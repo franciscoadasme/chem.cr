@@ -1,0 +1,13 @@
+name: chem.cr
+version: 0.1.0
+
+authors:
+  - Francisco Adasme <francisco.adasme@gmail.com>
+
+targets:
+  chem.cr:
+    main: src/chem.cr
+
+crystal: 0.26.1
+
+license: MIT
