@@ -31,6 +31,8 @@ describe Chem::PDB do
       system.experiment.should be_nil
       system.title.should eq "Glutamate"
       system.size.should eq 13
+      system.chains.size.should eq 1
+      system.residues.size.should eq 3
       system.atoms.map(&.element.symbol).should eq ["C", "O", "O", "N", "C", "C", "O",
                                                     "C", "C", "C", "O", "O", "N"]
       system.atoms.map(&.charge).should eq [0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, -1, 1]
@@ -39,11 +41,11 @@ describe Chem::PDB do
       atom.index.should eq 11
       atom.serial.should eq 12
       atom.name.should eq "OE2"
-      atom.altloc.should be_nil
-      atom.residue_name.should eq "GLU"
-      atom.chain.should eq 'A'
-      atom.residue_number.should eq 2
-      atom.insertion_code.should be_nil
+      # atom.altloc.should be_nil
+      atom.residue.name.should eq "GLU"
+      atom.chain.id.should eq 'A'
+      atom.residue.number.should eq 2
+      # atom.insertion_code.should be_nil
       atom.coords.should eq Vector[-1.204, 4.061, 0.195]
       atom.occupancy.should eq 1
       atom.temperature_factor.should eq 0
@@ -96,8 +98,7 @@ describe Chem::PDB do
       system = PDB.parse "spec/data/pdb/big_numbers.pdb"
       system.size.should eq 6
       system.atoms.map(&.serial).should eq (99995..100000).to_a
-      system.atoms.map(&.residue_number).should eq [9999, 9999, 9999, 10000, 10000,
-                                                    10000]
+      system.residues.map(&.number).should eq [9999, 10000]
     end
 
     it "parses a PDB file with unit cell parameters" do
@@ -134,6 +135,12 @@ describe Chem::PDB do
       system.sequence.should_not be_nil
       seq = system.sequence.not_nil!
       seq.to_s.should eq "TTCCPSIVARSNFNVCRLPGTPEAICATYTGCIIIPGATCPGDYAN"
+    end
+
+    it "fails when charges are ill formatted" do
+      expect_raises PDB::ParseException, "Couldn't read a formal charge at 4:78" do
+        PDB.parse "spec/data/pdb/bad_charges.pdb"
+      end
     end
   end
 end

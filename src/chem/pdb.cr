@@ -1,4 +1,5 @@
-require "./pdb/*"
+require "./io"
+require "./pdb/parser"
 require "./system"
 
 module Chem::PDB
@@ -9,6 +10,6 @@ module Chem::PDB
   end
 
   def self.parse(io : ::IO) : System
-    PullParser.new(io).parse
+    Parser.new(io).parse
   end
 end

@@ -9,6 +9,7 @@ module Chem::VASP::Poscar
 
     @atom_index = -1
     @coord_system : CoordinateSystem?
+    @current_residue = uninitialized Residue
     @elements = [] of PeriodicTable::Element
     @has_constraints : Bool = false
     @lattice : Lattice?
@@ -25,8 +26,25 @@ module Chem::VASP::Poscar
       @atom_index
     end
 
+    def current_residue : Residue
+      @current_residue
+    end
+
     def parse : System
-      System.new self
+      system = System.new
+      chain = system.make_chain identifier: 'A'
+      @current_residue = chain.make_residue name: "UNK", number: 1
+
+      system.title = read_line
+      system.lattice = read_lattice
+      read_elements
+      read_selective_dynamics
+      read_coord_system
+
+      @elements.size.times do
+        @current_residue << read_atom
+      end
+      system
     end
 
     def read_atom : Atom

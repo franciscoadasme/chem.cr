@@ -9,14 +9,14 @@ describe Chem::VASP::Poscar do
       system.size.should eq 49
 
       atom = system.atoms[-1]
-      atom.chain.should be_nil
+      atom.chain.id.should eq 'A'
       atom.coords.should eq Vector[1.25020645, 3.42088266, 4.92610368]
       atom.element.should be Elements::O
       atom.index.should eq 48
       atom.name.should eq "O"
       atom.occupancy.should eq 1
-      atom.residue_name.should eq "UNK"
-      atom.residue_number.should eq 1
+      atom.residue.name.should eq "UNK"
+      atom.residue.number.should eq 1
       atom.serial.should eq 49
       atom.temperature_factor.should eq 0
 

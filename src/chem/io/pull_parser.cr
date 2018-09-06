@@ -1,6 +1,4 @@
 module Chem::IO
-  class ParseException < Exception; end
-
   module PullParser
     @input : ::IO
 

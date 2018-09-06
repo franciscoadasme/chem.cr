@@ -2,20 +2,34 @@ require "./bias"
 require "./lattice"
 require "./protein/experiment"
 require "./protein/sequence"
-require "./topology/atom_collection"
+require "./topology/chain"
+require "./topology/chain_collection"
 
 module Chem
   class System
-    include AtomCollection
+    include ChainCollection
+
+    @chains = [] of Chain
 
     getter biases = [] of Chem::Bias
-    getter experiment : Protein::Experiment?
-    getter lattice : Lattice?
-    getter sequence : Protein::Sequence?
-    getter title : String
+    property experiment : Protein::Experiment?
+    property lattice : Lattice?
+    property sequence : Protein::Sequence?
+    property title : String = ""
 
-    def size
-      @atoms.size
+    def <<(chain : Chain)
+      @chains << chain
+    end
+
+    def each_chain(&block : Chain ->)
+      @chains.each &block
+    end
+
+    def make_chain(**options) : Chain
+      options = options.merge({system: self})
+      chain = Chain.new **options
+      self << chain
+      chain
     end
   end
 end

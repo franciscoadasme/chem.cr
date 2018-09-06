@@ -7,6 +7,7 @@ module Chem
       @name = @element.symbol
       @coords = pull.read_coords
       @constraint = pull.read_constraint?
+      @residue = pull.current_residue
     end
   end
 
@@ -43,17 +44,6 @@ module Chem
       @a = pull.read_vector
       @b = pull.read_vector
       @c = pull.read_vector
-    end
-  end
-
-  class System
-    def initialize(pull : VASP::Poscar::PullParser)
-      @title = pull.read_line
-      @lattice = pull.read_lattice
-      pull.read_elements
-      pull.read_selective_dynamics
-      pull.read_coord_system
-      @atoms = Array(Atom).new(pull.atom_count) { pull.read_atom }
     end
   end
 

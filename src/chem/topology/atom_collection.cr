@@ -3,13 +3,16 @@ require "./atom_view"
 
 module Chem
   module AtomCollection
-    @atoms : Array(Atom)
+    abstract def each_atom(&block : Atom ->)
+    abstract def size : Int32
 
     def atoms : AtomView
-      AtomView.new @atoms
+      ary = Array(Atom).new size
+      each_atom { |atom| ary << atom }
+      AtomView.new ary
     end
 
-    def bounds : Geom::Cuboid
+    def bounds
       raise NotImplementedError.new
     end
 
@@ -18,7 +21,9 @@ module Chem
     end
 
     def formal_charges : Array(Int32)
-      @atoms.map &.charge
+      ary = [] of Int32
+      each_atom { |atom| ary << atom.charge }
+      ary
     end
   end
 end

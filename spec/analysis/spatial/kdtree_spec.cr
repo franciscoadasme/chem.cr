@@ -4,15 +4,18 @@ alias KDTree = Chem::Analysis::Spatial::KDTree
 
 describe Chem::Analysis::Spatial::KDTree do
   context "toy example" do
-    atoms = AtomView.new [
-      Atom.dummy(0, at: Vector[4, 3, 0]),   # d^2 = 25
-      Atom.dummy(1, at: Vector[3, 0, 0]),   # d^2 = 9
-      Atom.dummy(2, at: Vector[-1, 2, 0]),  # d^2 = 5
-      Atom.dummy(3, at: Vector[6, 4, 0]),   # d^2 = 52
-      Atom.dummy(4, at: Vector[3, -5, 0]),  # d^2 = 34
-      Atom.dummy(5, at: Vector[-2, -5, 0]), # d^2 = 29
-    ]
-    tree = KDTree.new atoms
+    system = Chem::System.new
+    chain = system.make_chain identifier: 'A'
+    residue = chain.make_residue name: "UNK", number: 1
+
+    residue.make_atom index: 0, name: "C", coords: Vector[4, 3, 0]   # d^2 = 25
+    residue.make_atom index: 1, name: "C", coords: Vector[3, 0, 0]   # d^2 = 9
+    residue.make_atom index: 2, name: "C", coords: Vector[-1, 2, 0]  # d^2 = 5
+    residue.make_atom index: 3, name: "C", coords: Vector[6, 4, 0]   # d^2 = 52
+    residue.make_atom index: 4, name: "C", coords: Vector[3, -5, 0]  # d^2 = 34
+    residue.make_atom index: 5, name: "C", coords: Vector[-2, -5, 0] # d^2 = 29
+
+    tree = KDTree.new system.atoms
 
     describe "#nearest" do
       it "works" do

@@ -3,127 +3,109 @@ require "../lattice.cr"
 require "../periodic_table"
 require "../protein"
 require "../geometry/vector.cr"
-require "./pull_parser"
+require "./parser"
 
 module Chem
   class Atom
-    def initialize(pull : PDB::PullParser)
-      @index = pull.current_index
-      @serial = pull.read_serial
-      pull.skip_char
-      @name = pull.read_chars(4).strip
-      @altloc = pull.read_char_or_null
-      @residue_name = pull.read_chars(4).strip
-      @chain = pull.read_char_or_null
-      @residue_number = pull.read_residue_number
-      @insertion_code = pull.read_char_or_null
-      pull.skip_chars 3
-      @coords = pull.read_coords
-      @occupancy = pull.read_float 6
-      @temperature_factor = pull.read_float 6
-      pull.skip_chars 10, stop_at: '\n'
-      @element = pull.read_or_guess_element @name
+    def initialize(pull : PDB::Parser)
       @charge = pull.read_formal_charge
+      @coords = Geometry::Vector.new pull
+      @element = PeriodicTable::Element.new pull
+      @index = pull.next_index
+      @name = pull.read_chars(12..15).strip
+      @occupancy = pull.read_float 54..59
+      @residue = pull.current_residue
+      @serial = pull.read_serial
+      @temperature_factor = pull.read_float 60..65
     end
   end
 
+  class Chain
+    def initialize(pull : PDB::Parser)
+      @identifier = pull.read_char 21
+      @system = pull.current_system
+    end
+  end
+
+  struct Geometry::Vector
+    def initialize(pull : PDB::Parser)
+      @x = pull.read_float 30..37
+      @y = pull.read_float 38..45
+      @z = pull.read_float 46..53
+    end
+  end
+
+  def Lattice.new(pull : PDB::Parser) : Lattice
+    new size: {pull.read_float(6..14),
+               pull.read_float(15..23),
+               pull.read_float(24..32)},
+      angles: {pull.read_float(33..39),
+               pull.read_float(40..46),
+               pull.read_float(47..53)},
+      space_group: pull.read_chars(55..65).rstrip
+    #  z: pull.read_int(4)
+  end
+
+  def PeriodicTable::Element.new(pull : PDB::Parser) : PeriodicTable::Element
+    if symbol = pull.read_chars? 76..77, if_blank: nil
+      PeriodicTable[symbol.lstrip]
+    else
+      PeriodicTable.element atom_name: pull.read_chars(12..15).strip
+    end
+  rescue PeriodicTable::UnknownElement
+    # pull.fail "Couldn't determine element of atom #{pull.read_chars 12..15}"
+    raise "Couldn't determine element of atom #{pull.read_chars(12..15).strip}"
+  end
+
   struct Protein::Experiment
-    def initialize(pull : PDB::PullParser)
+    def initialize(pull : PDB::Parser)
       @deposition_date = Time.now
       @pdb_accession = "0000"
       @title = ""
 
-      loop do
-        case pull.next_record
-        when .citation?
-          pull.skip_chars 6
-          field_name = pull.read_chars(4).rstrip.downcase
-          pull.skip_chars 3
-          case field_name
+      names = ["header", "obslte", "title", "split", "caveat", "compnd", "source",
+               "keywds", "expdta", "nummdl", "mdltyp", "author", "revdat", "sprsde",
+               "jrnl", "remark"]
+      pull.next_record_while names do
+        case pull.record_name
+        when "expdta"
+          @kind = Kind.parse pull.read_chars(10..-1).strip.delete "- "
+        when "header"
+          @deposition_date = pull.read_date 50..58
+          @pdb_accession = pull.read_chars(62..65).downcase
+        when "jrnl"
+          case pull.read_chars(12..15).rstrip.downcase
           when "doi"
-            @doi = pull.read_line.rstrip
+            @doi = pull.read_chars(19..-1).rstrip
           end
-        when .experiment?
-          @kind = pull.read_experiment_kind
-        when .header?
-          pull.skip_chars 4
-          pull.skip_chars 40 # molecule classification
-          @deposition_date = pull.read_date
-          pull.skip_chars 3
-          @pdb_accession = pull.read_chars(4).downcase
-        when .remark?
-          pull.skip_char
-          number = pull.read_int 3
-          pull.skip_char
-          next if pull.peek_line.blank? # skip remark first line
-          case number
+        when "remark"
+          next if pull.read_chars(10..-1).blank? # skip remark first line
+          case pull.read_int 7..9
           when 2
-            pull.skip_chars 12
-            @resolution = pull.read_float 7
-            break # must break loop after reading the last field
+            @resolution = pull.read_float? 23..29
           end
-        when .title?
+        when "title"
           @title = pull.read_title
         end
       end
     end
   end
 
-  def Lattice.new(pull : PDB::PullParser) : Lattice
-    new size: {pull.read_float(9), pull.read_float(9), pull.read_float(9)},
-      angles: {pull.read_float(7), pull.read_float(7), pull.read_float(7)},
-      space_group: pull.skip_char.read_chars(11).rstrip
-    #  z: pull.read_int(4)
-  end
-
   struct Protein::Sequence
-    def initialize(pull : PDB::PullParser)
-      @aminoacids = [] of Protein::AminoAcid
-
-      while pull.next_record.sequence?
-        pull.skip_chars 5
-        chain = pull.read_char
-        pull.skip_chars 7
-        pull.read_line.split.each do |name|
+    def initialize(pull : PDB::Parser)
+      pull.next_record_while name: "seqres" do
+        pull.read_chars(19..-1).split.each do |name|
           @aminoacids << Protein::AminoAcid[name]
         end
       end
     end
   end
 
-  class System
-    def initialize(pull : PDB::PullParser)
-      @title = ""
-      @atoms = [] of Atom
-
-      loop do
-        case pull.next_record
-        when .atom?
-          @atoms << pull.read_atom
-        when .end?
-          break
-        when .header?
-          experiment = pull.read_experiment
-          @experiment = experiment
-          @title = experiment.pdb_accession
-        when .lattice?
-          @lattice = pull.read_lattice
-        when .sequence?
-          @sequence = pull.read_sequence
-        when .title?
-          @title = pull.read_title
-        else
-          # puts "#{record_type} #{pull.read_line.inspect}"
-        end
-      end
-    end
-  end
-
-  struct Geometry::Vector
-    def initialize(pull : PDB::PullParser)
-      @x = pull.read_float 8
-      @y = pull.read_float 8
-      @z = pull.read_float 8
+  class Residue
+    def initialize(pull : PDB::Parser)
+      @name = pull.read_chars(17..20).strip
+      @number = pull.read_residue_number
+      @chain = pull.current_chain
     end
   end
 end

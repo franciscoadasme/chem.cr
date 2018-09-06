@@ -1,6 +1,6 @@
 module Chem::Protein
   struct Sequence
-    @aminoacids : Array(AminoAcid)
+    @aminoacids = [] of Protein::AminoAcid
 
     def to_s
       String.build do |builder|
