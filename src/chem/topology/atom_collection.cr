@@ -1,29 +1,30 @@
-require "./atom"
+require "../core_ext/iterator"
 require "./atom_view"
+require "./atom"
 
 module Chem
   module AtomCollection
-    abstract def each_atom(&block : Atom ->)
+    abstract def each_atom : Iterator(Atom)
     abstract def size : Int32
 
     def atoms : AtomView
-      ary = Array(Atom).new size
-      each_atom { |atom| ary << atom }
-      AtomView.new ary
+      AtomView.new each_atom.to_a
     end
 
     def bounds
       raise NotImplementedError.new
     end
 
+    def each_atom(&block : Atom ->)
+      each_atom.each &block
+    end
+
     def formal_charge : Int32
-      formal_charges.sum
+      each_atom.sum &.charge
     end
 
     def formal_charges : Array(Int32)
-      ary = [] of Int32
-      each_atom { |atom| ary << atom.charge }
-      ary
+      each_atom.map(&.charge).to_a
     end
   end
 end

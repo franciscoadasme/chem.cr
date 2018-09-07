@@ -21,8 +21,8 @@ module Chem
       @chains << chain
     end
 
-    def each_chain(&block : Chain ->)
-      @chains.each &block
+    def each_chain : Iterator(Chain)
+      @chains.each
     end
 
     def make_chain(**options) : Chain

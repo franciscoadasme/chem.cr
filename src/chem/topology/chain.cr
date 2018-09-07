@@ -18,8 +18,8 @@ module Chem
       @residues << residue
     end
 
-    def each_residue(&block : Residue ->)
-      @residues.each &block
+    def each_residue : Iterator(Residue)
+      @residues.each
     end
 
     def id : Char?

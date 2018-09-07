@@ -19,8 +19,8 @@ module Chem
       @atoms << atom
     end
 
-    def each_atom(&block : Atom ->)
-      @atoms.each &block
+    def each_atom : Iterator(Atom)
+      @atoms.each
     end
 
     def make_atom(**options) : Atom
