@@ -1,4 +1,4 @@
-require "./atom"
+require "../protein/secondary_structure"
 require "./atom_collection"
 require "./chain"
 
@@ -11,6 +11,7 @@ module Chem
     property chain : Chain
     property name : String
     property number : Int32
+    property secondary_structure : Protein::SecondaryStructure = :none
 
     def initialize(@name : String, @number : Int32, @chain : Chain)
     end
@@ -18,6 +19,8 @@ module Chem
     def <<(atom : Atom)
       @atoms << atom
     end
+
+    delegate dssp, to: @secondary_structure
 
     def each_atom : Iterator(Atom)
       @atoms.each

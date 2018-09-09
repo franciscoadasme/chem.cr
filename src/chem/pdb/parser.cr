@@ -10,6 +10,7 @@ module Chem::PDB
     @current_system : System
     @input : ::IO
     @line_number : Int32 = 0
+    @ss_records = [] of SSRecord
 
     getter current_system : System
 
@@ -64,6 +65,7 @@ module Chem::PDB
       until next_record.name == "end"
         parse_current_record
       end
+      assign_secondary_structure
       @current_system
     end
 
@@ -138,6 +140,15 @@ module Chem::PDB
       @current_record.name
     end
 
+    private def assign_secondary_structure
+      @ss_records.each do |rcd|
+        chain = @current_system.each_chain.select { |chain| chain.id == rcd.chain }.first
+        chain.each_residue do |residue|
+          residue.secondary_structure = rcd.kind if rcd.range.includes?(residue.number)
+        end
+      end
+    end
+
     private def parse_atom_record
       read_chain unless @current_chain.try(&.id) == read_char(21)
       read_residue unless @current_residue.try(&.number) == read_residue_number
@@ -156,6 +167,8 @@ module Chem::PDB
         expt = Protein::Experiment.new self
         @current_system.experiment = expt
         @current_system.title = expt.pdb_accession
+      when "helix", "sheet"
+        @ss_records << SSRecord.new self
       when "seqres"
         @current_system.sequence = Protein::Sequence.new self
       when "title"

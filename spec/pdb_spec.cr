@@ -137,6 +137,20 @@ describe Chem::PDB do
       seq.to_s.should eq "TTCCPSIVARSNFNVCRLPGTPEAICATYTGCIIIPGATCPGDYAN"
     end
 
+    it "parses secondary structure information" do
+      system = PDB.parse "spec/data/pdb/1crn.pdb"
+      system.residues[0].dssp.should eq 'B'
+      system.residues[1].dssp.should eq 'B'
+      system.residues[3].dssp.should eq 'B'
+      system.residues[4].dssp.should eq '0'
+      system.residues[5].dssp.should eq '0'
+      system.residues[6].dssp.should eq 'H'
+      system.residues[18].dssp.should eq 'H'
+      system.residues[19].dssp.should eq '0'
+      system.residues[31].dssp.should eq 'B'
+      system.residues[-1].dssp.should eq '0'
+    end
+
     it "fails when charges are ill formatted" do
       expect_raises PDB::ParseException, "Couldn't read a formal charge at 4:78" do
         PDB.parse "spec/data/pdb/bad_charges.pdb"

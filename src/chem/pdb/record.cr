@@ -1,3 +1,5 @@
+require "../protein/secondary_structure"
+
 module Chem::PDB
   private struct Record
     @line : String = ""
@@ -23,4 +25,9 @@ module Chem::PDB
       @name
     end
   end
+
+  private record SSRecord,
+    chain : Char,
+    kind : Protein::SecondaryStructure,
+    range : Range(Int32, Int32)
 end

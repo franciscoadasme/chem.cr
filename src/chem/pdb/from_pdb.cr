@@ -108,4 +108,30 @@ module Chem
       @chain = pull.current_chain
     end
   end
+
+  module PDB
+    private struct SSRecord
+      def initialize(pull : Parser)
+        @kind = Protein::SecondaryStructure.new pull
+        case pull.record_name
+        when "helix"
+          @chain = pull.read_char 19
+          @range = pull.read_int(21..24)..pull.read_int(33..36)
+        when "sheet"
+          @chain = pull.read_char 21
+          @range = pull.read_int(22..25)..pull.read_int(33..36)
+        else
+          pull.fail "Invalid secondary structure record"
+        end
+      end
+    end
+  end
+
+  module Protein
+    def SecondaryStructure.new(pull : PDB::Parser) : self
+      value = pull.read_int(38..39)
+      value += 100 if pull.record_name == "sheet"
+      from_value value
+    end
+  end
 end
