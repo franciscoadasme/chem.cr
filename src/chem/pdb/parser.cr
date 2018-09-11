@@ -111,19 +111,18 @@ module Chem::PDB
       read_chars(range).to_i base
     end
 
-    # TODO need to handle **** (cannot simply return @prev_residue_num += 1), fail?
     def read_residue_number : Int32
       current_resnum = @current_residue.try(&.number) || 0
       resnum = read_chars 22..25
-      base = current_resnum < 9999 || resnum == "9999" ? 10 : 16
-      resnum.to_i base
+      return guess_residue_number if resnum == "****"
+      resnum.to_i base: current_resnum < 9999 || resnum == "9999" ? 10 : 16
     end
 
-    # TODO need to handle ***** (return current_serial += 1)
     def read_serial : Int32
+      chars = read_chars 6..10
       current_serial = @current_atom.try(&.serial) || 0
-      base = current_serial < 99999 ? 10 : 16
-      read_int 6..10, base
+      return current_serial + 1 if chars == "*****"
+      chars.to_i base: current_serial < 99999 ? 10 : 16
     rescue ArgumentError
       fail "Couldn't read serial number"
     end
@@ -147,6 +146,17 @@ module Chem::PDB
           residue.secondary_structure = rcd.kind if rcd.range.includes?(residue.number)
         end
       end
+    end
+
+    # TODO handle other residues than HOH
+    # TODO check if there are hidrogens
+    private def guess_residue_number : Int32
+      resname = read_chars(17..20).strip
+      residue = @current_residue.not_nil!
+      if residue.name == resname
+        return residue.number if residue.name == "HOH" && residue.atoms.size < 4
+      end
+      residue.number + 1
     end
 
     private def parse_atom_record

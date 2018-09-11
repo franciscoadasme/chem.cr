@@ -101,6 +101,14 @@ describe Chem::PDB do
       system.residues.map(&.number).should eq [9999, 10000]
     end
 
+    it "parses a PDB file with number of atoms/residues equal to asterisks (vmd)" do
+      system = PDB.parse "spec/data/pdb/asterisks.pdb"
+      system.size.should eq 18
+      system.residues.size.should eq 6
+      system.atoms.map(&.serial).should eq (99998..100015).to_a
+      system.residues.map(&.number).should eq [9998, 9999, 10000, 65535, 65536, 65537]
+    end
+
     it "parses a PDB file with unit cell parameters" do
       system = PDB.parse "spec/data/pdb/1crn.pdb"
 
