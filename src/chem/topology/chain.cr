@@ -1,9 +1,6 @@
-require "../system"
-require "./residue"
-require "./residue_collection"
-
 module Chem
   class Chain
+    include AtomCollection
     include ResidueCollection
 
     @residues = [] of Residue
@@ -16,6 +13,10 @@ module Chem
 
     def <<(residue : Residue)
       @residues << residue
+    end
+
+    def each_atom : Iterator(Atom)
+      Iterator.chain each_residue.map(&.each_atom).to_a
     end
 
     def each_residue : Iterator(Residue)

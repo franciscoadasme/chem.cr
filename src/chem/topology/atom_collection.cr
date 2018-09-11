@@ -1,11 +1,6 @@
-require "../core_ext/iterator"
-require "./atom_view"
-require "./atom"
-
 module Chem
   module AtomCollection
     abstract def each_atom : Iterator(Atom)
-    abstract def size : Int32
 
     def atoms : AtomView
       AtomView.new each_atom.to_a

@@ -1,13 +1,11 @@
-require "./bias"
-require "./lattice"
-require "./protein/experiment"
-require "./protein/sequence"
-require "./topology/chain"
-require "./topology/chain_collection"
+require "./core_ext/iterator"
+require "./topology"
 
 module Chem
   class System
+    include AtomCollection
     include ChainCollection
+    include ResidueCollection
 
     @chains = [] of Chain
 
@@ -21,8 +19,22 @@ module Chem
       @chains << chain
     end
 
+    def each_atom : Iterator(Atom)
+      iterators = [] of Iterator(Atom)
+      each_chain do |chain|
+        chain.each_residue do |residue|
+          iterators << residue.each_atom
+        end
+      end
+      Iterator.chain iterators
+    end
+
     def each_chain : Iterator(Chain)
       @chains.each
+    end
+
+    def each_residue : Iterator(Residue)
+      Iterator.chain each_chain.map(&.each_residue).to_a
     end
 
     def make_chain(**options) : Chain
@@ -30,6 +42,10 @@ module Chem
       chain = Chain.new **options
       self << chain
       chain
+    end
+
+    def size : Int32
+      each_atom.sum(0) { 1 }
     end
   end
 end

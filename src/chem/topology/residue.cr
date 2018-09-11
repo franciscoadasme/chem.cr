@@ -1,7 +1,3 @@
-require "../protein/secondary_structure"
-require "./atom_collection"
-require "./chain"
-
 module Chem
   class Residue
     include AtomCollection
@@ -32,7 +28,5 @@ module Chem
       self << atom
       atom
     end
-
-    delegate size, to: @atoms
   end
 end
