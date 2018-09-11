@@ -1,7 +1,7 @@
 require "./spec_helper"
 
 describe Chem::AtomCollection do
-  system = PDB.parse "spec/data/pdb/simple.pdb"
+  system = fake_system
 
   describe "#atoms" do
     it "returns an atom view" do
@@ -13,7 +13,7 @@ describe Chem::AtomCollection do
     it "iterates over each atom when called with block" do
       ary = [] of Int32
       system.each_atom { |atom| ary << atom.serial }
-      ary.should eq (1..13).to_a
+      ary.should eq (1..26).to_a
     end
 
     it "returns an iterator when called without block" do
@@ -23,27 +23,27 @@ describe Chem::AtomCollection do
 end
 
 describe Chem::AtomView do
-  atoms = PDB.parse("spec/data/pdb/simple.pdb").atoms
+  atoms = fake_system.atoms
 
   describe "#[]" do
     it "gets atom by zero-based index" do
-      atoms[4].name.should eq "CA"
+      atoms[4].name.should eq "CB"
     end
 
     it "gets atom by serial number" do
-      atoms[serial: 5].name.should eq "CA"
+      atoms[serial: 5].name.should eq "CB"
     end
   end
 
   describe "#size" do
     it "returns the number of chains" do
-      atoms.size.should eq 13
+      atoms.size.should eq 26
     end
   end
 end
 
 describe Chem::ChainCollection do
-  system = PDB.parse "spec/data/pdb/simple.pdb"
+  system = fake_system
 
   describe "#chains" do
     it "returns a chain view" do
@@ -55,7 +55,7 @@ describe Chem::ChainCollection do
     it "iterates over each chain when called with block" do
       ary = [] of Char?
       system.each_chain { |chain| ary << chain.id }
-      ary.should eq ['A']
+      ary.should eq ['A', 'B']
     end
 
     it "returns an iterator when called without block" do
@@ -65,7 +65,7 @@ describe Chem::ChainCollection do
 end
 
 describe Chem::ChainView do
-  chains = PDB.parse("spec/data/pdb/simple.pdb").chains
+  chains = fake_system.chains
 
   describe "#[]" do
     it "gets chain by zero-based index" do
@@ -79,19 +79,19 @@ describe Chem::ChainView do
 
   describe "#size" do
     it "returns the number of chains" do
-      chains.size.should eq 1
+      chains.size.should eq 2
     end
   end
 end
 
 describe Chem::ResidueCollection do
-  system = PDB.parse "spec/data/pdb/simple.pdb"
+  system = fake_system
 
   describe "#each_residue" do
     it "iterates over each residue when called with block" do
       ary = [] of String
       system.each_residue { |residue| ary << residue.name }
-      ary.should eq ["ACE", "GLU", "NMA"]
+      ary.should eq ["GLU", "PHE", "SER"]
     end
 
     it "returns an iterator when called without block" do
@@ -107,15 +107,15 @@ describe Chem::ResidueCollection do
 end
 
 describe Chem::ResidueView do
-  residues = PDB.parse("spec/data/pdb/simple.pdb").residues
+  residues = fake_system.residues
 
   describe "#[]" do
     it "gets residue by zero-based index" do
-      residues[1].name.should eq "GLU"
+      residues[1].name.should eq "PHE"
     end
 
     it "gets residue by serial number" do
-      residues[serial: 2].name.should eq "GLU"
+      residues[serial: 2].name.should eq "PHE"
     end
   end
 
@@ -127,11 +127,11 @@ describe Chem::ResidueView do
 end
 
 describe Chem::System do
-  system = PDB.parse "spec/data/pdb/simple.pdb"
+  system = fake_system
 
   describe "#size" do
     it "returns the number of atoms" do
-      system.size.should eq 13
+      system.size.should eq 26
     end
   end
 end
