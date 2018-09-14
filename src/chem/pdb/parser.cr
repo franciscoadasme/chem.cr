@@ -1,5 +1,6 @@
 require "./from_pdb"
 require "./record"
+require "../topology/templates/all"
 
 module Chem::PDB
   class Parser
@@ -148,15 +149,21 @@ module Chem::PDB
       end
     end
 
-    # TODO handle other residues than HOH
-    # TODO check if there are hidrogens
     private def guess_residue_number : Int32
       resname = read_chars(17..20).strip
       residue = @current_residue.not_nil!
+
+      next_number = residue.number
       if residue.name == resname
-        return residue.number if residue.name == "HOH" && residue.atoms.size < 4
+        if template = Topology::Templates[resname]?
+          atom_name = read_chars(12..15).strip
+          count = template.atom_count include_hydrogens: atom_name.starts_with?('H')
+          next_number += 1 unless residue.atoms.size < count
+        end
+      else
+        next_number += 1
       end
-      residue.number + 1
+      next_number
     end
 
     private def parse_atom_record
