@@ -1,7 +1,6 @@
 require "../spec_helper"
 
-require "../../src/chem/topology/templates/amino"
-
+alias Templates = Chem::Topology::Templates
 alias TemplateBuilder = Chem::Topology::Templates::Builder
 alias TemplateError = Chem::Topology::Templates::Error
 
@@ -10,7 +9,7 @@ describe Chem::Topology::Templates::Builder do
     bb_names = ["N", "H", "CA", "HA", "C", "O"]
 
     it "builds a residue without sidechain" do
-      residue = TemplateBuilder.build do
+      residue = TemplateBuilder.build(:protein) do
         name "Glycine"
         code "Gly"
         symbol 'G'
@@ -20,12 +19,12 @@ describe Chem::Topology::Templates::Builder do
       end
 
       residue.atom_names.should eq ["N", "H", "CA", "HA1", "HA2", "C", "O"]
-      residue.bonds.size.should eq 6 + 2
+      residue.bonds.size.should eq 6
       residue.formal_charge.should eq 0
     end
 
     it "builds a residue with short sidechain" do
-      residue = TemplateBuilder.build do
+      residue = TemplateBuilder.build(:protein) do
         name "Alanine"
         code "ALA"
         symbol 'A'
@@ -34,12 +33,12 @@ describe Chem::Topology::Templates::Builder do
       end
 
       residue.atom_names.should eq bb_names + ["CB", "HB1", "HB2", "HB3"]
-      residue.bonds.size.should eq 9 + 2
+      residue.bonds.size.should eq 9
       residue.formal_charge.should eq 0
     end
 
     it "builds a residue with branched sidechain" do
-      residue = TemplateBuilder.build do
+      residue = TemplateBuilder.build(:protein) do
         name "Isoleucine"
         code "ILE"
         symbol 'I'
@@ -53,12 +52,12 @@ describe Chem::Topology::Templates::Builder do
       names = bb_names + ["CB", "HB", "CG1", "HG11", "HG12", "CD1", "HD11", "HD12",
                           "HD13", "CG2", "HG21", "HG22", "HG23"]
       residue.atom_names.should eq names
-      residue.bonds.size.should eq 18 + 2
+      residue.bonds.size.should eq 18
       residue.formal_charge.should eq 0
     end
 
     it "builds a positively charged residue" do
-      residue = TemplateBuilder.build do
+      residue = TemplateBuilder.build(:protein) do
         name "Lysine"
         code "LYS"
         symbol 'K'
@@ -69,12 +68,12 @@ describe Chem::Topology::Templates::Builder do
       names = bb_names + ["CB", "HB1", "HB2", "CG", "HG1", "HG2", "CD", "HD1", "HD2",
                           "CE", "HE1", "HE2", "NZ", "HZ1", "HZ2", "HZ3"]
       residue.atom_names.should eq names
-      residue.bonds.size.should eq 21 + 2
+      residue.bonds.size.should eq 21
       residue.formal_charge.should eq 1
     end
 
     it "builds a negatively charged residue" do
-      residue = TemplateBuilder.build do
+      residue = TemplateBuilder.build(:protein) do
         name "Aspartate"
         code "ASP"
         symbol 'D'
@@ -87,12 +86,12 @@ describe Chem::Topology::Templates::Builder do
 
       names = bb_names + ["CB", "HB1", "HB2", "CG", "OE1", "OE2"]
       residue.atom_names.should eq names
-      residue.bonds.size.should eq 11 + 2
+      residue.bonds.size.should eq 11
       residue.formal_charge.should eq -1
     end
 
     it "builds a positively charged residue with one branch in the sidechain" do
-      residue = TemplateBuilder.build do
+      residue = TemplateBuilder.build(:protein) do
         name "Arginine"
         code "ARG"
         symbol 'R'
@@ -107,12 +106,12 @@ describe Chem::Topology::Templates::Builder do
                           "NE", "HE", "CZ", "NH1", "HH11", "HH12", "NH2", "HH21",
                           "HH22"]
       residue.atom_names.should eq names
-      residue.bonds.size.should eq 23 + 2
+      residue.bonds.size.should eq 23
       residue.formal_charge.should eq 1
     end
 
     it "builds a residue with a cyclic sidechain" do
-      residue = TemplateBuilder.build do
+      residue = TemplateBuilder.build(:protein) do
         name "Histidine"
         code "HIS"
         symbol 'H'
@@ -127,12 +126,12 @@ describe Chem::Topology::Templates::Builder do
       names = bb_names + ["CB", "HB1", "HB2", "CG", "CD2", "HD2", "NE2", "CE1", "HE1",
                           "ND1", "HD1"]
       residue.atom_names.should eq names
-      residue.bonds.size.should eq 17 + 2
+      residue.bonds.size.should eq 17
       residue.formal_charge.should eq 0
     end
 
     it "builds a residue with a cyclic sidechain with terminal bond" do
-      residue = TemplateBuilder.build do
+      residue = TemplateBuilder.build(:protein) do
         name "Histidine"
         code "HIS"
         symbol 'H'
@@ -147,12 +146,12 @@ describe Chem::Topology::Templates::Builder do
       names = bb_names + ["CB", "HB1", "HB2", "CG", "ND1", "HD1", "CE1", "HE1", "NE2",
                           "CD2", "HD2"]
       residue.atom_names.should eq names
-      residue.bonds.size.should eq 17 + 2
+      residue.bonds.size.should eq 17
       residue.formal_charge.should eq 0
     end
 
     it "builds a residue with a bicyclic sidechain" do
-      residue = TemplateBuilder.build do
+      residue = TemplateBuilder.build(:protein) do
         name "Tryptophan"
         code "TRP"
         symbol 'W'
@@ -168,12 +167,12 @@ describe Chem::Topology::Templates::Builder do
       names = bb_names + ["CB", "HB1", "HB2", "CG", "CD1", "HD1", "NE1", "HE1", "CE2",
                           "CD2", "CZ2", "HZ2", "CH2", "HH2", "CZ3", "HZ3", "CE3", "HE3"]
       residue.atom_names.should eq names
-      residue.bonds.size.should eq 25 + 2
+      residue.bonds.size.should eq 25
       residue.formal_charge.should eq 0
     end
 
     it "builds a cyclic residue" do
-      residue = TemplateBuilder.build do
+      residue = TemplateBuilder.build(:protein) do
         name "Proline"
         code "PRO"
         symbol 'P'
@@ -188,12 +187,12 @@ describe Chem::Topology::Templates::Builder do
       names = ["N", "CA", "HA", "C", "O", "CB", "HB1", "HB2", "CG", "HG1", "HG2", "CD",
                "HD1", "HD2"]
       residue.atom_names.should eq names
-      residue.bonds.size.should eq 14 + 2
+      residue.bonds.size.should eq 14
       residue.formal_charge.should eq 0
     end
 
     it "builds a residue having an atom with explicit valence" do
-      residue = TemplateBuilder.build do
+      residue = TemplateBuilder.build(:protein) do
         name "Cysteine"
         code "CYX"
         symbol 'C'
@@ -203,7 +202,7 @@ describe Chem::Topology::Templates::Builder do
       end
 
       residue.atom_names.should eq bb_names + ["CB", "HB1", "HB2", "SG"]
-      residue.bonds.size.should eq 9 + 2
+      residue.bonds.size.should eq 9
       residue.formal_charge.should eq 0
     end
 
@@ -211,8 +210,8 @@ describe Chem::Topology::Templates::Builder do
       # #cycle connects the first and last atoms with a single bond unless there is a
       # bond char (-, =, # or @) at the end. In this case, both CE2=CD2 and CD2-CE2 are
       # added
-      expect_raises TemplateError, "bond CD2-CE2 already exists" do
-        TemplateBuilder.build do
+      expect_raises TemplateError, "Bond CD2=CE2 already exists" do
+        TemplateBuilder.build(:protein) do
           name "Tryptophan"
           code "TRP"
           symbol 'W'
@@ -226,7 +225,7 @@ describe Chem::Topology::Templates::Builder do
 
     it "fails on incorrect valence" do
       expect_raises TemplateError, "incorrect valence" do
-        TemplateBuilder.build do
+        TemplateBuilder.build(:protein) do
           name "Tryptophan"
           code "TRP"
           symbol 'W'
@@ -239,14 +238,70 @@ describe Chem::Topology::Templates::Builder do
     end
 
     it "fails when adding a branch without existing root" do
-      expect_raises TemplateError, "branch must start with an existing atom name" do
-        TemplateBuilder.build { branch "CB-CG2" }
+      msg = "Branch must start with an existing atom type, got CB"
+      expect_raises TemplateError, msg do
+        TemplateBuilder.build(:protein) { branch "CB-CG2" }
       end
     end
 
     it "fails when adding sidechain without backbone" do
-      expect_raises TemplateError, "missing backbone" do
-        TemplateBuilder.build { sidechain "CB-CG" }
+      expect_raises TemplateError, "Backbone must be added before sidechain" do
+        TemplateBuilder.build(:protein) { sidechain "CB-CG" }
+      end
+    end
+  end
+end
+
+describe Chem::Topology::Templates do
+  Templates.residue do
+    name "Anything"
+    code "LFG"
+    main "N1+-C2-C3-O4-C5-C6"
+    branch "C5=O7"
+  end
+
+  describe "#[]" do
+    it "returns a residue template by code" do
+      residue_t = Templates["LFG"]
+      residue_t.should be_a Templates::Residue
+      residue_t.name.should eq "Anything"
+      residue_t.code.should eq "LFG"
+    end
+
+    it "fails when no matching residue template exists" do
+      expect_raises TemplateError, "Unknown residue template" do
+        Templates["ASD"]
+      end
+    end
+  end
+
+  describe "#[]?" do
+    it "returns a residue template by code" do
+      Templates["LFG"].should be_a Templates::Residue
+    end
+
+    it "returns nil when no matching residue template exists" do
+      Templates["ASD"]?.should be_nil
+    end
+  end
+
+  describe "#residue" do
+    it "creates a residue template with multiple codes" do
+      Templates.residue do
+        name "Anything"
+        codes "LXE", "EGR"
+        main "C1"
+      end
+      Templates["LXE"].should be Templates["EGR"]
+    end
+
+    it "fails when the residue code already exists" do
+      expect_raises TemplateError, "Duplicate residue template" do
+        Templates.residue do
+          name "Anything"
+          code "LXE"
+          main "C1"
+        end
       end
     end
   end

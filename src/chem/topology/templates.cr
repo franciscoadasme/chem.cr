@@ -1,37 +1,38 @@
 module Chem::Topology::Templates
+  extend self
+
   class Error < Exception; end
 
   private TEMPLATES = {} of String => Residue
 
-  def self.[](code : String) : Residue
-    TEMPLATES[code] || raise Error.new "unknown residue #{code}"
+  private macro build_method(name, kind = nil)
+    def {{name.id}} : Residue
+      builder = Builder.new Residue::Kind::{{(kind || name).id.camelcase}}
+      {{yield}}
+      with builder yield
+      residue = builder.build
+      builder.codes.each do |code|
+        raise Error.new "Duplicate residue template #{code}" if TEMPLATES.has_key?(code)
+        TEMPLATES[code] = residue
+      end
+      residue
+    end
   end
 
-  def self.[]?(code : String) : Residue?
+  def [](code : String) : Residue
+    TEMPLATES[code]? || raise Error.new "Unknown residue template #{code}"
+  end
+
+  def []?(code : String) : Residue?
     TEMPLATES[code]?
   end
 
-  def self.aminoacid : Nil
-    builder = Builder.new
+  build_method aminoacid, kind: protein do
     builder.backbone
-    with builder yield
-    residue = builder.build
-    if TEMPLATES.has_key?(residue.code)
-      raise Error.new "duplicate residue code #{residue.code}"
-    end
-    TEMPLATES[residue.code] = residue
   end
-
-  def self.residue : Nil
-    builder = Builder.new
-    with builder yield
-    residue = builder.build
-    if TEMPLATES.has_key?(residue.code)
-      raise Error.new "duplicate residue code #{residue.code}"
-    end
-    TEMPLATES[residue.code] = residue
-  end
+  build_method residue, kind: other
+  build_method solvent
 end
 
 require "./templates/builder"
-require "./templates/template"
+require "./templates/entities"

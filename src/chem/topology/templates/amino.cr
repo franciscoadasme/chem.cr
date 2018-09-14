@@ -1,3 +1,5 @@
+require "../templates"
+
 module Chem::Topology::Templates
   aminoacid do
     name "Alanine"
