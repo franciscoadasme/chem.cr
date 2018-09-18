@@ -159,6 +159,23 @@ describe Chem::PDB do
       system.residues[-1].dssp.should eq '0'
     end
 
+    it "parses bonds" do
+      system = PDB.parse "spec/data/pdb/1crn.pdb"
+      system.atoms[19].bonds[system.atoms[281]].order.should eq 1
+      system.atoms[25].bonds[system.atoms[228]].order.should eq 1
+      system.atoms[115].bonds[system.atoms[187]].order.should eq 1
+    end
+
+    it "parses duplicate bonds" do
+      system = PDB.parse "spec/data/pdb/duplicate_bonds.pdb"
+      system.atoms[0].bonds[system.atoms[1]].order.should eq 1
+      system.atoms[1].bonds[system.atoms[2]].order.should eq 2
+      system.atoms[2].bonds[system.atoms[3]].order.should eq 1
+      system.atoms[3].bonds[system.atoms[4]].order.should eq 2
+      system.atoms[4].bonds[system.atoms[5]].order.should eq 1
+      system.atoms[5].bonds[system.atoms[0]].order.should eq 2
+    end
+
     it "fails when charges are ill formatted" do
       expect_raises PDB::ParseException, "Couldn't read a formal charge at 4:78" do
         PDB.parse "spec/data/pdb/bad_charges.pdb"

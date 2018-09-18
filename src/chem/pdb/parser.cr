@@ -3,7 +3,10 @@ require "./record"
 require "../topology/templates/all"
 
 module Chem::PDB
+  private record Bond, first : Int32, second : Int32
+
   class Parser
+    @bonds = [] of Bond
     @current_atom : Atom?
     @current_chain : Chain?
     @current_record : Record
@@ -66,6 +69,7 @@ module Chem::PDB
       until next_record.name == "end"
         parse_current_record
       end
+      assign_bonds
       assign_secondary_structure
       @current_system
     end
@@ -140,6 +144,23 @@ module Chem::PDB
       @current_record.name
     end
 
+    private def assign_bonds
+      added_bonds = {} of Tuple(Int32, Int32) => Bool
+      @bonds.each do |bond|
+        atom1 = @current_system.atoms[serial: bond.first]
+        atom2 = @current_system.atoms[serial: bond.second]
+        next if added_bonds.has_key?({bond.second, bond.first}) # skip redundant bonds
+
+        # parse record duplicates as bond order
+        if existing_bond = atom1.bonds[atom2]?
+          existing_bond.order += 1
+        else
+          atom1.bonds.add atom2
+          added_bonds[{bond.first, bond.second}] = true
+        end
+      end
+    end
+
     private def assign_secondary_structure
       @ss_records.each do |rcd|
         chain = @current_system.each_chain.select { |chain| chain.id == rcd.chain }.first
@@ -174,10 +195,21 @@ module Chem::PDB
       current_residue << atom
     end
 
+    private def parse_bonds
+      serial = read_int 6..10
+      {11..15, 16..20, 21..25, 26..30}.each do |range|
+        if other = read_chars?(range, if_blank: nil)
+          @bonds << Bond.new serial, other.to_i
+        end
+      end
+    end
+
     private def parse_current_record
       case record_name
       when "atom", "hetatm"
         parse_atom_record
+      when "conect"
+        parse_bonds
       when "cryst1"
         @current_system.lattice = Lattice.new self
       when "header"
