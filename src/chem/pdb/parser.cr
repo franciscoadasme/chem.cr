@@ -82,9 +82,9 @@ module Chem::PDB
       @current_record[range]
     end
 
-    def read_chars(range : Range(Int, Int), *, if_blank replacement)
+    def read_chars(range : Range(Int, Int), *, if_blank value : T) : String | T forall T
       chars = read_chars range
-      chars.blank? ? replacement : chars
+      chars.blank? ? value : chars
     end
 
     def read_chars?(range, **options) : String?
