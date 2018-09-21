@@ -3,10 +3,9 @@ require "./record"
 require "../topology/templates/all"
 
 module Chem::PDB
-  private record Bond, first : Int32, second : Int32
-
   class Parser
-    @bonds = [] of Bond
+    @atoms_by_serial = {} of Int32 => Atom
+    @bonds = Hash(Tuple(Int32, Int32), Int32).new default_value: 0
     @current_atom : Atom?
     @current_chain : Chain?
     @current_record : Record
@@ -145,19 +144,10 @@ module Chem::PDB
     end
 
     private def assign_bonds
-      added_bonds = {} of Tuple(Int32, Int32) => Bool
-      @bonds.each do |bond|
-        atom1 = @current_system.atoms[serial: bond.first]
-        atom2 = @current_system.atoms[serial: bond.second]
-        next if added_bonds.has_key?({bond.second, bond.first}) # skip redundant bonds
-
-        # parse record duplicates as bond order
-        if existing_bond = atom1.bonds[atom2]?
-          existing_bond.order += 1
-        else
-          atom1.bonds.add atom2
-          added_bonds[{bond.first, bond.second}] = true
-        end
+      @bonds.each do |serials, bond_order|
+        atom1 = @atoms_by_serial[serials[0]]
+        atom2 = @atoms_by_serial[serials[1]]
+        atom1.bonds.add atom2, Bond::Kind.from_value(bond_order)
       end
     end
 
@@ -192,14 +182,18 @@ module Chem::PDB
       read_residue unless @current_residue.try(&.number) == read_residue_number
       atom = Atom.new self
       @current_atom = atom
+      @atoms_by_serial[atom.serial] = atom
       current_residue << atom
     end
 
     private def parse_bonds
       serial = read_int 6..10
       {11..15, 16..20, 21..25, 26..30}.each do |range|
-        if other = read_chars?(range, if_blank: nil)
-          @bonds << Bond.new serial, other.to_i
+        if other = read_chars?(range, if_blank: nil).try(&.to_i)
+          next if @bonds.has_key?({other, serial}) # skip redundant bonds
+          @bonds[{serial, other}] += 1             # parse duplicates as bond order
+        else
+          break # there are no more indices to read
         end
       end
     end
