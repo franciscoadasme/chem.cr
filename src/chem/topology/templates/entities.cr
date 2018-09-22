@@ -28,28 +28,11 @@ module Chem::Topology::Templates
   end
 
   struct Bond
-    enum Order
-      Single   = 1
-      Double   = 2
-      Triple   = 3
-      Aromatic = 4
+    getter first : String
+    getter second : String
+    getter order : Int32
 
-      def to_char : Char
-        case self
-        when Single   then '-'
-        when Double   then '='
-        when Triple   then '#'
-        when Aromatic then '@'
-        else               raise "BUG: unreachable"
-        end
-      end
-    end
-
-    getter first : AtomType
-    getter second : AtomType
-    getter order : Order
-
-    def initialize(@first : AtomType, @second : AtomType, @order : Order = :single)
+    def initialize(@first : String, @second : String, @order : Int = 1)
     end
 
     def ==(other : Bond) : Bool
@@ -59,11 +42,20 @@ module Chem::Topology::Templates
     end
 
     def includes?(atom_name : String) : Bool
-      @first.name == atom_name || @second.name == atom_name
+      @first == atom_name || @second == atom_name
     end
 
     def includes?(atom_t : AtomType) : Bool
-      @first == atom_t || @second == atom_t
+      includes? atom_t.name
+    end
+
+    def to_char : Char
+      case @order
+      when 1 then '-'
+      when 2 then '='
+      when 3 then '#'
+      else        raise "BUG: unreachable"
+      end
     end
   end
 

@@ -124,21 +124,17 @@ module Chem::Topology::Templates
       atom_type?(name) || fatal "Unknown atom type #{name}"
     end
 
-    private def add_bond(atom_name : String,
-                         other : String,
-                         order : Bond::Order = :single)
-      add_bond atom_type!(atom_name), atom_type!(other), order
+    private def add_bond(atom_name : String, other : String, order : Int = 1)
+      bond = @bonds.find { |bond| bond.includes?(atom_name) && bond.includes?(other) }
+      if bond && bond.order != order
+        fatal "Bond #{atom_name}#{bond.to_char}#{other} already exists"
+      elsif bond.nil?
+        @bonds << Bond.new atom_name, other, order
+      end
     end
 
-    private def add_bond(atom_t : AtomType,
-                         other : AtomType,
-                         order : Bond::Order = :single)
-      bond = @bonds.find { |bond| bond.includes?(atom_t) && bond.includes?(other) }
-      if bond && bond.order != order
-        fatal "Bond #{atom_t.name}#{bond.order.to_char}#{other.name} already exists"
-      elsif bond.nil?
-        @bonds << Bond.new atom_t, other, order
-      end
+    private def add_bond(atom_t : AtomType, other : AtomType, order : Int = 1)
+      add_bond atom_t.name, other.name, order
     end
 
     private def add_missing_hydrogens
@@ -193,12 +189,11 @@ module Chem::Topology::Templates
       end
     end
 
-    private def parse_bond(char : Char) : Bond::Order
+    private def parse_bond(char : Char) : Int32
       case char
-      when '-' then Bond::Order::Single
-      when '=' then Bond::Order::Double
-      when '#' then Bond::Order::Triple
-      when '@' then Bond::Order::Aromatic
+      when '-' then 1
+      when '=' then 2
+      when '#' then 3
       else          parse_exception "Unknown bond order \"#{char}\""
       end
     end
