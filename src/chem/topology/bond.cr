@@ -15,6 +15,18 @@ module Chem
     def initialize(@first, @second, @kind : Kind = :single)
     end
 
+    def initialize(first, second, order : Int32)
+      initialize first, second, Kind.from_value(order)
+    end
+
+    def [](index : Int32) : Atom
+      case index
+      when 0 then @first
+      when 1 then @second
+      else        raise IndexError.new
+      end
+    end
+
     def ==(other : self)
       return true if @first == other.first && @second == other.second
       @first == other.second && @second == other.first
