@@ -6,7 +6,9 @@ module Chem
 
     property chain : Chain
     property name : String
+    property next : Residue?
     property number : Int32
+    property previous : Residue?
     property secondary_structure : Protein::SecondaryStructure = :none
 
     def initialize(@name : String, @number : Int32, @chain : Chain)

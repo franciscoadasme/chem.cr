@@ -12,6 +12,10 @@ module Chem
     end
 
     def <<(residue : Residue)
+      if prev_res = @residues.last?
+        residue.previous = prev_res
+        prev_res.next = residue
+      end
       @residues << residue
     end
 
