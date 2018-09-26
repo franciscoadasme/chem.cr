@@ -44,6 +44,17 @@ module Chem::Topology::Templates
       @first == other.second && @second == other.first
     end
 
+    def [](index : Int32) : String
+      case index
+      when 0
+        @first
+      when 1
+        @second
+      else
+        raise IndexError.new
+      end
+    end
+
     def includes?(atom_name : String) : Bool
       @first == atom_name || @second == atom_name
     end
