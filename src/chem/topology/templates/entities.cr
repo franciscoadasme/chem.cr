@@ -18,6 +18,13 @@ module Chem::Topology::Templates
       name[@element.symbol.size..-1]
     end
 
+    def to_s(io : ::IO)
+      io << @name
+      io << '(' << @valence << ')' unless @valence == nominal_valence
+      io << (@formal_charge > 0 ? '+' : '-') unless @formal_charge == 0
+      io << @formal_charge.abs if @formal_charge.abs > 1
+    end
+
     private def nominal_valence : Int32
       @element.valence + @formal_charge
     end

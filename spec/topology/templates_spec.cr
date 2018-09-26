@@ -4,6 +4,25 @@ alias Templates = Chem::Topology::Templates
 alias TemplateBuilder = Chem::Topology::Templates::Builder
 alias TemplateError = Chem::Topology::Templates::Error
 
+describe Chem::Topology::Templates::AtomType do
+  describe "#to_s" do
+    it "returns atom name" do
+      Templates::AtomType.new("CA").to_s.should eq "CA"
+    end
+
+    it "returns atom name plus charge sign when charge is not zero" do
+      Templates::AtomType.new("NZ", formal_charge: 1).to_s.should eq "NZ+"
+      Templates::AtomType.new("OE1", formal_charge: -1).to_s.should eq "OE1-"
+      Templates::AtomType.new("NA", formal_charge: 2).to_s.should eq "NA+2"
+      Templates::AtomType.new("UK", formal_charge: -5).to_s.should eq "UK-5"
+    end
+
+    it "returns atom name plus valence when its not nominal" do
+      Templates::AtomType.new("SG", valence: 1).to_s.should eq "SG(1)"
+    end
+  end
+end
+
 describe Chem::Topology::Templates::Builder do
   describe ".build" do
     bb_names = ["N", "H", "CA", "HA", "C", "O"]
