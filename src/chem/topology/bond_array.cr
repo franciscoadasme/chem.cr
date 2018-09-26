@@ -39,6 +39,10 @@ module Chem
       add Bond.new @atom, other, kind
     end
 
+    def add(other : Atom, order : Int32 = 1)
+      add Bond.new @atom, other, order
+    end
+
     def delete(other : Atom)
       if bond = self[other]?
         delete bond
