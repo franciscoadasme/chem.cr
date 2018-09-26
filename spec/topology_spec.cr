@@ -372,3 +372,51 @@ describe Chem::System do
     end
   end
 end
+
+describe Chem::Topology do
+  describe "#assign_bonds_from_template" do
+    it "works" do
+      system = fake_system
+      r1, r2, r3 = system.residues
+
+      Chem::Topology.assign_bonds_from_templates system
+
+      r1.atoms["N"].bonded_atoms.map(&.name).should eq ["CA"]
+
+      r1.atoms["N"].bonds[r1.atoms["CA"]].order.should eq 1
+      r1.atoms["CA"].bonds[r1.atoms["C"]].order.should eq 1
+      r1.atoms["C"].bonds[r1.atoms["O"]].order.should eq 2
+      r1.atoms["CA"].bonds[r1.atoms["CB"]].order.should eq 1
+      r1.atoms["CB"].bonds[r1.atoms["CG"]].order.should eq 1
+      r1.atoms["CG"].bonds[r1.atoms["CD"]].order.should eq 1
+      r1.atoms["CD"].bonds[r1.atoms["OE1"]].order.should eq 2
+      r1.atoms["CD"].bonds[r1.atoms["OE2"]].order.should eq 1
+
+      r1.atoms["C"].bonded_atoms.map(&.name).should eq ["CA", "O", "N"]
+      r2.atoms["N"].bonded_atoms.map(&.name).should eq ["C", "CA"]
+
+      r2.atoms["N"].bonds[r2.atoms["CA"]].order.should eq 1
+      r2.atoms["CA"].bonds[r2.atoms["C"]].order.should eq 1
+      r2.atoms["C"].bonds[r2.atoms["O"]].order.should eq 2
+      r2.atoms["CA"].bonds[r2.atoms["CB"]].order.should eq 1
+      r2.atoms["CB"].bonds[r2.atoms["CG"]].order.should eq 1
+      r2.atoms["CG"].bonds[r2.atoms["CD1"]].order.should eq 2
+      r2.atoms["CD1"].bonds[r2.atoms["CE1"]].order.should eq 1
+      r2.atoms["CE1"].bonds[r2.atoms["CZ"]].order.should eq 2
+      r2.atoms["CZ"].bonds[r2.atoms["CE2"]].order.should eq 1
+      r2.atoms["CE2"].bonds[r2.atoms["CD2"]].order.should eq 2
+      r2.atoms["CD2"].bonds[r2.atoms["CG"]].order.should eq 1
+
+      r2.atoms["C"].bonded_atoms.map(&.name).should eq ["CA", "O"]
+      r3.atoms["N"].bonded_atoms.map(&.name).should eq ["CA"]
+
+      r3.atoms["N"].bonds[r3.atoms["CA"]].order.should eq 1
+      r3.atoms["CA"].bonds[r3.atoms["C"]].order.should eq 1
+      r3.atoms["C"].bonds[r3.atoms["O"]].order.should eq 2
+      r3.atoms["CA"].bonds[r3.atoms["CB"]].order.should eq 1
+      r3.atoms["CB"].bonds[r3.atoms["OG"]].order.should eq 1
+
+      r3.atoms["C"].bonded_atoms.map(&.name).should eq ["CA", "O"]
+    end
+  end
+end
