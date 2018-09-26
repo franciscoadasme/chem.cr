@@ -27,9 +27,7 @@ module Chem::Topology::Templates
     TEMPLATES[code]?
   end
 
-  build_method aminoacid, kind: protein do
-    builder.backbone
-  end
+  build_method aminoacid, kind: protein
   build_method residue, kind: other
   build_method solvent
 end

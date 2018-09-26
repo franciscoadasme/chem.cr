@@ -32,8 +32,6 @@ describe Chem::Topology::Templates::Builder do
         name "Glycine"
         code "Gly"
         symbol 'G'
-
-        backbone
         remove_atom "HA"
       end
 
@@ -47,7 +45,6 @@ describe Chem::Topology::Templates::Builder do
         name "Alanine"
         code "ALA"
         symbol 'A'
-        backbone
         sidechain "CB"
       end
 
@@ -61,7 +58,6 @@ describe Chem::Topology::Templates::Builder do
         name "Isoleucine"
         code "ILE"
         symbol 'I'
-        backbone
         sidechain do
           main "CB-CG1-CD1"
           branch "CB-CG2"
@@ -80,7 +76,6 @@ describe Chem::Topology::Templates::Builder do
         name "Lysine"
         code "LYS"
         symbol 'K'
-        backbone
         sidechain "CB-CG-CD-CE-NZ+"
       end
 
@@ -96,7 +91,6 @@ describe Chem::Topology::Templates::Builder do
         name "Aspartate"
         code "ASP"
         symbol 'D'
-        backbone
         sidechain do
           main "CB-CG=OE1"
           branch "CG-OE2-"
@@ -114,7 +108,6 @@ describe Chem::Topology::Templates::Builder do
         name "Arginine"
         code "ARG"
         symbol 'R'
-        backbone
         sidechain do
           main "CB-CG-CD-NE-CZ-NH1"
           branch "CZ=NH2+"
@@ -134,8 +127,6 @@ describe Chem::Topology::Templates::Builder do
         name "Histidine"
         code "HIS"
         symbol 'H'
-
-        backbone
         sidechain do
           main "CB-CG"
           cycle "CG=CD2-NE2=CE1-ND1"
@@ -154,8 +145,6 @@ describe Chem::Topology::Templates::Builder do
         name "Histidine"
         code "HIS"
         symbol 'H'
-
-        backbone
         sidechain do
           main "CB-CG"
           cycle "CG-ND1-CE1=NE2-CD2="
@@ -174,8 +163,6 @@ describe Chem::Topology::Templates::Builder do
         name "Tryptophan"
         code "TRP"
         symbol 'W'
-
-        backbone
         sidechain do
           main "CB-CG"
           cycle "CG=CD1-NE1-CE2=CD2"
@@ -195,8 +182,6 @@ describe Chem::Topology::Templates::Builder do
         name "Proline"
         code "PRO"
         symbol 'P'
-
-        backbone
         remove_atom "H"
         sidechain do
           cycle "CA-CB-CG-CD-N"
@@ -215,8 +200,6 @@ describe Chem::Topology::Templates::Builder do
         name "Cysteine"
         code "CYX"
         symbol 'C'
-
-        backbone
         sidechain "CB-SG(1)"
       end
 
@@ -275,12 +258,6 @@ describe Chem::Topology::Templates::Builder do
       msg = "Branch must start with an existing atom type, got CB"
       expect_raises TemplateError, msg do
         TemplateBuilder.build(:protein) { branch "CB-CG2" }
-      end
-    end
-
-    it "fails when adding sidechain without backbone" do
-      expect_raises TemplateError, "Backbone must be added before sidechain" do
-        TemplateBuilder.build(:protein) { sidechain "CB-CG" }
       end
     end
   end

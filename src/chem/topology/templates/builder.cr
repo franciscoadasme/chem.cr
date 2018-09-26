@@ -16,27 +16,13 @@ module Chem::Topology::Templates
     @symbol : Char?
 
     def initialize(@kind : Residue::Kind = :other)
+      setup
     end
 
     def self.build(kind : Residue::Kind = :other) : Residue
       builder = Builder.new kind
       with builder yield
       builder.build
-    end
-
-    def backbone
-      fatal "Backbone is only valid for protein residues" unless @kind.protein?
-      fatal "Backbone must be added first" unless @atom_types.empty?
-      atom_type "N"
-      atom_type "H"
-      atom_type "CA"
-      atom_type "HA"
-      atom_type "C"
-      atom_type "O"
-      parse_spec "N-CA-C=O"
-      add_bond "N", "H"
-      add_bond "CA", "HA"
-      link_adjacent_by "C-N"
     end
 
     def branch(spec : String)
@@ -94,7 +80,6 @@ module Chem::Topology::Templates
 
     def sidechain
       fatal "Sidechain is only valid for protein residues" unless @kind.protein?
-      fatal "Backbone must be added before sidechain" if @atom_types.empty?
       with self yield
     end
 
@@ -241,6 +226,22 @@ module Chem::Topology::Templates
 
     private def root(spec : String) : String
       spec[/#{ATOM_NAME_PATTERN}/]
+    end
+
+    private def setup
+      case @kind
+      when .protein?
+        atom_type "N"
+        atom_type "H"
+        atom_type "CA"
+        atom_type "HA"
+        atom_type "C"
+        atom_type "O"
+        parse_spec "N-CA-C=O"
+        add_bond "N", "H"
+        add_bond "CA", "HA"
+        link_adjacent_by "C-N"
+      end
     end
   end
 end
