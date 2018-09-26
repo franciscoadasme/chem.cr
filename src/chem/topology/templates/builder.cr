@@ -45,14 +45,14 @@ module Chem::Topology::Templates
     end
 
     def build : Residue
-      fatal "Missing residue name" unless @name
+      fatal "Missing residue name" unless (name = @name)
       fatal "Missing residue code" if @codes.empty?
       fatal "Missing residue atom names" if @atom_types.empty?
 
       add_missing_hydrogens
       check_valences!
 
-      Residue.new @name.not_nil!, @codes.first, @symbol, @kind, @atom_types, @bonds
+      Residue.new name, @codes.first, @symbol, @kind, @atom_types, @bonds, @link_bond
     end
 
     def code(code : String)
