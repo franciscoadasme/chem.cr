@@ -206,6 +206,20 @@ describe Chem::Topology::Templates::Builder do
       residue.formal_charge.should eq 0
     end
 
+    it "builds a polymer residue" do
+      residue_t = TemplateBuilder.build(:other) do
+        name "Fake"
+        code "UNK"
+        main "C1-C2-C3"
+        link_adjacent_by "C3=C1"
+      end
+
+      residue_t.atom_names.should eq ["C1", "H1", "C2", "H21", "H22", "C3", "H3"]
+      residue_t.bonds.size.should eq 6
+      residue_t.monomer?.should be_true
+      residue_t.link_bond.should eq Templates::Bond.new("C3", "C1", 2)
+    end
+
     it "fails when adding the same bond twice with different order" do
       # #cycle connects the first and last atoms with a single bond unless there is a
       # bond char (-, =, # or @) at the end. In this case, both CE2=CD2 and CD2-CE2 are

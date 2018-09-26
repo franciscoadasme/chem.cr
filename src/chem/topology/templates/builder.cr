@@ -2,13 +2,16 @@ module Chem::Topology::Templates
   class Builder
     class ParseException < Error; end
 
-    ATOM_NAME_REGEX = /(?<name>[A-Z]{1,2}[0-9]{0,2})(?<charge>\+|-)?(\((?<valence>\d)\))?/
-    BOND_PATTERN    = "[-=#@]"
-    BOND_SEP        = /(?<=[A-Z0-9])#{BOND_PATTERN}(?=[A-Z0-9])/
+    ATOM_NAME_PATTERN  = "[A-Z]{1,2}[0-9]{0,2}"
+    ATOM_SEP_REGEX     = /(?<=[A-Z0-9])#{BOND_ORDER_PATTERN}(?=[A-Z0-9])/
+    ATOM_SPEC_REGEX    = /(#{ATOM_NAME_PATTERN})(\+|-)?(\((\d)\))?/
+    BOND_ORDER_PATTERN = "[-=#]"
+    BOND_REGEX         = /(#{ATOM_NAME_PATTERN})(#{BOND_ORDER_PATTERN})(#{ATOM_NAME_PATTERN})/
 
     @atom_types = [] of AtomType
     @bonds = [] of Bond
     @codes = [] of String
+    @link_bond : Bond?
     @name : String?
     @symbol : Char?
 
@@ -24,15 +27,16 @@ module Chem::Topology::Templates
     def backbone
       fatal "Backbone is only valid for protein residues" unless @kind.protein?
       fatal "Backbone must be added first" unless @atom_types.empty?
-      atom_type "N", terminal: true
+      atom_type "N"
       atom_type "H"
       atom_type "CA"
       atom_type "HA"
-      atom_type "C", terminal: true
+      atom_type "C"
       atom_type "O"
       parse_spec "N-CA-C=O"
-      parse_spec "N-H"
-      parse_spec "CA-HA"
+      add_bond "N", "H"
+      add_bond "CA", "HA"
+      link_adjacent_by "C-N"
     end
 
     def branch(spec : String)
@@ -65,8 +69,12 @@ module Chem::Topology::Templates
 
     def cycle(spec : String)
       check_root! "cycle", spec
-      spec += '-' unless /#{BOND_PATTERN}$/ =~ spec
+      spec += '-' unless /#{BOND_ORDER_PATTERN}$/ =~ spec
       parse_spec "#{spec}#{root spec}"
+    end
+
+    def link_adjacent_by(spec : String)
+      @link_bond = parse_bond spec
     end
 
     def main(spec : String)
@@ -176,20 +184,35 @@ module Chem::Topology::Templates
     end
 
     private def missing_bonds(atom_t : AtomType) : Int32
-      atom_t.valence - @bonds.each.select(&.includes?(atom_t)).map(&.order.to_i).sum
+      valence = atom_t.valence
+      if bond = @link_bond
+        valence -= bond.order if bond.includes?(atom_t)
+      end
+      valence - @bonds.each.select(&.includes?(atom_t.name)).map(&.order).sum
     end
 
     private def parse_atom(spec : String) : AtomType
-      if ATOM_NAME_REGEX =~ spec
-        atom_type $~["name"],
-          formal_charge: parse_charge($~["charge"]?),
-          valence: $~["valence"]?.try(&.to_i)
+      if spec =~ ATOM_SPEC_REGEX
+        atom_type name: $~[1],
+          formal_charge: parse_charge($~[2]?),
+          valence: $~[4]?.try(&.to_i)
       else
         parse_exception "Invalid atom specification \"#{spec}\""
       end
     end
 
-    private def parse_bond(char : Char) : Int32
+    private def parse_bond(spec : String)
+      if spec =~ BOND_REGEX
+        _, atom_name, bond_str, other = $~
+        atom_type! atom_name
+        atom_type! other
+        Bond.new atom_name, other, parse_bond_order(bond_str[0])
+      else
+        parse_exception "Invalid bond specification \"#{spec}\""
+      end
+    end
+
+    private def parse_bond_order(char : Char) : Int32
       case char
       when '-' then 1
       when '=' then 2
@@ -208,13 +231,13 @@ module Chem::Topology::Templates
     end
 
     private def parse_spec(spec : String) : Nil
-      atom_specs = spec.split BOND_SEP
-      bond_chars = spec.scan(BOND_SEP).map(&.[0]).map &.[0]
+      atom_specs = spec.split ATOM_SEP_REGEX
+      bond_chars = spec.scan(ATOM_SEP_REGEX).map(&.[0]).map &.[0]
       parse_exception "Invalid specification" if bond_chars.size != atom_specs.size - 1
 
       atom_types = atom_specs.map { |spec| parse_atom spec }
       bond_chars.each_with_index do |bond_char, i|
-        add_bond atom_types[i], atom_types[i + 1], parse_bond(bond_char)
+        add_bond atom_types[i], atom_types[i + 1], parse_bond_order(bond_char)
       end
     end
 

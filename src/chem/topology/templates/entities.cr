@@ -5,13 +5,11 @@ module Chem::Topology::Templates
     getter element : PeriodicTable::Element
     getter formal_charge : Int32
     getter name : String
-    getter? terminal : Bool
     getter valence : Int32
 
     def initialize(@name : String,
                    @formal_charge : Int32 = 0,
-                   valence : Int32? = nil,
-                   @terminal : Bool = false)
+                   valence : Int32? = nil)
       @element = PeriodicTable.element atom_name: name
       @valence = valence || nominal_valence
     end
@@ -21,9 +19,7 @@ module Chem::Topology::Templates
     end
 
     private def nominal_valence : Int32
-      valence = @element.valence + @formal_charge
-      valence -= 1 if terminal?
-      valence
+      @element.valence + @formal_charge
     end
   end
 
@@ -73,6 +69,7 @@ module Chem::Topology::Templates
 
     getter code : String
     getter kind : Kind
+    getter link_bond : Bond?
     getter name : String
     getter symbol : Char?
 
@@ -81,7 +78,8 @@ module Chem::Topology::Templates
                    @symbol : Char?,
                    @kind : Kind,
                    atom_types : Array(AtomType),
-                   bonds : Array(Bond))
+                   bonds : Array(Bond),
+                   @link_bond : Bond? = nil)
       @atom_types = atom_types.dup
       @bonds = bonds.dup
     end
@@ -104,6 +102,10 @@ module Chem::Topology::Templates
 
     def formal_charge : Int32
       @atom_types.each.map(&.formal_charge).sum
+    end
+
+    def monomer? : Bool
+      !link_bond.nil?
     end
   end
 end
