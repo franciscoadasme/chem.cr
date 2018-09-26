@@ -242,7 +242,7 @@ module Chem::Topology::Templates
     end
 
     private def root(spec : String) : String
-      spec[/[A-Z0-9]+/]
+      spec[/#{ATOM_NAME_PATTERN}/]
     end
   end
 end
