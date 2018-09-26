@@ -170,11 +170,9 @@ module Chem::Topology::Templates
 
     private def check_valences!
       @atom_types.each do |atom_t|
-        count = missing_bonds atom_t
-        next if count == 0
-        name = atom_t.name
-        name += (atom_t.formal_charge > 0 ? '+' : '-') if atom_t.formal_charge != 0
-        fatal "atom type #{name} has incorrect valence (#{atom_t.valence - count}), " \
+        num = missing_bonds atom_t
+        next if num == 0
+        fatal "Atom type #{atom_t} has incorrect valence (#{atom_t.valence - num}), " \
               "expected #{atom_t.valence}"
       end
     end

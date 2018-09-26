@@ -257,7 +257,8 @@ describe Chem::Topology::Templates::Builder do
     end
 
     it "fails on incorrect valence" do
-      expect_raises TemplateError, "incorrect valence" do
+      msg = "Atom type CG has incorrect valence (5), expected 4"
+      expect_raises TemplateError, msg do
         TemplateBuilder.build(:protein) do
           name "Tryptophan"
           code "TRP"
