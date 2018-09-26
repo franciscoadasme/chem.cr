@@ -11,8 +11,16 @@ module Chem
       self[serial: serial]? || raise IndexError.new
     end
 
+    def [](name : String) : Atom?
+      self[name: name]? || raise KeyError.new
+    end
+
     def []?(*, serial : Int) : Atom?
       find &.serial.==(serial)
+    end
+
+    def []?(name : String) : Atom?
+      find &.name.==(name)
     end
 
     def each_chain : Iterator(Chain)
