@@ -34,6 +34,10 @@ module Chem
       @serial = @index + 1
     end
 
+    def bonded_atoms : Array(Atom)
+      bonds.map &.other(self)
+    end
+
     def valence : Int32
       @element.valence + @charge
     end
