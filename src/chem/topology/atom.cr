@@ -30,7 +30,7 @@ module Chem
                    @charge : Int32 = 0,
                    @occupancy : Float64 = 1,
                    @temperature_factor : Float64 = 0)
-      @element = element || PeriodicTable.element atom_name: @name
+      @element = element || PeriodicTable[atom_name: @name]
       @serial = @index + 1
     end
 

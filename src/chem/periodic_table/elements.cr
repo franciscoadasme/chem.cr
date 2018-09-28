@@ -1,123 +1,454 @@
-require "./element"
+require "./macros"
 
-# TODO add missing valences
-module Chem::PeriodicTable::Elements
-  H   = Element.new 1, "Hydrogen", "H", mass: 1.0079, valence: 1
-  He  = Element.new 2, "Helium", "He", mass: 4.0026, valence: 0
-  Li  = Element.new 3, "Lithium", "Li", mass: 6.941
-  Be  = Element.new 4, "Beryllium", "Be", mass: 9.0122
-  B   = Element.new 5, "Boron", "B", mass: 10.811
-  C   = Element.new 6, "Carbon", "C", mass: 12.0107, valence: 4
-  N   = Element.new 7, "Nitrogen", "N", mass: 14.0067, valence: 3
-  O   = Element.new 8, "Oxygen", "O", mass: 15.9994, valence: 2
-  F   = Element.new 9, "Fluorine", "F", mass: 18.9984, valence: 1
-  Ne  = Element.new 10, "Neon", "Ne", mass: 20.1797
-  Na  = Element.new 11, "Sodium", "Na", mass: 22.9898, valence: 1
-  Mg  = Element.new 12, "Magnesium", "Mg", mass: 24.305
-  Al  = Element.new 13, "Aluminum", "Al", mass: 26.9815
-  Si  = Element.new 14, "Silicon", "Si", mass: 28.0855
-  P   = Element.new 15, "Phosphorus", "P", mass: 30.9738, valence: 5
-  S   = Element.new 16, "Sulfur", "S", mass: 32.065, valence: 2
-  Cl  = Element.new 17, "Chlorine", "Cl", mass: 35.453, valence: 1
-  Ar  = Element.new 18, "Argon", "Ar", mass: 39.948
-  K   = Element.new 19, "Potassium", "K", mass: 39.0983, valence: 1
-  Ca  = Element.new 20, "Calcium", "Ca", mass: 40.078, valence: 1
-  Sc  = Element.new 21, "Scandium", "Sc", mass: 44.9559
-  Ti  = Element.new 22, "Titanium", "Ti", mass: 47.867
-  V   = Element.new 23, "Vanadium", "V", mass: 50.9415
-  Cr  = Element.new 24, "Chromium", "Cr", mass: 51.9961
-  Mn  = Element.new 25, "Manganese", "Mn", mass: 54.938
-  Fe  = Element.new 26, "Iron", "Fe", mass: 55.845
-  Co  = Element.new 27, "Cobalt", "Co", mass: 58.9331
-  Ni  = Element.new 28, "Nickel", "Ni", mass: 58.6934
-  Cu  = Element.new 29, "Copper", "Cu", mass: 63.546
-  Zn  = Element.new 30, "Zinc", "Zn", mass: 65.409
-  Ga  = Element.new 31, "Gallium", "Ga", mass: 69.723
-  Ge  = Element.new 32, "Germanium", "Ge", mass: 72.64
-  As  = Element.new 33, "Arsenic", "As", mass: 74.9216
-  Se  = Element.new 34, "Selenium", "Se", mass: 78.96
-  Br  = Element.new 35, "Bromine", "Br", mass: 79.904, valence: 1
-  Kr  = Element.new 36, "Krypton", "Kr", mass: 83.798
-  Rb  = Element.new 37, "Rubidium", "Rb", mass: 85.4678
-  Sr  = Element.new 38, "Strontium", "Sr", mass: 87.62
-  Y   = Element.new 39, "Yttrium", "Y", mass: 88.9059
-  Zr  = Element.new 40, "Zirconium", "Zr", mass: 91.224
-  Nb  = Element.new 41, "Niobium", "Nb", mass: 92.9064
-  Mo  = Element.new 42, "Molybdenum", "Mo", mass: 95.94
-  Tc  = Element.new 43, "Technetium", "Tc", mass: 98
-  Ru  = Element.new 44, "Ruthenium", "Ru", mass: 101.07
-  Rh  = Element.new 45, "Rhodium", "Rh", mass: 102.9055
-  Pd  = Element.new 46, "Palladium", "Pd", mass: 106.42
-  Ag  = Element.new 47, "Silver", "Ag", mass: 107.8682
-  Cd  = Element.new 48, "Cadmium", "Cd", mass: 112.411
-  In  = Element.new 49, "Indium", "In", mass: 114.818
-  Sn  = Element.new 50, "Tin", "Sn", mass: 118.71
-  Sb  = Element.new 51, "Antimony", "Sb", mass: 121.76
-  Te  = Element.new 52, "Tellurium", "Te", mass: 127.6
-  I   = Element.new 53, "Iodine", "I", mass: 126.9045, valence: 1
-  Xe  = Element.new 54, "Xenon", "Xe", mass: 131.293
-  Cs  = Element.new 55, "Cesium", "Cs", mass: 132.9055
-  Ba  = Element.new 56, "Barium", "Ba", mass: 137.327
-  La  = Element.new 57, "Lanthanum", "La", mass: 138.9055
-  Ce  = Element.new 58, "Cerium", "Ce", mass: 140.116
-  Pr  = Element.new 59, "Praseodymium", "Pr", mass: 140.9077
-  Nd  = Element.new 60, "Neodymium", "Nd", mass: 144.242
-  Pm  = Element.new 61, "Promethium", "Pm", mass: 145
-  Sm  = Element.new 62, "Samarium", "Sm", mass: 150.36
-  Eu  = Element.new 63, "Europium", "Eu", mass: 151.964
-  Gd  = Element.new 64, "Gadolinium", "Gd", mass: 157.25
-  Tb  = Element.new 65, "Terbium", "Tb", mass: 158.9254
-  Dy  = Element.new 66, "Dysprosium", "Dy", mass: 162.5
-  Ho  = Element.new 67, "Holmium", "Ho", mass: 164.9303
-  Er  = Element.new 68, "Erbium", "Er", mass: 167.259
-  Tm  = Element.new 69, "Thulium", "Tm", mass: 168.9342
-  Yb  = Element.new 70, "Ytterbium", "Yb", mass: 173.04
-  Lu  = Element.new 71, "Lutetium", "Lu", mass: 174.967
-  Hf  = Element.new 72, "Hafnium", "Hf", mass: 178.49
-  Ta  = Element.new 73, "Tantalum", "Ta", mass: 180.9479
-  W   = Element.new 74, "Tungsten", "W", mass: 183.84
-  Re  = Element.new 75, "Rhenium", "Re", mass: 186.207
-  Os  = Element.new 76, "Osmium", "Os", mass: 190.23
-  Ir  = Element.new 77, "Iridium", "Ir", mass: 192.217
-  Pt  = Element.new 78, "Platinum", "Pt", mass: 195.084
-  Au  = Element.new 79, "Gold", "Au", mass: 196.9666
-  Hg  = Element.new 80, "Mercury", "Hg", mass: 200.59
-  Tl  = Element.new 81, "Thallium", "Tl", mass: 204.3833
-  Pb  = Element.new 82, "Lead", "Pb", mass: 207.2
-  Bi  = Element.new 83, "Bismuth", "Bi", mass: 208.9804
-  Po  = Element.new 84, "Polonium", "Po", mass: 209
-  At  = Element.new 85, "Astatine", "At", mass: 210
-  Rn  = Element.new 86, "Radon", "Rn", mass: 222
-  Fr  = Element.new 87, "Francium", "Fr", mass: 223
-  Ra  = Element.new 88, "Radium", "Ra", mass: 226
-  Ac  = Element.new 89, "Actinium", "Ac", mass: 227
-  Th  = Element.new 90, "Thorium", "Th", mass: 232.0381
-  Pa  = Element.new 91, "Proactinium", "Pa", mass: 231.0359
-  U   = Element.new 92, "Uranium", "U", mass: 238.0289
-  Np  = Element.new 93, "Neptunium", "Np", mass: 237
-  Pu  = Element.new 94, "Plutonium", "Pu", mass: 244
-  Am  = Element.new 95, "Americium", "Am", mass: 243
-  Cm  = Element.new 96, "Curium", "Cm", mass: 247
-  Bk  = Element.new 97, "Berkelium", "Bk", mass: 247
-  Cf  = Element.new 98, "Californium", "Cf", mass: 251
-  Es  = Element.new 99, "Einsteinium", "Es", mass: 252
-  Fm  = Element.new 100, "Fermium", "Fm", mass: 257
-  Md  = Element.new 101, "Mendelevium", "Md", mass: 258
-  No  = Element.new 102, "Nobelium", "No", mass: 259
-  Lr  = Element.new 103, "Lawrencium", "Lr", mass: 262
-  Rf  = Element.new 104, "Rutherfordium", "Rf", mass: 261
-  Db  = Element.new 105, "Dubnium", "Db", mass: 262
-  Sg  = Element.new 106, "Seaborgium", "Sg", mass: 266
-  Bh  = Element.new 107, "Bohrium", "Bh", mass: 264
-  Hs  = Element.new 108, "Hassium", "Hs", mass: 277
-  Mt  = Element.new 109, "Meitnerium", "Mt", mass: 268
-  Ds  = Element.new 110, "Darmstadtium", "Ds", mass: 281
-  Rg  = Element.new 111, "Roentgenium", "Rg", mass: 272
-  Cn  = Element.new 112, "Copernicium", "Cn", mass: 285
-  Uut = Element.new 113, "Ununtrium", "Uut", mass: 284
-  Uuq = Element.new 114, "Ununquadium", "Uuq", mass: 289
-  Uup = Element.new 115, "Ununpentium", "Uup", mass: 288
-  Uuh = Element.new 116, "Ununhexium", "Uuh", mass: 292
-  Uus = Element.new 117, "Ununseptium", "Uus", mass: 291
-  Uuo = Element.new 118, "Ununoctium", "Uuo", mass: 294
+# NOTE: Standard atom weights (in Da) are taken from Meija, J., et al., Pure Appl.
+# Chem., 2016, 88 (3), pp 265-291,
+# doi:[10.1515/pac-2015-0305](https://dx.doi.org/10.1515/pac-2015-0305)
+#
+# NOTE: Covalent radii (in Å) are taken from Cordero, B., et al., Dalton Trans., 2008,
+# 21, pp 2832-2838, doi:[10.1039/b801115j](https://dx.doi.org/10.1039/b801115j). Missing
+# values are set to 1.5 Å
+#
+# NOTE: vdW radii (in Å) are taken from Alvarez, S., Dalton Trans., 2013, 42, pp
+# 8617-8636, doi:[10.1039/c3dt50599e](https://dx.doi.org/10.1039/c3dt50599e). Missing
+# values are set to covalent radius + 0.9 Å
+module Chem::PeriodicTable
+  element H, Hydrogen,
+    covalent_radius: 0.31,
+    mass: 1.0079,
+    valence: 1,
+    vdw_radius: 1.2
+  element He, Helium,
+    covalent_radius: 0.2,
+    mass: 4.0026,
+    valence: 0,
+    vdw_radius: 1.43
+  element Li, Lithium,
+    covalent_radius: 1.28,
+    mass: 6.941,
+    vdw_radius: 2.12
+  element Be, Beryllium,
+    covalent_radius: 0.96,
+    mass: 9.0122,
+    vdw_radius: 1.98
+  element B, Boron,
+    covalent_radius: 0.84,
+    mass: 10.811,
+    vdw_radius: 1.91
+  element C, Carbon,
+    covalent_radius: 0.76,
+    mass: 12.0107,
+    valence: 4,
+    vdw_radius: 1.77
+  element N, Nitrogen,
+    covalent_radius: 0.71,
+    mass: 14.0067,
+    valence: 3,
+    vdw_radius: 1.66
+  element O, Oxygen,
+    covalent_radius: 0.66,
+    mass: 15.9994,
+    valence: 2,
+    vdw_radius: 1.5
+  element F, Fluorine,
+    covalent_radius: 0.57,
+    mass: 18.9984,
+    valence: 1,
+    vdw_radius: 1.46
+  element Ne, Neon,
+    covalent_radius: 0.5,
+    mass: 20.1797,
+    vdw_radius: 1.58
+  element Na, Sodium,
+    covalent_radius: 1.66,
+    mass: 22.9898,
+    valence: 1,
+    vdw_radius: 2.5
+  element Mg, Magnesium,
+    covalent_radius: 1.41,
+    mass: 24.305,
+    vdw_radius: 2.51
+  element Al, Aluminum,
+    covalent_radius: 1.21,
+    mass: 26.9815,
+    vdw_radius: 2.25
+  element Si, Silicon,
+    covalent_radius: 1.11,
+    mass: 28.0855,
+    vdw_radius: 2.19
+  element P, Phosphorus,
+    covalent_radius: 1.07,
+    mass: 30.9738,
+    valence: 5,
+    vdw_radius: 1.9
+  element S, Sulfur,
+    covalent_radius: 1.05,
+    mass: 32.065,
+    valence: 2,
+    vdw_radius: 1.89
+  element Cl, Chlorine,
+    covalent_radius: 1.02,
+    mass: 35.453,
+    valence: 1,
+    vdw_radius: 1.82
+  element Ar, Argon,
+    covalent_radius: 1.06,
+    mass: 39.948,
+    vdw_radius: 1.83
+  element K, Potassium,
+    covalent_radius: 2.03,
+    mass: 39.0983,
+    valence: 1,
+    vdw_radius: 2.73
+  element Ca, Calcium,
+    covalent_radius: 1.76,
+    mass: 40.078,
+    valence: 1,
+    vdw_radius: 2.62
+  element Sc, Scandium,
+    covalent_radius: 1.70,
+    mass: 44.9559,
+    vdw_radius: 2.58
+  element Ti, Titanium,
+    covalent_radius: 1.60,
+    mass: 47.867,
+    vdw_radius: 2.46
+  element V, Vanadium,
+    covalent_radius: 1.53,
+    mass: 50.9415,
+    vdw_radius: 2.42
+  element Cr, Chromium,
+    covalent_radius: 1.39,
+    mass: 51.9961,
+    vdw_radius: 2.45
+  element Mn, Manganese,
+    covalent_radius: 1.61,
+    mass: 54.938,
+    vdw_radius: 2.45
+  element Fe, Iron,
+    covalent_radius: 1.52,
+    mass: 55.845,
+    vdw_radius: 2.44
+  element Co, Cobalt,
+    covalent_radius: 1.50,
+    mass: 58.9331,
+    vdw_radius: 2.4
+  element Ni, Nickel,
+    covalent_radius: 1.24,
+    mass: 58.6934,
+    vdw_radius: 2.4
+  element Cu, Copper,
+    covalent_radius: 1.32,
+    mass: 63.546,
+    vdw_radius: 2.38
+  element Zn, Zinc,
+    covalent_radius: 1.22,
+    mass: 65.409,
+    vdw_radius: 2.39
+  element Ga, Gallium,
+    covalent_radius: 1.22,
+    mass: 69.723,
+    vdw_radius: 2.32
+  element Ge, Germanium,
+    covalent_radius: 1.20,
+    mass: 72.64,
+    vdw_radius: 2.29
+  element As, Arsenic,
+    covalent_radius: 1.19,
+    mass: 74.9216,
+    vdw_radius: 1.88
+  element Se, Selenium,
+    covalent_radius: 1.20,
+    mass: 78.96,
+    vdw_radius: 1.82
+  element Br, Bromine,
+    covalent_radius: 1.20,
+    mass: 79.904,
+    valence: 1,
+    vdw_radius: 1.86
+  element Kr, Krypton,
+    covalent_radius: 1.16,
+    mass: 83.798,
+    vdw_radius: 2.25
+  element Rb, Rubidium,
+    covalent_radius: 2.20,
+    mass: 85.4678,
+    vdw_radius: 3.21
+  element Sr, Strontium,
+    covalent_radius: 1.95,
+    mass: 87.62,
+    vdw_radius: 2.84
+  element Y, Yttrium,
+    covalent_radius: 1.90,
+    mass: 88.9059,
+    vdw_radius: 2.75
+  element Zr, Zirconium,
+    covalent_radius: 1.75,
+    mass: 91.224,
+    vdw_radius: 2.52
+  element Nb, Niobium,
+    covalent_radius: 1.64,
+    mass: 92.9064,
+    vdw_radius: 2.56
+  element Mo, Molybdenum,
+    covalent_radius: 1.54,
+    mass: 95.94,
+    vdw_radius: 2.45
+  element Tc, Technetium,
+    covalent_radius: 1.47,
+    mass: 98,
+    vdw_radius: 2.44
+  element Ru, Ruthenium,
+    covalent_radius: 1.46,
+    mass: 101.07,
+    vdw_radius: 2.46
+  element Rh, Rhodium,
+    covalent_radius: 1.42,
+    mass: 102.9055,
+    vdw_radius: 2.44
+  element Pd, Palladium,
+    covalent_radius: 1.39,
+    mass: 106.42,
+    vdw_radius: 2.15
+  element Ag, Silver,
+    covalent_radius: 1.45,
+    mass: 107.8682,
+    vdw_radius: 2.53
+  element Cd, Cadmium,
+    covalent_radius: 1.44,
+    mass: 112.411,
+    vdw_radius: 2.49
+  element In, Indium,
+    covalent_radius: 1.42,
+    mass: 114.818,
+    vdw_radius: 2.43
+  element Sn, Tin,
+    covalent_radius: 1.39,
+    mass: 118.71,
+    vdw_radius: 2.42
+  element Sb, Antimony,
+    covalent_radius: 1.39,
+    mass: 121.76,
+    vdw_radius: 2.47
+  element Te, Tellurium,
+    covalent_radius: 1.38,
+    mass: 127.6,
+    vdw_radius: 1.99
+  element I, Iodine,
+    covalent_radius: 1.39,
+    mass: 126.9045,
+    valence: 1,
+    vdw_radius: 2.04
+  element Xe, Xenon,
+    covalent_radius: 1.40,
+    mass: 131.293,
+    vdw_radius: 2.06
+  element Cs, Cesium,
+    covalent_radius: 2.44,
+    mass: 132.9055,
+    vdw_radius: 3.48
+  element Ba, Barium,
+    covalent_radius: 2.15,
+    mass: 137.327,
+    vdw_radius: 3.03
+  element La, Lanthanum,
+    covalent_radius: 2.07,
+    mass: 138.9055,
+    vdw_radius: 2.98
+  element Ce, Cerium,
+    covalent_radius: 2.04,
+    mass: 140.116,
+    vdw_radius: 2.88
+  element Pr, Praseodymium,
+    covalent_radius: 2.03,
+    mass: 140.9077,
+    vdw_radius: 2.92
+  element Nd, Neodymium,
+    covalent_radius: 2.01,
+    mass: 144.242,
+    vdw_radius: 2.95
+  element Pm, Promethium,
+    covalent_radius: 1.9,
+    mass: 145
+  element Sm, Samarium,
+    covalent_radius: 1.98,
+    mass: 150.36,
+    vdw_radius: 2.9
+  element Eu, Europium,
+    covalent_radius: 1.98,
+    mass: 151.964,
+    vdw_radius: 2.87
+  element Gd, Gadolinium,
+    covalent_radius: 1.96,
+    mass: 157.25,
+    vdw_radius: 2.83
+  element Tb, Terbium,
+    covalent_radius: 1.94,
+    mass: 158.9254,
+    vdw_radius: 2.79
+  element Dy, Dysprosium,
+    covalent_radius: 1.92,
+    mass: 162.5,
+    vdw_radius: 2.87
+  element Ho, Holmium,
+    covalent_radius: 1.92,
+    mass: 164.9303,
+    vdw_radius: 2.81
+  element Er, Erbium,
+    covalent_radius: 1.89,
+    mass: 167.259,
+    vdw_radius: 2.83
+  element Tm, Thulium,
+    covalent_radius: 1.90,
+    mass: 168.9342,
+    vdw_radius: 2.79
+  element Yb, Ytterbium,
+    covalent_radius: 1.87,
+    mass: 173.04,
+    vdw_radius: 2.8
+  element Lu, Lutetium,
+    covalent_radius: 1.87,
+    mass: 174.967,
+    vdw_radius: 2.74
+  element Hf, Hafnium,
+    covalent_radius: 1.75,
+    mass: 178.49,
+    vdw_radius: 2.63
+  element Ta, Tantalum,
+    covalent_radius: 1.70,
+    mass: 180.9479,
+    vdw_radius: 2.53
+  element W, Tungsten,
+    covalent_radius: 1.62,
+    mass: 183.84,
+    vdw_radius: 2.57
+  element Re, Rhenium,
+    covalent_radius: 1.51,
+    mass: 186.207,
+    vdw_radius: 2.49
+  element Os, Osmium,
+    covalent_radius: 1.44,
+    mass: 190.23,
+    vdw_radius: 2.48
+  element Ir, Iridium,
+    covalent_radius: 1.41,
+    mass: 192.217,
+    vdw_radius: 2.41
+  element Pt, Platinum,
+    covalent_radius: 1.36,
+    mass: 195.084,
+    vdw_radius: 2.29
+  element Au, Gold,
+    covalent_radius: 1.36,
+    mass: 196.9666,
+    vdw_radius: 2.32
+  element Hg, Mercury,
+    covalent_radius: 1.32,
+    mass: 200.59,
+    vdw_radius: 2.45
+  element Tl, Thallium,
+    covalent_radius: 1.45,
+    mass: 204.3833,
+    vdw_radius: 2.47
+  element Pb, Lead,
+    covalent_radius: 1.46,
+    mass: 207.2,
+    vdw_radius: 2.6
+  element Bi, Bismuth,
+    covalent_radius: 1.48,
+    mass: 208.9804,
+    vdw_radius: 2.54
+  element Po, Polonium,
+    covalent_radius: 1.40,
+    mass: 209
+  element At, Astatine,
+    covalent_radius: 1.5,
+    mass: 210
+  element Rn, Radon,
+    covalent_radius: 1.5,
+    mass: 222
+  element Fr, Francium,
+    covalent_radius: 2.6,
+    mass: 223
+  element Ra, Radium,
+    covalent_radius: 2.21,
+    mass: 226
+  element Ac, Actinium,
+    covalent_radius: 2.15,
+    mass: 227,
+    vdw_radius: 2.8
+  element Th, Thorium,
+    covalent_radius: 2.06,
+    mass: 232.0381,
+    vdw_radius: 2.93
+  element Pa, Proactinium,
+    covalent_radius: 2.00,
+    mass: 231.0359,
+    vdw_radius: 2.88
+  element U, Uranium,
+    covalent_radius: 1.96,
+    mass: 238.0289,
+    vdw_radius: 2.71
+  element Np, Neptunium,
+    covalent_radius: 1.90,
+    mass: 237,
+    vdw_radius: 2.82
+  element Pu, Plutonium,
+    covalent_radius: 1.87,
+    mass: 244,
+    vdw_radius: 2.81
+  element Am, Americium,
+    covalent_radius: 1.80,
+    mass: 243,
+    vdw_radius: 2.83
+  element Cm, Curium,
+    covalent_radius: 1.69,
+    mass: 247,
+    vdw_radius: 3.05
+  element Bk, Berkelium,
+    mass: 247,
+    vdw_radius: 3.4
+  element Cf, Californium,
+    mass: 251,
+    vdw_radius: 3.05
+  element Es, Einsteinium,
+    mass: 252,
+    vdw_radius: 2.7
+  element Fm, Fermium,
+    mass: 257
+  element Md, Mendelevium,
+    mass: 258
+  element No, Nobelium,
+    mass: 259
+  element Lr, Lawrencium,
+    mass: 262
+  element Rf, Rutherfordium,
+    mass: 261
+  element Db, Dubnium,
+    mass: 262
+  element Sg, Seaborgium,
+    mass: 266
+  element Bh, Bohrium,
+    mass: 264
+  element Hs, Hassium,
+    mass: 277
+  element Mt, Meitnerium,
+    mass: 268
+  element Ds, Darmstadtium,
+    mass: 281
+  element Rg, Roentgenium,
+    mass: 272
+  element Cn, Copernicium,
+    mass: 285
+  element Uut, Ununtrium,
+    mass: 284
+  element Uuq, Ununquadium,
+    mass: 289
+  element Uup, Ununpentium,
+    mass: 288
+  element Uuh, Ununhexium,
+    mass: 292
+  element Uus, Ununseptium,
+    mass: 291
+  element Uuo, Ununoctium,
+    mass: 294
 end

@@ -10,7 +10,7 @@ module Chem::Topology::Templates
     def initialize(@name : String,
                    @formal_charge : Int32 = 0,
                    valence : Int32? = nil)
-      @element = PeriodicTable.element atom_name: name
+      @element = PeriodicTable[atom_name: name]
       @valence = valence || nominal_valence
     end
 
@@ -103,11 +103,9 @@ module Chem::Topology::Templates
     end
 
     def atom_count(*, include_hydrogens : Bool = true)
-      if include_hydrogens
-        @atom_types.size
-      else
-        @atom_types.count &.element.!=(PeriodicTable::Elements::H)
-      end
+      size = @atom_types.size
+      size -= @atom_types.count &.element.hydrogen? unless include_hydrogens
+      size
     end
 
     def atom_names : Array(String)

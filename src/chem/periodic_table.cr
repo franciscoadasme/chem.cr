@@ -1,82 +1,79 @@
+require "./err"
 require "./periodic_table/*"
 
 module Chem::PeriodicTable
-  class UnknownElement < Exception
+  extend self
+
+  def [](*args, **options) : Element
+    self[*args, **options]? || unknown_element *args, **options
   end
 
-  def self.[](*args, **options) : Element
-    element *args, **options
-  end
-
-  def self.[]?(*args, **options) : Element?
-    element *args, **options
-  rescue UnknownElement
-    nil
-  end
-
-  def self.element(number : Int32) : Element
+  def []?(number : Int32) : Element?
     {% begin %}
       case number
-      {% for constant, index in @type.constant("Elements").constants %}
-        when {{ index + 1 }}
-          {{ @type }}::Elements::{{ constant }}
+      {% for name, index in @type.constants %}
+        {% unless @type.constant(name).is_a? TypeNode %}
+          when {{index}}
+            {{@type}}::{{name}}
+        {% end %}
       {% end %}
       else
-        unknown_element number
+        nil
       end
     {% end %}
   end
 
-  def self.element(symbol : Char) : Element
-    element symbol.to_s
-  end
-
-  def self.element(symbol : String) : Element
+  def []?(symbol : String | Char) : Element?
     {% begin %}
-      case symbol.capitalize
-      {% for constant in @type.constant("Elements").constants %}
-        when {{constant.stringify}}
-          {{@type}}::Elements::{{constant}}
+      case symbol.to_s.capitalize
+      {% for name in @type.constants %}
+        {% unless @type.constant(name).is_a? TypeNode %}
+          when {{name.stringify}}
+            {{@type}}::{{name}}
+        {% end %}
       {% end %}
       else
-        unknown_element symbol
+        nil
+      end
+    {% end %}
+  end
+
+  def []?(*, name : String) : Element?
+    {% begin %}
+      case name
+      {% for name in @type.constants %}
+        {% unless @type.constant(name).is_a? TypeNode %}
+          when {{@type}}::{{name}}.name
+            {{@type}}::{{name}}
+        {% end %}
+      {% end %}
+      else
+        nil
       end
     {% end %}
   end
 
   # TODO rename to guess_element?
   # TODO test different atom names
-  def self.element(*, atom_name : String) : Element
+  def []?(*, atom_name : String) : Element?
     atom_name = atom_name.lstrip("123456789").capitalize
-    element atom_name[0]
-  rescue UnknownElement
-    element atom_name
+    self[atom_name[0]]? || self[atom_name]?
   end
 
-  def self.element(*, name : String) : Element
-    {% begin %}
-      case name
-      {% for constant in @type.constant("Elements").constants %}
-        when {{@type}}::Elements::{{constant}}.name
-          {{@type}}::Elements::{{constant}}
-      {% end %}
-      else
-        unknown_element name
-      end
-    {% end %}
-  end
-
-  def self.elements : Tuple
+  def elements : Tuple
     {% begin %}
       {
-        {% for constant in @type.constant("Elements").constants %}
-          {{ @type }}::Elements::{{ constant }},
+        {% for name in @type.constants %}
+          {% unless @type.constant(name).is_a? TypeNode %}
+            {{@type}}::{{name}},
+          {% end %}
         {% end %}
       }
     {% end %}
   end
 
-  private def self.unknown_element(value)
-    raise UnknownElement.new "Unknown element: #{value}"
+  private def unknown_element(*args, **options)
+    value = options.values.first? || args[0]?
+    raise Error.new "Unknown element: #{value}"
   end
 end

@@ -49,7 +49,7 @@ describe Chem::PDB do
       atom.coords.should eq Vector[-1.204, 4.061, 0.195]
       atom.occupancy.should eq 1
       atom.temperature_factor.should eq 0
-      atom.element.should eq PeriodicTable::Elements::O
+      atom.element.oxygen?.should be_true
       atom.charge.should eq -1
     end
 

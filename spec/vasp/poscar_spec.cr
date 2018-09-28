@@ -11,7 +11,7 @@ describe Chem::VASP::Poscar do
       atom = system.atoms[-1]
       atom.chain.id.should eq 'A'
       atom.coords.should eq Vector[1.25020645, 3.42088266, 4.92610368]
-      atom.element.should be Elements::O
+      atom.element.oxygen?.should be_true
       atom.index.should eq 48
       atom.name.should eq "O"
       atom.occupancy.should eq 1
@@ -22,9 +22,9 @@ describe Chem::VASP::Poscar do
 
       system.atoms[atom.index].should be atom
 
-      system.atoms[0].element.should be Elements::C
-      system.atoms[14].element.should be Elements::H
-      system.atoms[35].element.should be Elements::N
+      system.atoms[0].element.carbon?.should be_true
+      system.atoms[14].element.hydrogen?.should be_true
+      system.atoms[35].element.nitrogen?.should be_true
     end
 
     it "parses a file with direct coordinates" do

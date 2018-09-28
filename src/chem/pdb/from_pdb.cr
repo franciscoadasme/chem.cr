@@ -50,9 +50,9 @@ module Chem
     if symbol = pull.read_chars? 76..77, if_blank: nil
       PeriodicTable[symbol.lstrip]
     else
-      PeriodicTable.element atom_name: pull.read_chars(12..15).strip
+      PeriodicTable[atom_name: pull.read_chars(12..15).strip]
     end
-  rescue PeriodicTable::UnknownElement
+  rescue Error
     # pull.fail "Couldn't determine element of atom #{pull.read_chars 12..15}"
     raise "Couldn't determine element of atom #{pull.read_chars(12..15).strip}"
   end
