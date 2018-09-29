@@ -26,7 +26,7 @@ module Chem::Topology
     if res_t = Templates[residue.name]?
       res_t.bonds.each { |bond_t| assign_bond bond_t, residue }
       if (bond_t = res_t.link_bond) && (next_res = residue.next)
-        assign_bond bond_t, residue, next_res
+        assign_bond bond_t, residue, next_res if next_res.number - residue.number == 1
       end
     end
   end
