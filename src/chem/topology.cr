@@ -19,6 +19,7 @@ module Chem::Topology
     other ||= residue
     return unless atom1 = residue.atoms[bond_t[0]]?
     return unless atom2 = other.atoms[bond_t[1]]?
+    return unless atom1.within_covalent_distance? of: atom2
     atom1.bonds.add atom2, bond_t.order
   end
 
