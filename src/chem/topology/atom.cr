@@ -21,6 +21,7 @@ module Chem
 
     delegate x, y, z, to: @coords
     delegate chain, to: @residue
+    delegate atomic_number, covalent_radius, mass, vdw_radius, to: @element
 
     def initialize(@name : String,
                    @index : Int32,
