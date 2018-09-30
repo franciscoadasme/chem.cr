@@ -42,5 +42,14 @@ module Chem
     def valence : Int32
       @element.valence + @charge
     end
+
+    # NOTE: The additional term (0.3 Å) is taken from the covalent radii reference,
+    # which states that about 96% of the surveyed bonds are within three standard
+    # deviations of the sum of the radii, where the found average standard deviation is
+    # about 0.1 Å.
+    def within_covalent_distance?(of other : Atom) : Bool
+      threshold = covalent_radius + other.covalent_radius + 0.3
+      @coords.squared_distance(to: other.coords) <= threshold**2
+    end
   end
 end
