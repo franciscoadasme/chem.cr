@@ -13,7 +13,7 @@ describe Chem::AtomCollection do
     it "iterates over each atom when called with block" do
       ary = [] of Int32
       system.each_atom { |atom| ary << atom.serial }
-      ary.should eq (1..26).to_a
+      ary.should eq (1..25).to_a
     end
 
     it "returns an iterator when called without block" do
@@ -37,7 +37,7 @@ describe Chem::AtomView do
 
   describe "#size" do
     it "returns the number of chains" do
-      atoms.size.should eq 26
+      atoms.size.should eq 25
     end
   end
 end
@@ -328,7 +328,7 @@ describe Chem::ResidueCollection do
     it "iterates over each residue when called with block" do
       ary = [] of String
       system.each_residue { |residue| ary << residue.name }
-      ary.should eq ["GLU", "PHE", "SER"]
+      ary.should eq ["ASP", "PHE", "SER"]
     end
 
     it "returns an iterator when called without block" do
@@ -368,7 +368,7 @@ describe Chem::System do
 
   describe "#size" do
     it "returns the number of atoms" do
-      system.size.should eq 26
+      system.size.should eq 25
     end
   end
 end
@@ -388,9 +388,8 @@ describe Chem::Topology do
       r1.atoms["C"].bonds[r1.atoms["O"]].order.should eq 2
       r1.atoms["CA"].bonds[r1.atoms["CB"]].order.should eq 1
       r1.atoms["CB"].bonds[r1.atoms["CG"]].order.should eq 1
-      r1.atoms["CG"].bonds[r1.atoms["CD"]].order.should eq 1
-      r1.atoms["CD"].bonds[r1.atoms["OE1"]].order.should eq 2
-      r1.atoms["CD"].bonds[r1.atoms["OE2"]].order.should eq 1
+      r1.atoms["CG"].bonds[r1.atoms["OD1"]].order.should eq 2
+      r1.atoms["CG"].bonds[r1.atoms["OD2"]].order.should eq 1
 
       r1.atoms["C"].bonded_atoms.map(&.name).should eq ["CA", "O", "N"]
       r2.atoms["N"].bonded_atoms.map(&.name).should eq ["C", "CA"]
