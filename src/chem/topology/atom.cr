@@ -49,7 +49,7 @@ module Chem
     # about 0.1 Å.
     def within_covalent_distance?(of other : Atom) : Bool
       threshold = covalent_radius + other.covalent_radius + 0.3
-      @coords.squared_distance(to: other.coords) <= threshold**2
+      Spatial.squared_distance(@coords, other.coords) <= threshold**2
     end
   end
 end

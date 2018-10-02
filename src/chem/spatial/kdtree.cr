@@ -108,7 +108,7 @@ module Chem::Spatial
                        &block : Int32, Float64 -> Nil) : Nil
       return unless node
 
-      distance = node.coords.squared_distance to: point
+      distance = Spatial.squared_distance node.coords, point
       yield node.atom_index, distance if distance <= radius
 
       return if node.leaf?
@@ -123,7 +123,7 @@ module Chem::Spatial
                                  point : Vector,
                                  max_neighbors : Int32,
                                  neighbors : Array(Tuple(Int32, Float64))) : Nil
-      distance = node.coords.squared_distance to: point
+      distance = Spatial.squared_distance node.coords, point
       if neighbors.size < max_neighbors
         neighbors << {node.atom_index, distance}
         neighbors.sort! { |a, b| a[1] <=> b[1] }

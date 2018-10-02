@@ -59,15 +59,15 @@ module Chem
     end
 
     def alpha : Float64
-      @b.angle @c
+      Spatial.angle @b, @c
     end
 
     def beta : Float64
-      @a.angle c
+      Spatial.angle @a, @c
     end
 
     def gamma : Float64
-      @a.angle @b
+      Spatial.angle @a, @b
     end
 
     def size : Spatial::Size3D

@@ -47,18 +47,10 @@ module Chem::Spatial
       end
     {% end %}
 
-    def angle(other : Vector) : Float64
-      Math.atan2(cross(other).magnitude, dot(other)).degrees
-    end
-
     def cross(other : Vector) : self
       Vector.new @y * other.z - @z * other.y,
         @z * other.x - @x * other.z,
         @x * other.y - @y * other.x
-    end
-
-    def distance(to other : Vector) : Float64
-      Math.sqrt squared_distance(other)
     end
 
     def dot(other : Vector) : Float64
@@ -80,11 +72,6 @@ module Chem::Spatial
 
     def origin? : Bool
       @x == 0 && @y == 0 && @z == 0
-    end
-
-    @[AlwaysInline]
-    def squared_distance(to other : Vector) : Float64
-      (x - other.x)**2 + (y - other.y)**2 + (z - other.z)**2
     end
 
     def to_a : Array(Float64)

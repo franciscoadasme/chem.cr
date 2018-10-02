@@ -73,33 +73,10 @@ describe Chem::Spatial::Vector do
     end
   end
 
-  describe "#angle" do
-    it "returns the angle between two vectors" do
-      Vector[1, 0, 0].angle(Vector[-1, -1, 0]).should eq 135
-      Vector[3, 4, 0].angle(Vector[4, 4, 2]).should eq 21.039469781317237
-      Vector[1, 0, 3].angle(Vector[5, 5, 0]).should eq 77.07903361841643
-    end
-
-    it "returns zero when vectors are parallel" do
-      Vector[1, 0, 0].angle(Vector[2, 0, 0]).should eq 0
-    end
-
-    it "returns 90 degrees when vectors are perpendicular to each other" do
-      Vector[1, 0, 0].angle(Vector[0, 1, 0]).should eq 90
-    end
-  end
-
   describe "#cross" do
     it "returns the cross product between two vectors" do
       Vector[1, 0, 0].cross(Vector[0, 1, 0]).should eq Vector[0, 0, 1]
       Vector[2, 3, 4].cross(Vector[5, 6, 7]).should eq Vector[-3, 6, -3]
-    end
-  end
-
-  describe "#distance" do
-    it "returns the distance between two vectors" do
-      v1.distance(to: v2).should eq Math.sqrt(17)
-      v1.inverse.distance(to: v2).should eq Math.sqrt(61)
     end
   end
 
@@ -135,13 +112,6 @@ describe Chem::Spatial::Vector do
       Vector.origin.origin?.should be_true
       v1.origin?.should be_false
       v1.inverse.origin?.should be_false
-    end
-  end
-
-  describe "#squared_distance" do
-    it "returns the squared distance between two vectors" do
-      v1.squared_distance(to: v2).should eq 17
-      v1.inverse.squared_distance(to: v2).should eq 61
     end
   end
 
