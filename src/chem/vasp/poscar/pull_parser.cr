@@ -1,7 +1,7 @@
 require "../../bias"
 require "../../periodic_table"
 require "../../system"
-require "../../geometry/vector"
+require "../../spatial/vector"
 
 module Chem::VASP::Poscar
   class PullParser
@@ -62,7 +62,7 @@ module Chem::VASP::Poscar
     end
 
     # TODO check whether using a tuple and manual math would speed up the parsing
-    def read_coords : Geometry::Vector
+    def read_coords : Spatial::Vector
       coords = read_vector
       case coord_system
       when .cartesian?
@@ -106,8 +106,8 @@ module Chem::VASP::Poscar
       @has_constraints
     end
 
-    def read_vector : Geometry::Vector
-      Geometry::Vector.new self
+    def read_vector : Spatial::Vector
+      Spatial::Vector.new self
     end
 
     private def coord_system : CoordinateSystem

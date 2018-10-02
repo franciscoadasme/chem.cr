@@ -36,7 +36,7 @@ module Chem::VASP::Poscar
       write lattice.c
     end
 
-    private def write(vector : Geometry::Vector) : Nil
+    private def write(vector : Spatial::Vector) : Nil
       @io.printf "%14.8f", vector.x
       @io.printf "%14.8f", vector.y
       @io.printf "%14.8f", vector.z

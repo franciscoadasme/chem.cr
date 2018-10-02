@@ -1,16 +1,16 @@
-module Chem::Analysis::Spatial
+module Chem::Spatial
   class KDTree
     private class Node
       getter axis : Int32
       getter atom_index : Int32
-      getter coords : Geometry::Vector
+      getter coords : Vector
       getter left : Node?
       getter right : Node?
 
       def initialize(@axis, @atom_index, @coords, @left = nil, @right = nil)
       end
 
-      def children_sorted_by_proximity(to coords : Geometry::Vector) : Tuple(Node?, Node?)
+      def children_sorted_by_proximity(to coords : Vector) : Tuple(Node?, Node?)
         if coords[@axis] <= value
           {left, right}
         else
@@ -18,7 +18,7 @@ module Chem::Analysis::Spatial
         end
       end
 
-      def distance(to point : Geometry::Vector) : Float64
+      def distance(to point : Vector) : Float64
         (point[@axis] - value) ** 2
       end
 
@@ -43,13 +43,13 @@ module Chem::Analysis::Spatial
       end
     end
 
-    def nearest(to point : Geometry::Vector, neighbors count : Int32 = 1) : Array(Int32)
+    def nearest(to point : Vector, neighbors count : Int32 = 1) : Array(Int32)
       neighbors = Array(Tuple(Int32, Float64)).new count
       search @root, point, count, neighbors
       neighbors.map &.[0]
     end
 
-    def nearest(to point : Geometry::Vector, within radius : Float64) : Array(Int32)
+    def nearest(to point : Vector, within radius : Float64) : Array(Int32)
       neighbors = [] of Tuple(Int32, Float64)
       search @root, point, radius ** 2 do |atom_index, distance|
         neighbors << {atom_index, distance}
@@ -58,7 +58,7 @@ module Chem::Analysis::Spatial
       neighbors.map &.[0]
     end
 
-    def nearest(to point : Geometry::Vector,
+    def nearest(to point : Vector,
                 within radius : Float64,
                 &block : Int32, Float64 ->) : Nil
       search @root, point, radius ** 2, &block
@@ -80,7 +80,7 @@ module Chem::Analysis::Spatial
     end
 
     private def search(node : Node,
-                       point : Geometry::Vector,
+                       point : Vector,
                        max_neighbors : Int32,
                        neighbors : Array(Tuple(Int32, Float64))) : Nil
       if point[node.axis] < node.value
@@ -103,7 +103,7 @@ module Chem::Analysis::Spatial
     end
 
     private def search(node : Node?,
-                       point : Geometry::Vector,
+                       point : Vector,
                        radius : Float64,
                        &block : Int32, Float64 -> Nil) : Nil
       return unless node
@@ -120,7 +120,7 @@ module Chem::Analysis::Spatial
     end
 
     private def update_neighbors(node : Node,
-                                 point : Geometry::Vector,
+                                 point : Vector,
                                  max_neighbors : Int32,
                                  neighbors : Array(Tuple(Int32, Float64))) : Nil
       distance = node.coords.squared_distance to: point

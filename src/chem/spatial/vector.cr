@@ -1,6 +1,6 @@
 require "../core_ext/number"
 
-module Chem::Geometry
+module Chem::Spatial
   struct Vector
     getter x : Float64
     getter y : Float64

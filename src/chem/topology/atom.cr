@@ -1,6 +1,6 @@
 require "../bias"
 require "../periodic_table/element"
-require "../geometry/vector"
+require "../spatial/vector"
 
 module Chem
   # TODO rename `charge` to `formal_charge`
@@ -10,7 +10,7 @@ module Chem
     getter bonds : BondArray { BondArray.new self }
     property charge : Int32 = 0
     property constraint : Constraint?
-    property coords : Geometry::Vector
+    property coords : Spatial::Vector
     property element : PeriodicTable::Element
     property index : Int32
     property name : String
@@ -25,7 +25,7 @@ module Chem
 
     def initialize(@name : String,
                    @index : Int32,
-                   @coords : Geometry::Vector,
+                   @coords : Spatial::Vector,
                    @residue : Residue,
                    element : PeriodicTable::Element? = nil,
                    @charge : Int32 = 0,

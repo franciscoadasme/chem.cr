@@ -2,14 +2,14 @@ require "../topology/atom.cr"
 require "../lattice.cr"
 require "../periodic_table"
 require "../protein"
-require "../geometry/vector.cr"
+require "../spatial/vector.cr"
 require "./parser"
 
 module Chem
   class Atom
     def initialize(pull : PDB::Parser)
       @charge = pull.read_formal_charge
-      @coords = Geometry::Vector.new pull
+      @coords = Spatial::Vector.new pull
       @element = PeriodicTable::Element.new pull
       @index = pull.next_index
       @name = pull.read_chars(12..15).strip
@@ -27,7 +27,7 @@ module Chem
     end
   end
 
-  struct Geometry::Vector
+  struct Spatial::Vector
     def initialize(pull : PDB::Parser)
       @x = pull.read_float 30..37
       @y = pull.read_float 38..45

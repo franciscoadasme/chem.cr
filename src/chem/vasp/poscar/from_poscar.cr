@@ -47,7 +47,7 @@ module Chem
     end
   end
 
-  struct Geometry::Vector
+  struct Spatial::Vector
     def initialize(pull : VASP::Poscar::PullParser)
       @x = pull.read_float
       @y = pull.read_float

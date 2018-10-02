@@ -1,4 +1,4 @@
-module Chem::Geometry
+module Chem::Spatial
   struct Size3D
     getter a : Float64
     getter b : Float64

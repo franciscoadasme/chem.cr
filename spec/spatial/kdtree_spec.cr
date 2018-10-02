@@ -1,8 +1,8 @@
 require "../../spec_helper"
 
-alias KDTree = Chem::Analysis::Spatial::KDTree
+alias KDTree = Chem::Spatial::KDTree
 
-describe Chem::Analysis::Spatial::KDTree do
+describe Chem::Spatial::KDTree do
   context "toy example" do
     system = Chem::System.new
     chain = system.make_chain identifier: 'A'

@@ -1,6 +1,6 @@
 require "../spec_helper"
 
-describe Chem::Geometry::Vector do
+describe Chem::Spatial::Vector do
   v1 = Vector[3.0, 4.0, 0.0]
   v2 = Vector[1.0, 2.0, 3.0]
 

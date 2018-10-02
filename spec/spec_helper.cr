@@ -7,7 +7,7 @@ alias Constraint = Chem::Constraint
 alias Element = Chem::PeriodicTable::Element
 alias PDB = Chem::PDB
 alias PeriodicTable = Chem::PeriodicTable
-alias Vector = Chem::Geometry::Vector
+alias Vector = Chem::Spatial::Vector
 
 module Spec
   struct CloseExpectation
@@ -18,7 +18,7 @@ module Spec
       actual_value.zip(@expected_value).all? { |a, b| (a - b).abs <= @delta }
     end
 
-    def match(actual_value : Chem::Geometry::Vector)
+    def match(actual_value : Chem::Spatial::Vector)
       [(actual_value.x - @expected_value.x).abs,
        (actual_value.y - @expected_value.y).abs,
        (actual_value.z - @expected_value.z).abs].all? do |value|

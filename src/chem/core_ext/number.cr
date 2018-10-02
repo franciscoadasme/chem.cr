@@ -1,10 +1,10 @@
-require "../geometry/vector"
+require "../spatial/vector"
 
 abstract struct Number
   RADIAN_TO_DEGREE = 180 / Math::PI
   DEGREE_TO_RADIAN = Math::PI / 180
 
-  def *(other : Chem::Geometry::Vector) : Chem::Geometry::Vector
+  def *(other : Chem::Spatial::Vector) : Chem::Spatial::Vector
     other * self
   end
 
