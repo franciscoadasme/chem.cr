@@ -40,7 +40,7 @@ module Chem::VASP::Poscar
 end
 
 # TODO add SystemBuilder?
-def fake_system
+def fake_system(*, include_bonds = false)
   sys = Chem::System.new
   sys.title = "Asp-Phe Ser"
   chain = sys.make_chain identifier: 'A'
@@ -75,6 +75,8 @@ def fake_system
   residue.make_atom name: "O", index: 22, coords: Vector[5.213, 2.016, 5.557]
   residue.make_atom name: "CB", index: 23, coords: Vector[5.908, 0.462, 8.400]
   residue.make_atom name: "OG", index: 24, coords: Vector[6.990, -0.272, 9.012]
+
+  Chem::Topology.assign_bonds_from_templates sys if include_bonds
 
   sys
 end
