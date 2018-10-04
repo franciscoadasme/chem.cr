@@ -30,5 +30,12 @@ module Chem
       self << atom
       atom
     end
+
+    def to_s(io : ::IO)
+      io << chain.id
+      io << ':'
+      io << @name
+      io << @number
+    end
   end
 end
