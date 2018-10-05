@@ -37,6 +37,31 @@ module Chem
       atom
     end
 
+    def omega : Float64
+      if (prev_res = previous) && bonded?(prev_res)
+        Spatial.dihedral prev_res.atoms["CA"], prev_res.atoms["C"], atoms["N"],
+          atoms["CA"]
+      else
+        raise Error.new "#{self} is terminal"
+      end
+    end
+
+    def phi : Float64
+      if (prev_res = previous) && bonded?(prev_res)
+        Spatial.dihedral prev_res.atoms["C"], atoms["N"], atoms["CA"], atoms["C"]
+      else
+        raise Error.new "#{self} is terminal"
+      end
+    end
+
+    def psi : Float64
+      if (next_res = self.next) && bonded?(next_res)
+        Spatial.dihedral atoms["N"], atoms["CA"], atoms["C"], next_res.atoms["N"]
+      else
+        raise Error.new "#{self} is terminal"
+      end
+    end
+
     def to_s(io : ::IO)
       io << chain.id
       io << ':'
