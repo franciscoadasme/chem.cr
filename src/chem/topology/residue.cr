@@ -20,6 +20,12 @@ module Chem
 
     delegate dssp, to: @secondary_structure
 
+    def bonded?(other : self) : Bool
+      each_atom.any? do |a1|
+        other.each_atom.any? { |a2| a1.bonded? to: a2 }
+      end
+    end
+
     def each_atom : Iterator(Atom)
       @atoms.each
     end

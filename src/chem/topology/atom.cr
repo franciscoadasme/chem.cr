@@ -35,6 +35,10 @@ module Chem
       @serial = @index + 1
     end
 
+    def bonded?(to other : self) : Bool
+      !bonds[other]?.nil?
+    end
+
     def bonded_atoms : Array(Atom)
       bonds.map &.other(self)
     end
