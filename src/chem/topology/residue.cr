@@ -62,6 +62,10 @@ module Chem
       end
     end
 
+    def ramachandran_angles : Tuple(Float64, Float64)
+      {phi, psi}
+    end
+
     def to_s(io : ::IO)
       io << chain.id
       io << ':'
