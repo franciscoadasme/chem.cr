@@ -420,5 +420,16 @@ describe Chem::Topology do
 
       r3.atoms["C"].bonded_atoms.map(&.name).should eq ["CA", "O"]
     end
+
+    it "does not connect consecutive residues when there are far away" do
+      system = PDB.parse "spec/data/pdb/gap.pdb"
+      r1, r2, r3, r4 = system.residues
+
+      Chem::Topology.guess_topology system
+
+      r1["C"].bonds[r2["N"]]?.should_not be_nil
+      r2["C"].bonds[r3["N"]]?.should be_nil
+      r3["C"].bonds[r4["N"]]?.should_not be_nil
+    end
   end
 end
