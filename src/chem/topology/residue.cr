@@ -23,6 +23,14 @@ module Chem
     def initialize(@name : String, @number : Int32, @chain : Chain)
     end
 
+    def [](atom_name : String) : Atom
+      atoms[atom_name]
+    end
+
+    def []?(atom_name : String) : Atom?
+      atoms[atom_name]?
+    end
+
     def <<(atom : Atom)
       @atoms << atom
     end
