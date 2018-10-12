@@ -2,9 +2,18 @@ module Chem
   class Residue
     include AtomCollection
 
+    enum Kind
+      Protein
+      DNA
+      Ion
+      Solvent
+      Other
+    end
+
     @atoms = [] of Atom
 
     property chain : Chain
+    property kind : Kind = :other
     property name : String
     property next : Residue?
     property number : Int32
@@ -80,5 +89,11 @@ module Chem
     def trans? : Bool
       omega.abs > 150
     end
+
+    {% for member in Kind.constants %}
+      def {{member.underscore.id}}? : Bool
+        @kind == Kind::{{member}}
+      end
+    {% end %}
   end
 end
