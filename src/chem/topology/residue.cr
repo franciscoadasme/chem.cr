@@ -26,6 +26,10 @@ module Chem
       end
     end
 
+    def cis? : Bool
+      omega.abs < 30
+    end
+
     def each_atom : Iterator(Atom)
       @atoms.each
     end
@@ -71,6 +75,10 @@ module Chem
       io << ':'
       io << @name
       io << @number
+    end
+
+    def trans? : Bool
+      omega.abs > 150
     end
   end
 end
