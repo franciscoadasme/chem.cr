@@ -11,6 +11,10 @@ module Chem::Spatial
     end
 
     def self.origin : self
+      zero
+    end
+
+    def self.zero : self
       new 0, 0, 0
     end
 
@@ -66,12 +70,12 @@ module Chem::Spatial
     end
 
     def normalize : self
-      return dup if origin?
+      return dup if zero?
       self / magnitude
     end
 
     def origin? : Bool
-      @x == 0 && @y == 0 && @z == 0
+      zero?
     end
 
     def to_a : Array(Float64)
@@ -80,6 +84,10 @@ module Chem::Spatial
 
     def to_t : Tuple(Float64, Float64, Float64)
       {x, y, z}
+    end
+
+    def zero? : Bool
+      @x == 0 && @y == 0 && @z == 0
     end
   end
 end

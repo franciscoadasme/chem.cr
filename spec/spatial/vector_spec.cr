@@ -10,9 +10,9 @@ describe Chem::Spatial::Vector do
     end
   end
 
-  describe ".origin" do
-    it "returns a vector at the origin" do
-      Vector.origin.should eq Vector[0, 0, 0]
+  describe ".zero" do
+    it "returns a vector zero" do
+      Vector.zero.should eq Vector[0, 0, 0]
     end
   end
 
@@ -107,14 +107,6 @@ describe Chem::Spatial::Vector do
     end
   end
 
-  describe "#origin?" do
-    it "returns whether the vector is at the origin" do
-      Vector.origin.origin?.should be_true
-      v1.origin?.should be_false
-      v1.inverse.origin?.should be_false
-    end
-  end
-
   describe "#to_a" do
     it "returns an array" do
       v1.to_a.should eq [3, 4, 0]
@@ -124,6 +116,14 @@ describe Chem::Spatial::Vector do
   describe "#to_t" do
     it "returns a 3-sized tuple" do
       v1.to_t.should eq({3, 4, 0})
+    end
+  end
+
+  describe "#zero?" do
+    it "returns whether the vector is zero" do
+      Vector.zero.zero?.should be_true
+      v1.zero?.should be_false
+      v1.inverse.zero?.should be_false
     end
   end
 end
