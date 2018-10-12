@@ -20,7 +20,7 @@ module Chem::Topology
   private def assign_bonds(from res_t : Templates::Residue, to residue : Residue)
     res_t.bonds.each { |bond_t| assign_bond bond_t, residue }
     if (bond_t = res_t.link_bond) && (next_res = residue.next)
-      assign_bond bond_t, residue, next_res if next_res.number - residue.number == 1
+      assign_bond bond_t, residue, next_res
     end
   end
 
