@@ -13,13 +13,18 @@ module Chem::Topology
     other ||= residue
     return unless atom1 = residue.atoms[bond_t[0]]?
     return unless atom2 = other.atoms[bond_t[1]]?
+    return if atom1.bonded? atom2
     return unless atom1.within_covalent_distance? of: atom2
     atom1.bonds.add atom2, bond_t.order
   end
 
   private def assign_bonds(from res_t : Templates::Residue, to residue : Residue)
     res_t.bonds.each { |bond_t| assign_bond bond_t, residue }
-    if (bond_t = res_t.link_bond) && (next_res = residue.next)
+    return unless bond_t = res_t.link_bond
+    if prev_res = residue.previous
+      assign_bond bond_t, prev_res, residue
+    end
+    if next_res = residue.next
       assign_bond bond_t, residue, next_res
     end
   end
