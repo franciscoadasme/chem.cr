@@ -76,7 +76,7 @@ def fake_system(*, include_bonds = false)
   residue.make_atom name: "CB", index: 23, coords: Vector[5.908, 0.462, 8.400]
   residue.make_atom name: "OG", index: 24, coords: Vector[6.990, -0.272, 9.012]
 
-  Chem::Topology.assign_bonds_from_templates sys if include_bonds
+  Chem::Topology.guess_topology of: sys if include_bonds
 
   sys
 end

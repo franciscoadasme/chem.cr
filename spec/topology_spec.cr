@@ -374,12 +374,15 @@ describe Chem::System do
 end
 
 describe Chem::Topology do
-  describe "#assign_bonds_from_template" do
+  describe "#guess_topology" do
     it "works" do
       system = fake_system
       r1, r2, r3 = system.residues
 
-      Chem::Topology.assign_bonds_from_templates system
+      Chem::Topology.guess_topology system
+
+      [r1, r2, r3].map(&.protein?).should eq [true, true, true]
+      [r1, r2, r3].map(&.formal_charge).should eq [-1, 0, 0]
 
       r1.atoms["N"].bonded_atoms.map(&.name).should eq ["CA"]
 
