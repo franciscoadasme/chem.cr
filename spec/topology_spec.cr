@@ -422,7 +422,7 @@ describe Chem::Topology do
     end
 
     it "does not connect consecutive residues when there are far away" do
-      system = PDB.parse "spec/data/pdb/gap.pdb"
+      system = PDB.parse "spec/data/pdb/protein_gap.pdb"
       r1, r2, r3, r4 = system.residues
 
       Chem::Topology.guess_topology system
