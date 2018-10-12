@@ -431,5 +431,35 @@ describe Chem::Topology do
       r2["C"].bonds[r3["N"]]?.should be_nil
       r3["C"].bonds[r4["N"]]?.should_not be_nil
     end
+
+    it "guess kind of unknown residue when previous is known" do
+      system = PDB.parse "spec/data/pdb/residue_kind_unknown_previous.pdb"
+      Chem::Topology.guess_topology system
+      system.residues[1].protein?.should be_true
+    end
+
+    it "guess kind of unknown residue when next is known" do
+      system = PDB.parse "spec/data/pdb/residue_kind_unknown_next.pdb"
+      Chem::Topology.guess_topology system
+      system.residues[0].protein?.should be_true
+    end
+
+    it "guess kind of unknown residue when its flanked by known residues" do
+      system = PDB.parse "spec/data/pdb/residue_kind_unknown_flanked.pdb"
+      Chem::Topology.guess_topology system
+      system.residues[1].protein?.should be_true
+    end
+
+    it "does not guess kind of unknown residue" do
+      system = PDB.parse "spec/data/pdb/residue_kind_unknown_single.pdb"
+      Chem::Topology.guess_topology system
+      system.residues[0].other?.should be_true
+    end
+
+    it "does not guess kind of unknown residue when its not connected to others" do
+      system = PDB.parse "spec/data/pdb/residue_kind_unknown_next_gap.pdb"
+      Chem::Topology.guess_topology system
+      system.residues.first.other?.should be_true
+    end
   end
 end

@@ -5,6 +5,7 @@ module Chem::Topology
 
   def guess_topology(of system : System)
     system.each_residue { |residue| find_and_assign_template to: residue }
+    guess_unknown_residue_types of: system
   end
 
   private def assign_bond(bond_t : Templates::Bond,
@@ -41,5 +42,20 @@ module Chem::Topology
     residue.kind = Residue::Kind.from_value res_t.kind.to_i
     assign_bonds from: res_t, to: residue
     assign_charges from: res_t, to: residue
+  end
+
+  private def guess_unknown_residue_types(of system : System)
+    system.each_residue.select(&.other?).each do |res|
+      if (prev_res = res.previous) && (next_res = res.next)
+        next unless prev_res.kind == next_res.kind
+        next unless res.bonded? prev_res
+        next unless res.bonded? next_res
+        res.kind = next_res.kind
+      elsif prev_res = res.previous
+        res.kind = prev_res.kind if res.bonded? prev_res
+      elsif next_res = res.next
+        res.kind = next_res.kind if res.bonded? next_res
+      end
+    end
   end
 end
