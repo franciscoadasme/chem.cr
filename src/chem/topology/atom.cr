@@ -7,6 +7,7 @@ module Chem
   # TODO add `partial_charge : Float64 = 0.0`
   # TODO add `residue_index` that starts from 0 and does not reset per chain
   class Atom
+    property alt_loc : Char?
     getter bonds : BondArray { BondArray.new self }
     property charge : Int32 = 0
     property constraint : Constraint?
@@ -27,10 +28,14 @@ module Chem
                    @index : Int32,
                    @coords : Spatial::Vector,
                    @residue : Residue,
+                   @alt_loc : Char? = nil,
                    element : PeriodicTable::Element? = nil,
                    @charge : Int32 = 0,
                    @occupancy : Float64 = 1,
                    @temperature_factor : Float64 = 0)
+      if @occupancy < 0 || @occupancy > 1
+        raise ArgumentError.new "Occupancy is not within 0 and 1"
+      end
       @element = element || PeriodicTable[atom_name: @name]
       @serial = @index + 1
     end

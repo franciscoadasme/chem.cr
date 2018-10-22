@@ -1,3 +1,5 @@
+require "./residue/*"
+
 module Chem
   class Residue
     include AtomCollection
@@ -13,6 +15,7 @@ module Chem
     @atoms = [] of Atom
 
     property chain : Chain
+    getter conformations : ConformationManager { ConformationManager.new self }
     property kind : Kind = :other
     property name : String
     property next : Residue?
@@ -27,12 +30,24 @@ module Chem
       atoms[atom_name]
     end
 
+    protected def []=(atom_name : String, atom : Atom)
+      idx = @atoms.index(self[atom_name]).not_nil!
+      @atoms[idx] = atom
+    end
+
     def []?(atom_name : String) : Atom?
       atoms[atom_name]?
     end
 
     def <<(atom : Atom)
-      @atoms << atom
+      raise "Atom #{atom} does not belong to #{self}" unless atom.residue.same? self
+      if alt_loc = atom.alt_loc
+        @atoms << atom if conf.nil? || alt_loc == conf.try(&.id)
+        conformations << atom
+      else
+        @atoms << atom
+      end
+      self
     end
 
     delegate dssp, to: @secondary_structure
@@ -47,8 +62,20 @@ module Chem
       omega.abs < 30
     end
 
+    def conf : Conformation?
+      conformations.current
+    end
+
+    def conf=(id : Char)
+      conformations.current = id
+    end
+
     def each_atom : Iterator(Atom)
       @atoms.each
+    end
+
+    def has_alternate_conformations? : Bool
+      conformations.any?
     end
 
     def make_atom(**options) : Atom

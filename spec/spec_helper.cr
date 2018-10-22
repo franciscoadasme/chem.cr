@@ -39,6 +39,23 @@ module Chem::VASP::Poscar
   end
 end
 
+def fake_residue_with_alternate_conformations
+  sys = Chem::System.new
+  sys << (chain = Chem::Chain.new 'A', sys)
+  chain << (residue = Chem::Residue.new "SER", 1, chain)
+
+  residue << Atom.new "N", 0, Vector.zero, residue
+  residue << Atom.new "CA", 1, Vector.zero, residue
+  residue << Atom.new "C", 2, Vector.zero, residue
+  residue << Atom.new "O", 3, Vector.zero, residue
+  residue << Atom.new "CB", 4, Vector[1, 0, 0], residue, 'A', occupancy: 0.65
+  residue << Atom.new "CB", 5, Vector[2, 0, 0], residue, 'B', occupancy: 0.25
+  residue << Atom.new "CB", 6, Vector[3, 0, 0], residue, 'C', occupancy: 0.1
+  residue << Atom.new "OG", 7, Vector[1, 0, 0], residue, 'A', occupancy: 0.65
+  residue << Atom.new "OG", 8, Vector[2, 0, 0], residue, 'B', occupancy: 0.35
+  residue << Atom.new "OG", 9, Vector[3, 0, 0], residue, 'C', occupancy: 0.1
+end
+
 # TODO add SystemBuilder?
 def fake_system(*, include_bonds = false)
   sys = Chem::System.new
