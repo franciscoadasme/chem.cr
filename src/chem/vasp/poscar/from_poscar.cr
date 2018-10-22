@@ -4,7 +4,7 @@ module Chem
       @index = pull.current_index
       @serial = @index + 1
       @element = pull.current_element
-      @name = @element.symbol
+      @name = "#{@element.symbol}#{pull.element_count[@element.symbol] += 1}"
       @coords = pull.read_coords
       @constraint = pull.read_constraint?
       @residue = pull.current_residue

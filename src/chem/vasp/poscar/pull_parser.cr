@@ -7,6 +7,8 @@ module Chem::VASP::Poscar
   class PullParser
     include IO::PullParser
 
+    getter element_count = Hash(String, Int32).new { 0 }
+
     @atom_index = -1
     @coord_system : CoordinateSystem?
     @current_residue = uninitialized Residue

@@ -13,7 +13,7 @@ describe Chem::VASP::Poscar do
       atom.coords.should eq Vector[1.25020645, 3.42088266, 4.92610368]
       atom.element.oxygen?.should be_true
       atom.index.should eq 48
-      atom.name.should eq "O"
+      atom.name.should eq "O7"
       atom.occupancy.should eq 1
       atom.residue.name.should eq "UNK"
       atom.residue.number.should eq 1
