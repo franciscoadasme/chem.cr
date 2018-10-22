@@ -3,24 +3,29 @@ require "./spec_helper"
 describe Chem::PDB do
   # TODO test partial occupancy and insertion code (5tun)
   describe ".parse" do
-    pending "parses a PDB file" do
-      system = PDB.parse "spec/data/1h1s.pdb"
+    it "parses a (real) PDB file" do
+      system = PDB.parse "spec/data/pdb/1h1s.pdb"
       system.size.should eq 9701
       system.formal_charge.should eq 0
+
+      system.chains.map(&.id).should eq ['A', 'B', 'C', 'D']
+      system.chains['A'].residues.size.should eq 569
+      system.chains['B'].residues.size.should eq 440
+      system.chains['C'].residues.size.should eq 436
+      system.chains['D'].residues.size.should eq 370
 
       atom = system.atoms[-1]
       atom.index.should eq 9700
       atom.serial.should eq 9705
       atom.name.should eq "O"
-      atom.altloc.should be_nil
-      atom.residue_name.should eq "HOH"
-      atom.chain.should eq 'D'
-      atom.residue_number.should eq 2112
-      atom.insertion_code.should be_nil
+      atom.alt_loc.should be_nil
+      atom.residue.name.should eq "HOH"
+      atom.chain.id.should eq 'D'
+      atom.residue.number.should eq 2112
       atom.coords.should eq Vector[66.315, 27.887, 48.252]
       atom.occupancy.should eq 1
       atom.temperature_factor.should eq 53.58
-      atom.element.should eq PeriodicTable::Elements::O
+      atom.element.oxygen?.should be_true
       atom.charge.should eq 0
 
       system.atoms[atom.index].should be atom
