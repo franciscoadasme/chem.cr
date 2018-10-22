@@ -178,8 +178,13 @@ module Chem::PDB
     end
 
     private def parse_atom_record
-      read_chain unless @current_chain.try(&.id) == read_char(21)
-      read_residue unless @current_residue.try(&.number) == read_residue_number
+      chain, resnum = read_char(21), read_residue_number
+      read_chain unless @current_chain.try(&.id) == chain
+      if res = @current_residue
+        read_residue if res.chain.id != chain || res.number != resnum
+      else
+        read_residue
+      end
       atom = Atom.new self
       @current_atom = atom
       @atoms_by_serial[atom.serial] = atom
