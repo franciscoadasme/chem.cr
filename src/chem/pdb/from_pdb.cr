@@ -107,6 +107,7 @@ module Chem
       @name = pull.read_chars(17..20).strip
       @number = pull.read_residue_number
       @chain = pull.current_chain
+      @insertion_code = pull.read_char 26, if_blank: nil
     end
   end
 

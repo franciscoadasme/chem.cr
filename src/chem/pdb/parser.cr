@@ -234,11 +234,17 @@ module Chem::PDB
     end
 
     private def update_residue
-      res = @current_residue
-      resnum = read_residue_number
-      if res.try(&.chain.id) != current_chain.id || res.try(&.number) != resnum
-        current_chain << (residue = Residue.new self)
-        @current_residue = residue
+      res = Residue.new self
+      if cres = @current_residue
+        cresid = {cres.chain.id, cres.name, cres.number, cres.insertion_code}
+        resid = {res.chain.id, res.name, res.number, res.insertion_code}
+        if cresid != resid
+          current_chain << res
+          @current_residue = res
+        end
+      else
+        current_chain << res
+        @current_residue = res
       end
     end
   end

@@ -16,6 +16,7 @@ module Chem
 
     property chain : Chain
     getter conformations : ConformationManager { ConformationManager.new self }
+    property insertion_code : Char?
     property kind : Kind = :other
     property name : String
     property next : Residue?
@@ -24,6 +25,12 @@ module Chem
     property secondary_structure : Protein::SecondaryStructure = :none
 
     def initialize(@name : String, @number : Int32, @chain : Chain)
+    end
+
+    def initialize(@name : String,
+                   @number : Int32,
+                   @insertion_code : Char,
+                   @chain : Chain)
     end
 
     def [](atom_name : String) : Atom
