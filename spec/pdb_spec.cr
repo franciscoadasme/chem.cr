@@ -181,6 +181,21 @@ describe Chem::PDB do
       system.atoms[5].bonds[system.atoms[0]].order.should eq 2
     end
 
+    it "parses alternate conformations" do
+      residue = PDB.parse("spec/data/pdb/alternate_conf.pdb").residues.first
+      residue.has_alternate_conformations?.should be_true
+      residue.conformations.map(&.id).should eq ['A', 'B', 'C']
+      residue.conformations.map(&.occupancy).should eq [0.37, 0.33, 0.3]
+
+      residue.conf.try(&.id).should eq 'A'
+      residue["N"].x.should eq 7.831
+      residue["OD1"].x.should eq 10.427
+
+      residue.conf = 'C'
+      residue["N"].x.should eq 7.831
+      residue["OD1"].x.should eq 8.924
+    end
+
     it "fails when charges are ill formatted" do
       expect_raises PDB::ParseException, "Couldn't read a formal charge at 4:78" do
         PDB.parse "spec/data/pdb/bad_charges.pdb"

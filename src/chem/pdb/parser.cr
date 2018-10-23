@@ -77,6 +77,11 @@ module Chem::PDB
       @current_record[index]
     end
 
+    def read_char(index : Int, *, if_blank value : T) : Char | T forall T
+      char = read_char index
+      char.whitespace? ? value : char
+    end
+
     def read_chars(range : Range(Int, Int)) : String
       @current_record[range]
     end

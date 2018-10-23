@@ -8,6 +8,7 @@ require "./parser"
 module Chem
   class Atom
     def initialize(pull : PDB::Parser)
+      @alt_loc = pull.read_char 16, if_blank: nil
       @charge = pull.read_formal_charge
       @coords = Spatial::Vector.new pull
       @element = PeriodicTable::Element.new pull
