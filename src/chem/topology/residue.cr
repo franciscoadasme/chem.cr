@@ -29,7 +29,7 @@ module Chem
 
     def initialize(@name : String,
                    @number : Int32,
-                   @insertion_code : Char,
+                   @insertion_code : Char?,
                    @chain : Chain)
     end
 
