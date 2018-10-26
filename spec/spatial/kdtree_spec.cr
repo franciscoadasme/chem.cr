@@ -4,16 +4,14 @@ alias KDTree = Chem::Spatial::KDTree
 
 describe Chem::Spatial::KDTree do
   context "toy example" do
-    system = Chem::System.new
-    chain = system.make_chain identifier: 'A'
-    residue = chain.make_residue name: "UNK", number: 1
-
-    residue.make_atom index: 0, name: "C1", coords: Vector[4, 3, 0]   # d^2 = 25
-    residue.make_atom index: 1, name: "C2", coords: Vector[3, 0, 0]   # d^2 = 9
-    residue.make_atom index: 2, name: "C3", coords: Vector[-1, 2, 0]  # d^2 = 5
-    residue.make_atom index: 3, name: "C4", coords: Vector[6, 4, 0]   # d^2 = 52
-    residue.make_atom index: 4, name: "C5", coords: Vector[3, -5, 0]  # d^2 = 34
-    residue.make_atom index: 5, name: "C6", coords: Vector[-2, -5, 0] # d^2 = 29
+    system = Chem::System.build do
+      atom at: {4, 3, 0}   # d^2 = 25
+      atom at: {3, 0, 0}   # d^2 = 9
+      atom at: {-1, 2, 0}  # d^2 = 5
+      atom at: {6, 4, 0}   # d^2 = 52
+      atom at: {3, -5, 0}  # d^2 = 34
+      atom at: {-2, -5, 0} # d^2 = 29
+    end
 
     tree = KDTree.new system.atoms
 
