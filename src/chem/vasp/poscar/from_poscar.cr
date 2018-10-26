@@ -38,7 +38,7 @@ module Chem
     end
   end
 
-  struct Lattice
+  class Lattice
     def initialize(pull : VASP::Poscar::PullParser)
       @scale_factor = pull.read_float
       @a = pull.read_vector

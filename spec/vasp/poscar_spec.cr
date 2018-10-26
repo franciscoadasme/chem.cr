@@ -60,7 +60,6 @@ describe Chem::VASP::Poscar do
       system = Poscar.parse "spec/data/poscar/basic.poscar"
       other = Poscar.write_and_read_back system
 
-      system.lattice.should eq other.lattice
       system.atoms.each_with_index do |atom, index|
         atom.element.should be other.atoms[index].element
         atom.coords.should eq other.atoms[index].coords

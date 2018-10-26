@@ -3,7 +3,7 @@ require "./spatial/size3d"
 require "./spatial/vector"
 
 module Chem
-  struct Lattice
+  class Lattice
     # @a : Float64
     # @b : Float64
     # @c : Float64
@@ -13,11 +13,11 @@ module Chem
     # @gamma : Float64
     # @space_group : String
     # @z : Int32
-    getter a : Spatial::Vector
-    getter b : Spatial::Vector
-    getter c : Spatial::Vector
-    getter scale_factor : Float64 = 1.0
-    getter space_group : String?
+    property a : Spatial::Vector
+    property b : Spatial::Vector
+    property c : Spatial::Vector
+    property scale_factor : Float64 = 1.0
+    property space_group : String?
 
     def initialize(@a : Spatial::Vector,
                    @b : Spatial::Vector,
