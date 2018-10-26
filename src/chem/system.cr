@@ -15,6 +15,12 @@ module Chem
     property sequence : Protein::Sequence?
     property title : String = ""
 
+    def self.build(&block) : self
+      builder = System::Builder.new
+      with builder yield builder
+      builder.build
+    end
+
     def <<(chain : Chain)
       @chains << chain
     end
