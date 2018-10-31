@@ -127,26 +127,26 @@ module Chem
       residue
     end
 
-    def atom(at coords : Coords, **options)
-      atom PeriodicTable::C, coords, **options
-    end
-
-    def atom(named name : String,
-             at coords : Coords = Spatial::Vector.zero,
-             **options)
-      add_atom name, (@atom_index += 1), coords, **options
-    end
-
     def atom(of element : PeriodicTable::Element,
              at coords : Coords = Spatial::Vector.zero,
-             **options)
+             **options) : Atom
       ele_count = current_residue.each_atom.count &.element.==(element)
       name = "#{element.symbol}#{ele_count + 1}"
       atom name, coords, **options.merge(element: element)
     end
 
-    def atoms(*names : String)
-      names.each { |name| atom name }
+    def atom(named name : String,
+             at coords : Coords = Spatial::Vector.zero,
+             **options) : Atom
+      add_atom name, (@atom_index += 1), coords, **options
+    end
+
+    def atom(at coords : Coords, **options) : Atom
+      atom PeriodicTable::C, coords, **options
+    end
+
+    def atoms(*names : String) : Array(Atom)
+      names.to_a.map { |name| atom name }
     end
 
     def build : System
@@ -157,12 +157,12 @@ module Chem
       @chain = add_chain id: (@chain.try(&.id) || 64.chr).succ
     end
 
-    def chain(named id : Char)
-      return if id(of: @chain) == id
+    def chain(named id : Char) : Chain
+      return current_chain if id(of: @chain) == id
       @chain = self[chain: id]? || add_chain(id)
     end
 
-    def chain(*args, **options, &block)
+    def chain(*args, **options, &block) : Chain
       ch = chain *args, **options
       with self yield self
       ch
@@ -198,7 +198,7 @@ module Chem
       nil
     end
 
-    def lattice(a : Number, b : Number, c : Number)
+    def lattice(a : Number, b : Number, c : Number) : Lattice
       builder = Lattice::Builder.new
       builder.a a
       builder.b b
@@ -206,28 +206,30 @@ module Chem
       @system.lattice = builder.build
     end
 
-    def lattice(&block)
+    def lattice(&block) : Lattice
       builder = Lattice::Builder.new
       with builder yield builder
       @system.lattice = builder.build
     end
 
-    def residue
+    def residue : Residue
       residue "UNK"
     end
 
-    def residue(named name : String)
+    def residue(named name : String,
+                number : Int32,
+                insertion_code : Char? = nil) : Residue
+      resid = {current_chain.id, name, number, insertion_code}
+      return current_residue if id(of: @residue) == resid
+      @residue = self[residue: resid]? || add_residue(name, number, insertion_code)
+    end
+
+    def residue(named name : String) : Residue
       next_number = (current_chain.residues[-1]?.try(&.number) || 0) + 1
       residue name, next_number
     end
 
-    def residue(named name : String, number : Int32, insertion_code : Char? = nil)
-      resid = {current_chain.id, name, number, insertion_code}
-      return if id(of: @residue) == resid
-      @residue = self[residue: resid]? || add_residue(name, number, insertion_code)
-    end
-
-    def residue(*args, **options, &block)
+    def residue(*args, **options, &block) : Residue
       res = residue *args, **options
       with self yield self
       res
