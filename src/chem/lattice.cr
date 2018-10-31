@@ -43,14 +43,14 @@ module Chem
       @c = Spatial::Vector[cx, cy, cz]
     end
 
-    def self.[](a : Float64, b : Float64, c : Float64)
+    def self.[](a : Float64, b : Float64, c : Float64) : self
       orthorombic a, b, c
     end
 
     def self.orthorombic(a : Float64,
                          b : Float64,
                          c : Float64,
-                         scale_factor : Float64 = 1.0)
+                         scale_factor : Float64 = 1.0) : self
       new Spatial::Vector[a, 0, 0],
         Spatial::Vector[0, b, 0],
         Spatial::Vector[0, 0, c],
