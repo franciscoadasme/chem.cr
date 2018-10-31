@@ -8,6 +8,11 @@ describe Chem::VASP::Poscar do
       system = Poscar.parse "spec/data/poscar/basic.poscar"
       system.size.should eq 49
 
+      system.atoms.count(&.element.symbol.==("C")).should eq 14
+      system.atoms.count(&.element.symbol.==("H")).should eq 21
+      system.atoms.count(&.element.symbol.==("N")).should eq 7
+      system.atoms.count(&.element.symbol.==("O")).should eq 7
+
       atom = system.atoms[-1]
       atom.chain.id.should eq 'A'
       atom.coords.should eq Vector[1.25020645, 3.42088266, 4.92610368]
