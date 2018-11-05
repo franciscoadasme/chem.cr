@@ -73,39 +73,39 @@ module Chem::PDB
       @current_system
     end
 
-    def read_char(index : Int) : Char
+    def read_char(at index : Int) : Char
       @current_record[index]
     end
 
-    def read_char(index : Int, *, if_blank value : T) : Char | T forall T
+    def read_char(at index : Int, *, if_blank value : T) : Char | T forall T
       char = read_char index
       char.whitespace? ? value : char
     end
 
-    def read_chars(range : Range(Int, Int)) : String
+    def read_chars(at range : Range(Int, Int)) : String
       @current_record[range]
     end
 
-    def read_chars(range : Range(Int, Int), *, if_blank value : T) : String | T forall T
+    def read_chars(at range : Range(Int, Int), *, if_blank value : T) : String | T forall T
       chars = read_chars range
       chars.blank? ? value : chars
     end
 
-    def read_chars?(range, **options) : String?
+    def read_chars?(at range, **options) : String?
       read_chars range, **options
     rescue IndexError
       nil
     end
 
-    def read_date(range : Range(Int, Int)) : Time
+    def read_date(at range : Range(Int, Int)) : Time
       Time.parse_utc read_chars(range), "%d-%^b-%y"
     end
 
-    def read_float(range : Range(Int, Int)) : Float64
+    def read_float(at range : Range(Int, Int)) : Float64
       read_chars(range).to_f
     end
 
-    def read_float?(range : Range(Int, Int)) : Float64?
+    def read_float?(at range : Range(Int, Int)) : Float64?
       read_chars(range).to_f?
     end
 
@@ -116,7 +116,7 @@ module Chem::PDB
       fail "Couldn't read a formal charge"
     end
 
-    def read_int(range : Range(Int, Int), base : Int32 = 10) : Int32
+    def read_int(at range : Range(Int, Int), base : Int32 = 10) : Int32
       read_chars(range).to_i base
     end
 
