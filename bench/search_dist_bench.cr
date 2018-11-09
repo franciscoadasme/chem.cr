@@ -7,7 +7,7 @@ require "benchmark"
 alias KDTree = Chem::Analysis::Spatial::KDTree
 alias Vector = Chem::Spatial::Vector
 
-atoms = Chem::PDB.parse_first("spec/data/1h1s.pdb").atoms
+atoms = Chem::PDB.read_first("spec/data/1h1s.pdb").atoms
 atoms_as_a = atoms.to_a
 tree = KDTree.new atoms
 

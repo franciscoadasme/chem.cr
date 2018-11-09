@@ -29,7 +29,7 @@ describe Chem::Spatial::KDTree do
   end
 
   context "real example" do
-    system = PDB.parse_first "spec/data/pdb/1h1s.pdb"
+    system = PDB.read_first "spec/data/pdb/1h1s.pdb"
     tree = KDTree.new system.atoms
 
     describe "#find" do
