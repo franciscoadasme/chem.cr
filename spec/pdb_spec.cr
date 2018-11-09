@@ -204,6 +204,14 @@ describe Chem::PDB do
       end
     end
 
+    it "parses selected model" do
+      sys = PDB.read "spec/data/pdb/models.pdb", model: 4
+      sys.size.should eq 5
+      sys.atoms.map(&.serial).should eq (1..5).to_a
+      sys.atoms.map(&.name).should eq ["N", "CA", "C", "O", "CB"]
+      sys.atoms[0].x.should eq 22.055
+    end
+
     it "parses selected models" do
       systems = PDB.read "spec/data/pdb/models.pdb", models: {2, 4}
       systems.size.should eq 2
