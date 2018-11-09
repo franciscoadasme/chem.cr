@@ -1,180 +1,57 @@
-require "./from_pdb"
-require "./record"
 require "../topology/templates/all"
+require "./helpers"
+require "./record"
+require "./record_iterator"
 
 module Chem::PDB
   class Parser
-    @atoms_by_serial = {} of Int32 => Atom
-    @bonds = Hash(Tuple(Int32, Int32), Int32).new default_value: 0
-    @current_atom : Atom?
-    @current_chain : Chain?
-    @current_record : Record
-    @current_residue : Residue?
-    @current_system : System
-    @input : ::IO
-    @line_number : Int32 = 0
-    @ss_records = [] of SSRecord
+    private alias BondTable = Hash(Tuple(Int32, Int32), Int32)
 
-    getter current_system : System
+    private alias ChainId = Tuple(UInt64, Char?)          # model, ch
+    private alias ResidueId = Tuple(UInt64, Int32, Char?) # ch, num, inscode
 
-    def initialize(@input : ::IO)
-      @current_record = uninitialized Record
-      @current_system = uninitialized System
-    end
+    @pdb_expt : Protein::Experiment?
+    @pdb_has_hydrogens = false
+    @pdb_lattice : Lattice?
+    @pdb_models = 1
+    @pdb_seq : Protein::Sequence?
+    @pdb_title = ""
 
-    def current_chain : Chain
-      @current_chain.not_nil!
-    end
+    @atoms = {} of Int32 => Atom
+    @chains = {} of ChainId => Chain
+    @residues = {} of ResidueId => Residue
+    @segments = [] of SecondaryStructureSegment
+    @use_hex_numbers = {:atom_serial => false, :residue_number => false}
 
-    def current_residue : Residue
-      @current_residue.not_nil!
-    end
-
-    def fail(msg : String)
-      column_number = @current_record.last_read_range.begin
-      raise ParseException.new "#{msg} at #{@line_number}:#{column_number}"
-    end
-
-    def next_index
-      (@current_atom.try(&.index) || -1) + 1
-    end
-
-    def next_residue_index
-      return 0 unless @current_residue
-    end
-
-    def next_record : Record
-      @line_number += 1
-      @current_record = Record.new @input.read_line
-    end
-
-    def next_record_while(name : String, &block)
-      next_record_while [name], &block
-    end
-
-    def next_record_while(names : Array(String))
-      pos = @input.pos
-      yield
-      while names.includes? next_record.name
-        pos = @input.pos
-        yield
-      end
-      @line_number -= 1
-      @input.pos = pos
-    end
-
-    def parse : System
-      @current_system = System.new
-      until next_record.name == "end"
-        parse_current_record
-      end
-      assign_bonds
-      assign_secondary_structure
-      @current_system
-    end
-
-    def read_char(at index : Int) : Char
-      @current_record[index]
-    end
-
-    def read_char(at index : Int, *, if_blank value : T) : Char | T forall T
-      char = read_char index
-      char.whitespace? ? value : char
-    end
-
-    def read_chars(at range : Range(Int, Int)) : String
-      @current_record[range]
-    end
-
-    def read_chars(at range : Range(Int, Int), *, if_blank value : T) : String | T forall T
-      chars = read_chars range
-      chars.blank? ? value : chars
-    end
-
-    def read_chars?(at range, **options) : String?
-      read_chars range, **options
-    rescue IndexError
-      nil
-    end
-
-    def read_date(at range : Range(Int, Int)) : Time
-      Time.parse_utc read_chars(range), "%d-%^b-%y"
-    end
-
-    def read_float(at range : Range(Int, Int)) : Float64
-      read_chars(range).to_f
-    end
-
-    def read_float?(at range : Range(Int, Int)) : Float64?
-      read_chars(range).to_f?
-    end
-
-    def read_formal_charge : Int32
-      chars = read_chars?(78..79, if_blank: nil)
-      chars ? chars.reverse.to_i : 0
-    rescue ArgumentError
-      fail "Couldn't read a formal charge"
-    end
-
-    def read_int(at range : Range(Int, Int), base : Int32 = 10) : Int32
-      read_chars(range).to_i base
-    end
-
-    def read_residue_number : Int32
-      current_resnum = @current_residue.try(&.number) || 0
-      resnum = read_chars 22..25
-      return guess_residue_number if resnum == "****"
-      resnum.to_i base: current_resnum < 9999 || resnum == "9999" ? 10 : 16
-    end
-
-    def read_serial : Int32
-      chars = read_chars 6..10
-      current_serial = @current_atom.try(&.serial) || 0
-      return current_serial + 1 if chars == "*****"
-      chars.to_i base: current_serial < 99999 ? 10 : 16
-    rescue ArgumentError
-      fail "Couldn't read serial number"
-    end
-
-    def read_title : String
-      String.build do |builder|
-        next_record_while name: "title" do
-          builder << read_chars(10..-1).rstrip
-        end
-      end.squeeze ' '
-    end
-
-    def record_name : String
-      @current_record.name
-    end
-
-    private def assign_bonds
-      @bonds.each do |serials, bond_order|
-        atom1 = @atoms_by_serial[serials[0]]
-        atom2 = @atoms_by_serial[serials[1]]
-        atom1.bonds.add atom2, Bond::Kind.from_value(bond_order)
+    private def assign_bonds(bonds : BondTable, to system : System)
+      bonds.each do |serials, order|
+        index, other = serials
+        @atoms[index].bonds.add @atoms[other], order
       end
     end
 
-    private def assign_secondary_structure
-      @ss_records.each do |rcd|
-        chain = @current_system.each_chain.select { |chain| chain.id == rcd.chain }.first
-        chain.each_residue do |residue|
-          residue.secondary_structure = rcd.kind if rcd.range.includes?(residue.number)
+    private def assign_secondary_structure(to sys : System)
+      chains = sys.chains
+      @segments.each do |seg|
+        next unless chain = chains[seg.chain]?
+        chain.each_residue.select { |res| res.number.within? seg.range }.each do |res|
+          res.secondary_structure = seg.kind
         end
       end
     end
 
-    private def guess_residue_number : Int32
-      resname = read_chars(17..20).strip
-      residue = @current_residue.not_nil!
+    private def guess_atom_serial(prev_atom : Atom?) : Int32
+      prev_atom ? prev_atom.serial + 1 : Int32::MIN
+    end
 
-      next_number = residue.number
-      if residue.name == resname
+    private def guess_residue_number(prev_residue : Residue?, resname : String) : Int32
+      return Int32::MIN unless prev_residue
+
+      next_number = prev_residue.number
+      if prev_residue.name == resname
         if template = Topology::Templates[resname]?
-          atom_name = read_chars(12..15).strip
-          count = template.atom_count include_hydrogens: atom_name.starts_with?('H')
-          next_number += 1 unless residue.atoms.size < count
+          count = template.atom_count include_hydrogens: @pdb_has_hydrogens
+          next_number += 1 unless prev_residue.atoms.size < count
         end
       else
         next_number += 1
@@ -182,70 +59,207 @@ module Chem::PDB
       next_number
     end
 
-    private def parse_atom_record
-      update_chain
-      update_residue
-      atom = Atom.new self
-      @current_atom = atom
-      @atoms_by_serial[atom.serial] = atom
-      current_residue << atom
+    private def make_system : System
+      sys = System.new
+      sys.experiment = @pdb_expt
+      sys.lattice = @pdb_lattice
+      sys.sequence = @pdb_seq
+      sys.title = @pdb_title
+      sys
     end
 
-    private def parse_bonds
-      serial = read_int 6..10
-      {11..15, 16..20, 21..25, 26..30}.each do |range|
-        if other = read_chars?(range, if_blank: nil).try(&.to_i)
-          next if @bonds.has_key?({other, serial}) # skip redundant bonds
-          @bonds[{serial, other}] += 1             # parse duplicates as bond order
+    def parse(io : ::IO, models : Enumerable(Int32)? = nil) : Array(System)
+      iter = Record::Iterator.new io
+      parse_header iter
+      systems = parse_models(iter, models || (1..@pdb_models).to_a)
+      bonds = parse_bonds iter
+      systems.each do |sys|
+        assign_bonds bonds, to: sys
+        assign_secondary_structure to: sys
+      end
+      systems
+    end
+
+    private def parse_atom(residue : Residue, prev_atom : Atom?, rec : Record) : Atom
+      atom = Atom.new \
+        name: rec[12..15].delete(' '),
+        serial: parse_atom_serial(rec[6..10]) || guess_atom_serial(prev_atom),
+        coords: Spatial::Vector.new(rec[30..37].to_f, rec[38..45].to_f, rec[46..53].to_f),
+        residue: residue,
+        alt_loc: rec[16]?,
+        element: (symbol = rec[76..77]?) ? PeriodicTable[symbol.lstrip]? : nil,
+        charge: rec[78..79]?.try(&.reverse.to_i?) || 0,
+        occupancy: rec[54..59].to_f,
+        temperature_factor: rec[60..65].to_f
+      residue << atom
+      atom
+    end
+
+    private def parse_atom_serial(str : String) : Int32?
+      number = str.to_i? base: @use_hex_numbers[:atom_serial] ? 16 : 10
+      @use_hex_numbers[:atom_serial] = number >= 99999 if number
+      number
+    end
+
+    private def parse_bonds(iter : Record::Iterator) : BondTable
+      BondTable.new(default_value: 0).tap do |bonds|
+        iter.each do |rec|
+          case rec.name
+          when "conect"
+            serial = rec[6..10].to_i
+            {11..15, 16..20, 21..25, 26..30}.each do |range|
+              if other = rec[range]?.try(&.to_i)
+                next if bonds.has_key?({other, serial}) # skip redundant bonds
+                bonds[{serial, other}] += 1             # parse duplicates as bond order
+              else
+                break # there are no more indices to read
+              end
+            end
+          else
+            Iterator.stop
+          end
+        end
+      end
+    end
+
+    private def parse_chain(sys : System, prev_chain : Chain?, rec : Record) : Chain
+      chain_id = rec[21]
+      key = {sys.object_id, chain_id}
+      @chains[key] ||= begin
+        sys << (chain = Chain.new chain_id, sys)
+        chain
+      end
+    end
+
+    private def parse_header(iter : Record::Iterator)
+      expt_b = ExperimentBuilder.new
+      iter.each do |rec|
+        case rec.name
+        when "atom", "hetatm", "model" then Iterator.stop
+        when "cryst1"                  then @pdb_lattice = parse_lattice rec
+        when "helix"                   then @segments << parse_helix rec
+        when "nummdl"                  then @pdb_models = rec[10..13].to_i
+        when "seqres"                  then @pdb_seq = parse_sequence iter.back
+        when "sheet"                   then @segments << parse_sheet rec
+        when "expdta"
+          expt_b.kind = Protein::Experiment::Kind.parse(rec[10..79].delete "- ")
+        when "header"
+          expt_b.deposition_date = Time.parse_utc rec[50..58], "%d-%^b-%y"
+          expt_b.pdb_accession = rec[62..65].downcase
+        when "jrnl"
+          case rec[12..15].delete(' ').downcase
+          when "doi"
+            expt_b.doi = rec[19..79].delete ' '
+          end
+        when "remark"
+          next if rec[10..79].blank? # skip remark first line
+          case rec[7..9].to_i
+          when 2
+            expt_b.resolution = rec[23..29].to_f?
+          end
+        when "title"
+          @pdb_title += rec[10..79].rstrip.squeeze ' '
+          expt_b.title = @pdb_title
+        end
+      end
+      @pdb_expt = expt_b.build?
+      @pdb_title = @pdb_expt.try(&.pdb_accession) || @pdb_title
+    end
+
+    private def parse_helix(rec : Record)
+      SecondaryStructureSegment.new \
+        kind: Protein::SecondaryStructure.from_value(rec[38..39].to_i),
+        chain: rec[19],
+        range: rec[21..24].to_i..rec[33..36].to_i
+    end
+
+    private def parse_lattice(rec : Record)
+      @lattice = Lattice.new \
+        size: {rec[6..14].to_f, rec[15..23].to_f, rec[24..32].to_f},
+        angles: {rec[33..39].to_f, rec[40..46].to_f, rec[47..53].to_f},
+        space_group: rec[55..65].rstrip
+    end
+
+    private def parse_model(iter : Record::Iterator, system : System)
+      chain, residue, atom = nil, nil, nil
+      iter.each do |rec|
+        case rec.name
+        when "atom", "hetatm"
+          chain = parse_chain system, chain, rec
+          residue = parse_residue chain, residue, rec
+          atom = parse_atom residue, atom, rec
+          @atoms[atom.serial] = atom
+          @pdb_has_hydrogens = true if atom.element.hydrogen?
+        when "anisou", "ter"
+          next
         else
-          break # there are no more indices to read
+          Iterator.stop
         end
       end
     end
 
-    private def parse_current_record
-      case record_name
-      when "atom", "hetatm"
-        parse_atom_record
-      when "conect"
-        parse_bonds
-      when "cryst1"
-        @current_system.lattice = Lattice.new self
-      when "header"
-        expt = Protein::Experiment.new self
-        @current_system.experiment = expt
-        @current_system.title = expt.pdb_accession
-      when "helix", "sheet"
-        @ss_records << SSRecord.new self
-      when "seqres"
-        @current_system.sequence = Protein::Sequence.new self
-      when "title"
-        @current_system.title = read_title
-      end
-    end
-
-    private def update_chain
-      chain_id, new_id = @current_chain.try(&.id), read_char 21
-      return if chain_id == new_id
-
-      chain = @current_system.chains[new_id]?
-      @current_system << (chain = Chain.new self) unless chain
-      @current_chain = chain
-    end
-
-    private def update_residue
-      res = Residue.new self
-      if cres = @current_residue
-        cresid = {cres.chain.id, cres.name, cres.number, cres.insertion_code}
-        resid = {res.chain.id, res.name, res.number, res.insertion_code}
-        if cresid != resid
-          current_chain << res
-          @current_residue = res
+    private def parse_models(iter : Record::Iterator,
+                             serials : Enumerable(Int32)) : Array(System)
+      model = serials.first
+      system = make_system
+      Array(System).new(serials.size).tap do |models|
+        iter.each do |rec|
+          case rec.name
+          when "atom", "hetatm"
+            next unless serials.includes? model
+            parse_model iter.back, system
+          when "endmdl"
+            models << system if serials.includes? model
+          when "model"
+            model = rec[10..13].to_i
+            system = make_system unless system.empty?
+          else
+            Iterator.stop
+          end
         end
-      else
-        current_chain << res
-        @current_residue = res
+        models << system if models.empty?
       end
+    end
+
+    private def parse_residue(chain : Chain,
+                              prev_res : Residue?,
+                              rec : Record) : Residue
+      name = rec[17..20].delete ' '
+      number = parse_residue_number(rec[22..25]) || guess_residue_number(prev_res, name)
+      ins_code = rec[26]?
+
+      key = {chain.object_id, number, ins_code}
+      @residues[key] ||= begin
+        chain << (residue = Residue.new name, number, ins_code, chain)
+        residue
+      end
+    end
+
+    private def parse_residue_number(str : String) : Int32?
+      base = @use_hex_numbers[:residue_number] && str != "9999" ? 16 : 10
+      number = str.to_i? base
+      @use_hex_numbers[:residue_number] = number >= 9999 if number
+      number
+    end
+
+    private def parse_sequence(iter : Record::Iterator) : Protein::Sequence
+      Protein::Sequence.build do |aminoacids|
+        iter.each do |rec|
+          case rec.name
+          when "seqres"
+            rec[19..79].split.each { |name| aminoacids << Protein::AminoAcid[name] }
+          else
+            Iterator.stop
+          end
+        end
+      end
+    end
+
+    private def parse_sheet(rec : Record) : SecondaryStructureSegment
+      SecondaryStructureSegment.new \
+        kind: Protein::SecondaryStructure.from_value(rec[38..39].to_i + 100),
+        chain: rec[21],
+        range: rec[22..25].to_i..rec[33..36].to_i
     end
   end
 end

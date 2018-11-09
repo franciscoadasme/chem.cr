@@ -1,33 +1,33 @@
-require "../protein/secondary_structure"
-
 module Chem::PDB
   private struct Record
-    @line : String = ""
-    @name : String
+    @line : String
+    @line_number : Int32
 
-    getter last_read_range : Range(Int32, Int32) = 0..0
+    getter cursor : Range(Int32, Int32) = 0..0
+    getter name : String
 
-    def initialize(@line : String)
-      @name = @line[0..5].rstrip.downcase
+    def initialize(@line : String, @line_number : Int32)
+      @line = @line.ljust 80
+      @name = @line[0, 6].delete(' ').downcase
     end
 
     def [](index : Int) : Char
-      @last_read_range = index..index
-      @line[index]
+      @line.to_unsafe[index].unsafe_chr
     end
 
     def [](range : Range(Int, Int)) : String
-      @last_read_range = range
-      @line[range]
+      count = range.end - range.begin + 1
+      String.new @line.unsafe_byte_slice(range.begin, count)
     end
 
-    def name : String
-      @name
+    def []?(index : Int) : Char?
+      char = self[index]
+      char.whitespace? ? nil : char
+    end
+
+    def []?(range : Range(Int, Int)) : String?
+      str = self[range]
+      str.blank? ? nil : str
     end
   end
-
-  private record SSRecord,
-    chain : Char,
-    kind : Protein::SecondaryStructure,
-    range : Range(Int32, Int32)
 end

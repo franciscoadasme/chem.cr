@@ -344,7 +344,7 @@ describe Chem::ResidueCollection do
 end
 
 describe Chem::ResidueView do
-  residues = PDB.parse("spec/data/pdb/insertion_codes.pdb").residues
+  residues = PDB.parse_first("spec/data/pdb/insertion_codes.pdb").residues
 
   describe "#[]" do
     it "gets residue by zero-based index" do
@@ -363,7 +363,7 @@ describe Chem::ResidueView do
     end
 
     it "gets residue by serial number and insertion code" do
-      residues = PDB.parse("spec/data/pdb/insertion_codes.pdb").residues
+      residues = PDB.parse_first("spec/data/pdb/insertion_codes.pdb").residues
       residue = residues[75, 'B']
       residue.number.should eq 75
       residue.insertion_code.should eq 'B'
@@ -437,7 +437,7 @@ describe Chem::Topology do
     end
 
     it "does not connect consecutive residues when there are far away" do
-      system = PDB.parse "spec/data/pdb/protein_gap.pdb"
+      system = PDB.parse_first "spec/data/pdb/protein_gap.pdb"
       r1, r2, r3, r4 = system.residues
 
       Chem::Topology.guess_topology system
@@ -448,31 +448,31 @@ describe Chem::Topology do
     end
 
     it "guess kind of unknown residue when previous is known" do
-      system = PDB.parse "spec/data/pdb/residue_kind_unknown_previous.pdb"
+      system = PDB.parse_first "spec/data/pdb/residue_kind_unknown_previous.pdb"
       Chem::Topology.guess_topology system
       system.residues[1].protein?.should be_true
     end
 
     it "guess kind of unknown residue when next is known" do
-      system = PDB.parse "spec/data/pdb/residue_kind_unknown_next.pdb"
+      system = PDB.parse_first "spec/data/pdb/residue_kind_unknown_next.pdb"
       Chem::Topology.guess_topology system
       system.residues[0].protein?.should be_true
     end
 
     it "guess kind of unknown residue when its flanked by known residues" do
-      system = PDB.parse "spec/data/pdb/residue_kind_unknown_flanked.pdb"
+      system = PDB.parse_first "spec/data/pdb/residue_kind_unknown_flanked.pdb"
       Chem::Topology.guess_topology system
       system.residues[1].protein?.should be_true
     end
 
     it "does not guess kind of unknown residue" do
-      system = PDB.parse "spec/data/pdb/residue_kind_unknown_single.pdb"
+      system = PDB.parse_first "spec/data/pdb/residue_kind_unknown_single.pdb"
       Chem::Topology.guess_topology system
       system.residues[0].other?.should be_true
     end
 
     it "does not guess kind of unknown residue when its not connected to others" do
-      system = PDB.parse "spec/data/pdb/residue_kind_unknown_next_gap.pdb"
+      system = PDB.parse_first "spec/data/pdb/residue_kind_unknown_next_gap.pdb"
       Chem::Topology.guess_topology system
       system.residues.first.other?.should be_true
     end
