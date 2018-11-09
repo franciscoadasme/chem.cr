@@ -3,25 +3,27 @@ require "./pdb/parser"
 require "./system"
 
 module Chem::PDB
+  extend self
+
   class ParseException < IO::ParseException; end
 
-  def self.parse(content : String, **options) : Array(System)
+  def parse(content : String, **options) : Array(System)
     parse ::IO::Memory.new(content), **options
   end
 
-  def self.parse(io : ::IO, **options) : Array(System)
+  def parse(io : ::IO, **options) : Array(System)
     systems = Parser.new.parse io, **options
   end
 
-  def self.read(filepath : String, model : Int32) : System
+  def read(filepath : String, model : Int32) : System
     read(filepath, models: {model}).first
   end
 
-  def self.read(filepath : String, **options) : Array(System)
+  def read(filepath : String, **options) : Array(System)
     parse File.read(filepath), **options
   end
 
-  def self.read_first(filepath : String) : System
+  def read_first(filepath : String) : System
     read filepath, model: 1
   end
 end

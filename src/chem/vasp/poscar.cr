@@ -1,4 +1,6 @@
 module Chem::VASP::Poscar
+  extend self
+
   class ParseException < IO::ParseException; end
 
   enum CoordinateSystem
@@ -6,25 +8,25 @@ module Chem::VASP::Poscar
     Fractional
   end
 
-  def self.parse(content : String) : System
+  def parse(content : String) : System
     parse ::IO::Memory.new content
   end
 
-  def self.parse(io : ::IO) : System
+  def parse(io : ::IO) : System
     PullParser.new(io).parse
   end
 
-  def self.read(filepath : String) : System
+  def read(filepath : String) : System
     parse File.read(filepath)
   end
 
-  def self.write(filepath : String, system : System)
+  def write(filepath : String, system : System)
     File.open(filepath, "w") do |file|
       Writer.new(file).write system
     end
   end
 
-  def self.write(io : ::IO, system : System)
+  def write(io : ::IO, system : System)
     Writer.new(io).write system
   end
 end
