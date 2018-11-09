@@ -23,4 +23,8 @@ abstract struct Number
   def radians : self
     self * DEGREE_TO_RADIAN
   end
+
+  def within?(range : Range(Number, Number)) : Bool
+    range.includes? self
+  end
 end
