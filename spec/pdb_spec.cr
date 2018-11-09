@@ -215,5 +215,14 @@ describe Chem::PDB do
         sys.atoms[0].x.should eq x
       end
     end
+
+    it "parses file without the END record" do
+      system = PDB.parse_first "spec/data/pdb/no_end.pdb"
+      system.size.should eq 6
+      system.chains.map(&.id).should eq ['A']
+      system.residues.map(&.number).should eq [0]
+      system.residues.map(&.name).should eq ["SER"]
+      system.atoms.map(&.name).should eq ["N", "CA", "C", "O", "CB", "OG"]
+    end
   end
 end
