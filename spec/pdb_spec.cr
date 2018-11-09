@@ -192,6 +192,13 @@ describe Chem::PDB do
       residue["OD1"].x.should eq 8.924
     end
 
+    it "parses insertion codes" do
+      residues = PDB.read_first("spec/data/pdb/insertion_codes.pdb").residues
+      residues.size.should eq 7
+      residues.map(&.number).should eq [75, 75, 75, 75, 75, 75, 76]
+      residues.map(&.insertion_code).should eq [nil, 'A', 'B', 'C', 'D', 'E', nil]
+    end
+
     it "parses multiple models" do
       systems = PDB.read "spec/data/pdb/models.pdb"
       systems.size.should eq 4
