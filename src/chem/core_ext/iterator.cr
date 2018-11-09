@@ -7,6 +7,7 @@ module Iterator(T)
     end
 
     def next
+      return Iterator.stop if @iterators.empty?
       value = @iterators[@current_index].next
       if value.is_a?(Stop) && @current_index < @iterators.size - 1
         @current_index += 1
