@@ -73,7 +73,7 @@ module Chem::Spatial
       middle = atoms.size / 2
 
       Node.new axis,
-        atoms[middle].index,
+        atoms[middle].serial,
         atoms[middle].coords,
         build_tree(atoms[0...middle], depth + 1),
         build_tree(atoms[(middle + 1)..-1], depth + 1)

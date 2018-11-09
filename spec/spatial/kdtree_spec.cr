@@ -17,30 +17,30 @@ describe Chem::Spatial::KDTree do
 
     describe "#nearest" do
       it "works" do
-        tree.nearest(to: Vector.origin, within: 5.5).should eq [2, 1, 0, 5]
+        tree.nearest(to: Vector.origin, within: 5.5).should eq [3, 2, 1, 6]
       end
     end
 
     describe "#nearest" do
       it "works" do
-        tree.nearest(to: Vector.origin, neighbors: 2).should eq [2, 1]
+        tree.nearest(to: Vector.origin, neighbors: 2).should eq [3, 2]
       end
     end
   end
 
   context "real example" do
-    system = PDB.parse "spec/data/pdb/1h1s.pdb"
+    system = PDB.parse_first "spec/data/pdb/1h1s.pdb"
     tree = KDTree.new system.atoms
 
     describe "#find" do
       it "works" do
-        tree.nearest(to: Vector[19, 32, 44], neighbors: 1).should eq [9121]
+        tree.nearest(to: Vector[19, 32, 44], neighbors: 1).should eq [9126]
       end
     end
 
     describe "#find" do
       it "works" do
-        tree.nearest(to: Vector[19, 32, 44], within: 3.5).should eq [9121, 1118, 1116, 9120]
+        tree.nearest(to: Vector[19, 32, 44], within: 3.5).should eq [9126, 1119, 1117, 9125]
       end
 
       it "works" do
@@ -48,7 +48,7 @@ describe Chem::Spatial::KDTree do
         tree.nearest(to: Vector[19, 32, 44], within: 3.5) do |atom_index, distance|
           atom_indices << atom_index
         end
-        atom_indices.sort!.should eq [1116, 1118, 9120, 9121]
+        atom_indices.sort!.should eq [1117, 1119, 9125, 9126]
       end
     end
   end

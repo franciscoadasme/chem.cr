@@ -13,7 +13,6 @@ module Chem
     property constraint : Constraint?
     property coords : Spatial::Vector
     property element : PeriodicTable::Element
-    property index : Int32
     property name : String
     property occupancy : Float64 = 1
     property residue : Residue
@@ -25,7 +24,7 @@ module Chem
     delegate atomic_number, covalent_radius, mass, vdw_radius, to: @element
 
     def initialize(@name : String,
-                   @index : Int32,
+                   @serial : Int32,
                    @coords : Spatial::Vector,
                    @residue : Residue,
                    @alt_loc : Char? = nil,
@@ -37,7 +36,6 @@ module Chem
         raise ArgumentError.new "Occupancy is not within 0 and 1"
       end
       @element = element || PeriodicTable[atom_name: @name]
-      @serial = @index + 1
     end
 
     def bonded?(to other : self) : Bool

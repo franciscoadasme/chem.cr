@@ -15,7 +15,6 @@ describe Chem::PDB do
       system.chains['D'].residues.size.should eq 370
 
       atom = system.atoms[-1]
-      atom.index.should eq 9700
       atom.serial.should eq 9705
       atom.name.should eq "O"
       atom.alt_loc.should be_nil
@@ -27,8 +26,6 @@ describe Chem::PDB do
       atom.temperature_factor.should eq 53.58
       atom.element.oxygen?.should be_true
       atom.charge.should eq 0
-
-      system.atoms[atom.index].should be atom
     end
 
     it "parses a PDB file" do
@@ -43,7 +40,6 @@ describe Chem::PDB do
       system.atoms.map(&.charge).should eq [0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, -1, 1]
 
       atom = system.atoms[11]
-      atom.index.should eq 11
       atom.serial.should eq 12
       atom.name.should eq "OE2"
       # atom.altloc.should be_nil

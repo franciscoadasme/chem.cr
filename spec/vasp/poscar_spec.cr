@@ -17,15 +17,13 @@ describe Chem::VASP::Poscar do
       atom.chain.id.should eq 'A'
       atom.coords.should eq Vector[1.25020645, 3.42088266, 4.92610368]
       atom.element.oxygen?.should be_true
-      atom.index.should eq 48
+      atom.serial.should eq 49
       atom.name.should eq "O7"
       atom.occupancy.should eq 1
       atom.residue.name.should eq "UNK"
       atom.residue.number.should eq 1
       atom.serial.should eq 49
       atom.temperature_factor.should eq 0
-
-      system.atoms[atom.index].should be atom
 
       system.atoms[0].element.carbon?.should be_true
       system.atoms[14].element.hydrogen?.should be_true

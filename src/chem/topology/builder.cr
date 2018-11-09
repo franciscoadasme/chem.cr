@@ -57,7 +57,7 @@ module Chem
     private alias ChainId = Char?
     private alias ResidueId = Tuple(ChainId, String, Int32, Char?)
 
-    @atom_index = -1
+    @atom_serial : Int32 = 0
     @chain : Chain?
     @chains = {} of ChainId => Chain
     @conf : Conf?
@@ -72,7 +72,7 @@ module Chem
         @chain = @chains.last_value?
         system.each_residue { |residue| @residues[id of: residue] = residue }
         @residue = @chain.try &.residues.last
-        @atom_index = system.each_atom.max_of &.index
+        @atom_serial = system.each_atom.max_of &.serial
       else
         @system = System.new
       end
@@ -138,7 +138,7 @@ module Chem
     def atom(named name : String,
              at coords : Coords = Spatial::Vector.zero,
              **options) : Atom
-      add_atom name, (@atom_index += 1), coords, **options
+      add_atom name, (@atom_serial += 1), coords, **options
     end
 
     def atom(at coords : Coords, **options) : Atom
