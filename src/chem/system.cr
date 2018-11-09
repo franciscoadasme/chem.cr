@@ -43,6 +43,10 @@ module Chem
       Iterator.chain each_chain.map(&.each_residue).to_a
     end
 
+    def empty?
+      size == 0
+    end
+
     def make_chain(**options) : Chain
       options = options.merge({system: self})
       chain = Chain.new **options
