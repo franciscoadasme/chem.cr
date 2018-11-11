@@ -68,7 +68,7 @@ module Chem
 
       def next
         return unless any?
-        next_idx = @conformations.index(@current_conf).not_nil! + 1
+        next_idx = @conformations.index!(@current_conf) + 1
         next_idx = 0 if next_idx >= @conformations.size
         self.current = @conformations[next_idx]
       end

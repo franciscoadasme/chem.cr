@@ -40,7 +40,7 @@ module Chem
     end
 
     protected def []=(atom_name : String, atom : Atom)
-      idx = @atoms.index(self[atom_name]).not_nil!
+      idx = @atoms.index! self[atom_name]
       @atoms[idx] = atom
     end
 

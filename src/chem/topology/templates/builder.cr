@@ -137,7 +137,7 @@ module Chem::Topology::Templates
         h_count = missing_bonds atom_t
         h_count.times do |j|
           name = "H#{atom_t.suffix}#{j + 1 if h_count > 1}"
-          pos = @atom_types.index(atom_t).not_nil! + 1 + j
+          pos = @atom_types.index!(atom_t) + 1 + j
           add_bond atom_t, atom_type(name, insert_at: pos)
           i += 1
         end
