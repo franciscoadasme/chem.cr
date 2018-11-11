@@ -239,5 +239,38 @@ describe Chem::PDB do
       system.residues.map(&.name).should eq ["SER"]
       system.atoms.map(&.name).should eq ["N", "CA", "C", "O", "CB", "OG"]
     end
+
+    it "parses 1cbn (alternate conformations)" do
+      system = PDB.read_first "spec/data/pdb/1cbn.pdb"
+      system.size.should eq 640 # atom with alt_loc = nil or A
+      system.chains.size.should eq 1
+      system.residues.size.should eq 47
+      system.residues.map(&.number).should eq ((1..46).to_a << 66)
+
+      res = system.residues[serial: 23]
+      res.has_alternate_conformations?.should be_true
+      { {'A', 0.8, 10.387}, {'B', 0.2, 10.421} }.each do |conf_id, occupancy, cg_x|
+        res.conf = conf_id
+        res.conf.try(&.occupancy).should eq occupancy
+        res["CG"].x.should eq cg_x
+      end
+    end
+
+    it "parses 1dpo (insertions)" do
+      system = PDB.read_first "spec/data/pdb/1dpo.pdb"
+      system.size.should eq 1921 # atom with alt_loc = nil or A
+      system.chains.size.should eq 1
+      system.residues.size.should eq 446
+
+      missing = {35, 36, 68, 126, 131, 205, 206, 207, 208, 218}
+      resids = [] of Tuple(Int32, Char?)
+      resids.concat (16..246).reject { |i| missing.includes? i }.map { |i| {i, nil} }
+      resids.concat [250, 251, 247, 248, 249].map { |num| {num, nil} }
+      resids.concat (252..468).map { |num| {num, nil} }
+      {184, 188, 221}.each do |i|
+        resids.insert resids.index!({i, nil}) + 1, {i, 'A'}
+      end
+      system.residues.map { |res| {res.number, res.insertion_code} }.should eq resids
+    end
   end
 end
