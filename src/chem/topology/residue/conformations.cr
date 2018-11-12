@@ -23,13 +23,6 @@ module Chem
       def initialize(@residue : Residue)
       end
 
-      protected def <<(atom : Atom)
-        if alt_loc = atom.alt_loc
-          conf = self[alt_loc]? || add(alt_loc, atom.occupancy)
-          conf.atoms << atom
-        end
-      end
-
       def [](id : Char) : Conformation
         self[id]? || raise Error.new "#{@residue} does not have conformation #{id}"
       end

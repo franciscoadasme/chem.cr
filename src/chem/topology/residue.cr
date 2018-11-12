@@ -51,7 +51,9 @@ module Chem
 
       if alt_loc = atom.alt_loc
         @atoms << atom if conf.nil? || alt_loc == conf.try(&.id)
-        conformations << atom
+        conf = conformations[alt_loc]?
+        conf ||= conformations.add name, alt_loc, atom.occupancy
+        conf.atoms << atom
       else
         @atoms << atom
       end
