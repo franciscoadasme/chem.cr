@@ -124,7 +124,7 @@ module Chem
       {phi, psi}
     end
 
-    protected def swap_conf_atoms(atoms : Array(Atom))
+    protected def swap_conf_atoms(id : Char, atoms : Array(Atom))
       atoms.each do |atom|
         if idx = @atoms.index &.name.==(atom.name)
           @atoms[idx] = atom
@@ -132,7 +132,7 @@ module Chem
           @atoms << atom
         end
       end
-      @atoms.select! { |atom| {atoms.first.alt_loc, nil}.includes? atom.alt_loc }
+      @atoms.select! { |atom| {id, nil}.includes? atom.alt_loc }
     end
 
     def to_s(io : ::IO)

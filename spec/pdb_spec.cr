@@ -199,16 +199,16 @@ describe Chem::PDB do
       residue.conformations.map(&.residue_name).should eq ["ARG", "ARG", "TRP"]
       residue.conformations.map(&.occupancy).should eq [0.22, 0.22, 0.56]
 
-      residue.conf.try(&.id).should eq 'A'
-      residue.name.should eq "ARG"
-      residue.atoms.map(&.name).should eq ["N", "CA", "C", "O", "CB", "CG", "CD", "NE",
-                                           "CZ", "NH1", "NH2"]
-
-      residue.conf = 'C'
+      residue.conf.try(&.id).should eq 'C' #  highest occupancy
       residue.name.should eq "TRP"
       residue.atoms.map(&.name).should eq ["N", "CA", "C", "O", "CB", "CG", "CD1",
                                            "CD2", "NE1", "CE2", "CE3", "CZ2", "CZ3",
                                            "CH2"]
+
+      residue.conf = 'A'
+      residue.name.should eq "ARG"
+      residue.atoms.map(&.name).should eq ["N", "CA", "C", "O", "CB", "CG", "CD", "NE",
+                                           "CZ", "NH1", "NH2"]
     end
 
     it "parses insertion codes" do
@@ -261,7 +261,7 @@ describe Chem::PDB do
 
     it "parses 1cbn (alternate conformations)" do
       system = PDB.read_first "spec/data/pdb/1cbn.pdb"
-      system.size.should eq 640 # atom with alt_loc = nil or A
+      system.size.should eq 644 # atom with alt_loc = nil or highest occupancy
       system.chains.size.should eq 1
       system.residues.size.should eq 47
       system.residues.map(&.number).should eq ((1..46).to_a << 66)

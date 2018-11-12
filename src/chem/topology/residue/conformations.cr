@@ -42,6 +42,7 @@ module Chem
 
         @conformations << (conf = Conformation.new residue_name, id, occupancy)
         @current_conf ||= conf
+        self.current = conf if (other = current) && occupancy > other.occupancy
         conf
       end
 
@@ -58,7 +59,7 @@ module Chem
       end
 
       private def current=(conf : Conformation)
-        @residue.swap_conf_atoms conf.atoms
+        @residue.swap_conf_atoms conf.id, conf.atoms
         @residue.name = conf.residue_name
         @current_conf = conf
       end
