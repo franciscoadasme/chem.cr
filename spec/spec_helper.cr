@@ -49,7 +49,7 @@ def fake_residue_with_alternate_conformations
         atom "OG", {1.0, 0.0, 0.0}
       end
 
-      conf 'B', occupancy: 0.25 do
+      conf 'B', occupancy: 0.2 do
         atom "CB", {2.0, 0.0, 0.0}
         atom "OG", {2.0, 0.0, 0.0}
       end
@@ -57,6 +57,12 @@ def fake_residue_with_alternate_conformations
       conf 'C', occupancy: 0.1 do
         atom "CB", {3.0, 0.0, 0.0}
         atom "OG", {3.0, 0.0, 0.0}
+      end
+
+      conf 'D', occupancy: 0.05 do
+        atom "OB", {4.0, 0.0, 0.0}
+        atom "CG1", {4.0, 0.0, 0.0}
+        atom "CG2", {4.0, 0.0, 0.0}
       end
     end
   end.residues.first

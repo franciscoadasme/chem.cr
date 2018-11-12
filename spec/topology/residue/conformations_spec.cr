@@ -3,15 +3,15 @@ require "../../spec_helper"
 describe Chem::Residue do
   it "sets up conformations based on atom alternate locations" do
     residue = fake_residue_with_alternate_conformations
-    residue.conformations.map(&.id).should eq ['A', 'B', 'C']
+    residue.conformations.map(&.id).should eq ['A', 'B', 'C', 'D']
   end
 
   it "fails when adding an atom that leads to invalid total occupancy" do
     msg = "Sum of occupancies in A:SER1 will be greater than 1 when adding " \
-          "conformation D"
+          "conformation E"
     expect_raises Chem::Error, msg do
       residue = fake_residue_with_alternate_conformations
-      residue << Atom.new "OG", 10, Vector[4, 0, 0], residue, 'D', occupancy: 0.05
+      residue << Atom.new "OG", 10, Vector[4, 0, 0], residue, 'E', occupancy: 0.05
     end
   end
 
@@ -41,11 +41,13 @@ describe Chem::Residue do
       it "changes to the next conformation" do
         residue = fake_residue_with_alternate_conformations
 
-        confs = [{'A', 1, 0.65}, {'B', 2, 0.25}, {'C', 3, 0.1}]
+        confs = [{'A', 1, 0.65}, {'B', 2, 0.2}, {'C', 3, 0.1}, {'D', 4, 0.05}]
         confs.each.cycle(2) do |id, x, occ|
           residue.conf.try(&.id).should eq id
           residue.conf.try(&.occupancy).should eq occ
-          residue.atoms.map(&.x).should eq [0, 0, 0, 0, x, x]
+          xs = [0, 0, 0, 0, x, x]
+          xs << x if id == 'D'
+          residue.atoms.map(&.x).should eq xs
           residue.conformations.next
         end
       end

@@ -192,6 +192,25 @@ describe Chem::PDB do
       residue["OD1"].x.should eq 8.924
     end
 
+    it "parses alternate conformations with different residues" do
+      residue = PDB.read_first("spec/data/pdb/alternate_conf_mut.pdb").residues.first
+      residue.has_alternate_conformations?.should be_true
+      residue.conformations.map(&.id).should eq ['A', 'B', 'C']
+      residue.conformations.map(&.residue_name).should eq ["ARG", "ARG", "TRP"]
+      residue.conformations.map(&.occupancy).should eq [0.22, 0.22, 0.56]
+
+      residue.conf.try(&.id).should eq 'A'
+      residue.name.should eq "ARG"
+      residue.atoms.map(&.name).should eq ["N", "CA", "C", "O", "CB", "CG", "CD", "NE",
+                                           "CZ", "NH1", "NH2"]
+
+      residue.conf = 'C'
+      residue.name.should eq "TRP"
+      residue.atoms.map(&.name).should eq ["N", "CA", "C", "O", "CB", "CG", "CD1",
+                                           "CD2", "NE1", "CE2", "CE3", "CZ2", "CZ3",
+                                           "CH2"]
+    end
+
     it "parses insertion codes" do
       residues = PDB.read_first("spec/data/pdb/insertion_codes.pdb").residues
       residues.size.should eq 7

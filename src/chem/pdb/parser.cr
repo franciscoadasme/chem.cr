@@ -229,9 +229,16 @@ module Chem::PDB
       ins_code = rec[26]?
 
       key = {chain.object_id, number, ins_code}
-      @residues[key] ||= begin
-        chain << (residue = Residue.new name, number, ins_code, chain)
+      if residue = @residues[key]?
+        if (alt_loc = rec[16]?) && !residue.conformations[alt_loc]?
+          residue.conformations.add name, alt_loc, rec[54..59].to_f
+        end
         residue
+      else
+        @residues[key] ||= begin
+          chain << (res = Residue.new name, number, ins_code, chain)
+          res
+        end
       end
     end
 

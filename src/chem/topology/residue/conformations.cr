@@ -5,9 +5,10 @@ module Chem
     class Conformation
       getter id : Char
       getter occupancy : Float64
+      getter residue_name : String
       protected getter atoms = [] of Atom
 
-      protected def initialize(@id : Char, @occupancy : Float64)
+      protected def initialize(@residue_name : String, @id : Char, @occupancy : Float64)
       end
     end
 
@@ -31,13 +32,15 @@ module Chem
         find &.id.==(id)
       end
 
-      private def add(id : Char, occupancy : Float64) : Conformation
+      protected def add(residue_name : String,
+                        id : Char,
+                        occupancy : Float64) : Conformation
         if total_occupancy + occupancy > 1
           raise Error.new "Sum of occupancies in #{@residue} will be greater than 1 " \
                           "when adding conformation #{id}"
         end
 
-        @conformations << (conf = Conformation.new id, occupancy)
+        @conformations << (conf = Conformation.new residue_name, id, occupancy)
         @current_conf ||= conf
         conf
       end
@@ -56,6 +59,7 @@ module Chem
 
       private def current=(conf : Conformation)
         @residue.swap_conf_atoms conf.atoms
+        @residue.name = conf.residue_name
         @current_conf = conf
       end
 
