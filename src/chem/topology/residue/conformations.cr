@@ -59,6 +59,7 @@ module Chem
       end
 
       private def current=(conf : Conformation)
+        return if @current_conf == conf
         @residue.swap_conf_atoms conf.id, conf.atoms
         @residue.name = conf.residue_name
         @current_conf = conf
