@@ -39,11 +39,6 @@ module Chem
       atoms[atom_name]
     end
 
-    protected def []=(atom_name : String, atom : Atom)
-      idx = @atoms.index! self[atom_name]
-      @atoms[idx] = atom
-    end
-
     def []?(atom_name : String) : Atom?
       atoms[atom_name]?
     end
@@ -125,6 +120,17 @@ module Chem
 
     def ramachandran_angles : Tuple(Float64, Float64)
       {phi, psi}
+    end
+
+    protected def swap_conf_atoms(atoms : Array(Atom))
+      atoms.each do |atom|
+        if idx = @atoms.index &.name.==(atom.name)
+          @atoms[idx] = atom
+        else
+          @atoms << atom
+        end
+      end
+      @atoms.select! { |atom| {atoms.first.alt_loc, nil}.includes? atom.alt_loc }
     end
 
     def to_s(io : ::IO)

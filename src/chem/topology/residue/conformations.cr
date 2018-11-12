@@ -62,7 +62,7 @@ module Chem
       end
 
       private def current=(conf : Conformation)
-        conf.atoms.each { |atom| @residue[atom.name] = atom }
+        @residue.swap_conf_atoms conf.atoms
         @current_conf = conf
       end
 
