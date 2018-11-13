@@ -90,13 +90,6 @@ module Chem
       conformations.any?
     end
 
-    def make_atom(**options) : Atom
-      options = options.merge({residue: self})
-      atom = Atom.new **options
-      self << atom
-      atom
-    end
-
     def omega : Float64
       if (prev_res = previous) && bonded?(prev_res)
         Spatial.dihedral prev_res.atoms["CA"], prev_res.atoms["C"], atoms["N"],

@@ -31,12 +31,5 @@ module Chem
     def id : Char?
       @identifier
     end
-
-    def make_residue(**options) : Residue
-      options = options.merge({chain: self})
-      residue = Residue.new **options
-      self << residue
-      residue
-    end
   end
 end

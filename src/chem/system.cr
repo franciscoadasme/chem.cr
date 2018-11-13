@@ -44,13 +44,6 @@ module Chem
       size == 0
     end
 
-    def make_chain(**options) : Chain
-      options = options.merge({system: self})
-      chain = Chain.new **options
-      self << chain
-      chain
-    end
-
     def size : Int32
       each_atom.sum(0) { 1 }
     end
