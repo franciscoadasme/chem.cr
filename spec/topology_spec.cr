@@ -1,29 +1,29 @@
 require "./spec_helper"
 
 describe Chem::AtomCollection do
-  system = fake_system
+  st = fake_structure
 
   describe "#atoms" do
     it "returns an atom view" do
-      system.atoms.should be_a Chem::AtomView
+      st.atoms.should be_a Chem::AtomView
     end
   end
 
   describe "#each_atom" do
     it "iterates over each atom when called with block" do
       ary = [] of Int32
-      system.each_atom { |atom| ary << atom.serial }
+      st.each_atom { |atom| ary << atom.serial }
       ary.should eq (1..25).to_a
     end
 
     it "returns an iterator when called without block" do
-      system.each_atom.should be_a Iterator(Chem::Atom)
+      st.each_atom.should be_a Iterator(Chem::Atom)
     end
   end
 end
 
 describe Chem::AtomView do
-  atoms = fake_system.atoms
+  atoms = fake_structure.atoms
 
   describe "#[]" do
     it "gets atom by zero-based index" do
@@ -43,8 +43,8 @@ describe Chem::AtomView do
 end
 
 describe Chem::Bond do
-  system = fake_system
-  glu_cd, glu_oe1, glu_oe2 = system.atoms[6..8]
+  st = fake_structure
+  glu_cd, glu_oe1, glu_oe2 = st.atoms[6..8]
 
   describe "#==" do
     it "returns true when the atoms are in the same order" do
@@ -129,8 +129,8 @@ end
 
 describe Chem::BondArray do
   describe "#[]" do
-    system = fake_system
-    glu_cd, glu_oe1, glu_oe2 = system.atoms[6..8]
+    st = fake_structure
+    glu_cd, glu_oe1, glu_oe2 = st.atoms[6..8]
     glu_cd.bonds.add glu_oe1, :double
     glu_cd.bonds.add glu_oe2
 
@@ -140,14 +140,14 @@ describe Chem::BondArray do
 
     it "fails when the bond does not exist" do
       expect_raises Chem::Error, "Atom 7 is not bonded to atom 6" do
-        glu_cd.bonds[system.atoms[5]]
+        glu_cd.bonds[st.atoms[5]]
       end
     end
   end
 
   describe "#[]?" do
-    system = fake_system
-    glu_cd, glu_oe1, glu_oe2 = system.atoms[6..8]
+    st = fake_structure
+    glu_cd, glu_oe1, glu_oe2 = st.atoms[6..8]
     glu_cd.bonds.add glu_oe1, :double
     glu_cd.bonds.add glu_oe2
 
@@ -156,14 +156,14 @@ describe Chem::BondArray do
     end
 
     it "returns nil when the bond does not exist" do
-      glu_cd.bonds[system.atoms[5]]?.should be_nil
+      glu_cd.bonds[st.atoms[5]]?.should be_nil
     end
   end
 
   describe "#add" do
     it "adds a new bond" do
-      system = fake_system
-      glu_cd, glu_oe1, glu_oe2 = system.atoms[6..8]
+      st = fake_structure
+      glu_cd, glu_oe1, glu_oe2 = st.atoms[6..8]
 
       glu_cd.bonds.add glu_oe1, :double
       glu_cd.bonds.size.should eq 1
@@ -171,8 +171,8 @@ describe Chem::BondArray do
     end
 
     it "doesn't add an existing bond" do
-      system = fake_system
-      glu_cd, glu_oe1, glu_oe2 = system.atoms[6..8]
+      st = fake_structure
+      glu_cd, glu_oe1, glu_oe2 = st.atoms[6..8]
 
       glu_cd.bonds.add glu_oe1, :double
       glu_cd.bonds.add glu_oe1, :double
@@ -181,8 +181,8 @@ describe Chem::BondArray do
     end
 
     it "doesn't add an existing bond (inversed)" do
-      system = fake_system
-      glu_cd, glu_oe1, glu_oe2 = system.atoms[6..8]
+      st = fake_structure
+      glu_cd, glu_oe1, glu_oe2 = st.atoms[6..8]
 
       glu_cd.bonds.add glu_oe1, :double
       glu_oe1.bonds.add glu_cd
@@ -191,8 +191,8 @@ describe Chem::BondArray do
     end
 
     it "fails when adding a bond that doesn't have the primary atom" do
-      system = fake_system
-      glu_cd, glu_oe1, glu_oe2 = system.atoms[6..8]
+      st = fake_structure
+      glu_cd, glu_oe1, glu_oe2 = st.atoms[6..8]
 
       expect_raises Chem::Error, "Bond doesn't include atom 7" do
         glu_cd.bonds << Chem::Bond.new glu_oe1, glu_oe2
@@ -200,29 +200,29 @@ describe Chem::BondArray do
     end
 
     # it "fails when adding a bond leads to an invalid valence" do
-    #   system = fake_system
-    #   glu_cd, glu_oe1, glu_oe2 = system.atoms[6..8]
+    #   st = fake_structure
+    #   glu_cd, glu_oe1, glu_oe2 = st.atoms[6..8]
     #   glu_cd.bonds.add glu_oe1, :double
     #   glu_cd.bonds.add glu_oe2
 
     #   expect_raises Chem::Error, "Atom 7 has only 1 valence electron available" do
-    #     glu_cd.bonds.add system.atoms[5], :double
+    #     glu_cd.bonds.add st.atoms[5], :double
     #   end
     # end
 
     # it "fails when adding a bond leads to an invalid valence on secondary atom" do
-    #   system = fake_system
-    #   glu_cd, glu_oe1, glu_oe2 = system.atoms[6..8]
+    #   st = fake_structure
+    #   glu_cd, glu_oe1, glu_oe2 = st.atoms[6..8]
     #   glu_cd.bonds.add glu_oe1
 
     #   expect_raises Chem::Error, "Atom 8 has only 1 valence electron available" do
-    #     system.atoms[5].bonds.add glu_oe1, :double
+    #     st.atoms[5].bonds.add glu_oe1, :double
     #   end
     # end
 
     # it "fails when the primary atom has its valence shell already full" do
-    #   system = fake_system
-    #   glu_cd, glu_oe1, glu_oe2 = system.atoms[6..8]
+    #   st = fake_structure
+    #   glu_cd, glu_oe1, glu_oe2 = st.atoms[6..8]
     #   glu_cd.bonds.add glu_oe1, :double
 
     #   expect_raises Chem::Error, "Atom 8 has its valence shell already full" do
@@ -231,8 +231,8 @@ describe Chem::BondArray do
     # end
 
     # it "fails when the secondary atom has its valence shell already full" do
-    #   system = fake_system
-    #   glu_cd, glu_oe1, glu_oe2 = system.atoms[6..8]
+    #   st = fake_structure
+    #   glu_cd, glu_oe1, glu_oe2 = st.atoms[6..8]
     #   glu_cd.bonds.add glu_oe1, :double
 
     #   expect_raises Chem::Error, "Atom 8 has its valence shell already full" do
@@ -241,21 +241,21 @@ describe Chem::BondArray do
     # end
 
     # it "fails when a charged atom has its valence shell already full" do
-    #   system = fake_system
-    #   glu_cd, glu_oe1, glu_oe2 = system.atoms[6..8]
+    #   st = fake_structure
+    #   glu_cd, glu_oe1, glu_oe2 = st.atoms[6..8]
     #   glu_cd.bonds.add glu_oe2
     #   glu_oe2.charge.should eq -1
 
     #   expect_raises Chem::Error, "Atom 9 has its valence shell already full" do
-    #     glu_oe2.bonds.add system.atoms[5], :double
+    #     glu_oe2.bonds.add st.atoms[5], :double
     #   end
     # end
   end
 
   describe "#delete" do
     it "deletes an existing bond" do
-      system = fake_system
-      glu_cd, glu_oe1, glu_oe2 = system.atoms[6..8]
+      st = fake_structure
+      glu_cd, glu_oe1, glu_oe2 = st.atoms[6..8]
 
       glu_cd.bonds.add glu_oe1, :double
       glu_cd.bonds.add glu_oe2, :single
@@ -266,8 +266,8 @@ describe Chem::BondArray do
     end
 
     it "doesn't delete a non-existing bond" do
-      system = fake_system
-      glu_cd, glu_oe1, glu_oe2 = system.atoms[6..8]
+      st = fake_structure
+      glu_cd, glu_oe1, glu_oe2 = st.atoms[6..8]
 
       glu_cd.bonds.add glu_oe1, :double
 
@@ -280,29 +280,29 @@ describe Chem::BondArray do
 end
 
 describe Chem::ChainCollection do
-  system = fake_system
+  st = fake_structure
 
   describe "#chains" do
     it "returns a chain view" do
-      system.chains.should be_a Chem::ChainView
+      st.chains.should be_a Chem::ChainView
     end
   end
 
   describe "#each_chain" do
     it "iterates over each chain when called with block" do
       ary = [] of Char?
-      system.each_chain { |chain| ary << chain.id }
+      st.each_chain { |chain| ary << chain.id }
       ary.should eq ['A', 'B']
     end
 
     it "returns an iterator when called without block" do
-      system.each_chain.should be_a Iterator(Chem::Chain)
+      st.each_chain.should be_a Iterator(Chem::Chain)
     end
   end
 end
 
 describe Chem::ChainView do
-  chains = fake_system.chains
+  chains = fake_structure.chains
 
   describe "#[]" do
     it "gets chain by zero-based index" do
@@ -322,23 +322,23 @@ describe Chem::ChainView do
 end
 
 describe Chem::ResidueCollection do
-  system = fake_system
+  st = fake_structure
 
   describe "#each_residue" do
     it "iterates over each residue when called with block" do
       ary = [] of String
-      system.each_residue { |residue| ary << residue.name }
+      st.each_residue { |residue| ary << residue.name }
       ary.should eq ["ASP", "PHE", "SER"]
     end
 
     it "returns an iterator when called without block" do
-      system.each_residue.should be_a Iterator(Chem::Residue)
+      st.each_residue.should be_a Iterator(Chem::Residue)
     end
   end
 
   describe "#residues" do
     it "returns a residue view" do
-      system.residues.should be_a Chem::ResidueView
+      st.residues.should be_a Chem::ResidueView
     end
   end
 end
@@ -378,12 +378,12 @@ describe Chem::ResidueView do
   end
 end
 
-describe Chem::System do
-  system = fake_system
+describe Chem::Structure do
+  st = fake_structure
 
   describe "#size" do
     it "returns the number of atoms" do
-      system.size.should eq 25
+      st.size.should eq 25
     end
   end
 end
@@ -391,10 +391,10 @@ end
 describe Chem::Topology do
   describe "#guess_topology" do
     it "works" do
-      system = fake_system
-      r1, r2, r3 = system.residues
+      st = fake_structure
+      r1, r2, r3 = st.residues
 
-      Chem::Topology.guess_topology system
+      Chem::Topology.guess_topology st
 
       [r1, r2, r3].map(&.protein?).should eq [true, true, true]
       [r1, r2, r3].map(&.formal_charge).should eq [-1, 0, 0]
@@ -437,10 +437,10 @@ describe Chem::Topology do
     end
 
     it "does not connect consecutive residues when there are far away" do
-      system = PDB.read_first "spec/data/pdb/protein_gap.pdb"
-      r1, r2, r3, r4 = system.residues
+      st = PDB.read_first "spec/data/pdb/protein_gap.pdb"
+      r1, r2, r3, r4 = st.residues
 
-      Chem::Topology.guess_topology system
+      Chem::Topology.guess_topology st
 
       r1["C"].bonds[r2["N"]]?.should_not be_nil
       r2["C"].bonds[r3["N"]]?.should be_nil
@@ -448,33 +448,33 @@ describe Chem::Topology do
     end
 
     it "guess kind of unknown residue when previous is known" do
-      system = PDB.read_first "spec/data/pdb/residue_kind_unknown_previous.pdb"
-      Chem::Topology.guess_topology system
-      system.residues[1].protein?.should be_true
+      st = PDB.read_first "spec/data/pdb/residue_kind_unknown_previous.pdb"
+      Chem::Topology.guess_topology st
+      st.residues[1].protein?.should be_true
     end
 
     it "guess kind of unknown residue when next is known" do
-      system = PDB.read_first "spec/data/pdb/residue_kind_unknown_next.pdb"
-      Chem::Topology.guess_topology system
-      system.residues[0].protein?.should be_true
+      st = PDB.read_first "spec/data/pdb/residue_kind_unknown_next.pdb"
+      Chem::Topology.guess_topology st
+      st.residues[0].protein?.should be_true
     end
 
     it "guess kind of unknown residue when its flanked by known residues" do
-      system = PDB.read_first "spec/data/pdb/residue_kind_unknown_flanked.pdb"
-      Chem::Topology.guess_topology system
-      system.residues[1].protein?.should be_true
+      st = PDB.read_first "spec/data/pdb/residue_kind_unknown_flanked.pdb"
+      Chem::Topology.guess_topology st
+      st.residues[1].protein?.should be_true
     end
 
     it "does not guess kind of unknown residue" do
-      system = PDB.read_first "spec/data/pdb/residue_kind_unknown_single.pdb"
-      Chem::Topology.guess_topology system
-      system.residues[0].other?.should be_true
+      st = PDB.read_first "spec/data/pdb/residue_kind_unknown_single.pdb"
+      Chem::Topology.guess_topology st
+      st.residues[0].other?.should be_true
     end
 
     it "does not guess kind of unknown residue when its not connected to others" do
-      system = PDB.read_first "spec/data/pdb/residue_kind_unknown_next_gap.pdb"
-      Chem::Topology.guess_topology system
-      system.residues.first.other?.should be_true
+      st = PDB.read_first "spec/data/pdb/residue_kind_unknown_next_gap.pdb"
+      Chem::Topology.guess_topology st
+      st.residues.first.other?.should be_true
     end
   end
 end

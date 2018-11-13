@@ -3,12 +3,12 @@ module Chem::VASP::Poscar
     def initialize(@io : ::IO)
     end
 
-    def write(system : System) : Nil
-      raise "cannot write a Poscar without lattice" unless system.lattice
-      atoms = system.atoms.sort_by { |atom| {atom.element.symbol, atom.serial} }
+    def write(structure : Structure) : Nil
+      raise "cannot write a Poscar without lattice" unless structure.lattice
+      atoms = structure.atoms.sort_by { |atom| {atom.element.symbol, atom.serial} }
 
-      @io.puts system.title.gsub('\n', ' ')
-      write system.lattice.not_nil!
+      @io.puts structure.title.gsub('\n', ' ')
+      write structure.lattice.not_nil!
       write_atom_info atoms
       write CoordinateSystem::Cartesian
       atoms.each { |atom| write atom }

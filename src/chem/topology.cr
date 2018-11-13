@@ -10,16 +10,16 @@ require "./topology/array_view"
 require "./topology/atom_view"
 require "./topology/residue_view"
 require "./topology/chain_view"
-require "./topology/system"
-require "./topology/system/builder"
+require "./topology/structure"
+require "./topology/structure/builder"
 require "./topology/templates"
 
 module Chem::Topology
   extend self
 
-  def guess_topology(of system : System)
-    system.each_residue { |residue| find_and_assign_template to: residue }
-    guess_unknown_residue_types of: system
+  def guess_topology(of structure : Structure)
+    structure.each_residue { |residue| find_and_assign_template to: residue }
+    guess_unknown_residue_types of: structure
   end
 
   private def assign_bond(bond_t : Templates::Bond,
@@ -58,8 +58,8 @@ module Chem::Topology
     assign_charges from: res_t, to: residue
   end
 
-  private def guess_unknown_residue_types(of system : System)
-    system.each_residue.select(&.other?).each do |res|
+  private def guess_unknown_residue_types(of structure : Structure)
+    structure.each_residue.select(&.other?).each do |res|
       if (prev_res = res.previous) && (next_res = res.next)
         next unless prev_res.kind == next_res.kind
         next unless res.bonded? prev_res

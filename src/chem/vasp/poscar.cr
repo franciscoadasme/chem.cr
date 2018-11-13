@@ -5,25 +5,25 @@ module Chem::VASP::Poscar
 
   class ParseException < IO::ParseException; end
 
-  def parse(content : String) : System
+  def parse(content : String) : Structure
     parse ::IO::Memory.new content
   end
 
-  def parse(io : ::IO) : System
+  def parse(io : ::IO) : Structure
     PullParser.new(io).parse
   end
 
-  def read(filepath : String) : System
+  def read(filepath : String) : Structure
     parse File.read(filepath)
   end
 
-  def write(filepath : String, system : System)
+  def write(filepath : String, structure : Structure)
     File.open(filepath, "w") do |file|
-      Writer.new(file).write system
+      Writer.new(file).write structure
     end
   end
 
-  def write(io : ::IO, system : System)
-    Writer.new(io).write system
+  def write(io : ::IO, structure : Structure)
+    Writer.new(io).write structure
   end
 end

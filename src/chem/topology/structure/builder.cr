@@ -45,7 +45,7 @@ module Chem
     end
   end
 
-  class System::Builder
+  class Structure::Builder
     private record Conf, id : Char, occupancy : Float64
 
     private alias NumberType = Number::Primitive
@@ -60,23 +60,23 @@ module Chem
     @conf : Conf?
     @residue : Residue?
     @residues = {} of ResidueId => Residue
-    @system : System
+    @structure : Structure
 
-    def initialize(system : System? = nil)
-      if system
-        @system = system
-        system.each_chain { |chain| @chains[id(of: chain)] = chain }
+    def initialize(structure : Structure? = nil)
+      if structure
+        @structure = structure
+        structure.each_chain { |chain| @chains[id(of: chain)] = chain }
         @chain = @chains.last_value?
-        system.each_residue { |residue| @residues[id of: residue] = residue }
+        structure.each_residue { |residue| @residues[id of: residue] = residue }
         @residue = @chain.try &.residues.last
-        @atom_serial = system.each_atom.max_of &.serial
+        @atom_serial = structure.each_atom.max_of &.serial
       else
-        @system = System.new
+        @structure = Structure.new
       end
     end
 
-    def self.build(system : System? = nil) : System
-      builder = new system
+    def self.build(structure : Structure? = nil) : Structure
+      builder = new structure
       with builder yield builder
       builder.build
     end
@@ -110,7 +110,7 @@ module Chem
     end
 
     private def add_chain(id : Char) : Chain
-      chain = Chain.new id, @system
+      chain = Chain.new id, @structure
       @chains[id(of: chain)] = @chain = chain
     end
 
@@ -143,8 +143,8 @@ module Chem
       names.to_a.map { |name| atom name }
     end
 
-    def build : System
-      @system
+    def build : Structure
+      @structure
     end
 
     def chain : Chain
@@ -197,13 +197,13 @@ module Chem
       builder.a a
       builder.b b
       builder.c c
-      @system.lattice = builder.build
+      @structure.lattice = builder.build
     end
 
     def lattice(&block) : Lattice
       builder = Lattice::Builder.new
       with builder yield builder
-      @system.lattice = builder.build
+      @structure.lattice = builder.build
     end
 
     def residue : Residue
@@ -230,7 +230,7 @@ module Chem
     end
 
     def title(title : String)
-      @system.title = title
+      @structure.title = title
     end
   end
 end

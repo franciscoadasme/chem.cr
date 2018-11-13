@@ -64,7 +64,7 @@ describe Chem::Residue do
     end
 
     it "returns nil when there are no conformations" do
-      residue = fake_system.residues.first
+      residue = fake_structure.residues.first
       residue.conf.should be_nil
     end
   end
@@ -94,7 +94,7 @@ describe Chem::Residue do
     end
 
     it "returns false when residue doesn't have alternate conformations" do
-      residue = fake_system.residues.first
+      residue = fake_structure.residues.first
       residue.has_alternate_conformations?.should be_false
     end
   end

@@ -5,8 +5,8 @@ module Chem::VASP::Poscar
     @coord_system = CoordinateSystem::Fractional
     @lattice = Lattice[0, 0, 0]
 
-    def parse : System
-      builder = System::Builder.new
+    def parse : Structure
+      builder = Structure::Builder.new
       builder.title read_line
 
       @lattice = builder.lattice self

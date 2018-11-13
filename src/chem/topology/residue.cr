@@ -24,7 +24,7 @@ module Chem
     property previous : Residue?
     property secondary_structure : Protein::SecondaryStructure = :none
 
-    delegate system, to: @chain
+    delegate structure, to: @chain
 
     def initialize(name : String, number : Int32, chain : Chain)
       initialize name, number, nil, chain

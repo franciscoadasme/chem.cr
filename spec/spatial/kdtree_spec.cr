@@ -4,7 +4,7 @@ alias KDTree = Chem::Spatial::KDTree
 
 describe Chem::Spatial::KDTree do
   context "toy example" do
-    system = Chem::System.build do
+    st = Chem::Structure.build do
       atom at: {4, 3, 0}   # d^2 = 25
       atom at: {3, 0, 0}   # d^2 = 9
       atom at: {-1, 2, 0}  # d^2 = 5
@@ -13,7 +13,7 @@ describe Chem::Spatial::KDTree do
       atom at: {-2, -5, 0} # d^2 = 29
     end
 
-    tree = KDTree.new system.atoms
+    tree = KDTree.new st.atoms
 
     describe "#nearest" do
       it "works" do
@@ -29,8 +29,8 @@ describe Chem::Spatial::KDTree do
   end
 
   context "real example" do
-    system = PDB.read_first "spec/data/pdb/1h1s.pdb"
-    tree = KDTree.new system.atoms
+    st = PDB.read_first "spec/data/pdb/1h1s.pdb"
+    tree = KDTree.new st.atoms
 
     describe "#find" do
       it "works" do

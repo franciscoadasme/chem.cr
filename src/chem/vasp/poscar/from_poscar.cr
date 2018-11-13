@@ -34,7 +34,7 @@ module Chem
     end
   end
 
-  class System::Builder
+  class Structure::Builder
     def lattice(pull : VASP::Poscar::PullParser) : Lattice
       lattice do
         scale by: pull.read_float

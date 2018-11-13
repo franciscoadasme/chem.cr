@@ -1,5 +1,5 @@
 module Chem
-  class System
+  class Structure
     include AtomCollection
     include ChainCollection
     include ResidueCollection
@@ -13,7 +13,7 @@ module Chem
     property title : String = ""
 
     def self.build(&block) : self
-      builder = System::Builder.new
+      builder = Structure::Builder.new
       with builder yield builder
       builder.build
     end

@@ -23,14 +23,14 @@ module Chem::PDB
     @segments = [] of SecondaryStructureSegment
     @use_hex_numbers = {:atom_serial => false, :residue_number => false}
 
-    private def assign_bonds(bonds : BondTable, to system : System)
+    private def assign_bonds(bonds : BondTable, to structure : Structure)
       bonds.each do |serials, order|
         index, other = serials
         @atoms[index].bonds.add @atoms[other], order
       end
     end
 
-    private def assign_secondary_structure(to sys : System)
+    private def assign_secondary_structure(to sys : Structure)
       chains = sys.chains
       @segments.each do |seg|
         next unless chain = chains[seg.chain]?
@@ -59,8 +59,8 @@ module Chem::PDB
       next_number
     end
 
-    private def make_system : System
-      sys = System.new
+    private def make_structure : Structure
+      sys = Structure.new
       sys.experiment = @pdb_expt
       sys.lattice = @pdb_lattice
       sys.sequence = @pdb_seq
@@ -68,16 +68,16 @@ module Chem::PDB
       sys
     end
 
-    def parse(io : ::IO, models : Enumerable(Int32)? = nil) : Array(System)
+    def parse(io : ::IO, models : Enumerable(Int32)? = nil) : Array(Structure)
       iter = Record::Iterator.new io
       parse_header iter
-      systems = parse_models(iter, models || (1..@pdb_models).to_a)
+      structures = parse_models(iter, models || (1..@pdb_models).to_a)
       bonds = parse_bonds iter
-      systems.each do |sys|
+      structures.each do |sys|
         assign_bonds bonds, to: sys
         assign_secondary_structure to: sys
       end
-      systems
+      structures
     end
 
     private def parse_atom(residue : Residue, prev_atom : Atom?, rec : Record) : Atom
@@ -120,7 +120,7 @@ module Chem::PDB
       end
     end
 
-    private def parse_chain(sys : System, prev_chain : Chain?, rec : Record) : Chain
+    private def parse_chain(sys : Structure, prev_chain : Chain?, rec : Record) : Chain
       chain_id = rec[21]
       key = {sys.object_id, chain_id}
       @chains[key] ||= Chain.new chain_id, sys
@@ -175,12 +175,12 @@ module Chem::PDB
         space_group: rec[55..65].rstrip
     end
 
-    private def parse_model(iter : Record::Iterator, system : System)
+    private def parse_model(iter : Record::Iterator, structure : Structure)
       chain, residue, atom = nil, nil, nil
       iter.each do |rec|
         case rec.name
         when "atom", "hetatm"
-          chain = parse_chain system, chain, rec
+          chain = parse_chain structure, chain, rec
           residue = parse_residue chain, residue, rec
           atom = parse_atom residue, atom, rec
           @atoms[atom.serial] = atom
@@ -194,25 +194,25 @@ module Chem::PDB
     end
 
     private def parse_models(iter : Record::Iterator,
-                             serials : Enumerable(Int32)) : Array(System)
+                             serials : Enumerable(Int32)) : Array(Structure)
       model = serials.first
-      system = make_system
-      Array(System).new(serials.size).tap do |models|
+      structure = make_structure
+      Array(Structure).new(serials.size).tap do |models|
         iter.each do |rec|
           case rec.name
           when "atom", "hetatm"
             next unless serials.includes? model
-            parse_model iter.back, system
+            parse_model iter.back, structure
           when "endmdl"
-            models << system if serials.includes? model
+            models << structure if serials.includes? model
           when "model"
             model = rec[10..13].to_i
-            system = make_system unless system.empty?
+            structure = make_structure unless structure.empty?
           else
             Iterator.stop
           end
         end
-        models << system if models.empty?
+        models << structure if models.empty?
       end
     end
 

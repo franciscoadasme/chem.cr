@@ -1,8 +1,8 @@
 require "../../spec_helper"
 
-describe Chem::System::Builder do
-  it "builds a system" do
-    sys = Chem::System::Builder.build do
+describe Chem::Structure::Builder do
+  it "builds a structure" do
+    st = Chem::Structure::Builder.build do
       title "Ser-Thr-Gly Val"
       chain 'F' do
         residue "SER", 1 do
@@ -42,27 +42,27 @@ describe Chem::System::Builder do
       end
     end
 
-    sys.title.should eq "Ser-Thr-Gly Val"
+    st.title.should eq "Ser-Thr-Gly Val"
 
-    sys.chains.size.should eq 2
-    sys.chains.map(&.id).should eq ['F', 'G']
+    st.chains.size.should eq 2
+    st.chains.map(&.id).should eq ['F', 'G']
 
-    sys.residues.size.should eq 4
-    sys.residues.map(&.chain.id).should eq ['F', 'F', 'F', 'G']
-    sys.residues.map(&.number).should eq [1, 2, 3, 1]
-    sys.residues.map(&.name).should eq ["SER", "THR", "GLY", "VAL"]
-    sys.residues.map(&.atoms.size).should eq [6, 7, 4, 7]
+    st.residues.size.should eq 4
+    st.residues.map(&.chain.id).should eq ['F', 'F', 'F', 'G']
+    st.residues.map(&.number).should eq [1, 2, 3, 1]
+    st.residues.map(&.name).should eq ["SER", "THR", "GLY", "VAL"]
+    st.residues.map(&.atoms.size).should eq [6, 7, 4, 7]
 
-    sys.size.should eq 24
-    sys.atoms.map(&.serial).should eq (1..24).to_a
-    sys.atoms[0..6].map(&.name).should eq ["N", "CA", "C", "O", "CB", "OG", "N"]
-    sys.atoms.map(&.residue.name).uniq.should eq ["SER", "THR", "GLY", "VAL"]
-    sys.atoms.map(&.chain.id).should eq ("F" * 17 + "G" * 7).chars
-    sys.atoms[serial: 13].x.should eq 7.681
+    st.size.should eq 24
+    st.atoms.map(&.serial).should eq (1..24).to_a
+    st.atoms[0..6].map(&.name).should eq ["N", "CA", "C", "O", "CB", "OG", "N"]
+    st.atoms.map(&.residue.name).uniq.should eq ["SER", "THR", "GLY", "VAL"]
+    st.atoms.map(&.chain.id).should eq ("F" * 17 + "G" * 7).chars
+    st.atoms[serial: 13].x.should eq 7.681
   end
 
-  it "builds a system (no DSL)" do
-    builder = Chem::System::Builder.new
+  it "builds a structure (no DSL)" do
+    builder = Chem::Structure::Builder.new
     builder.title "Ser-Thr-Gly Val"
     builder.chain 'T'
     builder.residue "SER"
@@ -75,18 +75,18 @@ describe Chem::System::Builder do
     builder.residue "VAL"
     builder.atom "N", {18.066, -7.542, 27.177}
 
-    sys = builder.build
+    st = builder.build
 
-    sys.title.should eq "Ser-Thr-Gly Val"
-    sys.chains.map(&.id).should eq ['T', 'U']
-    sys.residues.map(&.name).should eq ["SER", "THR", "GLY", "VAL"]
-    sys.residues.map(&.number).should eq [1, 2, 3, 1]
-    sys.atoms.map(&.residue.name).uniq.should eq ["SER", "THR", "GLY", "VAL"]
-    sys.atoms[serial: 4].x.should eq 18.066
+    st.title.should eq "Ser-Thr-Gly Val"
+    st.chains.map(&.id).should eq ['T', 'U']
+    st.residues.map(&.name).should eq ["SER", "THR", "GLY", "VAL"]
+    st.residues.map(&.number).should eq [1, 2, 3, 1]
+    st.atoms.map(&.residue.name).uniq.should eq ["SER", "THR", "GLY", "VAL"]
+    st.atoms[serial: 4].x.should eq 18.066
   end
 
-  it "builds a system with alternate conformations" do
-    sys = Chem::System::Builder.build do
+  it "builds a structure with alternate conformations" do
+    st = Chem::Structure::Builder.build do
       chain do
         residue do
           atom "N", {7.831, -27.902, 17.508}
@@ -113,12 +113,12 @@ describe Chem::System::Builder do
       end
     end
 
-    sys.atoms.map(&.alt_loc).should eq [nil, nil, nil, 'A', 'A', nil]
-    sys.residues.first.conformations.map(&.id).should eq ['A', 'B', 'C']
+    st.atoms.map(&.alt_loc).should eq [nil, nil, nil, 'A', 'A', nil]
+    st.residues.first.conformations.map(&.id).should eq ['A', 'B', 'C']
   end
 
-  it "builds a system with lattice" do
-    sys = Chem::System::Builder.build do
+  it "builds a structure with lattice" do
+    st = Chem::Structure::Builder.build do
       lattice do
         a Vector[25.0, 32.0, 12.0]
         b Vector[12.0, 34.0, 23.0]
@@ -128,7 +128,7 @@ describe Chem::System::Builder do
       end
     end
 
-    lat = sys.lattice.not_nil!
+    lat = st.lattice.not_nil!
     lat.a.should eq Vector[25, 32, 12]
     lat.b.should eq Vector[12, 34, 23]
     lat.c.should eq Vector[12, 68, 21]
@@ -136,8 +136,8 @@ describe Chem::System::Builder do
     lat.space_group.should eq "P 1 2 1"
   end
 
-  it "builds a system with lattice using numbers" do
-    sys = Chem::System::Builder.build do
+  it "builds a structure with lattice using numbers" do
+    st = Chem::Structure::Builder.build do
       lattice do
         a 25
         b 34
@@ -145,43 +145,43 @@ describe Chem::System::Builder do
       end
     end
 
-    lat = sys.lattice.not_nil!
+    lat = st.lattice.not_nil!
     lat.a.should eq Vector[25, 0, 0]
     lat.b.should eq Vector[0, 34, 0]
     lat.c.should eq Vector[0, 0, 21]
   end
 
-  it "builds a system with lattice using numbers (one-line)" do
-    sys = Chem::System::Builder.build do
+  it "builds a structure with lattice using numbers (one-line)" do
+    st = Chem::Structure::Builder.build do
       lattice 25, 34, 21
     end
 
-    lat = sys.lattice.not_nil!
+    lat = st.lattice.not_nil!
     lat.a.should eq Vector[25, 0, 0]
     lat.b.should eq Vector[0, 34, 0]
     lat.c.should eq Vector[0, 0, 21]
   end
 
   it "names chains automatically" do
-    sys = Chem::System::Builder.build do
+    st = Chem::Structure::Builder.build do
       5.times { chain }
     end
 
-    sys.chains.map(&.id).should eq ['A', 'B', 'C', 'D', 'E']
+    st.chains.map(&.id).should eq ['A', 'B', 'C', 'D', 'E']
   end
 
   it "names chains automatically after manually setting one" do
-    sys = Chem::System::Builder.build do
+    st = Chem::Structure::Builder.build do
       chain 'F'
       chain
       chain
     end
 
-    sys.chains.map(&.id).should eq ['F', 'G', 'H']
+    st.chains.map(&.id).should eq ['F', 'G', 'H']
   end
 
   it "numbers residues automatically" do
-    sys = Chem::System::Builder.build do
+    st = Chem::Structure::Builder.build do
       chain
       2.times { residue "ALA" }
       chain
@@ -190,21 +190,21 @@ describe Chem::System::Builder do
       3.times { residue "PRO" }
     end
 
-    sys.residues.map(&.number).should eq [1, 2, 1, 2, 3, 4, 5, 1, 2, 3]
+    st.residues.map(&.number).should eq [1, 2, 1, 2, 3, 4, 5, 1, 2, 3]
   end
 
   it "numbers residues automatically after manually setting one" do
-    sys = Chem::System::Builder.build do
+    st = Chem::Structure::Builder.build do
       chain
       residue "SER", 5
       3.times { residue "ALA" }
     end
 
-    sys.residues.map(&.number).should eq [5, 6, 7, 8]
+    st.residues.map(&.number).should eq [5, 6, 7, 8]
   end
 
   it "names atoms automatically when called with element" do
-    sys = Chem::System::Builder.build do
+    st = Chem::Structure::Builder.build do
       atom PeriodicTable::C
       atom PeriodicTable::C
       atom PeriodicTable::O
@@ -213,52 +213,52 @@ describe Chem::System::Builder do
       atom PeriodicTable::N
     end
 
-    sys.atoms.map(&.name).should eq ["C1", "C2", "O1", "N1", "C3", "N2"]
+    st.atoms.map(&.name).should eq ["C1", "C2", "O1", "N1", "C3", "N2"]
   end
 
   it "creates a chain automatically" do
-    sys = Chem::System::Builder.build do
+    st = Chem::Structure::Builder.build do
       residue "SER"
     end
 
-    sys.chains.map(&.id).should eq ['A']
+    st.chains.map(&.id).should eq ['A']
   end
 
   it "creates a residue automatically" do
-    sys = Chem::System::Builder.build do
+    st = Chem::Structure::Builder.build do
       atom "CA"
     end
 
-    sys.chains.map(&.id).should eq ['A']
-    sys.residues.map(&.number).should eq [1]
-    sys.residues.map(&.name).should eq ["UNK"]
+    st.chains.map(&.id).should eq ['A']
+    st.residues.map(&.number).should eq [1]
+    st.residues.map(&.name).should eq ["UNK"]
   end
 
   it "adds dummy atoms" do
-    sys = Chem::System::Builder.build do
+    st = Chem::Structure::Builder.build do
       atoms "N", "CA", "C", "O", "CB"
     end
 
-    sys.atoms.map(&.name).should eq ["N", "CA", "C", "O", "CB"]
-    sys.atoms.all?(&.coords.zero?).should be_true
+    st.atoms.map(&.name).should eq ["N", "CA", "C", "O", "CB"]
+    st.atoms.all?(&.coords.zero?).should be_true
   end
 
   it "adds dummy atoms with coordinates" do
-    sys = Chem::System::Builder.build do
+    st = Chem::Structure::Builder.build do
       atom at: {1, 0, 0}
       atom at: {2, 0, 0}
     end
 
-    sys.atoms.map(&.name).should eq ["C1", "C2"]
-    sys.atoms.map(&.x).should eq [1, 2]
+    st.atoms.map(&.name).should eq ["C1", "C2"]
+    st.atoms.map(&.x).should eq [1, 2]
   end
 
   it "adds atom with named arguments" do
-    sys = Chem::System::Builder.build do
+    st = Chem::Structure::Builder.build do
       atom "OD1", charge: -1, temperature_factor: 43.24
     end
 
-    atom = sys.atoms[-1]
+    atom = st.atoms[-1]
     atom.charge.should eq -1
     atom.temperature_factor.should eq 43.24
   end

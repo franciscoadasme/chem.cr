@@ -6,10 +6,10 @@ module Chem
     @residues = [] of Residue
 
     getter identifier : Char?
-    getter system : System
+    getter structure : Structure
 
-    def initialize(@identifier : Char?, @system : System)
-      @system << self
+    def initialize(@identifier : Char?, @structure : Structure)
+      @structure << self
     end
 
     protected def <<(residue : Residue)

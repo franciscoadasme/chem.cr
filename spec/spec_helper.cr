@@ -29,9 +29,9 @@ module Spec
 end
 
 module Chem::VASP::Poscar
-  def self.write_and_read_back(system : System) : System
+  def self.write_and_read_back(structure : Structure) : Structure
     io = ::IO::Memory.new
-    Poscar.write io, system
+    Poscar.write io, structure
     io.rewind
     other = Poscar.parse io
     io.close
@@ -40,7 +40,7 @@ module Chem::VASP::Poscar
 end
 
 def fake_residue_with_alternate_conformations
-  Chem::System.build do
+  Chem::Structure.build do
     residue "SER" do
       atoms "N", "CA", "C", "O"
 
@@ -68,9 +68,9 @@ def fake_residue_with_alternate_conformations
   end.residues.first
 end
 
-# TODO add SystemBuilder?
-def fake_system(*, include_bonds = false)
-  sys = Chem::System.build do
+# TODO add StructureBuilder?
+def fake_structure(*, include_bonds = false)
+  st = Chem::Structure.build do
     title "Asp-Phe Ser"
 
     chain do
@@ -112,7 +112,7 @@ def fake_system(*, include_bonds = false)
     end
   end
 
-  Chem::Topology.guess_topology of: sys if include_bonds
+  Chem::Topology.guess_topology of: st if include_bonds
 
-  sys
+  st
 end
