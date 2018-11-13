@@ -46,7 +46,6 @@ module Chem
     end
 
     protected def <<(atom : Atom)
-      raise "Atom #{atom} does not belong to #{self}" unless atom.residue.same? self
       if (other = self[atom.name]?) && atom.alt_loc == other.alt_loc
         raise Chem::Error.new "Duplicate atom #{atom.name} in #{self}"
       end
