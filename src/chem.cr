@@ -10,8 +10,6 @@ require "./chem/configuration"
 require "./chem/lattice"
 require "./chem/protein"
 require "./chem/topology"
-require "./chem/system"
-require "./chem/system/builder"
 
 require "./chem/pdb"
 require "./chem/vasp"

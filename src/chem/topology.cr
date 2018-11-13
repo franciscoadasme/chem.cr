@@ -10,6 +10,8 @@ require "./topology/array_view"
 require "./topology/atom_view"
 require "./topology/residue_view"
 require "./topology/chain_view"
+require "./topology/system"
+require "./topology/system/builder"
 require "./topology/templates"
 
 module Chem::Topology
