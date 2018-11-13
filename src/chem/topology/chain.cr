@@ -12,7 +12,7 @@ module Chem
       @system << self
     end
 
-    def <<(residue : Residue)
+    protected def <<(residue : Residue)
       if prev_res = @residues.last?
         residue.previous = prev_res
         prev_res.next = residue

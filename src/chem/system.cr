@@ -18,7 +18,7 @@ module Chem
       builder.build
     end
 
-    def <<(chain : Chain)
+    protected def <<(chain : Chain)
       @chains << chain
     end
 

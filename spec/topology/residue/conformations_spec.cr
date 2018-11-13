@@ -11,7 +11,7 @@ describe Chem::Residue do
           "conformation E"
     expect_raises Chem::Error, msg do
       residue = fake_residue_with_alternate_conformations
-      residue << Atom.new "OG", 10, Vector[4, 0, 0], residue, 'E', occupancy: 0.05
+      Atom.new "OG", 10, Vector[4, 0, 0], residue, 'E', occupancy: 0.05
     end
   end
 
