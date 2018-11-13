@@ -9,6 +9,7 @@ module Chem
     getter system : System
 
     def initialize(@identifier : Char?, @system : System)
+      @system << self
     end
 
     def <<(residue : Residue)

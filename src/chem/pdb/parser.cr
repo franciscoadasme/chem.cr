@@ -81,7 +81,7 @@ module Chem::PDB
     end
 
     private def parse_atom(residue : Residue, prev_atom : Atom?, rec : Record) : Atom
-      atom = Atom.new \
+      Atom.new \
         name: rec[12..15].delete(' '),
         serial: parse_atom_serial(rec[6..10]) || guess_atom_serial(prev_atom),
         coords: Spatial::Vector.new(rec[30..37].to_f, rec[38..45].to_f, rec[46..53].to_f),
@@ -91,8 +91,6 @@ module Chem::PDB
         charge: rec[78..79]?.try(&.reverse.to_i?) || 0,
         occupancy: rec[54..59].to_f,
         temperature_factor: rec[60..65].to_f
-      residue << atom
-      atom
     end
 
     private def parse_atom_serial(str : String) : Int32?
@@ -125,10 +123,7 @@ module Chem::PDB
     private def parse_chain(sys : System, prev_chain : Chain?, rec : Record) : Chain
       chain_id = rec[21]
       key = {sys.object_id, chain_id}
-      @chains[key] ||= begin
-        sys << (chain = Chain.new chain_id, sys)
-        chain
-      end
+      @chains[key] ||= Chain.new chain_id, sys
     end
 
     private def parse_header(iter : Record::Iterator)
@@ -235,10 +230,7 @@ module Chem::PDB
         end
         residue
       else
-        @residues[key] ||= begin
-          chain << (res = Residue.new name, number, ins_code, chain)
-          res
-        end
+        @residues[key] ||= Residue.new name, number, ins_code, chain
       end
     end
 

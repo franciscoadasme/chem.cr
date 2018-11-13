@@ -26,13 +26,15 @@ module Chem
 
     delegate system, to: @chain
 
-    def initialize(@name : String, @number : Int32, @chain : Chain)
+    def initialize(name : String, number : Int32, chain : Chain)
+      initialize name, number, nil, chain
     end
 
     def initialize(@name : String,
                    @number : Int32,
                    @insertion_code : Char?,
                    @chain : Chain)
+      @chain << self
     end
 
     def [](atom_name : String) : Atom

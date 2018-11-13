@@ -32,6 +32,7 @@ module Chem
         raise ArgumentError.new "Occupancy is not within 0 and 1"
       end
       @element = element || PeriodicTable[atom_name: @name]
+      @residue << self
     end
 
     def bonded?(to other : self) : Bool

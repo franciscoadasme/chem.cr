@@ -105,20 +105,17 @@ module Chem
                          occupancy : Float64,
                          **options) : Atom
       coords = Spatial::Vector.new *coords unless coords.is_a? Spatial::Vector
-      atom = Atom.new name, serial, coords, current_residue, alt_loc, **options,
+      Atom.new name, serial, coords, current_residue, alt_loc, **options,
         occupancy: occupancy
-      current_residue << atom
-      atom
     end
 
     private def add_chain(id : Char) : Chain
-      @system << (chain = Chain.new id, @system)
+      chain = Chain.new id, @system
       @chains[id(of: chain)] = @chain = chain
-      chain
     end
 
     private def add_residue(name : String, number : Int32, ins_code : Char?) : Residue
-      current_chain << (residue = Residue.new name, number, ins_code, current_chain)
+      residue = Residue.new name, number, ins_code, current_chain
       @residues[id(of: residue)] = @residue = residue
       @conf = nil
       residue
