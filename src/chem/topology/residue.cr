@@ -46,10 +46,6 @@ module Chem
     end
 
     protected def <<(atom : Atom)
-      if (other = self[atom.name]?) && atom.alt_loc == other.alt_loc
-        raise Chem::Error.new "Duplicate atom #{atom.name} in #{self}"
-      end
-
       if alt_loc = atom.alt_loc
         @atoms << atom if conf.nil? || alt_loc == conf.try(&.id)
         conf = conformations[alt_loc]?
