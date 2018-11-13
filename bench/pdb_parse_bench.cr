@@ -1,6 +1,5 @@
-require "../src/chem/pdb"
+require "./bench_helper"
 require "./search_dist_helper"
-require "benchmark"
 
 Benchmark.bm do |x|
   x.report("1CRN (327 atoms)") do

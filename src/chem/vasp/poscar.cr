@@ -1,12 +1,9 @@
+require "./poscar/*"
+
 module Chem::VASP::Poscar
   extend self
 
   class ParseException < IO::ParseException; end
-
-  enum CoordinateSystem
-    Cartesian
-    Fractional
-  end
 
   def parse(content : String) : System
     parse ::IO::Memory.new content
@@ -30,5 +27,3 @@ module Chem::VASP::Poscar
     Writer.new(io).write system
   end
 end
-
-require "./poscar/*"

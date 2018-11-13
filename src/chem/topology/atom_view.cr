@@ -1,6 +1,3 @@
-require "./chain_collection"
-require "./residue_collection"
-
 module Chem
   struct AtomView
     include ArrayView(Atom)

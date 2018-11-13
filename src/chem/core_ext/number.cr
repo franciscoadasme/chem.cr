@@ -1,5 +1,3 @@
-require "../spatial/vector"
-
 abstract struct Number
   RADIAN_TO_DEGREE = 180 / Math::PI
   DEGREE_TO_RADIAN = Math::PI / 180

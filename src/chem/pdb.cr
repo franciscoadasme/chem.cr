@@ -1,6 +1,4 @@
-require "./io"
 require "./pdb/parser"
-require "./system"
 
 module Chem::PDB
   extend self

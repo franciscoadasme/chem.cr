@@ -1,5 +1,3 @@
-require "../protein"
-
 module Chem::PDB
   private record SecondaryStructureSegment,
     chain : Char,

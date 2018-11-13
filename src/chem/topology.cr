@@ -1,4 +1,16 @@
-require "./topology/*"
+require "./topology/bond"
+require "./topology/bond_array"
+require "./topology/atom"
+require "./topology/atom_collection"
+require "./topology/residue"
+require "./topology/residue_collection"
+require "./topology/chain"
+require "./topology/chain_collection"
+require "./topology/array_view"
+require "./topology/atom_view"
+require "./topology/residue_view"
+require "./topology/chain_view"
+require "./topology/templates"
 
 module Chem::Topology
   extend self

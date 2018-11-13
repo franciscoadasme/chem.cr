@@ -1,7 +1,3 @@
-require "./core_ext/number"
-require "./spatial/size3d"
-require "./spatial/vector"
-
 module Chem
   class Lattice
     # @a : Float64

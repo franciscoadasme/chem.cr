@@ -1,5 +1,3 @@
-require "../core_ext/number"
-
 module Chem::Spatial
   struct Vector
     private alias NumberType = Number::Primitive

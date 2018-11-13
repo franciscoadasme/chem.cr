@@ -1,5 +1,3 @@
-require "./element"
-
 module Chem::PeriodicTable
   macro element(symbol, name, **options)
     {% elements = @type.constants.reject { |c| @type.constant(c).is_a? TypeNode } %}

@@ -1,7 +1,4 @@
 module Chem
-  # FIXME: this hack is needed for the require mechanism to work properly
-  class System; end
-
   class Lattice::Builder
     @lattice : Lattice = Lattice[0, 0, 0]
 

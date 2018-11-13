@@ -1,7 +1,3 @@
-require "../bias"
-require "../periodic_table/element"
-require "../spatial/vector"
-
 module Chem
   # TODO rename `charge` to `formal_charge`
   # TODO add `partial_charge : Float64 = 0.0`

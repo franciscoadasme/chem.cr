@@ -1,5 +1,3 @@
-require "../err"
-
 module Chem
   class BondArray
     include Indexable(Bond)

@@ -1,5 +1,4 @@
-require "../src/chem"
-require "benchmark"
+require "./bench_helper"
 
 system = Chem::PDB.read_first "bench/data/1ake.pdb"
 

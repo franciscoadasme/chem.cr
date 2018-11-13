@@ -1,8 +1,3 @@
-require "../../bias"
-require "../../periodic_table"
-require "../../system"
-require "../../spatial/vector"
-
 module Chem::VASP::Poscar
   class PullParser
     include IO::PullParser

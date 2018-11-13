@@ -1,6 +1,3 @@
-require "./core_ext/iterator"
-require "./topology"
-
 module Chem
   class System
     include AtomCollection

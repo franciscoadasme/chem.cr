@@ -1,5 +1,3 @@
-require "./macros"
-
 # NOTE: Standard atom weights (in Da) are taken from Meija, J., et al., Pure Appl.
 # Chem., 2016, 88 (3), pp 265-291,
 # doi:[10.1515/pac-2015-0305](https://dx.doi.org/10.1515/pac-2015-0305)

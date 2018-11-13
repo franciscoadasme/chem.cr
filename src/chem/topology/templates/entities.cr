@@ -1,5 +1,3 @@
-require "../../periodic_table"
-
 module Chem::Topology::Templates
   class AtomType
     getter element : PeriodicTable::Element

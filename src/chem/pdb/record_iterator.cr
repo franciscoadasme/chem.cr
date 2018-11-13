@@ -1,5 +1,3 @@
-require "./record"
-
 module Chem::PDB
   class Record::Iterator
     include ::Iterator(Record)

@@ -1,5 +1,3 @@
-require "./aminoacid"
-
 module Chem::Protein::AminoAcids
   ALA = AminoAcid.new "Alanine", "ALA", 'A'
   ARG = AminoAcid.new "Arginine", "ARG", 'R'

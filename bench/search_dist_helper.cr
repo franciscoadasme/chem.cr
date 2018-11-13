@@ -1,5 +1,3 @@
-require "../src/chem/topology/atom"
-
 # github.com/jtomschroeder/crystalline on 2018-7-13
 module Crystalline
   class KDTree(T)
@@ -143,7 +141,7 @@ end
 def naive_search(atoms, point, count)
   neighbors = Array({Chem::Atom, Float64}).new count
   atoms.each do |atom|
-    dist = atom.coords.squared_distance to: point
+    dist = Chem::Spatial.squared_distance atom.coords, point
     if neighbors.size < count
       neighbors << {atom, dist}
     elsif dist < neighbors.last[1]
@@ -157,8 +155,8 @@ end
 
 def sort_search(atoms, point, count)
   atoms = atoms.sort do |a, b|
-    dist_a = a.coords.squared_distance to: point
-    dist_b = b.coords.squared_distance to: point
+    dist_a = Chem::Spatial.squared_distance a.coords, point
+    dist_b = Chem::Spatial.squared_distance b.coords, point
     dist_a <=> dist_b
   end
   atoms.first count

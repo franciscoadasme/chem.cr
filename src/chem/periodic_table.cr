@@ -1,5 +1,6 @@
-require "./err"
-require "./periodic_table/*"
+require "./periodic_table/element"
+require "./periodic_table/macros"
+require "./periodic_table/elements"
 
 module Chem::PeriodicTable
   extend self

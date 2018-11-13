@@ -1,5 +1,3 @@
-require "../templates"
-
 module Chem::Topology::Templates
   solvent do
     name "Water"

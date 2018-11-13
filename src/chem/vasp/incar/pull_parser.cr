@@ -1,5 +1,3 @@
-require "../../configuration"
-
 module Chem::VASP::Incar
   class PullParser
     include IO::PullParser

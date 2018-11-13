@@ -1,13 +1,10 @@
-require "../src/chem/analysis"
-require "../src/chem/spatial/vector"
-require "../src/chem/pdb"
+require "./bench_helper"
 require "./search_dist_helper"
-require "benchmark"
 
-alias KDTree = Chem::Analysis::Spatial::KDTree
+alias KDTree = Chem::Spatial::KDTree
 alias Vector = Chem::Spatial::Vector
 
-atoms = Chem::PDB.read_first("spec/data/1h1s.pdb").atoms
+atoms = Chem::PDB.read_first("spec/data/pdb/1h1s.pdb").atoms
 atoms_as_a = atoms.to_a
 tree = KDTree.new atoms
 

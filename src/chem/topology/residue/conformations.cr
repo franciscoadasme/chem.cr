@@ -1,5 +1,3 @@
-require "../../core_ext/number"
-
 module Chem
   class Residue
     class Conformation
