@@ -12,6 +12,7 @@ module Chem
       Other
     end
 
+    @atom_table = {} of String => Atom
     @atoms = [] of Atom
 
     property chain : Chain
@@ -24,6 +25,7 @@ module Chem
     property previous : Residue?
     property secondary_structure : Protein::SecondaryStructure = :none
 
+    delegate :[], :[]?, to: @atom_table
     delegate structure, to: @chain
 
     def initialize(name : String, number : Int32, chain : Chain)
@@ -37,22 +39,18 @@ module Chem
       @chain << self
     end
 
-    def [](atom_name : String) : Atom
-      atoms[atom_name]
-    end
-
-    def []?(atom_name : String) : Atom?
-      atoms[atom_name]?
-    end
-
     protected def <<(atom : Atom)
       if alt_loc = atom.alt_loc
-        @atoms << atom if conf.nil? || alt_loc == conf.try(&.id)
+        if conf.nil? || alt_loc == conf.try(&.id)
+          @atoms << atom
+          @atom_table[atom.name] ||= atom
+        end
         conf = conformations[alt_loc]?
         conf ||= conformations.add name, alt_loc, atom.occupancy
         conf.atoms << atom
       else
         @atoms << atom
+        @atom_table[atom.name] ||= atom
       end
       self
     end
@@ -165,8 +163,10 @@ module Chem
         else
           @atoms << atom
         end
+        @atom_table[atom.name] = atom
       end
       @atoms.select! { |atom| {id, nil}.includes? atom.alt_loc }
+      @atom_table.select! { |_, atom| {id, nil}.includes? atom.alt_loc }
     end
 
     def to_s(io : ::IO)
