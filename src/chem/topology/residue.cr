@@ -85,6 +85,48 @@ module Chem
       conformations.any?
     end
 
+    def hlxparam : Tuple(Float64, Float64, Float64)?
+      return nil unless protein?
+      return nil unless prev_res = previous
+      return nil unless next_res = self.next
+      return nil unless bonded?(prev_res) && bonded?(next_res)
+
+      v1_CA, v1_C = prev_res["CA"].coords, prev_res["C"].coords
+      v2_N, v2_CA, v2_C = self["N"].coords, self["CA"].coords, self["C"].coords
+      v3_N, v3_CA = next_res["N"].coords, next_res["CA"].coords
+
+      v1 = v1_C - v1_CA
+      v2 = v2_N - v1_CA
+      v3 = v1.cross(v2).normalize
+      v1 = (v1 + v2).normalize
+      w1 = v2_C - v2_CA
+      w2 = v3_N - v2_CA
+      w3 = w1.cross(w2).normalize
+      w1 = (w1 + w2).normalize
+
+      tz = (w1 - v1).cross(w3 - v3).normalize
+
+      com1 = (v1_CA + v1_C + v2_N + v2_CA) / 4
+      com2 = (v2_CA + v2_C + v3_N + v3_CA) / 4
+      zeta = tz.dot(com2 - com1)
+      tz, zeta = -tz, -zeta if zeta < 0
+
+      v1p = (v1 - tz * tz.dot(v1)).normalize
+      w1p = (w1 - tz * tz.dot(w1)).normalize
+      theta = Math.acos v1p.dot(w1p)
+
+      tzp = v1p.cross(w1p).normalize
+      handedness = tz.dot tzp
+      handedness = 1 if handedness.abs < 1e-9
+      handedness /= handedness.abs
+      theta = theta * handedness + Math::PI * (1 - handedness)
+
+      r1 = (v3_CA - v2_CA) - tz * zeta
+      radius = r1.magnitude / (2 * Math.sin(0.5 * theta))
+
+      {zeta, theta.degrees, radius}
+    end
+
     def omega : Float64
       if (prev_res = previous) && bonded?(prev_res)
         Spatial.dihedral prev_res.atoms["CA"], prev_res.atoms["C"], atoms["N"],
