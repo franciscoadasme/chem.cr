@@ -67,6 +67,8 @@ module Chem
 
     def cis? : Bool
       omega.abs < 30
+    rescue Error
+      false
     end
 
     def conf : Conformation?
@@ -176,6 +178,8 @@ module Chem
 
     def trans? : Bool
       omega.abs > 150
+    rescue Error
+      false
     end
 
     {% for member in Kind.constants %}
