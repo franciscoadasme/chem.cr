@@ -1,6 +1,25 @@
 require "../spec_helper"
 
 describe Chem::Residue do
+  describe "#cis?" do
+    it "returns true when residue is in the cis conformation" do
+      st = PDB.read_first "spec/data/pdb/cis-trans.pdb"
+      Chem::Topology.guess_topology of: st
+      st.residues[2].cis?.should be_true
+    end
+
+    it "returns true when residue is not in the cis conformation" do
+      st = PDB.read_first "spec/data/pdb/cis-trans.pdb"
+      Chem::Topology.guess_topology of: st
+      st.residues[1].cis?.should be_false
+    end
+
+    it "returns false when residue is at the start" do
+      st = PDB.read_first "spec/data/pdb/cis-trans.pdb"
+      Chem::Topology.guess_topology of: st
+      st.residues[0].cis?.should be_false
+    end
+  end
   describe "#hlxparam" do
     it "returns helical parameters" do
       st = Chem::PDB.read_first "spec/data/pdb/hlxparam.pdb"
@@ -71,6 +90,26 @@ describe Chem::Residue do
       expect_raises Chem::Error, "A:PHE2 is terminal" do
         st.residues[1].psi
       end
+    end
+  end
+
+  describe "#trans?" do
+    it "returns true when residue is in the trans conformation" do
+      st = PDB.read_first "spec/data/pdb/cis-trans.pdb"
+      Chem::Topology.guess_topology of: st
+      st.residues[1].trans?.should be_true
+    end
+
+    it "returns true when residue is not in the trans conformation" do
+      st = PDB.read_first "spec/data/pdb/cis-trans.pdb"
+      Chem::Topology.guess_topology of: st
+      st.residues[2].trans?.should be_false
+    end
+
+    it "returns false when residue is at the start" do
+      st = PDB.read_first "spec/data/pdb/cis-trans.pdb"
+      Chem::Topology.guess_topology of: st
+      st.residues[0].trans?.should be_false
     end
   end
 end
