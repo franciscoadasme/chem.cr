@@ -129,8 +129,7 @@ module Chem
 
     def omega : Float64
       if (prev_res = previous) && bonded?(prev_res)
-        Spatial.dihedral prev_res.atoms["CA"], prev_res.atoms["C"], atoms["N"],
-          atoms["CA"]
+        Spatial.dihedral prev_res["CA"], prev_res["C"], self["N"], self["CA"]
       else
         raise Error.new "#{self} is terminal"
       end
@@ -138,7 +137,7 @@ module Chem
 
     def phi : Float64
       if (prev_res = previous) && bonded?(prev_res)
-        Spatial.dihedral prev_res.atoms["C"], atoms["N"], atoms["CA"], atoms["C"]
+        Spatial.dihedral prev_res["C"], self["N"], self["CA"], self["C"]
       else
         raise Error.new "#{self} is terminal"
       end
@@ -146,7 +145,7 @@ module Chem
 
     def psi : Float64
       if (next_res = self.next) && bonded?(next_res)
-        Spatial.dihedral atoms["N"], atoms["CA"], atoms["C"], next_res.atoms["N"]
+        Spatial.dihedral self["N"], self["CA"], self["C"], next_res["N"]
       else
         raise Error.new "#{self} is terminal"
       end
