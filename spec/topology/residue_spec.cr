@@ -20,6 +20,7 @@ describe Chem::Residue do
       st.residues[0].cis?.should be_false
     end
   end
+
   describe "#hlxparam" do
     it "returns helical parameters" do
       st = Chem::PDB.read_first "spec/data/pdb/hlxparam.pdb"
@@ -65,6 +66,19 @@ describe Chem::Residue do
     end
   end
 
+  describe "#omega?" do
+    it "returns torsion angle omega" do
+      st = fake_structure include_bonds: true
+      st.residues[1].omega?.should_not be_nil
+      st.residues[1].omega?.not_nil!.should be_close -179.87, 1e-2
+    end
+
+    it "returns nil when residue is at the start" do
+      st = fake_structure include_bonds: true
+      st.residues[0].omega?.should be_nil
+    end
+  end
+
   describe "#phi" do
     it "returns torsion angle phi" do
       st = fake_structure include_bonds: true
@@ -79,6 +93,19 @@ describe Chem::Residue do
     end
   end
 
+  describe "#phi?" do
+    it "returns torsion angle phi" do
+      st = fake_structure include_bonds: true
+      st.residues[1].phi?.should_not be_nil
+      st.residues[1].phi?.not_nil!.should be_close -57.87, 1e-2
+    end
+
+    it "returns nil when residue is at the start" do
+      st = fake_structure include_bonds: true
+      st.residues[0].phi?.should be_nil
+    end
+  end
+
   describe "#psi" do
     it "returns torsion angle psi" do
       st = fake_structure include_bonds: true
@@ -90,6 +117,19 @@ describe Chem::Residue do
       expect_raises Chem::Error, "A:PHE2 is terminal" do
         st.residues[1].psi
       end
+    end
+  end
+
+  describe "#psi?" do
+    it "returns torsion angle psi" do
+      st = fake_structure include_bonds: true
+      st.residues[0].psi?.should_not be_nil
+      st.residues[0].psi?.not_nil!.should be_close 127.28, 1e-2
+    end
+
+    it "returns nil when residue is at the start" do
+      st = fake_structure include_bonds: true
+      st.residues[1].psi?.should be_nil
     end
   end
 

@@ -126,39 +126,57 @@ module Chem
     end
 
     def omega : Float64
-      omega? || raise Error.new "#{self} is terminal"
-    end
-
-    def omega? : Float64?
       if (prev_res = previous) && bonded?(prev_res)
         Spatial.dihedral prev_res["CA"], prev_res["C"], self["N"], self["CA"]
       else
-        nil
+        raise Error.new "#{self} is terminal"
       end
+    end
+
+    def omega? : Float64?
+      return nil unless prev_res = self.previous
+      return nil unless bonded? prev_res
+      return nil unless ca1 = prev_res["CA"]?
+      return nil unless c = prev_res["C"]?
+      return nil unless n = self["N"]?
+      return nil unless ca2 = self["CA"]?
+      Spatial.dihedral ca1, c, n, ca2
     end
 
     def phi : Float64
-      phi? || raise Error.new "#{self} is terminal"
-    end
-
-    def phi? : Float64?
       if (prev_res = previous) && bonded?(prev_res)
         Spatial.dihedral prev_res["C"], self["N"], self["CA"], self["C"]
       else
-        nil
+        raise Error.new "#{self} is terminal"
       end
+    end
+
+    def phi? : Float64?
+      return nil unless prev_res = previous
+      return nil unless bonded? prev_res
+      return nil unless ca1 = prev_res["C"]?
+      return nil unless n = self["N"]?
+      return nil unless ca2 = self["CA"]?
+      return nil unless c = self["C"]?
+      Spatial.dihedral ca1, n, ca2, c
     end
 
     def psi : Float64
-      psi? || raise Error.new "#{self} is terminal"
-    end
-
-    def psi? : Float64?
       if (next_res = self.next) && bonded?(next_res)
         Spatial.dihedral self["N"], self["CA"], self["C"], next_res["N"]
       else
-        nil
+        raise Error.new "#{self} is terminal"
       end
+    end
+
+    def psi? : Float64?
+      return nil unless next_res = self.next
+      return nil unless bonded? next_res
+      return nil unless n1 = self["N"]?
+      return nil unless ca = self["CA"]?
+      return nil unless c = self["C"]?
+      return nil unless n2 = next_res["N"]?
+      Spatial.dihedral n1, ca, c, n2
     end
 
     def ramachandran_angles : Tuple(Float64, Float64)
