@@ -64,9 +64,7 @@ module Chem
     end
 
     def cis? : Bool
-      omega.abs < 30
-    rescue Error
-      false
+      (angle = omega?) ? angle.abs < 30 : false
     end
 
     def conf : Conformation?
@@ -128,26 +126,38 @@ module Chem
     end
 
     def omega : Float64
+      omega? || raise Error.new "#{self} is terminal"
+    end
+
+    def omega? : Float64?
       if (prev_res = previous) && bonded?(prev_res)
         Spatial.dihedral prev_res["CA"], prev_res["C"], self["N"], self["CA"]
       else
-        raise Error.new "#{self} is terminal"
+        nil
       end
     end
 
     def phi : Float64
+      phi? || raise Error.new "#{self} is terminal"
+    end
+
+    def phi? : Float64?
       if (prev_res = previous) && bonded?(prev_res)
         Spatial.dihedral prev_res["C"], self["N"], self["CA"], self["C"]
       else
-        raise Error.new "#{self} is terminal"
+        nil
       end
     end
 
     def psi : Float64
+      psi? || raise Error.new "#{self} is terminal"
+    end
+
+    def psi? : Float64?
       if (next_res = self.next) && bonded?(next_res)
         Spatial.dihedral self["N"], self["CA"], self["C"], next_res["N"]
       else
-        raise Error.new "#{self} is terminal"
+        nil
       end
     end
 
@@ -176,9 +186,7 @@ module Chem
     end
 
     def trans? : Bool
-      omega.abs > 150
-    rescue Error
-      false
+      (angle = omega?) ? angle.abs > 150 : false
     end
 
     {% for member in Kind.constants %}
