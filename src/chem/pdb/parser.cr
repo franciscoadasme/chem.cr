@@ -34,7 +34,9 @@ module Chem::PDB
       chains = sys.chains
       @segments.each do |seg|
         next unless chain = chains[seg.chain]?
-        chain.each_residue.select { |res| res.number.within? seg.range }.each do |res|
+        chain.each_residue.each do |res|
+          pos = {res.number, res.insertion_code || ' '}
+          next if pos < seg.start_pos || pos > seg.end_pos
           res.secondary_structure = seg.kind
         end
       end
@@ -165,7 +167,8 @@ module Chem::PDB
       SecondaryStructureSegment.new \
         kind: Protein::SecondaryStructure.from_value(rec[38..39].to_i),
         chain: rec[19],
-        range: rec[21..24].to_i..rec[33..36].to_i
+        start_pos: {rec[21..24].to_i, rec[25]},
+        end_pos: {rec[33..36].to_i, rec[37]}
     end
 
     private def parse_lattice(rec : Record)
@@ -258,7 +261,8 @@ module Chem::PDB
       SecondaryStructureSegment.new \
         kind: Protein::SecondaryStructure.from_value(rec[38..39].to_i + 100),
         chain: rec[21],
-        range: rec[22..25].to_i..rec[33..36].to_i
+        start_pos: {rec[22..25].to_i, rec[26]},
+        end_pos: {rec[33..36].to_i, rec[37]}
     end
   end
 end

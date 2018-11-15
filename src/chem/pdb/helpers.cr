@@ -2,7 +2,8 @@ module Chem::PDB
   private record SecondaryStructureSegment,
     chain : Char,
     kind : Protein::SecondaryStructure,
-    range : Range(Int32, Int32)
+    start_pos : Tuple(Int32, Char),
+    end_pos : Tuple(Int32, Char)
 
   private class ExperimentBuilder
     setter deposition_date : Time?

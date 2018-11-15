@@ -160,6 +160,13 @@ describe Chem::PDB do
       st.residues[-1].dssp.should eq '0'
     end
 
+    it "parses secondary structure information with insertion codes" do
+      st = PDB.read_first "spec/data/pdb/secondary_structure_inscode.pdb"
+      st.residues.map(&.dssp).should eq ['H', 'H', 'H', 'H', 'H', 'H', '0', '0', '0',
+                                         '0', '0', '0', 'B', 'B', 'B', 'H', 'H', '0',
+                                         '0', '0']
+    end
+
     it "parses bonds" do
       st = PDB.read_first "spec/data/pdb/1crn.pdb"
       st.atoms[19].bonds[st.atoms[281]].order.should eq 1
