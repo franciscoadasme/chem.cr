@@ -5,7 +5,7 @@ module Chem
     @atom : Atom
     @bonds : Array(Bond)
 
-    delegate size, unsafe_at, to: @bonds
+    delegate size, unsafe_fetch, to: @bonds
 
     def initialize(@atom : Atom)
       @bonds = Array(Bond).new @atom.valence

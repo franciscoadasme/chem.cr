@@ -7,7 +7,7 @@ module Chem
     def initialize(@items)
     end
 
-    delegate find, size, unsafe_at, to: @items
+    delegate find, size, unsafe_fetch, to: @items
 
     def [](range : Range(Int, Int)) : self
       {{@type}}.new @items[range]
