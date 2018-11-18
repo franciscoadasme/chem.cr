@@ -33,11 +33,6 @@ module Chem
       protected def add(residue_name : String,
                         id : Char,
                         occupancy : Float64) : Conformation
-        if total_occupancy + occupancy > 1
-          raise Error.new "Sum of occupancies in #{@residue} will be greater than 1 " \
-                          "when adding conformation #{id}"
-        end
-
         @conformations << (conf = Conformation.new residue_name, id, occupancy)
         @current_conf ||= conf
         self.current = conf if (other = current) && occupancy > other.occupancy
@@ -68,10 +63,6 @@ module Chem
         next_idx = @conformations.index!(@current_conf) + 1
         next_idx = 0 if next_idx >= @conformations.size
         self.current = @conformations[next_idx]
-      end
-
-      private def total_occupancy : Float64
-        @conformations.sum &.occupancy
       end
     end
   end

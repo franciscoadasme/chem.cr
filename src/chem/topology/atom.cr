@@ -28,9 +28,6 @@ module Chem
                    @charge : Int32 = 0,
                    @occupancy : Float64 = 1,
                    @temperature_factor : Float64 = 0)
-      if @occupancy < 0 || @occupancy > 1
-        raise ArgumentError.new "Occupancy is not within 0 and 1"
-      end
       @element = element || PeriodicTable[atom_name: @name]
       @residue << self
     end

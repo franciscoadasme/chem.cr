@@ -6,15 +6,6 @@ describe Chem::Residue do
     residue.conformations.map(&.id).should eq ['A', 'B', 'C', 'D']
   end
 
-  it "fails when adding an atom that leads to invalid total occupancy" do
-    msg = "Sum of occupancies in A:SER1 will be greater than 1 when adding " \
-          "conformation E"
-    expect_raises Chem::Error, msg do
-      residue = fake_residue_with_alternate_conformations
-      Atom.new "OG", 10, Vector[4, 0, 0], residue, 'E', occupancy: 0.05
-    end
-  end
-
   describe "conformations" do
     describe "#[]" do
       it "fails on unknown conformation id" do
