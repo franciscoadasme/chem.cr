@@ -123,6 +123,8 @@ module Chem
       radius = r1.magnitude / (2 * Math.sin(0.5 * theta))
 
       {zeta, theta.degrees, radius}
+    rescue KeyError
+      nil
     end
 
     def omega : Float64
