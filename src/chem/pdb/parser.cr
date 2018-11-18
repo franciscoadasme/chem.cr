@@ -257,9 +257,14 @@ module Chem::PDB
       end
     end
 
+    # NOTE: When the beta strand sense (columns 39-40) is missing in the PDB record, it
+    # defaults to anti-parallel if the previous segment is any beta, otherwise to
+    # beta-first
     private def parse_sheet(rec : Record) : SecondaryStructureSegment
+      value = rec[38..39].to_i?
+      value ||= @segments.last.kind.beta? ? -1 : 0
       SecondaryStructureSegment.new \
-        kind: Protein::SecondaryStructure.from_value(rec[38..39].to_i + 100),
+        kind: Protein::SecondaryStructure.from_value(value + 100),
         chain: rec[21],
         start_pos: {rec[22..25].to_i, rec[26]},
         end_pos: {rec[33..36].to_i, rec[37]}

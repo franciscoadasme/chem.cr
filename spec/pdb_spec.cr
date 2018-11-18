@@ -167,6 +167,12 @@ describe Chem::PDB do
                                          '0', '0']
     end
 
+    it "parses secondary structure information when sheet type is missing" do
+      st = PDB.read_first "spec/data/pdb/secondary_structure_missing_type.pdb"
+      values = [0, 100, 100, 0, 0, 99, 99, 99, 99, 99, 0]
+      st.residues.map(&.secondary_structure.value).should eq values
+    end
+
     it "parses bonds" do
       st = PDB.read_first "spec/data/pdb/1crn.pdb"
       st.atoms[19].bonds[st.atoms[281]].order.should eq 1
