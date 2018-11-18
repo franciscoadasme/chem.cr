@@ -17,6 +17,10 @@ module Chem::Protein
     Bend                  = 300
     None                  =   0
 
+    def beta? : Bool
+      99 <= value <= 101
+    end
+
     def dssp : Char
       case self
       when .bend?
@@ -38,6 +42,10 @@ module Chem::Protein
       else
         '0'
       end
+    end
+
+    def helix? : Bool
+      1 <= value <= 10
     end
 
     def helix_right_handed_310? : Bool
