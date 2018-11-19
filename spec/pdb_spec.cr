@@ -146,6 +146,15 @@ describe Chem::PDB do
       seq.to_s.should eq "TTCCPSIVARSNFNVCRLPGTPEAICATYTGCIIIPGATCPGDYAN"
     end
 
+    it "parses a PDB file with anisou/ter records" do
+      ary = PDB.read "spec/data/pdb/anisou.pdb"
+      ary.size.should eq 1
+
+      st = ary.first
+      st.size.should eq 133
+      st.residues.map(&.number).should eq (32..52).to_a
+    end
+
     it "parses secondary structure information" do
       st = PDB.read_first "spec/data/pdb/1crn.pdb"
       st.residues[0].dssp.should eq 'B'
