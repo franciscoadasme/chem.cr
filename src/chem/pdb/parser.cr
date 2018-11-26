@@ -1,15 +1,16 @@
 require "../topology/templates/all"
 require "./helpers"
 require "./record"
-require "./record_iterator"
+require "./record/*"
 
 module Chem::PDB
   class Parser
-    private alias BondTable = Hash(Tuple(Int32, Int32), Int32)
+    private alias BondTable = Hash(Int32, Hash(Int32, Int32))
 
     private alias ChainId = Tuple(UInt64, Char?)          # model, ch
     private alias ResidueId = Tuple(UInt64, Int32, Char?) # ch, num, inscode
 
+    @pdb_bonds = uninitialized BondTable
     @pdb_expt : Protein::Experiment?
     @pdb_has_hydrogens = false
     @pdb_lattice : Lattice?
@@ -17,16 +18,20 @@ module Chem::PDB
     @pdb_seq : Protein::Sequence?
     @pdb_title = ""
 
-    @atoms = {} of Int32 => Atom
     @chains = {} of ChainId => Chain
     @residues = {} of ResidueId => Residue
     @segments = [] of SecondaryStructureSegment
     @use_hex_numbers = {:atom_serial => false, :residue_number => false}
 
-    private def assign_bonds(bonds : BondTable, to structure : Structure)
-      bonds.each do |serials, order|
-        index, other = serials
-        @atoms[index].bonds.add @atoms[other], order
+    def initialize(@io : ::IO)
+      @iter = Record::Iterator.new @io
+    end
+
+    private def assign_bonds(to atoms : Hash(Int32, Atom))
+      @pdb_bonds.each do |serial, bond_table|
+        bond_table.each do |other, order|
+          atoms[serial].bonds.add atoms[other], order
+        end
       end
     end
 
@@ -70,16 +75,19 @@ module Chem::PDB
       sys
     end
 
-    def parse(io : ::IO, models : Enumerable(Int32)? = nil) : Array(Structure)
-      iter = Record::Iterator.new io
-      parse_header iter
-      structures = parse_models(iter, models || (1..@pdb_models).to_a)
-      bonds = parse_bonds iter
-      structures.each do |sys|
-        assign_bonds bonds, to: sys
-        assign_secondary_structure to: sys
-      end
-      structures
+    def parse(models : Enumerable(Int32)? = nil) : Array(Structure)
+      ary = Array(Structure).new models ? models.size : 1
+      parse_each(models) { |st| ary << st }
+      ary
+    end
+
+    def parse_each(models : Enumerable(Int32)? = nil, &block : Structure ->)
+      return if models.try(&.empty?)
+
+      parse_header
+      parse_bonds
+      models = models ? models.to_a.sort : (1..@pdb_models).to_a
+      parse_models models, &block
     end
 
     private def parse_atom(residue : Residue, prev_atom : Atom?, rec : Record) : Atom
@@ -101,25 +109,32 @@ module Chem::PDB
       number
     end
 
-    private def parse_bonds(iter : Record::Iterator) : BondTable
-      BondTable.new(default_value: 0).tap do |bonds|
-        iter.each do |rec|
-          case rec.name
-          when "conect"
-            serial = rec[6..10].to_i
-            {11..15, 16..20, 21..25, 26..30}.each do |range|
-              if other = rec[range]?.try(&.to_i)
-                next if bonds.has_key?({other, serial}) # skip redundant bonds
-                bonds[{serial, other}] += 1             # parse duplicates as bond order
-              else
-                break # there are no more indices to read
-              end
+    private def parse_bonds
+      last_pos = @io.pos
+      @io.seek 0, ::IO::Seek::End
+
+      @pdb_bonds = BondTable.new { |hash, key| hash[key] = Hash(Int32, Int32).new 0 }
+      Record::BackwardIterator.new(@io).each do |rec|
+        case rec.name
+        when "conect"
+          serial = rec[6..10].to_i
+          {11..15, 16..20, 21..25, 26..30}.each do |range|
+            if other = rec[range]?.try(&.to_i)
+              next if serial > other # skip redundant bonds
+              @pdb_bonds[serial][other] += 1
+              @pdb_bonds[other][serial] += 1
+            else
+              break
             end
-          else
-            Iterator.stop
           end
+        when "end", "master"
+          next
+        else
+          ::Iterator.stop
         end
       end
+
+      @io.pos = last_pos
     end
 
     private def parse_chain(sys : Structure, prev_chain : Chain?, rec : Record) : Chain
@@ -128,16 +143,18 @@ module Chem::PDB
       @chains[key] ||= Chain.new chain_id, sys
     end
 
-    private def parse_header(iter : Record::Iterator)
+    private def parse_header
       expt_b = ExperimentBuilder.new
-      iter.each do |rec|
+      @iter.each do |rec|
         case rec.name
-        when "atom", "hetatm", "model" then Iterator.stop
+        when "atom", "hetatm", "model" then ::Iterator.stop
         when "cryst1"                  then @pdb_lattice = parse_lattice rec
         when "helix"                   then @segments << parse_helix rec
         when "nummdl"                  then @pdb_models = rec[10..13].to_i
-        when "seqres"                  then @pdb_seq = parse_sequence iter.back
         when "sheet"                   then @segments << parse_sheet rec
+        when "seqres"
+          @iter.back
+          @pdb_seq = parse_sequence
         when "expdta"
           expt_b.kind = Protein::Experiment::Kind.parse(rec[10..79].delete "- ")
         when "header"
@@ -178,44 +195,45 @@ module Chem::PDB
         space_group: rec[55..65].rstrip
     end
 
-    private def parse_model(iter : Record::Iterator, structure : Structure)
-      chain, residue, atom = nil, nil, nil
-      iter.each do |rec|
-        case rec.name
-        when "atom", "hetatm"
-          chain = parse_chain structure, chain, rec
-          residue = parse_residue chain, residue, rec
-          atom = parse_atom residue, atom, rec
-          @atoms[atom.serial] = atom
-          @pdb_has_hydrogens = true if atom.element.hydrogen?
-        when "anisou", "ter"
-          next
-        else
-          Iterator.stop
+    private def parse_model : Structure
+      make_structure.tap do |structure|
+        bonded_atoms = Hash(Int32, Atom).new initial_capacity: @pdb_bonds.size
+        chain, residue, atom = nil, nil, nil
+        @iter.each do |rec|
+          case rec.name
+          when "atom", "hetatm"
+            chain = parse_chain structure, chain, rec
+            residue = parse_residue chain, residue, rec
+            atom = parse_atom residue, atom, rec
+            bonded_atoms[atom.serial] = atom if @pdb_bonds.has_key? atom.serial
+            @pdb_has_hydrogens = true if atom.element.hydrogen?
+          when "anisou", "ter"
+            next
+          else
+            ::Iterator.stop
+          end
         end
+        assign_bonds to: bonded_atoms
+        assign_secondary_structure to: structure
       end
     end
 
-    private def parse_models(iter : Record::Iterator,
-                             serials : Enumerable(Int32)) : Array(Structure)
-      model = serials.first
-      structure = make_structure
-      Array(Structure).new(serials.size).tap do |models|
-        iter.each do |rec|
-          case rec.name
-          when "atom", "hetatm"
-            next unless serials.includes? model
-            parse_model iter.back, structure
-          when "endmdl"
-            models << structure if serials.includes? model
-          when "model"
-            model = rec[10..13].to_i
-            structure = make_structure unless structure.empty?
-          else
-            Iterator.stop
+    private def parse_models(models : Array(Int32), &block : Structure ->)
+      @iter.each do |rec|
+        case rec.name
+        when "atom", "hetatm"
+          @iter.back
+          yield parse_model
+        when "endmdl"
+          models.shift
+          return if models.empty?
+        when "model"
+          unless models.includes? rec[10..13].to_i
+            @iter.skip "atom", "anisou", "endmdl", "hetatm", "ter"
           end
+        else
+          ::Iterator.stop
         end
-        models << structure if models.empty?
       end
     end
 
@@ -244,14 +262,14 @@ module Chem::PDB
       number
     end
 
-    private def parse_sequence(iter : Record::Iterator) : Protein::Sequence
+    private def parse_sequence : Protein::Sequence
       Protein::Sequence.build do |aminoacids|
-        iter.each do |rec|
+        @iter.each do |rec|
           case rec.name
           when "seqres"
             rec[19..79].split.each { |name| aminoacids << Protein::AminoAcid[name] }
           else
-            Iterator.stop
+            ::Iterator.stop
           end
         end
       end

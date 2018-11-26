@@ -2,11 +2,13 @@ module Chem::PDB
   class Record::Iterator
     include ::Iterator(Record)
 
+    @initial_pos : Int32
     @line_number = 0
     @prev_pos = -1
     @record = uninitialized Record
 
     def initialize(@io : ::IO)
+      @initial_pos = @io.pos.to_i
     end
 
     def back : self
@@ -36,7 +38,16 @@ module Chem::PDB
     end
 
     def rewind
-      @io.rewind
+      @io.pos = @initial_pos
+    end
+
+    def skip(*names : String)
+      loop do
+        value = self.next
+        return if value.is_a?(Stop)
+        break unless names.includes? value.name
+      end
+      back
     end
   end
 end
