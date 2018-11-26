@@ -155,6 +155,12 @@ describe Chem::PDB do
       st.residues.map(&.number).should eq (32..52).to_a
     end
 
+    it "parses a PDB file with deuterium" do
+      st = PDB.read_first "spec/data/pdb/isotopes.pdb"
+      st.size.should eq 12
+      st.atoms[5].element.deuterium?.should be_true
+    end
+
     it "parses secondary structure information" do
       st = PDB.read_first "spec/data/pdb/1crn.pdb"
       st.residues[0].dssp.should eq 'B'

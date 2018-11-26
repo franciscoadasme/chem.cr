@@ -38,7 +38,7 @@ describe Chem::PeriodicTable do
 
   describe ".elements" do
     it "returns all elements" do
-      PeriodicTable.elements.size.should eq 118
+      PeriodicTable.elements.size.should eq 119
       PeriodicTable.elements[0].should be PeriodicTable::H
     end
   end
