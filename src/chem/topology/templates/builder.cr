@@ -4,7 +4,7 @@ module Chem::Topology::Templates
 
     ATOM_NAME_PATTERN  = "[A-Z]{1,2}[0-9]{0,2}"
     ATOM_SEP_REGEX     = /(?<=[A-Z0-9])#{BOND_ORDER_PATTERN}(?=[A-Z0-9])/
-    ATOM_SPEC_REGEX    = /(#{ATOM_NAME_PATTERN})([\+-]\d?)?(\((\d)\))?/
+    ATOM_SPEC_REGEX    = /(#{ATOM_NAME_PATTERN})(\[([A-Z][a-z]?)\])?([\+-]\d?)?(\((\d)\))?/
     BOND_ORDER_PATTERN = "[-=#]"
     BOND_REGEX         = /(#{ATOM_NAME_PATTERN})(#{BOND_ORDER_PATTERN})(#{ATOM_NAME_PATTERN})/
 
@@ -177,8 +177,9 @@ module Chem::Topology::Templates
     private def parse_atom(spec : String) : AtomType
       if spec =~ ATOM_SPEC_REGEX
         atom_type name: $~[1],
-          formal_charge: parse_charge($~[2]?),
-          valence: $~[4]?.try(&.to_i)
+          element: $~[3]?,
+          formal_charge: parse_charge($~[4]?),
+          valence: $~[6]?.try(&.to_i)
       else
         parse_exception "Invalid atom specification \"#{spec}\""
       end

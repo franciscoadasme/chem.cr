@@ -7,8 +7,9 @@ module Chem::Topology::Templates
 
     def initialize(@name : String,
                    @formal_charge : Int32 = 0,
+                   element : String? = nil,
                    valence : Int32? = nil)
-      @element = PeriodicTable[atom_name: name]
+      @element = element ? PeriodicTable[element] : PeriodicTable[atom_name: name]
       @valence = valence || nominal_valence
     end
 

@@ -218,6 +218,15 @@ describe Chem::Topology::Templates::Builder do
       residue.formal_charge.should eq 0
     end
 
+    it "builds a residue having an atom with explicit element" do
+      residue = TemplateBuilder.build(:ion) do
+        name "Calcium"
+        code "CA"
+        main "CA[Ca]"
+      end
+      residue.atom_types[0].element.should eq PeriodicTable::Ca
+    end
+
     it "builds a polymer residue" do
       residue_t = TemplateBuilder.build(:other) do
         name "Fake"
