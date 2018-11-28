@@ -218,6 +218,18 @@ describe Chem::Topology::Templates::Builder do
       residue.formal_charge.should eq 0
     end
 
+    it "builds a residue having an atom with explicit valence followed by a bond" do
+      residue = TemplateBuilder.build(:ion) do
+        name "Sulfate"
+        code "SO4"
+        main "S(2)=O1"
+      end
+
+      residue.atom_names.should eq ["S", "O1"]
+      residue.atom_types.map(&.valence).should eq [2, 2]
+      residue.formal_charge.should eq 0
+    end
+
     it "builds a residue having an atom with explicit element" do
       residue = TemplateBuilder.build(:ion) do
         name "Calcium"
