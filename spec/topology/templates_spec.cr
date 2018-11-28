@@ -247,10 +247,23 @@ describe Chem::Topology::Templates::Builder do
         link_adjacent_by "C3=C1"
       end
 
-      residue_t.atom_names.should eq ["C1", "H1", "C2", "H21", "H22", "C3", "H3"]
+      residue_t.atom_names.should eq ["C1", "H1", "C2", "H2", "H3", "C3", "H4"]
       residue_t.bonds.size.should eq 6
       residue_t.monomer?.should be_true
       residue_t.link_bond.should eq Templates::Bond.new("C3", "C1", 2)
+    end
+
+    it "builds a residue with numbered atoms per element" do
+      residue = TemplateBuilder.build(:solvent) do
+        name "Glycerol"
+        code "GOL"
+        main "O1-C1-C2-C3-O3"
+        branch "C2-O2"
+      end
+
+      names = ["O1", "H1", "C1", "H4", "H5", "C2", "H6", "C3", "H7", "H8", "O3", "H3",
+               "O2", "H2"]
+      residue.atom_names.should eq names
     end
 
     it "fails when adding the same bond twice with different order" do

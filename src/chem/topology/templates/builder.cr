@@ -131,18 +131,20 @@ module Chem::Topology::Templates
     end
 
     private def add_missing_hydrogens
-      i = 0
-      while i < @atom_types.size
-        atom_t = @atom_types[i]
+      use_name_suffix = @atom_types.any? &.suffix.to_i?.nil?
+      atom_types = use_name_suffix ? @atom_types : @atom_types.sort_by do |atom_t|
+        {atom_t.element.atomic_number * -1, atom_t.suffix.to_i}
+      end
+
+      h_i = 0
+      atom_types.each do |atom_t|
+        i = @atom_types.index! atom_t
         h_count = missing_bonds atom_t
         h_count.times do |j|
-          name = "H#{atom_t.suffix}#{j + 1 if h_count > 1}"
-          pos = @atom_types.index!(atom_t) + 1 + j
-          add_bond atom_t, atom_type(name, insert_at: pos)
-          i += 1
+          h_i += 1
+          name = use_name_suffix ? "H#{atom_t.suffix}#{j + 1 if h_count > 1}" : "H#{h_i}"
+          add_bond atom_t, atom_type(name, element: "H", insert_at: i + 1 + j)
         end
-
-        i += 1
       end
     end
 
