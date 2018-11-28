@@ -23,7 +23,7 @@ module Chem
 
     protected def <<(chain : Chain)
       @chains << chain
-      @chain_table[chain.id || ' '] = chain
+      @chain_table[chain.id] = chain
     end
 
     def each_atom : Iterator(Atom)

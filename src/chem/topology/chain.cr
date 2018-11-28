@@ -6,10 +6,10 @@ module Chem
     @residue_table = {} of Tuple(Int32, Char?) => Residue
     @residues = [] of Residue
 
-    getter identifier : Char?
+    getter identifier : Char
     getter structure : Structure
 
-    def initialize(@identifier : Char?, @structure : Structure)
+    def initialize(@identifier : Char, @structure : Structure)
       @structure << self
     end
 
