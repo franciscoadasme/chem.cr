@@ -1,55 +1,42 @@
 module Chem::Protein
   enum SecondaryStructure
-    HelixRightHandedAlpha =   1
-    HelixRightHandedOmega =   2
-    HelixRightHandedPi    =   3
-    HelixRightHandedGamma =   4
-    HelixRightHanded310   =   5
-    HelixLeftHandedAlpha  =   6
-    HelixLeftHandedGamma  =   7
-    HelixLeftHandedOmega  =   8
-    HelixRibbon27         =   9
-    HelixPolyproline      =  10
-    BetaAntiparallel      =  99
-    BetaFirst             = 100
-    BetaParallel          = 101
-    Turn                  = 200
-    Bend                  = 300
-    None                  =   0
+    HelixAlpha
+    Helix3_10
+    HelixPi
+    BetaStrand
+    BetaBridge
+    Turn
+    Bend
+    None
 
     def beta? : Bool
-      99 <= value <= 101
+      beta_strand?
+    end
+
+    def coil? : Bool
+      bend? || none? || turn?
     end
 
     def dssp : Char
       case self
-      when .bend?
-        'S'
-      when .beta_antiparallel?, .beta_first?
-        'B'
-      when .beta_parallel?
-        'E'
-      when .helix_right_handed_310?
-        'G'
-      when .helix_right_handed_alpha?, .helix_left_handed_alpha?
-        'H'
-      when .helix_right_handed_pi?
-        'I'
-      when .none?
-        '0'
-      when .turn?
-        'T'
-      else
-        '0'
+      when .bend?        then 'S'
+      when .beta_bridge? then 'B'
+      when .beta_strand? then 'E'
+      when .helix_3_10?  then 'G'
+      when .helix_alpha? then 'H'
+      when .helix_pi?    then 'I'
+      when .none?        then '0'
+      when .turn?        then 'T'
+      else                    '0'
       end
     end
 
     def helix? : Bool
-      1 <= value <= 10
+      helix_alpha? || helix_3_10? || helix_pi?
     end
 
-    def helix_right_handed_310? : Bool
-      helix_right_handed310?
+    def helix_3_10? : Bool
+      helix3_10?
     end
   end
 end

@@ -163,29 +163,26 @@ describe Chem::PDB do
 
     it "parses secondary structure information" do
       st = PDB.read_first "spec/data/pdb/1crn.pdb"
-      st.residues[0].dssp.should eq 'B'
-      st.residues[1].dssp.should eq 'B'
-      st.residues[3].dssp.should eq 'B'
+      st.residues[0].dssp.should eq 'E'
+      st.residues[1].dssp.should eq 'E'
+      st.residues[3].dssp.should eq 'E'
       st.residues[4].dssp.should eq '0'
       st.residues[5].dssp.should eq '0'
       st.residues[6].dssp.should eq 'H'
       st.residues[18].dssp.should eq 'H'
       st.residues[19].dssp.should eq '0'
-      st.residues[31].dssp.should eq 'B'
+      st.residues[31].dssp.should eq 'E'
       st.residues[-1].dssp.should eq '0'
     end
 
     it "parses secondary structure information with insertion codes" do
       st = PDB.read_first "spec/data/pdb/secondary_structure_inscode.pdb"
-      st.residues.map(&.dssp).should eq ['H', 'H', 'H', 'H', 'H', 'H', '0', '0', '0',
-                                         '0', '0', '0', 'B', 'B', 'B', 'H', 'H', '0',
-                                         '0', '0']
+      st.residues.map(&.dssp).should eq "HHHHHH000000EEEHH000".chars
     end
 
     it "parses secondary structure information when sheet type is missing" do
       st = PDB.read_first "spec/data/pdb/secondary_structure_missing_type.pdb"
-      values = [0, 100, 100, 0, 0, 99, 99, 99, 99, 99, 0]
-      st.residues.map(&.secondary_structure.value).should eq values
+      st.residues.map(&.secondary_structure.dssp).should eq "0EE00EEEEE0".chars
     end
 
     it "parses bonds" do
