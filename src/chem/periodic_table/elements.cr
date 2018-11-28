@@ -450,11 +450,7 @@ module Chem::PeriodicTable
   element Uuo, Ununoctium,
     mass: 294
 
-  # Same values as hydrogen except the mass
-  element D, Deuterium,
-    atomic_number: 1,
-    covalent_radius: 0.31,
-    mass: 2.0141,
-    valence: 1,
+  # Special elements that are used internally
+  D = Element.new 1, "Deuterium", "D", covalent_radius: 0.31, mass: 2.0141, valence: 1,
     vdw_radius: 1.2
 end

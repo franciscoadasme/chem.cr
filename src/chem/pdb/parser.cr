@@ -97,7 +97,7 @@ module Chem::PDB
         coords: Spatial::Vector.new(rec[30..37].to_f, rec[38..45].to_f, rec[46..53].to_f),
         residue: residue,
         alt_loc: rec[16]?,
-        element: (symbol = rec[76..77]?) ? PeriodicTable[symbol.lstrip]? : nil,
+        element: parse_element(rec, residue.name),
         charge: rec[78..79]?.try(&.reverse.to_i?) || 0,
         occupancy: rec[54..59].to_f,
         temperature_factor: rec[60..65].to_f
@@ -141,6 +141,15 @@ module Chem::PDB
       chain_id = rec[21]
       key = {sys.object_id, chain_id}
       @chains[key] ||= Chain.new chain_id, sys
+    end
+
+    private def parse_element(rec : Record, resname : String) : PeriodicTable::Element?
+      case symbol = rec[76..77]?.try(&.lstrip)
+      when "D" # deuterium
+        PeriodicTable::D
+      when String
+        PeriodicTable[symbol]?
+      end
     end
 
     private def parse_header

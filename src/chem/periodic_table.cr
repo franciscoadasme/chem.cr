@@ -12,9 +12,9 @@ module Chem::PeriodicTable
   def []?(number : Int32) : Element?
     {% begin %}
       case number
-      {% for name, index in @type.constants %}
-        {% unless @type.constant(name).is_a? TypeNode %}
-          when {{index}}
+      {% for name, i in @type.constants.select { |c| @type.constant(c).is_a?(Call) } %}
+        {% if i < 118 %}
+          when {{i + 1}}
             {{@type}}::{{name}}
         {% end %}
       {% end %}
@@ -27,8 +27,8 @@ module Chem::PeriodicTable
   def []?(symbol : String | Char) : Element?
     {% begin %}
       case symbol.to_s.capitalize
-      {% for name in @type.constants %}
-        {% unless @type.constant(name).is_a? TypeNode %}
+      {% for name, i in @type.constants.select { |c| @type.constant(c).is_a?(Call) } %}
+        {% if i < 118 %}
           when {{name.stringify}}
             {{@type}}::{{name}}
         {% end %}
@@ -42,8 +42,8 @@ module Chem::PeriodicTable
   def []?(*, name : String) : Element?
     {% begin %}
       case name
-      {% for name in @type.constants %}
-        {% unless @type.constant(name).is_a? TypeNode %}
+      {% for name, i in @type.constants.select { |c| @type.constant(c).is_a?(Call) } %}
+        {% if i < 118 %}
           when {{@type}}::{{name}}.name
             {{@type}}::{{name}}
         {% end %}
@@ -64,8 +64,8 @@ module Chem::PeriodicTable
   def elements : Tuple
     {% begin %}
       {
-        {% for name in @type.constants %}
-          {% unless @type.constant(name).is_a? TypeNode %}
+        {% for name, i in @type.constants.select { |c| @type.constant(c).is_a?(Call) } %}
+          {% if i < 118 %}
             {{@type}}::{{name}},
           {% end %}
         {% end %}

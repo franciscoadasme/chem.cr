@@ -158,7 +158,7 @@ describe Chem::PDB do
     it "parses a PDB file with deuterium" do
       st = PDB.read_first "spec/data/pdb/isotopes.pdb"
       st.size.should eq 12
-      st.atoms[5].element.deuterium?.should be_true
+      st.atoms[5].element.symbol.should eq "D"
     end
 
     it "parses a PDB file with SIG* records" do
