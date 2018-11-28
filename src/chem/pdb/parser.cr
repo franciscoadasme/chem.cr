@@ -213,7 +213,7 @@ module Chem::PDB
             atom = parse_atom residue, atom, rec
             bonded_atoms[atom.serial] = atom if @pdb_bonds.has_key? atom.serial
             @pdb_has_hydrogens = true if atom.element.hydrogen?
-          when "anisou", "ter"
+          when "anisou", "ter", "sigatm", "siguij"
             next
           else
             ::Iterator.stop
@@ -235,7 +235,7 @@ module Chem::PDB
           return if models.empty?
         when "model"
           unless models.includes? rec[10..13].to_i
-            @iter.skip "atom", "anisou", "endmdl", "hetatm", "ter"
+            @iter.skip "atom", "anisou", "endmdl", "hetatm", "ter", "sigatm", "siguij"
           end
         else
           ::Iterator.stop

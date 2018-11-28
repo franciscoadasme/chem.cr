@@ -161,6 +161,12 @@ describe Chem::PDB do
       st.atoms[5].element.deuterium?.should be_true
     end
 
+    it "parses a PDB file with SIG* records" do
+      st = PDB.read_first "spec/data/pdb/1etl.pdb"
+      st.size.should eq 160
+      st.residues[serial: 6]["SG"].bonded?(st.residues[serial: 14]["SG"]).should be_true
+    end
+
     it "parses secondary structure information" do
       st = PDB.read_first "spec/data/pdb/1crn.pdb"
       st.residues[0].dssp.should eq 'E'
