@@ -7,9 +7,6 @@ module Chem::PDB
   class Parser
     private alias BondTable = Hash(Int32, Hash(Int32, Int32))
 
-    private alias ChainId = Tuple(UInt64, Char?)          # model, ch
-    private alias ResidueId = Tuple(UInt64, Int32, Char?) # ch, num, inscode
-
     @pdb_bonds = uninitialized BondTable
     @pdb_expt : Protein::Experiment?
     @pdb_has_hydrogens = false
@@ -18,8 +15,6 @@ module Chem::PDB
     @pdb_seq : Protein::Sequence?
     @pdb_title = ""
 
-    @chains = {} of ChainId => Chain
-    @residues = {} of ResidueId => Residue
     @segments = [] of SecondaryStructureSegment
     @use_hex_numbers = {:atom_serial => false, :residue_number => false}
 
@@ -139,8 +134,7 @@ module Chem::PDB
 
     private def parse_chain(sys : Structure, prev_chain : Chain?, rec : Record) : Chain
       chain_id = rec[21]
-      key = {sys.object_id, chain_id}
-      @chains[key] ||= Chain.new chain_id, sys
+      sys[chain_id]? || Chain.new chain_id, sys
     end
 
     private def parse_element(rec : Record, resname : String) : PeriodicTable::Element?
@@ -261,14 +255,13 @@ module Chem::PDB
       number = parse_residue_number(rec[22..25]) || guess_residue_number(prev_res, name)
       ins_code = rec[26]?
 
-      key = {chain.object_id, number, ins_code}
-      if residue = @residues[key]?
+      if residue = chain[number, ins_code]?
         if (alt_loc = rec[16]?) && !residue.conformations[alt_loc]?
           residue.conformations.add name, alt_loc, rec[54..59].to_f
         end
         residue
       else
-        @residues[key] ||= Residue.new name, number, ins_code, chain
+        Residue.new name, number, ins_code, chain
       end
     end
 

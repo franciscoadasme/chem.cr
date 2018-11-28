@@ -3,6 +3,7 @@ module Chem
     include AtomCollection
     include ResidueCollection
 
+    @residue_table = {} of Tuple(Int32, Char?) => Residue
     @residues = [] of Residue
 
     getter identifier : Char?
@@ -18,6 +19,15 @@ module Chem
         prev_res.next = residue
       end
       @residues << residue
+      @residue_table[{residue.number, residue.insertion_code}] = residue
+    end
+
+    def [](number : Int32, insertion_code : Char? = nil) : Residue
+      @residue_table[{number, insertion_code}]
+    end
+
+    def []?(number : Int32, insertion_code : Char? = nil) : Residue?
+      @residue_table[{number, insertion_code}]?
     end
 
     def each_atom : Iterator(Atom)

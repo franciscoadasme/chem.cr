@@ -4,6 +4,7 @@ module Chem
     include ChainCollection
     include ResidueCollection
 
+    @chain_table = {} of Char => Chain
     @chains = [] of Chain
 
     getter biases = [] of Chem::Bias
@@ -11,6 +12,8 @@ module Chem
     property lattice : Lattice?
     property sequence : Protein::Sequence?
     property title : String = ""
+
+    delegate :[], :[]?, to: @chain_table
 
     def self.build(&block) : self
       builder = Structure::Builder.new
@@ -20,6 +23,7 @@ module Chem
 
     protected def <<(chain : Chain)
       @chains << chain
+      @chain_table[chain.id || ' '] = chain
     end
 
     def each_atom : Iterator(Atom)
