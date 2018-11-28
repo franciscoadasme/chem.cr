@@ -453,4 +453,6 @@ module Chem::PeriodicTable
   # Special elements that are used internally
   D = Element.new 1, "Deuterium", "D", covalent_radius: 0.31, mass: 2.0141, valence: 1,
     vdw_radius: 1.2
+  N_or_O = Element.new 0, "Unknown", "X", covalent_radius: 0.71, mass: 15, valence: 3,
+    vdw_radius: 1.66
 end

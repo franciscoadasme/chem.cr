@@ -161,6 +161,11 @@ describe Chem::PDB do
       st.atoms[5].element.symbol.should eq "D"
     end
 
+    it "parses a PDB file with element X (ASX case)" do
+      st = PDB.read_first "spec/data/pdb/3e2o.pdb"
+      st.residues[serial: 235]["XD1"].element.should be PeriodicTable::N_or_O
+    end
+
     it "parses a PDB file with SIG* records" do
       st = PDB.read_first "spec/data/pdb/1etl.pdb"
       st.size.should eq 160
