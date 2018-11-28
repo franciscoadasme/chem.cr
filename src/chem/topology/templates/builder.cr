@@ -4,7 +4,7 @@ module Chem::Topology::Templates
 
     ATOM_NAME_PATTERN  = "[A-Z]{1,2}[0-9]{0,2}"
     ATOM_SEP_REGEX     = /(?<=[A-Z0-9])#{BOND_ORDER_PATTERN}(?=[A-Z0-9])/
-    ATOM_SPEC_REGEX    = /(#{ATOM_NAME_PATTERN})(\+|-)?(\((\d)\))?/
+    ATOM_SPEC_REGEX    = /(#{ATOM_NAME_PATTERN})([\+-]\d?)?(\((\d)\))?/
     BOND_ORDER_PATTERN = "[-=#]"
     BOND_REGEX         = /(#{ATOM_NAME_PATTERN})(#{BOND_ORDER_PATTERN})(#{ATOM_NAME_PATTERN})/
 
@@ -205,8 +205,12 @@ module Chem::Topology::Templates
     end
 
     private def parse_charge(spec : String?) : Int32
-      return 0 unless spec
-      spec == "+" ? 1 : -1
+      case spec
+      when "+"    then 1
+      when "-"    then -1
+      when String then spec.to_i
+      else             0
+      end
     end
 
     private def parse_exception(msg : String)

@@ -103,6 +103,16 @@ describe Chem::Topology::Templates::Builder do
       residue.formal_charge.should eq -1
     end
 
+    it "builds a residue with charge +2" do
+      residue = TemplateBuilder.build(:ion) do
+        name "Magnesium"
+        code "MG"
+        main "MG+2"
+      end
+
+      residue.formal_charge.should eq 2
+    end
+
     it "builds a positively charged residue with one branch in the sidechain" do
       residue = TemplateBuilder.build(:protein) do
         name "Arginine"
