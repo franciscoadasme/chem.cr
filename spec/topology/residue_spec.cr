@@ -21,37 +21,6 @@ describe Chem::Residue do
     end
   end
 
-  describe "#hlxparam" do
-    it "returns helical parameters" do
-      st = Chem::PDB.read_first "spec/data/pdb/hlxparam.pdb"
-      Chem::Topology.guess_topology of: st
-
-      hlxparam = st.residues[1].hlxparam
-      hlxparam.should_not be_nil
-      zeta, theta, radius = hlxparam.not_nil!
-      zeta.should be_close 1.63, 1e-2
-      theta.should be_close 101.67, 1e-2
-      radius.should be_close 2.24, 1e-2
-    end
-
-    it "returns nil when residue is terminal" do
-      st = Chem::PDB.read_first "spec/data/pdb/hlxparam.pdb"
-      Chem::Topology.guess_topology of: st
-
-      st.residues.first.hlxparam.should be_nil
-      st.residues.last.hlxparam.should be_nil
-    end
-
-    it "returns nil when residue is non-bonded to its previous/next residue" do
-      st = Chem::PDB.read_first "spec/data/pdb/hlxparam.pdb"
-      Chem::Topology.guess_topology of: st
-
-      # there is a gap between residues 2 and 3
-      st.residues[2].hlxparam.should be_nil
-      st.residues[3].hlxparam.should be_nil
-    end
-  end
-
   describe "#omega" do
     it "returns torsion angle omega" do
       st = fake_structure include_bonds: true
