@@ -17,13 +17,13 @@ describe Chem::Spatial::KDTree do
 
     describe "#nearest" do
       it "works" do
-        tree.nearest(to: Vector.origin, within: 5.5).should eq [3, 2, 1, 6]
+        tree.nearest(to: Vector.zero, within: 5.5).map(&.serial).should eq [3, 2, 1, 6]
       end
     end
 
     describe "#nearest" do
       it "works" do
-        tree.nearest(to: Vector.origin, neighbors: 2).should eq [3, 2]
+        tree.nearest(to: Vector.zero, neighbors: 2).map(&.serial).should eq [3, 2]
       end
     end
   end
@@ -34,21 +34,23 @@ describe Chem::Spatial::KDTree do
 
     describe "#find" do
       it "works" do
-        tree.nearest(to: Vector[19, 32, 44], neighbors: 1).should eq [9126]
+        tree.nearest(to: Vector[19, 32, 44], neighbors: 1)
+          .map(&.serial).should eq [9126]
       end
     end
 
     describe "#find" do
       it "works" do
-        tree.nearest(to: Vector[19, 32, 44], within: 3.5).should eq [9126, 1119, 1117, 9125]
+        tree.nearest(to: Vector[19, 32, 44], within: 3.5)
+          .map(&.serial).should eq [9126, 1119, 1117, 9125]
       end
 
       it "works" do
-        atom_indices = [] of Int32
-        tree.nearest(to: Vector[19, 32, 44], within: 3.5) do |atom_index, distance|
-          atom_indices << atom_index
+        atom_numbers = [] of Int32
+        tree.nearest(to: Vector[19, 32, 44], within: 3.5) do |atom, distance|
+          atom_numbers << atom.serial
         end
-        atom_indices.sort!.should eq [1117, 1119, 9125, 9126]
+        atom_numbers.sort!.should eq [1117, 1119, 9125, 9126]
       end
     end
   end
