@@ -37,6 +37,11 @@ module Chem::Spatial
     Math.sqrt squared_distance(p1, p2)
   end
 
+  def distance(q1 : Quaternion, q2 : Quaternion) : Float64
+    # 2 * Math.acos q1.dot(q2)
+    Math.acos 2 * q1.dot(q2)**2 - 1
+  end
+
   def squared_distance(a1 : Atom, a2 : Atom) : Float64
     squared_distance a1.coords, a2.coords
   end

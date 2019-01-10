@@ -25,6 +25,22 @@ describe Chem::Spatial do
       Chem::Spatial.distance(v1, v2).should eq Math.sqrt(17)
       Chem::Spatial.distance(v1.inv, v2).should eq Math.sqrt(61)
     end
+
+    it "returns the distance between two quaternions" do
+      q1 = Q[1, 0, 0, 0]
+      q2 = Q[0.5, 0.5, 0.5, 0.5]
+      Chem::Spatial.distance(q1, q2).should be_close 2.094395102393196, 1e-15
+
+      q1 = Q.rotation(V[1, 1, 0], 60)
+      q2 = Q.rotation(V[1, 1, 0], 180)
+      Chem::Spatial.distance(q1, q2).degrees.should be_close 120, 1e-12
+
+      q1 = Q.rotation(V[1, 1, 0], -60)
+      q2 = Q.rotation(V[1, 1, 0], 180)
+      Chem::Spatial.distance(q1, q2).degrees.should be_close 120, 1e-12
+
+      Chem::Spatial.distance(q1, q1).degrees.should be_close 0, 1e-12
+    end
   end
 
   describe ".dihedral" do

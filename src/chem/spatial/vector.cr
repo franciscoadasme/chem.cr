@@ -84,6 +84,10 @@ module Chem::Spatial
       zero?
     end
 
+    def rotate(about rotaxis : Vector, by theta : Float64) : self
+      Quaternion.rotation(rotaxis, theta).rotate self
+    end
+
     def size : Float64
       norm
     end

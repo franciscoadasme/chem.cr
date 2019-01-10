@@ -107,6 +107,14 @@ describe Chem::Spatial::Vector do
     end
   end
 
+  describe "#rotate" do
+    it "rotates a vector" do
+      V[1, 0, 0].rotate(about: V[0, 0, 1], by: 90).should be_close V[0, 1, 0], 1e-15
+      V[1, 2, 0].rotate(about: V[0, 0, -1], by: 60).should be_close V[2.23, 0.13, 0], 1e-2
+      V[0, 1, 0].rotate(about: V[1, 1, 1], by: 120).should be_close V[0, 0, 1], 1e-15
+    end
+  end
+
   describe "#to_a" do
     it "returns an array" do
       v1.to_a.should eq [3, 4, 0]

@@ -7,6 +7,8 @@ alias Constraint = Chem::Constraint
 alias Element = Chem::PeriodicTable::Element
 alias PDB = Chem::PDB
 alias PeriodicTable = Chem::PeriodicTable
+alias Q = Chem::Spatial::Quaternion
+alias V = Chem::Spatial::Vector
 alias Vector = Chem::Spatial::Vector
 
 module Spec
@@ -24,6 +26,10 @@ module Spec
        (actual_value.z - @expected_value.z).abs].all? do |value|
         value <= @delta
       end
+    end
+
+    def match(actual_value : Chem::Spatial::Quaternion) : Bool
+      (0..3).all? { |i| (actual_value[i] - @expected_value[i]).abs <= @delta }
     end
   end
 end
