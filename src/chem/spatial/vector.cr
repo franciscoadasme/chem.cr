@@ -48,7 +48,7 @@ module Chem::Spatial
     {% end %}
 
     def - : self
-      inverse
+      inv
     end
 
     {% for op in ['*', '/'] %}
@@ -67,21 +67,25 @@ module Chem::Spatial
       @x * other.x + @y * other.y + @z * other.z
     end
 
-    def inverse : self
+    def inv : self
       Vector.new -@x, -@y, -@z
     end
 
-    def magnitude : Float64
+    def norm : Float64
       Math.sqrt @x**2 + @y**2 + @z**2
     end
 
     def normalize : self
       return dup if zero?
-      self / magnitude
+      self / norm
     end
 
     def origin? : Bool
       zero?
+    end
+
+    def size : Float64
+      norm
     end
 
     def to_a : Array(Float64)

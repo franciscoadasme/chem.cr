@@ -4,7 +4,7 @@ module Chem::Spatial
   extend self
 
   def angle(v1 : Vector, v2 : Vector) : Float64
-    Math.atan2(v1.cross(v2).magnitude, v1.dot(v2)).degrees
+    Math.atan2(v1.cross(v2).size, v1.dot(v2)).degrees
   end
 
   def angle(a1 : Atom, a2 : Atom, a3 : Atom) : Float64

@@ -23,7 +23,7 @@ describe Chem::Spatial do
   describe ".distance" do
     it "returns the distance between two vectors" do
       Chem::Spatial.distance(v1, v2).should eq Math.sqrt(17)
-      Chem::Spatial.distance(v1.inverse, v2).should eq Math.sqrt(61)
+      Chem::Spatial.distance(v1.inv, v2).should eq Math.sqrt(61)
     end
   end
 
@@ -46,7 +46,7 @@ describe Chem::Spatial do
   describe ".squared_distance" do
     it "returns the squared distance between two vectors" do
       Chem::Spatial.squared_distance(v1, v2).should eq 17
-      Chem::Spatial.squared_distance(v1.inverse, v2).should eq 61
+      Chem::Spatial.squared_distance(v1.inv, v2).should eq 61
     end
   end
 end

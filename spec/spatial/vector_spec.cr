@@ -86,18 +86,18 @@ describe Chem::Spatial::Vector do
     end
   end
 
-  describe "#inverse" do
+  describe "#inv" do
     it "returns the inverse vector" do
-      v1.inverse.should eq Vector[-3, -4, 0]
+      v1.inv.should eq Vector[-3, -4, 0]
     end
   end
 
-  describe "#magnitude" do
-    it "returns the magnitude of the vector" do
-      Vector.origin.magnitude.should eq 0
-      v1.magnitude.should eq 5
-      v1.inverse.magnitude.should eq 5
-      Vector[0.6, 0.8, 0].magnitude.should eq 1
+  describe "#norm" do
+    it "returns the norm of the vector" do
+      Vector.origin.norm.should eq 0
+      v1.norm.should eq 5
+      v1.inv.norm.should eq 5
+      Vector[0.6, 0.8, 0].norm.should eq 1
     end
   end
 
@@ -123,7 +123,7 @@ describe Chem::Spatial::Vector do
     it "returns whether the vector is zero" do
       Vector.zero.zero?.should be_true
       v1.zero?.should be_false
-      v1.inverse.zero?.should be_false
+      v1.inv.zero?.should be_false
     end
   end
 end

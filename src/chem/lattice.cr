@@ -67,7 +67,7 @@ module Chem
     end
 
     def size : Spatial::Size3D
-      Spatial::Size3D.new @a.magnitude, @b.magnitude, @c.magnitude
+      Spatial::Size3D.new @a.size, @b.size, @c.size
     end
   end
 end
