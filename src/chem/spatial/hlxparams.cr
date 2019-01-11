@@ -4,6 +4,7 @@ module Chem::Spatial
     getter rotaxis : Vector
     getter theta : Float64
     getter zeta : Float64
+    getter q : Quaternion { Quaternion.rotation about: @rotaxis, by: @theta }
 
     def initialize(@rotaxis : Vector,
                    @theta : Float64,
