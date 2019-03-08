@@ -17,6 +17,12 @@ module Chem::Spatial
       end
     end
 
+    {% for op in ['*', '/'] %}
+      def {{op.id}}(other : Number) : self
+        Size3D.new @a {{op.id}} other, @b {{op.id}} other, @c {{op.id}} other
+      end
+    {% end %}
+
     def to_a : Array(Float64)
       [@a, @b, @c]
     end

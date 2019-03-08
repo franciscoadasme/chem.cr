@@ -45,6 +45,10 @@ module Chem::Spatial
       def {{op.id}}(other : {NumberType, NumberType, NumberType}) : self
         Vector.new @x {{op.id}} other[0], @y {{op.id}} other[1], @z {{op.id}} other[2]
       end
+
+      def {{op.id}}(other : Size3D) : self
+        Vector.new @x {{op.id}} other.a, @y {{op.id}} other.b, @z {{op.id}} other.c
+      end
     {% end %}
 
     def - : self
