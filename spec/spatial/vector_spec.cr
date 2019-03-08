@@ -107,6 +107,18 @@ describe Chem::Spatial::Vector do
     end
   end
 
+  describe "#resize" do
+    it "resizes a vector to an arbitrary size" do
+      V[1, 0, 0].resize(to: 5).should eq V[5, 0, 0]
+      (V[1, 1, 0] * 4.2).resize(to: 1).should eq V[Math.sqrt(0.5), Math.sqrt(0.5), 0]
+    end
+
+    it "resizes a vector by the given amount" do
+      V[1, 0, 0].resize(by: 2).should eq V[3, 0, 0]
+      V[0.34, 0.16, 0.1].resize(by: 2.5).size.should eq 2.888844441904472
+    end
+  end
+
   describe "#rotate" do
     it "rotates a vector" do
       V[1, 0, 0].rotate(about: V[0, 0, 1], by: 90).should be_close V[0, 1, 0], 1e-15
