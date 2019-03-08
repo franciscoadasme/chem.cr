@@ -111,6 +111,10 @@ module Chem::Topology::Templates
       @atom_types.map &.name
     end
 
+    def atom_types : Array(AtomType)
+      @atom_types.dup
+    end
+
     def each_atom_type(&block : AtomType ->)
       @atom_types.each &block
     end
