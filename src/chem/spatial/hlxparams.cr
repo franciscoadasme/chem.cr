@@ -26,7 +26,8 @@ module Chem::Spatial
     }
 
     tz, theta, zeta = rotation coord
-    zeta *= chirality res, coord
+    chirality = chirality res, coord
+    zeta, tz, theta = -zeta, -tz, 2 * Math::PI - theta if chirality < 0
     HlxParams.new tz, theta.degrees, zeta, radius(coord, theta)
   rescue KeyError
     nil
