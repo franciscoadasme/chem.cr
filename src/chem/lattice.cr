@@ -54,6 +54,12 @@ module Chem
         "P 1"
     end
 
+    {% for name in %w(a b c) %}
+      def {{name.id}}=(new_size : Number)
+        @{{name.id}} = @{{name.id}}.resize to: new_size
+      end
+    {% end %}
+
     def alpha : Float64
       Spatial.angle @b, @c
     end
