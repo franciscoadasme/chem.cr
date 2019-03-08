@@ -31,5 +31,11 @@ module Chem
     def formal_charges : Array(Int32)
       each_atom.map(&.charge).to_a
     end
+
+    def translate!(by vector : Spatial::Vector)
+      each_atom do |atom|
+        atom.coords += vector
+      end
+    end
   end
 end
