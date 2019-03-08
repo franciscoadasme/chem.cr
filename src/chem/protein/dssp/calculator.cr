@@ -24,7 +24,7 @@ module Chem::Protein::DSSP
         next unless @helices[{i, 3}].start? && @helices[{i - 1, 3}].start?
         next if i.upto(i + 2).any? { |j| !sec(j).none? && !sec(j).helix_3_10? }
         i.upto(i + 2).each do |j|
-          res(j).secondary_structure = :helix_3_10
+          res(j).secondary_structure = :helix3_10
         end
       end
     end
@@ -54,7 +54,7 @@ module Chem::Protein::DSSP
       @bridges.sort!
       merge_bridges
       @bridges.each do |bridge|
-        ss = bridge.i.size > 1 ? :beta_strand : :beta_bridge
+        ss = bridge.i.size > 1 ? SecondaryStructure::BetaStrand : SecondaryStructure::BetaBridge
         {bridge.i, bridge.j}.each do |idxs|
           idxs.first.upto(idxs.last) do |i|
             res(i).secondary_structure = ss unless res(i).secondary_structure.beta_strand?
