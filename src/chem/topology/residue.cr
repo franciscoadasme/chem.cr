@@ -83,6 +83,10 @@ module Chem
       conformations.any?
     end
 
+    def has_backbone? : Bool
+      !self["N"]?.nil? && !self["CA"]?.nil? && !self["C"]?.nil? && !self["O"]?.nil?
+    end
+
     def hlxparams : Spatial::HlxParams?
       Spatial.hlxparams self
     end
