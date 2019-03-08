@@ -40,6 +40,12 @@ module Chem
       bonds.map &.other(self)
     end
 
+    def to_s(io : ::IO)
+      io << @residue
+      io << '(' << @alt_loc << ')' if @alt_loc
+      io << ':' << @name << '(' << @serial << ')'
+    end
+
     def valence : Int32
       @element.valence + @charge
     end
