@@ -38,9 +38,9 @@ describe Chem::VASP::Poscar do
 
     it "parses a file with selective dynamics" do
       st = Poscar.read "spec/data/poscar/selective_dynamics.poscar"
-      st.atoms[0].constraint.should eq Constraint.new(:z)
-      st.atoms[1].constraint.should eq Constraint.new(:xyz)
-      st.atoms[2].constraint.should eq Constraint.new(:z)
+      st.atoms[0].constraint.should eq Constraint::Z
+      st.atoms[1].constraint.should eq Constraint::XYZ
+      st.atoms[2].constraint.should eq Constraint::Z
     end
 
     it "fails when element symbols are missing" do
@@ -112,8 +112,8 @@ describe Chem::VASP::Poscar do
     end
 
     it "writes a structure having constraints" do
-      structure.atoms[0].constraint = Constraint.new :xyz
-      structure.atoms[3].constraint = Constraint.new :xz
+      structure.atoms[0].constraint = Constraint::XYZ
+      structure.atoms[3].constraint = Constraint::XZ
 
       io = IO::Memory.new
       Poscar.write io, structure

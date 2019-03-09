@@ -1,31 +1,24 @@
 module Chem
   abstract struct Bias; end
 
-  struct Constraint < Bias
-    enum Direction
-      None
-      X
-      Y
-      Z
-      XY
-      XZ
-      YZ
-      XYZ
-    end
-
-    getter direction : Direction
-
-    def initialize(@direction : Direction = :xyz)
-    end
+  enum Constraint
+    None
+    X
+    Y
+    Z
+    XY
+    XZ
+    YZ
+    XYZ
 
     def includes?(axis : Symbol) : Bool
       case axis
       when :x
-        direction.xyz? || direction.x? || direction.xy? || direction.xz?
+        xyz? || x? || xy? || xz?
       when :y
-        direction.xyz? || direction.y? || direction.xy? || direction.yz?
+        xyz? || y? || xy? || yz?
       when :z
-        direction.xyz? || direction.z? || direction.xz? || direction.yz?
+        xyz? || z? || xz? || yz?
       else
         false
       end

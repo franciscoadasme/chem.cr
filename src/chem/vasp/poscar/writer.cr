@@ -28,12 +28,7 @@ module Chem::VASP::Poscar
 
     private def <<(atom : Atom)
       @io.printf "%22.16f%22.16f%22.16f", atom.x, atom.y, atom.z
-
-      if @write_constraint_flags
-        constraint = atom.constraint
-        constraint ||= Constraint.new(:none)
-        self << constraint
-      end
+      self << (atom.constraint || Constraint::None) if @write_constraint_flags
       @io.puts
     end
 

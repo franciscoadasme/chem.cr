@@ -1,14 +1,14 @@
 module Chem
-  def Constraint.new(pull : VASP::Poscar::PullParser)
-    Constraint.new case {pull.read_bool, pull.read_bool, pull.read_bool}
-    when {true, true, true}    then Direction::None
-    when {false, true, true}   then Direction::X
-    when {true, false, true}   then Direction::Y
-    when {true, true, false}   then Direction::Z
-    when {false, false, true}  then Direction::XY
-    when {false, true, false}  then Direction::XZ
-    when {true, false, false}  then Direction::YZ
-    when {false, false, false} then Direction::XYZ
+  def Constraint.new(pull : VASP::Poscar::PullParser) : Constraint
+    case {pull.read_bool, pull.read_bool, pull.read_bool}
+    when {true, true, true}    then None
+    when {false, true, true}   then X
+    when {true, false, true}   then Y
+    when {true, true, false}   then Z
+    when {false, false, true}  then XY
+    when {false, true, false}  then XZ
+    when {true, false, false}  then YZ
+    when {false, false, false} then XYZ
     else                            raise "BUG: unreachable"
     end
   end
