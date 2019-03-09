@@ -1,24 +1,50 @@
 module Chem::VASP::Poscar
   class Writer
+    @coord_system = CoordinateSystem::Cartesian
+    @write_constraint_flags = false
+
     def initialize(@io : ::IO)
     end
 
-    def write(structure : Structure) : Nil
-      raise "cannot write a Poscar without lattice" unless structure.lattice
-      atoms = structure.atoms.sort_by { |atom| {atom.element.symbol, atom.serial} }
+    def <<(structure : Structure) : self
+      raise ::IO::Error.new "Cannot overwrite existing content" if @io.pos > 0
+      raise ::IO::Error.new "Cannot write a non-periodic structure" unless lattice = structure.lattice
 
-      @io.puts structure.title.gsub('\n', ' ')
-      write structure.lattice.not_nil!
-      write_atom_info atoms
-      write CoordinateSystem::Cartesian
-      atoms.each { |atom| write atom }
+      atoms = structure.each_atom.to_a
+      elements = atoms.map &.element
+      atoms.sort_by! { |atom| elements.index(atom.element).as(Int32) }
+
+      @write_constraint_flags = atoms.any? &.constraint
+
+      @io.puts structure.title.gsub(/ *\n */, ' ')
+      self << lattice
+      self << elements
+      @io.puts "Selective dynamics" if @write_constraint_flags
+      self << @coord_system
+      atoms.each { |atom| self << atom }
+
+      self
     end
 
-    private def write(atom : Atom) : Nil
-      write atom.coords
+    private def <<(atom : Atom)
+      @io.printf "%22.16f%22.16f%22.16f", atom.x, atom.y, atom.z
+
+      if @write_constraint_flags
+        constraint = atom.constraint
+        constraint ||= Constraint.new(:none)
+        self << constraint
+      end
+      @io.puts
     end
 
-    private def write(coord_type : CoordinateSystem) : Nil
+    private def <<(constraint : Constraint)
+      {:x, :y, :z}.each do |axis|
+        flag = constraint.includes?(axis) ? 'F' : 'T'
+        @io.printf "%4s", flag
+      end
+    end
+
+    private def <<(coord_type : CoordinateSystem)
       case coord_type
       when .cartesian?
         @io.puts "Cartesian"
@@ -29,33 +55,21 @@ module Chem::VASP::Poscar
       end
     end
 
-    private def write(lattice : Lattice) : Nil
-      @io.printf "%.8f\n", lattice.scale_factor
-      write lattice.a
-      write lattice.b
-      write lattice.c
+    private def <<(elements : Array(PeriodicTable::Element))
+      counts = Hash(PeriodicTable::Element, Int32).new 0
+      elements.each { |ele| counts[ele] += 1 }
+
+      counts.each_key { |ele| @io.printf "%5s", ele.symbol.ljust 2 }
+      @io.puts
+      counts.each_value { |count| @io.printf "%6d", count }
+      @io.puts
     end
 
-    private def write(vector : Spatial::Vector) : Nil
-      @io.printf "%14.8f", vector.x
-      @io.printf "%14.8f", vector.y
-      @io.printf "%14.8f", vector.z
-      @io << "\n"
-    end
-
-    private def write_atom_info(atoms : AtomView) : Nil
-      write_element_symbols atoms
-      write_element_counts atoms
-    end
-
-    private def write_element_counts(atoms : AtomView) : Nil
-      atoms.chunks(&.element).each { |_, values| @io.printf "%-6i", values.size }
-      @io << "\n"
-    end
-
-    private def write_element_symbols(atoms : AtomView) : Nil
-      atoms.map(&.element).uniq.each { |ele| @io.printf "%-6s", ele.symbol }
-      @io << "\n"
+    private def <<(lattice : Lattice)
+      @io.printf " %18.14f\n", lattice.scale_factor
+      {lattice.a, lattice.b, lattice.c}.each do |vec|
+        @io.printf " %22.16f%22.16f%22.16f\n", vec.x, vec.y, vec.z
+      end
     end
   end
 end

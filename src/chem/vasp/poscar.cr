@@ -17,13 +17,13 @@ module Chem::VASP::Poscar
     parse File.read(filepath)
   end
 
-  def write(filepath : String, structure : Structure)
+  def write(filepath : String, structure : Structure, **options)
     File.open(filepath, "w") do |file|
-      Writer.new(file).write structure
+      write file, structure
     end
   end
 
-  def write(io : ::IO, structure : Structure)
-    Writer.new(io).write structure
+  def write(io : ::IO, structure : Structure, **options)
+    Writer.new(io, **options) << structure
   end
 end

@@ -59,13 +59,93 @@ describe Chem::VASP::Poscar do
   end
 
   describe ".write" do
-    it "works with cartesian coordinates" do
-      st = Poscar.read "spec/data/poscar/basic.poscar"
-      other = Poscar.write_and_read_back st
+    structure = Chem::Structure.build do
+      title "NaCl-O-NaCl"
+      lattice 40, 20, 10
+      atom PeriodicTable::Cl, at: V[30, 15, 10]
+      atom PeriodicTable::Na, at: V[10, 5, 5]
+      atom PeriodicTable::O, at: V[30, 15, 9]
+      atom PeriodicTable::Na, at: V[10, 10, 12.5]
+      atom PeriodicTable::Cl, at: V[20, 10, 10]
+    end
 
-      st.atoms.each_with_index do |atom, index|
-        atom.element.should be other.atoms[index].element
-        atom.coords.should eq other.atoms[index].coords
+    it "writes a structure in cartesian coordinates" do
+      io = IO::Memory.new
+      Poscar.write io, structure
+
+      io.to_s.rstrip.should eq <<-EOS
+        NaCl-O-NaCl
+           1.00000000000000
+            40.0000000000000000    0.0000000000000000    0.0000000000000000
+             0.0000000000000000   20.0000000000000000    0.0000000000000000
+             0.0000000000000000    0.0000000000000000   10.0000000000000000
+           Cl   Na   O 
+             2     2     1
+        Cartesian
+           30.0000000000000000   15.0000000000000000   10.0000000000000000
+           20.0000000000000000   10.0000000000000000   10.0000000000000000
+           10.0000000000000000    5.0000000000000000    5.0000000000000000
+           10.0000000000000000   10.0000000000000000   12.5000000000000000
+           30.0000000000000000   15.0000000000000000    9.0000000000000000
+        EOS
+    end
+
+    pending "writes a structure in fractional coordinates" do
+      io = IO::Memory.new
+      Poscar.write io, structure, fractional: true
+
+      io.to_s.rstrip.should eq <<-EOS
+        NaCl-O-NaCl
+           1.00000000000000
+            40.0000000000000000    0.0000000000000000    0.0000000000000000
+             0.0000000000000000   20.0000000000000000    0.0000000000000000
+             0.0000000000000000    0.0000000000000000   10.0000000000000000
+           Cl   Na   O 
+             2     2     1
+        Direct
+          0.7500000000000000  0.7500000000000000  1.0000000000000000
+          0.2500000000000000  0.5000000000000000  1.0000000000000000
+          0.7500000000000000  0.2500000000000000  0.5000000000000000
+          0.2500000000000000  0.5000000000000000  0.2500000000000000
+          0.5000000000000000  0.7500000000000000  0.9000000000000000
+        EOS
+    end
+
+    it "writes a structure having constraints" do
+      structure.atoms[0].constraint = Constraint.new :xyz
+      structure.atoms[3].constraint = Constraint.new :xz
+
+      io = IO::Memory.new
+      Poscar.write io, structure
+
+      io.to_s.rstrip.should eq <<-EOS
+        NaCl-O-NaCl
+           1.00000000000000
+            40.0000000000000000    0.0000000000000000    0.0000000000000000
+             0.0000000000000000   20.0000000000000000    0.0000000000000000
+             0.0000000000000000    0.0000000000000000   10.0000000000000000
+           Cl   Na   O 
+             2     2     1
+        Selective dynamics
+        Cartesian
+           30.0000000000000000   15.0000000000000000   10.0000000000000000   F   F   F
+           20.0000000000000000   10.0000000000000000   10.0000000000000000   T   T   T
+           10.0000000000000000    5.0000000000000000    5.0000000000000000   T   T   T
+           10.0000000000000000   10.0000000000000000   12.5000000000000000   F   T   F
+           30.0000000000000000   15.0000000000000000    9.0000000000000000   T   T   T
+        EOS
+    end
+
+    it "fails with non-periodic structures" do
+      expect_raises IO::Error, "Cannot write a non-periodic structure" do
+        Poscar.write IO::Memory.new, Chem::Structure.new
+      end
+    end
+
+    it "fails when writing multiple structures" do
+      expect_raises IO::Error, "Cannot overwrite existing content" do
+        writer = Poscar::Writer.new IO::Memory.new
+        writer << structure << structure
       end
     end
   end
