@@ -12,7 +12,7 @@ module Chem::VASP::Poscar
 
       atoms = structure.each_atom.to_a
       elements = atoms.map &.element
-      atoms.sort_by! { |atom| elements.index(atom.element).as(Int32) }
+      atoms.sort_by! { |atom| {elements.index(atom.element).as(Int32), atom.serial} }
 
       @write_constraint_flags = atoms.any? &.constraint
 
