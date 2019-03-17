@@ -31,6 +31,13 @@ module Spec
     def match(actual_value : Chem::Spatial::Quaternion) : Bool
       (0..3).all? { |i| (actual_value[i] - @expected_value[i]).abs <= @delta }
     end
+
+    def match(actual_value : Chem::Linalg::Matrix) : Bool
+      return false if actual_value.dim != @expected_value.dim
+      actual_value.each_with_index.all? do |value, i, j|
+        (value - @expected_value.unsafe_fetch(i, j)).abs <= @delta
+      end
+    end
   end
 end
 
