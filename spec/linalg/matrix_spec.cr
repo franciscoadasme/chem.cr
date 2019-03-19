@@ -304,4 +304,16 @@ describe Chem::Linalg::Matrix do
       EOS
     end
   end
+
+  describe "#to_vector" do
+    it "returns a vector" do
+      M.column(1, 2, 3).to_vector.should eq V[1, 2, 3]
+    end
+
+    it "fails when matrix is not a column vector" do
+      expect_raises Chem::Linalg::Error, "Matrix is not a column vector" do
+        M.new(3, 2).to_vector
+      end
+    end
+  end
 end

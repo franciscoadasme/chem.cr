@@ -2,6 +2,7 @@ module Chem::Spatial
   struct Vector
     private alias NumberType = Number::Primitive
 
+    getter norm : Float64 { Math.sqrt @x**2 + @y**2 + @z**2 }
     getter x : Float64
     getter y : Float64
     getter z : Float64
@@ -75,10 +76,6 @@ module Chem::Spatial
       Vector.new -@x, -@y, -@z
     end
 
-    def norm : Float64
-      Math.sqrt @x**2 + @y**2 + @z**2
-    end
-
     def normalize : self
       resize to: 1
     end
@@ -106,6 +103,10 @@ module Chem::Spatial
 
     def to_a : Array(Float64)
       [x, y, z]
+    end
+
+    def to_m : Linalg::Matrix
+      Linalg::Matrix.column @x, @y, @z
     end
 
     def to_t : Tuple(Float64, Float64, Float64)

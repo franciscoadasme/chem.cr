@@ -358,6 +358,11 @@ module Chem::Linalg
       io << "]]"
     end
 
+    def to_vector : Spatial::Vector
+      raise Error.new "Matrix is not a column vector" unless dim == {3, 1}
+      Spatial::Vector.new unsafe_fetch(0), unsafe_fetch(1), unsafe_fetch(2)
+    end
+
     @[AlwaysInline]
     protected def unsafe_fetch(index : Int) : Float64
       @buffer[index]

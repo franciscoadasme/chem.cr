@@ -133,6 +133,12 @@ describe Chem::Spatial::Vector do
     end
   end
 
+  describe "#to_m" do
+    it "returns a column matrix" do
+      V[3, 1, 5].to_m.should eq Chem::Linalg::Matrix[[3], [1], [5]]
+    end
+  end
+
   describe "#to_t" do
     it "returns a 3-sized tuple" do
       v1.to_t.should eq({3, 4, 0})
