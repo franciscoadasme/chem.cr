@@ -25,7 +25,7 @@ describe Chem::Linalg::Matrix do
     end
 
     it "creates a square matrix with the main diagonal set to the given values" do
-      M.diagonal([1, 2, 3]).to_a.should eq [[1, 0, 0], [0, 2, 0], [0, 0, 3]]
+      M.diagonal(1, 2, 3).to_a.should eq [[1, 0, 0], [0, 2, 0], [0, 0, 3]]
     end
   end
 
@@ -69,7 +69,7 @@ describe Chem::Linalg::Matrix do
 
   describe "#-" do
     it "substracts a number from a matrix" do
-      (M.diagonal([1, 2]) - 2).should eq M[[-1, -2], [-2, 0]]
+      (M.diagonal(1, 2) - 2).should eq M[[-1, -2], [-2, 0]]
     end
 
     it "subtracts two matrices" do
@@ -152,7 +152,7 @@ describe Chem::Linalg::Matrix do
 
     it "iterates over each value together with its row and column indexes (block)" do
       ary = [] of Tuple(Float64, Int32, Int32)
-      M.diagonal([3, 1]).each_with_index do |value, i, j|
+      M.diagonal(3, 1).each_with_index do |value, i, j|
         ary << {value, i, j}
       end
       ary.should eq [{3, 0, 0}, {0, 0, 1}, {0, 1, 0}, {1, 1, 1}]
@@ -211,7 +211,7 @@ describe Chem::Linalg::Matrix do
 
   describe "#inspect" do
     it "returns a string representation of the matrix" do
-      M.diagonal([5, 3]).inspect.should eq "Matrix[[5.0, 0.0], [0.0, 3.0]]"
+      M.diagonal(5, 3).inspect.should eq "Matrix[[5.0, 0.0], [0.0, 3.0]]"
     end
   end
 

@@ -68,7 +68,7 @@ module Chem::Linalg
       m
     end
 
-    def self.diagonal(values : Indexable(Number)) : self
+    def self.diagonal(*values : Number) : self
       m = Matrix.square values.size
       values.each_with_index do |value, i|
         m[i, i] = value.to_f
