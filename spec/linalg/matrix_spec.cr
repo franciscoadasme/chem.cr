@@ -15,6 +15,12 @@ describe Chem::Linalg::Matrix do
     end
   end
 
+  describe ".column" do
+    it "creates a column matrix" do
+      M.column(1, 2, 3).should eq M[[1], [2], [3]]
+    end
+  end
+
   describe ".diagonal" do
     it "creates a square matrix with the main diagonal set to an initial value" do
       M.diagonal(3, initial_value: 8).to_a.should eq [[8, 0, 0], [0, 8, 0], [0, 0, 8]]

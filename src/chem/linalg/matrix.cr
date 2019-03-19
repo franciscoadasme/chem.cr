@@ -56,6 +56,10 @@ module Chem::Linalg
       end
     end
 
+    def self.column(*values : Number) : self
+      Matrix.new(values.size, 1) { |i| values[i] }
+    end
+
     def self.diagonal(size : Int, initial_value : Float64) : self
       m = Matrix.square size
       size.times { |i| m[i, i] = initial_value }
