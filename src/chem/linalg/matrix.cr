@@ -28,7 +28,6 @@ module Chem::Linalg
 
     getter columns : Int32
     getter rows : Int32
-    getter size : Int32 { @rows * @columns }
 
     def initialize(@rows : Int32, @columns : Int32, initial_value : Float64? = nil)
       @buffer = if value = initial_value
@@ -321,6 +320,10 @@ module Chem::Linalg
 
     def singular? : Bool
       det == 0
+    end
+
+    def size : Int32
+      @rows * @columns
     end
 
     def square? : Bool
