@@ -318,6 +318,20 @@ module Chem::Linalg
       end
     end
 
+    def reshape(rows : Int, columns : Int) : self
+      dup.reshape! rows, columns
+    end
+
+    def reshape!(rows : Int, columns : Int) : self
+      if size == rows * columns
+        @rows, @columns = rows, columns
+        self
+      else
+        raise Error.new "Can't reshape a matrix with dimensions " \
+                        "(#{@rows}, #{@columns}) to (#{rows}, #{columns})"
+      end
+    end
+
     def singular? : Bool
       det == 0
     end

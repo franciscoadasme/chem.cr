@@ -255,6 +255,36 @@ describe Chem::Linalg::Matrix do
     end
   end
 
+  describe "#reshape" do
+    it "returns a new matrix with the given dimensions" do
+      mat = M.square(2) { |i, j| i * 10 + j + 1 }
+      new_mat = mat.reshape(4, 1)
+      new_mat.should_not be mat
+      new_mat.should eq M[[1], [2], [11], [12]]
+    end
+
+    it "fails when the new dimensions are incompatible" do
+      expect_raises Chem::Linalg::Error, "Can't reshape a matrix with dimensions (2, 2) to (3, 1)" do
+        M.square(2).reshape 3, 1
+      end
+    end
+  end
+
+  describe "#reshape!" do
+    it "changes the dimensions of the matrix" do
+      mat = M.square(2) { |i, j| i * 10 + j + 1 }
+      new_mat = mat.reshape!(4, 1)
+      new_mat.should be mat
+      new_mat.should eq M[[1], [2], [11], [12]]
+    end
+
+    it "fails when the new dimensions are incompatible" do
+      expect_raises Chem::Linalg::Error, "Can't reshape a matrix with dimensions (3, 3) to (2, 4)" do
+        M.square(3).reshape! 2, 4
+      end
+    end
+  end
+
   describe "#singular?" do
     it "returns true when the matrix is singular" do
       M[[2, 6], [1, 3]].singular?.should be_true
