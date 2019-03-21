@@ -285,6 +285,58 @@ describe Chem::Linalg::Matrix do
     end
   end
 
+  describe "#resize" do
+    it "returns a shrinked matrix" do
+      mat = M[[0, 1], [2, 3]]
+      other = mat.resize 2, 1
+      other.should_not be mat
+      other.dim.should eq({2, 1})
+      mat.should eq M[[0, 1], [2, 3]]
+      other.should eq M[[0], [2]]
+    end
+
+    it "returns an enlarged matrix" do
+      mat = M[[4], [5]]
+      other = mat.resize 3, 4
+      other.should_not be mat
+      other.dim.should eq ({3, 4})
+      mat.should eq M[[4], [5]]
+      other.should eq M[[4, 0, 0, 0], [5, 0, 0, 0], [0, 0, 0, 0]]
+    end
+
+    it "returns an enlarged matrix with missing entries filled with the given value" do
+      mat = M[[0, 1], [2, 3]]
+      other = mat.resize 2, 3, fill_value: 3.5
+      other.should_not be mat
+      other.dim.should eq ({2, 3})
+      mat.should eq M[[0, 1], [2, 3]]
+      other.should eq M[[0, 1, 3.5], [2, 3, 3.5]]
+    end
+  end
+
+  describe "#resize!" do
+    it "shrinks a matrix" do
+      mat = M[[0, 1], [2, 3]]
+      mat.resize! 2, 1
+      mat.dim.should eq({2, 1})
+      mat.should eq M[[0], [2]]
+    end
+
+    it "enlarges a matrix" do
+      mat = M[[4], [5]]
+      mat.resize! 3, 4
+      mat.dim.should eq ({3, 4})
+      mat.should eq M[[4, 0, 0, 0], [5, 0, 0, 0], [0, 0, 0, 0]]
+    end
+
+    it "enlarges a matrix with missing entries filled with the given value" do
+      mat = M[[0, 1], [2, 3]]
+      mat.resize! 2, 3, fill_value: 3.5
+      mat.dim.should eq ({2, 3})
+      mat.should eq M[[0, 1, 3.5], [2, 3, 3.5]]
+    end
+  end
+
   describe "#singular?" do
     it "returns true when the matrix is singular" do
       M[[2, 6], [1, 3]].singular?.should be_true

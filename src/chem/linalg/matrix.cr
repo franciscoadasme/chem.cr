@@ -332,6 +332,29 @@ module Chem::Linalg
       end
     end
 
+    def resize(rows : Int, columns : Int, fill_value : Number = 0) : self
+      dup.resize! rows, columns, fill_value
+    end
+
+    def resize!(rows : Int, columns : Int, fill_value : Number = 0) : self
+      new_size = rows * columns
+      if new_size < size
+        new_size.times do |k|
+          self[k] = unsafe_fetch k / columns, k % columns
+        end
+        @buffer = @buffer.realloc new_size
+      elsif new_size > size
+        @buffer = @buffer.realloc new_size
+        (new_size - 1).downto(0) do |k|
+          i = k / columns
+          j = k % columns
+          self[k] = self[i, j]? || fill_value.to_f
+        end
+      end
+      @rows, @columns = rows, columns
+      self
+    end
+
     def singular? : Bool
       det == 0
     end
