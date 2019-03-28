@@ -5,6 +5,7 @@ alias Atom = Chem::Atom
 alias AtomView = Chem::AtomView
 alias Constraint = Chem::Constraint
 alias Element = Chem::PeriodicTable::Element
+alias M = Chem::Linalg::Matrix
 alias PDB = Chem::PDB
 alias PeriodicTable = Chem::PeriodicTable
 alias Q = Chem::Spatial::Quaternion

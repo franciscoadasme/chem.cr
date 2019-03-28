@@ -1,7 +1,5 @@
 require "../spec_helper"
 
-alias M = Chem::Linalg::Matrix
-
 describe Chem::Linalg::Matrix do
   describe ".[]" do
     it "creates a matrix" do
