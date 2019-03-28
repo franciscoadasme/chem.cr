@@ -60,9 +60,7 @@ module Chem::Linalg
     end
 
     def self.diagonal(size : Int, initial_value : Float64) : self
-      m = Matrix.square size
-      size.times { |i| m[i, i] = initial_value }
-      m
+      diagonal(size) { initial_value }
     end
 
     def self.diagonal(size : Int, &block : Int32 -> Number::Primitive) : self
@@ -72,11 +70,7 @@ module Chem::Linalg
     end
 
     def self.diagonal(*values : Number) : self
-      m = Matrix.square values.size
-      values.each_with_index do |value, i|
-        m[i, i] = value.to_f
-      end
-      m
+      diagonal(values.size) { |i| values[i] }
     end
 
     def self.identity(size : Int) : self
