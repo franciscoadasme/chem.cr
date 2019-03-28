@@ -15,6 +15,15 @@ describe Chem::Linalg::Matrix do
     end
   end
 
+  describe ".build" do
+    it "creates a matrix" do
+      mat = M.build 3, 2 do |buffer|
+        6.times { |i| buffer[i] = (i + 1).to_f }
+      end
+      mat.should eq M[[1, 2], [3, 4], [5, 6]]
+    end
+  end
+
   describe ".column" do
     it "creates a column matrix" do
       M.column(1, 2, 3).should eq M[[1], [2], [3]]

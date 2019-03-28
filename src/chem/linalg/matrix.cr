@@ -55,6 +55,12 @@ module Chem::Linalg
       end
     end
 
+    def self.build(rows : Number, columns : Number, &block : Pointer(Float64) ->) : self
+      mat = Matrix.new rows, columns
+      yield mat.to_unsafe
+      mat
+    end
+
     def self.column(*values : Number) : self
       Matrix.new(values.size, 1) { |i| values[i] }
     end
