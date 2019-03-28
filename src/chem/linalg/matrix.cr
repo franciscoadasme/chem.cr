@@ -221,8 +221,8 @@ module Chem::Linalg
     end
 
     def dup : self
-      Matrix.new(@rows, @columns) do |_, _, k|
-        unsafe_fetch k
+      Matrix.build(@rows, @columns) do |buffer|
+        buffer.copy_from @buffer, @rows * @columns
       end
     end
 
