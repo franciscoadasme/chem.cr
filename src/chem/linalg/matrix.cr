@@ -65,7 +65,9 @@ module Chem::Linalg
 
     def self.diagonal(size : Int, &block : Int32 -> Number::Primitive) : self
       m = Matrix.square size
-      size.times { |i| m[i, i] = (yield i).to_f }
+      size.times do |i|
+        m.to_unsafe[i * size + i] = (yield i).to_f
+      end
       m
     end
 
@@ -97,14 +99,9 @@ module Chem::Linalg
       end
     end
 
-    @[AlwaysInline]
-    protected def []=(index : Int32, value : Float64) : Float64
-      @buffer[index] = value
-    end
-
     def []=(i : Int, j : Int, value : Float64) : Float64
       if k = internal_index?(i, j)
-        self[unsafe_internal_index(i, j)] = value
+        to_unsafe[k] = value
       else
         raise IndexError.new
       end
@@ -202,7 +199,10 @@ module Chem::Linalg
               ij = unsafe_internal_index i, j
               ik = unsafe_internal_index i, k
               kj = unsafe_internal_index k, j
-              mat[ij] = (pivot * mat.unsafe_fetch(ij) - mat.unsafe_fetch(ik) * mat.unsafe_fetch(kj)) / previous_pivot
+              mat.to_unsafe[ij] = (pivot *
+                                   mat.unsafe_fetch(ij) -
+                                   mat.unsafe_fetch(ik) *
+                                   mat.unsafe_fetch(kj)) / previous_pivot
             end
           end
         end
@@ -270,24 +270,24 @@ module Chem::Linalg
         0.upto(last) do |ii|
           next if ii == k
           q = mat.unsafe_fetch(ii, k) / akk
-          mat[unsafe_internal_index(ii, k)] = 0.0
+          mat.to_unsafe[unsafe_internal_index(ii, k)] = 0.0
           (k + 1).upto(last) do |j|
             ui = unsafe_internal_index ii, j
-            mat[ui] = mat.unsafe_fetch(ui) - mat.unsafe_fetch(k, j) * q
+            mat.to_unsafe[ui] = mat.unsafe_fetch(ui) - mat.unsafe_fetch(k, j) * q
           end
 
           0.upto(last) do |j|
             ui = unsafe_internal_index ii, j
-            inv_mat[ui] = inv_mat.unsafe_fetch(ui) - inv_mat.unsafe_fetch(k, j) * q
+            inv_mat.to_unsafe[ui] = inv_mat.unsafe_fetch(ui) - inv_mat.unsafe_fetch(k, j) * q
           end
         end
 
         (k + 1).upto(last) do |j|
-          mat[unsafe_internal_index(k, j)] = mat.unsafe_fetch(k, j) / akk
+          mat.to_unsafe[unsafe_internal_index(k, j)] = mat.unsafe_fetch(k, j) / akk
         end
 
         0.upto(last) do |j|
-          inv_mat[unsafe_internal_index(k, j)] = inv_mat.unsafe_fetch(k, j) / akk
+          inv_mat.to_unsafe[unsafe_internal_index(k, j)] = inv_mat.unsafe_fetch(k, j) / akk
         end
       end
 
@@ -334,7 +334,7 @@ module Chem::Linalg
       new_size = rows * columns
       if new_size < size
         new_size.times do |k|
-          self[k] = unsafe_fetch k / columns, k % columns
+          to_unsafe[k] = unsafe_fetch k / columns, k % columns
         end
         @buffer = @buffer.realloc new_size
       elsif new_size > size
@@ -342,7 +342,7 @@ module Chem::Linalg
         (new_size - 1).downto(0) do |k|
           i = k / columns
           j = k % columns
-          self[k] = self[i, j]? || fill_value.to_f
+          to_unsafe[k] = self[i, j]? || fill_value.to_f
         end
       end
       @rows, @columns = rows, columns
@@ -368,8 +368,8 @@ module Chem::Linalg
         raise IndexError.new unless i1 < @rows && i2 < @rows
         @columns.times do |j|
           value = unsafe_fetch i1, j
-          @buffer[unsafe_internal_index(i1, j)] = unsafe_fetch i2, j
-          @buffer[unsafe_internal_index(i2, j)] = value
+          to_unsafe[unsafe_internal_index(i1, j)] = unsafe_fetch i2, j
+          to_unsafe[unsafe_internal_index(i2, j)] = value
         end
       end
       self
@@ -392,14 +392,19 @@ module Chem::Linalg
       io << "]]"
     end
 
+    @[AlwaysInline]
+    def to_unsafe : Pointer(Float64)
+      @buffer
+    end
+
     def to_vector : Spatial::Vector
       raise Error.new "Matrix is not a column vector" unless dim == {3, 1}
       Spatial::Vector.new unsafe_fetch(0), unsafe_fetch(1), unsafe_fetch(2)
     end
 
     @[AlwaysInline]
-    protected def unsafe_fetch(index : Int) : Float64
-      @buffer[index]
+    def unsafe_fetch(index : Int) : Float64
+      to_unsafe[index]
     end
 
     @[AlwaysInline]
