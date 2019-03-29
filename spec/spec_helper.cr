@@ -9,6 +9,7 @@ alias M = Chem::Linalg::Matrix
 alias PDB = Chem::PDB
 alias PeriodicTable = Chem::PeriodicTable
 alias Q = Chem::Spatial::Quaternion
+alias Tf = Chem::Spatial::AffineTransform
 alias V = Chem::Spatial::Vector
 alias Vector = Chem::Spatial::Vector
 
@@ -37,6 +38,12 @@ module Spec
       return false if actual_value.dim != @expected_value.dim
       actual_value.each_with_index.all? do |value, i, j|
         (value - @expected_value.unsafe_fetch(i, j)).abs <= @delta
+      end
+    end
+
+    def match(actual_value : Chem::Spatial::AffineTransform) : Bool
+      actual_value.@mat.each_with_index.all? do |value, i, j|
+        (value - @expected_value.@mat.unsafe_fetch(i, j)).abs <= @delta
       end
     end
   end

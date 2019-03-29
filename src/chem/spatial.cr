@@ -3,6 +3,8 @@ require "./spatial/*"
 module Chem::Spatial
   extend self
 
+  class Error < Exception; end
+
   def angle(v1 : Vector, v2 : Vector) : Float64
     Math.atan2(v1.cross(v2).size, v1.dot(v2)).degrees
   end
