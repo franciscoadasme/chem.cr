@@ -15,6 +15,18 @@ module Chem::Spatial
       zero
     end
 
+    def self.x : self
+      Vector.new 1, 0, 0
+    end
+
+    def self.y : self
+      Vector.new 0, 1, 0
+    end
+
+    def self.z : self
+      Vector.new 0, 0, 1
+    end
+
     def self.zero : self
       new 0, 0, 0
     end
@@ -111,6 +123,18 @@ module Chem::Spatial
 
     def to_t : Tuple(Float64, Float64, Float64)
       {x, y, z}
+    end
+
+    def x? : Bool
+      @x == 1 && @y == 0 && @z == 0
+    end
+
+    def y? : Bool
+      @x == 0 && @y == 1 && @z == 0
+    end
+
+    def z? : Bool
+      @x == 0 && @y == 0 && @z == 1
     end
 
     def zero? : Bool
