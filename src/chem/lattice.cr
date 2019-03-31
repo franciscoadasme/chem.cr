@@ -68,6 +68,10 @@ module Chem
       Spatial.angle @a, @c
     end
 
+    def center : Spatial::Vector
+      (@a + @b + @c) * 0.5
+    end
+
     def gamma : Float64
       Spatial.angle @a, @b
     end
