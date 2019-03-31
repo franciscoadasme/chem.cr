@@ -14,4 +14,12 @@ describe Chem::Structure do
       st.atoms.map(&.name).should eq ["N", "CA", "C", "O", "CB"]
     end
   end
+
+  describe "#wrap" do
+    it "fails for non-periodic structures" do
+      expect_raises Chem::Error, "Cannot wrap a non-periodic structure" do
+        fake_structure.wrap
+      end
+    end
+  end
 end

@@ -51,5 +51,14 @@ module Chem
     def size : Int32
       each_atom.sum(0) { 1 }
     end
+
+    def wrap(around center : Spatial::Vector? = nil) : self
+      if lattice = @lattice
+        Spatial::PBC.wrap self, lattice, center || lattice.center
+        self
+      else
+        raise Error.new "Cannot wrap a non-periodic structure"
+      end
+    end
   end
 end
