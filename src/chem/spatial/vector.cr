@@ -74,6 +74,10 @@ module Chem::Spatial
       end
     {% end %}
 
+    def *(rhs : AffineTransform) : self
+      rhs * self
+    end
+
     def cross(other : Vector) : self
       Vector.new @y * other.z - @z * other.y,
         @z * other.x - @x * other.z,
