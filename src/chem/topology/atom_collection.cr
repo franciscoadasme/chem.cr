@@ -32,6 +32,13 @@ module Chem
       each_atom.map(&.charge).to_a
     end
 
+    def transform(by transform : Spatial::AffineTransform) : self
+      each_atom do |atom|
+        atom.coords *= transform
+      end
+      self
+    end
+
     def translate!(by vector : Spatial::Vector)
       each_atom do |atom|
         atom.coords += vector
