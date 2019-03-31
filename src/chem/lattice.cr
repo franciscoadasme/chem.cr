@@ -72,8 +72,36 @@ module Chem
       (@a + @b + @c) * 0.5
     end
 
+    def cubic? : Bool
+      a.size == b.size && b.size == c.size && cuboid?
+    end
+
+    def cuboid? : Bool
+      alpha == 90 && beta == 90 && gamma == 90
+    end
+
     def gamma : Float64
       Spatial.angle @a, @b
+    end
+
+    def hexagonal? : Bool
+      a.size == b.size && alpha == 90 && beta == 90 && gamma == 120
+    end
+
+    def monoclinic? : Bool
+      a.size != c.size && alpha == 90 && beta != 90 && gamma == 90
+    end
+
+    def orthorhombic? : Bool
+      a.size != b.size && a.size != c.size && b.size != c.size && cuboid?
+    end
+
+    def tetragonal? : Bool
+      a.size == b.size && b.size != c.size && cuboid?
+    end
+
+    def triclinic? : Bool
+      !cuboid? && !monoclinic? && !hexagonal?
     end
 
     def size : Spatial::Size3D
