@@ -22,7 +22,7 @@ Benchmark.ips do |x|
   end
 
   x.report("kdtree") do
-    tree.nearest to: point, neighbors: 2
+    tree.neighbors of: point, count: 2
   end
 
   x.report("naive_search") do
@@ -45,10 +45,10 @@ Benchmark.ips do |x|
   end
 
   x.report("kdtree (array)") do
-    tree.nearest to: point, within: 3.5
+    tree.neighbors of: point, within: 3.5
   end
 
   x.report("kdtree (yield)") do
-    tree.nearest to: point, within: 3.5 { }
+    tree.each_neighbor of: point, within: 3.5 { }
   end
 end

@@ -22,15 +22,21 @@ Benchmark.bm do |bm|
     end
   end
 
+  bm.report("query nearest neighbors") do
+    points.each do |pt|
+      kdtree.neighbors of: pt, count: 5
+    end
+  end
+
   bm.report("query nearest neighbors within a threshold") do
     points.each do |pt|
-      kdtree.nearest to: pt, within: 0.2
+      kdtree.neighbors of: pt, within: 0.2
     end
   end
 
   bm.report("query nearest neighbors within a threshold with block") do
     points.each do |pt|
-      kdtree.nearest to: pt, within: 0.2 { }
+      kdtree.each_neighbor of: pt, within: 0.2 { }
     end
   end
 end

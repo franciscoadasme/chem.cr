@@ -43,25 +43,29 @@ module Chem::Spatial
       end
     end
 
-    def nearest(to point : Vector, neighbors count : Int32 = 1) : Array(Atom)
+    def each_neighbor(of coords : Vector,
+                      *,
+                      within radius : Float64,
+                      &block : Atom, Float64 ->) : Nil
+      search @root, coords, radius ** 2, &block
+    end
+
+    def nearest(to coords : Vector) : Atom
+      neighbors(coords, count: 1).first
+    end
+
+    def neighbors(of coords : Vector, *, count : Int) : Array(Atom)
       neighbors = Array(Tuple(Atom, Float64)).new count
-      search @root, point, count, neighbors
+      search @root, coords, count, neighbors
       neighbors.map &.[0]
     end
 
-    def nearest(to point : Vector, within radius : Float64) : Array(Atom)
+    def neighbors(of coords : Vector, *, within radius : Number) : Array(Atom)
       neighbors = [] of Tuple(Atom, Float64)
-      search @root, point, radius ** 2 do |atom, distance|
+      search @root, coords, radius ** 2 do |atom, distance|
         neighbors << {atom, distance}
       end
-      neighbors.sort! { |a, b| a[1] <=> b[1] }
-      neighbors.map &.[0]
-    end
-
-    def nearest(to point : Vector,
-                within radius : Float64,
-                &block : Atom, Float64 ->) : Nil
-      search @root, point, radius ** 2, &block
+      neighbors.sort_by!(&.[1]).map &.[0]
     end
 
     private def build_tree(atoms : Array(Atom),
