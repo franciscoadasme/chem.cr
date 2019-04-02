@@ -94,7 +94,7 @@ module Chem::Spatial
         if right = node.right
           search right, point, max_neighbors, neighbors
         end
-        if (left = node.left) && node.distance(to: point) < neighbors.last[1]
+        if (left = node.left) && !neighbors.empty? && node.distance(to: point) < neighbors.last[1]
           search left, point, max_neighbors, neighbors
         end
       end
