@@ -32,30 +32,52 @@ describe Chem::Spatial::KDTree do
     kdtree = KDTree.new st.atoms
 
     describe "#each_neighbor" do
-      it "yields each atom within the given radius" do
+      it "yields each atom within the given radius of a point" do
         atoms = [] of Atom
         kdtree.each_neighbor(of: V[19, 32, 44], within: 3.5) do |atom, _|
           atoms << atom
         end
         atoms.map(&.serial).sort!.should eq [1117, 1119, 9125, 9126]
       end
+
+      it "yields each atom within the given radius of an atom" do
+        atoms = [] of Atom
+        kdtree.each_neighbor(of: st['C'][123]["CG1"], within: 2.61) do |atom, _|
+          atoms << atom
+        end
+        atoms.map(&.serial).should eq [5461, 5464, 5466]
+      end
     end
 
     describe "#nearest" do
-      it "returns the nearest atom" do
+      it "returns the nearest atom to a point" do
         kdtree.nearest(to: V[22.5, 57.3, 37.63]).serial.should eq 9651
+      end
+
+      it "returns the nearest atom to an atom" do
+        kdtree.nearest(to: st['A'][35]["CD1"]).serial.should eq 280
       end
     end
 
     describe "#neighbors" do
-      it "returns the N closest atoms sorted by proximity" do
+      it "returns the N closest atoms to a point sorted by proximity" do
         atoms = kdtree.neighbors of: V[19, 32, 44], count: 3
         atoms.map(&.serial).should eq [9126, 1119, 1117]
       end
 
-      it "returns the atoms within the given radius sorted by proximity" do
+      it "returns the N closest atoms to an atom sorted by proximity" do
+        atoms = kdtree.neighbors of: st['C'][46]["OG"], count: 5
+        atoms.map(&.serial).should eq [4837, 9489, 4834, 4839, 4835]
+      end
+
+      it "returns the atoms within the given radius of a point sorted by proximity" do
         atoms = kdtree.neighbors of: V[19, 32, 44], within: 3.5
         atoms.map(&.serial).should eq [9126, 1119, 1117, 9125]
+      end
+
+      it "returns the atoms within the given radius of a point sorted by proximity" do
+        atoms = kdtree.neighbors of: st['C'][1298]["S23"], within: 1.5
+        atoms.map(&.serial).should eq [9001, 9002]
       end
     end
   end

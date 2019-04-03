@@ -41,6 +41,15 @@ module Chem::Spatial
       end
     end
 
+    def each_neighbor(of atom : Atom,
+                      *,
+                      within radius : Float64,
+                      &block : Atom, Float64 ->) : Nil
+      search @root, atom.coords, radius ** 2 do |other, distance|
+        block.call(other, distance) if atom != other
+      end
+    end
+
     def each_neighbor(of coords : Vector,
                       *,
                       within radius : Float64,
@@ -48,14 +57,26 @@ module Chem::Spatial
       search @root, coords, radius ** 2, &block
     end
 
+    def nearest(to atom : Atom) : Atom
+      neighbors(atom.coords, count: 2)[1]
+    end
+
     def nearest(to coords : Vector) : Atom
       neighbors(coords, count: 1).first
+    end
+
+    def neighbors(of atom : Atom, *, count : Int) : Array(Atom)
+      neighbors(atom.coords, count: count + 1).reject! &.==(atom)
     end
 
     def neighbors(of coords : Vector, *, count : Int) : Array(Atom)
       neighbors = Array(Tuple(Atom, Float64)).new count
       search @root, coords, count, neighbors
       neighbors.map &.[0]
+    end
+
+    def neighbors(of atom : Atom, *, within radius : Number) : Array(Atom)
+      neighbors(atom.coords, within: radius).reject! &.==(atom)
     end
 
     def neighbors(of coords : Vector, *, within radius : Number) : Array(Atom)
