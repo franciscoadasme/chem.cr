@@ -10,24 +10,22 @@ module Chem::Spatial
       def initialize(@axis, @atom, @coords, @left = nil, @right = nil)
       end
 
-      def children_sorted_by_proximity(to coords : Vector) : Tuple(Node?, Node?)
-        if coords[@axis] <= value
-          {left, right}
-        else
-          {right, left}
-        end
-      end
-
-      def distance(to point : Vector) : Float64
-        (point[@axis] - value) ** 2
+      def distance(coords : Vector) : Float64
+        (coords[@axis] - @coords[@axis]) ** 2
       end
 
       def leaf?
         @left.nil? && @right.nil?
       end
 
-      def value
-        @coords[@axis]
+      def next(coords : Vector) : Tuple(Node?, Node?)
+        if leaf?
+          {nil, nil}
+        elsif @right.nil? || coords[@axis] <= @coords[@axis]
+          {@left, @right}
+        else
+          {@right, @left}
+        end
       end
     end
 
@@ -89,57 +87,42 @@ module Chem::Spatial
     end
 
     private def search(node : Node,
-                       point : Vector,
-                       max_neighbors : Int32,
+                       coords : Vector,
+                       count : Int32,
                        neighbors : Array(Tuple(Atom, Float64))) : Nil
-      if point[node.axis] < node.value
-        if left = node.left
-          search left, point, max_neighbors, neighbors
-        end
-        if (right = node.right) && node.distance(to: point) < neighbors.last[1]
-          search right, point, max_neighbors, neighbors
-        end
-      else
-        if right = node.right
-          search right, point, max_neighbors, neighbors
-        end
-        if (left = node.left) && !neighbors.empty? && node.distance(to: point) < neighbors.last[1]
-          search left, point, max_neighbors, neighbors
-        end
+      a, b = node.next coords
+      search a, coords, count, neighbors if a
+      if b && (neighbors.size < count || node.distance(coords) < neighbors.last[1])
+        search b, coords, count, neighbors
       end
 
-      update_neighbors node, point, max_neighbors, neighbors
+      update_neighbors node, coords, count, neighbors
     end
 
-    private def search(node : Node?,
-                       point : Vector,
+    private def search(node : Node,
+                       coords : Vector,
                        radius : Float64,
                        &block : Atom, Float64 -> Nil) : Nil
-      return unless node
-
-      distance = Spatial.squared_distance node.coords, point
+      distance = Spatial.squared_distance node.coords, coords
       yield node.atom, distance if distance <= radius
 
-      return if node.leaf?
-
-      next_node, other = node.children_sorted_by_proximity to: point
-      search next_node, point, radius, &block
-
-      search other, point, radius, &block if other && node.distance(to: point) <= radius
+      a, b = node.next coords
+      search a, coords, radius, &block if a
+      search b, coords, radius, &block if b && node.distance(coords) <= radius
     end
 
     private def update_neighbors(node : Node,
                                  point : Vector,
-                                 max_neighbors : Int32,
+                                 count : Int32,
                                  neighbors : Array(Tuple(Atom, Float64))) : Nil
       distance = Spatial.squared_distance node.coords, point
-      if neighbors.size < max_neighbors
-        neighbors << {node.atom, distance}
-        neighbors.sort! { |a, b| a[1] <=> b[1] }
-      elsif distance < neighbors.last[1]
-        neighbors.pop
-        neighbors << {node.atom, distance}
-        neighbors.sort! { |a, b| a[1] <=> b[1] }
+      if neighbors.size < count || distance < neighbors.last[1]
+        neighbors.pop if neighbors.size >= count
+        if i = neighbors.bsearch_index { |a| a[1] > distance }
+          neighbors.insert i, {node.atom, distance}
+        else
+          neighbors << {node.atom, distance}
+        end
       end
     end
   end
