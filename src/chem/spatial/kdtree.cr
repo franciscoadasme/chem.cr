@@ -33,8 +33,9 @@ module Chem::Spatial
 
     @root : Node
 
-    def initialize(atoms : AtomView)
-      if root = build_tree atoms.to_a, 0...atoms.size
+    def initialize(atoms : ArrayView)
+      atoms = atoms.map { |atom| {atom.coords, atom} }
+      if root = build_tree atoms, 0...atoms.size
         @root = root
       else
         raise "kdtree construction failed"
@@ -87,7 +88,7 @@ module Chem::Spatial
       neighbors.sort_by!(&.[1]).map &.[0]
     end
 
-    private def build_tree(atoms : Array(Atom),
+    private def build_tree(atoms : Array(Tuple(Vector, Atom)),
                            range : Range(Int, Int),
                            depth : Int32 = 0) : Node?
       start, stop = range.begin, range.end
@@ -96,13 +97,13 @@ module Chem::Spatial
       return if size == 0
 
       axis = depth % DIMENSIONS
-      return Node.new axis, atoms[start], atoms[start].coords if size == 1
+      return Node.new axis, atoms[start][1], atoms[start][0] if size == 1
 
-      atoms.sort!(range) { |a, b| a.coords[axis] <=> b.coords[axis] }
+      atoms.sort!(range) { |a, b| a[0][axis] <=> b[0][axis] }
       middle = start + size / 2
       Node.new axis,
-        atoms[middle],
-        atoms[middle].coords,
+        atoms[middle][1],
+        atoms[middle][0],
         build_tree(atoms, start...middle, depth + 1),
         build_tree(atoms, (middle + 1)..stop, depth + 1)
     end
