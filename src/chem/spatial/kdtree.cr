@@ -33,8 +33,8 @@ module Chem::Spatial
 
     @root : Node
 
-    def initialize(atoms : ArrayView)
-      atoms = atoms.map { |atom| {atom.coords, atom} }
+    def initialize(atoms : AtomCollection)
+      atoms = atoms.each_atom.map { |atom| {atom.coords, atom} }.to_a
       if root = build_tree atoms, 0...atoms.size
         @root = root
       else

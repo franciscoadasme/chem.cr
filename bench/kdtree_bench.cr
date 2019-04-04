@@ -5,7 +5,7 @@ alias V = Chem::Spatial::Vector
 
 random = Random.new
 
-atoms = Chem::PDB.read_first("spec/data/pdb/1h1s.pdb").atoms
+structure = Chem::PDB.read_first("spec/data/pdb/1h1s.pdb")
 kdtree = uninitialized KDTree
 points = (0...1000).map do
   V[random.rand(-10.0..70.0), random.rand(100.0), random.rand(100.0)]
@@ -13,7 +13,7 @@ end
 
 Benchmark.bm do |bm|
   bm.report("initialization") do
-    kdtree = KDTree.new atoms
+    kdtree = KDTree.new structure
   end
 
   bm.report("query nearest neighbor") do

@@ -4,9 +4,10 @@ require "./search_dist_helper"
 alias KDTree = Chem::Spatial::KDTree
 alias Vector = Chem::Spatial::Vector
 
-atoms = Chem::PDB.read_first("spec/data/pdb/1h1s.pdb").atoms
+structure = Chem::PDB.read_first "spec/data/pdb/1h1s.pdb"
+atoms = structure.atoms
 atoms_as_a = atoms.to_a
-tree = KDTree.new atoms
+tree = KDTree.new structure
 
 cr_data = Hash.zip (0...atoms.size).to_a.map(&.to_f), atoms.map(&.coords.to_a)
 cr_tree = Crystalline::KDTree(Float64).new cr_data

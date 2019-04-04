@@ -12,7 +12,7 @@ describe Chem::Spatial::KDTree do
       atom at: {3, -5, 0}  # d^2 = 34
       atom at: {-2, -5, 0} # d^2 = 29
     end
-    kdtree = KDTree.new st.atoms
+    kdtree = KDTree.new st
 
     describe "#neighbors" do
       it "returns the N closest atoms sorted by proximity" do
@@ -29,7 +29,7 @@ describe Chem::Spatial::KDTree do
 
   context "real example" do
     st = PDB.read_first "spec/data/pdb/1h1s.pdb"
-    kdtree = KDTree.new st.atoms
+    kdtree = KDTree.new st
 
     describe "#each_neighbor" do
       it "yields each atom within the given radius of a point" do
