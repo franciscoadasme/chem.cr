@@ -22,6 +22,14 @@ module Spec
       actual_value.zip(@expected_value).all? { |a, b| (a - b).abs <= @delta }
     end
 
+    def match(actual_value : Array(Chem::Spatial::Vector))
+      return false unless @expected_value.size == actual_value.size
+      actual_value.zip(@expected_value).all? do |a, b|
+        dvec = (a - b).abs
+        dvec.x <= @delta && dvec.y <= @delta && dvec.z <= @delta
+      end
+    end
+
     def match(actual_value : Chem::Spatial::Vector)
       [(actual_value.x - @expected_value.x).abs,
        (actual_value.y - @expected_value.y).abs,

@@ -1,6 +1,64 @@
 require "../spec_helper"
 
 describe Chem::Spatial::PBC do
+  describe "#each_adjacent_image" do
+    it "yields each atom in the adjacent periodic images" do
+      structure = Chem::Structure.build do
+        lattice 10, 10, 10
+
+        atom PeriodicTable::C, at: V[2.5, 2.5, 2.5]
+        atom PeriodicTable::H, at: V[7.5, 2.5, 2.5]
+        atom PeriodicTable::O, at: V[2.5, 7.5, 2.5]
+        atom PeriodicTable::N, at: V[2.5, 2.5, 7.5]
+      end
+
+      vectors = Chem::Spatial::PBC.adjacent_images(structure).map &.[1]
+      expected = [
+        V[12.5, 2.5, 2.5], V[2.5, 12.5, 2.5], V[2.5, 2.5, 12.5], V[12.5, 12.5, 2.5],
+        V[12.5, 2.5, 12.5], V[2.5, 12.5, 12.5], V[12.5, 12.5, 12.5], V[-2.5, 2.5, 2.5],
+        V[7.5, 12.5, 2.5], V[7.5, 2.5, 12.5], V[-2.5, 12.5, 2.5], V[-2.5, 2.5, 12.5],
+        V[7.5, 12.5, 12.5], V[-2.5, 12.5, 12.5], V[12.5, 7.5, 2.5], V[2.5, -2.5, 2.5],
+        V[2.5, 7.5, 12.5], V[12.5, -2.5, 2.5], V[12.5, 7.5, 12.5], V[2.5, -2.5, 12.5],
+        V[12.5, -2.5, 12.5], V[12.5, 2.5, 7.5], V[2.5, 12.5, 7.5], V[2.5, 2.5, -2.5],
+        V[12.5, 12.5, 7.5], V[12.5, 2.5, -2.5], V[2.5, 12.5, -2.5], V[12.5, 12.5, -2.5],
+      ]
+      vectors.should eq expected
+    end
+
+    it "yields each atom in the adjacent periodic images for non-centered structure" do
+      offset = V[-20, 10, 30]
+
+      structure = Chem::Structure.build do
+        lattice 10, 10, 10
+
+        atom PeriodicTable::C, at: V[2.5, 2.5, 2.5]
+        atom PeriodicTable::H, at: V[7.5, 2.5, 2.5]
+        atom PeriodicTable::O, at: V[2.5, 7.5, 2.5]
+        atom PeriodicTable::N, at: V[2.5, 2.5, 7.5]
+      end
+      structure.translate! by: offset
+
+      vectors = Chem::Spatial::PBC.adjacent_images(structure).map &.[1]
+      expected = [
+        V[12.5, 2.5, 2.5], V[2.5, 12.5, 2.5], V[2.5, 2.5, 12.5], V[12.5, 12.5, 2.5],
+        V[12.5, 2.5, 12.5], V[2.5, 12.5, 12.5], V[12.5, 12.5, 12.5], V[-2.5, 2.5, 2.5],
+        V[7.5, 12.5, 2.5], V[7.5, 2.5, 12.5], V[-2.5, 12.5, 2.5], V[-2.5, 2.5, 12.5],
+        V[7.5, 12.5, 12.5], V[-2.5, 12.5, 12.5], V[12.5, 7.5, 2.5], V[2.5, -2.5, 2.5],
+        V[2.5, 7.5, 12.5], V[12.5, -2.5, 2.5], V[12.5, 7.5, 12.5], V[2.5, -2.5, 12.5],
+        V[12.5, -2.5, 12.5], V[12.5, 2.5, 7.5], V[2.5, 12.5, 7.5], V[2.5, 2.5, -2.5],
+        V[12.5, 12.5, 7.5], V[12.5, 2.5, -2.5], V[2.5, 12.5, -2.5], V[12.5, 12.5, -2.5],
+      ].map &.+(offset)
+      vectors.should eq expected
+    end
+
+    it "fails for non-periodic structures" do
+      msg = "Cannot generate adjacent images of a non-periodic structure"
+      expect_raises Chem::Spatial::Error, msg do
+        Chem::Spatial::PBC.each_adjacent_image(fake_structure) { }
+      end
+    end
+  end
+
   describe "#wrap" do
     it "wraps atoms into the primary unit cell" do
       st = Chem::VASP::Poscar.read "spec/data/poscar/AlaIle--unwrapped.poscar"
