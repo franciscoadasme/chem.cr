@@ -73,6 +73,12 @@ describe Chem::Spatial::Vector do
     end
   end
 
+  describe "#abs" do
+    it "returns the element-wise absolute value of the vector" do
+      V[-1, 5, 4].abs.should eq V[1, 5, 4]
+    end
+  end
+
   describe "#cross" do
     it "returns the cross product between two vectors" do
       Vector[1, 0, 0].cross(Vector[0, 1, 0]).should eq Vector[0, 0, 1]
@@ -86,9 +92,33 @@ describe Chem::Spatial::Vector do
     end
   end
 
+  describe "#floor" do
+    it "returns the element-wise floor value of the vector" do
+      V[-1.5234, 2.31, 4.001].floor.should eq V[-2, 2, 4]
+    end
+  end
+
   describe "#inv" do
     it "returns the inverse vector" do
       v1.inv.should eq Vector[-3, -4, 0]
+    end
+  end
+
+  describe "#inspect" do
+    it "returns a delimited string representation of a vector" do
+      V[2.5, 1, 8.4].inspect.should eq "Vector[2.5, 1.0, 8.4]"
+    end
+  end
+
+  describe "#map" do
+    it "returns the element-wise map operation of the vector" do
+      V[-5, 1, 0].map(&.**(2)).should eq V[25, 1, 0]
+    end
+  end
+
+  describe "#map_with_index" do
+    it "returns the element-wise map operation of the vector" do
+      V[2, 75, 2].map_with_index { |value, i| value + i**2 }.should eq V[2, 76, 6]
     end
   end
 
@@ -127,6 +157,12 @@ describe Chem::Spatial::Vector do
     end
   end
 
+  describe "#round" do
+    it "rounds a vector" do
+      V[-1.4, 2.50001, 9.2].round.should eq V[-1, 3, 9]
+    end
+  end
+
   describe "#to_a" do
     it "returns an array" do
       v1.to_a.should eq [3, 4, 0]
@@ -136,6 +172,12 @@ describe Chem::Spatial::Vector do
   describe "#to_m" do
     it "returns a column matrix" do
       V[3, 1, 5].to_m.should eq Chem::Linalg::Matrix[[3], [1], [5]]
+    end
+  end
+
+  describe "#to_s" do
+    it "returns a string representation of a vector" do
+      V[2.5, 1, 8.4].to_s.should eq "[2.5 1.0 8.4]"
     end
   end
 

@@ -56,7 +56,7 @@ module Chem::Spatial
       end
 
       def {{op.id}}(other : {NumberType, NumberType, NumberType}) : self
-        Vector.new @x {{op.id}} other[0], @y {{op.id}} other[1], @z {{op.id}} other[2]
+        map_with_index { |value, i| value {{op.id}} other[i] }
       end
 
       def {{op.id}}(other : Size3D) : self
@@ -69,13 +69,17 @@ module Chem::Spatial
     end
 
     {% for op in ['*', '/'] %}
-      def {{op.id}}(other : NumberType) : self
+      def {{op.id}}(other : Number) : self
         Vector.new @x {{op.id}} other, @y {{op.id}} other, @z {{op.id}} other
       end
     {% end %}
 
     def *(rhs : AffineTransform) : self
       rhs * self
+    end
+
+    def abs : self
+      map &.abs
     end
 
     def cross(other : Vector) : self
@@ -88,8 +92,24 @@ module Chem::Spatial
       @x * other.x + @y * other.y + @z * other.z
     end
 
+    def floor : self
+      map &.floor
+    end
+
     def inv : self
       Vector.new -@x, -@y, -@z
+    end
+
+    def inspect(io : ::IO)
+      io << "Vector[" << @x << ", " << @y << ", " << @z << ']'
+    end
+
+    def map(&block : Float64 -> Number::Primitive) : self
+      Vector.new (yield @x).to_f, (yield @y).to_f, (yield @z).to_f
+    end
+
+    def map_with_index(&block : Float64, Int32 -> Number::Primitive) : self
+      Vector.new (yield @x, 0).to_f, (yield @y, 1).to_f, (yield @z, 2).to_f
     end
 
     def normalize : self
@@ -113,6 +133,10 @@ module Chem::Spatial
       Quaternion.rotation(rotaxis, theta).rotate self
     end
 
+    def round : self
+      map &.round
+    end
+
     def size : Float64
       norm
     end
@@ -123,6 +147,10 @@ module Chem::Spatial
 
     def to_m : Linalg::Matrix
       Linalg::Matrix.column @x, @y, @z
+    end
+
+    def to_s(io : ::IO)
+      io << '[' << @x << ' ' << @y << ' ' << @z << ']'
     end
 
     def to_t : Tuple(Float64, Float64, Float64)
