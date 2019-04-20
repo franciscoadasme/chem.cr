@@ -1,6 +1,9 @@
 module Chem::Spatial::PBC
   extend self
 
+  ADJACENT_IMAGE_IDXS = [{1, 0, 0}, {0, 1, 0}, {0, 0, 1}, {1, 1, 0}, {1, 0, 1},
+                         {0, 1, 1}, {1, 1, 1}]
+
   def adjacent_images(*args, **options) : Array(Tuple(Atom, Vector))
     ary = [] of Tuple(Atom, Vector)
     each_adjacent_image(*args, **options) do |atom, coords|
@@ -26,15 +29,13 @@ module Chem::Spatial::PBC
 
     atoms = atoms.each_atom
     while !(atom = atoms.next).is_a? Iterator::Stop
-      # bring fractional coords to primary unit cell then compute offset per axis
-      fcoords = transform * atom.coords
-      ax_d = -2 * (fcoords - fcoords.floor).round + {1, 1, 1}
+      fcoords = transform * atom.coords            # convert to fractional coords
+      w_fcoords = fcoords - fcoords.floor          # wrap to primary unit cell
+      ax_offset = -2 * w_fcoords.round + {1, 1, 1} # compute offset per axis
 
-      {% for img in [{1, 0, 0}, {0, 1, 0}, {0, 0, 1}, {1, 1, 0}, {1, 0, 1}, {0, 1, 1},
-                     {1, 1, 1}] %}
-        img_offset = V[ax_d.x * {{img[0]}}, ax_d.y * {{img[1]}}, ax_d.z * {{img[2]}}]
-        yield atom, inv_transform * (fcoords + img_offset)
-      {% end %}
+      ADJACENT_IMAGE_IDXS.each do |img_idx|
+        yield atom, inv_transform * (fcoords + ax_offset * img_idx)
+      end
     end
   end
 
