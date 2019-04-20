@@ -22,8 +22,24 @@ module Chem
       Iterator.chain iterators
     end
 
+    def each_atom(&block : Atom ->)
+      each do |chain|
+        chain.each_atom do |atom|
+          yield atom
+        end
+      end
+    end
+
     def each_residue : Iterator(Residue)
       Iterator.chain each.map(&.each_residue).to_a
+    end
+
+    def each_residue(&block : Residue ->)
+      each do |chain|
+        chain.each_residue do |residue|
+          yield residue
+        end
+      end
     end
   end
 end

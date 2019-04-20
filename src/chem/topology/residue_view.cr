@@ -24,8 +24,23 @@ module Chem
       Iterator.chain map(&.each_atom)
     end
 
+    def each_atom(&block : Atom ->)
+      each do |residue|
+        residue.each_atom do |atom|
+          yield atom
+        end
+      end
+    end
+
     def each_chain : Iterator(Chain)
       each.map(&.chain).uniq
+    end
+
+    def each_chain(&block : Chain ->)
+      each do |residue|
+        yield if residue.chain == prev_chain
+        prev_chain = residue.chain
+      end
     end
   end
 end

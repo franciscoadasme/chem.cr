@@ -1,9 +1,12 @@
 module Chem
   module AtomCollection
     abstract def each_atom : Iterator(Atom)
+    abstract def each_atom(&block : Atom ->)
 
     def atoms : AtomView
-      AtomView.new each_atom.to_a
+      atoms = [] of Atom
+      each_atom { |atom| atoms << atom }
+      AtomView.new atoms
     end
 
     def bounds : Spatial::Bounds
@@ -20,8 +23,6 @@ module Chem
       Spatial::Bounds.new origin, size
     end
 
-    def each_atom(&block : Atom ->)
-      each_atom.each &block
     end
 
     def formal_charge : Int32

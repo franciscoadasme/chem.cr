@@ -79,6 +79,12 @@ module Chem
       @atoms.each
     end
 
+    def each_atom(&block : Atom ->)
+      @atoms.each do |atom|
+        yield atom
+      end
+    end
+
     def has_alternate_conformations? : Bool
       conformations.any?
     end

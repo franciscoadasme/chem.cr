@@ -1,13 +1,12 @@
 module Chem
   module ChainCollection
     abstract def each_chain : Iterator(Chain)
+    abstract def each_chain(&block : Chain ->)
 
     def chains : ChainView
-      ChainView.new each_chain.to_a
-    end
-
-    def each_chain(&block : Chain ->)
-      each_chain.each &block
+      chains = [] of Chain
+      each_chain { |chain| chains << chain }
+      ChainView.new chains
     end
   end
 end

@@ -1,13 +1,12 @@
 module Chem
   module ResidueCollection
     abstract def each_residue : Iterator(Residue)
-
-    def each_residue(&block : Residue ->)
-      each_residue.each &block
-    end
+    abstract def each_residue(&block : Residue ->)
 
     def residues : ResidueView
-      ResidueView.new each_residue.to_a
+      residues = [] of Residue
+      each_residue { |residue| residues << residue }
+      ResidueView.new residues
     end
   end
 end

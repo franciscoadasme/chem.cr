@@ -36,12 +36,34 @@ module Chem
       Iterator.chain iterators
     end
 
+    def each_atom(&block : Atom ->)
+      @chains.each do |chain|
+        chain.each_atom do |atom|
+          yield atom
+        end
+      end
+    end
+
     def each_chain : Iterator(Chain)
       @chains.each
     end
 
+    def each_chain(&block : Chain ->)
+      @chains.each do |chain|
+        yield chain
+      end
+    end
+
     def each_residue : Iterator(Residue)
       Iterator.chain each_chain.map(&.each_residue).to_a
+    end
+
+    def each_residue(&block : Residue ->)
+      @chains.each do |chain|
+        chain.each_residue do |residue|
+          yield residue
+        end
+      end
     end
 
     def empty?
