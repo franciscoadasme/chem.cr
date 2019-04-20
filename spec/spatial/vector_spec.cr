@@ -103,6 +103,12 @@ describe Chem::Spatial::Vector do
     end
   end
 
+  describe "#clamp" do
+    it "clamps each element of a vector" do
+      V[10, 5, -1].clamp(0..9).should eq V[9, 5, 0]
+    end
+  end
+
   describe "#cross" do
     it "returns the cross product between two vectors" do
       Vector[1, 0, 0].cross(Vector[0, 1, 0]).should eq Vector[0, 0, 1]

@@ -82,6 +82,14 @@ module Chem::Spatial
       map &.abs
     end
 
+    def clamp(min : Number, max : Number) : self
+      map &.clamp(min, max)
+    end
+
+    def clamp(range : Range) : self
+      map &.clamp(range)
+    end
+
     def cross(other : Vector) : self
       Vector.new @y * other.z - @z * other.y,
         @z * other.x - @x * other.z,
