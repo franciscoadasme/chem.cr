@@ -40,6 +40,12 @@ module Chem
       bonds.map &.other(self)
     end
 
+    def inspect(io : ::IO)
+      io << "<Atom "
+      to_s io
+      io << ">"
+    end
+
     def to_s(io : ::IO)
       io << @residue
       io << '(' << @alt_loc << ')' if @alt_loc

@@ -48,8 +48,23 @@ module Chem
       size == 0
     end
 
+    def inspect(io : ::IO)
+      to_s io
+    end
+
     def size : Int32
       each_atom.sum(0) { 1 }
+    end
+
+    def to_s(io : ::IO)
+      io << "<Structure"
+      io << " " << title.inspect unless title.blank?
+      io << ": "
+      io << size << " atoms"
+      io << ", " << residues.size << " residues" if residues.size > 1
+      io << ", "
+      io << "non-" unless @lattice
+      io << "periodic>"
     end
 
     def wrap(around center : Spatial::Vector? = nil) : self
