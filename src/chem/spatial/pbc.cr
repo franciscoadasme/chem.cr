@@ -39,6 +39,41 @@ module Chem::Spatial::PBC
     end
   end
 
+  def each_adjacent_image(structure : Structure,
+                          radius : Number,
+                          &block : Atom, Vector ->)
+    if lattice = structure.lattice
+      each_adjacent_image structure, lattice, radius, &block
+    else
+      raise Error.new "Cannot generate adjacent images of a non-periodic structure"
+    end
+  end
+
+  def each_adjacent_image(atoms : AtomCollection,
+                          lattice : Lattice,
+                          radius : Number,
+                          &block : Atom, Vector ->)
+    raise Error.new "Radius cannot be negative" if radius < 0
+
+    basis = Linalg::Basis.new lattice.a, lattice.b, lattice.c
+    transform = Linalg::Basis.standard.transform to: basis
+    inv_transform = transform.inv
+    padding = (transform * Vector[radius, radius, radius]).clamp 0..0.5
+
+    atoms = atoms.each_atom
+    while !(atom = atoms.next).is_a? Iterator::Stop
+      fcoords = transform * atom.coords            # convert to fractional coords
+      w_fcoords = fcoords - fcoords.floor          # wrap to primary unit cell
+      ax_offset = -2 * w_fcoords.round + {1, 1, 1} # compute offset per axis
+      ax_pad = (w_fcoords - w_fcoords.round).abs
+
+      ADJACENT_IMAGE_IDXS.each do |img_idx|
+        next unless 3.times.all? { |i| img_idx[i] * ax_pad[i] <= padding[i] }
+        yield atom, inv_transform * (fcoords + ax_offset * img_idx)
+      end
+    end
+  end
+
   def wrap(atoms : AtomCollection, lattice : Lattice)
     wrap atoms, lattice, lattice.center
   end
