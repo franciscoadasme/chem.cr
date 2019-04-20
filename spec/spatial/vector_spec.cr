@@ -38,6 +38,10 @@ describe Chem::Spatial::Vector do
   end
 
   describe "#+" do
+    it "returns the element-wise arithmetic addition with a number" do
+      (V[1, 2, 3] + 5).should eq V[6, 7, 8]
+    end
+
     it "returns the arithmetic addition between vectors" do
       (v1 + v2).should eq Vector[4, 6, 3]
     end
@@ -50,6 +54,10 @@ describe Chem::Spatial::Vector do
   describe "#-" do
     it "returns the inverse vector" do
       (-v1).should eq Vector[-3, -4, 0]
+    end
+
+    it "returns the element-wise subtraction with a number" do
+      (V[3, 9, 123] - 5).should eq V[-2, 4, 118]
     end
 
     it "returns the subtraction between vectors" do
@@ -65,11 +73,27 @@ describe Chem::Spatial::Vector do
     it "returns the multiplication with a number" do
       (v1 * 3).should eq Vector[9, 12, 0]
     end
+
+    it "returns the element-wise multiplication between vectors" do
+      (V[3, 9, 123] * V[1, 2, 3]).should eq V[3, 18, 369]
+    end
+
+    it "returns the element-wise multiplication with a 3-sized tuple" do
+      (V[3, 9, 123] * {3, 2, 1}).should eq V[9, 18, 123]
+    end
   end
 
   describe "#/" do
     it "returns the division by a number" do
       (v1 / 5).should eq Vector[0.6, 0.8, 0]
+    end
+
+    it "returns the element-wise division between vectors" do
+      (V[3, 9, 128] / V[1, 2, 32]).should eq V[3, 4.5, 4]
+    end
+
+    it "returns the element-wise division with a 3-sized tuple" do
+      (V[7, 3.2, 6] / {3.5, 1.6, 3}).should eq V[2, 2, 2]
     end
   end
 

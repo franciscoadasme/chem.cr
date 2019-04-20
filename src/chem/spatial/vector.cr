@@ -50,15 +50,21 @@ module Chem::Spatial
       end
     end
 
-    {% for op in ['+', '-'] %}
+    {% for op in ['+', '-', '*', '/'] %}
+      def {{op.id}}(other : Number) : self
+        Vector.new @x {{op.id}} other, @y {{op.id}} other, @z {{op.id}} other
+      end
+
       def {{op.id}}(other : Vector) : self
         Vector.new @x {{op.id}} other.x, @y {{op.id}} other.y, @z {{op.id}} other.z
       end
 
-      def {{op.id}}(other : {NumberType, NumberType, NumberType}) : self
+      def {{op.id}}(other : Tuple(NumberType, NumberType, NumberType)) : self
         map_with_index { |value, i| value {{op.id}} other[i] }
       end
+    {% end %}
 
+    {% for op in ['+', '-'] %}
       def {{op.id}}(other : Size3D) : self
         Vector.new @x {{op.id}} other.a, @y {{op.id}} other.b, @z {{op.id}} other.c
       end
@@ -67,12 +73,6 @@ module Chem::Spatial
     def - : self
       inv
     end
-
-    {% for op in ['*', '/'] %}
-      def {{op.id}}(other : Number) : self
-        Vector.new @x {{op.id}} other, @y {{op.id}} other, @z {{op.id}} other
-      end
-    {% end %}
 
     def *(rhs : AffineTransform) : self
       rhs * self
