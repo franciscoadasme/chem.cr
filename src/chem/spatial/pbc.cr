@@ -24,7 +24,7 @@ module Chem::Spatial::PBC
                           lattice : Lattice,
                           &block : Atom, Vector ->)
     basis = Linalg::Basis.new lattice.a, lattice.b, lattice.c
-    transform = Linalg::Basis.standard.transform to: basis
+    transform = AffineTransform.basis_change to: basis
     inv_transform = transform.inv
 
     atoms = atoms.each_atom
@@ -56,7 +56,7 @@ module Chem::Spatial::PBC
     raise Error.new "Radius cannot be negative" if radius < 0
 
     basis = Linalg::Basis.new lattice.a, lattice.b, lattice.c
-    transform = Linalg::Basis.standard.transform to: basis
+    transform = AffineTransform.basis_change to: basis
     inv_transform = transform.inv
     padding = (transform * Vector[radius, radius, radius]).clamp 0..0.5
 
@@ -91,7 +91,7 @@ module Chem::Spatial::PBC
       end
     else
       basis = Linalg::Basis.new lattice.a, lattice.b, lattice.c
-      transform = Linalg::Basis.standard.transform to: basis
+      transform = AffineTransform.basis_change to: basis
       atoms.transform by: transform
       wrap atoms, Lattice.new(V.x, V.y, V.z), (transform * center)
       atoms.transform by: transform.inv

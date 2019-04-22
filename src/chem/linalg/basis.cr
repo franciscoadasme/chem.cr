@@ -14,24 +14,5 @@ module Chem::Linalg
     def standard? : Bool
       @i.x? && @j.y? && @k.z?
     end
-
-    def transform(to other : Basis) : Spatial::AffineTransform
-      if self == other
-        Spatial::AffineTransform.new
-      elsif other.standard?
-        Spatial::AffineTransform.new to_m
-      elsif standard?
-        Spatial::AffineTransform.new other.to_m.inv
-      else
-        Spatial::AffineTransform.new other.to_m.inv * to_m
-      end
-    end
-
-    def to_m : Matrix
-      Matrix[
-        [@i.x, @j.x, @k.x],
-        [@i.y, @j.y, @k.y],
-        [@i.z, @j.z, @k.z]]
-    end
   end
 end
