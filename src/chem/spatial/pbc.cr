@@ -26,8 +26,7 @@ module Chem::Spatial::PBC
     basis = Linalg::Basis.new lattice.a, lattice.b, lattice.c
     transform = AffineTransform.basis_change to: basis
 
-    atoms = atoms.each_atom
-    while !(atom = atoms.next).is_a? Iterator::Stop
+    atoms.each_atom do |atom|
       fcoords = transform * atom.coords            # convert to fractional coords
       w_fcoords = fcoords - fcoords.floor          # wrap to primary unit cell
       ax_offset = -2 * w_fcoords.round + {1, 1, 1} # compute offset per axis
@@ -58,8 +57,7 @@ module Chem::Spatial::PBC
     transform = AffineTransform.basis_change to: basis
     padding = (transform * Vector[radius, radius, radius]).clamp 0..0.5
 
-    atoms = atoms.each_atom
-    while !(atom = atoms.next).is_a? Iterator::Stop
+    atoms.each_atom do |atom|
       fcoords = transform * atom.coords            # convert to fractional coords
       w_fcoords = fcoords - fcoords.floor          # wrap to primary unit cell
       ax_offset = -2 * w_fcoords.round + {1, 1, 1} # compute offset per axis
