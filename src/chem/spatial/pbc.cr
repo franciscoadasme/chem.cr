@@ -25,7 +25,6 @@ module Chem::Spatial::PBC
                           &block : Atom, Vector ->)
     basis = Linalg::Basis.new lattice.a, lattice.b, lattice.c
     transform = AffineTransform.basis_change to: basis
-    inv_transform = transform.inv
 
     atoms = atoms.each_atom
     while !(atom = atoms.next).is_a? Iterator::Stop
@@ -34,7 +33,7 @@ module Chem::Spatial::PBC
       ax_offset = -2 * w_fcoords.round + {1, 1, 1} # compute offset per axis
 
       ADJACENT_IMAGE_IDXS.each do |img_idx|
-        yield atom, inv_transform * (fcoords + ax_offset * img_idx)
+        yield atom, transform.inv * (fcoords + ax_offset * img_idx)
       end
     end
   end
@@ -57,7 +56,6 @@ module Chem::Spatial::PBC
 
     basis = Linalg::Basis.new lattice.a, lattice.b, lattice.c
     transform = AffineTransform.basis_change to: basis
-    inv_transform = transform.inv
     padding = (transform * Vector[radius, radius, radius]).clamp 0..0.5
 
     atoms = atoms.each_atom
@@ -69,7 +67,7 @@ module Chem::Spatial::PBC
 
       ADJACENT_IMAGE_IDXS.each do |img_idx|
         next unless 3.times.all? { |i| img_idx[i] * ax_pad[i] <= padding[i] }
-        yield atom, inv_transform * (fcoords + ax_offset * img_idx)
+        yield atom, transform.inv * (fcoords + ax_offset * img_idx)
       end
     end
   end
