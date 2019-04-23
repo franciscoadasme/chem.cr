@@ -23,8 +23,7 @@ module Chem::Spatial::PBC
   def each_adjacent_image(atoms : AtomCollection,
                           lattice : Lattice,
                           &block : Atom, Vector ->)
-    basis = Linalg::Basis.new lattice.a, lattice.b, lattice.c
-    transform = AffineTransform.basis_change to: basis
+    transform = AffineTransform.cart_to_fractional lattice
 
     atoms.each_atom do |atom|
       fcoords = transform * atom.coords            # convert to fractional coords
@@ -53,8 +52,7 @@ module Chem::Spatial::PBC
                           &block : Atom, Vector ->)
     raise Error.new "Radius cannot be negative" if radius < 0
 
-    basis = Linalg::Basis.new lattice.a, lattice.b, lattice.c
-    transform = AffineTransform.basis_change to: basis
+    transform = AffineTransform.cart_to_fractional lattice
     padding = (transform * Vector[radius, radius, radius]).clamp 0..0.5
 
     atoms.each_atom do |atom|
@@ -86,8 +84,7 @@ module Chem::Spatial::PBC
         {% end %}
       end
     else
-      basis = Linalg::Basis.new lattice.a, lattice.b, lattice.c
-      transform = AffineTransform.basis_change to: basis
+      transform = AffineTransform.cart_to_fractional lattice
       atoms.transform by: transform
       wrap atoms, Lattice.new(V.x, V.y, V.z), (transform * center)
       atoms.transform by: transform.inv
