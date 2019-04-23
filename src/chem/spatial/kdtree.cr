@@ -34,11 +34,35 @@ module Chem::Spatial
     @root : Node
 
     def initialize(atoms : AtomCollection)
-      atoms = atoms.each_atom.map { |atom| {atom.coords, atom} }.to_a
+      initialize atoms.each_atom.map { |atom| {atom.coords, atom} }.to_a
+    end
+
+    def initialize(atoms : AtomCollection, lattice : Lattice, **options)
+      ary = [] of Tuple(Vector, Atom)
+      atoms.each_atom { |atom| ary << {atom.coords, atom} }
+      PBC.each_adjacent_image(atoms, lattice, **options) do |atom, coords|
+        ary << {coords, atom}
+      end
+      initialize ary
+    end
+
+    private def initialize(atoms : Array(Tuple(Vector, Atom)))
       if root = build_tree atoms, 0...atoms.size
         @root = root
       else
         raise "kdtree construction failed"
+      end
+    end
+
+    def initialize(structure : Structure, periodic : Bool = false, **options)
+      if periodic
+        if lattice = structure.lattice
+          initialize structure, lattice, **options
+        else
+          raise Error.new "Non-periodic structure"
+        end
+      else
+        initialize structure
       end
     end
 
@@ -123,7 +147,7 @@ module Chem::Spatial
 
     private def search(node : Node,
                        coords : Vector,
-                       radius : Float64,
+                       radius : Number,
                        &block : Atom, Float64 -> Nil) : Nil
       distance = Spatial.squared_distance node.coords, coords
       yield node.atom, distance if distance <= radius
