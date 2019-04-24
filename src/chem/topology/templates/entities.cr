@@ -14,7 +14,7 @@ module Chem::Topology::Templates
     end
 
     def suffix : String
-      name[@element.symbol.size..-1]
+      name[@element.symbol.size..]
     end
 
     def to_s(io : ::IO)

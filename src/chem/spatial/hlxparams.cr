@@ -89,7 +89,7 @@ module Chem::Spatial
 
     tzp = v1p.cross(w1p).normalize
     handedness = rotaxis.dot tzp
-    handedness = 1 if handedness.abs < 1e-9
+    handedness = 1.0 if handedness.abs < 1e-9
     handedness /= handedness.abs
     theta * handedness + Math::PI * (1 - handedness)
   end

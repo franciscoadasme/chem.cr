@@ -124,7 +124,7 @@ module Chem::Spatial
       return Node.new axis, atoms[start][1], atoms[start][0] if size == 1
 
       atoms.sort!(range) { |a, b| a[0][axis] <=> b[0][axis] }
-      middle = start + size / 2
+      middle = start + size // 2
       Node.new axis,
         atoms[middle][1],
         atoms[middle][0],

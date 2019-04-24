@@ -41,7 +41,7 @@ module Chem::Linalg
                    @columns : Int32,
                    &block : Int32, Int32, Int32 -> Number::Primitive)
       @buffer = Pointer(Float64).malloc(size) do |k|
-        i = k / @columns
+        i = k // @columns
         j = k % @columns
         (yield i, j, k).to_f
       end
@@ -233,7 +233,7 @@ module Chem::Linalg
     def each_with_index(&block : Float64, Int32, Int32 ->)
       k = 0
       while k < size
-        i = k / @columns
+        i = k // @columns
         j = k % @columns
         yield unsafe_fetch(k), i, j
         k += 1
@@ -340,13 +340,13 @@ module Chem::Linalg
       new_size = rows * columns
       if new_size < size
         new_size.times do |k|
-          to_unsafe[k] = unsafe_fetch k / columns, k % columns
+          to_unsafe[k] = unsafe_fetch k // columns, k % columns
         end
         @buffer = @buffer.realloc new_size
       elsif new_size > size
         @buffer = @buffer.realloc new_size
         (new_size - 1).downto(0) do |k|
-          i = k / columns
+          i = k // columns
           j = k % columns
           to_unsafe[k] = self[i, j]? || fill_value.to_f
         end

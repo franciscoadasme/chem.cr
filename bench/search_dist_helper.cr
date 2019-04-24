@@ -44,8 +44,8 @@ module Crystalline
       median = points.size / 2
 
       node = Node.new(points[median][0], points[median][1])
-      node.left = build_tree(points[0...median], depth + 1)
-      node.right = build_tree(points[median + 1..-1], depth + 1)
+      node.left = build_tree(points[...median], depth + 1)
+      node.right = build_tree(points[median + 1..], depth + 1)
       node
     end
 

@@ -53,7 +53,7 @@ module Chem::Spatial::PBC
     raise Error.new "Radius cannot be negative" if radius < 0
 
     transform = AffineTransform.cart_to_fractional lattice
-    padding = (transform * Vector[radius, radius, radius]).clamp 0..0.5
+    padding = (transform * Vector[radius, radius, radius]).clamp(..0.5)
 
     atoms.each_atom do |atom|
       fcoords = transform * atom.coords            # convert to fractional coords

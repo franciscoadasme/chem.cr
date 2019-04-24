@@ -64,7 +64,7 @@ module Chem::IO
       chars = read_chars? count
       if chars && (pos = chars.index sentinel)
         @input.pos -= chars.size - pos
-        chars = chars[0...pos]
+        chars = chars[...pos]
       end
       chars
     end

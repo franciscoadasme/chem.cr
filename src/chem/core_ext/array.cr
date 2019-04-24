@@ -3,7 +3,7 @@ class Array(T)
     dup.sort! range
   end
 
-  def sort(range : Range(Int, Int), &block : T, T -> Int32) : self
+  def sort(range : Range(Int, Int), &block : T, T -> Int32?) : self
     dup.sort! range, &block
   end
 
@@ -15,7 +15,7 @@ class Array(T)
     self
   end
 
-  def sort!(range : Range(Int, Int), &block : T, T -> Int32) : self
+  def sort!(range : Range(Int, Int), &block : T, T -> Int32?) : self
     start, count = Indexable.range_to_index_and_count range, size
     raise IndexError.new if start >= size
     count = Math.min count, size - start
