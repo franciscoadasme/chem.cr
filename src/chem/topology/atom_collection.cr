@@ -23,8 +23,6 @@ module Chem
       Spatial::Bounds.new origin, size
     end
 
-    end
-
     def formal_charge : Int32
       each_atom.sum &.charge
     end
