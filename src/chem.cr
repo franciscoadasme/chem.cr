@@ -7,7 +7,6 @@ require "./chem/linalg"
 require "./chem/spatial"
 
 require "./chem/bias"
-require "./chem/configuration"
 require "./chem/lattice"
 require "./chem/protein"
 require "./chem/topology"

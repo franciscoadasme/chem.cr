@@ -5,7 +5,7 @@ alias Poscar = Chem::VASP::Poscar
 describe Chem::VASP::Poscar do
   describe ".parse" do
     it "parses a basic file" do
-      st = Poscar.read "spec/data/poscar/basic.poscar"
+      st = Chem::Structure.read "spec/data/poscar/basic.poscar"
       st.size.should eq 49
 
       st.atoms.count(&.element.symbol.==("C")).should eq 14
@@ -31,13 +31,13 @@ describe Chem::VASP::Poscar do
     end
 
     it "parses a file with direct coordinates" do
-      st = Poscar.read "spec/data/poscar/direct.poscar"
+      st = Chem::Structure.read "spec/data/poscar/direct.poscar"
       st.atoms[0].coords.should eq Vector.origin
       st.atoms[1].coords.should be_close Vector[0.3, 0.45, 0.35], 1e-16
     end
 
     it "parses a file with selective dynamics" do
-      st = Poscar.read "spec/data/poscar/selective_dynamics.poscar"
+      st = Chem::Structure.read "spec/data/poscar/selective_dynamics.poscar"
       st.atoms[0].constraint.should eq Constraint::Z
       st.atoms[1].constraint.should eq Constraint::XYZ
       st.atoms[2].constraint.should eq Constraint::Z
@@ -45,15 +45,15 @@ describe Chem::VASP::Poscar do
 
     it "fails when element symbols are missing" do
       msg = "Expected element symbols (vasp 5+) at 6:4"
-      expect_raises(Poscar::ParseException, msg) do
-        Poscar.read "spec/data/poscar/no_symbols.poscar"
+      expect_raises(Chem::IO::ParseException, msg) do
+        Chem::Structure.read "spec/data/poscar/no_symbols.poscar"
       end
     end
 
     it "fails when there are missing atomic species counts" do
       msg = "Mismatch between element symbols and counts at 7:5"
-      expect_raises(Poscar::ParseException, msg) do
-        Poscar.read "spec/data/poscar/mismatch.poscar"
+      expect_raises(Chem::IO::ParseException, msg) do
+        Chem::Structure.read "spec/data/poscar/mismatch.poscar"
       end
     end
   end
@@ -71,7 +71,7 @@ describe Chem::VASP::Poscar do
 
     it "writes a structure in cartesian coordinates" do
       io = IO::Memory.new
-      Poscar.write io, structure
+      structure.write io, :poscar
 
       io.to_s.rstrip.should eq <<-EOS
         NaCl-O-NaCl
@@ -92,7 +92,7 @@ describe Chem::VASP::Poscar do
 
     it "writes a structure in fractional coordinates" do
       io = IO::Memory.new
-      Poscar.write io, structure, fractional: true
+      structure.write io, :poscar, fractional: true
 
       io.to_s.rstrip.should eq <<-EOS
         NaCl-O-NaCl
@@ -113,7 +113,7 @@ describe Chem::VASP::Poscar do
 
     it "writes a structure in fractional coordinates (wrapped)" do
       io = IO::Memory.new
-      Poscar.write io, structure, fractional: true, wrap: true
+      structure.write io, :poscar, fractional: true, wrap: true
 
       io.to_s.rstrip.should eq <<-EOS
         NaCl-O-NaCl
@@ -137,7 +137,7 @@ describe Chem::VASP::Poscar do
       structure.atoms[3].constraint = Constraint::XZ
 
       io = IO::Memory.new
-      Poscar.write io, structure
+      structure.write io, :poscar
 
       io.to_s.rstrip.should eq <<-EOS
         NaCl-O-NaCl
@@ -159,7 +159,7 @@ describe Chem::VASP::Poscar do
 
     it "fails with non-periodic structures" do
       expect_raises IO::Error, "Cannot write a non-periodic structure" do
-        Poscar.write IO::Memory.new, Chem::Structure.new
+        Poscar::Writer.new(IO::Memory.new) << Chem::Structure.new
       end
     end
 

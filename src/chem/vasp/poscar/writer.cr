@@ -1,5 +1,6 @@
 module Chem::VASP::Poscar
-  class Writer
+  @[IO::FileType(format: Poscar, ext: [:poscar])]
+  class Writer < IO::Writer
     @transform : Spatial::AffineTransform?
     @write_constraint_flags = false
 

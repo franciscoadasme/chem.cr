@@ -5,7 +5,7 @@ alias V = Chem::Spatial::Vector
 
 random = Random.new
 
-structure = Chem::PDB.read_first("spec/data/pdb/1h1s.pdb")
+structure = Chem::Structure.read "spec/data/pdb/1h1s.pdb"
 kdtree = uninitialized KDTree
 pkdtree = uninitialized KDTree
 points = (0...1000).map do

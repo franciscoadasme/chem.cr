@@ -4,7 +4,8 @@ require "./record"
 require "./record/*"
 
 module Chem::PDB
-  class Parser
+  @[IO::FileType(format: PDB, ext: [:ent, :pdb])]
+  class Parser < IO::Parser
     private alias BondTable = Hash(Int32, Hash(Int32, Int32))
 
     @pdb_bonds = uninitialized BondTable
@@ -42,6 +43,46 @@ module Chem::PDB
       end
     end
 
+    def each_structure(&block : Structure ->)
+      parse_header
+      parse_bonds
+      @iter.each do |rec|
+        case rec.name
+        when "atom", "hetatm"
+          @iter.back
+          yield parse_model
+        when "model", "endmdl"
+          next
+        else
+          ::Iterator.stop
+        end
+      end
+    end
+
+    def each_structure(indexes : Indexable(Int), &block : Structure ->)
+      return if indexes.empty?
+      indexes = indexes.to_a.sort!
+
+      parse_header
+      parse_bonds
+      @iter.each do |rec|
+        case rec.name
+        when "atom", "hetatm"
+          @iter.back
+          yield parse_model
+        when "endmdl"
+          indexes.shift
+          return if indexes.empty?
+        when "model"
+          unless indexes.includes? rec[10..13].to_i
+            @iter.skip "atom", "anisou", "endmdl", "hetatm", "ter", "sigatm", "siguij"
+          end
+        else
+          ::Iterator.stop
+        end
+      end
+    end
+
     private def guess_atom_serial(prev_atom : Atom?) : Int32
       prev_atom ? prev_atom.serial + 1 : Int32::MIN
     end
@@ -70,19 +111,17 @@ module Chem::PDB
       sys
     end
 
-    def parse(models : Enumerable(Int32)? = nil) : Array(Structure)
-      ary = Array(Structure).new models ? models.size : 1
-      parse_each(models) { |st| ary << st }
-      ary
-    end
-
-    def parse_each(models : Enumerable(Int32)? = nil, &block : Structure ->)
-      return if models.try(&.empty?)
-
+    def parse : Structure
       parse_header
       parse_bonds
-      models = models ? models.to_a.sort : (1..@pdb_models).to_a
-      parse_models models, &block
+      @iter.each do |rec|
+        case rec.name
+        when "atom", "hetatm"
+          @iter.back
+          return parse_model
+        end
+      end
+      make_structure
     end
 
     private def parse_atom(residue : Residue, prev_atom : Atom?, rec : Record) : Atom
@@ -226,25 +265,6 @@ module Chem::PDB
         end
         assign_bonds to: bonded_atoms
         assign_secondary_structure to: structure
-      end
-    end
-
-    private def parse_models(models : Array(Int32), &block : Structure ->)
-      @iter.each do |rec|
-        case rec.name
-        when "atom", "hetatm"
-          @iter.back
-          yield parse_model
-        when "endmdl"
-          models.shift
-          return if models.empty?
-        when "model"
-          unless models.includes? rec[10..13].to_i
-            @iter.skip "atom", "anisou", "endmdl", "hetatm", "ter", "sigatm", "siguij"
-          end
-        else
-          ::Iterator.stop
-        end
       end
     end
 

@@ -4,7 +4,7 @@ describe Chem::PDB do
   # TODO test partial occupancy and insertion code (5tun)
   describe ".parse" do
     it "parses a (real) PDB file" do
-      st = PDB.read_first "spec/data/pdb/1h1s.pdb"
+      st = Chem::Structure.read "spec/data/pdb/1h1s.pdb"
       st.size.should eq 9701
       st.formal_charge.should eq 0
 
@@ -29,7 +29,7 @@ describe Chem::PDB do
     end
 
     it "parses a PDB file" do
-      st = PDB.read_first "spec/data/pdb/simple.pdb"
+      st = Chem::Structure.read "spec/data/pdb/simple.pdb"
       st.experiment.should be_nil
       st.title.should eq "Glutamate"
       st.size.should eq 13
@@ -55,55 +55,55 @@ describe Chem::PDB do
     end
 
     it "parses a PDB file without elements" do
-      st = PDB.read_first "spec/data/pdb/no_elements.pdb"
+      st = Chem::Structure.read "spec/data/pdb/no_elements.pdb"
       st.size.should eq 6
       st.atoms.map(&.element.symbol).should eq ["N", "C", "C", "O", "C", "O"]
       st.atoms.map(&.charge).should eq [0, 0, 0, 0, 0, 0]
     end
 
     it "parses a PDB file without elements and irregular line width (77)" do
-      st = PDB.read_first "spec/data/pdb/no_elements_irregular_end.pdb"
+      st = Chem::Structure.read "spec/data/pdb/no_elements_irregular_end.pdb"
       st.size.should eq 6
       st.atoms.map(&.element.symbol).should eq ["N", "C", "C", "O", "C", "O"]
       st.atoms.map(&.charge).should eq [0, 0, 0, 0, 0, 0]
     end
 
     it "parses a PDB file without charges" do
-      st = PDB.read_first "spec/data/pdb/no_charges.pdb"
+      st = Chem::Structure.read "spec/data/pdb/no_charges.pdb"
       st.size.should eq 6
       st.atoms.map(&.element.symbol).should eq ["N", "C", "C", "O", "C", "O"]
       st.atoms.map(&.charge).should eq [0, 0, 0, 0, 0, 0]
     end
 
     it "parses a PDB file without charges and irregular line width (79)" do
-      st = PDB.read_first "spec/data/pdb/no_charges_irregular_end.pdb"
+      st = Chem::Structure.read "spec/data/pdb/no_charges_irregular_end.pdb"
       st.size.should eq 6
       st.atoms.map(&.element.symbol).should eq ["N", "C", "C", "O", "C", "O"]
       st.atoms.map(&.charge).should eq [0, 0, 0, 0, 0, 0]
     end
 
     it "parses a PDB file without trailing spaces" do
-      st = PDB.read_first "spec/data/pdb/no_trailing_spaces.pdb"
+      st = Chem::Structure.read "spec/data/pdb/no_trailing_spaces.pdb"
       st.size.should eq 6
       st.atoms.map(&.element.symbol).should eq ["N", "C", "C", "O", "C", "O"]
       st.atoms.map(&.charge).should eq [0, 0, 0, 0, 0, 0]
     end
 
     it "parses a PDB file with long title" do
-      st = PDB.read_first "spec/data/pdb/title_long.pdb"
+      st = Chem::Structure.read "spec/data/pdb/title_long.pdb"
       st.title.should eq "STRUCTURE OF THE TRANSFORMED MONOCLINIC LYSOZYME BY " \
                          "CONTROLLED DEHYDRATION"
     end
 
     it "parses a PDB file with numbers in hexadecimal representation" do
-      st = PDB.read_first "spec/data/pdb/big_numbers.pdb"
+      st = Chem::Structure.read "spec/data/pdb/big_numbers.pdb"
       st.size.should eq 6
       st.atoms.map(&.serial).should eq (99995..100000).to_a
       st.residues.map(&.number).should eq [9999, 10000]
     end
 
     it "parses a PDB file with number of atoms/residues equal to asterisks (vmd)" do
-      st = PDB.read_first "spec/data/pdb/asterisks.pdb"
+      st = Chem::Structure.read "spec/data/pdb/asterisks.pdb"
       st.size.should eq 18
       st.residues.size.should eq 6
       st.atoms.map(&.serial).should eq (99998..100015).to_a
@@ -111,7 +111,7 @@ describe Chem::PDB do
     end
 
     it "parses a PDB file with unit cell parameters" do
-      st = PDB.read_first "spec/data/pdb/1crn.pdb"
+      st = Chem::Structure.read "spec/data/pdb/1crn.pdb"
 
       st.lattice.should_not be_nil
       lattice = st.lattice.not_nil!
@@ -123,7 +123,7 @@ describe Chem::PDB do
     end
 
     it "parses a PDB file with experimental header" do
-      st = PDB.read_first "spec/data/pdb/1crn.pdb"
+      st = Chem::Structure.read "spec/data/pdb/1crn.pdb"
 
       st.title.should eq "1crn"
       st.experiment.should_not be_nil
@@ -139,7 +139,7 @@ describe Chem::PDB do
     end
 
     it "parses a PDB file with sequence" do
-      st = PDB.read_first "spec/data/pdb/1crn.pdb"
+      st = Chem::Structure.read "spec/data/pdb/1crn.pdb"
 
       st.sequence.should_not be_nil
       seq = st.sequence.not_nil!
@@ -156,24 +156,24 @@ describe Chem::PDB do
     end
 
     it "parses a PDB file with deuterium" do
-      st = PDB.read_first "spec/data/pdb/isotopes.pdb"
+      st = Chem::Structure.read "spec/data/pdb/isotopes.pdb"
       st.size.should eq 12
       st.atoms[5].element.symbol.should eq "D"
     end
 
     it "parses a PDB file with element X (ASX case)" do
-      st = PDB.read_first "spec/data/pdb/3e2o.pdb"
+      st = Chem::Structure.read "spec/data/pdb/3e2o.pdb"
       st.residues[serial: 235]["XD1"].element.should be PeriodicTable::N_or_O
     end
 
     it "parses a PDB file with SIG* records" do
-      st = PDB.read_first "spec/data/pdb/1etl.pdb"
+      st = Chem::Structure.read "spec/data/pdb/1etl.pdb"
       st.size.should eq 160
       st.residues[serial: 6]["SG"].bonded?(st.residues[serial: 14]["SG"]).should be_true
     end
 
     it "parses secondary structure information" do
-      st = PDB.read_first "spec/data/pdb/1crn.pdb"
+      st = Chem::Structure.read "spec/data/pdb/1crn.pdb"
       st.residues[0].dssp.should eq 'E'
       st.residues[1].dssp.should eq 'E'
       st.residues[3].dssp.should eq 'E'
@@ -187,24 +187,24 @@ describe Chem::PDB do
     end
 
     it "parses secondary structure information with insertion codes" do
-      st = PDB.read_first "spec/data/pdb/secondary_structure_inscode.pdb"
+      st = Chem::Structure.read "spec/data/pdb/secondary_structure_inscode.pdb"
       st.residues.map(&.dssp).should eq "HHHHHH000000EEEHH000".chars
     end
 
     it "parses secondary structure information when sheet type is missing" do
-      st = PDB.read_first "spec/data/pdb/secondary_structure_missing_type.pdb"
+      st = Chem::Structure.read "spec/data/pdb/secondary_structure_missing_type.pdb"
       st.residues.map(&.secondary_structure.dssp).should eq "0EE00EEEEE0".chars
     end
 
     it "parses bonds" do
-      st = PDB.read_first "spec/data/pdb/1crn.pdb"
+      st = Chem::Structure.read "spec/data/pdb/1crn.pdb"
       st.atoms[19].bonds[st.atoms[281]].order.should eq 1
       st.atoms[25].bonds[st.atoms[228]].order.should eq 1
       st.atoms[115].bonds[st.atoms[187]].order.should eq 1
     end
 
     it "parses duplicate bonds" do
-      st = PDB.read_first "spec/data/pdb/duplicate_bonds.pdb"
+      st = Chem::Structure.read "spec/data/pdb/duplicate_bonds.pdb"
       st.atoms[0].bonds[st.atoms[1]].order.should eq 1
       st.atoms[1].bonds[st.atoms[2]].order.should eq 2
       st.atoms[2].bonds[st.atoms[3]].order.should eq 1
@@ -214,7 +214,7 @@ describe Chem::PDB do
     end
 
     it "parses alternate conformations" do
-      residue = PDB.read_first("spec/data/pdb/alternate_conf.pdb").residues.first
+      residue = Chem::Structure.read("spec/data/pdb/alternate_conf.pdb").residues.first
       residue.has_alternate_conformations?.should be_true
       residue.conformations.map(&.id).should eq ['A', 'B', 'C']
       residue.conformations.map(&.occupancy).should eq [0.37, 0.33, 0.3]
@@ -229,7 +229,7 @@ describe Chem::PDB do
     end
 
     it "parses alternate conformations with different residues" do
-      residue = PDB.read_first("spec/data/pdb/alternate_conf_mut.pdb").residues.first
+      residue = Chem::Structure.read("spec/data/pdb/alternate_conf_mut.pdb").residues.first
       residue.has_alternate_conformations?.should be_true
       residue.conformations.map(&.id).should eq ['A', 'B', 'C']
       residue.conformations.map(&.residue_name).should eq ["ARG", "ARG", "TRP"]
@@ -248,7 +248,7 @@ describe Chem::PDB do
     end
 
     it "parses insertion codes" do
-      residues = PDB.read_first("spec/data/pdb/insertion_codes.pdb").residues
+      residues = Chem::Structure.read("spec/data/pdb/insertion_codes.pdb").residues
       residues.size.should eq 7
       residues.map(&.number).should eq [75, 75, 75, 75, 75, 75, 76]
       residues.map(&.insertion_code).should eq [nil, 'A', 'B', 'C', 'D', 'E', nil]
@@ -275,7 +275,7 @@ describe Chem::PDB do
     end
 
     it "parses selected models" do
-      st_list = PDB.read "spec/data/pdb/models.pdb", models: {2, 4}
+      st_list = PDB.read "spec/data/pdb/models.pdb", models: [2, 4]
       st_list.size.should eq 2
       xs = {7.212, 22.055}
       st_list.zip(xs) do |st, x|
@@ -287,7 +287,7 @@ describe Chem::PDB do
     end
 
     it "parses file without the END record" do
-      st = PDB.read_first "spec/data/pdb/no_end.pdb"
+      st = Chem::Structure.read "spec/data/pdb/no_end.pdb"
       st.size.should eq 6
       st.chains.map(&.id).should eq ['A']
       st.residues.map(&.number).should eq [0]
@@ -296,7 +296,7 @@ describe Chem::PDB do
     end
 
     it "parses 1cbn (alternate conformations)" do
-      st = PDB.read_first "spec/data/pdb/1cbn.pdb"
+      st = Chem::Structure.read "spec/data/pdb/1cbn.pdb"
       st.size.should eq 644 # atom with alt_loc = nil or highest occupancy
       st.chains.size.should eq 1
       st.residues.size.should eq 47
@@ -312,7 +312,7 @@ describe Chem::PDB do
     end
 
     it "parses 1dpo (insertions)" do
-      st = PDB.read_first "spec/data/pdb/1dpo.pdb"
+      st = Chem::Structure.read "spec/data/pdb/1dpo.pdb"
       st.size.should eq 1921 # atom with alt_loc = nil or A
       st.chains.size.should eq 1
       st.residues.size.should eq 446

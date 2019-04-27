@@ -4,7 +4,7 @@ require "./search_dist_helper"
 alias KDTree = Chem::Spatial::KDTree
 alias Vector = Chem::Spatial::Vector
 
-structure = Chem::PDB.read_first "spec/data/pdb/1h1s.pdb"
+structure = Chem::Structure.read "spec/data/pdb/1h1s.pdb"
 atoms = structure.atoms
 atoms_as_a = atoms.to_a
 tree = KDTree.new structure

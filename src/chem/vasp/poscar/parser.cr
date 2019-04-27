@@ -1,9 +1,21 @@
 module Chem::VASP::Poscar
-  class PullParser
+  @[IO::FileType(format: Poscar, ext: [:poscar])]
+  class Parser < IO::Parser
     include IO::PullParser
 
     @coord_system = CoordinateSystem::Fractional
     @lattice = Lattice[0, 0, 0]
+
+    def initialize(@io : ::IO)
+    end
+
+    def each_structure(&block : Structure ->)
+      yield parse
+    end
+
+    def each_structure(indexes : Indexable(Int), &block : Structure ->)
+      yield parse if indexes.size == 1 && indexes == 0
+    end
 
     def parse : Structure
       builder = Structure::Builder.new
@@ -29,10 +41,6 @@ module Chem::VASP::Poscar
       counts = read_multiple_int
       fail "Mismatch between element symbols and counts" if elements.size != counts.size
       elements.map_with_index { |ele, i| [ele] * counts[i] }.flatten
-    end
-
-    private def parse_exception(msg : String)
-      raise ParseException.new msg
     end
 
     private def parse_selective_dynamics : Bool

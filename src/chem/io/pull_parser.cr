@@ -1,23 +1,6 @@
 module Chem::IO
   module PullParser
-    @input : ::IO
-
-    abstract def parse
-
-    macro included
-      private def parse_exception(msg : String)
-        {% scope = @type.name.split("::")[0...-1].join "::" %}
-        raise {{scope.id}}::ParseException.new msg
-      end
-    end
-
-    def initialize(@input : ::IO)
-    end
-
-    def fail(msg : String)
-      line_number, column_number = guess_location
-      parse_exception "#{msg} at #{line_number}:#{column_number}"
-    end
+    abstract def parse_exception(msg : String)
 
     def peek_char : Char
       peek { read_char }
@@ -32,8 +15,8 @@ module Chem::IO
     end
 
     def prev_char : Char
-      raise ParseException.new "Couldn't read previous character" if @input.pos == 0
-      @input.pos -= 1
+      parse_exception "Couldn't read previous character" if @io.pos == 0
+      @io.pos -= 1
       read_char
     end
 
@@ -42,7 +25,7 @@ module Chem::IO
     end
 
     def read_char? : Char?
-      @input.read_char
+      @io.read_char
     end
 
     def read_char_or_null : Char?
@@ -55,7 +38,7 @@ module Chem::IO
     end
 
     def read_chars?(count : Int) : String?
-      @input.read_string count
+      @io.read_string count
     rescue ::IO::EOFError
       nil
     end
@@ -63,7 +46,7 @@ module Chem::IO
     def read_chars?(count : Int, stop_at sentinel : Char) : String?
       chars = read_chars? count
       if chars && (pos = chars.index sentinel)
-        @input.pos -= chars.size - pos
+        @io.pos -= chars.size - pos
         chars = chars[...pos]
       end
       chars
@@ -78,19 +61,19 @@ module Chem::IO
     def read_float : Float64
       scan(/[-\d\.]/, skip_leading_whitespace: true).to_f
     rescue ArgumentError
-      fail "Couldn't read a decimal number"
+      parse_exception "Couldn't read a decimal number"
     end
 
     def read_float(count : Int32) : Float64
       read_chars(count).to_f
     rescue ArgumentError
-      fail "Couldn't read a decimal number"
+      parse_exception "Couldn't read a decimal number"
     end
 
     def read_int(count : Int32, **options) : Int32
       read_chars(count, **options).to_i
     rescue ArgumentError
-      fail "Couldn't read a number"
+      parse_exception "Couldn't read a number"
     end
 
     # TODO rename to `read_int` with option `on_blank`
@@ -99,11 +82,11 @@ module Chem::IO
       return nil if chars.blank?
       chars.to_i
     rescue ArgumentError
-      fail "Couldn't read a number"
+      parse_exception "Couldn't read a number"
     end
 
     def read_line : String
-      @input.read_line
+      @io.read_line
     end
 
     def read_multiple_int : Array(Int32)
@@ -113,7 +96,7 @@ module Chem::IO
     def rewind(&block : Char -> Bool) : self
       while char = prev_char
         break unless yield char
-        @input.pos -= 1
+        @io.pos -= 1
       end
       self
     rescue ParseException
@@ -129,15 +112,15 @@ module Chem::IO
     # TODO remove skip_leading_whitespace option
     # FIXME: raise an exception instead of return "" if cannot read anymore?
     def scan(skip_leading_whitespace : Bool = true, &block : Char -> Bool) : String
-      prev_pos = @input.pos
+      prev_pos = @io.pos
       skip_whitespace if skip_leading_whitespace
       String.build do |io|
-        while char = @input.read_char
+        while char = @io.read_char
           break unless yield char
           io << char
-          prev_pos = @input.pos
+          prev_pos = @io.pos
         end
-        @input.pos = prev_pos
+        @io.pos = prev_pos
       end
     end
 
@@ -157,12 +140,12 @@ module Chem::IO
     end
 
     def skip(&block : Char -> Bool) : self
-      prev_pos = @input.pos
-      while char = @input.read_char
+      prev_pos = @io.pos
+      while char = @io.read_char
         break unless yield char
-        prev_pos = @input.pos
+        prev_pos = @io.pos
       end
-      @input.pos = prev_pos
+      @io.pos = prev_pos
       self
     end
 
@@ -185,7 +168,7 @@ module Chem::IO
     end
 
     def skip_chars(count : Int) : self
-      @input.skip count
+      @io.skip count
       self
     end
 
@@ -194,7 +177,7 @@ module Chem::IO
     end
 
     def skip_line : self
-      @input.read_line
+      @io.read_line
       self
     end
 
@@ -202,17 +185,10 @@ module Chem::IO
       skip { |char| char.whitespace? }
     end
 
-    private def guess_location : {Int32, Int32}
-      prev_pos = @input.pos
-      @input.rewind
-      text = read_chars prev_pos
-      {text.count('\n') + 1, text.size - (text.rindex('\n') || 0)}
-    end
-
     private def peek
-      prev_pos = @input.pos
+      prev_pos = @io.pos
       value = yield
-      @input.pos = prev_pos
+      @io.pos = prev_pos
       value
     end
   end

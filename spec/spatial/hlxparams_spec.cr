@@ -4,7 +4,7 @@ describe Chem::Spatial do
   describe ".hlxparam" do
     it "returns helical parameters" do
       datasets = load_hlxparams_data
-      st = Chem::PDB.read_first "spec/data/pdb/4wfe.pdb"
+      st = Chem::Structure.read "spec/data/pdb/4wfe.pdb"
       Chem::Topology.guess_topology of: st
       st.each_residue.compact_map(&.hlxparams).with_index do |params, i|
         params.zeta.should be_close datasets[:zeta][i], 1e-1
@@ -14,7 +14,7 @@ describe Chem::Spatial do
     end
 
     it "returns nil when residue is terminal" do
-      st = Chem::PDB.read_first "spec/data/pdb/hlxparam.pdb"
+      st = Chem::Structure.read "spec/data/pdb/hlxparam.pdb"
       Chem::Topology.guess_topology of: st
 
       st.residues.first.hlxparams.should be_nil
@@ -22,7 +22,7 @@ describe Chem::Spatial do
     end
 
     it "returns nil when residue is not bonded to its previous/next residue" do
-      st = Chem::PDB.read_first "spec/data/pdb/hlxparam.pdb"
+      st = Chem::Structure.read "spec/data/pdb/hlxparam.pdb"
       Chem::Topology.guess_topology of: st
 
       # there is a gap between residues 2 and 3

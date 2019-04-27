@@ -6,10 +6,12 @@ class Parser
   include Chem::IO::PullParser
 
   def initialize(content : String)
-    @input = IO::Memory.new(content)
+    @io = IO::Memory.new(content)
   end
 
-  def parse; end
+  def parse_exception(msg : String)
+    raise ParseException.new msg
+  end
 end
 
 describe Chem::IO::PullParser do
@@ -17,8 +19,8 @@ describe Chem::IO::PullParser do
     it "fails with message containing line and column" do
       parser = Parser.new "Lorem ipsum\ndolor\nsit amet,\nconsectetur adipiscing."
       parser.read_chars 22
-      expect_raises ParseException, "Invalid character at 3:5" do
-        parser.fail "Invalid character"
+      expect_raises ParseException, "Invalid character" do
+        parser.parse_exception "Invalid character"
       end
     end
   end
@@ -154,7 +156,7 @@ describe Chem::IO::PullParser do
     end
 
     it "fails with an invalid float" do
-      expect_raises ParseException, "Couldn't read a decimal number at 1:0" do
+      expect_raises ParseException, "Couldn't read a decimal number" do
         Parser.new("abcd").read_float
       end
     end
@@ -170,7 +172,7 @@ describe Chem::IO::PullParser do
     end
 
     it "fails with an invalid integer" do
-      expect_raises ParseException, "Couldn't read a number at 1:4" do
+      expect_raises ParseException, "Couldn't read a number" do
         Parser.new("abcd").read_int 4
       end
     end
@@ -190,7 +192,7 @@ describe Chem::IO::PullParser do
     end
 
     it "fails with an invalid integer" do
-      expect_raises ParseException, "Couldn't read a number at 1:4" do
+      expect_raises ParseException, "Couldn't read a number" do
         Parser.new("abcd").read_int 4
       end
     end

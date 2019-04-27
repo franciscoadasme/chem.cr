@@ -1,5 +1,5 @@
 module Chem
-  def Constraint.new(pull : VASP::Poscar::PullParser) : Constraint
+  def Constraint.new(pull : VASP::Poscar::Parser) : Constraint
     case {pull.read_bool, pull.read_bool, pull.read_bool}
     when {true, true, true}    then None
     when {false, true, true}   then X
@@ -13,7 +13,7 @@ module Chem
     end
   end
 
-  def VASP::Poscar::CoordinateSystem.new(pull : VASP::Poscar::PullParser)
+  def VASP::Poscar::CoordinateSystem.new(pull : VASP::Poscar::Parser)
     pull.skip_whitespace
     line = pull.read_line
     case line[0].downcase
@@ -27,7 +27,7 @@ module Chem
   end
 
   struct Spatial::Vector
-    def initialize(pull : VASP::Poscar::PullParser)
+    def initialize(pull : VASP::Poscar::Parser)
       @x = pull.read_float
       @y = pull.read_float
       @z = pull.read_float
@@ -35,7 +35,7 @@ module Chem
   end
 
   class Structure::Builder
-    def lattice(pull : VASP::Poscar::PullParser) : Lattice
+    def lattice(pull : VASP::Poscar::Parser) : Lattice
       lattice do
         scale by: pull.read_float
         a pull.read_vector
@@ -46,7 +46,7 @@ module Chem
   end
 end
 
-def Bool.new(pull : Chem::VASP::Poscar::PullParser)
+def Bool.new(pull : Chem::VASP::Poscar::Parser)
   pull.skip_whitespace
   case flag = pull.read_char
   when 'F'

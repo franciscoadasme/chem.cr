@@ -21,6 +21,24 @@ module Chem
       builder.build
     end
 
+    def self.parse(io : ::IO | String,
+                   format : IO::FileFormat | Symbol,
+                   **options) : Structure
+      format = IO::FileFormat.parse(format.to_s) if format.is_a? Symbol
+      format.parser(io, **options).parse
+    end
+
+    def self.read(filepath : String,
+                  format : IO::FileFormat | Symbol,
+                  **options) : Structure
+      parse File.read(filepath), format, **options
+    end
+
+    def self.read(filepath : String, **options) : Structure
+      format = IO::FileFormat.from_ext File.extname(filepath)
+      read filepath, format, **options
+    end
+
     protected def <<(chain : Chain)
       @chains << chain
       @chain_table[chain.id] = chain
@@ -96,6 +114,22 @@ module Chem
       else
         raise Error.new "Cannot wrap a non-periodic structure"
       end
+    end
+
+    def write(io : ::IO, format : IO::FileFormat | Symbol, **options) : Nil
+      format = IO::FileFormat.parse(format.to_s) if format.is_a? Symbol
+      format.writer(io, **options) << self
+    end
+
+    def write(filepath : String, format : IO::FileFormat | Symbol, **options) : Nil
+      File.open(filepath, mode: "w") do |file|
+        write file, format, **options
+      end
+    end
+
+    def write(filepath : String, **options) : Nil
+      format = IO::FileFormat.from_ext File.extname(filepath)
+      write filepath, format, **options
     end
   end
 end

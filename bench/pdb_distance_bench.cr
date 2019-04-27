@@ -1,6 +1,6 @@
 require "./bench_helper"
 
-st = Chem::PDB.read_first "bench/data/1ake.pdb"
+st = Chem::Structure.read "bench/data/1ake.pdb"
 
 Benchmark.bm do |bm|
   bm.report("1AKE (3818 atoms)") do
