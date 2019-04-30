@@ -44,6 +44,10 @@ module Chem
       @chain_table[chain.id] = chain
     end
 
+    def coords : Spatial::CoordinatesProxy
+      Spatial::CoordinatesProxy.new self, @lattice
+    end
+
     def each_atom : Iterator(Atom)
       iterators = [] of Iterator(Atom)
       each_chain do |chain|

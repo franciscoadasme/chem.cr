@@ -23,6 +23,10 @@ module Chem
       Spatial::Bounds.new origin, size
     end
 
+    def coords : Spatial::CollectionProxy
+      Spatial::CollectionProxy.new self
+    end
+
     def formal_charge : Int32
       each_atom.sum &.charge
     end

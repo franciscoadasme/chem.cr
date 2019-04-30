@@ -1,4 +1,14 @@
-require "./spatial/*"
+require "./spatial/affine"
+require "./spatial/size3d"
+require "./spatial/vector"
+
+require "./spatial/bounds"
+require "./spatial/quaternion"
+
+require "./spatial/coordinates_proxy"
+require "./spatial/hlxparams"
+require "./spatial/kdtree"
+require "./spatial/pbc"
 
 module Chem::Spatial
   extend self
