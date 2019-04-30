@@ -31,11 +31,7 @@ module Chem::DFTB::Gen
 
       builder.lattice self if @periodic
       structure = builder.build
-      # TODO: refactor this to structure.coords.to_cart! if @fractional
-      if @fractional
-        tf = Spatial::AffineTransform.fractional_to_cart structure.lattice.not_nil!
-        structure.transform tf
-      end
+      structure.coords.to_cartesian! if @fractional
       structure
     end
 
