@@ -59,6 +59,12 @@ module Chem::Spatial
       basis_change to: Linalg::Basis.new(lattice.a, lattice.b, lattice.c)
     end
 
+    # Returns the transformation that converts Cartesian coordinates to fractional
+    # coordinates in terms of the unit cell vectors
+    def self.fractional_to_cart(lattice : Lattice) : self
+      basis_change from: Linalg::Basis.new(lattice.a, lattice.b, lattice.c)
+    end
+
     def self.scaling(by factor : Number) : self
       AffineTransform.build do |buffer|
         3.times { |i| buffer[i * 4 + i] = factor.to_f }
