@@ -132,7 +132,7 @@ module Chem::PDB
         residue: residue,
         alt_loc: rec[16]?,
         element: parse_element(rec, residue.name),
-        charge: rec[78..79]?.try(&.reverse.to_i?) || 0,
+        formal_charge: rec[78..79]?.try(&.reverse.to_i?) || 0,
         occupancy: rec[54..59].to_f,
         temperature_factor: rec[60..65].to_f
     end

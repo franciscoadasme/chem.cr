@@ -28,11 +28,11 @@ module Chem
     end
 
     def formal_charge : Int32
-      each_atom.sum &.charge
+      each_atom.sum &.formal_charge
     end
 
     def formal_charges : Array(Int32)
-      each_atom.map(&.charge).to_a
+      each_atom.map(&.formal_charge).to_a
     end
 
     def transform(by transform : Spatial::AffineTransform) : self

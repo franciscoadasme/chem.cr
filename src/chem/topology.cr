@@ -47,7 +47,7 @@ module Chem::Topology
   private def assign_charges(from res_t : Templates::Residue, to residue : Residue)
     res_t.each_atom_type do |atom_type|
       next unless atom = residue.atoms[atom_type.name]?
-      atom.charge = atom_type.formal_charge
+      atom.formal_charge = atom_type.formal_charge
     end
   end
 

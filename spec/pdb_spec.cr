@@ -25,7 +25,7 @@ describe Chem::PDB do
       atom.occupancy.should eq 1
       atom.temperature_factor.should eq 53.58
       atom.element.oxygen?.should be_true
-      atom.charge.should eq 0
+      atom.formal_charge.should eq 0
     end
 
     it "parses a PDB file" do
@@ -37,7 +37,7 @@ describe Chem::PDB do
       st.residues.size.should eq 3
       st.atoms.map(&.element.symbol).should eq ["C", "O", "O", "N", "C", "C", "O",
                                                 "C", "C", "C", "O", "O", "N"]
-      st.atoms.map(&.charge).should eq [0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, -1, 1]
+      st.atoms.map(&.formal_charge).should eq [0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, -1, 1]
 
       atom = st.atoms[11]
       atom.serial.should eq 12
@@ -51,42 +51,42 @@ describe Chem::PDB do
       atom.occupancy.should eq 1
       atom.temperature_factor.should eq 0
       atom.element.oxygen?.should be_true
-      atom.charge.should eq -1
+      atom.formal_charge.should eq -1
     end
 
     it "parses a PDB file without elements" do
       st = Chem::Structure.read "spec/data/pdb/no_elements.pdb"
       st.size.should eq 6
       st.atoms.map(&.element.symbol).should eq ["N", "C", "C", "O", "C", "O"]
-      st.atoms.map(&.charge).should eq [0, 0, 0, 0, 0, 0]
+      st.atoms.map(&.formal_charge).should eq [0, 0, 0, 0, 0, 0]
     end
 
     it "parses a PDB file without elements and irregular line width (77)" do
       st = Chem::Structure.read "spec/data/pdb/no_elements_irregular_end.pdb"
       st.size.should eq 6
       st.atoms.map(&.element.symbol).should eq ["N", "C", "C", "O", "C", "O"]
-      st.atoms.map(&.charge).should eq [0, 0, 0, 0, 0, 0]
+      st.atoms.map(&.formal_charge).should eq [0, 0, 0, 0, 0, 0]
     end
 
     it "parses a PDB file without charges" do
       st = Chem::Structure.read "spec/data/pdb/no_charges.pdb"
       st.size.should eq 6
       st.atoms.map(&.element.symbol).should eq ["N", "C", "C", "O", "C", "O"]
-      st.atoms.map(&.charge).should eq [0, 0, 0, 0, 0, 0]
+      st.atoms.map(&.formal_charge).should eq [0, 0, 0, 0, 0, 0]
     end
 
     it "parses a PDB file without charges and irregular line width (79)" do
       st = Chem::Structure.read "spec/data/pdb/no_charges_irregular_end.pdb"
       st.size.should eq 6
       st.atoms.map(&.element.symbol).should eq ["N", "C", "C", "O", "C", "O"]
-      st.atoms.map(&.charge).should eq [0, 0, 0, 0, 0, 0]
+      st.atoms.map(&.formal_charge).should eq [0, 0, 0, 0, 0, 0]
     end
 
     it "parses a PDB file without trailing spaces" do
       st = Chem::Structure.read "spec/data/pdb/no_trailing_spaces.pdb"
       st.size.should eq 6
       st.atoms.map(&.element.symbol).should eq ["N", "C", "C", "O", "C", "O"]
-      st.atoms.map(&.charge).should eq [0, 0, 0, 0, 0, 0]
+      st.atoms.map(&.formal_charge).should eq [0, 0, 0, 0, 0, 0]
     end
 
     it "parses a PDB file with long title" do

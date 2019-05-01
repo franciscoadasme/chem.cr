@@ -5,12 +5,13 @@ module Chem
   class Atom
     property alt_loc : Char?
     getter bonds : BondArray { BondArray.new self }
-    property charge : Int32 = 0
     property constraint : Constraint?
     property coords : Spatial::Vector
     property element : PeriodicTable::Element
+    property formal_charge : Int32 = 0
     property name : String
     property occupancy : Float64 = 1
+    property partial_charge : Float64 = 0.0
     property residue : Residue
     property serial : Int32
     property temperature_factor : Float64 = 0
@@ -25,8 +26,9 @@ module Chem
                    @residue : Residue,
                    @alt_loc : Char? = nil,
                    element : PeriodicTable::Element? = nil,
-                   @charge : Int32 = 0,
+                   @formal_charge : Int32 = 0,
                    @occupancy : Float64 = 1,
+                   @partial_charge : Float64 = 0.0,
                    @temperature_factor : Float64 = 0)
       @element = element || PeriodicTable[atom_name: @name]
       @residue << self
@@ -53,7 +55,7 @@ module Chem
     end
 
     def valence : Int32
-      @element.valence + @charge
+      @element.valence + @formal_charge
     end
 
     # NOTE: The additional term (0.3 Å) is taken from the covalent radii reference,

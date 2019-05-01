@@ -111,7 +111,7 @@ def fake_structure(*, include_bonds = false)
         atom "CB", at: {-1.316, 19.953, 79.003}
         atom "CG", at: {-0.895, 18.952, 77.936}
         atom "OD1", at: {-1.281, 17.738, 78.086}
-        atom "OD2", at: {-0.209, 19.223, 76.945}, charge: -1
+        atom "OD2", at: {-0.209, 19.223, 76.945}, formal_charge: -1
       end
 
       residue "PHE" do
