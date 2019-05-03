@@ -81,6 +81,13 @@ module Chem
       builder.build
     end
 
+    private def [](*, atom name : String) : Atom
+      @structure.each_atom do |atom|
+        return atom if atom.name == name
+      end
+      raise "Unknown atom #{name.inspect}"
+    end
+
     private def []?(*, chain id : ChainId) : Chain?
       @chains[id]?
     end
@@ -141,6 +148,10 @@ module Chem
 
     def atoms(*names : String) : Array(Atom)
       names.to_a.map { |name| atom name }
+    end
+
+    def bond(name : String, other : String, order : Int = 1)
+      self[atom: name].bonds.add self[atom: other], order
     end
 
     def build : Structure
