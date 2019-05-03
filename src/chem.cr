@@ -12,5 +12,6 @@ require "./chem/protein"
 require "./chem/topology"
 
 require "./chem/dftb"
+require "./chem/mol2"
 require "./chem/pdb"
 require "./chem/vasp"
