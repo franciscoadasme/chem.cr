@@ -9,6 +9,12 @@ module Chem
       AtomView.new atoms
     end
 
+    def bonds : Array(Bond)
+      bonds = Set(Bond).new
+      each_atom { |atom| bonds.concat atom.bonds }
+      bonds.to_a
+    end
+
     def bounds : Spatial::Bounds
       min = StaticArray[Float64::MAX, Float64::MAX, Float64::MAX]
       max = StaticArray[Float64::MIN, Float64::MIN, Float64::MIN]
