@@ -13,7 +13,7 @@ module Chem::PeriodicTable
   element H, Hydrogen,
     covalent_radius: 0.31,
     mass: 1.0079,
-    valences: [1],
+    valencies: [1],
     vdw_radius: 1.2
   element He, Helium,
     covalent_radius: 0.2,
@@ -34,22 +34,22 @@ module Chem::PeriodicTable
   element C, Carbon,
     covalent_radius: 0.76,
     mass: 12.0107,
-    valences: [4],
+    valencies: [4],
     vdw_radius: 1.77
   element N, Nitrogen,
     covalent_radius: 0.71,
     mass: 14.0067,
-    valences: [3],
+    valencies: [3],
     vdw_radius: 1.66
   element O, Oxygen,
     covalent_radius: 0.66,
     mass: 15.9994,
-    valences: [2],
+    valencies: [2],
     vdw_radius: 1.5
   element F, Fluorine,
     covalent_radius: 0.57,
     mass: 18.9984,
-    valences: [1],
+    valencies: [1],
     vdw_radius: 1.46
   element Ne, Neon,
     covalent_radius: 0.5,
@@ -59,13 +59,13 @@ module Chem::PeriodicTable
     covalent_radius: 1.66,
     mass: 22.9898,
     ionic: true,
-    valences: [1],
+    valencies: [1],
     vdw_radius: 2.5
   element Mg, Magnesium,
     covalent_radius: 1.41,
     mass: 24.305,
     ionic: true,
-    valences: [2],
+    valencies: [2],
     vdw_radius: 2.51
   element Al, Aluminum,
     covalent_radius: 1.21,
@@ -78,17 +78,17 @@ module Chem::PeriodicTable
   element P, Phosphorus,
     covalent_radius: 1.07,
     mass: 30.9738,
-    valences: [3, 5],
+    valencies: [3, 5],
     vdw_radius: 1.9
   element S, Sulfur,
     covalent_radius: 1.05,
     mass: 32.065,
-    valences: [2, 6],
+    valencies: [2, 6],
     vdw_radius: 1.89
   element Cl, Chlorine,
     covalent_radius: 1.02,
     mass: 35.453,
-    valences: [1],
+    valencies: [1],
     vdw_radius: 1.82
   element Ar, Argon,
     covalent_radius: 1.06,
@@ -98,13 +98,13 @@ module Chem::PeriodicTable
     covalent_radius: 2.03,
     mass: 39.0983,
     ionic: true,
-    valences: [1],
+    valencies: [1],
     vdw_radius: 2.73
   element Ca, Calcium,
     covalent_radius: 1.76,
     mass: 40.078,
     ionic: true,
-    valences: [2],
+    valencies: [2],
     vdw_radius: 2.62
   element Sc, Scandium,
     covalent_radius: 1.70,
@@ -165,7 +165,7 @@ module Chem::PeriodicTable
   element Br, Bromine,
     covalent_radius: 1.20,
     mass: 79.904,
-    valences: [1],
+    valencies: [1],
     vdw_radius: 1.86
   element Kr, Krypton,
     covalent_radius: 1.16,
@@ -238,7 +238,7 @@ module Chem::PeriodicTable
   element I, Iodine,
     covalent_radius: 1.39,
     mass: 126.9045,
-    valences: [1],
+    valencies: [1],
     vdw_radius: 2.04
   element Xe, Xenon,
     covalent_radius: 1.40,
@@ -456,7 +456,7 @@ module Chem::PeriodicTable
 
   # Special elements that are used internally
   D = Element.new 1, "Deuterium", "D", covalent_radius: 0.31, mass: 2.0141,
-    valences: [1], vdw_radius: 1.2
+    valencies: [1], vdw_radius: 1.2
   N_or_O = Element.new 0, "Unknown", "X", covalent_radius: 0.71, mass: 15,
-    valences: [2, 3], vdw_radius: 1.66
+    valencies: [2, 3], vdw_radius: 1.66
 end

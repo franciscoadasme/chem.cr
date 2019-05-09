@@ -36,7 +36,7 @@ module Chem::Topology::Templates
       fatal "Missing residue atom names" if @atom_types.empty?
 
       add_missing_hydrogens
-      check_valences!
+      check_valencies!
 
       Residue.new name, @codes.first, @symbol, @kind, @atom_types, @bonds, @link_bond
     end
@@ -155,12 +155,12 @@ module Chem::Topology::Templates
                       "got #{atom_name}"
     end
 
-    private def check_valences!
+    private def check_valencies!
       @atom_types.each do |atom_t|
         num = missing_bonds atom_t
         next if num == 0
-        fatal "Atom type #{atom_t} has incorrect valence (#{atom_t.valence - num}), " \
-              "expected #{atom_t.valence}"
+        fatal "Atom type #{atom_t} has incorrect valency (#{atom_t.valency - num}), " \
+              "expected #{atom_t.valency}"
       end
     end
 
@@ -169,11 +169,11 @@ module Chem::Topology::Templates
     end
 
     private def missing_bonds(atom_t : AtomType) : Int32
-      valence = atom_t.valence
+      valency = atom_t.valency
       if bond = @link_bond
-        valence -= bond.order if bond.includes?(atom_t)
+        valency -= bond.order if bond.includes?(atom_t)
       end
-      valence - @bonds.each.select(&.includes?(atom_t.name)).map(&.order).sum
+      valency - @bonds.each.select(&.includes?(atom_t.name)).map(&.order).sum
     end
 
     private def parse_atom(spec : String) : AtomType
@@ -181,7 +181,7 @@ module Chem::Topology::Templates
         atom_type name: $~[1],
           element: $~[3]?,
           formal_charge: parse_charge($~[4]?),
-          valence: $~[6]?.try(&.to_i)
+          valency: $~[6]?.try(&.to_i)
       else
         parse_exception "Invalid atom specification \"#{spec}\""
       end

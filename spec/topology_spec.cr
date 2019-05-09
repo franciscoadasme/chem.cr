@@ -199,54 +199,54 @@ describe Chem::BondArray do
       end
     end
 
-    # it "fails when adding a bond leads to an invalid valence" do
+    # it "fails when adding a bond leads to an invalid valency" do
     #   st = fake_structure
     #   glu_cd, glu_oe1, glu_oe2 = st.atoms[6..8]
     #   glu_cd.bonds.add glu_oe1, :double
     #   glu_cd.bonds.add glu_oe2
 
-    #   expect_raises Chem::Error, "Atom 7 has only 1 valence electron available" do
+    #   expect_raises Chem::Error, "Atom 7 has only 1 valency electron available" do
     #     glu_cd.bonds.add st.atoms[5], :double
     #   end
     # end
 
-    # it "fails when adding a bond leads to an invalid valence on secondary atom" do
+    # it "fails when adding a bond leads to an invalid valency on secondary atom" do
     #   st = fake_structure
     #   glu_cd, glu_oe1, glu_oe2 = st.atoms[6..8]
     #   glu_cd.bonds.add glu_oe1
 
-    #   expect_raises Chem::Error, "Atom 8 has only 1 valence electron available" do
+    #   expect_raises Chem::Error, "Atom 8 has only 1 valency electron available" do
     #     st.atoms[5].bonds.add glu_oe1, :double
     #   end
     # end
 
-    # it "fails when the primary atom has its valence shell already full" do
+    # it "fails when the primary atom has its valency shell already full" do
     #   st = fake_structure
     #   glu_cd, glu_oe1, glu_oe2 = st.atoms[6..8]
     #   glu_cd.bonds.add glu_oe1, :double
 
-    #   expect_raises Chem::Error, "Atom 8 has its valence shell already full" do
+    #   expect_raises Chem::Error, "Atom 8 has its valency shell already full" do
     #     glu_oe1.bonds.add glu_oe2
     #   end
     # end
 
-    # it "fails when the secondary atom has its valence shell already full" do
+    # it "fails when the secondary atom has its valency shell already full" do
     #   st = fake_structure
     #   glu_cd, glu_oe1, glu_oe2 = st.atoms[6..8]
     #   glu_cd.bonds.add glu_oe1, :double
 
-    #   expect_raises Chem::Error, "Atom 8 has its valence shell already full" do
+    #   expect_raises Chem::Error, "Atom 8 has its valency shell already full" do
     #     glu_oe2.bonds.add glu_oe1
     #   end
     # end
 
-    # it "fails when a charged atom has its valence shell already full" do
+    # it "fails when a charged atom has its valency shell already full" do
     #   st = fake_structure
     #   glu_cd, glu_oe1, glu_oe2 = st.atoms[6..8]
     #   glu_cd.bonds.add glu_oe2
     #   glu_oe2.charge.should eq -1
 
-    #   expect_raises Chem::Error, "Atom 9 has its valence shell already full" do
+    #   expect_raises Chem::Error, "Atom 9 has its valency shell already full" do
     #     glu_oe2.bonds.add st.atoms[5], :double
     #   end
     # end

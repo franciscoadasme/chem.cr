@@ -17,8 +17,8 @@ describe Chem::Topology::Templates::AtomType do
       Templates::AtomType.new("UK", formal_charge: -5).to_s.should eq "UK-5"
     end
 
-    it "returns atom name plus valence when its not nominal" do
-      Templates::AtomType.new("SG", valence: 1).to_s.should eq "SG(1)"
+    it "returns atom name plus valency when its not nominal" do
+      Templates::AtomType.new("SG", valency: 1).to_s.should eq "SG(1)"
     end
   end
 end
@@ -205,7 +205,7 @@ describe Chem::Topology::Templates::Builder do
       residue.formal_charge.should eq 0
     end
 
-    it "builds a residue having an atom with explicit valence" do
+    it "builds a residue having an atom with explicit valency" do
       residue = TemplateBuilder.build(:protein) do
         name "Cysteine"
         code "CYX"
@@ -218,7 +218,7 @@ describe Chem::Topology::Templates::Builder do
       residue.formal_charge.should eq 0
     end
 
-    it "builds a residue having an atom with explicit valence followed by a bond" do
+    it "builds a residue having an atom with explicit valency followed by a bond" do
       residue = TemplateBuilder.build(:ion) do
         name "Sulfate"
         code "SO4"
@@ -226,7 +226,7 @@ describe Chem::Topology::Templates::Builder do
       end
 
       residue.atom_names.should eq ["S", "O1"]
-      residue.atom_types.map(&.valence).should eq [2, 2]
+      residue.atom_types.map(&.valency).should eq [2, 2]
       residue.formal_charge.should eq 0
     end
 
@@ -283,8 +283,8 @@ describe Chem::Topology::Templates::Builder do
       end
     end
 
-    it "fails on incorrect valence" do
-      msg = "Atom type CG has incorrect valence (5), expected 4"
+    it "fails on incorrect valency" do
+      msg = "Atom type CG has incorrect valency (5), expected 4"
       expect_raises TemplateError, msg do
         TemplateBuilder.build(:protein) do
           name "Tryptophan"

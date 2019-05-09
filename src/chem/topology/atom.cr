@@ -54,8 +54,8 @@ module Chem
       io << ':' << @name << '(' << @serial << ')'
     end
 
-    def valence : Int32
-      @element.max_valence + @formal_charge
+    def valency : Int32
+      @element.max_valency + @formal_charge
     end
 
     # NOTE: The additional term (0.3 Å) is taken from the covalent radii reference,

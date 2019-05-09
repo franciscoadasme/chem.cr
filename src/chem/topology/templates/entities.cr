@@ -3,14 +3,14 @@ module Chem::Topology::Templates
     getter element : PeriodicTable::Element
     getter formal_charge : Int32
     getter name : String
-    getter valence : Int32
+    getter valency : Int32
 
     def initialize(@name : String,
                    @formal_charge : Int32 = 0,
                    element : String? = nil,
-                   valence : Int32? = nil)
+                   valency : Int32? = nil)
       @element = element ? PeriodicTable[element] : PeriodicTable[atom_name: name]
-      @valence = valence || nominal_valence
+      @valency = valency || nominal_valency
     end
 
     def suffix : String
@@ -19,13 +19,13 @@ module Chem::Topology::Templates
 
     def to_s(io : ::IO)
       io << @name
-      io << '(' << @valence << ')' unless @valence == nominal_valence
+      io << '(' << @valency << ')' unless @valency == nominal_valency
       io << (@formal_charge > 0 ? '+' : '-') unless @formal_charge == 0
       io << @formal_charge.abs if @formal_charge.abs > 1
     end
 
-    private def nominal_valence : Int32
-      @element.max_valence + @formal_charge
+    private def nominal_valency : Int32
+      @element.max_valency + @formal_charge
     end
   end
 
