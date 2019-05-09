@@ -34,6 +34,10 @@ module Chem
       @first == other.second && @second == other.first
     end
 
+    def distance : Float64
+      Math.sqrt squared_distance
+    end
+
     def includes?(atom : Atom) : Bool
       @first == atom || @second == atom
     end
@@ -61,6 +65,10 @@ module Chem
       else
         raise Error.new "Bond doesn't include atom #{atom.serial}"
       end
+    end
+
+    def squared_distance : Float64
+      Spatial.squared_distance @first, @second
     end
   end
 end
