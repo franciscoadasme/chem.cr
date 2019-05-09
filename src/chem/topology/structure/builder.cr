@@ -128,9 +128,12 @@ module Chem
       residue
     end
 
-    def atom(of element : PeriodicTable::Element,
+    def atom(of element : PeriodicTable::Element | String | Symbol,
              at coords : Coords = Spatial::Vector.zero,
              **options) : Atom
+      unless element.is_a? PeriodicTable::Element
+        element = PeriodicTable[element.to_s.capitalize]
+      end
       ele_count = current_residue.each_atom.count &.element.==(element)
       name = "#{element.symbol}#{ele_count + 1}"
       atom name, coords, **options.merge(element: element)
