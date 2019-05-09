@@ -2,6 +2,7 @@ module Chem::PeriodicTable
   class Element
     getter atomic_number : Int32
     getter covalent_radius : Float64
+    getter? ionic : Bool
     getter mass : Float64
     getter name : String
     getter symbol : String
@@ -14,6 +15,7 @@ module Chem::PeriodicTable
                    *,
                    @mass : Float64,
                    @covalent_radius : Float64 = 1.5,
+                   @ionic : Bool = false,
                    @valences : Array(Int32) = [] of Int32,
                    vdw_radius : Float64? = nil)
       @vdw_radius = vdw_radius || @covalent_radius + 0.9

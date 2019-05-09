@@ -58,11 +58,13 @@ module Chem::PeriodicTable
   element Na, Sodium,
     covalent_radius: 1.66,
     mass: 22.9898,
+    ionic: true,
     valences: [1],
     vdw_radius: 2.5
   element Mg, Magnesium,
     covalent_radius: 1.41,
     mass: 24.305,
+    ionic: true,
     valences: [2],
     vdw_radius: 2.51
   element Al, Aluminum,
@@ -95,11 +97,13 @@ module Chem::PeriodicTable
   element K, Potassium,
     covalent_radius: 2.03,
     mass: 39.0983,
+    ionic: true,
     valences: [1],
     vdw_radius: 2.73
   element Ca, Calcium,
     covalent_radius: 1.76,
     mass: 40.078,
+    ionic: true,
     valences: [2],
     vdw_radius: 2.62
   element Sc, Scandium,
