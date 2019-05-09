@@ -12,6 +12,8 @@ module Chem
     getter second : Atom
     property kind : Kind
 
+    delegate dative?, zero?, single?, double?, triple?, to: @kind
+
     def initialize(@first, @second, @kind : Kind = :single)
     end
 
