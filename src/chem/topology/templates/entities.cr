@@ -25,7 +25,7 @@ module Chem::Topology::Templates
     end
 
     private def nominal_valence : Int32
-      @element.valence + @formal_charge
+      @element.max_valence + @formal_charge
     end
   end
 

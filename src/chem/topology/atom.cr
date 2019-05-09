@@ -55,7 +55,7 @@ module Chem
     end
 
     def valence : Int32
-      @element.valence + @formal_charge
+      @element.max_valence + @formal_charge
     end
 
     # NOTE: The additional term (0.3 Å) is taken from the covalent radii reference,
