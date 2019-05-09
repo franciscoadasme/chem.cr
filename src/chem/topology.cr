@@ -12,6 +12,7 @@ require "./topology/residue_view"
 require "./topology/chain_view"
 require "./topology/structure"
 require "./topology/structure/builder"
+require "./topology/builder"
 require "./topology/templates"
 
 module Chem::Topology

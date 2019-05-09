@@ -55,7 +55,11 @@ module Chem
     end
 
     def valency : Int32
-      @element.max_valency + @formal_charge
+      if element.ionic?
+        @element.max_valency
+      else
+        bonds.sum(&.order) - @formal_charge
+      end
     end
 
     # NOTE: The additional term (0.3 Å) is taken from the covalent radii reference,
