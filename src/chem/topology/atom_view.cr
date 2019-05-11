@@ -55,5 +55,11 @@ module Chem
         prev_residue = atom.residue
       end
     end
+
+    def translate!(by offset : Spatial::Vector)
+      each do |atom|
+        atom.coords += offset
+      end
+    end
   end
 end
