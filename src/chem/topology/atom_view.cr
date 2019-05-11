@@ -20,6 +20,20 @@ module Chem
       find &.name.==(name)
     end
 
+    def center : Spatial::Vector
+      i = 0
+      center = uninitialized Spatial::Vector
+      each do |atom|
+        if i == 0
+          center = atom.coords
+        else
+          center += atom.coords
+        end
+        i += 1
+      end
+      center / i
+    end
+
     def each_chain : Iterator(Chain)
       each.map(&.chain).uniq
     end
