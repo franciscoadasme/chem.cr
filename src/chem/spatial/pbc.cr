@@ -68,6 +68,17 @@ module Chem::Spatial::PBC
     end
   end
 
+  def unwrap(atoms : AtomCollection, lattice : Lattice) : Nil
+    atoms.coords.to_fractional!
+    moved_atoms = Set(Atom).new
+    atoms.each_fragment do |fragment|
+      assemble_fragment fragment[0], fragment[0].coords, moved_atoms
+      fragment.translate! by: -fragment.center.floor
+      moved_atoms.clear
+    end
+    atoms.coords.to_cartesian!
+  end
+
   def wrap(atoms : AtomCollection, lattice : Lattice)
     wrap atoms, lattice, lattice.center
   end
@@ -88,6 +99,17 @@ module Chem::Spatial::PBC
       atoms.transform by: transform
       wrap atoms, Lattice.new(V.x, V.y, V.z), (transform * center)
       atoms.transform by: transform.inv
+    end
+  end
+
+  private def assemble_fragment(atom, center, moved_atoms) : Nil
+    return if moved_atoms.includes? atom
+
+    atom.coords -= (atom.coords - center).round
+    moved_atoms << atom
+
+    atom.bonded_atoms.each do |other|
+      assemble_fragment other, atom.coords, moved_atoms
     end
   end
 end

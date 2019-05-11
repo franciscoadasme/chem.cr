@@ -111,6 +111,15 @@ module Chem
       io << "periodic>"
     end
 
+    def unwrap : self
+      if lattice = @lattice
+        Spatial::PBC.unwrap self, lattice
+        self
+      else
+        raise Error.new "Cannot wrap a non-periodic structure"
+      end
+    end
+
     def wrap(around center : Spatial::Vector? = nil) : self
       if lattice = @lattice
         Spatial::PBC.wrap self, lattice, center || lattice.center
