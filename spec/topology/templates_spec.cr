@@ -253,6 +253,19 @@ describe Chem::Topology::Templates::Builder do
       residue_t.link_bond.should eq Templates::Bond.new("C3", "C1", 2)
     end
 
+    it "builds a rooted residue" do
+      residue_t = TemplateBuilder.build(:other) do
+        name "Fake"
+        code "UNK"
+        main "C1=C2"
+        root "C2"
+      end
+
+      residue_t.atom_names.should eq ["C1", "H1", "H2", "C2", "H3", "H4"]
+      residue_t.bonds.size.should eq 5
+      residue_t.root.should eq residue_t["C2"]
+    end
+
     it "builds a residue with numbered atoms per element" do
       residue = TemplateBuilder.build(:solvent) do
         name "Glycerol"

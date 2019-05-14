@@ -13,6 +13,7 @@ module Chem::Topology::Templates
     @codes = [] of String
     @link_bond : Bond?
     @name : String?
+    @root : AtomType?
     @symbol : Char?
 
     def initialize(@kind : Residue::Kind = :other)
@@ -38,7 +39,7 @@ module Chem::Topology::Templates
       add_missing_hydrogens
       check_valencies!
 
-      Residue.new name, @codes.first, @symbol, @kind, @atom_types, @bonds, @link_bond
+      Residue.new name, @codes.first, @symbol, @kind, @atom_types, @bonds, @link_bond, @root
     end
 
     def code(code : String)
@@ -56,7 +57,7 @@ module Chem::Topology::Templates
     def cycle(spec : String)
       check_root! "cycle", spec
       spec += '-' unless /#{BOND_ORDER_PATTERN}$/ =~ spec
-      parse_spec "#{spec}#{root spec}"
+      parse_spec "#{spec}#{extract_root spec}"
     end
 
     def link_adjacent_by(spec : String)
@@ -76,6 +77,10 @@ module Chem::Topology::Templates
       atom_t = atom_type! atom_name
       @bonds.reject! &.includes?(atom_t)
       @atom_types.delete atom_t
+    end
+
+    def root(atom_name : String)
+      @root = atom_type! atom_name
     end
 
     def sidechain
@@ -149,7 +154,7 @@ module Chem::Topology::Templates
     end
 
     private def check_root!(cmd : String, desc : String)
-      atom_name = root desc
+      atom_name = extract_root desc
       return if atom_type? atom_name
       parse_exception "#{cmd.capitalize} must start with an existing atom type, " \
                       "got #{atom_name}"
@@ -162,6 +167,10 @@ module Chem::Topology::Templates
         fatal "Atom type #{atom_t} has incorrect valency (#{atom_t.valency - num}), " \
               "expected #{atom_t.valency}"
       end
+    end
+
+    private def extract_root(spec : String) : String
+      spec[/#{ATOM_NAME_PATTERN}/]
     end
 
     private def fatal(msg)
@@ -231,10 +240,6 @@ module Chem::Topology::Templates
       end
     end
 
-    private def root(spec : String) : String
-      spec[/#{ATOM_NAME_PATTERN}/]
-    end
-
     private def setup
       case @kind
       when .protein?
@@ -248,6 +253,7 @@ module Chem::Topology::Templates
         add_bond "N", "H"
         add_bond "CA", "HA"
         link_adjacent_by "C-N"
+        root "CA"
       end
     end
   end

@@ -88,6 +88,7 @@ module Chem::Topology::Templates
     getter kind : Kind
     getter link_bond : Bond?
     getter name : String
+    getter root : AtomType?
     getter symbol : Char?
 
     def initialize(@name : String,
@@ -96,9 +97,18 @@ module Chem::Topology::Templates
                    @kind : Kind,
                    atom_types : Array(AtomType),
                    bonds : Array(Bond),
-                   @link_bond : Bond? = nil)
+                   @link_bond : Bond? = nil,
+                   @root : AtomType? = nil)
       @atom_types = atom_types.dup
       @bonds = bonds.dup
+    end
+
+    def [](atom_name : String) : AtomType
+      self[atom_name]? || raise Error.new "Unknown atom type #{atom_name}"
+    end
+
+    def []?(atom_name : String) : AtomType?
+      @atom_types.find &.name.==(atom_name)
     end
 
     def atom_count(*, include_hydrogens : Bool = true)
