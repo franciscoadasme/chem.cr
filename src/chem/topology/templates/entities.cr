@@ -62,6 +62,14 @@ module Chem::Topology::Templates
       includes? atom_t.name
     end
 
+    def other(atom_name : String) : String
+      @first == atom_name ? @second : @first
+    end
+
+    def other(atom_t : AtomType) : String
+      other atom_t.name
+    end
+
     def to_char : Char
       case @order
       when 1 then '-'
@@ -127,6 +135,10 @@ module Chem::Topology::Templates
 
     def each_atom_type(&block : AtomType ->)
       @atom_types.each &block
+    end
+
+    def bonded_atoms(atom_t : AtomType) : Array(AtomType)
+      @bonds.select(&.includes?(atom_t)).map { |bond| self[bond.other(atom_t)] }
     end
 
     def bonds : Array(Bond)

@@ -33,4 +33,5 @@ module Chem::Topology::Templates
 end
 
 require "./templates/builder"
+require "./templates/detector"
 require "./templates/entities"
