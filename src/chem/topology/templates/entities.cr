@@ -152,5 +152,9 @@ module Chem::Topology::Templates
     def monomer? : Bool
       !link_bond.nil?
     end
+
+    def size : Int32
+      @atom_types.size
+    end
   end
 end

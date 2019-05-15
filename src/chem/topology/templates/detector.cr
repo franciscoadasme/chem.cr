@@ -28,7 +28,7 @@ module Chem::Topology::Templates
 
       n_atoms = structure.size
       @templates.each do |res_t|
-        break if @mapped_atoms.size == n_atoms
+        next if (n_atoms - @mapped_atoms.size) < res_t.size
         next unless root = res_t.root
         each_match res_t, root, structure do |res_t, idxs|
           yield res_t, idxs
@@ -66,7 +66,7 @@ module Chem::Topology::Templates
                            structure : Structure,
                            &block : Residue, Hash(Atom, String) ->)
       structure.each_atom do |atom|
-        next if @mapped_atoms.includes? atom
+        next if mapped?(atom)
         match res_t, atom_type, atom
         if res_t.kind.protein? && @atom_type_map.has_value?("CA")
           extend_match CTER_T, CTER_T["C"], @atom_type_map.key_for("CA")
@@ -82,14 +82,17 @@ module Chem::Topology::Templates
 
     private def extend_match(res_t : Residue, atom_t : AtomType, atom : Atom)
       atom.bonded_atoms.each do |other|
-        next if @atom_type_map.has_key? other
-        next unless @atom_table[other] == @atom_table[atom_t]
+        next if mapped?(other) || @atom_table[other] != @atom_table[atom_t]
         match res_t, atom_t, other
       end
     end
 
+    private def mapped?(atom : Atom) : Bool
+      @mapped_atoms.includes?(atom) || @atom_type_map.has_key?(atom)
+    end
+
     private def match(res_t : Residue, atom_t : AtomType, atom : Atom)
-      return if @atom_type_map[atom]? || @atom_table[atom] != @atom_table[atom_t]
+      return if mapped?(atom) || @atom_table[atom] != @atom_table[atom_t]
       @atom_type_map[atom] = atom_t.name
       res_t.bonded_atoms(atom_t).each do |other_t|
         atom.bonded_atoms.each do |other|
