@@ -22,15 +22,15 @@ module Chem::Topology::Templates
       compute_atom_descriptions [CTER_T, NTER_T]
     end
 
-    def each_match(structure : Structure, &block : Residue, Hash(Atom, String) ->)
+    def each_match(atoms : Enumerable(Atom),
+                   &block : Residue, Hash(Atom, String) ->) : Nil
       reset_cache
-      compute_atom_descriptions structure
+      compute_atom_descriptions atoms
 
-      n_atoms = structure.size
-      structure.each_atom do |atom|
+      atoms.each do |atom|
         next if mapped?(atom)
         @templates.each do |res_t|
-          next if (n_atoms - @mapped_atoms.size) < res_t.size
+          next if (atoms.size - @mapped_atoms.size) < res_t.size
           if (root = res_t.root) && match?(res_t, root, atom)
             yield res_t, @atom_type_map
             @atom_type_map.each_key { |atom| @mapped_atoms << atom }
@@ -40,8 +40,14 @@ module Chem::Topology::Templates
       end
     end
 
-    private def compute_atom_descriptions(structure : Structure)
-      structure.each_atom do |atom|
+    def each_match(structure : Structure, &block : Residue, Hash(Atom, String) ->) : Nil
+      each_match structure.atoms do |res_t, atom_map|
+        yield res_t, atom_map
+      end
+    end
+
+    private def compute_atom_descriptions(atoms : Enumerable(Atom))
+      atoms.each do |atom|
         @atom_table[atom] = String.build do |io|
           io << atom.element.symbol
           atom.bonded_atoms.map(&.element.symbol).sort!.join "", io
