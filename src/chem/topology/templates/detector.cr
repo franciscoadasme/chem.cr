@@ -27,11 +27,15 @@ module Chem::Topology::Templates
       compute_atom_descriptions structure
 
       n_atoms = structure.size
-      @templates.each do |res_t|
-        next if (n_atoms - @mapped_atoms.size) < res_t.size
-        next unless root = res_t.root
-        each_match res_t, root, structure do |res_t, idxs|
-          yield res_t, idxs
+      structure.each_atom do |atom|
+        next if mapped?(atom)
+        @templates.each do |res_t|
+          next if (n_atoms - @mapped_atoms.size) < res_t.size
+          if (root = res_t.root) && match?(res_t, root, atom)
+            yield res_t, @atom_type_map
+            @atom_type_map.each_key { |atom| @mapped_atoms << atom }
+          end
+          @atom_type_map.clear
         end
       end
     end
@@ -61,29 +65,10 @@ module Chem::Topology::Templates
       end
     end
 
-    private def each_match(res_t : Residue,
-                           atom_type : AtomType,
-                           structure : Structure,
-                           &block : Residue, Hash(Atom, String) ->)
-      structure.each_atom do |atom|
-        next if mapped?(atom)
-        match res_t, atom_type, atom
-        if res_t.kind.protein? && @atom_type_map.has_value?("CA")
-          extend_match CTER_T, CTER_T["C"], @atom_type_map.key_for("CA")
-          extend_match NTER_T, NTER_T["N"], @atom_type_map.key_for("CA")
-        end
-        if @atom_type_map.size >= res_t.atom_count
-          @atom_type_map.each_key { |atom| @mapped_atoms << atom }
-          yield res_t, @atom_type_map
-        end
-        @atom_type_map.clear
-      end
-    end
-
     private def extend_match(res_t : Residue, atom_t : AtomType, atom : Atom)
       atom.bonded_atoms.each do |other|
-        next if mapped?(other) || @atom_table[other] != @atom_table[atom_t]
-        match res_t, atom_t, other
+        next if mapped?(other) || !match?(atom_t, other)
+        search res_t, atom_t, other
       end
     end
 
@@ -91,20 +76,33 @@ module Chem::Topology::Templates
       @mapped_atoms.includes?(atom) || @atom_type_map.has_key?(atom)
     end
 
-    private def match(res_t : Residue, atom_t : AtomType, atom : Atom)
-      return if mapped?(atom) || @atom_table[atom] != @atom_table[atom_t]
-      @atom_type_map[atom] = atom_t.name
-      res_t.bonded_atoms(atom_t).each do |other_t|
-        atom.bonded_atoms.each do |other|
-          match res_t, other_t, other
-        end
+    private def match?(res_t : Residue, atom_type : AtomType, atom : Atom) : Bool
+      search res_t, atom_type, atom
+      if res_t.kind.protein? && @atom_type_map.has_value?("CA")
+        extend_match CTER_T, CTER_T["C"], @atom_type_map.key_for("CA")
+        extend_match NTER_T, NTER_T["N"], @atom_type_map.key_for("CA")
       end
+      @atom_type_map.size >= res_t.atom_count
+    end
+
+    private def match?(atom_t : AtomType, atom : Atom) : Bool
+      @atom_table[atom] == @atom_table[atom_t]
     end
 
     private def reset_cache : Nil
       @atom_table.reject! { |k, _| k.is_a? Atom }
       @atom_type_map.clear
       @mapped_atoms.clear
+    end
+
+    private def search(res_t : Residue, atom_t : AtomType, atom : Atom)
+      return if mapped?(atom) || !match?(atom_t, atom)
+      @atom_type_map[atom] = atom_t.name
+      res_t.bonded_atoms(atom_t).each do |other_t|
+        atom.bonded_atoms.each do |other|
+          search res_t, other_t, other
+        end
+      end
     end
   end
 end
