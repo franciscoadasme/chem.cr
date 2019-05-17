@@ -3,5 +3,6 @@ module Chem::Topology::Templates
     name "Water"
     codes "HOH", "WAT"
     main "O"
+    root "O"
   end
 end
