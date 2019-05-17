@@ -7,11 +7,24 @@ module Chem::Topology::Templates
       main "CA-C=O"
       branch "C-OXT"
     end
+    CHARGED_CTER_T = Chem::Topology::Templates::Builder.build do
+      name "C-ter"
+      code "CTER"
+      symbol 'c'
+      main "CA-C=O"
+      branch "C-OXT-"
+    end
     NTER_T = Chem::Topology::Templates::Builder.build do
       name "N-ter"
       code "NTER"
       symbol 'n'
       main "CA-N"
+    end
+    CHARGED_NTER_T = Chem::Topology::Templates::Builder.build do
+      name "N-ter"
+      code "NTER"
+      symbol 'n'
+      main "CA-N+"
     end
 
     def initialize(@templates : Array(Residue))
@@ -19,7 +32,7 @@ module Chem::Topology::Templates
       @atom_type_map = {} of Atom => String
       @mapped_atoms = Set(Atom).new
       compute_atom_descriptions @templates
-      compute_atom_descriptions [CTER_T, NTER_T]
+      compute_atom_descriptions [CTER_T, NTER_T, CHARGED_CTER_T, CHARGED_NTER_T]
     end
 
     def each_match(atoms : Enumerable(Atom),
@@ -87,6 +100,8 @@ module Chem::Topology::Templates
       if res_t.kind.protein? && @atom_type_map.has_value?("CA")
         extend_match CTER_T, CTER_T["C"], @atom_type_map.key_for("CA")
         extend_match NTER_T, NTER_T["N"], @atom_type_map.key_for("CA")
+        extend_match CHARGED_CTER_T, CHARGED_CTER_T["C"], @atom_type_map.key_for("CA")
+        extend_match CHARGED_NTER_T, CHARGED_NTER_T["N"], @atom_type_map.key_for("CA")
       end
       @atom_type_map.size >= res_t.atom_count
     end
