@@ -43,6 +43,7 @@ module Chem::PDB
     end
 
     private def <<(chain : Chain) : Nil
+      return if chain.residues.size == 0
       last_residue = uninitialized Residue
       chain.each_atom do |atom|
         self << atom
