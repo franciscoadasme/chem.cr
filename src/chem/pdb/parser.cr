@@ -281,7 +281,11 @@ module Chem::PDB
         end
         residue
       else
-        Residue.new name, number, ins_code, chain
+        residue = Residue.new name, number, ins_code, chain
+        if res_t = Topology::Templates[name]?
+          residue.kind = Residue::Kind.from_value res_t.kind.to_i
+        end
+        residue
       end
     end
 

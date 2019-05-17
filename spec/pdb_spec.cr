@@ -14,6 +14,12 @@ describe Chem::PDB do
       st.chains['C'].residues.size.should eq 436
       st.chains['D'].residues.size.should eq 370
 
+      st['A'][290].kind.protein?.should be_true
+      st['A'][1298].kind.other?.should be_true
+      st['A'][2008].kind.solvent?.should be_true
+      st['D'][342].kind.protein?.should be_true
+      st['D'][2080].kind.solvent?.should be_true
+
       atom = st.atoms[-1]
       atom.serial.should eq 9705
       atom.name.should eq "O"
