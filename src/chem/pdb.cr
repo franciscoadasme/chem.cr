@@ -1,4 +1,5 @@
 require "./pdb/parser"
+require "./pdb/writer"
 
 module Chem::PDB
   def self.read(filepath : String) : Array(Structure)

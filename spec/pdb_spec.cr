@@ -335,3 +335,9 @@ describe Chem::PDB do
     end
   end
 end
+
+describe Chem::PDB::Writer do
+  it "writes a structure" do
+    assert_writer Chem::PDB::Writer, "pdb/1crn.pdb", "pdb/1crn--stripped.pdb"
+  end
+end

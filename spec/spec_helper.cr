@@ -68,6 +68,19 @@ module Chem::VASP::Poscar
   end
 end
 
+def assert_writer(klass : Chem::IO::Writer.class,
+                  filepath : String,
+                  expected : String,
+                  *,
+                  raw : Bool = false)
+  structure = Chem::Structure.read File.join("spec", "data", filepath)
+  io = IO::Memory.new
+  klass.new(io) << structure
+
+  expected = File.read File.join("spec", "data", expected) unless raw
+  io.to_s.should eq expected
+end
+
 def fake_residue_with_alternate_conformations
   Chem::Structure.build do
     residue "SER" do
