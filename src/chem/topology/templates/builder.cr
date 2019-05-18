@@ -2,7 +2,7 @@ module Chem::Topology::Templates
   class Builder
     class ParseException < Error; end
 
-    ATOM_NAME_PATTERN  = "[A-Z]{1,2}[0-9]{0,2}"
+    ATOM_NAME_PATTERN  = "[A-Z]{1,3}[0-9]{0,2}"
     ATOM_SEP_REGEX     = /(?<=[A-Z0-9\)\]])#{BOND_ORDER_PATTERN}(?=[A-Z0-9])/
     ATOM_SPEC_REGEX    = /(#{ATOM_NAME_PATTERN})(\[([A-Z][a-z]?)\])?([\+-]\d?)?(\((\d)\))?/
     BOND_ORDER_PATTERN = "[-=#]"

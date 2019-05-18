@@ -279,6 +279,17 @@ describe Chem::Topology::Templates::Builder do
       residue.atom_names.should eq names
     end
 
+    it "builds a residue with three-letter atom names" do
+      residue = TemplateBuilder.build(:other) do
+        name "C-ter"
+        code "CTER"
+        main "CA-C=O"
+        branch "C-OXT"
+      end
+
+      residue.atom_names.should eq ["CA", "HA1", "HA2", "HA3", "C", "O", "OXT", "HXT"]
+    end
+
     it "fails when adding the same bond twice with different order" do
       # #cycle connects the first and last atoms with a single bond unless there is a
       # bond char (-, =, # or @) at the end. In this case, both CE2=CD2 and CD2-CE2 are
