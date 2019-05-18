@@ -95,6 +95,10 @@ module Chem::Topology::Templates
       @mapped_atoms.includes?(atom) || @atom_type_map.has_key?(atom)
     end
 
+    private def mapped?(atom_t : AtomType) : Bool
+      @atom_type_map.has_value? atom_t.name
+    end
+
     private def match?(res_t : Residue, atom_type : AtomType, atom : Atom) : Bool
       search res_t, atom_type, atom
       if res_t.kind.protein? && @atom_type_map.has_value?("CA")
@@ -117,7 +121,7 @@ module Chem::Topology::Templates
     end
 
     private def search(res_t : Residue, atom_t : AtomType, atom : Atom)
-      return if mapped?(atom) || !match?(atom_t, atom)
+      return if mapped?(atom) || mapped?(atom_t) || !match?(atom_t, atom)
       @atom_type_map[atom] = atom_t.name
       res_t.bonded_atoms(atom_t).each do |other_t|
         atom.bonded_atoms.each do |other|
