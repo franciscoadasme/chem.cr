@@ -110,4 +110,65 @@ describe Chem::Topology::Builder do
       structure.atoms[37].bonds[structure.atoms[38]].single?.should be_true
     end
   end
+
+  describe "#guess_topology_from_connectivity" do
+    it "guesses the topology of a dipeptide" do
+      structure = Chem::Structure.read "spec/data/poscar/AlaIle--unwrapped.poscar"
+      builder = Chem::Topology::Builder.new structure
+      builder.guess_bonds_from_geometry
+      builder.guess_topology_from_connectivity
+
+      structure.chains.map(&.id).should eq ['A']
+      structure.residues.map(&.name).should eq %w(ALA ILE)
+      structure.residues.map(&.number).should eq [1, 2]
+      structure.residues[0].atoms.map(&.name).should eq %w(
+        N CA HA C O CB HB1 HB2 HB3 H1 H2)
+      structure.residues[1].atoms.map(&.name).should eq %w(
+        N H CA HA C O CB HB CG1 HG11 HG12 CD HD1 HD2 HD3 CG2 HG21 HG22 HG23 OXT HXT)
+    end
+
+    it "guesses the topology of two peptide chains" do
+      structure = Chem::Structure.read "spec/data/poscar/5e61--unwrapped.poscar"
+      builder = Chem::Topology::Builder.new structure
+      builder.guess_bonds_from_geometry
+      builder.guess_topology_from_connectivity
+
+      structure.chains.map(&.id).should eq ['A', 'B']
+      structure.each_chain do |chain|
+        chain.residues.map(&.name).should eq %w(PHE GLY ALA ILE LEU SER SER)
+        chain.residues.map(&.number).should eq (1..7).to_a
+        chain.residues[0].atoms.map(&.name).should eq %w(
+          N CA HA C O CB HB1 HB2 CG CD1 HD1 CE1 HE1 CZ HZ CE2 HE2 CD2 HD2 H1 H2)
+        chain.residues[5].atoms.map(&.name).should eq %w(
+          N H CA HA C O CB HB1 HB2 OG HG)
+        chain.residues[6].atoms.map(&.name).should eq %w(
+          N H CA HA C O CB HB1 HB2 OG HG OXT HXT)
+      end
+    end
+
+    it "guesses the topology of a broken peptide with waters" do
+      structure = Chem::Structure.read "spec/data/poscar/5e5v--unwrapped.poscar"
+      builder = Chem::Topology::Builder.new structure
+      builder.guess_bonds_from_geometry
+      builder.guess_topology_from_connectivity
+
+      structure.chains.map(&.id).should eq ['A', 'B', 'C', 'D']
+      structure.chains[0].residues.map(&.name).should eq %w(ASN PHE GLY ALA ILE LEU SER)
+      structure.chains[0].residues.map(&.number).should eq (1..7).to_a
+      structure.chains[1].residues.map(&.name).should eq %w(PHE GLY ALA ILE LEU SER UNK)
+      structure.chains[1].residues.map(&.number).should eq (1..7).to_a
+      structure.chains[2].residues.map(&.name).should eq %w(UNK)
+      structure.chains[2].residues.map(&.number).should eq [1]
+      structure.chains[3].residues.map(&.name).should eq %w(HOH HOH HOH HOH HOH HOH HOH)
+      structure.chains[3].residues.map(&.number).should eq (1..7).to_a
+    end
+
+    it "fails when structure has no bonds" do
+      expect_raises Chem::Error, "Structure has no bonds" do
+        structure = Chem::Structure.read "spec/data/poscar/5e5v--unwrapped.poscar"
+        builder = Chem::Topology::Builder.new structure
+        builder.guess_topology_from_connectivity
+      end
+    end
+  end
 end

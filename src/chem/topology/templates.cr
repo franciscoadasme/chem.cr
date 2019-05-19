@@ -27,6 +27,10 @@ module Chem::Topology::Templates
     TEMPLATES[code]?
   end
 
+  def all : Array(Residue)
+    TEMPLATES.values
+  end
+
   build_method aminoacid, kind: protein
   build_method residue, kind: other
   build_method solvent

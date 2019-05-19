@@ -17,6 +17,28 @@ module Chem::Topology
       assign_bond_orders
     end
 
+    def guess_topology_from_connectivity : Nil
+      raise Error.new "Structure has no bonds" if @structure.bonds.empty?
+      return unless old_chain = @structure.delete(@structure.chains.first)
+
+      chains = {} of Residue::Kind => Chain
+      detector = Templates::Detector.new Templates.all
+      old_chain.fragments.each do |atoms|
+        residues, polymer = guess_residues detector, old_chain, atoms.to_a
+
+        id = (65 + @structure.chains.size).chr
+        chain = if polymer
+                  Chain.new id, @structure
+                else
+                  chains[residues.first.kind] ||= Chain.new id, @structure
+                end
+        residues.each do |residue|
+          residue.number = chain.residues.size + 1
+          residue.chain = chain
+        end
+      end
+    end
+
     private def assign_bond_orders : Nil
       @structure.each_atom do |atom|
         if atom.element.ionic?
@@ -58,6 +80,32 @@ module Chem::Topology
 
     private def guess_nominal_valency_from_connectivity(atom : Atom) : Int32
       atom.element.valencies.find(&.>=(atom.valency)) || atom.element.max_valency
+    end
+
+    private def guess_residues(detector : Templates::Detector,
+                               chain : Chain,
+                               atoms : Array(Atom)) : Tuple(Array(Residue), Bool)
+      polymer = false
+      residues = [] of Residue
+      detector.each_match(atoms.dup) do |res_t, atom_map|
+        names = res_t.atom_names
+
+        residues << (residue = Residue.new res_t.code, residues.size + 1, chain)
+        residue.kind = Residue::Kind.from_value res_t.kind.to_i
+        atom_map.to_a.sort_by! { |_, k| names.index(k) || 99 }.each do |atom, name|
+          atom.name = name
+          atom.residue = residue
+          atoms.delete atom
+        end
+        polymer ||= res_t.monomer?
+      end
+
+      unless atoms.empty?
+        residues << (residue = Residue.new "UNK", chain.residues.size, chain)
+        atoms.each &.residue=(residue)
+      end
+
+      {residues, polymer}
     end
 
     private def missing_bonds(atom : Atom) : Int32
