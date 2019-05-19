@@ -39,13 +39,20 @@ module Chem
       read filepath, format, **options
     end
 
-    protected def <<(chain : Chain)
+    protected def <<(chain : Chain) : self
       @chains << chain
       @chain_table[chain.id] = chain
+      self
     end
 
     def coords : Spatial::CoordinatesProxy
       Spatial::CoordinatesProxy.new self, @lattice
+    end
+
+    def delete(chain : Chain) : Chain?
+      chain = @chains.delete chain
+      @chain_table.delete(chain.id) if chain
+      chain
     end
 
     def each_atom : Iterator(Atom)
@@ -143,6 +150,14 @@ module Chem
     def write(filepath : String, **options) : Nil
       format = IO::FileFormat.from_ext File.extname(filepath)
       write filepath, format, **options
+    end
+
+    protected def reset_cache : Nil
+      @chain_table.clear
+      @chains.sort_by! &.id
+      @chains.each do |chain|
+        @chain_table[chain.id] = chain
+      end
     end
   end
 end

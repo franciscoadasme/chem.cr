@@ -48,6 +48,12 @@ module Chem
       io << ">"
     end
 
+    def residue=(new_res : Residue) : Residue
+      @residue.delete self
+      @residue = new_res
+      new_res << self
+    end
+
     def to_s(io : ::IO)
       io << @residue
       io << '(' << @alt_loc << ')' if @alt_loc

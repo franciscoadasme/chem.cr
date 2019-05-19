@@ -39,7 +39,7 @@ module Chem
       @chain << self
     end
 
-    protected def <<(atom : Atom)
+    protected def <<(atom : Atom) : self
       if alt_loc = atom.alt_loc
         if conf.nil? || alt_loc == conf.try(&.id)
           @atoms << atom
@@ -50,7 +50,7 @@ module Chem
         conf.atoms << atom
       else
         @atoms << atom
-        @atom_table[atom.name] ||= atom
+        @atom_table[atom.name] = atom
       end
       self
     end
@@ -63,6 +63,12 @@ module Chem
       end
     end
 
+    def chain=(new_chain : Chain) : Chain
+      @chain.delete self
+      @chain = new_chain
+      new_chain << self
+    end
+
     def cis? : Bool
       (angle = omega?) ? angle.abs < 30 : false
     end
@@ -73,6 +79,12 @@ module Chem
 
     def conf=(id : Char)
       conformations.current = id
+    end
+
+    def delete(atom : Atom) : Atom?
+      atom = @atoms.delete atom
+      @atom_table.delete atom.name if atom
+      atom
     end
 
     def each_atom : Iterator(Atom)
@@ -184,5 +196,13 @@ module Chem
         @kind == Kind::{{member}}
       end
     {% end %}
+
+    protected def reset_cache : Nil
+      @atom_table.clear
+      @atoms.sort_by! &.serial
+      @atoms.each do |atom|
+        @atom_table[atom.name] = atom
+      end
+    end
   end
 end
