@@ -6,30 +6,33 @@ module Chem::Topology::Templates
       symbol 'c'
       main "CA-C=O"
       branch "C-OXT"
+      root "C"
     end
     CHARGED_CTER_T = Chem::Topology::Templates::Builder.build do
-      name "C-ter"
+      name "Charged C-ter"
       code "CTER"
       symbol 'c'
       main "CA-C=O"
       branch "C-OXT-"
+      root "C"
     end
     NTER_T = Chem::Topology::Templates::Builder.build do
       name "N-ter"
       code "NTER"
       symbol 'n'
       main "CA-N"
+      root "N"
     end
     CHARGED_NTER_T = Chem::Topology::Templates::Builder.build do
-      name "N-ter"
+      name "Charged N-ter"
       code "NTER"
       symbol 'n'
       main "CA-N+"
+      root "N"
     end
 
     def initialize(@templates : Array(Residue))
       @atom_table = {} of Atom | AtomType => String
-      @atom_type_map = {} of Atom => String
       @mapped_atoms = Set(Atom).new
       compute_atom_descriptions @templates
       compute_atom_descriptions [CTER_T, NTER_T, CHARGED_CTER_T, CHARGED_NTER_T]
@@ -40,15 +43,16 @@ module Chem::Topology::Templates
       reset_cache
       compute_atom_descriptions atoms
 
+      atom_map = {} of Atom => String
       atoms.each do |atom|
-        next if mapped?(atom)
+        next if mapped?(atom, atom_map)
         @templates.each do |res_t|
           next if (atoms.size - @mapped_atoms.size) < res_t.size
-          if (root = res_t.root) && match?(res_t, root, atom)
-            yield res_t, @atom_type_map
-            @atom_type_map.each_key { |atom| @mapped_atoms << atom }
+          if match?(res_t, atom, atom_map)
+            yield res_t, atom_map
+            atom_map.each_key { |atom| @mapped_atoms << atom }
           end
-          @atom_type_map.clear
+          atom_map.clear
         end
       end
     end
@@ -84,30 +88,39 @@ module Chem::Topology::Templates
       end
     end
 
-    private def extend_match(res_t : Residue, atom_t : AtomType, atom : Atom)
-      atom.bonded_atoms.each do |other|
-        next if mapped?(other) || !match?(atom_t, other)
-        search res_t, atom_t, other
+    private def extend_match(res_t : Residue,
+                             root : Atom,
+                             atom_map : Hash(Atom, String))
+      ter_map = {} of Atom => String
+      [NTER_T, CHARGED_NTER_T, CTER_T, CHARGED_CTER_T].each do |ter_t|
+        root.bonded_atoms.each do |other|
+          search ter_t, ter_t.root.not_nil!, other, ter_map
+        end
+
+        if ter_map.size == ter_t.size - 4 # ter has an extra CH3
+          atom_map.merge! ter_map
+          break
+        end
+        ter_map.clear
       end
     end
 
-    private def mapped?(atom : Atom) : Bool
-      @mapped_atoms.includes?(atom) || @atom_type_map.has_key?(atom)
+    private def mapped?(atom : Atom, atom_map : Hash(Atom, String)) : Bool
+      @mapped_atoms.includes?(atom) || atom_map.has_key?(atom)
     end
 
-    private def mapped?(atom_t : AtomType) : Bool
-      @atom_type_map.has_value? atom_t.name
+    private def mapped?(atom_t : AtomType, atom_map : Hash(Atom, String)) : Bool
+      atom_map.has_value? atom_t.name
     end
 
-    private def match?(res_t : Residue, atom_type : AtomType, atom : Atom) : Bool
-      search res_t, atom_type, atom
-      if res_t.kind.protein? && @atom_type_map.has_value?("CA")
-        extend_match CTER_T, CTER_T["C"], @atom_type_map.key_for("CA")
-        extend_match NTER_T, NTER_T["N"], @atom_type_map.key_for("CA")
-        extend_match CHARGED_CTER_T, CHARGED_CTER_T["C"], @atom_type_map.key_for("CA")
-        extend_match CHARGED_NTER_T, CHARGED_NTER_T["N"], @atom_type_map.key_for("CA")
+    private def match?(res_t : Residue,
+                       atom : Atom,
+                       atom_map : Hash(Atom, String)) : Bool
+      search res_t, res_t.root.not_nil!, atom, atom_map
+      if res_t.kind.protein? && (root = atom_map.key_for?("CA"))
+        extend_match res_t, root, atom_map
       end
-      @atom_type_map.size >= res_t.atom_count
+      atom_map.size >= res_t.atom_count
     end
 
     private def match?(atom_t : AtomType, atom : Atom) : Bool
@@ -116,16 +129,19 @@ module Chem::Topology::Templates
 
     private def reset_cache : Nil
       @atom_table.reject! { |k, _| k.is_a? Atom }
-      @atom_type_map.clear
       @mapped_atoms.clear
     end
 
-    private def search(res_t : Residue, atom_t : AtomType, atom : Atom)
-      return if mapped?(atom) || mapped?(atom_t) || !match?(atom_t, atom)
-      @atom_type_map[atom] = atom_t.name
+    private def search(res_t : Residue,
+                       atom_t : AtomType,
+                       atom : Atom,
+                       atom_map : Hash(Atom, String)) : Nil
+      return if mapped?(atom, atom_map) || mapped?(atom_t, atom_map)
+      return unless match?(atom_t, atom)
+      atom_map[atom] = atom_t.name
       res_t.bonded_atoms(atom_t).each do |other_t|
         atom.bonded_atoms.each do |other|
-          search res_t, other_t, other
+          search res_t, other_t, other, atom_map
         end
       end
     end

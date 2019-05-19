@@ -33,7 +33,7 @@ describe Chem::Topology::Templates::Detector do
     residue_matches_helper(path, ["ALA", "GLY", "SER"]).should eq expected
   end
 
-  it "detects terminal protein residues" do
+  it "detects protein residues in a dipeptide" do
     expected = {
       "ALA" => [
         {2 => "CA", 3 => "C", 29 => "O", 13 => "HA", 1 => "CB", 15 => "HB1",
@@ -49,6 +49,25 @@ describe Chem::Topology::Templates::Detector do
 
     path = "spec/data/poscar/AlaIle--unwrapped.poscar"
     residue_matches_helper(path, ["ALA", "ILE"]).should eq expected
+  end
+
+  it "detects charged terminal protein residues" do
+    expected = {
+      "ASN" => [
+        {1 => "CA", 2 => "C", 201 => "O", 70 => "HA", 3 => "CB", 4 => "CG",
+         186 => "ND2", 73 => "HD21", 74 => "HD22", 202 => "OD1", 71 => "HB1",
+         72 => "HB2", 185 => "N", 67 => "H1", 68 => "H2", 69 => "H3"},
+      ],
+      "SER" => [
+        {31 => "CA", 192 => "N", 114 => "H", 115 => "HA", 33 => "CB", 209 => "OG",
+         118 => "HG", 116 => "HB1", 117 => "HB2", 32 => "C", 208 => "O", 210 => "OXT"},
+        {64 => "CA", 200 => "N", 166 => "H", 167 => "HA", 66 => "CB", 219 => "OG",
+         170 => "HG", 169 => "HB1", 168 => "HB2", 65 => "C", 218 => "O", 220 => "OXT"},
+      ],
+    }
+
+    path = "spec/data/poscar/5e5v--unwrapped.poscar"
+    residue_matches_helper(path, ["ASN", "SER"]).should eq expected
   end
 
   it "detects waters" do
