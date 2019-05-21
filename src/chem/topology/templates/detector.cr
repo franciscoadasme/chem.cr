@@ -47,7 +47,7 @@ module Chem::Topology::Templates
       atoms.each do |atom|
         next if mapped?(atom, atom_map)
         @templates.each do |res_t|
-          next if (atoms.size - @mapped_atoms.size) < res_t.size
+          next if (atoms.size - @mapped_atoms.size) < res_t.size || res_t.root.nil?
           if match?(res_t, atom, atom_map)
             yield res_t, atom_map
             atom_map.each_key { |atom| @mapped_atoms << atom }
