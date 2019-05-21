@@ -152,15 +152,27 @@ describe Chem::Topology::Builder do
       builder.guess_bonds_from_geometry
       builder.guess_topology_from_connectivity
 
-      structure.chains.map(&.id).should eq ['A', 'B', 'C', 'D']
-      structure.chains[0].residues.map(&.name).should eq %w(ASN PHE GLY ALA ILE LEU SER)
-      structure.chains[0].residues.map(&.number).should eq (1..7).to_a
-      structure.chains[1].residues.map(&.name).should eq %w(PHE GLY ALA ILE LEU SER UNK)
-      structure.chains[1].residues.map(&.number).should eq (1..7).to_a
-      structure.chains[2].residues.map(&.name).should eq %w(UNK)
-      structure.chains[2].residues.map(&.number).should eq [1]
-      structure.chains[3].residues.map(&.name).should eq %w(HOH HOH HOH HOH HOH HOH HOH)
-      structure.chains[3].residues.map(&.number).should eq (1..7).to_a
+      chains = structure.chains
+      chains.map(&.id).should eq ['A', 'B', 'C', 'D']
+      chains[0].residues.map(&.name).sort!.should eq %w(ALA ASN GLY ILE LEU PHE SER)
+      chains[0].residues.map(&.number).should eq (1..7).to_a
+      chains[1].residues.map(&.name).sort!.should eq %w(ALA GLY ILE LEU PHE SER UNK)
+      chains[1].residues.map(&.number).should eq (1..7).to_a
+      chains[2].residues.map(&.name).should eq %w(UNK)
+      chains[2].residues.map(&.number).should eq [1]
+      chains[3].residues.map(&.name).should eq %w(HOH HOH HOH HOH HOH HOH HOH)
+      chains[3].residues.map(&.number).should eq (1..7).to_a
+    end
+
+    it "guesses the topology of a periodic peptide" do
+      structure = Chem::Structure.read "spec/data/poscar/hlx_gly.poscar"
+      builder = Chem::Topology::Builder.new structure
+      builder.guess_bonds_from_geometry
+      builder.guess_topology_from_connectivity
+
+      structure.chains.map(&.id).should eq ['A']
+      structure.chains[0].residues.map(&.name).should eq ["GLY"] * 13
+      structure.chains[0].residues.map(&.number).should eq (1..13).to_a
     end
 
     it "fails when structure has no bonds" do
