@@ -39,6 +39,29 @@ module Chem::Topology
       end
     end
 
+    def renumber_by_connectivity : Nil
+      raise Error.new "Structure has no bonds" if @structure.bonds.empty?
+      @structure.each_chain do |chain|
+        next unless chain.residues.size > 1
+        next unless link_bond = chain.each_residue.compact_map do |residue|
+                      Templates[residue.name]?.try &.link_bond
+                    end.first?
+
+        res_map = chain.each_residue.to_h do |residue|
+          {guess_previous_residue(residue, link_bond), residue}
+        end
+        res_map[nil] = chain.residues.first unless res_map.has_key? nil
+
+        prev_res = nil
+        chain.residues.size.times do |i|
+          next_res = res_map[prev_res]
+          next_res.number = i + 1
+          prev_res = next_res
+        end
+        chain.reset_cache
+      end
+    end
+
     private def assign_bond_orders : Nil
       @structure.each_atom do |atom|
         if atom.element.ionic?
@@ -80,6 +103,29 @@ module Chem::Topology
 
     private def guess_nominal_valency_from_connectivity(atom : Atom) : Int32
       atom.element.valencies.find(&.>=(atom.valency)) || atom.element.max_valency
+    end
+
+    private def guess_previous_residue(residue : Residue,
+                                       link_bond : Templates::Bond) : Residue?
+      prev_res = nil
+      if atom = residue[link_bond.second]?
+        prev_res = atom.bonded_atoms.find(&.name.==(link_bond.first)).try &.residue
+        prev_res ||= atom.bonded_atoms.find do |atom|
+          element = PeriodicTable[atom_name: link_bond.first]
+          atom.element == element && atom.residue != residue
+        end.try &.residue
+      else
+        elements = {PeriodicTable[atom_name: link_bond.first],
+                    PeriodicTable[atom_name: link_bond.second]}
+        residue.each_atom do |atom|
+          next unless atom.element == elements[1]
+          prev_res = atom.bonded_atoms.find do |atom|
+            atom.element == elements[0] && atom.residue != residue
+          end.try &.residue
+          break if prev_res
+        end
+      end
+      prev_res
     end
 
     private def guess_residues(detector : Templates::Detector,

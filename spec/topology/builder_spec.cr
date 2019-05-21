@@ -183,4 +183,43 @@ describe Chem::Topology::Builder do
       end
     end
   end
+
+  describe "#renumber_by_connectivity" do
+    it "renumber residues in ascending order based on the link bond" do
+      structure = Chem::Structure.read "spec/data/poscar/5e5v--unwrapped.poscar"
+      builder = Chem::Topology::Builder.new structure
+      builder.guess_bonds_from_geometry
+      builder.guess_topology_from_connectivity
+      builder.renumber_by_connectivity
+
+      chains = structure.chains
+      chains[0].residues.map(&.number).should eq (1..7).to_a
+      chains[0].residues.map(&.name).should eq %w(ASN PHE GLY ALA ILE LEU SER)
+      chains[1].residues.map(&.number).should eq (1..7).to_a
+      chains[1].residues.map(&.name).should eq %w(UNK PHE GLY ALA ILE LEU SER)
+      chains[2].residues.map(&.name).should eq %w(UNK)
+      chains[2].residues.map(&.number).should eq [1]
+      chains[3].residues.map(&.name).should eq %w(HOH HOH HOH HOH HOH HOH HOH)
+      chains[3].residues.map(&.number).should eq (1..7).to_a
+
+      chains[0].residues[0].previous.should be_nil
+      chains[0].residues[3].previous.try(&.name).should eq "GLY"
+      chains[0].residues[3].next.try(&.name).should eq "ILE"
+      chains[0].residues[-1].next.should be_nil
+    end
+
+    it "renumber residues of a periodic peptide" do
+      structure = Chem::Structure.read "spec/data/poscar/hlx_gly.poscar"
+      builder = Chem::Topology::Builder.new structure
+      builder.guess_bonds_from_geometry
+      builder.guess_topology_from_connectivity
+      builder.renumber_by_connectivity
+
+      structure.each_residue.cons(2, reuse: true).each do |(a, b)|
+        a["C"].bonded?(b["N"]).should be_true
+        a.next.should eq b
+        b.previous.should eq a
+      end
+    end
+  end
 end

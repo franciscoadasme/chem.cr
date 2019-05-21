@@ -68,9 +68,13 @@ module Chem
     protected def reset_cache : Nil
       @residue_table.clear
       @residues.sort_by! { |residue| {residue.number, (residue.insertion_code || ' ')} }
-      @residues.each do |residue|
+      @residues.each_with_index do |residue, i|
+        residue.previous = @residues[i - 1]?
+        residue.next = @residues[i + 1]?
         @residue_table[{residue.number, residue.insertion_code}] = residue
       end
+      @residues.first?.try &.previous=(nil)
+      @residues.last?.try &.next=(nil)
     end
   end
 end
