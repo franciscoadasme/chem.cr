@@ -153,7 +153,7 @@ module Chem::Topology::Templates
       !link_bond.nil?
     end
 
-    def size : Int32
+    def n_atoms : Int32
       @atom_types.size
     end
   end

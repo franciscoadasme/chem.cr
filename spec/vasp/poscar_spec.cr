@@ -6,7 +6,7 @@ describe Chem::VASP::Poscar do
   describe ".parse" do
     it "parses a basic file" do
       st = Chem::Structure.read "spec/data/poscar/basic.poscar"
-      st.size.should eq 49
+      st.n_atoms.should eq 49
 
       st.atoms.count(&.element.symbol.==("C")).should eq 14
       st.atoms.count(&.element.symbol.==("H")).should eq 21

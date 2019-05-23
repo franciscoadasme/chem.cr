@@ -59,6 +59,14 @@ module Chem
       end
     end
 
+    def n_atoms : Int32
+      each_residue.map(&.n_atoms).sum
+    end
+
+    def n_residues : Int32
+      @residues.size
+    end
+
     def structure=(new_structure : Structure) : Structure
       @structure.delete self
       @structure = new_structure

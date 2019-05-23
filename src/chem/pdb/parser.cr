@@ -94,7 +94,7 @@ module Chem::PDB
       if prev_residue.name == resname
         if template = Topology::Templates[resname]?
           count = template.atom_count include_hydrogens: @pdb_has_hydrogens
-          next_number += 1 unless prev_residue.atoms.size < count
+          next_number += 1 unless prev_residue.n_atoms < count
         end
       else
         next_number += 1

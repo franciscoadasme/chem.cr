@@ -26,14 +26,14 @@ module Chem::Topology
       old_chain.fragments.each do |atoms|
         residues, polymer = guess_residues detector, old_chain, atoms.to_a
 
-        id = (65 + @structure.chains.size).chr
+        id = (65 + @structure.n_chains).chr
         chain = if polymer
                   Chain.new id, @structure
                 else
                   chains[residues.first.kind] ||= Chain.new id, @structure
                 end
         residues.each do |residue|
-          residue.number = chain.residues.size + 1
+          residue.number = chain.n_residues + 1
           residue.chain = chain
         end
       end
@@ -42,7 +42,7 @@ module Chem::Topology
     def renumber_by_connectivity : Nil
       raise Error.new "Structure has no bonds" if @structure.bonds.empty?
       @structure.each_chain do |chain|
-        next unless chain.residues.size > 1
+        next unless chain.n_residues > 1
         next unless link_bond = chain.each_residue.compact_map do |residue|
                       Templates[residue.name]?.try &.link_bond
                     end.first?
@@ -53,7 +53,7 @@ module Chem::Topology
         res_map[nil] = chain.residues.first unless res_map.has_key? nil
 
         prev_res = nil
-        chain.residues.size.times do |i|
+        chain.n_residues.times do |i|
           next_res = res_map[prev_res]
           next_res.number = i + 1
           prev_res = next_res

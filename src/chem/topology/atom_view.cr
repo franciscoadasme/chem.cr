@@ -56,6 +56,14 @@ module Chem
       end
     end
 
+    def n_chains : Int32
+      each_chain.sum { 1 }
+    end
+
+    def n_residues : Int32
+      each_residue.sum { 1 }
+    end
+
     def translate!(by offset : Spatial::Vector)
       each do |atom|
         atom.coords += offset

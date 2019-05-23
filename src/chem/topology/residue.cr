@@ -109,6 +109,10 @@ module Chem
       Spatial.hlxparams self
     end
 
+    def n_atoms : Int32
+      @atoms.size
+    end
+
     def omega : Float64
       if (prev_res = previous) && bonded?(prev_res)
         Spatial.dihedral prev_res["CA"], prev_res["C"], self["N"], self["CA"]

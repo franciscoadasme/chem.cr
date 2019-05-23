@@ -15,7 +15,7 @@ describe Chem::DFTB::Gen::PullParser do
     structure = Chem::DFTB::Gen::PullParser.new(content).parse
     structure.lattice.should be_nil
 
-    structure.size.should eq 5
+    structure.n_atoms.should eq 5
     structure.atoms.map(&.element.symbol).should eq ["Cl", "Na", "O", "Na", "Cl"]
     structure.atoms[0].coords.should eq V[30, 15, 10]
     structure.atoms[1].coords.should eq V[10, 5, 5]
@@ -44,7 +44,7 @@ describe Chem::DFTB::Gen::PullParser do
     structure.lattice.not_nil!.b.should eq V[0, 20, 0]
     structure.lattice.not_nil!.c.should eq V[0, 0, 10]
 
-    structure.size.should eq 4
+    structure.n_atoms.should eq 4
     structure.atoms.map(&.element.symbol).should eq ["Cl", "O", "O", "Na"]
     structure.atoms[0].coords.should eq V[30, 15, 10]
     structure.atoms[1].coords.should eq V[10, 5, 5]
@@ -70,7 +70,7 @@ describe Chem::DFTB::Gen::PullParser do
     structure.lattice.not_nil!.b.should eq V[0, 2.713546, 2.713546]
     structure.lattice.not_nil!.c.should eq V[2.713546, 0, 2.713546]
 
-    structure.size.should eq 2
+    structure.n_atoms.should eq 2
     structure.atoms.map(&.element.symbol).should eq ["Ga", "As"]
     structure.atoms[0].coords.should eq V[0, 0, 0]
     structure.atoms[1].coords.should eq V[1.356773, 1.356773, 1.356773]

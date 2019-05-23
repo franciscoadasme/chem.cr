@@ -41,5 +41,13 @@ module Chem
         end
       end
     end
+
+    def n_atoms : Int32
+      sum &.n_atoms
+    end
+
+    def n_residues : Int32
+      sum &.n_residues
+    end
   end
 end

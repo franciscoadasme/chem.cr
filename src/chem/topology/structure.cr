@@ -103,16 +103,24 @@ module Chem
       to_s io
     end
 
-    def size : Int32
-      each_atom.sum(0) { 1 }
+    def n_atoms : Int32
+      each_chain.sum &.n_atoms
+    end
+
+    def n_chains : Int32
+      @chains.size
+    end
+
+    def n_residues : Int32
+      each_chain.sum &.n_residues
     end
 
     def to_s(io : ::IO)
       io << "<Structure"
       io << " " << title.inspect unless title.blank?
       io << ": "
-      io << size << " atoms"
-      io << ", " << residues.size << " residues" if residues.size > 1
+      io << n_atoms << " atoms"
+      io << ", " << n_residues << " residues" if n_residues > 1
       io << ", "
       io << "non-" unless @lattice
       io << "periodic>"

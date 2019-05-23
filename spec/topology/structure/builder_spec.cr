@@ -44,16 +44,16 @@ describe Chem::Structure::Builder do
 
     st.title.should eq "Ser-Thr-Gly Val"
 
-    st.chains.size.should eq 2
+    st.n_chains.should eq 2
     st.chains.map(&.id).should eq ['F', 'G']
 
-    st.residues.size.should eq 4
+    st.n_residues.should eq 4
     st.residues.map(&.chain.id).should eq ['F', 'F', 'F', 'G']
     st.residues.map(&.number).should eq [1, 2, 3, 1]
     st.residues.map(&.name).should eq ["SER", "THR", "GLY", "VAL"]
-    st.residues.map(&.atoms.size).should eq [6, 7, 4, 7]
+    st.residues.map(&.n_atoms).should eq [6, 7, 4, 7]
 
-    st.size.should eq 24
+    st.n_atoms.should eq 24
     st.atoms.map(&.serial).should eq (1..24).to_a
     st.atoms[0..6].map(&.name).should eq ["N", "CA", "C", "O", "CB", "OG", "N"]
     st.atoms.map(&.residue.name).uniq.should eq ["SER", "THR", "GLY", "VAL"]

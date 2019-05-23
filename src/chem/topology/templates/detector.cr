@@ -47,7 +47,7 @@ module Chem::Topology::Templates
       atoms.each do |atom|
         next if mapped?(atom, atom_map)
         @templates.each do |res_t|
-          next if (atoms.size - @mapped_atoms.size) < res_t.size || res_t.root.nil?
+          next if (atoms.size - @mapped_atoms.size) < res_t.n_atoms || res_t.root.nil?
           if match?(res_t, atom, atom_map)
             yield res_t, atom_map
             atom_map.each_key { |atom| @mapped_atoms << atom }
@@ -97,7 +97,7 @@ module Chem::Topology::Templates
           search ter_t, ter_t.root.not_nil!, other, ter_map
         end
 
-        if ter_map.size == ter_t.size - 4 # ter has an extra CH3
+        if ter_map.size == ter_t.n_atoms - 4 # ter has an extra CH3
           atom_map.merge! ter_map
           break
         end

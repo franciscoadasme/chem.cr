@@ -5,14 +5,14 @@ describe Chem::PDB do
   describe ".parse" do
     it "parses a (real) PDB file" do
       st = Chem::Structure.read "spec/data/pdb/1h1s.pdb"
-      st.size.should eq 9701
+      st.n_atoms.should eq 9701
       st.formal_charge.should eq 0
 
       st.chains.map(&.id).should eq ['A', 'B', 'C', 'D']
-      st.chains['A'].residues.size.should eq 569
-      st.chains['B'].residues.size.should eq 440
-      st.chains['C'].residues.size.should eq 436
-      st.chains['D'].residues.size.should eq 370
+      st.chains['A'].n_residues.should eq 569
+      st.chains['B'].n_residues.should eq 440
+      st.chains['C'].n_residues.should eq 436
+      st.chains['D'].n_residues.should eq 370
 
       st['A'][290].kind.protein?.should be_true
       st['A'][1298].kind.other?.should be_true
@@ -38,9 +38,9 @@ describe Chem::PDB do
       st = Chem::Structure.read "spec/data/pdb/simple.pdb"
       st.experiment.should be_nil
       st.title.should eq "Glutamate"
-      st.size.should eq 13
-      st.chains.size.should eq 1
-      st.residues.size.should eq 3
+      st.n_atoms.should eq 13
+      st.n_chains.should eq 1
+      st.n_residues.should eq 3
       st.atoms.map(&.element.symbol).should eq ["C", "O", "O", "N", "C", "C", "O",
                                                 "C", "C", "C", "O", "O", "N"]
       st.atoms.map(&.formal_charge).should eq [0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, -1, 1]
@@ -62,35 +62,35 @@ describe Chem::PDB do
 
     it "parses a PDB file without elements" do
       st = Chem::Structure.read "spec/data/pdb/no_elements.pdb"
-      st.size.should eq 6
+      st.n_atoms.should eq 6
       st.atoms.map(&.element.symbol).should eq ["N", "C", "C", "O", "C", "O"]
       st.atoms.map(&.formal_charge).should eq [0, 0, 0, 0, 0, 0]
     end
 
     it "parses a PDB file without elements and irregular line width (77)" do
       st = Chem::Structure.read "spec/data/pdb/no_elements_irregular_end.pdb"
-      st.size.should eq 6
+      st.n_atoms.should eq 6
       st.atoms.map(&.element.symbol).should eq ["N", "C", "C", "O", "C", "O"]
       st.atoms.map(&.formal_charge).should eq [0, 0, 0, 0, 0, 0]
     end
 
     it "parses a PDB file without charges" do
       st = Chem::Structure.read "spec/data/pdb/no_charges.pdb"
-      st.size.should eq 6
+      st.n_atoms.should eq 6
       st.atoms.map(&.element.symbol).should eq ["N", "C", "C", "O", "C", "O"]
       st.atoms.map(&.formal_charge).should eq [0, 0, 0, 0, 0, 0]
     end
 
     it "parses a PDB file without charges and irregular line width (79)" do
       st = Chem::Structure.read "spec/data/pdb/no_charges_irregular_end.pdb"
-      st.size.should eq 6
+      st.n_atoms.should eq 6
       st.atoms.map(&.element.symbol).should eq ["N", "C", "C", "O", "C", "O"]
       st.atoms.map(&.formal_charge).should eq [0, 0, 0, 0, 0, 0]
     end
 
     it "parses a PDB file without trailing spaces" do
       st = Chem::Structure.read "spec/data/pdb/no_trailing_spaces.pdb"
-      st.size.should eq 6
+      st.n_atoms.should eq 6
       st.atoms.map(&.element.symbol).should eq ["N", "C", "C", "O", "C", "O"]
       st.atoms.map(&.formal_charge).should eq [0, 0, 0, 0, 0, 0]
     end
@@ -103,15 +103,15 @@ describe Chem::PDB do
 
     it "parses a PDB file with numbers in hexadecimal representation" do
       st = Chem::Structure.read "spec/data/pdb/big_numbers.pdb"
-      st.size.should eq 6
+      st.n_atoms.should eq 6
       st.atoms.map(&.serial).should eq (99995..100000).to_a
       st.residues.map(&.number).should eq [9999, 10000]
     end
 
     it "parses a PDB file with number of atoms/residues equal to asterisks (vmd)" do
       st = Chem::Structure.read "spec/data/pdb/asterisks.pdb"
-      st.size.should eq 18
-      st.residues.size.should eq 6
+      st.n_atoms.should eq 18
+      st.n_residues.should eq 6
       st.atoms.map(&.serial).should eq (99998..100015).to_a
       st.residues.map(&.number).should eq [9998, 9999, 10000, 65535, 65536, 65537]
     end
@@ -157,13 +157,13 @@ describe Chem::PDB do
       ary.size.should eq 1
 
       st = ary.first
-      st.size.should eq 133
+      st.n_atoms.should eq 133
       st.residues.map(&.number).should eq (32..52).to_a
     end
 
     it "parses a PDB file with deuterium" do
       st = Chem::Structure.read "spec/data/pdb/isotopes.pdb"
-      st.size.should eq 12
+      st.n_atoms.should eq 12
       st.atoms[5].element.symbol.should eq "D"
     end
 
@@ -174,7 +174,7 @@ describe Chem::PDB do
 
     it "parses a PDB file with SIG* records" do
       st = Chem::Structure.read "spec/data/pdb/1etl.pdb"
-      st.size.should eq 160
+      st.n_atoms.should eq 160
       st.residues[serial: 6]["SG"].bonded?(st.residues[serial: 14]["SG"]).should be_true
     end
 
@@ -265,7 +265,7 @@ describe Chem::PDB do
       st_list.size.should eq 4
       xs = {5.606, 7.212, 5.408, 22.055}
       st_list.zip(xs) do |st, x|
-        st.size.should eq 5
+        st.n_atoms.should eq 5
         st.atoms.map(&.serial).should eq (1..5).to_a
         st.atoms.map(&.name).should eq ["N", "CA", "C", "O", "CB"]
         st.atoms[0].x.should eq x
@@ -274,7 +274,7 @@ describe Chem::PDB do
 
     it "parses selected model" do
       st = PDB.read "spec/data/pdb/models.pdb", model: 4
-      st.size.should eq 5
+      st.n_atoms.should eq 5
       st.atoms.map(&.serial).should eq (1..5).to_a
       st.atoms.map(&.name).should eq ["N", "CA", "C", "O", "CB"]
       st.atoms[0].x.should eq 22.055
@@ -285,7 +285,7 @@ describe Chem::PDB do
       st_list.size.should eq 2
       xs = {7.212, 22.055}
       st_list.zip(xs) do |st, x|
-        st.size.should eq 5
+        st.n_atoms.should eq 5
         st.atoms.map(&.serial).should eq (1..5).to_a
         st.atoms.map(&.name).should eq ["N", "CA", "C", "O", "CB"]
         st.atoms[0].x.should eq x
@@ -294,7 +294,7 @@ describe Chem::PDB do
 
     it "parses file without the END record" do
       st = Chem::Structure.read "spec/data/pdb/no_end.pdb"
-      st.size.should eq 6
+      st.n_atoms.should eq 6
       st.chains.map(&.id).should eq ['A']
       st.residues.map(&.number).should eq [0]
       st.residues.map(&.name).should eq ["SER"]
@@ -303,9 +303,9 @@ describe Chem::PDB do
 
     it "parses 1cbn (alternate conformations)" do
       st = Chem::Structure.read "spec/data/pdb/1cbn.pdb"
-      st.size.should eq 644 # atom with alt_loc = nil or highest occupancy
-      st.chains.size.should eq 1
-      st.residues.size.should eq 47
+      st.n_atoms.should eq 644 # atom with alt_loc = nil or highest occupancy
+      st.n_chains.should eq 1
+      st.n_residues.should eq 47
       st.residues.map(&.number).should eq ((1..46).to_a << 66)
 
       res = st.residues[serial: 23]
@@ -319,9 +319,9 @@ describe Chem::PDB do
 
     it "parses 1dpo (insertions)" do
       st = Chem::Structure.read "spec/data/pdb/1dpo.pdb"
-      st.size.should eq 1921 # atom with alt_loc = nil or A
-      st.chains.size.should eq 1
-      st.residues.size.should eq 446
+      st.n_atoms.should eq 1921 # atom with alt_loc = nil or A
+      st.n_chains.should eq 1
+      st.n_residues.should eq 446
 
       missing = {35, 36, 68, 126, 131, 205, 206, 207, 208, 218}
       resids = [] of Tuple(Int32, Char?)

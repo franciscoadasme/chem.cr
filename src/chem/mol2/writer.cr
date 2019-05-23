@@ -84,9 +84,9 @@ module Chem::Mol2
       write_record "molecule" do |io|
         io.puts structure.title
         io.printf "%5d%5d%4d\n",
-          structure.atoms.size,
+          structure.n_atoms,
           structure.bonds.size,
-          structure.residues.size
+          structure.n_residues
         io.puts guess_mol_type(structure)
         io.puts "USER_CHARGES"
       end

@@ -2,9 +2,10 @@ module Chem
   module AtomCollection
     abstract def each_atom : Iterator(Atom)
     abstract def each_atom(&block : Atom ->)
+    abstract def n_atoms : Int32
 
     def atoms : AtomView
-      atoms = [] of Atom
+      atoms = Array(Atom).new n_atoms
       each_atom { |atom| atoms << atom }
       AtomView.new atoms
     end

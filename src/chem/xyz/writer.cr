@@ -5,7 +5,7 @@ module Chem::XYZ
     end
 
     def <<(structure : Structure) : self
-      @io << structure.size << '\n'
+      @io << structure.n_atoms << '\n'
       @io << structure.title << '\n'
       structure.each_atom { |atom| self << atom }
       self

@@ -12,7 +12,7 @@ describe Chem::XYZ::PullParser do
     structure = Chem::XYZ::PullParser.new(content).parse
 
     structure.title.should eq "Ala-Cys-Ala-Met-Ala"
-    structure.size.should eq 61
+    structure.n_atoms.should eq 61
     structure.atoms.map(&.element.symbol).should eq symbols
     structure.atoms[11].coords.should eq V[4.76610, 0.49650, 5.29840]
     structure.atoms[-1].coords.should eq V[0.72200, 0.70700, 7.66970]
@@ -24,7 +24,7 @@ describe Chem::XYZ::PullParser do
 
     structures.size.should eq 4
     structures.map(&.title).should eq ["0", "1", "2", "3"]
-    structures.map(&.size).should eq [3, 3, 3, 3]
+    structures.map(&.n_atoms).should eq [3, 3, 3, 3]
     structures.map(&.atoms[1].z).should eq [1.159076, 1.2, 1.3, 1.4]
     structures.each do |structure|
       structure.atoms.map(&.element.symbol).should eq ["C", "O", "O"]
@@ -37,7 +37,7 @@ describe Chem::XYZ::PullParser do
 
     structures.size.should eq 2
     structures.map(&.title).should eq ["1", "3"]
-    structures.map(&.size).should eq [3, 3]
+    structures.map(&.n_atoms).should eq [3, 3]
     structures.map(&.atoms[1].z).should eq [1.2, 1.4]
   end
 

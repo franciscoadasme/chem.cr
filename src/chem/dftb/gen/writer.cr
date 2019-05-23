@@ -67,7 +67,7 @@ module Chem::DFTB::Gen
     end
 
     private def write_header(structure : Structure)
-      @io.printf "%5d", structure.size
+      @io.printf "%5d", structure.n_atoms
       write_geometry_type structure
       @io.puts
       @ele_idxs.each_key { |ele| @io.printf "%3s", ele }

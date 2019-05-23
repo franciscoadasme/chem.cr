@@ -42,5 +42,13 @@ module Chem
         prev_chain = residue.chain
       end
     end
+
+    def n_atoms : Int32
+      sum &.n_atoms
+    end
+
+    def n_chains : Int32
+      each_chain.sum { 1 }
+    end
   end
 end

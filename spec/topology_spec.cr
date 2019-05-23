@@ -20,6 +20,12 @@ describe Chem::AtomCollection do
       st.each_atom.should be_a Iterator(Chem::Atom)
     end
   end
+
+  describe "#n_atoms" do
+    it "returns the number of atoms" do
+      st.n_atoms.should eq 25
+    end
+  end
 end
 
 describe Chem::AtomView do
@@ -299,6 +305,12 @@ describe Chem::ChainCollection do
       st.each_chain.should be_a Iterator(Chem::Chain)
     end
   end
+
+  describe "#n_chains" do
+    it "returns the number of chains" do
+      st.n_chains.should eq 2
+    end
+  end
 end
 
 describe Chem::ChainView do
@@ -333,6 +345,12 @@ describe Chem::ResidueCollection do
 
     it "returns an iterator when called without block" do
       st.each_residue.should be_a Iterator(Chem::Residue)
+    end
+  end
+
+  describe "#n_residues" do
+    it "returns the number of residues" do
+      st.n_residues.should eq 3
     end
   end
 
@@ -374,16 +392,6 @@ describe Chem::ResidueView do
   describe "#size" do
     it "returns the number of residues" do
       residues.size.should eq 7
-    end
-  end
-end
-
-describe Chem::Structure do
-  st = fake_structure
-
-  describe "#size" do
-    it "returns the number of atoms" do
-      st.size.should eq 25
     end
   end
 end
