@@ -69,15 +69,23 @@ module Chem::VASP::Poscar
 end
 
 def assert_writer(klass : Chem::IO::Writer.class,
-                  filepath : String,
-                  expected : String,
-                  *,
-                  raw : Bool = false)
-  structure = Chem::Structure.read File.join("spec", "data", filepath)
-  io = IO::Memory.new
-  klass.new(io) << structure
+                  structure : Chem::Structure | String,
+                  expected : String)
+  assert_writer klass, nil, structure, expected
+end
 
-  expected = File.read File.join("spec", "data", expected) unless raw
+def assert_writer(klass : Chem::IO::Writer.class,
+                  options : NamedTuple?,
+                  structure : Chem::Structure | String,
+                  expected : String)
+  if structure.is_a? String
+    structure = Chem::Structure.read File.join("spec", "data", structure)
+  end
+  io = IO::Memory.new
+  writer = options ? klass.new(io, options) : klass.new(io)
+  writer << structure
+
+  expected = File.read File.join("spec", "data", expected) if /\.[a-z]+$/ =~ expected
   io.to_s.should eq expected
 end
 

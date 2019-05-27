@@ -1,10 +1,14 @@
 module Chem::VASP::Poscar
   @[IO::FileType(format: Poscar, ext: [:poscar])]
   class Writer < IO::Writer
+    @order : Array(PeriodicTable::Element)
     @transform : Spatial::AffineTransform?
     @write_constraint_flags = false
 
-    def initialize(@io : ::IO, fractional : Bool = false, @wrap : Bool = false)
+    def initialize(@io : ::IO,
+                   @order : Array(PeriodicTable::Element) = [] of PeriodicTable::Element,
+                   fractional : Bool = false,
+                   @wrap : Bool = false)
       @coord_system = fractional ? CoordinateSystem::Fractional : CoordinateSystem::Cartesian
     end
 
@@ -13,8 +17,15 @@ module Chem::VASP::Poscar
       raise ::IO::Error.new "Cannot write a non-periodic structure" unless lattice = structure.lattice
 
       atoms = structure.each_atom.to_a
+      @order = atoms.map(&.element).uniq! if @order.empty?
+      atoms.sort_by! do |atom|
+        if idx = @order.index(atom.element)
+          {idx, atom.serial}
+        else
+          raise Error.new "Missing #{atom.element.symbol} in element order"
+        end
+      end
       elements = atoms.map &.element
-      atoms.sort_by! { |atom| {elements.index(atom.element).as(Int32), atom.serial} }
 
       @transform = transform? lattice
       @write_constraint_flags = atoms.any? &.constraint
