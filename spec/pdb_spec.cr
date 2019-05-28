@@ -340,4 +340,33 @@ describe Chem::PDB::Writer do
   it "writes a structure" do
     assert_writer Chem::PDB::Writer, "pdb/1crn.pdb", "pdb/1crn--stripped.pdb"
   end
+
+  it "writes CONECT records when specified" do
+    structure = Chem::Structure.build do
+      residue "CH3" do
+        atom :c, V[0, 0, 0]
+        atom :h, V[0, -1, 0]
+        atom :h, V[1, 0, 0]
+        atom :h, V[0, 1, 0]
+
+        bond "C1", "H1"
+        bond "C1", "H2"
+        bond "C1", "H3"
+      end
+    end
+
+    bonds = [structure.atoms[0].bonds[structure.atoms[2]]]
+    assert_writer Chem::PDB::Writer, {bonds: bonds}, structure, <<-EOS
+      REMARK   4                                                                      
+      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
+      HETATM    1  C1  CH3 A   1       0.000   0.000   0.000  1.00  0.00           C  
+      HETATM    2  H1  CH3 A   1       0.000  -1.000   0.000  1.00  0.00           H  
+      HETATM    3  H2  CH3 A   1       1.000   0.000   0.000  1.00  0.00           H  
+      HETATM    4  H3  CH3 A   1       0.000   1.000   0.000  1.00  0.00           H  
+      TER              CH3 A   1                                                      
+      CONECT    1    3
+      CONECT    3    1
+      END                                                                             \n
+      EOS
+  end
 end

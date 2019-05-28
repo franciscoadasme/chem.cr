@@ -4,7 +4,7 @@ module Chem::PDB
     PDB_VERSION      = "3.30"
     PDB_VERSION_DATE = Time.new 2011, 7, 13
 
-    def initialize(@io : ::IO)
+    def initialize(@io : ::IO, @bonds : Array(Bond)? = nil)
     end
 
     def <<(structure : Structure) : self
@@ -18,6 +18,7 @@ module Chem::PDB
         self << lattice
       end
       structure.each_chain { |chain| self << chain }
+      write_bonds
       @io.puts "END".ljust(80)
       self
     end
@@ -71,6 +72,27 @@ module Chem::PDB
         lattice.space_group || "",
         "",
         ""
+    end
+
+    private def write_bonds : Nil
+      if bonds = @bonds
+        write_bonds bonds
+      end
+    end
+
+    private def write_bonds(bonds : Array(Bond)) : Nil
+      idx_pairs = Hash(Int32, Array(Int32)).new { |hash, key| hash[key] = [] of Int32 }
+      bonds.each do |bond|
+        idx_pairs[bond.first.serial] << bond.second.serial
+        idx_pairs[bond.second.serial] << bond.first.serial
+      end
+      idx_pairs.to_a.sort!.each do |i, idxs|
+        idxs.each_slice(4, reuse: true) do |slice|
+          @io.printf "CONECT%5d", i
+          slice.each { |j| @io.printf "%5d", j }
+          @io.puts
+        end
+      end
     end
 
     private def write_expt_citation(expt : Protein::Experiment) : Nil
