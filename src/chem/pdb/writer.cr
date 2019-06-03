@@ -4,7 +4,7 @@ module Chem::PDB
     PDB_VERSION      = "3.30"
     PDB_VERSION_DATE = Time.new 2011, 7, 13
 
-    def initialize(@io : ::IO, @bonds : Array(Bond)? = nil)
+    def initialize(@io : ::IO, @bonds : Bool | Array(Bond) = false)
     end
 
     def <<(structure : Structure) : self
@@ -18,7 +18,11 @@ module Chem::PDB
         self << lattice
       end
       structure.each_chain { |chain| self << chain }
-      write_bonds
+      if (bonds = @bonds).is_a? Array(Bond)
+        write_bonds bonds
+      elsif @bonds
+        write_bonds structure.bonds
+      end
       @io.puts "END".ljust(80)
       self
     end
@@ -72,12 +76,6 @@ module Chem::PDB
         lattice.space_group || "",
         "",
         ""
-    end
-
-    private def write_bonds : Nil
-      if bonds = @bonds
-        write_bonds bonds
-      end
     end
 
     private def write_bonds(bonds : Array(Bond)) : Nil
