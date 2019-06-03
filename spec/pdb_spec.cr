@@ -369,4 +369,33 @@ describe Chem::PDB::Writer do
       END                                                                             \n
       EOS
   end
+
+  it "writes CONECT records for non-single bonds" do
+    structure = Chem::Structure.build do
+      residue "CNH" do
+        atom :c, V[0, 0, 0]
+        atom :n, V[0, -1, 0]
+        atom :h, V[1, 0, 0]
+        atom :h, V[0, 1, 0]
+
+        bond "C1", "N1", order: 3
+        bond "C1", "H1"
+        bond "C1", "H2"
+      end
+    end
+
+    bonds = [structure.atoms[0].bonds[structure.atoms[1]]]
+    assert_writer Chem::PDB::Writer, {bonds: bonds}, structure, <<-EOS
+      REMARK   4                                                                      
+      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
+      HETATM    1  C1  CNH A   1       0.000   0.000   0.000  1.00  0.00           C  
+      HETATM    2  N1  CNH A   1       0.000  -1.000   0.000  1.00  0.00           N  
+      HETATM    3  H1  CNH A   1       1.000   0.000   0.000  1.00  0.00           H  
+      HETATM    4  H2  CNH A   1       0.000   1.000   0.000  1.00  0.00           H  
+      TER              CNH A   1                                                      
+      CONECT    1    2    2    2
+      CONECT    2    1    1    1
+      END                                                                             \n
+      EOS
+  end
 end

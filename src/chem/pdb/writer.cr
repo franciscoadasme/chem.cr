@@ -81,15 +81,17 @@ module Chem::PDB
     end
 
     private def write_bonds(bonds : Array(Bond)) : Nil
-      idx_pairs = Hash(Int32, Array(Int32)).new { |hash, key| hash[key] = [] of Int32 }
+      idx_pairs = Array(Tuple(Int32, Int32)).new bonds.size
       bonds.each do |bond|
-        idx_pairs[bond.first.serial] << bond.second.serial
-        idx_pairs[bond.second.serial] << bond.first.serial
+        bond.order.clamp(1..3).times do
+          idx_pairs << {bond.first.serial, bond.second.serial}
+          idx_pairs << {bond.second.serial, bond.first.serial}
+        end
       end
-      idx_pairs.to_a.sort!.each do |i, idxs|
-        idxs.each_slice(4, reuse: true) do |slice|
+      idx_pairs.sort!.chunk(&.[0]).each do |i, pairs|
+        pairs.each_slice(4, reuse: true) do |slice|
           @io.printf "CONECT%5d", i
-          slice.each { |j| @io.printf "%5d", j }
+          slice.each { |pair| @io.printf "%5d", pair[1] }
           @io.puts
         end
       end
