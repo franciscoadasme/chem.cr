@@ -9,6 +9,23 @@ module Chem::Protein
     Bend
     None
 
+    def self.[](code : Char) : self
+      self[code]? || raise "Unknown secondary structure code: #{code}"
+    end
+
+    def self.[]?(code : Char) : self?
+      case code.upcase
+      when 'H'      then HelixAlpha
+      when 'G'      then Helix3_10
+      when 'I'      then HelixPi
+      when 'E'      then BetaStrand
+      when 'B'      then BetaBridge
+      when 'T'      then Turn
+      when '0', 'C' then None
+      else               nil
+      end
+    end
+
     def beta? : Bool
       beta_strand?
     end
