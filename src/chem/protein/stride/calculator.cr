@@ -1,14 +1,35 @@
 module Chem::Protein::Stride
   class Calculator
     def initialize(@structure : Structure)
+      @output = uninitialized String
     end
 
     def assign
-      pdbfile = write_input
-      output = exec_stride pdbfile.path
-      parse_and_assign output
-    ensure
-      pdbfile.delete if pdbfile
+      run_stride
+      each_record do |chain, resnum, inscode, ss|
+        @structure[chain][resnum, inscode].secondary_structure = ss
+      end
+    end
+
+    def calculate : Hash(Residue, SecondaryStructure)
+      run_stride
+      ss_table = {} of Residue => SecondaryStructure
+      each_record do |chain, resnum, inscode, ss|
+        ss_table[@structure[chain][resnum, inscode]] = ss
+      end
+      ss_table
+    end
+
+    private def each_record(&block : Char, Int32, Char?, SecondaryStructure ->) : Nil
+      @output.each_line do |line|
+        next unless line.starts_with? "ASG"
+        chain = (chr = line[9]) != '-' ? chr : '-'
+        resnum = line[10..14].to_i
+        inscode = line[15]
+        inscode = nil if inscode.whitespace?
+        ss = SecondaryStructure[line[24]]
+        yield chain, resnum, inscode, ss
+      end
     end
 
     private def exec_stride(pdbfile : String) : String
@@ -22,16 +43,11 @@ module Chem::Protein::Stride
       end
     end
 
-    private def parse_and_assign(output : String) : Nil
-      output.each_line do |line|
-        next unless line.starts_with? "ASG"
-        chain = (chr = line[9]) != '-' ? chr : '-'
-        resnum = line[10..14].to_i
-        inscode = line[15]
-        inscode = nil if inscode.whitespace?
-        ss = SecondaryStructure[line[24]]
-        @structure[chain][resnum, inscode].secondary_structure = ss
-      end
+    private def run_stride : Nil
+      pdbfile = write_input
+      @output = exec_stride pdbfile.path
+    ensure
+      pdbfile.delete if pdbfile
     end
 
     private def write_input : File

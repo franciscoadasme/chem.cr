@@ -6,7 +6,7 @@ describe Chem::Protein::Stride do
     structure.each_residue.select(&.has_alternate_conformations?).each &.conf=('A')
 
     Chem::Topology.guess_topology structure
-    Chem::Protein::Stride.assign_secondary_structure structure
+    Chem::Protein::Stride.assign structure
     expected = "0EE000HHHHHHHHHHHH0000HHHHHHHH00EE000000TTTTT0"
     structure.each_residue.select(&.protein?).map(&.dssp).join.should eq expected
   end
@@ -16,8 +16,19 @@ describe Chem::Protein::Stride do
     structure.each_residue.select(&.has_alternate_conformations?).each &.conf=('A')
 
     Chem::Topology.guess_topology structure
-    Chem::Protein::Stride.assign_secondary_structure structure
+    Chem::Protein::Stride.assign structure
     expected = "00B0000BTTTTT0BTTEEE000B0000BTTTTT0B00EEE0"
     structure.each_residue.select(&.protein?).map(&.dssp).join.should eq expected
+  end
+
+  it "calculates secondary structure (1cbn)" do
+    structure = Chem::Structure.read "spec/data/pdb/1cbn.pdb"
+    structure.each_residue.select(&.has_alternate_conformations?).each &.conf=('A')
+
+    Chem::Topology.guess_topology structure
+    ss_table = Chem::Protein::Stride.calculate structure
+    ss_table[structure['A'][7]].helix_alpha?.should be_true
+    ss_table[structure['A'][45]].turn?.should be_true
+    ss_table[structure['A'][46]].none?.should be_true
   end
 end
