@@ -52,7 +52,7 @@ module Chem::Protein::Stride
 
     private def write_input : File
       File.tempfile(".pdb") do |io|
-        @structure.write io, format: :pdb
+        @structure.write io, format: :pdb, alternate_locations: false
       end
     end
   end
