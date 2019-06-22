@@ -29,7 +29,9 @@ module Chem::IO
               initialize(
                 io,
                 \{% for arg in args %}
-                  \{{arg.name}}: options[:\{{arg.name}}]? || \{{arg.default_value}},
+                  \{{arg.name}}: (options.has_key?(:\{{arg.name}}) ?
+                    options[:\{{arg.name}}]?.not_nil! :
+                    \{{arg.default_value}}),
                 \{% end %}
               )
             end
