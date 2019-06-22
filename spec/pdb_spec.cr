@@ -341,6 +341,70 @@ describe Chem::PDB::Writer do
     assert_writer Chem::PDB::Writer, "pdb/1crn.pdb", "pdb/1crn--stripped.pdb"
   end
 
+  it "writes alternate conformations" do
+    structure = Chem::Structure.build do
+      residue "SER" do
+        atoms "N", "CA", "C", "O"
+
+        conf 'B', occupancy: 0.65 do
+          atom "CB", {1.0, 0.0, 0.0}
+          atom "OG", {1.0, 0.0, 0.0}
+        end
+
+        conf 'C', occupancy: 0.2 do
+          atom "CB", {2.0, 0.0, 0.0}
+          atom "OG", {2.0, 0.0, 0.0}
+        end
+      end
+    end
+    structure.residues[0].kind = :protein
+
+    assert_writer Chem::PDB::Writer, structure, <<-EOS
+      REMARK   4                                                                      
+      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
+      ATOM      1  N   SER A   1       0.000   0.000   0.000  1.00  0.00           N  
+      ATOM      2  CA  SER A   1       0.000   0.000   0.000  1.00  0.00           C  
+      ATOM      3  C   SER A   1       0.000   0.000   0.000  1.00  0.00           C  
+      ATOM      4  O   SER A   1       0.000   0.000   0.000  1.00  0.00           O  
+      ATOM      5  CB BSER A   1       1.000   0.000   0.000  0.65  0.00           C  
+      ATOM      6  OG BSER A   1       1.000   0.000   0.000  0.65  0.00           O  
+      TER              SER A   1                                                      
+      END                                                                             \n
+      EOS
+  end
+
+  it "omits alternate conformations" do
+    structure = Chem::Structure.build do
+      residue "SER" do
+        atoms "N", "CA", "C", "O"
+
+        conf 'B', occupancy: 0.65 do
+          atom "CB", {1.0, 0.0, 0.0}
+          atom "OG", {1.0, 0.0, 0.0}
+        end
+
+        conf 'C', occupancy: 0.2 do
+          atom "CB", {2.0, 0.0, 0.0}
+          atom "OG", {2.0, 0.0, 0.0}
+        end
+      end
+    end
+    structure.residues[0].kind = :protein
+
+    assert_writer Chem::PDB::Writer, {alternate_locations: false}, structure, <<-EOS
+      REMARK   4                                                                      
+      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
+      ATOM      1  N   SER A   1       0.000   0.000   0.000  1.00  0.00           N  
+      ATOM      2  CA  SER A   1       0.000   0.000   0.000  1.00  0.00           C  
+      ATOM      3  C   SER A   1       0.000   0.000   0.000  1.00  0.00           C  
+      ATOM      4  O   SER A   1       0.000   0.000   0.000  1.00  0.00           O  
+      ATOM      5  CB  SER A   1       1.000   0.000   0.000  1.00  0.00           C  
+      ATOM      6  OG  SER A   1       1.000   0.000   0.000  1.00  0.00           O  
+      TER              SER A   1                                                      
+      END                                                                             \n
+      EOS
+  end
+
   it "writes CONECT records" do
     structure = Chem::Structure.build do
       residue "ICN" do

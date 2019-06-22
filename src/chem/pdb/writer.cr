@@ -4,7 +4,11 @@ module Chem::PDB
     PDB_VERSION      = "3.30"
     PDB_VERSION_DATE = Time.new 2011, 7, 13
 
-    def initialize(@io : ::IO, @bonds : Bool | Array(Bond) = false)
+    getter? alternate_locations : Bool
+
+    def initialize(@io : ::IO,
+                   @bonds : Bool | Array(Bond) = false,
+                   @alternate_locations : Bool = true)
     end
 
     def <<(structure : Structure) : self
@@ -32,7 +36,7 @@ module Chem::PDB
         (atom.residue.protein? ? "ATOM" : "HETATM"),
         atom.serial,
         atom.name.ljust(3).rjust(4),
-        atom.alt_loc,
+        alternate_locations? ? atom.alt_loc : ' ',
         atom.residue.name,
         atom.chain.id,
         atom.residue.number,
@@ -40,7 +44,7 @@ module Chem::PDB
         atom.x,
         atom.y,
         atom.z,
-        atom.occupancy,
+        alternate_locations? ? atom.occupancy : 1,
         atom.temperature_factor,
         nil,
         atom.element.symbol,
