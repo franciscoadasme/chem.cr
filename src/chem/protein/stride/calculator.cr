@@ -24,9 +24,9 @@ module Chem::Protein::Stride
       @output.each_line do |line|
         next unless line.starts_with? "ASG"
         chain = (chr = line[9]) != '-' ? chr : '-'
-        resnum = line[10..14].to_i
-        inscode = line[15]
-        inscode = nil if inscode.whitespace?
+        inscode = line[14]
+        inscode = nil unless inscode.letter?
+        resnum = line[inscode.nil? ? 10..14 : 10..13].to_i
         ss = SecondaryStructure[line[24]]
         yield chain, resnum, inscode, ss
       end
