@@ -14,10 +14,9 @@ class CAD::Parser < Chem::IO::Parser
 end
 
 @[Chem::IO::FileType(format: Image, ext: [:bmp, :jpg, :png, :tiff])]
-class Image::Writer < Chem::IO::Writer
-  def initialize(@io : IO); end
-
-  def <<(structure : Chem::Structure); end
+class Image::Builder < Chem::IO::Builder
+  def initialize(@io : IO)
+  end
 end
 
 describe Chem::IO::FileFormat do
@@ -66,19 +65,6 @@ describe Chem::IO::FileFormat do
     it "fails when there is no registered parser" do
       expect_raises Exception, "No parser associated with file format Image" do
         Chem::IO::FileFormat::Image.parser IO::Memory.new
-      end
-    end
-  end
-
-  describe "#writer" do
-    it "returns an instance of the registered writer" do
-      writer = Chem::IO::FileFormat::Image.writer IO::Memory.new
-      writer.should be_a Image::Writer
-    end
-
-    it "fails when there is no registered writer" do
-      expect_raises Exception, "No writer associated with file format CAD" do
-        Chem::IO::FileFormat::CAD.writer IO::Memory.new
       end
     end
   end

@@ -57,38 +57,6 @@ module Spec
   end
 end
 
-module Chem::VASP::Poscar
-  def self.write_and_read_back(structure : Structure) : Structure
-    io = ::IO::Memory.new
-    Poscar.write io, structure
-    io.rewind
-    other = Poscar.parse io
-    io.close
-    other
-  end
-end
-
-def assert_writer(klass : Chem::IO::Writer.class,
-                  structure : Chem::Structure | String,
-                  expected : String)
-  assert_writer klass, nil, structure, expected
-end
-
-def assert_writer(klass : Chem::IO::Writer.class,
-                  options : NamedTuple?,
-                  structure : Chem::Structure | String,
-                  expected : String)
-  if structure.is_a? String
-    structure = Chem::Structure.read File.join("spec", "data", structure)
-  end
-  io = IO::Memory.new
-  writer = options ? klass.new(io, options) : klass.new(io)
-  writer << structure
-
-  expected = File.read File.join("spec", "data", expected) if /\.[a-z]+$/ =~ expected
-  io.to_s.should eq expected
-end
-
 def fake_residue_with_alternate_conformations
   Chem::Structure.build do
     residue "SER" do

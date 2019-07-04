@@ -1,7 +1,5 @@
 require "../spec_helper.cr"
 
-alias Poscar = Chem::VASP::Poscar
-
 describe Chem::VASP::Poscar do
   describe ".parse" do
     it "parses a basic file" do
@@ -57,143 +55,122 @@ describe Chem::VASP::Poscar do
       end
     end
   end
+end
 
-  describe ".write" do
-    structure = Chem::Structure.build do
-      title "NaCl-O-NaCl"
-      lattice 40, 20, 10
-      atom PeriodicTable::Cl, at: V[30, 15, 10]
-      atom PeriodicTable::Na, at: V[10, 5, 5]
-      atom PeriodicTable::O, at: V[30, 15, 9]
-      atom PeriodicTable::Na, at: V[10, 10, 12.5]
-      atom PeriodicTable::Cl, at: V[20, 10, 10]
+describe Chem::VASP::Poscar::Builder do
+  structure = Chem::Structure.build do
+    title "NaCl-O-NaCl"
+    lattice 40, 20, 10
+    atom PeriodicTable::Cl, at: V[30, 15, 10]
+    atom PeriodicTable::Na, at: V[10, 5, 5]
+    atom PeriodicTable::O, at: V[30, 15, 9]
+    atom PeriodicTable::Na, at: V[10, 10, 12.5]
+    atom PeriodicTable::Cl, at: V[20, 10, 10]
+  end
+
+  it "writes a structure in cartesian coordinates" do
+    structure.to_poscar.should eq <<-EOS
+      NaCl-O-NaCl
+         1.00000000000000
+          40.0000000000000000    0.0000000000000000    0.0000000000000000
+           0.0000000000000000   20.0000000000000000    0.0000000000000000
+           0.0000000000000000    0.0000000000000000   10.0000000000000000
+         Cl   Na   O 
+           2     2     1
+      Cartesian
+         30.0000000000000000   15.0000000000000000   10.0000000000000000
+         20.0000000000000000   10.0000000000000000   10.0000000000000000
+         10.0000000000000000    5.0000000000000000    5.0000000000000000
+         10.0000000000000000   10.0000000000000000   12.5000000000000000
+         30.0000000000000000   15.0000000000000000    9.0000000000000000\n
+      EOS
+  end
+
+  it "writes a structure in the specified element order" do
+    elements = ["O", "Na", "Cl"].map { |ele| PeriodicTable[ele] }
+    structure.to_poscar(order: elements).should eq <<-EOS
+      NaCl-O-NaCl
+         1.00000000000000
+          40.0000000000000000    0.0000000000000000    0.0000000000000000
+           0.0000000000000000   20.0000000000000000    0.0000000000000000
+           0.0000000000000000    0.0000000000000000   10.0000000000000000
+         O    Na   Cl
+           1     2     2
+      Cartesian
+         30.0000000000000000   15.0000000000000000    9.0000000000000000
+         10.0000000000000000    5.0000000000000000    5.0000000000000000
+         10.0000000000000000   10.0000000000000000   12.5000000000000000
+         30.0000000000000000   15.0000000000000000   10.0000000000000000
+         20.0000000000000000   10.0000000000000000   10.0000000000000000\n
+      EOS
+  end
+
+  it "writes a structure in fractional coordinates" do
+    structure.to_poscar(fractional: true).should eq <<-EOS
+      NaCl-O-NaCl
+         1.00000000000000
+          40.0000000000000000    0.0000000000000000    0.0000000000000000
+           0.0000000000000000   20.0000000000000000    0.0000000000000000
+           0.0000000000000000    0.0000000000000000   10.0000000000000000
+         Cl   Na   O 
+           2     2     1
+      Direct
+          0.7500000000000000    0.7500000000000000    1.0000000000000000
+          0.5000000000000000    0.5000000000000000    1.0000000000000000
+          0.2500000000000000    0.2500000000000000    0.5000000000000000
+          0.2500000000000000    0.5000000000000000    1.2500000000000000
+          0.7500000000000000    0.7500000000000000    0.9000000000000000\n
+      EOS
+  end
+
+  it "writes a structure in fractional coordinates (wrapped)" do
+    structure.to_poscar(fractional: true, wrap: true).should eq <<-EOS
+      NaCl-O-NaCl
+         1.00000000000000
+          40.0000000000000000    0.0000000000000000    0.0000000000000000
+           0.0000000000000000   20.0000000000000000    0.0000000000000000
+           0.0000000000000000    0.0000000000000000   10.0000000000000000
+         Cl   Na   O 
+           2     2     1
+      Direct
+          0.7500000000000000    0.7500000000000000    1.0000000000000000
+          0.5000000000000000    0.5000000000000000    1.0000000000000000
+          0.2500000000000000    0.2500000000000000    0.5000000000000000
+          0.2500000000000000    0.5000000000000000    0.2500000000000000
+          0.7500000000000000    0.7500000000000000    0.9000000000000000\n
+      EOS
+  end
+
+  it "writes a structure having constraints" do
+    structure.atoms[0].constraint = Constraint::XYZ
+    structure.atoms[3].constraint = Constraint::XZ
+    structure.to_poscar.should eq <<-EOS
+      NaCl-O-NaCl
+         1.00000000000000
+          40.0000000000000000    0.0000000000000000    0.0000000000000000
+           0.0000000000000000   20.0000000000000000    0.0000000000000000
+           0.0000000000000000    0.0000000000000000   10.0000000000000000
+         Cl   Na   O 
+           2     2     1
+      Selective dynamics
+      Cartesian
+         30.0000000000000000   15.0000000000000000   10.0000000000000000   F   F   F
+         20.0000000000000000   10.0000000000000000   10.0000000000000000   T   T   T
+         10.0000000000000000    5.0000000000000000    5.0000000000000000   T   T   T
+         10.0000000000000000   10.0000000000000000   12.5000000000000000   F   T   F
+         30.0000000000000000   15.0000000000000000    9.0000000000000000   T   T   T\n
+      EOS
+  end
+
+  it "fails with non-periodic structures" do
+    expect_raises IO::Error, "Cannot write a non-periodic structure" do
+      Chem::Structure.new.to_poscar
     end
+  end
 
-    it "writes a structure in cartesian coordinates" do
-      io = IO::Memory.new
-      structure.write io, :poscar
-
-      io.to_s.rstrip.should eq <<-EOS
-        NaCl-O-NaCl
-           1.00000000000000
-            40.0000000000000000    0.0000000000000000    0.0000000000000000
-             0.0000000000000000   20.0000000000000000    0.0000000000000000
-             0.0000000000000000    0.0000000000000000   10.0000000000000000
-           Cl   Na   O 
-             2     2     1
-        Cartesian
-           30.0000000000000000   15.0000000000000000   10.0000000000000000
-           20.0000000000000000   10.0000000000000000   10.0000000000000000
-           10.0000000000000000    5.0000000000000000    5.0000000000000000
-           10.0000000000000000   10.0000000000000000   12.5000000000000000
-           30.0000000000000000   15.0000000000000000    9.0000000000000000
-        EOS
-    end
-
-    it "writes a structure in the specified element order" do
-      elements = ["O", "Na", "Cl"].map { |ele| PeriodicTable[ele] }
-      assert_writer Poscar::Writer, {order: elements}, structure, <<-EOS
-        NaCl-O-NaCl
-           1.00000000000000
-            40.0000000000000000    0.0000000000000000    0.0000000000000000
-             0.0000000000000000   20.0000000000000000    0.0000000000000000
-             0.0000000000000000    0.0000000000000000   10.0000000000000000
-           O    Na   Cl
-             1     2     2
-        Cartesian
-           30.0000000000000000   15.0000000000000000    9.0000000000000000
-           10.0000000000000000    5.0000000000000000    5.0000000000000000
-           10.0000000000000000   10.0000000000000000   12.5000000000000000
-           30.0000000000000000   15.0000000000000000   10.0000000000000000
-           20.0000000000000000   10.0000000000000000   10.0000000000000000\n
-        EOS
-    end
-
-    it "writes a structure in fractional coordinates" do
-      io = IO::Memory.new
-      structure.write io, :poscar, fractional: true
-
-      io.to_s.rstrip.should eq <<-EOS
-        NaCl-O-NaCl
-           1.00000000000000
-            40.0000000000000000    0.0000000000000000    0.0000000000000000
-             0.0000000000000000   20.0000000000000000    0.0000000000000000
-             0.0000000000000000    0.0000000000000000   10.0000000000000000
-           Cl   Na   O 
-             2     2     1
-        Direct
-          0.7500000000000000  0.7500000000000000  1.0000000000000000
-          0.5000000000000000  0.5000000000000000  1.0000000000000000
-          0.2500000000000000  0.2500000000000000  0.5000000000000000
-          0.2500000000000000  0.5000000000000000  1.2500000000000000
-          0.7500000000000000  0.7500000000000000  0.9000000000000000
-        EOS
-    end
-
-    it "writes a structure in fractional coordinates (wrapped)" do
-      io = IO::Memory.new
-      structure.write io, :poscar, fractional: true, wrap: true
-
-      io.to_s.rstrip.should eq <<-EOS
-        NaCl-O-NaCl
-           1.00000000000000
-            40.0000000000000000    0.0000000000000000    0.0000000000000000
-             0.0000000000000000   20.0000000000000000    0.0000000000000000
-             0.0000000000000000    0.0000000000000000   10.0000000000000000
-           Cl   Na   O 
-             2     2     1
-        Direct
-          0.7500000000000000  0.7500000000000000  1.0000000000000000
-          0.5000000000000000  0.5000000000000000  1.0000000000000000
-          0.2500000000000000  0.2500000000000000  0.5000000000000000
-          0.2500000000000000  0.5000000000000000  0.2500000000000000
-          0.7500000000000000  0.7500000000000000  0.9000000000000000
-        EOS
-    end
-
-    it "writes a structure having constraints" do
-      structure.atoms[0].constraint = Constraint::XYZ
-      structure.atoms[3].constraint = Constraint::XZ
-
-      io = IO::Memory.new
-      structure.write io, :poscar
-
-      io.to_s.rstrip.should eq <<-EOS
-        NaCl-O-NaCl
-           1.00000000000000
-            40.0000000000000000    0.0000000000000000    0.0000000000000000
-             0.0000000000000000   20.0000000000000000    0.0000000000000000
-             0.0000000000000000    0.0000000000000000   10.0000000000000000
-           Cl   Na   O 
-             2     2     1
-        Selective dynamics
-        Cartesian
-           30.0000000000000000   15.0000000000000000   10.0000000000000000   F   F   F
-           20.0000000000000000   10.0000000000000000   10.0000000000000000   T   T   T
-           10.0000000000000000    5.0000000000000000    5.0000000000000000   T   T   T
-           10.0000000000000000   10.0000000000000000   12.5000000000000000   F   T   F
-           30.0000000000000000   15.0000000000000000    9.0000000000000000   T   T   T
-        EOS
-    end
-
-    it "fails with non-periodic structures" do
-      expect_raises IO::Error, "Cannot write a non-periodic structure" do
-        Poscar::Writer.new(IO::Memory.new) << Chem::Structure.new
-      end
-    end
-
-    it "fails when writing multiple structures" do
-      expect_raises IO::Error, "Cannot overwrite existing content" do
-        writer = Poscar::Writer.new IO::Memory.new
-        writer << structure << structure
-      end
-    end
-
-    it "fails when there is a missing element in the specified order" do
-      expect_raises Chem::Error, "Missing Cl in element order" do
-        writer = Poscar::Writer.new IO::Memory.new, order: [PeriodicTable::H]
-        writer << structure
-      end
+  it "fails when there is a missing element in the specified order" do
+    expect_raises Chem::Error, "Missing Cl in element order" do
+      structure.to_poscar order: [PeriodicTable::H]
     end
   end
 end

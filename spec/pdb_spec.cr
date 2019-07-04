@@ -336,9 +336,11 @@ describe Chem::PDB do
   end
 end
 
-describe Chem::PDB::Writer do
+describe Chem::PDB::Builder do
   it "writes a structure" do
-    assert_writer Chem::PDB::Writer, "pdb/1crn.pdb", "pdb/1crn--stripped.pdb"
+    structure = Chem::Structure.read "spec/data/pdb/1crn.pdb"
+    expected = File.read "spec/data/pdb/1crn--stripped.pdb"
+    structure.to_pdb.should eq expected
   end
 
   it "writes alternate conformations" do
@@ -359,7 +361,7 @@ describe Chem::PDB::Writer do
     end
     structure.residues[0].kind = :protein
 
-    assert_writer Chem::PDB::Writer, structure, <<-EOS
+    structure.to_pdb.should eq <<-EOS
       REMARK   4                                                                      
       REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
       ATOM      1  N   SER A   1       0.000   0.000   0.000  1.00  0.00           N  
@@ -391,7 +393,7 @@ describe Chem::PDB::Writer do
     end
     structure.residues[0].kind = :protein
 
-    assert_writer Chem::PDB::Writer, {alternate_locations: false}, structure, <<-EOS
+    structure.to_pdb(alternate_locations: false).should eq <<-EOS
       REMARK   4                                                                      
       REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
       ATOM      1  N   SER A   1       0.000   0.000   0.000  1.00  0.00           N  
@@ -417,7 +419,7 @@ describe Chem::PDB::Writer do
       end
     end
 
-    assert_writer Chem::PDB::Writer, {bonds: true}, structure, <<-EOS
+    structure.to_pdb(bonds: true).should eq <<-EOS
       REMARK   4                                                                      
       REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
       HETATM    1  I1  ICN A   1      -1.000   0.000   0.000  1.00  0.00           I  
@@ -446,7 +448,7 @@ describe Chem::PDB::Writer do
     end
 
     bonds = [structure.atoms[0].bonds[structure.atoms[2]]]
-    assert_writer Chem::PDB::Writer, {bonds: bonds}, structure, <<-EOS
+    structure.to_pdb(bonds: bonds).should eq <<-EOS
       REMARK   4                                                                      
       REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
       HETATM    1  C1  CH3 A   1       0.000   0.000   0.000  1.00  0.00           C  

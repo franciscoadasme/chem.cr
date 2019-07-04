@@ -5,7 +5,7 @@ EXPDTA    X-RAY DIFFRACTION
 JRNL        DOI    10.1073/PNAS.81.19.6014                                      
 REMARK   4                                                                      
 REMARK   4 1CRN COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
-CRYST1   40.960   18.650   22.520  90.00  90.77  90.00 P 1 21 1                 
+CRYST1   40.960   18.650   22.520  90.00  90.77  90.00 P 1           1          
 ATOM      1  N   THR A   1      17.047  14.099   3.625  1.00 13.79           N  
 ATOM      2  CA  THR A   1      16.967  12.784   4.338  1.00 10.80           C  
 ATOM      3  C   THR A   1      15.685  12.755   5.133  1.00  9.19           C  

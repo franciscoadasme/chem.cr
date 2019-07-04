@@ -144,20 +144,19 @@ module Chem
       end
     end
 
-    def write(io : ::IO, format : IO::FileFormat | Symbol, **options) : Nil
-      format = IO::FileFormat.parse(format.to_s) if format.is_a? Symbol
-      format.writer(io, **options) << self
-    end
-
-    def write(filepath : String, format : IO::FileFormat | Symbol, **options) : Nil
-      File.open(filepath, mode: "w") do |file|
-        write file, format, **options
-      end
-    end
-
-    def write(filepath : String, **options) : Nil
-      format = IO::FileFormat.from_ext File.extname(filepath)
-      write filepath, format, **options
+    def write(path : Path | String) : Nil
+      format = IO::FileFormat.from_ext File.extname(path)
+      {% begin %}
+        case format
+        {% for builder in IO::Builder.subclasses.select(&.annotation(IO::FileType)) %}
+          {% format = builder.annotation(IO::FileType)[:format].id.underscore %}
+          when .{{format.id}}?
+            to_{{format.id}} ::{{builder}}.new(file)
+        {% end %}
+        else
+          raise "No builder associated with file format #{self}"
+        end
+      {% end %}
     end
 
     protected def reset_cache : Nil

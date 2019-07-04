@@ -49,7 +49,7 @@ describe Chem::XYZ::PullParser do
   end
 end
 
-describe Chem::XYZ::Writer do
+describe Chem::XYZ::Builder do
   it "writes a structure" do
     structure = Chem::Structure.build do
       title "COO-"
@@ -58,18 +58,13 @@ describe Chem::XYZ::Writer do
       atom :o, V[0, 0, -1.159076]
     end
 
-    io = IO::Memory.new
-    Chem::XYZ::Writer.new(io) << structure
-
-    expected = <<-EOS
+    structure.to_xyz.should eq <<-EOS
       3
       COO-
       C          0.00000        0.00000        0.00000
       O          0.00000        0.00000        1.15908
-      O          0.00000        0.00000       -1.15908
-
+      O          0.00000        0.00000       -1.15908\n
       EOS
-    io.to_s.should eq expected
   end
 
   it "writes multiple structures" do
@@ -80,15 +75,15 @@ describe Chem::XYZ::Writer do
       atom :o, V[3, 0, 0]
     end
 
-    io = IO::Memory.new
-    writer = Chem::XYZ::Writer.new io
-    (1..3).each do |i|
-      structure.title = "COO- Step #{i}"
-      structure.coords.map! &.*(i)
-      writer << structure
+    xyz = Chem::XYZ.build do |xyz|
+      (1..3).each do |i|
+        structure.title = "COO- Step #{i}"
+        structure.coords.map! &.*(i)
+        structure.to_xyz xyz
+      end
     end
 
-    expected = <<-EOS
+    xyz.should eq <<-EOS
       3
       COO- Step 1
       C          1.00000        0.00000        0.00000
@@ -106,6 +101,5 @@ describe Chem::XYZ::Writer do
       O         18.00000        0.00000        0.00000
 
       EOS
-    io.to_s.should eq expected
   end
 end

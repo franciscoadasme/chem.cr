@@ -149,7 +149,7 @@ describe Chem::Mol2::PullParser do
   end
 end
 
-describe Chem::Mol2::Writer do
+describe Chem::Mol2::Builder do
   it "writes a structure" do
     structure = Chem::Structure.build do
       title "Sulfur"
@@ -170,11 +170,11 @@ describe Chem::Mol2::Writer do
       end
     end
 
-    expected = <<-EOS
+    structure.to_mol2.should eq <<-EOS
       @<TRIPOS>MOLECULE
       Sulfur
           5    4   1
-      PROTEIN
+      UNKNOWN
       USER_CHARGES
 
       @<TRIPOS>ATOM
@@ -193,11 +193,6 @@ describe Chem::Mol2::Writer do
       @<TRIPOS>SUBSTRUCTURE
          1 SO445       1 RESIDUE 1 C SO4 1
 
-
       EOS
-
-    io = IO::Memory.new
-    Chem::Mol2::Writer.new(io) << structure
-    io.to_s.should eq expected
   end
 end

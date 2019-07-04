@@ -77,10 +77,9 @@ describe Chem::DFTB::Gen::PullParser do
   end
 end
 
-describe Chem::DFTB::Gen::Writer do
+describe Chem::DFTB::Gen::Builder do
   structure = Chem::Structure.build do
     title "NaCl-O-NaCl"
-    lattice 40, 20, 10
     atom PeriodicTable::Cl, at: V[30, 15, 10]
     atom PeriodicTable::Na, at: V[10, 5, 5]
     atom PeriodicTable::O, at: V[30, 15, 9]
@@ -88,8 +87,21 @@ describe Chem::DFTB::Gen::Writer do
     atom PeriodicTable::Cl, at: V[20, 10, 10]
   end
 
+  it "writes a structure in cartersian coordinats without unit cell" do
+    structure.to_gen.should eq <<-EOS
+          5  C
+       Cl Na  O
+          1 1    3.0000000000E+01    1.5000000000E+01    1.0000000000E+01
+          2 2    1.0000000000E+01    5.0000000000E+00    5.0000000000E+00
+          3 3    3.0000000000E+01    1.5000000000E+01    9.0000000000E+00
+          4 2    1.0000000000E+01    1.0000000000E+01    1.2500000000E+01
+          5 1    2.0000000000E+01    1.0000000000E+01    1.0000000000E+01\n
+      EOS
+  end
+
   it "writes a structure in cartersian coordinats with unit cell" do
-    expected = <<-EOS
+    structure.lattice = Chem::Lattice.orthorombic 40, 20, 10
+    structure.to_gen.should eq <<-EOS
           5  S
        Cl Na  O
           1 1    3.0000000000E+01    1.5000000000E+01    1.0000000000E+01
@@ -100,34 +112,13 @@ describe Chem::DFTB::Gen::Writer do
           0.0000000000E+00    0.0000000000E+00    0.0000000000E+00
           4.0000000000E+01    0.0000000000E+00    0.0000000000E+00
           0.0000000000E+00    2.0000000000E+01    0.0000000000E+00
-          0.0000000000E+00    0.0000000000E+00    1.0000000000E+01
-
+          0.0000000000E+00    0.0000000000E+00    1.0000000000E+01\n
       EOS
-
-    io = IO::Memory.new
-    Chem::DFTB::Gen::Writer.new(io) << structure
-    io.to_s.should eq expected
-  end
-
-  it "writes a structure in cartersian coordinats without unit cell" do
-    expected = <<-EOS
-          5  C
-       Cl Na  O
-          1 1    3.0000000000E+01    1.5000000000E+01    1.0000000000E+01
-          2 2    1.0000000000E+01    5.0000000000E+00    5.0000000000E+00
-          3 3    3.0000000000E+01    1.5000000000E+01    9.0000000000E+00
-          4 2    1.0000000000E+01    1.0000000000E+01    1.2500000000E+01
-          5 1    2.0000000000E+01    1.0000000000E+01    1.0000000000E+01
-
-      EOS
-
-    io = IO::Memory.new
-    Chem::DFTB::Gen::Writer.new(io, periodic: false) << structure
-    io.to_s.should eq expected
   end
 
   it "writes a structure in fractional coordinats with unit cell" do
-    expected = <<-EOS
+    structure.lattice = Chem::Lattice.orthorombic 40, 20, 10
+    structure.to_gen(fractional: true).should eq <<-EOS
           5  F
        Cl Na  O
           1 1    7.5000000000E-01    7.5000000000E-01    1.0000000000E+00
@@ -138,26 +129,13 @@ describe Chem::DFTB::Gen::Writer do
           0.0000000000E+00    0.0000000000E+00    0.0000000000E+00
           4.0000000000E+01    0.0000000000E+00    0.0000000000E+00
           0.0000000000E+00    2.0000000000E+01    0.0000000000E+00
-          0.0000000000E+00    0.0000000000E+00    1.0000000000E+01
-
+          0.0000000000E+00    0.0000000000E+00    1.0000000000E+01\n
       EOS
-
-    io = IO::Memory.new
-    Chem::DFTB::Gen::Writer.new(io, fractional: true) << structure
-    io.to_s.should eq expected
-  end
-
-  it "fails when writing a non-periodic structure" do
-    expect_raises IO::Error, "Cannot write a non-periodic structure" do
-      writer = Chem::DFTB::Gen::Writer.new IO::Memory.new, periodic: true
-      writer << Chem::Structure.new
-    end
   end
 
   it "fails when writing a non-periodic structure in fractional coordinates" do
     expect_raises IO::Error, "Cannot write a non-periodic structure" do
-      writer = Chem::DFTB::Gen::Writer.new IO::Memory.new, fractional: true
-      writer << Chem::Structure.new
+      Chem::Structure.new.to_gen fractional: true
     end
   end
 end
