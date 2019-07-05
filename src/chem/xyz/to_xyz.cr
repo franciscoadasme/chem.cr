@@ -7,6 +7,15 @@ module Chem
     end
   end
 
+  module AtomCollection
+    def to_xyz(xyz : XYZ::Builder) : Nil
+      xyz.atoms = n_atoms
+      xyz.object do
+        each_atom &.to_xyz(xyz)
+      end
+    end
+  end
+
   class PeriodicTable::Element
     def to_xyz(xyz : XYZ::Builder) : Nil
       xyz.string symbol, width: 3

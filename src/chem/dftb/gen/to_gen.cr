@@ -8,6 +8,17 @@ module Chem
     end
   end
 
+  module AtomCollection
+    def to_gen(gen : DFTB::Gen::Builder) : Nil
+      gen.atoms = n_atoms
+      gen.elements = each_atom.map(&.element)
+
+      gen.object do
+        each_atom &.to_gen(gen)
+      end
+    end
+  end
+
   class PeriodicTable::Element
     def to_gen(gen : DFTB::Gen::Builder) : Nil
       gen.string @symbol, alignment: :right, width: 3

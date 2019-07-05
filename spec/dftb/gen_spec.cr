@@ -133,6 +133,18 @@ describe Chem::DFTB::Gen::Builder do
       EOS
   end
 
+  it "writes an atom collection" do
+    structure.chains[0].to_gen.should eq <<-EOS
+          5  C
+       Cl Na  O
+          1 1    3.0000000000E+01    1.5000000000E+01    1.0000000000E+01
+          2 2    1.0000000000E+01    5.0000000000E+00    5.0000000000E+00
+          3 3    3.0000000000E+01    1.5000000000E+01    9.0000000000E+00
+          4 2    1.0000000000E+01    1.0000000000E+01    1.2500000000E+01
+          5 1    2.0000000000E+01    1.0000000000E+01    1.0000000000E+01\n
+      EOS
+  end
+
   it "fails when writing a non-periodic structure in fractional coordinates" do
     expect_raises IO::Error, "Cannot write a non-periodic structure" do
       Chem::Structure.new.to_gen fractional: true

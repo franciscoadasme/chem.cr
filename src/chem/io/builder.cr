@@ -156,7 +156,7 @@ module Chem::IO
     {% for builder in Builder.subclasses.select(&.annotation(FileType)) %}
       {% format = builder.annotation(FileType)[:format].id.underscore %}
 
-      class ::Chem::Structure
+      module ::Chem::AtomCollection
         def to_{{format.id}}(**options) : String
           String.build do |io|
             to_{{format.id}} io, **options

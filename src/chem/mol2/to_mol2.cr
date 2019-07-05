@@ -16,6 +16,21 @@ module Chem
     end
   end
 
+  module AtomCollection
+    def to_mol2(mol2 : Mol2::Builder) : Nil
+      mol2.atoms = n_atoms
+      mol2.bonds = bonds.size
+      mol2.residues = n_residues
+      mol2.title = title
+
+      mol2.object do
+        mol2.section "atom" { each_atom &.to_mol2(mol2) }
+        mol2.section "bond" { bonds.each &.to_mol2(mol2) }
+        mol2.section "substructure" { each_residue &.to_mol2(mol2) }
+      end
+    end
+  end
+
   class Bond
     def to_mol2(mol2 : Mol2::Builder) : Nil
       mol2.number mol2.next_bond_index, width: 5
@@ -58,21 +73,6 @@ module Chem
       mol2.number x, precision: 4, width: 10
       mol2.number y, precision: 4, width: 10
       mol2.number z, precision: 4, width: 10
-    end
-  end
-
-  class Structure
-    def to_mol2(mol2 : Mol2::Builder) : Nil
-      mol2.atoms = n_atoms
-      mol2.bonds = bonds.size
-      mol2.residues = n_residues
-      mol2.title = title
-
-      mol2.object do
-        mol2.section "atom" { each_atom &.to_mol2(mol2) }
-        mol2.section "bond" { bonds.each &.to_mol2(mol2) }
-        mol2.section "substructure" { each_residue &.to_mol2(mol2) }
-      end
     end
   end
 end

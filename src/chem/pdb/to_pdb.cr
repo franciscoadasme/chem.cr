@@ -26,6 +26,24 @@ module Chem
     end
   end
 
+  module AtomCollection
+    def to_pdb(pdb : PDB::Builder) : Nil
+      pdb.bonds = bonds if pdb.bonds?
+
+      prev_chain = nil
+      prev_residue = nil
+      pdb.object do
+        each_atom do |atom|
+          atom.to_pdb pdb
+          prev_residue = atom.residue
+          pdb.ter prev_residue if prev_chain && atom.chain != prev_chain
+          prev_chain = atom.chain
+        end
+        pdb.ter prev_residue if prev_residue
+      end
+    end
+  end
+
   class PeriodicTable::Element
     def to_pdb(pdb : PDB::Builder) : Nil
       pdb.string symbol, alignment: :right, width: 2

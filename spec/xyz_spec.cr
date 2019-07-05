@@ -58,9 +58,9 @@ describe Chem::XYZ::Builder do
       atom :o, V[0, 0, -1.159076]
     end
 
-    structure.to_xyz.should eq <<-EOS
+    structure.chains[0].to_xyz.should eq <<-EOS
       3
-      COO-
+
       C          0.00000        0.00000        0.00000
       O          0.00000        0.00000        1.15908
       O          0.00000        0.00000       -1.15908\n
