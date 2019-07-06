@@ -167,6 +167,10 @@ module Chem
       Spatial.dihedral n1, ca, c, n2
     end
 
+    def polymer? : Bool
+      protein? || dna? || !Topology::Templates[name]?.try(&.link_bond).nil?
+    end
+
     def ramachandran_angles : Tuple(Float64, Float64)
       {phi, psi}
     end

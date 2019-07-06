@@ -355,7 +355,6 @@ describe Chem::PDB::Builder do
       ATOM     31  CB  PRO A   5       8.230   9.957  15.345  1.00  5.11           C  
       ATOM     32  CG  PRO A   5       7.338   9.786  14.114  1.00  5.24           C  
       ATOM     33  CD  PRO A   5       8.366   9.804  12.958  1.00  5.20           C  
-      TER              PRO A   5                                                      
       END                                                                             \n
       EOS
   end
@@ -442,7 +441,6 @@ describe Chem::PDB::Builder do
       HETATM    1  I1  ICN A   1      -1.000   0.000   0.000  1.00  0.00           I  
       HETATM    2  C1  ICN A   1       0.000   0.000   0.000  1.00  0.00           C  
       HETATM    3  N1  ICN A   1       1.000   0.000   0.000  1.00  0.00           N  
-      TER              ICN A   1                                                      
       CONECT    1    2
       CONECT    2    1    3    3    3
       CONECT    3    2    2    2
@@ -472,7 +470,6 @@ describe Chem::PDB::Builder do
       HETATM    2  H1  CH3 A   1       0.000  -1.000   0.000  1.00  0.00           H  
       HETATM    3  H2  CH3 A   1       1.000   0.000   0.000  1.00  0.00           H  
       HETATM    4  H3  CH3 A   1       0.000   1.000   0.000  1.00  0.00           H  
-      TER              CH3 A   1                                                      
       CONECT    1    3
       CONECT    3    1
       END                                                                             \n

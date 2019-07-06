@@ -29,17 +29,8 @@ module Chem
   module AtomCollection
     def to_pdb(pdb : PDB::Builder) : Nil
       pdb.bonds = bonds if pdb.bonds?
-
-      prev_chain = nil
-      prev_residue = nil
       pdb.object do
-        each_atom do |atom|
-          atom.to_pdb pdb
-          prev_residue = atom.residue
-          pdb.ter prev_residue if prev_chain && atom.chain != prev_chain
-          prev_chain = atom.chain
-        end
-        pdb.ter prev_residue if prev_residue
+        each_atom &.to_pdb(pdb)
       end
     end
   end
@@ -103,17 +94,17 @@ module Chem
       pdb.experiment = experiment
       pdb.title = title
 
+      prev_chain = nil
+      prev_res = nil
       pdb.object do
         lattice.try &.to_pdb(pdb)
-        each_chain do |chain|
-          next if chain.n_residues == 0
-          last_residue = uninitialized Residue
-          chain.each_atom do |atom|
-            atom.to_pdb pdb
-            last_residue = atom.residue
-          end
-          pdb.ter last_residue
+        each_atom do |atom|
+          atom.to_pdb pdb
+          prev_res = atom.residue
+          pdb.ter prev_res if prev_chain && atom.chain != prev_chain && prev_res.polymer?
+          prev_chain = atom.chain
         end
+        pdb.ter prev_res if prev_res && prev_res.polymer?
       end
     end
   end
