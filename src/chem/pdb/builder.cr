@@ -7,11 +7,14 @@ module Chem::PDB
     property? alternate_locations : Bool
     setter bonds : Bool | Array(Bond)
     setter experiment : Protein::Experiment?
+    property? renumber : Bool
     setter title = ""
 
     def initialize(@io : ::IO,
                    @bonds : Bool | Array(Bond) = false,
-                   @alternate_locations : Bool = true)
+                   @alternate_locations : Bool = true,
+                   @renumber : Bool = true)
+      @atom_index = 0
     end
 
     def bonds : Nil
@@ -52,6 +55,10 @@ module Chem::PDB
       bonds
     end
 
+    def next_index : Int32
+      @atom_index += 1
+    end
+
     def pdb_version : Nil
       string "REMARK"
       space
@@ -75,7 +82,7 @@ module Chem::PDB
 
     def ter(residue : Residue) : Nil
       string "TER", width: 6
-      space 5
+      renumber? ? number(next_index, width: 5) : space(5)
       space 6
       string residue.name, width: 3
       space

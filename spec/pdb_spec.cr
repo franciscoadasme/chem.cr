@@ -348,13 +348,13 @@ describe Chem::PDB::Builder do
     structure.residues[4].to_pdb.should eq <<-EOS
       REMARK   4                                                                      
       REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
-      ATOM     27  N   PRO A   5       9.561   9.108  13.563  1.00  3.96           N  
-      ATOM     28  CA  PRO A   5       9.448   9.034  15.012  1.00  4.25           C  
-      ATOM     29  C   PRO A   5       9.288   7.670  15.606  1.00  4.96           C  
-      ATOM     30  O   PRO A   5       9.490   7.519  16.819  1.00  7.44           O  
-      ATOM     31  CB  PRO A   5       8.230   9.957  15.345  1.00  5.11           C  
-      ATOM     32  CG  PRO A   5       7.338   9.786  14.114  1.00  5.24           C  
-      ATOM     33  CD  PRO A   5       8.366   9.804  12.958  1.00  5.20           C  
+      ATOM      1  N   PRO A   5       9.561   9.108  13.563  1.00  3.96           N  
+      ATOM      2  CA  PRO A   5       9.448   9.034  15.012  1.00  4.25           C  
+      ATOM      3  C   PRO A   5       9.288   7.670  15.606  1.00  4.96           C  
+      ATOM      4  O   PRO A   5       9.490   7.519  16.819  1.00  7.44           O  
+      ATOM      5  CB  PRO A   5       8.230   9.957  15.345  1.00  5.11           C  
+      ATOM      6  CG  PRO A   5       7.338   9.786  14.114  1.00  5.24           C  
+      ATOM      7  CD  PRO A   5       8.366   9.804  12.958  1.00  5.20           C  
       END                                                                             \n
       EOS
   end
@@ -386,7 +386,7 @@ describe Chem::PDB::Builder do
       ATOM      4  O   SER A   1       0.000   0.000   0.000  1.00  0.00           O  
       ATOM      5  CB BSER A   1       1.000   0.000   0.000  0.65  0.00           C  
       ATOM      6  OG BSER A   1       1.000   0.000   0.000  0.65  0.00           O  
-      TER              SER A   1                                                      
+      TER       7      SER A   1                                                      
       END                                                                             \n
       EOS
   end
@@ -418,7 +418,23 @@ describe Chem::PDB::Builder do
       ATOM      4  O   SER A   1       0.000   0.000   0.000  1.00  0.00           O  
       ATOM      5  CB  SER A   1       1.000   0.000   0.000  1.00  0.00           C  
       ATOM      6  OG  SER A   1       1.000   0.000   0.000  1.00  0.00           O  
-      TER              SER A   1                                                      
+      TER       7      SER A   1                                                      
+      END                                                                             \n
+      EOS
+  end
+
+  it "keeps original atom numbering" do
+    structure = Chem::Structure.read "spec/data/pdb/1crn.pdb"
+    structure.residues[4].to_pdb(renumber: false).should eq <<-EOS
+      REMARK   4                                                                      
+      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
+      ATOM     27  N   PRO A   5       9.561   9.108  13.563  1.00  3.96           N  
+      ATOM     28  CA  PRO A   5       9.448   9.034  15.012  1.00  4.25           C  
+      ATOM     29  C   PRO A   5       9.288   7.670  15.606  1.00  4.96           C  
+      ATOM     30  O   PRO A   5       9.490   7.519  16.819  1.00  7.44           O  
+      ATOM     31  CB  PRO A   5       8.230   9.957  15.345  1.00  5.11           C  
+      ATOM     32  CG  PRO A   5       7.338   9.786  14.114  1.00  5.24           C  
+      ATOM     33  CD  PRO A   5       8.366   9.804  12.958  1.00  5.20           C  
       END                                                                             \n
       EOS
   end

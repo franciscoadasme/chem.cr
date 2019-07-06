@@ -2,7 +2,7 @@ module Chem
   class Atom
     def to_pdb(pdb : PDB::Builder) : Nil
       pdb.string (residue.protein? ? "ATOM" : "HETATM"), width: 6
-      pdb.number serial, width: 5
+      pdb.number (pdb.renumber? ? pdb.next_index : serial), width: 5
       pdb.space
       pdb.string name.ljust(3).rjust(4)
       pdb.string (pdb.alternate_locations? ? alt_loc : ' ') || ' '
