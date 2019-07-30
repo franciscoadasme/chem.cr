@@ -119,7 +119,7 @@ module Chem
 end
 
 struct Time
-  def to_pdb(pdb : PDB::Builder) : Nil
+  def to_pdb(pdb : Chem::PDB::Builder) : Nil
     pdb.string to_s("%d-%^b-%y"), width: 9
   end
 end
