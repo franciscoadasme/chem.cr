@@ -151,7 +151,7 @@ module Chem
         {% for builder in IO::Builder.subclasses.select(&.annotation(IO::FileType)) %}
           {% format = builder.annotation(IO::FileType)[:format].id.underscore %}
           when .{{format.id}}?
-            to_{{format.id}} ::{{builder}}.new(file)
+            to_{{format.id}} path
         {% end %}
         else
           raise "No builder associated with file format #{self}"
