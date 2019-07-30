@@ -16,16 +16,20 @@ module Chem::PDB
     @pdb_seq : Protein::Sequence?
     @pdb_title = ""
 
+    @chains : Set(Char)?
     @segments = [] of SecondaryStructureSegment
     @use_hex_numbers = {:atom_serial => false, :residue_number => false}
 
-    def initialize(@io : ::IO)
+    def initialize(@io : ::IO, chains : Enumerable(Char)? = nil)
       @iter = Record::Iterator.new @io
+      @chains = chains.try &.to_set
     end
 
     private def assign_bonds(to atoms : Hash(Int32, Atom))
       @pdb_bonds.each do |serial, bond_table|
+        next unless atoms.has_key? serial
         bond_table.each do |other, order|
+          next unless atoms.has_key? other
           atoms[serial].bonds.add atoms[other], order
         end
       end
@@ -171,8 +175,9 @@ module Chem::PDB
       @io.pos = last_pos
     end
 
-    private def parse_chain(sys : Structure, prev_chain : Chain?, rec : Record) : Chain
+    private def parse_chain(sys : Structure, prev_chain : Chain?, rec : Record) : Chain?
       chain_id = rec[21]
+      return if (chains = @chains) && !chains.includes?(chain_id)
       sys[chain_id]? || Chain.new chain_id, sys
     end
 
@@ -253,6 +258,7 @@ module Chem::PDB
           case rec.name
           when "atom", "hetatm"
             chain = parse_chain structure, chain, rec
+            next unless chain
             residue = parse_residue chain, residue, rec
             atom = parse_atom residue, atom, rec
             bonded_atoms[atom.serial] = atom if @pdb_bonds.has_key? atom.serial
@@ -301,6 +307,7 @@ module Chem::PDB
         @iter.each do |rec|
           case rec.name
           when "seqres"
+            next if (chains = @chains) && !chains.includes?(rec[11])
             rec[19..79].split.each { |name| aminoacids << Protein::AminoAcid[name] }
           else
             ::Iterator.stop

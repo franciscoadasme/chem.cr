@@ -292,6 +292,16 @@ describe Chem::PDB do
       end
     end
 
+    it "parses selected chains" do
+      structure = Chem::Structure.read "spec/data/pdb/5jqf.pdb", chains: ['B']
+      structure.n_chains.should eq 1
+      structure.n_residues.should eq 38
+      structure.n_atoms.should eq 310
+      structure.chains.map(&.id).should eq ['B']
+      structure.sequence.to_s.should eq "GIEPLGPVDEDQGEHYLFAGG"
+      structure['B'][18].secondary_structure.dssp.should eq 'E'
+    end
+
     it "parses file without the END record" do
       st = Chem::Structure.read "spec/data/pdb/no_end.pdb"
       st.n_atoms.should eq 6
