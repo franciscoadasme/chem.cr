@@ -314,6 +314,13 @@ describe Chem::PDB do
       structure['B'][18].secondary_structure.dssp.should eq 'E'
     end
 
+    it "parses only protein" do
+      structure = Chem::Structure.read "spec/data/pdb/5jqf.pdb", het: false
+      structure.n_chains.should eq 2
+      structure.n_residues.should eq 42
+      structure.n_atoms.should eq 586
+    end
+
     it "parses file without the END record" do
       st = Chem::Structure.read "spec/data/pdb/no_end.pdb"
       st.n_atoms.should eq 6

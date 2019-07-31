@@ -20,7 +20,7 @@ module Chem::PDB
     @segments = [] of SecondaryStructureSegment
     @use_hex_numbers = {:atom_serial => false, :residue_number => false}
 
-    def initialize(@io : ::IO, chains : Enumerable(Char)? = nil)
+    def initialize(@io : ::IO, chains : Enumerable(Char)? = nil, @het : Bool = true)
       @iter = Record::Iterator.new @io
       @chains = chains.try &.to_set
     end
@@ -258,6 +258,7 @@ module Chem::PDB
         @iter.each do |rec|
           case rec.name
           when "atom", "hetatm"
+            next if rec.name == "hetatm" && !read_het?
             chain = parse_chain structure, chain, rec
             next unless chain
             residue = parse_residue chain, residue, rec
@@ -323,6 +324,10 @@ module Chem::PDB
         chain: rec[21],
         start_pos: {rec[22..25].to_i, rec[26]},
         end_pos: {rec[33..36].to_i, rec[37]}
+    end
+
+    private def read_het? : Bool
+      @het
     end
   end
 end
