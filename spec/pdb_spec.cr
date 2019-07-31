@@ -144,6 +144,18 @@ describe Chem::PDB do
                           "OF CRAMBIN"
     end
 
+    it "parses experiment with multiple methods" do
+      content = <<-EOS
+        HEADER    CHAPERONE                               14-FEB-13   4J7Z              
+        TITLE     THERMUS THERMOPHILUS DNAJ J- AND G/F-DOMAINS                          
+        EXPDTA    X-RAY DIFFRACTION; EPR                                                
+        EOS
+      structure = Chem::Structure.parse content, :pdb
+      structure.experiment.should_not be_nil
+      expt = structure.experiment.not_nil!
+      expt.kind.should eq Chem::Protein::Experiment::Kind::XRayDiffraction
+    end
+
     it "parses a PDB file with sequence" do
       st = Chem::Structure.read "spec/data/pdb/1crn.pdb"
 

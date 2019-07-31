@@ -205,7 +205,8 @@ module Chem::PDB
           @iter.back
           @pdb_seq = parse_sequence
         when "expdta"
-          expt_b.kind = Protein::Experiment::Kind.parse(rec[10..79].delete "- ")
+          methods = rec[10..79].split ';'
+          expt_b.kind = Protein::Experiment::Kind.parse methods[0].delete("- ")
         when "header"
           expt_b.deposition_date = Time.parse_utc rec[50..58], "%d-%^b-%y"
           expt_b.pdb_accession = rec[62..65].downcase
