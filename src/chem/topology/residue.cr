@@ -1,5 +1,3 @@
-require "./residue/*"
-
 module Chem
   class Residue
     include AtomCollection
@@ -16,7 +14,6 @@ module Chem
     @atoms = [] of Atom
 
     property chain : Chain
-    getter conformations : ConformationManager { ConformationManager.new self }
     property insertion_code : Char?
     property kind : Kind = :other
     property name : String
@@ -40,18 +37,8 @@ module Chem
     end
 
     protected def <<(atom : Atom) : self
-      if alt_loc = atom.alt_loc
-        if conf.nil? || alt_loc == conf.try(&.id)
-          @atoms << atom
-          @atom_table[atom.name] ||= atom
-        end
-        conf = conformations[alt_loc]?
-        conf ||= conformations.add name, alt_loc, atom.occupancy
-        conf.atoms << atom
-      else
-        @atoms << atom
-        @atom_table[atom.name] = atom
-      end
+      @atoms << atom
+      @atom_table[atom.name] = atom
       self
     end
 
@@ -73,14 +60,6 @@ module Chem
       (angle = omega?) ? angle.abs < 30 : false
     end
 
-    def conf : Conformation?
-      conformations.current
-    end
-
-    def conf=(id : Char)
-      conformations.current = id
-    end
-
     def delete(atom : Atom) : Atom?
       atom = @atoms.delete atom
       @atom_table.delete atom.name if atom
@@ -95,10 +74,6 @@ module Chem
       @atoms.each do |atom|
         yield atom
       end
-    end
-
-    def has_alternate_conformations? : Bool
-      conformations.any?
     end
 
     def has_backbone? : Bool
@@ -173,19 +148,6 @@ module Chem
 
     def ramachandran_angles : Tuple(Float64, Float64)
       {phi, psi}
-    end
-
-    protected def swap_conf_atoms(id : Char, atoms : Array(Atom))
-      atoms.each do |atom|
-        if idx = @atoms.index &.name.==(atom.name)
-          @atoms[idx] = atom
-        else
-          @atoms << atom
-        end
-        @atom_table[atom.name] = atom
-      end
-      @atoms.select! { |atom| {id, nil}.includes? atom.alt_loc }
-      @atom_table.select! { |_, atom| {id, nil}.includes? atom.alt_loc }
     end
 
     def to_s(io : ::IO)

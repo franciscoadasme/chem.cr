@@ -57,7 +57,6 @@ module Chem
     @atom_serial : Int32 = 0
     @chain : Chain?
     @chains = {} of ChainId => Chain
-    @conf : Conf?
     @residue : Residue?
     @residues = {} of ResidueId => Residue
     @structure : Structure
@@ -100,20 +99,8 @@ module Chem
                          serial : Int32,
                          coords : Coords,
                          **options) : Atom
-      options = options.merge(alt_loc: @conf.try(&.id),
-        occupancy: @conf.try(&.occupancy) || 1.0)
-      add_atom name, serial, coords, **options
-    end
-
-    private def add_atom(name : String,
-                         serial : Int32,
-                         coords : Coords,
-                         alt_loc : Char?,
-                         occupancy : Float64,
-                         **options) : Atom
       coords = Spatial::Vector.new *coords unless coords.is_a? Spatial::Vector
-      Atom.new name, serial, coords, current_residue, alt_loc, **options,
-        occupancy: occupancy
+      Atom.new name, serial, coords, current_residue, **options
     end
 
     private def add_chain(id : Char) : Chain
@@ -124,7 +111,6 @@ module Chem
     private def add_residue(name : String, number : Int32, ins_code : Char?) : Residue
       residue = Residue.new name, number, ins_code, current_chain
       @residues[id(of: residue)] = @residue = residue
-      @conf = nil
       residue
     end
 
@@ -174,16 +160,6 @@ module Chem
       ch = chain *args, **options
       with self yield self
       ch
-    end
-
-    def conf(named id : Char, occupancy : Float64)
-      @conf = Conf.new id, occupancy
-    end
-
-    def conf(*args, **options, &block)
-      conf *args, **options
-      with self yield self
-      @conf = nil
     end
 
     private def current_chain : Chain

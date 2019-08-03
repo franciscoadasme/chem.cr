@@ -85,38 +85,6 @@ describe Chem::Structure::Builder do
     st.atoms[serial: 4].x.should eq 18.066
   end
 
-  it "builds a structure with alternate conformations" do
-    st = Chem::Structure::Builder.build do
-      chain do
-        residue do
-          atom "N", {7.831, -27.902, 17.508}
-          atom "C", {6.189, -26.986, 15.988}
-          atom "O", {5.359, -27.732, 16.505}
-
-          conf 'A', 0.65 do
-            atom "CB", {7.668, -27.218, 16.232}
-            atom "CG", {9.718, -27.932, 14.926}
-          end
-
-          conf 'B', 0.2 do
-            atom "CB", {7.629, -26.946, 16.449}
-            atom "CG", {8.451, -28.477, 14.616}
-          end
-
-          conf 'C', 0.15 do
-            atom "CB", {7.671, -27.217, 16.251}
-            atom "CG", {9.113, -27.299, 14.210}
-          end
-
-          atom "CD", {8.226, -28.074, 15.091}
-        end
-      end
-    end
-
-    st.atoms.map(&.alt_loc).should eq [nil, nil, nil, 'A', 'A', nil]
-    st.residues.first.conformations.map(&.id).should eq ['A', 'B', 'C']
-  end
-
   it "builds a structure with lattice" do
     st = Chem::Structure::Builder.build do
       lattice do

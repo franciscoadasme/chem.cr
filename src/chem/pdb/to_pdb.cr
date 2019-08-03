@@ -5,7 +5,7 @@ module Chem
       pdb.number (pdb.renumber? ? pdb.next_index : serial), width: 5
       pdb.space
       pdb.string name.ljust(3).rjust(4)
-      pdb.string (pdb.alternate_locations? ? alt_loc : ' ') || ' '
+      pdb.space
       pdb.string residue.name, width: 3
       pdb.space
       pdb.string chain.id
@@ -13,7 +13,7 @@ module Chem
       pdb.string residue.insertion_code || ' '
       pdb.space 3
       coords.to_pdb pdb
-      pdb.number (pdb.alternate_locations? ? occupancy : 1.0), precision: 2, width: 6
+      pdb.number occupancy, precision: 2, width: 6
       pdb.number temperature_factor, precision: 2, width: 6
       pdb.space 10
       element.to_pdb pdb

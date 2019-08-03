@@ -4,7 +4,6 @@ module Chem::PDB
     PDB_VERSION      = "3.30"
     PDB_VERSION_DATE = Time.new 2011, 7, 13
 
-    property? alternate_locations : Bool
     setter bonds : Bool | Array(Bond)
     setter experiment : Protein::Experiment?
     property? renumber : Bool
@@ -12,7 +11,6 @@ module Chem::PDB
 
     def initialize(@io : ::IO,
                    @bonds : Bool | Array(Bond) = false,
-                   @alternate_locations : Bool = true,
                    @renumber : Bool = true)
       @atom_index = 0
     end

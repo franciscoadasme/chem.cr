@@ -57,35 +57,6 @@ module Spec
   end
 end
 
-def fake_residue_with_alternate_conformations
-  Chem::Structure.build do
-    residue "SER" do
-      atoms "N", "CA", "C", "O"
-
-      conf 'A', occupancy: 0.65 do
-        atom "CB", {1.0, 0.0, 0.0}
-        atom "OG", {1.0, 0.0, 0.0}
-      end
-
-      conf 'B', occupancy: 0.2 do
-        atom "CB", {2.0, 0.0, 0.0}
-        atom "OG", {2.0, 0.0, 0.0}
-      end
-
-      conf 'C', occupancy: 0.1 do
-        atom "CB", {3.0, 0.0, 0.0}
-        atom "OG", {3.0, 0.0, 0.0}
-      end
-
-      conf 'D', occupancy: 0.05 do
-        atom "OB", {4.0, 0.0, 0.0}
-        atom "CG1", {4.0, 0.0, 0.0}
-        atom "CG2", {4.0, 0.0, 0.0}
-      end
-    end
-  end.residues.first
-end
-
 # TODO add StructureBuilder?
 def fake_structure(*, include_bonds = false)
   st = Chem::Structure.build do

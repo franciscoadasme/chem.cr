@@ -23,7 +23,6 @@ describe Chem::PDB do
       atom = st.atoms[-1]
       atom.serial.should eq 9705
       atom.name.should eq "O"
-      atom.alt_loc.should be_nil
       atom.residue.name.should eq "HOH"
       atom.chain.id.should eq 'D'
       atom.residue.number.should eq 2112
@@ -48,7 +47,6 @@ describe Chem::PDB do
       atom = st.atoms[11]
       atom.serial.should eq 12
       atom.name.should eq "OE2"
-      # atom.altloc.should be_nil
       atom.residue.name.should eq "GLU"
       atom.chain.id.should eq 'A'
       atom.residue.number.should eq 2
@@ -232,37 +230,21 @@ describe Chem::PDB do
     end
 
     it "parses alternate conformations" do
-      residue = Chem::Structure.read("spec/data/pdb/alternate_conf.pdb").residues.first
-      residue.has_alternate_conformations?.should be_true
-      residue.conformations.map(&.id).should eq ['A', 'B', 'C']
-      residue.conformations.map(&.occupancy).should eq [0.37, 0.33, 0.3]
-
-      residue.conf.try(&.id).should eq 'A'
-      residue["N"].x.should eq 7.831
-      residue["OD1"].x.should eq 10.427
-
-      residue.conf = 'C'
-      residue["N"].x.should eq 7.831
-      residue["OD1"].x.should eq 8.924
+      structure = Chem::Structure.read "spec/data/pdb/alternate_conf.pdb"
+      structure.n_residues.should eq 1
+      structure.n_atoms.should eq 8
+      structure.each_atom.map(&.occupancy).uniq.to_a.should eq [1, 0.37]
+      structure['A'][1]["N"].x.should eq 7.831
+      structure['A'][1]["OD1"].x.should eq 10.427
     end
 
     it "parses alternate conformations with different residues" do
-      residue = Chem::Structure.read("spec/data/pdb/alternate_conf_mut.pdb").residues.first
-      residue.has_alternate_conformations?.should be_true
-      residue.conformations.map(&.id).should eq ['A', 'B', 'C']
-      residue.conformations.map(&.residue_name).should eq ["ARG", "ARG", "TRP"]
-      residue.conformations.map(&.occupancy).should eq [0.22, 0.22, 0.56]
-
-      residue.conf.try(&.id).should eq 'C' #  highest occupancy
-      residue.name.should eq "TRP"
-      residue.atoms.map(&.name).should eq ["N", "CA", "C", "O", "CB", "CG", "CD1",
-                                           "CD2", "NE1", "CE2", "CE3", "CZ2", "CZ3",
-                                           "CH2"]
-
-      residue.conf = 'A'
-      residue.name.should eq "ARG"
-      residue.atoms.map(&.name).should eq ["N", "CA", "C", "O", "CB", "CG", "CD", "NE",
-                                           "CZ", "NH1", "NH2"]
+      structure = Chem::Structure.read("spec/data/pdb/alternate_conf_mut.pdb")
+      structure.n_residues.should eq 1
+      structure.n_atoms.should eq 14
+      structure.each_atom.map(&.occupancy).uniq.to_a.should eq [0.56]
+      structure['A'][1].name.should eq "TRP"
+      structure['A'][1]["N"].coords.should eq V[3.298, 2.388, 22.684]
     end
 
     it "parses insertion codes" do
@@ -331,24 +313,26 @@ describe Chem::PDB do
     end
 
     it "parses 1cbn (alternate conformations)" do
-      st = Chem::Structure.read "spec/data/pdb/1cbn.pdb"
-      st.n_atoms.should eq 644 # atom with alt_loc = nil or highest occupancy
-      st.n_chains.should eq 1
-      st.n_residues.should eq 47
-      st.residues.map(&.number).should eq ((1..46).to_a << 66)
+      structure = Chem::Structure.read "spec/data/pdb/1cbn.pdb"
+      structure.n_atoms.should eq 644
+      structure.n_chains.should eq 1
+      structure.n_residues.should eq 47
+      structure.residues.map(&.number).should eq ((1..46).to_a << 66)
 
-      res = st.residues[serial: 23]
-      res.has_alternate_conformations?.should be_true
-      { {'A', 0.8, 10.387}, {'B', 0.2, 10.421} }.each do |conf_id, occupancy, cg_x|
-        res.conf = conf_id
-        res.conf.try(&.occupancy).should eq occupancy
-        res["CG"].x.should eq cg_x
-      end
+      residue = structure['A'][22]
+      residue.name.should eq "PRO"
+      residue.n_atoms.should eq 14
+      residue.each_atom.map(&.occupancy).uniq.to_a.should eq [0.6]
+
+      residue = structure['A'][23]
+      residue.n_atoms.should eq 15
+      residue.each_atom.map(&.occupancy).uniq.to_a.should eq [1, 0.8]
+      residue["CG"].coords.should eq V[10.387, 12.021, 0.058]
     end
 
     it "parses 1dpo (insertions)" do
       st = Chem::Structure.read "spec/data/pdb/1dpo.pdb"
-      st.n_atoms.should eq 1921 # atom with alt_loc = nil or A
+      st.n_atoms.should eq 1921
       st.n_chains.should eq 1
       st.n_residues.should eq 446
 
@@ -384,70 +368,6 @@ describe Chem::PDB::Builder do
       ATOM      5  CB  PRO A   5       8.230   9.957  15.345  1.00  5.11           C  
       ATOM      6  CG  PRO A   5       7.338   9.786  14.114  1.00  5.24           C  
       ATOM      7  CD  PRO A   5       8.366   9.804  12.958  1.00  5.20           C  
-      END                                                                             \n
-      EOS
-  end
-
-  it "writes alternate conformations" do
-    structure = Chem::Structure.build do
-      residue "SER" do
-        atoms "N", "CA", "C", "O"
-
-        conf 'B', occupancy: 0.65 do
-          atom "CB", {1.0, 0.0, 0.0}
-          atom "OG", {1.0, 0.0, 0.0}
-        end
-
-        conf 'C', occupancy: 0.2 do
-          atom "CB", {2.0, 0.0, 0.0}
-          atom "OG", {2.0, 0.0, 0.0}
-        end
-      end
-    end
-    structure.residues[0].kind = :protein
-
-    structure.to_pdb.should eq <<-EOS
-      REMARK   4                                                                      
-      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
-      ATOM      1  N   SER A   1       0.000   0.000   0.000  1.00  0.00           N  
-      ATOM      2  CA  SER A   1       0.000   0.000   0.000  1.00  0.00           C  
-      ATOM      3  C   SER A   1       0.000   0.000   0.000  1.00  0.00           C  
-      ATOM      4  O   SER A   1       0.000   0.000   0.000  1.00  0.00           O  
-      ATOM      5  CB BSER A   1       1.000   0.000   0.000  0.65  0.00           C  
-      ATOM      6  OG BSER A   1       1.000   0.000   0.000  0.65  0.00           O  
-      TER       7      SER A   1                                                      
-      END                                                                             \n
-      EOS
-  end
-
-  it "omits alternate conformations" do
-    structure = Chem::Structure.build do
-      residue "SER" do
-        atoms "N", "CA", "C", "O"
-
-        conf 'B', occupancy: 0.65 do
-          atom "CB", {1.0, 0.0, 0.0}
-          atom "OG", {1.0, 0.0, 0.0}
-        end
-
-        conf 'C', occupancy: 0.2 do
-          atom "CB", {2.0, 0.0, 0.0}
-          atom "OG", {2.0, 0.0, 0.0}
-        end
-      end
-    end
-    structure.residues[0].kind = :protein
-
-    structure.to_pdb(alternate_locations: false).should eq <<-EOS
-      REMARK   4                                                                      
-      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
-      ATOM      1  N   SER A   1       0.000   0.000   0.000  1.00  0.00           N  
-      ATOM      2  CA  SER A   1       0.000   0.000   0.000  1.00  0.00           C  
-      ATOM      3  C   SER A   1       0.000   0.000   0.000  1.00  0.00           C  
-      ATOM      4  O   SER A   1       0.000   0.000   0.000  1.00  0.00           O  
-      ATOM      5  CB  SER A   1       1.000   0.000   0.000  1.00  0.00           C  
-      ATOM      6  OG  SER A   1       1.000   0.000   0.000  1.00  0.00           O  
-      TER       7      SER A   1                                                      
       END                                                                             \n
       EOS
   end

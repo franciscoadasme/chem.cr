@@ -3,7 +3,6 @@ module Chem
   # TODO add `partial_charge : Float64 = 0.0`
   # TODO add `residue_index` that starts from 0 and does not reset per chain
   class Atom
-    property alt_loc : Char?
     getter bonds : BondArray { BondArray.new self }
     property constraint : Constraint?
     property coords : Spatial::Vector
@@ -24,7 +23,6 @@ module Chem
                    @serial : Int32,
                    @coords : Spatial::Vector,
                    @residue : Residue,
-                   @alt_loc : Char? = nil,
                    element : PeriodicTable::Element? = nil,
                    @formal_charge : Int32 = 0,
                    @occupancy : Float64 = 1,
@@ -56,7 +54,6 @@ module Chem
 
     def to_s(io : ::IO)
       io << @residue
-      io << '(' << @alt_loc << ')' if @alt_loc
       io << ':' << @name << '(' << @serial << ')'
     end
 

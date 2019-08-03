@@ -16,6 +16,9 @@ module Chem::PDB
     @pdb_seq : Protein::Sequence?
     @pdb_title = ""
 
+    @alt_loc_table = Hash(Residue, Hash(Char, AlternateLocation)).new do |hash, key|
+      hash[key] = {} of Char => AlternateLocation
+    end
     @chains : Set(Char)?
     @segments = [] of SecondaryStructureSegment
     @use_hex_numbers = {:atom_serial => false, :residue_number => false}
@@ -134,7 +137,6 @@ module Chem::PDB
         serial: parse_atom_serial(rec[6..10]) || guess_atom_serial(prev_atom),
         coords: Spatial::Vector.new(rec[30..37].to_f, rec[38..45].to_f, rec[46..53].to_f),
         residue: residue,
-        alt_loc: rec[16]?,
         element: parse_element(rec, residue.name),
         formal_charge: rec[78..79]?.try(&.reverse.to_i?) || 0,
         occupancy: rec[54..59].to_f,
@@ -145,6 +147,12 @@ module Chem::PDB
       number = str.to_i? base: @use_hex_numbers[:atom_serial] ? 16 : 10
       @use_hex_numbers[:atom_serial] = number >= 99999 if number
       number
+    end
+
+    private def parse_alt_loc(residue : Residue, rec : Record) : AlternateLocation
+      alt_loc = rec[16]
+      @alt_loc_table[residue][alt_loc] ||= \
+         AlternateLocation.new alt_loc, resname: rec[17..20].delete(' ')
     end
 
     private def parse_bonds
@@ -263,6 +271,7 @@ module Chem::PDB
             next unless chain
             residue = parse_residue chain, residue, rec
             atom = parse_atom residue, atom, rec
+            parse_alt_loc(residue, rec) << atom if rec[16]?
             bonded_atoms[atom.serial] = atom if @pdb_bonds.has_key? atom.serial
             @pdb_has_hydrogens = true if atom.element.hydrogen?
           when "anisou", "ter", "sigatm", "siguij"
@@ -271,6 +280,7 @@ module Chem::PDB
             ::Iterator.stop
           end
         end
+        resolve_alternate_locations
         assign_bonds to: bonded_atoms
         assign_secondary_structure to: structure
       end
@@ -283,12 +293,7 @@ module Chem::PDB
       number = parse_residue_number(rec[22..25]) || guess_residue_number(prev_res, name)
       ins_code = rec[26]?
 
-      if residue = chain[number, ins_code]?
-        if (alt_loc = rec[16]?) && !residue.conformations[alt_loc]?
-          residue.conformations.add name, alt_loc, rec[54..59].to_f
-        end
-        residue
-      else
+      chain[number, ins_code]? || begin
         residue = Residue.new name, number, ins_code, chain
         if res_t = Topology::Templates[name]?
           residue.kind = Residue::Kind.from_value res_t.kind.to_i
@@ -328,6 +333,43 @@ module Chem::PDB
 
     private def read_het? : Bool
       @het
+    end
+
+    private def resolve_alternate_locations : Nil
+      @alt_loc_table.each do |residue, alt_locs|
+        id = alt_locs.each_value.max_by(&.occupancy).id
+        alt_locs.each_value do |alt_loc|
+          next if alt_loc.id == id
+          alt_loc.each_atom { |atom| residue.delete atom }
+        end
+        residue.name = alt_locs[id].resname
+        residue.reset_cache
+      end
+      @alt_loc_table.clear
+    end
+
+    private struct AlternateLocation
+      getter id : Char
+      getter resname : String
+
+      def initialize(@id : Char, @resname : String)
+        @atoms = [] of Atom
+      end
+
+      def <<(atom : Atom) : self
+        @atoms << atom
+        self
+      end
+
+      def each_atom(&block : Atom ->) : Nil
+        @atoms.each do |atom|
+          yield atom
+        end
+      end
+
+      def occupancy : Float64
+        @atoms.sum &.occupancy
+      end
     end
   end
 end
