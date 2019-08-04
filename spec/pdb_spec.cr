@@ -247,6 +247,15 @@ describe Chem::PDB do
       structure['A'][1]["N"].coords.should eq V[3.298, 2.388, 22.684]
     end
 
+    it "parses selected alternate conformation" do
+      structure = Chem::Structure.read "spec/data/pdb/alternate_conf_mut.pdb", alt_loc: 'B'
+      structure.n_residues.should eq 1
+      structure.n_atoms.should eq 11
+      structure.each_atom.map(&.occupancy).uniq.to_a.should eq [0.22]
+      structure['A'][1].name.should eq "ARG"
+      structure['A'][1]["CB"].coords.should eq V[4.437, 2.680, 20.555]
+    end
+
     it "parses insertion codes" do
       residues = Chem::Structure.read("spec/data/pdb/insertion_codes.pdb").residues
       residues.size.should eq 7

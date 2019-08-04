@@ -23,7 +23,10 @@ module Chem::PDB
     @segments = [] of SecondaryStructureSegment
     @use_hex_numbers = {:atom_serial => false, :residue_number => false}
 
-    def initialize(@io : ::IO, chains : Enumerable(Char)? = nil, @het : Bool = true)
+    def initialize(@io : ::IO,
+                   @alt_loc : Char? = nil,
+                   chains : Enumerable(Char)? = nil,
+                   @het : Bool = true)
       @iter = Record::Iterator.new @io
       @chains = chains.try &.to_set
     end
@@ -183,9 +186,8 @@ module Chem::PDB
       @io.pos = last_pos
     end
 
-    private def parse_chain(sys : Structure, prev_chain : Chain?, rec : Record) : Chain?
+    private def parse_chain(sys : Structure, prev_chain : Chain?, rec : Record) : Chain
       chain_id = rec[21]
-      return if (chains = @chains) && !chains.includes?(chain_id)
       sys[chain_id]? || Chain.new chain_id, sys
     end
 
@@ -267,11 +269,13 @@ module Chem::PDB
           case rec.name
           when "atom", "hetatm"
             next if rec.name == "hetatm" && !read_het?
+            next if (chains = @chains) && !chains.includes?(rec[21])
+            next if @alt_loc && (alt_loc = rec[16]?) && rec[16] != @alt_loc
+
             chain = parse_chain structure, chain, rec
-            next unless chain
             residue = parse_residue chain, residue, rec
             atom = parse_atom residue, atom, rec
-            parse_alt_loc(residue, rec) << atom if rec[16]?
+            parse_alt_loc(residue, rec) << atom if !@alt_loc && rec[16]?
             bonded_atoms[atom.serial] = atom if @pdb_bonds.has_key? atom.serial
             @pdb_has_hydrogens = true if atom.element.hydrogen?
           when "anisou", "ter", "sigatm", "siguij"
@@ -280,7 +284,7 @@ module Chem::PDB
             ::Iterator.stop
           end
         end
-        resolve_alternate_locations
+        resolve_alternate_locations unless @alt_loc
         assign_bonds to: bonded_atoms
         assign_secondary_structure to: structure
       end
