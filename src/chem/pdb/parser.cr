@@ -372,7 +372,7 @@ module Chem::PDB
       end
 
       def occupancy : Float64
-        @atoms.sum &.occupancy
+        @atoms.sum(&.occupancy) / @atoms.size
       end
     end
   end
