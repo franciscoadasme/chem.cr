@@ -422,6 +422,40 @@ describe Chem::PDB::Builder do
       EOS
   end
 
+  it "writes CONECT records for renumbered atoms" do
+    structure = Chem::Structure.build do
+      residue "ICN" do
+        atom :i, V[-1, 0, 0]
+        atom :c, V[0, 0, 0]
+        atom :n, V[1, 0, 0]
+
+        bond "I1", "C1"
+        bond "C1", "N1", order: 3
+      end
+
+      residue "ICN" do
+        atom :i, V[-4, 0, 0]
+        atom :c, V[-3, 0, 0]
+        atom :n, V[-2, 0, 0]
+
+        bond "I1", "C1"
+        bond "C1", "N1", order: 3
+      end
+    end
+
+    structure.residues[1].to_pdb(bonds: true).should eq <<-EOS
+      REMARK   4                                                                      
+      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
+      HETATM    1  I1  ICN A   2      -4.000   0.000   0.000  1.00  0.00           I  
+      HETATM    2  C1  ICN A   2      -3.000   0.000   0.000  1.00  0.00           C  
+      HETATM    3  N1  ICN A   2      -2.000   0.000   0.000  1.00  0.00           N  
+      CONECT    1    2
+      CONECT    2    1    3    3    3
+      CONECT    3    2    2    2
+      END                                                                             \n
+      EOS
+  end
+
   it "writes CONECT records for specified bonds" do
     structure = Chem::Structure.build do
       residue "CH3" do

@@ -9,6 +9,8 @@ module Chem::PDB
     property? renumber : Bool
     setter title = ""
 
+    @atom_index_table : Hash(Int32, Int32)?
+
     def initialize(@io : ::IO,
                    @bonds : Bool | Array(Bond) = false,
                    @renumber : Bool = true)
@@ -20,11 +22,14 @@ module Chem::PDB
 
       idx_pairs = Array(Tuple(Int32, Int32)).new bonds.size
       bonds.each do |bond|
+        i = bond.first.serial
+        j = bond.second.serial
+        i, j = atom_index_table[i], atom_index_table[j] if renumber?
         bond.order.clamp(1..3).times do
-          idx_pairs << {bond.first.serial, bond.second.serial}
-          idx_pairs << {bond.second.serial, bond.first.serial}
+          idx_pairs << {i, j} << {j, i}
         end
       end
+
       idx_pairs.sort!.chunk(&.[0]).each do |i, pairs|
         pairs.each_slice(4, reuse: true) do |slice|
           @io.printf "CONECT%5d", i
@@ -49,12 +54,14 @@ module Chem::PDB
       pdb_version
     end
 
-    def object_footer : Nil
-      bonds
+    def index(atom : Atom) : Int32
+      idx = next_index
+      atom_index_table[atom.serial] = idx if @bonds
+      idx
     end
 
-    def next_index : Int32
-      @atom_index += 1
+    def object_footer : Nil
+      bonds
     end
 
     def pdb_version : Nil
@@ -105,6 +112,14 @@ module Chem::PDB
         end
         newline
       end
+    end
+
+    private def atom_index_table : Hash(Int32, Int32)
+      @atom_index_table ||= {} of Int32 => Int32
+    end
+
+    private def next_index : Int32
+      @atom_index += 1
     end
   end
 end
