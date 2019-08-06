@@ -81,7 +81,7 @@ module Chem
     end
 
     private def [](*, atom name : String) : Atom
-      @structure.each_atom do |atom|
+      @structure.atoms.reverse_each do |atom|
         return atom if atom.name == name
       end
       raise "Unknown atom #{name.inspect}"
