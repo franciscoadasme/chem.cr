@@ -381,6 +381,12 @@ describe Chem::PDB::Builder do
       EOS
   end
 
+  it "writes ter records at the end of polymer chains" do
+    content = File.read "spec/data/pdb/5e5v.pdb"
+    structure = Chem::Structure.parse content, :pdb
+    structure.to_pdb.should eq content
+  end
+
   it "keeps original atom numbering" do
     structure = Chem::Structure.read "spec/data/pdb/1crn.pdb"
     structure.residues[4].to_pdb(renumber: false).should eq <<-EOS

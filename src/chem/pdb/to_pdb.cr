@@ -94,17 +94,17 @@ module Chem
       pdb.experiment = experiment
       pdb.title = title
 
-      prev_chain = nil
-      prev_res = nil
+      p_ch = nil
+      p_res = nil
       pdb.object do
         lattice.try &.to_pdb(pdb)
         each_atom do |atom|
+          pdb.ter p_res if p_ch && p_res && atom.chain != p_ch && p_res.polymer?
           atom.to_pdb pdb
-          prev_res = atom.residue
-          pdb.ter prev_res if prev_chain && atom.chain != prev_chain && prev_res.polymer?
-          prev_chain = atom.chain
+          p_res = atom.residue
+          p_ch = atom.chain
         end
-        pdb.ter prev_res if prev_res && prev_res.polymer?
+        pdb.ter p_res if p_res && p_res.polymer?
       end
     end
   end
