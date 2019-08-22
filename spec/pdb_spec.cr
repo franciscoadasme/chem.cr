@@ -106,14 +106,6 @@ describe Chem::PDB do
       st.residues.map(&.number).should eq [9999, 10000]
     end
 
-    it "parses a PDB file with number of atoms/residues equal to asterisks (vmd)" do
-      st = Chem::Structure.read "spec/data/pdb/asterisks.pdb"
-      st.n_atoms.should eq 18
-      st.n_residues.should eq 6
-      st.atoms.map(&.serial).should eq (99998..100015).to_a
-      st.residues.map(&.number).should eq [9998, 9999, 10000, 65535, 65536, 65537]
-    end
-
     it "parses a PDB file with unit cell parameters" do
       st = Chem::Structure.read "spec/data/pdb/1crn.pdb"
 
@@ -486,6 +478,35 @@ describe Chem::PDB::Builder do
       HETATM    4  H3  CH3 A   1       0.000   1.000   0.000  1.00  0.00           H  
       CONECT    1    3
       CONECT    3    1
+      END                                                                             \n
+      EOS
+  end
+
+  it "writes big numbers" do
+    structure = Chem::Structure.build do
+      residue "ICN" do
+        atom :i, V[-1, 0, 0]
+        atom :c, V[0, 0, 0]
+        atom :n, V[1, 0, 0]
+
+        bond "I1", "C1"
+        bond "C1", "N1", order: 3
+      end
+    end
+    structure.atoms[0].serial = 99_999
+    structure.atoms[1].serial = 100_000
+    structure.atoms[2].serial = 235_123
+    structure.residues[0].number = 10_231
+
+    structure.to_pdb(bonds: true, renumber: false).should eq <<-EOS
+      REMARK   4                                                                      
+      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
+      HETATM99999  I1  ICN AA06F      -1.000   0.000   0.000  1.00  0.00           I  
+      HETATMA0000  C1  ICN AA06F       0.000   0.000   0.000  1.00  0.00           C  
+      HETATMA2W9F  N1  ICN AA06F       1.000   0.000   0.000  1.00  0.00           N  
+      CONECT99999A0000
+      CONECTA000099999A2W9FA2W9FA2W9F
+      CONECTA2W9FA0000A0000A0000
       END                                                                             \n
       EOS
   end

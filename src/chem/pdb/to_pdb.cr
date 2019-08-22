@@ -2,14 +2,14 @@ module Chem
   class Atom
     def to_pdb(pdb : PDB::Builder) : Nil
       pdb.string (residue.protein? ? "ATOM" : "HETATM"), width: 6
-      pdb.number (pdb.renumber? ? pdb.index(self) : serial), width: 5
+      pdb.string PDB::Hybrid36.encode(pdb.renumber? ? pdb.index(self) : serial, width: 5)
       pdb.space
       pdb.string name.ljust(3).rjust(4)
       pdb.space
       pdb.string residue.name, width: 3
       pdb.space
       pdb.string chain.id
-      pdb.number residue.number, width: 4
+      pdb.string PDB::Hybrid36.encode(residue.number, width: 4)
       pdb.string residue.insertion_code || ' '
       pdb.space 3
       coords.to_pdb pdb

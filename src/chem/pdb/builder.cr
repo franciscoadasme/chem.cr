@@ -32,8 +32,9 @@ module Chem::PDB
 
       idx_pairs.sort!.chunk(&.[0]).each do |i, pairs|
         pairs.each_slice(4, reuse: true) do |slice|
-          @io.printf "CONECT%5d", i
-          slice.each { |pair| @io.printf "%5d", pair[1] }
+          @io << "CONECT"
+          Hybrid36.encode @io, i, width: 5
+          slice.each { |pair| Hybrid36.encode @io, pair[1], width: 5 }
           @io.puts
         end
       end

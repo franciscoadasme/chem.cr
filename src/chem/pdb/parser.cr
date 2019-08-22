@@ -10,7 +10,6 @@ module Chem::PDB
 
     @pdb_bonds = uninitialized BondTable
     @pdb_expt : Protein::Experiment?
-    @pdb_has_hydrogens = false
     @pdb_lattice : Lattice?
     @pdb_models = 1
     @pdb_seq : Protein::Sequence?
@@ -21,7 +20,6 @@ module Chem::PDB
     end
     @chains : Set(Char)?
     @segments = [] of SecondaryStructureSegment
-    @use_hex_numbers = {:atom_serial => false, :residue_number => false}
 
     def initialize(@io : ::IO,
                    @alt_loc : Char? = nil,
@@ -93,25 +91,6 @@ module Chem::PDB
       end
     end
 
-    private def guess_atom_serial(prev_atom : Atom?) : Int32
-      prev_atom ? prev_atom.serial + 1 : Int32::MIN
-    end
-
-    private def guess_residue_number(prev_residue : Residue?, resname : String) : Int32
-      return Int32::MIN unless prev_residue
-
-      next_number = prev_residue.number
-      if prev_residue.name == resname
-        if template = Topology::Templates[resname]?
-          count = template.atom_count include_hydrogens: @pdb_has_hydrogens
-          next_number += 1 unless prev_residue.n_atoms < count
-        end
-      else
-        next_number += 1
-      end
-      next_number
-    end
-
     private def make_structure : Structure
       sys = Structure.new
       sys.experiment = @pdb_expt
@@ -137,19 +116,13 @@ module Chem::PDB
     private def parse_atom(residue : Residue, prev_atom : Atom?, rec : Record) : Atom
       Atom.new \
         name: rec[12..15].delete(' '),
-        serial: parse_atom_serial(rec[6..10]) || guess_atom_serial(prev_atom),
+        serial: Hybrid36.decode(rec[6..10]),
         coords: Spatial::Vector.new(rec[30..37].to_f, rec[38..45].to_f, rec[46..53].to_f),
         residue: residue,
         element: parse_element(rec, residue.name),
         formal_charge: rec[78..79]?.try(&.reverse.to_i?) || 0,
         occupancy: rec[54..59].to_f,
         temperature_factor: rec[60..65].to_f
-    end
-
-    private def parse_atom_serial(str : String) : Int32?
-      number = str.to_i? base: @use_hex_numbers[:atom_serial] ? 16 : 10
-      @use_hex_numbers[:atom_serial] = number >= 99999 if number
-      number
     end
 
     private def parse_alt_loc(residue : Residue, rec : Record) : AlternateLocation
@@ -277,7 +250,6 @@ module Chem::PDB
             atom = parse_atom residue, atom, rec
             parse_alt_loc(residue, rec) << atom if !@alt_loc && rec[16]?
             bonded_atoms[atom.serial] = atom if @pdb_bonds.has_key? atom.serial
-            @pdb_has_hydrogens = true if atom.element.hydrogen?
           when "anisou", "ter", "sigatm", "siguij"
             next
           else
@@ -294,7 +266,7 @@ module Chem::PDB
                               prev_res : Residue?,
                               rec : Record) : Residue
       name = rec[17..20].delete ' '
-      number = parse_residue_number(rec[22..25]) || guess_residue_number(prev_res, name)
+      number = Hybrid36.decode rec[22..25]
       ins_code = rec[26]?
 
       chain[number, ins_code]? || begin
@@ -304,13 +276,6 @@ module Chem::PDB
         end
         residue
       end
-    end
-
-    private def parse_residue_number(str : String) : Int32?
-      base = @use_hex_numbers[:residue_number] && str != "9999" ? 16 : 10
-      number = str.to_i? base
-      @use_hex_numbers[:residue_number] = number >= 9999 if number
-      number
     end
 
     private def parse_sequence : Protein::Sequence
