@@ -16,34 +16,6 @@ module Chem
       bonds.to_a
     end
 
-    def bounds : Spatial::Bounds
-      min = StaticArray[Float64::MAX, Float64::MAX, Float64::MAX]
-      max = StaticArray[Float64::MIN, Float64::MIN, Float64::MIN]
-      each_atom do |atom|
-        3.times do |i|
-          min[i] = atom.coords[i] if atom.coords[i] < min.unsafe_fetch(i)
-          max[i] = atom.coords[i] if atom.coords[i] > max.unsafe_fetch(i)
-        end
-      end
-      origin = Spatial::Vector.new min[0], min[1], min[2]
-      size = Spatial::Size3D.new max[0] - min[0], max[1] - min[1], max[2] - min[2]
-      Spatial::Bounds.new origin, size
-    end
-
-    def center : Spatial::Vector
-      i = 0
-      center = uninitialized Spatial::Vector
-      each do |atom|
-        if i == 0
-          center = atom.coords
-        else
-          center += atom.coords
-        end
-        i += 1
-      end
-      center / i
-    end
-
     def coords : Spatial::CoordinatesProxy
       Spatial::CoordinatesProxy.new self
     end
@@ -71,19 +43,6 @@ module Chem
       fragments = [] of AtomView
       each_fragment { |fragment| fragments << fragment }
       fragments
-    end
-
-    def transform(by transform : Spatial::AffineTransform) : self
-      each_atom do |atom|
-        atom.coords *= transform
-      end
-      self
-    end
-
-    def translate!(by vector : Spatial::Vector)
-      each_atom do |atom|
-        atom.coords += vector
-      end
     end
 
     private def collect_connected_atoms(atom : Atom,

@@ -9,6 +9,20 @@ describe Chem::Spatial::CoordinatesProxy do
     atom PeriodicTable::H, V[7, 8, 9]
   end
 
+  describe "#bounds" do
+    it "returns the bounds" do
+      bounds = structure.coords.bounds
+      bounds.origin.should eq V[1, 2, 3]
+      bounds.size.to_a.should eq [6, 6, 6]
+    end
+  end
+
+  describe "#center" do
+    it "returns the geometric center" do
+      structure.coords.center.should eq V[4, 5, 6]
+    end
+  end
+
   describe "#each" do
     it "yields the coordinates of every atom" do
       vecs = [] of V

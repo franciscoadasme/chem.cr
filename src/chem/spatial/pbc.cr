@@ -73,7 +73,7 @@ module Chem::Spatial::PBC
     moved_atoms = Set(Atom).new
     atoms.each_fragment do |fragment|
       assemble_fragment fragment[0], fragment[0].coords, moved_atoms
-      fragment.translate! by: -fragment.center.floor
+      fragment.coords.translate! by: -fragment.coords.center.floor
       moved_atoms.clear
     end
     atoms.coords.to_cartesian!
@@ -96,9 +96,9 @@ module Chem::Spatial::PBC
       end
     else
       transform = AffineTransform.cart_to_fractional lattice
-      atoms.transform by: transform
+      atoms.coords.transform! transform
       wrap atoms, Lattice.new(V.x, V.y, V.z), (transform * center)
-      atoms.transform by: transform.inv
+      atoms.coords.transform! transform.inv
     end
   end
 

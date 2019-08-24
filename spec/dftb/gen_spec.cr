@@ -17,11 +17,13 @@ describe Chem::DFTB::Gen::PullParser do
 
     structure.n_atoms.should eq 5
     structure.atoms.map(&.element.symbol).should eq ["Cl", "Na", "O", "Na", "Cl"]
-    structure.atoms[0].coords.should eq V[30, 15, 10]
-    structure.atoms[1].coords.should eq V[10, 5, 5]
-    structure.atoms[2].coords.should eq V[30, 15, 9]
-    structure.atoms[3].coords.should eq V[10, 10, 12.5]
-    structure.atoms[4].coords.should eq V[20, 10, 10]
+    structure.coords.to_a.should eq [
+      V[30, 15, 10],
+      V[10, 5, 5],
+      V[30, 15, 9],
+      V[10, 10, 12.5],
+      V[20, 10, 10],
+    ]
   end
 
   it "parses a periodic Gen file" do
@@ -46,10 +48,12 @@ describe Chem::DFTB::Gen::PullParser do
 
     structure.n_atoms.should eq 4
     structure.atoms.map(&.element.symbol).should eq ["Cl", "O", "O", "Na"]
-    structure.atoms[0].coords.should eq V[30, 15, 10]
-    structure.atoms[1].coords.should eq V[10, 5, 5]
-    structure.atoms[2].coords.should eq V[3, 1.5, 9]
-    structure.atoms[3].coords.should eq V[1, 1, 1.25]
+    structure.coords.to_a.should eq [
+      V[30, 15, 10],
+      V[10, 5, 5],
+      V[3, 1.5, 9],
+      V[1, 1, 1.25],
+    ]
   end
 
   it "parses a Gen file having fractional coordinates" do
@@ -72,8 +76,7 @@ describe Chem::DFTB::Gen::PullParser do
 
     structure.n_atoms.should eq 2
     structure.atoms.map(&.element.symbol).should eq ["Ga", "As"]
-    structure.atoms[0].coords.should eq V[0, 0, 0]
-    structure.atoms[1].coords.should eq V[1.356773, 1.356773, 1.356773]
+    structure.coords.to_a.should eq [V[0, 0, 0], V[1.356773, 1.356773, 1.356773]]
   end
 end
 

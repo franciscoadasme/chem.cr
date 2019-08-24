@@ -5,6 +5,24 @@ module Chem::Spatial
     def initialize(@atoms : AtomCollection, @lattice : Lattice? = nil)
     end
 
+    def bounds : Bounds
+      min = StaticArray[Float64::MAX, Float64::MAX, Float64::MAX]
+      max = StaticArray[Float64::MIN, Float64::MIN, Float64::MIN]
+      each do |coords|
+        3.times do |i|
+          min[i] = coords[i] if coords[i] < min.unsafe_fetch(i)
+          max[i] = coords[i] if coords[i] > max.unsafe_fetch(i)
+        end
+      end
+      origin = Vector.new min[0], min[1], min[2]
+      size = Size3D.new max[0] - min[0], max[1] - min[1], max[2] - min[2]
+      Bounds.new origin, size
+    end
+
+    def center : Vector
+      sum / @atoms.n_atoms
+    end
+
     def each(fractional : Bool = false, &block : Vector ->)
       if fractional
         if lattice = @lattice

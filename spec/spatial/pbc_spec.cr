@@ -36,7 +36,7 @@ describe Chem::Spatial::PBC do
         atom PeriodicTable::O, at: V[2.5, 7.5, 2.5]
         atom PeriodicTable::N, at: V[2.5, 2.5, 7.5]
       end
-      structure.translate! by: offset
+      structure.coords.translate! by: offset
 
       vectors = Chem::Spatial::PBC.adjacent_images(structure).map &.[1]
       expected = [
