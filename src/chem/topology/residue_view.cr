@@ -3,6 +3,7 @@ module Chem
     include ArrayView(Residue)
     include AtomCollection
     include ChainCollection
+    include ResidueCollection
 
     def [](serial : Int, ins_code : Char) : Residue?
       self[serial, ins_code]? || raise IndexError.new
@@ -43,12 +44,30 @@ module Chem
       end
     end
 
+    def each_residue : Iterator(Residue)
+      each
+    end
+
+    def each_residue(&block : Residue ->)
+      each do |residue|
+        yield residue
+      end
+    end
+
     def n_atoms : Int32
       sum &.n_atoms
     end
 
     def n_chains : Int32
       each_chain.sum { 1 }
+    end
+
+    def n_residues : Int32
+      size
+    end
+
+    def residues : self
+      self
     end
   end
 end

@@ -1,6 +1,7 @@
 module Chem
   struct AtomView
     include ArrayView(Atom)
+    include AtomCollection
     include ChainCollection
     include ResidueCollection
 
@@ -20,18 +21,18 @@ module Chem
       find &.name.==(name)
     end
 
-    def center : Spatial::Vector
-      i = 0
-      center = uninitialized Spatial::Vector
+    def atoms : self
+      self
+    end
+
+    def each_atom : Iterator(Atom)
+      each
+    end
+
+    def each_atom(&block : Atom ->)
       each do |atom|
-        if i == 0
-          center = atom.coords
-        else
-          center += atom.coords
-        end
-        i += 1
+        yield atom
       end
-      center / i
     end
 
     def each_chain : Iterator(Chain)
@@ -56,18 +57,16 @@ module Chem
       end
     end
 
+    def n_atoms : Int32
+      size
+    end
+
     def n_chains : Int32
       each_chain.sum { 1 }
     end
 
     def n_residues : Int32
       each_residue.sum { 1 }
-    end
-
-    def translate!(by offset : Spatial::Vector)
-      each do |atom|
-        atom.coords += offset
-      end
     end
   end
 end
