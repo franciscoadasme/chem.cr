@@ -44,8 +44,8 @@ module Chem
       center / i
     end
 
-    def coords : Spatial::CollectionProxy
-      Spatial::CollectionProxy.new self
+    def coords : Spatial::CoordinatesProxy
+      Spatial::CoordinatesProxy.new self
     end
 
     def each_fragment(&block : AtomView ->) : Nil
