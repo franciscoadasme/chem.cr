@@ -36,6 +36,14 @@ module Chem::Spatial
       end
     end
 
+    def each_with_atom(fractional : Bool = false, &block : Vector, Atom ->)
+      iter = @atoms.each_atom
+      each(fractional) do |vec|
+        break unless (atom = iter.next).is_a?(Atom)
+        yield vec, atom
+      end
+    end
+
     def map(fractional : Bool = false, &block : Vector -> Vector) : Array(Vector)
       ary = [] of Vector
       each(fractional) { |coords| ary << yield coords }
@@ -56,6 +64,24 @@ module Chem::Spatial
         end
       else
         @atoms.each_atom { |atom| atom.coords = yield atom.coords }
+      end
+      self
+    end
+
+    def map_with_atom(fractional : Bool = false,
+                      &block : Vector, Atom -> Vector) : Array(Vector)
+      ary = [] of Vector
+      each_with_atom(fractional) do |coords, atom|
+        ary << yield coords, atom
+      end
+      ary
+    end
+
+    def map_with_atom!(fractional : Bool = false, &block : Vector, Atom -> Vector) : self
+      iter = @atoms.each_atom
+      map!(fractional) do |vec|
+        break unless (atom = iter.next).is_a?(Atom)
+        yield vec, atom
       end
       self
     end

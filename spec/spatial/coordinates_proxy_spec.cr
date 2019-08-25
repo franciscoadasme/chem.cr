@@ -46,6 +46,39 @@ describe Chem::Spatial::CoordinatesProxy do
     end
   end
 
+  describe "#each_with_atom" do
+    it "yields coordinates and the corresponding atom" do
+      elements = [] of String
+      vecs = [] of Vector
+      structure.coords.each_with_atom do |coords, atom|
+        vecs << coords
+        elements << atom.element.symbol
+      end
+      vecs.should eq [V[1, 2, 3], V[4, 5, 6], V[7, 8, 9]]
+      elements.should eq ["O", "H", "H"]
+    end
+
+    it "yields the fractional coordinates of every atom" do
+      elements = [] of String
+      vecs = [] of V
+      structure.coords.each_with_atom(fractional: true) do |fcoords, atom|
+        vecs << fcoords
+        elements << atom.element.symbol
+      end
+
+      expected = [V[0.1, 0.2, 0.3], V[0.4, 0.5, 0.6], V[0.7, 0.8, 0.9]]
+      vecs.should be_close expected, 1e-15
+      elements.should eq ["O", "H", "H"]
+    end
+
+    it "fails for a non-periodic atom collection" do
+      msg = "Cannot compute fractional coordinates for non-periodic atoms"
+      expect_raises Chem::Spatial::Error, msg do
+        fake_structure.coords.each(fractional: true) { }
+      end
+    end
+  end
+
   describe "#map" do
     it "returns the modified atom coordinates" do
       expected = [V[2, 4, 6], V[8, 10, 12], V[14, 16, 18]]
@@ -94,6 +127,66 @@ describe Chem::Spatial::CoordinatesProxy do
       msg = "Cannot compute fractional coordinates for non-periodic atoms"
       expect_raises Chem::Spatial::Error, msg do
         fake_structure.coords.map! fractional: true, &.itself
+      end
+    end
+  end
+
+  describe "#map_with_atom" do
+    it "returns the modified atom coordinates" do
+      expected = [V[2, 4, 6], V[4, 5, 6], V[7, 8, 9]]
+      coords = structure.coords.map_with_atom do |vec, atom|
+        vec * (atom.element.hydrogen? ? 1 : 2)
+      end
+      coords.should eq expected
+    end
+
+    it "returns the modified fractional atom coordinates" do
+      expected = [V[0.2, 0.4, 0.6], V[0.4, 0.5, 0.6], V[0.7, 0.8, 0.9]]
+      coords = structure.coords.map_with_atom(fractional: true) do |vec, atom|
+        vec * (atom.element.hydrogen? ? 1 : 2)
+      end
+      coords.should be_close expected, 1e-15
+    end
+
+    it "fails for a non-periodic atom collection" do
+      msg = "Cannot compute fractional coordinates for non-periodic atoms"
+      expect_raises Chem::Spatial::Error, msg do
+        fake_structure.coords.map_with_atom fractional: true, &.itself
+      end
+    end
+  end
+
+  describe "#map_with_atom!" do
+    it "modifies the atom coordinates" do
+      other = Chem::Structure.build do
+        atom PeriodicTable::O, V[1, 2, 3]
+        atom PeriodicTable::H, V[4, 5, 6]
+        atom PeriodicTable::H, V[7, 8, 9]
+      end
+
+      other.coords.map_with_atom! { |vec, atom| vec * (atom.element.hydrogen? ? 1 : 3) }
+      other.coords.to_a.should eq [V[3, 6, 9], V[4, 5, 6], V[7, 8, 9]]
+    end
+
+    it "modifies the fractional atom coordinates" do
+      other = Chem::Structure.build do
+        lattice 5, 10, 15
+        atom PeriodicTable::O, V[1, 2, 3]
+        atom PeriodicTable::H, V[4, 5, 6]
+        atom PeriodicTable::H, V[7, 8, 9]
+      end
+      expected = [V[6, 12, 18], V[4, 5, 6], V[7, 8, 9]]
+
+      other.coords.map_with_atom!(fractional: true) do |vec, atom|
+        vec + (atom.element.hydrogen? ? 0 : 1)
+      end
+      other.coords.to_a.should be_close expected, 1e-12
+    end
+
+    it "fails for a non-periodic atom collection" do
+      msg = "Cannot compute fractional coordinates for non-periodic atoms"
+      expect_raises Chem::Spatial::Error, msg do
+        fake_structure.coords.map_with_atom! fractional: true, &.itself
       end
     end
   end
