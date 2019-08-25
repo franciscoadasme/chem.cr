@@ -25,12 +25,9 @@ module Chem::Spatial
 
     def each(fractional : Bool = false, &block : Vector ->)
       if fractional
-        if lattice = @lattice
-          transform = AffineTransform.cart_to_fractional lattice
-          @atoms.each_atom { |atom| yield transform * atom.coords }
-        else
-          non_periodic_exception
-        end
+        raise NotPeriodicError.new unless lattice = @lattice
+        transform = AffineTransform.cart_to_fractional lattice
+        @atoms.each_atom { |atom| yield transform * atom.coords }
       else
         @atoms.each_atom { |atom| yield atom.coords }
       end
@@ -52,15 +49,12 @@ module Chem::Spatial
 
     def map!(fractional : Bool = false, &block : Vector -> Vector) : self
       if fractional
-        if lattice = @lattice
-          transform = AffineTransform.cart_to_fractional lattice
+        raise NotPeriodicError.new unless lattice = @lattice
+        transform = AffineTransform.cart_to_fractional lattice
 
-          @atoms.each_atom do |atom|
-            new_coords = yield transform * atom.coords
-            atom.coords = transform.inv * new_coords
-          end
-        else
-          non_periodic_exception
+        @atoms.each_atom do |atom|
+          new_coords = yield transform * atom.coords
+          atom.coords = transform.inv * new_coords
         end
       else
         @atoms.each_atom { |atom| atom.coords = yield atom.coords }
@@ -86,10 +80,6 @@ module Chem::Spatial
       self
     end
 
-    private def non_periodic_exception
-      raise Error.new "Cannot compute fractional coordinates for non-periodic atoms"
-    end
-
     def transform(transform : AffineTransform) : Array(Vector)
       map &.*(transform)
     end
@@ -113,19 +103,13 @@ module Chem::Spatial
     end
 
     def to_cartesian! : self
-      if lattice = @lattice
-        transform! AffineTransform.fractional_to_cart(lattice)
-      else
-        non_periodic_exception
-      end
+      raise NotPeriodicError.new unless lattice = @lattice
+      transform! AffineTransform.fractional_to_cart(lattice)
     end
 
     def to_fractional! : self
-      if lattice = @lattice
-        transform! AffineTransform.cart_to_fractional(lattice)
-      else
-        non_periodic_exception
-      end
+      raise NotPeriodicError.new unless lattice = @lattice
+      transform! AffineTransform.cart_to_fractional(lattice)
     end
   end
 end

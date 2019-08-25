@@ -56,11 +56,8 @@ module Chem::Spatial
 
     def initialize(structure : Structure, periodic : Bool = false, **options)
       if periodic
-        if lattice = structure.lattice
-          initialize structure, lattice, **options
-        else
-          raise Error.new "Non-periodic structure"
-        end
+        raise NotPeriodicError.new unless lattice = structure.lattice
+        initialize structure, lattice, **options
       else
         initialize structure
       end

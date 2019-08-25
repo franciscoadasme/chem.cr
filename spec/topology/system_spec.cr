@@ -17,7 +17,7 @@ describe Chem::Structure do
 
   describe "#wrap" do
     it "fails for non-periodic structures" do
-      expect_raises Chem::Error, "Cannot wrap a non-periodic structure" do
+      expect_raises Chem::Spatial::Error do
         fake_structure.wrap
       end
     end

@@ -39,8 +39,7 @@ describe Chem::Spatial::CoordinatesProxy do
     end
 
     it "fails for a non-periodic atom collection" do
-      msg = "Cannot compute fractional coordinates for non-periodic atoms"
-      expect_raises Chem::Spatial::Error, msg do
+      expect_raises Chem::Spatial::NotPeriodicError do
         fake_structure.coords.each(fractional: true) { }
       end
     end
@@ -72,8 +71,7 @@ describe Chem::Spatial::CoordinatesProxy do
     end
 
     it "fails for a non-periodic atom collection" do
-      msg = "Cannot compute fractional coordinates for non-periodic atoms"
-      expect_raises Chem::Spatial::Error, msg do
+      expect_raises Chem::Spatial::NotPeriodicError do
         fake_structure.coords.each(fractional: true) { }
       end
     end
@@ -91,8 +89,7 @@ describe Chem::Spatial::CoordinatesProxy do
     end
 
     it "fails for a non-periodic atom collection" do
-      msg = "Cannot compute fractional coordinates for non-periodic atoms"
-      expect_raises Chem::Spatial::Error, msg do
+      expect_raises Chem::Spatial::NotPeriodicError do
         fake_structure.coords.map fractional: true, &.itself
       end
     end
@@ -124,8 +121,7 @@ describe Chem::Spatial::CoordinatesProxy do
     end
 
     it "fails for a non-periodic atom collection" do
-      msg = "Cannot compute fractional coordinates for non-periodic atoms"
-      expect_raises Chem::Spatial::Error, msg do
+      expect_raises Chem::Spatial::NotPeriodicError do
         fake_structure.coords.map! fractional: true, &.itself
       end
     end
@@ -149,8 +145,7 @@ describe Chem::Spatial::CoordinatesProxy do
     end
 
     it "fails for a non-periodic atom collection" do
-      msg = "Cannot compute fractional coordinates for non-periodic atoms"
-      expect_raises Chem::Spatial::Error, msg do
+      expect_raises Chem::Spatial::NotPeriodicError do
         fake_structure.coords.map_with_atom fractional: true, &.itself
       end
     end
@@ -184,8 +179,7 @@ describe Chem::Spatial::CoordinatesProxy do
     end
 
     it "fails for a non-periodic atom collection" do
-      msg = "Cannot compute fractional coordinates for non-periodic atoms"
-      expect_raises Chem::Spatial::Error, msg do
+      expect_raises Chem::Spatial::NotPeriodicError do
         fake_structure.coords.map_with_atom! fractional: true, &.itself
       end
     end
@@ -245,8 +239,7 @@ describe Chem::Spatial::CoordinatesProxy do
     end
 
     it "fails for a non-periodic atom collection" do
-      msg = "Cannot compute fractional coordinates for non-periodic atoms"
-      expect_raises Chem::Spatial::Error, msg do
+      expect_raises Chem::Spatial::NotPeriodicError do
         fake_structure.coords.to_a fractional: true
       end
     end

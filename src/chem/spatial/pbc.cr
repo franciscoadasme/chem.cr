@@ -13,11 +13,8 @@ module Chem::Spatial::PBC
   end
 
   def each_adjacent_image(structure : Structure, &block : Atom, Vector ->)
-    if lattice = structure.lattice
-      each_adjacent_image structure, lattice, &block
-    else
-      raise Error.new "Cannot generate adjacent images of a non-periodic structure"
-    end
+    raise NotPeriodicError.new unless lattice = structure.lattice
+    each_adjacent_image structure, lattice, &block
   end
 
   def each_adjacent_image(atoms : AtomCollection,
@@ -39,11 +36,8 @@ module Chem::Spatial::PBC
   def each_adjacent_image(structure : Structure,
                           radius : Number,
                           &block : Atom, Vector ->)
-    if lattice = structure.lattice
-      each_adjacent_image structure, lattice, radius, &block
-    else
-      raise Error.new "Cannot generate adjacent images of a non-periodic structure"
-    end
+    raise NotPeriodicError.new unless lattice = structure.lattice
+    each_adjacent_image structure, lattice, radius, &block
   end
 
   def each_adjacent_image(atoms : AtomCollection,

@@ -45,7 +45,7 @@ module Chem
 
   class Structure
     def to_poscar(poscar : VASP::Poscar::Builder) : Nil
-      raise ::IO::Error.new "Cannot write a non-periodic structure" unless lat = lattice
+      raise Spatial::NotPeriodicError.new unless lat = lattice
 
       poscar.constraints = each_atom.any? &.constraint
       poscar.converter = Spatial::Vector::FractionalConverter.new lat, poscar.wrap? if poscar.fractional?

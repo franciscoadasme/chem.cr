@@ -149,7 +149,7 @@ describe Chem::DFTB::Gen::Builder do
   end
 
   it "fails when writing a non-periodic structure in fractional coordinates" do
-    expect_raises IO::Error, "Cannot write a non-periodic structure" do
+    expect_raises Chem::Spatial::NotPeriodicError do
       Chem::Structure.new.to_gen fractional: true
     end
   end

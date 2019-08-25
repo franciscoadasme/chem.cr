@@ -15,6 +15,12 @@ module Chem::Spatial
 
   class Error < Exception; end
 
+  class NotPeriodicError < Error
+    def initialize(message = "Coordinates are not periodic")
+      super(message)
+    end
+  end
+
   def angle(v1 : Vector, v2 : Vector) : Float64
     Math.atan2(v1.cross(v2).size, v1.dot(v2)).degrees
   end

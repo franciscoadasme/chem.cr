@@ -127,21 +127,15 @@ module Chem
     end
 
     def unwrap : self
-      if lattice = @lattice
-        Spatial::PBC.unwrap self, lattice
-        self
-      else
-        raise Error.new "Cannot wrap a non-periodic structure"
-      end
+      raise Spatial::NotPeriodicError.new unless lattice = @lattice
+      Spatial::PBC.unwrap self, lattice
+      self
     end
 
     def wrap(around center : Spatial::Vector? = nil) : self
-      if lattice = @lattice
-        Spatial::PBC.wrap self, lattice, center || lattice.center
-        self
-      else
-        raise Error.new "Cannot wrap a non-periodic structure"
-      end
+      raise Spatial::NotPeriodicError.new unless lattice = @lattice
+      Spatial::PBC.wrap self, lattice, center || lattice.center
+      self
     end
 
     def write(path : Path | String) : Nil

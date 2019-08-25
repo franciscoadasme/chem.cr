@@ -44,7 +44,7 @@ module Chem
 
   class Structure
     def to_gen(gen : DFTB::Gen::Builder) : Nil
-      raise ::IO::Error.new "Cannot write a non-periodic structure" if gen.fractional? && lattice.nil?
+      raise Spatial::NotPeriodicError.new if gen.fractional? && lattice.nil?
 
       gen.atoms = n_atoms
       gen.converter = Spatial::Vector::FractionalConverter.new lattice.not_nil! if gen.fractional?

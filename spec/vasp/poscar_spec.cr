@@ -163,7 +163,7 @@ describe Chem::VASP::Poscar::Builder do
   end
 
   it "fails with non-periodic structures" do
-    expect_raises IO::Error, "Cannot write a non-periodic structure" do
+    expect_raises Chem::Spatial::NotPeriodicError do
       Chem::Structure.new.to_poscar
     end
   end

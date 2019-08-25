@@ -68,8 +68,7 @@ describe Chem::Spatial::PBC do
     end
 
     it "fails for non-periodic structures" do
-      msg = "Cannot generate adjacent images of a non-periodic structure"
-      expect_raises Chem::Spatial::Error, msg do
+      expect_raises Chem::Spatial::NotPeriodicError do
         Chem::Spatial::PBC.each_adjacent_image(fake_structure) { }
       end
     end
