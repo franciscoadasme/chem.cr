@@ -7,35 +7,22 @@ describe Chem::Spatial::AffineTransform do
     end
   end
 
-  describe ".basis_change" do
-    it "returns the identity transformation" do
-      basis = Chem::Linalg::Basis.new V[-1, 1, 0], V[-1, 0, 1], V[1, 1, 1]
-      Tf.basis_change(from: basis, to: basis).should eq Tf.new
-    end
-
-    it "returns the transformation to change a basis to standard" do
-      basis = Chem::Linalg::Basis.new V[1, 2, 3], V[4, 5, 6], V[7, 8, 9]
-      expected = [1, 4, 7, 0, 2, 5, 8, 0, 3, 6, 9, 0, 0, 0, 0, 1]
-      Tf.basis_change(from: basis).to_a.should eq expected
-    end
-
-    it "returns the transformation to change a basis to another" do
-      basis = Chem::Linalg::Basis.new V[1.2, 0, 1.8], V[0, 1.2, 1.2], V[1.6, 0, 1.6]
-      other = Chem::Linalg::Basis.new V[0, 0.4, 0], V[1.2, 1, 1.2], V[1.4, 1.6, 1]
-      expected = [-0.875, 6.25, -10.0/3, 0,
-                  2.75, 3.5, 4.0/3, 0,
-                  -1.5, -3, 0, 0,
-                  0, 0, 0, 1]
-      Tf.basis_change(from: basis, to: other).to_a.should be_close expected, 1e8
-    end
-
-    it "returns the transformation to change the standard basis to another" do
-      basis = Chem::Linalg::Basis.new V[-1, 1, 0], V[-1, 0, 1], V[1, 1, 1]
+  describe ".cart_to_fractional" do
+    it "returns the transformation from fractional coordinates to cartesian" do
+      lattice = Chem::Lattice.new V[-1, 1, 0], V[-1, 0, 1], V[1, 1, 1]
       expected = [-1.0/3, 2.0/3, -1.0/3, 0,
                   -1.0/3, -1.0/3, 2.0/3, 0,
                   1.0/3, 1.0/3, 1.0/3, 0,
                   0, 0, 0, 1]
-      Tf.basis_change(to: basis).to_a.should be_close expected, 1e8
+      Tf.cart_to_fractional(lattice).to_a.should be_close expected, 1e8
+    end
+  end
+
+  describe ".fractional_to_cart" do
+    it "returns the transformation from fractional coordinates to cartesian" do
+      lattice = Chem::Lattice.new V[1, 2, 3], V[4, 5, 6], V[7, 8, 9]
+      expected = [1, 4, 7, 0, 2, 5, 8, 0, 3, 6, 9, 0, 0, 0, 0, 1]
+      Tf.fractional_to_cart(lattice).to_a.should eq expected
     end
   end
 

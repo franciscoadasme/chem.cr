@@ -15,38 +15,6 @@ module Chem::Spatial
                              @inv : Pointer(Float64) = Pointer(Float64).null)
     end
 
-    # Returns the transformation that converts fractional coordinates with respect to
-    # `basis` to Cartesian coordinates
-    def self.basis_change(*, from basis : Linalg::Basis) : self
-      AffineTransform.build do |buffer|
-        {basis.i, basis.j, basis.k}.each_with_index do |vec, j|
-          3.times do |i|
-            buffer[i * 4 + j] = vec[i]
-          end
-        end
-      end
-    end
-
-    # Returns the transformation that converts Cartesian coordinates to fractional
-    # coordinates with respect to `basis`
-    def self.basis_change(*, to basis : Linalg::Basis) : self
-      basis_change(from: basis).inv
-    end
-
-    # Returns the transformation that converts fractional coordinates with respect to
-    # `basis` to `other`
-    def self.basis_change(from basis : Linalg::Basis, to other : Linalg::Basis) : self
-      if basis == other
-        AffineTransform.new
-      elsif basis.standard?
-        basis_change to: other
-      elsif other.standard?
-        basis_change from: basis
-      else
-        basis_change(to: other) * basis_change(from: basis)
-      end
-    end
-
     def self.build(&block : Pointer(Float64) ->) : self
       transform = AffineTransform.new
       yield transform.to_unsafe
@@ -55,14 +23,42 @@ module Chem::Spatial
 
     # Returns the transformation that converts Cartesian coordinates to fractional
     # coordinates in terms of the unit cell vectors
+    #
+    # This is equivalent to the basis change from standard to the basis defined by the
+    # lattice vectors, which is calculated as the inverse of the latter
     def self.cart_to_fractional(lattice : Lattice) : self
-      basis_change to: Linalg::Basis.new(lattice.a, lattice.b, lattice.c)
+      a, b, c = lattice.a, lattice.b, lattice.c
+      det = a.x * (b.y * c.z - b.z * c.y) -
+            b.x * (a.y * c.z + c.y * a.z) +
+            c.x * (a.y * b.z - b.y * a.z)
+      inv_det = 1 / det
+      AffineTransform.build do |buffer|
+        buffer[0] = (b.y * c.z - b.z * c.y) * inv_det
+        buffer[1] = (c.x * b.z - b.x * c.z) * inv_det
+        buffer[2] = (b.x * c.y - c.x * b.y) * inv_det
+        buffer[4] = (c.y * a.z - a.y * c.z) * inv_det
+        buffer[5] = (a.x * c.z - c.x * a.z) * inv_det
+        buffer[6] = (a.y * c.x - a.x * c.y) * inv_det
+        buffer[8] = (a.y * b.z - a.z * b.y) * inv_det
+        buffer[9] = (a.z * b.x - a.x * b.z) * inv_det
+        buffer[10] = (a.x * b.y - a.y * b.x) * inv_det
+      end
     end
 
     # Returns the transformation that converts Cartesian coordinates to fractional
     # coordinates in terms of the unit cell vectors
+    #
+    # This is equivalent to the basis change from the basis defined by the lattice
+    # vectors to the standard basis, which is expressed by the matrix formed by the
+    # column lattice vectors
     def self.fractional_to_cart(lattice : Lattice) : self
-      basis_change from: Linalg::Basis.new(lattice.a, lattice.b, lattice.c)
+      AffineTransform.build do |buffer|
+        {lattice.a, lattice.b, lattice.c}.each_with_index do |vec, j|
+          3.times do |i|
+            buffer[i * 4 + j] = vec[i]
+          end
+        end
+      end
     end
 
     def self.scaling(by factor : Number) : self
@@ -110,7 +106,7 @@ module Chem::Spatial
     end
 
     # Returns the determinant of the inner 3x3 rotation matrix
-    private def inner_det : Float64
+    def inner_det : Float64
       unsafe_fetch(0) * (unsafe_fetch(5) * unsafe_fetch(10) -
                          unsafe_fetch(9) * unsafe_fetch(6)) -
         unsafe_fetch(1) * (unsafe_fetch(4) * unsafe_fetch(10) +
