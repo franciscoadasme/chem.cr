@@ -47,4 +47,26 @@ describe Chem::Lattice do
       Lattice[74.23, 135.35, 148.46] == expected
     end
   end
+
+  describe "#change_coords" do
+    it "returns the coordinates relative to the lattice vectors" do
+      lattice = Chem::Lattice.orthorombic 10, 20, 30
+      lattice.change_coords(V[1, 2, 3]).should be_close V[0.1, 0.1, 0.1], 1e-15
+      lattice.change_coords(V[2, 3, 15]).should be_close V[0.2, 0.15, 0.5], 1e-15
+
+      lattice.a = 20
+      lattice.change_coords(V[1, 2, 3]).should be_close V[0.05, 0.1, 0.1], 1e-15
+    end
+  end
+
+  describe "#revert_coords" do
+    it "returns the coordinates relative to the lattice vectors" do
+      lattice = Chem::Lattice.orthorombic 20, 20, 16
+      lattice.revert_coords(V[0.5, 0.65, 1]).should be_close V[10, 13, 16], 1e-15
+      lattice.revert_coords(V[1.5, 0.23, 0.9]).should be_close V[30, 4.6, 14.4], 1e-15
+
+      lattice.b /= 2
+      lattice.revert_coords(V[0.5, 0.65, 1]).should be_close V[10, 6.5, 16], 1e-15
+    end
+  end
 end

@@ -55,8 +55,13 @@ module Chem
     end
 
     {% for name in %w(a b c) %}
-      def {{name.id}}=(new_size : Number)
-        @{{name.id}} = @{{name.id}}.resize to: new_size
+      def {{name.id}}=(new_size : Number) : Spatial::Vector
+        self.{{name.id}} = @{{name.id}}.resize to: new_size
+      end
+
+      def {{name.id}}=(vec : Spatial::Vector) : Spatial::Vector
+        @basis_transform = @inverse_basis_transform = nil
+        @{{name.id}} = vec
       end
     {% end %}
 
@@ -70,6 +75,10 @@ module Chem
 
     def center : Spatial::Vector
       (@a + @b + @c) * 0.5
+    end
+
+    def change_coords(vec : Spatial::Vector) : Spatial::Vector
+      basis_transform * vec
     end
 
     def cubic? : Bool
@@ -96,6 +105,10 @@ module Chem
       a.size != b.size && a.size != c.size && b.size != c.size && cuboid?
     end
 
+    def revert_coords(vec : Spatial::Vector) : Spatial::Vector
+      inverse_basis_transform * vec
+    end
+
     def tetragonal? : Bool
       a.size == b.size && b.size != c.size && cuboid?
     end
@@ -106,6 +119,14 @@ module Chem
 
     def size : Spatial::Size3D
       Spatial::Size3D.new @a.size, @b.size, @c.size
+    end
+
+    private def basis_transform : Spatial::AffineTransform
+      @basis_transform ||= Spatial::AffineTransform.cart_to_fractional self
+    end
+
+    private def inverse_basis_transform : Spatial::AffineTransform
+      @inverse_basis_transform ||= Spatial::AffineTransform.fractional_to_cart self
     end
   end
 end

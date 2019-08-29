@@ -31,8 +31,7 @@ module Chem::Spatial
     def each(fractional : Bool = false, &block : Vector ->)
       if fractional
         raise NotPeriodicError.new unless lattice = @lattice
-        transform = AffineTransform.cart_to_fractional lattice
-        @atoms.each_atom { |atom| yield transform * atom.coords }
+        @atoms.each_atom { |atom| yield atom.coords.to_fractional lattice }
       else
         @atoms.each_atom { |atom| yield atom.coords }
       end
@@ -55,11 +54,8 @@ module Chem::Spatial
     def map!(fractional : Bool = false, &block : Vector -> Vector) : self
       if fractional
         raise NotPeriodicError.new unless lattice = @lattice
-        transform = AffineTransform.cart_to_fractional lattice
-
         @atoms.each_atom do |atom|
-          new_coords = yield transform * atom.coords
-          atom.coords = transform.inv * new_coords
+          atom.coords = (yield atom.coords.to_fractional(lattice)).to_cartesian lattice
         end
       else
         @atoms.each_atom { |atom| atom.coords = yield atom.coords }
@@ -109,12 +105,12 @@ module Chem::Spatial
 
     def to_cartesian! : self
       raise NotPeriodicError.new unless lattice = @lattice
-      transform! AffineTransform.fractional_to_cart(lattice)
+      map! &.to_cartesian(lattice)
     end
 
     def to_fractional! : self
       raise NotPeriodicError.new unless lattice = @lattice
-      transform! AffineTransform.cart_to_fractional(lattice)
+      map! &.to_fractional(lattice)
     end
   end
 end

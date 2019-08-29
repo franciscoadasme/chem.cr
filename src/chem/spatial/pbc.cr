@@ -20,15 +20,13 @@ module Chem::Spatial::PBC
   def each_adjacent_image(atoms : AtomCollection,
                           lattice : Lattice,
                           &block : Atom, Vector ->)
-    transform = AffineTransform.cart_to_fractional lattice
-
     atoms.each_atom do |atom|
-      fcoords = transform * atom.coords            # convert to fractional coords
+      fcoords = atom.coords.to_fractional lattice  # convert to fractional coords
       w_fcoords = fcoords - fcoords.floor          # wrap to primary unit cell
       ax_offset = -2 * w_fcoords.round + {1, 1, 1} # compute offset per axis
 
       ADJACENT_IMAGE_IDXS.each do |img_idx|
-        yield atom, transform.inv * (fcoords + ax_offset * img_idx)
+        yield atom, (fcoords + ax_offset * img_idx).to_cartesian(lattice)
       end
     end
   end
@@ -46,18 +44,16 @@ module Chem::Spatial::PBC
                           &block : Atom, Vector ->)
     raise Error.new "Radius cannot be negative" if radius < 0
 
-    transform = AffineTransform.cart_to_fractional lattice
-    padding = (transform * Vector[radius, radius, radius]).clamp(..0.5)
-
+    padding = Vector[radius, radius, radius].to_fractional(lattice).clamp(..0.5)
     atoms.each_atom do |atom|
-      fcoords = transform * atom.coords            # convert to fractional coords
+      fcoords = atom.coords.to_fractional lattice  # convert to fractional coords
       w_fcoords = fcoords - fcoords.floor          # wrap to primary unit cell
       ax_offset = -2 * w_fcoords.round + {1, 1, 1} # compute offset per axis
       ax_pad = (w_fcoords - w_fcoords.round).abs
 
       ADJACENT_IMAGE_IDXS.each do |img_idx|
         next unless 3.times.all? { |i| img_idx[i] * ax_pad[i] <= padding[i] }
-        yield atom, transform.inv * (fcoords + ax_offset * img_idx)
+        yield atom, (fcoords + ax_offset * img_idx).to_cartesian(lattice)
       end
     end
   end
@@ -89,10 +85,9 @@ module Chem::Spatial::PBC
         {% end %}
       end
     else
-      transform = AffineTransform.cart_to_fractional lattice
-      atoms.coords.transform! transform
-      wrap atoms, Lattice.new(V.x, V.y, V.z), (transform * center)
-      atoms.coords.transform! transform.inv
+      atoms.coords.to_fractional!
+      wrap atoms, Lattice.new(V.x, V.y, V.z), center.to_fractional(lattice)
+      atoms.coords.to_cartesian!
     end
   end
 
