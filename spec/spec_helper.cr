@@ -15,6 +15,14 @@ alias Vector = Chem::Spatial::Vector
 
 module Spec
   struct CloseExpectation
+    def match(actual_value : Enumerable(Vector)) : Bool
+      actual_value.zip(@expected_value).all? do |a, b|
+        {(a.x - b.x).abs, (a.y - b.y).abs, (a.z - b.z).abs}.all? do |value|
+          value <= @delta
+        end
+      end
+    end
+
     def match(actual_value : Array(T)) forall T
       if @expected_value.size != actual_value.size
         raise ArgumentError.new "arrays have different sizes"

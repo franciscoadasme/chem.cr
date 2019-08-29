@@ -5,6 +5,11 @@ module Chem::Spatial
     def initialize(@atoms : AtomCollection, @lattice : Lattice? = nil)
     end
 
+    def ==(rhs : Enumerable(Vector)) : Bool
+      zip(rhs) { |a, b| return false if a != b }
+      true
+    end
+
     def bounds : Bounds
       min = StaticArray[Float64::MAX, Float64::MAX, Float64::MAX]
       max = StaticArray[Float64::MIN, Float64::MIN, Float64::MIN]

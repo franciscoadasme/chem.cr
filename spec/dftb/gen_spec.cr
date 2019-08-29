@@ -17,7 +17,7 @@ describe Chem::DFTB::Gen::PullParser do
 
     structure.n_atoms.should eq 5
     structure.atoms.map(&.element.symbol).should eq ["Cl", "Na", "O", "Na", "Cl"]
-    structure.coords.to_a.should eq [
+    structure.coords.should eq [
       V[30, 15, 10],
       V[10, 5, 5],
       V[30, 15, 9],
@@ -48,7 +48,7 @@ describe Chem::DFTB::Gen::PullParser do
 
     structure.n_atoms.should eq 4
     structure.atoms.map(&.element.symbol).should eq ["Cl", "O", "O", "Na"]
-    structure.coords.to_a.should eq [
+    structure.coords.should eq [
       V[30, 15, 10],
       V[10, 5, 5],
       V[3, 1.5, 9],
@@ -76,7 +76,7 @@ describe Chem::DFTB::Gen::PullParser do
 
     structure.n_atoms.should eq 2
     structure.atoms.map(&.element.symbol).should eq ["Ga", "As"]
-    structure.coords.to_a.should eq [V[0, 0, 0], V[1.356773, 1.356773, 1.356773]]
+    structure.coords.should eq [V[0, 0, 0], V[1.356773, 1.356773, 1.356773]]
   end
 end
 

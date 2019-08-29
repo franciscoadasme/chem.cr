@@ -103,8 +103,7 @@ describe Chem::Spatial::CoordinatesProxy do
         atom PeriodicTable::H, V[7, 8, 9]
       end
 
-      other.coords.map! &.*(2)
-      other.coords.to_a.should eq [V[2, 4, 6], V[8, 10, 12], V[14, 16, 18]]
+      other.coords.map!(&.*(2)).should eq [V[2, 4, 6], V[8, 10, 12], V[14, 16, 18]]
     end
 
     it "modifies the fractional atom coordinates" do
@@ -116,8 +115,7 @@ describe Chem::Spatial::CoordinatesProxy do
       end
       expected = [V[6, 12, 18], V[9, 15, 21], V[12, 18, 24]]
 
-      other.coords.map! fractional: true, &.+(1)
-      other.coords.to_a.should be_close expected, 1e-12
+      other.coords.map!(fractional: true, &.+(1)).should be_close expected, 1e-12
     end
 
     it "fails for a non-periodic atom collection" do
@@ -160,7 +158,7 @@ describe Chem::Spatial::CoordinatesProxy do
       end
 
       other.coords.map_with_atom! { |vec, atom| vec * (atom.element.hydrogen? ? 1 : 3) }
-      other.coords.to_a.should eq [V[3, 6, 9], V[4, 5, 6], V[7, 8, 9]]
+      other.coords.should eq [V[3, 6, 9], V[4, 5, 6], V[7, 8, 9]]
     end
 
     it "modifies the fractional atom coordinates" do
@@ -175,7 +173,7 @@ describe Chem::Spatial::CoordinatesProxy do
       other.coords.map_with_atom!(fractional: true) do |vec, atom|
         vec + (atom.element.hydrogen? ? 0 : 1)
       end
-      other.coords.to_a.should be_close expected, 1e-12
+      other.coords.should be_close expected, 1e-12
     end
 
     it "fails for a non-periodic atom collection" do
@@ -201,9 +199,8 @@ describe Chem::Spatial::CoordinatesProxy do
         atom PeriodicTable::H, V[7, 8, 9]
       end
 
-      expected = [V[0, 2, 4], V[3, 5, 7], V[6, 8, 10]]
-      other.coords.transform! Tf.translation by: V[-1, 0, 1]
-      other.coords.to_a.should eq expected
+      transform = Tf.translation by: V[-1, 0, 1]
+      other.coords.transform!(transform).should eq [V[0, 2, 4], V[3, 5, 7], V[6, 8, 10]]
     end
   end
 
@@ -223,8 +220,7 @@ describe Chem::Spatial::CoordinatesProxy do
       end
 
       expected = [V[-2, 0, 2], V[1, 3, 5], V[4, 6, 8]]
-      other.coords.translate! by: V[-3, -2, -1]
-      other.coords.to_a.should eq expected
+      other.coords.translate!(by: V[-3, -2, -1]).should eq expected
     end
   end
 
@@ -255,8 +251,7 @@ describe Chem::Spatial::CoordinatesProxy do
       end
 
       expected = [V[2, 8, 18], V[1, 4, 9], V[6, 18, 10.5]]
-      structure.coords.to_cartesian!
-      structure.coords.to_a.should be_close expected, 1e-15
+      structure.coords.to_cartesian!.should be_close expected, 1e-15
     end
   end
 
@@ -270,8 +265,7 @@ describe Chem::Spatial::CoordinatesProxy do
       end
 
       expected = [V[0.1, 0.1, 0.1], V[0.4, 0.25, 0.2], V[0.7, 0.4, 0.3]]
-      structure.coords.to_fractional!
-      structure.coords.to_a.should be_close expected, 1e-15
+      structure.coords.to_fractional!.should be_close expected, 1e-15
     end
   end
 end
