@@ -8,11 +8,6 @@ module Chem::Spatial
         j = index % 4
         i == j ? 1.0 : 0.0
       end
-      @inv = Pointer(Float64).null
-    end
-
-    protected def initialize(@buffer : Pointer(Float64),
-                             @inv : Pointer(Float64) = Pointer(Float64).null)
     end
 
     def self.build(&block : Pointer(Float64) ->) : self
@@ -172,17 +167,14 @@ module Chem::Spatial
     # Refer to https://stackoverflow.com/a/2625420 or Wikipedia, Affine transformation
     # article (Properties section) for a detailed explanation.
     def inv : self
-      if @inv.null?
-        @inv = Pointer.malloc 16, 0.0
-        inner_inv @inv
+      AffineTransform.build do |buffer|
+        inner_inv buffer
         {3, 7, 11}.each do |i|
-          @inv[i] = (0..2).sum do |j|
-            -@inv[i - 3 + j] * unsafe_fetch(j * 4 + 3)
+          buffer[i] = (0..2).sum do |j|
+            -buffer[i - 3 + j] * unsafe_fetch(j * 4 + 3)
           end
         end
-        @inv[15] = 1.0
       end
-      AffineTransform.new buffer: @inv, inv: @buffer
     end
 
     def scale(by factor : Number) : self
