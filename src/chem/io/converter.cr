@@ -8,14 +8,13 @@ module Chem
 
     property? wrap : Bool
 
-    def initialize(lattice : Lattice, @wrap : Bool = false)
-      @transform = AffineTransform.cart_to_fractional lattice
+    def initialize(@lattice : Lattice, @wrap : Bool = false)
     end
 
-    def convert(value : Vector) : Vector
-      value *= @transform
-      value -= value.map_with_index { |e, i| value[i] == 1 ? 0 : e.floor } if wrap?
-      value
+    def convert(vec : Vector) : Vector
+      vec = vec.to_fractional @lattice
+      vec -= vec.map_with_index { |e, i| vec[i] == 1 ? 0 : e.floor } if wrap?
+      vec
     end
   end
 end
