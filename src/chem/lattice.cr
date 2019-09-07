@@ -121,12 +121,37 @@ module Chem
       Spatial::Size3D.new @a.size, @b.size, @c.size
     end
 
+    # Returns the transformation that converts Cartesian coordinates to fractional
+    # coordinates in terms of the unit cell vectors
+    #
+    # This is equivalent to the basis change from standard to the basis defined by the
+    # lattice vectors, which is calculated as the inverse of the latter
     private def basis_transform : Spatial::AffineTransform
-      @basis_transform ||= Spatial::AffineTransform.cart_to_fractional self
+      @basis_transform ||= Spatial::AffineTransform.build do |buffer|
+        det = @a.x * (@b.y * @c.z - @b.z * @c.y) -
+              @b.x * (@a.y * @c.z + @c.y * @a.z) +
+              @c.x * (@a.y * @b.z - @b.y * @a.z)
+        inv_det = 1 / det
+        buffer[0] = (@b.y * @c.z - @b.z * @c.y) * inv_det
+        buffer[1] = (@c.x * @b.z - @b.x * @c.z) * inv_det
+        buffer[2] = (@b.x * @c.y - @c.x * @b.y) * inv_det
+        buffer[4] = (@c.y * @a.z - @a.y * @c.z) * inv_det
+        buffer[5] = (@a.x * @c.z - @c.x * @a.z) * inv_det
+        buffer[6] = (@a.y * @c.x - @a.x * @c.y) * inv_det
+        buffer[8] = (@a.y * @b.z - @a.z * @b.y) * inv_det
+        buffer[9] = (@a.z * @b.x - @a.x * @b.z) * inv_det
+        buffer[10] = (@a.x * @b.y - @a.y * @b.x) * inv_det
+      end
     end
 
+    # Returns the transformation that converts Cartesian coordinates to fractional
+    # coordinates in terms of the unit cell vectors
+    #
+    # This is equivalent to the basis change from the basis defined by the lattice
+    # vectors to the standard basis, which is expressed by the matrix formed by the
+    # column lattice vectors
     private def inverse_basis_transform : Spatial::AffineTransform
-      @inverse_basis_transform ||= Spatial::AffineTransform.fractional_to_cart self
+      @inverse_basis_transform ||= Spatial::AffineTransform.new @a, @b, @c
     end
   end
 end

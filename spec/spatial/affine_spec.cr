@@ -17,25 +17,6 @@ describe Chem::Spatial::AffineTransform do
     end
   end
 
-  describe ".cart_to_fractional" do
-    it "returns the transformation from fractional coordinates to cartesian" do
-      lattice = Chem::Lattice.new V[-1, 1, 0], V[-1, 0, 1], V[1, 1, 1]
-      expected = [-1.0/3, 2.0/3, -1.0/3, 0,
-                  -1.0/3, -1.0/3, 2.0/3, 0,
-                  1.0/3, 1.0/3, 1.0/3, 0,
-                  0, 0, 0, 1]
-      Tf.cart_to_fractional(lattice).to_a.should be_close expected, 1e8
-    end
-  end
-
-  describe ".fractional_to_cart" do
-    it "returns the transformation from fractional coordinates to cartesian" do
-      lattice = Chem::Lattice.new V[1, 2, 3], V[4, 5, 6], V[7, 8, 9]
-      expected = [1, 4, 7, 0, 2, 5, 8, 0, 3, 6, 9, 0, 0, 0, 0, 1]
-      Tf.fractional_to_cart(lattice).to_a.should eq expected
-    end
-  end
-
   describe ".scaling" do
     it "returns a scaling transformation" do
       expected = [1.5, 0, 0, 0, 0, 1.5, 0, 0, 0, 0, 1.5, 0, 0, 0, 0, 1]

@@ -26,46 +26,6 @@ module Chem::Spatial
       transform
     end
 
-    # Returns the transformation that converts Cartesian coordinates to fractional
-    # coordinates in terms of the unit cell vectors
-    #
-    # This is equivalent to the basis change from standard to the basis defined by the
-    # lattice vectors, which is calculated as the inverse of the latter
-    def self.cart_to_fractional(lattice : Lattice) : self
-      a, b, c = lattice.a, lattice.b, lattice.c
-      det = a.x * (b.y * c.z - b.z * c.y) -
-            b.x * (a.y * c.z + c.y * a.z) +
-            c.x * (a.y * b.z - b.y * a.z)
-      inv_det = 1 / det
-      AffineTransform.build do |buffer|
-        buffer[0] = (b.y * c.z - b.z * c.y) * inv_det
-        buffer[1] = (c.x * b.z - b.x * c.z) * inv_det
-        buffer[2] = (b.x * c.y - c.x * b.y) * inv_det
-        buffer[4] = (c.y * a.z - a.y * c.z) * inv_det
-        buffer[5] = (a.x * c.z - c.x * a.z) * inv_det
-        buffer[6] = (a.y * c.x - a.x * c.y) * inv_det
-        buffer[8] = (a.y * b.z - a.z * b.y) * inv_det
-        buffer[9] = (a.z * b.x - a.x * b.z) * inv_det
-        buffer[10] = (a.x * b.y - a.y * b.x) * inv_det
-      end
-    end
-
-    # Returns the transformation that converts Cartesian coordinates to fractional
-    # coordinates in terms of the unit cell vectors
-    #
-    # This is equivalent to the basis change from the basis defined by the lattice
-    # vectors to the standard basis, which is expressed by the matrix formed by the
-    # column lattice vectors
-    def self.fractional_to_cart(lattice : Lattice) : self
-      AffineTransform.build do |buffer|
-        {lattice.a, lattice.b, lattice.c}.each_with_index do |vec, j|
-          3.times do |i|
-            buffer[i * 4 + j] = vec[i]
-          end
-        end
-      end
-    end
-
     def self.scaling(by factor : Number) : self
       AffineTransform.build do |buffer|
         3.times { |i| buffer[i * 4 + i] = factor.to_f }
