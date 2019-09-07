@@ -10,6 +10,16 @@ module Chem::Spatial
       end
     end
 
+    def initialize(a : Vector, b : Vector, c : Vector, d : Vector = Vector.zero)
+      @buffer = Pointer(Float64).malloc 16
+      {a, b, c, d}.each_with_index do |vec, j|
+        3.times do |i|
+          @buffer[i * 4 + j] = vec[i]
+        end
+      end
+      @buffer[15] = 1.0
+    end
+
     def self.build(&block : Pointer(Float64) ->) : self
       transform = AffineTransform.new
       yield transform.to_unsafe

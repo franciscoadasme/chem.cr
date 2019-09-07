@@ -5,6 +5,16 @@ describe Chem::Spatial::AffineTransform do
     it "creates an identity transformation" do
       Tf.new.to_a.should eq [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
     end
+
+    it "creates a transformation" do
+      transform = Tf.new V[1, 2, 3], V[4, 5, 6], V[7, 8, 9]
+      transform.to_a.should eq [1, 4, 7, 0, 2, 5, 8, 0, 3, 6, 9, 0, 0, 0, 0, 1]
+    end
+
+    it "creates a transformation with a translation vector" do
+      transform = Tf.new V[1, 2, 3], V[4, 5, 6], V[7, 8, 9], V[1, 2, 3]
+      transform.to_a.should eq [1, 4, 7, 1, 2, 5, 8, 2, 3, 6, 9, 3, 0, 0, 0, 1]
+    end
   end
 
   describe ".cart_to_fractional" do
