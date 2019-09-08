@@ -85,9 +85,10 @@ module Chem::Spatial::PBC
         {% end %}
       end
     else
-      atoms.coords.to_fractional!
-      wrap atoms, Lattice.new(V.x, V.y, V.z), center.to_fractional(lattice)
-      atoms.coords.to_cartesian!
+      offset = center.to_fractional(lattice) - Vector[0.5, 0.5, 0.5]
+      atoms.coords.map!(fractional: true) do |vec|
+        vec - (vec - offset).floor
+      end
     end
   end
 
