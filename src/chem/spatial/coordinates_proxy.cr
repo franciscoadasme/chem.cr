@@ -1,6 +1,7 @@
 module Chem::Spatial
   struct CoordinatesProxy
     include Enumerable(Vector)
+    include Iterable(Vector)
 
     def initialize(@atoms : AtomCollection, @lattice : Lattice? = nil)
     end
@@ -26,6 +27,15 @@ module Chem::Spatial
 
     def center : Vector
       sum / @atoms.n_atoms
+    end
+
+    def each(fractional : Bool = false) : Iterator(Vector)
+      if fractional
+        raise NotPeriodicError.new unless lattice = @lattice
+        FractionalCoordinatesIterator.new @atoms, lattice
+      else
+        @atoms.each_atom.map &.coords
+      end
     end
 
     def each(fractional : Bool = false, &block : Vector ->)
@@ -111,6 +121,22 @@ module Chem::Spatial
     def to_fractional! : self
       raise NotPeriodicError.new unless lattice = @lattice
       map! &.to_fractional(lattice)
+    end
+
+    private class FractionalCoordinatesIterator
+      include Iterator(Vector)
+      include IteratorWrapper
+
+      @iterator : Iterator(Atom)
+
+      def initialize(atoms : AtomCollection, @lattice : Lattice)
+        @iterator = atoms.each_atom
+      end
+
+      def next : Vector | Iterator::Stop
+        atom = wrapped_next
+        atom.coords.to_fractional @lattice
+      end
     end
   end
 end

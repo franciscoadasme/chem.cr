@@ -38,6 +38,16 @@ describe Chem::Spatial::CoordinatesProxy do
       vecs.should be_close expected, 1e-15
     end
 
+    it "returns an iterator of coordinates" do
+      structure.coords.each.to_a.should eq [V[1, 2, 3], V[4, 5, 6], V[7, 8, 9]]
+    end
+
+    it "returns an iterator of fractional coordinates" do
+      structure.coords.each(fractional: true).to_a.should be_close [
+        V[0.1, 0.2, 0.3], V[0.4, 0.5, 0.6], V[0.7, 0.8, 0.9],
+      ], 1e-15
+    end
+
     it "fails for a non-periodic atom collection" do
       expect_raises Chem::Spatial::NotPeriodicError do
         fake_structure.coords.each(fractional: true) { }
