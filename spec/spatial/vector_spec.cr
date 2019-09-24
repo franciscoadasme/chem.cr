@@ -224,4 +224,47 @@ describe Chem::Spatial::Vector do
       v1.inv.zero?.should be_false
     end
   end
+
+  describe "#wrap" do
+    it "wraps a fractional vector" do
+      V[0, 0, 0].wrap.should eq V[0, 0, 0]
+      V[1, 1, 1].wrap.should eq V[1, 1, 1]
+      V[0.5, 0.3, 1].wrap.should eq V[0.5, 0.3, 1]
+      V[0.5, 0.3, 1.1].wrap.should be_close V[0.5, 0.3, 0.1], 1e-15
+      V[0.01, -0.3, 2.4].wrap.should be_close V[0.01, 0.7, 0.4], 1e-15
+    end
+
+    it "wraps a fractional vector around a center" do
+      center = V.origin
+
+      V[0, 0, 0].wrap(center).should eq V[0, 0, 0]
+      V[1, 1, 1].wrap(center).should eq V[0, 0, 0]
+      V[0.5, 0.3, 1].wrap(center).should eq V[0.5, 0.3, 0]
+      V[0.5, 0.3, 1.1].wrap(center).should be_close V[0.5, 0.3, 0.1], 1e-15
+      V[0.01, -0.3, 2.4].wrap(center).should be_close V[0.01, -0.3, 0.4], 1e-12
+    end
+
+    it "wraps a cartersian vector" do
+      lattice = Chem::Lattice.orthorombic 15, 20, 9
+
+      V[0, 0, 0].wrap(lattice).should eq V[0, 0, 0]
+      V[15, 20, 9].wrap(lattice).should be_close V[15, 20, 9], 1e-12
+      V[10, 10, 5].wrap(lattice).should be_close V[10, 10, 5], 1e-12
+      V[15.5, 21, -5].wrap(lattice).should be_close V[0.5, 1, 4], 1e-12
+    end
+
+    it "wraps a cartersian vector around a center" do
+      lattice = Chem::Lattice.orthorombic 32, 20, 19
+      center = V[32, 20, 19]
+
+      [
+        {V[0, 0, 0], V[32, 20, 19]},
+        {V[32, 20, 19], V[32, 20, 19]},
+        {V[20.285, 14.688, 16.487], V[20.285, 14.688, 16.487]},
+        {V[23.735, 19.25, 1.716], V[23.735, 19.25, 20.716]},
+      ].each do |vec, expected|
+        vec.wrap(lattice, center).should be_close expected, 1e-12
+      end
+    end
+  end
 end

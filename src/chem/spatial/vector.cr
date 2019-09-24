@@ -173,6 +173,23 @@ module Chem::Spatial
       {x, y, z}
     end
 
+    def wrap : self
+      self - map_with_index { |ele, i| ele == 1 ? 0 : ele.floor }
+    end
+
+    def wrap(around center : self) : self
+      offset = self - (center - Vector[0.5, 0.5, 0.5])
+      self - offset.map_with_index { |ele, i| ele == 1 ? 0 : ele.floor }
+    end
+
+    def wrap(lattice : Lattice) : self
+      to_fractional(lattice).wrap.to_cartesian lattice
+    end
+
+    def wrap(lattice : Lattice, around center : self) : self
+      to_fractional(lattice).wrap(center.to_fractional(lattice)).to_cartesian lattice
+    end
+
     def x? : Bool
       @x == 1 && @y == 0 && @z == 0
     end
