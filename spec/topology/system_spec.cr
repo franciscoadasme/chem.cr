@@ -14,12 +14,4 @@ describe Chem::Structure do
       st.atoms.map(&.name).should eq ["N", "CA", "C", "O", "CB"]
     end
   end
-
-  describe "#wrap" do
-    it "fails for non-periodic structures" do
-      expect_raises Chem::Spatial::Error do
-        fake_structure.wrap
-      end
-    end
-  end
 end

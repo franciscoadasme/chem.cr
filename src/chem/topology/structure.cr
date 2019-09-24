@@ -132,12 +132,6 @@ module Chem
       self
     end
 
-    def wrap(around center : Spatial::Vector? = nil) : self
-      raise Spatial::NotPeriodicError.new unless lattice = @lattice
-      Spatial::PBC.wrap self, lattice, center || lattice.center
-      self
-    end
-
     def write(path : Path | String) : Nil
       format = IO::FileFormat.from_ext File.extname(path)
       {% begin %}

@@ -69,29 +69,6 @@ module Chem::Spatial::PBC
     atoms.coords.to_cartesian!
   end
 
-  def wrap(atoms : AtomCollection, lattice : Lattice)
-    wrap atoms, lattice, lattice.center
-  end
-
-  def wrap(atoms : AtomCollection, lattice : Lattice, center : Spatial::Vector)
-    if lattice.cuboid?
-      vecs = {lattice.a, lattice.b, lattice.c}
-      normed_vecs = vecs.map &.normalize
-      atoms.each_atom do |atom|
-        d = atom.coords - center
-        {% for i in 0..2 %}
-          fd = d.dot(normed_vecs[{{i}}]) / vecs[{{i}}].size
-          atom.coords += -fd.round * vecs[{{i}}] if fd.abs > 0.5
-        {% end %}
-      end
-    else
-      offset = center.to_fractional(lattice) - Vector[0.5, 0.5, 0.5]
-      atoms.coords.map!(fractional: true) do |vec|
-        vec - (vec - offset).floor
-      end
-    end
-  end
-
   private def assemble_fragment(atom, center, moved_atoms) : Nil
     return if moved_atoms.includes? atom
 

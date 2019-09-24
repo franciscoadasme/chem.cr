@@ -123,6 +123,29 @@ module Chem::Spatial
       map! &.to_fractional(lattice)
     end
 
+    def wrap(around center : Vector? = nil) : self
+      raise NotPeriodicError.new unless lattice = @lattice
+      center ||= lattice.center
+
+      if lattice.cuboid?
+        vecs = {lattice.a, lattice.b, lattice.c}
+        normed_vecs = vecs.map &.normalize
+        map! do |vec|
+          d = vec - center
+          3.times do |i|
+            fd = d.dot(normed_vecs[i]) / vecs[i].size
+            vec -= fd.round * vecs[i] if fd.abs > 0.5
+          end
+          vec
+        end
+      else
+        offset = center.to_fractional(lattice) - Vector[0.5, 0.5, 0.5]
+        map!(fractional: true) { |vec| vec - (vec - offset).floor }
+      end
+
+      self
+    end
+
     private class FractionalCoordinatesIterator
       include Iterator(Vector)
       include IteratorWrapper
