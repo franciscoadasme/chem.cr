@@ -125,6 +125,10 @@ module Chem::Spatial
 
     def wrap(around center : Vector? = nil) : self
       raise NotPeriodicError.new unless lattice = @lattice
+      wrap lattice, center
+    end
+
+    def wrap(lattice : Lattice, around center : Vector? = nil) : self
       center ||= lattice.center
 
       if lattice.cuboid?
