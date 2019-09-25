@@ -11,7 +11,7 @@ class Array(T)
     start, count = Indexable.range_to_index_and_count range, size
     raise IndexError.new if start >= size
     count = Math.min count, size - start
-    Array.intro_sort! @buffer + start, count if count > 1
+    Slice.new(to_unsafe + start, count).sort! if count > 1
     self
   end
 
@@ -19,7 +19,7 @@ class Array(T)
     start, count = Indexable.range_to_index_and_count range, size
     raise IndexError.new if start >= size
     count = Math.min count, size - start
-    Array.intro_sort! @buffer + start, count, block if count > 1
+    Slice.new(to_unsafe + start, count).sort! &block if count > 1
     self
   end
 end
