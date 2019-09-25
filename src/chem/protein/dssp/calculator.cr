@@ -94,23 +94,25 @@ module Chem::Protein::DSSP
     private def bulge?(bi : Bridge, bj : Bridge) : Bool
       return false unless bi.kind == bj.kind
 
-      ibi = bi.i.first.to_u
-      iei = bi.i.last.to_u
-      jbi = bi.j.first.to_u
-      jei = bi.j.last.to_u
-      ibj = bj.i.first.to_u
-      iej = bj.i.last.to_u
-      jbj = bj.j.first.to_u
-      jej = bj.j.last.to_u
+      ibi = bi.i.first
+      iei = bi.i.last
+      jbi = bi.j.first
+      jei = bi.j.last
+      ibj = bj.i.first
+      iej = bj.i.last
+      jbj = bj.j.first
+      jej = bj.j.last
 
       return false if gap?({ibi, ibj}.min, {iei, iej}.max)
       return false if gap?({jbi, jbj}.min, {jei, jej}.max)
-      return false if ibj - iei >= 6 || (iei >= ibj && ibi <= iej)
+      return false if (ibj >= iei && ibj - iei >= 6) || (iei >= ibj && ibi <= iej)
 
       if bi.parallel?
-        (jbj - jei < 6 && ibj - iei < 3) || (jbj - jei < 3)
+        ((jbj >= jei && jbj - jei < 6) && (ibj >= iei && ibj - iei < 3)) ||
+          (jbj >= jei && jbj - jei < 3)
       else
-        (jbi - jej < 6 && ibj - iei < 3) || (jbi - jej < 3)
+        ((jbi >= jej && jbi - jej < 6) && (ibj >= iei && ibj - iei < 3)) ||
+          (jbi >= jej && jbi - jej < 3)
       end
     end
 
