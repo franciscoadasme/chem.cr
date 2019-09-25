@@ -8,7 +8,7 @@ class CAD::Parser < Chem::IO::Parser
 
   def each_structure(indexes : Indexable(Int), &block : Structure ->); end
 
-  def parse
+  def parse : Chem::Structure
     Chem::Structure.new
   end
 end
