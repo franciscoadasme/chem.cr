@@ -2,7 +2,7 @@ module Chem::PDB
   @[IO::FileType(format: PDB, ext: [:pdb])]
   class Builder < IO::Builder
     PDB_VERSION      = "3.30"
-    PDB_VERSION_DATE = Time.new 2011, 7, 13
+    PDB_VERSION_DATE = Time.local 2011, 7, 13
 
     setter bonds : Bool | Array(Bond)
     setter experiment : Protein::Experiment?
