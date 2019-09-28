@@ -93,6 +93,16 @@ module Chem::IO
       parse_exception "Couldn't read a decimal number"
     end
 
+    def read_int : Int32
+      skip_whitespace
+      String.build do |io|
+        io << read_sign
+        read_digits io
+      end.to_i
+    rescue ArgumentError
+      parse_exception "Couldn't read a number"
+    end
+
     def read_int(count : Int32, **options) : Int32
       read_chars(count, **options).to_i
     rescue ArgumentError

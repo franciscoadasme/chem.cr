@@ -214,6 +214,10 @@ describe Chem::IO::PullParser do
   end
 
   describe "#read_int" do
+    it "reads an integer" do
+      Parser.new("12574").read_int.should eq 12574
+    end
+
     it "reads an integer from N characters" do
       Parser.new("12574").read_int(4).should eq 1257
     end
