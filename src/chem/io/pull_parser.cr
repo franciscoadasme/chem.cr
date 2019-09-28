@@ -105,22 +105,35 @@ module Chem::IO
     end
 
     def scan(pattern : Regex) : String
-      scan do |char|
+      String.build do |io|
+        scan io, pattern
+      end
+    end
+
+    def scan(io : ::IO, pattern : Regex) : self
+      scan(io) do |char|
         !pattern.match(char.to_s).nil?
       end
     end
 
     # FIXME: raise an exception instead of return "" if cannot read anymore?
     def scan(& : Char -> Bool) : String
-      prev_pos = @io.pos
       String.build do |io|
-        while char = @io.read_char
-          break unless yield char
-          io << char
-          prev_pos = @io.pos
+        scan(io) do |char|
+          yield char
         end
-        @io.pos = prev_pos
       end
+    end
+
+    def scan(io : ::IO, & : Char -> Bool) : self
+      prev_pos = @io.pos
+      while char = read_char?
+        break unless yield char
+        io << char
+        prev_pos = @io.pos
+      end
+      @io.pos = prev_pos
+      self
     end
 
     # TODO change to scan_delimited and add a delimiter : Char option

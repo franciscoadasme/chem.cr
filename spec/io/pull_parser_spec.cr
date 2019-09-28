@@ -255,6 +255,20 @@ describe Chem::IO::PullParser do
       parser = Parser.new "Lorem ipsum dolor sit amet"
       parser.scan { |char| char.number? }.should eq ""
     end
+
+    it "reads characters into a IO object" do
+      io = IO::Memory.new
+      parser = Parser.new "Lorem ipsum dolor sit amet"
+      parser.scan io, &.letter?
+      io.to_s.should eq "Lorem"
+    end
+
+    it "reads characters that match a pattern into a IO object" do
+      io = IO::Memory.new
+      parser = Parser.new "Lorem ipsum dolor sit amet"
+      parser.scan io, /[A-Z]/
+      io.to_s.should eq "L"
+    end
   end
 
   describe "#scan_multiple" do
