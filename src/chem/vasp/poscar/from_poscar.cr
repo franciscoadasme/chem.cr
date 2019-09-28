@@ -1,7 +1,7 @@
 module Chem
-  def Constraint.new(pull : VASP::Poscar::Parser) : Constraint
+  def Constraint.new(pull : VASP::Poscar::Parser) : Constraint?
     case {pull.read_bool, pull.read_bool, pull.read_bool}
-    when {true, true, true}    then None
+    when {true, true, true}    then nil
     when {false, true, true}   then X
     when {true, false, true}   then Y
     when {true, true, false}   then Z
