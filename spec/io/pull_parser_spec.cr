@@ -84,6 +84,19 @@ describe Chem::IO::PullParser do
     end
   end
 
+  describe "#read_char_in_set" do
+    it "reads a character" do
+      parser = Parser.new "Lorem ipsum"
+      parser.read_char_in_set("A-Z").should eq 'L'
+    end
+
+    it "does not read a character if not in charset" do
+      parser = Parser.new "Lorem ipsum"
+      parser.read_char_in_set("0-9").should be_nil
+      parser.read_char.should eq 'L'
+    end
+  end
+
   describe "#read_char_or_null" do
     it "reads one character" do
       parser = Parser.new "Lorem ipsum"

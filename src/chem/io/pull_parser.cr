@@ -28,6 +28,10 @@ module Chem::IO
       @io.read_char
     end
 
+    def read_char_in_set(charset : String) : Char?
+      read_char if peek_char.in_set?(charset)
+    end
+
     def read_char_or_null : Char?
       char = read_char
       char.whitespace? ? nil : char
