@@ -13,19 +13,6 @@ module Chem
     end
   end
 
-  def VASP::Poscar::CoordinateSystem.new(pull : VASP::Poscar::Parser)
-    pull.skip_whitespace
-    line = pull.read_line
-    case line[0].downcase
-    when 'c', 'k' # cartesian
-      CoordinateSystem::Cartesian
-    when 'd' # direct
-      CoordinateSystem::Fractional
-    else
-      pull.fail "Invalid coordinate type: #{line}"
-    end
-  end
-
   struct Spatial::Vector
     def initialize(pull : VASP::Poscar::Parser)
       @x = pull.read_float

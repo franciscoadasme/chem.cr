@@ -3,7 +3,7 @@ module Chem::VASP::Poscar
   class Parser < IO::Parser
     include IO::PullParser
 
-    @coord_system = CoordinateSystem::Fractional
+    @fractional = false
     @lattice = Lattice[0, 0, 0]
 
     def initialize(@io : ::IO)
@@ -24,7 +24,7 @@ module Chem::VASP::Poscar
       @lattice = builder.lattice self
       elements = parse_elements
       has_constraints = parse_selective_dynamics
-      @coord_system = CoordinateSystem.new self
+      parse_coordinate_system
 
       elements.each do |element|
         atom = builder.atom of: element, at: read_coords
@@ -59,22 +59,32 @@ module Chem::VASP::Poscar
 
     # TODO check whether using a tuple and manual math would speed up the parsing
     private def read_coords : Spatial::Vector
-      coords = read_vector
-      case @coord_system
-      when .cartesian?
-        coords * @lattice.scale_factor
-      when .fractional?
-        a = coords.x * @lattice.a
-        b = coords.y * @lattice.b
-        c = coords.z * @lattice.c
+      vec = read_vector
+      if @fractional
+        a = vec.x * @lattice.a
+        b = vec.y * @lattice.b
+        c = vec.z * @lattice.c
         a + b + c
       else
-        raise "BUG: unreachable"
+        vec * @lattice.scale_factor
       end
     end
 
     def read_vector : Spatial::Vector
       Spatial::Vector.new self
+    end
+
+    private def parse_coordinate_system : Nil
+      skip_whitespace
+      line = read_line
+      @fractional = case line[0].downcase
+                    when 'c', 'k' # cartesian
+                      false
+                    when 'd' # direct
+                      true
+                    else
+                      fail "Invalid coordinate type"
+                    end
     end
   end
 end
