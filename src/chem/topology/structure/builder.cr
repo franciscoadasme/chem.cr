@@ -36,10 +36,6 @@ module Chem
       @lattice.c = vector
     end
 
-    def scale(by factor : Float64)
-      @lattice.scale_factor = factor
-    end
-
     def space_group(group : String)
       @lattice.space_group = group
     end

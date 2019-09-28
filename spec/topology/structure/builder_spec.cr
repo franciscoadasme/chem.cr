@@ -91,7 +91,6 @@ describe Chem::Structure::Builder do
         a Vector[25.0, 32.0, 12.0]
         b Vector[12.0, 34.0, 23.0]
         c Vector[12.0, 68.0, 21.0]
-        scale by: 1.1
         space_group "P 1 2 1"
       end
     end
@@ -100,7 +99,6 @@ describe Chem::Structure::Builder do
     lat.a.should eq Vector[25, 32, 12]
     lat.b.should eq Vector[12, 34, 23]
     lat.c.should eq Vector[12, 68, 21]
-    lat.scale_factor.should eq 1.1
     lat.space_group.should eq "P 1 2 1"
   end
 

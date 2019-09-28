@@ -19,7 +19,7 @@ module Chem
   class Lattice
     def to_poscar(poscar : VASP::Poscar::Builder) : Nil
       poscar.space
-      poscar.number scale_factor, precision: 14, width: 18
+      poscar.number 1.0, precision: 14, width: 18
       poscar.newline
       {a, b, c}.each do |vec|
         poscar.space

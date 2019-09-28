@@ -1,24 +1,13 @@
 module Chem
   class Lattice
-    # @a : Float64
-    # @b : Float64
-    # @c : Float64
-    # @scale_factor : Float64 = 1.0
-    # @alpha : Float64
-    # @beta : Float64
-    # @gamma : Float64
-    # @space_group : String
-    # @z : Int32
     property a : Spatial::Vector
     property b : Spatial::Vector
     property c : Spatial::Vector
-    property scale_factor : Float64 = 1.0
     property space_group : String?
 
     def initialize(@a : Spatial::Vector,
                    @b : Spatial::Vector,
                    @c : Spatial::Vector,
-                   @scale_factor : Float64 = 1.0,
                    @space_group : String? = nil)
     end
 
@@ -43,14 +32,10 @@ module Chem
       orthorombic a, b, c
     end
 
-    def self.orthorombic(a : Float64,
-                         b : Float64,
-                         c : Float64,
-                         scale_factor : Float64 = 1.0) : self
+    def self.orthorombic(a : Float64, b : Float64, c : Float64) : self
       new Spatial::Vector[a, 0, 0],
         Spatial::Vector[0, b, 0],
         Spatial::Vector[0, 0, c],
-        scale_factor,
         "P 1"
     end
 

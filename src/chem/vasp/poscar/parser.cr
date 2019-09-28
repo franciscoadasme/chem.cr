@@ -3,6 +3,8 @@ module Chem::VASP::Poscar
   class Parser < IO::Parser
     include IO::PullParser
 
+    getter scale_factor : Float64 = 1.0
+
     def initialize(@io : ::IO)
     end
 
@@ -18,6 +20,8 @@ module Chem::VASP::Poscar
       builder = Structure::Builder.new
       builder.title read_line
 
+      @scale_factor = read_float
+      skip_line
       lattice = builder.lattice self
       elements = parse_elements
       has_constraints = parse_selective_dynamics
@@ -25,7 +29,7 @@ module Chem::VASP::Poscar
 
       elements.each do |element|
         vec = read_vector
-        vec = fractional ? vec.to_cartesian(lattice) : vec * lattice.scale_factor
+        vec = fractional ? vec.to_cartesian(lattice) : vec * @scale_factor
         atom = builder.atom of: element, at: vec
         atom.constraint = Constraint.new self if has_constraints
       end

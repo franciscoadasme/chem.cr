@@ -22,7 +22,6 @@ describe Chem::Lattice do
       lattice.alpha.should eq 90
       lattice.beta.should eq 90
       lattice.gamma.should eq 90
-      lattice.scale_factor.should eq 1
       lattice.space_group.should eq "P 21 21 21"
     end
 
@@ -34,7 +33,6 @@ describe Chem::Lattice do
       lattice.alpha.should eq 90
       lattice.beta.should eq 90
       lattice.gamma.should eq 90
-      lattice.scale_factor.should eq 1
       lattice.space_group.should eq "P 1"
     end
   end

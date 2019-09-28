@@ -24,10 +24,9 @@ module Chem
   class Structure::Builder
     def lattice(pull : VASP::Poscar::Parser) : Lattice
       lattice do
-        scale by: pull.read_float
-        a pull.read_vector
-        b pull.read_vector
-        c pull.read_vector
+        a pull.scale_factor * pull.read_vector
+        b pull.scale_factor * pull.read_vector
+        c pull.scale_factor * pull.read_vector
       end
     end
   end
