@@ -60,7 +60,7 @@ module Chem
       end
 
       def {{name.id}}=(vec : Spatial::Vector) : Spatial::Vector
-        @basis_transform = @inverse_basis_transform = nil
+        @basis_transform = nil
         @{{name.id}} = vec
       end
     {% end %}
@@ -106,7 +106,7 @@ module Chem
     end
 
     def revert_coords(vec : Spatial::Vector) : Spatial::Vector
-      inverse_basis_transform * vec
+      vec.x * @a + vec.y * @b + vec.z * @c
     end
 
     def tetragonal? : Bool
@@ -142,16 +142,6 @@ module Chem
         buffer[9] = (@a.z * @b.x - @a.x * @b.z) * inv_det
         buffer[10] = (@a.x * @b.y - @a.y * @b.x) * inv_det
       end
-    end
-
-    # Returns the transformation that converts Cartesian coordinates to fractional
-    # coordinates in terms of the unit cell vectors
-    #
-    # This is equivalent to the basis change from the basis defined by the lattice
-    # vectors to the standard basis, which is expressed by the matrix formed by the
-    # column lattice vectors
-    private def inverse_basis_transform : Spatial::AffineTransform
-      @inverse_basis_transform ||= Spatial::AffineTransform.new @a, @b, @c
     end
   end
 end

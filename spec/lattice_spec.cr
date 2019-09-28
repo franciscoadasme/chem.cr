@@ -67,6 +67,12 @@ describe Chem::Lattice do
 
       lattice.b /= 2
       lattice.revert_coords(V[0.5, 0.65, 1]).should be_close V[10, 6.5, 16], 1e-15
+
+      lattice = Chem::Lattice.new(
+        V[8.497, 0.007, 0.031],
+        V[10.148, 42.359, 0.503],
+        V[7.296, 2.286, 53.093])
+      lattice.revert_coords(V[0.724, 0.04, 0.209]).should be_close V[8.083, 2.177, 11.139], 1e-3
     end
   end
 end
