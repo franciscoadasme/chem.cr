@@ -50,6 +50,14 @@ module Chem::IO
       {% end %}
     end
 
+    def eof? : Bool
+      if bytes = @io.peek
+        bytes.empty?
+      else
+        true
+      end
+    end
+
     def fail(msg : String)
       line_number, column_number = guess_location
       parse_exception "#{msg} at #{line_number}:#{column_number}"
