@@ -59,7 +59,8 @@ module Chem::IO
 
     # TODO add support for scientific notation
     def read_float : Float64
-      scan(/[-\d\.]/, skip_leading_whitespace: true).to_f
+      skip_whitespace
+      scan(/[-\d\.]/).to_f
     rescue ArgumentError
       parse_exception "Couldn't read a decimal number"
     end
@@ -103,17 +104,15 @@ module Chem::IO
       self
     end
 
-    def scan(pattern : Regex, skip_leading_whitespace : Bool = true) : String
-      scan(skip_leading_whitespace) do |char|
+    def scan(pattern : Regex) : String
+      scan do |char|
         !pattern.match(char.to_s).nil?
       end
     end
 
-    # TODO remove skip_leading_whitespace option
     # FIXME: raise an exception instead of return "" if cannot read anymore?
-    def scan(skip_leading_whitespace : Bool = true, &block : Char -> Bool) : String
+    def scan(& : Char -> Bool) : String
       prev_pos = @io.pos
-      skip_whitespace if skip_leading_whitespace
       String.build do |io|
         while char = @io.read_char
           break unless yield char
@@ -127,14 +126,14 @@ module Chem::IO
     # TODO change to scan_delimited and add a delimiter : Char option
     def scan_multiple(&block : Char -> Bool) : Array(String)
       Array(String).new.tap do |ary|
-        until (value = scan(&block)).empty?
+        until (value = skip_whitespace.scan(&block)).empty?
           ary << value
         end
       end
     end
 
     def scan_until(pattern : Regex) : String
-      scan(skip_leading_whitespace: false) do |char|
+      scan do |char|
         pattern.match(char.to_s).nil?
       end
     end

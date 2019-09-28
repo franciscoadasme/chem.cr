@@ -73,7 +73,7 @@ module Chem
       new_structure << self
     end
 
-    protected def reset_cache : Nil
+    def reset_cache : Nil
       @residue_table.clear
       @residues.sort_by! { |residue| {residue.number, (residue.insertion_code || ' ')} }
       @residues.each_with_index do |residue, i|

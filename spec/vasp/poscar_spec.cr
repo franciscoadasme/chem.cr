@@ -49,7 +49,7 @@ describe Chem::VASP::Poscar do
     end
 
     it "fails when there are missing atomic species counts" do
-      msg = "Mismatch between element symbols and counts at 7:5"
+      msg = "Mismatch between element symbols and counts at 8:1"
       expect_raises(Chem::IO::ParseException, msg) do
         Chem::Structure.read "spec/data/poscar/mismatch.poscar"
       end
