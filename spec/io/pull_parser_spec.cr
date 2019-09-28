@@ -31,6 +31,28 @@ describe Chem::IO::PullParser do
       parser.peek_char.should eq 'L'
       parser.peek_char.should eq 'L'
     end
+
+    it "fails at end of file" do
+      parser = Parser.new "Lorem ipsum"
+      parser.read_line
+      expect_raises IO::EOFError do
+        parser.peek_char
+      end
+    end
+  end
+
+  describe "#peek_char?" do
+    it "reads a character without advancing position" do
+      parser = Parser.new "Lorem ipsum"
+      parser.peek_char?.should eq 'L'
+      parser.peek_char?.should eq 'L'
+    end
+
+    it "returns nil at end of file" do
+      parser = Parser.new "Lorem ipsum"
+      parser.read_line
+      parser.peek_char?.should be_nil
+    end
   end
 
   describe "#peek_chars" do

@@ -6,6 +6,10 @@ module Chem::IO
       peek { read_char }
     end
 
+    def peek_char? : Char?
+      peek { read_char? }
+    end
+
     def peek_chars(count : Int) : String
       peek { read_chars count }
     end
