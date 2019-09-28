@@ -15,14 +15,13 @@ describe Chem::Lattice do
     end
 
     it "succeeds with size and angles" do
-      lattice = Lattice.new({74.23, 135.35, 148.46}, {90.0, 90.0, 90.0}, "P 21 21 21")
+      lattice = Lattice.new({74.23, 135.35, 148.46}, {90.0, 90.0, 90.0})
       lattice.a.should be_close Vector[74.23, 0, 0], 1e-8
       lattice.b.should be_close Vector[0, 135.35, 0], 1e-8
       lattice.c.should be_close Vector[0, 0, 148.46], 1e-8
       lattice.alpha.should eq 90
       lattice.beta.should eq 90
       lattice.gamma.should eq 90
-      lattice.space_group.should eq "P 21 21 21"
     end
 
     it "succeeds with sizes (orthorombic box)" do
@@ -33,7 +32,6 @@ describe Chem::Lattice do
       lattice.alpha.should eq 90
       lattice.beta.should eq 90
       lattice.gamma.should eq 90
-      lattice.space_group.should eq "P 1"
     end
   end
 

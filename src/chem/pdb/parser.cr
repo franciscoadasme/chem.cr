@@ -230,8 +230,7 @@ module Chem::PDB
     private def parse_lattice(rec : Record)
       @lattice = Lattice.new \
         size: {rec[6..14].to_f, rec[15..23].to_f, rec[24..32].to_f},
-        angles: {rec[33..39].to_f, rec[40..46].to_f, rec[47..53].to_f},
-        space_group: rec[55..65].rstrip
+        angles: {rec[33..39].to_f, rec[40..46].to_f, rec[47..53].to_f}
     end
 
     private def parse_model : Structure

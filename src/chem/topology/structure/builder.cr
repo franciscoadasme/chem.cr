@@ -35,10 +35,6 @@ module Chem
     def c(vector : Spatial::Vector)
       @lattice.c = vector
     end
-
-    def space_group(group : String)
-      @lattice.space_group = group
-    end
   end
 
   class Structure::Builder

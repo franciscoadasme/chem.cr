@@ -115,7 +115,6 @@ describe Chem::PDB do
       lattice.alpha.should eq 90
       lattice.beta.should eq 90.77
       lattice.gamma.should eq 90
-      lattice.space_group.should eq "P 1 21 1"
     end
 
     it "parses a PDB file with experimental header" do
