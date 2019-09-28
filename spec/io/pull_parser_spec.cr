@@ -117,6 +117,12 @@ describe Chem::IO::PullParser do
       parser.read_char_in_set("0-9").should be_nil
       parser.read_char.should eq 'L'
     end
+
+    it "returns nil at end of file" do
+      parser = Parser.new "Lorem ipsum"
+      parser.read_line
+      parser.read_char_in_set("a-z").should be_nil
+    end
   end
 
   describe "#read_char_or_null" do

@@ -33,7 +33,9 @@ module Chem::IO
     end
 
     def read_char_in_set(charset : String) : Char?
-      read_char if peek_char.in_set?(charset)
+      if char = peek_char?
+        read_char if char.in_set?(charset)
+      end
     end
 
     def read_char_or_null : Char?
