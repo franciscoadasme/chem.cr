@@ -31,7 +31,7 @@ describe Chem::VASP::Poscar do
     it "parses a file with direct coordinates" do
       st = Chem::Structure.read "spec/data/poscar/direct.poscar"
       st.atoms[0].coords.should eq Vector.origin
-      st.atoms[1].coords.should be_close Vector[0.3, 0.45, 0.35], 1e-16
+      st.atoms[1].coords.should be_close Vector[1.0710, 1.6065, 1.2495], 1e-15
     end
 
     it "parses a file with scaled Cartesian coordinates" do
