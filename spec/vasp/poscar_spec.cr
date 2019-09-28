@@ -34,6 +34,12 @@ describe Chem::VASP::Poscar do
       st.atoms[1].coords.should be_close Vector[0.3, 0.45, 0.35], 1e-16
     end
 
+    it "parses a file with scaled Cartesian coordinates" do
+      st = Chem::Structure.read "spec/data/poscar/cartesian.poscar"
+      st.atoms[0].coords.should eq Vector.origin
+      st.atoms[1].coords.should be_close Vector[0.8925, 0.8925, 0.8925], 1e-16
+    end
+
     it "parses a file with selective dynamics" do
       st = Chem::Structure.read "spec/data/poscar/selective_dynamics.poscar"
       st.atoms[0].constraint.should eq Constraint::Z
