@@ -2,7 +2,7 @@ module Chem
   class Structure::Builder
     def atom(pull : XYZ::PullParser) : Atom
       pull.skip_whitespace
-      ele = pull.scan(/[A-Z][a-z]?/).to_s
+      ele = pull.scan &.letter?
       atom PeriodicTable[ele], Spatial::Vector.new(pull)
     end
   end
