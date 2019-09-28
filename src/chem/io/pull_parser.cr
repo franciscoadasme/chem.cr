@@ -113,7 +113,7 @@ module Chem::IO
     end
 
     def read_multiple_int : Array(Int32)
-      scan_multiple(&.number?).map &.to_i
+      scan_delimited(&.number?).map &.to_i
     end
 
     def rewind(&block : Char -> Bool) : self
@@ -158,10 +158,12 @@ module Chem::IO
       self
     end
 
-    # TODO change to scan_delimited and add a delimiter : Char option
-    def scan_multiple(&block : Char -> Bool) : Array(String)
+    def scan_delimited(& : Char -> Bool) : Array(String)
       Array(String).new.tap do |ary|
-        until (value = skip_whitespace.scan(&block)).empty?
+        loop do
+          skip_whitespace
+          value = scan { |char| yield char }
+          break if value.empty?
           ary << value
         end
       end

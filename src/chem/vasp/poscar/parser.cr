@@ -37,7 +37,7 @@ module Chem::VASP::Poscar
     private def parse_elements : Array(PeriodicTable::Element)
       skip_whitespace
       fail "Expected element symbols (vasp 5+)" if peek_char.number?
-      elements = scan_multiple(&.letter?).map { |symbol| PeriodicTable[symbol] }
+      elements = scan_delimited(&.letter?).map { |symbol| PeriodicTable[symbol] }
       counts = read_multiple_int
       fail "Mismatch between element symbols and counts" if elements.size != counts.size
       elements.map_with_index { |ele, i| [ele] * counts[i] }.flatten
