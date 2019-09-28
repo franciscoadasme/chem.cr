@@ -122,10 +122,6 @@ module Chem::IO
       @io.read_line
     end
 
-    def read_multiple_int : Array(Int32)
-      scan_delimited(&.number?).map &.to_i
-    end
-
     def rewind(&block : Char -> Bool) : self
       while char = prev_char
         break unless yield char

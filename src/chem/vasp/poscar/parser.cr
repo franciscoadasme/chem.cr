@@ -38,8 +38,8 @@ module Chem::VASP::Poscar
       skip_whitespace
       fail "Expected element symbols (vasp 5+)" if peek_char.number?
       elements = scan_delimited(&.letter?).map { |symbol| PeriodicTable[symbol] }
-      counts = read_multiple_int
-      fail "Mismatch between element symbols and counts" if elements.size != counts.size
+      counts = Array(Int32).new(elements.size) { read_int }
+      skip_line
       elements.map_with_index { |ele, i| [ele] * counts[i] }.flatten
     end
 

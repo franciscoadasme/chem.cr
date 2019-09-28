@@ -266,17 +266,6 @@ describe Chem::IO::PullParser do
     end
   end
 
-  describe "#read_multiple_int" do
-    it "reads consecutive integers separated by whitespace" do
-      parser = Parser.new "4 8 15 16 23 42"
-      parser.read_multiple_int.should eq [4, 8, 15, 16, 23, 42]
-    end
-
-    it "returns an empty array if there are no integers" do
-      Parser.new("abcd").read_multiple_int.empty?.should be_true
-    end
-  end
-
   describe "#rewind" do
     it "moves the io backwards while the previous character passes a predicate" do
       parser = Parser.new "Lorem ipsum dolor sit amet"
