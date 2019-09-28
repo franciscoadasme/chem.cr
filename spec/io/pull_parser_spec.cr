@@ -199,6 +199,13 @@ describe Chem::IO::PullParser do
       Parser.new("  -125.35").read_float.should eq -125.35
     end
 
+    it "reads a float in scientific notation" do
+      Parser.new("1e-1").read_float.should eq 0.1
+      Parser.new("1E-1").read_float.should eq 0.1
+      Parser.new("-1.25e4").read_float.should eq -12_500
+      Parser.new("-1.25e-3").read_float.should eq -0.00125
+    end
+
     it "fails with an invalid float" do
       expect_raises ParseException, "Couldn't read a decimal number" do
         Parser.new("abcd").read_float

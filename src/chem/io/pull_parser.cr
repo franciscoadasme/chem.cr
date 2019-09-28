@@ -77,6 +77,11 @@ module Chem::IO
           io << read_char
           read_digits io
         end
+        if char = read_char_in_set("eE")
+          io << char
+          io << read_sign
+          read_digits io
+        end
       end.to_f
     rescue ArgumentError
       parse_exception "Couldn't read a decimal number"
