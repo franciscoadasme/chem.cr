@@ -185,7 +185,10 @@ describe Chem::IO::PullParser do
 
   describe "#read_float" do
     it "reads a float" do
+      Parser.new("125.35").read_float.should eq 125.35
+      Parser.new("+125.35").read_float.should eq 125.35
       Parser.new("-125.35").read_float.should eq -125.35
+      Parser.new("1.2.3.4").read_float.should eq 1.2
     end
 
     it "reads a float from N characters" do

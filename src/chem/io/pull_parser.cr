@@ -70,7 +70,14 @@ module Chem::IO
     # TODO add support for scientific notation
     def read_float : Float64
       skip_whitespace
-      scan(/[-\d\.]/).to_f
+      String.build do |io|
+        io << read_sign
+        read_digits io
+        if peek_char? == '.'
+          io << read_char
+          read_digits io
+        end
+      end.to_f
     rescue ArgumentError
       parse_exception "Couldn't read a decimal number"
     end
@@ -212,6 +219,15 @@ module Chem::IO
       value = yield
       @io.pos = prev_pos
       value
+    end
+
+    private def read_digits(io : ::IO) : self
+      scan(io) { |chr| '0' <= chr <= '9' }
+      self
+    end
+
+    private def read_sign : Char?
+      read_char_in_set "+-"
     end
   end
 end
