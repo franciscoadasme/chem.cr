@@ -1,12 +1,11 @@
 module Chem::Mol2
   @[IO::FileType(format: Mol2, ext: [:mol2])]
   class PullParser < IO::Parser
-    include IO::TextPullParser
+    include IO::PullParser
 
-    def initialize(io : ::IO)
+    def initialize(@io : ::IO)
       @builder = Structure::Builder.new
       @n_atoms = @n_bonds = 0
-      @scanner = StringScanner.new io.to_s
     end
 
     def each_structure(&block : Structure ->)
@@ -18,14 +17,15 @@ module Chem::Mol2
     end
 
     def parse : Structure
-      until eos?
+      until eof?
         skip_whitespace
-        case peek
-        when '@' then parse_record
-        else          skip_line
-        end
+        check('@') ? parse_record : skip_line
       end
       @builder.build
+    end
+
+    def skip_index : self
+      skip_spaces.skip_in_set("0-9").skip_spaces
     end
 
     private def guess_bond_order(bond_type : String) : Int32
@@ -51,10 +51,10 @@ module Chem::Mol2
       atoms = @builder.build.atoms
       aromatic_bonds = [] of Bond
       @n_bonds.times do
-        skip(/ *\d+ */)
+        skip_index
         atom = atoms[read_int - 1]
         other = atoms[read_int - 1]
-        bond_type = skip_whitespace.scan(/[a-z0-9]+/).to_s
+        bond_type = skip_spaces.scan(/[a-z0-9]+/).to_s
         bond_order = guess_bond_order bond_type
         if bond_order > 0
           bond = Bond.new atom, other, bond_order
@@ -70,13 +70,14 @@ module Chem::Mol2
       @builder.title read_line.strip
       @n_atoms = read_int
       @n_bonds = read_int
-      skip_lines 3                      # rest of line, mol_type, charge_type
-      skip_line unless peek.whitespace? # status_bits
-      skip_line unless peek.whitespace? # comment
+      3.times { skip_line }                # rest of line, mol_type, charge_type
+      skip_line unless check &.whitespace? # status_bits
+      skip_line unless check &.whitespace? # comment
     end
 
     private def parse_record : Nil
-      skip(/@<TRIPOS>/)
+      parse_exception "Invalid record header" unless check "@<TRIPOS>"
+      skip 9 # @<TRIPOS>
       case read_line.downcase
       when "atom"
         parse_atoms

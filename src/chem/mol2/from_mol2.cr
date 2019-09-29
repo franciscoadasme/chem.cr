@@ -1,17 +1,17 @@
 module Chem
   class Structure::Builder
     def atom(pull : Mol2::PullParser) : Atom
-      pull.skip(/ *\d+ */)
-      name = pull.scan_until(/\s/).to_s.rstrip
+      pull.skip_index
+      name = pull.scan_in_set "a-zA-Z0-9"
       coords = Spatial::Vector.new pull
-      element = PeriodicTable[pull.skip_whitespace.scan(/[A-Za-z]/).to_s]
-      pull.skip(/(\.[a-z0-9]+)? */)
-      unless pull.peek.whitespace?
+      element = PeriodicTable[pull.skip_spaces.scan_in_set("A-z")]
+      pull.skip('.').skip_in_set("A-z0-9").skip_spaces
+      unless pull.check(&.whitespace?)
         resid = pull.read_int
-        resname = pull.skip_whitespace.scan_until(/\s/).to_s.rstrip
+        resname = pull.skip_spaces.scan_in_set "A-z0-9"
         residue resname[..2], resid
       end
-      charge = pull.read_float unless pull.skip(/ +/).peek.whitespace?
+      charge = pull.read_float unless pull.skip_spaces.check(&.whitespace?)
       atom name, coords, element: element, partial_charge: (charge || 0.0)
     end
   end
