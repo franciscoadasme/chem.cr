@@ -396,6 +396,12 @@ describe Chem::IO::PullParser do
       parser.skip_line
     end
   end
+
+  describe "#skip_spaces" do
+    it "skips spaces and tabs only" do
+      parser = Parser.new "  \t\nLorem ipsum"
+      parser.skip_spaces.read_char.should eq '\n'
+    end
   end
 
   describe "#skip_whitespace" do

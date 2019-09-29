@@ -228,6 +228,10 @@ module Chem::IO
       self
     end
 
+    def skip_spaces : self
+      skip_in_set " \t"
+    end
+
     def skip_whitespace : self
       skip &.ascii_whitespace?
     end
