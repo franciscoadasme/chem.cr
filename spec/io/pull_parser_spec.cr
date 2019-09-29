@@ -316,10 +316,22 @@ describe Chem::IO::PullParser do
   end
 
   describe "#scan_delimited" do
-    it "reads consecutive character groups" do
+    it "reads character groups delimited by whitespace" do
       parser = Parser.new "I you he she it we they. 231345"
       groups = parser.scan_delimited &.letter?
       groups.should eq ["I", "you", "he", "she", "it", "we", "they"]
+    end
+
+    it "reads character groups delimited by a character" do
+      parser = Parser.new "a|b||cd|ef  \n1|2|34"
+      groups = parser.scan_delimited '|', &.letter?
+      groups.should eq ["a", "b", "", "cd", "ef"]
+    end
+
+    it "reads character groups delimited by characters" do
+      parser = Parser.new "a|b__cd|ef__\n1|2|34"
+      groups = parser.scan_delimited_by_set "|_", &.letter?
+      groups.should eq ["a", "b", "cd", "ef"]
     end
   end
 

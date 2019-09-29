@@ -175,6 +175,28 @@ module Chem::IO
       end
     end
 
+    def scan_delimited(delimiter : Char, & : Char -> Bool) : Array(String)
+      Array(String).new.tap do |ary|
+        loop do
+          skip delimiter, limit: 1
+          value = scan { |char| yield char }
+          break if value.empty? && peek_char? != delimiter
+          ary << value
+        end
+      end
+    end
+
+    def scan_delimited_by_set(charset : String, & : Char -> Bool) : Array(String)
+      Array(String).new.tap do |ary|
+        loop do
+          skip_in_set charset
+          value = scan { |char| yield char }
+          break if value.empty?
+          ary << value
+        end
+      end
+    end
+
     def scan_until(pattern : Regex) : String
       scan do |char|
         pattern.match(char.to_s).nil?
