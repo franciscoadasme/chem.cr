@@ -2,20 +2,25 @@ module Chem::IO
   module PullParser
     abstract def parse_exception(msg : String)
 
-    def peek_char : Char
-      peek { read_char }
+
+    def peek : Char
+      peek? || raise ::IO::EOFError.new
     end
 
-    def peek_char? : Char?
-      peek { read_char? }
-    end
-
-    def peek_chars(count : Int) : String
-      peek { read_chars count }
+    def peek(count : Int) : String
+      peek?(count) || raise ::IO::EOFError.new
     end
 
     def peek_line : String
       peek { read_line }
+    end
+
+    def peek? : Char?
+      peek { read_char? }
+    end
+
+    def peek?(count : Int) : String?
+      peek { read_chars? count }
     end
 
     def prev_char : Char
@@ -33,7 +38,7 @@ module Chem::IO
     end
 
     def read_char_in_set(charset : String) : Char?
-      if char = peek_char?
+      if char = peek?
         read_char if char.in_set?(charset)
       end
     end
@@ -73,7 +78,7 @@ module Chem::IO
       String.build do |io|
         io << read_sign
         read_digits io
-        if peek_char? == '.'
+        if peek? == '.'
           io << read_char
           read_digits io
         end
@@ -180,7 +185,7 @@ module Chem::IO
         loop do
           skip delimiter, limit: 1
           value = scan { |char| yield char }
-          break if value.empty? && peek_char? != delimiter
+          break if value.empty? && peek? != delimiter
           ary << value
         end
       end
@@ -258,7 +263,7 @@ module Chem::IO
       skip &.ascii_whitespace?
     end
 
-    private def peek
+    private def peek(& : -> T) : T forall T
       prev_pos = @io.pos
       value = yield
       @io.pos = prev_pos

@@ -39,7 +39,7 @@ module Chem::VASP::Poscar
 
     private def parse_elements : Array(PeriodicTable::Element)
       skip_whitespace
-      fail "Expected element symbols (vasp 5+)" if peek_char.number?
+      fail "Expected element symbols (vasp 5+)" if peek.number?
       elements = scan_delimited(&.letter?).map { |symbol| PeriodicTable[symbol] }
       counts = Array(Int32).new(elements.size) { read_int }
       skip_line
@@ -48,7 +48,7 @@ module Chem::VASP::Poscar
 
     private def parse_selective_dynamics : Bool
       skip_whitespace
-      if peek_char.downcase == 's'
+      if peek.downcase == 's'
         skip_line
         true
       else

@@ -25,41 +25,45 @@ describe Chem::IO::PullParser do
     end
   end
 
-  describe "#peek_char" do
-    it "reads a char without modifying io position" do
+  describe "#peek" do
+    it "reads a character without advancing position" do
       parser = Parser.new "Lorem ipsum"
-      parser.peek_char.should eq 'L'
-      parser.peek_char.should eq 'L'
+      parser.peek.should eq 'L'
+      parser.peek.should eq 'L'
+    end
+
+    it "reads N characters without advancing position" do
+      parser = Parser.new "Lorem ipsum"
+      parser.peek(5).should eq "Lorem"
+      parser.peek(5).should eq "Lorem"
     end
 
     it "fails at end of file" do
       parser = Parser.new "Lorem ipsum"
       parser.read_line
       expect_raises IO::EOFError do
-        parser.peek_char
+        parser.peek
       end
     end
   end
 
-  describe "#peek_char?" do
+  describe "#peek?" do
     it "reads a character without advancing position" do
       parser = Parser.new "Lorem ipsum"
-      parser.peek_char?.should eq 'L'
-      parser.peek_char?.should eq 'L'
+      parser.peek?.should eq 'L'
+      parser.peek?.should eq 'L'
+    end
+
+    it "reads N characters without advancing position" do
+      parser = Parser.new "Lorem ipsum"
+      parser.peek?(5).should eq "Lorem"
+      parser.peek?(5).should eq "Lorem"
     end
 
     it "returns nil at end of file" do
       parser = Parser.new "Lorem ipsum"
       parser.read_line
-      parser.peek_char?.should be_nil
-    end
-  end
-
-  describe "#peek_chars" do
-    it "reads N characters without modifying io position" do
-      parser = Parser.new "Lorem ipsum"
-      parser.peek_chars(5).should eq "Lorem"
-      parser.peek_chars(5).should eq "Lorem"
+      parser.peek?.should be_nil
     end
   end
 
@@ -361,7 +365,7 @@ describe Chem::IO::PullParser do
 
     it "skips N occurrences of a character at most" do
       parser = Parser.new "---abcd"
-      parser.skip('-', limit: 2).peek_chars(2).should eq "-a"
+      parser.skip('-', limit: 2).peek(2).should eq "-a"
       parser.skip('-', limit: 10).read_char.should eq 'a'
     end
 
@@ -372,7 +376,7 @@ describe Chem::IO::PullParser do
 
     it "skips N characters that pass the predicate at most" do
       parser = Parser.new "Lorem ipsum"
-      parser.skip(limit: 4, &.letter?).peek_chars(2).should eq "m "
+      parser.skip(limit: 4, &.letter?).peek(2).should eq "m "
       parser.skip(limit: 10, &.letter?).read_char.should eq ' '
     end
 
