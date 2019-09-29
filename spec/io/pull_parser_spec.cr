@@ -337,14 +337,10 @@ describe Chem::IO::PullParser do
       parser.skip { |char| !char.letter? }.read_char.should eq 'L'
     end
 
-    it "skips N characters if they pass the predicate" do
+    it "skips N characters that pass the predicate at most" do
       parser = Parser.new "Lorem ipsum"
-      parser.skip(10) { |char| !char.number? }.read_char.should eq 'm'
-    end
-
-    it "skips less than N characters stopping at the character that does not pass the predicate" do
-      parser = Parser.new "Lorem ipsum"
-      parser.skip(10) { |char| char.letter? }.read_char.should eq ' '
+      parser.skip(limit: 4, &.letter?).peek_chars(2).should eq "m "
+      parser.skip(limit: 10, &.letter?).read_char.should eq ' '
     end
 
     it "skips characters that match a pattern" do

@@ -191,13 +191,9 @@ module Chem::IO
       self
     end
 
-    # TODO why? maybe delete?
-    def skip(max_count : Int, &block : Char -> Bool) : self
-      max_count += 1
-      count = 0
+    def skip(limit count : Int, & : Char -> Bool) : self
       skip do |char|
-        count += 1
-        count != max_count && yield char
+        (count -= 1) >= 0 ? yield char : false
       end
     end
 
