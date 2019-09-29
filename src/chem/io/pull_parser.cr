@@ -28,7 +28,11 @@ module Chem::IO
     end
 
     def peek_line : String
-      peek { read_line }
+      peek_line? || raise ::IO::EOFError.new
+    end
+
+    def peek_line? : String?
+      peek { @io.gets }
     end
 
     def peek? : Char?

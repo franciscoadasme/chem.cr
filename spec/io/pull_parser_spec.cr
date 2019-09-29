@@ -113,6 +113,21 @@ describe Chem::IO::PullParser do
       parser.peek_line.should eq "Lorem ipsum"
       parser.peek_line.should eq "Lorem ipsum"
     end
+
+    it "fails at end of line" do
+      parser = Parser.new ""
+      expect_raises IO::EOFError do
+        parser.peek_line
+      end
+    end
+  end
+
+  describe "#peek_line?" do
+    it "returns nil at end of file" do
+      parser = Parser.new("Lorem ipsum\n")
+      parser.read_line
+      parser.peek_line?.should be_nil
+    end
   end
 
   describe "#prev_char" do
