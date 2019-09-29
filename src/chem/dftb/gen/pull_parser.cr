@@ -43,7 +43,7 @@ module Chem::DFTB::Gen
     private def parse_elements
       loop do
         skip_spaces
-        break unless peek.letter?
+        break unless check &.letter?
         @elements << PeriodicTable[scan(&.letter?)]
       end
       skip_line

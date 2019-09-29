@@ -15,6 +15,46 @@ class Parser
 end
 
 describe Chem::IO::PullParser do
+  describe "#check" do
+    it "checks current character" do
+      parser = Parser.new "Lorem ipsum"
+      parser.check('L').should be_true
+      parser.check('o').should be_false
+      parser.read_char.should eq 'L'
+    end
+
+    it "checks current character (block)" do
+      parser = Parser.new "Lorem ipsum"
+      parser.check(&.letter?).should be_true
+      parser.check(&.ascii_lowercase?).should be_false
+      parser.read_char.should eq 'L'
+    end
+
+    it "checks current characters" do
+      parser = Parser.new "Lorem ipsum"
+      parser.check("Lorem").should be_true
+      parser.check("orem").should be_false
+      parser.read_chars(6).should eq "Lorem "
+      parser.check("ipsum ").should be_false
+    end
+
+    it "returns false at end of file" do
+      parser = Parser.new "Lorem ipsum\n"
+      parser.read_line
+      parser.read_char?.should be_nil
+      parser.check("Lorem").should be_false
+    end
+  end
+
+  describe "#check_in_set" do
+    it "checks current character is in charset" do
+      parser = Parser.new "Lorem ipsum"
+      parser.check_in_set("A-Z").should be_true
+      parser.check_in_set("a-z0-9").should be_false
+      parser.read_char.should eq 'L'
+    end
+  end
+
   describe "#fail" do
     it "fails with message containing line and column" do
       parser = Parser.new "Lorem ipsum\ndolor\nsit amet,\nconsectetur adipiscing."

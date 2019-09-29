@@ -2,6 +2,22 @@ module Chem::IO
   module PullParser
     abstract def parse_exception(msg : String)
 
+    def check(& : Char -> Bool) : Bool
+      return false unless char = peek?
+      yield char
+    end
+
+    def check(char : Char) : Bool
+      peek? == char
+    end
+
+    def check(string : String) : Bool
+      peek?(string.size) == string
+    end
+
+    def check_in_set(charset : String) : Bool
+      check &.in_set?(charset)
+    end
 
     def peek : Char
       peek? || raise ::IO::EOFError.new
@@ -38,9 +54,7 @@ module Chem::IO
     end
 
     def read_char_in_set(charset : String) : Char?
-      if char = peek?
-        read_char if char.in_set?(charset)
-      end
+      read_char if check_in_set charset
     end
 
     def read_char_or_null : Char?
@@ -78,7 +92,7 @@ module Chem::IO
       String.build do |io|
         io << read_sign
         read_digits io
-        if peek? == '.'
+        if check '.'
           io << read_char
           read_digits io
         end
