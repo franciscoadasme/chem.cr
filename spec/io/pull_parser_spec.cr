@@ -359,6 +359,15 @@ describe Chem::IO::PullParser do
     end
   end
 
+  describe "#scan_in_set" do
+    it "reads characters in set" do
+      parser = Parser.new "Lorem ipsum dolor sit amet"
+      parser.scan_in_set("A-Z").should eq "L"
+      parser.scan_in_set("A-Z").should eq ""
+      parser.scan_in_set("a-z").should eq "orem"
+    end
+  end
+
   describe "#scan_delimited" do
     it "reads character groups delimited by whitespace" do
       parser = Parser.new "I you he she it we they. 231345"

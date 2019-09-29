@@ -216,6 +216,10 @@ module Chem::IO
       end
     end
 
+    def scan_in_set(charset : String) : String
+      scan &.in_set?(charset)
+    end
+
     def scan_until(pattern : Regex) : String
       scan do |char|
         pattern.match(char.to_s).nil?
