@@ -201,6 +201,14 @@ module Chem::IO
       skip { |char| !pattern.match(char.to_s).nil? }
     end
 
+    def skip(char : Char) : self
+      skip &.==(char)
+    end
+
+    def skip(char : Char, limit : Int) : self
+      skip limit, &.==(char)
+    end
+
     def skip_char : self
       skip_chars 1
     end

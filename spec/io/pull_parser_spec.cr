@@ -332,6 +332,17 @@ describe Chem::IO::PullParser do
   end
 
   describe "#skip" do
+    it "skips consecutive occurrences of a character" do
+      parser = Parser.new "---abcd"
+      parser.skip('-').read_char.should eq 'a'
+    end
+
+    it "skips consecutive N occurrences of a character at most" do
+      parser = Parser.new "---abcd"
+      parser.skip('-', limit: 2).peek_chars(2).should eq "-a"
+      parser.skip('-', limit: 10).read_char.should eq 'a'
+    end
+
     it "skips characters that pass a predicate" do
       parser = Parser.new "1342,!, ,Lorem ipsum"
       parser.skip { |char| !char.letter? }.read_char.should eq 'L'
