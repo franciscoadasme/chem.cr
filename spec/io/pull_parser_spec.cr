@@ -384,6 +384,13 @@ describe Chem::IO::PullParser do
       parser = Parser.new "Lorem ipsum\ndolor sit amet"
       parser.skip_line.read_char.should eq 'd'
     end
+
+    it "does not fail at end of file" do
+      parser = Parser.new "Lorem ipsum\n"
+      parser.read_line
+      parser.skip_line
+    end
+  end
   end
 
   describe "#skip_whitespace" do

@@ -222,7 +222,7 @@ module Chem::IO
     end
 
     def skip_line : self
-      @io.read_line
+      @io.gets
       self
     end
 
