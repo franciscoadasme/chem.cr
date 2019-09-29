@@ -3,14 +3,13 @@ require "string_scanner"
 module Chem::DFTB::Gen
   @[IO::FileType(format: Gen, ext: [:gen])]
   class PullParser < IO::Parser
-    include IO::TextPullParser
+    include IO::PullParser
 
     @elements = [] of PeriodicTable::Element
     @fractional = false
     @periodic = false
 
-    def initialize(io : ::IO)
-      @scanner = StringScanner.new io.to_s
+    def initialize(@io : ::IO)
     end
 
     def each_structure(&block : Structure ->)
@@ -42,20 +41,23 @@ module Chem::DFTB::Gen
     end
 
     private def parse_elements
-      read_line.split.each do |symbol|
-        @elements << PeriodicTable[symbol]
+      loop do
+        skip_spaces
+        break unless peek_char.letter?
+        @elements << PeriodicTable[scan(&.letter?)]
       end
+      skip_line
     end
 
     private def parse_geometry_type
-      skip_whitespace
+      skip_spaces
       case read_char
       when 'F'
         @fractional = @periodic = true
       when 'S'
         @periodic = true
       end
-      skip_whitespace
+      skip_line
     end
   end
 end
