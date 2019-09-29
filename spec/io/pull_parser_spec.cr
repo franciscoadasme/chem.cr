@@ -332,12 +332,22 @@ describe Chem::IO::PullParser do
   end
 
   describe "#skip" do
-    it "skips consecutive occurrences of a character" do
+    it "skips a character" do
+      parser = Parser.new "Lorem ipsum"
+      parser.skip.read_char.should eq 'o'
+    end
+
+    it "skips N characters" do
+      parser = Parser.new "Lorem ipsum"
+      parser.skip(10).read_char.should eq 'm'
+    end
+
+    it "skips occurrences of a character" do
       parser = Parser.new "---abcd"
       parser.skip('-').read_char.should eq 'a'
     end
 
-    it "skips consecutive N occurrences of a character at most" do
+    it "skips N occurrences of a character at most" do
       parser = Parser.new "---abcd"
       parser.skip('-', limit: 2).peek_chars(2).should eq "-a"
       parser.skip('-', limit: 10).read_char.should eq 'a'
@@ -358,29 +368,14 @@ describe Chem::IO::PullParser do
       parser = Parser.new "Lorem ipsum!\ndolor sit amet"
       parser.skip(/[\w\s]/).read_char.should eq '!'
     end
-  end
 
-  describe "#skip_char" do
-    it "skips a character" do
-      parser = Parser.new "Lorem ipsum"
-      parser.skip_char.read_char.should eq 'o'
+    it "does not fail at end of file" do
+      parser = Parser.new "Lorem ipsum\n"
+      parser.read_line
+      parser.skip(&.letter?)
     end
   end
 
-  describe "#skip_chars" do
-    it "skips N characters" do
-      parser = Parser.new "Lorem ipsum"
-      parser.skip_chars(10).read_char.should eq 'm'
-    end
-
-    it "skips N characters if sentinel is not found" do
-      parser = Parser.new "Lorem ipsum"
-      parser.skip_chars(10, stop_at: '\n').read_char.should eq 'm'
-    end
-
-    it "skips less than N characters stopping at sentinel character" do
-      parser = Parser.new "Lorem ipsum"
-      parser.skip_chars(10, stop_at: ' ').read_char.should eq ' '
     end
   end
 

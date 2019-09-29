@@ -181,9 +181,14 @@ module Chem::IO
       end
     end
 
-    def skip(&block : Char -> Bool) : self
+    def skip : self
+      read_char?
+      self
+    end
+
+    def skip(& : Char -> Bool) : self
       prev_pos = @io.pos
-      while char = @io.read_char
+      while char = read_char?
         break unless yield char
         prev_pos = @io.pos
       end
@@ -191,14 +196,15 @@ module Chem::IO
       self
     end
 
+    def skip(count : Int) : self
+      count.times { skip }
+      self
+    end
+
     def skip(limit count : Int, & : Char -> Bool) : self
       skip do |char|
         (count -= 1) >= 0 ? yield char : false
       end
-    end
-
-    def skip(pattern : Regex) : self
-      skip { |char| !pattern.match(char.to_s).nil? }
     end
 
     def skip(char : Char) : self
@@ -209,17 +215,10 @@ module Chem::IO
       skip limit, &.==(char)
     end
 
-    def skip_char : self
-      skip_chars 1
+    def skip(pattern : Regex) : self
+      skip { |char| !pattern.match(char.to_s).nil? }
     end
 
-    def skip_chars(count : Int) : self
-      @io.skip count
-      self
-    end
-
-    def skip_chars(count : Int, stop_at sentinel : Char) : self
-      skip(count) { |char| char != sentinel }
     end
 
     def skip_line : self
@@ -228,7 +227,7 @@ module Chem::IO
     end
 
     def skip_whitespace : self
-      skip { |char| char.whitespace? }
+      skip &.ascii_whitespace?
     end
 
     private def peek
