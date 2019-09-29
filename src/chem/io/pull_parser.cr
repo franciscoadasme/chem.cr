@@ -219,6 +219,8 @@ module Chem::IO
       skip { |char| !pattern.match(char.to_s).nil? }
     end
 
+    def skip_in_set(charset : String) : self
+      skip &.in_set?(charset)
     end
 
     def skip_line : self

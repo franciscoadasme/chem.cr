@@ -376,6 +376,11 @@ describe Chem::IO::PullParser do
     end
   end
 
+  describe "#skip_in_set" do
+    it "skips characters in set" do
+      parser = Parser.new "Lorem123"
+      parser.skip_in_set "A-Za-z"
+      parser.read_char?.should eq '1'
     end
   end
 
