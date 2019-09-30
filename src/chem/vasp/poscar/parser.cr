@@ -39,7 +39,7 @@ module Chem::VASP::Poscar
 
     private def parse_elements : Array(PeriodicTable::Element)
       skip_whitespace
-      fail "Expected element symbols (vasp 5+)" if check &.number?
+      parse_exception "Expected element symbols (vasp 5+)" if check &.number?
       elements = scan_delimited(&.letter?).map { |symbol| PeriodicTable[symbol] }
       counts = Array(Int32).new(elements.size) { read_int }
       skip_line
@@ -73,7 +73,7 @@ module Chem::VASP::Poscar
       when 'd' # direct
         true
       else
-        fail "Invalid coordinate type"
+        parse_exception "Invalid coordinate type"
       end
     end
   end

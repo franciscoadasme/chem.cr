@@ -58,11 +58,6 @@ module Chem::IO
       end
     end
 
-    def fail(msg : String)
-      line_number, column_number = guess_location
-      parse_exception "#{msg} at #{line_number}:#{column_number}"
-    end
-
     private def guess_location : {Int32, Int32}
       prev_pos = @io.pos
       @io.rewind
@@ -86,8 +81,9 @@ module Chem::IO
       ary
     end
 
-    protected def parse_exception(msg : String)
-      raise IO::ParseException.new msg
+    def parse_exception(msg : String)
+      line_number, column_number = guess_location
+      raise IO::ParseException.new "#{msg} at #{line_number}:#{column_number}"
     end
   end
 end

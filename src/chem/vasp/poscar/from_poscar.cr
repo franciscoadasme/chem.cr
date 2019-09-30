@@ -40,6 +40,6 @@ def Bool.new(pull : Chem::VASP::Poscar::Parser)
   when 'T'
     true
   else
-    pull.fail "Invalid boolean: #{flag}"
+    pull.parse_exception "Invalid boolean"
   end
 end
