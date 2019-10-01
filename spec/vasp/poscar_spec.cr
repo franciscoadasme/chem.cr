@@ -48,7 +48,7 @@ describe Chem::VASP::Poscar do
     end
 
     it "fails when element symbols are missing" do
-      msg = "Expected element symbols (vasp 5+) at 6:4"
+      msg = "Expected element symbols (vasp 5+)"
       expect_raises(Chem::IO::ParseException, msg) do
         Chem::Structure.read "spec/data/poscar/no_symbols.poscar"
       end

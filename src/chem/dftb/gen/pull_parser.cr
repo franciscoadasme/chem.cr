@@ -51,11 +51,11 @@ module Chem::DFTB::Gen
 
     private def parse_geometry_type
       skip_spaces
-      case read_char
-      when 'F'
-        @fractional = @periodic = true
-      when 'S'
-        @periodic = true
+      case read
+      when 'F' then @fractional = @periodic = true
+      when 'S' then @periodic = true
+      when 'C' then @fractional = @periodic = false
+      else          parse_exception "Invalid geometry type"
       end
       skip_line
     end

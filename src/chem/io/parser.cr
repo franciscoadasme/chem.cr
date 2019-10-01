@@ -61,7 +61,7 @@ module Chem::IO
     private def guess_location : {Int32, Int32}
       prev_pos = @io.pos
       @io.rewind
-      text = read_chars prev_pos
+      text = read prev_pos
       {text.count('\n') + 1, text.size - (text.rindex('\n') || 0)}
     end
 

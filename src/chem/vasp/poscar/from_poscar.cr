@@ -34,12 +34,9 @@ end
 
 def Bool.new(pull : Chem::VASP::Poscar::Parser)
   pull.skip_whitespace
-  case flag = pull.read_char
-  when 'F'
-    false
-  when 'T'
-    true
-  else
-    pull.parse_exception "Invalid boolean"
+  case flag = pull.read
+  when 'F' then false
+  when 'T' then true
+  else          pull.parse_exception "Invalid boolean"
   end
 end

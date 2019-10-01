@@ -36,71 +36,45 @@ module Chem::IO
     end
 
     def peek? : Char?
-      peek { read_char? }
+      peek { read? }
     end
 
     def peek?(count : Int) : String?
-      peek { read_chars? count }
+      peek { read? count }
     end
 
     def prev_char : Char
       parse_exception "Couldn't read previous character" if @io.pos == 0
       @io.pos -= 1
-      read_char
+      read
     end
 
-    def read_char : Char
-      read_char? || raise ::IO::EOFError.new
+    def read : Char
+      read? || raise ::IO::EOFError.new
     end
 
-    def read_char? : Char?
+    def read(count : Int) : String
+      read?(count) || raise ::IO::EOFError.new
+    end
+
+    def read? : Char?
       @io.read_char
     end
 
-    def read_char_in_set(charset : String) : Char?
-      read_char if check_in_set charset
+    def read?(count : Int) : String?
+      @io.gets count
     end
 
-    def read_char_or_null : Char?
-      char = read_char
-      char.whitespace? ? nil : char
-    end
-
-    def read_chars(*args, **options) : String
-      read_chars?(*args, **options) || raise ::IO::EOFError.new
-    end
-
-    def read_chars?(count : Int) : String?
-      @io.read_string count
-    rescue ::IO::EOFError
-      nil
-    end
-
-    def read_chars?(count : Int, stop_at sentinel : Char) : String?
-      chars = read_chars? count
-      if chars && (pos = chars.index sentinel)
-        @io.pos -= chars.size - pos
-        chars = chars[...pos]
-      end
-      chars
-    end
-
-    def read_chars_or_null(*args, **options) : String?
-      chars = read_chars *args, **options
-      chars.blank? ? nil : chars
-    end
-
-    # TODO add support for scientific notation
     def read_float : Float64
       skip_whitespace
       String.build do |io|
         io << read_sign
         read_digits io
         if check '.'
-          io << read_char
+          io << read
           read_digits io
         end
-        if char = read_char_in_set("eE")
+        if char = read_in_set("eE")
           io << char
           io << read_sign
           read_digits io
@@ -110,8 +84,8 @@ module Chem::IO
       parse_exception "Couldn't read a decimal number"
     end
 
-    def read_float(count : Int32) : Float64
-      read_chars(count).to_f
+    def read_float(count : Int) : Float64
+      read(count).to_f
     rescue ArgumentError
       parse_exception "Couldn't read a decimal number"
     end
@@ -126,23 +100,22 @@ module Chem::IO
       parse_exception "Couldn't read a number"
     end
 
-    def read_int(count : Int32, **options) : Int32
-      read_chars(count, **options).to_i
+    def read_int(count : Int) : Int32
+      read(count).to_i
     rescue ArgumentError
       parse_exception "Couldn't read a number"
     end
 
-    # TODO rename to `read_int` with option `on_blank`
-    def read_int_or_null(count : Int32, **options) : Int32?
-      chars = read_chars count, **options
-      return nil if chars.blank?
-      chars.to_i
-    rescue ArgumentError
-      parse_exception "Couldn't read a number"
+    def read_in_set(charset : String) : Char?
+      read? if check_in_set charset
     end
 
     def read_line : String
-      @io.read_line
+      read_line? || raise ::IO::EOFError.new
+    end
+
+    def read_line? : String?
+      @io.gets
     end
 
     def rewind(&block : Char -> Bool) : self
@@ -178,7 +151,7 @@ module Chem::IO
 
     def scan(io : ::IO, & : Char -> Bool) : self
       prev_pos = @io.pos
-      while char = read_char?
+      while char = read?
         break unless yield char
         io << char
         prev_pos = @io.pos
@@ -231,13 +204,13 @@ module Chem::IO
     end
 
     def skip : self
-      read_char?
+      read?
       self
     end
 
     def skip(& : Char -> Bool) : self
       prev_pos = @io.pos
-      while char = read_char?
+      while char = read?
         break unless yield char
         prev_pos = @io.pos
       end
@@ -298,7 +271,7 @@ module Chem::IO
     end
 
     private def read_sign : Char?
-      read_char_in_set "+-"
+      read_in_set "+-"
     end
   end
 end
