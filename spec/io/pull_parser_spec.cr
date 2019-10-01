@@ -153,9 +153,9 @@ describe Chem::IO::PullParser do
     end
 
     it "reads N characters" do
-      parser = Parser.new "Lorem ipsum"
+      parser = Parser.new "Lorem ipsum\n0 1 2 3 4"
       parser.read(5).should eq "Lorem"
-      parser.read(6).should eq " ipsum"
+      parser.read(10).should eq " ipsum\n0 1"
     end
 
     it "fails at eof" do

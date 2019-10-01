@@ -54,7 +54,7 @@ module Chem::IO
     end
 
     def read(count : Int) : String
-      read?(count) || raise ::IO::EOFError.new
+      @io.read_string count
     end
 
     def read? : Char?
@@ -62,7 +62,9 @@ module Chem::IO
     end
 
     def read?(count : Int) : String?
-      @io.gets count
+      read count
+    rescue ::IO::EOFError
+      nil
     end
 
     def read_float : Float64
