@@ -52,7 +52,7 @@ describe Chem::PDB::Hybrid36 do
 
     it "raises for invalid number literal" do
       ["", " 1234", " abc", "abc-", "40a0"].each do |str|
-        expect_raises(Chem::IO::ParseException, "Invalid number literal") do
+        expect_raises(ArgumentError, "Invalid number literal") do
           PDB::Hybrid36.decode str, width: 4
         end
       end

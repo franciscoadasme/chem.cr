@@ -46,7 +46,7 @@ module Chem::PDB::Hybrid36
   end
 
   private def invalid_literal(str : String)
-    raise IO::ParseException.new "Invalid number literal: #{str}"
+    raise ArgumentError.new "Invalid number literal: #{str}"
   end
 
   private def out_of_range(num : Int)
