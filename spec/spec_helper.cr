@@ -7,6 +7,7 @@ alias Constraint = Chem::Constraint
 alias Element = Chem::PeriodicTable::Element
 alias M = Chem::Linalg::Matrix
 alias PDB = Chem::PDB
+alias ParseException = Chem::IO::ParseException
 alias PeriodicTable = Chem::PeriodicTable
 alias Q = Chem::Spatial::Quaternion
 alias Tf = Chem::Spatial::AffineTransform

@@ -1,7 +1,5 @@
 require "../spec_helper"
 
-alias ParseException = Chem::IO::ParseException
-
 class Parser
   include Chem::IO::PullParser
 
