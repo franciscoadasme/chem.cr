@@ -1,6 +1,6 @@
 module Chem::IO
   module PullParser
-    abstract def parse_exception(msg : String)
+    include ParserWithLocation
 
     def check(& : Char -> Bool) : Bool
       return false unless char = peek?
@@ -54,11 +54,11 @@ module Chem::IO
     end
 
     def read(count : Int) : String
-      @io.read_string count
+      read { @io.read_string count }
     end
 
     def read? : Char?
-      @io.read_char
+      read { @io.read_char }
     end
 
     def read?(count : Int) : String?
@@ -68,18 +68,20 @@ module Chem::IO
     end
 
     def read_float : Float64
-      skip_whitespace
-      String.build do |io|
-        io << read_sign
-        read_digits io
-        if check '.'
-          io << read
-          read_digits io
-        end
-        if char = read_in_set("eE")
-          io << char
+      read do
+        skip_whitespace
+        String.build do |io|
           io << read_sign
           read_digits io
+          if check '.'
+            io << read
+            read_digits io
+          end
+          if char = read_in_set("eE")
+            io << char
+            io << read_sign
+            read_digits io
+          end
         end
       end.to_f
     rescue ArgumentError
@@ -93,10 +95,12 @@ module Chem::IO
     end
 
     def read_int : Int32
-      skip_whitespace
-      String.build do |io|
-        io << read_sign
-        read_digits io
+      read do
+        skip_whitespace
+        String.build do |io|
+          io << read_sign
+          read_digits io
+        end
       end.to_i
     rescue ArgumentError
       parse_exception "Couldn't read a number"
@@ -117,7 +121,7 @@ module Chem::IO
     end
 
     def read_line? : String?
-      @io.gets
+      read { @io.gets }
     end
 
     def rewind(&block : Char -> Bool) : self
@@ -152,13 +156,15 @@ module Chem::IO
     end
 
     def scan(io : ::IO, & : Char -> Bool) : self
-      prev_pos = @io.pos
-      while char = read?
-        break unless yield char
-        io << char
+      read do
         prev_pos = @io.pos
+        while char = read?
+          break unless yield char
+          io << char
+          prev_pos = @io.pos
+        end
+        @io.pos = prev_pos
       end
-      @io.pos = prev_pos
       self
     end
 
@@ -211,17 +217,19 @@ module Chem::IO
     end
 
     def skip(& : Char -> Bool) : self
-      prev_pos = @io.pos
-      while char = read?
-        break unless yield char
+      read do
         prev_pos = @io.pos
+        while char = read?
+          break unless yield char
+          prev_pos = @io.pos
+        end
+        @io.pos = prev_pos
       end
-      @io.pos = prev_pos
       self
     end
 
     def skip(count : Int) : self
-      count.times { skip }
+      read { @io.gets count }
       self
     end
 
@@ -248,7 +256,7 @@ module Chem::IO
     end
 
     def skip_line : self
-      @io.gets
+      read { @io.gets }
       self
     end
 

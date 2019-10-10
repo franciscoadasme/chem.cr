@@ -7,8 +7,8 @@ class Parser
     @io = IO::Memory.new(content)
   end
 
-  def parse_exception(msg : String)
-    raise ParseException.new msg
+  def char_span : Int32 | Int64
+    @io.pos - @prev_pos
   end
 end
 
@@ -147,13 +147,17 @@ describe Chem::IO::PullParser do
     it "reads one character" do
       parser = Parser.new "Lorem ipsum"
       parser.read.should eq 'L'
+      parser.char_span.should eq 1
       parser.read.should eq 'o'
+      parser.char_span.should eq 1
     end
 
     it "reads N characters" do
       parser = Parser.new "Lorem ipsum\n0 1 2 3 4"
       parser.read(5).should eq "Lorem"
+      parser.char_span.should eq 5
       parser.read(10).should eq " ipsum\n0 1"
+      parser.char_span.should eq 10
     end
 
     it "fails at eof" do
@@ -174,7 +178,10 @@ describe Chem::IO::PullParser do
       Parser.new("125.35").read_float.should eq 125.35
       Parser.new("+125.35").read_float.should eq 125.35
       Parser.new("-125.35").read_float.should eq -125.35
-      Parser.new("1.2.3.4").read_float.should eq 1.2
+
+      parser = Parser.new "1.2.3.4"
+      parser.read_float.should eq 1.2
+      parser.char_span.should eq 3
     end
 
     it "reads a float from N characters" do
@@ -189,7 +196,10 @@ describe Chem::IO::PullParser do
       Parser.new("1e-1").read_float.should eq 0.1
       Parser.new("1E-1").read_float.should eq 0.1
       Parser.new("-1.25e4").read_float.should eq -12_500
-      Parser.new("-1.25e-3").read_float.should eq -0.00125
+
+      parser = Parser.new("-1.25e-3_")
+      parser.read_float.should eq -0.00125
+      parser.char_span.should eq 8
     end
 
     it "fails with an invalid float" do
@@ -201,7 +211,9 @@ describe Chem::IO::PullParser do
 
   describe "#read_int" do
     it "reads an integer" do
-      Parser.new("12574").read_int.should eq 12574
+      parser = Parser.new "12574 "
+      parser.read_int.should eq 12574
+      parser.char_span.should eq 5
     end
 
     it "reads an integer from N characters" do
@@ -238,6 +250,7 @@ describe Chem::IO::PullParser do
     it "reads a line" do
       parser = Parser.new("Lorem ipsum\ndolor sit amet")
       parser.read_line.should eq "Lorem ipsum"
+      parser.char_span.should eq 12
     end
 
     it "fails at eof" do
@@ -264,27 +277,32 @@ describe Chem::IO::PullParser do
     it "reads characters that match a pattern" do
       parser = Parser.new "Lorem ipsum!\ndolor sit amet"
       parser.scan(/\w/).should eq "Lorem"
+      parser.char_span.should eq 5
     end
 
     it "returns an empty string if the next character does not match the pattern" do
       parser = Parser.new "Lorem ipsum dolor sit amet"
       parser.scan(/\d/).should eq ""
+      parser.char_span.should eq 0
     end
 
     it "reads characters that pass a predicate" do
       parser = Parser.new "Lorem ipsum dolor sit amet"
       parser.scan { |char| char.letter? }.should eq "Lorem"
+      parser.char_span.should eq 5
     end
 
     it "returns an empty string if the next character does not pass the predicate" do
       parser = Parser.new "Lorem ipsum dolor sit amet"
       parser.scan { |char| char.number? }.should eq ""
+      parser.char_span.should eq 0
     end
 
     it "reads characters into a IO object" do
       io = IO::Memory.new
       parser = Parser.new "Lorem ipsum dolor sit amet"
       parser.scan io, &.letter?
+      parser.char_span.should eq 5
       io.to_s.should eq "Lorem"
     end
 
@@ -292,6 +310,7 @@ describe Chem::IO::PullParser do
       io = IO::Memory.new
       parser = Parser.new "Lorem ipsum dolor sit amet"
       parser.scan io, /[A-Z]/
+      parser.char_span.should eq 1
       io.to_s.should eq "L"
     end
   end
@@ -336,39 +355,58 @@ describe Chem::IO::PullParser do
   describe "#skip" do
     it "skips a character" do
       parser = Parser.new "Lorem ipsum"
-      parser.skip.read.should eq 'o'
+      parser.skip
+      parser.char_span.should eq 1
+      parser.read.should eq 'o'
     end
 
     it "skips N characters" do
       parser = Parser.new "Lorem ipsum"
-      parser.skip(10).read.should eq 'm'
+      parser.skip 10
+      parser.char_span.should eq 10
+      parser.read.should eq 'm'
     end
 
     it "skips occurrences of a character" do
       parser = Parser.new "---abcd"
-      parser.skip('-').read.should eq 'a'
+      parser.skip '-'
+      parser.char_span.should eq 3
+      parser.read.should eq 'a'
     end
 
     it "skips N occurrences of a character at most" do
       parser = Parser.new "---abcd"
-      parser.skip('-', limit: 2).peek(2).should eq "-a"
-      parser.skip('-', limit: 10).read.should eq 'a'
+      parser.skip '-', limit: 2
+      parser.char_span.should eq 2
+      parser.peek(2).should eq "-a"
+      parser.skip '-', limit: 10
+      parser.char_span.should eq 1
+      parser.read.should eq 'a'
     end
 
     it "skips characters that pass a predicate" do
       parser = Parser.new "1342,!, ,Lorem ipsum"
-      parser.skip { |char| !char.letter? }.read.should eq 'L'
+      parser.skip { |char| !char.letter? }
+      parser.char_span.should eq 9
+      parser.read.should eq 'L'
     end
 
     it "skips N characters that pass the predicate at most" do
       parser = Parser.new "Lorem ipsum"
-      parser.skip(limit: 4, &.letter?).peek(2).should eq "m "
-      parser.skip(limit: 10, &.letter?).read.should eq ' '
+      parser.skip limit: 4, &.letter?
+      parser.char_span.should eq 4
+      parser.peek(2).should eq "m "
+
+      parser.skip limit: 10, &.letter?
+      parser.char_span.should eq 1
+      parser.read.should eq ' '
     end
 
     it "skips characters that match a pattern" do
       parser = Parser.new "Lorem ipsum!\ndolor sit amet"
-      parser.skip(/[\w\s]/).read.should eq '!'
+      parser.skip /[\w\s]/
+      parser.char_span.should eq 11
+      parser.read.should eq '!'
     end
 
     it "does not fail at end of file" do
@@ -389,7 +427,9 @@ describe Chem::IO::PullParser do
   describe "#skip_line" do
     it "skips line" do
       parser = Parser.new "Lorem ipsum\ndolor sit amet"
-      parser.skip_line.read.should eq 'd'
+      parser.skip_line
+      parser.char_span.should eq 12
+      parser.read.should eq 'd'
     end
 
     it "does not fail at end of file" do
