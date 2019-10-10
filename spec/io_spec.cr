@@ -1,3 +1,31 @@
+require "./spec_helper"
+
+describe Chem::IO::ParserWithLocation do
+  describe "#parse_exception" do
+    it "raises an exception with location" do
+      parser = ParserWithLocationTest.new "Lorem ipsum\n123 321 66\n23 123 21\n foo bar"
+      parser.read 26
+      parser.read 3
+      ex = expect_raises(ParseException) { parser.parse_exception "Custom error" }
+      ex.message.should eq "Custom error"
+      ex.loc.should_not be_nil
+      loc = ex.loc.not_nil!
+      loc.source_file.should be_nil
+      loc.line_number.should eq 3
+      loc.column_number.should eq 4
+      loc.size.should eq 3
+      ex.to_s_with_location.should eq <<-EOS
+        In line 3:4:
+
+         1 | Lorem ipsum
+         2 | 123 321 66
+         3 | 23 123 21
+                ^~~
+        Error: Custom error
+        EOS
+    end
+  end
+end
 
 describe Chem::IO::ParseException do
   describe "#to_s_with_location" do
@@ -68,5 +96,17 @@ describe Chem::IO::ParseException do
         Error: Invalid coordinate system (expected either Cartesian or Direct)
         EOS
     end
+  end
+end
+
+class ParserWithLocationTest
+  include Chem::IO::ParserWithLocation
+
+  def initialize(content : String)
+    @io = IO::Memory.new content
+  end
+
+  def read(count : Int = 1) : String
+    read { @io.read_string count }
   end
 end
