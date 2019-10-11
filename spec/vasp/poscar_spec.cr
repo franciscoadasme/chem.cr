@@ -49,16 +49,60 @@ describe Chem::VASP::Poscar do
 
     it "fails when element symbols are missing" do
       msg = "Expected element symbols (vasp 5+)"
-      expect_raises(Chem::IO::ParseException, msg) do
+      ex = expect_raises(Chem::IO::ParseException) do
         Chem::Structure.read "spec/data/poscar/no_symbols.poscar"
       end
+      ex.to_s_with_location.should eq <<-EOS
+        In line 6:4:
+
+         4 |  0.5 0.0 0.5
+         5 |  0.5 0.5 0.0
+         6 |    1 1
+                ^
+        Error: Expected element symbols (vasp 5+)
+        EOS
     end
 
     it "fails when there are missing atomic species counts" do
-      msg = "Couldn't read a number"
-      expect_raises(Chem::IO::ParseException, msg) do
+      ex = expect_raises(Chem::IO::ParseException) do
         Chem::Structure.read "spec/data/poscar/mismatch.poscar"
       end
+      ex.to_s_with_location.should eq <<-EOS
+        In line 7:5:
+        
+         5 |  0.5 0.5 0.0
+         6 |    C N
+         7 |    1
+                 ^
+        Error: Expected 1 more number(s) of atoms per atomic species
+        EOS
+    end
+
+    it "fails when constraint flags are invalid" do
+      ex = expect_raises Chem::IO::ParseException do
+        Chem::Structure.parse <<-EOS, :poscar
+          Cubic BN
+          3.57
+            0.0 0.5 0.5
+            0.5 0.0 0.5
+            0.5 0.5 0.0
+          O H
+          1 1
+          Selective dynamics
+          Direct
+            0.00 0.00 0.00 T T T
+            0.25 0.25 0.25 A T F
+          EOS
+      end
+      ex.to_s_with_location.should eq <<-EOS
+        In line 11:18:
+        
+          9 | Direct
+         10 |   0.00 0.00 0.00 T T T
+         11 |   0.25 0.25 0.25 A T F
+                               ^
+        Error: Invalid boolean flag (expected either T or F)
+        EOS
     end
   end
 end

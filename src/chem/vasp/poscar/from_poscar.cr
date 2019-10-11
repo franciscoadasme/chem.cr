@@ -37,6 +37,6 @@ def Bool.new(pull : Chem::VASP::Poscar::Parser)
   case flag = pull.read
   when 'F' then false
   when 'T' then true
-  else          pull.parse_exception "Invalid boolean"
+  else          pull.parse_exception "Invalid boolean flag (expected either T or F)"
   end
 end

@@ -41,7 +41,7 @@ module Chem::VASP::Poscar
       skip_whitespace
       parse_exception "Expected element symbols (vasp 5+)" if check &.number?
       elements = scan_delimited(&.letter?).map { |symbol| PeriodicTable[symbol] }
-      counts = Array(Int32).new(elements.size) { read_int }
+      counts = parse_atom_counts elements.size
       skip_line
       elements.map_with_index { |ele, i| [ele] * counts[i] }.flatten
     end
@@ -64,6 +64,15 @@ module Chem::VASP::Poscar
       Spatial::Vector.new self
     end
 
+    private def parse_atom_counts(n : Int) : Array(Int32)
+      Array(Int32).new(n) do |i|
+        read_int
+      rescue ex : ParseException
+        ex.message = "Expected #{n - i} more number(s) of atoms per atomic species"
+        raise ex
+      end
+    end
+
     private def parse_coordinate_system : Bool
       skip_whitespace
       line = read_line
@@ -73,7 +82,7 @@ module Chem::VASP::Poscar
       when 'd' # direct
         true
       else
-        parse_exception "Invalid coordinate type"
+        parse_exception "Invalid coordinate type (expected either Cartesian or Direct)"
       end
     end
   end
