@@ -26,6 +26,10 @@ module Chem::IO
       super message
     end
 
+    def message=(message : String) : String
+      @message = message
+    end
+
     def to_s_with_location : String
       String.build do |io|
         to_s_with_location io
