@@ -97,7 +97,7 @@ module Chem::IO
         line_number += 1
         lines.shift if lines.size == nlines
         lines << line.chomp
-        break if @io.pos > current_pos
+        break if @io.pos >= current_pos
         column_number -= line.size
       end
       @io.pos = current_pos

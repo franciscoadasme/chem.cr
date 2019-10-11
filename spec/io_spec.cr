@@ -24,6 +24,28 @@ describe Chem::IO::ParserWithLocation do
         Error: Custom error
         EOS
     end
+
+    it "raises an exception at the end of line" do
+      parser = ParserWithLocationTest.new "Lorem ipsum\n123 321 66\n23 123 21"
+      parser.read 22
+      parser.read 1
+      ex = expect_raises(ParseException) { parser.parse_exception "Custom error" }
+      ex.message.should eq "Custom error"
+      ex.loc.should_not be_nil
+      loc = ex.loc.not_nil!
+      loc.source_file.should be_nil
+      loc.line_number.should eq 2
+      loc.column_number.should eq 11
+      loc.size.should eq 1
+      ex.to_s_with_location.should eq <<-EOS
+        In line 2:11:
+
+         1 | Lorem ipsum
+         2 | 123 321 66
+                       ^
+        Error: Custom error
+        EOS
+    end
   end
 end
 
