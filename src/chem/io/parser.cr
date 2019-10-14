@@ -78,4 +78,26 @@ module Chem::IO
       value
     end
   end
+
+  macro finished
+    class ::Array(T)
+      {% for parser in Parser.subclasses.select(&.annotation(FileType)) %}
+        {% format = parser.annotation(FileType)[:format].id.underscore %}
+
+        def self.from_{{format.id}}(input : ::IO | Path | String, **options) : self
+          \{% raise "Invalid use of `Array#from_{{format.id}}` with type #{T}" \
+                unless T == Chem::Structure %}
+          {{parser}}.new(input, **options).parse_all
+        end
+
+        def self.from_{{format.id}}(input : ::IO | Path | String,
+                                    indexes : Array(Int),
+                                    **options) : self
+          \{% raise "Invalid use of `Array#from_{{format.id}}` with type #{T}" \
+                unless T == Chem::Structure %}
+          {{parser}}.new(input, **options).parse indexes
+        end
+      {% end %}
+    end
+  end
 end

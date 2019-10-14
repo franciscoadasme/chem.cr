@@ -18,8 +18,7 @@ describe Chem::XYZ::PullParser do
   end
 
   it "parses a XYZ file with multiple structures" do
-    content = File.read "spec/data/xyz/coo.trj.xyz"
-    structures = Chem::XYZ::PullParser.new(content).parse_all
+    structures = Array(Chem::Structure).from_xyz Path["spec/data/xyz/coo.trj.xyz"]
 
     structures.size.should eq 4
     structures.map(&.title).should eq ["0", "1", "2", "3"]
@@ -31,8 +30,8 @@ describe Chem::XYZ::PullParser do
   end
 
   it "parses selected structures of a XYZ file with multiple structures" do
-    content = File.read "spec/data/xyz/coo.trj.xyz"
-    structures = Chem::XYZ::PullParser.new(content).parse indexes: [1, 3]
+    path = Path["spec/data/xyz/coo.trj.xyz"]
+    structures = Array(Chem::Structure).from_xyz path, indexes: [1, 3]
 
     structures.size.should eq 2
     structures.map(&.title).should eq ["1", "3"]
@@ -42,8 +41,7 @@ describe Chem::XYZ::PullParser do
 
   it "fails when structure index is invalid" do
     expect_raises IndexError do
-      content = File.read "spec/data/xyz/coo.trj.xyz"
-      Chem::XYZ::PullParser.new(content).parse indexes: [5]
+      Array(Chem::Structure).from_xyz Path["spec/data/xyz/coo.trj.xyz"], indexes: [5]
     end
   end
 end

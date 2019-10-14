@@ -154,10 +154,7 @@ describe Chem::PDB do
     end
 
     it "parses a PDB file with anisou/ter records" do
-      ary = PDB.read "spec/data/pdb/anisou.pdb"
-      ary.size.should eq 1
-
-      st = ary.first
+      st = Chem::Structure.from_pdb Path["spec/data/pdb/anisou.pdb"]
       st.n_atoms.should eq 133
       st.residues.map(&.number).should eq (32..52).to_a
     end
@@ -255,7 +252,7 @@ describe Chem::PDB do
     end
 
     it "parses multiple models" do
-      st_list = PDB.read "spec/data/pdb/models.pdb"
+      st_list = Array(Chem::Structure).from_pdb Path["spec/data/pdb/models.pdb"]
       st_list.size.should eq 4
       xs = {5.606, 7.212, 5.408, 22.055}
       st_list.zip(xs) do |st, x|
@@ -266,16 +263,9 @@ describe Chem::PDB do
       end
     end
 
-    it "parses selected model" do
-      st = PDB.read "spec/data/pdb/models.pdb", model: 4
-      st.n_atoms.should eq 5
-      st.atoms.map(&.serial).should eq (1..5).to_a
-      st.atoms.map(&.name).should eq ["N", "CA", "C", "O", "CB"]
-      st.atoms[0].x.should eq 22.055
-    end
-
     it "parses selected models" do
-      st_list = PDB.read "spec/data/pdb/models.pdb", models: [2, 4]
+      path = Path["spec/data/pdb/models.pdb"]
+      st_list = Array(Chem::Structure).from_pdb path, indexes: [2, 4]
       st_list.size.should eq 2
       xs = {7.212, 22.055}
       st_list.zip(xs) do |st, x|

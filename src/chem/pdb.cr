@@ -15,16 +15,4 @@ module Chem::PDB
       yield builder
     end
   end
-
-  def self.read(filepath : String) : Array(Structure)
-    Parser.new(Path[filepath]).parse_all
-  end
-
-  def self.read(filepath : String, model : Int) : Structure
-    Parser.new(Path[filepath]).parse model
-  end
-
-  def self.read(filepath : String, models : Array(Int)) : Array(Structure)
-    Parser.new(Path[filepath]).parse models
-  end
 end
