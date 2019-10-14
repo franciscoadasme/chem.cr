@@ -139,7 +139,7 @@ describe Chem::PDB do
         TITLE     THERMUS THERMOPHILUS DNAJ J- AND G/F-DOMAINS                          
         EXPDTA    X-RAY DIFFRACTION; EPR                                                
         EOS
-      structure = Chem::Structure.parse content, :pdb
+      structure = Chem::Structure.from_pdb content
       structure.experiment.should_not be_nil
       expt = structure.experiment.not_nil!
       expt.kind.should eq Chem::Protein::Experiment::Kind::XRayDiffraction
@@ -239,7 +239,7 @@ describe Chem::PDB do
     end
 
     it "parses selected alternate conformation" do
-      structure = Chem::Structure.read "spec/data/pdb/alternate_conf_mut.pdb", alt_loc: 'B'
+      structure = Chem::Structure.from_pdb Path["spec/data/pdb/alternate_conf_mut.pdb"], alt_loc: 'B'
       structure.n_residues.should eq 1
       structure.n_atoms.should eq 11
       structure.each_atom.map(&.occupancy).uniq.to_a.should eq [0.22]
@@ -287,7 +287,7 @@ describe Chem::PDB do
     end
 
     it "parses selected chains" do
-      structure = Chem::Structure.read "spec/data/pdb/5jqf.pdb", chains: ['B']
+      structure = Chem::Structure.from_pdb Path["spec/data/pdb/5jqf.pdb"], chains: ['B']
       structure.n_chains.should eq 1
       structure.n_residues.should eq 38
       structure.n_atoms.should eq 310
@@ -297,7 +297,7 @@ describe Chem::PDB do
     end
 
     it "parses only protein" do
-      structure = Chem::Structure.read "spec/data/pdb/5jqf.pdb", het: false
+      structure = Chem::Structure.from_pdb Path["spec/data/pdb/5jqf.pdb"], het: false
       structure.n_chains.should eq 2
       structure.n_residues.should eq 42
       structure.n_atoms.should eq 586
@@ -374,7 +374,7 @@ describe Chem::PDB::Builder do
 
   it "writes ter records at the end of polymer chains" do
     content = File.read "spec/data/pdb/5e5v.pdb"
-    structure = Chem::Structure.parse content, :pdb
+    structure = Chem::Structure.from_pdb content
     structure.to_pdb.should eq content
   end
 

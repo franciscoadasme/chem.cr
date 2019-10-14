@@ -21,10 +21,11 @@ module Chem::PDB
     @chains : Set(Char)?
     @segments = [] of SecondaryStructureSegment
 
-    def initialize(@io : ::IO,
+    def initialize(input : ::IO | Path | String,
                    @alt_loc : Char? = nil,
                    chains : Enumerable(Char)? = nil,
                    @het : Bool = true)
+      super input
       @iter = Record::Iterator.new @io
       @chains = chains.try &.to_set
     end

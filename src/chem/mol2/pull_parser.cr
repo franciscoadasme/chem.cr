@@ -3,7 +3,8 @@ module Chem::Mol2
   class PullParser < IO::Parser
     include IO::PullParser
 
-    def initialize(@io : ::IO)
+    def initialize(input : ::IO | Path | String)
+      super
       @builder = Structure::Builder.new
       @n_atoms = @n_bonds = 0
     end

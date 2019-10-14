@@ -8,8 +8,7 @@ describe Chem::XYZ::PullParser do
                "H", "H", "H", "H", "H", "H", "N", "C", "C", "O", "C", "H", "H", "H",
                "H", "H", "O", "H", "H"]
 
-    content = File.read "spec/data/xyz/acama.xyz"
-    structure = Chem::XYZ::PullParser.new(content).parse
+    structure = Chem::Structure.from_xyz Path["spec/data/xyz/acama.xyz"]
 
     structure.title.should eq "Ala-Cys-Ala-Met-Ala"
     structure.n_atoms.should eq 61

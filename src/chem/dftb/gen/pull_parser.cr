@@ -9,9 +9,6 @@ module Chem::DFTB::Gen
     @fractional = false
     @periodic = false
 
-    def initialize(@io : ::IO)
-    end
-
     def each_structure(&block : Structure ->)
       yield parse
     end

@@ -3,9 +3,6 @@ module Chem::XYZ
   class PullParser < IO::Parser
     include IO::PullParser
 
-    def initialize(@io : ::IO)
-    end
-
     def each_structure(&block : Structure ->)
       until eof?
         yield parse

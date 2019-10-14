@@ -5,9 +5,6 @@ module Chem::VASP::Poscar
 
     getter scale_factor : Float64 = 1.0
 
-    def initialize(@io : ::IO)
-    end
-
     def each_structure(&block : Structure ->)
       yield parse
     end

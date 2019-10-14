@@ -2,8 +2,6 @@ require "../spec_helper"
 
 @[Chem::IO::FileType(format: CAD, ext: [:cad])]
 class CAD::Parser < Chem::IO::Parser
-  def initialize(@io : IO); end
-
   def each_structure(&block : Structure ->); end
 
   def each_structure(indexes : Indexable(Int), &block : Structure ->); end
@@ -53,19 +51,6 @@ describe Chem::IO::FileFormat do
     it "returns registered file formats" do
       Chem::IO::FileFormat.names.includes?("CAD").should be_true
       Chem::IO::FileFormat.names.includes?("Image").should be_true
-    end
-  end
-
-  describe "#parser" do
-    it "returns an instance of the registered parser" do
-      parser = Chem::IO::FileFormat::CAD.parser IO::Memory.new
-      parser.should be_a CAD::Parser
-    end
-
-    it "fails when there is no registered parser" do
-      expect_raises Exception, "No parser associated with file format Image" do
-        Chem::IO::FileFormat::Image.parser IO::Memory.new
-      end
     end
   end
 end

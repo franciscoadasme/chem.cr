@@ -21,22 +21,30 @@ module Chem
       builder.build
     end
 
-    def self.parse(io : ::IO | String,
-                   format : IO::FileFormat | Symbol,
-                   **options) : Structure
-      format = IO::FileFormat.parse(format.to_s) if format.is_a? Symbol
-      format.parser(io, **options).parse
+    macro finished
+      {% for parser in IO::Parser.subclasses.select(&.annotation(IO::FileType)) %}
+        {% format = parser.annotation(IO::FileType)[:format].id.underscore %}
+
+        def self.from_{{format.id}}(input : ::IO | Path | String, **options) : self
+          {{parser}}.new(input, **options).parse
+        end
+      {% end %}
     end
 
-    def self.read(filepath : String,
-                  format : IO::FileFormat | Symbol,
-                  **options) : Structure
-      parse File.read(filepath), format, **options
-    end
-
-    def self.read(filepath : String, **options) : Structure
-      format = IO::FileFormat.from_ext File.extname(filepath)
-      read filepath, format, **options
+    def self.read(path : Path | String) : self
+      format = IO::FileFormat.from_ext File.extname(path)
+      path = Path[path] unless path.is_a?(Path)
+      {% begin %}
+        case format
+        {% for parser in IO::Parser.subclasses.select(&.annotation(IO::FileType)) %}
+          {% format = parser.annotation(IO::FileType)[:format].id.underscore %}
+          when .{{format.id}}?
+            from_{{format.id}} path
+        {% end %}
+        else
+          raise "No parser associated with file format #{format}"
+        end
+      {% end %}
     end
 
     protected def <<(chain : Chain) : self

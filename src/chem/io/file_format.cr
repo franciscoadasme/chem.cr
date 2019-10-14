@@ -90,19 +90,6 @@ module Chem::IO
           end
         {% end %}
       end
-
-      def parser(io : ::IO | String, **options)
-        {% begin %}
-          case self
-          {% for parser in parsers %}
-            when .{{parser.annotation(FileType)[:format].id.underscore}}?
-              ::{{parser}}.new io, options
-          {% end %}
-          else
-            raise "No parser associated with file format #{self}"
-          end
-        {% end %}
-      end
     end
   end
 end

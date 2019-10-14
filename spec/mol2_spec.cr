@@ -50,7 +50,7 @@ describe Chem::Mol2::PullParser do
       1    BENZENE1    PERM    0    ****    ****    0    ROOT
       EOS
 
-    structure = Chem::Mol2::PullParser.new(content).parse
+    structure = Chem::Structure.from_mol2 content
     structure.title.should eq "benzene"
     structure.residues[0].name.should eq "BEN"
 
@@ -132,7 +132,7 @@ describe Chem::Mol2::PullParser do
                   "O12", "H13", "H14", "H15", "H16", "H17", "H18", "H19", "H20"]
     symbols = atom_names.map { |name| PeriodicTable[name[0]].symbol }
 
-    structure = Chem::Mol2::PullParser.new(content).parse
+    structure = Chem::Structure.from_mol2 content
     structure.title.should eq "Histidine"
 
     atoms = structure.atoms
