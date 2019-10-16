@@ -110,6 +110,21 @@ module Chem::PDB
       make_structure
     end
 
+    def skip_structure(n : Int = 1) : Nil
+      n.times do
+        @iter.skip "model"
+        @iter.each do |rec|
+          case rec.name
+          when "model", "conect", "master"
+            @iter.back
+            break
+          when "end", "endmdl"
+            break
+          end
+        end
+      end
+    end
+
     private def parse_atom(residue : Residue, prev_atom : Atom?, rec : Record) : Atom
       Atom.new \
         name: rec[12..15].delete(' '),
