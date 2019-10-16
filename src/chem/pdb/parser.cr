@@ -28,6 +28,8 @@ module Chem::PDB
       super input
       @iter = Record::Iterator.new @io
       @chains = chains.try &.to_set
+      parse_header
+      parse_bonds
     end
 
     private def assign_bonds(to atoms : Hash(Int32, Atom))
@@ -53,8 +55,6 @@ module Chem::PDB
     end
 
     def each_structure(&block : Structure ->)
-      parse_header
-      parse_bonds
       @iter.each do |rec|
         case rec.name
         when "atom", "hetatm"
@@ -72,8 +72,6 @@ module Chem::PDB
       return if indexes.empty?
       indexes = indexes.to_a.sort!
 
-      parse_header
-      parse_bonds
       @iter.each do |rec|
         case rec.name
         when "atom", "hetatm"
@@ -102,8 +100,6 @@ module Chem::PDB
     end
 
     def parse : Structure
-      parse_header
-      parse_bonds
       @iter.each do |rec|
         case rec.name
         when "atom", "hetatm"
