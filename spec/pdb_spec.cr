@@ -265,7 +265,7 @@ describe Chem::PDB do
 
     it "parses selected models" do
       path = Path["spec/data/pdb/models.pdb"]
-      st_list = Array(Chem::Structure).from_pdb path, indexes: [2, 4]
+      st_list = Array(Chem::Structure).from_pdb path, indexes: [1, 3]
       st_list.size.should eq 2
       xs = {7.212, 22.055}
       st_list.zip(xs) do |st, x|

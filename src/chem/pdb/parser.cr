@@ -57,11 +57,9 @@ module Chem::PDB
     def each_structure(&block : Structure ->)
       @iter.each do |rec|
         case rec.name
-        when "atom", "hetatm"
+        when "atom", "hetatm", "model"
           @iter.back
           yield parse_model
-        when "model", "endmdl"
-          next
         else
           ::Iterator.stop
         end
@@ -70,22 +68,14 @@ module Chem::PDB
 
     def each_structure(indexes : Indexable(Int), &block : Structure ->)
       return if indexes.empty?
-      indexes = indexes.to_a.sort!
 
-      @iter.each do |rec|
-        case rec.name
-        when "atom", "hetatm"
-          @iter.back
-          yield parse_model
-        when "endmdl"
-          indexes.shift
-          return if indexes.empty?
-        when "model"
-          unless indexes.includes? rec[10..13].to_i
-            @iter.skip "atom", "anisou", "endmdl", "hetatm", "ter", "sigatm", "siguij"
-          end
+      (indexes.max + 1).times do |i|
+        if eof?
+          raise IndexError.new
+        elsif indexes.includes? i
+          yield parse
         else
-          ::Iterator.stop
+          skip_structure
         end
       end
     end
@@ -249,6 +239,7 @@ module Chem::PDB
       make_structure.tap do |structure|
         bonded_atoms = Hash(Int32, Atom).new initial_capacity: @pdb_bonds.size
         chain, residue, atom = nil, nil, nil
+        @iter.skip "model"
         @iter.each do |rec|
           case rec.name
           when "atom", "hetatm"
@@ -263,6 +254,8 @@ module Chem::PDB
             bonded_atoms[atom.serial] = atom if @pdb_bonds.has_key? atom.serial
           when "anisou", "ter", "sigatm", "siguij"
             next
+          when "endmdl"
+            break
           else
             ::Iterator.stop
           end
