@@ -13,10 +13,6 @@ module Chem::Mol2
       yield parse
     end
 
-    def each_structure(indexes : Indexable(Int), &block : Structure ->)
-      yield parse if indexes.size == 1 && indexes == 0
-    end
-
     def parse : Structure
       until eof?
         skip_whitespace

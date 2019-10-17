@@ -1,7 +1,6 @@
 module Chem::IO
   abstract class Parser
     abstract def each_structure(&block : Structure ->)
-    abstract def each_structure(indexes : Indexable(Int), &block : Structure ->)
     abstract def parse : Structure
 
     def initialize(@io : ::IO)
@@ -13,6 +12,18 @@ module Chem::IO
 
     def initialize(path : Path)
       @io = ::IO::Memory.new File.read(path)
+    end
+
+    def each_structure(indexes : Enumerable(Int), &block : Structure ->)
+      (indexes.max + 1).times do |i|
+        if eof?
+          raise IndexError.new
+        elsif indexes.includes? i
+          yield parse
+        else
+          skip_structure
+        end
+      end
     end
 
     def eof? : Bool
@@ -41,6 +52,10 @@ module Chem::IO
 
     def parse_exception(msg : String)
       raise ParseException.new msg
+    end
+
+    def skip_structure : Nil
+      @io.skip_to_end
     end
   end
 

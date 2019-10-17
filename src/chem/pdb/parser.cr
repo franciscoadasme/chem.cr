@@ -66,20 +66,6 @@ module Chem::PDB
       end
     end
 
-    def each_structure(indexes : Indexable(Int), &block : Structure ->)
-      return if indexes.empty?
-
-      (indexes.max + 1).times do |i|
-        if eof?
-          raise IndexError.new
-        elsif indexes.includes? i
-          yield parse
-        else
-          skip_structure
-        end
-      end
-    end
-
     private def make_structure : Structure
       sys = Structure.new
       sys.experiment = @pdb_expt
@@ -100,17 +86,15 @@ module Chem::PDB
       make_structure
     end
 
-    def skip_structure(n : Int = 1) : Nil
-      n.times do
-        @iter.skip "model"
-        @iter.each do |rec|
-          case rec.name
-          when "model", "conect", "master"
-            @iter.back
-            break
-          when "end", "endmdl"
-            break
-          end
+    def skip_structure : Nil
+      @iter.skip "model"
+      @iter.each do |rec|
+        case rec.name
+        when "model", "conect", "master"
+          @iter.back
+          break
+        when "end", "endmdl"
+          break
         end
       end
     end

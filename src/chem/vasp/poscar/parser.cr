@@ -9,10 +9,6 @@ module Chem::VASP::Poscar
       yield parse
     end
 
-    def each_structure(indexes : Indexable(Int), &block : Structure ->)
-      yield parse if indexes.size == 1 && indexes == 0
-    end
-
     def parse : Structure
       builder = Structure::Builder.new
       builder.title read_line

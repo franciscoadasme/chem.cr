@@ -10,18 +10,6 @@ module Chem::XYZ
       end
     end
 
-    def each_structure(indexes : Indexable(Int), &block : Structure ->)
-      (indexes.max + 1).times do |i|
-        if eof?
-          raise IndexError.new
-        elsif indexes.includes? i
-          yield parse
-        else
-          skip_structure
-        end
-      end
-    end
-
     def parse : Structure
       Structure.build do |builder|
         skip_whitespace
@@ -32,7 +20,7 @@ module Chem::XYZ
       end
     end
 
-    private def skip_structure
+    def skip_structure
       skip_whitespace
       n_atoms = read_int
       (n_atoms + 2).times { skip_line }
