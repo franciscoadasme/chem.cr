@@ -37,8 +37,30 @@ module Chem::IO
       raise ParseException.new msg
     end
 
+    def skip(n : Int) : Iterator(Structure)
+      raise ArgumentError.new "Negative size: #{n}" if n < 0
+      SkipStructure(typeof(self)).new self, n
+    end
+
     def skip_structure : Nil
       @io.skip_to_end
+    end
+
+    # Specialized iterator that uses `Parser#skip_structure` to avoid creating/parsing
+    # skipped structures
+    private class SkipStructure(T)
+      include Iterator(Structure)
+
+      def initialize(@parser : T, @n : Int32)
+      end
+
+      def next : Structure | Stop
+        while @n > 0
+          @n -= 1
+          @parser.skip_structure
+        end
+        @parser.next
+      end
     end
   end
 

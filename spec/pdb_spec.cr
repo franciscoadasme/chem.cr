@@ -288,6 +288,11 @@ describe Chem::PDB do
       parser.first.atoms[0].coords.should eq V[22.055, 14.701, 7.032]
     end
 
+    it "skip models (iterator)" do
+      parser = PDB::Parser.new Path["spec/data/pdb/models.pdb"]
+      parser.skip(3).first.atoms[0].coords.should eq V[22.055, 14.701, 7.032]
+    end
+
     it "parses selected chains" do
       structure = Chem::Structure.from_pdb Path["spec/data/pdb/5jqf.pdb"], chains: ['B']
       structure.n_chains.should eq 1
