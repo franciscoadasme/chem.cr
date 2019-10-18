@@ -1,6 +1,6 @@
 module Chem
   class Structure::Builder
-    def atom(pull : Mol2::PullParser) : Atom
+    def atom(pull : Mol2::Parser) : Atom
       pull.skip_index
       name = pull.scan_in_set "a-zA-Z0-9"
       coords = Spatial::Vector.new pull
@@ -17,7 +17,7 @@ module Chem
   end
 
   struct Spatial::Vector
-    def initialize(pull : Mol2::PullParser)
+    def initialize(pull : Mol2::Parser)
       @x = pull.read_float
       @y = pull.read_float
       @z = pull.read_float

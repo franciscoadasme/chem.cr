@@ -1,6 +1,6 @@
 module Chem::XYZ
   @[IO::FileType(format: XYZ, ext: [:xyz])]
-  class PullParser < IO::Parser
+  class Parser < IO::Parser
     include IO::PullParser
 
     def next : Structure | Iterator::Stop

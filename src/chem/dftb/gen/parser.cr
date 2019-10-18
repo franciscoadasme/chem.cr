@@ -1,8 +1,6 @@
-require "string_scanner"
-
 module Chem::DFTB::Gen
   @[IO::FileType(format: Gen, ext: [:gen])]
-  class PullParser < IO::Parser
+  class Parser < IO::Parser
     include IO::PullParser
 
     @elements = [] of PeriodicTable::Element

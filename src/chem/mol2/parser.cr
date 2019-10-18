@@ -1,6 +1,6 @@
 module Chem::Mol2
   @[IO::FileType(format: Mol2, ext: [:mol2])]
-  class PullParser < IO::Parser
+  class Parser < IO::Parser
     include IO::PullParser
 
     def initialize(input : ::IO | Path | String)

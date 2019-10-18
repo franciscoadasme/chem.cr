@@ -1,6 +1,6 @@
 module Chem
   class Structure::Builder
-    def atom(pull : DFTB::Gen::PullParser) : Atom
+    def atom(pull : DFTB::Gen::Parser) : Atom
       pull.skip_spaces.skip(&.number?).skip_spaces
       ele = pull.parse_element
       vec = Spatial::Vector.new pull
@@ -8,7 +8,7 @@ module Chem
       atom ele, vec
     end
 
-    def lattice(pull : DFTB::Gen::PullParser) : Lattice
+    def lattice(pull : DFTB::Gen::Parser) : Lattice
       lattice do
         pull.skip_line
         a Spatial::Vector.new pull
@@ -19,7 +19,7 @@ module Chem
   end
 
   struct Spatial::Vector
-    def initialize(pull : DFTB::Gen::PullParser)
+    def initialize(pull : DFTB::Gen::Parser)
       @x = pull.read_float
       @y = pull.read_float
       @z = pull.read_float

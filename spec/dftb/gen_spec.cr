@@ -1,6 +1,6 @@
 require "../spec_helper"
 
-describe Chem::DFTB::Gen::PullParser do
+describe Chem::DFTB::Gen::Parser do
   it "parses a non-periodic Gen file" do
     content = <<-EOS
       5  C
