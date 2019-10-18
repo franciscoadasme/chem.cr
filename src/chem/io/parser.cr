@@ -71,7 +71,6 @@ module Chem::IO
         value = @parser.next
         raise IndexError.new if value.is_a?(Stop)
         @current += 1
-        puts typeof(value)
         value
       end
     end
