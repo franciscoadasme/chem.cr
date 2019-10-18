@@ -147,6 +147,26 @@ describe Chem::Mol2::PullParser do
     atoms[3].bonds[atoms[11]].order.should eq 1
     atoms[8].bonds[atoms[9]].order.should eq 2
   end
+
+  it "parses multiple structures" do
+    ary = Array(Chem::Structure).from_mol2 Path["spec/data/mol2/molecules.mol2"]
+    ary.size.should eq 12
+
+    structure = ary.first
+    atoms = structure.atoms
+    atoms[0].name.should eq "N1"
+    atoms[0].element.nitrogen?.should be_true
+    atoms[0].partial_charge.should eq -0.896
+    atoms[0].coords.should be_close V[6.8420, 9.9900, 22.7430], 1e-4
+    atoms[33].name.should eq "H131"
+    atoms[33].element.hydrogen?.should be_true
+    atoms[33].partial_charge.should eq 0.072
+    atoms[33].coords.should be_close V[4.5540, 11.1000, 22.5880], 1e-4
+
+    structure.bonds.size.should eq 51
+    atoms[7].bonded?(atoms[34]).should be_true
+    atoms[13].bonded?(atoms[19]).should be_true
+  end
 end
 
 describe Chem::Mol2::Builder do
