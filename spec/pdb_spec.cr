@@ -125,7 +125,7 @@ describe Chem::PDB do
       exp = st.experiment.not_nil!
       exp.deposition_date.should eq Time.utc(1981, 4, 30)
       exp.doi.should eq "10.1073/PNAS.81.19.6014"
-      exp.kind.should eq Chem::Protein::Experiment::Kind::XRayDiffraction
+      exp.kind.x_ray_diffraction?.should be_true
       exp.pdb_accession.should eq "1crn"
       exp.resolution.should eq 1.5
       exp.title.should eq "WATER STRUCTURE OF A HYDROPHOBIC PROTEIN AT ATOMIC " \
@@ -134,15 +134,19 @@ describe Chem::PDB do
     end
 
     it "parses experiment with multiple methods" do
-      content = <<-EOS
+      structure = Chem::Structure.from_pdb <<-EOS
         HEADER    CHAPERONE                               14-FEB-13   4J7Z              
         TITLE     THERMUS THERMOPHILUS DNAJ J- AND G/F-DOMAINS                          
         EXPDTA    X-RAY DIFFRACTION; EPR                                                
+        ATOM      1  N   ALA A   1       5.606   4.546  11.941  1.00  3.73           N  
+        ATOM      2  CA  ALA A   1       5.598   5.767  11.082  1.00  3.56           C  
+        ATOM      3  C   ALA A   1       6.441   5.527   9.850  1.00  4.13           C  
+        ATOM      4  O   ALA A   1       6.052   5.933   8.744  1.00  4.36           O  
+        ATOM      5  CB  ALA A   1       6.022   6.977  11.891  1.00  4.80           C  
         EOS
-      structure = Chem::Structure.from_pdb content
       structure.experiment.should_not be_nil
       expt = structure.experiment.not_nil!
-      expt.kind.should eq Chem::Protein::Experiment::Kind::XRayDiffraction
+      expt.kind.x_ray_diffraction?.should be_true
     end
 
     it "parses a PDB file with sequence" do
@@ -279,9 +283,9 @@ describe Chem::PDB do
     it "skip models" do
       parser = PDB::Parser.new Path["spec/data/pdb/models.pdb"]
       parser.skip_structure
-      parser.parse.atoms[0].coords.should eq V[7.212, 15.334, 0.966]
+      parser.first.atoms[0].coords.should eq V[7.212, 15.334, 0.966]
       parser.skip_structure
-      parser.parse.atoms[0].coords.should eq V[22.055, 14.701, 7.032]
+      parser.first.atoms[0].coords.should eq V[22.055, 14.701, 7.032]
     end
 
     it "parses selected chains" do

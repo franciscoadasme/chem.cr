@@ -9,11 +9,18 @@ module Chem::DFTB::Gen
     @fractional = false
     @periodic = false
 
-    def each_structure(&block : Structure ->)
-      yield parse
+    def next : Structure | Iterator::Stop
+      skip_whitespace
+      eof? ? stop : parse
     end
 
-    def parse : Structure
+    def parse_element : PeriodicTable::Element
+      @elements[read_int - 1]
+    rescue IndexError
+      parse_exception "Invalid element index"
+    end
+
+    private def parse : Structure
       builder = Structure::Builder.new
 
       n_atoms = read_int
@@ -22,15 +29,12 @@ module Chem::DFTB::Gen
       n_atoms.times { builder.atom self }
 
       builder.lattice self if @periodic
+
+      @io.skip_to_end # ensure end of file as Gen doesn't support multiple entries
+
       structure = builder.build
       structure.coords.to_cartesian! if @fractional
       structure
-    end
-
-    def parse_element : PeriodicTable::Element
-      @elements[read_int - 1]
-    rescue IndexError
-      parse_exception "Invalid element index"
     end
 
     private def parse_elements

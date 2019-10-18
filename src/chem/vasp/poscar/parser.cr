@@ -5,8 +5,8 @@ module Chem::VASP::Poscar
 
     getter scale_factor : Float64 = 1.0
 
-    def each_structure(&block : Structure ->)
-      yield parse
+    def next : Structure | Iterator::Stop
+      eof? ? stop : parse
     end
 
     def parse : Structure
@@ -26,6 +26,8 @@ module Chem::VASP::Poscar
         atom = builder.atom of: element, at: vec
         atom.constraint = Constraint.new self if has_constraints
       end
+
+      @io.skip_to_end # ensure end of file as POSCAR doesn't support multiple entries
 
       builder.build
     end

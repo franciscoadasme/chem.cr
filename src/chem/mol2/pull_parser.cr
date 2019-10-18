@@ -9,16 +9,13 @@ module Chem::Mol2
       @n_atoms = @n_bonds = 0
     end
 
-    def each_structure(&block : Structure ->)
-      yield parse
-    end
-
-    def parse : Structure
+    def next : Structure | Iterator::Stop
       until eof?
         skip_whitespace
-        check('@') ? parse_record : skip_line
+        return parse if check "@<TRIPOS>MOLECULE"
+        skip_line
       end
-      @builder.build
+      stop
     end
 
     def skip_index : self
@@ -34,6 +31,31 @@ module Chem::Mol2
       else
         bond_type.to_i
       end
+    end
+
+    private def parse : Structure
+      skip_line
+      parse_header
+
+      prev_pos = @io.pos
+      until eof?
+        skip_whitespace
+        if check "@<TRIPOS>"
+          case skip(9).read_line.rstrip.downcase
+          when "atom"
+            parse_atoms
+          when "bond"
+            parse_bonds
+          when "molecule"
+            @io.pos = prev_pos
+            break
+          end
+          prev_pos = @io.pos
+        else
+          skip_line
+        end
+      end
+      @builder.build
     end
 
     private def parse_atoms : Nil
@@ -70,19 +92,6 @@ module Chem::Mol2
       3.times { skip_line }                # rest of line, mol_type, charge_type
       skip_line unless check &.whitespace? # status_bits
       skip_line unless check &.whitespace? # comment
-    end
-
-    private def parse_record : Nil
-      parse_exception "Invalid record header" unless check "@<TRIPOS>"
-      skip 9 # @<TRIPOS>
-      case read_line.downcase
-      when "atom"
-        parse_atoms
-      when "bond"
-        parse_bonds
-      when "molecule"
-        parse_header
-      end
     end
 
     private def transform_aromatic_bonds(bonds : Array(Bond))

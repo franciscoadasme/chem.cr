@@ -1,7 +1,6 @@
 module Chem::IO
   abstract class Parser
-    abstract def each_structure(&block : Structure ->)
-    abstract def parse : Structure
+    include Iterator(Structure)
 
     def initialize(@io : ::IO)
     end
@@ -14,12 +13,12 @@ module Chem::IO
       @io = ::IO::Memory.new File.read(path)
     end
 
-    def each_structure(indexes : Enumerable(Int), &block : Structure ->)
+    def each(indexes : Enumerable(Int), &block : Structure ->)
       (indexes.max + 1).times do |i|
-        if eof?
-          raise IndexError.new
-        elsif indexes.includes? i
-          yield parse
+        if indexes.includes? i
+          value = self.next
+          raise IndexError.new if value.is_a?(Stop)
+          yield value
         else
           skip_structure
         end
@@ -32,22 +31,6 @@ module Chem::IO
       else
         true
       end
-    end
-
-    def parse(index : Int) : Structure
-      parse([index]).first
-    end
-
-    def parse(indexes : Array(Int)) : Array(Structure)
-      ary = [] of Structure
-      each_structure(indexes) { |structure| ary << structure }
-      ary
-    end
-
-    def parse_all : Array(Structure)
-      ary = [] of Structure
-      each_structure { |structure| ary << structure }
-      ary
     end
 
     def parse_exception(msg : String)
@@ -102,7 +85,7 @@ module Chem::IO
         def self.from_{{format.id}}(input : ::IO | Path | String, **options) : self
           \{% raise "Invalid use of `Array#from_{{format.id}}` with type #{T}" \
                 unless T == Chem::Structure %}
-          {{parser}}.new(input, **options).parse_all
+          {{parser}}.new(input, **options).to_a
         end
 
         def self.from_{{format.id}}(input : ::IO | Path | String,
@@ -110,7 +93,9 @@ module Chem::IO
                                     **options) : self
           \{% raise "Invalid use of `Array#from_{{format.id}}` with type #{T}" \
                 unless T == Chem::Structure %}
-          {{parser}}.new(input, **options).parse indexes
+          ary = Array(Chem::Structure).new indexes.size
+          {{parser}}.new(input, **options).each(indexes) { |st| ary << st }
+          ary
         end
       {% end %}
     end

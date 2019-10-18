@@ -54,18 +54,6 @@ module Chem::PDB
       end
     end
 
-    def each_structure(&block : Structure ->)
-      @iter.each do |rec|
-        case rec.name
-        when "atom", "hetatm", "model"
-          @iter.back
-          yield parse_model
-        else
-          ::Iterator.stop
-        end
-      end
-    end
-
     private def make_structure : Structure
       sys = Structure.new
       sys.experiment = @pdb_expt
@@ -75,15 +63,17 @@ module Chem::PDB
       sys
     end
 
-    def parse : Structure
+    def next : Structure | Iterator::Stop
       @iter.each do |rec|
         case rec.name
         when "atom", "hetatm"
           @iter.back
           return parse_model
+        when "end", "master"
+          stop
         end
       end
-      make_structure
+      stop
     end
 
     def skip_structure : Nil
@@ -145,9 +135,9 @@ module Chem::PDB
       @io.pos = last_pos
     end
 
-    private def parse_chain(sys : Structure, prev_chain : Chain?, rec : Record) : Chain
+    private def parse_chain(sys : Structure, prev_chain : Chem::Chain?, rec : Record) : Chem::Chain
       chain_id = rec[21]
-      sys[chain_id]? || Chain.new chain_id, sys
+      sys[chain_id]? || Chem::Chain.new chain_id, sys
     end
 
     private def parse_element(rec : Record, resname : String) : PeriodicTable::Element?
@@ -250,7 +240,7 @@ module Chem::PDB
       end
     end
 
-    private def parse_residue(chain : Chain,
+    private def parse_residue(chain : Chem::Chain,
                               prev_res : Residue?,
                               rec : Record) : Residue
       name = rec[17..20].delete ' '

@@ -26,7 +26,7 @@ module Chem
         {% format = parser.annotation(IO::FileType)[:format].id.underscore %}
 
         def self.from_{{format.id}}(input : ::IO | Path | String, **options) : self
-          {{parser}}.new(input, **options).parse
+          {{parser}}.new(input, **options).first? || raise IO::ParseException.new("Empty content")
         end
       {% end %}
     end

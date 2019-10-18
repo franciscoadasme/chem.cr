@@ -2,13 +2,7 @@ require "../spec_helper"
 
 @[Chem::IO::FileType(format: CAD, ext: [:cad])]
 class CAD::Parser < Chem::IO::Parser
-  def each_structure(&block : Structure ->); end
-
-  def each_structure(indexes : Indexable(Int), &block : Structure ->); end
-
-  def parse : Chem::Structure
-    Chem::Structure.new
-  end
+  def next; end
 end
 
 @[Chem::IO::FileType(format: Image, ext: [:bmp, :jpg, :png, :tiff])]
