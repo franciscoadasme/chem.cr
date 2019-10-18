@@ -37,6 +37,10 @@ module Chem::IO
       raise ParseException.new msg
     end
 
+    def select(indexes : Enumerable(Int)) : Iterator(Structure)
+      SelectByIndex(typeof(self)).new self, indexes
+    end
+
     def skip(n : Int) : Iterator(Structure)
       raise ArgumentError.new "Negative size: #{n}" if n < 0
       SkipStructure(typeof(self)).new self, n
@@ -44,6 +48,32 @@ module Chem::IO
 
     def skip_structure : Nil
       @io.skip_to_end
+    end
+
+    # Specialized iterator that creates/parses only selected structures by using
+    # `Parser#skip_structure`, which doesn't parse skipped structures
+    private class SelectByIndex(T)
+      include Iterator(Structure)
+
+      @indexes : Array(Int32)
+
+      def initialize(@parser : T, indexes : Enumerable(Int))
+        @current = 0
+        @indexes = indexes.map(&.to_i).sort!
+      end
+
+      def next : Structure | Stop
+        return stop if @indexes.empty?
+        (@indexes.shift - @current).times do
+          @parser.skip_structure
+          @current += 1
+        end
+        value = @parser.next
+        raise IndexError.new if value.is_a?(Stop)
+        @current += 1
+        puts typeof(value)
+        value
+      end
     end
 
     # Specialized iterator that uses `Parser#skip_structure` to avoid creating/parsing
