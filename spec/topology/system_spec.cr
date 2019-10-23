@@ -6,7 +6,7 @@ describe Chem::Structure do
       st = Chem::Structure.build do
         title "Alanine"
         residue "ALA" do
-          atoms "N", "CA", "C", "O", "CB"
+          %w(N CA C O CB).each { |name| atom name, Vector.origin }
         end
       end
 

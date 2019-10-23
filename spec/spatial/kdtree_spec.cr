@@ -5,12 +5,12 @@ alias KDTree = Chem::Spatial::KDTree
 describe Chem::Spatial::KDTree do
   context "toy example" do
     st = Chem::Structure.build do
-      atom at: {4, 3, 0}   # d^2 = 25
-      atom at: {3, 0, 0}   # d^2 = 9
-      atom at: {-1, 2, 0}  # d^2 = 5
-      atom at: {6, 4, 0}   # d^2 = 52
-      atom at: {3, -5, 0}  # d^2 = 34
-      atom at: {-2, -5, 0} # d^2 = 29
+      atom V[4, 3, 0]   # d^2 = 25
+      atom V[3, 0, 0]   # d^2 = 9
+      atom V[-1, 2, 0]  # d^2 = 5
+      atom V[6, 4, 0]   # d^2 = 52
+      atom V[3, -5, 0]  # d^2 = 34
+      atom V[-2, -5, 0] # d^2 = 29
     end
     kdtree = KDTree.new st
 

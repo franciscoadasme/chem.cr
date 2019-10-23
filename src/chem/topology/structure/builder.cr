@@ -1,3 +1,5 @@
+require "../templates/all"
+
 module Chem
   class Lattice::Builder
     @lattice : Lattice = Lattice[0, 0, 0]
@@ -38,28 +40,16 @@ module Chem
   end
 
   class Structure::Builder
-    private record Conf, id : Char, occupancy : Float64
-
-    private alias NumberType = Number::Primitive
-    private alias Coords = Spatial::Vector | Tuple(NumberType, NumberType, NumberType)
-
-    private alias ChainId = Char?
-    private alias ResidueId = Tuple(ChainId, String, Int32, Char?)
-
     @atom_serial : Int32 = 0
     @chain : Chain?
-    @chains = {} of ChainId => Chain
     @residue : Residue?
-    @residues = {} of ResidueId => Residue
     @structure : Structure
 
     def initialize(structure : Structure? = nil)
       if structure
         @structure = structure
-        structure.each_chain { |chain| @chains[id(of: chain)] = chain }
-        @chain = @chains.last_value?
-        structure.each_residue { |residue| @residues[id of: residue] = residue }
-        @residue = @chain.try &.residues.last
+        @chain = structure.each_chain.last
+        @residue = structure.each_residue.last
         @atom_serial = structure.each_atom.max_of &.serial
       else
         @structure = Structure.new
@@ -72,67 +62,22 @@ module Chem
       builder.build
     end
 
-    private def [](*, atom name : String) : Atom
-      @structure.atoms.reverse_each do |atom|
-        return atom if atom.name == name
-      end
-      raise "Unknown atom #{name.inspect}"
+    def atom(coords : Spatial::Vector, **options) : Atom
+      atom :C, coords, **options
     end
 
-    private def []?(*, chain id : ChainId) : Chain?
-      @chains[id]?
+    def atom(element : PeriodicTable::Element | Symbol, coords : Spatial::Vector, **options) : Atom
+      element = PeriodicTable[element.to_s.capitalize] if element.is_a?(Symbol)
+      id = residue.each_atom.count(&.element.==(element)) + 1
+      atom "#{element.symbol}#{id}", coords, **options.merge(element: element)
     end
 
-    private def []?(*, residue id : ResidueId) : Residue?
-      @residues[id]?
-    end
-
-    private def add_atom(name : String,
-                         serial : Int32,
-                         coords : Coords,
-                         **options) : Atom
-      coords = Spatial::Vector.new *coords unless coords.is_a? Spatial::Vector
-      Atom.new name, serial, coords, current_residue, **options
-    end
-
-    private def add_chain(id : Char) : Chain
-      chain = Chain.new id, @structure
-      @chains[id(of: chain)] = @chain = chain
-    end
-
-    private def add_residue(name : String, number : Int32, ins_code : Char?) : Residue
-      residue = Residue.new name, number, ins_code, current_chain
-      @residues[id(of: residue)] = @residue = residue
-      residue
-    end
-
-    def atom(of element : PeriodicTable::Element | String | Symbol,
-             at coords : Coords = Spatial::Vector.zero,
-             **options) : Atom
-      unless element.is_a? PeriodicTable::Element
-        element = PeriodicTable[element.to_s.capitalize]
-      end
-      ele_count = current_residue.each_atom.count &.element.==(element)
-      name = "#{element.symbol}#{ele_count + 1}"
-      atom name, coords, **options.merge(element: element)
-    end
-
-    def atom(named name : String,
-             at coords : Coords = Spatial::Vector.zero,
-             **options) : Atom
-      add_atom name, (@atom_serial += 1), coords, **options
-    end
-
-    def atom(at coords : Coords, **options) : Atom
-      atom PeriodicTable::C, coords, **options
-    end
-
-    def atoms(*names : String) : Array(Atom)
-      names.to_a.map { |name| atom name }
+    def atom(name : String, coords : Spatial::Vector, **options) : Atom
+      Atom.new name, (@atom_serial += 1), coords, residue, **options
     end
 
     def bond(name : String, other : String, order : Int = 1)
-      self[atom: name].bonds.add self[atom: other], order
+      atom!(name).bonds.add atom!(other), order
     end
 
     def build : Structure
@@ -140,79 +85,78 @@ module Chem
     end
 
     def chain : Chain
-      @chain = add_chain id: (@chain.try(&.id) || 64.chr).succ
+      @chain ||= next_chain
     end
 
-    def chain(named id : Char) : Chain
-      return current_chain if id(of: @chain) == id
-      @chain = self[chain: id]? || add_chain(id)
-    end
-
-    def chain(*args, **options, &block) : Chain
-      ch = chain *args, **options
+    def chain(& : self ->) : Nil
+      @chain = next_chain
       with self yield self
-      ch
     end
 
-    private def current_chain : Chain
-      @chain || add_chain id: 'A'
+    def chain(id : Char) : Chain
+      @chain = @structure[id]? || Chain.new(id, @structure)
     end
 
-    private def current_residue : Residue
-      @residue || add_residue(name: "UNK", number: 1, ins_code: nil)
+    def chain(id : Char, & : self ->) : Nil
+      chain id
+      with self yield self
     end
 
-    private def id(of chain : Chain) : ChainId
-      chain.id
-    end
-
-    private def id(of residue : Residue) : ResidueId
-      {id(of: residue.chain), residue.name, residue.number, residue.insertion_code}
-    end
-
-    private def id(of object : Nil) : Nil
-      nil
+    def lattice(a : Spatial::Vector, b : Spatial::Vector, c : Spatial::Vector) : Lattice
+      @structure.lattice = Lattice.new a, b, c
     end
 
     def lattice(a : Number, b : Number, c : Number) : Lattice
-      builder = Lattice::Builder.new
-      builder.a a
-      builder.b b
-      builder.c c
-      @structure.lattice = builder.build
-    end
-
-    def lattice(&block) : Lattice
-      builder = Lattice::Builder.new
-      with builder yield builder
-      @structure.lattice = builder.build
+      @structure.lattice = Lattice.orthorombic a.to_f, b.to_f, c.to_f
     end
 
     def residue : Residue
-      residue "UNK"
+      @residue || next_residue
     end
 
-    def residue(named name : String,
-                number : Int32,
-                insertion_code : Char? = nil) : Residue
-      resid = {current_chain.id, name, number, insertion_code}
-      return current_residue if id(of: @residue) == resid
-      @residue = self[residue: resid]? || add_residue(name, number, insertion_code)
+    def residue(name : String) : Residue
+      @residue = next_residue name
     end
 
-    def residue(named name : String) : Residue
-      next_number = (current_chain.residues[-1]?.try(&.number) || 0) + 1
-      residue name, next_number
-    end
-
-    def residue(*args, **options, &block) : Residue
-      res = residue *args, **options
+    def residue(name : String, & : self ->) : Nil
+      residue name
       with self yield self
-      res
+    end
+
+    def residue(name : String, number : Int32, inscode : Char? = nil) : Residue
+      @residue = chain[number, inscode]? || begin
+        residue = Residue.new(name, number, inscode, chain)
+        if res_t = Topology::Templates[name]?
+          residue.kind = Residue::Kind.from_value res_t.kind.to_i
+        end
+        residue
+      end
+    end
+
+    def residue(name : String, number : Int32, inscode : Char? = nil, & : self ->) : Nil
+      residue name, number, inscode
+      with self yield self
     end
 
     def title(title : String)
       @structure.title = title
+    end
+
+    private def atom!(name : String) : Atom
+      if residue = @residue
+        residue.each_atom do |atom|
+          return atom if atom.name == name
+        end
+      end
+      raise "Unknown atom #{name.inspect}"
+    end
+
+    private def next_chain : Chain
+      chain (@chain.try(&.id) || 64.chr).succ
+    end
+
+    private def next_residue(name : String = "UNK") : Residue
+      residue name, (chain.each_residue.max_of?(&.number) || 0) + 1
     end
   end
 end

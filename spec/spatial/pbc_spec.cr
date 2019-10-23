@@ -6,10 +6,10 @@ describe Chem::Spatial::PBC do
       structure = Chem::Structure.build do
         lattice 10, 10, 10
 
-        atom PeriodicTable::C, at: V[2.5, 2.5, 2.5]
-        atom PeriodicTable::H, at: V[7.5, 2.5, 2.5]
-        atom PeriodicTable::O, at: V[2.5, 7.5, 2.5]
-        atom PeriodicTable::N, at: V[2.5, 2.5, 7.5]
+        atom :C, V[2.5, 2.5, 2.5]
+        atom :H, V[7.5, 2.5, 2.5]
+        atom :O, V[2.5, 7.5, 2.5]
+        atom :N, V[2.5, 2.5, 7.5]
       end
 
       vectors = Chem::Spatial::PBC.adjacent_images(structure).map &.[1]
@@ -31,10 +31,10 @@ describe Chem::Spatial::PBC do
       structure = Chem::Structure.build do
         lattice 10, 10, 10
 
-        atom PeriodicTable::C, at: V[2.5, 2.5, 2.5]
-        atom PeriodicTable::H, at: V[7.5, 2.5, 2.5]
-        atom PeriodicTable::O, at: V[2.5, 7.5, 2.5]
-        atom PeriodicTable::N, at: V[2.5, 2.5, 7.5]
+        atom :C, V[2.5, 2.5, 2.5]
+        atom :H, V[7.5, 2.5, 2.5]
+        atom :O, V[2.5, 7.5, 2.5]
+        atom :N, V[2.5, 2.5, 7.5]
       end
       structure.coords.translate! by: offset
 
@@ -55,8 +55,8 @@ describe Chem::Spatial::PBC do
       structure = Chem::Structure.build do
         lattice 10, 10, 10
 
-        atom PeriodicTable::C, at: V[1, 8.5, 3.5]
-        atom PeriodicTable::H, at: V[7.5, 1.5, 9.5]
+        atom :C, V[1, 8.5, 3.5]
+        atom :H, V[7.5, 1.5, 9.5]
       end
 
       vectors = Chem::Spatial::PBC.adjacent_images(structure, radius: 2).map &.[1]

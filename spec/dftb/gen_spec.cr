@@ -83,11 +83,11 @@ end
 describe Chem::DFTB::Gen::Builder do
   structure = Chem::Structure.build do
     title "NaCl-O-NaCl"
-    atom PeriodicTable::Cl, at: V[30, 15, 10]
-    atom PeriodicTable::Na, at: V[10, 5, 5]
-    atom PeriodicTable::O, at: V[30, 15, 9]
-    atom PeriodicTable::Na, at: V[10, 10, 12.5]
-    atom PeriodicTable::Cl, at: V[20, 10, 10]
+    atom PeriodicTable::Cl, V[30, 15, 10]
+    atom PeriodicTable::Na, V[10, 5, 5]
+    atom PeriodicTable::O, V[30, 15, 9]
+    atom PeriodicTable::Na, V[10, 10, 12.5]
+    atom PeriodicTable::Cl, V[20, 10, 10]
   end
 
   it "writes a structure in cartersian coordinats without unit cell" do
