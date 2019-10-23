@@ -9,20 +9,13 @@ module Chem::Mol2
     end
 
     def next : Structure | Iterator::Stop
-      until eof?
-        skip_whitespace
-        return parse if check "@<TRIPOS>MOLECULE"
-        skip_line
-      end
-      stop
+      skip_to_record "molecule"
+      eof? ? stop : parse
     end
 
     def skip_structure : Nil
-      until eof?
-        skip_whitespace
-        break if check "@<TRIPOS>MOLECULE"
-        skip_line
-      end
+      skip_line if check "@<TRIPOS>MOLECULE"
+      skip_to_record "molecule"
     end
 
     private def guess_bond_order(bond_type : String) : Int32
@@ -116,6 +109,15 @@ module Chem::Mol2
 
     private def skip_index : self
       skip_spaces.skip_in_set("0-9").skip_spaces
+    end
+
+    private def skip_to_record(name : String) : Nil
+      while record_name = next_record
+        if record_name == name
+          @io.pos = @prev_pos
+          break
+        end
+      end
     end
 
     private def transform_aromatic_bonds(bonds : Array(Bond))
