@@ -12,6 +12,10 @@ module Chem::DFTB::Gen
       eof? ? stop : parse
     end
 
+    def skip_structure : Nil
+      @io.skip_to_end
+    end
+
     private def parse : Structure
       Structure.build do |builder|
         n_atoms = read_int

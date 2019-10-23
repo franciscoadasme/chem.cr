@@ -8,7 +8,7 @@ module Chem::XYZ
       eof? ? stop : parse
     end
 
-    def skip_structure
+    def skip_structure : Nil
       skip_whitespace
       return if eof?
       n_atoms = read_int

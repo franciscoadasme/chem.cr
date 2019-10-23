@@ -2,6 +2,8 @@ module Chem::IO
   abstract class Parser
     include Iterator(Structure)
 
+    abstract def skip_structure : Nil
+
     def initialize(@io : ::IO)
     end
 
@@ -44,10 +46,6 @@ module Chem::IO
     def skip(n : Int) : Iterator(Structure)
       raise ArgumentError.new "Negative size: #{n}" if n < 0
       SkipStructure(typeof(self)).new self, n
-    end
-
-    def skip_structure : Nil
-      @io.skip_to_end
     end
 
     # Specialized iterator that creates/parses only selected structures by using

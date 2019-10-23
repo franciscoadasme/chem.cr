@@ -17,6 +17,14 @@ module Chem::Mol2
       stop
     end
 
+    def skip_structure : Nil
+      until eof?
+        skip_whitespace
+        break if check "@<TRIPOS>MOLECULE"
+        skip_line
+      end
+    end
+
     private def guess_bond_order(bond_type : String) : Int32
       case bond_type
       when "am", "ar", "du"

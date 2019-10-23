@@ -12,6 +12,10 @@ module Chem::VASP::Poscar
       eof? ? stop : parse
     end
 
+    def skip_structure : Nil
+      @io.skip_to_end
+    end
+
     private def parse : Structure
       Structure.build do |builder|
         builder.title read_line
