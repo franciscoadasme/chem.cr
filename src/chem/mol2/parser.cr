@@ -42,23 +42,27 @@ module Chem::Mol2
         builder.title read_line.strip
         parse_info
 
-        prev_pos = @io.pos
-        until eof?
-          skip_whitespace
-          if check "@<TRIPOS>"
-            case read_record
-            when "atom"
-              @n_atoms.times { parse_atom builder }
-            when "bond"
-              parse_bonds builder.build.atoms
-            when "molecule"
-              @io.pos = prev_pos
-              break
-            end
-            prev_pos = @io.pos
-          else
-            skip_line
+        while name = next_record
+          case name
+          when "atom"
+            @n_atoms.times { parse_atom builder }
+          when "bond"
+            parse_bonds builder.build.atoms
+          when "molecule"
+            @io.pos = @prev_pos
+            break
           end
+        end
+      end
+    end
+
+    private def next_record : String?
+      until eof?
+        skip_whitespace
+        if check "@<TRIPOS>"
+          return read { skip(9).read_line.rstrip.downcase }
+        else
+          skip_line
         end
       end
     end
@@ -108,10 +112,6 @@ module Chem::Mol2
 
     private def read_element : PeriodicTable::Element
       PeriodicTable[skip_spaces.scan_in_set("A-z")]
-    end
-
-    private def read_record : String
-      skip(9).read_line.rstrip.downcase
     end
 
     private def skip_index : self
