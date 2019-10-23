@@ -12,30 +12,29 @@ module Chem::DFTB::Gen
       eof? ? stop : parse
     end
 
-    def parse_element : PeriodicTable::Element
-      @elements[read_int - 1]
-    rescue IndexError
-      parse_exception "Invalid element index"
-    end
-
     private def parse : Structure
-      builder = Structure::Builder.new
+      Structure.build do |builder|
+        n_atoms = read_int
+        parse_geometry_type
+        parse_elements
+        n_atoms.times { parse_atom builder }
 
-      n_atoms = read_int
-      parse_geometry_type
-      parse_elements
-      n_atoms.times { builder.atom self }
+        parse_lattice builder if @periodic
 
-      builder.lattice self if @periodic
+        @io.skip_to_end # ensure end of file as Gen doesn't support multiple entries
 
-      @io.skip_to_end # ensure end of file as Gen doesn't support multiple entries
-
-      structure = builder.build
-      structure.coords.to_cartesian! if @fractional
-      structure
+        structure = builder.build
+        structure.coords.to_cartesian! if @fractional
+      end
     end
 
-    private def parse_elements
+    private def parse_atom(builder : Structure::Builder) : Nil
+      skip_spaces.skip(&.number?).skip_spaces
+      builder.atom read_element, read_vector
+      skip_line
+    end
+
+    private def parse_elements : Nil
       loop do
         skip_spaces
         break unless check &.letter?
@@ -44,7 +43,7 @@ module Chem::DFTB::Gen
       skip_line
     end
 
-    private def parse_geometry_type
+    private def parse_geometry_type : Nil
       skip_spaces
       case read
       when 'F' then @fractional = @periodic = true
@@ -53,6 +52,17 @@ module Chem::DFTB::Gen
       else          parse_exception "Invalid geometry type"
       end
       skip_line
+    end
+
+    private def parse_lattice(builder : Structure::Builder) : Nil
+      skip_line
+      builder.lattice read_vector, read_vector, read_vector
+    end
+
+    private def read_element : PeriodicTable::Element
+      @elements[read_int - 1]
+    rescue IndexError
+      parse_exception "Invalid element index"
     end
   end
 end

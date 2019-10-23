@@ -17,12 +17,17 @@ module Chem::XYZ
 
     private def parse : Structure
       Structure.build do |builder|
-        skip_whitespace
         n_atoms = read_int
         skip_line
         builder.title read_line.strip
-        n_atoms.times { builder.atom self }
+        n_atoms.times { parse_atom builder }
       end
+    end
+
+    private def parse_atom(builder : Structure::Builder) : Nil
+      skip_whitespace
+      builder.atom PeriodicTable[scan(&.letter?)], read_vector
+      skip_line
     end
   end
 end

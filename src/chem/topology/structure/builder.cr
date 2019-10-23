@@ -102,6 +102,14 @@ module Chem
       with self yield self
     end
 
+    def lattice : Lattice?
+      @structure.lattice
+    end
+
+    def lattice! : Lattice
+      @structure.lattice || raise Spatial::NotPeriodicError.new
+    end
+
     def lattice(a : Spatial::Vector, b : Spatial::Vector, c : Spatial::Vector) : Lattice
       @structure.lattice = Lattice.new a, b, c
     end

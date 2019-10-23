@@ -5,7 +5,6 @@ module Chem::Mol2
 
     def initialize(input : ::IO | Path | String)
       super
-      @builder = Structure::Builder.new
       @n_atoms = @n_bonds = 0
     end
 
@@ -16,10 +15,6 @@ module Chem::Mol2
         skip_line
       end
       stop
-    end
-
-    def skip_index : self
-      skip_spaces.skip_in_set("0-9").skip_spaces
     end
 
     private def guess_bond_order(bond_type : String) : Int32
@@ -34,40 +29,50 @@ module Chem::Mol2
     end
 
     private def parse : Structure
-      skip_line
-      parse_header
+      Structure.build do |builder|
+        skip_line
+        builder.title read_line.strip
+        parse_info
 
-      prev_pos = @io.pos
-      until eof?
-        skip_whitespace
-        if check "@<TRIPOS>"
-          case skip(9).read_line.rstrip.downcase
-          when "atom"
-            parse_atoms
-          when "bond"
-            parse_bonds
-          when "molecule"
-            @io.pos = prev_pos
-            break
+        prev_pos = @io.pos
+        until eof?
+          skip_whitespace
+          if check "@<TRIPOS>"
+            case read_record
+            when "atom"
+              @n_atoms.times { parse_atom builder }
+            when "bond"
+              parse_bonds builder.build.atoms
+            when "molecule"
+              @io.pos = prev_pos
+              break
+            end
+            prev_pos = @io.pos
+          else
+            skip_line
           end
-          prev_pos = @io.pos
-        else
-          skip_line
         end
       end
-      @builder.build
     end
 
-    private def parse_atoms : Nil
-      @n_atoms.times do
-        skip_whitespace
-        @builder.atom self
-        skip_line
+    private def parse_atom(builder : Structure::Builder) : Nil
+      skip_whitespace
+      skip_index
+      name = scan_in_set "a-zA-Z0-9"
+      coords = read_vector
+      element = read_element
+      skip('.').skip_in_set("A-z0-9").skip_spaces # skip atom type
+      unless check(&.whitespace?)
+        resid = read_int
+        resname = skip_spaces.scan_in_set "A-z0-9"
+        builder.residue resname[..2], resid
       end
+      charge = read_float unless skip_spaces.check(&.whitespace?)
+      skip_line
+      builder.atom name, coords, element: element, partial_charge: (charge || 0.0)
     end
 
-    private def parse_bonds : Nil
-      atoms = @builder.build.atoms
+    private def parse_bonds(atoms : Indexable(Atom)) : Nil
       aromatic_bonds = [] of Bond
       @n_bonds.times do
         skip_index
@@ -85,13 +90,24 @@ module Chem::Mol2
       transform_aromatic_bonds aromatic_bonds
     end
 
-    private def parse_header : Nil
-      @builder.title read_line.strip
+    private def parse_info : Nil
       @n_atoms = read_int
       @n_bonds = read_int
-      3.times { skip_line }                # rest of line, mol_type, charge_type
+      3.times { skip_line } # rest of line, mol_type, charge_type
       skip_line unless check &.whitespace? # status_bits
       skip_line unless check &.whitespace? # comment
+    end
+
+    private def read_element : PeriodicTable::Element
+      PeriodicTable[skip_spaces.scan_in_set("A-z")]
+    end
+
+    private def read_record : String
+      skip(9).read_line.rstrip.downcase
+    end
+
+    private def skip_index : self
+      skip_spaces.skip_in_set("0-9").skip_spaces
     end
 
     private def transform_aromatic_bonds(bonds : Array(Bond))

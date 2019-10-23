@@ -253,6 +253,10 @@ module Chem::IO
       read { @io.gets }
     end
 
+    def read_vector : Spatial::Vector
+      Spatial::Vector.new read_float, read_float, read_float
+    end
+
     def rewind(&block : Char -> Bool) : self
       while char = prev_char
         break unless yield char
