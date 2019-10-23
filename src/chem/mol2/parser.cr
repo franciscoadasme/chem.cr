@@ -14,7 +14,7 @@ module Chem::Mol2
     end
 
     def skip_structure : Nil
-      skip_line if check "@<TRIPOS>MOLECULE"
+      skip_line if record? :molecule
       skip_to_record :molecule
     end
 
@@ -113,16 +113,23 @@ module Chem::Mol2
       RecordType.parse? name
     end
 
+    private def record?(type : RecordType) : Bool
+      if record_type = read_record
+        @io.pos = @prev_pos
+        record_type == type
+      else
+        false
+      end
+    end
+
     private def skip_index : self
       skip_spaces.skip_in_set("0-9").skip_spaces
     end
 
     private def skip_to_record(type : RecordType) : Nil
-      while record_type = next_record
-        if record_type == type
-          @io.pos = @prev_pos
-          break
-        end
+      until eof?
+        break if record? type
+        skip_line
       end
     end
 
