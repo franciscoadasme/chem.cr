@@ -51,10 +51,8 @@ module Chem::Mol2
 
     private def next_record : RecordType?
       until eof?
-        skip_whitespace
-        if check "@<TRIPOS>"
-          name = read { skip(9).read_line.rstrip.downcase }
-          return RecordType.parse?(name)
+        if record_type = read_record
+          return record_type
         else
           skip_line
         end
@@ -106,6 +104,13 @@ module Chem::Mol2
 
     private def read_element : PeriodicTable::Element
       PeriodicTable[skip_spaces.scan_in_set("A-z")]
+    end
+
+    private def read_record : RecordType?
+      skip_whitespace
+      return unless check "@<TRIPOS>"
+      name = read { skip(9).read_line.rstrip.downcase }
+      RecordType.parse? name
     end
 
     private def skip_index : self
