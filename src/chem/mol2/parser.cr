@@ -9,13 +9,13 @@ module Chem::Mol2
     end
 
     def next : Structure | Iterator::Stop
-      skip_to_record "molecule"
+      skip_to_record :molecule
       eof? ? stop : parse
     end
 
     def skip_structure : Nil
       skip_line if check "@<TRIPOS>MOLECULE"
-      skip_to_record "molecule"
+      skip_to_record :molecule
     end
 
     private def guess_bond_order(bond_type : String) : Int32
@@ -37,11 +37,11 @@ module Chem::Mol2
 
         while name = next_record
           case name
-          when "atom"
+          when .atom?
             @n_atoms.times { parse_atom builder }
-          when "bond"
+          when .bond?
             parse_bonds builder.build.atoms
-          when "molecule"
+          when .molecule?
             @io.pos = @prev_pos
             break
           end
@@ -49,11 +49,12 @@ module Chem::Mol2
       end
     end
 
-    private def next_record : String?
+    private def next_record : RecordType?
       until eof?
         skip_whitespace
         if check "@<TRIPOS>"
-          return read { skip(9).read_line.rstrip.downcase }
+          name = read { skip(9).read_line.rstrip.downcase }
+          return RecordType.parse?(name)
         else
           skip_line
         end
@@ -111,9 +112,9 @@ module Chem::Mol2
       skip_spaces.skip_in_set("0-9").skip_spaces
     end
 
-    private def skip_to_record(name : String) : Nil
-      while record_name = next_record
-        if record_name == name
+    private def skip_to_record(type : RecordType) : Nil
+      while record_type = next_record
+        if record_type == type
           @io.pos = @prev_pos
           break
         end
