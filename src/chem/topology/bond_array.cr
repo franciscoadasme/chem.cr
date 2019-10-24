@@ -24,20 +24,22 @@ module Chem
       add bond
     end
 
-    def add(bond : Bond)
-      return if @bonds.includes? bond
-      other_bonds = bond.other(@atom).bonds
-      # validate_bond! bond
-      # other_bonds.validate_bond! bond
-      push bond
-      other_bonds.push bond
+    def add(bond : Bond) : Bond
+      unless @bonds.includes? bond
+        other_bonds = bond.other(@atom).bonds
+        # validate_bond! bond
+        # other_bonds.validate_bond! bond
+        push bond
+        other_bonds.push bond
+      end
+      bond
     end
 
-    def add(other : Atom, kind : Bond::Kind = :single)
+    def add(other : Atom, kind : Bond::Kind = :single) : Bond
       add Bond.new @atom, other, kind
     end
 
-    def add(other : Atom, order : Int32 = 1)
+    def add(other : Atom, order : Int32 = 1) : Bond
       add Bond.new @atom, other, order
     end
 
