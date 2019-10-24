@@ -223,4 +223,18 @@ describe Chem::Structure::Builder do
     atom.formal_charge.should eq -1
     atom.temperature_factor.should eq 43.24
   end
+
+  it "adds bonds by atom index" do
+    structure = Chem::Structure.build do
+      atom :O, V[0, 0, 0]
+      atom :H, V[-1, 0, 0]
+      atom :H, V[1, 0, 0]
+
+      bond 0, 1
+      bond 0, 2
+    end
+
+    expected = [{"O1", "H1"}, {"O1", "H2"}]
+    structure.bonds.map { |bond| {bond[0].name, bond[1].name} }.should eq expected
+  end
 end

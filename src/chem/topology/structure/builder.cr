@@ -41,6 +41,7 @@ module Chem
 
   class Structure::Builder
     @atom_serial : Int32 = 0
+    @atoms : Indexable(Atom)?
     @chain : Chain?
     @residue : Residue?
     @structure : Structure
@@ -76,8 +77,12 @@ module Chem
       Atom.new name, (@atom_serial += 1), coords, residue, **options
     end
 
-    def bond(name : String, other : String, order : Int = 1)
+    def bond(name : String, other : String, order : Int = 1) : Bool
       atom!(name).bonds.add atom!(other), order
+    end
+
+    def bond(i : Int, j : Int, order : Int = 1) : Bool
+      atoms[i].bonds.add atoms[j], order
     end
 
     def build : Structure
@@ -157,6 +162,10 @@ module Chem
         end
       end
       raise "Unknown atom #{name.inspect}"
+    end
+
+    private def atoms : Indexable(Atom)
+      @atoms ||= @structure.atoms
     end
 
     private def next_chain : Chain
