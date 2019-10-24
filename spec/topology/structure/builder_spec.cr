@@ -237,4 +237,15 @@ describe Chem::Structure::Builder do
     expected = [{"O1", "H1"}, {"O1", "H2"}]
     structure.bonds.map { |bond| {bond[0].name, bond[1].name} }.should eq expected
   end
+
+  it "sets secondary structure" do
+    structure = Chem::Structure.build do
+      chain { %w(PHE ARG ALA).each { |name| residue name } }
+      chain { %w(ILE VAL).each { |name| residue name } }
+      secondary_structure({'A', 1, nil}, {'A', 2, nil}, :helix_alpha)
+      secondary_structure({'B', 2, nil}, {'B', 2, nil}, :beta_strand)
+    end
+
+    structure.each_residue.map(&.dssp).to_a.should eq ['H', 'H', '0', '0', 'E']
+  end
 end

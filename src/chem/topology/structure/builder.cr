@@ -160,6 +160,20 @@ module Chem
       with self yield self
     end
 
+    def secondary_structure(i : Tuple(Char, Int32, Char?),
+                            j : Tuple(Char, Int32, Char?),
+                            type : Protein::SecondaryStructure) : Nil
+      return unless (ri = @structure.dig?(*i)) && (rj = @structure.dig?(*j))
+      secondary_structure ri, rj, type
+    end
+
+    def secondary_structure(ri : Residue, rj : Residue, type : Protein::SecondaryStructure)
+      loop do
+        ri.secondary_structure = type
+        break unless ri != rj && (ri = ri.next)
+      end
+    end
+
     def title(title : String)
       @structure.title = title
     end
