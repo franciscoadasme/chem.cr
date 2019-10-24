@@ -40,7 +40,7 @@ module Chem::Mol2
           when .atom?
             @n_atoms.times { parse_atom builder }
           when .bond?
-            parse_bonds builder.build.atoms
+            @n_bonds.times { parse_bond builder }
           when .molecule?
             @io.pos = @prev_pos
             break
@@ -76,22 +76,14 @@ module Chem::Mol2
       builder.atom name, coords, element: element, partial_charge: (charge || 0.0)
     end
 
-    private def parse_bonds(atoms : Indexable(Atom)) : Nil
-      aromatic_bonds = [] of Bond
-      @n_bonds.times do
-        skip_index
-        atom = atoms[read_int - 1]
-        other = atoms[read_int - 1]
-        bond_type = skip_spaces.scan(/[a-z0-9]+/).to_s
-        bond_order = guess_bond_order bond_type
-        if bond_order > 0
-          bond = Bond.new atom, other, bond_order
-          atom.bonds.add bond
-          aromatic_bonds << bond if bond_type == "ar"
-        end
-        skip_line
-      end
-      transform_aromatic_bonds aromatic_bonds
+    private def parse_bond(builder : Structure::Builder) : Nil
+      skip_index
+      i = read_int - 1
+      j = read_int - 1
+      bond_type = skip_spaces.scan(/[a-z0-9]+/).to_s
+      bond_order = guess_bond_order bond_type
+      builder.bond i, j, bond_order, aromatic: bond_type == "ar" if bond_order > 0
+      skip_line
     end
 
     private def parse_info : Nil
@@ -130,17 +122,6 @@ module Chem::Mol2
       until eof?
         break if record? type
         skip_line
-      end
-    end
-
-    private def transform_aromatic_bonds(bonds : Array(Bond))
-      bonds.sort_by! { |bond| Math.min bond[0].serial, bond[1].serial }
-      until bonds.empty?
-        bond = bonds.shift
-        if other = bonds.find { |b| b.includes?(bond[0]) || b.includes?(bond[1]) }
-          bonds.delete other
-          (bond[1] != other[0] ? bond : other).order = 2
-        end
       end
     end
   end
