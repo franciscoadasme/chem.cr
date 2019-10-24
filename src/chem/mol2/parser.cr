@@ -3,11 +3,6 @@ module Chem::Mol2
   class Parser < IO::Parser
     include IO::PullParser
 
-    def initialize(input : ::IO | Path | String)
-      super
-      @n_atoms = @n_bonds = 0
-    end
-
     def next : Structure | Iterator::Stop
       skip_to_record :molecule
       eof? ? stop : parse
@@ -33,14 +28,16 @@ module Chem::Mol2
       Structure.build do |builder|
         skip_line
         builder.title read_line.strip
-        parse_info
+        n_atoms = read_int
+        n_bonds = read_int
+        skip_line
 
         while name = next_record
           case name
           when .atom?
-            @n_atoms.times { parse_atom builder }
+            n_atoms.times { parse_atom builder }
           when .bond?
-            @n_bonds.times { parse_bond builder }
+            n_bonds.times { parse_bond builder }
           when .molecule?
             @io.pos = @prev_pos
             break
@@ -84,14 +81,6 @@ module Chem::Mol2
       bond_order = guess_bond_order bond_type
       builder.bond i, j, bond_order, aromatic: bond_type == "ar" if bond_order > 0
       skip_line
-    end
-
-    private def parse_info : Nil
-      @n_atoms = read_int
-      @n_bonds = read_int
-      3.times { skip_line } # rest of line, mol_type, charge_type
-      skip_line unless check &.whitespace? # status_bits
-      skip_line unless check &.whitespace? # comment
     end
 
     private def read_element : PeriodicTable::Element
