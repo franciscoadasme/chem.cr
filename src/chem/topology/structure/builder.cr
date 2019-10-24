@@ -40,6 +40,7 @@ module Chem
   end
 
   class Structure::Builder
+    @aromatic_bonds : Array(Bond)?
     @atom_serial : Int32 = 0
     @atoms : Indexable(Atom)?
     @chain : Chain?
@@ -81,11 +82,14 @@ module Chem
       atom!(name).bonds.add atom!(other), order
     end
 
-      atoms[i].bonds.add atoms[j], order
-    def bond(i : Int, j : Int, order : Int = 1) : Bond
+    def bond(i : Int, j : Int, order : Int = 1, aromatic : Bool = false) : Bond
+      bond = atoms[i].bonds.add atoms[j], order
+      aromatic_bonds << bond if aromatic
+      bond
     end
 
     def build : Structure
+      transform_aromatic_bonds
       @structure
     end
 
@@ -155,6 +159,10 @@ module Chem
       @structure.title = title
     end
 
+    private def aromatic_bonds : Array(Bond)
+      @aromatic_bonds ||= Array(Bond).new
+    end
+
     private def atom!(name : String) : Atom
       if residue = @residue
         residue.each_atom do |atom|
@@ -174,6 +182,18 @@ module Chem
 
     private def next_residue(name : String = "UNK") : Residue
       residue name, (chain.each_residue.max_of?(&.number) || 0) + 1
+    end
+
+    private def transform_aromatic_bonds : Nil
+      return unless bonds = @aromatic_bonds
+      bonds.sort_by! { |bond| Math.min bond[0].serial, bond[1].serial }
+      until bonds.empty?
+        bond = bonds.shift
+        if other = bonds.find { |b| b.includes?(bond[0]) || b.includes?(bond[1]) }
+          bonds.delete other
+          (bond[1] != other[0] ? bond : other).order = 2
+        end
+      end
     end
   end
 end
