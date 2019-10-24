@@ -78,6 +78,11 @@ module Chem
       Atom.new name, (@atom_serial += 1), coords, residue, **options
     end
 
+    def atom(name : String, serial : Int32, coords : Spatial::Vector, **options) : Atom
+      @atom_serial = serial
+      Atom.new name, @atom_serial, coords, residue, **options
+    end
+
     def bond(name : String, other : String, order : Int = 1) : Bond
       atom!(name).bonds.add atom!(other), order
     end
