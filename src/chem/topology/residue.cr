@@ -66,6 +66,14 @@ module Chem
       atom
     end
 
+    def dig(name : String) : Atom
+      self[name]
+    end
+
+    def dig?(name : String) : Atom?
+      self[name]?
+    end
+
     def each_atom : Iterator(Atom)
       @atoms.each
     end

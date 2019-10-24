@@ -37,6 +37,42 @@ module Chem
       residue
     end
 
+    def dig(number : Int32) : Residue
+      self[number]
+    end
+
+    def dig(number : Int32, *subindexes)
+      self[number].dig *subindexes
+    end
+
+    def dig(number : Int32, insertion_code : Char?) : Residue
+      self[number, insertion_code]
+    end
+
+    def dig(number : Int32, insertion_code : Char?, *subindexes)
+      self[number, insertion_code].dig *subindexes
+    end
+
+    def dig?(number : Int32) : Residue?
+      self[number]?
+    end
+
+    def dig?(number : Int32, *subindexes)
+      if residue = self[number]?
+        residue.dig? *subindexes
+      end
+    end
+
+    def dig?(number : Int32, insertion_code : Char?) : Residue?
+      self[number, insertion_code]?
+    end
+
+    def dig?(number : Int32, insertion_code : Char?, *subindexes)
+      if residue = self[number, insertion_code]?
+        residue.dig? *subindexes
+      end
+    end
+
     def each_atom : Iterator(Atom)
       Iterator.chain each_residue.map(&.each_atom).to_a
     end

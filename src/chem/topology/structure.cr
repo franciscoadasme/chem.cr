@@ -63,6 +63,24 @@ module Chem
       chain
     end
 
+    def dig(id : Char) : Chain
+      self[id]
+    end
+
+    def dig(id : Char, *subindexes)
+      self[id].dig *subindexes
+    end
+
+    def dig?(id : Char) : Chain?
+      self[id]?
+    end
+
+    def dig?(id : Char, *subindexes)
+      if chain = self[id]?
+        chain.dig? *subindexes
+      end
+    end
+
     def each_atom : Iterator(Atom)
       iterators = [] of Iterator(Atom)
       each_chain do |chain|
