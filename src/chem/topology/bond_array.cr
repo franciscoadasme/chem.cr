@@ -36,11 +36,15 @@ module Chem
     end
 
     def add(other : Atom, kind : Bond::Kind = :single) : Bond
-      add Bond.new @atom, other, kind
+      if bond = @bonds.find(&.includes?(other))
+        bond
+      else
+        add Bond.new(@atom, other, kind)
+      end
     end
 
-    def add(other : Atom, order : Int32 = 1) : Bond
-      add Bond.new @atom, other, order
+    def add(other : Atom, order : Int32) : Bond
+      add other, Bond::Kind.from_value(order)
     end
 
     def delete(other : Atom)
