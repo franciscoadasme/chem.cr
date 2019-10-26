@@ -5,9 +5,7 @@ require "./record/*"
 module Chem::PDB
   @[IO::FileType(format: PDB, ext: [:ent, :pdb])]
   class Parser < IO::Parser
-    private alias BondTable = Hash(Tuple(Int32, Int32), Int32)
-
-    @pdb_bonds = uninitialized BondTable
+    @pdb_bonds = uninitialized Hash(Tuple(Int32, Int32), Int32)
     @pdb_expt : Protein::Experiment?
     @pdb_lattice : Lattice?
     @pdb_models = 1
@@ -110,7 +108,7 @@ module Chem::PDB
       last_pos = @io.pos
       @io.seek 0, ::IO::Seek::End
 
-      @pdb_bonds = BondTable.new { |hash, key| hash[key] = 0 }
+      @pdb_bonds = Hash(Tuple(Int32, Int32), Int32).new 0
       Record::BackwardIterator.new(@io).each do |rec|
         case rec.name
         when "conect"
