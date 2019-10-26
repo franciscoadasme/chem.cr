@@ -8,7 +8,6 @@ module Chem::PDB
     @pdb_bonds = uninitialized Hash(Tuple(Int32, Int32), Int32)
     @pdb_expt : Protein::Experiment?
     @pdb_lattice : Lattice?
-    @pdb_models = 1
     @pdb_seq : Protein::Sequence?
     @pdb_title = ""
 
@@ -154,7 +153,6 @@ module Chem::PDB
         when "atom", "hetatm", "model" then ::Iterator.stop
         when "cryst1"                  then parse_lattice rec
         when "helix"                   then parse_helix rec
-        when "nummdl"                  then @pdb_models = rec[10..13].to_i
         when "sheet"                   then parse_sheet rec
         when "seqres"
           @iter.back
