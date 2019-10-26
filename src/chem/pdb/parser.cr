@@ -1,4 +1,3 @@
-require "./helpers"
 require "./record"
 require "./record/*"
 
@@ -14,8 +13,8 @@ module Chem::PDB
     @alt_locs : Hash(Residue, Array(AlternateLocation))?
     @chains : Set(Char)?
     @offsets : Array(Tuple(Int32, Int32))?
-    @segments = [] of SecondaryStructureSegment
     @serial = 0
+    @ss_elements = [] of SecondaryStructureElement
     @use_offsets = false
 
     def initialize(input : ::IO | Path | String,
@@ -36,8 +35,8 @@ module Chem::PDB
     end
 
     private def assign_secondary_structure(builder : Structure::Builder) : Nil
-      @segments.each do |seg|
-        builder.secondary_structure seg.start, seg.end, seg.kind
+      @ss_elements.each do |ele|
+        builder.secondary_structure ele.start, ele.end, ele.type
       end
     end
 
@@ -69,6 +68,10 @@ module Chem::PDB
 
     private def add_offset_at(serial : Int32) : Nil
       offsets << {serial, serial - @serial - 1}
+    end
+
+    private def add_sec(type : Protein::SecondaryStructure, i : ResidueId, j : ResidueId)
+      @ss_elements << SecondaryStructureElement.new type, i, j
     end
 
     private def alt_loc(residue : Residue, id : Char, resname : String) : AlternateLocation
@@ -208,10 +211,9 @@ module Chem::PDB
              when 5 then Protein::SecondaryStructure::Helix3_10
              else        Protein::SecondaryStructure::None
              end
-      @segments << SecondaryStructureSegment.new \
-        kind: kind,
-        start: {rec[19], rec[21..24].to_i, rec[25]?},
-        end: {rec[19], rec[33..36].to_i, rec[37]?}
+      add_sec kind,
+        {rec[19], rec[21..24].to_i, rec[25]?},
+        {rec[19], rec[33..36].to_i, rec[37]?}
     end
 
     private def parse_lattice(rec : Record)
@@ -272,10 +274,9 @@ module Chem::PDB
     end
 
     private def parse_sheet(rec : Record) : Nil
-      @segments << SecondaryStructureSegment.new \
-        kind: :beta_strand,
-        start: {rec[21], rec[22..25].to_i, rec[26]?},
-        end: {rec[21], rec[33..36].to_i, rec[37]?}
+      add_sec :beta_strand,
+        {rec[21], rec[22..25].to_i, rec[26]?},
+        {rec[21], rec[33..36].to_i, rec[37]?}
     end
 
     private def read_het? : Bool
@@ -314,6 +315,8 @@ module Chem::PDB
       index
     end
 
+    private alias ResidueId = Tuple(Char, Int32, Char?)
+
     private struct AlternateLocation
       getter id : Char
       getter resname : String
@@ -337,5 +340,10 @@ module Chem::PDB
         @atoms.sum(&.occupancy) / @atoms.size
       end
     end
+
+    private record SecondaryStructureElement,
+      type : Protein::SecondaryStructure,
+      start : ResidueId,
+      end : ResidueId
   end
 end
