@@ -5,7 +5,7 @@ require "./record/*"
 module Chem::PDB
   @[IO::FileType(format: PDB, ext: [:ent, :pdb])]
   class Parser < IO::Parser
-    private alias BondTable = Hash(Int32, Hash(Int32, Int32))
+    private alias BondTable = Hash(Tuple(Int32, Int32), Int32)
 
     @pdb_bonds = uninitialized BondTable
     @pdb_expt : Protein::Experiment?
@@ -33,10 +33,8 @@ module Chem::PDB
     end
 
     private def assign_bonds(builder : Structure::Builder) : Nil
-      @pdb_bonds.each do |i, bond_table|
-        bond_table.each do |j, order|
-          builder.bond serial_to_index(i), serial_to_index(j), order
-        end
+      @pdb_bonds.each do |(i, j), order|
+        builder.bond serial_to_index(i), serial_to_index(j), order
       end
     end
 
@@ -112,7 +110,7 @@ module Chem::PDB
       last_pos = @io.pos
       @io.seek 0, ::IO::Seek::End
 
-      @pdb_bonds = BondTable.new { |hash, key| hash[key] = Hash(Int32, Int32).new 0 }
+      @pdb_bonds = BondTable.new { |hash, key| hash[key] = 0 }
       Record::BackwardIterator.new(@io).each do |rec|
         case rec.name
         when "conect"
@@ -120,8 +118,7 @@ module Chem::PDB
           {11..15, 16..20, 21..25, 26..30}.each do |range|
             if other = rec[range]?.try(&.to_i)
               next if serial > other # skip redundant bonds
-              @pdb_bonds[serial][other] += 1
-              @pdb_bonds[other][serial] += 1
+              @pdb_bonds[{serial, other}] += 1
             else
               break
             end
