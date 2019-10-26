@@ -95,7 +95,7 @@ module Chem::PDB
         rec[12..15].strip,
         Hybrid36.decode(rec[6..10]),
         read_vector(rec),
-        element: parse_element(rec, builder.residue.name),
+        element: read_element(rec),
         formal_charge: rec[78..79]?.try(&.reverse.to_i?) || 0,
         occupancy: rec[54..59].to_f,
         temperature_factor: rec[60..65].to_f
@@ -138,14 +138,14 @@ module Chem::PDB
       builder.chain rec[21]
     end
 
-    private def parse_element(rec : Record, resname : String) : PeriodicTable::Element?
+    private def read_element(rec : Record) : PeriodicTable::Element?
       case symbol = rec[76..77]?.try(&.lstrip)
       when "D" # deuterium
         PeriodicTable::D
       when "X" # unknown, e.g., ASX
         PeriodicTable::X
       when String
-        PeriodicTable[symbol]?
+        PeriodicTable[symbol]? || parse_exception "Unknown element"
       end
     end
 
