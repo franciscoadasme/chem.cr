@@ -14,7 +14,7 @@ module Chem::PDB
     @pdb_seq : Protein::Sequence?
     @pdb_title = ""
 
-    @alt_locs : Hash(Residue, Hash(Char, AlternateLocation))?
+    @alt_locs : Hash(Residue, Array(AlternateLocation))?
     @chains : Set(Char)?
     @offsets : Array(Tuple(Int32, Int32))?
     @segments = [] of SecondaryStructureSegment
@@ -77,12 +77,14 @@ module Chem::PDB
     end
 
     private def alt_loc(residue : Residue, id : Char, resname : String) : AlternateLocation
-      alt_locs[residue][id] ||= AlternateLocation.new id, resname
+      alt_loc = alt_locs[residue].find &.id.==(id)
+      alt_locs[residue] << (alt_loc = AlternateLocation.new id, resname) unless alt_loc
+      alt_loc
     end
 
-    private def alt_locs : Hash(Residue, Hash(Char, AlternateLocation))
-      @alt_locs ||= Hash(Residue, Hash(Char, AlternateLocation)).new do |hash, key|
-        hash[key] = {} of Char => AlternateLocation
+    private def alt_locs : Hash(Residue, Array(AlternateLocation))
+      @alt_locs ||= Hash(Residue, Array(AlternateLocation)).new do |hash, key|
+        hash[key] = Array(AlternateLocation).new 4
       end
     end
 
@@ -274,11 +276,10 @@ module Chem::PDB
     end
 
     private def resolve_alternate_locations : Nil
-      return unless alt_locs = @alt_locs
-      alt_locs.each do |residue, alt_locs|
-        id = alt_locs.each_value.max_by(&.occupancy).id
-        alt_locs.each_value do |alt_loc|
-          next if alt_loc.id == id
+      return unless table = @alt_locs
+      table.each do |residue, alt_locs|
+        alt_locs.sort! { |a, b| b.occupancy <=> a.occupancy }
+        alt_locs.each(within: 1..) do |alt_loc|
           alt_loc.each_atom do |atom|
             unless @pdb_bonds.empty?
               i = offsets.bsearch_index { |(i, _)| i > atom.serial } || -1
@@ -287,10 +288,10 @@ module Chem::PDB
             residue.delete atom
           end
         end
-        residue.name = alt_locs[id].resname
+        residue.name = alt_locs[0].resname
         residue.reset_cache
       end
-      alt_locs.clear
+      table.clear
     end
 
     private def serial_to_index(serial : Int32) : Int32
