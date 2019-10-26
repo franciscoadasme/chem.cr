@@ -146,41 +146,59 @@ module Chem::PDB
       end
     end
 
+    private def parse_expt : Nil
+      title = ""
+      method = Protein::Experiment::Kind::XRayDiffraction
+      date = doi = pdbid = resolution = nil
+
+      @iter.each do |rec|
+        case rec.name
+        when "atom", "hetatm", "cryst1", "model", "seqres", "helix", "sheet"
+          ::Iterator.stop
+        when "expdta"
+          method = Protein::Experiment::Kind.parse rec[10..79].split(';')[0].delete "- "
+        when "header"
+          date = Time.parse_utc rec[50..58], "%d-%^b-%y"
+          pdbid = rec[62..65].downcase
+        when "jrnl"
+          case rec[12..15].strip.downcase
+          when "doi"
+            doi = rec[19..79].strip
+          end
+        when "remark"
+          next if rec[10..79].blank? # skip remark first line
+          case rec[7..9].to_i
+          when 2
+            resolution = rec[23..29].to_f?
+          end
+        when "title"
+          title += rec[10..79].rstrip.squeeze ' '
+        end
+      end
+
+      if date && pdbid
+        @pdb_expt = Protein::Experiment.new title, method, resolution, pdbid, date, doi
+        @pdb_title = pdbid
+      else
+        @pdb_title = title
+      end
+    end
+
     private def parse_header
-      expt_b = ExperimentBuilder.new
       @iter.each do |rec|
         case rec.name
         when "atom", "hetatm", "model" then ::Iterator.stop
         when "cryst1"                  then parse_lattice rec
         when "helix"                   then parse_helix rec
         when "sheet"                   then parse_sheet rec
+        when "header", "title", "expdta", "jrnl", "remark"
+          @iter.back
+          parse_expt
         when "seqres"
           @iter.back
           parse_sequence
-        when "expdta"
-          methods = rec[10..79].split ';'
-          expt_b.kind = Protein::Experiment::Kind.parse methods[0].delete("- ")
-        when "header"
-          expt_b.deposition_date = Time.parse_utc rec[50..58], "%d-%^b-%y"
-          expt_b.pdb_accession = rec[62..65].downcase
-        when "jrnl"
-          case rec[12..15].strip.downcase
-          when "doi"
-            expt_b.doi = rec[19..79].strip
-          end
-        when "remark"
-          next if rec[10..79].blank? # skip remark first line
-          case rec[7..9].to_i
-          when 2
-            expt_b.resolution = rec[23..29].to_f?
-          end
-        when "title"
-          @pdb_title += rec[10..79].rstrip.squeeze ' '
-          expt_b.title = @pdb_title
         end
       end
-      @pdb_expt = expt_b.build?
-      @pdb_title = @pdb_expt.try(&.pdb_accession) || @pdb_title
     end
 
     private def parse_helix(rec : Record) : Nil
