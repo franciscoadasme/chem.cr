@@ -14,9 +14,7 @@ module Chem::PDB
     @pdb_seq : Protein::Sequence?
     @pdb_title = ""
 
-    @alt_loc_table = Hash(Residue, Hash(Char, AlternateLocation)).new do |hash, key|
-      hash[key] = {} of Char => AlternateLocation
-    end
+    @alt_locs : Hash(Residue, Hash(Char, AlternateLocation))?
     @chains : Set(Char)?
     @offsets : Array(Tuple(Int32, Int32))?
     @segments = [] of SecondaryStructureSegment
@@ -78,6 +76,16 @@ module Chem::PDB
       offsets << {serial, serial - @serial - 1}
     end
 
+    private def alt_loc(residue : Residue, id : Char, resname : String) : AlternateLocation
+      alt_locs[residue][id] ||= AlternateLocation.new id, resname
+    end
+
+    private def alt_locs : Hash(Residue, Hash(Char, AlternateLocation))
+      @alt_locs ||= Hash(Residue, Hash(Char, AlternateLocation)).new do |hash, key|
+        hash[key] = {} of Char => AlternateLocation
+      end
+    end
+
     private def offsets : Array(Tuple(Int32, Int32))
       @offsets ||= [] of Tuple(Int32, Int32)
     end
@@ -95,13 +103,7 @@ module Chem::PDB
       add_offset_at atom.serial if atom.serial - @serial > 1 if @use_offsets
       @serial = atom.serial
 
-      parse_alt_loc(atom.residue, rec) << atom if !@alt_loc && rec[16]?
-    end
-
-    private def parse_alt_loc(residue : Residue, rec : Record) : AlternateLocation
-      alt_loc = rec[16]
-      @alt_loc_table[residue][alt_loc] ||= \
-         AlternateLocation.new(alt_loc, resname: rec[17..20].strip)
+      alt_loc(atom.residue, rec[16], rec[17..20].strip) << atom if !@alt_loc && rec[16]?
     end
 
     private def parse_bonds
@@ -272,7 +274,8 @@ module Chem::PDB
     end
 
     private def resolve_alternate_locations : Nil
-      @alt_loc_table.each do |residue, alt_locs|
+      return unless alt_locs = @alt_locs
+      alt_locs.each do |residue, alt_locs|
         id = alt_locs.each_value.max_by(&.occupancy).id
         alt_locs.each_value do |alt_loc|
           next if alt_loc.id == id
@@ -287,7 +290,7 @@ module Chem::PDB
         residue.name = alt_locs[id].resname
         residue.reset_cache
       end
-      @alt_loc_table.clear
+      alt_locs.clear
     end
 
     private def serial_to_index(serial : Int32) : Int32
