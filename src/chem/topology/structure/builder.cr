@@ -116,12 +116,20 @@ module Chem
       with self yield self
     end
 
+    def expt(expt : Protein::Experiment?)
+      @structure.experiment = expt
+    end
+
     def lattice : Lattice?
       @structure.lattice
     end
 
     def lattice! : Lattice
       @structure.lattice || raise Spatial::NotPeriodicError.new
+    end
+
+    def lattice(lattice : Lattice?)
+      @structure.lattice = lattice
     end
 
     def lattice(a : Spatial::Vector, b : Spatial::Vector, c : Spatial::Vector) : Lattice
@@ -172,6 +180,10 @@ module Chem
         ri.secondary_structure = type
         break unless ri != rj && (ri = ri.next)
       end
+    end
+
+    def seq(seq : Protein::Sequence?)
+      @structure.sequence = seq
     end
 
     def title(title : String)
