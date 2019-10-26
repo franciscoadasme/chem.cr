@@ -84,7 +84,7 @@ module Chem::PDB
 
     private def parse_atom(builder : Structure::Builder, rec : Record) : Nil
       atom = builder.atom \
-        rec[12..15].delete(' '),
+        rec[12..15].strip,
         Hybrid36.decode(rec[6..10]),
         read_vector(rec),
         element: parse_element(rec, builder.residue.name),
@@ -101,7 +101,7 @@ module Chem::PDB
     private def parse_alt_loc(residue : Residue, rec : Record) : AlternateLocation
       alt_loc = rec[16]
       @alt_loc_table[residue][alt_loc] ||= \
-         AlternateLocation.new alt_loc, resname: rec[17..20].delete(' ')
+         AlternateLocation.new(alt_loc, resname: rec[17..20].strip)
     end
 
     private def parse_bonds
@@ -167,9 +167,9 @@ module Chem::PDB
           expt_b.deposition_date = Time.parse_utc rec[50..58], "%d-%^b-%y"
           expt_b.pdb_accession = rec[62..65].downcase
         when "jrnl"
-          case rec[12..15].delete(' ').downcase
+          case rec[12..15].strip.downcase
           when "doi"
-            expt_b.doi = rec[19..79].delete ' '
+            expt_b.doi = rec[19..79].strip
           end
         when "remark"
           next if rec[10..79].blank? # skip remark first line
@@ -239,7 +239,7 @@ module Chem::PDB
     end
 
     private def parse_residue(builder : Structure::Builder, rec : Record) : Nil
-      builder.residue rec[17..20].delete(' '), Hybrid36.decode(rec[22..25]), rec[26]?
+      builder.residue rec[17..20].strip, Hybrid36.decode(rec[22..25]), rec[26]?
     end
 
     private def parse_sequence : Nil
