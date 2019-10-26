@@ -142,8 +142,8 @@ module Chem::PDB
       case symbol = rec[76..77]?.try(&.lstrip)
       when "D" # deuterium
         PeriodicTable::D
-      when "X"
-        PeriodicTable::N_or_O if resname == "ASX"
+      when "X" # unknown, e.g., ASX
+        PeriodicTable::X
       when String
         PeriodicTable[symbol]?
       end

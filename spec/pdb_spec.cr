@@ -171,7 +171,7 @@ describe Chem::PDB do
 
     it "parses a PDB file with element X (ASX case)" do
       st = Chem::Structure.read "spec/data/pdb/3e2o.pdb"
-      st.residues[serial: 235]["XD1"].element.should be PeriodicTable::N_or_O
+      st.residues[serial: 235]["XD1"].element.should be PeriodicTable::X
     end
 
     it "parses a PDB file with SIG* records" do
