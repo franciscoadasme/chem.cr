@@ -258,6 +258,7 @@ Coming soon...
 - [x] Nearest neighbor search (via native k-d tree impl.)
 - [ ] RMSD
 - [ ] Structure superposition
+- [ ] Intermolecular interactions (H-bonds, etc.)
 - [ ] Volumetric data
 - [ ] Parallel processing
 
@@ -265,6 +266,7 @@ Coming soon...
 
 - [ ] Documentation
 - [ ] Guides
+- [ ] Workflows (handle calculation pipelines)
 - [ ] More tests
 
 ## Testing
