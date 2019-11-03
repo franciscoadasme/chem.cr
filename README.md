@@ -26,7 +26,7 @@ Add this to your application's `shard.yml`:
 
 ```yaml
 dependencies:
-  wordsmith:
+  chem:
     github: franciscoadasme/chem.cr
     version: ~> 0.1
 ```
