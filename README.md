@@ -234,11 +234,14 @@ Coming soon...
 - [x] Support for per-file format options (e.g., select PDB chain)
 - [x] Friendly errors (message with error location)
 - [x] Iterator-based IO
+- [ ] Compressed files (.gz and .xz)
 - [ ] Trajectory support
 
 #### File formats
 
 - [x] DFTB+'s Gen format
+- [ ] Macromolecular Crystallographic Information Framework (CIF)
+- [ ] MacroMolecular Transmission Format (MMTF)
 - [x] PDB
 - [x] Tripos Mol2
 - [x] VASP's Poscar
