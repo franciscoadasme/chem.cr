@@ -240,7 +240,7 @@ Coming soon...
 
 - [x] DFTB+'s Gen format
 - [x] PDB
-- [x] Sybyl's Mol2
+- [x] Tripos Mol2
 - [x] VASP's Poscar
 - [x] XYZ
 - [ ] and many more
