@@ -416,6 +416,149 @@ module Chem::IO
     end
   end
 
+  module ColumnBasedParser
+    @line = ""
+    @line_number = 0
+    @cursor = 0..0
+
+    abstract def current_record : String
+
+    def each_record(& : String ->) : Nil
+      loop do
+        yield current_record
+        break unless next_record
+      end
+    end
+
+    def each_record_of(name : String, & : ->) : Nil
+      each_record do |record_name|
+        break unless record_name == name
+        yield
+      end
+      back_to_beginning_of_line
+    end
+
+    def each_record_reversed(& : String ->) : Nil
+      while @io.pos > 1
+        @line = String.build do |io|
+          loop do
+            @io.pos -= 2
+            break unless (ch = @io.read_char) && ch != '\n'
+            io << ch
+            break if @io.pos < 2
+          end
+        end.reverse
+        @line_number -= 1
+        @cursor = 0..0
+        yield current_record
+      end
+    end
+
+    def next_record : String?
+      return unless line = @io.gets(chomp: false)
+      @line = line
+      @line_number += 1
+      @cursor = 0..0
+      current_record
+    end
+
+    def read(index : Int) : Char
+      @cursor = index..index
+      @line[index]
+    end
+
+    def read(range : Range(Int, Int)) : String
+      @cursor = range
+      @line[range]
+    end
+
+    def read(start : Int, count : Int) : String
+      @cursor = start..(count - 1)
+      @line[start, count]
+    end
+
+    def read?(index : Int) : Char?
+      @cursor = index..index
+      if char = @line[index]?
+        char.whitespace? ? nil : char
+      end
+    end
+
+    def read?(range : Range(Int, Int)) : String?
+      @cursor = range
+      if str = @line[range]?
+        str.blank? ? nil : str
+      end
+    end
+
+    def read?(start : Int, count : Int) : String?
+      @cursor = start..(count - 1)
+      if str = @line[start, count]?
+        str.blank? ? nil : str
+      end
+    end
+
+    def read_float(range : Range(Int, Int)) : Float64
+      read(range).to_f
+    rescue ArgumentError
+      parse_exception "Couldn't read a decimal number"
+    end
+
+    def read_float(start : Int, count : Int) : Float64
+      read(start, count).to_f
+    rescue ArgumentError
+      parse_exception "Couldn't read a decimal number"
+    end
+
+    def read_float?(range : Range(Int, Int)) : Float64?
+      read?(range).try &.to_f
+    end
+
+    def read_float?(start : Int, count : Int) : Float64?
+      read?(start, count).try &.to_f
+    end
+
+    def read_int(range : Range(Int, Int)) : Int32
+      read(range).to_i
+    rescue ArgumentError
+      parse_exception "Couldn't read an integer"
+    end
+
+    def read_int(start : Int, count : Int) : Int32
+      read(start, count).to_i
+    rescue ArgumentError
+      parse_exception "Couldn't read an integer"
+    end
+
+    def read_int?(range : Range(Int, Int)) : Int32?
+      read?(range).try &.to_i
+    end
+
+    def read_int?(start : Int, count : Int) : Int32?
+      read?(start, count).try &.to_i
+    end
+
+    def skip_until(name : String) : Nil
+      each_record do |record_name|
+        break if record_name == name
+      end
+    end
+
+    private def back_to_beginning_of_line : Nil
+      @io.pos -= @line.bytesize
+    end
+
+    private def read_context(& : ->) : Nil
+      prev_pos = @io.pos
+      prev_line = @line
+      prev_line_number = @line_number
+      yield
+      @io.pos = prev_pos
+      @line = prev_line
+      @line_number = prev_line_number
+    end
+  end
+
   macro finished
     class ::Array(T)
       {% for parser in Parser.subclasses.select(&.annotation(FileType)) %}
