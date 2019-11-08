@@ -211,6 +211,17 @@ describe Chem::PDB do
       st.atoms[115].bonds[st.atoms[187]].order.should eq 1
     end
 
+    it "parses bonds when multiple models" do
+      models = Array(Chem::Structure).from_pdb Path["spec/data/pdb/models.pdb"]
+      models.size.should eq 4
+      models.each do |st|
+        st.atoms[0].bonds[st.atoms[1]].order.should eq 1
+        st.atoms[1].bonds[st.atoms[2]].order.should eq 1
+        st.atoms[1].bonds[st.atoms[4]].order.should eq 1
+        st.atoms[2].bonds[st.atoms[3]].order.should eq 1
+      end
+    end
+
     it "parses duplicate bonds" do
       st = Chem::Structure.read "spec/data/pdb/duplicate_bonds.pdb"
       st.atoms[0].bonds[st.atoms[1]].order.should eq 1
