@@ -8,7 +8,7 @@ module Chem
     @chains = [] of Chain
 
     getter biases = [] of Chem::Bias
-    property experiment : Protein::Experiment?
+    property experiment : Structure::Experiment?
     property lattice : Lattice?
     property sequence : Protein::Sequence?
     property title : String = ""

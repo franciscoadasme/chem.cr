@@ -4,7 +4,7 @@ module Chem::PDB
     include IO::ColumnBasedParser
 
     @pdb_bonds = Hash(Tuple(Int32, Int32), Int32).new 0
-    @pdb_expt : Protein::Experiment?
+    @pdb_expt : Structure::Experiment?
     @pdb_lattice : Lattice?
     @pdb_seq : Protein::Sequence?
     @pdb_title = ""
@@ -129,7 +129,7 @@ module Chem::PDB
 
     private def parse_expt : Nil
       title = ""
-      method = Protein::Experiment::Kind::XRayDiffraction
+      method = Structure::Experiment::Kind::XRayDiffraction
       date = doi = pdbid = resolution = nil
 
       each_record do |name|
@@ -138,7 +138,7 @@ module Chem::PDB
           back_to_beginning_of_line
           break
         when "expdta"
-          method = Protein::Experiment::Kind.parse read(10, 70).split(';')[0].delete "- "
+          method = Structure::Experiment::Kind.parse read(10, 70).split(';')[0].delete "- "
         when "header"
           date = Time.parse_utc read(50, 9), "%d-%^b-%y"
           pdbid = read(62, 4).downcase
@@ -159,7 +159,7 @@ module Chem::PDB
       end
 
       if date && pdbid
-        @pdb_expt = Protein::Experiment.new title, method, resolution, pdbid, date, doi
+        @pdb_expt = Structure::Experiment.new title, method, resolution, pdbid, date, doi
         @pdb_title = pdbid
       else
         @pdb_title = title

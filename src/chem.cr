@@ -20,7 +20,7 @@ require "./chem/core/residue_view"
 require "./chem/core/chain_view"
 require "./chem/core/lattice"
 require "./chem/core/structure"
-require "./chem/core/structure/builder"
+require "./chem/core/structure/*"
 
 require "./chem/io"
 require "./chem/protein"

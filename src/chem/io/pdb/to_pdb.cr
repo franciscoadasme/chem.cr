@@ -58,7 +58,28 @@ module Chem
     end
   end
 
-  struct Protein::Experiment
+  class Structure
+    def to_pdb(pdb : PDB::Builder) : Nil
+      pdb.bonds = bonds if pdb.bonds?
+      pdb.experiment = experiment
+      pdb.title = title
+
+      p_ch = nil
+      p_res = nil
+      pdb.object do
+        lattice.try &.to_pdb(pdb)
+        each_atom do |atom|
+          pdb.ter p_res if p_ch && p_res && atom.chain != p_ch && p_res.polymer?
+          atom.to_pdb pdb
+          p_res = atom.residue
+          p_ch = atom.chain
+        end
+        pdb.ter p_res if p_res && p_res.polymer?
+      end
+    end
+  end
+
+  struct Structure::Experiment
     def to_pdb(pdb : PDB::Builder) : Nil
       pdb.string "HEADER"
       pdb.space 4
@@ -84,27 +105,6 @@ module Chem
         pdb.space 3
         pdb.string doi, width: 61
         pdb.newline
-      end
-    end
-  end
-
-  class Structure
-    def to_pdb(pdb : PDB::Builder) : Nil
-      pdb.bonds = bonds if pdb.bonds?
-      pdb.experiment = experiment
-      pdb.title = title
-
-      p_ch = nil
-      p_res = nil
-      pdb.object do
-        lattice.try &.to_pdb(pdb)
-        each_atom do |atom|
-          pdb.ter p_res if p_ch && p_res && atom.chain != p_ch && p_res.polymer?
-          atom.to_pdb pdb
-          p_res = atom.residue
-          p_ch = atom.chain
-        end
-        pdb.ter p_res if p_res && p_res.polymer?
       end
     end
   end

@@ -5,7 +5,7 @@ module Chem::PDB
     PDB_VERSION_DATE = Time.local 2011, 7, 13
 
     setter bonds : Bool | Array(Bond)
-    setter experiment : Protein::Experiment?
+    setter experiment : Structure::Experiment?
     property? renumber : Bool
     setter title = ""
 

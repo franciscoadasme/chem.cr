@@ -116,7 +116,7 @@ module Chem
       with self yield self
     end
 
-    def expt(expt : Protein::Experiment?)
+    def expt(expt : Structure::Experiment?)
       @structure.experiment = expt
     end
 
