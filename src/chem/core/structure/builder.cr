@@ -1,4 +1,4 @@
-require "../templates/all"
+require "../../topology/templates/all"
 
 module Chem
   class Lattice::Builder
