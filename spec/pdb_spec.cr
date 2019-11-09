@@ -125,7 +125,7 @@ describe Chem::PDB do
       exp = st.experiment.not_nil!
       exp.deposition_date.should eq Time.utc(1981, 4, 30)
       exp.doi.should eq "10.1073/PNAS.81.19.6014"
-      exp.kind.x_ray_diffraction?.should be_true
+      exp.method.x_ray_diffraction?.should be_true
       exp.pdb_accession.should eq "1crn"
       exp.resolution.should eq 1.5
       exp.title.should eq "WATER STRUCTURE OF A HYDROPHOBIC PROTEIN AT ATOMIC " \
@@ -146,7 +146,7 @@ describe Chem::PDB do
         EOS
       structure.experiment.should_not be_nil
       expt = structure.experiment.not_nil!
-      expt.kind.x_ray_diffraction?.should be_true
+      expt.method.x_ray_diffraction?.should be_true
     end
 
     it "parses a PDB file with sequence" do

@@ -92,10 +92,10 @@ module Chem
 
       pdb.title title
 
-      method = kind.to_s.underscore.upcase.gsub('_', ' ').gsub "X RAY", "X-RAY"
+      raw_method = method.to_s.underscore.upcase.gsub('_', ' ').gsub "X RAY", "X-RAY"
       pdb.string "EXPDTA"
       pdb.space 4
-      pdb.string method, width: 70
+      pdb.string raw_method, width: 70
       pdb.newline
 
       if doi = @doi

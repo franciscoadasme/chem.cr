@@ -1,5 +1,5 @@
 struct Chem::Structure::Experiment
-  enum Kind
+  enum Method
     ElectronCrystallography
     ElectronMicroscopy
     FiberDiffraction
@@ -12,13 +12,13 @@ struct Chem::Structure::Experiment
 
   getter deposition_date : Time
   getter doi : String?
-  getter kind : Kind = :x_ray_diffraction
+  getter method : Method = :x_ray_diffraction
   getter pdb_accession : String
   getter resolution : Float64?
   getter title : String
 
   def initialize(@title : String,
-                 @kind : Kind,
+                 @method : Method,
                  @resolution : Float64?,
                  @pdb_accession : String,
                  @deposition_date : Time,

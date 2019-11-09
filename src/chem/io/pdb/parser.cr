@@ -129,7 +129,7 @@ module Chem::PDB
 
     private def parse_expt : Nil
       title = ""
-      method = Structure::Experiment::Kind::XRayDiffraction
+      method = Structure::Experiment::Method::XRayDiffraction
       date = doi = pdbid = resolution = nil
 
       each_record do |name|
@@ -138,7 +138,8 @@ module Chem::PDB
           back_to_beginning_of_line
           break
         when "expdta"
-          method = Structure::Experiment::Kind.parse read(10, 70).split(';')[0].delete "- "
+          raw_method = read(10, 70).split(';')[0].delete "- "
+          method = Structure::Experiment::Method.parse raw_method
         when "header"
           date = Time.parse_utc read(50, 9), "%d-%^b-%y"
           pdbid = read(62, 4).downcase
