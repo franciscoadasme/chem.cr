@@ -1,7 +1,7 @@
 module Chem::DFTB::Gen
   @[IO::FileType(format: Gen, ext: [:gen])]
   class Builder < IO::Builder
-    @ele_table = {} of PeriodicTable::Element => Int32
+    @ele_table = {} of Element => Int32
     @index = 0
 
     setter atoms = 0
@@ -11,12 +11,12 @@ module Chem::DFTB::Gen
     def initialize(@io : ::IO, @fractional : Bool = false)
     end
 
-    def elements=(elements : Enumerable(PeriodicTable::Element)) : Nil
+    def elements=(elements : Enumerable(Element)) : Nil
       @ele_table.clear
       elements.each.uniq.with_index { |ele, i| @ele_table[ele] = i + 1 }
     end
 
-    def element_index(ele : PeriodicTable::Element) : Int32
+    def element_index(ele : Element) : Int32
       @ele_table[ele]
     end
 

@@ -3,7 +3,7 @@ module Chem::DFTB::Gen
   class Parser < IO::Parser
     include IO::PullParser
 
-    @elements = [] of PeriodicTable::Element
+    @elements = [] of Element
     @fractional = false
     @periodic = false
 
@@ -63,7 +63,7 @@ module Chem::DFTB::Gen
       builder.lattice read_vector, read_vector, read_vector
     end
 
-    private def read_element : PeriodicTable::Element
+    private def read_element : Element
       @elements[read_int - 1]
     rescue IndexError
       parse_exception "Invalid element index"

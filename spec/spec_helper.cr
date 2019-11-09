@@ -4,7 +4,7 @@ require "../src/chem"
 alias Atom = Chem::Atom
 alias AtomView = Chem::AtomView
 alias Constraint = Chem::Constraint
-alias Element = Chem::PeriodicTable::Element
+alias Element = Chem::Element
 alias M = Chem::Linalg::Matrix
 alias PDB = Chem::PDB
 alias ParseException = Chem::IO::ParseException

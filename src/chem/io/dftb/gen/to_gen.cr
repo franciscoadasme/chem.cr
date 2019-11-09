@@ -19,7 +19,7 @@ module Chem
     end
   end
 
-  class PeriodicTable::Element
+  class Element
     def to_gen(gen : DFTB::Gen::Builder) : Nil
       gen.string @symbol, alignment: :right, width: 3
     end

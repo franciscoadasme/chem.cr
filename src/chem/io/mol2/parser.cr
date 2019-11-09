@@ -83,7 +83,7 @@ module Chem::Mol2
       skip_line
     end
 
-    private def read_element : PeriodicTable::Element
+    private def read_element : Element
       PeriodicTable[skip_spaces.scan_in_set("A-z")]
     end
 

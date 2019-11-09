@@ -68,7 +68,7 @@ module Chem
       atom :C, coords, **options
     end
 
-    def atom(element : PeriodicTable::Element | Symbol, coords : Spatial::Vector, **options) : Atom
+    def atom(element : Element | Symbol, coords : Spatial::Vector, **options) : Atom
       element = PeriodicTable[element.to_s.capitalize] if element.is_a?(Symbol)
       id = residue.each_atom.count(&.element.==(element)) + 1
       atom "#{element.symbol}#{id}", coords, **options.merge(element: element)

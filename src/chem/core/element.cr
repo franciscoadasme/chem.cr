@@ -1,4 +1,4 @@
-module Chem::PeriodicTable
+module Chem
   class Element
     getter atomic_number : Int32
     getter covalent_radius : Float64

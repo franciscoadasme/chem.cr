@@ -35,7 +35,7 @@ module Chem
     end
   end
 
-  class PeriodicTable::Element
+  class Element
     def to_pdb(pdb : PDB::Builder) : Nil
       pdb.string symbol, alignment: :right, width: 2
     end

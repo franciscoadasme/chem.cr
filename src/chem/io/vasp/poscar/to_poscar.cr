@@ -29,7 +29,7 @@ module Chem
     end
   end
 
-  class PeriodicTable::Element
+  class Element
     def to_poscar(poscar : VASP::Poscar::Builder) : Nil
       poscar.string symbol.ljust(2), alignment: :right, width: 5
     end

@@ -41,7 +41,7 @@ module Chem
     end
   end
 
-  class PeriodicTable::Element
+  class Element
     def to_mol2(mol2 : Mol2::Builder) : Nil
       mol2.string @symbol, width: 4
     end

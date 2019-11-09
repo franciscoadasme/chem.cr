@@ -1,4 +1,3 @@
-require "./periodic_table/element"
 require "./periodic_table/macros"
 require "./periodic_table/elements"
 

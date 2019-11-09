@@ -6,7 +6,7 @@ module Chem
     getter bonds : BondArray { BondArray.new self }
     property constraint : Constraint?
     property coords : Spatial::Vector
-    property element : PeriodicTable::Element
+    property element : Element
     property formal_charge : Int32 = 0
     property name : String
     property occupancy : Float64 = 1
@@ -23,7 +23,7 @@ module Chem
                    @serial : Int32,
                    @coords : Spatial::Vector,
                    @residue : Residue,
-                   element : PeriodicTable::Element? = nil,
+                   element : Element? = nil,
                    @formal_charge : Int32 = 0,
                    @occupancy : Float64 = 1,
                    @partial_charge : Float64 = 0.0,

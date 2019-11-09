@@ -236,7 +236,7 @@ module Chem::PDB
         {read(21), read_int(33, 4), read?(37)}
     end
 
-    private def read_element : PeriodicTable::Element?
+    private def read_element : Element?
       case symbol = read?(76, 2).try(&.lstrip)
       when "D" # deuterium
         PeriodicTable::D

@@ -1,6 +1,6 @@
 module Chem::Topology::Templates
   class AtomType
-    getter element : PeriodicTable::Element
+    getter element : Element
     getter formal_charge : Int32
     getter name : String
     getter valency : Int32

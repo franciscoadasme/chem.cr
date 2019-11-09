@@ -16,7 +16,7 @@ module Chem
     end
   end
 
-  class PeriodicTable::Element
+  class Element
     def to_xyz(xyz : XYZ::Builder) : Nil
       xyz.string symbol, width: 3
     end

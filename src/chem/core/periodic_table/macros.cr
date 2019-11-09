@@ -5,9 +5,9 @@ module Chem::PeriodicTable
     {% options[:name] = name.stringify %}
     {% options[:symbol] = symbol.stringify %}
 
-    {{@type}}::{{symbol.id}} = {{@type}}::Element.new {{options.double_splat}}
+    {{@type}}::{{symbol.id}} = Element.new {{options.double_splat}}
 
-    class {{@type}}::Element
+    class ::Chem::Element
       def {{name.id.underscore.id}}?
         same? {{@type}}::{{symbol.id}}
       end

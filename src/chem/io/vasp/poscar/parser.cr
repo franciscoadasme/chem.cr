@@ -3,7 +3,7 @@ module Chem::VASP::Poscar
   class Parser < IO::Parser
     include IO::PullParser
 
-    @elements = [] of PeriodicTable::Element
+    @elements = [] of Element
     @fractional = false
     @has_constraints = false
     @scale_factor = 1.0
