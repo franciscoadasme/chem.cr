@@ -1,44 +1,6 @@
 require "../../topology/templates/all"
 
 module Chem
-  class Lattice::Builder
-    @lattice : Lattice = Lattice[0, 0, 0]
-
-    def self.build : Lattice
-      builder = new
-      with builder yield builder
-      builder.build
-    end
-
-    def a(value : Number)
-      a Spatial::Vector[value.to_f, 0, 0]
-    end
-
-    def a(vector : Spatial::Vector)
-      @lattice.a = vector
-    end
-
-    def b(value : Number)
-      b Spatial::Vector[0, value.to_f, 0]
-    end
-
-    def b(vector : Spatial::Vector)
-      @lattice.b = vector
-    end
-
-    def build : Lattice
-      @lattice
-    end
-
-    def c(value : Number)
-      c Spatial::Vector[0, 0, value.to_f]
-    end
-
-    def c(vector : Spatial::Vector)
-      @lattice.c = vector
-    end
-  end
-
   class Structure::Builder
     @aromatic_bonds : Array(Bond)?
     @atom_serial : Int32 = 0
