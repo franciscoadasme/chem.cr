@@ -84,7 +84,7 @@ module Chem::VASP::Poscar
     private def read_atom_counts(n : Int) : Array(Int32)
       Array(Int32).new(n) do |i|
         read_int
-      rescue ex : ParseException
+      rescue ex : IO::ParseException
         ex.message = "Expected #{n - i} more number(s) of atoms per atomic species"
         raise ex
       end
