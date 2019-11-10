@@ -234,8 +234,6 @@ The benchmark is designed as follows:
 * Calculating the Ramachandran phi/psi angles in adenylate kinase (1AKE, 3816
   atoms).
 
-Heavily inspired by [PDB benchmarks](https://github.com/jgreener64/pdb-benchmarks).
-
 **IMPORTANT**: direct comparison of parsing times should be taken with a grain
 of salt because each library does something slightly different, e.g., error
 checking. Some of this functionality is listed below. Nonetheless, these results
@@ -260,31 +258,7 @@ gives an overall picture in terms of the expected performance.
 
 Latest update: 2019-11-10
 
-### Environment
-
-#### PC specs
-
-* CPU: Intel(R) Core(TM) i7-5930K CPU @ 3.50GHz
-* RAM: 16 GB 2400 MHz DDR4
-* SSD: 480GB Western Digital Green SATA3
-* OS: Ubuntu 18.04.2
-
-#### Software
-
-| Library     | Version | Language   | Language version |
-| ----------- | ------: | ---------- | ---------------: |
-| Biopython   |    1.74 | Python     |            3.6.8 |
-| chem.cr     |   0.1.0 | Crystal    |           0.31.0 |
-| Chemfiles   |   0.9.1 | C++/Python |            3.6.8 |
-| MDAnalysis  |  0.20.1 | Python     |            3.6.8 |
-| MDTraj      |   1.9.3 | Python     |            3.6.8 |
-| Schrodinger |  2018-4 | C++/Python |            3.6.1 |
-| VMD         |   1.9.4 | C/Tcl      |                  |
-
-**NOTE**: Python libraries here listed internally use C-powered code for some
-performance-critical code such as distance calculation. In the other hand,
-C++/Python libraries are implemented in pure C++ and offer access from Python
-through bindings.
+Scripts and details are provided at [pdb-bench](https://github.com/franciscoadasme/pdb-bench).
 
 ## Roadmap
 
