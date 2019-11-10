@@ -31,7 +31,7 @@ describe Chem::Topology::Templates::Builder do
       residue = TemplateBuilder.build(:protein) do
         description "Glycine"
         name "Gly"
-        symbol 'G'
+        code 'G'
         remove_atom "HA"
       end
 
@@ -44,7 +44,7 @@ describe Chem::Topology::Templates::Builder do
       residue = TemplateBuilder.build(:protein) do
         description "Alanine"
         name "ALA"
-        symbol 'A'
+        code 'A'
         sidechain "CB"
       end
 
@@ -57,7 +57,7 @@ describe Chem::Topology::Templates::Builder do
       residue = TemplateBuilder.build(:protein) do
         description "Isoleucine"
         name "ILE"
-        symbol 'I'
+        code 'I'
         sidechain do
           main "CB-CG1-CD1"
           branch "CB-CG2"
@@ -75,7 +75,7 @@ describe Chem::Topology::Templates::Builder do
       residue = TemplateBuilder.build(:protein) do
         description "Lysine"
         name "LYS"
-        symbol 'K'
+        code 'K'
         sidechain "CB-CG-CD-CE-NZ+"
       end
 
@@ -90,7 +90,7 @@ describe Chem::Topology::Templates::Builder do
       residue = TemplateBuilder.build(:protein) do
         description "Aspartate"
         name "ASP"
-        symbol 'D'
+        code 'D'
         sidechain do
           main "CB-CG=OE1"
           branch "CG-OE2-"
@@ -117,7 +117,7 @@ describe Chem::Topology::Templates::Builder do
       residue = TemplateBuilder.build(:protein) do
         description "Arginine"
         name "ARG"
-        symbol 'R'
+        code 'R'
         sidechain do
           main "CB-CG-CD-NE-CZ-NH1"
           branch "CZ=NH2+"
@@ -136,7 +136,7 @@ describe Chem::Topology::Templates::Builder do
       residue = TemplateBuilder.build(:protein) do
         description "Histidine"
         name "HIS"
-        symbol 'H'
+        code 'H'
         sidechain do
           main "CB-CG"
           cycle "CG=CD2-NE2=CE1-ND1"
@@ -154,7 +154,7 @@ describe Chem::Topology::Templates::Builder do
       residue = TemplateBuilder.build(:protein) do
         description "Histidine"
         name "HIS"
-        symbol 'H'
+        code 'H'
         sidechain do
           main "CB-CG"
           cycle "CG-ND1-CE1=NE2-CD2="
@@ -172,7 +172,7 @@ describe Chem::Topology::Templates::Builder do
       residue = TemplateBuilder.build(:protein) do
         description "Tryptophan"
         name "TRP"
-        symbol 'W'
+        code 'W'
         sidechain do
           main "CB-CG"
           cycle "CG=CD1-NE1-CE2=CD2"
@@ -191,7 +191,7 @@ describe Chem::Topology::Templates::Builder do
       residue = TemplateBuilder.build(:protein) do
         description "Proline"
         name "PRO"
-        symbol 'P'
+        code 'P'
         remove_atom "H"
         sidechain do
           cycle "CA-CB-CG-CD-N"
@@ -209,7 +209,7 @@ describe Chem::Topology::Templates::Builder do
       residue = TemplateBuilder.build(:protein) do
         description "Cysteine"
         name "CYX"
-        symbol 'C'
+        code 'C'
         sidechain "CB-SG(1)"
       end
 
@@ -298,7 +298,7 @@ describe Chem::Topology::Templates::Builder do
         TemplateBuilder.build(:protein) do
           description "Tryptophan"
           name "TRP"
-          symbol 'W'
+          code 'W'
 
           main "CB-CG"
           cycle "CG=CD1-NE1-CE2=CD2"
@@ -313,7 +313,7 @@ describe Chem::Topology::Templates::Builder do
         TemplateBuilder.build(:protein) do
           description "Tryptophan"
           name "TRP"
-          symbol 'W'
+          code 'W'
 
           main "CB-CG=CD"
           branch "CG-CZ"

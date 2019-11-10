@@ -14,7 +14,7 @@ module Chem::Topology::Templates
     @link_bond : Bond?
     @description : String?
     @root : AtomType?
-    @symbol : Char?
+    @code : Char?
 
     def initialize(@kind : Residue::Kind = :other)
       setup
@@ -39,7 +39,7 @@ module Chem::Topology::Templates
       add_missing_hydrogens
       check_valencies!
 
-      ResidueType.new description, @names.first, @symbol, @kind, @atom_types, @bonds,
+      ResidueType.new description, @names.first, @code, @kind, @atom_types, @bonds,
         @link_bond, @root
     end
 
@@ -95,8 +95,8 @@ module Chem::Topology::Templates
       end
     end
 
-    def symbol(char : Char) : Nil
-      @symbol = char
+    def code(char : Char) : Nil
+      @code = char
     end
 
     private def atom_type(name : String,

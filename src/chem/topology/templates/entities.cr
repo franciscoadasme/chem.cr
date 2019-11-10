@@ -89,11 +89,11 @@ module Chem::Topology::Templates
     getter link_bond : Bond?
     getter description : String
     getter root : AtomType?
-    getter symbol : Char?
+    getter code : Char?
 
     def initialize(@description : String,
                    @name : String,
-                   @symbol : Char?,
+                   @code : Char?,
                    @kind : Residue::Kind,
                    atom_types : Array(AtomType),
                    bonds : Array(Bond),
