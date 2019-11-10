@@ -32,7 +32,7 @@ module Chem::Topology::Templates
     end
 
     def build : ResidueType
-      fatal "Missing residue name" unless (description = @description)
+      fatal "Missing residue description" unless (description = @description)
       fatal "Missing residue name" if @names.empty?
       fatal "Missing residue atom names" if @atom_types.empty?
 
