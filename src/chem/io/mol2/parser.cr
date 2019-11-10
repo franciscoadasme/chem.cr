@@ -56,7 +56,7 @@ module Chem::Mol2
       end
     end
 
-    private def parse_atom(builder : Structure::Builder) : Nil
+    private def parse_atom(builder : Topology::Builder) : Nil
       skip_whitespace
       skip_index
       name = scan_in_set "a-zA-Z0-9"
@@ -73,7 +73,7 @@ module Chem::Mol2
       builder.atom name, coords, element: element, partial_charge: (charge || 0.0)
     end
 
-    private def parse_bond(builder : Structure::Builder) : Nil
+    private def parse_bond(builder : Topology::Builder) : Nil
       skip_index
       i = read_int - 1
       j = read_int - 1

@@ -32,7 +32,7 @@ module Chem::DFTB::Gen
       end
     end
 
-    private def parse_atom(builder : Structure::Builder) : Nil
+    private def parse_atom(builder : Topology::Builder) : Nil
       skip_spaces.skip(&.number?).skip_spaces
       builder.atom read_element, read_vector
       skip_line
@@ -58,7 +58,7 @@ module Chem::DFTB::Gen
       skip_line
     end
 
-    private def parse_lattice(builder : Structure::Builder) : Nil
+    private def parse_lattice(builder : Topology::Builder) : Nil
       skip_line
       builder.lattice read_vector, read_vector, read_vector
     end

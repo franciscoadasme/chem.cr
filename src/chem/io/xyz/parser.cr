@@ -24,7 +24,7 @@ module Chem::XYZ
       end
     end
 
-    private def parse_atom(builder : Structure::Builder) : Nil
+    private def parse_atom(builder : Topology::Builder) : Nil
       skip_whitespace
       builder.atom PeriodicTable[scan(&.letter?)], read_vector
       skip_line

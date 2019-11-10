@@ -16,7 +16,7 @@ module Chem
     delegate :[], :[]?, to: @chain_table
 
     def self.build(&block) : self
-      builder = Structure::Builder.new
+      builder = Topology::Builder.new
       with builder yield builder
       builder.build
     end

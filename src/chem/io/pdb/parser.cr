@@ -73,13 +73,13 @@ module Chem::PDB
       end
     end
 
-    private def assign_bonds(builder : Structure::Builder) : Nil
+    private def assign_bonds(builder : Topology::Builder) : Nil
       @pdb_bonds.each do |(i, j), order|
         builder.bond serial_to_index(i), serial_to_index(j), order
       end
     end
 
-    private def assign_secondary_structure(builder : Structure::Builder) : Nil
+    private def assign_secondary_structure(builder : Topology::Builder) : Nil
       @ss_elements.each do |ele|
         builder.secondary_structure ele.start, ele.end, ele.type
       end
@@ -93,7 +93,7 @@ module Chem::PDB
       @offsets ||= [] of Tuple(Int32, Int32)
     end
 
-    private def parse_atom(builder : Structure::Builder) : Nil
+    private def parse_atom(builder : Topology::Builder) : Nil
       return if (chains = @chains) && !chains.includes?(read(21))
       return if @alt_loc && (alt_loc = read?(16)) && alt_loc != @alt_loc
 
