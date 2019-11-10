@@ -29,7 +29,7 @@ module Chem::Topology::Templates
     end
   end
 
-  struct Bond
+  struct BondType
     getter first : String
     getter second : String
     getter order : Int32
@@ -37,7 +37,7 @@ module Chem::Topology::Templates
     def initialize(@first : String, @second : String, @order : Int = 1)
     end
 
-    def ==(other : Bond) : Bool
+    def ==(other : BondType) : Bool
       return false if @order != other.order
       return true if @first == other.first && @second == other.second
       @first == other.second && @second == other.first
@@ -82,11 +82,11 @@ module Chem::Topology::Templates
 
   class ResidueType
     @atom_types : Array(AtomType)
-    @bonds : Array(Bond)
+    @bonds : Array(BondType)
 
     getter name : String
     getter kind : Residue::Kind
-    getter link_bond : Bond?
+    getter link_bond : BondType?
     getter description : String
     getter root : AtomType?
     getter code : Char?
@@ -96,8 +96,8 @@ module Chem::Topology::Templates
                    @code : Char?,
                    @kind : Residue::Kind,
                    atom_types : Array(AtomType),
-                   bonds : Array(Bond),
-                   @link_bond : Bond? = nil,
+                   bonds : Array(BondType),
+                   @link_bond : BondType? = nil,
                    @root : AtomType? = nil)
       @atom_types = atom_types.dup
       @bonds = bonds.dup
@@ -133,7 +133,7 @@ module Chem::Topology::Templates
       @bonds.select(&.includes?(atom_t)).map { |bond| self[bond.other(atom_t)] }
     end
 
-    def bonds : Array(Bond)
+    def bonds : Array(BondType)
       @bonds.dup
     end
 

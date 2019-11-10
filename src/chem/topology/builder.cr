@@ -271,7 +271,7 @@ module Chem::Topology
     end
 
     private def guess_previous_residue(residue : Residue,
-                                       link_bond : Templates::Bond) : Residue?
+                                       link_bond : Templates::BondType) : Residue?
       prev_res = nil
       if atom = residue[link_bond.second]?
         prev_res = atom.bonded_atoms.find(&.name.==(link_bond.first)).try &.residue

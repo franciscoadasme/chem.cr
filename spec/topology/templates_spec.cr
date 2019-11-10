@@ -250,7 +250,7 @@ describe Chem::Topology::Templates::Builder do
       residue_t.atom_names.should eq ["C1", "H1", "C2", "H2", "H3", "C3", "H4"]
       residue_t.bonds.size.should eq 6
       residue_t.monomer?.should be_true
-      residue_t.link_bond.should eq Templates::Bond.new("C3", "C1", 2)
+      residue_t.link_bond.should eq Templates::BondType.new("C3", "C1", 2)
     end
 
     it "builds a rooted residue" do

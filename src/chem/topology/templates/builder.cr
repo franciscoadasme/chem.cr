@@ -9,9 +9,9 @@ module Chem::Topology::Templates
     BOND_REGEX         = /(#{ATOM_NAME_PATTERN})(#{BOND_ORDER_PATTERN})(#{ATOM_NAME_PATTERN})/
 
     @atom_types = [] of AtomType
-    @bonds = [] of Bond
+    @bonds = [] of BondType
     @names = [] of String
-    @link_bond : Bond?
+    @link_bond : BondType?
     @description : String?
     @root : AtomType?
     @code : Char?
@@ -128,7 +128,7 @@ module Chem::Topology::Templates
       if bond && bond.order != order
         fatal "Bond #{atom_name}#{bond.to_char}#{other} already exists"
       elsif bond.nil?
-        @bonds << Bond.new atom_name, other, order
+        @bonds << BondType.new atom_name, other, order
       end
     end
 
@@ -202,7 +202,7 @@ module Chem::Topology::Templates
         _, atom_name, bond_str, other = $~
         atom_type! atom_name
         atom_type! other
-        Bond.new atom_name, other, parse_bond_order(bond_str[0])
+        BondType.new atom_name, other, parse_bond_order(bond_str[0])
       else
         parse_exception "Invalid bond specification \"#{spec}\""
       end

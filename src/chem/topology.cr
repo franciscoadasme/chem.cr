@@ -9,7 +9,7 @@ module Chem::Topology
     guess_unknown_residue_types of: structure
   end
 
-  private def assign_bond(bond_t : Templates::Bond,
+  private def assign_bond(bond_t : Templates::BondType,
                           residue : Residue,
                           other : Residue? = nil)
     other ||= residue
