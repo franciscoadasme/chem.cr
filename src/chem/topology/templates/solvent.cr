@@ -1,6 +1,6 @@
 module Chem::Topology::Templates
   solvent do
-    name "Water"
+    description "Water"
     codes "HOH", "WAT"
     main "O"
     root "O"

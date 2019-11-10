@@ -12,7 +12,7 @@ module Chem::Topology::Templates
     @bonds = [] of Bond
     @codes = [] of String
     @link_bond : Bond?
-    @name : String?
+    @description : String?
     @root : AtomType?
     @symbol : Char?
 
@@ -32,14 +32,15 @@ module Chem::Topology::Templates
     end
 
     def build : ResidueType
-      fatal "Missing residue name" unless (name = @name)
+      fatal "Missing residue name" unless (description = @description)
       fatal "Missing residue code" if @codes.empty?
       fatal "Missing residue atom names" if @atom_types.empty?
 
       add_missing_hydrogens
       check_valencies!
 
-      ResidueType.new name, @codes.first, @symbol, @kind, @atom_types, @bonds, @link_bond, @root
+      ResidueType.new description, @codes.first, @symbol, @kind, @atom_types, @bonds,
+        @link_bond, @root
     end
 
     def code(code : String)
@@ -69,8 +70,8 @@ module Chem::Topology::Templates
       parse_spec spec
     end
 
-    def name(name : String)
-      @name = name
+    def description(name : String)
+      @description = name
     end
 
     def remove_atom(atom_name : String)

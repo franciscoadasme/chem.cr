@@ -1,7 +1,7 @@
 module Chem::Topology::Templates
   class Detector
     CTER_T = Chem::Topology::Templates::Builder.build do
-      name "C-ter"
+      description "C-ter"
       code "CTER"
       symbol 'c'
       main "CA-C=O"
@@ -9,7 +9,7 @@ module Chem::Topology::Templates
       root "C"
     end
     CHARGED_CTER_T = Chem::Topology::Templates::Builder.build do
-      name "Charged C-ter"
+      description "Charged C-ter"
       code "CTER"
       symbol 'c'
       main "CA-C=O"
@@ -17,14 +17,14 @@ module Chem::Topology::Templates
       root "C"
     end
     NTER_T = Chem::Topology::Templates::Builder.build do
-      name "N-ter"
+      description "N-ter"
       code "NTER"
       symbol 'n'
       main "CA-N"
       root "N"
     end
     CHARGED_NTER_T = Chem::Topology::Templates::Builder.build do
-      name "Charged N-ter"
+      description "Charged N-ter"
       code "NTER"
       symbol 'n'
       main "CA-N+"

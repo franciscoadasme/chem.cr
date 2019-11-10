@@ -1,13 +1,13 @@
 module Chem::Topology::Templates
   aminoacid do
-    name "Alanine"
+    description "Alanine"
     code "ALA"
     symbol 'A'
     sidechain "CB"
   end
 
   aminoacid do
-    name "Arginine"
+    description "Arginine"
     code "ARG"
     symbol 'R'
     sidechain do
@@ -17,7 +17,7 @@ module Chem::Topology::Templates
   end
 
   aminoacid do
-    name "Aspartate"
+    description "Aspartate"
     code "ASH"
     symbol 'D'
     sidechain do
@@ -27,7 +27,7 @@ module Chem::Topology::Templates
   end
 
   aminoacid do
-    name "Asparagine"
+    description "Asparagine"
     code "ASN"
     symbol 'N'
     sidechain do
@@ -37,7 +37,7 @@ module Chem::Topology::Templates
   end
 
   aminoacid do
-    name "Aspartate"
+    description "Aspartate"
     code "ASP"
     symbol 'D'
     sidechain do
@@ -47,21 +47,21 @@ module Chem::Topology::Templates
   end
 
   aminoacid do
-    name "Cysteine"
+    description "Cysteine"
     code "CYS"
     symbol 'C'
     sidechain "CB-SG"
   end
 
   aminoacid do
-    name "Cysteine"
+    description "Cysteine"
     code "CYX"
     symbol 'C'
     sidechain "CB-SG(1)"
   end
 
   aminoacid do
-    name "Glutamate"
+    description "Glutamate"
     code "GLH"
     symbol 'E'
     sidechain do
@@ -71,7 +71,7 @@ module Chem::Topology::Templates
   end
 
   aminoacid do
-    name "Glutamine"
+    description "Glutamine"
     code "GLN"
     symbol 'Q'
     sidechain do
@@ -81,7 +81,7 @@ module Chem::Topology::Templates
   end
 
   aminoacid do
-    name "Glutamate"
+    description "Glutamate"
     code "GLU"
     symbol 'E'
     sidechain do
@@ -91,14 +91,14 @@ module Chem::Topology::Templates
   end
 
   aminoacid do
-    name "Glycine"
+    description "Glycine"
     code "GLY"
     symbol 'G'
     remove_atom "HA"
   end
 
   aminoacid do
-    name "Histidine"
+    description "Histidine"
     code "HIS"
     symbol 'H'
     sidechain do
@@ -108,7 +108,7 @@ module Chem::Topology::Templates
   end
 
   aminoacid do
-    name "Histidine"
+    description "Histidine"
     code "HIE"
     symbol 'H'
     sidechain do
@@ -118,7 +118,7 @@ module Chem::Topology::Templates
   end
 
   aminoacid do
-    name "Histidine"
+    description "Histidine"
     code "HIP"
     symbol 'H'
     sidechain do
@@ -128,7 +128,7 @@ module Chem::Topology::Templates
   end
 
   aminoacid do
-    name "Isoleucine"
+    description "Isoleucine"
     code "ILE"
     symbol 'I'
     sidechain do
@@ -138,7 +138,7 @@ module Chem::Topology::Templates
   end
 
   aminoacid do
-    name "Leucine"
+    description "Leucine"
     code "LEU"
     symbol 'L'
     sidechain do
@@ -148,21 +148,21 @@ module Chem::Topology::Templates
   end
 
   aminoacid do
-    name "Lysine"
+    description "Lysine"
     code "LYS"
     symbol 'K'
     sidechain "CB-CG-CD-CE-NZ+"
   end
 
   aminoacid do
-    name "Methionine "
+    description "Methionine "
     code "MET"
     symbol 'M'
     sidechain "CB-CG-SD-CE"
   end
 
   aminoacid do
-    name "Phenylalanine"
+    description "Phenylalanine"
     code "PHE"
     symbol 'F'
     sidechain do
@@ -172,7 +172,7 @@ module Chem::Topology::Templates
   end
 
   aminoacid do
-    name "Proline"
+    description "Proline"
     code "PRO"
     symbol 'P'
 
@@ -183,14 +183,14 @@ module Chem::Topology::Templates
   end
 
   aminoacid do
-    name "Serine"
+    description "Serine"
     code "SER"
     symbol 'S'
     sidechain "CB-OG"
   end
 
   aminoacid do
-    name "Threonine"
+    description "Threonine"
     code "THR"
     symbol 'T'
     sidechain do
@@ -200,7 +200,7 @@ module Chem::Topology::Templates
   end
 
   aminoacid do
-    name "Tryptophan"
+    description "Tryptophan"
     code "TRP"
     symbol 'W'
     sidechain do
@@ -211,7 +211,7 @@ module Chem::Topology::Templates
   end
 
   aminoacid do
-    name "Tyrosine"
+    description "Tyrosine"
     code "TYR"
     symbol 'Y'
     sidechain do
@@ -222,7 +222,7 @@ module Chem::Topology::Templates
   end
 
   aminoacid do
-    name "Valine"
+    description "Valine"
     code "VAL"
     symbol 'V'
     sidechain do
