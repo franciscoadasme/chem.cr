@@ -1,4 +1,4 @@
-require "../spec_helper.cr"
+require "../../spec_helper.cr"
 
 describe Chem::VASP::Poscar do
   describe ".parse" do

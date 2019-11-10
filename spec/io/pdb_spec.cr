@@ -1,4 +1,4 @@
-require "./spec_helper"
+require "../spec_helper"
 
 describe Chem::PDB do
   # TODO test partial occupancy and insertion code (5tun)

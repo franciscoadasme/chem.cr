@@ -1,4 +1,4 @@
-require "./spec_helper"
+require "../spec_helper"
 
 describe Chem::Mol2::Parser do
   it "parses a Mol2 file" do

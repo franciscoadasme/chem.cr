@@ -1,4 +1,4 @@
-require "./spec_helper"
+require "../spec_helper"
 
 describe Chem::XYZ::Parser do
   it "parses a XYZ file" do

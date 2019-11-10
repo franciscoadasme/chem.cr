@@ -1,4 +1,4 @@
-require "../spec_helper"
+require "../../spec_helper"
 
 describe Chem::PDB::Hybrid36 do
   describe ".decode" do

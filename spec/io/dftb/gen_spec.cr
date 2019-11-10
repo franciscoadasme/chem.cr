@@ -1,4 +1,4 @@
-require "../spec_helper"
+require "../../spec_helper"
 
 describe Chem::DFTB::Gen::Parser do
   it "parses a non-periodic Gen file" do
