@@ -342,7 +342,7 @@ describe Chem::Topology::Templates do
   describe "#[]" do
     it "returns a residue template by code" do
       residue_t = Templates["LFG"]
-      residue_t.should be_a Templates::Residue
+      residue_t.should be_a Templates::ResidueType
       residue_t.name.should eq "Anything"
       residue_t.code.should eq "LFG"
     end
@@ -356,7 +356,7 @@ describe Chem::Topology::Templates do
 
   describe "#[]?" do
     it "returns a residue template by code" do
-      Templates["LFG"].should be_a Templates::Residue
+      Templates["LFG"].should be_a Templates::ResidueType
     end
 
     it "returns nil when no matching residue template exists" do

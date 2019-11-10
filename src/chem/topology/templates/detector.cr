@@ -31,7 +31,7 @@ module Chem::Topology::Templates
       root "N"
     end
 
-    def initialize(@templates : Array(Residue))
+    def initialize(@templates : Array(ResidueType))
       @atom_table = {} of Atom | AtomType => String
       @mapped_atoms = Set(Atom).new
       compute_atom_descriptions @templates
@@ -39,7 +39,7 @@ module Chem::Topology::Templates
     end
 
     def each_match(atoms : Enumerable(Atom),
-                   &block : Residue, Hash(Atom, String) ->) : Nil
+                   & : ResidueType, Hash(Atom, String) ->) : Nil
       reset_cache
       compute_atom_descriptions atoms
 
@@ -57,7 +57,7 @@ module Chem::Topology::Templates
       end
     end
 
-    def each_match(structure : Structure, &block : Residue, Hash(Atom, String) ->) : Nil
+    def each_match(structure : Structure, & : ResidueType, Hash(Atom, String) ->) : Nil
       each_match structure.atoms do |res_t, atom_map|
         yield res_t, atom_map
       end
@@ -72,7 +72,7 @@ module Chem::Topology::Templates
       end
     end
 
-    private def compute_atom_descriptions(res_types : Array(Residue))
+    private def compute_atom_descriptions(res_types : Array(ResidueType))
       res_types.each do |res_t|
         res_t.each_atom_type do |atom_t|
           @atom_table[atom_t] = String.build do |io|
@@ -88,7 +88,7 @@ module Chem::Topology::Templates
       end
     end
 
-    private def extend_match(res_t : Residue,
+    private def extend_match(res_t : ResidueType,
                              root : Atom,
                              atom_map : Hash(Atom, String))
       ter_map = {} of Atom => String
@@ -113,7 +113,7 @@ module Chem::Topology::Templates
       atom_map.has_value? atom_t.name
     end
 
-    private def match?(res_t : Residue,
+    private def match?(res_t : ResidueType,
                        atom : Atom,
                        atom_map : Hash(Atom, String)) : Bool
       search res_t, res_t.root.not_nil!, atom, atom_map
@@ -132,7 +132,7 @@ module Chem::Topology::Templates
       @mapped_atoms.clear
     end
 
-    private def search(res_t : Residue,
+    private def search(res_t : ResidueType,
                        atom_t : AtomType,
                        atom : Atom,
                        atom_map : Hash(Atom, String)) : Nil

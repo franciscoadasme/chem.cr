@@ -3,11 +3,11 @@ module Chem::Topology::Templates
 
   class Error < Exception; end
 
-  private TEMPLATES = {} of String => Residue
+  private TEMPLATES = {} of String => ResidueType
 
   private macro build_method(name, kind = nil)
-    def {{name.id}} : Residue
-      builder = Builder.new Residue::Kind::{{(kind || name).id.camelcase}}
+    def {{name.id}} : ResidueType
+      builder = Builder.new ResidueType::Kind::{{(kind || name).id.camelcase}}
       {{yield}}
       with builder yield
       residue = builder.build
@@ -19,15 +19,15 @@ module Chem::Topology::Templates
     end
   end
 
-  def [](code : String) : Residue
+  def [](code : String) : ResidueType
     TEMPLATES[code]? || raise Error.new "Unknown residue template #{code}"
   end
 
-  def []?(code : String) : Residue?
+  def []?(code : String) : ResidueType?
     TEMPLATES[code]?
   end
 
-  def all : Array(Residue)
+  def all : Array(ResidueType)
     TEMPLATES.values
   end
 

@@ -16,11 +16,11 @@ module Chem::Topology::Templates
     @root : AtomType?
     @symbol : Char?
 
-    def initialize(@kind : Residue::Kind = :other)
+    def initialize(@kind : ResidueType::Kind = :other)
       setup
     end
 
-    def self.build(kind : Residue::Kind = :other) : Residue
+    def self.build(kind : ResidueType::Kind = :other) : ResidueType
       builder = Builder.new kind
       with builder yield
       builder.build
@@ -31,7 +31,7 @@ module Chem::Topology::Templates
       parse_spec spec
     end
 
-    def build : Residue
+    def build : ResidueType
       fatal "Missing residue name" unless (name = @name)
       fatal "Missing residue code" if @codes.empty?
       fatal "Missing residue atom names" if @atom_types.empty?
@@ -39,7 +39,7 @@ module Chem::Topology::Templates
       add_missing_hydrogens
       check_valencies!
 
-      Residue.new name, @codes.first, @symbol, @kind, @atom_types, @bonds, @link_bond, @root
+      ResidueType.new name, @codes.first, @symbol, @kind, @atom_types, @bonds, @link_bond, @root
     end
 
     def code(code : String)

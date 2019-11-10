@@ -80,7 +80,7 @@ module Chem::Topology::Templates
     end
   end
 
-  class Residue
+  class ResidueType
     enum Kind
       Protein
       DNA

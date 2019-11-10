@@ -20,7 +20,7 @@ module Chem::Topology
     atom1.bonds.add atom2, bond_t.order
   end
 
-  private def assign_bonds(from res_t : Templates::Residue, to residue : Residue)
+  private def assign_bonds(from res_t : Templates::ResidueType, to residue : Residue)
     res_t.bonds.each { |bond_t| assign_bond bond_t, residue }
     return unless bond_t = res_t.link_bond
     if prev_res = residue.previous
@@ -31,7 +31,7 @@ module Chem::Topology
     end
   end
 
-  private def assign_charges(from res_t : Templates::Residue, to residue : Residue)
+  private def assign_charges(from res_t : Templates::ResidueType, to residue : Residue)
     res_t.each_atom_type do |atom_type|
       next unless atom = residue.atoms[atom_type.name]?
       atom.formal_charge = atom_type.formal_charge
