@@ -7,7 +7,7 @@ module Chem::Topology::Templates
 
   private macro build_method(name, kind = nil)
     def {{name.id}} : ResidueType
-      builder = Builder.new ResidueType::Kind::{{(kind || name).id.camelcase}}
+      builder = Builder.new Residue::Kind::{{(kind || name).id.camelcase}}
       {{yield}}
       with builder yield
       residue = builder.build

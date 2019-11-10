@@ -16,11 +16,11 @@ module Chem::Topology::Templates
     @root : AtomType?
     @symbol : Char?
 
-    def initialize(@kind : ResidueType::Kind = :other)
+    def initialize(@kind : Residue::Kind = :other)
       setup
     end
 
-    def self.build(kind : ResidueType::Kind = :other) : ResidueType
+    def self.build(kind : Residue::Kind = :other) : ResidueType
       builder = Builder.new kind
       with builder yield
       builder.build

@@ -81,19 +81,11 @@ module Chem::Topology::Templates
   end
 
   class ResidueType
-    enum Kind
-      Protein
-      DNA
-      Ion
-      Solvent
-      Other
-    end
-
     @atom_types : Array(AtomType)
     @bonds : Array(Bond)
 
     getter code : String
-    getter kind : Kind
+    getter kind : Residue::Kind
     getter link_bond : Bond?
     getter name : String
     getter root : AtomType?
@@ -102,7 +94,7 @@ module Chem::Topology::Templates
     def initialize(@name : String,
                    @code : String,
                    @symbol : Char?,
-                   @kind : Kind,
+                   @kind : Residue::Kind,
                    atom_types : Array(AtomType),
                    bonds : Array(Bond),
                    @link_bond : Bond? = nil,
