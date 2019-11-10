@@ -163,19 +163,21 @@ describe Chem::Spatial::Vector do
 
   describe "#normalize" do
     it "returns the unit vector" do
-      v1.normalize.should eq Vector[0.6, 0.8, 0]
+      v1.normalize.should be_close Vector[0.6, 0.8, 0], 1e-15
+    end
+  end
+
+  describe "#pad" do
+    it "pads a vector by the given amount" do
+      V[1, 0, 0].pad(2).should eq V[3, 0, 0]
+      V[0.34, 0.16, 0.1].pad(2.5).size.should eq 2.888844441904472
     end
   end
 
   describe "#resize" do
     it "resizes a vector to an arbitrary size" do
-      V[1, 0, 0].resize(to: 5).should eq V[5, 0, 0]
-      (V[1, 1, 0] * 4.2).resize(to: 1).should eq V[Math.sqrt(0.5), Math.sqrt(0.5), 0]
-    end
-
-    it "resizes a vector by the given amount" do
-      V[1, 0, 0].resize(by: 2).should eq V[3, 0, 0]
-      V[0.34, 0.16, 0.1].resize(by: 2.5).size.should eq 2.888844441904472
+      V[1, 0, 0].resize(5).should eq V[5, 0, 0]
+      (V[1, 1, 0] * 4.2).resize(1).should eq V[Math.sqrt(0.5), Math.sqrt(0.5), 0]
     end
   end
 

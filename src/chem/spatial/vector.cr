@@ -121,20 +121,20 @@ module Chem::Spatial
     end
 
     def normalize : self
-      resize to: 1
+      resize 1
     end
 
     def origin? : Bool
       zero?
     end
 
-    def resize(*, by padding : Number) : self
-      resize to: size + padding
+    def pad(padding : Number) : self
+      resize size + padding
     end
 
-    def resize(*, to new_size : Number) : self
+    def resize(new_size : Number) : self
       return dup if zero?
-      self * new_size / size
+      self * (new_size / size)
     end
 
     def rotate(about rotaxis : Vector, by theta : Float64) : self

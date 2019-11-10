@@ -34,7 +34,7 @@ module Chem
 
     {% for name in %w(a b c) %}
       def {{name.id}}=(new_size : Number) : Spatial::Vector
-        self.{{name.id}} = @{{name.id}}.resize to: new_size
+        self.{{name.id}} = @{{name.id}}.resize new_size
       end
 
       def {{name.id}}=(vec : Spatial::Vector) : Spatial::Vector
