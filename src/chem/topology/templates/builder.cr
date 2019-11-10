@@ -10,7 +10,7 @@ module Chem::Topology::Templates
 
     @atom_types = [] of AtomType
     @bonds = [] of Bond
-    @codes = [] of String
+    @names = [] of String
     @link_bond : Bond?
     @description : String?
     @root : AtomType?
@@ -33,26 +33,26 @@ module Chem::Topology::Templates
 
     def build : ResidueType
       fatal "Missing residue name" unless (description = @description)
-      fatal "Missing residue code" if @codes.empty?
+      fatal "Missing residue name" if @names.empty?
       fatal "Missing residue atom names" if @atom_types.empty?
 
       add_missing_hydrogens
       check_valencies!
 
-      ResidueType.new description, @codes.first, @symbol, @kind, @atom_types, @bonds,
+      ResidueType.new description, @names.first, @symbol, @kind, @atom_types, @bonds,
         @link_bond, @root
     end
 
-    def code(code : String)
-      @codes << code
+    def name(name : String)
+      @names << name
     end
 
-    def codes : Array(String)
-      @codes.dup
+    def names : Array(String)
+      @names.dup
     end
 
-    def codes(*codes : String)
-      @codes.concat codes
+    def names(*names : String)
+      @names.concat names
     end
 
     def cycle(spec : String)

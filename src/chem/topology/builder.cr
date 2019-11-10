@@ -301,7 +301,7 @@ module Chem::Topology
       detector.each_match(atoms.dup) do |res_t, atom_map|
         names = res_t.atom_names
 
-        residues << (residue = Residue.new res_t.code, residues.size + 1, chain)
+        residues << (residue = Residue.new res_t.name, residues.size + 1, chain)
         residue.kind = Residue::Kind.from_value res_t.kind.to_i
         atom_map.to_a.sort_by! { |_, k| names.index(k) || 99 }.each do |atom, name|
           atom.name = name

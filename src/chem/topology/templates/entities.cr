@@ -84,7 +84,7 @@ module Chem::Topology::Templates
     @atom_types : Array(AtomType)
     @bonds : Array(Bond)
 
-    getter code : String
+    getter name : String
     getter kind : Residue::Kind
     getter link_bond : Bond?
     getter description : String
@@ -92,7 +92,7 @@ module Chem::Topology::Templates
     getter symbol : Char?
 
     def initialize(@description : String,
-                   @code : String,
+                   @name : String,
                    @symbol : Char?,
                    @kind : Residue::Kind,
                    atom_types : Array(AtomType),

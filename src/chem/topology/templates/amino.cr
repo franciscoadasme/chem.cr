@@ -1,14 +1,14 @@
 module Chem::Topology::Templates
   aminoacid do
     description "Alanine"
-    code "ALA"
+    name "ALA"
     symbol 'A'
     sidechain "CB"
   end
 
   aminoacid do
     description "Arginine"
-    code "ARG"
+    name "ARG"
     symbol 'R'
     sidechain do
       main "CB-CG-CD-NE-CZ=NH1"
@@ -18,7 +18,7 @@ module Chem::Topology::Templates
 
   aminoacid do
     description "Aspartate"
-    code "ASH"
+    name "ASH"
     symbol 'D'
     sidechain do
       main "CB-CG=OD1"
@@ -28,7 +28,7 @@ module Chem::Topology::Templates
 
   aminoacid do
     description "Asparagine"
-    code "ASN"
+    name "ASN"
     symbol 'N'
     sidechain do
       main "CB-CG-ND2"
@@ -38,7 +38,7 @@ module Chem::Topology::Templates
 
   aminoacid do
     description "Aspartate"
-    code "ASP"
+    name "ASP"
     symbol 'D'
     sidechain do
       main "CB-CG=OD1"
@@ -48,21 +48,21 @@ module Chem::Topology::Templates
 
   aminoacid do
     description "Cysteine"
-    code "CYS"
+    name "CYS"
     symbol 'C'
     sidechain "CB-SG"
   end
 
   aminoacid do
     description "Cysteine"
-    code "CYX"
+    name "CYX"
     symbol 'C'
     sidechain "CB-SG(1)"
   end
 
   aminoacid do
     description "Glutamate"
-    code "GLH"
+    name "GLH"
     symbol 'E'
     sidechain do
       main "CB-CG-CD=OE1"
@@ -72,7 +72,7 @@ module Chem::Topology::Templates
 
   aminoacid do
     description "Glutamine"
-    code "GLN"
+    name "GLN"
     symbol 'Q'
     sidechain do
       main "CB-CG-CD=OE1"
@@ -82,7 +82,7 @@ module Chem::Topology::Templates
 
   aminoacid do
     description "Glutamate"
-    code "GLU"
+    name "GLU"
     symbol 'E'
     sidechain do
       main "CB-CG-CD=OE1"
@@ -92,14 +92,14 @@ module Chem::Topology::Templates
 
   aminoacid do
     description "Glycine"
-    code "GLY"
+    name "GLY"
     symbol 'G'
     remove_atom "HA"
   end
 
   aminoacid do
     description "Histidine"
-    code "HIS"
+    name "HIS"
     symbol 'H'
     sidechain do
       main "CB-CG"
@@ -109,7 +109,7 @@ module Chem::Topology::Templates
 
   aminoacid do
     description "Histidine"
-    code "HIE"
+    name "HIE"
     symbol 'H'
     sidechain do
       main "CB-CG"
@@ -119,7 +119,7 @@ module Chem::Topology::Templates
 
   aminoacid do
     description "Histidine"
-    code "HIP"
+    name "HIP"
     symbol 'H'
     sidechain do
       main "CB-CG"
@@ -129,7 +129,7 @@ module Chem::Topology::Templates
 
   aminoacid do
     description "Isoleucine"
-    code "ILE"
+    name "ILE"
     symbol 'I'
     sidechain do
       main "CB-CG1-CD"
@@ -139,7 +139,7 @@ module Chem::Topology::Templates
 
   aminoacid do
     description "Leucine"
-    code "LEU"
+    name "LEU"
     symbol 'L'
     sidechain do
       main "CB-CG-CD1"
@@ -149,21 +149,21 @@ module Chem::Topology::Templates
 
   aminoacid do
     description "Lysine"
-    code "LYS"
+    name "LYS"
     symbol 'K'
     sidechain "CB-CG-CD-CE-NZ+"
   end
 
   aminoacid do
     description "Methionine "
-    code "MET"
+    name "MET"
     symbol 'M'
     sidechain "CB-CG-SD-CE"
   end
 
   aminoacid do
     description "Phenylalanine"
-    code "PHE"
+    name "PHE"
     symbol 'F'
     sidechain do
       main "CB-CG"
@@ -173,7 +173,7 @@ module Chem::Topology::Templates
 
   aminoacid do
     description "Proline"
-    code "PRO"
+    name "PRO"
     symbol 'P'
 
     remove_atom "H"
@@ -184,14 +184,14 @@ module Chem::Topology::Templates
 
   aminoacid do
     description "Serine"
-    code "SER"
+    name "SER"
     symbol 'S'
     sidechain "CB-OG"
   end
 
   aminoacid do
     description "Threonine"
-    code "THR"
+    name "THR"
     symbol 'T'
     sidechain do
       main "CB-OG1"
@@ -201,7 +201,7 @@ module Chem::Topology::Templates
 
   aminoacid do
     description "Tryptophan"
-    code "TRP"
+    name "TRP"
     symbol 'W'
     sidechain do
       main "CB-CG"
@@ -212,7 +212,7 @@ module Chem::Topology::Templates
 
   aminoacid do
     description "Tyrosine"
-    code "TYR"
+    name "TYR"
     symbol 'Y'
     sidechain do
       main "CB-CG"
@@ -223,7 +223,7 @@ module Chem::Topology::Templates
 
   aminoacid do
     description "Valine"
-    code "VAL"
+    name "VAL"
     symbol 'V'
     sidechain do
       main "CB-CG1"

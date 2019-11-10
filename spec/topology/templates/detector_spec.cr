@@ -88,18 +88,18 @@ describe Chem::Topology::Templates::Detector do
   end
 end
 
-def residue_matches_helper(path, codes)
+def residue_matches_helper(path, names)
   structure = Chem::Structure.read path
   builder = Chem::Topology::Builder.new structure
   builder.guess_bonds_from_geometry
 
-  templates = codes.map { |code| Chem::Topology::Templates[code] }
+  templates = names.map { |name| Chem::Topology::Templates[name] }
   detector = Chem::Topology::Templates::Detector.new templates
 
   res_idxs = {} of String => Array(Hash(Int32, String))
   detector.each_match(structure) do |res_t, idxs|
-    res_idxs[res_t.code] ||= [] of Hash(Int32, String)
-    res_idxs[res_t.code] << idxs.transform_keys &.serial
+    res_idxs[res_t.name] ||= [] of Hash(Int32, String)
+    res_idxs[res_t.name] << idxs.transform_keys &.serial
   end
   res_idxs
 end

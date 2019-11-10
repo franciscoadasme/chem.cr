@@ -11,20 +11,20 @@ module Chem::Topology::Templates
       {{yield}}
       with builder yield
       residue = builder.build
-      builder.codes.each do |code|
-        raise Error.new "Duplicate residue template #{code}" if TEMPLATES.has_key?(code)
-        TEMPLATES[code] = residue
+      builder.names.each do |name|
+        raise Error.new "Duplicate residue template #{name}" if TEMPLATES.has_key?(name)
+        TEMPLATES[name] = residue
       end
       residue
     end
   end
 
-  def [](code : String) : ResidueType
-    TEMPLATES[code]? || raise Error.new "Unknown residue template #{code}"
+  def [](name : String) : ResidueType
+    TEMPLATES[name]? || raise Error.new "Unknown residue template #{name}"
   end
 
-  def []?(code : String) : ResidueType?
-    TEMPLATES[code]?
+  def []?(name : String) : ResidueType?
+    TEMPLATES[name]?
   end
 
   def all : Array(ResidueType)
