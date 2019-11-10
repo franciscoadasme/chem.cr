@@ -103,6 +103,12 @@ module Chem::Topology::Templates
       @bonds = bonds.dup
     end
 
+    def self.build(kind : Residue::Kind = :other) : self
+      builder = Builder.new kind
+      with builder yield builder
+      builder.build
+    end
+
     def [](atom_name : String) : AtomType
       self[atom_name]? || raise Error.new "Unknown atom type #{atom_name}"
     end

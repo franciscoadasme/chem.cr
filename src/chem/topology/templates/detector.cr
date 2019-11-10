@@ -1,6 +1,6 @@
 module Chem::Topology::Templates
   class Detector
-    CTER_T = Chem::Topology::Templates::Builder.build do
+    CTER_T = ResidueType.build do
       description "C-ter"
       name "CTER"
       code 'c'
@@ -8,7 +8,7 @@ module Chem::Topology::Templates
       branch "C-OXT"
       root "C"
     end
-    CHARGED_CTER_T = Chem::Topology::Templates::Builder.build do
+    CHARGED_CTER_T = ResidueType.build do
       description "Charged C-ter"
       name "CTER"
       code 'c'
@@ -16,14 +16,14 @@ module Chem::Topology::Templates
       branch "C-OXT-"
       root "C"
     end
-    NTER_T = Chem::Topology::Templates::Builder.build do
+    NTER_T = ResidueType.build do
       description "N-ter"
       name "NTER"
       code 'n'
       main "CA-N"
       root "N"
     end
-    CHARGED_NTER_T = Chem::Topology::Templates::Builder.build do
+    CHARGED_NTER_T = ResidueType.build do
       description "Charged N-ter"
       name "NTER"
       code 'n'

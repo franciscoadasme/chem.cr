@@ -7,15 +7,15 @@ module Chem::Topology::Templates
 
   private macro build_method(name, kind = nil)
     def {{name.id}} : ResidueType
-      builder = Builder.new Residue::Kind::{{(kind || name).id.camelcase}}
-      {{yield}}
-      with builder yield
-      residue = builder.build
-      builder.names.each do |name|
-        raise Error.new "Duplicate residue template #{name}" if TEMPLATES.has_key?(name)
-        TEMPLATES[name] = residue
+      ResidueType.build(Residue::Kind::{{(kind || name).id.camelcase}}) do |builder|
+        {{yield}}
+        with builder yield builder
+        residue = builder.build
+        builder.names.each do |name|
+          raise Error.new "Duplicate residue template #{name}" if TEMPLATES.has_key?(name)
+          TEMPLATES[name] = residue
+        end
       end
-      residue
     end
   end
 

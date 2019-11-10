@@ -1,7 +1,6 @@
 require "../spec_helper"
 
 alias Templates = Chem::Topology::Templates
-alias TemplateBuilder = Chem::Topology::Templates::Builder
 alias TemplateError = Chem::Topology::Templates::Error
 
 describe Chem::Topology::Templates::AtomType do
@@ -28,7 +27,7 @@ describe Chem::Topology::Templates::Builder do
     bb_names = ["N", "H", "CA", "HA", "C", "O"]
 
     it "builds a residue without sidechain" do
-      residue = TemplateBuilder.build(:protein) do
+      residue = Templates::ResidueType.build(:protein) do
         description "Glycine"
         name "Gly"
         code 'G'
@@ -41,7 +40,7 @@ describe Chem::Topology::Templates::Builder do
     end
 
     it "builds a residue with short sidechain" do
-      residue = TemplateBuilder.build(:protein) do
+      residue = Templates::ResidueType.build(:protein) do
         description "Alanine"
         name "ALA"
         code 'A'
@@ -54,7 +53,7 @@ describe Chem::Topology::Templates::Builder do
     end
 
     it "builds a residue with branched sidechain" do
-      residue = TemplateBuilder.build(:protein) do
+      residue = Templates::ResidueType.build(:protein) do
         description "Isoleucine"
         name "ILE"
         code 'I'
@@ -72,7 +71,7 @@ describe Chem::Topology::Templates::Builder do
     end
 
     it "builds a positively charged residue" do
-      residue = TemplateBuilder.build(:protein) do
+      residue = Templates::ResidueType.build(:protein) do
         description "Lysine"
         name "LYS"
         code 'K'
@@ -87,7 +86,7 @@ describe Chem::Topology::Templates::Builder do
     end
 
     it "builds a negatively charged residue" do
-      residue = TemplateBuilder.build(:protein) do
+      residue = Templates::ResidueType.build(:protein) do
         description "Aspartate"
         name "ASP"
         code 'D'
@@ -104,7 +103,7 @@ describe Chem::Topology::Templates::Builder do
     end
 
     it "builds a residue with charge +2" do
-      residue = TemplateBuilder.build(:ion) do
+      residue = Templates::ResidueType.build(:ion) do
         description "Magnesium"
         name "MG"
         main "MG+2"
@@ -114,7 +113,7 @@ describe Chem::Topology::Templates::Builder do
     end
 
     it "builds a positively charged residue with one branch in the sidechain" do
-      residue = TemplateBuilder.build(:protein) do
+      residue = Templates::ResidueType.build(:protein) do
         description "Arginine"
         name "ARG"
         code 'R'
@@ -133,7 +132,7 @@ describe Chem::Topology::Templates::Builder do
     end
 
     it "builds a residue with a cyclic sidechain" do
-      residue = TemplateBuilder.build(:protein) do
+      residue = Templates::ResidueType.build(:protein) do
         description "Histidine"
         name "HIS"
         code 'H'
@@ -151,7 +150,7 @@ describe Chem::Topology::Templates::Builder do
     end
 
     it "builds a residue with a cyclic sidechain with terminal bond" do
-      residue = TemplateBuilder.build(:protein) do
+      residue = Templates::ResidueType.build(:protein) do
         description "Histidine"
         name "HIS"
         code 'H'
@@ -169,7 +168,7 @@ describe Chem::Topology::Templates::Builder do
     end
 
     it "builds a residue with a bicyclic sidechain" do
-      residue = TemplateBuilder.build(:protein) do
+      residue = Templates::ResidueType.build(:protein) do
         description "Tryptophan"
         name "TRP"
         code 'W'
@@ -188,7 +187,7 @@ describe Chem::Topology::Templates::Builder do
     end
 
     it "builds a cyclic residue" do
-      residue = TemplateBuilder.build(:protein) do
+      residue = Templates::ResidueType.build(:protein) do
         description "Proline"
         name "PRO"
         code 'P'
@@ -206,7 +205,7 @@ describe Chem::Topology::Templates::Builder do
     end
 
     it "builds a residue having an atom with explicit valency" do
-      residue = TemplateBuilder.build(:protein) do
+      residue = Templates::ResidueType.build(:protein) do
         description "Cysteine"
         name "CYX"
         code 'C'
@@ -219,7 +218,7 @@ describe Chem::Topology::Templates::Builder do
     end
 
     it "builds a residue having an atom with explicit valency followed by a bond" do
-      residue = TemplateBuilder.build(:ion) do
+      residue = Templates::ResidueType.build(:ion) do
         description "Sulfate"
         name "SO4"
         main "S(2)=O1"
@@ -231,7 +230,7 @@ describe Chem::Topology::Templates::Builder do
     end
 
     it "builds a residue having an atom with explicit element" do
-      residue = TemplateBuilder.build(:ion) do
+      residue = Templates::ResidueType.build(:ion) do
         description "Calcium"
         name "CA"
         main "CA[Ca]"
@@ -240,7 +239,7 @@ describe Chem::Topology::Templates::Builder do
     end
 
     it "builds a polymer residue" do
-      residue_t = TemplateBuilder.build(:other) do
+      residue_t = Templates::ResidueType.build(:other) do
         description "Fake"
         name "UNK"
         main "C1-C2-C3"
@@ -254,7 +253,7 @@ describe Chem::Topology::Templates::Builder do
     end
 
     it "builds a rooted residue" do
-      residue_t = TemplateBuilder.build(:other) do
+      residue_t = Templates::ResidueType.build(:other) do
         description "Fake"
         name "UNK"
         main "C1=C2"
@@ -267,7 +266,7 @@ describe Chem::Topology::Templates::Builder do
     end
 
     it "builds a residue with numbered atoms per element" do
-      residue = TemplateBuilder.build(:solvent) do
+      residue = Templates::ResidueType.build(:solvent) do
         description "Glycerol"
         name "GOL"
         main "O1-C1-C2-C3-O3"
@@ -280,7 +279,7 @@ describe Chem::Topology::Templates::Builder do
     end
 
     it "builds a residue with three-letter atom names" do
-      residue = TemplateBuilder.build(:other) do
+      residue = Templates::ResidueType.build(:other) do
         description "C-ter"
         name "CTER"
         main "CA-C=O"
@@ -295,7 +294,7 @@ describe Chem::Topology::Templates::Builder do
       # bond char (-, =, # or @) at the end. In this case, both CE2=CD2 and CD2-CE2 are
       # added
       expect_raises TemplateError, "Bond CD2=CE2 already exists" do
-        TemplateBuilder.build(:protein) do
+        Templates::ResidueType.build(:protein) do
           description "Tryptophan"
           name "TRP"
           code 'W'
@@ -310,7 +309,7 @@ describe Chem::Topology::Templates::Builder do
     it "fails on incorrect valency" do
       msg = "Atom type CG has incorrect valency (5), expected 4"
       expect_raises TemplateError, msg do
-        TemplateBuilder.build(:protein) do
+        Templates::ResidueType.build(:protein) do
           description "Tryptophan"
           name "TRP"
           code 'W'
@@ -325,7 +324,7 @@ describe Chem::Topology::Templates::Builder do
     it "fails when adding a branch without existing root" do
       msg = "Branch must start with an existing atom type, got CB"
       expect_raises TemplateError, msg do
-        TemplateBuilder.build(:protein) { branch "CB-CG2" }
+        Templates::ResidueType.build(:protein) { branch "CB-CG2" }
       end
     end
   end
