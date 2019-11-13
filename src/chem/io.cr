@@ -1,14 +1,7 @@
 require "./io/builder"
 require "./io/converter"
-require "./io/file_format"
-require "./io/file_type"
 require "./io/parser"
-
-require "./io/dftb"
-require "./io/mol2"
-require "./io/pdb"
-require "./io/vasp"
-require "./io/xyz"
+require "./io/formats"
 
 module Chem::IO
   struct Location

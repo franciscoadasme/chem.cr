@@ -1,4 +1,8 @@
 module Chem::IO
+  # format : String
+  # ext : Array(Tuple(String, Symbol))
+  annotation FileType; end
+
   macro finished
     enum FileFormat
       {% builders = Builder.subclasses.select &.annotation(FileType) %}
@@ -93,3 +97,5 @@ module Chem::IO
     end
   end
 end
+
+require "./formats/*"
