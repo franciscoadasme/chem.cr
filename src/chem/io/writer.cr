@@ -1,9 +1,7 @@
-module Chem::IO
-  abstract class Writer
+module Chem
+  abstract class IO::Writer
     property? sync_close = false
     getter? closed = false
-
-    abstract def write(atoms : AtomCollection) : Nil
 
     def initialize(@io : ::IO, @sync_close : Bool = false)
     end
@@ -33,11 +31,15 @@ module Chem::IO
     end
   end
 
-  macro finished
-    {% for writer in Writer.subclasses.select(&.annotation(FileType)) %}
-      {% format = writer.annotation(FileType)[:format].id.underscore %}
+  abstract class Structure::Writer < IO::Writer
+    abstract def write(atoms : AtomCollection) : Nil
+  end
 
-      module ::Chem::AtomCollection
+  macro finished
+    {% for writer in Structure::Writer.subclasses.select(&.annotation(IO::FileType)) %}
+      {% format = writer.annotation(IO::FileType)[:format].id.underscore %}
+
+      module AtomCollection
         def to_{{format.id}}(**options) : String
           String.build do |io|
             to_{{format.id}} io, **options

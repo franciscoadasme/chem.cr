@@ -5,8 +5,8 @@ module Chem::IO
 
   macro finished
     enum FileFormat
-      {% writers = Writer.subclasses.select &.annotation(FileType) %}
-      {% parsers = Parser.subclasses.select(&.annotation(FileType)) %}
+      {% writers = Writer.all_subclasses.select &.annotation(FileType) %}
+      {% parsers = Parser.all_subclasses.select(&.annotation(FileType)) %}
       {% klasses = parsers + writers %}
       {% file_types = klasses.map &.annotation(IO::FileType) %}
 

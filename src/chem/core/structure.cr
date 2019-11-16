@@ -22,7 +22,7 @@ module Chem
     end
 
     macro finished
-      {% for parser in IO::Parser.subclasses.select(&.annotation(IO::FileType)) %}
+      {% for parser in Parser.subclasses.select(&.annotation(IO::FileType)) %}
         {% format = parser.annotation(IO::FileType)[:format].id.underscore %}
 
         def self.from_{{format.id}}(input : ::IO | Path | String, **options) : self
@@ -36,7 +36,7 @@ module Chem
       path = Path[path] unless path.is_a?(Path)
       {% begin %}
         case format
-        {% for parser in IO::Parser.subclasses.select(&.annotation(IO::FileType)) %}
+        {% for parser in Parser.subclasses.select(&.annotation(IO::FileType)) %}
           {% format = parser.annotation(IO::FileType)[:format].id.underscore %}
           when .{{format.id}}?
             from_{{format.id}} path

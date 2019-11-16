@@ -1,6 +1,6 @@
 module Chem::DFTB::Gen
   @[IO::FileType(format: Gen, ext: [:gen])]
-  class Writer < IO::Writer
+  class Writer < Structure::Writer
     def initialize(io : ::IO, @fractional : Bool = false, sync_close : Bool = false)
       super io, sync_close
     end
@@ -38,7 +38,7 @@ module Chem::DFTB::Gen
   end
 
   @[IO::FileType(format: Gen, ext: [:gen])]
-  class Parser < IO::Parser
+  class Parser < Structure::Parser
     include IO::PullParser
 
     @elements = [] of Element

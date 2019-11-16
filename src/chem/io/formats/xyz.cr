@@ -1,6 +1,6 @@
 module Chem::XYZ
   @[IO::FileType(format: XYZ, ext: [:xyz])]
-  class Writer < IO::Writer
+  class Writer < Structure::Writer
     def write(atoms : AtomCollection, title : String = "") : Nil
       check_open
 
@@ -17,7 +17,7 @@ module Chem::XYZ
   end
 
   @[IO::FileType(format: XYZ, ext: [:xyz])]
-  class Parser < IO::Parser
+  class Parser < Structure::Parser
     include IO::PullParser
 
     def next : Structure | Iterator::Stop

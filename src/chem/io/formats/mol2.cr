@@ -6,7 +6,7 @@ module Chem::Mol2
   end
 
   @[IO::FileType(format: Mol2, ext: [:mol2])]
-  class Writer < IO::Writer
+  class Writer < Structure::Writer
     def initialize(io : ::IO, sync_close : Bool = false)
       super io, sync_close
       @atom_table = {} of Atom => Int32
@@ -101,7 +101,7 @@ module Chem::Mol2
   end
 
   @[IO::FileType(format: Mol2, ext: [:mol2])]
-  class Parser < IO::Parser
+  class Parser < Structure::Parser
     include IO::PullParser
 
     def next : Structure | Iterator::Stop

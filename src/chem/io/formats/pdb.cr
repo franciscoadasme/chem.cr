@@ -56,7 +56,7 @@ module Chem::PDB
   end
 
   @[IO::FileType(format: PDB, ext: [:pdb])]
-  class Writer < IO::Writer
+  class Writer < Structure::Writer
     PDB_VERSION      = "3.30"
     PDB_VERSION_DATE = Time.local 2011, 7, 13
     WHITESPACE       = ' '
@@ -226,7 +226,7 @@ module Chem::PDB
   end
 
   @[IO::FileType(format: PDB, ext: [:ent, :pdb])]
-  class Parser < IO::Parser
+  class Parser < Structure::Parser
     include IO::ColumnBasedParser
 
     @pdb_bonds = Hash(Tuple(Int32, Int32), Int32).new 0

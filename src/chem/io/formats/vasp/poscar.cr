@@ -1,6 +1,6 @@
 module Chem::VASP::Poscar
   @[IO::FileType(format: Poscar, ext: [:poscar])]
-  class Writer < IO::Writer
+  class Writer < Structure::Writer
     def initialize(io : ::IO,
                    order @ele_order : Array(Element)? = nil,
                    @fractional : Bool = false,
@@ -77,7 +77,7 @@ module Chem::VASP::Poscar
   end
 
   @[IO::FileType(format: Poscar, ext: [:poscar])]
-  class Parser < IO::Parser
+  class Parser < Structure::Parser
     include IO::PullParser
 
     @elements = [] of Element
