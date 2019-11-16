@@ -6,55 +6,97 @@ module Chem::Mol2
   end
 
   @[IO::FileType(format: Mol2, ext: [:mol2])]
-  class Builder < IO::Builder
-    setter atoms = 0
-    setter bonds = 0
-    setter residues = 0
-    setter title = ""
-
-    def initialize(@io : ::IO)
-      @atom_index_table = {} of Int32 => Int32
-      @bond_index = 0
-      @resnum_table = {} of Int32 => Int32
+  class Writer < IO::Writer
+    def initialize(io : ::IO, sync_close : Bool = false)
+      super io, sync_close
+      @atom_table = {} of Atom => Int32
+      @res_table = {} of Residue => Int32
     end
 
-    def atom_index(atom : Atom) : Int32
-      @atom_index_table[atom.serial] ||= @atom_index_table.size + 1
+    def write(atoms : AtomCollection) : Nil
+      check_open
+      reset_index
+      write_header "",
+        atoms.n_atoms,
+        atoms.bonds.size,
+        atoms.each_atom.map(&.residue).uniq.sum { 1 }
+      section "atom" { atoms.each_atom { |atom| write atom } }
+      section "bond" { atoms.bonds.each_with_index { |bond, i| write bond, i + 1 } }
     end
 
-    def next_bond_index : Int32
-      @bond_index += 1
+    def write(structure : Structure) : Nil
+      check_open
+      reset_index
+      write_header structure.title,
+        structure.n_atoms,
+        structure.bonds.size,
+        structure.n_residues
+      section "atom" { structure.each_atom { |atom| write atom } }
+      section "bond" { structure.bonds.each_with_index { |bond, i| write bond, i + 1 } }
+      section "substructure" { structure.each_residue { |res| write res } }
     end
 
-    def residue_index(residue : Residue) : Int32
-      @resnum_table[residue.number] ||= @resnum_table.size + 1
+    private def atom_index(atom : Atom) : Int32
+      @atom_table[atom] ||= @atom_table.size + 1
     end
 
-    def object_header : Nil
-      @atom_index_table.clear
-      @bond_serial = 0
-      @resnum_table.clear
-
-      section "molecule" do
-        string @title
-        newline
-        number @atoms, width: 5
-        number @bonds, width: 5
-        number @residues, width: 4
-        newline
-        string "UNKNOWN"
-        newline
-        string "USER_CHARGES"
-        newline
-      end
+    private def reset_index
+      @atom_table.clear
+      @res_table.clear
     end
 
-    def section(name : String, &block : ->) : Nil
-      string "@<TRIPOS>"
-      string name.upcase
-      newline
+    private def residue_index(residue : Residue) : Int32
+      @res_table[residue] ||= @res_table.size + 1
+    end
+
+    private def section(name : String, &block : ->)
+      @io << "@<TRIPOS>" << name.upcase << '\n'
       yield
-      newline
+      @io.puts
+    end
+
+    private def write(atom : Atom)
+      @io.printf "%5d %-4s%10.4f%10.4f%10.4f %-4s%4d %3s%-4d%8.4f\n",
+        atom_index(atom),
+        atom.name,
+        atom.x,
+        atom.y,
+        atom.z,
+        atom.element.symbol,
+        residue_index(atom.residue),
+        atom.residue.name,
+        atom.residue.number,
+        atom.partial_charge
+    end
+
+    private def write(bond : Bond, i : Int32)
+      @io.printf "%5d%5d%5d%2d\n",
+        i,
+        atom_index(bond.first),
+        atom_index(bond.second),
+        bond.order
+    end
+
+    private def write(residue : Residue)
+      @io.printf "%4d %-3s%-4d %5d %-8s %1d %1s %3s %2d\n",
+        residue_index(residue),
+        residue.name[..2],
+        residue.number,
+        1,         # root_atom
+        "RESIDUE", # subst_type
+        1,         # dict_type
+        residue.chain.id,
+        residue.name[..2],
+        residue.bonds.size # inter_bonds
+    end
+
+    private def write_header(title, n_atoms, n_bonds, n_residues)
+      section "molecule" do
+        @io.puts title.gsub(/ *\n */, ' ')
+        @io.printf "%5d%5d%4d\n", n_atoms, n_bonds, n_residues
+        @io.puts "UNKNOWN"
+        @io.puts "USER_CHARGES"
+      end
     end
   end
 
@@ -171,100 +213,6 @@ module Chem::Mol2
         break if record? type
         skip_line
       end
-    end
-  end
-
-  def self.build(**options) : String
-    String.build do |io|
-      build(io, **options) do |mol2|
-        yield mol2
-      end
-    end
-  end
-
-  def self.build(io : ::IO, **options) : Nil
-    builder = Builder.new io, **options
-    builder.document do
-      yield builder
-    end
-  end
-end
-
-module Chem
-  class Atom
-    def to_mol2(mol2 : Mol2::Builder) : Nil
-      mol2.number mol2.atom_index(self), width: 5
-      mol2.space
-      mol2.string name, width: 4
-      coords.to_mol2 mol2
-      mol2.space
-      element.to_mol2 mol2 # atom_type
-      mol2.number mol2.residue_index(residue), width: 4
-      mol2.space
-      mol2.string residue.name, width: 3
-      mol2.number residue.number, alignment: :left, width: 4
-      mol2.number partial_charge, precision: 4, width: 8
-      mol2.newline
-    end
-  end
-
-  module AtomCollection
-    def to_mol2(mol2 : Mol2::Builder) : Nil
-      mol2.atoms = n_atoms
-      mol2.bonds = bonds.size
-      mol2.residues = n_residues
-      mol2.title = title
-
-      mol2.object do
-        mol2.section "atom" { each_atom &.to_mol2(mol2) }
-        mol2.section "bond" { bonds.each &.to_mol2(mol2) }
-        mol2.section "substructure" { each_residue &.to_mol2(mol2) }
-      end
-    end
-  end
-
-  class Bond
-    def to_mol2(mol2 : Mol2::Builder) : Nil
-      mol2.number mol2.next_bond_index, width: 5
-      mol2.number mol2.atom_index(first), width: 5
-      mol2.number mol2.atom_index(second), width: 5
-      mol2.number order, width: 2
-      mol2.newline
-    end
-  end
-
-  class Element
-    def to_mol2(mol2 : Mol2::Builder) : Nil
-      mol2.string @symbol, width: 4
-    end
-  end
-
-  class Residue
-    def to_mol2(mol2 : Mol2::Builder) : Nil
-      mol2.number mol2.residue_index(self), width: 4
-      mol2.space
-      mol2.string name[..2], width: 3
-      mol2.number number, alignment: :left, width: 4
-      mol2.space
-      mol2.number 1, width: 5 # root_atom
-      mol2.space
-      mol2.string "RESIDUE" # subst_type
-      mol2.space
-      mol2.number 1 # dict_type
-      mol2.space
-      mol2.string chain.id
-      mol2.space
-      mol2.string name[..2], width: 3
-      mol2.space
-      mol2.number 1 # inter_bonds
-    end
-  end
-
-  struct Spatial::Vector
-    def to_mol2(mol2 : Mol2::Builder) : Nil
-      mol2.number x, precision: 4, width: 10
-      mol2.number y, precision: 4, width: 10
-      mol2.number z, precision: 4, width: 10
     end
   end
 end

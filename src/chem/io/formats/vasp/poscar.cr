@@ -1,46 +1,78 @@
 module Chem::VASP::Poscar
   @[IO::FileType(format: Poscar, ext: [:poscar])]
-  class Builder < IO::Builder
-    property? constraints = false
-    property? fractional : Bool
-    setter order : Array(Element)
-    property? wrap : Bool
-    setter title = ""
-
-    def initialize(@io : ::IO,
-                   @order : Array(Element) = [] of Element,
+  class Writer < IO::Writer
+    def initialize(io : ::IO,
+                   order @ele_order : Array(Element)? = nil,
                    @fractional : Bool = false,
+                   sync_close : Bool = false,
                    @wrap : Bool = false)
-      @ele_table = Hash(Element, Int32).new default_value: 0
+      super io, sync_close
     end
 
-    def element_index(ele : Element) : Int32
-      index = @order.index ele
-      raise Error.new "Missing #{ele.symbol} in element order" unless index
-      index
-    end
+    def write(atoms : AtomCollection, lattice : Lattice? = nil, title : String = "") : Nil
+      check_open
+      raise Spatial::NotPeriodicError.new unless lattice
 
-    def elements=(elements : Enumerable(Element)) : Nil
-      @ele_table.clear
-      elements.each { |ele| @ele_table[ele] += 1 }
-      @order = @ele_table.each_key.uniq.to_a if @order.empty?
-    end
+      coordinate_system = @fractional ? "Direct" : "Cartesian"
+      ele_table = count_elements atoms
+      has_constraints = atoms.each_atom.any? &.constraint
 
-    def object_header : Nil
-      @order.each &.to_poscar(self)
-      newline
-      @order.each { |ele| number @ele_table[ele], width: 6 }
-      newline
-      if constraints?
-        string "Selective dynamics"
-        newline
+      @io.puts title.gsub(/ *\n */, ' ')
+      write lattice
+      write_elements ele_table
+      @io.puts "Selective dynamics" if has_constraints
+      @io.puts coordinate_system
+
+      ele_table.each_key do |ele|
+        atoms.each_atom.select(&.element.==(ele)).each do |atom|
+          vec = atom.coords
+          if @fractional
+            vec = vec.to_fractional lattice
+            vec = vec.wrap if @wrap
+          elsif @wrap
+            vec = vec.wrap lattice
+          end
+
+          @io.printf "%22.16f%22.16f%22.16f", vec.x, vec.y, vec.z
+          write atom.constraint || Constraint::None if has_constraints
+          @io.puts
+        end
       end
-      string coordinate_system
-      newline
     end
 
-    private def coordinate_system : String
-      fractional? ? "Direct" : "Cartesian"
+    def write(structure : Structure) : Nil
+      write structure, structure.lattice, structure.title
+    end
+
+    private def count_elements(atoms : AtomCollection) : Hash(Element, Int32)
+      ele_table = atoms.each_atom.map(&.element).tally
+      if ele_order = @ele_order
+        if ele = ele_table.keys.find { |ele| !ele_order.includes? ele }
+          raise Error.new "Missing #{ele.symbol} in element order"
+        end
+        ele_table = ele_order.map { |ele| {ele, ele_table[ele]} }.to_h
+      end
+      ele_table
+    end
+
+    private def write(constraint : Constraint) : Nil
+      {:x, :y, :z}.each do |axis|
+        @io.printf "%4s", constraint.includes?(axis) ? 'F' : 'T'
+      end
+    end
+
+    private def write(lattice : Lattice) : Nil
+      @io.printf " %18.14f\n", 1.0
+      {lattice.a, lattice.b, lattice.c}.each do |vec|
+        @io.printf " %22.16f%22.16f%22.16f\n", vec.x, vec.y, vec.z
+      end
+    end
+
+    private def write_elements(ele_table) : Nil
+      ele_table.each_key { |ele| @io.printf "%5s", ele.symbol.ljust(2) }
+      @io.puts
+      ele_table.each_value { |count| @io.printf "%6d", count }
+      @io.puts
     end
   end
 
@@ -155,86 +187,6 @@ module Chem::VASP::Poscar
       when {true, false, false}  then Constraint::YZ
       when {false, false, false} then Constraint::XYZ
       else                            raise "BUG: unreachable"
-      end
-    end
-  end
-
-  def self.build(**options) : String
-    String.build do |io|
-      build(io, **options) do |poscar|
-        yield poscar
-      end
-    end
-  end
-
-  def self.build(io : ::IO, **options) : Nil
-    builder = Builder.new io, **options
-    builder.document do
-      yield builder
-    end
-  end
-end
-
-module Chem
-  class Atom
-    def to_poscar(poscar : VASP::Poscar::Builder) : Nil
-      poscar.convert(coords).to_poscar poscar
-      (constraint || Constraint::None).to_poscar poscar
-      poscar.newline
-    end
-  end
-
-  enum Constraint
-    def to_poscar(poscar : VASP::Poscar::Builder) : Nil
-      return unless poscar.constraints?
-      {:x, :y, :z}.each do |axis|
-        poscar.string includes?(axis) ? 'F' : 'T', alignment: :right, width: 4
-      end
-    end
-  end
-
-  class Lattice
-    def to_poscar(poscar : VASP::Poscar::Builder) : Nil
-      poscar.space
-      poscar.number 1.0, precision: 14, width: 18
-      poscar.newline
-      {a, b, c}.each do |vec|
-        poscar.space
-        vec.to_poscar poscar
-        poscar.newline
-      end
-    end
-  end
-
-  class Element
-    def to_poscar(poscar : VASP::Poscar::Builder) : Nil
-      poscar.string symbol.ljust(2), alignment: :right, width: 5
-    end
-  end
-
-  struct Spatial::Vector
-    def to_poscar(poscar : VASP::Poscar::Builder) : Nil
-      poscar.number x, precision: 16, width: 22
-      poscar.number y, precision: 16, width: 22
-      poscar.number z, precision: 16, width: 22
-    end
-  end
-
-  class Structure
-    def to_poscar(poscar : VASP::Poscar::Builder) : Nil
-      raise Spatial::NotPeriodicError.new unless lat = lattice
-
-      poscar.constraints = each_atom.any? &.constraint
-      poscar.converter = Spatial::Vector::FractionalConverter.new lat, poscar.wrap? if poscar.fractional?
-      poscar.elements = each_atom.map &.element
-
-      poscar.string title.gsub(/ *\n */, ' ')
-      poscar.newline
-      lattice.try &.to_poscar(poscar)
-      poscar.object do
-        atoms.to_a
-          .sort_by! { |atom| {poscar.element_index(atom.element), atom.serial} }
-          .each &.to_poscar(poscar)
       end
     end
   end

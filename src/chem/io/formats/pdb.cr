@@ -56,31 +56,119 @@ module Chem::PDB
   end
 
   @[IO::FileType(format: PDB, ext: [:pdb])]
-  class Builder < IO::Builder
+  class Writer < IO::Writer
     PDB_VERSION      = "3.30"
     PDB_VERSION_DATE = Time.local 2011, 7, 13
+    WHITESPACE       = ' '
 
-    setter bonds : Bool | Array(Bond)
-    setter experiment : Structure::Experiment?
-    property? renumber : Bool
-    setter title = ""
+    @atom_index_table = {} of Int32 => Int32
+    @record_index = 0
+    @model = 0
 
-    @atom_index_table : Hash(Int32, Int32)?
-
-    def initialize(@io : ::IO,
+    def initialize(io : ::IO,
                    @bonds : Bool | Array(Bond) = false,
-                   @renumber : Bool = true)
-      @atom_index = 0
+                   @renumber : Bool = true,
+                   sync_close : Bool = false)
+      super io, sync_close
     end
 
-    def bonds : Nil
+    def close : Nil
+      write_bonds
+      @io.printf "%-80s\n", "END"
+      super
+    end
+
+    def write(atoms : AtomCollection) : Nil
+      check_open
+      @record_index = 0
+      @bonds = atoms.bonds if @bonds == true
+
+      write_pdb_version if @model == 0
+
+      atoms.each_atom { |atom| write atom }
+
+      @model += 1
+    end
+
+    def write(structure : Structure) : Nil
+      check_open
+      @record_index = 0
+      @bonds = structure.bonds if @bonds == true
+
+      write_header structure if @model == 0
+
+      structure.each_chain do |chain|
+        p_res = nil
+        chain.each_residue do |residue|
+          residue.each_atom { |atom| write atom }
+          p_res = residue
+        end
+        write_ter p_res if p_res && p_res.polymer?
+      end
+
+      @model += 1
+    end
+
+    private def index(atom : Atom) : Int32
+      idx = next_index
+      @atom_index_table[atom.serial] = idx if @bonds
+      idx
+    end
+
+    private def next_index : Int32
+      @record_index += 1
+    end
+
+    private def write(atom : Atom) : Nil
+      @io.printf "%-6s%5s %4s %3s %s%4s%1s   %8.3f%8.3f%8.3f%6.2f%6.2f          %2s%2s\n",
+        (atom.residue.protein? ? "ATOM" : "HETATM"),
+        PDB::Hybrid36.encode(@renumber ? index(atom) : atom.serial, width: 5),
+        atom.name.ljust(3),
+        atom.residue.name,
+        atom.chain.id,
+        PDB::Hybrid36.encode(atom.residue.number, width: 4),
+        atom.residue.insertion_code,
+        atom.x,
+        atom.y,
+        atom.z,
+        atom.occupancy,
+        atom.temperature_factor,
+        atom.element.symbol,
+        (sprintf("%+d", atom.formal_charge).reverse if atom.formal_charge != 0)
+    end
+
+    private def write(expt : Structure::Experiment) : Nil
+      raw_method = expt.method.to_s.underscore.upcase.gsub('_', ' ').gsub "X RAY", "X-RAY"
+
+      @io.printf "HEADER    %40s%9s   %4s              \n",
+        WHITESPACE, # classification
+        expt.deposition_date.to_s("%d-%^b-%y"),
+        expt.pdb_accession.upcase
+      write_title expt.title
+      @io.printf "EXPDTA    %-70s\n", raw_method
+      @io.printf "JRNL        DOI    %-61s\n", expt.doi.not_nil! if expt.doi
+    end
+
+    private def write(lattice : Lattice) : Nil
+      @io.printf "CRYST1%9.3f%9.3f%9.3f%7.2f%7.2f%7.2f %-11s%4d          \n",
+        lattice.a.size,
+        lattice.b.size,
+        lattice.c.size,
+        lattice.alpha,
+        lattice.beta,
+        lattice.gamma,
+        "P 1", # default space group
+        1      # default Z value
+    end
+
+    private def write_bonds : Nil
       return unless (bonds = @bonds).is_a?(Array(Bond))
 
       idx_pairs = Array(Tuple(Int32, Int32)).new bonds.size
       bonds.each do |bond|
         i = bond.first.serial
         j = bond.second.serial
-        i, j = atom_index_table[i], atom_index_table[j] if renumber?
+        i, j = @atom_index_table[i], @atom_index_table[j] if @renumber
         bond.order.clamp(1..3).times do
           idx_pairs << {i, j} << {j, i}
         end
@@ -96,87 +184,44 @@ module Chem::PDB
       end
     end
 
-    def bonds? : Bool
-      @bonds == true
-    end
-
-    def document_footer : Nil
-      string "END", width: 80
-      newline
-    end
-
-    def document_header : Nil
-      @experiment.try &.to_pdb(self)
-      title @title unless @experiment || @title.blank?
-      pdb_version
-    end
-
-    def index(atom : Atom) : Int32
-      idx = next_index
-      atom_index_table[atom.serial] = idx if @bonds
-      idx
-    end
-
-    def object_footer : Nil
-      bonds
-    end
-
-    def pdb_version : Nil
-      string "REMARK"
-      space
-      number 4, width: 3
-      space 70
-      newline
-
-      string "REMARK"
-      space
-      number 4, width: 3
-      space
-      string (@experiment.try(&.pdb_accession.upcase) || ""), width: 4
-      string " COMPLIES WITH FORMAT V. "
-      string PDB_VERSION, width: 4
-      string ','
-      space
-      PDB_VERSION_DATE.to_pdb self
-      space 25
-      newline
-    end
-
-    def ter(residue : Residue) : Nil
-      string "TER", width: 6
-      renumber? ? number(next_index, width: 5) : space(5)
-      space 6
-      string residue.name, width: 3
-      space
-      string residue.chain.id
-      number residue.number, width: 4
-      string residue.insertion_code || ' '
-      space 53
-      newline
-    end
-
-    def title(str : String) : Nil
-      str.scan(/.{1,70}( |$)/).each_with_index do |match, i|
-        string "TITLE", width: 6
-        space 2
-        if i > 0
-          number i + 1, width: 2
-          space
-          string match[0].strip, width: 69
-        else
-          space 2
-          string match[0].strip, width: 70
-        end
-        newline
+    private def write_header(structure : Structure) : Nil
+      if expt = structure.experiment
+        write expt
+      else
+        write_title structure.title unless structure.title.blank?
       end
+      write_pdb_version structure.experiment.try(&.pdb_accession)
+      write structure.lattice.not_nil! if structure.lattice
     end
 
-    private def atom_index_table : Hash(Int32, Int32)
-      @atom_index_table ||= {} of Int32 => Int32
+    private def write_pdb_version(pdb_accession : String? = nil) : Nil
+      @io.printf "REMARK   4%-70s\n", WHITESPACE
+      @io.printf "REMARK   4 %4s COMPLIES WITH FORMAT V. %4s, %9s%25s\n",
+        pdb_accession.try(&.upcase),
+        PDB_VERSION,
+        PDB_VERSION_DATE.to_s("%d-%^b-%y"),
+        WHITESPACE
     end
 
-    private def next_index : Int32
-      @atom_index += 1
+    private def write_ter(prev_res : Residue) : Nil
+      @io.printf "TER   %5d      %3s %s%4d%1s%53s\n",
+        @renumber ? next_index.to_s : WHITESPACE,
+        prev_res.name,
+        prev_res.chain.id,
+        prev_res.number,
+        prev_res.insertion_code,
+        WHITESPACE
+    end
+
+    private def write_title(str : String) : Nil
+      str.scan(/.{1,70}( |$)/).each_with_index do |match, i|
+        @io << "TITLE   "
+        if i > 0
+          @io.printf "%2d %-69s\n", i + 1, match[0]
+        else
+          @io.printf "  %-70s\n", match[0]
+        end
+      end
     end
   end
 
@@ -520,146 +565,5 @@ module Chem::PDB
       type : Protein::SecondaryStructure,
       start : ResidueId,
       end : ResidueId
-  end
-
-  def self.build(**options) : String
-    String.build do |io|
-      build(io, **options) do |poscar|
-        yield poscar
-      end
-    end
-  end
-
-  def self.build(io : ::IO, **options) : Nil
-    builder = Builder.new io, **options
-    builder.document do
-      yield builder
-    end
-  end
-end
-
-module Chem
-  class Atom
-    def to_pdb(pdb : PDB::Builder) : Nil
-      pdb.string (residue.protein? ? "ATOM" : "HETATM"), width: 6
-      pdb.string PDB::Hybrid36.encode(pdb.renumber? ? pdb.index(self) : serial, width: 5)
-      pdb.space
-      pdb.string name.ljust(3).rjust(4)
-      pdb.space
-      pdb.string residue.name, width: 3
-      pdb.space
-      pdb.string chain.id
-      pdb.string PDB::Hybrid36.encode(residue.number, width: 4)
-      pdb.string residue.insertion_code || ' '
-      pdb.space 3
-      coords.to_pdb pdb
-      pdb.number occupancy, precision: 2, width: 6
-      pdb.number temperature_factor, precision: 2, width: 6
-      pdb.space 10
-      element.to_pdb pdb
-      if formal_charge != 0
-        pdb.string sprintf("%+d", formal_charge).reverse
-      else
-        pdb.space 2
-      end
-      pdb.newline
-    end
-  end
-
-  module AtomCollection
-    def to_pdb(pdb : PDB::Builder) : Nil
-      pdb.bonds = bonds if pdb.bonds?
-      pdb.object do
-        each_atom &.to_pdb(pdb)
-      end
-    end
-  end
-
-  class Element
-    def to_pdb(pdb : PDB::Builder) : Nil
-      pdb.string symbol, alignment: :right, width: 2
-    end
-  end
-
-  class Lattice
-    def to_pdb(pdb : PDB::Builder) : Nil
-      pdb.string "CRYST1"
-      pdb.number a.size, precision: 3, width: 9
-      pdb.number b.size, precision: 3, width: 9
-      pdb.number c.size, precision: 3, width: 9
-      pdb.number alpha, precision: 2, width: 7
-      pdb.number beta, precision: 2, width: 7
-      pdb.number gamma, precision: 2, width: 7
-      pdb.space
-      pdb.string "P 1", width: 11 # default space group
-      pdb.number 1, width: 4      # default Z value
-      pdb.space 10
-      pdb.newline
-    end
-  end
-
-  class Structure
-    def to_pdb(pdb : PDB::Builder) : Nil
-      pdb.bonds = bonds if pdb.bonds?
-      pdb.experiment = experiment
-      pdb.title = title
-
-      p_ch = nil
-      p_res = nil
-      pdb.object do
-        lattice.try &.to_pdb(pdb)
-        each_atom do |atom|
-          pdb.ter p_res if p_ch && p_res && atom.chain != p_ch && p_res.polymer?
-          atom.to_pdb pdb
-          p_res = atom.residue
-          p_ch = atom.chain
-        end
-        pdb.ter p_res if p_res && p_res.polymer?
-      end
-    end
-  end
-
-  struct Structure::Experiment
-    def to_pdb(pdb : PDB::Builder) : Nil
-      pdb.string "HEADER"
-      pdb.space 4
-      pdb.space 40
-      deposition_date.to_pdb pdb
-      pdb.space 3
-      pdb.string pdb_accession.upcase
-      pdb.space 14
-      pdb.newline
-
-      pdb.title title
-
-      raw_method = method.to_s.underscore.upcase.gsub('_', ' ').gsub "X RAY", "X-RAY"
-      pdb.string "EXPDTA"
-      pdb.space 4
-      pdb.string raw_method, width: 70
-      pdb.newline
-
-      if doi = @doi
-        pdb.string "JRNL", width: 6
-        pdb.space 6
-        pdb.string "DOI", width: 4
-        pdb.space 3
-        pdb.string doi, width: 61
-        pdb.newline
-      end
-    end
-  end
-
-  struct Spatial::Vector
-    def to_pdb(pdb : PDB::Builder) : Nil
-      pdb.number x, precision: 3, width: 8
-      pdb.number y, precision: 3, width: 8
-      pdb.number z, precision: 3, width: 8
-    end
-  end
-end
-
-struct Time
-  def to_pdb(pdb : Chem::PDB::Builder) : Nil
-    pdb.string to_s("%d-%^b-%y"), width: 9
   end
 end

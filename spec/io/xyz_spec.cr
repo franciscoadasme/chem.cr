@@ -46,7 +46,7 @@ describe Chem::XYZ::Parser do
   end
 end
 
-describe Chem::XYZ::Builder do
+describe Chem::XYZ::Writer do
   it "writes a structure" do
     structure = Chem::Structure.build do
       title "COO-"
@@ -72,15 +72,16 @@ describe Chem::XYZ::Builder do
       atom :o, V[3, 0, 0]
     end
 
-    xyz = Chem::XYZ.build do |xyz|
+    io = IO::Memory.new
+    Chem::XYZ::Writer.open(io) do |xyz|
       (1..3).each do |i|
         structure.title = "COO- Step #{i}"
         structure.coords.map! &.*(i)
-        structure.to_xyz xyz
+        xyz.write structure
       end
     end
 
-    xyz.should eq <<-EOS
+    io.to_s.should eq <<-EOS
       3
       COO- Step 1
       C          1.00000        0.00000        0.00000

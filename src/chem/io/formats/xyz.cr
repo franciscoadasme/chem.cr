@@ -1,17 +1,18 @@
 module Chem::XYZ
   @[IO::FileType(format: XYZ, ext: [:xyz])]
-  class Builder < IO::Builder
-    setter atoms = 0
-    setter title = ""
+  class Writer < IO::Writer
+    def write(atoms : AtomCollection, title : String = "") : Nil
+      check_open
 
-    def initialize(@io : ::IO)
+      @io.puts atoms.n_atoms
+      @io.puts title.gsub(/ *\n */, ' ')
+      atoms.each_atom do |atom|
+        @io.printf "%-3s%15.5f%15.5f%15.5f\n", atom.element.symbol, atom.x, atom.y, atom.z
+      end
     end
 
-    def object_header : Nil
-      number @atoms
-      newline
-      string @title
-      newline
+    def write(structure : Structure) : Nil
+      write structure, structure.title
     end
   end
 
@@ -44,65 +45,6 @@ module Chem::XYZ
       skip_whitespace
       builder.atom PeriodicTable[scan(&.letter?)], read_vector
       skip_line
-    end
-  end
-
-  def self.build(**options) : String
-    String.build do |io|
-      build(io, **options) do |xyz|
-        yield xyz
-      end
-    end
-  end
-
-  def self.build(io : ::IO, **options) : Nil
-    builder = Builder.new io, **options
-    builder.document do
-      yield builder
-    end
-  end
-end
-
-module Chem
-  class Atom
-    def to_xyz(xyz : XYZ::Builder) : Nil
-      @element.to_xyz xyz
-      @coords.to_xyz xyz
-      xyz.newline
-    end
-  end
-
-  module AtomCollection
-    def to_xyz(xyz : XYZ::Builder) : Nil
-      xyz.atoms = n_atoms
-      xyz.object do
-        each_atom &.to_xyz(xyz)
-      end
-    end
-  end
-
-  class Element
-    def to_xyz(xyz : XYZ::Builder) : Nil
-      xyz.string symbol, width: 3
-    end
-  end
-
-  struct Spatial::Vector
-    def to_xyz(xyz : XYZ::Builder) : Nil
-      xyz.number x, precision: 5, width: 15
-      xyz.number y, precision: 5, width: 15
-      xyz.number z, precision: 5, width: 15
-    end
-  end
-
-  class Structure
-    def to_xyz(xyz : XYZ::Builder) : Nil
-      xyz.atoms = n_atoms
-      xyz.title = title.gsub(/ *\n */, ' ')
-
-      xyz.object do
-        each_atom &.to_xyz(xyz)
-      end
     end
   end
 end

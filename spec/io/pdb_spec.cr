@@ -380,7 +380,7 @@ describe Chem::PDB do
   end
 end
 
-describe Chem::PDB::Builder do
+describe Chem::PDB::Writer do
   it "writes a structure" do
     structure = Chem::Structure.read "spec/data/pdb/1crn.pdb"
     expected = File.read "spec/data/pdb/1crn--stripped.pdb"

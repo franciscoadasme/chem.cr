@@ -80,7 +80,7 @@ describe Chem::DFTB::Gen::Parser do
   end
 end
 
-describe Chem::DFTB::Gen::Builder do
+describe Chem::DFTB::Gen::Writer do
   structure = Chem::Structure.build do
     title "NaCl-O-NaCl"
     atom PeriodicTable::Cl, V[30, 15, 10]

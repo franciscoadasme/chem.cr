@@ -95,6 +95,10 @@ module Chem
       end
     end
 
+    def polymer? : Bool
+      @residues.any? &.polymer?
+    end
+
     def n_atoms : Int32
       each_residue.map(&.n_atoms).sum
     end

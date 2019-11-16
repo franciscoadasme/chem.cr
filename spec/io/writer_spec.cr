@@ -1,6 +1,6 @@
 require "../spec_helper"
 
-describe Chem::IO::Builder do
+describe Chem::IO::Writer do
   describe "#to_document" do
     structure = Chem::Structure.build { }
 
@@ -23,13 +23,8 @@ describe Chem::IO::Builder do
 end
 
 @[Chem::IO::FileType(format: Document, ext: [:pdf, :doc, :docx, :rtf])]
-class Document::Builder < Chem::IO::Builder
-  def initialize(@io : IO)
-  end
-end
-
-class Chem::Structure
-  def to_document(document : Document::Builder) : Nil
-    document.string "document"
+class Document::Writer < Chem::IO::Writer
+  def write(atoms : Chem::AtomCollection) : Nil
+    @io << "document"
   end
 end

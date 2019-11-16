@@ -8,9 +8,8 @@ class CAD::Parser < Chem::IO::Parser
 end
 
 @[Chem::IO::FileType(format: Image, ext: [:bmp, :jpg, :png, :tiff])]
-class Image::Builder < Chem::IO::Builder
-  def initialize(@io : IO)
-  end
+class Image::Writer < Chem::IO::Writer
+  def write(atoms : Chem::AtomCollection) : Nil; end
 end
 
 describe Chem::IO::FileFormat do

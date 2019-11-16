@@ -5,9 +5,9 @@ module Chem::IO
 
   macro finished
     enum FileFormat
-      {% builders = Builder.subclasses.select &.annotation(FileType) %}
+      {% writers = Writer.subclasses.select &.annotation(FileType) %}
       {% parsers = Parser.subclasses.select(&.annotation(FileType)) %}
-      {% klasses = parsers + builders %}
+      {% klasses = parsers + writers %}
       {% file_types = klasses.map &.annotation(IO::FileType) %}
 
       # check missing annotation arguments
@@ -24,7 +24,7 @@ module Chem::IO
       # check duplicate file formats
       {% file_formats = file_types.map(&.[:format].id).uniq.sort %}
       {% for format in file_formats %}
-        {% for ary in [parsers, builders] %}
+        {% for ary in [parsers, writers] %}
           {% ary = ary.select &.annotation(IO::FileType)[:format].id.==(format) %}
           {% if ary.size > 1 %}
             {% ary[1].raise "#{format} file format is already associated with " \

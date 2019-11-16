@@ -169,7 +169,7 @@ describe Chem::Mol2::Parser do
   end
 end
 
-describe Chem::Mol2::Builder do
+describe Chem::Mol2::Writer do
   it "writes a structure" do
     structure = Chem::Structure.build do
       title "Sulfur"
@@ -211,7 +211,7 @@ describe Chem::Mol2::Builder do
           4    1    5 2
 
       @<TRIPOS>SUBSTRUCTURE
-         1 SO445       1 RESIDUE 1 C SO4 1
+         1 SO445       1 RESIDUE  1 C SO4  4\n
 
       EOS
   end
