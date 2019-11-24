@@ -64,9 +64,9 @@ module Chem::Spatial
       end
     {% end %}
 
-    {% for op in ['+', '-'] %}
-      def {{op.id}}(other : Size) : self
-        Vector.new @x {{op.id}} other.a, @y {{op.id}} other.b, @z {{op.id}} other.c
+    {% for op in %w(+ -) %}
+      def {{op.id}}(rhs : Size) : self
+        Vector.new @x {{op.id}} rhs.x, @y {{op.id}} rhs.y, @z {{op.id}} rhs.z
       end
     {% end %}
 
