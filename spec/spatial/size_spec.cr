@@ -20,7 +20,7 @@ describe Chem::Spatial::Size do
   end
 
   describe "#/" do
-    it "returns the size multiplied by a number" do
+    it "returns the size divided by a number" do
       (S[1, 2, 3] / 0.5).should eq S[2, 4, 6]
     end
   end
