@@ -15,5 +15,11 @@ module Chem::Spatial
     def self.zero : self
       new 0, 0, 0
     end
+
+    {% for op in %w(* /) %}
+      def {{op.id}}(rhs : Number) : self
+        Size.new @x {{op.id}} rhs, @y {{op.id}} rhs, @z {{op.id}} rhs
+      end
+    {% end %}
   end
 end
