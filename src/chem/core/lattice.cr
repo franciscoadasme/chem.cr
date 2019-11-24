@@ -95,8 +95,8 @@ module Chem
       !cuboid? && !monoclinic? && !hexagonal?
     end
 
-    def size : Spatial::Size3D
-      Spatial::Size3D.new @a.size, @b.size, @c.size
+    def size : Spatial::Size
+      Spatial::Size.new @a.size, @b.size, @c.size
     end
 
     # Returns the transformation that converts Cartesian coordinates to fractional

@@ -1,13 +1,13 @@
 module Chem::Spatial
   struct Bounds
     getter origin : Vector
-    getter size : Size3D
+    getter size : Size
 
     def initialize
       initialize Vector.origin, Size3D.new(1, 1, 1)
+    def initialize(@origin : Vector, @size : Size)
     end
 
-    def initialize(@origin : Vector, @size : Size3D)
     end
 
     def initialize(vmin : Vector, vmax : Vector)

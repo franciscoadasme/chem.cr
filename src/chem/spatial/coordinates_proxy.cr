@@ -21,7 +21,7 @@ module Chem::Spatial
         end
       end
       origin = Vector.new min[0], min[1], min[2]
-      size = Size3D.new max[0] - min[0], max[1] - min[1], max[2] - min[2]
+      size = Size.new max[0] - min[0], max[1] - min[1], max[2] - min[2]
       Bounds.new origin, size
     end
 

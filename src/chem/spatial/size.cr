@@ -1,5 +1,5 @@
 module Chem::Spatial
-  struct Size3D
+  struct Size
     getter x : Float64
     getter y : Float64
     getter z : Float64
