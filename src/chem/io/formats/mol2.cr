@@ -6,7 +6,7 @@ module Chem::Mol2
   end
 
   @[IO::FileType(format: Mol2, ext: [:mol2])]
-  class Writer < Structure::Writer
+  class Writer < IO::Writer(AtomCollection)
     def initialize(io : ::IO, sync_close : Bool = false)
       super io, sync_close
       @atom_table = {} of Atom => Int32
