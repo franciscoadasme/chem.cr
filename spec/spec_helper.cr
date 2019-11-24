@@ -6,6 +6,7 @@ alias AtomView = Chem::AtomView
 alias Bounds = Chem::Spatial::Bounds
 alias Constraint = Chem::Constraint
 alias Element = Chem::Element
+alias Grid = Chem::Spatial::Grid
 alias M = Chem::Linalg::Matrix
 alias PDB = Chem::PDB
 alias ParseException = Chem::IO::ParseException
@@ -132,5 +133,26 @@ def load_hlxparams_data
       datasets[:theta] << values[1]
       datasets[:radius] << values[2]
     end
+  end
+end
+
+def make_grid(nx : Int,
+              ny : Int,
+              nz : Int,
+              bounds : Bounds = Bounds.zero) : Grid
+  Grid.build({nx, ny, nz}, bounds) do |buffer|
+    (nx * ny * nz).times do |i|
+      buffer[i] = i.to_f
+    end
+  end
+end
+
+def make_grid(nx : Int,
+              ny : Int,
+              nz : Int,
+              bounds : Bounds = Bounds.zero,
+              &block : Int32, Int32, Int32 -> Number) : Grid
+  Grid.new({nx, ny, nz}, bounds).map_with_index! do |_, i, j, k|
+    (yield i, j, k).to_f
   end
 end
