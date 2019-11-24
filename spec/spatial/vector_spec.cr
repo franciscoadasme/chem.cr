@@ -49,6 +49,10 @@ describe Chem::Spatial::Vector do
     it "returns the arithmetic addition with a 3-sized tuple" do
       (v1 + {1, 2, 3}).should eq Vector[4, 6, 3]
     end
+
+    it "sums a vector and a size" do
+      (V[1, 2, 3] + S[3, 2, 1]).should eq V[4, 4, 4]
+    end
   end
 
   describe "#-" do
@@ -66,6 +70,10 @@ describe Chem::Spatial::Vector do
 
     it "returns the subtraction with a 3-sized tuple" do
       (v1 - {1, 2, 3}).should eq Vector[2, 2, -3]
+    end
+
+    it "subtracts a size from a vector" do
+      (V[1, 2, 3] - S[3, 2, 1]).should eq V[-2, 0, 2]
     end
   end
 
