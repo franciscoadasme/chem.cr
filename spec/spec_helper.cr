@@ -3,6 +3,7 @@ require "../src/chem"
 
 alias Atom = Chem::Atom
 alias AtomView = Chem::AtomView
+alias Bounds = Chem::Spatial::Bounds
 alias Constraint = Chem::Constraint
 alias Element = Chem::Element
 alias M = Chem::Linalg::Matrix
