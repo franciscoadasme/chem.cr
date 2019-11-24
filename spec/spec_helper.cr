@@ -10,6 +10,7 @@ alias PDB = Chem::PDB
 alias ParseException = Chem::IO::ParseException
 alias PeriodicTable = Chem::PeriodicTable
 alias Q = Chem::Spatial::Quaternion
+alias S = Chem::Spatial::Size3D
 alias Tf = Chem::Spatial::AffineTransform
 alias V = Chem::Spatial::Vector
 alias Vector = Chem::Spatial::Vector
@@ -62,6 +63,12 @@ module Spec
       actual_value.@mat.each_with_index.all? do |value, i, j|
         (value - @expected_value.@mat.unsafe_fetch(i, j)).abs <= @delta
       end
+    end
+
+    def match(actual_value : Chem::Spatial::Size3D) : Bool
+      (actual_value.x - @expected_value.x).abs <= @delta &&
+        (actual_value.y - @expected_value.y).abs <= @delta &&
+        (actual_value.z - @expected_value.z).abs <= @delta
     end
   end
 end

@@ -8,7 +8,7 @@ describe Chem::Lattice do
       lattice = Lattice.new Vector[8.77, 0, 0],
         Vector[3.19616011, 8.94620370, 0],
         Vector[4.29605592, -0.71878676, 24.35353874]
-      lattice.size.to_a.should be_close [8.77, 9.5, 24.740], 1e-8
+      lattice.size.should be_close S[8.77, 9.5, 24.740], 1e-8
       lattice.alpha.should be_close 88.22, 1e-8
       lattice.beta.should be_close 80.00, 1e-7
       lattice.gamma.should be_close 70.34, 1e-7

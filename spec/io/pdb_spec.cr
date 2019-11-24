@@ -111,7 +111,7 @@ describe Chem::PDB do
 
       st.lattice.should_not be_nil
       lattice = st.lattice.not_nil!
-      lattice.size.to_a.should eq [40.960, 18.650, 22.520]
+      lattice.size.should eq S[40.960, 18.650, 22.520]
       lattice.alpha.should eq 90
       lattice.beta.should eq 90.77
       lattice.gamma.should eq 90

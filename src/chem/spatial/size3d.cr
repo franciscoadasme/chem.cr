@@ -1,30 +1,19 @@
 module Chem::Spatial
   struct Size3D
-    getter a : Float64
-    getter b : Float64
-    getter c : Float64
+    getter x : Float64
+    getter y : Float64
+    getter z : Float64
 
-    def initialize(@a : Float64, @b : Float64, @c : Float64)
+    def initialize(@x : Float64, @y : Float64, @z : Float64)
+      raise ArgumentError.new "Negative size" if @x < 0 || @y < 0 || @z < 0
     end
 
-    def [](index : Int32) : Float64
-      case index
-      when 0 then @a
-      when 1 then @b
-      when 2 then @c
-      else
-        raise IndexError.new
-      end
+    def self.[](x : Float64, y : Float64, z : Float64) : self
+      new x, y, z
     end
 
-    {% for op in ['*', '/'] %}
-      def {{op.id}}(other : Number) : self
-        Size3D.new @a {{op.id}} other, @b {{op.id}} other, @c {{op.id}} other
-      end
-    {% end %}
-
-    def to_a : Array(Float64)
-      [@a, @b, @c]
+    def self.zero : self
+      new 0, 0, 0
     end
   end
 end
