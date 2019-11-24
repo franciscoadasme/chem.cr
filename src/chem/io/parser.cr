@@ -1,6 +1,8 @@
 module Chem
   module IO
-    abstract class Parser
+    abstract class Parser(T)
+      abstract def parse : T
+
       def initialize(@io : ::IO)
       end
 
@@ -494,7 +496,7 @@ module Chem
     end
   end
 
-  abstract class Structure::Parser < IO::Parser
+  abstract class Structure::Parser < IO::Parser(Structure)
     include Iterator(Structure)
 
     abstract def skip_structure : Nil
@@ -509,6 +511,10 @@ module Chem
           skip_structure
         end
       end
+    end
+
+    def parse : Structure
+      first? || parse_exception "Empty content"
     end
 
     def select(indexes : Enumerable(Int)) : Iterator(Structure)
@@ -564,26 +570,32 @@ module Chem
   end
 
   macro finished
-    class ::Array(T)
-      {% for parser in Structure::Parser.subclasses.select(&.annotation(IO::FileType)) %}
-        {% format = parser.annotation(IO::FileType)[:format].id.underscore %}
+    {% for parser in IO::Parser.all_subclasses.select(&.annotation(IO::FileType)) %}
+      {% format = parser.annotation(IO::FileType)[:format].id.underscore %}
 
+      {% type = parser.ancestors.reject(&.type_vars.empty?)[0].type_vars[0] %}
+      {% keyword = type.class.id.ends_with?("Module") ? "module" : nil %}
+      {% keyword = type < Reference ? "class" : "struct" unless keyword %}
+
+      {{keyword.id}} ::{{type.id}}
         def self.from_{{format.id}}(input : ::IO | Path | String, **options) : self
-          \{% raise "Invalid use of `Array#from_{{format.id}}` with type #{T}" \
-                unless T == Chem::Structure %}
+          {{parser}}.new(input, **options).parse
+        end
+      end
+
+      class ::Array(T)
+        def self.from_{{format.id}}(input : ::IO | Path | String, **options) : self
           {{parser}}.new(input, **options).to_a
         end
 
         def self.from_{{format.id}}(input : ::IO | Path | String,
                                     indexes : Array(Int),
                                     **options) : self
-          \{% raise "Invalid use of `Array#from_{{format.id}}` with type #{T}" \
-                unless T == Chem::Structure %}
           ary = Array(Chem::Structure).new indexes.size
           {{parser}}.new(input, **options).each(indexes) { |st| ary << st }
           ary
         end
-      {% end %}
-    end
+      end
+    {% end %}
   end
 end

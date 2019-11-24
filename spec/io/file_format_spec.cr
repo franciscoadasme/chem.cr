@@ -1,10 +1,10 @@
 require "../spec_helper"
 
 @[Chem::IO::FileType(format: CAD, ext: [:cad])]
-class CAD::Parser < Chem::IO::Parser
-  def next; end
-
-  def skip_structure : Nil; end
+class CAD::Parser < Chem::IO::Parser(String)
+  def parse : String
+    "foo"
+  end
 end
 
 @[Chem::IO::FileType(format: Image, ext: [:bmp, :jpg, :png, :tiff])]

@@ -106,7 +106,7 @@ module Chem::Mol2
 
     def next : Structure | Iterator::Stop
       skip_to_record :molecule
-      eof? ? stop : parse
+      eof? ? stop : parse_next
     end
 
     def skip_structure : Nil
@@ -122,28 +122,6 @@ module Chem::Mol2
         0
       else
         bond_type.to_i
-      end
-    end
-
-    private def parse : Structure
-      Structure.build do |builder|
-        skip_line
-        builder.title read_line.strip
-        n_atoms = read_int
-        n_bonds = read_int
-        skip_line
-
-        while name = next_record
-          case name
-          when .atom?
-            n_atoms.times { parse_atom builder }
-          when .bond?
-            n_bonds.times { parse_bond builder }
-          when .molecule?
-            @io.pos = @prev_pos
-            break
-          end
-        end
       end
     end
 
@@ -182,6 +160,28 @@ module Chem::Mol2
       bond_order = guess_bond_order bond_type
       builder.bond i, j, bond_order, aromatic: bond_type == "ar" if bond_order > 0
       skip_line
+    end
+
+    private def parse_next : Structure
+      Structure.build do |builder|
+        skip_line
+        builder.title read_line.strip
+        n_atoms = read_int
+        n_bonds = read_int
+        skip_line
+
+        while name = next_record
+          case name
+          when .atom?
+            n_atoms.times { parse_atom builder }
+          when .bond?
+            n_bonds.times { parse_bond builder }
+          when .molecule?
+            @io.pos = @prev_pos
+            break
+          end
+        end
+      end
     end
 
     private def read_element : Element

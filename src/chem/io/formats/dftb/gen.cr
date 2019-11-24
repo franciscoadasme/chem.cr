@@ -47,27 +47,11 @@ module Chem::DFTB::Gen
 
     def next : Structure | Iterator::Stop
       skip_whitespace
-      eof? ? stop : parse
+      eof? ? stop : parse_next
     end
 
     def skip_structure : Nil
       @io.skip_to_end
-    end
-
-    private def parse : Structure
-      Structure.build do |builder|
-        n_atoms = read_int
-        parse_geometry_type
-        parse_elements
-        n_atoms.times { parse_atom builder }
-
-        parse_lattice builder if @periodic
-
-        @io.skip_to_end # ensure end of file as Gen doesn't support multiple entries
-
-        structure = builder.build
-        structure.coords.to_cartesian! if @fractional
-      end
     end
 
     private def parse_atom(builder : Topology::Builder) : Nil
@@ -99,6 +83,22 @@ module Chem::DFTB::Gen
     private def parse_lattice(builder : Topology::Builder) : Nil
       skip_line
       builder.lattice read_vector, read_vector, read_vector
+    end
+
+    private def parse_next : Structure
+      Structure.build do |builder|
+        n_atoms = read_int
+        parse_geometry_type
+        parse_elements
+        n_atoms.times { parse_atom builder }
+
+        parse_lattice builder if @periodic
+
+        @io.skip_to_end # ensure end of file as Gen doesn't support multiple entries
+
+        structure = builder.build
+        structure.coords.to_cartesian! if @fractional
+      end
     end
 
     private def read_element : Element

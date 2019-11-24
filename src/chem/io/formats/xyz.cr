@@ -22,7 +22,7 @@ module Chem::XYZ
 
     def next : Structure | Iterator::Stop
       skip_whitespace
-      eof? ? stop : parse
+      eof? ? stop : parse_next
     end
 
     def skip_structure : Nil
@@ -32,19 +32,19 @@ module Chem::XYZ
       (n_atoms + 2).times { skip_line }
     end
 
-    private def parse : Structure
+    private def parse_atom(builder : Topology::Builder) : Nil
+      skip_whitespace
+      builder.atom PeriodicTable[scan(&.letter?)], read_vector
+      skip_line
+    end
+
+    private def parse_next : Structure
       Structure.build do |builder|
         n_atoms = read_int
         skip_line
         builder.title read_line.strip
         n_atoms.times { parse_atom builder }
       end
-    end
-
-    private def parse_atom(builder : Topology::Builder) : Nil
-      skip_whitespace
-      builder.atom PeriodicTable[scan(&.letter?)], read_vector
-      skip_line
     end
   end
 end

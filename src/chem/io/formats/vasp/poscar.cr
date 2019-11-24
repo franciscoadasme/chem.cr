@@ -86,28 +86,11 @@ module Chem::VASP::Poscar
     @scale_factor = 1.0
 
     def next : Structure | Iterator::Stop
-      eof? ? stop : parse
+      eof? ? stop : parse_next
     end
 
     def skip_structure : Nil
       @io.skip_to_end
-    end
-
-    private def parse : Structure
-      Structure.build do |builder|
-        builder.title read_line
-
-        @scale_factor = read_float
-        skip_line
-        parse_lattice builder
-        parse_elements
-        parse_selective_dynamics
-        parse_coordinate_system
-
-        @elements.size.times { parse_atom builder }
-
-        @io.skip_to_end # ensure end of file as POSCAR doesn't support multiple entries
-      end
     end
 
     private def parse_atom(builder : Topology::Builder) : Nil
@@ -146,6 +129,23 @@ module Chem::VASP::Poscar
         @scale_factor * read_vector,
         @scale_factor * read_vector,
         @scale_factor * read_vector
+    end
+
+    private def parse_next : Structure
+      Structure.build do |builder|
+        builder.title read_line
+
+        @scale_factor = read_float
+        skip_line
+        parse_lattice builder
+        parse_elements
+        parse_selective_dynamics
+        parse_coordinate_system
+
+        @elements.size.times { parse_atom builder }
+
+        @io.skip_to_end # ensure end of file as POSCAR doesn't support multiple entries
+      end
     end
 
     private def parse_selective_dynamics : Nil
