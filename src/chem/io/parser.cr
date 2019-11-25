@@ -6,11 +6,7 @@ module Chem
       def initialize(@io : ::IO)
       end
 
-      def initialize(content : String)
-        @io = ::IO::Memory.new content
-      end
-
-      def initialize(path : Path)
+      def initialize(path : Path | String)
         @io = ::IO::Memory.new File.read(path)
       end
 

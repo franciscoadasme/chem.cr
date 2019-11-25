@@ -80,7 +80,7 @@ describe Chem::VASP::Poscar do
 
     it "fails when constraint flags are invalid" do
       ex = expect_raises Chem::IO::ParseException do
-        Chem::Structure.from_poscar <<-EOS
+        Chem::Structure.from_poscar IO::Memory.new <<-EOS
           Cubic BN
           3.57
             0.0 0.5 0.5

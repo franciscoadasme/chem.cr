@@ -134,7 +134,7 @@ describe Chem::PDB do
     end
 
     it "parses experiment with multiple methods" do
-      structure = Chem::Structure.from_pdb <<-EOS
+      structure = Chem::Structure.from_pdb IO::Memory.new <<-EOS
         HEADER    CHAPERONE                               14-FEB-13   4J7Z              
         TITLE     THERMUS THERMOPHILUS DNAJ J- AND G/F-DOMAINS                          
         EXPDTA    X-RAY DIFFRACTION; EPR                                                
@@ -405,7 +405,7 @@ describe Chem::PDB::Writer do
 
   it "writes ter records at the end of polymer chains" do
     content = File.read "spec/data/pdb/5e5v.pdb"
-    structure = Chem::Structure.from_pdb content
+    structure = Chem::Structure.from_pdb IO::Memory.new(content)
     structure.to_pdb.should eq content
   end
 
