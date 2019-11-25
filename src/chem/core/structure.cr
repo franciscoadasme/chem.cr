@@ -23,16 +23,20 @@ module Chem
 
     def self.read(path : Path | String) : self
       format = IO::FileFormat.from_ext File.extname(path)
-      path = Path[path] unless path.is_a?(Path)
+      read path, format
+    end
+
+    def self.read(input : ::IO | Path | String, format : IO::FileFormat | String) : self
+      format = IO::FileFormat.parse format if format.is_a?(String)
       {% begin %}
         case format
         {% for parser in Parser.subclasses.select(&.annotation(IO::FileType)) %}
           {% format = parser.annotation(IO::FileType)[:format].id.underscore %}
           when .{{format.id}}?
-            from_{{format.id}} path
+            from_{{format.id}} input
         {% end %}
         else
-          raise "No parser associated with file format #{format}"
+          raise "No structure parser associated with file format #{format}"
         end
       {% end %}
     end
@@ -150,15 +154,22 @@ module Chem
 
     def write(path : Path | String) : Nil
       format = IO::FileFormat.from_ext File.extname(path)
+      read path, format
+    end
+
+    def write(output : ::IO | Path | String, format : IO::FileFormat | String) : Nil
+      format = IO::FileFormat.parse format if format.is_a?(String)
       {% begin %}
         case format
-        {% for builder in IO::Builder.subclasses.select(&.annotation(IO::FileType)) %}
-          {% format = builder.annotation(IO::FileType)[:format].id.underscore %}
-          when .{{format.id}}?
-            to_{{format.id}} path
+        {% for writer in IO::Writer.all_subclasses.select(&.annotation(IO::FileType)) %}
+          {% if (type = writer.type_vars[0]) && type == Structure %}
+            {% format = writer.annotation(IO::FileType)[:format].id.underscore %}
+            when .{{format.id}}?
+              to_{{format.id}} output
+          {% end %}
         {% end %}
         else
-          raise "No builder associated with file format #{self}"
+          raise "No structure writer associated with file format #{self}"
         end
       {% end %}
     end
