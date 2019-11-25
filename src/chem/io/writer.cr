@@ -24,6 +24,7 @@ module Chem
 
     def close : Nil
       return if @closed
+      @io.flush
       @closed = true
       @io.close if @sync_close
     end
