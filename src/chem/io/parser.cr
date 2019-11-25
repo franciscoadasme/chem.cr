@@ -554,6 +554,10 @@ module Chem
         end
       end
 
+      def skip_lines(n : Int) : Nil
+        n.times { skip_line }
+      end
+
       def skip_word : Nil
         next_non_whitespace
       end
