@@ -529,6 +529,16 @@ module Chem
         end
       end
 
+      def read_word : String
+        read_word? || raise ::IO::EOFError.new
+      end
+
+      def read_word? : String?
+        if bytes = next_non_whitespace
+          String.new bytes
+        end
+      end
+
       private def eob? : Bool
         @pos == @bytes_read || @bytes_read < 0
       end

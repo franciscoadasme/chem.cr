@@ -509,6 +509,30 @@ describe Chem::IO::AsciiParser do
       ary[999].should eq 200
     end
   end
+
+  describe "#read_word" do
+    it "fails at eof" do
+      expect_raises(IO::EOFError) do
+        CustomAsciiParser.new(IO::Memory.new).read_word
+      end
+    end
+  end
+
+  describe "#read_word?" do
+    it "reads consecutive non-whitespace characters" do
+      io = IO::Memory.new "The quick\n brown\t\tfox jumps \t\nover the lazy dog\n"
+      parser = CustomAsciiParser.new io
+      ary = [] of String
+      while word = parser.read_word?
+        ary << word
+      end
+      ary.should eq %w(The quick brown fox jumps over the lazy dog)
+    end
+
+    it "returns nil at eof" do
+      CustomAsciiParser.new(IO::Memory.new).read_word?.should be_nil
+    end
+  end
 end
 
 class ParserWithLocationTest
