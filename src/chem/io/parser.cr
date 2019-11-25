@@ -548,6 +548,10 @@ module Chem
         next_non_whitespace
       end
 
+      def skip_words(n : Int) : Nil
+        n.times { next_non_whitespace }
+      end
+
       private def eob? : Bool
         @pos >= @bytes_read || @bytes_read < 0
       end
