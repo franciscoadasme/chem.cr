@@ -536,7 +536,9 @@ module Chem
       private def next_non_whitespace : Bytes?
         start = -1
         loop do
-          if eob?
+          if eof?
+            return nil
+          elsif eob?
             if start >= 0
               bytesize = @pos - start
               @buffer.copy_from @buffer.to_unsafe + start, bytesize
