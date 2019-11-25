@@ -510,7 +510,7 @@ module Chem
 
       def read : Char?
         read_raw if eob?
-        return if @bytes_read == 0
+        return if eof?
         chr = current_char
         @pos += 1
         chr
