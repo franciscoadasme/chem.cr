@@ -492,6 +492,22 @@ describe Chem::IO::PullParser do
 end
 
 describe Chem::IO::AsciiParser do
+  describe "#peek" do
+    it "returns a char without advacing IO position" do
+      io = IO::Memory.new "The quick brown fox jumps over the lazy dog"
+      parser = CustomAsciiParser.new io
+      parser.peek.should eq 'T'
+      parser.peek.should eq 'T'
+      parser.read.should eq 'T'
+    end
+
+    it "returns nil at eof" do
+      parser = CustomAsciiParser.new IO::Memory.new
+      parser.peek.should eq nil
+      parser.peek.should eq nil
+    end
+  end
+
   describe "#read_float" do
     it "reads consecutive floats" do
       io = make_io do |io|

@@ -508,6 +508,12 @@ module Chem
         @bytes_read == 0 # no more bytes to read at eof
       end
 
+      def peek : Char?
+        char = read
+        @pos -= 1 if char
+        char
+      end
+
       def read : Char?
         read_raw if eob?
         return if eof?
