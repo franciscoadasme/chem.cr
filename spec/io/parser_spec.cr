@@ -545,6 +545,18 @@ describe Chem::IO::AsciiParser do
       parser.read_word.should eq "over"
     end
   end
+
+  describe "#skip_word" do
+    it "skips a word" do
+      io = IO::Memory.new "The quick\n brown\t\tfox jumps \t\r\nover the lazy dog\n"
+      parser = CustomAsciiParser.new io
+      parser.skip_word
+      parser.read.should eq ' '
+      parser.read.should eq 'q'
+      parser.skip_word
+      parser.read.should eq '\n'
+    end
+  end
 end
 
 class ParserWithLocationTest

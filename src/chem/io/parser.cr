@@ -544,6 +544,10 @@ module Chem
         end
       end
 
+      def skip_word : Nil
+        next_non_whitespace
+      end
+
       private def eob? : Bool
         @pos >= @bytes_read || @bytes_read < 0
       end
