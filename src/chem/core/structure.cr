@@ -169,7 +169,7 @@ module Chem
           {% end %}
         {% end %}
         else
-          raise "No structure writer associated with file format #{self}"
+          raise "No structure writer associated with file format #{format}"
         end
       {% end %}
     end
