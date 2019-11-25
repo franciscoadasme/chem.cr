@@ -534,6 +534,14 @@ describe Chem::IO::AsciiParser do
     end
   end
 
+  describe "#read_vector" do
+    it "reads a vector" do
+      io = IO::Memory.new "1.000 2.000 3.00"
+      parser = CustomAsciiParser.new io
+      parser.read_vector.should eq V[1, 2, 3]
+    end
+  end
+
   describe "#skip_line" do
     it "skips a line" do
       io = IO::Memory.new "The quick\n brown\t\tfox jumps \t\r\nover the lazy dog\n"

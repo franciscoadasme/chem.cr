@@ -529,6 +529,10 @@ module Chem
         end
       end
 
+      def read_vector : Spatial::Vector
+        Spatial::Vector.new read_float, read_float, read_float
+      end
+
       def read_word : String
         read_word? || raise ::IO::EOFError.new
       end
