@@ -535,6 +535,18 @@ module Chem
         end
       end
 
+      def read_int : Int32
+        read_int? || parse_exception "Couldn't read a number"
+      end
+
+      def read_int? : Int32?
+        return if eof?
+
+        if bytes = next_non_whitespace
+          String.new(bytes).to_i?
+        end
+      end
+
       def read_vector : Spatial::Vector
         Spatial::Vector.new read_float, read_float, read_float
       end

@@ -508,6 +508,24 @@ describe Chem::IO::AsciiParser do
     end
   end
 
+  describe "#read_int" do
+    it "reads consecutive ints" do
+      io = make_io do |io|
+        1000.times do |i|
+          io.printf "%16d", i * 100
+          io << '\n' if i % 5 == 0
+        end
+      end
+
+      parser = CustomAsciiParser.new io
+      ary = [] of Int32
+      1000.times { ary << parser.read_int }
+      ary[0].should eq 0
+      ary[342].should eq 34200
+      ary[999].should eq 99900
+    end
+  end
+
   describe "#read_float" do
     it "reads consecutive floats" do
       io = make_io do |io|
