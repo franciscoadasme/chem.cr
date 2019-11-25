@@ -540,7 +540,7 @@ module Chem
       end
 
       private def eob? : Bool
-        @pos == @bytes_read || @bytes_read < 0
+        @pos >= @bytes_read || @bytes_read < 0
       end
 
       private def next_non_whitespace : Bytes?
