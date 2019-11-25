@@ -494,6 +494,71 @@ module Chem
         @line_number = prev_line_number
       end
     end
+
+    module AsciiParser
+      @buffer = Bytes.new 8192
+      @bytes_read = -1
+      @pos = 0
+
+      def current_char : Char
+        @buffer.unsafe_fetch(@pos).unsafe_chr
+      end
+
+      def eof? : Bool
+        @bytes_read == 0 # no more bytes to read at eof
+      end
+
+      def read : Char?
+        read_raw if eob?
+        return if @bytes_read == 0
+        chr = current_char
+        @pos += 1
+        chr
+      end
+
+      def read_float : Float64
+        read_float? || parse_exception "Couldn't read a decimal number"
+      end
+
+      def read_float? : Float64?
+        return if eof?
+
+        start = -1
+        loop do
+          if eob?
+            if start >= 0
+              bytesize = @pos - start
+              @buffer.copy_from @buffer.to_unsafe + start, bytesize
+              read_raw offset: bytesize
+              start = 0
+            else
+              read_raw
+              start = -1
+            end
+          end
+
+          if current_char.whitespace?
+            if start >= 0
+              value = LibC.strtod @buffer.to_unsafe + start, out endptr
+              return value if endptr == @buffer.to_unsafe + @pos
+            end
+          elsif start < 0
+            start = @pos
+          end
+
+          @pos += 1
+        end
+      end
+
+      private def eob? : Bool
+        @pos == @bytes_read || @bytes_read < 0
+      end
+
+      private def read_raw(offset : Int = 0)
+        @bytes_read = @io.read(@buffer + offset) + offset
+        @pos = offset
+      end
+    end
   end
 
   abstract class Structure::Parser < IO::Parser(Structure)

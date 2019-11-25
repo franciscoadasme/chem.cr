@@ -491,6 +491,26 @@ describe Chem::IO::PullParser do
   end
 end
 
+describe Chem::IO::AsciiParser do
+  describe "#read_float" do
+    it "reads consecutive floats" do
+      io = make_io do |io|
+        1000.times do |i|
+          io.printf "%16.8f", (i + 1) / 5
+          io << '\n' if i % 5 == 0
+        end
+      end
+
+      parser = CustomAsciiParser.new io
+      ary = [] of Float64
+      1000.times { ary << parser.read_float }
+      ary[0].should eq 0.2
+      ary[342].should eq 68.6
+      ary[999].should eq 200
+    end
+  end
+end
+
 class ParserWithLocationTest
   include Chem::IO::ParserWithLocation
 
@@ -513,4 +533,22 @@ class PullParserTest
   def char_span : Int32 | Int64
     @io.pos - @prev_pos
   end
+end
+
+class CustomAsciiParser
+  include Chem::IO::AsciiParser
+
+  def initialize(@io : IO)
+  end
+
+  def parse_exception(msg : String) : Nil
+    raise msg
+  end
+end
+
+def make_io(& : IO ->) : IO
+  io = IO::Memory.new
+  yield io
+  io.rewind
+  io
 end
