@@ -29,6 +29,15 @@ module Chem
       @io.close if @sync_close
     end
 
+    def format(str : String, *args, **options) : Nil
+      @io.printf str, *args, **options
+    end
+
+    def formatl(str : String, *args, **options) : Nil
+      format str, *args, **options
+      @io << '\n'
+    end
+
     protected def check_open
       raise Error.new "Closed IO" if closed?
     end
