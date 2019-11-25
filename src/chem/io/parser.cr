@@ -523,6 +523,17 @@ module Chem
       def read_float? : Float64?
         return if eof?
 
+        if bytes = next_non_whitespace
+          value = LibC.strtod bytes.to_unsafe, out endptr
+          return value if endptr == bytes.to_unsafe + bytes.size
+        end
+      end
+
+      private def eob? : Bool
+        @pos == @bytes_read || @bytes_read < 0
+      end
+
+      private def next_non_whitespace : Bytes?
         start = -1
         loop do
           if eob?
@@ -538,20 +549,13 @@ module Chem
           end
 
           if current_char.whitespace?
-            if start >= 0
-              value = LibC.strtod @buffer.to_unsafe + start, out endptr
-              return value if endptr == @buffer.to_unsafe + @pos
-            end
+            return Bytes.new(@buffer.to_unsafe + start, @pos - start) if start >= 0
           elsif start < 0
             start = @pos
           end
 
           @pos += 1
         end
-      end
-
-      private def eob? : Bool
-        @pos == @bytes_read || @bytes_read < 0
       end
 
       private def read_raw(offset : Int = 0)
