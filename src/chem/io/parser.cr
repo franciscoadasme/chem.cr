@@ -539,6 +539,11 @@ module Chem
         end
       end
 
+      def skip_line : Nil
+        while (chr = read) && chr != '\n'
+        end
+      end
+
       private def eob? : Bool
         @pos >= @bytes_read || @bytes_read < 0
       end
