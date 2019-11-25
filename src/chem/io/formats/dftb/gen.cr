@@ -1,8 +1,10 @@
 module Chem::DFTB::Gen
   @[IO::FileType(format: Gen, ext: [:gen])]
-    def initialize(io : ::IO, @fractional : Bool = false, sync_close : Bool = false)
-      super io, sync_close
   class Writer < IO::Writer(AtomCollection)
+    def initialize(output : ::IO | Path | String,
+                   @fractional : Bool = false,
+                   sync_close : Bool = false)
+      super output, sync_close
     end
 
     def write(atoms : AtomCollection, lattice : Lattice? = nil) : Nil

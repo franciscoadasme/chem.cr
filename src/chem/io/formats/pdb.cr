@@ -65,7 +65,7 @@ module Chem::PDB
     @record_index = 0
     @model = 0
 
-    def initialize(io : ::IO,
+    def initialize(io : ::IO | Path | String,
                    @bonds : Bool | Array(Bond) = false,
                    @renumber : Bool = true,
                    sync_close : Bool = false)

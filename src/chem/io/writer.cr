@@ -1,15 +1,18 @@
 module Chem
   abstract class IO::Writer(T)
+    abstract def write(obj : T) : Nil
+
     property? sync_close = false
     getter? closed = false
 
-    abstract def write(obj : T) : Nil
+    @io : ::IO
 
-    def initialize(@io : ::IO, @sync_close : Bool = false)
-    end
-
-    def self.new(path : Path | String, **options)
-      new File.new(path, "w"), **options, sync_close: true
+    def initialize(input : ::IO | Path | String, @sync_close : Bool = false)
+      if input.is_a?(Path | String)
+        input = File.new(input, "w")
+        @sync_close = true
+      end
+      @io = input
     end
 
     def self.open(io : ::IO, sync_close : Bool = false, **options)
