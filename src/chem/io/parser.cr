@@ -41,13 +41,15 @@ module Chem
           line_number += 1
           lines.shift if lines.size == nlines
           lines << line.chomp
-          break if @io.pos >= current_pos
+          break if @io.pos > current_pos
           column_number -= line.size
         end
         @io.pos = current_pos
 
+        @prev_pos = current_pos - 1 if column_number == 0 && @prev_pos >= current_pos
+
         size = current_pos - @prev_pos
-        {Location.new(line_number, column_number - size + 1, size), lines}
+        {Location.new(line_number, column_number.clamp(1..) - size + 1, size), lines}
       end
 
       private def read(& : -> T) : T forall T

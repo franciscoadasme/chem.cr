@@ -34,15 +34,16 @@ describe Chem::IO::ParserWithLocation do
       ex.loc.should_not be_nil
       loc = ex.loc.not_nil!
       loc.source_file.should be_nil
-      loc.line_number.should eq 2
-      loc.column_number.should eq 11
+      loc.line_number.should eq 3
+      loc.column_number.should eq 1
       loc.size.should eq 1
       ex.to_s_with_location.should eq <<-EOS
-        In line 2:11:
+        In line 3:1:
 
          1 | Lorem ipsum
          2 | 123 321 66
-                       ^
+         3 | 23 123 21
+             ^
         Error: Custom error
         EOS
     end

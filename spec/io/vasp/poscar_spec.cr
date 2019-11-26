@@ -68,12 +68,12 @@ describe Chem::VASP::Poscar do
         Chem::Structure.read "spec/data/poscar/mismatch.poscar"
       end
       ex.to_s_with_location.should eq <<-EOS
-        In line 7:5:
-        
-         5 |  0.5 0.5 0.0
+        In line 8:1:
+
          6 |    C N
          7 |    1
-                 ^
+         8 | Direct
+             ^
         Error: Expected 1 more number(s) of atoms per atomic species
         EOS
     end
