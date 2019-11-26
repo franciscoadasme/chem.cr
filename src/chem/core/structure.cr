@@ -154,7 +154,7 @@ module Chem
 
     def write(path : Path | String) : Nil
       format = IO::FileFormat.from_ext File.extname(path)
-      read path, format
+      write path, format
     end
 
     def write(output : ::IO | Path | String, format : IO::FileFormat | String) : Nil
