@@ -72,6 +72,13 @@ module Spec
         (actual_value.y - @expected_value.y).abs <= @delta &&
         (actual_value.z - @expected_value.z).abs <= @delta
     end
+
+    def match(actual_value : Chem::Spatial::Bounds) : Bool
+      (actual_value.origin - @expected_value.origin).abs.size <= @delta &&
+        (actual_value.size.x - @expected_value.size.x).abs <= @delta &&
+        (actual_value.size.y - @expected_value.size.y).abs <= @delta &&
+        (actual_value.size.z - @expected_value.size.z).abs <= @delta
+    end
   end
 end
 
