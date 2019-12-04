@@ -15,13 +15,8 @@ module Chem
       @io = input
     end
 
-    def self.open(io : ::IO, sync_close : Bool = false, **options)
+    def self.open(io : ::IO | Path | String, sync_close : Bool = false, **options)
       writer = new io, **options, sync_close: sync_close
-      yield writer ensure writer.close
-    end
-
-    def self.open(filename : Path | String, **options)
-      writer = new filename
       yield writer ensure writer.close
     end
 
