@@ -67,7 +67,7 @@ module Chem
     end
 
     def change_coords(vec : Spatial::Vector) : Spatial::Vector
-      basis_transform * vec
+      basis_transform * (vec - @origin)
     end
 
     def cubic? : Bool
@@ -95,7 +95,7 @@ module Chem
     end
 
     def revert_coords(vec : Spatial::Vector) : Spatial::Vector
-      vec.x * @a + vec.y * @b + vec.z * @c
+      (vec.x * @a + vec.y * @b + vec.z * @c) + @origin
     end
 
     def tetragonal? : Bool

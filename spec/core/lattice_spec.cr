@@ -49,18 +49,25 @@ describe Chem::Lattice do
   end
 
   describe "#change_coords" do
-    it "returns the coordinates relative to the lattice vectors" do
+    it "converts Cartesian to fractional coordinates" do
       lattice = Chem::Lattice.new 10, 20, 30
+      lattice.change_coords(V.zero).should eq V.zero
       lattice.change_coords(V[1, 2, 3]).should be_close V[0.1, 0.1, 0.1], 1e-15
       lattice.change_coords(V[2, 3, 15]).should be_close V[0.2, 0.15, 0.5], 1e-15
 
       lattice.a = 20
       lattice.change_coords(V[1, 2, 3]).should be_close V[0.05, 0.1, 0.1], 1e-15
     end
+
+    it "converts Cartesian to fractional coordinates (non-origin)" do
+      lattice = Chem::Lattice.new 10, 20, 30, origin: V[1, 2, 3]
+      lattice.change_coords(V[1, 2, 3]).should eq V.zero
+      lattice.change_coords(V[6, 12, 18]).should be_close V[0.5, 0.5, 0.5], 1e-15
+    end
   end
 
   describe "#revert_coords" do
-    it "returns the coordinates relative to the lattice vectors" do
+    it "converts fractional to Cartesian coordinates" do
       lattice = Chem::Lattice.new 20, 20, 16
       lattice.revert_coords(V[0.5, 0.65, 1]).should be_close V[10, 13, 16], 1e-15
       lattice.revert_coords(V[1.5, 0.23, 0.9]).should be_close V[30, 4.6, 14.4], 1e-15
@@ -73,6 +80,12 @@ describe Chem::Lattice do
         V[10.148, 42.359, 0.503],
         V[7.296, 2.286, 53.093])
       lattice.revert_coords(V[0.724, 0.04, 0.209]).should be_close V[8.083, 2.177, 11.139], 1e-3
+    end
+
+    it "converts fractional to Cartesian coordinates (non-origin)" do
+      lattice = Chem::Lattice.new 20, 20, 16, origin: V[5, 1, 13]
+      lattice.revert_coords(V[0.5, 0.65, 1]).should be_close V[15, 14, 29], 1e-15
+      lattice.revert_coords(V[1.5, 0.23, 0.9]).should be_close V[35, 5.6, 27.4], 1e-15
     end
   end
 
