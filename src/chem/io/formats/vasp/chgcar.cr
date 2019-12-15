@@ -16,6 +16,7 @@ module Chem::VASP::Chgcar
     include VASP::GridWriter
 
     def write(grid : Spatial::Grid) : Nil
+      incompatible_expcetion if (lat = @structure.lattice) && lat.size != grid.bounds.size
       write_header
       volume = grid.volume
       write_array grid, &.*(volume)

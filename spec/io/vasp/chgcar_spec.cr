@@ -55,4 +55,11 @@ describe Chem::VASP::Chgcar do
       grid.to_chgcar structure: Chem::Structure.new
     end
   end
+
+  it "fails when lattice and bounds are incompatible" do
+    structure = Chem::Structure.build { lattice 10, 20, 30 }
+    expect_raises ArgumentError, "Incompatible structure and grid" do
+      make_grid(3, 3, 3, Bounds[20, 20, 20]).to_chgcar structure: structure
+    end
+  end
 end

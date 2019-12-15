@@ -48,6 +48,10 @@ module Chem::VASP
       super input
     end
 
+    private def incompatible_expcetion : Nil
+      raise ArgumentError.new("Incompatible structure and grid")
+    end
+
     private def write_array(grid : Spatial::Grid, & : Float64 -> Float64) : Nil
       @io.puts
       nx, ny, nz = grid.dim
