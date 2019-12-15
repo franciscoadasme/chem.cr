@@ -48,4 +48,14 @@ describe Chem::Structure do
       structure.dig?('A', 2, "OH").should be_nil
     end
   end
+
+  describe "#periodic?" do
+    it "returns true when a structure has a lattice" do
+      Chem::Structure.build { lattice 10, 20, 30 }.periodic?.should be_true
+    end
+
+    it "returns false when a structure does not have a lattice" do
+      Chem::Structure.new.periodic?.should be_false
+    end
+  end
 end

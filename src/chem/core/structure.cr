@@ -135,6 +135,10 @@ module Chem
       each_chain.sum &.n_residues
     end
 
+    def periodic? : Bool
+      !!@lattice
+    end
+
     def to_s(io : ::IO)
       io << "<Structure"
       io << " " << title.inspect unless title.blank?

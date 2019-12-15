@@ -321,7 +321,7 @@ module Chem::Topology
 
     private def kdtree : Spatial::KDTree
       @kdtree ||= Spatial::KDTree.new @structure,
-        periodic: !@structure.lattice.nil?,
+        periodic: @structure.periodic?,
         radius: MAX_COVALENT_RADIUS
     end
 

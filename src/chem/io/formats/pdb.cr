@@ -191,7 +191,7 @@ module Chem::PDB
         write_title structure.title unless structure.title.blank?
       end
       write_pdb_version structure.experiment.try(&.pdb_accession)
-      write structure.lattice.not_nil! if structure.lattice
+      write structure.lattice.not_nil! if structure.periodic?
     end
 
     private def write_pdb_version(pdb_accession : String? = nil) : Nil
