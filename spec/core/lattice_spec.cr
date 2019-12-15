@@ -75,4 +75,12 @@ describe Chem::Lattice do
       lattice.revert_coords(V[0.724, 0.04, 0.209]).should be_close V[8.083, 2.177, 11.139], 1e-3
     end
   end
+
+  describe "#volume" do
+    it "returns lattice's volume" do
+      Lattice[10, 20, 30].volume.should eq 6_000
+      Lattice.new({5.0, 5.0, 8.0}, {90.0, 90.0, 120.0}).volume.should be_close 173.2050807569, 1e-10
+      Lattice.new({1.0, 2.0, 3.0}, {90.0, 101.2, 90.0}).volume.should be_close 5.8857309321, 1e-10
+    end
+  end
 end

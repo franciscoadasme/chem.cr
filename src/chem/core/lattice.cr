@@ -109,6 +109,10 @@ module Chem
       Spatial::Size.new @a.size, @b.size, @c.size
     end
 
+    def volume : Float64
+      @a.dot(@b.cross(@c))
+    end
+
     # Returns the transformation that converts Cartesian coordinates to fractional
     # coordinates in terms of the unit cell vectors
     #
