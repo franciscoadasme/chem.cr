@@ -129,8 +129,8 @@ module Chem::Topology
       @structure.lattice = Lattice.new a, b, c
     end
 
-    def lattice(a : Number, b : Number, c : Number) : Lattice
-      @structure.lattice = Lattice.orthorhombic a.to_f, b.to_f, c.to_f
+    def lattice(a : Float64, b : Float64, c : Float64) : Lattice
+      @structure.lattice = Lattice.new a, b, c
     end
 
     def renumber_by_connectivity : Nil

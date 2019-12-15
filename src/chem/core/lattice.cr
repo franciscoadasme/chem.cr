@@ -11,35 +11,36 @@ module Chem
                    @origin : Spatial::Vector = Spatial::Vector.origin)
     end
 
-    def initialize(size : {Float64, Float64, Float64},
-                   angles : {Float64, Float64, Float64},
-                   @origin : Spatial::Vector = Spatial::Vector.origin)
-      cos_alpha = Math.cos angles[0].radians
-      cos_beta = Math.cos angles[1].radians
-      cos_gamma = Math.cos angles[2].radians
-      sin_gamma = Math.sin angles[2].radians
+    def self.new(a : Float64,
+                 b : Float64,
+                 c : Float64,
+                 alpha : Float64 = 90.0,
+                 beta : Float64 = 90.0,
+                 gamma : Float64 = 90.0,
+                 origin : Spatial::Vector = Spatial::Vector.origin) : self
+      if alpha == 90 && beta == 90 && gamma == 90
+        a = Spatial::Vector[a, 0, 0]
+        b = Spatial::Vector[0, b, 0]
+        c = Spatial::Vector[0, 0, c]
+      else
+        cos_alpha = Math.cos alpha.radians
+        cos_beta = Math.cos beta.radians
+        cos_gamma = Math.cos gamma.radians
+        sin_gamma = Math.sin gamma.radians
 
-      cx = size[2] * cos_beta
-      cy = size[2] * (cos_alpha - cos_beta * cos_gamma) / sin_gamma
-      cz = Math.sqrt size[2]**2 - cx**2 - cy**2
+        cx = c * cos_beta
+        cy = c * (cos_alpha - cos_beta * cos_gamma) / sin_gamma
+        cz = Math.sqrt c**2 - cx**2 - cy**2
 
-      @a = Spatial::Vector[size[0], 0, 0]
-      @b = Spatial::Vector[size[1] * cos_gamma, size[1] * sin_gamma, 0]
-      @c = Spatial::Vector[cx, cy, cz]
+        a = Spatial::Vector[a, 0, 0]
+        b = Spatial::Vector[b * cos_gamma, b * sin_gamma, 0]
+        c = Spatial::Vector[cx, cy, cz]
+      end
+      new a, b, c, origin
     end
 
     def self.[](a : Float64, b : Float64, c : Float64) : self
-      orthorhombic a, b, c
-    end
-
-    def self.orthorhombic(a : Float64,
-                          b : Float64,
-                          c : Float64,
-                          origin : Spatial::Vector = Spatial::Vector.origin) : self
-      new Spatial::Vector[a, 0, 0],
-        Spatial::Vector[0, b, 0],
-        Spatial::Vector[0, 0, c],
-        origin
+      new a, b, c
     end
 
     {% for name in %w(a b c) %}

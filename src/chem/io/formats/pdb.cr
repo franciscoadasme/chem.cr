@@ -420,8 +420,12 @@ module Chem::PDB
 
     private def parse_lattice
       @pdb_lattice = Lattice.new \
-        size: {read_float(6, 9), read_float(15, 9), read_float(24, 9)},
-        angles: {read_float(33, 7), read_float(40, 7), read_float(47, 7)}
+        read_float(6, 9),
+        read_float(15, 9),
+        read_float(24, 9),
+        read_float(33, 7),
+        read_float(40, 7),
+        read_float(47, 7)
     end
 
     private def parse_model : Structure

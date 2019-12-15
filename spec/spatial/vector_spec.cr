@@ -255,7 +255,7 @@ describe Chem::Spatial::Vector do
     end
 
     it "wraps a Cartesian vector" do
-      lattice = Chem::Lattice.orthorhombic 15, 20, 9
+      lattice = Chem::Lattice.new 15, 20, 9
 
       V[0, 0, 0].wrap(lattice).should eq V[0, 0, 0]
       V[15, 20, 9].wrap(lattice).should be_close V[15, 20, 9], 1e-12
@@ -264,7 +264,7 @@ describe Chem::Spatial::Vector do
     end
 
     it "wraps a Cartesian vector around a center" do
-      lattice = Chem::Lattice.orthorhombic 32, 20, 19
+      lattice = Chem::Lattice.new 32, 20, 19
       center = V[32, 20, 19]
 
       [

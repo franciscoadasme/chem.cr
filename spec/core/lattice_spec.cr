@@ -17,7 +17,7 @@ describe Chem::Lattice do
     end
 
     it "succeeds with size and angles" do
-      lattice = Lattice.new({74.23, 135.35, 148.46}, {90.0, 90.0, 90.0})
+      lattice = Lattice.new 74.23, 135.35, 148.46, 90, 90, 90
       lattice.a.should be_close Vector[74.23, 0, 0], 1e-8
       lattice.b.should be_close Vector[0, 135.35, 0], 1e-8
       lattice.c.should be_close Vector[0, 0, 148.46], 1e-8
@@ -28,7 +28,7 @@ describe Chem::Lattice do
     end
 
     it "succeeds with sizes (orthorhombic box)" do
-      lattice = Lattice.orthorhombic 74.23, 135.35, 148.46, V[1, 2, 3]
+      lattice = Lattice.new 74.23, 135.35, 148.46, origin: V[1, 2, 3]
       lattice.a.should be_close Vector[74.23, 0, 0], 1e-8
       lattice.b.should be_close Vector[0, 135.35, 0], 1e-8
       lattice.c.should be_close Vector[0, 0, 148.46], 1e-8
@@ -50,7 +50,7 @@ describe Chem::Lattice do
 
   describe "#change_coords" do
     it "returns the coordinates relative to the lattice vectors" do
-      lattice = Chem::Lattice.orthorhombic 10, 20, 30
+      lattice = Chem::Lattice.new 10, 20, 30
       lattice.change_coords(V[1, 2, 3]).should be_close V[0.1, 0.1, 0.1], 1e-15
       lattice.change_coords(V[2, 3, 15]).should be_close V[0.2, 0.15, 0.5], 1e-15
 
@@ -61,7 +61,7 @@ describe Chem::Lattice do
 
   describe "#revert_coords" do
     it "returns the coordinates relative to the lattice vectors" do
-      lattice = Chem::Lattice.orthorhombic 20, 20, 16
+      lattice = Chem::Lattice.new 20, 20, 16
       lattice.revert_coords(V[0.5, 0.65, 1]).should be_close V[10, 13, 16], 1e-15
       lattice.revert_coords(V[1.5, 0.23, 0.9]).should be_close V[30, 4.6, 14.4], 1e-15
 
@@ -79,8 +79,8 @@ describe Chem::Lattice do
   describe "#volume" do
     it "returns lattice's volume" do
       Lattice[10, 20, 30].volume.should eq 6_000
-      Lattice.new({5.0, 5.0, 8.0}, {90.0, 90.0, 120.0}).volume.should be_close 173.2050807569, 1e-10
-      Lattice.new({1.0, 2.0, 3.0}, {90.0, 101.2, 90.0}).volume.should be_close 5.8857309321, 1e-10
+      Lattice.new(5, 5, 8, 90, 90, 120).volume.should be_close 173.2050807569, 1e-10
+      Lattice.new(1, 2, 3, beta: 101.2).volume.should be_close 5.8857309321, 1e-10
     end
   end
 end
