@@ -14,15 +14,14 @@ module Chem::Spatial
 
     delegate includes?, origin, volume, to: @bounds
 
-    def initialize(@dim : Dimensions,
-                   @bounds : Bounds,
-                   initial_value : Float64 = 0.0)
-      raise ArgumentError.new "Invalid dimensions" unless dim.all?(&.>(0))
-      @buffer = if initial_value == 0
-                  Pointer(Float64).malloc size
-                else
-                  Pointer(Float64).malloc size, initial_value
-                end
+    def initialize(@dim : Dimensions, @bounds : Bounds)
+      check_dim
+      @buffer = Pointer(Float64).malloc size
+    end
+
+    def initialize(@dim : Dimensions, @bounds : Bounds, initial_value : Float64)
+      check_dim
+      @buffer = Pointer(Float64).malloc size, initial_value
     end
 
     def self.[](nx : Int, ny : Int, nz : Int) : self
@@ -312,6 +311,10 @@ module Chem::Spatial
     @[AlwaysInline]
     def unsafe_fetch(i : Int, j : Int, k : Int) : Float64
       to_unsafe[unsafe_index(i, j, k)]
+    end
+
+    private def check_dim : Nil
+      raise ArgumentError.new "Invalid dimensions" unless dim.all?(&.>(0))
     end
 
     private def internal_index?(i : Int, j : Int, k : Int) : Int32?
