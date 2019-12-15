@@ -130,7 +130,7 @@ module Chem::Topology
     end
 
     def lattice(a : Number, b : Number, c : Number) : Lattice
-      @structure.lattice = Lattice.orthorombic a.to_f, b.to_f, c.to_f
+      @structure.lattice = Lattice.orthorhombic a.to_f, b.to_f, c.to_f
     end
 
     def renumber_by_connectivity : Nil

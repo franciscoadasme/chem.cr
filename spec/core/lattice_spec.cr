@@ -27,8 +27,8 @@ describe Chem::Lattice do
       lattice.origin.should eq V.origin
     end
 
-    it "succeeds with sizes (orthorombic box)" do
-      lattice = Lattice.orthorombic 74.23, 135.35, 148.46, V[1, 2, 3]
+    it "succeeds with sizes (orthorhombic box)" do
+      lattice = Lattice.orthorhombic 74.23, 135.35, 148.46, V[1, 2, 3]
       lattice.a.should be_close Vector[74.23, 0, 0], 1e-8
       lattice.b.should be_close Vector[0, 135.35, 0], 1e-8
       lattice.c.should be_close Vector[0, 0, 148.46], 1e-8
@@ -50,7 +50,7 @@ describe Chem::Lattice do
 
   describe "#change_coords" do
     it "returns the coordinates relative to the lattice vectors" do
-      lattice = Chem::Lattice.orthorombic 10, 20, 30
+      lattice = Chem::Lattice.orthorhombic 10, 20, 30
       lattice.change_coords(V[1, 2, 3]).should be_close V[0.1, 0.1, 0.1], 1e-15
       lattice.change_coords(V[2, 3, 15]).should be_close V[0.2, 0.15, 0.5], 1e-15
 
@@ -61,7 +61,7 @@ describe Chem::Lattice do
 
   describe "#revert_coords" do
     it "returns the coordinates relative to the lattice vectors" do
-      lattice = Chem::Lattice.orthorombic 20, 20, 16
+      lattice = Chem::Lattice.orthorhombic 20, 20, 16
       lattice.revert_coords(V[0.5, 0.65, 1]).should be_close V[10, 13, 16], 1e-15
       lattice.revert_coords(V[1.5, 0.23, 0.9]).should be_close V[30, 4.6, 14.4], 1e-15
 

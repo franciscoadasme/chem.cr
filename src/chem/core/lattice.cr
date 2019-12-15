@@ -29,13 +29,13 @@ module Chem
     end
 
     def self.[](a : Float64, b : Float64, c : Float64) : self
-      orthorombic a, b, c
+      orthorhombic a, b, c
     end
 
-    def self.orthorombic(a : Float64,
-                         b : Float64,
-                         c : Float64,
-                         origin : Spatial::Vector = Spatial::Vector.origin) : self
+    def self.orthorhombic(a : Float64,
+                          b : Float64,
+                          c : Float64,
+                          origin : Spatial::Vector = Spatial::Vector.origin) : self
       new Spatial::Vector[a, 0, 0],
         Spatial::Vector[0, b, 0],
         Spatial::Vector[0, 0, c],
