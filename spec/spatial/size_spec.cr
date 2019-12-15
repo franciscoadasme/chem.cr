@@ -24,4 +24,10 @@ describe Chem::Spatial::Size do
       (S[1, 2, 3] / 0.5).should eq S[2, 4, 6]
     end
   end
+
+  describe "#volume" do
+    it "returns the volume enclosed by the bounds" do
+      S[6, 4, 23].volume.should eq 552
+    end
+  end
 end

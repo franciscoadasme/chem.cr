@@ -3,6 +3,8 @@ module Chem::Spatial
     getter origin : Vector
     getter size : Size
 
+    delegate :volume, to: @size
+
     def initialize(@origin : Vector, @size : Size)
     end
 

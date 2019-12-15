@@ -71,4 +71,11 @@ describe Chem::Spatial::Bounds do
       Bounds.new(V[1, 2, 3], S[6, 3, 23]).includes?(V[2.4, 1.8, 23.1]).should be_false
     end
   end
+
+  describe "#volume" do
+    it "returns the volume enclosed by the bounds" do
+      Bounds[10, 20, 30].volume.should eq 6_000
+      Bounds.new(V[1, 2, 3], S[6, 3, 23]).volume.should eq 414
+    end
+  end
 end

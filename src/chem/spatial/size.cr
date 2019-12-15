@@ -21,5 +21,9 @@ module Chem::Spatial
         Size.new @x {{op.id}} rhs, @y {{op.id}} rhs, @z {{op.id}} rhs
       end
     {% end %}
+
+    def volume : Float64
+      @x * @y * @z
+    end
   end
 end
