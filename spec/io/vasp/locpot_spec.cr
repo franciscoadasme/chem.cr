@@ -49,4 +49,11 @@ describe Chem::VASP::Locpot do
 
       EOF
   end
+
+  it "fails when writing a LOCPOT with a non-periodic structure" do
+    grid = make_grid 3, 3, 3, Bounds.zero
+    expect_raises Chem::Spatial::NotPeriodicError do
+      grid.to_locpot structure: Chem::Structure.new
+    end
+  end
 end
