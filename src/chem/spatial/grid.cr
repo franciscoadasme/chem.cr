@@ -12,7 +12,7 @@ module Chem::Spatial
 
     @buffer : Pointer(Float64)
 
-    delegate includes?, origin, to: @bounds
+    delegate includes?, origin, volume, to: @bounds
 
     def initialize(@dim : Dimensions,
                    @bounds : Bounds,
