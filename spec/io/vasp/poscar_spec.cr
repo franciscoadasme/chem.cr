@@ -118,7 +118,7 @@ describe Chem::VASP::Poscar::Writer do
     atom :Cl, V[20, 10, 10]
   end
 
-  it "writes a structure in cartesian coordinates" do
+  it "writes a structure in Cartesian coordinates" do
     structure.to_poscar.should eq <<-EOS
       NaCl-O-NaCl
          1.00000000000000

@@ -254,8 +254,8 @@ describe Chem::Spatial::Vector do
       V[0.01, -0.3, 2.4].wrap(center).should be_close V[0.01, -0.3, 0.4], 1e-12
     end
 
-    it "wraps a cartersian vector" do
-      lattice = Chem::Lattice.orthorombic 15, 20, 9
+    it "wraps a Cartesian vector" do
+      lattice = Chem::Lattice.orthorhombic 15, 20, 9
 
       V[0, 0, 0].wrap(lattice).should eq V[0, 0, 0]
       V[15, 20, 9].wrap(lattice).should be_close V[15, 20, 9], 1e-12
@@ -263,8 +263,8 @@ describe Chem::Spatial::Vector do
       V[15.5, 21, -5].wrap(lattice).should be_close V[0.5, 1, 4], 1e-12
     end
 
-    it "wraps a cartersian vector around a center" do
-      lattice = Chem::Lattice.orthorombic 32, 20, 19
+    it "wraps a Cartesian vector around a center" do
+      lattice = Chem::Lattice.orthorhombic 32, 20, 19
       center = V[32, 20, 19]
 
       [

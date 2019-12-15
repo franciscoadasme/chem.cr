@@ -90,7 +90,7 @@ describe Chem::DFTB::Gen::Writer do
     atom PeriodicTable::Cl, V[20, 10, 10]
   end
 
-  it "writes a structure in cartersian coordinats without unit cell" do
+  it "writes a structure in Cartesian coordinats without unit cell" do
     structure.to_gen.should eq <<-EOS
           5  C
        Cl Na  O
@@ -102,7 +102,7 @@ describe Chem::DFTB::Gen::Writer do
       EOS
   end
 
-  it "writes a structure in cartersian coordinats with unit cell" do
+  it "writes a structure in Cartesian coordinates with unit cell" do
     structure.lattice = Chem::Lattice.orthorhombic 40, 20, 10
     structure.to_gen.should eq <<-EOS
           5  S
