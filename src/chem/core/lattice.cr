@@ -3,11 +3,17 @@ module Chem
     property a : Spatial::Vector
     property b : Spatial::Vector
     property c : Spatial::Vector
+    property origin : Spatial::Vector
 
-    def initialize(@a : Spatial::Vector, @b : Spatial::Vector, @c : Spatial::Vector)
+    def initialize(@a : Spatial::Vector,
+                   @b : Spatial::Vector,
+                   @c : Spatial::Vector,
+                   @origin : Spatial::Vector = Spatial::Vector.origin)
     end
 
-    def initialize(size : {Float64, Float64, Float64}, angles : {Float64, Float64, Float64})
+    def initialize(size : {Float64, Float64, Float64},
+                   angles : {Float64, Float64, Float64},
+                   @origin : Spatial::Vector = Spatial::Vector.origin)
       cos_alpha = Math.cos angles[0].radians
       cos_beta = Math.cos angles[1].radians
       cos_gamma = Math.cos angles[2].radians
@@ -26,10 +32,14 @@ module Chem
       orthorombic a, b, c
     end
 
-    def self.orthorombic(a : Float64, b : Float64, c : Float64) : self
+    def self.orthorombic(a : Float64,
+                         b : Float64,
+                         c : Float64,
+                         origin : Spatial::Vector = Spatial::Vector.origin) : self
       new Spatial::Vector[a, 0, 0],
         Spatial::Vector[0, b, 0],
-        Spatial::Vector[0, 0, c]
+        Spatial::Vector[0, 0, c],
+        origin
     end
 
     {% for name in %w(a b c) %}
