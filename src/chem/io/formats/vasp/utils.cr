@@ -1,10 +1,10 @@
 module Chem::VASP
   module GridParser
-    private def read_grid(nx : Int,
-                          ny : Int,
-                          nz : Int,
-                          bounds : Spatial::Bounds,
-                          & : Float64 -> Float64) : Spatial::Grid
+    private def read_array(nx : Int,
+                           ny : Int,
+                           nz : Int,
+                           bounds : Spatial::Bounds,
+                           & : Float64 -> Float64) : Spatial::Grid
       Grid.build({nx, ny, nz}, bounds) do |buffer|
         nz.times do |k|
           ny.times do |j|

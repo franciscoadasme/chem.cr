@@ -6,7 +6,7 @@ module Chem::VASP::Locpot
 
     def parse : Spatial::Grid
       nx, ny, nz, bounds = read_header
-      read_grid nx, ny, nz, bounds, &.itself
+      read_array nx, ny, nz, bounds, &.itself
     end
   end
 
