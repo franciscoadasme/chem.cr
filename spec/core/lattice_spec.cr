@@ -66,6 +66,24 @@ describe Chem::Lattice do
     end
   end
 
+  describe "#includes?" do
+    it "tells if a vector is within the primary unit cell" do
+      Lattice[10, 20, 30].includes?(V[1, 2, 3]).should be_true
+      Lattice.new(6, 3, 23, origin: V[1, 2, 3]).includes?(V[3, 2.1, 20]).should be_true
+      Lattice[10, 20, 30].includes?(V[-1, 2, 3]).should be_false
+      Lattice.new(6, 3, 23, origin: V[1, 2, 3]).includes?(V[2.4, 1.8, 23.1]).should be_false
+    end
+
+    it "tells if a vector is within the primary unit cell (non-orthogonal)" do
+      lattice = Lattice.new 23.803, 23.828, 5.387, 90, 90, 120
+      lattice.includes?(V[10, 20, 2]).should be_true
+      lattice.includes?(V[0, 0, 0]).should be_true
+      lattice.includes?(V[30, 30, 10]).should be_false
+      lattice.includes?(V[-3, 10, 2]).should be_true
+      lattice.includes?(V[-3, 2, 2]).should be_false
+    end
+  end
+
   describe "#revert_coords" do
     it "converts fractional to Cartesian coordinates" do
       lattice = Chem::Lattice.new 20, 20, 16

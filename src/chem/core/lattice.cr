@@ -86,6 +86,17 @@ module Chem
       a.size == b.size && alpha == 90 && beta == 90 && gamma == 120
     end
 
+    def includes?(vec : Spatial::Vector) : Bool
+      if @a.y == 0 && @a.z == 0 && cuboid?
+        origin.x <= vec.x <= origin.x + @a.size &&
+          origin.y <= vec.y <= origin.y + @b.size &&
+          origin.z <= vec.z <= origin.z + @c.size
+      else
+        fvec = vec.to_fractional self
+        0 <= fvec.x <= 1 && 0 <= fvec.y <= 1 && 0 <= fvec.z <= 1
+      end
+    end
+
     def monoclinic? : Bool
       a.size != c.size && alpha == 90 && beta != 90 && gamma == 90
     end
