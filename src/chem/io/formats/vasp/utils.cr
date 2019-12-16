@@ -25,8 +25,8 @@ module Chem::VASP
       loop do
         if (str = read_word)[0].number?
           n_atoms += str.to_i
-          break if n_elements = 0
           n_elements -= 1
+          break if n_elements == 0
         else
           n_elements += 1
         end
