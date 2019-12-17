@@ -160,12 +160,12 @@ describe Chem::Spatial::Vector do
     end
   end
 
-  describe "#norm" do
-    it "returns the norm of the vector" do
-      Vector.origin.norm.should eq 0
-      v1.norm.should eq 5
-      v1.inv.norm.should eq 5
-      Vector[0.6, 0.8, 0].norm.should eq 1
+  describe "#size" do
+    it "returns the size of the vector" do
+      Vector.origin.size.should eq 0
+      v1.size.should eq 5
+      v1.inv.size.should eq 5
+      Vector[0.6, 0.8, 0].size.should eq 1
     end
   end
 
