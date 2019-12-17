@@ -3,12 +3,8 @@ module Chem
     property a : Spatial::Vector
     property b : Spatial::Vector
     property c : Spatial::Vector
-    property origin : Spatial::Vector
 
-    def initialize(@a : Spatial::Vector,
-                   @b : Spatial::Vector,
-                   @c : Spatial::Vector,
-                   @origin : Spatial::Vector = Spatial::Vector.origin)
+    def initialize(@a : Spatial::Vector, @b : Spatial::Vector, @c : Spatial::Vector)
     end
 
     def self.new(a : Float64,
@@ -16,8 +12,7 @@ module Chem
                  c : Float64,
                  alpha : Float64 = 90.0,
                  beta : Float64 = 90.0,
-                 gamma : Float64 = 90.0,
-                 origin : Spatial::Vector = Spatial::Vector.origin) : self
+                 gamma : Float64 = 90.0) : self
       if alpha == 90 && beta == 90 && gamma == 90
         a = Spatial::Vector[a, 0, 0]
         b = Spatial::Vector[0, b, 0]
@@ -36,7 +31,7 @@ module Chem
         b = Spatial::Vector[b * cos_gamma, b * sin_gamma, 0]
         c = Spatial::Vector[cx, cy, cz]
       end
-      new a, b, c, origin
+      new a, b, c
     end
 
     def self.[](a : Float64, b : Float64, c : Float64) : self
@@ -67,7 +62,7 @@ module Chem
     end
 
     def change_coords(vec : Spatial::Vector) : Spatial::Vector
-      basis_transform * (vec - @origin)
+      basis_transform * vec
     end
 
     def cubic? : Bool
@@ -86,17 +81,6 @@ module Chem
       a.size == b.size && alpha == 90 && beta == 90 && gamma == 120
     end
 
-    def includes?(vec : Spatial::Vector) : Bool
-      if @a.y == 0 && @a.z == 0 && cuboid?
-        origin.x <= vec.x <= origin.x + @a.size &&
-          origin.y <= vec.y <= origin.y + @b.size &&
-          origin.z <= vec.z <= origin.z + @c.size
-      else
-        fvec = vec.to_fractional self
-        0 <= fvec.x <= 1 && 0 <= fvec.y <= 1 && 0 <= fvec.z <= 1
-      end
-    end
-
     def monoclinic? : Bool
       a.size != c.size && alpha == 90 && beta != 90 && gamma == 90
     end
@@ -106,7 +90,7 @@ module Chem
     end
 
     def revert_coords(vec : Spatial::Vector) : Spatial::Vector
-      (vec.x * @a + vec.y * @b + vec.z * @c) + @origin
+      vec.x * @a + vec.y * @b + vec.z * @c
     end
 
     def tetragonal? : Bool
