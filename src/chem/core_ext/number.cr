@@ -6,19 +6,19 @@ abstract struct Number
     other * self
   end
 
-  def degree : self
+  def degree
     degrees
   end
 
-  def degrees : self
+  def degrees
     self * RADIAN_TO_DEGREE
   end
 
-  def radian : self
+  def radian
     radians
   end
 
-  def radians : self
+  def radians
     self * DEGREE_TO_RADIAN
   end
 
