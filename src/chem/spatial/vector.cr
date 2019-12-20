@@ -156,12 +156,20 @@ module Chem::Spatial
       Linalg::Matrix.column @x, @y, @z
     end
 
+    def to_cartesian(basis : Basis) : self
+      @x * basis.i + @y * basis.j + @z * basis.k
+    end
+
     def to_cartesian(lattice : Lattice) : self
-      lattice.revert_coords self
+      to_cartesian lattice.basis
+    end
+
+    def to_fractional(basis : Basis) : self
+      basis.transform * self
     end
 
     def to_fractional(lattice : Lattice) : self
-      lattice.change_coords self
+      to_fractional lattice.basis
     end
 
     def to_s(io : ::IO)

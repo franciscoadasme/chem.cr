@@ -209,6 +209,35 @@ describe Chem::Spatial::Vector do
     end
   end
 
+  describe "#to_cartesian" do
+    it "converts fractional to Cartesian coordinates" do
+      basis = Basis.new S[20, 20, 16]
+      V[0.5, 0.65, 1].to_cartesian(basis).should be_close V[10, 13, 16], 1e-15
+      V[1.5, 0.23, 0.9].to_cartesian(basis).should be_close V[30, 4.6, 14.4], 1e-15
+
+      basis = Basis.new S[20, 10, 16]
+      V[0.5, 0.65, 1].to_cartesian(basis).should be_close V[10, 6.5, 16], 1e-15
+
+      basis = Basis.new(
+        V[8.497, 0.007, 0.031],
+        V[10.148, 42.359, 0.503],
+        V[7.296, 2.286, 53.093])
+      V[0.724, 0.04, 0.209].to_cartesian(basis).should be_close V[8.083, 2.177, 11.139], 1e-3
+    end
+  end
+
+  describe "#to_fractional" do
+    it "converts Cartesian to fractional coordinates" do
+      basis = Basis.new S[10, 20, 30]
+      V.zero.to_fractional(basis).should eq V.zero
+      V[1, 2, 3].to_fractional(basis).should be_close V[0.1, 0.1, 0.1], 1e-15
+      V[2, 3, 15].to_fractional(basis).should be_close V[0.2, 0.15, 0.5], 1e-15
+
+      basis = Basis.new S[20, 20, 30]
+      V[1, 2, 3].to_fractional(basis).should be_close V[0.05, 0.1, 0.1], 1e-15
+    end
+  end
+
   describe "#to_m" do
     it "returns a column matrix" do
       V[3, 1, 5].to_m.should eq Chem::Linalg::Matrix[[3], [1], [5]]

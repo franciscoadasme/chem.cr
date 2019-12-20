@@ -2,6 +2,7 @@ require "./spatial/affine"
 require "./spatial/size"
 require "./spatial/vector"
 
+require "./spatial/basis"
 require "./spatial/bounds"
 require "./spatial/grid"
 require "./spatial/quaternion"
