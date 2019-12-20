@@ -130,7 +130,7 @@ module Chem::Topology
     end
 
     def lattice(a : Float64, b : Float64, c : Float64) : Lattice
-      @structure.lattice = Lattice.new a, b, c
+      @structure.lattice = Lattice.new Spatial::Size[a, b, c]
     end
 
     def renumber_by_connectivity : Nil

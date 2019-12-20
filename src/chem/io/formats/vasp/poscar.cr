@@ -63,7 +63,7 @@ module Chem::VASP::Poscar
 
     private def write(lattice : Lattice) : Nil
       @io.printf " %18.14f\n", 1.0
-      {lattice.a, lattice.b, lattice.c}.each do |vec|
+      {lattice.i, lattice.j, lattice.k}.each do |vec|
         @io.printf " %22.16f%22.16f%22.16f\n", vec.x, vec.y, vec.z
       end
     end

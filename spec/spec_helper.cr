@@ -8,6 +8,7 @@ alias Bounds = Chem::Spatial::Bounds
 alias Constraint = Chem::Constraint
 alias Element = Chem::Element
 alias Grid = Chem::Spatial::Grid
+alias Lattice = Chem::Lattice
 alias M = Chem::Linalg::Matrix
 alias PDB = Chem::PDB
 alias ParseException = Chem::IO::ParseException

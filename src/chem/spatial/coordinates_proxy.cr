@@ -132,7 +132,7 @@ module Chem::Spatial
       center ||= lattice.center
 
       if lattice.cuboid?
-        vecs = {lattice.a, lattice.b, lattice.c}
+        vecs = {lattice.i, lattice.j, lattice.k}
         normed_vecs = vecs.map &.normalize
         map! do |vec|
           d = vec - center

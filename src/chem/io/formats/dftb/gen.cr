@@ -33,7 +33,7 @@ module Chem::DFTB::Gen
     end
 
     private def write(lattice : Lattice) : Nil
-      {Spatial::Vector.zero, lattice.a, lattice.b, lattice.c}.each do |vec|
+      {Spatial::Vector.zero, lattice.i, lattice.j, lattice.k}.each do |vec|
         @io.printf "%20.10E%20.10E%20.10E\n", vec.x, vec.y, vec.z
       end
     end

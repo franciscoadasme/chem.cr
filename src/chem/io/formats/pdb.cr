@@ -151,9 +151,9 @@ module Chem::PDB
 
     private def write(lattice : Lattice) : Nil
       @io.printf "CRYST1%9.3f%9.3f%9.3f%7.2f%7.2f%7.2f %-11s%4d          \n",
-        lattice.a.size,
-        lattice.b.size,
-        lattice.c.size,
+        lattice.a,
+        lattice.b,
+        lattice.c,
         lattice.alpha,
         lattice.beta,
         lattice.gamma,
@@ -419,13 +419,12 @@ module Chem::PDB
     end
 
     private def parse_lattice
+      size = Spatial::Size.new read_float(6, 9), read_float(15, 9), read_float(24, 9)
       @pdb_lattice = Lattice.new \
-        read_float(6, 9),
-        read_float(15, 9),
-        read_float(24, 9),
-        read_float(33, 7),
-        read_float(40, 7),
-        read_float(47, 7)
+        size,
+        alpha: read_float(33, 7),
+        beta: read_float(40, 7),
+        gamma: read_float(47, 7)
     end
 
     private def parse_model : Structure

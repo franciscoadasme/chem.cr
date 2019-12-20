@@ -42,9 +42,9 @@ describe Chem::DFTB::Gen::Parser do
 
     structure = Chem::Structure.from_gen IO::Memory.new(content)
     structure.lattice.should_not be_nil
-    structure.lattice.not_nil!.a.should eq V[40, 0, 0]
-    structure.lattice.not_nil!.b.should eq V[0, 20, 0]
-    structure.lattice.not_nil!.c.should eq V[0, 0, 10]
+    structure.lattice.not_nil!.i.should eq V[40, 0, 0]
+    structure.lattice.not_nil!.j.should eq V[0, 20, 0]
+    structure.lattice.not_nil!.k.should eq V[0, 0, 10]
 
     structure.n_atoms.should eq 4
     structure.atoms.map(&.element.symbol).should eq ["Cl", "O", "O", "Na"]
@@ -70,9 +70,9 @@ describe Chem::DFTB::Gen::Parser do
 
     structure = Chem::Structure.from_gen IO::Memory.new(content)
     structure.lattice.should_not be_nil
-    structure.lattice.not_nil!.a.should eq V[2.713546, 2.713546, 0]
-    structure.lattice.not_nil!.b.should eq V[0, 2.713546, 2.713546]
-    structure.lattice.not_nil!.c.should eq V[2.713546, 0, 2.713546]
+    structure.lattice.not_nil!.i.should eq V[2.713546, 2.713546, 0]
+    structure.lattice.not_nil!.j.should eq V[0, 2.713546, 2.713546]
+    structure.lattice.not_nil!.k.should eq V[2.713546, 0, 2.713546]
 
     structure.n_atoms.should eq 2
     structure.atoms.map(&.element.symbol).should eq ["Ga", "As"]
@@ -103,7 +103,7 @@ describe Chem::DFTB::Gen::Writer do
   end
 
   it "writes a structure in Cartesian coordinates with unit cell" do
-    structure.lattice = Chem::Lattice.new 40, 20, 10
+    structure.lattice = Lattice.new S[40, 20, 10]
     structure.to_gen.should eq <<-EOS
           5  S
        Cl Na  O
@@ -120,7 +120,7 @@ describe Chem::DFTB::Gen::Writer do
   end
 
   it "writes a structure in fractional coordinates with unit cell" do
-    structure.lattice = Chem::Lattice.new 40, 20, 10
+    structure.lattice = Lattice.new S[40, 20, 10]
     structure.to_gen(fractional: true).should eq <<-EOS
           5  F
        Cl Na  O

@@ -91,9 +91,9 @@ describe Chem::Topology::Builder do
     end
 
     lat = st.lattice.not_nil!
-    lat.a.should eq Vector[25, 32, 12]
-    lat.b.should eq Vector[12, 34, 23]
-    lat.c.should eq Vector[12, 68, 21]
+    lat.i.should eq Vector[25, 32, 12]
+    lat.j.should eq Vector[12, 34, 23]
+    lat.k.should eq Vector[12, 68, 21]
   end
 
   it "builds a structure with lattice using numbers" do
@@ -102,9 +102,9 @@ describe Chem::Topology::Builder do
     end
 
     lat = st.lattice.not_nil!
-    lat.a.should eq Vector[25, 0, 0]
-    lat.b.should eq Vector[0, 34, 0]
-    lat.c.should eq Vector[0, 0, 21]
+    lat.i.should eq Vector[25, 0, 0]
+    lat.j.should eq Vector[0, 34, 0]
+    lat.k.should eq Vector[0, 0, 21]
   end
 
   it "builds a structure with lattice using numbers (one-line)" do
@@ -113,9 +113,9 @@ describe Chem::Topology::Builder do
     end
 
     lat = st.lattice.not_nil!
-    lat.a.should eq Vector[25, 0, 0]
-    lat.b.should eq Vector[0, 34, 0]
-    lat.c.should eq Vector[0, 0, 21]
+    lat.i.should eq Vector[25, 0, 0]
+    lat.j.should eq Vector[0, 34, 0]
+    lat.k.should eq Vector[0, 0, 21]
   end
 
   it "names chains automatically" do
