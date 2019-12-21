@@ -330,7 +330,17 @@ module Chem::Topology
     end
 
     private def next_chain : Chain
-      chain (@chain.try(&.id) || 64.chr).succ
+      next_id = case id = @chain.try(&.id) || 'A'.pred
+                when 'A'..'Y', 'a'..'y', '0'..'8', 'A'.pred
+                  id.succ
+                when 'Z'
+                  'a'
+                when 'z'
+                  '0'
+                else
+                  raise ArgumentError.new("Non-alphanumeric chain id")
+                end
+      chain next_id
     end
 
     private def next_residue(name : String = "UNK") : Residue

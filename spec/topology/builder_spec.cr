@@ -120,12 +120,13 @@ describe Chem::Topology::Builder do
 
   it "names chains automatically" do
     st = Chem::Topology::Builder.build do
-      5.times do
+      62.times do
         chain { }
       end
     end
 
-    st.chains.map(&.id).should eq ['A', 'B', 'C', 'D', 'E']
+    ids = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".chars
+    st.chains.map(&.id).should eq ids
   end
 
   it "names chains automatically after manually setting one" do
@@ -136,6 +137,16 @@ describe Chem::Topology::Builder do
     end
 
     st.chains.map(&.id).should eq ['F', 'G', 'H']
+  end
+
+  it "fails over chain id limit" do
+    expect_raises ArgumentError, "Non-alphanumeric chain id" do
+      Chem::Topology::Builder.build do
+        63.times do
+          chain { }
+        end
+      end
+    end
   end
 
   it "numbers residues automatically" do
