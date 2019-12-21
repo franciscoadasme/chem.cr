@@ -92,6 +92,15 @@ module Chem::Topology
       assign_bond_orders
     end
 
+    # Guesses topology (chain, residue and atom names) from existing bonds.
+    #
+    # Atoms are split in fragments, where each fragment is mapped to a list of residues.
+    # Then, fragments are divided into polymers (e.g., peptide) and non-polymer
+    # fragments (e.g., water), where residues assigned to the latter are grouped
+    # together by their kind (i.e., protein, ion, solvent, etc.). Finally, polymer
+    # fragments and residues grouped by kind are assigned to their own unique chain as
+    # long as there are less residue groups than the chain limit (62), otherwise all
+    # residues are assigned to the same chain.
     def guess_topology_from_connectivity : Nil
       raise Error.new "Structure has no bonds" if @structure.bonds.empty?
       return unless old_chain = @structure.delete(@structure.chains.first)
