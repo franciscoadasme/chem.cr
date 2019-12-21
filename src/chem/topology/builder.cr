@@ -2,6 +2,7 @@ require "./templates/all"
 
 module Chem::Topology
   class Builder
+    MAX_CHAINS          =  62 # remove artificial limit
     MAX_COVALENT_RADIUS = 5.0
 
     @aromatic_bonds : Array(Bond)?
@@ -65,11 +66,11 @@ module Chem::Topology
     end
 
     def chain : Chain
-      @chain ||= next_chain
+      @chain || next_chain
     end
 
     def chain(& : self ->) : Nil
-      @chain = next_chain
+      next_chain
       with self yield self
     end
 
@@ -91,21 +92,37 @@ module Chem::Topology
       assign_bond_orders
     end
 
+    # Guesses topology (chain, residue and atom names) from existing bonds.
+    #
+    # Atoms are split in fragments, where each fragment is mapped to a list of residues.
+    # Then, fragments are divided into polymers (e.g., peptide) and non-polymer
+    # fragments (e.g., water), where residues assigned to the latter are grouped
+    # together by their kind (i.e., protein, ion, solvent, etc.). Finally, polymer
+    # fragments and residues grouped by kind are assigned to their own unique chain as
+    # long as there are less residue groups than the chain limit (62), otherwise all
+    # residues are assigned to the same chain.
     def guess_topology_from_connectivity : Nil
       raise Error.new "Structure has no bonds" if @structure.bonds.empty?
       return unless old_chain = @structure.delete(@structure.chains.first)
 
-      chains = {} of Residue::Kind => Chain
-      detector = Templates::Detector.new Templates.all
-      old_chain.fragments.each do |atoms|
-        residues, polymer = guess_residues detector, old_chain, atoms.to_a
+      @chain = nil
+      @residue = nil
 
-        id = (65 + @structure.n_chains).chr
-        chain = if polymer
-                  Chain.new id, @structure
-                else
-                  chains[residues.first.kind] ||= Chain.new id, @structure
-                end
+      detector = Templates::Detector.new Templates.all
+      fragments = old_chain.fragments.map do |atoms|
+        guess_residues detector, old_chain, atoms.to_a
+      end
+
+      polymer_chains, other = fragments.partition { |frag| frag.size > 1 }
+      other = other.flatten.sort_by!(&.kind.to_i).group_by(&.kind).values
+      if polymer_chains.size + other.size <= MAX_CHAINS
+        fragments = polymer_chains + other
+      else
+        fragments = [fragments.flatten]
+      end
+
+      fragments.each do |residues|
+        chain = next_chain
         residues.each do |residue|
           residue.number = chain.n_residues + 1
           residue.chain = chain
@@ -295,8 +312,7 @@ module Chem::Topology
 
     private def guess_residues(detector : Templates::Detector,
                                chain : Chain,
-                               atoms : Array(Atom)) : Tuple(Array(Residue), Bool)
-      polymer = false
+                               atoms : Array(Atom)) : Array(Residue)
       residues = [] of Residue
       detector.each_match(atoms.dup) do |res_t, atom_map|
         names = res_t.atom_names
@@ -308,7 +324,6 @@ module Chem::Topology
           atom.residue = residue
           atoms.delete atom
         end
-        polymer ||= res_t.monomer?
       end
 
       unless atoms.empty?
@@ -316,7 +331,7 @@ module Chem::Topology
         atoms.each &.residue=(residue)
       end
 
-      {residues, polymer}
+      residues
     end
 
     private def kdtree : Spatial::KDTree
@@ -330,7 +345,17 @@ module Chem::Topology
     end
 
     private def next_chain : Chain
-      chain (@chain.try(&.id) || 64.chr).succ
+      next_id = case id = @chain.try(&.id) || 'A'.pred
+                when 'A'..'Y', 'a'..'y', '0'..'8', 'A'.pred
+                  id.succ
+                when 'Z'
+                  'a'
+                when 'z'
+                  '0'
+                else
+                  raise ArgumentError.new("Non-alphanumeric chain id")
+                end
+      chain next_id
     end
 
     private def next_residue(name : String = "UNK") : Residue

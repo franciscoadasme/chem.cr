@@ -10,6 +10,7 @@ module Chem
     getter structure : Structure
 
     def initialize(@id : Char, @structure : Structure)
+      raise ArgumentError.new("Non-alphanumeric chain id") unless @id.ascii_alphanumeric?
       @structure << self
     end
 

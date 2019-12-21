@@ -120,12 +120,13 @@ describe Chem::Topology::Builder do
 
   it "names chains automatically" do
     st = Chem::Topology::Builder.build do
-      5.times do
+      62.times do
         chain { }
       end
     end
 
-    st.chains.map(&.id).should eq ['A', 'B', 'C', 'D', 'E']
+    ids = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".chars
+    st.chains.map(&.id).should eq ids
   end
 
   it "names chains automatically after manually setting one" do
@@ -136,6 +137,16 @@ describe Chem::Topology::Builder do
     end
 
     st.chains.map(&.id).should eq ['F', 'G', 'H']
+  end
+
+  it "fails over chain id limit" do
+    expect_raises ArgumentError, "Non-alphanumeric chain id" do
+      Chem::Topology::Builder.build do
+        63.times do
+          chain { }
+        end
+      end
+    end
   end
 
   it "numbers residues automatically" do
@@ -406,10 +417,10 @@ describe Chem::Topology::Builder do
       chains[0].residues.map(&.number).should eq (1..7).to_a
       chains[1].residues.map(&.name).sort!.should eq %w(ALA GLY ILE LEU PHE SER UNK)
       chains[1].residues.map(&.number).should eq (1..7).to_a
-      chains[2].residues.map(&.name).should eq %w(UNK)
-      chains[2].residues.map(&.number).should eq [1]
-      chains[3].residues.map(&.name).should eq %w(HOH HOH HOH HOH HOH HOH HOH)
-      chains[3].residues.map(&.number).should eq (1..7).to_a
+      chains[2].residues.map(&.name).should eq %w(HOH HOH HOH HOH HOH HOH HOH)
+      chains[2].residues.map(&.number).should eq (1..7).to_a
+      chains[3].residues.map(&.name).should eq %w(UNK)
+      chains[3].residues.map(&.number).should eq [1]
     end
 
     it "guesses the topology of a periodic peptide" do
@@ -421,6 +432,20 @@ describe Chem::Topology::Builder do
       structure.chains.map(&.id).should eq ['A']
       structure.chains[0].residues.map(&.name).should eq ["GLY"] * 13
       structure.chains[0].residues.map(&.number).should eq (1..13).to_a
+    end
+
+    it "guesses the topology of many fragments (beyond max chain id)" do
+      structure = Chem::Structure.read "spec/data/poscar/many_fragments.poscar"
+      builder = Chem::Topology::Builder.new structure
+      builder.guess_bonds_from_geometry
+      builder.guess_topology_from_connectivity
+
+      structure.n_chains.should eq 1
+      structure.n_residues.should eq 144
+      structure.fragments.size.should eq 72
+      structure.chains.map(&.id).should eq ['A']
+      structure.residues.map(&.name).should eq ["PHE"] * 144
+      structure.residues.map(&.number).should eq (1..144).to_a
     end
 
     it "fails when structure has no bonds" do
@@ -445,10 +470,10 @@ describe Chem::Topology::Builder do
       chains[0].residues.map(&.name).should eq %w(ASN PHE GLY ALA ILE LEU SER)
       chains[1].residues.map(&.number).should eq (1..7).to_a
       chains[1].residues.map(&.name).should eq %w(UNK PHE GLY ALA ILE LEU SER)
-      chains[2].residues.map(&.name).should eq %w(UNK)
-      chains[2].residues.map(&.number).should eq [1]
-      chains[3].residues.map(&.name).should eq %w(HOH HOH HOH HOH HOH HOH HOH)
-      chains[3].residues.map(&.number).should eq (1..7).to_a
+      chains[2].residues.map(&.name).should eq %w(HOH HOH HOH HOH HOH HOH HOH)
+      chains[2].residues.map(&.number).should eq (1..7).to_a
+      chains[3].residues.map(&.name).should eq %w(UNK)
+      chains[3].residues.map(&.number).should eq [1]
 
       chains[0].residues[0].previous.should be_nil
       chains[0].residues[3].previous.try(&.name).should eq "GLY"
