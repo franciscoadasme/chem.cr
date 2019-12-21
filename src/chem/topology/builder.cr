@@ -95,17 +95,15 @@ module Chem::Topology
       raise Error.new "Structure has no bonds" if @structure.bonds.empty?
       return unless old_chain = @structure.delete(@structure.chains.first)
 
+      @chain = nil
+      @residue = nil
+
       chains = {} of Residue::Kind => Chain
       detector = Templates::Detector.new Templates.all
       old_chain.fragments.each do |atoms|
         residues, polymer = guess_residues detector, old_chain, atoms.to_a
 
-        id = (65 + @structure.n_chains).chr
-        chain = if polymer
-                  Chain.new id, @structure
-                else
-                  chains[residues.first.kind] ||= Chain.new id, @structure
-                end
+        chain = polymer ? next_chain : (chains[residues.first.kind] ||= next_chain)
         residues.each do |residue|
           residue.number = chain.n_residues + 1
           residue.chain = chain
