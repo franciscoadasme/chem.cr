@@ -65,11 +65,11 @@ module Chem::Topology
     end
 
     def chain : Chain
-      @chain ||= next_chain
+      @chain || next_chain
     end
 
     def chain(& : self ->) : Nil
-      @chain = next_chain
+      next_chain
       with self yield self
     end
 
