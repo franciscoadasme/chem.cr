@@ -2,6 +2,7 @@ require "./templates/all"
 
 module Chem::Topology
   class Builder
+    MAX_CHAINS          =  62 # remove artificial limit
     MAX_COVALENT_RADIUS = 5.0
 
     @aromatic_bonds : Array(Bond)?
@@ -105,8 +106,13 @@ module Chem::Topology
 
       polymer_chains, other = fragments.partition { |frag| frag.size > 1 }
       other = other.flatten.sort_by!(&.kind.to_i).group_by(&.kind).values
+      if polymer_chains.size + other.size <= MAX_CHAINS
+        fragments = polymer_chains + other
+      else
+        fragments = [fragments.flatten]
+      end
 
-      (polymer_chains + other).each do |residues|
+      fragments.each do |residues|
         chain = next_chain
         residues.each do |residue|
           residue.number = chain.n_residues + 1

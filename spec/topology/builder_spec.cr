@@ -434,6 +434,20 @@ describe Chem::Topology::Builder do
       structure.chains[0].residues.map(&.number).should eq (1..13).to_a
     end
 
+    it "guesses the topology of many fragments (beyond max chain id)" do
+      structure = Chem::Structure.read "spec/data/poscar/many_fragments.poscar"
+      builder = Chem::Topology::Builder.new structure
+      builder.guess_bonds_from_geometry
+      builder.guess_topology_from_connectivity
+
+      structure.n_chains.should eq 1
+      structure.n_residues.should eq 144
+      structure.fragments.size.should eq 72
+      structure.chains.map(&.id).should eq ['A']
+      structure.residues.map(&.name).should eq ["PHE"] * 144
+      structure.residues.map(&.number).should eq (1..144).to_a
+    end
+
     it "fails when structure has no bonds" do
       expect_raises Chem::Error, "Structure has no bonds" do
         structure = Chem::Structure.read "spec/data/poscar/5e5v--unwrapped.poscar"
