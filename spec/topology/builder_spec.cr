@@ -417,10 +417,10 @@ describe Chem::Topology::Builder do
       chains[0].residues.map(&.number).should eq (1..7).to_a
       chains[1].residues.map(&.name).sort!.should eq %w(ALA GLY ILE LEU PHE SER UNK)
       chains[1].residues.map(&.number).should eq (1..7).to_a
-      chains[2].residues.map(&.name).should eq %w(UNK)
-      chains[2].residues.map(&.number).should eq [1]
-      chains[3].residues.map(&.name).should eq %w(HOH HOH HOH HOH HOH HOH HOH)
-      chains[3].residues.map(&.number).should eq (1..7).to_a
+      chains[2].residues.map(&.name).should eq %w(HOH HOH HOH HOH HOH HOH HOH)
+      chains[2].residues.map(&.number).should eq (1..7).to_a
+      chains[3].residues.map(&.name).should eq %w(UNK)
+      chains[3].residues.map(&.number).should eq [1]
     end
 
     it "guesses the topology of a periodic peptide" do
@@ -456,10 +456,10 @@ describe Chem::Topology::Builder do
       chains[0].residues.map(&.name).should eq %w(ASN PHE GLY ALA ILE LEU SER)
       chains[1].residues.map(&.number).should eq (1..7).to_a
       chains[1].residues.map(&.name).should eq %w(UNK PHE GLY ALA ILE LEU SER)
-      chains[2].residues.map(&.name).should eq %w(UNK)
-      chains[2].residues.map(&.number).should eq [1]
-      chains[3].residues.map(&.name).should eq %w(HOH HOH HOH HOH HOH HOH HOH)
-      chains[3].residues.map(&.number).should eq (1..7).to_a
+      chains[2].residues.map(&.name).should eq %w(HOH HOH HOH HOH HOH HOH HOH)
+      chains[2].residues.map(&.number).should eq (1..7).to_a
+      chains[3].residues.map(&.name).should eq %w(UNK)
+      chains[3].residues.map(&.number).should eq [1]
 
       chains[0].residues[0].previous.should be_nil
       chains[0].residues[3].previous.try(&.name).should eq "GLY"

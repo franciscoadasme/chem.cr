@@ -98,12 +98,16 @@ module Chem::Topology
       @chain = nil
       @residue = nil
 
-      chains = {} of Residue::Kind => Chain
       detector = Templates::Detector.new Templates.all
-      old_chain.fragments.each do |atoms|
-        residues, polymer = guess_residues detector, old_chain, atoms.to_a
+      fragments = old_chain.fragments.map do |atoms|
+        guess_residues detector, old_chain, atoms.to_a
+      end
 
-        chain = polymer ? next_chain : (chains[residues.first.kind] ||= next_chain)
+      polymer_chains, other = fragments.partition { |frag| frag.size > 1 }
+      other = other.flatten.sort_by!(&.kind.to_i).group_by(&.kind).values
+
+      (polymer_chains + other).each do |residues|
+        chain = next_chain
         residues.each do |residue|
           residue.number = chain.n_residues + 1
           residue.chain = chain
@@ -293,8 +297,7 @@ module Chem::Topology
 
     private def guess_residues(detector : Templates::Detector,
                                chain : Chain,
-                               atoms : Array(Atom)) : Tuple(Array(Residue), Bool)
-      polymer = false
+                               atoms : Array(Atom)) : Array(Residue)
       residues = [] of Residue
       detector.each_match(atoms.dup) do |res_t, atom_map|
         names = res_t.atom_names
@@ -306,7 +309,6 @@ module Chem::Topology
           atom.residue = residue
           atoms.delete atom
         end
-        polymer ||= res_t.monomer?
       end
 
       unless atoms.empty?
@@ -314,7 +316,7 @@ module Chem::Topology
         atoms.each &.residue=(residue)
       end
 
-      {residues, polymer}
+      residues
     end
 
     private def kdtree : Spatial::KDTree
