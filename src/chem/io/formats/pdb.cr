@@ -323,7 +323,7 @@ module Chem::PDB
       return if (chains = @chains) && !chains.includes?(read(21))
       return if @alt_loc && (alt_loc = read?(16)) && alt_loc != @alt_loc
 
-      builder.chain read(21)
+      builder.chain read(21) if read(21).alphanumeric?
       builder.residue read(17, 4).strip, read_serial(22, 4), read?(26)
       atom = builder.atom \
         read(12, 4).strip,
