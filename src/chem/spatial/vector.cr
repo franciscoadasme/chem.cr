@@ -103,6 +103,37 @@ module Chem::Spatial
       map &.floor
     end
 
+    # Returns vector's PBC image in fractional coordinates
+    #
+    # ```
+    # vec = Vector[0.456, 0.1, 0.8]
+    # vec.image 1, 0, 0   # => Vector[1.456, 0.1, 0.8]
+    # vec.image -1, 0, 0  # => Vector[-0.544, 0.1, 0.8]
+    # vec.image -1, 1, -5 # => Vector[-0.544, 1.1, -4.2]
+    # ```
+    def image(i : Int, j : Int, k : Int) : self
+      self + Vector[i, j, k]
+    end
+
+    # Returns vector's PBC image with respect to `lattice`
+    #
+    # ```
+    # lat = Lattice.new S[2, 2, 3], 90, 90, 120
+    # lat.i # => Vector[2.0, 0.0, 0.0]
+    # lat.j # => Vector[-1, 1.732, 0.0]
+    # lat.k # => Vector[0.0, 0.0, 3.0]
+    #
+    # vec = V[1, 1, 1.5]
+    # vec.image(lat, 1, 0, 0) # => Vector[3.0, 1.0, 1.5]
+    # vec.image(lat, 0, 1, 0) # => Vector[0.0, 2.732, 1.5]
+    # vec.image(lat, 0, 0, 1) # => Vector[1.0, 1.0, 4.5]
+    # vec.image(lat, 1, 0, 1) # => Vector[3.0, 1.0, 4.5]
+    # vec.image(lat, 1, 1, 1) # => Vector[2.0, 2.732, 4.5]
+    # ```
+    def image(lattice : Lattice, i : Int, j : Int, k : Int) : self
+      self + lattice.i * i + lattice.j * j + lattice.k * k
+    end
+
     def inv : self
       Vector.new -@x, -@y, -@z
     end
