@@ -136,6 +136,25 @@ describe Chem::Spatial::Vector do
     end
   end
 
+  describe "#image" do
+    it "returns vector's pbc image" do
+      vec = V[0.456, 0.1, 0.8]
+      vec.image(1, 0, 0).should eq V[1.456, 0.1, 0.8]
+      vec.image(-1, 0, 0).should eq V[-0.544, 0.1, 0.8]
+      vec.image(-1, 1, -5).should eq V[-0.544, 1.1, -4.2]
+    end
+  end
+
+  describe "#image" do
+    it "returns vector's pbc image" do
+      lat = Lattice.new S[8.77, 9.5, 24.74], 88.22, 80, 70.34
+      vec = V[8.745528, 6.330571, 1.334073]
+      vec.image(lat, 1, 0, 0).should be_close V[17.515528, 6.330571, 1.334073], 1e-6
+      vec.image(lat, -1, 0, 0).should be_close V[-0.024472, 6.330571, 1.334073], 1e-6
+      vec.image(lat, -1, 1, -5).should be_close V[-18.308592, 18.870709, -120.433621], 1e-6
+    end
+  end
+
   describe "#inv" do
     it "returns the inverse vector" do
       v1.inv.should eq Vector[-3, -4, 0]
