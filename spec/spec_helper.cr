@@ -24,6 +24,7 @@ alias Vector = Chem::Spatial::Vector
 module Spec
   struct CloseExpectation
     def match(actual_value : Enumerable(Vector)) : Bool
+      return false unless @expected_value.size == actual_value.size
       actual_value.zip(@expected_value).all? do |a, b|
         {(a.x - b.x).abs, (a.y - b.y).abs, (a.z - b.z).abs}.all? do |value|
           value <= @delta
