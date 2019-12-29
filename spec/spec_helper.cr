@@ -11,6 +11,7 @@ alias Element = Chem::Element
 alias Grid = Chem::Spatial::Grid
 alias Lattice = Chem::Lattice
 alias M = Chem::Linalg::Matrix
+alias PBC = Chem::Spatial::PBC
 alias PDB = Chem::PDB
 alias ParseException = Chem::IO::ParseException
 alias PeriodicTable = Chem::PeriodicTable

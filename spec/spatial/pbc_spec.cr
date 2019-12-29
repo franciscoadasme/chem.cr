@@ -67,6 +67,28 @@ describe Chem::Spatial::PBC do
       vectors.should be_close expected, 1e-8
     end
 
+    it "yields periodic images within cutoff (non-orthogonal lattice)" do
+      structure = Chem::Structure.build do
+        lattice Lattice.new(S[8.77, 9.5, 24.74], 88.22, 80, 70.339996)
+        atom :C, V[8.746, 6.331, 1.334]
+      end
+
+      lat = structure.lattice.not_nil!
+      vec = structure.atoms.first.coords
+
+      vectors = PBC.adjacent_images(structure, radius: 5).map(&.[1]).sort_by! &.to_a
+      expected = [
+        vec.image(lat, -1, -1, 0),
+        vec.image(lat, -1, 0, 0),
+        vec.image(lat, -1, -1, 1),
+        vec.image(lat, -1, 0, 1),
+        vec.image(lat, 0, -1, 0),
+        vec.image(lat, 0, -1, 1),
+        vec.image(lat, 0, 0, 1),
+      ]
+      vectors.should be_close expected, 1e-6
+    end
+
     it "fails for non-periodic structures" do
       expect_raises Chem::Spatial::NotPeriodicError do
         Chem::Spatial::PBC.each_adjacent_image(fake_structure) { }

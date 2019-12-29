@@ -44,7 +44,7 @@ module Chem::Spatial::PBC
                           &block : Atom, Vector ->)
     raise Error.new "Radius cannot be negative" if radius < 0
 
-    padding = Vector[radius, radius, radius].to_fractional(lattice).clamp(..0.5)
+    padding = Vector[radius / lattice.a, radius / lattice.b, radius / lattice.c].clamp(..0.5)
     atoms.each_atom do |atom|
       fcoords = atom.coords.to_fractional lattice  # convert to fractional coords
       w_fcoords = fcoords - fcoords.floor          # wrap to primary unit cell
