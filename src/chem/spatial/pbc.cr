@@ -45,10 +45,11 @@ module Chem::Spatial::PBC
     raise Error.new "Radius cannot be negative" if radius < 0
 
     padding = Vector[radius / lattice.a, radius / lattice.b, radius / lattice.c].clamp(..0.5)
+    offset = (lattice.center - atoms.coords.center).to_fractional lattice
     atoms.each_atom do |atom|
-      fcoords = atom.coords.to_fractional lattice  # convert to fractional coords
-      w_fcoords = fcoords - fcoords.floor          # wrap to primary unit cell
-      ax_offset = -2 * w_fcoords.round + {1, 1, 1} # compute offset per axis
+      fcoords = atom.coords.to_fractional lattice                     # convert to fractional coords
+      w_fcoords = fcoords - fcoords.floor                             # wrap to primary unit cell
+      ax_offset = (fcoords + offset).map { |ele| ele < 0.5 ? 1 : -1 } # compute offset per axis
       ax_pad = (w_fcoords - w_fcoords.round).abs
 
       ADJACENT_IMAGE_IDXS.each do |img_idx|
