@@ -59,33 +59,38 @@ describe Chem::Spatial::PBC do
         atom :H, V[7.5, 1.5, 9.5]
       end
 
-      vectors = Chem::Spatial::PBC.adjacent_images(structure, radius: 2).map &.[1]
+      vectors = PBC.adjacent_images(structure, radius: 2).map(&.[1]).sort_by! &.to_a
       expected = [
         V[11, 8.5, 3.5], V[1, -1.5, 3.5], V[11, -1.5, 3.5],
         V[7.5, 11.5, 9.5], V[7.5, 1.5, -0.5], V[7.5, 11.5, -0.5],
-      ]
+      ].sort_by! &.to_a
       vectors.should be_close expected, 1e-8
     end
 
-    it "yields periodic images within cutoff (non-orthogonal lattice)" do
-      structure = Chem::Structure.build do
-        lattice Lattice.new(S[8.77, 9.5, 24.74], 88.22, 80, 70.339996)
-        atom :C, V[8.746, 6.331, 1.334]
-      end
+    it "yields periodic images within cutoff for a off-center non-orthogonal lattice" do
+      structure = Chem::Structure.read "spec/data/poscar/5e61--off-center.poscar"
 
       lat = structure.lattice.not_nil!
-      vec = structure.atoms.first.coords
+      v1 = structure.atoms[29].coords
+      v2 = structure.atoms[192].coords
 
-      vectors = PBC.adjacent_images(structure, radius: 5).map(&.[1]).sort_by! &.to_a
+      vectors = PBC.adjacent_images(structure, radius: 5)
+        .select! { |atom, _| {30, 193}.includes?(atom.serial) }
+        .map(&.[1])
+        .sort_by!(&.to_a)
       expected = [
-        vec.image(lat, -1, -1, 0),
-        vec.image(lat, -1, 0, 0),
-        vec.image(lat, -1, -1, 1),
-        vec.image(lat, -1, 0, 1),
-        vec.image(lat, 0, -1, 0),
-        vec.image(lat, 0, -1, 1),
-        vec.image(lat, 0, 0, 1),
-      ]
+        v1.image(lat, -1, -1, 0),
+        v1.image(lat, -1, -1, 1),
+        v1.image(lat, -1, 0, 0),
+        v1.image(lat, -1, 0, 1),
+        v1.image(lat, 0, -1, 0),
+        v1.image(lat, 0, -1, 1),
+        v1.image(lat, 0, 0, 1),
+        v2.image(lat, 0, -1, 0),
+        v2.image(lat, 1, -1, 0),
+        v2.image(lat, 1, 0, 0),
+      ].sort_by!(&.to_a)
+
       vectors.should be_close expected, 1e-6
     end
 
