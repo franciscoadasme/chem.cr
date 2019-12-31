@@ -20,10 +20,11 @@ module Chem::Spatial::PBC
   def each_adjacent_image(atoms : AtomCollection,
                           lattice : Lattice,
                           &block : Atom, Vector ->)
+    offset = (lattice.center - atoms.coords.center).to_fractional lattice
     atoms.each_atom do |atom|
-      fcoords = atom.coords.to_fractional lattice  # convert to fractional coords
-      w_fcoords = fcoords - fcoords.floor          # wrap to primary unit cell
-      ax_offset = -2 * w_fcoords.round + {1, 1, 1} # compute offset per axis
+      fcoords = atom.coords.to_fractional lattice                     # convert to fractional coords
+      w_fcoords = fcoords - fcoords.floor                             # wrap to primary unit cell
+      ax_offset = (fcoords + offset).map { |ele| ele < 0.5 ? 1 : -1 } # compute offset per axis
 
       ADJACENT_IMAGE_IDXS.each do |img_idx|
         yield atom, (fcoords + ax_offset * img_idx).to_cartesian(lattice)
