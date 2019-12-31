@@ -405,6 +405,20 @@ describe Chem::Topology::Builder do
       end
     end
 
+    it "guesses the topology of two peptides off-center (issue #3)" do
+      structure = Chem::Structure.read "spec/data/poscar/5e61--off-center.poscar"
+      builder = Chem::Topology::Builder.new structure
+      builder.guess_bonds_from_geometry
+      builder.guess_topology_from_connectivity
+
+      chains = structure.chains
+      chains.map(&.id).should eq ['A', 'B']
+      chains[0].residues.map(&.name).sort!.should eq %w(ALA GLY ILE LEU PHE SER SER)
+      chains[0].residues.map(&.number).should eq (1..7).to_a
+      chains[1].residues.map(&.name).sort!.should eq %w(ALA GLY ILE LEU PHE SER SER)
+      chains[1].residues.map(&.number).should eq (1..7).to_a
+    end
+
     it "guesses the topology of a broken peptide with waters" do
       structure = Chem::Structure.read "spec/data/poscar/5e5v--unwrapped.poscar"
       builder = Chem::Topology::Builder.new structure

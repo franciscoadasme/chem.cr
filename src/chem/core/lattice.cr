@@ -26,7 +26,7 @@ module Chem
       value
     end
 
-    def center : Vector
+    def center : Spatial::Vector
       (@basis.i + @basis.j + @basis.k) * 0.5
     end
 
