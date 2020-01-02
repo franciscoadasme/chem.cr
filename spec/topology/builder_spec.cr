@@ -347,6 +347,15 @@ describe Chem::Topology::Builder do
       Chem::Topology::Builder.build(st) { assign_topology_from_templates }
       st.residues.first.other?.should be_true
     end
+
+    it "does not guess kind of unknown residue when it's not bonded by link bond" do
+      structure = Structure.read "spec/data/pdb/residue_kind_unknown_covalent_ligand.pdb"
+      Chem::Topology::Builder.build(structure) do
+        guess_bonds_from_geometry
+        assign_topology_from_templates
+      end
+      structure.residues.map(&.kind.to_s).should eq %w(Protein Protein Protein Other)
+    end
   end
 
   describe "#guess_bonds_from_geometry" do

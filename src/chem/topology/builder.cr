@@ -370,17 +370,22 @@ module Chem::Topology
     end
 
     private def guess_unknown_residue_types : Nil
-      @structure.each_residue.select(&.other?).each do |res|
+      @structure.each_residue do |res|
+        next unless res.kind.other?
+        next unless (other = res.previous || res.next)
+        next unless bond_t = Templates[other.name].link_bond
+
         if (prev_res = res.previous) && (next_res = res.next)
-          next unless prev_res.kind == next_res.kind
-          next unless res.bonded? prev_res
-          next unless res.bonded? next_res
-          res.kind = next_res.kind
+          next unless prev_res.kind == next_res.kind &&
+                      prev_res.bonded?(res, bond_t) &&
+                      res.bonded?(next_res, bond_t)
         elsif prev_res = res.previous
-          res.kind = prev_res.kind if res.bonded? prev_res
+          next unless prev_res.bonded?(res, bond_t)
         elsif next_res = res.next
-          res.kind = next_res.kind if res.bonded? next_res
+          next unless res.bonded?(next_res, bond_t)
         end
+
+        res.kind = other.kind
       end
     end
 
