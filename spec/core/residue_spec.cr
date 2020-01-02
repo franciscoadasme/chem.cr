@@ -1,6 +1,36 @@
 require "../spec_helper"
 
 describe Chem::Residue do
+  describe "#bonded?" do
+    it "tells if two residues are bonded through any pair of atoms" do
+      structure = fake_structure include_bonds: true
+      structure.dig('A', 1).bonded?(structure.dig('A', 2)).should be_true
+      structure.dig('A', 1).bonded?(structure.dig('B', 1)).should be_false
+    end
+
+    it "tells if two residues are bonded through a specific pair of atoms" do
+      structure = fake_structure include_bonds: true
+      structure.dig('A', 1).bonded?(structure.dig('A', 2), "C", "N").should be_true
+      structure.dig('A', 1).bonded?(structure.dig('A', 2), "CB", "CA").should be_false
+      structure.dig('A', 1).bonded?(structure.dig('B', 1), "C", "N").should be_false
+      structure.dig('A', 2).bonded?(structure.dig('A', 1), "C", "N").should be_false
+    end
+
+    it "tells if two residues are bonded through a specific bond type" do
+      bond_t = Chem::Topology::Templates::BondType.new "C", "N"
+      structure = fake_structure include_bonds: true
+      structure.dig('A', 1).bonded?(structure.dig('A', 2), bond_t).should be_true
+      structure.dig('A', 2).bonded?(structure.dig('A', 1), bond_t).should be_false
+      structure.dig('A', 1).bonded?(structure.dig('B', 1), bond_t).should be_false
+    end
+
+    it "returns false when residue is itself" do
+      structure = fake_structure include_bonds: true
+      structure.dig('A', 1).bonded?(structure.dig('A', 1)).should be_false
+      structure.dig('B', 1).bonded?(structure.dig('B', 1)).should be_false
+    end
+  end
+
   describe "#cis?" do
     it "returns true when residue is in the cis conformation" do
       st = Chem::Structure.read "spec/data/pdb/cis-trans.pdb"
