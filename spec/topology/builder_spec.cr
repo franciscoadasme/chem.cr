@@ -260,6 +260,95 @@ describe Chem::Topology::Builder do
     structure.each_residue.map(&.dssp).to_a.should eq ['H', 'H', '0', '0', 'E']
   end
 
+  describe "#assign_topology_from_templates" do
+    it "assigns bonds and types based on templates" do
+      st = fake_structure
+      r1, r2, r3 = st.residues
+
+      Chem::Topology::Builder.build(st) { assign_topology_from_templates }
+
+      [r1, r2, r3].map(&.protein?).should eq [true, true, true]
+      [r1, r2, r3].map(&.formal_charge).should eq [-1, 0, 0]
+
+      r1["N"].bonded_atoms.map(&.name).should eq ["CA"]
+
+      r1["N"].bonds[r1["CA"]].order.should eq 1
+      r1["CA"].bonds[r1["C"]].order.should eq 1
+      r1["C"].bonds[r1["O"]].order.should eq 2
+      r1["CA"].bonds[r1["CB"]].order.should eq 1
+      r1["CB"].bonds[r1["CG"]].order.should eq 1
+      r1["CG"].bonds[r1["OD1"]].order.should eq 2
+      r1["CG"].bonds[r1["OD2"]].order.should eq 1
+
+      r1["C"].bonded_atoms.map(&.name).should eq ["CA", "O", "N"]
+      r2["N"].bonded_atoms.map(&.name).should eq ["C", "CA"]
+
+      r2["N"].bonds[r2["CA"]].order.should eq 1
+      r2["CA"].bonds[r2["C"]].order.should eq 1
+      r2["C"].bonds[r2["O"]].order.should eq 2
+      r2["CA"].bonds[r2["CB"]].order.should eq 1
+      r2["CB"].bonds[r2["CG"]].order.should eq 1
+      r2["CG"].bonds[r2["CD1"]].order.should eq 2
+      r2["CD1"].bonds[r2["CE1"]].order.should eq 1
+      r2["CE1"].bonds[r2["CZ"]].order.should eq 2
+      r2["CZ"].bonds[r2["CE2"]].order.should eq 1
+      r2["CE2"].bonds[r2["CD2"]].order.should eq 2
+      r2["CD2"].bonds[r2["CG"]].order.should eq 1
+
+      r2["C"].bonded_atoms.map(&.name).should eq ["CA", "O"]
+      r3["N"].bonded_atoms.map(&.name).should eq ["CA"]
+
+      r3["N"].bonds[r3["CA"]].order.should eq 1
+      r3["CA"].bonds[r3["C"]].order.should eq 1
+      r3["C"].bonds[r3["O"]].order.should eq 2
+      r3["CA"].bonds[r3["CB"]].order.should eq 1
+      r3["CB"].bonds[r3["OG"]].order.should eq 1
+
+      r3["C"].bonded_atoms.map(&.name).should eq ["CA", "O"]
+    end
+
+    it "does not connect consecutive residues when there are far away" do
+      st = Chem::Structure.read "spec/data/pdb/protein_gap.pdb"
+      r1, r2, r3, r4 = st.residues
+
+      Chem::Topology::Builder.build(st) { assign_topology_from_templates }
+
+      r1["C"].bonds[r2["N"]]?.should_not be_nil
+      r2["C"].bonds[r3["N"]]?.should be_nil
+      r3["C"].bonds[r4["N"]]?.should_not be_nil
+    end
+
+    it "guess kind of unknown residue when previous is known" do
+      st = Chem::Structure.read "spec/data/pdb/residue_kind_unknown_previous.pdb"
+      Chem::Topology::Builder.build(st) { assign_topology_from_templates }
+      st.residues[1].protein?.should be_true
+    end
+
+    it "guess kind of unknown residue when next is known" do
+      st = Chem::Structure.read "spec/data/pdb/residue_kind_unknown_next.pdb"
+      Chem::Topology::Builder.build(st) { assign_topology_from_templates }
+      st.residues[0].protein?.should be_true
+    end
+
+    it "guess kind of unknown residue when its flanked by known residues" do
+      st = Chem::Structure.read "spec/data/pdb/residue_kind_unknown_flanked.pdb"
+      Chem::Topology::Builder.build(st) { assign_topology_from_templates }
+      st.residues[1].protein?.should be_true
+    end
+
+    it "does not guess kind of unknown residue" do
+      st = Chem::Structure.read "spec/data/pdb/residue_kind_unknown_single.pdb"
+      Chem::Topology::Builder.build(st) { assign_topology_from_templates }
+      st.residues[0].other?.should be_true
+    end
+
+    it "does not guess kind of unknown residue when its not connected to others" do
+      st = Chem::Structure.read "spec/data/pdb/residue_kind_unknown_next_gap.pdb"
+      Chem::Topology::Builder.build(st) { assign_topology_from_templates }
+      st.residues.first.other?.should be_true
+    end
+  end
+
   describe "#guess_bonds_from_geometry" do
     it "guesses bonds from geometry" do
       structure = Chem::Structure.read "spec/data/poscar/AlaIle--unwrapped.poscar"

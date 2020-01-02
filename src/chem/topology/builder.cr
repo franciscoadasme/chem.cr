@@ -50,6 +50,14 @@ module Chem::Topology
       Atom.new name, @atom_serial, coords, residue, **options
     end
 
+    def assign_topology_from_templates
+      @structure.each_residue do |residue|
+        next unless res_t = Templates[residue.name]?
+        assign_template residue, res_t
+      end
+      guess_unknown_residue_types
+    end
+
     def bond(name : String, other : String, order : Int = 1) : Bond
       atom!(name).bonds.add atom!(other), order
     end
@@ -242,6 +250,33 @@ module Chem::Topology
       end
     end
 
+    private def assign_bond_from_template(residue : Residue,
+                                          other : Residue,
+                                          bond_t : Templates::BondType) : Nil
+      if (i = residue[bond_t.first]?) && (j = other[bond_t.second]?) && !i.bonded?(j)
+        d = Spatial.squared_distance i, j
+        i.bonds.add j, bond_t.order if d <= covalent_cutoff(i, j)
+      end
+    end
+
+    private def assign_template(residue : Residue, res_t : Templates::ResidueType) : Nil
+      residue.kind = res_t.kind
+      res_t.bonds.each { |bond_t| assign_bond_from_template residue, residue, bond_t }
+      if bond_t = res_t.link_bond
+        if prev_res = residue.previous
+          assign_bond_from_template prev_res, residue, bond_t
+        end
+        if next_res = residue.next
+          assign_bond_from_template residue, next_res, bond_t
+        end
+      end
+
+      res_t.each_atom_type do |atom_type|
+        next unless atom = residue[atom_type.name]?
+        atom.formal_charge = atom_type.formal_charge
+      end
+    end
+
     private def aromatic_bonds : Array(Bond)
       @aromatic_bonds ||= Array(Bond).new
     end
@@ -332,6 +367,21 @@ module Chem::Topology
       end
 
       residues
+    end
+
+    private def guess_unknown_residue_types : Nil
+      @structure.each_residue.select(&.other?).each do |res|
+        if (prev_res = res.previous) && (next_res = res.next)
+          next unless prev_res.kind == next_res.kind
+          next unless res.bonded? prev_res
+          next unless res.bonded? next_res
+          res.kind = next_res.kind
+        elsif prev_res = res.previous
+          res.kind = prev_res.kind if res.bonded? prev_res
+        elsif next_res = res.next
+          res.kind = next_res.kind if res.bonded? next_res
+        end
+      end
     end
 
     private def kdtree : Spatial::KDTree
