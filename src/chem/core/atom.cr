@@ -17,7 +17,7 @@ module Chem
 
     delegate x, y, z, to: @coords
     delegate chain, to: @residue
-    delegate atomic_number, covalent_radius, mass, vdw_radius, to: @element
+    delegate atomic_number, covalent_radius, mass, max_valency, vdw_radius, to: @element
 
     def initialize(@name : String,
                    @serial : Int32,
@@ -44,6 +44,14 @@ module Chem
       io << "<Atom "
       to_s io
       io << ">"
+    end
+
+    def missing_valency : Int32
+      (nominal_valency - valency).clamp 0..
+    end
+
+    def nominal_valency : Int32
+      @element.valencies.find(&.>=(valency)) || max_valency
     end
 
     def residue=(new_res : Residue) : Residue

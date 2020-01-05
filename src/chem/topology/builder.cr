@@ -288,9 +288,9 @@ module Chem::Topology
     private def guess_bond_orders(atoms : AtomCollection) : Nil
       atoms.each_atom do |atom|
         next if atom.element.ionic?
-        missing_bonds = missing_bonds atom
+        missing_bonds = atom.missing_valency
         while missing_bonds > 0
-          others = atom.bonded_atoms.select { |other| missing_bonds(other) > 0 }
+          others = atom.bonded_atoms.select &.missing_valency.>(0)
           break if others.empty?
           others.each(within: ...missing_bonds) do |other|
             atom.bonds[other].order += 1
@@ -305,7 +305,7 @@ module Chem::Topology
         next if a.element.ionic?
         kdtree.each_neighbor a, within: MAX_COVALENT_RADIUS do |b, sqr_d|
           next if b.element.ionic? || a.bonded?(b) || sqr_d > covalent_cutoff(a, b)
-          next unless b.valency < b.element.max_valency
+          next unless b.valency < b.max_valency
           if a.element.hydrogen? && a.bonds.size == 1
             next unless sqr_d < a.bonds[0].squared_distance
             a.bonds.delete a.bonds[0]
@@ -318,15 +318,11 @@ module Chem::Topology
     private def guess_formal_charges(atoms : AtomCollection) : Nil
       atoms.each_atom do |atom|
         atom.formal_charge = if atom.element.ionic?
-                               atom.element.max_valency
+                               atom.max_valency
                              else
-                               -missing_bonds(atom)
+                               atom.valency - atom.nominal_valency
                              end
       end
-    end
-
-    private def guess_nominal_valency_from_connectivity(atom : Atom) : Int32
-      atom.element.valencies.find(&.>=(atom.valency)) || atom.element.max_valency
     end
 
     private def guess_previous_residue(residue : Residue,
@@ -400,10 +396,6 @@ module Chem::Topology
       @kdtree ||= Spatial::KDTree.new @structure,
         periodic: @structure.periodic?,
         radius: MAX_COVALENT_RADIUS
-    end
-
-    private def missing_bonds(atom : Atom) : Int32
-      guess_nominal_valency_from_connectivity(atom) - atom.valency
     end
 
     private def next_chain : Chain
