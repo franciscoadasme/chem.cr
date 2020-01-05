@@ -234,14 +234,14 @@ module Chem::Topology
 
     private def assign_bond_from_template(residue : Residue,
                                           other : Residue,
-                                          bond_t : Templates::BondType) : Nil
+                                          bond_t : BondType) : Nil
       if (i = residue[bond_t.first]?) && (j = other[bond_t.second]?) && !i.bonded?(j)
         d = Spatial.squared_distance i, j
         i.bonds.add j, bond_t.order if d <= covalent_cutoff(i, j)
       end
     end
 
-    private def assign_template(residue : Residue, res_t : Templates::ResidueType) : Nil
+    private def assign_template(residue : Residue, res_t : ResidueType) : Nil
       residue.kind = res_t.kind
       res_t.bonds.each { |bond_t| assign_bond_from_template residue, residue, bond_t }
       if bond_t = res_t.link_bond
@@ -325,8 +325,7 @@ module Chem::Topology
       end
     end
 
-    private def guess_previous_residue(residue : Residue,
-                                       link_bond : Templates::BondType) : Residue?
+    private def guess_previous_residue(residue : Residue, link_bond : BondType) : Residue?
       prev_res = nil
       if atom = residue[link_bond.second]?
         prev_res = atom.bonded_atoms.find(&.name.==(link_bond.first)).try &.residue

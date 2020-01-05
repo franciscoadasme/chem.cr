@@ -18,6 +18,7 @@ alias PeriodicTable = Chem::PeriodicTable
 alias Q = Chem::Spatial::Quaternion
 alias S = Chem::Spatial::Size
 alias Structure = Chem::Structure
+alias Topology = Chem::Topology
 alias Tf = Chem::Spatial::AffineTransform
 alias V = Chem::Spatial::Vector
 alias Vector = Chem::Spatial::Vector

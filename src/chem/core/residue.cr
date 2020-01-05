@@ -57,7 +57,7 @@ module Chem
       a.bonded? b
     end
 
-    def bonded?(other : self, bond_t : Topology::Templates::BondType) : Bool
+    def bonded?(other : self, bond_t : Topology::BondType) : Bool
       bonded? other, bond_t.first, bond_t.second
     end
 

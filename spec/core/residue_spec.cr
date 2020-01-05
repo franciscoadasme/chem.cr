@@ -17,7 +17,7 @@ describe Chem::Residue do
     end
 
     it "tells if two residues are bonded through a specific bond type" do
-      bond_t = Chem::Topology::Templates::BondType.new "C", "N"
+      bond_t = Chem::Topology::BondType.new "C", "N"
       structure = fake_structure include_bonds: true
       structure.dig('A', 1).bonded?(structure.dig('A', 2), bond_t).should be_true
       structure.dig('A', 2).bonded?(structure.dig('A', 1), bond_t).should be_false
