@@ -18,7 +18,7 @@ module Chem::Topology
       if structure
         @structure = structure
         structure.each_chain { |chain| @chain = chain }
-        structure.each_residue { |residue| @residue = residue }
+        @chain.try &.each_residue { |residue| @residue = residue }
         @atom_serial = structure.each_atom.max_of &.serial
       else
         @structure = Structure.new
