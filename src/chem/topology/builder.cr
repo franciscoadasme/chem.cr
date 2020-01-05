@@ -96,8 +96,9 @@ module Chem::Topology
     end
 
     def guess_bonds_from_geometry : Nil
-      guess_connectivity_from_geometry
-      assign_bond_orders
+      guess_connectivity_from_geometry @structure
+      guess_bond_orders @structure
+      guess_formal_charges @structure
     end
 
     # Guesses topology (chain, residue and atom names) from existing bonds.
@@ -231,25 +232,6 @@ module Chem::Topology
       @structure.title = title
     end
 
-    private def assign_bond_orders : Nil
-      @structure.each_atom do |atom|
-        if atom.element.ionic?
-          atom.formal_charge = atom.element.max_valency
-        else
-          missing_bonds = missing_bonds atom
-          while missing_bonds > 0
-            others = atom.bonded_atoms.select { |other| missing_bonds(other) > 0 }
-            break if others.empty?
-            others.each(within: ...missing_bonds) do |other|
-              atom.bonds[other].order += 1
-              missing_bonds -= 1
-            end
-          end
-          atom.formal_charge = -missing_bonds
-        end
-      end
-    end
-
     private def assign_bond_from_template(residue : Residue,
                                           other : Residue,
                                           bond_t : Templates::BondType) : Nil
@@ -303,8 +285,23 @@ module Chem::Topology
       @covalent_dist_table ||= {} of Tuple(String, String) => Float64
     end
 
-    private def guess_connectivity_from_geometry : Nil
-      @structure.each_atom do |a|
+    private def guess_bond_orders(atoms : AtomCollection) : Nil
+      atoms.each_atom do |atom|
+        next if atom.element.ionic?
+        missing_bonds = missing_bonds atom
+        while missing_bonds > 0
+          others = atom.bonded_atoms.select { |other| missing_bonds(other) > 0 }
+          break if others.empty?
+          others.each(within: ...missing_bonds) do |other|
+            atom.bonds[other].order += 1
+            missing_bonds -= 1
+          end
+        end
+      end
+    end
+
+    private def guess_connectivity_from_geometry(atoms : AtomCollection) : Nil
+      atoms.each_atom do |a|
         next if a.element.ionic?
         kdtree.each_neighbor a, within: MAX_COVALENT_RADIUS do |b, sqr_d|
           next if b.element.ionic? || a.bonded?(b) || sqr_d > covalent_cutoff(a, b)
@@ -315,6 +312,16 @@ module Chem::Topology
           end
           a.bonds.add b
         end
+      end
+    end
+
+    private def guess_formal_charges(atoms : AtomCollection) : Nil
+      atoms.each_atom do |atom|
+        atom.formal_charge = if atom.element.ionic?
+                               atom.element.max_valency
+                             else
+                               -missing_bonds(atom)
+                             end
       end
     end
 
