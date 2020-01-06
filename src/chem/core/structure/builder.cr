@@ -1,7 +1,7 @@
-require "./templates/all"
+require "../../topology/templates/all"
 
-module Chem::Topology
-  class Builder
+module Chem
+  class Structure::Builder
     MAX_CHAINS          =  62 # remove artificial limit
     MAX_COVALENT_RADIUS = 5.0
 
@@ -52,7 +52,7 @@ module Chem::Topology
 
     def assign_topology_from_templates
       @structure.each_residue do |residue|
-        next unless res_t = Templates[residue.name]?
+        next unless res_t = Topology::Templates[residue.name]?
         assign_template residue, res_t
       end
       guess_unknown_residue_types
@@ -117,7 +117,7 @@ module Chem::Topology
       @chain = nil
       @residue = nil
 
-      detector = Templates::Detector.new Templates.all
+      detector = Topology::Templates::Detector.new Topology::Templates.all
       fragments = old_chain.fragments.map do |atoms|
         guess_residues detector, old_chain, atoms.to_a
       end
@@ -164,7 +164,7 @@ module Chem::Topology
       @structure.each_chain do |chain|
         next unless chain.n_residues > 1
         next unless link_bond = chain.each_residue.compact_map do |residue|
-                      Templates[residue.name]?.try &.link_bond
+                      Topology::Templates[residue.name]?.try &.link_bond
                     end.first?
 
         res_map = chain.each_residue.to_h do |residue|
@@ -234,14 +234,14 @@ module Chem::Topology
 
     private def assign_bond_from_template(residue : Residue,
                                           other : Residue,
-                                          bond_t : BondType) : Nil
+                                          bond_t : Topology::BondType) : Nil
       if (i = residue[bond_t.first]?) && (j = other[bond_t.second]?) && !i.bonded?(j)
         d = Spatial.squared_distance i, j
         i.bonds.add j, bond_t.order if d <= covalent_cutoff(i, j)
       end
     end
 
-    private def assign_template(residue : Residue, res_t : ResidueType) : Nil
+    private def assign_template(residue : Residue, res_t : Topology::ResidueType) : Nil
       residue.kind = res_t.kind
       res_t.bonds.each { |bond_t| assign_bond_from_template residue, residue, bond_t }
       if bond_t = res_t.link_bond
@@ -325,7 +325,7 @@ module Chem::Topology
       end
     end
 
-    private def guess_previous_residue(residue : Residue, link_bond : BondType) : Residue?
+    private def guess_previous_residue(residue : Residue, link_bond : Topology::BondType) : Residue?
       prev_res = nil
       if atom = residue[link_bond.second]?
         prev_res = atom.bonded_atoms.find(&.name.==(link_bond.first)).try &.residue
@@ -347,7 +347,7 @@ module Chem::Topology
       prev_res
     end
 
-    private def guess_residues(detector : Templates::Detector,
+    private def guess_residues(detector : Topology::Templates::Detector,
                                chain : Chain,
                                atoms : Array(Atom)) : Array(Residue)
       residues = [] of Residue
@@ -375,7 +375,7 @@ module Chem::Topology
       @structure.each_residue do |res|
         next unless res.kind.other?
         next unless (other = res.previous || res.next)
-        next unless bond_t = Templates[other.name].link_bond
+        next unless bond_t = Topology::Templates[other.name].link_bond
 
         if (prev_res = res.previous) && (next_res = res.next)
           next unless prev_res.kind == next_res.kind &&

@@ -90,7 +90,7 @@ end
 
 def residue_matches_helper(path, names)
   structure = Chem::Structure.read path
-  builder = Chem::Topology::Builder.new structure
+  builder = Chem::Structure::Builder.new structure
   builder.guess_bonds_from_geometry
 
   templates = names.map { |name| Chem::Topology::Templates[name] }

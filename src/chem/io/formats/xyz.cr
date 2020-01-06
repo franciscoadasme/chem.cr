@@ -32,7 +32,7 @@ module Chem::XYZ
       (n_atoms + 2).times { skip_line }
     end
 
-    private def parse_atom(builder : Topology::Builder) : Nil
+    private def parse_atom(builder : Structure::Builder) : Nil
       skip_whitespace
       builder.atom PeriodicTable[scan(&.letter?)], read_vector
       skip_line

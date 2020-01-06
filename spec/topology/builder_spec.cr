@@ -1,8 +1,8 @@
 require "../spec_helper"
 
-describe Chem::Topology::Builder do
+describe Chem::Structure::Builder do
   it "builds a structure" do
-    st = Chem::Topology::Builder.build do
+    st = Chem::Structure::Builder.build do
       title "Ser-Thr-Gly Val"
       chain 'F' do
         residue "SER", 1 do
@@ -62,7 +62,7 @@ describe Chem::Topology::Builder do
   end
 
   it "builds a structure (no DSL)" do
-    builder = Chem::Topology::Builder.new
+    builder = Chem::Structure::Builder.new
     builder.title "Ser-Thr-Gly Val"
     builder.chain 'T'
     builder.residue "SER"
@@ -86,7 +86,7 @@ describe Chem::Topology::Builder do
   end
 
   it "builds a structure with lattice" do
-    st = Chem::Topology::Builder.build do
+    st = Chem::Structure::Builder.build do
       lattice V[25, 32, 12], V[12, 34, 23], V[12, 68, 21]
     end
 
@@ -97,7 +97,7 @@ describe Chem::Topology::Builder do
   end
 
   it "builds a structure with lattice using numbers" do
-    st = Chem::Topology::Builder.build do
+    st = Chem::Structure::Builder.build do
       lattice 25, 34, 21
     end
 
@@ -108,7 +108,7 @@ describe Chem::Topology::Builder do
   end
 
   it "builds a structure with lattice using numbers (one-line)" do
-    st = Chem::Topology::Builder.build do
+    st = Chem::Structure::Builder.build do
       lattice 25, 34, 21
     end
 
@@ -119,7 +119,7 @@ describe Chem::Topology::Builder do
   end
 
   it "names chains automatically" do
-    st = Chem::Topology::Builder.build do
+    st = Chem::Structure::Builder.build do
       62.times do
         chain { }
       end
@@ -130,7 +130,7 @@ describe Chem::Topology::Builder do
   end
 
   it "names chains automatically after manually setting one" do
-    st = Chem::Topology::Builder.build do
+    st = Chem::Structure::Builder.build do
       chain 'F'
       chain { }
       chain { }
@@ -141,7 +141,7 @@ describe Chem::Topology::Builder do
 
   it "fails over chain id limit" do
     expect_raises ArgumentError, "Non-alphanumeric chain id" do
-      Chem::Topology::Builder.build do
+      Chem::Structure::Builder.build do
         63.times do
           chain { }
         end
@@ -150,7 +150,7 @@ describe Chem::Topology::Builder do
   end
 
   it "numbers residues automatically" do
-    st = Chem::Topology::Builder.build do
+    st = Chem::Structure::Builder.build do
       chain do
         2.times { residue "ALA" }
       end
@@ -166,7 +166,7 @@ describe Chem::Topology::Builder do
   end
 
   it "numbers residues automatically after manually setting one" do
-    st = Chem::Topology::Builder.build do
+    st = Chem::Structure::Builder.build do
       chain
       residue "SER", 5
       3.times { residue "ALA" }
@@ -176,7 +176,7 @@ describe Chem::Topology::Builder do
   end
 
   it "names atoms automatically when called with element" do
-    st = Chem::Topology::Builder.build do
+    st = Chem::Structure::Builder.build do
       atom :C, Vector.origin
       atom :C, Vector.origin
       atom :O, Vector.origin
@@ -189,7 +189,7 @@ describe Chem::Topology::Builder do
   end
 
   it "creates a chain automatically" do
-    st = Chem::Topology::Builder.build do
+    st = Chem::Structure::Builder.build do
       residue "SER"
     end
 
@@ -197,7 +197,7 @@ describe Chem::Topology::Builder do
   end
 
   it "creates a residue automatically" do
-    st = Chem::Topology::Builder.build do
+    st = Chem::Structure::Builder.build do
       atom "CA", Vector.origin
     end
 
@@ -207,7 +207,7 @@ describe Chem::Topology::Builder do
   end
 
   it "adds dummy atoms" do
-    st = Chem::Topology::Builder.build do
+    st = Chem::Structure::Builder.build do
       %w(N CA C O CB).each { |name| atom name, Vector.origin }
     end
 
@@ -216,7 +216,7 @@ describe Chem::Topology::Builder do
   end
 
   it "adds dummy atoms with coordinates" do
-    st = Chem::Topology::Builder.build do
+    st = Chem::Structure::Builder.build do
       atom V[1, 0, 0]
       atom V[2, 0, 0]
     end
@@ -226,7 +226,7 @@ describe Chem::Topology::Builder do
   end
 
   it "adds atom with named arguments" do
-    st = Chem::Topology::Builder.build do
+    st = Chem::Structure::Builder.build do
       atom "OD1", Vector.origin, formal_charge: -1, temperature_factor: 43.24
     end
 
@@ -265,7 +265,7 @@ describe Chem::Topology::Builder do
       st = fake_structure
       r1, r2, r3 = st.residues
 
-      Chem::Topology::Builder.build(st) { assign_topology_from_templates }
+      Chem::Structure::Builder.build(st) { assign_topology_from_templates }
 
       [r1, r2, r3].map(&.protein?).should eq [true, true, true]
       [r1, r2, r3].map(&.formal_charge).should eq [-1, 0, 0]
@@ -311,7 +311,7 @@ describe Chem::Topology::Builder do
       st = Chem::Structure.read "spec/data/pdb/protein_gap.pdb"
       r1, r2, r3, r4 = st.residues
 
-      Chem::Topology::Builder.build(st) { assign_topology_from_templates }
+      Chem::Structure::Builder.build(st) { assign_topology_from_templates }
 
       r1["C"].bonds[r2["N"]]?.should_not be_nil
       r2["C"].bonds[r3["N"]]?.should be_nil
@@ -320,37 +320,37 @@ describe Chem::Topology::Builder do
 
     it "guess kind of unknown residue when previous is known" do
       st = Chem::Structure.read "spec/data/pdb/residue_kind_unknown_previous.pdb"
-      Chem::Topology::Builder.build(st) { assign_topology_from_templates }
+      Chem::Structure::Builder.build(st) { assign_topology_from_templates }
       st.residues[1].protein?.should be_true
     end
 
     it "guess kind of unknown residue when next is known" do
       st = Chem::Structure.read "spec/data/pdb/residue_kind_unknown_next.pdb"
-      Chem::Topology::Builder.build(st) { assign_topology_from_templates }
+      Chem::Structure::Builder.build(st) { assign_topology_from_templates }
       st.residues[0].protein?.should be_true
     end
 
     it "guess kind of unknown residue when its flanked by known residues" do
       st = Chem::Structure.read "spec/data/pdb/residue_kind_unknown_flanked.pdb"
-      Chem::Topology::Builder.build(st) { assign_topology_from_templates }
+      Chem::Structure::Builder.build(st) { assign_topology_from_templates }
       st.residues[1].protein?.should be_true
     end
 
     it "does not guess kind of unknown residue" do
       st = Chem::Structure.read "spec/data/pdb/residue_kind_unknown_single.pdb"
-      Chem::Topology::Builder.build(st) { assign_topology_from_templates }
+      Chem::Structure::Builder.build(st) { assign_topology_from_templates }
       st.residues[0].other?.should be_true
     end
 
     it "does not guess kind of unknown residue when its not connected to others" do
       st = Chem::Structure.read "spec/data/pdb/residue_kind_unknown_next_gap.pdb"
-      Chem::Topology::Builder.build(st) { assign_topology_from_templates }
+      Chem::Structure::Builder.build(st) { assign_topology_from_templates }
       st.residues.first.other?.should be_true
     end
 
     it "does not guess kind of unknown residue when it's not bonded by link bond" do
       structure = Structure.read "spec/data/pdb/residue_kind_unknown_covalent_ligand.pdb"
-      Chem::Topology::Builder.build(structure) do
+      Chem::Structure::Builder.build(structure) do
         guess_bonds_from_geometry
         assign_topology_from_templates
       end
@@ -361,7 +361,7 @@ describe Chem::Topology::Builder do
   describe "#guess_bonds_from_geometry" do
     it "guesses bonds from geometry" do
       structure = Chem::Structure.read "spec/data/poscar/AlaIle--unwrapped.poscar"
-      builder = Chem::Topology::Builder.new structure
+      builder = Chem::Structure::Builder.new structure
       builder.guess_bonds_from_geometry
 
       atoms = structure.atoms
@@ -376,7 +376,7 @@ describe Chem::Topology::Builder do
 
     it "guesses bonds from geometry of a protein with charged termini and ions" do
       structure = Chem::Structure.read "spec/data/xyz/k2p_pore_b.xyz"
-      builder = Chem::Topology::Builder.new structure
+      builder = Chem::Structure::Builder.new structure
       builder.guess_bonds_from_geometry
 
       structure.bonds.size.should eq 644
@@ -418,7 +418,7 @@ describe Chem::Topology::Builder do
 
     it "guesses bonds from geometry having a sulfate ion" do
       structure = Chem::Structure.read "spec/data/xyz/sulbactam.xyz"
-      builder = Chem::Topology::Builder.new structure
+      builder = Chem::Structure::Builder.new structure
       builder.guess_bonds_from_geometry
 
       structure.bonds.size.should eq 27
@@ -445,7 +445,7 @@ describe Chem::Topology::Builder do
 
     it "guesses bonds from geometry of a protein having sulfur" do
       structure = Chem::Structure.read "spec/data/xyz/acama.xyz"
-      builder = Chem::Topology::Builder.new structure
+      builder = Chem::Structure::Builder.new structure
       builder.guess_bonds_from_geometry
 
       structure.bonds.size.should eq 60
@@ -471,7 +471,7 @@ describe Chem::Topology::Builder do
   describe "#guess_topology_from_connectivity" do
     it "guesses the topology of a dipeptide" do
       structure = Chem::Structure.read "spec/data/poscar/AlaIle--unwrapped.poscar"
-      builder = Chem::Topology::Builder.new structure
+      builder = Chem::Structure::Builder.new structure
       builder.guess_bonds_from_geometry
       builder.guess_topology_from_connectivity
 
@@ -486,7 +486,7 @@ describe Chem::Topology::Builder do
 
     it "guesses the topology of two peptide chains" do
       structure = Chem::Structure.read "spec/data/poscar/5e61--unwrapped.poscar"
-      builder = Chem::Topology::Builder.new structure
+      builder = Chem::Structure::Builder.new structure
       builder.guess_bonds_from_geometry
       builder.guess_topology_from_connectivity
 
@@ -505,7 +505,7 @@ describe Chem::Topology::Builder do
 
     it "guesses the topology of two peptides off-center (issue #3)" do
       structure = Chem::Structure.read "spec/data/poscar/5e61--off-center.poscar"
-      builder = Chem::Topology::Builder.new structure
+      builder = Chem::Structure::Builder.new structure
       builder.guess_bonds_from_geometry
       builder.guess_topology_from_connectivity
 
@@ -519,7 +519,7 @@ describe Chem::Topology::Builder do
 
     it "guesses the topology of a broken peptide with waters" do
       structure = Chem::Structure.read "spec/data/poscar/5e5v--unwrapped.poscar"
-      builder = Chem::Topology::Builder.new structure
+      builder = Chem::Structure::Builder.new structure
       builder.guess_bonds_from_geometry
       builder.guess_topology_from_connectivity
 
@@ -537,7 +537,7 @@ describe Chem::Topology::Builder do
 
     it "guesses the topology of a periodic peptide" do
       structure = Chem::Structure.read "spec/data/poscar/hlx_gly.poscar"
-      builder = Chem::Topology::Builder.new structure
+      builder = Chem::Structure::Builder.new structure
       builder.guess_bonds_from_geometry
       builder.guess_topology_from_connectivity
 
@@ -548,7 +548,7 @@ describe Chem::Topology::Builder do
 
     it "guesses the topology of many fragments (beyond max chain id)" do
       structure = Chem::Structure.read "spec/data/poscar/many_fragments.poscar"
-      builder = Chem::Topology::Builder.new structure
+      builder = Chem::Structure::Builder.new structure
       builder.guess_bonds_from_geometry
       builder.guess_topology_from_connectivity
 
@@ -563,7 +563,7 @@ describe Chem::Topology::Builder do
     it "fails when structure has no bonds" do
       expect_raises Chem::Error, "Structure has no bonds" do
         structure = Chem::Structure.read "spec/data/poscar/5e5v--unwrapped.poscar"
-        builder = Chem::Topology::Builder.new structure
+        builder = Chem::Structure::Builder.new structure
         builder.guess_topology_from_connectivity
       end
     end
@@ -572,7 +572,7 @@ describe Chem::Topology::Builder do
   describe "#renumber_by_connectivity" do
     it "renumber residues in ascending order based on the link bond" do
       structure = Chem::Structure.read "spec/data/poscar/5e5v--unwrapped.poscar"
-      builder = Chem::Topology::Builder.new structure
+      builder = Chem::Structure::Builder.new structure
       builder.guess_bonds_from_geometry
       builder.guess_topology_from_connectivity
       builder.renumber_by_connectivity
@@ -595,7 +595,7 @@ describe Chem::Topology::Builder do
 
     it "renumber residues of a periodic peptide" do
       structure = Chem::Structure.read "spec/data/poscar/hlx_gly.poscar"
-      builder = Chem::Topology::Builder.new structure
+      builder = Chem::Structure::Builder.new structure
       builder.guess_bonds_from_geometry
       builder.guess_topology_from_connectivity
       builder.renumber_by_connectivity

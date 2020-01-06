@@ -111,7 +111,7 @@ describe Chem::Spatial::PBC do
   describe "#unwrap" do
     it "unwraps a structure" do
       structure = Chem::Structure.read "spec/data/poscar/5e61--wrapped.poscar"
-      builder = Chem::Topology::Builder.new structure
+      builder = Chem::Structure::Builder.new structure
       builder.guess_bonds_from_geometry
       structure.unwrap
 
@@ -121,7 +121,7 @@ describe Chem::Spatial::PBC do
 
     it "unwraps a structure placing fragments close together" do
       structure = Chem::Structure.read "spec/data/poscar/5e5v--wrapped.poscar"
-      builder = Chem::Topology::Builder.new structure
+      builder = Chem::Structure::Builder.new structure
       builder.guess_bonds_from_geometry
       structure.unwrap
 

@@ -93,7 +93,7 @@ module Chem::VASP::Poscar
       @io.skip_to_end
     end
 
-    private def parse_atom(builder : Topology::Builder) : Nil
+    private def parse_atom(builder : Structure::Builder) : Nil
       vec = read_vector
       vec = @fractional ? vec.to_cartesian(builder.lattice!) : vec * @scale_factor
       atom = builder.atom @elements.shift, vec
@@ -124,7 +124,7 @@ module Chem::VASP::Poscar
       skip_line
     end
 
-    private def parse_lattice(builder : Topology::Builder) : Nil
+    private def parse_lattice(builder : Structure::Builder) : Nil
       builder.lattice \
         @scale_factor * read_vector,
         @scale_factor * read_vector,
