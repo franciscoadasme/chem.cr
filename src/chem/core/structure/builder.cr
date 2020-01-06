@@ -9,7 +9,6 @@ module Chem
     @atom_serial : Int32 = 0
     @atoms : Indexable(Atom)?
     @chain : Chain?
-    @covalent_dist_table : Hash(Tuple(String, String), Float64)?
     @kdtree : Spatial::KDTree?
     @residue : Residue?
     @structure : Structure
@@ -237,7 +236,7 @@ module Chem
                                           bond_t : Topology::BondType) : Nil
       if (i = residue[bond_t.first]?) && (j = other[bond_t.second]?) && !i.bonded?(j)
         d = Spatial.squared_distance i, j
-        i.bonds.add j, bond_t.order if d <= covalent_cutoff(i, j)
+        i.bonds.add j, bond_t.order if d <= PeriodicTable.covalent_cutoff(i, j)
       end
     end
 
@@ -274,15 +273,6 @@ module Chem
 
     private def atoms : Indexable(Atom)
       @atoms ||= @structure.atoms
-    end
-
-    private def covalent_cutoff(atom : Atom, other : Atom) : Float64
-      covalent_dist_table[{atom.element.symbol, other.element.symbol}] ||= \
-         (atom.covalent_radius + other.covalent_radius + 0.3) ** 2
-    end
-
-    private def covalent_dist_table : Hash(Tuple(String, String), Float64)
-      @covalent_dist_table ||= {} of Tuple(String, String) => Float64
     end
 
     private def guess_bond_orders(atoms : AtomCollection) : Nil

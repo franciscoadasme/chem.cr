@@ -60,6 +60,19 @@ module Chem::PeriodicTable
     self[atom_name[0]]? || self[atom_name]?
   end
 
+  def covalent_cutoff(atom : Atom, other : Atom) : Float64
+    covalent_cutoff atom.element, other.element
+  end
+
+  # NOTE: The additional term (0.3 Å) is taken from the covalent radii reference,
+  # which states that about 96% of the surveyed bonds are within three standard
+  # deviations of the sum of the radii, where the found average standard deviation is
+  # about 0.1 Å.
+  def covalent_cutoff(ele : Element, other : Element) : Float64
+    covalent_pair_dist_table[{ele, other}] ||= \
+       (ele.covalent_radius + other.covalent_radius + 0.3) ** 2
+  end
+
   def elements : Tuple
     {% begin %}
       {
@@ -70,6 +83,10 @@ module Chem::PeriodicTable
         {% end %}
       }
     {% end %}
+  end
+
+  private def covalent_pair_dist_table : Hash(Tuple(Element, Element), Float64)
+    @@covalent_pair_dist_table ||= {} of Tuple(Element, Element) => Float64
   end
 
   private def unknown_element(*args, **options)

@@ -138,15 +138,15 @@ describe Chem::Atom do
     res = fake_structure.residues[0]
 
     it "returns true for covalently-bonded atoms" do
-      res["N"].within_covalent_distance?(of: res["CA"]).should be_true
-      res["CA"].within_covalent_distance?(of: res["C"]).should be_true
-      res["CB"].within_covalent_distance?(of: res["CA"]).should be_true
+      res["N"].within_covalent_distance?(res["CA"]).should be_true
+      res["CA"].within_covalent_distance?(res["C"]).should be_true
+      res["CB"].within_covalent_distance?(res["CA"]).should be_true
     end
 
     it "returns false for non-bonded atoms" do
-      res["N"].within_covalent_distance?(of: res["CB"]).should be_false
-      res["CA"].within_covalent_distance?(of: res["O"]).should be_false
-      res["CA"].within_covalent_distance?(of: res["OD1"]).should be_false
+      res["N"].within_covalent_distance?(res["CB"]).should be_false
+      res["CA"].within_covalent_distance?(res["O"]).should be_false
+      res["CA"].within_covalent_distance?(res["OD1"]).should be_false
     end
   end
 end

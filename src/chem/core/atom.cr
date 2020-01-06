@@ -73,13 +73,8 @@ module Chem
       end
     end
 
-    # NOTE: The additional term (0.3 Å) is taken from the covalent radii reference,
-    # which states that about 96% of the surveyed bonds are within three standard
-    # deviations of the sum of the radii, where the found average standard deviation is
-    # about 0.1 Å.
-    def within_covalent_distance?(of other : Atom) : Bool
-      threshold = covalent_radius + other.covalent_radius + 0.3
-      Spatial.squared_distance(@coords, other.coords) <= threshold**2
+    def within_covalent_distance?(rhs : self) : Bool
+      Spatial.squared_distance(self, rhs) <= PeriodicTable.covalent_cutoff(self, rhs)
     end
   end
 end
