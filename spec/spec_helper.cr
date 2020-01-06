@@ -91,7 +91,7 @@ end
 
 # TODO add StructureBuilder?
 def fake_structure(*, include_bonds = false)
-  Chem::Structure.build do
+  structure = Chem::Structure.build do
     title "Asp-Phe Ser"
 
     chain do
@@ -131,9 +131,11 @@ def fake_structure(*, include_bonds = false)
         atom "OG", V[6.990, -0.272, 9.012]
       end
     end
-
-    assign_topology_from_templates if include_bonds
   end
+
+  Topology::Guesser.guess_topology_from_templates structure if include_bonds
+
+  structure
 end
 
 def load_hlxparams_data
