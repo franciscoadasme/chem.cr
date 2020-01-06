@@ -76,7 +76,14 @@ module Chem::Topology::Guesser
         unknown_residues << residue
       end
     end
-    unknown_residues.each { |res| res.kind = guess_residue_type res }
+
+    unless unknown_residues.empty?
+      radar = ConnectivityRadar.new structure
+      unknown_residues.each do |residue|
+        residue.kind = guess_residue_type residue
+        radar.detect_bonds residue
+      end
+    end
   end
 
   private def assign_bond(residue : Residue, other : Residue, bond_t : BondType) : Nil

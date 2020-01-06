@@ -179,6 +179,14 @@ describe Chem::Topology::Guesser do
       r3["C"].bonded_atoms.map(&.name).should eq ["CA", "O"]
     end
 
+    it "guesses bonds of unknown residues" do
+      structure = Structure.read "spec/data/pdb/residue_kind_unknown_covalent_ligand.pdb"
+      Topology::Guesser.guess_topology_from_templates structure
+      structure.dig('A', 148, "C20").bonded?(structure.dig('A', 147, "SG")).should be_true
+      structure.dig('A', 148, "C20").bonded?(structure.dig('A', 148, "N21")).should be_true
+      structure.dig('A', 148, "S2").bonded?(structure.dig('A', 148, "O23")).should be_true
+    end
+
     it "does not connect consecutive residues when there are far away" do
       st = Chem::Structure.read "spec/data/pdb/protein_gap.pdb"
       r1, r2, r3, r4 = st.residues
