@@ -74,34 +74,41 @@ module Chem::Topology::Guesser
   end
 
   def guess_topology_from_templates(structure : Structure) : Nil
+    unknown_residues = [] of Residue
     structure.each_residue do |residue|
-      next unless res_t = Templates[residue.name]?
-
-      residue.kind = res_t.kind
-      res_t.bonds.each { |bond_t| assign_bond_from_template residue, residue, bond_t }
-      if bond_t = res_t.link_bond
-        if prev_res = residue.previous
-          assign_bond_from_template prev_res, residue, bond_t
-        end
-        if next_res = residue.next
-          assign_bond_from_template residue, next_res, bond_t
-        end
-      end
-
-      res_t.each_atom_type do |atom_type|
-        next unless atom = residue[atom_type.name]?
-        atom.formal_charge = atom_type.formal_charge
+      if res_t = Templates[residue.name]?
+        residue.kind = res_t.kind
+        assign_bonds residue, res_t
+        assign_formal_charges residue, res_t
+      else
+        unknown_residues << residue
       end
     end
-
-    guess_unknown_residue_types structure
+    unknown_residues.each { |res| res.kind = guess_residue_type res }
   end
 
-  private def assign_bond_from_template(residue : Residue,
-                                        other : Residue,
-                                        bond_t : Topology::BondType) : Nil
+  private def assign_bond(residue : Residue, other : Residue, bond_t : BondType) : Nil
     if (i = residue[bond_t.first]?) && (j = other[bond_t.second]?) && !i.bonded?(j)
       i.bonds.add j, bond_t.order if i.within_covalent_distance?(j)
+    end
+  end
+
+  private def assign_bonds(residue : Residue, res_t : ResidueType) : Nil
+    res_t.bonds.each { |bond_t| assign_bond residue, residue, bond_t }
+    if bond_t = res_t.link_bond
+      if prev_res = residue.previous
+        assign_bond prev_res, residue, bond_t
+      end
+      if next_res = residue.next
+        assign_bond residue, next_res, bond_t
+      end
+    end
+  end
+
+  private def assign_formal_charges(residue : Residue, res_t : ResidueType) : Nil
+    res_t.each_atom_type do |atom_t|
+      next unless atom = residue[atom_t.name]?
+      atom.formal_charge = atom_t.formal_charge
     end
   end
 
@@ -194,23 +201,20 @@ module Chem::Topology::Guesser
     residues
   end
 
-  private def guess_unknown_residue_types(structure : Structure) : Nil
-    structure.each_residue do |res|
-      next unless res.kind.other? &&
-                  (other = res.previous || res.next) &&
-                  (bond_t = Templates[other.name].link_bond)
+  private def guess_residue_type(res : Residue) : Residue::Kind
+    kind = Residue::Kind::Other
+    prev_res, next_res = res.previous, res.next
 
-      if (prev_res = res.previous) && (next_res = res.next)
-        next unless prev_res.kind == next_res.kind &&
-                    prev_res.bonded?(res, bond_t) &&
-                    res.bonded?(next_res, bond_t)
-      elsif prev_res = res.previous
-        next unless prev_res.bonded?(res, bond_t)
-      elsif next_res = res.next
-        next unless res.bonded?(next_res, bond_t)
+    if (other = prev_res || next_res) && (bond_t = Templates[other.name].link_bond)
+      if prev_res && next_res && prev_res.kind == next_res.kind
+        kind = other.kind if prev_res.bonded?(res, bond_t) && res.bonded?(next_res, bond_t)
+      elsif prev_res
+        kind = prev_res.kind if prev_res.bonded?(res, bond_t)
+      elsif next_res
+        kind = next_res.kind if res.bonded?(next_res, bond_t)
       end
-
-      res.kind = other.kind
     end
+
+    kind
   end
 end
