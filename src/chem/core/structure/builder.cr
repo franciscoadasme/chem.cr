@@ -20,12 +20,6 @@ module Chem
       end
     end
 
-    def self.build(structure : Structure? = nil) : Structure
-      builder = new structure
-      with builder yield builder
-      builder.build
-    end
-
     def atom(coords : Spatial::Vector, **options) : Atom
       atom :C, coords, **options
     end
