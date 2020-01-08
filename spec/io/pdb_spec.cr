@@ -209,7 +209,7 @@ describe Chem::PDB do
     end
 
     it "parses bonds when multiple models" do
-      models = Array(Chem::Structure).from_pdb Path["spec/data/pdb/models.pdb"]
+      models = Array(Chem::Structure).from_pdb "spec/data/pdb/models.pdb"
       models.size.should eq 4
       models.each do |st|
         st.atoms[0].bonds[st.atoms[1]].order.should eq 1
@@ -248,7 +248,7 @@ describe Chem::PDB do
     end
 
     it "parses selected alternate conformation" do
-      structure = Chem::Structure.from_pdb Path["spec/data/pdb/alternate_conf_mut.pdb"], alt_loc: 'B'
+      structure = Chem::Structure.from_pdb "spec/data/pdb/alternate_conf_mut.pdb", alt_loc: 'B'
       structure.n_residues.should eq 1
       structure.n_atoms.should eq 11
       structure.each_atom.map(&.occupancy).uniq.to_a.should eq [0.22]
@@ -264,7 +264,7 @@ describe Chem::PDB do
     end
 
     it "parses multiple models" do
-      st_list = Array(Chem::Structure).from_pdb Path["spec/data/pdb/models.pdb"]
+      st_list = Array(Chem::Structure).from_pdb "spec/data/pdb/models.pdb"
       st_list.size.should eq 4
       xs = {5.606, 7.212, 5.408, 22.055}
       st_list.zip(xs) do |st, x|
@@ -276,7 +276,7 @@ describe Chem::PDB do
     end
 
     it "parses selected models" do
-      path = Path["spec/data/pdb/models.pdb"]
+      path = "spec/data/pdb/models.pdb"
       st_list = Array(Chem::Structure).from_pdb path, indexes: [1, 3]
       st_list.size.should eq 2
       xs = {7.212, 22.055}
@@ -289,7 +289,7 @@ describe Chem::PDB do
     end
 
     it "parses selected models (iterator)" do
-      path = Path["spec/data/pdb/models.pdb"]
+      path = "spec/data/pdb/models.pdb"
       st_list = PDB::Parser.new(path).select(indexes: [1, 3]).to_a
       st_list.size.should eq 2
       xs = {7.212, 22.055}
@@ -302,7 +302,7 @@ describe Chem::PDB do
     end
 
     it "skip models" do
-      parser = PDB::Parser.new Path["spec/data/pdb/models.pdb"]
+      parser = PDB::Parser.new "spec/data/pdb/models.pdb"
       parser.skip_structure
       parser.first.atoms[0].coords.should eq V[7.212, 15.334, 0.966]
       parser.skip_structure
@@ -310,12 +310,12 @@ describe Chem::PDB do
     end
 
     it "skip models (iterator)" do
-      parser = PDB::Parser.new Path["spec/data/pdb/models.pdb"]
+      parser = PDB::Parser.new "spec/data/pdb/models.pdb"
       parser.skip(3).first.atoms[0].coords.should eq V[22.055, 14.701, 7.032]
     end
 
     it "parses selected chains" do
-      structure = Chem::Structure.from_pdb Path["spec/data/pdb/5jqf.pdb"], chains: ['B']
+      structure = Chem::Structure.from_pdb "spec/data/pdb/5jqf.pdb", chains: ['B']
       structure.n_chains.should eq 1
       structure.n_residues.should eq 38
       structure.n_atoms.should eq 310
@@ -325,7 +325,7 @@ describe Chem::PDB do
     end
 
     it "parses only protein" do
-      structure = Chem::Structure.from_pdb Path["spec/data/pdb/5jqf.pdb"], het: false
+      structure = Chem::Structure.from_pdb "spec/data/pdb/5jqf.pdb", het: false
       structure.n_chains.should eq 2
       structure.n_residues.should eq 42
       structure.n_atoms.should eq 586

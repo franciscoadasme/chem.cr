@@ -17,7 +17,7 @@ describe Chem::XYZ::Parser do
   end
 
   it "parses a XYZ file with multiple structures" do
-    structures = Array(Chem::Structure).from_xyz Path["spec/data/xyz/coo.trj.xyz"]
+    structures = Array(Chem::Structure).from_xyz "spec/data/xyz/coo.trj.xyz"
 
     structures.size.should eq 4
     structures.map(&.title).should eq ["0", "1", "2", "3"]
@@ -29,7 +29,7 @@ describe Chem::XYZ::Parser do
   end
 
   it "parses selected structures of a XYZ file with multiple structures" do
-    path = Path["spec/data/xyz/coo.trj.xyz"]
+    path = "spec/data/xyz/coo.trj.xyz"
     structures = Array(Chem::Structure).from_xyz path, indexes: [1, 3]
 
     structures.size.should eq 2
@@ -40,7 +40,7 @@ describe Chem::XYZ::Parser do
 
   it "fails when structure index is invalid" do
     expect_raises IndexError do
-      Array(Chem::Structure).from_xyz Path["spec/data/xyz/coo.trj.xyz"], indexes: [5]
+      Array(Chem::Structure).from_xyz "spec/data/xyz/coo.trj.xyz", indexes: [5]
     end
   end
 end

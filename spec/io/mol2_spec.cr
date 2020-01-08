@@ -149,7 +149,7 @@ describe Chem::Mol2::Parser do
   end
 
   it "parses multiple structures" do
-    ary = Array(Chem::Structure).from_mol2 Path["spec/data/mol2/molecules.mol2"]
+    ary = Array(Chem::Structure).from_mol2 "spec/data/mol2/molecules.mol2"
     ary.size.should eq 12
 
     structure = ary.first
