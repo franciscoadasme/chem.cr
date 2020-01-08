@@ -362,7 +362,7 @@ describe Chem::ResidueCollection do
 end
 
 describe Chem::ResidueView do
-  residues = Chem::Structure.read("spec/data/pdb/insertion_codes.pdb").residues
+  residues = load_file("insertion_codes.pdb").residues
 
   describe "#[]" do
     it "gets residue by zero-based index" do
@@ -381,7 +381,7 @@ describe Chem::ResidueView do
     end
 
     it "gets residue by serial number and insertion code" do
-      residues = Chem::Structure.read("spec/data/pdb/insertion_codes.pdb").residues
+      residues = load_file("insertion_codes.pdb").residues
       residue = residues[75, 'B']
       residue.number.should eq 75
       residue.insertion_code.should eq 'B'

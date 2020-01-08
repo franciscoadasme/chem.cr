@@ -3,10 +3,7 @@ require "../spec_helper"
 describe Chem::Topology::Guesser do
   describe "#guess_residue_numbering_from_connectivity" do
     it "renumbers residues in ascending order based on the link bond" do
-      structure = Chem::Structure.read "spec/data/poscar/5e5v--unwrapped.poscar"
-      Topology::ConnectivityRadar.new(structure).detect_bonds structure
-      Topology::Guesser.guess_topology_from_connectivity structure
-      Topology::Guesser.guess_residue_numbering_from_connectivity structure
+      structure = load_file "5e5v--unwrapped.poscar", topology: :renumber
 
       chains = structure.chains
       chains[0].residues.map(&.number).should eq (1..7).to_a
@@ -25,10 +22,7 @@ describe Chem::Topology::Guesser do
     end
 
     it "renumbers residues of a periodic peptide" do
-      structure = Chem::Structure.read "spec/data/poscar/hlx_gly.poscar"
-      Topology::ConnectivityRadar.new(structure).detect_bonds structure
-      Topology::Guesser.guess_topology_from_connectivity structure
-      Topology::Guesser.guess_residue_numbering_from_connectivity structure
+      structure = load_file "hlx_gly.poscar", topology: :renumber
 
       structure.each_residue.cons(2, reuse: true).each do |(a, b)|
         a["C"].bonded?(b["N"]).should be_true
@@ -40,10 +34,7 @@ describe Chem::Topology::Guesser do
 
   describe "#guess_topology_from_connectivity" do
     it "guesses the topology of a dipeptide" do
-      structure = Chem::Structure.read "spec/data/poscar/AlaIle--unwrapped.poscar"
-      Topology::ConnectivityRadar.new(structure).detect_bonds structure
-      Topology::Guesser.guess_topology_from_connectivity structure
-
+      structure = load_file "AlaIle--unwrapped.poscar", topology: :guess
       structure.chains.map(&.id).should eq ['A']
       structure.residues.map(&.name).should eq %w(ALA ILE)
       structure.residues.map(&.number).should eq [1, 2]
@@ -54,10 +45,7 @@ describe Chem::Topology::Guesser do
     end
 
     it "guesses the topology of two peptide chains" do
-      structure = Chem::Structure.read "spec/data/poscar/5e61--unwrapped.poscar"
-      Topology::ConnectivityRadar.new(structure).detect_bonds structure
-      Topology::Guesser.guess_topology_from_connectivity structure
-
+      structure = load_file "5e61--unwrapped.poscar", topology: :guess
       structure.chains.map(&.id).should eq ['A', 'B']
       structure.each_chain do |chain|
         chain.residues.map(&.name).should eq %w(PHE GLY ALA ILE LEU SER SER)
@@ -72,11 +60,7 @@ describe Chem::Topology::Guesser do
     end
 
     it "guesses the topology of two peptides off-center (issue #3)" do
-      structure = Chem::Structure.read "spec/data/poscar/5e61--off-center.poscar"
-      Topology::ConnectivityRadar.new(structure).detect_bonds structure
-      Topology::Guesser.guess_topology_from_connectivity structure
-
-      chains = structure.chains
+      chains = load_file("5e61--off-center.poscar", topology: :guess).chains
       chains.map(&.id).should eq ['A', 'B']
       chains[0].residues.map(&.name).sort!.should eq %w(ALA GLY ILE LEU PHE SER SER)
       chains[0].residues.map(&.number).should eq (1..7).to_a
@@ -85,11 +69,7 @@ describe Chem::Topology::Guesser do
     end
 
     it "guesses the topology of a broken peptide with waters" do
-      structure = Chem::Structure.read "spec/data/poscar/5e5v--unwrapped.poscar"
-      Topology::ConnectivityRadar.new(structure).detect_bonds structure
-      Topology::Guesser.guess_topology_from_connectivity structure
-
-      chains = structure.chains
+      chains = load_file("5e5v--unwrapped.poscar", topology: :guess).chains
       chains.map(&.id).should eq ['A', 'B', 'C', 'D']
       chains[0].residues.map(&.name).sort!.should eq %w(ALA ASN GLY ILE LEU PHE SER)
       chains[0].residues.map(&.number).should eq (1..7).to_a
@@ -102,20 +82,14 @@ describe Chem::Topology::Guesser do
     end
 
     it "guesses the topology of a periodic peptide" do
-      structure = Chem::Structure.read "spec/data/poscar/hlx_gly.poscar"
-      Topology::ConnectivityRadar.new(structure).detect_bonds structure
-      Topology::Guesser.guess_topology_from_connectivity structure
-
-      structure.chains.map(&.id).should eq ['A']
-      structure.chains[0].residues.map(&.name).should eq ["GLY"] * 13
-      structure.chains[0].residues.map(&.number).should eq (1..13).to_a
+      chains = load_file("hlx_gly.poscar", topology: :guess).chains
+      chains.map(&.id).should eq ['A']
+      chains[0].residues.map(&.name).should eq ["GLY"] * 13
+      chains[0].residues.map(&.number).should eq (1..13).to_a
     end
 
     it "guesses the topology of many fragments (beyond max chain id)" do
-      structure = Chem::Structure.read "spec/data/poscar/many_fragments.poscar"
-      Topology::ConnectivityRadar.new(structure).detect_bonds structure
-      Topology::Guesser.guess_topology_from_connectivity structure
-
+      structure = load_file "many_fragments.poscar", topology: :guess
       structure.n_chains.should eq 1
       structure.n_residues.should eq 144
       structure.fragments.size.should eq 72
@@ -180,58 +154,47 @@ describe Chem::Topology::Guesser do
     end
 
     it "guesses bonds of unknown residues" do
-      structure = Structure.read "spec/data/pdb/residue_kind_unknown_covalent_ligand.pdb"
-      Topology::Guesser.guess_topology_from_templates structure
+      structure = load_file "residue_kind_unknown_covalent_ligand.pdb", topology: :templates
       structure.dig('A', 148, "C20").bonded?(structure.dig('A', 147, "SG")).should be_true
       structure.dig('A', 148, "C20").bonded?(structure.dig('A', 148, "N21")).should be_true
       structure.dig('A', 148, "S2").bonded?(structure.dig('A', 148, "O23")).should be_true
     end
 
     it "does not connect consecutive residues when there are far away" do
-      st = Chem::Structure.read "spec/data/pdb/protein_gap.pdb"
+      st = load_file "protein_gap.pdb", topology: :templates
       r1, r2, r3, r4 = st.residues
-
-      Topology::Guesser.guess_topology_from_templates st
-
       r1["C"].bonds[r2["N"]]?.should_not be_nil
       r2["C"].bonds[r3["N"]]?.should be_nil
       r3["C"].bonds[r4["N"]]?.should_not be_nil
     end
 
     it "guesses kind of unknown residue when previous is known" do
-      st = Chem::Structure.read "spec/data/pdb/residue_kind_unknown_previous.pdb"
-      Topology::Guesser.guess_topology_from_templates st
+      st = load_file "residue_kind_unknown_previous.pdb", topology: :templates
       st.residues[1].protein?.should be_true
     end
 
     it "guesses kind of unknown residue when next is known" do
-      st = Chem::Structure.read "spec/data/pdb/residue_kind_unknown_next.pdb"
-      Topology::Guesser.guess_topology_from_templates st
+      st = load_file "residue_kind_unknown_next.pdb", topology: :templates
       st.residues[0].protein?.should be_true
     end
 
     it "guesses kind of unknown residue when its flanked by known residues" do
-      st = Chem::Structure.read "spec/data/pdb/residue_kind_unknown_flanked.pdb"
-      Topology::Guesser.guess_topology_from_templates st
+      st = load_file "residue_kind_unknown_flanked.pdb", topology: :templates
       st.residues[1].protein?.should be_true
     end
 
     it "does not guess kind of unknown residue" do
-      st = Chem::Structure.read "spec/data/pdb/residue_kind_unknown_single.pdb"
-      Topology::Guesser.guess_topology_from_templates st
+      st = load_file "residue_kind_unknown_single.pdb", topology: :templates
       st.residues[0].other?.should be_true
     end
 
     it "does not guess kind of unknown residue when its not connected to others" do
-      st = Chem::Structure.read "spec/data/pdb/residue_kind_unknown_next_gap.pdb"
-      Topology::Guesser.guess_topology_from_templates st
+      st = load_file "residue_kind_unknown_next_gap.pdb", topology: :templates
       st.residues.first.other?.should be_true
     end
 
     it "does not guess kind of unknown residue when it's not bonded by link bond" do
-      structure = Structure.read "spec/data/pdb/residue_kind_unknown_covalent_ligand.pdb"
-      Topology::ConnectivityRadar.new(structure).detect_bonds structure
-      Topology::Guesser.guess_topology_from_templates structure
+      structure = load_file "residue_kind_unknown_covalent_ligand.pdb", topology: :templates
       structure.residues.map(&.kind.to_s).should eq %w(Protein Protein Protein Other)
     end
   end

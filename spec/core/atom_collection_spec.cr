@@ -3,21 +3,16 @@ require "../spec_helper"
 describe Chem::AtomCollection do
   describe "#fragments" do
     it "returns the fragments (1)" do
-      structure = Chem::Structure.read "spec/data/poscar/5e61--unwrapped.poscar"
-      Topology::ConnectivityRadar.new(structure).detect_bonds structure
-      structure.fragments.map(&.size).should eq [100, 100]
+      load_file("5e61--unwrapped.poscar", topology: :bonds).fragments.map(&.size).should eq [100, 100]
     end
 
     it "returns the fragments (2)" do
-      structure = Chem::Structure.read "spec/data/poscar/5e61--unwrapped.poscar"
-      Topology::ConnectivityRadar.new(structure).detect_bonds structure
-      structure.fragments.map(&.size).should eq [100, 100]
+      load_file("5e61--unwrapped.poscar", topology: :bonds).fragments.map(&.size).should eq [100, 100]
     end
 
     it "returns the fragments (3)" do
-      structure = Chem::Structure.read "spec/data/xyz/k2p_pore_b.xyz"
-      Topology::ConnectivityRadar.new(structure).detect_bonds structure
-      structure.fragments.map(&.size).sort!.should eq [1, 1, 1, 1, 304, 334]
+      expected = [1, 1, 1, 1, 304, 334]
+      load_file("k2p_pore_b.xyz", topology: :bonds).fragments.map(&.size).sort!.should eq expected
     end
   end
 end

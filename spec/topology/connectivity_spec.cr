@@ -3,10 +3,7 @@ require "../spec_helper"
 describe Topology::ConnectivityRadar do
   describe "#detect_bonds" do
     it "guesses bonds from geometry" do
-      structure = Structure.read "spec/data/poscar/AlaIle--unwrapped.poscar"
-      Topology::ConnectivityRadar.new(structure).detect_bonds structure
-
-      atoms = structure.atoms
+      atoms = load_file("AlaIle--unwrapped.poscar", topology: :bonds).atoms
       n_bonds = [4, 4, 3, 4, 3, 4, 4, 4, 4, 1, 1, 1, 1, 1, 1, 1,
                  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 3]
       atoms.each_with_index { |atom, i| atom.bonds.size.should eq n_bonds[i] }
@@ -17,8 +14,7 @@ describe Topology::ConnectivityRadar do
     end
 
     it "guesses bonds from geometry of a protein with charged termini and ions" do
-      structure = Chem::Structure.read "spec/data/xyz/k2p_pore_b.xyz"
-      Topology::ConnectivityRadar.new(structure).detect_bonds structure
+      structure = load_file "k2p_pore_b.xyz", topology: :bonds
 
       structure.bonds.size.should eq 644
       structure.bonds.sum(&.order).should eq 714
@@ -58,8 +54,7 @@ describe Topology::ConnectivityRadar do
     end
 
     it "guesses bonds from geometry having a sulfate ion" do
-      structure = Chem::Structure.read "spec/data/xyz/sulbactam.xyz"
-      Topology::ConnectivityRadar.new(structure).detect_bonds structure
+      structure = load_file "sulbactam.xyz", topology: :bonds
 
       structure.bonds.size.should eq 27
       structure.bonds.sum(&.order).should eq 31
@@ -84,8 +79,7 @@ describe Topology::ConnectivityRadar do
     end
 
     it "guesses bonds from geometry of a protein having sulfur" do
-      structure = Chem::Structure.read "spec/data/xyz/acama.xyz"
-      Topology::ConnectivityRadar.new(structure).detect_bonds structure
+      structure = load_file "acama.xyz", topology: :bonds
 
       structure.bonds.size.should eq 60
       structure.bonds.sum(&.order).should eq 65
@@ -107,9 +101,7 @@ describe Topology::ConnectivityRadar do
     end
 
     it "doesn't guess bond orders if hydrogens are missing" do
-      structure = Structure.read "spec/data/pdb/residue_kind_unknown_covalent_ligand.pdb"
-      Topology::ConnectivityRadar.new(structure).detect_bonds structure
-
+      structure = load_file "residue_kind_unknown_covalent_ligand.pdb", topology: :bonds
       structure.bonds.size.should eq 59
       structure.bonds.all?(&.single?).should be_true
       structure.formal_charges.all?(&.==(0)).should be_true

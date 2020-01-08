@@ -33,21 +33,15 @@ describe Chem::Residue do
 
   describe "#cis?" do
     it "returns true when residue is in the cis conformation" do
-      st = Chem::Structure.read "spec/data/pdb/cis-trans.pdb"
-      Topology::Guesser.guess_topology_from_templates st
-      st.residues[2].cis?.should be_true
+      load_file("cis-trans.pdb", topology: :templates).residues[2].cis?.should be_true
     end
 
     it "returns true when residue is not in the cis conformation" do
-      st = Chem::Structure.read "spec/data/pdb/cis-trans.pdb"
-      Topology::Guesser.guess_topology_from_templates st
-      st.residues[1].cis?.should be_false
+      load_file("cis-trans.pdb", topology: :templates).residues[1].cis?.should be_false
     end
 
     it "returns false when residue is at the start" do
-      st = Chem::Structure.read "spec/data/pdb/cis-trans.pdb"
-      Topology::Guesser.guess_topology_from_templates st
-      st.residues[0].cis?.should be_false
+      load_file("cis-trans.pdb", topology: :templates).residues[0].cis?.should be_false
     end
   end
 
@@ -134,21 +128,15 @@ describe Chem::Residue do
 
   describe "#trans?" do
     it "returns true when residue is in the trans conformation" do
-      st = Chem::Structure.read "spec/data/pdb/cis-trans.pdb"
-      Topology::Guesser.guess_topology_from_templates st
-      st.residues[1].trans?.should be_true
+      load_file("cis-trans.pdb", topology: :templates).residues[1].trans?.should be_true
     end
 
     it "returns true when residue is not in the trans conformation" do
-      st = Chem::Structure.read "spec/data/pdb/cis-trans.pdb"
-      Topology::Guesser.guess_topology_from_templates st
-      st.residues[2].trans?.should be_false
+      load_file("cis-trans.pdb", topology: :templates).residues[2].trans?.should be_false
     end
 
     it "returns false when residue is at the start" do
-      st = Chem::Structure.read "spec/data/pdb/cis-trans.pdb"
-      Topology::Guesser.guess_topology_from_templates st
-      st.residues[0].trans?.should be_false
+      load_file("cis-trans.pdb", topology: :templates).residues[0].trans?.should be_false
     end
   end
 end

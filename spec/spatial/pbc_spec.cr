@@ -68,7 +68,7 @@ describe Chem::Spatial::PBC do
     end
 
     it "yields periodic images within cutoff for a off-center non-orthogonal lattice" do
-      structure = Chem::Structure.read "spec/data/poscar/5e61--off-center.poscar"
+      structure = load_file "5e61--off-center.poscar"
 
       lat = structure.lattice.not_nil!
       v1 = structure.atoms[29].coords
@@ -110,20 +110,16 @@ describe Chem::Spatial::PBC do
 
   describe "#unwrap" do
     it "unwraps a structure" do
-      structure = Chem::Structure.read "spec/data/poscar/5e61--wrapped.poscar"
-      Topology::ConnectivityRadar.new(structure).detect_bonds structure
+      structure = load_file "5e61--wrapped.poscar", topology: :bonds
       structure.unwrap
-
-      expected = Chem::Structure.read "spec/data/poscar/5e61--unwrapped.poscar"
+      expected = load_file "5e61--unwrapped.poscar"
       structure.atoms.map(&.coords).should be_close expected.atoms.map(&.coords), 1e-3
     end
 
     it "unwraps a structure placing fragments close together" do
-      structure = Chem::Structure.read "spec/data/poscar/5e5v--wrapped.poscar"
-      Topology::ConnectivityRadar.new(structure).detect_bonds structure
+      structure = load_file "5e5v--wrapped.poscar", topology: :bonds
       structure.unwrap
-
-      expected = Chem::Structure.read "spec/data/poscar/5e5v--unwrapped.poscar"
+      expected = load_file "5e5v--unwrapped.poscar"
       structure.atoms.map(&.coords).should be_close expected.atoms.map(&.coords), 1e-3
     end
   end

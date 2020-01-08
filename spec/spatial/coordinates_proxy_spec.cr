@@ -281,26 +281,23 @@ describe Chem::Spatial::CoordinatesProxy do
 
   describe "#wrap" do
     it "wraps atoms into the primary unit cell" do
-      coords = Chem::Structure.read("spec/data/poscar/AlaIle--unwrapped.poscar").coords
+      coords = load_file("AlaIle--unwrapped.poscar").coords
       coords.wrap
-
-      expected = Chem::Structure.read("spec/data/poscar/AlaIle--wrapped.poscar").coords
+      expected = load_file("AlaIle--wrapped.poscar").coords
       coords.should be_close expected, 1e-15
     end
 
     it "wraps atoms into the primary unit cell in a non-rectangular lattice" do
-      coords = Chem::Structure.read("spec/data/poscar/5e61--unwrapped.poscar").coords
+      coords = load_file("5e61--unwrapped.poscar").coords
       coords.wrap
-
-      expected = Chem::Structure.read("spec/data/poscar/5e61--wrapped.poscar").coords
+      expected = load_file("5e61--wrapped.poscar").coords
       coords.should be_close expected, 1e-3
     end
 
     it "wraps atoms into the primary unit cell centered at the origin" do
-      coords = Chem::Structure.read("spec/data/poscar/5e61--unwrapped.poscar").coords
+      coords = load_file("5e61--unwrapped.poscar").coords
       coords.wrap around: V.origin
-
-      expected = Chem::Structure.read("spec/data/poscar/5e61--wrapped--origin.poscar").coords
+      expected = load_file("5e61--wrapped--origin.poscar").coords
       coords.should be_close expected, 1e-3
     end
   end

@@ -3,7 +3,7 @@ require "../../spec_helper.cr"
 describe Chem::VASP::Poscar do
   describe ".parse" do
     it "parses a basic file" do
-      st = Chem::Structure.read "spec/data/poscar/basic.poscar"
+      st = load_file "basic.poscar"
       st.n_atoms.should eq 49
 
       st.atoms.count(&.element.symbol.==("C")).should eq 14
@@ -29,19 +29,19 @@ describe Chem::VASP::Poscar do
     end
 
     it "parses a file with direct coordinates" do
-      st = Chem::Structure.read "spec/data/poscar/direct.poscar"
+      st = load_file "direct.poscar"
       st.atoms[0].coords.should eq Vector.origin
       st.atoms[1].coords.should be_close Vector[1.0710, 1.6065, 1.2495], 1e-15
     end
 
     it "parses a file with scaled Cartesian coordinates" do
-      st = Chem::Structure.read "spec/data/poscar/cartesian.poscar"
+      st = load_file "cartesian.poscar"
       st.atoms[0].coords.should eq Vector.origin
       st.atoms[1].coords.should be_close Vector[0.8925, 0.8925, 0.8925], 1e-16
     end
 
     it "parses a file with selective dynamics" do
-      st = Chem::Structure.read "spec/data/poscar/selective_dynamics.poscar"
+      st = load_file "selective_dynamics.poscar"
       st.atoms[0].constraint.should eq Constraint::Z
       st.atoms[1].constraint.should eq Constraint::XYZ
       st.atoms[2].constraint.should eq Constraint::Z
@@ -50,7 +50,7 @@ describe Chem::VASP::Poscar do
     it "fails when element symbols are missing" do
       msg = "Expected element symbols (vasp 5+)"
       ex = expect_raises(Chem::IO::ParseException) do
-        Chem::Structure.read "spec/data/poscar/no_symbols.poscar"
+        load_file "no_symbols.poscar"
       end
       ex.to_s_with_location.should eq <<-EOS
         In line 6:4:
@@ -65,7 +65,7 @@ describe Chem::VASP::Poscar do
 
     it "fails when there are missing atomic species counts" do
       ex = expect_raises(Chem::IO::ParseException) do
-        Chem::Structure.read "spec/data/poscar/mismatch.poscar"
+        load_file "mismatch.poscar"
       end
       ex.to_s_with_location.should eq <<-EOS
         In line 8:1:

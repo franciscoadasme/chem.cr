@@ -23,6 +23,14 @@ alias Tf = Chem::Spatial::AffineTransform
 alias V = Chem::Spatial::Vector
 alias Vector = Chem::Spatial::Vector
 
+enum TopologyLevel
+  None
+  Templates
+  Bonds
+  Guess
+  Renumber
+end
+
 module Spec
   struct CloseExpectation
     def match(actual_value : Enumerable(Vector)) : Bool
@@ -136,6 +144,20 @@ def fake_structure(*, include_bonds = false)
   Topology::Guesser.guess_topology_from_templates structure if include_bonds
 
   structure
+end
+
+def load_file(path : String, topology level : TopologyLevel = :none) : Structure
+  path = File.join File.extname(path)[1..], path unless File.extname(path).blank?
+  path = File.join "spec", "data", path
+  # st = Chem::Structure.read path, guess_topology: topology.renumber?
+  st = Chem::Structure.read path
+  # unless topology.renumber?
+  Topology::Guesser.guess_topology_from_templates st if level.templates?
+  Topology::ConnectivityRadar.new(st).detect_bonds st if level > TopologyLevel::Templates
+  Topology::Guesser.guess_topology_from_connectivity st if level > TopologyLevel::Bonds
+  Topology::Guesser.guess_residue_numbering_from_connectivity st if level > TopologyLevel::Guess
+  # end
+  st
 end
 
 def load_hlxparams_data
