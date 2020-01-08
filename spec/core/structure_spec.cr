@@ -51,7 +51,9 @@ describe Chem::Structure do
 
   describe "#periodic?" do
     it "returns true when a structure has a lattice" do
-      Chem::Structure.build { lattice 10, 20, 30 }.periodic?.should be_true
+      structure = Structure.new
+      structure.lattice = Lattice.new S[10, 20, 30]
+      structure.periodic?.should be_true
     end
 
     it "returns false when a structure does not have a lattice" do

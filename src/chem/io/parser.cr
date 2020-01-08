@@ -619,6 +619,10 @@ module Chem
 
     abstract def skip_structure : Nil
 
+    def initialize(input : ::IO | Path | String, @guess_topology : Bool = true)
+      super input
+    end
+
     def each(indexes : Enumerable(Int), &block : Structure ->)
       (indexes.max + 1).times do |i|
         if indexes.includes? i

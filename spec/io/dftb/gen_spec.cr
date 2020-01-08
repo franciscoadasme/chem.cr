@@ -12,7 +12,7 @@ describe Chem::DFTB::Gen::Parser do
         5 1    2.0000000000E+01    1.0000000000E+01    1.0000000000E+01
       EOS
 
-    structure = Chem::Structure.from_gen IO::Memory.new(content)
+    structure = Chem::Structure.from_gen IO::Memory.new(content), guess_topology: false
     structure.lattice.should be_nil
 
     structure.n_atoms.should eq 5
@@ -40,7 +40,7 @@ describe Chem::DFTB::Gen::Parser do
         0.0000000000E+00    0.0000000000E+00    1.0000000000E+01
       EOS
 
-    structure = Chem::Structure.from_gen IO::Memory.new(content)
+    structure = Chem::Structure.from_gen IO::Memory.new(content), guess_topology: false
     structure.lattice.should_not be_nil
     structure.lattice.not_nil!.i.should eq V[40, 0, 0]
     structure.lattice.not_nil!.j.should eq V[0, 20, 0]
@@ -68,7 +68,7 @@ describe Chem::DFTB::Gen::Parser do
       2.713546 0.0 2.713546
       EOS
 
-    structure = Chem::Structure.from_gen IO::Memory.new(content)
+    structure = Chem::Structure.from_gen IO::Memory.new(content), guess_topology: false
     structure.lattice.should_not be_nil
     structure.lattice.not_nil!.i.should eq V[2.713546, 2.713546, 0]
     structure.lattice.not_nil!.j.should eq V[0, 2.713546, 2.713546]
@@ -81,7 +81,7 @@ describe Chem::DFTB::Gen::Parser do
 end
 
 describe Chem::DFTB::Gen::Writer do
-  structure = Chem::Structure.build do
+  structure = Chem::Structure.build(guess_topology: false) do
     title "NaCl-O-NaCl"
     atom PeriodicTable::Cl, V[30, 15, 10]
     atom PeriodicTable::Na, V[10, 5, 5]

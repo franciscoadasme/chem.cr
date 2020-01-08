@@ -132,7 +132,7 @@ module Chem::VASP::Poscar
     end
 
     private def parse_next : Structure
-      Structure.build do |builder|
+      Structure.build(@guess_topology) do |builder|
         builder.title read_line
 
         @scale_factor = read_float

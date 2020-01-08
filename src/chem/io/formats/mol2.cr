@@ -160,7 +160,7 @@ module Chem::Mol2
     end
 
     private def parse_next : Structure
-      Structure.build do |builder|
+      Structure.build(guess_topology: false) do |builder|
         skip_line
         builder.title read_line.strip
         n_atoms = read_int

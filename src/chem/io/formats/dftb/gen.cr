@@ -88,7 +88,7 @@ module Chem::DFTB::Gen
     end
 
     private def parse_next : Structure
-      Structure.build do |builder|
+      Structure.build(@guess_topology) do |builder|
         n_atoms = read_int
         parse_geometry_type
         parse_elements

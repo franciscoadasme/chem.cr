@@ -9,7 +9,7 @@ module Chem
     @residue : Residue?
     @structure : Structure
 
-    def initialize(structure : Structure? = nil)
+    def initialize(structure : Structure? = nil, @guess_topology : Bool = true)
       if structure
         @structure = structure
         structure.each_chain { |chain| @chain = chain }
@@ -51,6 +51,16 @@ module Chem
 
     def build : Structure
       transform_aromatic_bonds
+      if @guess_topology && @structure.n_atoms > 0
+        if @structure.n_residues > 1 ||
+           @structure.chains.first.residues.first.name != "UNK"
+          Topology::Guesser.guess_topology_from_templates @structure
+        else
+          Topology::ConnectivityRadar.new(@structure).detect_bonds @structure
+          Topology::Guesser.guess_topology_from_connectivity @structure
+          Topology::Guesser.guess_residue_numbering_from_connectivity @structure
+        end
+      end
       @structure
     end
 

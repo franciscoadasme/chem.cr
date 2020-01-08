@@ -6,7 +6,7 @@ describe Chem::PDB do
     it "parses a (real) PDB file" do
       st = load_file "1h1s.pdb"
       st.n_atoms.should eq 9701
-      st.formal_charge.should eq 0
+      st.formal_charge.should eq -44
 
       st.chains.map(&.id).should eq ['A', 'B', 'C', 'D']
       st.chains['A'].n_residues.should eq 569
@@ -379,13 +379,13 @@ end
 
 describe Chem::PDB::Writer do
   it "writes a structure" do
-    structure = load_file "1crn.pdb"
+    structure = load_file "1crn.pdb", topology: :none
     expected = File.read "spec/data/pdb/1crn--stripped.pdb"
     structure.to_pdb.should eq expected
   end
 
   it "writes an atom collection" do
-    structure = load_file "1crn.pdb"
+    structure = load_file "1crn.pdb", topology: :none
     structure.residues[4].to_pdb.should eq <<-EOS
       REMARK   4                                                                      
       REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
@@ -402,7 +402,7 @@ describe Chem::PDB::Writer do
 
   it "writes ter records at the end of polymer chains" do
     content = File.read "spec/data/pdb/5e5v.pdb"
-    structure = Chem::Structure.from_pdb IO::Memory.new(content)
+    structure = Chem::Structure.from_pdb IO::Memory.new(content), guess_topology: false
     structure.to_pdb.should eq content
   end
 
@@ -423,7 +423,6 @@ describe Chem::PDB::Writer do
   end
 
   it "writes CONECT records" do
-    structure = Chem::Structure.build do
       residue "ICN" do
         atom :i, V[-1, 0, 0]
         atom :c, V[0, 0, 0]
@@ -448,7 +447,7 @@ describe Chem::PDB::Writer do
   end
 
   it "writes CONECT records for renumbered atoms" do
-    structure = Chem::Structure.build do
+    structure = Chem::Structure.build(guess_topology: false) do
       residue "ICN" do
         atom :i, V[-1, 0, 0]
         atom :c, V[0, 0, 0]
@@ -482,7 +481,7 @@ describe Chem::PDB::Writer do
   end
 
   it "writes CONECT records for specified bonds" do
-    structure = Chem::Structure.build do
+    structure = Chem::Structure.build(guess_topology: false) do
       residue "CH3" do
         atom :c, V[0, 0, 0]
         atom :h, V[0, -1, 0]
@@ -510,7 +509,7 @@ describe Chem::PDB::Writer do
   end
 
   it "writes big numbers" do
-    structure = Chem::Structure.build do
+    structure = Chem::Structure.build(guess_topology: false) do
       residue "ICN" do
         atom :i, V[-1, 0, 0]
         atom :c, V[0, 0, 0]

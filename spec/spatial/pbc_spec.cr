@@ -3,7 +3,7 @@ require "../spec_helper"
 describe Chem::Spatial::PBC do
   describe "#each_adjacent_image" do
     it "yields each atom in the adjacent periodic images" do
-      structure = Chem::Structure.build do
+      structure = Chem::Structure.build(guess_topology: false) do
         lattice 10, 10, 10
 
         atom :C, V[2.5, 2.5, 2.5]
@@ -28,7 +28,7 @@ describe Chem::Spatial::PBC do
     it "yields each atom in the adjacent periodic images for non-centered structure" do
       offset = V[-20, 10, 30]
 
-      structure = Chem::Structure.build do
+      structure = Chem::Structure.build(guess_topology: false) do
         lattice 10, 10, 10
 
         atom :C, V[2.5, 2.5, 2.5]
@@ -52,7 +52,7 @@ describe Chem::Spatial::PBC do
     end
 
     it "yields each atom in the adjacent periodic images within the given radius" do
-      structure = Chem::Structure.build do
+      structure = Chem::Structure.build(guess_topology: false) do
         lattice 10, 10, 10
 
         atom :C, V[1, 8.5, 3.5]
@@ -68,7 +68,7 @@ describe Chem::Spatial::PBC do
     end
 
     it "yields periodic images within cutoff for a off-center non-orthogonal lattice" do
-      structure = load_file "5e61--off-center.poscar"
+      structure = load_file "5e61--off-center.poscar", topology: :none
 
       lat = structure.lattice.not_nil!
       v1 = structure.atoms[29].coords
@@ -101,7 +101,8 @@ describe Chem::Spatial::PBC do
     end
 
     it "fails when radius is negative" do
-      structure = Chem::Structure.build { lattice 10, 10, 10 }
+      structure = Chem::Structure.new
+      structure.lattice = Lattice.new S[10, 10, 10]
       expect_raises Chem::Spatial::Error, "Radius cannot be negative" do
         Chem::Spatial::PBC.each_adjacent_image(structure, radius: -2) { }
       end
@@ -112,14 +113,14 @@ describe Chem::Spatial::PBC do
     it "unwraps a structure" do
       structure = load_file "5e61--wrapped.poscar", topology: :bonds
       structure.unwrap
-      expected = load_file "5e61--unwrapped.poscar"
+      expected = load_file "5e61--unwrapped.poscar", topology: :none
       structure.atoms.map(&.coords).should be_close expected.atoms.map(&.coords), 1e-3
     end
 
     it "unwraps a structure placing fragments close together" do
       structure = load_file "5e5v--wrapped.poscar", topology: :bonds
       structure.unwrap
-      expected = load_file "5e5v--unwrapped.poscar"
+      expected = load_file "5e5v--unwrapped.poscar", topology: :none
       structure.atoms.map(&.coords).should be_close expected.atoms.map(&.coords), 1e-3
     end
   end

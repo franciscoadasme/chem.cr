@@ -245,8 +245,9 @@ module Chem::PDB
     def initialize(input : ::IO | Path | String,
                    @alt_loc : Char? = nil,
                    chains : Enumerable(Char)? = nil,
+                   guess_topology : Bool = true,
                    @het : Bool = true)
-      super input
+      super input, guess_topology
       @chains = chains.try &.to_set
       parse_header
     end
@@ -429,7 +430,7 @@ module Chem::PDB
 
     private def parse_model : Structure
       @serial = 0
-      Structure.build do |builder|
+      Structure.build(@guess_topology) do |builder|
         title @pdb_title
         lattice @pdb_lattice
         expt @pdb_expt

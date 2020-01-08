@@ -1,7 +1,7 @@
 require "../spec_helper"
 
 describe Chem::Spatial::CoordinatesProxy do
-  structure = Chem::Structure.build do
+  structure = Chem::Structure.build(guess_topology: false) do
     lattice 10, 10, 10
 
     atom PeriodicTable::O, V[1, 2, 3]
@@ -107,7 +107,7 @@ describe Chem::Spatial::CoordinatesProxy do
 
   describe "#map!" do
     it "modifies the atom coordinates" do
-      other = Chem::Structure.build do
+      other = Chem::Structure.build(guess_topology: false) do
         atom PeriodicTable::O, V[1, 2, 3]
         atom PeriodicTable::H, V[4, 5, 6]
         atom PeriodicTable::H, V[7, 8, 9]
@@ -117,7 +117,7 @@ describe Chem::Spatial::CoordinatesProxy do
     end
 
     it "modifies the fractional atom coordinates" do
-      other = Chem::Structure.build do
+      other = Chem::Structure.build(guess_topology: false) do
         lattice 5, 10, 15
         atom PeriodicTable::O, V[1, 2, 3]
         atom PeriodicTable::H, V[4, 5, 6]
@@ -161,7 +161,7 @@ describe Chem::Spatial::CoordinatesProxy do
 
   describe "#map_with_atom!" do
     it "modifies the atom coordinates" do
-      other = Chem::Structure.build do
+      other = Chem::Structure.build(guess_topology: false) do
         atom PeriodicTable::O, V[1, 2, 3]
         atom PeriodicTable::H, V[4, 5, 6]
         atom PeriodicTable::H, V[7, 8, 9]
@@ -172,7 +172,7 @@ describe Chem::Spatial::CoordinatesProxy do
     end
 
     it "modifies the fractional atom coordinates" do
-      other = Chem::Structure.build do
+      other = Chem::Structure.build(guess_topology: false) do
         lattice 5, 10, 15
         atom PeriodicTable::O, V[1, 2, 3]
         atom PeriodicTable::H, V[4, 5, 6]
@@ -203,7 +203,7 @@ describe Chem::Spatial::CoordinatesProxy do
 
   describe "#transform!" do
     it "transforms the atom coordinates" do
-      other = Chem::Structure.build do
+      other = Chem::Structure.build(guess_topology: false) do
         atom PeriodicTable::O, V[1, 2, 3]
         atom PeriodicTable::H, V[4, 5, 6]
         atom PeriodicTable::H, V[7, 8, 9]
@@ -223,7 +223,7 @@ describe Chem::Spatial::CoordinatesProxy do
 
   describe "#translate!" do
     it "translates the atom coordinates" do
-      other = Chem::Structure.build do
+      other = Chem::Structure.build(guess_topology: false) do
         atom PeriodicTable::O, V[1, 2, 3]
         atom PeriodicTable::H, V[4, 5, 6]
         atom PeriodicTable::H, V[7, 8, 9]
@@ -253,7 +253,7 @@ describe Chem::Spatial::CoordinatesProxy do
 
   describe "#to_cartesian!" do
     it "transforms fractional coordinates to Cartesian" do
-      structure = Chem::Structure.build do
+      structure = Chem::Structure.build(guess_topology: false) do
         lattice 10, 20, 30
         atom PeriodicTable::O, V[0.2, 0.4, 0.6]
         atom PeriodicTable::H, V[0.1, 0.2, 0.3]
@@ -267,7 +267,7 @@ describe Chem::Spatial::CoordinatesProxy do
 
   describe "#to_fractional!" do
     it "transforms Cartesian coordinates to fractional" do
-      structure = Chem::Structure.build do
+      structure = Chem::Structure.build(guess_topology: false) do
         lattice 10, 20, 30
         atom PeriodicTable::O, V[1, 2, 3]
         atom PeriodicTable::H, V[4, 5, 6]
@@ -281,23 +281,23 @@ describe Chem::Spatial::CoordinatesProxy do
 
   describe "#wrap" do
     it "wraps atoms into the primary unit cell" do
-      coords = load_file("AlaIle--unwrapped.poscar").coords
+      coords = load_file("AlaIle--unwrapped.poscar", topology: :none).coords
       coords.wrap
-      expected = load_file("AlaIle--wrapped.poscar").coords
+      expected = load_file("AlaIle--wrapped.poscar", topology: :none).coords
       coords.should be_close expected, 1e-15
     end
 
     it "wraps atoms into the primary unit cell in a non-rectangular lattice" do
-      coords = load_file("5e61--unwrapped.poscar").coords
+      coords = load_file("5e61--unwrapped.poscar", topology: :none).coords
       coords.wrap
-      expected = load_file("5e61--wrapped.poscar").coords
+      expected = load_file("5e61--wrapped.poscar", topology: :none).coords
       coords.should be_close expected, 1e-3
     end
 
     it "wraps atoms into the primary unit cell centered at the origin" do
-      coords = load_file("5e61--unwrapped.poscar").coords
+      coords = load_file("5e61--unwrapped.poscar", topology: :none).coords
       coords.wrap around: V.origin
-      expected = load_file("5e61--wrapped--origin.poscar").coords
+      expected = load_file("5e61--wrapped--origin.poscar", topology: :none).coords
       coords.should be_close expected, 1e-3
     end
   end

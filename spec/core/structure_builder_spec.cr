@@ -176,7 +176,7 @@ describe Chem::Structure::Builder do
   end
 
   it "names atoms automatically when called with element" do
-    st = Chem::Structure.build do
+    st = Chem::Structure.build(guess_topology: false) do
       atom :C, Vector.origin
       atom :C, Vector.origin
       atom :O, Vector.origin
@@ -207,7 +207,7 @@ describe Chem::Structure::Builder do
   end
 
   it "adds dummy atoms" do
-    st = Chem::Structure.build do
+    st = Chem::Structure.build(guess_topology: false) do
       %w(N CA C O CB).each { |name| atom name, Vector.origin }
     end
 
@@ -226,7 +226,7 @@ describe Chem::Structure::Builder do
   end
 
   it "adds atom with named arguments" do
-    st = Chem::Structure.build do
+    st = Chem::Structure.build(guess_topology: false) do
       atom "OD1", Vector.origin, formal_charge: -1, temperature_factor: 43.24
     end
 
@@ -236,7 +236,7 @@ describe Chem::Structure::Builder do
   end
 
   it "adds bonds by atom index" do
-    structure = Chem::Structure.build do
+    structure = Chem::Structure.build(guess_topology: false) do
       atom :O, V[0, 0, 0]
       atom :H, V[-1, 0, 0]
       atom :H, V[1, 0, 0]

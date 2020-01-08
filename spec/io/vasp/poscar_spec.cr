@@ -16,15 +16,15 @@ describe Chem::VASP::Poscar do
       atom.coords.should eq Vector[1.25020645, 3.42088266, 4.92610368]
       atom.element.oxygen?.should be_true
       atom.serial.should eq 49
-      atom.name.should eq "O7"
+      atom.name.should eq "O"
       atom.occupancy.should eq 1
-      atom.residue.name.should eq "UNK"
-      atom.residue.number.should eq 1
+      atom.residue.name.should eq "GLY"
+      atom.residue.number.should eq 7
       atom.serial.should eq 49
       atom.temperature_factor.should eq 0
 
-      st.atoms[0].element.carbon?.should be_true
-      st.atoms[14].element.hydrogen?.should be_true
+      st.atoms[0].element.nitrogen?.should be_true
+      st.atoms[14].element.nitrogen?.should be_true
       st.atoms[35].element.nitrogen?.should be_true
     end
 
@@ -108,7 +108,7 @@ describe Chem::VASP::Poscar do
 end
 
 describe Chem::VASP::Poscar::Writer do
-  structure = Chem::Structure.build do
+  structure = Chem::Structure.build(guess_topology: false) do
     title "NaCl-O-NaCl"
     lattice 40, 20, 10
     atom :Cl, V[30, 15, 10]

@@ -12,7 +12,7 @@ describe Chem::VASP::Chgcar do
   end
 
   it "writes a CHGCAR" do
-    st = Chem::Structure.build do
+    st = Chem::Structure.build(guess_topology: false) do
       title "NaCl-O-NaCl"
       lattice 5, 10, 20
       atom :Cl, V[30, 15, 10]

@@ -39,7 +39,7 @@ module Chem::XYZ
     end
 
     private def parse_next : Structure
-      Structure.build do |builder|
+      Structure.build(@guess_topology) do |builder|
         n_atoms = read_int
         skip_line
         builder.title read_line.strip
