@@ -423,6 +423,7 @@ describe Chem::PDB::Writer do
   end
 
   it "writes CONECT records" do
+    structure = Chem::Structure.build(guess_topology: false) do
       residue "ICN" do
         atom :i, V[-1, 0, 0]
         atom :c, V[0, 0, 0]
