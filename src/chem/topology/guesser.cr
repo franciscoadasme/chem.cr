@@ -6,7 +6,6 @@ module Chem::Topology::Guesser
   MAX_CHAINS = 62 # chain id is alphanumeric: A-Z, a-z or 0-9
 
   def guess_residue_numbering_from_connectivity(structure : Structure) : Nil
-    raise ArgumentError.new "Structure has no bonds" if structure.bonds.empty?
     structure.each_chain do |chain|
       next unless chain.n_residues > 1
       next unless link_bond = chain.each_residue.compact_map do |residue|
@@ -38,7 +37,6 @@ module Chem::Topology::Guesser
   # long as there are less residue groups than the chain limit (62), otherwise all
   # residues are assigned to the same chain.
   def guess_topology_from_connectivity(structure : Structure) : Nil
-    raise ArgumentError.new "Structure has no bonds" if structure.bonds.empty?
     return unless old_chain = structure.delete(structure.chains.first)
 
     fragments = old_chain.fragments.map do |atoms|

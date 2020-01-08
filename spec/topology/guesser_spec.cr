@@ -97,13 +97,6 @@ describe Chem::Topology::Guesser do
       structure.residues.map(&.name).should eq ["PHE"] * 144
       structure.residues.map(&.number).should eq (1..144).to_a
     end
-
-    it "fails when structure has no bonds" do
-      expect_raises ArgumentError, "Structure has no bonds" do
-        structure = Chem::Structure.read "spec/data/poscar/5e5v--unwrapped.poscar"
-        Topology::Guesser.guess_topology_from_connectivity structure
-      end
-    end
   end
 
   describe "#guess_topology_from_templates" do
