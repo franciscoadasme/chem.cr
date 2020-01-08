@@ -158,7 +158,7 @@ module Chem::Topology::Guesser
     kind = Residue::Kind::Other
     prev_res, next_res = res.previous, res.next
 
-    if (other = prev_res || next_res) && (bond_t = Templates[other.name].link_bond)
+    if (other = prev_res || next_res) && (bond_t = Templates[other.name]?.try(&.link_bond))
       if prev_res && next_res && prev_res.kind == next_res.kind
         kind = other.kind if prev_res.bonded?(res, bond_t) && res.bonded?(next_res, bond_t)
       elsif prev_res
