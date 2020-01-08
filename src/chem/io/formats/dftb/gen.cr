@@ -56,7 +56,7 @@ module Chem::DFTB::Gen
       @io.skip_to_end
     end
 
-    private def parse_atom(builder : Topology::Builder) : Nil
+    private def parse_atom(builder : Structure::Builder) : Nil
       skip_spaces.skip(&.number?).skip_spaces
       builder.atom read_element, read_vector
       skip_line
@@ -82,13 +82,13 @@ module Chem::DFTB::Gen
       skip_line
     end
 
-    private def parse_lattice(builder : Topology::Builder) : Nil
+    private def parse_lattice(builder : Structure::Builder) : Nil
       skip_line
       builder.lattice read_vector, read_vector, read_vector
     end
 
     private def parse_next : Structure
-      Structure.build do |builder|
+      Structure.build(@guess_topology) do |builder|
         n_atoms = read_int
         parse_geometry_type
         parse_elements

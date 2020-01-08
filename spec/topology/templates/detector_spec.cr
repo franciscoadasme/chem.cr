@@ -28,9 +28,7 @@ describe Chem::Topology::Templates::Detector do
          165 => "HXT"},
       ],
     }
-
-    path = "spec/data/poscar/5e61--unwrapped.poscar"
-    residue_matches_helper(path, ["ALA", "GLY", "SER"]).should eq expected
+    residue_matches_helper("5e61--unwrapped.poscar", ["ALA", "GLY", "SER"]).should eq expected
   end
 
   it "detects protein residues in a dipeptide" do
@@ -46,9 +44,7 @@ describe Chem::Topology::Templates::Detector do
          30 => "OXT", 25 => "HXT"},
       ],
     }
-
-    path = "spec/data/poscar/AlaIle--unwrapped.poscar"
-    residue_matches_helper(path, ["ALA", "ILE"]).should eq expected
+    residue_matches_helper("AlaIle--unwrapped.poscar", ["ALA", "ILE"]).should eq expected
   end
 
   it "detects charged terminal protein residues" do
@@ -65,9 +61,7 @@ describe Chem::Topology::Templates::Detector do
          170 => "HG", 168 => "HB1", 169 => "HB2", 65 => "C", 218 => "O", 220 => "OXT"},
       ],
     }
-
-    path = "spec/data/poscar/5e5v--unwrapped.poscar"
-    residue_matches_helper(path, ["ASN", "SER"]).should eq expected
+    residue_matches_helper("5e5v--unwrapped.poscar", ["ASN", "SER"]).should eq expected
   end
 
   it "detects waters" do
@@ -82,16 +76,12 @@ describe Chem::Topology::Templates::Detector do
         {227 => "O", 183 => "H1", 184 => "H2"},
       ],
     }
-
-    path = "spec/data/poscar/5e5v--unwrapped.poscar"
-    residue_matches_helper(path, ["HOH"]).should eq expected
+    residue_matches_helper("5e5v--unwrapped.poscar", ["HOH"]).should eq expected
   end
 end
 
 def residue_matches_helper(path, names)
-  structure = Chem::Structure.read path
-  builder = Chem::Topology::Builder.new structure
-  builder.guess_bonds_from_geometry
+  structure = load_file path, topology: :bonds
 
   templates = names.map { |name| Chem::Topology::Templates[name] }
   detector = Chem::Topology::Templates::Detector.new templates

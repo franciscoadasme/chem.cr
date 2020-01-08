@@ -18,9 +18,18 @@ alias PeriodicTable = Chem::PeriodicTable
 alias Q = Chem::Spatial::Quaternion
 alias S = Chem::Spatial::Size
 alias Structure = Chem::Structure
+alias Topology = Chem::Topology
 alias Tf = Chem::Spatial::AffineTransform
 alias V = Chem::Spatial::Vector
 alias Vector = Chem::Spatial::Vector
+
+enum TopologyLevel
+  None
+  Templates
+  Bonds
+  Guess
+  Renumber
+end
 
 module Spec
   struct CloseExpectation
@@ -90,7 +99,7 @@ end
 
 # TODO add StructureBuilder?
 def fake_structure(*, include_bonds = false)
-  st = Chem::Structure.build do
+  Chem::Structure.build(guess_topology: include_bonds) do
     title "Asp-Phe Ser"
 
     chain do
@@ -131,9 +140,18 @@ def fake_structure(*, include_bonds = false)
       end
     end
   end
+end
 
-  Chem::Topology.guess_topology of: st if include_bonds
-
+def load_file(path : String, topology level : TopologyLevel? = nil) : Structure
+  path = File.join File.extname(path)[1..], path unless File.extname(path).blank?
+  path = File.join "spec", "data", path
+  st = Chem::Structure.read path, guess_topology: level.nil?
+  if level
+    Topology::Guesser.guess_topology_from_templates st if level.templates?
+    Topology::ConnectivityRadar.new(st).detect_bonds st if level > TopologyLevel::Templates
+    Topology::Guesser.guess_topology_from_connectivity st if level > TopologyLevel::Bonds
+    Topology::Guesser.guess_residue_numbering_from_connectivity st if level > TopologyLevel::Guess
+  end
   st
 end
 

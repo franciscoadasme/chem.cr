@@ -45,9 +45,20 @@ module Chem
     delegate dssp, to: @secondary_structure
 
     def bonded?(other : self) : Bool
+      return false if other.same?(self)
       each_atom.any? do |a1|
         other.each_atom.any? { |a2| a1.bonded? to: a2 }
       end
+    end
+
+    def bonded?(other : self, lhs : String, rhs : String) : Bool
+      return false if other.same?(self)
+      return false unless (a = self[lhs]?) && (b = other[rhs]?)
+      a.bonded? b
+    end
+
+    def bonded?(other : self, bond_t : Topology::BondType) : Bool
+      bonded? other, bond_t.first, bond_t.second
     end
 
     def chain=(new_chain : Chain) : Chain

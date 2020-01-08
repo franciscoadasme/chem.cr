@@ -1,4 +1,4 @@
-module Chem::Topology::Templates
+module Chem::Topology
   class AtomType
     getter element : Element
     getter formal_charge : Int32
@@ -104,7 +104,7 @@ module Chem::Topology::Templates
     end
 
     def self.build(kind : Residue::Kind = :other) : self
-      builder = Builder.new kind
+      builder = Templates::Builder.new kind
       with builder yield builder
       builder.build
     end

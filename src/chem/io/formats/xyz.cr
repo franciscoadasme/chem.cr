@@ -32,14 +32,14 @@ module Chem::XYZ
       (n_atoms + 2).times { skip_line }
     end
 
-    private def parse_atom(builder : Topology::Builder) : Nil
+    private def parse_atom(builder : Structure::Builder) : Nil
       skip_whitespace
       builder.atom PeriodicTable[scan(&.letter?)], read_vector
       skip_line
     end
 
     private def parse_next : Structure
-      Structure.build do |builder|
+      Structure.build(@guess_topology) do |builder|
         n_atoms = read_int
         skip_line
         builder.title read_line.strip

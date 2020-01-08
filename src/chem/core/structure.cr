@@ -15,25 +15,27 @@ module Chem
 
     delegate :[], :[]?, to: @chain_table
 
-    def self.build(&block) : self
-      builder = Topology::Builder.new
+    def self.build(guess_topology : Bool = true, &) : self
+      builder = Structure::Builder.new guess_topology: guess_topology
       with builder yield builder
       builder.build
     end
 
-    def self.read(path : Path | String) : self
+    def self.read(path : Path | String, guess_topology : Bool = true) : self
       format = IO::FileFormat.from_ext File.extname(path)
-      read path, format
+      read path, format, guess_topology
     end
 
-    def self.read(input : ::IO | Path | String, format : IO::FileFormat | String) : self
+    def self.read(input : ::IO | Path | String,
+                  format : IO::FileFormat | String,
+                  guess_topology : Bool = true) : self
       format = IO::FileFormat.parse format if format.is_a?(String)
       {% begin %}
         case format
         {% for parser in Parser.subclasses.select(&.annotation(IO::FileType)) %}
           {% format = parser.annotation(IO::FileType)[:format].id.underscore %}
           when .{{format.id}}?
-            from_{{format.id}} input
+            from_{{format.id}} input, guess_topology: guess_topology
         {% end %}
         else
           raise "No structure parser associated with file format #{format}"

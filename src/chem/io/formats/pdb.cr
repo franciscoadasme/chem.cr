@@ -245,8 +245,9 @@ module Chem::PDB
     def initialize(input : ::IO | Path | String,
                    @alt_loc : Char? = nil,
                    chains : Enumerable(Char)? = nil,
+                   guess_topology : Bool = true,
                    @het : Bool = true)
-      super input
+      super input, guess_topology
       @chains = chains.try &.to_set
       parse_header
     end
@@ -299,13 +300,13 @@ module Chem::PDB
       end
     end
 
-    private def assign_bonds(builder : Topology::Builder) : Nil
+    private def assign_bonds(builder : Structure::Builder) : Nil
       @pdb_bonds.each do |(i, j), order|
         builder.bond serial_to_index(i), serial_to_index(j), order
       end
     end
 
-    private def assign_secondary_structure(builder : Topology::Builder) : Nil
+    private def assign_secondary_structure(builder : Structure::Builder) : Nil
       @ss_elements.each do |ele|
         builder.secondary_structure ele.start, ele.end, ele.type
       end
@@ -319,7 +320,7 @@ module Chem::PDB
       @offsets ||= [] of Tuple(Int32, Int32)
     end
 
-    private def parse_atom(builder : Topology::Builder) : Nil
+    private def parse_atom(builder : Structure::Builder) : Nil
       return if (chains = @chains) && !chains.includes?(read(21))
       return if @alt_loc && (alt_loc = read?(16)) && alt_loc != @alt_loc
 
@@ -429,7 +430,7 @@ module Chem::PDB
 
     private def parse_model : Structure
       @serial = 0
-      Structure.build do |builder|
+      Structure.build(@guess_topology) do |builder|
         title @pdb_title
         lattice @pdb_lattice
         expt @pdb_expt
