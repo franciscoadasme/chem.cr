@@ -33,6 +33,7 @@ module Chem
                    @number : Int32,
                    @insertion_code : Char?,
                    @chain : Chain)
+      assign_kind_from_templates
       @chain << self
     end
 
@@ -105,6 +106,12 @@ module Chem
 
     def n_atoms : Int32
       @atoms.size
+    end
+
+    def name=(str : String) : String
+      @name = str
+      assign_kind_from_templates
+      str
     end
 
     def omega : Float64
@@ -185,6 +192,10 @@ module Chem
         @kind == Kind::{{member}}
       end
     {% end %}
+
+    private def assign_kind_from_templates : Nil
+      @kind = Topology::Templates[@name]?.try(&.kind) || Residue::Kind::Other
+    end
 
     protected def reset_cache : Nil
       @atom_table.clear

@@ -120,13 +120,7 @@ module Chem
     end
 
     def residue(name : String, number : Int32, inscode : Char? = nil) : Residue
-      @residue = chain[number, inscode]? || begin
-        residue = Residue.new(name, number, inscode, chain)
-        if res_t = Topology::Templates[name]?
-          residue.kind = Residue::Kind.from_value res_t.kind.to_i
-        end
-        residue
-      end
+      @residue = chain[number, inscode]? || Residue.new(name, number, inscode, chain)
     end
 
     def residue(name : String, number : Int32, inscode : Char? = nil, & : self ->) : Nil
