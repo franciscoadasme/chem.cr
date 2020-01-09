@@ -1,6 +1,16 @@
 require "../spec_helper"
 
 describe Chem::Residue do
+  describe ".new" do
+    it "sets kind from templates" do
+      structure = Chem::Structure.new
+      chain = Chem::Chain.new 'A', structure
+      Chem::Residue.new("TYR", 1, chain).kind.protein?.should be_true
+      Chem::Residue.new("HOH", 2, chain).kind.solvent?.should be_true
+      Chem::Residue.new("ULK", 2, chain).kind.other?.should be_true
+    end
+  end
+
   describe "#bonded?" do
     it "tells if two residues are bonded through any pair of atoms" do
       structure = fake_structure include_bonds: true
@@ -42,6 +52,19 @@ describe Chem::Residue do
 
     it "returns false when residue is at the start" do
       load_file("cis-trans.pdb", topology: :templates).residues[0].cis?.should be_false
+    end
+  end
+
+  describe "#name=" do
+    it "sets kind from templates" do
+      structure = Structure.new
+      chain = Chain.new 'A', structure
+      residue = Chem::Residue.new("TYR", 1, chain)
+      residue.kind.protein?.should be_true
+      residue.name = "HOH"
+      residue.kind.solvent?.should be_true
+      residue.name = "ULK"
+      residue.kind.other?.should be_true
     end
   end
 

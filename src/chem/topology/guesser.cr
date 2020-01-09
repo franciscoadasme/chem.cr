@@ -67,7 +67,6 @@ module Chem::Topology::Guesser
     unknown_residues = [] of Residue
     structure.each_residue do |residue|
       if res_t = Templates[residue.name]?
-        residue.kind = res_t.kind
         assign_bonds residue, res_t
         assign_formal_charges residue, res_t
       else
