@@ -32,9 +32,9 @@ module Chem::Spatial
                            dim : Dimensions,
                            bounds : Bounds? = nil) : self
       grid = new dim, (bounds || structure.coords.bounds)
-      kdtree = KDTree.new structure
+      kdtree = KDTree.new structure, periodic: structure.periodic?
       grid.map_with_coords! do |_, vec|
-        Spatial.distance vec, kdtree.nearest(vec).coords
+        Math.sqrt kdtree.nearest_with_distance(vec)[1]
       end
     end
 
