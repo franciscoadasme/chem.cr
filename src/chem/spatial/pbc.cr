@@ -20,7 +20,7 @@ module Chem::Spatial::PBC
   def each_adjacent_image(atoms : AtomCollection,
                           lattice : Lattice,
                           &block : Atom, Vector ->)
-    offset = (lattice.center - atoms.coords.center).to_fractional lattice
+    offset = (lattice.bounds.center - atoms.coords.center).to_fractional lattice
     atoms.each_atom do |atom|
       fcoords = atom.coords.to_fractional lattice                     # convert to fractional coords
       w_fcoords = fcoords - fcoords.floor                             # wrap to primary unit cell
@@ -46,7 +46,7 @@ module Chem::Spatial::PBC
     raise Error.new "Radius cannot be negative" if radius < 0
 
     padding = Vector[radius / lattice.a, radius / lattice.b, radius / lattice.c].clamp(..0.5)
-    offset = (lattice.center - atoms.coords.center).to_fractional lattice
+    offset = (lattice.bounds.center - atoms.coords.center).to_fractional lattice
     atoms.each_atom do |atom|
       fcoords = atom.coords.to_fractional lattice                     # convert to fractional coords
       w_fcoords = fcoords - fcoords.floor                             # wrap to primary unit cell

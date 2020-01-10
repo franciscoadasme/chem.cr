@@ -30,10 +30,6 @@ module Chem
       value
     end
 
-    def center : Spatial::Vector
-      (@basis.i + @basis.j + @basis.k) * 0.5
-    end
-
     def cubic? : Bool
       a == b && b == c && cuboid?
     end
