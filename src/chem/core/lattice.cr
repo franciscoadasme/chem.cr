@@ -12,17 +12,17 @@ module Chem
     end
 
     def a=(value : Float64) : Float64
-      @basis = Basis.new i.resize(value), j, k
+      @basis = Spatial::Basis.new i.resize(value), j, k
       value
     end
 
     def b=(value : Float64) : Float64
-      @basis = Basis.new i, j.resize(value), k
+      @basis = Spatial::Basis.new i, j.resize(value), k
       value
     end
 
     def c=(value : Float64) : Float64
-      @basis = Basis.new i, j, k.resize(value)
+      @basis = Spatial::Basis.new i, j, k.resize(value)
       value
     end
 
@@ -43,17 +43,17 @@ module Chem
     end
 
     def i=(vec : Spatial::Vector) : Spatial::Vector
-      @basis = Basis.new vec, j, k
+      @basis = Spatial::Basis.new vec, j, k
       vec
     end
 
     def j=(vec : Spatial::Vector) : Spatial::Vector
-      @basis = Basis.new i, vec, k
+      @basis = Spatial::Basis.new i, vec, k
       vec
     end
 
     def k=(vec : Spatial::Vector) : Spatial::Vector
-      @basis = Basis.new i, j, vec
+      @basis = Spatial::Basis.new i, j, vec
       vec
     end
 
