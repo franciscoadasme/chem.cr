@@ -17,6 +17,13 @@ describe Chem::Lattice do
     end
   end
 
+  describe "#bounds" do
+    it "returns the bounds" do
+      Lattice.new(S[1, 2, 3]).bounds.should eq Bounds[1, 2, 3]
+      Lattice.new(S[5, 1, 5], 90, 120, 90).bounds.should eq Bounds.new(S[5, 1, 5], 90, 120, 90)
+    end
+  end
+
   describe "#c=" do
     it "sets the size of the third basis vector" do
       lattice = Lattice.new(S[10, 20, 30])

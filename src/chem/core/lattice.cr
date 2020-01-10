@@ -21,6 +21,10 @@ module Chem
       value
     end
 
+    def bounds : Spatial::Bounds
+      Spatial::Bounds.new Spatial::Vector.origin, @basis
+    end
+
     def c=(value : Float64) : Float64
       @basis = Spatial::Basis.new i, j, k.resize(value)
       value
