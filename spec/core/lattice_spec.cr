@@ -55,12 +55,4 @@ describe Chem::Lattice do
       lattice.basis.should eq Basis.new(V[10, 0, 0], V[0, 20, 0], V[1, 2, 3])
     end
   end
-
-  describe "#volume" do
-    it "returns lattice's volume" do
-      Lattice.new(S[10, 20, 30]).volume.should eq 6_000
-      Lattice.new(S[5, 5, 8], 90, 90, 120).volume.should be_close 173.2050807569, 1e-10
-      Lattice.new(S[1, 2, 3], beta: 101.2).volume.should be_close 5.8857309321, 1e-10
-    end
-  end
 end

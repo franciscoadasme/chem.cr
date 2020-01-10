@@ -72,9 +72,5 @@ module Chem
     def triclinic? : Bool
       !cuboid? && !monoclinic? && !hexagonal?
     end
-
-    def volume : Float64
-      @basis.i.dot @basis.j.cross(@basis.k)
-    end
   end
 end
