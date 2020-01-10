@@ -129,7 +129,7 @@ module Chem::Spatial
     end
 
     def wrap(lattice : Lattice, around center : Vector? = nil) : self
-      center ||= lattice.center
+      center ||= lattice.bounds.center
 
       if lattice.cuboid?
         vecs = {lattice.i, lattice.j, lattice.k}

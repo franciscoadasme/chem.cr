@@ -83,6 +83,8 @@ describe Chem::Spatial::Bounds do
   describe "#volume" do
     it "returns the volume enclosed by the bounds" do
       Bounds[10, 20, 30].volume.should eq 6_000
+      Bounds.new(S[5, 5, 8], 90, 90, 120).volume.should be_close 173.2050807569, 1e-10
+      Bounds.new(S[1, 2, 3], beta: 101.2).volume.should be_close 5.8857309321, 1e-10
       Bounds.new(V[1, 2, 3], S[6, 3, 23]).volume.should eq 414
     end
   end

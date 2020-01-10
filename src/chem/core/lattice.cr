@@ -21,13 +21,13 @@ module Chem
       value
     end
 
+    def bounds : Spatial::Bounds
+      Spatial::Bounds.new Spatial::Vector.origin, @basis
+    end
+
     def c=(value : Float64) : Float64
       @basis = Spatial::Basis.new i, j, k.resize(value)
       value
-    end
-
-    def center : Spatial::Vector
-      (@basis.i + @basis.j + @basis.k) * 0.5
     end
 
     def cubic? : Bool
@@ -71,10 +71,6 @@ module Chem
 
     def triclinic? : Bool
       !cuboid? && !monoclinic? && !hexagonal?
-    end
-
-    def volume : Float64
-      @basis.i.dot @basis.j.cross(@basis.k)
     end
   end
 end
