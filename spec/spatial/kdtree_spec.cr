@@ -99,4 +99,64 @@ describe Chem::Spatial::KDTree do
       end
     end
   end
+
+  describe "#nearest_with_distance" do
+    it "returns closest neighbor + distance to a point" do
+      structure = Structure.build do
+        lattice 2, 2, 2
+        atom :C, V[1, 1, 1]
+        atom :H, V[1.5, 0.5, 0.5]
+      end
+      c, h = structure.atoms
+
+      kdtree = KDTree.new structure, periodic: true
+      kdtree.nearest_with_distance(V[0, 0, 0]).should eq({h, 0.75})
+      kdtree.nearest_with_distance(V[1, 1, 1]).should eq({c, 0})
+      kdtree.nearest_with_distance(V[2, 0, 0]).should eq({h, 0.75})
+    end
+
+    it "returns closest neighbor + distance to an atom" do
+      structure = Structure.build do
+        lattice 2, 2, 2
+        atom :C, V[1, 1, 1]
+        atom :H, V[1.5, 0.5, 0.5]
+      end
+      c, h = structure.atoms
+
+      kdtree = KDTree.new structure, periodic: true
+      kdtree.nearest_with_distance(c).should eq({h, 0.75})
+      kdtree.nearest_with_distance(h).should eq({c, 0.75})
+    end
+  end
+
+  describe "#neighbors_with_distance" do
+    it "returns N closest neighbors + distances to a point" do
+      structure = Structure.build do
+        lattice 2, 2, 2
+        atom :C, V[1, 1, 1]
+        atom :H, V[1.5, 0.5, 0.5]
+      end
+      c, h = structure.atoms
+
+      kdtree = KDTree.new structure, periodic: true
+      kdtree.neighbors_with_distance(V[0, 0, 0], n: 2).should eq [{h, 0.75}, {h, 2.75}]
+      kdtree.neighbors_with_distance(V[1, 1, 1], n: 2).should eq [{c, 0}, {h, 0.75}]
+      kdtree.neighbors_with_distance(V[2, 0, 0], n: 2).should eq [{h, 0.75}, {c, 3.0}]
+      neighbors = kdtree.neighbors_with_distance(V[0.141, 1.503, 1.801], n: 2)
+      neighbors.map(&.[0]).should eq [c, h]
+      neighbors.map(&.[1]).should be_close [1.633, 1.893], 1e-3
+    end
+
+    it "returns N closest neighbors + distances to an atom" do
+      structure = Structure.build do
+        lattice 2, 2, 2
+        atom :C, V[1, 1, 1]
+        atom :H, V[1.5, 0.5, 0.5]
+      end
+      c, h = structure.atoms
+
+      kdtree = KDTree.new structure, periodic: true
+      kdtree.neighbors_with_distance(c, n: 2).should eq [{h, 0.75}, {h, 2.75}]
+    end
+  end
 end
