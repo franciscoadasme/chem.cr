@@ -87,6 +87,10 @@ module Chem::Spatial
       neighbors(coords, count: 1).first
     end
 
+    def nearest_with_distance(atom : Atom | Vector) : Tuple(Atom, Float64)
+      neighbors_with_distance(atom, n: 1).first
+    end
+
     def neighbors(of atom : Atom, *, count : Int) : Array(Atom)
       neighbors(atom.coords, count: count + 1).reject! &.==(atom)
     end
@@ -107,6 +111,16 @@ module Chem::Spatial
         neighbors << {atom, distance}
       end
       neighbors.sort_by!(&.[1]).map &.[0]
+    end
+
+    def neighbors_with_distance(atom : Atom, *, n : Int) : Array(Tuple(Atom, Float64))
+      neighbors_with_distance(atom.coords, n: n + 1).reject! &.[0].==(atom)
+    end
+
+    def neighbors_with_distance(vec : Vector, *, n : Int) : Array(Tuple(Atom, Float64))
+      neighbors = Array(Tuple(Atom, Float64)).new n
+      search @root, vec, n, neighbors
+      neighbors
     end
 
     private def build_tree(atoms : Array(Tuple(Vector, Atom)),
