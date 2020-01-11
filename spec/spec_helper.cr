@@ -145,14 +145,17 @@ end
 def load_file(path : String, topology level : TopologyLevel? = nil) : Structure
   path = File.join File.extname(path)[1..], path unless File.extname(path).blank?
   path = File.join "spec", "data", path
-  st = Chem::Structure.read path, guess_topology: level.nil?
+  structure = Chem::Structure.read path, guess_topology: level.nil?
   if level
-    Topology::Guesser.guess_topology_from_templates st if level.templates?
-    Topology::ConnectivityRadar.new(st).detect_bonds st if level > TopologyLevel::Templates
-    Topology::Guesser.guess_topology_from_connectivity st if level > TopologyLevel::Bonds
-    Topology::Guesser.guess_residue_numbering_from_connectivity st if level > TopologyLevel::Guess
+    Topology::Perception.guess_topology structure, use_templates: true if level.templates?
+    if level > TopologyLevel::Templates
+      Topology::Perception.guess_bonds structure
+      Topology::Perception.guess_formal_charges structure if structure.has_hydrogens?
+    end
+    Topology::Perception.guess_residues structure if level > TopologyLevel::Bonds
+    Topology::Perception.renumber_by_connectivity structure if level > TopologyLevel::Guess
   end
-  st
+  structure
 end
 
 def load_hlxparams_data
