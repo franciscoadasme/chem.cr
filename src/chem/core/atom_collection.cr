@@ -45,6 +45,10 @@ module Chem
       fragments
     end
 
+    def has_hydrogens? : Bool
+      each_atom.any?(&.element.hydrogen?)
+    end
+
     private def collect_connected_atoms(atom : Atom,
                                         fragment : Set(Atom),
                                         visited : Set(Atom)) : Nil
