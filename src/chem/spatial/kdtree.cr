@@ -33,19 +33,6 @@ module Chem::Spatial
 
     @root : Node
 
-    def initialize(atoms : AtomCollection)
-      initialize atoms.each_atom.map { |atom| {atom.coords, atom} }.to_a
-    end
-
-    def initialize(atoms : AtomCollection, lattice : Lattice, **options)
-      ary = [] of Tuple(Vector, Atom)
-      atoms.each_atom { |atom| ary << {atom.coords, atom} }
-      PBC.each_adjacent_image(atoms, lattice, **options) do |atom, coords|
-        ary << {coords, atom}
-      end
-      initialize ary
-    end
-
     private def initialize(atoms : Array(Tuple(Vector, Atom)))
       if root = build_tree atoms, 0...atoms.size
         @root = root
@@ -54,13 +41,28 @@ module Chem::Spatial
       end
     end
 
-    def initialize(structure : Structure, periodic : Bool = false, **options)
+    def self.new(structure : Structure, **options) : self
+      new structure, structure.periodic?, **options
+    end
+
+    def self.new(structure : Structure, periodic : Bool, **options)
       if periodic
         raise NotPeriodicError.new unless lattice = structure.lattice
-        initialize structure, lattice, **options
+        new structure, lattice, **options
       else
-        initialize structure
+        new structure.each_atom.map { |atom| {atom.coords, atom} }.to_a
       end
+    end
+
+    def self.new(atoms : AtomCollection, lattice : Lattice? = nil, **options)
+      ary = Array(Tuple(Vector, Atom)).new atoms.n_atoms
+      atoms.each_atom { |atom| ary << {atom.coords, atom} }
+      if lattice
+        PBC.each_adjacent_image(atoms, lattice, **options) do |atom, coords|
+          ary << {coords, atom}
+        end
+      end
+      new ary
     end
 
     def each_neighbor(of atom : Atom,

@@ -4,7 +4,7 @@ module Chem::Topology
 
     def initialize(structure : Structure, bond_orders : Bool? = nil)
       @bond_orders = bond_orders || structure.each_atom.any?(&.element.hydrogen?)
-      @kdtree = Spatial::KDTree.new structure, structure.periodic?, radius: MAX_COVALENT_RADIUS
+      @kdtree = Spatial::KDTree.new structure, radius: MAX_COVALENT_RADIUS
     end
 
     def detect_bonds(atoms : AtomCollection) : Nil
