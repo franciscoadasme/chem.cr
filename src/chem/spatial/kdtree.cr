@@ -41,7 +41,11 @@ module Chem::Spatial
       end
     end
 
-    def self.new(structure : Structure, periodic : Bool = false, **options)
+    def self.new(structure : Structure, **options) : self
+      new structure, structure.periodic?, **options
+    end
+
+    def self.new(structure : Structure, periodic : Bool, **options)
       if periodic
         raise NotPeriodicError.new unless lattice = structure.lattice
         new structure, lattice, **options

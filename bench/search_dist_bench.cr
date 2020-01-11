@@ -7,7 +7,7 @@ alias Vector = Chem::Spatial::Vector
 structure = Chem::Structure.read "spec/data/pdb/1h1s.pdb"
 atoms = structure.atoms
 atoms_as_a = atoms.to_a
-tree = KDTree.new structure
+tree = KDTree.new structure, periodic: false
 
 cr_data = Hash.zip (0...atoms.size).to_a.map(&.to_f), atoms.map(&.coords.to_a)
 cr_tree = Crystalline::KDTree(Float64).new cr_data
