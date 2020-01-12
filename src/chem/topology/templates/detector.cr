@@ -31,35 +31,30 @@ module Chem::Topology::Templates
       root "N"
     end
 
-    def initialize(@templates : Array(ResidueType))
+    @atoms : Array(Atom)
+    @templates : Array(ResidueType)
+
+    def initialize(@atoms : Indexable(Atom), templates : Array(ResidueType)? = nil)
       @atom_table = {} of Atom | AtomType => String
+      @templates = templates || Templates.all
       @mapped_atoms = Set(Atom).new
+      compute_atom_descriptions @atoms
       compute_atom_descriptions @templates
       compute_atom_descriptions [CTER_T, NTER_T, CHARGED_CTER_T, CHARGED_NTER_T]
     end
 
-    def each_match(atoms : Enumerable(Atom),
-                   & : ResidueType, Hash(Atom, String) ->) : Nil
-      reset_cache
-      compute_atom_descriptions atoms
-
+    def each_match(& : ResidueType, Hash(Atom, String) ->) : Nil
       atom_map = {} of Atom => String
-      atoms.each do |atom|
+      @atoms.each do |atom|
         next if mapped?(atom, atom_map)
         @templates.each do |res_t|
-          next if (atoms.size - @mapped_atoms.size) < res_t.n_atoms || res_t.root.nil?
+          next if (@atoms.size - @mapped_atoms.size) < res_t.n_atoms || res_t.root.nil?
           if match?(res_t, atom, atom_map)
             yield res_t, atom_map
             atom_map.each_key { |atom| @mapped_atoms << atom }
           end
           atom_map.clear
         end
-      end
-    end
-
-    def each_match(structure : Structure, & : ResidueType, Hash(Atom, String) ->) : Nil
-      each_match structure.atoms do |res_t, atom_map|
-        yield res_t, atom_map
       end
     end
 
@@ -125,11 +120,6 @@ module Chem::Topology::Templates
 
     private def match?(atom_t : AtomType, atom : Atom) : Bool
       @atom_table[atom] == @atom_table[atom_t]
-    end
-
-    private def reset_cache : Nil
-      @atom_table.reject! { |k, _| k.is_a? Atom }
-      @mapped_atoms.clear
     end
 
     private def search(res_t : ResidueType,

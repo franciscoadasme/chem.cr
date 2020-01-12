@@ -203,9 +203,8 @@ module Chem::Topology::Perception
   end
 
   private def guess_residues(chain : Chain, atoms : Array(Atom)) : Array(Residue)
-    detector = Templates::Detector.new Templates.all
     residues = [] of Residue
-    detector.each_match(atoms.dup) do |res_t, atom_map|
+    Templates::Detector.new(atoms.dup).each_match do |res_t, atom_map|
       names = res_t.atom_names
 
       residues << (residue = Residue.new res_t.name, residues.size + 1, chain)

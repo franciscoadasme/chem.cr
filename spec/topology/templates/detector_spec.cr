@@ -81,13 +81,13 @@ describe Chem::Topology::Templates::Detector do
 end
 
 def residue_matches_helper(path, names)
-  structure = load_file path, topology: :bonds
-
   templates = names.map { |name| Chem::Topology::Templates[name] }
-  detector = Chem::Topology::Templates::Detector.new templates
+
+  structure = load_file path, topology: :bonds
+  detector = Chem::Topology::Templates::Detector.new structure.atoms.to_a, templates
 
   res_idxs = {} of String => Array(Hash(Int32, String))
-  detector.each_match(structure) do |res_t, idxs|
+  detector.each_match do |res_t, idxs|
     res_idxs[res_t.name] ||= [] of Hash(Int32, String)
     res_idxs[res_t.name] << idxs.transform_keys &.serial
   end
