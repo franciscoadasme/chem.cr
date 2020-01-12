@@ -3,25 +3,6 @@ require "../spec_helper"
 alias Templates = Chem::Topology::Templates
 alias TemplateError = Chem::Topology::Templates::Error
 
-describe Chem::Topology::AtomType do
-  describe "#to_s" do
-    it "returns atom name" do
-      Topology::AtomType.new("CA").to_s.should eq "CA"
-    end
-
-    it "returns atom name plus charge sign when charge is not zero" do
-      Topology::AtomType.new("NZ", formal_charge: 1).to_s.should eq "NZ+"
-      Topology::AtomType.new("OE1", formal_charge: -1).to_s.should eq "OE1-"
-      Topology::AtomType.new("NA", formal_charge: 2).to_s.should eq "NA+2"
-      Topology::AtomType.new("UK", formal_charge: -5).to_s.should eq "UK-5"
-    end
-
-    it "returns atom name plus valency when its not nominal" do
-      Topology::AtomType.new("SG", valency: 1).to_s.should eq "SG(1)"
-    end
-  end
-end
-
 describe Chem::Topology::Templates::Builder do
   describe ".build" do
     bb_names = ["N", "H", "CA", "HA", "C", "O"]
