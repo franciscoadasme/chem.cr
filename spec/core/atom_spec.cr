@@ -1,6 +1,26 @@
 require "../spec_helper"
 
 describe Chem::Atom do
+  describe "#each_bonded_atom" do
+    structure = Structure.build do
+      atom :I, V[-1, 0, 0]
+      atom :C, V[0, 0, 0]
+      atom :N, V[1, 0, 0]
+      bond "I1", "C1"
+      bond "C1", "N1", order: 3
+    end
+
+    it "yields bonded atoms" do
+      ary = [] of Atom
+      structure.atoms[1].each_bonded_atom { |atom| ary << atom }
+      ary.map(&.name).should eq ["I1", "N1"]
+    end
+
+    it "returns an iterator of bonded atoms" do
+      structure.atoms[1].each_bonded_atom.map(&.name).to_a.should eq ["I1", "N1"]
+    end
+  end
+
   describe "#missing_valency" do
     it "returns number of bonds to reach closest nominal valency (no bonds)" do
       structure = Structure.build(guess_topology: false) do
