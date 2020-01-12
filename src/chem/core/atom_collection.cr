@@ -20,14 +20,20 @@ module Chem
       Spatial::CoordinatesProxy.new self
     end
 
-    def each_fragment(&block : AtomView ->) : Nil
-      fragment = Set(Atom).new
-      visited = Set(Atom).new
+    def each_fragment(& : AtomView ->) : Nil
+      visited = Set(Atom).new n_atoms
       each_atom do |atom|
-        next if visited.includes? atom
-        collect_connected_atoms atom, fragment, visited
-        yield AtomView.new(fragment.to_a)
-        fragment.clear
+        next if visited.includes?(atom)
+        visited << atom
+        fragment = [atom]
+        fragment.each do |a|
+          a.each_bonded_atom do |b|
+            next if visited.includes?(b)
+            fragment << b
+            visited << b
+          end
+        end
+        yield AtomView.new(fragment.sort_by(&.serial))
       end
     end
 
@@ -43,16 +49,6 @@ module Chem
       fragments = [] of AtomView
       each_fragment { |fragment| fragments << fragment }
       fragments
-    end
-
-    private def collect_connected_atoms(atom : Atom,
-                                        fragment : Set(Atom),
-                                        visited : Set(Atom)) : Nil
-      fragment << atom
-      visited << atom
-      atom.bonded_atoms.each do |other|
-        collect_connected_atoms other, fragment, visited unless visited.includes? other
-      end
     end
   end
 end
