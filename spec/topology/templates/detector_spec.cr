@@ -78,6 +78,39 @@ describe Chem::Topology::Templates::Detector do
     }
     residue_matches_helper("5e5v--unwrapped.poscar", ["HOH"]).should eq expected
   end
+
+  describe "#matches" do
+    it "returns found matches" do
+      structure = load_file "waters.xyz", topology: :bonds
+      matches = Topology::Templates::Detector.new(structure.atoms.to_a).matches
+      matches.should eq [
+        {
+          Topology::Templates["HOH"],
+          {
+            structure.atoms[0] => "O",
+            structure.atoms[1] => "H1",
+            structure.atoms[2] => "H2",
+          },
+        },
+        {
+          Topology::Templates["HOH"],
+          {
+            structure.atoms[3] => "O",
+            structure.atoms[4] => "H1",
+            structure.atoms[5] => "H2",
+          },
+        },
+        {
+          Topology::Templates["HOH"],
+          {
+            structure.atoms[6] => "O",
+            structure.atoms[7] => "H1",
+            structure.atoms[8] => "H2",
+          },
+        },
+      ]
+    end
+  end
 end
 
 def residue_matches_helper(path, names)

@@ -1,5 +1,7 @@
 module Chem::Topology::Templates
   class Detector
+    alias MatchData = Tuple(ResidueType, Hash(Atom, String))
+
     CTER_T = ResidueType.build do
       description "C-ter"
       name "CTER"
@@ -56,6 +58,12 @@ module Chem::Topology::Templates
           atom_map.clear
         end
       end
+    end
+
+    def matches : Array(MatchData)
+      matches = [] of MatchData
+      each_match { |res_t, atom_map| matches << {res_t, atom_map.dup} }
+      matches
     end
 
     private def compute_atom_descriptions(atoms : Enumerable(Atom))
