@@ -33,7 +33,7 @@ module Chem
             visited << b
           end
         end
-        yield AtomView.new(fragment)
+        yield AtomView.new(fragment.sort_by(&.serial))
       end
     end
 
