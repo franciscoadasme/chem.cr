@@ -111,8 +111,8 @@ module Chem::Topology::Guesser
   private def guess_previous_residue(residue : Residue, link_bond : BondType) : Residue?
     prev_res = nil
     if atom = residue[link_bond.second]?
-      prev_res = atom.bonded_atoms.find(&.name.==(link_bond.first)).try &.residue
-      prev_res ||= atom.bonded_atoms.find do |atom|
+      prev_res = atom.each_bonded_atom.find(&.name.==(link_bond.first)).try &.residue
+      prev_res ||= atom.each_bonded_atom.find do |atom|
         element = PeriodicTable[atom_name: link_bond.first]
         atom.element == element && atom.residue != residue
       end.try &.residue
@@ -121,7 +121,7 @@ module Chem::Topology::Guesser
                   PeriodicTable[atom_name: link_bond.second]}
       residue.each_atom do |atom|
         next unless atom.element == elements[1]
-        prev_res = atom.bonded_atoms.find do |atom|
+        prev_res = atom.each_bonded_atom.find do |atom|
           atom.element == elements[0] && atom.residue != residue
         end.try &.residue
         break if prev_res

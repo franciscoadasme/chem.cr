@@ -93,7 +93,7 @@ module Chem::Topology::Templates
                              atom_map : Hash(Atom, String))
       ter_map = {} of Atom => String
       [NTER_T, CHARGED_NTER_T, CTER_T, CHARGED_CTER_T].each do |ter_t|
-        root.bonded_atoms.each do |other|
+        root.each_bonded_atom do |other|
           search ter_t, ter_t.root.not_nil!, other, ter_map
         end
 
@@ -140,7 +140,7 @@ module Chem::Topology::Templates
       return unless match?(atom_t, atom)
       atom_map[atom] = atom_t.name
       res_t.bonded_atoms(atom_t).each do |other_t|
-        atom.bonded_atoms.each do |other|
+        atom.each_bonded_atom do |other|
           search res_t, other_t, other, atom_map
         end
       end

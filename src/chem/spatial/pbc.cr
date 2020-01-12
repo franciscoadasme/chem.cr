@@ -77,7 +77,7 @@ module Chem::Spatial::PBC
     atom.coords -= (atom.coords - center).round
     moved_atoms << atom
 
-    atom.bonded_atoms.each do |other|
+    atom.each_bonded_atom do |other|
       assemble_fragment other, atom.coords, moved_atoms
     end
   end

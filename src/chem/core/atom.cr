@@ -40,6 +40,16 @@ module Chem
       bonds.map &.other(self)
     end
 
+    def each_bonded_atom : Iterator(Atom)
+      bonds.each.map(&.other(self))
+    end
+
+    def each_bonded_atom(& : self ->) : Nil
+      bonds.each do |bond|
+        yield bond.other(self)
+      end
+    end
+
     def inspect(io : ::IO)
       io << "<Atom "
       to_s io
