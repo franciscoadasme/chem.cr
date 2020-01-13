@@ -78,18 +78,58 @@ describe Chem::Topology::Templates::Detector do
     }
     residue_matches_helper("5e5v--unwrapped.poscar", ["HOH"]).should eq expected
   end
+
+  describe "#matches" do
+    it "returns found matches" do
+      structure = load_file "waters.xyz", topology: :bonds
+      matches = Topology::Templates::Detector.new(structure).matches
+      matches.should eq [
+        Topology::MatchData.new(Topology::Templates["HOH"], {
+          "O"  => structure.atoms[0],
+          "H1" => structure.atoms[1],
+          "H2" => structure.atoms[2],
+        }),
+        Topology::MatchData.new(Topology::Templates["HOH"], {
+          "O"  => structure.atoms[3],
+          "H1" => structure.atoms[4],
+          "H2" => structure.atoms[5],
+        }),
+        Topology::MatchData.new(Topology::Templates["HOH"], {
+          "O"  => structure.atoms[6],
+          "H1" => structure.atoms[7],
+          "H2" => structure.atoms[8],
+        }),
+      ]
+    end
+  end
+
+  describe "#unmatched_atoms" do
+    it "returns atoms not matched by any template" do
+      structure = load_file "5e5v--unwrapped.poscar", topology: :bonds
+      detector = Topology::Templates::Detector.new structure, [Topology::Templates["HOH"]]
+      detector.each_match { } # triggers search
+      detector.unmatched_atoms.try(&.size).should eq 206
+    end
+
+    it "returns nil when all atoms are matched" do
+      structure = load_file "waters.xyz", topology: :bonds
+      detector = Topology::Templates::Detector.new structure
+      detector.each_match { } # triggers search
+      detector.unmatched_atoms.should be_nil
+    end
+  end
 end
 
 def residue_matches_helper(path, names)
-  structure = load_file path, topology: :bonds
-
   templates = names.map { |name| Chem::Topology::Templates[name] }
-  detector = Chem::Topology::Templates::Detector.new templates
+
+  structure = load_file path, topology: :bonds
+  detector = Chem::Topology::Templates::Detector.new structure, templates
 
   res_idxs = {} of String => Array(Hash(Int32, String))
-  detector.each_match(structure) do |res_t, idxs|
-    res_idxs[res_t.name] ||= [] of Hash(Int32, String)
-    res_idxs[res_t.name] << idxs.transform_keys &.serial
+  detector.each_match do |m|
+    res_idxs[m.resname] ||= [] of Hash(Int32, String)
+    res_idxs[m.resname] << m.to_h.invert.transform_keys(&.serial)
   end
   res_idxs
 end

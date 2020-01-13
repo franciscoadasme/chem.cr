@@ -50,5 +50,9 @@ module Chem
       each_fragment { |fragment| fragments << fragment }
       fragments
     end
+
+    def has_hydrogens? : Bool
+      each_atom.any?(&.element.hydrogen?)
+    end
   end
 end

@@ -32,6 +32,12 @@ module Chem
       @residue_table[{number, insertion_code}]?
     end
 
+    def clear : self
+      @residue_table.clear
+      @residues.clear
+      self
+    end
+
     def delete(residue : Residue) : Residue?
       residue = @residues.delete residue
       @residue_table.delete({residue.number, residue.insertion_code}) if residue

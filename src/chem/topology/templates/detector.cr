@@ -31,36 +31,44 @@ module Chem::Topology::Templates
       root "N"
     end
 
-    def initialize(@templates : Array(ResidueType))
+    @atoms : Set(Atom)
+    @templates : Array(ResidueType)
+
+    def initialize(atoms : AtomCollection, templates : Array(ResidueType)? = nil)
+      @atoms = Set(Atom).new(atoms.n_atoms).concat atoms.each_atom
       @atom_table = {} of Atom | AtomType => String
-      @mapped_atoms = Set(Atom).new
+      @templates = templates || Templates.all
+      compute_atom_descriptions @atoms
       compute_atom_descriptions @templates
       compute_atom_descriptions [CTER_T, NTER_T, CHARGED_CTER_T, CHARGED_NTER_T]
     end
 
-    def each_match(atoms : Enumerable(Atom),
-                   & : ResidueType, Hash(Atom, String) ->) : Nil
-      reset_cache
-      compute_atom_descriptions atoms
-
+    def each_match(& : MatchData ->) : Nil
       atom_map = {} of Atom => String
-      atoms.each do |atom|
+      @atoms.each do |atom|
         next if mapped?(atom, atom_map)
         @templates.each do |res_t|
-          next if (atoms.size - @mapped_atoms.size) < res_t.n_atoms || res_t.root.nil?
+          next if @atoms.size < res_t.n_atoms || res_t.root.nil?
           if match?(res_t, atom, atom_map)
-            yield res_t, atom_map
-            atom_map.each_key { |atom| @mapped_atoms << atom }
+            yield MatchData.new(res_t, atom_map.invert)
+            @atoms.subtract atom_map.each_key
           end
           atom_map.clear
         end
       end
     end
 
-    def each_match(structure : Structure, & : ResidueType, Hash(Atom, String) ->) : Nil
-      each_match structure.atoms do |res_t, atom_map|
-        yield res_t, atom_map
-      end
+    def matches : Array(MatchData)
+      matches = [] of MatchData
+      each_match { |match| matches << match }
+      matches
+    end
+
+    def unmatched_atoms : MatchData?
+      return if @atoms.empty?
+      atom_map = Hash(String, Atom).new initial_capacity: @atoms.size
+      @atoms.each { |atom| atom_map[atom.name] = atom }
+      MatchData.new "UNK", :other, atom_map
     end
 
     private def compute_atom_descriptions(atoms : Enumerable(Atom))
@@ -106,7 +114,7 @@ module Chem::Topology::Templates
     end
 
     private def mapped?(atom : Atom, atom_map : Hash(Atom, String)) : Bool
-      @mapped_atoms.includes?(atom) || atom_map.has_key?(atom)
+      !@atoms.includes?(atom) || atom_map.has_key?(atom)
     end
 
     private def mapped?(atom_t : AtomType, atom_map : Hash(Atom, String)) : Bool
@@ -125,11 +133,6 @@ module Chem::Topology::Templates
 
     private def match?(atom_t : AtomType, atom : Atom) : Bool
       @atom_table[atom] == @atom_table[atom_t]
-    end
-
-    private def reset_cache : Nil
-      @atom_table.reject! { |k, _| k.is_a? Atom }
-      @mapped_atoms.clear
     end
 
     private def search(res_t : ResidueType,

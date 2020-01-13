@@ -72,6 +72,12 @@ module Chem
       (angle = omega?) ? angle.abs < 30 : false
     end
 
+    def clear : self
+      @atom_table.clear
+      @atoms.clear
+      self
+    end
+
     def delete(atom : Atom) : Atom?
       atom = @atoms.delete atom
       @atom_table.delete atom.name if atom

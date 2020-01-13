@@ -13,6 +13,12 @@ module Chem::Topology
       @valency = valency || nominal_valency
     end
 
+    def inspect(io : ::IO) : Nil
+      io << "<AtomType "
+      to_s io
+      io << '>'
+    end
+
     def suffix : String
       name[@element.symbol.size..]
     end
@@ -60,6 +66,10 @@ module Chem::Topology
 
     def includes?(atom_t : AtomType) : Bool
       includes? atom_t.name
+    end
+
+    def inspect(io : ::IO) : Nil
+      io << "<BondType " << @first << to_char << @second << '>'
     end
 
     def other(atom_name : String) : String
@@ -145,6 +155,13 @@ module Chem::Topology
 
     def formal_charge : Int32
       @atom_types.each.map(&.formal_charge).sum
+    end
+
+    def inspect(io : ::IO) : Nil
+      io << "<ResidueType " << @name
+      io << '(' << @code << ')' if @code
+      io << ", " << @kind.to_s.downcase unless @kind.other?
+      io << '>'
     end
 
     def monomer? : Bool

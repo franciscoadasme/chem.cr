@@ -49,6 +49,12 @@ module Chem
       self
     end
 
+    def clear : self
+      @chain_table.clear
+      @chains.clear
+      self
+    end
+
     def coords : Spatial::CoordinatesProxy
       Spatial::CoordinatesProxy.new self, @lattice
     end
