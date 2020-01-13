@@ -204,19 +204,19 @@ module Chem::Topology::Perception
 
   private def guess_residues(chain : Chain, atoms : Array(Atom)) : Array(Residue)
     residues = [] of Residue
-    Templates::Detector.new(atoms.dup).each_match do |m|
+    detector = Templates::Detector.new atoms.dup
+    detector.each_match do |m|
       residues << (residue = Residue.new m.resname, residues.size + 1, chain)
       residue.kind = m.reskind
       m.each_atom do |atom, name|
         atom.name = name
         atom.residue = residue
-        atoms.delete atom
       end
     end
 
-    unless atoms.empty?
-      residues << (residue = Residue.new "UNK", chain.residues.size, chain)
-      atoms.each &.residue=(residue)
+    if m = detector.unmatched_atoms
+      residues << (residue = Residue.new m.resname, chain.residues.size, chain)
+      m.each_atom &.residue=(residue)
     end
 
     residues
