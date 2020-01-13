@@ -31,13 +31,13 @@ module Chem::Topology::Templates
       root "N"
     end
 
-    @atoms : Array(Atom)
+    @atoms : Set(Atom)
     @templates : Array(ResidueType)
 
-    def initialize(@atoms : Indexable(Atom), templates : Array(ResidueType)? = nil)
+    def initialize(atoms : Indexable(Atom), templates : Array(ResidueType)? = nil)
+      @atoms = atoms.to_set
       @atom_table = {} of Atom | AtomType => String
       @templates = templates || Templates.all
-      @mapped_atoms = Set(Atom).new
       compute_atom_descriptions @atoms
       compute_atom_descriptions @templates
       compute_atom_descriptions [CTER_T, NTER_T, CHARGED_CTER_T, CHARGED_NTER_T]
@@ -48,10 +48,10 @@ module Chem::Topology::Templates
       @atoms.each do |atom|
         next if mapped?(atom, atom_map)
         @templates.each do |res_t|
-          next if (@atoms.size - @mapped_atoms.size) < res_t.n_atoms || res_t.root.nil?
+          next if @atoms.size < res_t.n_atoms || res_t.root.nil?
           if match?(res_t, atom, atom_map)
             yield MatchData.new(res_t, atom_map.invert)
-            atom_map.each_key { |atom| @mapped_atoms << atom }
+            @atoms.subtract atom_map.each_key
           end
           atom_map.clear
         end
@@ -107,7 +107,7 @@ module Chem::Topology::Templates
     end
 
     private def mapped?(atom : Atom, atom_map : Hash(Atom, String)) : Bool
-      @mapped_atoms.includes?(atom) || atom_map.has_key?(atom)
+      !@atoms.includes?(atom) || atom_map.has_key?(atom)
     end
 
     private def mapped?(atom_t : AtomType, atom_map : Hash(Atom, String)) : Bool
