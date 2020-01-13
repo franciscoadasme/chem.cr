@@ -43,27 +43,17 @@ module Chem::Topology::Perception
   # long as there are less residue groups than the chain limit (62), otherwise all
   # residues are assigned to the same chain.
   def guess_residues(structure : Structure) : Nil
-    return unless old_chain = structure.delete(structure.chains.first)
-
-    fragments = old_chain.fragments.map do |atoms|
-      guess_residues old_chain, atoms
-    end
-
-    polymer_chains, other = fragments.partition { |frag| frag.size > 1 }
-    other = other.flatten.sort_by!(&.kind.to_i).group_by(&.kind).values
-    if polymer_chains.size + other.size <= MAX_CHAINS
-      fragments = polymer_chains + other
-    else
-      fragments = [fragments.flatten]
-    end
-
-    builder = Structure::Builder.new(structure)
-    fragments.each do |residues|
-      builder.chain do |chain|
-        chain = builder.chain
-        residues.each do |residue|
-          residue.number = chain.n_residues + 1
-          residue.chain = chain
+    matches_per_fragment = detect_residues structure
+    builder = Structure::Builder.new structure.clear
+    matches_per_fragment.each do |matches|
+      builder.chain do
+        matches.each do |m|
+          residue = builder.residue m.resname
+          residue.kind = m.reskind
+          m.each_atom do |atom, atom_name|
+            atom.name = atom_name
+            atom.residue = residue
+          end
         end
       end
     end
@@ -129,6 +119,23 @@ module Chem::Topology::Perception
       next unless atom = residue[atom_t.name]?
       atom.formal_charge = atom_t.formal_charge
     end
+  end
+
+  private def detect_residues(atoms : AtomCollection) : Array(Array(MatchData))
+    fragments = [] of Array(MatchData)
+    atoms.each_fragment do |frag|
+      detector = Templates::Detector.new frag
+      matches = [] of MatchData
+      matches.concat detector.matches
+      if m = detector.unmatched_atoms
+        matches << m
+      end
+      fragments << matches
+    end
+
+    polymers, other = fragments.partition &.size.>(1)
+    other = other.flatten.sort_by!(&.reskind).group_by(&.reskind).values
+    polymers.size + other.size <= MAX_CHAINS ? polymers + other : [fragments.flatten]
   end
 
   private def guess_bond_orders(atoms : AtomCollection) : Nil
@@ -200,26 +207,6 @@ module Chem::Topology::Perception
     end
 
     kind
-  end
-
-  private def guess_residues(chain : Chain, atoms : AtomCollection) : Array(Residue)
-    residues = [] of Residue
-    detector = Templates::Detector.new atoms
-    detector.each_match do |m|
-      residues << (residue = Residue.new m.resname, residues.size + 1, chain)
-      residue.kind = m.reskind
-      m.each_atom do |atom, name|
-        atom.name = name
-        atom.residue = residue
-      end
-    end
-
-    if m = detector.unmatched_atoms
-      residues << (residue = Residue.new m.resname, chain.residues.size, chain)
-      m.each_atom &.residue=(residue)
-    end
-
-    residues
   end
 
   private def sanitize_residues(structure : Structure, residues : Array(Residue)) : Nil
