@@ -84,30 +84,21 @@ describe Chem::Topology::Templates::Detector do
       structure = load_file "waters.xyz", topology: :bonds
       matches = Topology::Templates::Detector.new(structure.atoms.to_a).matches
       matches.should eq [
-        {
-          Topology::Templates["HOH"],
-          {
-            structure.atoms[0] => "O",
-            structure.atoms[1] => "H1",
-            structure.atoms[2] => "H2",
-          },
-        },
-        {
-          Topology::Templates["HOH"],
-          {
-            structure.atoms[3] => "O",
-            structure.atoms[4] => "H1",
-            structure.atoms[5] => "H2",
-          },
-        },
-        {
-          Topology::Templates["HOH"],
-          {
-            structure.atoms[6] => "O",
-            structure.atoms[7] => "H1",
-            structure.atoms[8] => "H2",
-          },
-        },
+        Topology::MatchData.new(Topology::Templates["HOH"], {
+          "O"  => structure.atoms[0],
+          "H1" => structure.atoms[1],
+          "H2" => structure.atoms[2],
+        }),
+        Topology::MatchData.new(Topology::Templates["HOH"], {
+          "O"  => structure.atoms[3],
+          "H1" => structure.atoms[4],
+          "H2" => structure.atoms[5],
+        }),
+        Topology::MatchData.new(Topology::Templates["HOH"], {
+          "O"  => structure.atoms[6],
+          "H1" => structure.atoms[7],
+          "H2" => structure.atoms[8],
+        }),
       ]
     end
   end
@@ -120,9 +111,9 @@ def residue_matches_helper(path, names)
   detector = Chem::Topology::Templates::Detector.new structure.atoms.to_a, templates
 
   res_idxs = {} of String => Array(Hash(Int32, String))
-  detector.each_match do |res_t, idxs|
-    res_idxs[res_t.name] ||= [] of Hash(Int32, String)
-    res_idxs[res_t.name] << idxs.transform_keys &.serial
+  detector.each_match do |m|
+    res_idxs[m.resname] ||= [] of Hash(Int32, String)
+    res_idxs[m.resname] << m.to_h.invert.transform_keys(&.serial)
   end
   res_idxs
 end

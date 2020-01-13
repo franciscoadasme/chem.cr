@@ -1,7 +1,5 @@
 module Chem::Topology::Templates
   class Detector
-    alias MatchData = Tuple(ResidueType, Hash(Atom, String))
-
     CTER_T = ResidueType.build do
       description "C-ter"
       name "CTER"
@@ -45,14 +43,14 @@ module Chem::Topology::Templates
       compute_atom_descriptions [CTER_T, NTER_T, CHARGED_CTER_T, CHARGED_NTER_T]
     end
 
-    def each_match(& : ResidueType, Hash(Atom, String) ->) : Nil
+    def each_match(& : MatchData ->) : Nil
       atom_map = {} of Atom => String
       @atoms.each do |atom|
         next if mapped?(atom, atom_map)
         @templates.each do |res_t|
           next if (@atoms.size - @mapped_atoms.size) < res_t.n_atoms || res_t.root.nil?
           if match?(res_t, atom, atom_map)
-            yield res_t, atom_map
+            yield MatchData.new(res_t, atom_map.invert)
             atom_map.each_key { |atom| @mapped_atoms << atom }
           end
           atom_map.clear
@@ -62,7 +60,7 @@ module Chem::Topology::Templates
 
     def matches : Array(MatchData)
       matches = [] of MatchData
-      each_match { |res_t, atom_map| matches << {res_t, atom_map.dup} }
+      each_match { |match| matches << match }
       matches
     end
 
