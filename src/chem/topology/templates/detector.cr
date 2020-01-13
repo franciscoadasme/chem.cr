@@ -64,6 +64,13 @@ module Chem::Topology::Templates
       matches
     end
 
+    def unmatched_atoms : MatchData?
+      return if @atoms.empty?
+      atom_map = Hash(String, Atom).new initial_capacity: @atoms.size
+      @atoms.each { |atom| atom_map[atom.name] = atom }
+      MatchData.new "UNK", :other, atom_map
+    end
+
     private def compute_atom_descriptions(atoms : Enumerable(Atom))
       atoms.each do |atom|
         @atom_table[atom] = String.build do |io|

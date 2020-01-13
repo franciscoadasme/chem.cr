@@ -102,6 +102,22 @@ describe Chem::Topology::Templates::Detector do
       ]
     end
   end
+
+  describe "#unmatched_atoms" do
+    it "returns atoms not matched by any template" do
+      structure = load_file "5e5v--unwrapped.poscar", topology: :bonds
+      detector = Topology::Templates::Detector.new structure.atoms.to_a, [Topology::Templates["HOH"]]
+      detector.each_match { } # triggers search
+      detector.unmatched_atoms.try(&.size).should eq 206
+    end
+
+    it "returns nil when all atoms are matched" do
+      structure = load_file "waters.xyz", topology: :bonds
+      detector = Topology::Templates::Detector.new structure.atoms.to_a
+      detector.each_match { } # triggers search
+      detector.unmatched_atoms.should be_nil
+    end
+  end
 end
 
 def residue_matches_helper(path, names)
