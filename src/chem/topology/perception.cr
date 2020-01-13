@@ -46,7 +46,7 @@ module Chem::Topology::Perception
     return unless old_chain = structure.delete(structure.chains.first)
 
     fragments = old_chain.fragments.map do |atoms|
-      guess_residues old_chain, atoms.to_a
+      guess_residues old_chain, atoms
     end
 
     polymer_chains, other = fragments.partition { |frag| frag.size > 1 }
@@ -202,9 +202,9 @@ module Chem::Topology::Perception
     kind
   end
 
-  private def guess_residues(chain : Chain, atoms : Array(Atom)) : Array(Residue)
+  private def guess_residues(chain : Chain, atoms : AtomCollection) : Array(Residue)
     residues = [] of Residue
-    detector = Templates::Detector.new atoms.dup
+    detector = Templates::Detector.new atoms
     detector.each_match do |m|
       residues << (residue = Residue.new m.resname, residues.size + 1, chain)
       residue.kind = m.reskind

@@ -82,7 +82,7 @@ describe Chem::Topology::Templates::Detector do
   describe "#matches" do
     it "returns found matches" do
       structure = load_file "waters.xyz", topology: :bonds
-      matches = Topology::Templates::Detector.new(structure.atoms.to_a).matches
+      matches = Topology::Templates::Detector.new(structure).matches
       matches.should eq [
         Topology::MatchData.new(Topology::Templates["HOH"], {
           "O"  => structure.atoms[0],
@@ -106,14 +106,14 @@ describe Chem::Topology::Templates::Detector do
   describe "#unmatched_atoms" do
     it "returns atoms not matched by any template" do
       structure = load_file "5e5v--unwrapped.poscar", topology: :bonds
-      detector = Topology::Templates::Detector.new structure.atoms.to_a, [Topology::Templates["HOH"]]
+      detector = Topology::Templates::Detector.new structure, [Topology::Templates["HOH"]]
       detector.each_match { } # triggers search
       detector.unmatched_atoms.try(&.size).should eq 206
     end
 
     it "returns nil when all atoms are matched" do
       structure = load_file "waters.xyz", topology: :bonds
-      detector = Topology::Templates::Detector.new structure.atoms.to_a
+      detector = Topology::Templates::Detector.new structure
       detector.each_match { } # triggers search
       detector.unmatched_atoms.should be_nil
     end
@@ -124,7 +124,7 @@ def residue_matches_helper(path, names)
   templates = names.map { |name| Chem::Topology::Templates[name] }
 
   structure = load_file path, topology: :bonds
-  detector = Chem::Topology::Templates::Detector.new structure.atoms.to_a, templates
+  detector = Chem::Topology::Templates::Detector.new structure, templates
 
   res_idxs = {} of String => Array(Hash(Int32, String))
   detector.each_match do |m|

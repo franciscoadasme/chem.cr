@@ -34,8 +34,8 @@ module Chem::Topology::Templates
     @atoms : Set(Atom)
     @templates : Array(ResidueType)
 
-    def initialize(atoms : Indexable(Atom), templates : Array(ResidueType)? = nil)
-      @atoms = atoms.to_set
+    def initialize(atoms : AtomCollection, templates : Array(ResidueType)? = nil)
+      @atoms = Set(Atom).new(atoms.n_atoms).concat atoms.each_atom
       @atom_table = {} of Atom | AtomType => String
       @templates = templates || Templates.all
       compute_atom_descriptions @atoms
