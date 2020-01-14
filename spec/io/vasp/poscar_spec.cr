@@ -192,9 +192,10 @@ describe Chem::VASP::Poscar::Writer do
   end
 
   it "writes a structure having constraints" do
-    structure.atoms[0].constraint = Constraint::XYZ
-    structure.atoms[3].constraint = Constraint::XZ
-    structure.to_poscar.should eq <<-EOS
+    other = structure.clone
+    other.atoms[0].constraint = Constraint::XYZ
+    other.atoms[3].constraint = Constraint::XZ
+    other.to_poscar.should eq <<-EOS
       NaCl-O-NaCl
          1.00000000000000
           40.0000000000000000    0.0000000000000000    0.0000000000000000
