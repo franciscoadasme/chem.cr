@@ -266,6 +266,12 @@ describe Topology::Perception do
       structure.residues.map(&.name).should eq ["PHE"] * 144
       structure.residues.map(&.number).should eq (1..144).to_a
     end
+
+    it "detects multiple residues for unmatched atoms (#16)" do
+      structure = load_file "peptide_unknown_residues.xyz", topology: :guess
+      structure.n_residues.should eq 9
+      structure.residues.map(&.name).sort!.should eq %w(ALA ALA LEU LEU SER THR UNK UNK VAL)
+    end
   end
 
   describe "#renumber_by_connectivity" do

@@ -111,11 +111,11 @@ describe Chem::Topology::Templates::Detector do
       detector.unmatched_atoms.try(&.size).should eq 206
     end
 
-    it "returns nil when all atoms are matched" do
+    it "returns an empty array when all atoms are matched" do
       structure = load_file "waters.xyz", topology: :bonds
       detector = Topology::Templates::Detector.new structure
       detector.each_match { } # triggers search
-      detector.unmatched_atoms.should be_nil
+      detector.unmatched_atoms.empty?.should be_true
     end
   end
 end
