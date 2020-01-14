@@ -40,6 +40,13 @@ describe Chem::Lattice do
     end
   end
 
+  describe "#inspect" do
+    it "returns a delimited string representation" do
+      lattice = Chem::Lattice.new V[1, 2, 3], V[4, 5, 6], V[7, 8, 9]
+      lattice.inspect.should eq "<Lattice [1.0 2.0 3.0], [4.0 5.0 6.0], [7.0 8.0 9.0]>"
+    end
+  end
+
   describe "#j=" do
     it "sets the size of the second basis vector" do
       lattice = Lattice.new(S[10, 20, 30])

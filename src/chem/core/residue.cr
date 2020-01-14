@@ -110,6 +110,12 @@ module Chem
       Spatial.hlxparams self
     end
 
+    def inspect(io : ::IO) : Nil
+      io << "<Residue "
+      to_s io
+      io << '>'
+    end
+
     def n_atoms : Int32
       @atoms.size
     end

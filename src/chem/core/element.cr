@@ -21,6 +21,10 @@ module Chem
       @vdw_radius = vdw_radius || @covalent_radius + 0.9
     end
 
+    def inspect(io : ::IO) : Nil
+      io << "<Element " << @symbol << '(' << @atomic_number << ")>"
+    end
+
     def max_valency : Int32
       @valencies.last? || 0
     end
