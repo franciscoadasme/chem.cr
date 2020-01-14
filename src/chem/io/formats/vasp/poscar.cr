@@ -14,16 +14,16 @@ module Chem::VASP::Poscar
       raise Spatial::NotPeriodicError.new unless lattice
 
       coordinate_system = @fractional ? "Direct" : "Cartesian"
-      ele_table = count_elements atoms
+      ele_tally = count_elements atoms
       has_constraints = atoms.each_atom.any? &.constraint
 
       @io.puts title.gsub(/ *\n */, ' ')
       write lattice
-      write_elements ele_table
+      write_elements ele_tally
       @io.puts "Selective dynamics" if has_constraints
       @io.puts coordinate_system
 
-      ele_table.each_key do |ele|
+      ele_tally.each do |ele, _|
         atoms.each_atom.select(&.element.==(ele)).each do |atom|
           vec = atom.coords
           if @fractional
@@ -44,15 +44,14 @@ module Chem::VASP::Poscar
       write structure, structure.lattice, structure.title
     end
 
-    private def count_elements(atoms : AtomCollection) : Hash(Element, Int32)
-      ele_table = atoms.each_atom.map(&.element).tally
-      if ele_order = @ele_order
-        if ele = ele_table.keys.find { |ele| !ele_order.includes? ele }
-          raise Error.new "Missing #{ele.symbol} in element order"
+    private def count_elements(atoms : AtomCollection) : Array(Tuple(Element, Int32))
+      ele_tally = atoms.each_atom.map(&.element).tally.to_a
+      if order = @ele_order
+        ele_tally.sort_by! do |(k, _)|
+          order.index(k) || raise Error.new "Missing #{k.symbol} in element order"
         end
-        ele_table = ele_order.map { |ele| {ele, ele_table[ele]} }.to_h
       end
-      ele_table
+      ele_tally
     end
 
     private def write(constraint : Constraint) : Nil
@@ -69,9 +68,9 @@ module Chem::VASP::Poscar
     end
 
     private def write_elements(ele_table) : Nil
-      ele_table.each_key { |ele| @io.printf "%5s", ele.symbol.ljust(2) }
+      ele_table.each { |(ele, _)| @io.printf "%5s", ele.symbol.ljust(2) }
       @io.puts
-      ele_table.each_value { |count| @io.printf "%6d", count }
+      ele_table.each { |(_, count)| @io.printf "%6d", count }
       @io.puts
     end
   end
