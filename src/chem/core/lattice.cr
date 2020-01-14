@@ -47,6 +47,16 @@ module Chem
       vec
     end
 
+    def inspect(io : ::IO) : Nil
+      io << "<Lattice "
+      i.to_s io
+      io << ", "
+      j.to_s io
+      io << ", "
+      k.to_s io
+      io << '>'
+    end
+
     def j=(vec : Spatial::Vector) : Spatial::Vector
       @basis = Spatial::Basis.new i, vec, k
       vec

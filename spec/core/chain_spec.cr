@@ -8,4 +8,10 @@ describe Chem::Chain do
       end
     end
   end
+
+  describe "#inspect" do
+    it "returns a delimited string representation" do
+      Chain.new('K', Structure.new).inspect.should eq "<Chain K>"
+    end
+  end
 end

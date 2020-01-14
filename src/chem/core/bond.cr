@@ -42,6 +42,14 @@ module Chem
       @first == atom || @second == atom
     end
 
+    def inspect(io : ::IO) : Nil
+      io << "<Bond "
+      @first.to_s io
+      io << to_char
+      @second.to_s io
+      io << '>'
+    end
+
     def order : Int32
       case @kind
       when .dative?
@@ -69,6 +77,16 @@ module Chem
 
     def squared_distance : Float64
       Spatial.squared_distance @first, @second
+    end
+
+    def to_char : Char
+      case order
+      when 0 then '·'
+      when 1 then '-'
+      when 2 then '='
+      when 3 then '#'
+      else        raise "BUG: unreachable"
+      end
     end
   end
 end

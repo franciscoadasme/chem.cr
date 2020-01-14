@@ -55,6 +55,17 @@ describe Chem::Residue do
     end
   end
 
+  describe "#inspect" do
+    it "returns a delimited string representation" do
+      structure = Chem::Structure.new
+      chain = Chem::Chain.new 'A', structure
+      Chem::Residue.new("TYR", 1, chain).inspect.should eq "<Residue A:TYR1>"
+      Chem::Residue.new("ARG", 234, chain).inspect.should eq "<Residue A:ARG234>"
+      chain = Chem::Chain.new 'B', structure
+      Chem::Residue.new("ALA", 7453, chain).inspect.should eq "<Residue B:ALA7453>"
+    end
+  end
+
   describe "#name=" do
     it "sets kind from templates" do
       structure = Structure.new

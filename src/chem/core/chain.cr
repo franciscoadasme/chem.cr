@@ -102,6 +102,10 @@ module Chem
       end
     end
 
+    def inspect(io : ::IO) : Nil
+      io << "<Chain " << @id << '>'
+    end
+
     def polymer? : Bool
       @residues.any? &.polymer?
     end
