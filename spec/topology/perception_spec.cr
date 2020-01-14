@@ -270,7 +270,9 @@ describe Topology::Perception do
     it "detects multiple residues for unmatched atoms (#16)" do
       structure = load_file "peptide_unknown_residues.xyz", topology: :guess
       structure.n_residues.should eq 9
-      structure.residues.map(&.name).sort!.should eq %w(ALA ALA LEU LEU SER THR UNK UNK VAL)
+      structure.residues.map(&.name).should eq %w(ALA LEU VAL THR LEU SER ALA UNK UNK)
+      structure.residues[7].n_atoms.should eq 14
+      structure.residues[8].n_atoms.should eq 8
     end
   end
 
