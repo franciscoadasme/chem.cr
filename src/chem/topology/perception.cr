@@ -211,7 +211,11 @@ module Chem::Topology::Perception
     matches = [] of MatchData
     AtomView.new(atoms).each_fragment do |frag|
       atom_map = Hash(String, Atom).new initial_capacity: frag.size
-      frag.each { |atom| atom_map[atom.name] = atom }
+      ele_index = Hash(Element, Int32).new default_value: 0
+      frag.each do |atom|
+        name = "#{atom.element.symbol}#{ele_index[atom.element] += 1}"
+        atom_map[name] = atom
+      end
       matches << MatchData.new("UNK", :other, atom_map)
     end
     matches
