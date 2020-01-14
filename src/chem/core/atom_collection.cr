@@ -21,16 +21,16 @@ module Chem
     end
 
     def each_fragment(& : AtomView ->) : Nil
-      visited = Set(Atom).new n_atoms
+      atoms = Set(Atom).new(n_atoms).concat each_atom
       each_atom do |atom|
-        next if visited.includes?(atom)
-        visited << atom
+        next unless atoms.includes?(atom)
+        atoms.delete atom
         fragment = [atom]
         fragment.each do |a|
           a.each_bonded_atom do |b|
-            next if visited.includes?(b)
+            next unless atoms.includes?(b)
             fragment << b
-            visited << b
+            atoms.delete b
           end
         end
         yield AtomView.new(fragment.sort_by(&.serial))
