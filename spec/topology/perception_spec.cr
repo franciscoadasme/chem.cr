@@ -274,6 +274,13 @@ describe Topology::Perception do
       structure.residues[7].n_atoms.should eq 14
       structure.residues[8].n_atoms.should eq 8
     end
+
+    it "renames unmatched atoms" do
+      structure = load_file("peptide_unknown_residues.xyz", topology: :guess)
+      residues = structure.residues.to_a.select!(&.other?)
+      residues[0].atoms.map(&.name).should eq %w(N1 C1 C2 O1 C3 O2 H1 H2 H3 H4 C4 H5 H6 H7)
+      residues[1].atoms.map(&.name).should eq %w(N1 C1 C2 O1 S1 H1 H2 H3)
+    end
   end
 
   describe "#renumber_by_connectivity" do
