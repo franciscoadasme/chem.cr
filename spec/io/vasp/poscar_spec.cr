@@ -220,7 +220,7 @@ describe Chem::VASP::Poscar::Writer do
   end
 
   it "fails when there is a missing element in the specified order" do
-    expect_raises Chem::Error, "Missing Cl in element order" do
+    expect_raises ArgumentError, "<Element Cl(17)> not found in specified order" do
       structure.to_poscar order: [PeriodicTable::H]
     end
   end

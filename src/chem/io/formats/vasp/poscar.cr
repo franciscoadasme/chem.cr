@@ -48,7 +48,7 @@ module Chem::VASP::Poscar
       ele_tally = atoms.each_atom.map(&.element).tally.to_a
       if order = @ele_order
         ele_tally.sort_by! do |(k, _)|
-          order.index(k) || raise Error.new "Missing #{k.symbol} in element order"
+          order.index(k) || raise ArgumentError.new "#{k.inspect} not found in specified order"
         end
       end
       ele_tally
