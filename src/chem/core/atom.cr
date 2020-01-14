@@ -86,5 +86,15 @@ module Chem
     def within_covalent_distance?(rhs : self) : Bool
       Spatial.squared_distance(self, rhs) <= PeriodicTable.covalent_cutoff(self, rhs)
     end
+
+    # Copies `self` into *residue*
+    #
+    # NOTE: bonds are not copied and must be set manually for the copy.
+    protected def copy_to(residue : Residue) : self
+      atom = Atom.new @name, @serial, @coords, residue, @element, @formal_charge,
+        @occupancy, @partial_charge, @temperature_factor
+      atom.constraint = @constraint
+      atom
+    end
   end
 end

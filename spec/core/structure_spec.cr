@@ -15,6 +15,32 @@ describe Chem::Structure do
     end
   end
 
+  describe "#clone" do
+    it "returns a copy of the structure" do
+      structure = load_file "1crn.pdb"
+      other = structure.clone
+
+      other.should_not be structure
+      other.dig('A').should_not be structure.dig('A')
+      other.dig('A', 32).should_not be structure.dig('A', 32)
+      other.dig('A', 13, "CA").should_not be structure.dig('A', 13, "CA")
+
+      other.n_chains.should eq 1
+      other.n_residues.should eq 46
+      other.n_atoms.should eq 327
+      other.bonds.size.should eq 331
+      other.chains.map(&.id).should eq ['A']
+      other.dig('A', 32).name.should eq "CYS"
+      other.dig('A', 32).secondary_structure.beta_strand?.should be_true
+      other.dig('A', 32, "CA").coords.should eq V[8.140, 11.694, 9.635]
+
+      other.lattice.should eq structure.lattice
+      other.experiment.should eq structure.experiment
+      other.sequence.should eq structure.sequence
+      other.title.should eq structure.title
+    end
+  end
+
   describe "#dig" do
     structure = fake_structure
 

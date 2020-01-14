@@ -124,6 +124,16 @@ module Chem
       new_structure << self
     end
 
+    # Copies `self` into *structure*
+    # It calls `#copy_to` on each residue, which in turn calls `Atom#copy_to`.
+    #
+    # NOTE: bonds are not copied and must be set manually for the copy.
+    protected def copy_to(structure : Structure) : self
+      chain = Chain.new @id, structure
+      each_residue &.copy_to(chain)
+      chain
+    end
+
     def reset_cache : Nil
       @residue_table.clear
       @residues.sort_by! { |residue| {residue.number, (residue.insertion_code || ' ')} }
