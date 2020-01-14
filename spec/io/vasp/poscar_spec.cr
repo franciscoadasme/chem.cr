@@ -192,9 +192,10 @@ describe Chem::VASP::Poscar::Writer do
   end
 
   it "writes a structure having constraints" do
-    structure.atoms[0].constraint = Constraint::XYZ
-    structure.atoms[3].constraint = Constraint::XZ
-    structure.to_poscar.should eq <<-EOS
+    other = structure.clone
+    other.atoms[0].constraint = Constraint::XYZ
+    other.atoms[3].constraint = Constraint::XZ
+    other.to_poscar.should eq <<-EOS
       NaCl-O-NaCl
          1.00000000000000
           40.0000000000000000    0.0000000000000000    0.0000000000000000
@@ -219,8 +220,27 @@ describe Chem::VASP::Poscar::Writer do
   end
 
   it "fails when there is a missing element in the specified order" do
-    expect_raises Chem::Error, "Missing Cl in element order" do
+    expect_raises ArgumentError, "<Element Cl(17)> not found in specified order" do
       structure.to_poscar order: [PeriodicTable::H]
     end
+  end
+
+  it "does not fail when element order has extra elements (#22)" do
+    elements = %w(O Na Cl P).map { |ele| PeriodicTable[ele] }
+    structure.to_poscar(order: elements).should eq <<-EOS
+      NaCl-O-NaCl
+         1.00000000000000
+          40.0000000000000000    0.0000000000000000    0.0000000000000000
+           0.0000000000000000   20.0000000000000000    0.0000000000000000
+           0.0000000000000000    0.0000000000000000   10.0000000000000000
+         O    Na   Cl
+           1     2     2
+      Cartesian
+         30.0000000000000000   15.0000000000000000    9.0000000000000000
+         10.0000000000000000    5.0000000000000000    5.0000000000000000
+         10.0000000000000000   10.0000000000000000   12.5000000000000000
+         30.0000000000000000   15.0000000000000000   10.0000000000000000
+         20.0000000000000000   10.0000000000000000   10.0000000000000000\n
+      EOS
   end
 end
