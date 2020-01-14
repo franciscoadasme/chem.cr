@@ -55,6 +55,38 @@ module Chem
       self
     end
 
+    # Returns a deep copy of `self`, that is, every chain/residue/atom is copied.
+    #
+    # Unlike array-like classes in the language, `#dup` (shallow copy) is not possible.
+    #
+    # ```
+    # structure = Structure.new "/path/to/file.pdb"
+    # other = structure.clone
+    # other == structure     # => true
+    # other.same?(structure) # => false
+    #
+    # structure.dig('A', 23, "OG").partial_charge         # => 0.0
+    # other.dig('A', 23, "OG").partial_charge             # => 0.0
+    # structure.dig('A', 23, "OG").partial_charge = 0.635 # => 0.635
+    # other.dig('A', 23, "OG").partial_charge             # => 0.0
+    # ```
+    def clone : self
+      structure = Structure.new
+      structure.biases.concat @biases
+      structure.experiment = @experiment
+      structure.lattice = @lattice
+      structure.sequence = @sequence
+      structure.title = @title
+      each_chain &.copy_to(structure)
+      bonds.each do |bond|
+        a, b = bond
+        a = structure.dig a.chain.id, a.residue.number, a.residue.insertion_code, a.name
+        b = structure.dig b.chain.id, b.residue.number, b.residue.insertion_code, b.name
+        a.bonds.add b, order: bond.order
+      end
+      structure
+    end
+
     def coords : Spatial::CoordinatesProxy
       Spatial::CoordinatesProxy.new self, @lattice
     end

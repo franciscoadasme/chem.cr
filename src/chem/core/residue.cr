@@ -209,6 +209,18 @@ module Chem
       @kind = Topology::Templates[@name]?.try(&.kind) || Residue::Kind::Other
     end
 
+    # Copies `self` into *chain*
+    # It calls `#copy_to` on each atom.
+    #
+    # NOTE: bonds are not copied and must be set manually for the copy.
+    protected def copy_to(chain : Chain) : self
+      residue = Residue.new @name, @number, @insertion_code, chain
+      residue.kind = @kind
+      residue.secondary_structure = @secondary_structure
+      each_atom &.copy_to(residue)
+      residue
+    end
+
     protected def reset_cache : Nil
       @atom_table.clear
       @atoms.sort_by! &.serial
