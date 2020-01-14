@@ -209,10 +209,11 @@ module Chem::Topology::Perception
 
   private def guess_unmatched(atoms : Array(Atom)) : Array(MatchData)
     matches = [] of MatchData
-    return matches if atoms.empty?
-    atom_map = Hash(String, Atom).new initial_capacity: atoms.size
-    atoms.each { |atom| atom_map[atom.name] = atom }
-    matches << MatchData.new("UNK", :other, atom_map)
+    AtomView.new(atoms).each_fragment do |frag|
+      atom_map = Hash(String, Atom).new initial_capacity: frag.size
+      atoms.each { |atom| atom_map[atom.name] = atom }
+      matches << MatchData.new("UNK", :other, atom_map)
+    end
     matches
   end
 
