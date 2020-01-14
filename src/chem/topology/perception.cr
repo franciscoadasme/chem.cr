@@ -127,9 +127,7 @@ module Chem::Topology::Perception
       detector = Templates::Detector.new frag
       matches = [] of MatchData
       matches.concat detector.matches
-      if m = detector.unmatched_atoms
-        matches << m
-      end
+      matches.concat guess_unmatched(detector.unmatched_atoms)
       fragments << matches
     end
 
@@ -207,6 +205,15 @@ module Chem::Topology::Perception
     end
 
     kind
+  end
+
+  private def guess_unmatched(atoms : Array(Atom)) : Array(MatchData)
+    matches = [] of MatchData
+    return matches if atoms.empty?
+    atom_map = Hash(String, Atom).new initial_capacity: atoms.size
+    atoms.each { |atom| atom_map[atom.name] = atom }
+    matches << MatchData.new("UNK", :other, atom_map)
+    matches
   end
 
   private def sanitize_residues(structure : Structure, residues : Array(Residue)) : Nil
