@@ -61,6 +61,22 @@ describe Chem::Spatial::Grid do
     end
   end
 
+  describe ".empty_like" do
+    it "returns a zero-filled grid with the same bounds and shape of another grid" do
+      grid = Grid.empty_like make_grid(3, 5, 10, Bounds[1.5, 3, 1.3])
+      grid.bounds.should eq Bounds[1.5, 3, 1.3]
+      grid.dim.should eq({3, 5, 10})
+      grid.to_a.minmax.should eq({0, 0})
+    end
+
+    it "returns a zero-filled grid with the same bounds and shape of another grid info" do
+      grid = Grid.empty_like Grid::Info.new(Bounds[2, 2, 4], {20, 20, 20})
+      grid.bounds.should eq Bounds[2, 2, 4]
+      grid.dim.should eq({20, 20, 20})
+      grid.to_a.minmax.should eq({0, 0})
+    end
+  end
+
   describe ".new" do
     it "initializes a grid" do
       grid = Grid.new({2, 3, 2}, Bounds[1, 1, 1])

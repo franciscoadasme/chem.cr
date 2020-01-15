@@ -47,6 +47,19 @@ module Chem::Spatial
       grid
     end
 
+    # Returns a zero-filled grid with the same bounds and points as *other*.
+    #
+    # ```
+    # grid = Grid.from_dx "/path/to/grid"
+    # other = Grid.empty_like grid
+    # other.bounds == grid.bounds # => true
+    # other.dim == grid.dim       # => true
+    # other.to_a.minmax           # => {0.0, 0.0}
+    # ```
+    def self.empty_like(other : self | Info) : self
+      new other.dim, other.bounds
+    end
+
     def self.info(path : Path | String) : Info
       info path, IO::FileFormat.from_ext File.extname(path)
     end
