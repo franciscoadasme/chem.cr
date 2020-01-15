@@ -29,6 +29,83 @@ module Chem::Spatial
       sum / @atoms.n_atoms
     end
 
+    # Translates coordinates so that the center is at the middle of *vec*.
+    #
+    # ```
+    # structure = Structure.read "path/to/file"
+    # structure.coords.center # => [1.5 2.0 3.2]
+    # structure.coords.center_along Vector[0, 10, 0]
+    # structure.coords.center # => [1.5 5.0 3.2]
+    # ```
+    def center_along(vec : Vector) : self
+      nvec = vec.normalize
+      translate! vec / 2 - center.dot(nvec) * nvec
+    end
+
+    # Translates coordinates so that the center is at *vec*.
+    #
+    # ```
+    # structure = Structure.read "path/to/file"
+    # structure.coords.center # => [1.0 2.0 3.0]
+    # structure.coords.center_at Vector[10, 20, 30]
+    # structure.coords.center # => [10 20 30]
+    # ```
+    def center_at(vec : Vector) : self
+      translate! vec - center
+    end
+
+    # Translates coordinates so that they are centered at the primary unit cell.
+    #
+    # Raises NotPeriodicError if coordinates are not periodic.
+    #
+    # ```
+    # structure = Structure.read "path/to/file"
+    # structure.lattice       # => [[1.0 0.0 0.0] [0.0 25.0 0.0] [0.0 0.0 213]]
+    # structure.coords.center # => [1.0 2.0 3.0]
+    # structure.coords.center_at_cell
+    # structure.coords.center # => [0.5 12.5 106.5]
+    #
+    # structure = Structure.read "path/to/non_periodic_file"
+    # structure.coords.center_at_cell # raises NotPeriodicError
+    # ```
+    def center_at_cell : self
+      raise NotPeriodicError.new unless lattice = @lattice
+      center_at lattice.bounds.center
+    end
+
+    # Translates coordinates so that the center is at the origin.
+    #
+    # ```
+    # structure = Structure.read "path/to/file"
+    # structure.coords.center # => [1.0 2.0 3.0]
+    # structure.coords.center_at_origin
+    # structure.coords.center # => [0.0 0.0 0.0]
+    # ```
+    def center_at_origin : self
+      center_at Vector.origin
+    end
+
+    # Returns the center of mass.
+    #
+    # ```
+    # structure = Chem::Structure.build do
+    #   atom :O, V[1, 2, 3]
+    #   atom :H, V[4, 5, 6]
+    #   atom :H, V[7, 8, 9]
+    # end
+    # structure.coords.center # => [4.0 5.0 6.0]
+    # structure.coords.com    # => [1.5035248 2.5035248 3.5035248]
+    # ```
+    def com : Vector
+      center = V[0, 0, 0]
+      total_mass = 0.0
+      each_with_atom do |vec, atom|
+        center += atom.mass * vec
+        total_mass += atom.mass
+      end
+      center / total_mass
+    end
+
     def each(fractional : Bool = false) : Iterator(Vector)
       if fractional
         raise NotPeriodicError.new unless lattice = @lattice

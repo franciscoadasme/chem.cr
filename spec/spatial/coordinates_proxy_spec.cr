@@ -23,6 +23,36 @@ describe Chem::Spatial::CoordinatesProxy do
     end
   end
 
+  describe "#center_along" do
+    it "centers at the middle point of a vector" do
+      structure.clone.coords.center_along(V[0, 0, 10]).center.should eq V[4, 5, 5]
+    end
+  end
+
+  describe "#center_at" do
+    it "centers at the given vector" do
+      structure.clone.coords.center_at(V[2.5, 3, 0]).center.should eq V[2.5, 3, 0]
+    end
+  end
+
+  describe "#center_at_cell" do
+    it "centers at the primary unit cell" do
+      structure.clone.coords.center_at_cell.center.should eq V[5, 5, 5]
+    end
+  end
+
+  describe "#center_at_origin" do
+    it "centers at the origin" do
+      structure.clone.coords.center_at_origin.center.should eq V.origin
+    end
+  end
+
+  describe "#com" do
+    it "returns center of mass" do
+      structure.coords.com.should be_close V[1.5035248, 2.5035248, 3.5035248], 1e-6
+    end
+  end
+
   describe "#each" do
     it "yields the coordinates of every atom" do
       vecs = [] of V
