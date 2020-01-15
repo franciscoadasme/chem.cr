@@ -1,6 +1,6 @@
 module Chem::DX
   @[IO::FileType(format: DX, ext: [:dx])]
-  class Parser < IO::Parser(Spatial::Grid)
+  class Parser < Spatial::Grid::Parser
     include IO::AsciiParser
 
     def parse : Spatial::Grid

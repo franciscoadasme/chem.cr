@@ -1,6 +1,6 @@
 module Chem::VASP::Locpot
   @[IO::FileType(format: Locpot, ext: [:locpot])]
-  class Parser < IO::Parser(Spatial::Grid)
+  class Parser < Spatial::Grid::Parser
     include IO::AsciiParser
     include GridParser
 
