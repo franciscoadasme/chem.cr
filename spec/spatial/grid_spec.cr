@@ -152,6 +152,19 @@ describe Chem::Spatial::Grid do
     end
   end
 
+  describe ".vdw_mask_like" do
+    it "returns a grid with the same bounds and shape of another grid" do
+      structure = Chem::Structure.build do
+        atom :C, V[1, 0, 0]
+        atom :C, V[0, 0, 1]
+      end
+
+      info = Grid::Info.new Bounds[1.5, 2.135, 6.12], {10, 10, 10}
+      grid = Grid.vdw_mask structure, info.dim, info.bounds
+      Grid.vdw_mask_like(info, structure).should eq grid
+    end
+  end
+
   describe "#==" do
     it "returns true when grids are equal" do
       grid = make_grid(3, 5, 4, Bounds.new(V[0, 1, 3], V[30, 20, 25]))

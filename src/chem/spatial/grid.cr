@@ -146,6 +146,21 @@ module Chem::Spatial
       grid
     end
 
+    # Returns a grid mask with the points at the vdW spheres set to 1. It will have the
+    # same bounds and points as *other*.
+    #
+    # ```
+    # structure = Structure.read "path/to/file"
+    # info = Grid::Info.new Bounds[5.213, 6.823, 10.352], {20, 25, 40}
+    # grid = Grid.vdw_mask structure, info.dim, info.bounds
+    # Grid.vdw_mask_like(info, structure) == grid # => true
+    # ```
+    def self.vdw_mask_like(other : self | Info,
+                           structure : Structure,
+                           delta : Float64 = 0.02) : self
+      vdw_mask structure, other.dim, other.bounds, delta
+    end
+
     def ==(rhs : self) : Bool
       return false unless @dim == rhs.dim && @bounds == rhs.bounds
       size.times do |i|
