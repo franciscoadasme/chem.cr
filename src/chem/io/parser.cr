@@ -692,6 +692,7 @@ module Chem
   end
 
   abstract class Spatial::Grid::Parser < IO::Parser(Spatial::Grid)
+    abstract def info : Spatial::Grid::Info
   end
 
   macro finished

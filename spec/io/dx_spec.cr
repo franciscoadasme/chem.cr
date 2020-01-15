@@ -28,6 +28,30 @@ describe Chem::DX::Parser do
       0, 1, 2, 10, 11, 12, 20, 21, 22, 100, 101, 102, 110, 111, 112, 120, 121, 122,
     ]
   end
+
+  it "parses a DX header" do
+    io = IO::Memory.new <<-EOS
+      # comment line 1
+      # comment line 2
+      # comment line 3
+      object 1 class gridpositions counts 2 3 3
+      origin   0.500   0.300   1.000
+      delta   10.000   0.000   0.000
+      delta    0.000  20.000   0.000
+      delta    0.000   0.000  10.000
+      object 2 class gridconnections counts 2 3 3
+      object 3 class array type double rank 0 items 18 data follows
+            0.00000000      1.00000000      2.00000000
+           10.00000000     11.00000000     12.00000000
+           20.00000000     21.00000000     22.00000000
+          100.00000000    101.00000000    102.00000000
+          110.00000000    111.00000000    112.00000000
+          120.00000000    121.00000000    122.00000000\n
+      EOS
+    info = Grid.info io, :dx
+    info.bounds.should eq Bounds.new(V[0.5, 0.3, 1], S[10, 40, 20])
+    info.dim.should eq({2, 3, 3})
+  end
 end
 
 describe Chem::DX::Writer do

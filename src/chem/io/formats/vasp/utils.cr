@@ -1,5 +1,10 @@
 module Chem::VASP
   module GridParser
+    def info : Spatial::Grid::Info
+      nx, ny, nz, bounds = read_header
+      Spatial::Grid::Info.new bounds, {nx, ny, nz}
+    end
+
     private def read_array(nx : Int,
                            ny : Int,
                            nz : Int,
