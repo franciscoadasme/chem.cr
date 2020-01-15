@@ -47,6 +47,23 @@ module Chem::Spatial
       grid
     end
 
+    def self.info(path : Path | String) : Info
+      info path, IO::FileFormat.from_ext File.extname(path)
+    end
+
+    def self.info(input : ::IO | Path | String, format : IO::FileFormat) : Info
+      {% begin %}
+        case format
+        {% for parser in Parser.subclasses.select(&.annotation(IO::FileType)) %}
+          when .{{parser.annotation(IO::FileType)[:format].id.underscore.id}}?
+            {{parser}}.new(input).info
+        {% end %}
+        else
+          raise ArgumentError.new "#{format} not supported for Grid"
+        end
+      {% end %}
+    end
+
     def self.new(dim : Dimensions,
                  bounds : Bounds,
                  &block : Int32, Int32, Int32 -> Number)
