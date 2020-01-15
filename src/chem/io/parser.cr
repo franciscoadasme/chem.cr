@@ -691,6 +691,10 @@ module Chem
     end
   end
 
+  abstract class Spatial::Grid::Parser < IO::Parser(Spatial::Grid)
+    abstract def info : Spatial::Grid::Info
+  end
+
   macro finished
     {% for parser in IO::Parser.all_subclasses.select(&.annotation(IO::FileType)) %}
       {% format = parser.annotation(IO::FileType)[:format].id.underscore %}

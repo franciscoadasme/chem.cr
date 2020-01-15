@@ -1,7 +1,13 @@
 module Chem::DX
   @[IO::FileType(format: DX, ext: [:dx])]
-  class Parser < IO::Parser(Spatial::Grid)
+  class Parser < Spatial::Grid::Parser
     include IO::AsciiParser
+
+    def info : Spatial::Grid::Info
+      skip_comments
+      dim, bounds = read_header
+      Spatial::Grid::Info.new bounds, dim
+    end
 
     def parse : Spatial::Grid
       skip_comments

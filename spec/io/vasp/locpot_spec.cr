@@ -12,6 +12,12 @@ describe Chem::VASP::Locpot do
     grid[31, 31, 31].should eq -45.337774769
   end
 
+  it "parses a LOCPOT header" do
+    info = Grid.info "spec/data/vasp/LOCPOT", :chgcar
+    info.bounds.should be_close Bounds[2.969, 2.969, 2.969], 1e-3
+    info.dim.should eq({32, 32, 32})
+  end
+
   it "writes a LOCPOT" do
     st = Chem::Structure.build(guess_topology: false) do
       title "NaCl-O-NaCl"

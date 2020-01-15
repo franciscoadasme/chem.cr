@@ -6,6 +6,7 @@ module Chem::Spatial
   class Grid
     alias Dimensions = Tuple(Int32, Int32, Int32)
     alias Index = Tuple(Int32, Int32, Int32)
+    record Info, bounds : Bounds, dim : Dimensions
 
     getter bounds : Bounds
     getter dim : Dimensions
@@ -44,6 +45,23 @@ module Chem::Spatial
       grid = new dim, bounds
       yield grid.to_unsafe
       grid
+    end
+
+    def self.info(path : Path | String) : Info
+      info path, IO::FileFormat.from_ext File.extname(path)
+    end
+
+    def self.info(input : ::IO | Path | String, format : IO::FileFormat) : Info
+      {% begin %}
+        case format
+        {% for parser in Parser.subclasses.select(&.annotation(IO::FileType)) %}
+          when .{{parser.annotation(IO::FileType)[:format].id.underscore.id}}?
+            {{parser}}.new(input).info
+        {% end %}
+        else
+          raise ArgumentError.new "#{format} not supported for Grid"
+        end
+      {% end %}
     end
 
     def self.new(dim : Dimensions,

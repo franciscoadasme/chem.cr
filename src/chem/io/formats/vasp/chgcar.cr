@@ -1,6 +1,6 @@
 module Chem::VASP::Chgcar
   @[IO::FileType(format: Chgcar, ext: [:chgcar])]
-  class Parser < IO::Parser(Spatial::Grid)
+  class Parser < Spatial::Grid::Parser
     include IO::AsciiParser
     include VASP::GridParser
 

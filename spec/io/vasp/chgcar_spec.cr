@@ -11,6 +11,12 @@ describe Chem::VASP::Chgcar do
     grid[1, 0, 0].should be_close 7.6183317989, 1e-10
   end
 
+  it "parses a CHGCAR header" do
+    info = Grid.info "spec/data/vasp/CHGCAR", :chgcar
+    info.bounds.should eq Bounds[10, 10, 10]
+    info.dim.should eq({2, 2, 2})
+  end
+
   it "writes a CHGCAR" do
     st = Chem::Structure.build(guess_topology: false) do
       title "NaCl-O-NaCl"
