@@ -39,6 +39,19 @@ module Chem::Spatial
       end
     end
 
+    # Returns a grid filled with the distances to the nearest atom. It will have the
+    # same bounds and points as *other*.
+    #
+    # ```
+    # structure = Structure.read "path/to/file"
+    # info = Grid::Info.new Bounds[1.5, 2.135, 6.12], {10, 10, 10}
+    # grid = Grid.atom_distance structure, info.dim, info.bounds
+    # Grid.atom_distance_like(info, structure) == grid # => true
+    # ```
+    def self.atom_distance_like(other : self | Info, structure : Structure) : self
+      atom_distance structure, other.dim, other.bounds
+    end
+
     def self.build(dim : Dimensions,
                    bounds : Bounds,
                    &block : Pointer(Float64) ->)

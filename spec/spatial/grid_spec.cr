@@ -50,6 +50,19 @@ describe Chem::Spatial::Grid do
     end
   end
 
+  describe ".atom_distance_like" do
+    it "returns a grid with the same bounds and shape of another grid" do
+      structure = Chem::Structure.build do
+        atom :C, V[1, 0, 0]
+        atom :C, V[0, 0, 1]
+      end
+
+      info = Grid::Info.new Bounds[1.5, 2.135, 6.12], {10, 10, 10}
+      grid = Grid.atom_distance structure, info.dim, info.bounds
+      Grid.atom_distance_like(info, structure).should eq grid
+    end
+  end
+
   describe ".build" do
     it "builds a grid" do
       grid = Grid.build({2, 3, 2}, Bounds.zero) do |buffer|
