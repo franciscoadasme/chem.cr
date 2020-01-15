@@ -60,6 +60,19 @@ module Chem::Spatial
       new other.dim, other.bounds
     end
 
+    # Returns a grid with the same bounds and points as *other* filled with *value*.
+    #
+    # ```
+    # grid = Grid.from_dx "/path/to/grid"
+    # other = Grid.fill_like grid, 2345.123
+    # other.bounds == grid.bounds # => true
+    # other.dim == grid.dim       # => true
+    # other.to_a.minmax           # => {2345.123, 2345.123}
+    # ```
+    def self.fill_like(other : self | Info, value : Number) : self
+      new other.dim, other.bounds, value.to_f
+    end
+
     def self.info(path : Path | String) : Info
       info path, IO::FileFormat.from_ext File.extname(path)
     end
