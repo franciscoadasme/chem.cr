@@ -6,6 +6,7 @@ module Chem::Spatial
   class Grid
     alias Dimensions = Tuple(Int32, Int32, Int32)
     alias Index = Tuple(Int32, Int32, Int32)
+    record Info, bounds : Bounds, dim : Dimensions
 
     getter bounds : Bounds
     getter dim : Dimensions
