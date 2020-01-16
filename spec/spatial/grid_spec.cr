@@ -50,6 +50,19 @@ describe Chem::Spatial::Grid do
     end
   end
 
+  describe ".atom_distance_like" do
+    it "returns a grid with the same bounds and shape of another grid" do
+      structure = Chem::Structure.build do
+        atom :C, V[1, 0, 0]
+        atom :C, V[0, 0, 1]
+      end
+
+      info = Grid::Info.new Bounds[1.5, 2.135, 6.12], {10, 10, 10}
+      grid = Grid.atom_distance structure, info.dim, info.bounds
+      Grid.atom_distance_like(info, structure).should eq grid
+    end
+  end
+
   describe ".build" do
     it "builds a grid" do
       grid = Grid.build({2, 3, 2}, Bounds.zero) do |buffer|
@@ -58,6 +71,38 @@ describe Chem::Spatial::Grid do
         end
       end
       grid.to_a.should eq Array(Float64).new(12) { |i| i.to_f ** 2 }
+    end
+  end
+
+  describe ".empty_like" do
+    it "returns a zero-filled grid with the same bounds and shape of another grid" do
+      grid = Grid.empty_like make_grid(3, 5, 10, Bounds[1.5, 3, 1.3])
+      grid.bounds.should eq Bounds[1.5, 3, 1.3]
+      grid.dim.should eq({3, 5, 10})
+      grid.to_a.minmax.should eq({0, 0})
+    end
+
+    it "returns a zero-filled grid with the same bounds and shape of another grid info" do
+      grid = Grid.empty_like Grid::Info.new(Bounds[2, 2, 4], {20, 20, 20})
+      grid.bounds.should eq Bounds[2, 2, 4]
+      grid.dim.should eq({20, 20, 20})
+      grid.to_a.minmax.should eq({0, 0})
+    end
+  end
+
+  describe ".fill_like" do
+    it "returns a filled grid with the same bounds and shape of another grid" do
+      grid = Grid.fill_like make_grid(3, 5, 10, Bounds[1.5, 3, 1.3]), 5.0
+      grid.bounds.should eq Bounds[1.5, 3, 1.3]
+      grid.dim.should eq({3, 5, 10})
+      grid.to_a.minmax.should eq({5, 5})
+    end
+
+    it "returns a filled grid with the same bounds and shape of another grid info" do
+      grid = Grid.fill_like Grid::Info.new(Bounds[2, 2, 4], {20, 20, 20}), 23.4
+      grid.bounds.should eq Bounds[2, 2, 4]
+      grid.dim.should eq({20, 20, 20})
+      grid.to_a.minmax.should eq({23.4, 23.4})
     end
   end
 
@@ -104,6 +149,19 @@ describe Chem::Spatial::Grid do
         V[2.0, 0.8, 1.2],
         V[2.0, 1.2, 0.8],
       ], 1e-3
+    end
+  end
+
+  describe ".vdw_mask_like" do
+    it "returns a grid with the same bounds and shape of another grid" do
+      structure = Chem::Structure.build do
+        atom :C, V[1, 0, 0]
+        atom :C, V[0, 0, 1]
+      end
+
+      info = Grid::Info.new Bounds[1.5, 2.135, 6.12], {10, 10, 10}
+      grid = Grid.vdw_mask structure, info.dim, info.bounds
+      Grid.vdw_mask_like(info, structure).should eq grid
     end
   end
 

@@ -39,12 +39,51 @@ module Chem::Spatial
       end
     end
 
+    # Returns a grid filled with the distances to the nearest atom. It will have the
+    # same bounds and points as *other*.
+    #
+    # ```
+    # structure = Structure.read "path/to/file"
+    # info = Grid::Info.new Bounds[1.5, 2.135, 6.12], {10, 10, 10}
+    # grid = Grid.atom_distance structure, info.dim, info.bounds
+    # Grid.atom_distance_like(info, structure) == grid # => true
+    # ```
+    def self.atom_distance_like(other : self | Info, structure : Structure) : self
+      atom_distance structure, other.dim, other.bounds
+    end
+
     def self.build(dim : Dimensions,
                    bounds : Bounds,
                    &block : Pointer(Float64) ->)
       grid = new dim, bounds
       yield grid.to_unsafe
       grid
+    end
+
+    # Returns a zero-filled grid with the same bounds and points as *other*.
+    #
+    # ```
+    # grid = Grid.from_dx "/path/to/grid"
+    # other = Grid.empty_like grid
+    # other.bounds == grid.bounds # => true
+    # other.dim == grid.dim       # => true
+    # other.to_a.minmax           # => {0.0, 0.0}
+    # ```
+    def self.empty_like(other : self | Info) : self
+      new other.dim, other.bounds
+    end
+
+    # Returns a grid with the same bounds and points as *other* filled with *value*.
+    #
+    # ```
+    # grid = Grid.from_dx "/path/to/grid"
+    # other = Grid.fill_like grid, 2345.123
+    # other.bounds == grid.bounds # => true
+    # other.dim == grid.dim       # => true
+    # other.to_a.minmax           # => {2345.123, 2345.123}
+    # ```
+    def self.fill_like(other : self | Info, value : Number) : self
+      new other.dim, other.bounds, value.to_f
     end
 
     def self.info(path : Path | String) : Info
@@ -105,6 +144,21 @@ module Chem::Spatial
         end
       end
       grid
+    end
+
+    # Returns a grid mask with the points at the vdW spheres set to 1. It will have the
+    # same bounds and points as *other*.
+    #
+    # ```
+    # structure = Structure.read "path/to/file"
+    # info = Grid::Info.new Bounds[5.213, 6.823, 10.352], {20, 25, 40}
+    # grid = Grid.vdw_mask structure, info.dim, info.bounds
+    # Grid.vdw_mask_like(info, structure) == grid # => true
+    # ```
+    def self.vdw_mask_like(other : self | Info,
+                           structure : Structure,
+                           delta : Float64 = 0.02) : self
+      vdw_mask structure, other.dim, other.bounds, delta
     end
 
     def ==(rhs : self) : Bool
