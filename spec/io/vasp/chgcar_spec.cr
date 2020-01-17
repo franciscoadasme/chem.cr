@@ -18,7 +18,7 @@ describe Chem::VASP::Chgcar do
   end
 
   it "writes a CHGCAR" do
-    st = Chem::Structure.build(guess_topology: false) do
+    structure = Chem::Structure.build(guess_topology: false) do
       title "NaCl-O-NaCl"
       lattice 5, 10, 20
       atom :Cl, V[30, 15, 10]
@@ -29,7 +29,7 @@ describe Chem::VASP::Chgcar do
     end
 
     grid = make_grid(3, 3, 3, Bounds[5, 10, 20]) { |i, j, k| i * 100 + j * 10 + k }
-    grid.to_chgcar(structure: st).should eq <<-EOF
+    grid.to_chgcar(structure).should eq <<-EOF
       NaCl-O-NaCl
          1.00000000000000
            5.0000000000000000    0.0000000000000000    0.0000000000000000
@@ -58,14 +58,14 @@ describe Chem::VASP::Chgcar do
   it "fails when writing a CHGCAR with a non-periodic structure" do
     grid = make_grid 3, 3, 3, Bounds.zero
     expect_raises Chem::Spatial::NotPeriodicError do
-      grid.to_chgcar structure: Chem::Structure.new
+      grid.to_chgcar Chem::Structure.new
     end
   end
 
   it "fails when lattice and bounds are incompatible" do
     structure = Chem::Structure.build { lattice 10, 20, 30 }
     expect_raises ArgumentError, "Incompatible structure and grid" do
-      make_grid(3, 3, 3, Bounds[20, 20, 20]).to_chgcar structure: structure
+      make_grid(3, 3, 3, Bounds[20, 20, 20]).to_chgcar structure
     end
   end
 end

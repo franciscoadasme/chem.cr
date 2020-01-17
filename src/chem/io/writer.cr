@@ -7,7 +7,7 @@ module Chem
 
     @io : ::IO
 
-    def initialize(input : ::IO | Path | String, @sync_close : Bool = false)
+    def initialize(input : ::IO | Path | String, *, @sync_close : Bool = false)
       if input.is_a?(Path | String)
         input = File.new(input, "w")
         @sync_close = true
@@ -15,8 +15,8 @@ module Chem
       @io = input
     end
 
-    def self.open(io : ::IO | Path | String, sync_close : Bool = false, **options)
-      writer = new io, **options, sync_close: sync_close
+    def self.open(io : ::IO | Path | String, *args, sync_close : Bool = false, **options)
+      writer = new io, *args, **options, sync_close: sync_close
       yield writer ensure writer.close
     end
 
@@ -50,14 +50,14 @@ module Chem
       {% keyword = type < Reference ? "class" : "struct" unless keyword %}
 
       {{keyword.id}} ::{{type.id}}
-        def to_{{format.id}}(**options) : String
+        def to_{{format.id}}(*args, **options) : String
           String.build do |io|
-            to_{{format.id}} io, **options
+            to_{{format.id}} io, *args, **options
           end
         end
 
-        def to_{{format.id}}(output : ::IO | Path | String, **options) : Nil
-          {{writer}}.open(output, **options) do |writer|
+        def to_{{format.id}}(output : ::IO | Path | String, *args, **options) : Nil
+          {{writer}}.open(output, *args, **options) do |writer|
             writer.write self
           end
         end

@@ -4,9 +4,10 @@ module Chem::VASP::Poscar
     def initialize(io : ::IO | Path | String,
                    order @ele_order : Array(Element)? = nil,
                    @fractional : Bool = false,
-                   sync_close : Bool = false,
-                   @wrap : Bool = false)
-      super io, sync_close
+                   @wrap : Bool = false,
+                   *,
+                   sync_close : Bool = false)
+      super io, sync_close: sync_close
     end
 
     def write(atoms : AtomCollection, lattice : Lattice? = nil, title : String = "") : Nil
