@@ -49,8 +49,9 @@ module Chem::VASP
 
     def initialize(input : ::IO | Path | String,
                    @structure : Structure,
+                   *,
                    sync_close : Bool = false)
-      super input
+      super input, sync_close: sync_close
     end
 
     private def incompatible_expcetion : Nil

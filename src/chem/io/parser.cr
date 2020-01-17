@@ -704,21 +704,22 @@ module Chem
       {% keyword = type < Reference ? "class" : "struct" unless keyword %}
 
       {{keyword.id}} ::{{type.id}}
-        def self.from_{{format.id}}(input : ::IO | Path | String, **options) : self
-          {{parser}}.new(input, **options).parse
+        def self.from_{{format.id}}(input : ::IO | Path | String, *args, **options) : self
+          {{parser}}.new(input, *args, **options).parse
         end
       end
 
       class ::Array(T)
-        def self.from_{{format.id}}(input : ::IO | Path | String, **options) : self
-          {{parser}}.new(input, **options).to_a
+        def self.from_{{format.id}}(input : ::IO | Path | String, *args, **options) : self
+          {{parser}}.new(input, *args, **options).to_a
         end
 
         def self.from_{{format.id}}(input : ::IO | Path | String,
                                     indexes : Array(Int),
+                                    *args,
                                     **options) : self
           ary = Array(Chem::Structure).new indexes.size
-          {{parser}}.new(input, **options).each(indexes) { |st| ary << st }
+          {{parser}}.new(input, *args, **options).each(indexes) { |st| ary << st }
           ary
         end
       end

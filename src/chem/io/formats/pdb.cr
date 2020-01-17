@@ -68,8 +68,9 @@ module Chem::PDB
     def initialize(io : ::IO | Path | String,
                    @bonds : Bool | Array(Bond) = false,
                    @renumber : Bool = true,
+                   *,
                    sync_close : Bool = false)
-      super io, sync_close
+      super io, sync_close: sync_close
     end
 
     def close : Nil

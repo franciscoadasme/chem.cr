@@ -3,8 +3,9 @@ module Chem::DFTB::Gen
   class Writer < IO::Writer(AtomCollection)
     def initialize(output : ::IO | Path | String,
                    @fractional : Bool = false,
+                   *,
                    sync_close : Bool = false)
-      super output, sync_close
+      super output, sync_close: sync_close
     end
 
     def write(atoms : AtomCollection, lattice : Lattice? = nil) : Nil
