@@ -60,6 +60,6 @@ describe Chem::Cube::Writer do
 
     content = File.read "spec/data/cube/20.cube"
     io = IO::Memory.new content
-    Grid.from_cube(io).to_cube(atoms: structure).should eq content
+    Grid.from_cube(io).to_cube(structure).should eq content
   end
 end
