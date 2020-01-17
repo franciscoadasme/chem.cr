@@ -61,9 +61,9 @@ module Chem::Cube
         formatl "%5d%12.6f%12.6f%12.6f%12.6f",
           atom.atomic_number,
           atom.partial_charge,
-          atom.x,
-          atom.y,
-          atom.z
+          atom.x * ANGS_TO_BOHR,
+          atom.y * ANGS_TO_BOHR,
+          atom.z * ANGS_TO_BOHR
       end
     end
 

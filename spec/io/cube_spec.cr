@@ -40,22 +40,22 @@ end
 describe Chem::Cube::Writer do
   it "writes a grid" do
     structure = Chem::Structure.build do
-      atom :Cu, V[2.317035, 3.50954, -0.79557], partial_charge: 29.0
-      atom :O, V[3.517299, 6.882575, -1.794666], partial_charge: 8.0
-      atom :H, V[3.658572, 8.310089, -0.667807], partial_charge: 1.0
-      atom :H, V[3.55781, 7.487509, -3.515277], partial_charge: 1.0
-      atom :O, V[0.522854, 0.396282, 0.154812], partial_charge: 8.0
-      atom :H, V[-0.123518, 0.047338, 1.824539], partial_charge: 1.0
-      atom :H, V[-0.230385, -0.775379, -1.022862], partial_charge: 1.0
-      atom :O, V[6.060706, 1.880214, -0.48988], partial_charge: 8.0
-      atom :H, V[6.473038, 0.17068, -0.010227], partial_charge: 1.0
-      atom :H, V[7.644308, 2.732568, -0.787247], partial_charge: 1.0
-      atom :O, V[2.14017, 4.657838, 2.815361], partial_charge: 8.0
-      atom :O, V[1.905012, 2.624361, -4.461808], partial_charge: 8.0
-      atom :H, V[0.470734, 2.905126, -5.555472], partial_charge: 1.0
-      atom :H, V[3.187141, 1.724891, -5.399287], partial_charge: 1.0
-      atom :H, V[3.511551, 4.405199, 3.993241], partial_charge: 1.0
-      atom :H, V[0.794769, 5.548665, 3.668909], partial_charge: 1.0
+      atom :Cu, V[1.22612212, 1.85716859, -0.42099751], partial_charge: 29.0
+      atom :O, V[1.86127447, 3.64210184, -0.94969635], partial_charge: 8.0
+      atom :H, V[1.93603293, 4.39750972, -0.35338825], partial_charge: 1.0
+      atom :H, V[1.88271197, 3.96221913, -1.86020448], partial_charge: 1.0
+      atom :O, V[0.27668242, 0.2097034, 0.08192298], partial_charge: 8.0
+      atom :H, V[-0.06536291, 0.02505019, 0.96550446], partial_charge: 1.0
+      atom :H, V[-0.12191449, -0.4103129, -0.54127526], partial_charge: 1.0
+      atom :O, V[3.2071875, 0.9949664, -0.25923333], partial_charge: 8.0
+      atom :H, V[3.42538419, 0.09031997, -0.0054119], partial_charge: 1.0
+      atom :H, V[4.04519359, 1.44601271, -0.41659317], partial_charge: 1.0
+      atom :O, V[1.13252919, 2.46482172, 1.48982488], partial_charge: 8.0
+      atom :O, V[1.00808894, 1.38875203, -2.36108711], partial_charge: 8.0
+      atom :H, V[0.24910171, 1.53732647, -2.93982918], partial_charge: 1.0
+      atom :H, V[1.68656238, 0.91277301, -2.85717964], partial_charge: 1.0
+      atom :H, V[1.85823276, 2.33113092, 2.11313213], partial_charge: 1.0
+      atom :H, V[0.42057364, 2.93622707, 1.94150303], partial_charge: 1.0
     end
 
     content = File.read "spec/data/cube/20.cube"
