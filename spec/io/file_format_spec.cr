@@ -40,6 +40,29 @@ describe Chem::IO::FileFormat do
     end
   end
 
+  describe ".from_filename" do
+    it "fails for unknown filename" do
+      expect_raises ArgumentError, "File format not found for foo.bar" do
+        Chem::IO::FileFormat.from_filename "foo.bar"
+      end
+    end
+  end
+
+  describe ".from_filename?" do
+    it "returns file format based on filename" do
+      Chem::IO::FileFormat.from_filename?("img.tiff").should eq Chem::IO::FileFormat::Image
+      Chem::IO::FileFormat.from_filename?("spec.cad").should eq Chem::IO::FileFormat::CAD
+      Chem::IO::FileFormat.from_filename?("spec").should eq Chem::IO::FileFormat::License
+      Chem::IO::FileFormat.from_filename?("license").should eq Chem::IO::FileFormat::License
+      Chem::IO::FileFormat.from_filename?("license.key").should eq Chem::IO::FileFormat::License
+    end
+
+    it "returns nil for unknown filename" do
+      Chem::IO::FileFormat.from_filename?("foo.bar").should be_nil
+      Chem::IO::FileFormat.from_filename?("baz").should be_nil
+    end
+  end
+
   describe ".from_stem" do
     it "fails for unknown file stem" do
       expect_raises ArgumentError, "File format not found for UNKNOWN" do

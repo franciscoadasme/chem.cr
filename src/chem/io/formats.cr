@@ -76,6 +76,52 @@ module Chem::IO
         {% end %}
       end
 
+      # Returns the file format associated with *filename*, or raises `ArgumentError`
+      # otherwise.
+      #
+      # It first looks up the file format associated with the extension in *filename*
+      # via `.from_ext?`. If this yields no result, then it executes a case-insensitive
+      # search with the stem in *filename* via `.from_stem?`.
+      #
+      # ```
+      # @[FileType(format: Image, ext: %w(tiff png jpg), names: %w(IMG*))]
+      # ...
+      #
+      # FileFormat.from_filename("IMG_2314.tiff") # => FileFormat::Image
+      # FileFormat.from_filename("IMG_2314.png") # => FileFormat::Image
+      # FileFormat.from_filename("IMG_2314") # => FileFormat::Image
+      # FileFormat.from_filename("img_2314") # => FileFormat::Image
+      # FileFormat.from_filename("img2314") # => FileFormat::Image
+      # FileFormat.from_filename("Imi") # => raises ArgumentError
+      # ```
+      def self.from_filename(filename : Path | String) : self
+        format = from_filename? filename
+        format || raise ArgumentError.new "File format not found for #{filename}"
+      end
+
+      # Returns the file format associated with *filename*, or `nil` otherwise.
+      #
+      # It first looks up the file format associated with the extension in *filename*
+      # via `.from_ext?`. If this yields no result, then it executes a case-insensitive
+      # search with the stem in *filename* via `.from_stem?`.
+      #
+      # ```
+      # @[FileType(format: Image, ext: %w(tiff png jpg), names: %w(IMG*))]
+      # ...
+      #
+      # FileFormat.from_filename?("IMG_2314.tiff") # => FileFormat::Image
+      # FileFormat.from_filename?("IMG_2314.png") # => FileFormat::Image
+      # FileFormat.from_filename?("IMG_2314") # => FileFormat::Image
+      # FileFormat.from_filename?("img_2314") # => FileFormat::Image
+      # FileFormat.from_filename?("img2314") # => FileFormat::Image
+      # FileFormat.from_filename?("Imi") # => nil
+      # ```
+      def self.from_filename?(filename : Path | String) : self?
+        filename = Path[filename] unless filename.is_a?(Path)
+        extname = filename.extension
+        from_ext?(extname) || from_stem?(filename.basename(extname))
+      end
+
       # Returns the file format associated with *stem*, or raises `ArgumentError`
       # otherwise.
       #
