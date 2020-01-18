@@ -14,6 +14,8 @@ module Chem::IO
       {% for klass in klasses %}
         {% t = klass.annotation(FileType) %}
         {% klass.raise "FileType annotation on #{klass} must set `format`" unless t[:format] %}
+        {% if !t[:ext] && !t[:names] %}
+          {% klass.raise "FileType annotation on #{klass} must set either `ext` or `names`" %}
         {% end %}
       {% end %}
 
