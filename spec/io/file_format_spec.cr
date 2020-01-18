@@ -24,7 +24,9 @@ describe Chem::IO::FileFormat do
       Chem::IO::FileFormat.from_ext?(".jpg").should eq Chem::IO::FileFormat::Image
       Chem::IO::FileFormat.from_ext?(".png").should eq Chem::IO::FileFormat::Image
       Chem::IO::FileFormat.from_ext?(".tiff").should eq Chem::IO::FileFormat::Image
+      Chem::IO::FileFormat.from_ext?(".TIFF").should eq Chem::IO::FileFormat::Image
       Chem::IO::FileFormat.from_ext?(".cad").should eq Chem::IO::FileFormat::CAD
+      Chem::IO::FileFormat.from_ext?(".CAD").should eq Chem::IO::FileFormat::CAD
     end
 
     it "returns nil for unknown file extension" do

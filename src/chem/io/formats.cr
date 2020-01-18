@@ -59,7 +59,7 @@ module Chem::IO
 
       def self.from_ext?(extname : String) : self?
         {% begin %}
-          case extname
+          case extname.downcase
           {% for format in file_formats %}
             {% extensions = [] of MacroId %}
             {% for file_type in file_types.select(&.[:format].id.==(format)) %}
@@ -67,7 +67,7 @@ module Chem::IO
                 {% extensions << ext %}
               {% end %}
             {% end %}
-            when {{extensions.uniq.map { |ext| ".#{ext.id}" }.splat}}
+            when {{extensions.uniq.map { |ext| ".#{ext.downcase.id}" }.splat}}
               {{format}}
           {% end %}
           else
