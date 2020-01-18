@@ -12,12 +12,8 @@ module Chem::IO
 
       # check missing annotation arguments
       {% for klass in klasses %}
-        {% args = {format: String, ext: Array(Symbol)} %}
-        {% for name, type in args %}
-          {% unless klass.annotation(FileType)[name] %}
-            {% klass.raise "Named argument `#{name} : #{type}` of " \
-                           "#{FileType} annotation must be set by #{klass}" %}
-          {% end %}
+        {% t = klass.annotation(FileType) %}
+        {% klass.raise "FileType annotation on #{klass} must set `format`" unless t[:format] %}
         {% end %}
       {% end %}
 
@@ -34,18 +30,22 @@ module Chem::IO
       {% end %}
 
       # check duplicate file extensions (different file formats)
-      {% formats_by_ext = {} of String => MacroId %}
-      {% klasses_by_ext = {} of String => MacroId %}
+      {% format_by_ext = {} of String => MacroId %}
+      {% klass_by_ext = {} of String => MacroId %}
       {% for klass in klasses %}
         {% format = klass.annotation(IO::FileType)[:format].id %}
-        {% for ext in klass.annotation(IO::FileType)[:ext] %}
-          {% if (other = formats_by_ext[ext]) && other != format %}
-            {% klass.raise ".#{ext.id} extension declared in #{klass} is already " \
-                           "associated with file format #{other} via " \
-                           "#{klasses_by_ext[ext]}" %}
+        {% if extnames = klass.annotation(IO::FileType)[:ext] %}
+          {% for ext in extnames %}
+            {% if (other = format_by_ext[ext]) && other != format %}
+              {% klass.raise ".#{ext.id} extension declared in #{klass} is already " \
+                             "associated with file format #{other} via " \
+                             "#{klass_by_ext[ext]}" %}
+            {% end %}
+            {% format_by_ext[ext] = format %}
+            {% klass_by_ext[ext] = klass %}
           {% end %}
-          {% formats_by_ext[ext] = format %}
-          {% klasses_by_ext[ext] = klass %}
+        {% end %}
+          {% end %}
         {% end %}
       {% end %}
 
@@ -90,12 +90,16 @@ module Chem::IO
           {% for format in file_formats %}
             {% extensions = [] of MacroId %}
             {% for file_type in file_types.select(&.[:format].id.==(format)) %}
-              {% for ext in file_type[:ext] %}
-                {% extensions << ext %}
+              {% if extnames = file_type[:ext] %}
+                {% for ext in extnames %}
+                  {% extensions << ext %}
+                {% end %}
               {% end %}
             {% end %}
-            when {{extensions.uniq.map { |ext| ".#{ext.downcase.id}" }.splat}}
-              {{format}}
+            {% unless extensions.empty? %}
+              when {{extensions.uniq.map { |ext| ".#{ext.downcase.id}" }.splat}}
+                {{format}}
+            {% end %}
           {% end %}
           else
             nil
@@ -216,12 +220,16 @@ module Chem::IO
           {% for format in file_formats %}
             {% extensions = [] of MacroId %}
             {% for file_type in file_types.select(&.[:format].id.==(format)) %}
-              {% for ext in file_type[:ext] %}
-                {% extensions << ext %}
+              {% if extnames = file_type[:ext] %}
+                {% for ext in extnames %}
+                  {% extensions << ext %}
+                {% end %}
               {% end %}
             {% end %}
-            when {{format}}
-              {{extensions.uniq.map { |ext| ".#{ext.id}" }}}
+            {% unless extensions.empty? %}
+              when {{format}}
+                {{extensions.uniq.map { |ext| ".#{ext.id}" }}}
+            {% end %}
           {% end %}
           else
             raise "BUG: unreachable"
