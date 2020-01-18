@@ -53,10 +53,37 @@ module Chem::IO
         {{format.id}}
       {% end %}
 
+      # Returns the file format associated with *extname*, or raises `ArgumentError`
+      # otherwise.
+      #
+      # ```
+      # @[FileType(format: Image, ext: %w(tiff png jpg))]
+      # ...
+      #
+      # FileFormat.from_ext("img.tiff") # => FileFormat::Image
+      # FileFormat.from_ext("img.TIFF") # => FileFormat::Image
+      # FileFormat.from_ext("img.png")  # => FileFormat::Image
+      # FileFormat.from_ext("img.txt")  # => raises ArgumentError
+      # ```
+      #
+      # NOTE: it performs a case-insensitive search so .tiff and .TIFF return the same.
       def self.from_ext(extname : String) : self
         from_ext?(extname) || raise ArgumentError.new "File format not found for #{extname}"
       end
 
+      # Returns the file format associated with *extname*, or `nil` otherwise.
+      #
+      # ```
+      # @[FileType(format: Image, ext: %w(tiff png jpg))]
+      # ...
+      #
+      # FileFormat.from_ext?("img.tiff") # => FileFormat::Image
+      # FileFormat.from_ext?("img.TIFF") # => FileFormat::Image
+      # FileFormat.from_ext?("img.png")  # => FileFormat::Image
+      # FileFormat.from_ext?("img.txt")  # => nil
+      # ```
+      #
+      # NOTE: it performs a case-insensitive search so .tiff and .TIFF return the same.
       def self.from_ext?(extname : String) : self?
         {% begin %}
           case extname.downcase
