@@ -1,5 +1,5 @@
 module Chem::VASP::Chgcar
-  @[IO::FileType(format: Chgcar, ext: [:chgcar])]
+  @[IO::FileType(format: Chgcar, names: %w(CHGCAR*))]
   class Parser < Spatial::Grid::Parser
     include IO::AsciiParser
     include VASP::GridParser
@@ -11,7 +11,7 @@ module Chem::VASP::Chgcar
     end
   end
 
-  @[IO::FileType(format: Chgcar, ext: [:chgcar])]
+  @[IO::FileType(format: Chgcar, names: %w(CHGCAR*))]
   class Writer < IO::Writer(Spatial::Grid)
     include VASP::GridWriter
 

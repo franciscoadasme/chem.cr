@@ -1,5 +1,5 @@
 module Chem::VASP::Poscar
-  @[IO::FileType(format: Poscar, ext: [:poscar])]
+  @[IO::FileType(format: Poscar, ext: %w(poscar), names: %w(POSCAR* CONTCAR*))]
   class Writer < IO::Writer(AtomCollection)
     def initialize(io : ::IO | Path | String,
                    order @ele_order : Array(Element)? = nil,
@@ -76,7 +76,7 @@ module Chem::VASP::Poscar
     end
   end
 
-  @[IO::FileType(format: Poscar, ext: [:poscar])]
+  @[IO::FileType(format: Poscar, names: %w(POSCAR* CONTCAR*))]
   class Parser < Structure::Parser
     include IO::PullParser
 

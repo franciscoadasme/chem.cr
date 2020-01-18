@@ -1,13 +1,13 @@
 require "../spec_helper"
 
-@[Chem::IO::FileType(format: CAD, ext: [:cad])]
+@[Chem::IO::FileType(format: CAD, ext: %w(cad))]
 class CAD::Parser < Chem::IO::Parser(String)
   def parse : String
     "foo"
   end
 end
 
-@[Chem::IO::FileType(format: Image, ext: [:bmp, :jpg, :png, :tiff])]
+@[Chem::IO::FileType(format: Image, ext: %w(bmp jpg png tiff))]
 class Image::Writer < Chem::IO::Writer(String)
   def write(obj : String) : Nil; end
 end

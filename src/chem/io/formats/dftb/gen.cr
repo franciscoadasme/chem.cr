@@ -1,5 +1,5 @@
 module Chem::DFTB::Gen
-  @[IO::FileType(format: Gen, ext: [:gen])]
+  @[IO::FileType(format: Gen, ext: %w(gen))]
   class Writer < IO::Writer(AtomCollection)
     def initialize(output : ::IO | Path | String,
                    @fractional : Bool = false,
@@ -40,7 +40,7 @@ module Chem::DFTB::Gen
     end
   end
 
-  @[IO::FileType(format: Gen, ext: [:gen])]
+  @[IO::FileType(format: Gen, ext: %w(gen))]
   class Parser < Structure::Parser
     include IO::PullParser
 

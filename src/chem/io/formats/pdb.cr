@@ -55,7 +55,7 @@ module Chem::PDB
     end
   end
 
-  @[IO::FileType(format: PDB, ext: [:pdb])]
+  @[IO::FileType(format: PDB, ext: %w(ent pdb))]
   class Writer < IO::Writer(AtomCollection)
     PDB_VERSION      = "3.30"
     PDB_VERSION_DATE = Time.local 2011, 7, 13
@@ -226,7 +226,7 @@ module Chem::PDB
     end
   end
 
-  @[IO::FileType(format: PDB, ext: [:ent, :pdb])]
+  @[IO::FileType(format: PDB, ext: %w(ent pdb))]
   class Parser < Structure::Parser
     include IO::ColumnBasedParser
 

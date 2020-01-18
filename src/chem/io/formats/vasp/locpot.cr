@@ -1,5 +1,5 @@
 module Chem::VASP::Locpot
-  @[IO::FileType(format: Locpot, ext: [:locpot])]
+  @[IO::FileType(format: Locpot, names: %w(LOCPOT*))]
   class Parser < Spatial::Grid::Parser
     include IO::AsciiParser
     include GridParser
@@ -10,7 +10,7 @@ module Chem::VASP::Locpot
     end
   end
 
-  @[IO::FileType(format: Locpot, ext: [:locpot])]
+  @[IO::FileType(format: Locpot, names: %w(LOCPOT*))]
   class Writer < IO::Writer(Spatial::Grid)
     include GridWriter
 
