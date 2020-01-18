@@ -54,7 +54,7 @@ module Chem::IO
       {% end %}
 
       def self.from_ext(extname : String) : self
-        from_ext?(extname) || raise "Unknown file extension: #{extname}"
+        from_ext?(extname) || raise ArgumentError.new "File format not found for #{extname}"
       end
 
       def self.from_ext?(extname : String) : self?

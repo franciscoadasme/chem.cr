@@ -34,7 +34,7 @@ describe Chem::IO::FileFormat do
 
   describe ".from_ext" do
     it "fails for unknown file extension" do
-      expect_raises Exception, "Unknown file extension: .hei" do
+      expect_raises ArgumentError, "File format not found for .hei" do
         Chem::IO::FileFormat.from_ext ".hei"
       end
     end
