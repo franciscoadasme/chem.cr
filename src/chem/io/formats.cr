@@ -32,6 +32,8 @@ module Chem::IO
       # check duplicate file extensions (different file formats)
       {% format_by_ext = {} of String => MacroId %}
       {% klass_by_ext = {} of String => MacroId %}
+      {% format_by_name = {} of String => MacroId %}
+      {% klass_by_name = {} of String => MacroId %}
       {% for klass in klasses %}
         {% format = klass.annotation(IO::FileType)[:format].id %}
         {% if extnames = klass.annotation(IO::FileType)[:ext] %}
@@ -45,6 +47,17 @@ module Chem::IO
             {% klass_by_ext[ext] = klass %}
           {% end %}
         {% end %}
+
+        {% if names = klass.annotation(IO::FileType)[:names] %}
+          {% for name in names %}
+            {% key = name.tr("*", "").camelcase.underscore %}
+            {% if (other = format_by_name[key]) && other != format %}
+              {% klass.raise "File name #{name} declared in #{klass} is already " \
+                             "associated with file format #{other} via " \
+                             "#{klass_by_name[name]}" %}
+            {% end %}
+            {% format_by_name[key] = format %}
+            {% klass_by_name[key] = klass %}
           {% end %}
         {% end %}
       {% end %}
