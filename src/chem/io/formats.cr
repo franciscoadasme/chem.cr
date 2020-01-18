@@ -76,6 +76,67 @@ module Chem::IO
         {% end %}
       end
 
+      # Returns the file format associated with *stem*, or raises `ArgumentError`
+      # otherwise.
+      #
+      # The comparison is made using `String#camelcase` and `String#downcase`, so a file
+      # format named `ChgCar` will match `"CHGCAR"`, `"ChgCar"`, `"chgcar"`, `"CHG_CAR"`
+      # and `"chg_car"`.
+      #
+      # ```
+      # @[FileType(format: Image, names: %w(IMG*))]
+      # ...
+      #
+      # FileFormat.from_stem("IMG_2314") # => FileFormat::Image
+      # FileFormat.from_stem("img_2314") # => FileFormat::Image
+      # FileFormat.from_stem("img2314") # => FileFormat::Image
+      # FileFormat.from_stem("Imi") # => raises ArgumentError
+      # ```
+      def self.from_stem(stem : Path | String) : self
+        from_stem?(stem) || raise ArgumentError.new "File format not found for #{stem}"
+      end
+
+      # Returns the file format associated with *stem*, or `nil` otherwise.
+      #
+      # The comparison is made using `String#camelcase` and `String#downcase`, so a file
+      # format named `ChgCar` will match `"CHGCAR"`, `"ChgCar"`, `"chgcar"`, `"CHG_CAR"`
+      # and `"chg_car"`.
+      #
+      # ```
+      # @[FileType(format: Image, names: %w(IMG*))]
+      # ...
+      #
+      # FileFormat.from_stem?("IMG_2314") # => FileFormat::Image
+      # FileFormat.from_stem?("img_2314") # => FileFormat::Image
+      # FileFormat.from_stem?("img2314") # => FileFormat::Image
+      # FileFormat.from_stem?("Imi") # => nil
+      # ```
+      def self.from_stem?(stem : String) : self?
+        stem = stem.camelcase.downcase
+        {% for format in file_formats %}
+          {% file_names = [] of StringLiteral %}
+          {% for file_type in file_types.select(&.[:format].id.==(format)) %}
+            {% if names = file_type[:names] %}
+              {% for name in names %}
+                {% file_names << name.id.stringify.camelcase.downcase %}
+              {% end %}
+            {% end %}
+          {% end %}
+
+          {% for name in file_names.uniq.sort %}
+            {% if name =~ /\*\w+\*/ %}
+              return {{format}} if stem.includes? {{name[1..-2]}}
+            {% elsif name.starts_with? "*" %}
+              return {{format}} if stem.ends_with? {{name[1..-1]}}
+            {% elsif name.ends_with? "*" %}
+              return {{format}} if stem.starts_with? {{name[0..-2]}}
+            {% else %}
+              return {{format}} if stem == {{name}}
+            {% end %}
+          {% end %}
+        {% end %}
+      end
+
       def extnames : Array(String)
         {% begin %}
           case self
