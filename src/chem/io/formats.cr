@@ -115,11 +115,11 @@ module Chem::IO
       # ...
       #
       # FileFormat.from_filename("IMG_2314.tiff") # => FileFormat::Image
-      # FileFormat.from_filename("IMG_2314.png") # => FileFormat::Image
-      # FileFormat.from_filename("IMG_2314") # => FileFormat::Image
-      # FileFormat.from_filename("img_2314") # => FileFormat::Image
-      # FileFormat.from_filename("img2314") # => FileFormat::Image
-      # FileFormat.from_filename("Imi") # => raises ArgumentError
+      # FileFormat.from_filename("IMG_2314.png")  # => FileFormat::Image
+      # FileFormat.from_filename("IMG_2314")      # => FileFormat::Image
+      # FileFormat.from_filename("img_2314")      # => FileFormat::Image
+      # FileFormat.from_filename("img2314")       # => FileFormat::Image
+      # FileFormat.from_filename("Imi")           # => raises ArgumentError
       # ```
       def self.from_filename(filename : Path | String) : self
         format = from_filename? filename
@@ -137,11 +137,11 @@ module Chem::IO
       # ...
       #
       # FileFormat.from_filename?("IMG_2314.tiff") # => FileFormat::Image
-      # FileFormat.from_filename?("IMG_2314.png") # => FileFormat::Image
-      # FileFormat.from_filename?("IMG_2314") # => FileFormat::Image
-      # FileFormat.from_filename?("img_2314") # => FileFormat::Image
-      # FileFormat.from_filename?("img2314") # => FileFormat::Image
-      # FileFormat.from_filename?("Imi") # => nil
+      # FileFormat.from_filename?("IMG_2314.png")  # => FileFormat::Image
+      # FileFormat.from_filename?("IMG_2314")      # => FileFormat::Image
+      # FileFormat.from_filename?("img_2314")      # => FileFormat::Image
+      # FileFormat.from_filename?("img2314")       # => FileFormat::Image
+      # FileFormat.from_filename?("Imi")           # => nil
       # ```
       def self.from_filename?(filename : Path | String) : self?
         filename = Path[filename] unless filename.is_a?(Path)
@@ -162,8 +162,8 @@ module Chem::IO
       #
       # FileFormat.from_stem("IMG_2314") # => FileFormat::Image
       # FileFormat.from_stem("img_2314") # => FileFormat::Image
-      # FileFormat.from_stem("img2314") # => FileFormat::Image
-      # FileFormat.from_stem("Imi") # => raises ArgumentError
+      # FileFormat.from_stem("img2314")  # => FileFormat::Image
+      # FileFormat.from_stem("Imi")      # => raises ArgumentError
       # ```
       def self.from_stem(stem : Path | String) : self
         from_stem?(stem) || raise ArgumentError.new "File format not found for #{stem}"
@@ -181,8 +181,8 @@ module Chem::IO
       #
       # FileFormat.from_stem?("IMG_2314") # => FileFormat::Image
       # FileFormat.from_stem?("img_2314") # => FileFormat::Image
-      # FileFormat.from_stem?("img2314") # => FileFormat::Image
-      # FileFormat.from_stem?("Imi") # => nil
+      # FileFormat.from_stem?("img2314")  # => FileFormat::Image
+      # FileFormat.from_stem?("Imi")      # => nil
       # ```
       def self.from_stem?(stem : String) : self?
         stem = stem.camelcase.downcase
