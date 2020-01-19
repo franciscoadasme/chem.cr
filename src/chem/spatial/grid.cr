@@ -72,9 +72,9 @@ module Chem::Spatial
 
     def self.build(dim : Dimensions,
                    bounds : Bounds,
-                   &block : Pointer(Float64) ->)
+                   &block : Pointer(Float64), Int32 ->) : self
       grid = new dim, bounds
-      yield grid.to_unsafe
+      yield grid.to_unsafe, grid.size
       grid
     end
 
