@@ -22,7 +22,7 @@ module Chem
     end
 
     def self.read(path : Path | String, guess_topology : Bool = true) : self
-      format = IO::FileFormat.from_ext File.extname(path)
+      format = IO::FileFormat.from_filename File.basename(path)
       read path, format, guess_topology
     end
 
