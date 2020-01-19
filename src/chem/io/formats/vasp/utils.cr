@@ -14,11 +14,12 @@ module Chem::VASP
     private def read_array(info : Spatial::Grid::Info,
                            & : Float64 -> Float64) : Spatial::Grid
       nx, ny, nz = info.dim
+      nyz = ny * nz
       Grid.build(info) do |buffer|
         nz.times do |k|
           ny.times do |j|
             nx.times do |i|
-              buffer[i * ny * nz + j * nz + k] = yield read_float
+              buffer[i * nyz + j * nz + k] = yield read_float
             end
           end
         end
