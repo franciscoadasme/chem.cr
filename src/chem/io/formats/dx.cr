@@ -5,35 +5,28 @@ module Chem::DX
 
     def info : Spatial::Grid::Info
       skip_comments
-      dim, bounds = read_header
-      Spatial::Grid::Info.new bounds, dim
-    end
-
-    def parse : Spatial::Grid
-      skip_comments
-      dim, bounds = read_header
-      Spatial::Grid.build(dim, bounds) do |buffer|
-        (dim[0] * dim[1] * dim[2]).times do |i|
-          buffer[i] = read_float
-        end
-      end
-    end
-
-    private def read_header : Tuple(Spatial::Grid::Dimensions, Bounds)
       skip_words 5
       nx, ny, nz = read_int, read_int, read_int
       skip_word # origin
       origin = read_vector
       skip_word # delta
-      a = read_vector
+      i = read_vector
       skip_word # delta
-      b = read_vector
+      j = read_vector
       skip_word # delta
-      c = read_vector
+      k = read_vector
       skip_lines 3
 
-      size = Spatial::Size[a.size * (nx - 1), b.size * (ny - 1), c.size * (nz - 1)]
-      { {nx, ny, nz}, Bounds.new(origin, size) }
+      size = Spatial::Size[i.size * (nx - 1), j.size * (ny - 1), k.size * (nz - 1)]
+      Spatial::Grid::Info.new Spatial::Bounds.new(origin, size), {nx, ny, nz}
+    end
+
+    def parse : Spatial::Grid
+      Spatial::Grid.build(info) do |buffer, size|
+        size.times do |i|
+          buffer[i] = read_float
+        end
+      end
     end
 
     private def skip_comments : Nil

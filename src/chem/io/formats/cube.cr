@@ -20,9 +20,8 @@ module Chem::Cube
     end
 
     def parse : Spatial::Grid
-      grid_info = info
-      Spatial::Grid.build(grid_info.dim, grid_info.bounds) do |buffer|
-        (grid_info.dim[0] * grid_info.dim[1] * grid_info.dim[2]).times do |i|
+      Spatial::Grid.build(info) do |buffer, size|
+        size.times do |i|
           buffer[i] = read_float
         end
       end
