@@ -52,11 +52,29 @@ module Chem::Spatial
       atom_distance structure, other.dim, other.bounds
     end
 
+    # Creates a new `Grid` with *info* and yields a buffer to be filled.
+    #
+    # This method is **unsafe**, but it is usually used to initialize the buffer in a
+    # linear fashion, e.g., reading values from a file.
+    #
+    # ```
+    # Grid.build(Grid.info("/path/to/file")) do |buffer, size|
+    #   size.times do |i|
+    #     buffer[i] = read_value
+    #   end
+    # end
+    # ```
+    def self.build(info : Info, & : Pointer(Float64), Int32 ->) : self
+      grid = empty_like info
+      yield grid.to_unsafe, grid.size
+      grid
+    end
+
     def self.build(dim : Dimensions,
                    bounds : Bounds,
-                   &block : Pointer(Float64) ->)
+                   &block : Pointer(Float64), Int32 ->) : self
       grid = new dim, bounds
-      yield grid.to_unsafe
+      yield grid.to_unsafe, grid.size
       grid
     end
 

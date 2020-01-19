@@ -1,16 +1,20 @@
 module Chem::VASP
   module GridParser
     def info : Spatial::Grid::Info
-      nx, ny, nz, bounds = read_header
+      skip_line
+      scale = read_float
+      lattice = Lattice.new scale * read_vector, scale * read_vector, scale * read_vector
+      skip_atoms
+      nx, ny, nz = read_int, read_int, read_int
+
+      bounds = Spatial::Bounds.new Spatial::Vector.origin, lattice.size
       Spatial::Grid::Info.new bounds, {nx, ny, nz}
     end
 
-    private def read_array(nx : Int,
-                           ny : Int,
-                           nz : Int,
-                           bounds : Spatial::Bounds,
+    private def read_array(info : Spatial::Grid::Info,
                            & : Float64 -> Float64) : Spatial::Grid
-      Grid.build({nx, ny, nz}, bounds) do |buffer|
+      nx, ny, nz = info.dim
+      Grid.build(info) do |buffer|
         nz.times do |k|
           ny.times do |j|
             nx.times do |i|
@@ -21,10 +25,7 @@ module Chem::VASP
       end
     end
 
-    private def read_header : Tuple(Int32, Int32, Int32, Spatial::Bounds)
-      skip_line
-      scale = read_float
-      lattice = Lattice.new scale * read_vector, scale * read_vector, scale * read_vector
+    private def skip_atoms : Nil
       n_atoms = 0
       n_elements = 0
       loop do
@@ -40,7 +41,6 @@ module Chem::VASP
       skip_line if (char = peek) && char.in_set?("sS")
       skip_line
       n_atoms.times { skip_line }
-      {read_int, read_int, read_int, Bounds.new(Vector.origin, lattice.size)}
     end
   end
 

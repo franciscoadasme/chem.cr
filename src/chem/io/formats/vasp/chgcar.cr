@@ -5,9 +5,9 @@ module Chem::VASP::Chgcar
     include VASP::GridParser
 
     def parse : Spatial::Grid
-      nx, ny, nz, bounds = read_header
-      volume = bounds.volume
-      read_array nx, ny, nz, bounds, &./(volume)
+      info = self.info
+      volume = info.bounds.volume
+      read_array info, &./(volume)
     end
   end
 

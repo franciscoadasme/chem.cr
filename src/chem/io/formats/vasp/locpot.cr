@@ -5,8 +5,8 @@ module Chem::VASP::Locpot
     include GridParser
 
     def parse : Spatial::Grid
-      nx, ny, nz, bounds = read_header
-      read_array nx, ny, nz, bounds, &.itself
+      info = self.info
+      read_array info, &.itself
     end
   end
 
