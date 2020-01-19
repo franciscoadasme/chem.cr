@@ -87,7 +87,7 @@ module Chem::Spatial
     end
 
     def self.info(path : Path | String) : Info
-      info path, IO::FileFormat.from_ext File.extname(path)
+      info path, IO::FileFormat.from_filename File.basename(path)
     end
 
     def self.info(input : ::IO | Path | String, format : IO::FileFormat) : Info
