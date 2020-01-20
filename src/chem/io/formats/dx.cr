@@ -57,13 +57,13 @@ module Chem::DX
     end
 
     private def write_connections(grid : Spatial::Grid) : Nil
-      formatl "object 2 class gridconnections counts %d %d %d", grid.nx, grid.ny, grid.nz
+      formatl "object 2 class gridconnections counts %d %d %d", grid.ni, grid.nj, grid.nk
     end
 
     private def write_header(grid : Spatial::Grid) : Nil
       rx, ry, rz = grid.resolution
 
-      formatl "object 1 class gridpositions counts %d %d %d", grid.nx, grid.ny, grid.nz
+      formatl "object 1 class gridpositions counts %d %d %d", grid.ni, grid.nj, grid.nk
       formatl "origin%8.3f%8.3f%8.3f", grid.origin.x, grid.origin.y, grid.origin.z
       formatl "delta %8.3f%8.3f%8.3f", rx, 0, 0
       formatl "delta %8.3f%8.3f%8.3f", 0, ry, 0

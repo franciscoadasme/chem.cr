@@ -110,9 +110,9 @@ describe Chem::Spatial::Grid do
     it "initializes a grid" do
       grid = Grid.new({2, 3, 2}, Bounds[1, 1, 1])
       grid.dim.should eq({2, 3, 2})
-      grid.nx.should eq 2
-      grid.ny.should eq 3
-      grid.nz.should eq 2
+      grid.ni.should eq 2
+      grid.nj.should eq 3
+      grid.nk.should eq 2
       grid.resolution.should eq({1, 0.5, 1})
       grid.to_a.should eq Array(Float64).new(12, 0.0)
     end
@@ -460,21 +460,21 @@ describe Chem::Spatial::Grid do
     end
   end
 
-  describe "#nx" do
+  describe "#ni" do
     it "returns the number of points along the first axis" do
-      make_grid(2, 6, 1).nx.should eq 2
+      make_grid(2, 6, 1).ni.should eq 2
     end
   end
 
-  describe "#ny" do
+  describe "#nj" do
     it "returns the number of points along the second axis" do
-      make_grid(2, 6, 1).ny.should eq 6
+      make_grid(2, 6, 1).nj.should eq 6
     end
   end
 
-  describe "#nz" do
+  describe "#nk" do
     it "returns the number of points along the third axis" do
-      make_grid(2, 6, 1).nz.should eq 1
+      make_grid(2, 6, 1).nk.should eq 1
     end
   end
 

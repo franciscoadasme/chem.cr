@@ -25,8 +25,8 @@ module Chem::Spatial
       @buffer = Pointer(Float64).malloc size, initial_value
     end
 
-    def self.[](nx : Int, ny : Int, nz : Int) : self
-      new({nx.to_i, ny.to_i, nz.to_i}, Bounds.zero)
+    def self.[](ni : Int, nj : Int, nk : Int) : self
+      new({ni.to_i, nj.to_i, nk.to_i}, Bounds.zero)
     end
 
     def self.atom_distance(structure : Structure,
@@ -267,9 +267,9 @@ module Chem::Spatial
     end
 
     def each_index(& : Int32, Int32, Int32 ->) : Nil
-      nx.times do |i|
-        ny.times do |j|
-          nz.times do |k|
+      ni.times do |i|
+        nj.times do |j|
+          nk.times do |k|
             yield i, j, k
           end
         end
@@ -280,9 +280,9 @@ module Chem::Spatial
       return unless index = index(vec)
       di, dj, dk = resolution.map { |ele| (cutoff / ele).to_i }
       cutoff *= cutoff
-      ((index[0] - di - 1)..(index[0] + di + 1)).clamp(0..nx - 1).each do |i|
-        ((index[1] - dj - 1)..(index[1] + dj + 1)).clamp(0..ny - 1).each do |j|
-          ((index[2] - dk - 1)..(index[2] + dk + 1)).clamp(0..nz - 1).each do |k|
+      ((index[0] - di - 1)..(index[0] + di + 1)).clamp(0..ni - 1).each do |i|
+        ((index[1] - dj - 1)..(index[1] + dj + 1)).clamp(0..nj - 1).each do |j|
+          ((index[2] - dk - 1)..(index[2] + dk + 1)).clamp(0..nk - 1).each do |k|
             d = Spatial.squared_distance vec, unsafe_coords_at(i, j, k)
             yield i, j, k, Math.sqrt(d) if d < cutoff
           end
@@ -351,36 +351,42 @@ module Chem::Spatial
       self
     end
 
-    {% for axis, i in %w(x y z) %}
-      def n{{axis.id}} : Int32
-        dim[{{i}}]
-      end
-    {% end %}
+    def ni : Int32
+      dim[0]
+    end
+
+    def nj : Int32
+      dim[1]
+    end
+
+    def nk : Int32
+      dim[2]
+    end
 
     def resolution : Tuple(Float64, Float64, Float64)
-      {nx == 1 ? 0.0 : bounds.i.size / (nx - 1),
-       ny == 1 ? 0.0 : bounds.j.size / (ny - 1),
-       nz == 1 ? 0.0 : bounds.k.size / (nz - 1)}
+      {ni == 1 ? 0.0 : bounds.i.size / (ni - 1),
+       nj == 1 ? 0.0 : bounds.j.size / (nj - 1),
+       nk == 1 ? 0.0 : bounds.k.size / (nk - 1)}
     end
 
     def size : Int32
-      nx * ny * nz
+      ni * nj * nk
     end
 
     def step(n : Int) : self
       step n, n, n
     end
 
-    def step(ni : Int, nj : Int, nk : Int) : self
-      raise ArgumentError.new "Invalid step size" unless ni > 0 && nj > 0 && nk > 0
-      new_nx = nx // ni
-      new_nx += 1 if new_nx % ni > 0
-      new_ny = ny // nj
-      new_ny += 1 if new_ny % nj > 0
-      new_nz = nz // nk
-      new_nz += 1 if new_nz % nk > 0
-      Grid.new({new_nx, new_ny, new_nz}, bounds) do |i, j, k|
-        unsafe_fetch i * ni, j * nj, k * nk
+    def step(di : Int, dj : Int, dk : Int) : self
+      raise ArgumentError.new "Invalid step size" unless di > 0 && dj > 0 && dk > 0
+      new_ni = ni // di
+      new_ni += 1 if new_ni % di > 0
+      new_nj = nj // dj
+      new_nj += 1 if new_nj % dj > 0
+      new_nk = nk // dk
+      new_nk += 1 if new_nk % dk > 0
+      Grid.new({new_ni, new_nj, new_nk}, bounds) do |i, j, k|
+        unsafe_fetch i * di, j * dj, k * dk
       end
     end
 
@@ -405,10 +411,10 @@ module Chem::Spatial
     end
 
     private def internal_index?(i : Int, j : Int, k : Int) : Int32?
-      i += nx if i < 0
-      j += ny if j < 0
-      k += nz if k < 0
-      if 0 <= i < nx && 0 <= j < ny && 0 <= k < nz
+      i += ni if i < 0
+      j += nj if j < 0
+      k += nk if k < 0
+      if 0 <= i < ni && 0 <= j < nj && 0 <= k < nk
         unsafe_index i, j, k
       else
         nil
@@ -417,17 +423,17 @@ module Chem::Spatial
 
     @[AlwaysInline]
     private def raw_to_index(i_ : Int) : Index
-      i = i_ // (ny * nz)
-      j = (i_ // nz) % ny
-      k = i_ % nz
+      i = i_ // (nj * nk)
+      j = (i_ // nk) % nj
+      k = i_ % nk
       {i, j, k}
     end
 
     @[AlwaysInline]
     private def unsafe_coords_at(i : Int, j : Int, k : Int) : Vector
-      vi = nx == 1 ? Vector.zero : bounds.i / (nx - 1)
-      vj = ny == 1 ? Vector.zero : bounds.j / (ny - 1)
-      vk = nz == 1 ? Vector.zero : bounds.k / (nz - 1)
+      vi = ni == 1 ? Vector.zero : bounds.i / (ni - 1)
+      vj = nj == 1 ? Vector.zero : bounds.j / (nj - 1)
+      vk = nk == 1 ? Vector.zero : bounds.k / (nk - 1)
       origin + i * vi + j * vj + k * vk
     end
 
@@ -438,7 +444,7 @@ module Chem::Spatial
 
     @[AlwaysInline]
     private def unsafe_index(i : Int, j : Int, k : Int) : Int
-      i * ny * nz + j * nz + k
+      i * nj * nk + j * nk + k
     end
   end
 end
