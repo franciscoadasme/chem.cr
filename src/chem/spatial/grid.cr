@@ -304,11 +304,8 @@ module Chem::Spatial
 
     def index(vec : Vector) : Index?
       return unless bounds.includes? vec
-      rx, ry, rz = resolution
-      i = ((vec.x - origin.x) / rx).to_i
-      j = ((vec.y - origin.y) / ry).to_i
-      k = ((vec.z - origin.z) / rz).to_i
-      {i, j, k}
+      vec = (vec - origin).to_fractional bounds.basis
+      (vec * @dim.map &.-(1)).round.to_t.map &.to_i
     end
 
     def index!(vec : Vector) : Index
@@ -361,9 +358,9 @@ module Chem::Spatial
     {% end %}
 
     def resolution : Tuple(Float64, Float64, Float64)
-      {nx == 1 ? 0.0 : bounds.size.x / (nx - 1),
-       ny == 1 ? 0.0 : bounds.size.y / (ny - 1),
-       nz == 1 ? 0.0 : bounds.size.z / (nz - 1)}
+      {nx == 1 ? 0.0 : bounds.i.size / (nx - 1),
+       ny == 1 ? 0.0 : bounds.j.size / (ny - 1),
+       nz == 1 ? 0.0 : bounds.k.size / (nz - 1)}
     end
 
     def size : Int32
@@ -428,8 +425,10 @@ module Chem::Spatial
 
     @[AlwaysInline]
     private def unsafe_coords_at(i : Int, j : Int, k : Int) : Vector
-      rx, ry, rz = resolution
-      Vector[origin.x + i * rx, origin.y + j * ry, origin.z + k * rz]
+      vi = nx == 1 ? Vector.zero : bounds.i / (nx - 1)
+      vj = ny == 1 ? Vector.zero : bounds.j / (ny - 1)
+      vk = nz == 1 ? Vector.zero : bounds.k / (nz - 1)
+      origin + i * vi + j * vj + k * vk
     end
 
     @[AlwaysInline]
