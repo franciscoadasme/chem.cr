@@ -37,8 +37,8 @@ describe Chem::DX::Parser do
       object 1 class gridpositions counts 2 3 3
       origin   0.500   0.300   1.000
       delta   10.000   0.000   0.000
-      delta    0.000  20.000   0.000
-      delta    0.000   0.000  10.000
+      delta    5.000  20.000   0.000
+      delta    8.000   5.000  10.000
       object 2 class gridconnections counts 2 3 3
       object 3 class array type double rank 0 items 18 data follows
             0.00000000      1.00000000      2.00000000
@@ -49,7 +49,12 @@ describe Chem::DX::Parser do
           120.00000000    121.00000000    122.00000000\n
       EOS
     info = Grid.info io, :dx
-    info.bounds.should eq Bounds.new(V[0.5, 0.3, 1], S[10, 40, 20])
+    info.bounds.should eq Bounds.new(
+      V[0.5, 0.3, 1],
+      V[10, 0, 0],
+      V[10, 40, 0],
+      V[16, 10, 20]
+    )
     info.dim.should eq({2, 3, 3})
   end
 end

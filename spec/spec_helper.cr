@@ -90,9 +90,9 @@ module Spec
 
     def match(actual_value : Chem::Spatial::Bounds) : Bool
       (actual_value.origin - @expected_value.origin).abs.size <= @delta &&
-        (actual_value.size.x - @expected_value.size.x).abs <= @delta &&
-        (actual_value.size.y - @expected_value.size.y).abs <= @delta &&
-        (actual_value.size.z - @expected_value.size.z).abs <= @delta
+        (actual_value.i - @expected_value.i).abs.size <= @delta &&
+        (actual_value.j - @expected_value.j).abs.size <= @delta &&
+        (actual_value.k - @expected_value.k).abs.size <= @delta
     end
   end
 end

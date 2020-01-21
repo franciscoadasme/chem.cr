@@ -6,19 +6,19 @@ module Chem::DX
     def info : Spatial::Grid::Info
       skip_comments
       skip_words 5
-      nx, ny, nz = read_int, read_int, read_int
+      ni, nj, nk = read_int, read_int, read_int
       skip_word # origin
       origin = read_vector
       skip_word # delta
-      i = read_vector
+      i = read_vector * (ni - 1)
       skip_word # delta
-      j = read_vector
+      j = read_vector * (nj - 1)
       skip_word # delta
-      k = read_vector
+      k = read_vector * (nk - 1)
       skip_lines 3
 
-      size = Spatial::Size[i.size * (nx - 1), j.size * (ny - 1), k.size * (nz - 1)]
-      Spatial::Grid::Info.new Spatial::Bounds.new(origin, size), {nx, ny, nz}
+      bounds = Spatial::Bounds.new origin, i, j, k
+      Spatial::Grid::Info.new bounds, {ni, nj, nk}
     end
 
     def parse : Spatial::Grid

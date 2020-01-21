@@ -3,11 +3,11 @@ module Chem::VASP
     def info : Spatial::Grid::Info
       skip_line
       scale = read_float
-      lattice = Lattice.new scale * read_vector, scale * read_vector, scale * read_vector
+      i, j, k = scale * read_vector, scale * read_vector, scale * read_vector
       skip_atoms
       nx, ny, nz = read_int, read_int, read_int
 
-      bounds = Spatial::Bounds.new Spatial::Vector.origin, lattice.size
+      bounds = Spatial::Bounds.new Spatial::Vector.origin, i, j, k
       Spatial::Grid::Info.new bounds, {nx, ny, nz}
     end
 

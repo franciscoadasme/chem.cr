@@ -4,7 +4,12 @@ describe Chem::VASP::Locpot do
   it "parses a LOCPOT" do
     grid = Grid.from_locpot "spec/data/vasp/LOCPOT"
     grid.dim.should eq({32, 32, 32})
-    grid.bounds.should be_close Bounds[2.969, 2.969, 2.969], 1e-3
+    grid.bounds.should be_close Bounds.new(
+      V.origin,
+      V[2.969072, -0.000523, -0.000907],
+      V[-0.987305, 2.800110, 0.000907],
+      V[-0.987305, -1.402326, 2.423654],
+    ), 1e-6
     grid[0, 0, 0].should eq -46.16312251
     grid[0, 5, 11].should eq -8.1037443195
     grid[7, 31, 0].should eq -17.403441349
@@ -14,7 +19,12 @@ describe Chem::VASP::Locpot do
 
   it "parses a LOCPOT header" do
     info = Grid.info "spec/data/vasp/LOCPOT", :chgcar
-    info.bounds.should be_close Bounds[2.969, 2.969, 2.969], 1e-3
+    info.bounds.should be_close Bounds.new(
+      V.origin,
+      V[2.969072, -0.000523, -0.000907],
+      V[-0.987305, 2.800110, 0.000907],
+      V[-0.987305, -1.402326, 2.423654],
+    ), 1e-6
     info.dim.should eq({32, 32, 32})
   end
 
