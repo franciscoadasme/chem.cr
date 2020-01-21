@@ -110,9 +110,9 @@ describe Chem::Spatial::Grid do
     it "initializes a grid" do
       grid = Grid.new({2, 3, 2}, Bounds[1, 1, 1])
       grid.dim.should eq({2, 3, 2})
-      grid.nx.should eq 2
-      grid.ny.should eq 3
-      grid.nz.should eq 2
+      grid.ni.should eq 2
+      grid.nj.should eq 3
+      grid.nk.should eq 2
       grid.resolution.should eq({1, 0.5, 1})
       grid.to_a.should eq Array(Float64).new(12, 0.0)
     end
@@ -226,15 +226,16 @@ describe Chem::Spatial::Grid do
     end
 
     it "returns the value at the coordinates" do
-      grid = make_grid 6, 10, 8, Bounds.new(V[2, 3, 4], S[1, 1, 1])
+      grid = make_grid 6, 11, 9, Bounds.new(V[2, 3, 4], S[1, 1, 1])
       grid[V[2, 3, 4]]?.should eq 0
-      grid[V[2.5, 3.5, 4.5]]?.should eq 195
-      grid[V[3, 4, 5]]?.should eq 479
+      grid[V[2.2, 3.6, 4.25]]?.should eq 155
+      grid[V[3, 4, 5]]?.should eq 593
     end
 
     it "returns the value close to the coordinates" do
       grid = make_grid 6, 10, 8, Bounds.new(V[2, 3, 4], S[1, 1, 1])
-      grid[V[2.51, 3.505, 4.51]]?.should eq 195 # no interpolation
+      grid[V[2.51, 3.505, 4.51]]?.should eq 284 # no interpolation
+      grid[V[2.65, 3.24, 4.97]]?.should eq 263  # no interpolation
     end
 
     it "returns nil when indexes are out of bounds" do
@@ -270,6 +271,13 @@ describe Chem::Spatial::Grid do
       grid.coords_at?(0, 0, 0).should eq V[1, 2, 3]
       grid.coords_at?(10, 10, 10).should eq V[11, 22, 33]
       grid.coords_at?(3, 5, 0).should eq V[4, 12, 3]
+    end
+
+    it "returns the coordinates at indexes (non-orthogonal)" do
+      grid = make_grid 11, 11, 11, Bounds.new(V[1, 2, 3], S[10, 10, 5], 90, 90, 120)
+      grid.coords_at?(0, 0, 0).should eq V[1, 2, 3]
+      grid.coords_at?(10, 10, 10).not_nil!.should be_close V[6, 10.660, 8], 1e-3
+      grid.coords_at?(3, 5, 0).not_nil!.should be_close V[1.5, 6.330, 3], 1e-3
     end
 
     it "returns nil when indexes are out of bounds" do
@@ -374,7 +382,16 @@ describe Chem::Spatial::Grid do
       grid = make_grid 6, 10, 8, Bounds.new(V[2, 3, 4], S[1, 1, 1])
       grid.index(V[2, 3, 4]).should eq({0, 0, 0})
       grid.index(V[3, 4, 5]).should eq({5, 9, 7})
-      grid.index(V[2.5, 3.5, 4.5]).should eq({2, 4, 3})
+      grid.index(V[2.45, 3.4, 4.4]).should eq({2, 4, 3})
+      grid.index(V[2.16, 3.75, 4.87]).should eq({1, 7, 6})
+    end
+
+    it "returns the index at the coordinates (non-orthogonal)" do
+      grid = make_grid 11, 11, 11, Bounds.new(V[4, 3, 2], S[5, 5, 4], 90, 100, 90)
+      grid.index(V[4, 3, 2]).should eq({0, 0, 0})
+      grid.index(V[8.305, 8, 5.939]).should eq({10, 10, 10})
+      grid.index(V[4.5, 6.21, 2.63]).should eq({1, 6, 2})
+      grid.index(V[7.4, 4.91, 5.4]).should eq({8, 4, 9})
     end
 
     it "returns nil when coordinates are out of bounds" do
@@ -443,21 +460,21 @@ describe Chem::Spatial::Grid do
     end
   end
 
-  describe "#nx" do
+  describe "#ni" do
     it "returns the number of points along the first axis" do
-      make_grid(2, 6, 1).nx.should eq 2
+      make_grid(2, 6, 1).ni.should eq 2
     end
   end
 
-  describe "#ny" do
+  describe "#nj" do
     it "returns the number of points along the second axis" do
-      make_grid(2, 6, 1).ny.should eq 6
+      make_grid(2, 6, 1).nj.should eq 6
     end
   end
 
-  describe "#nz" do
+  describe "#nk" do
     it "returns the number of points along the third axis" do
-      make_grid(2, 6, 1).nz.should eq 1
+      make_grid(2, 6, 1).nk.should eq 1
     end
   end
 

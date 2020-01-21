@@ -18,6 +18,29 @@ describe Chem::Cube::Parser do
     info.bounds.size.should be_close S[12.184834, 12.859271, 13.117308], 1e-6
   end
 
+  it "parses a cube file header (non-orthogonal)" do
+    io = IO::Memory.new <<-EOS
+      Comment line 1
+      Comment line 2
+         3   -7.230385   -7.775379  -12.555472
+        14    1.146929    0.000000    0.000000
+        20    0.255354    1.061993    0.000000
+        22    0.499640    0.190885    3.536519
+        29   29.000000    2.317035    3.509540   -0.795570
+         8    8.000000    3.517299    6.882575   -1.794666
+         1    1.000000    3.658572    8.310089   -0.667807
+         1    1.000000    3.557810    7.487509   -3.515277
+      EOS
+    info = Grid.info io, :cube
+    info.dim.should eq({14, 20, 22})
+    info.bounds.should be_close Bounds.new(
+      V[-3.826155, -4.114553, -6.64407],
+      V[8.497002, 0.0, 0.0],
+      V[2.702550, 11.23965, 0.0],
+      V[5.816758, 2.222264, 41.171796],
+    ), 1e-6
+  end
+
   it "fails when cube have multiple densities" do
     io = IO::Memory.new <<-EOF
       CPMD CUBE FILE.
