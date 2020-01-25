@@ -351,6 +351,38 @@ module Chem::Spatial
       self
     end
 
+    # Returns a grid mask. Elements for which the passed block returns `true` are set to
+    # 1, otherwise 0.
+    #
+    # Grid masks are very useful to deal with multiple grids, and when points are to be
+    # selected based on one grid only.
+    #
+    # ```
+    # grid = Grid.new({2, 2, 2}, Bounds[10, 10, 10]) { |i, j, k| i + j + k }
+    # grid.to_a              # => [0, 1, 1, 2, 1, 2, 2, 3]
+    # grid.mask(&.>(1)).to_a # => [0, 0, 0, 1, 0, 1, 1, 1]
+    # grid.to_a              # => [0, 1, 1, 2, 1, 2, 2, 3]
+    # ```
+    def mask(& : Float64 -> Bool) : self
+      map { |ele| (yield ele) ? 1.0 : 0.0 }
+    end
+
+    # Returns a grid mask. Elements for which `pattern === element` returns `true` are
+    # set to 1, otherwise 0.
+    #
+    # Grid masks are very useful to deal with multiple grids, and when points are to be
+    # selected based on one grid only.
+    #
+    # ```
+    # grid = Grid.new({2, 2, 3}, Bounds[1, 1, 1]) { |i, j, k| (i + 1) * (j + 1) * (k + 1) }
+    # grid.to_a              # => [1, 2, 3, 2, 4, 6, 2, 4, 6, 4, 8, 12]
+    # grid.mask(2..4.5).to_a # => [0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0]
+    # grid.to_a              # => [1, 2, 3, 2, 4, 6, 2, 4, 6, 4, 8, 12]
+    # ```
+    def mask(pattern) : self
+      mask { |ele| pattern === ele }
+    end
+
     def ni : Int32
       dim[0]
     end

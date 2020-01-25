@@ -460,6 +460,26 @@ describe Chem::Spatial::Grid do
     end
   end
 
+  describe "#mask" do
+    it "returns a masked grid by a number" do
+      grid = make_grid(2, 2, 2) { |i, j, k| i + j + k }
+      grid.mask(2).to_a.should eq [0, 0, 0, 1, 0, 1, 1, 0]
+      grid.to_a.should eq [0, 1, 1, 2, 1, 2, 2, 3]
+    end
+
+    it "returns a masked grid by a range" do
+      grid = make_grid(2, 2, 3) { |i, j, k| (i + 1) * (j + 1) * (k + 1) }
+      grid.mask(2..4.5).to_a.should eq [0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0]
+      grid.to_a.should eq [1, 2, 3, 2, 4, 6, 2, 4, 6, 4, 8, 12]
+    end
+
+    it "returns a masked grid with a block" do
+      grid = make_grid(2, 2, 3) { |i, j, k| (i + 1) / (j + 1) * (k + 1) }
+      grid.mask(&.<(2)).to_a.should eq [1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0]
+      grid.to_a.should eq [1, 2, 3, 0.5, 1, 1.5, 2, 4, 6, 1, 2, 3]
+    end
+  end
+
   describe "#ni" do
     it "returns the number of points along the first axis" do
       make_grid(2, 6, 1).ni.should eq 2
