@@ -467,6 +467,12 @@ describe Chem::Spatial::Grid do
       grid.to_a.should eq [0, 1, 1, 2, 1, 2, 2, 3]
     end
 
+    it "returns a masked grid by a number+-delta" do
+      grid = make_grid(2, 2, 3) { |i, j, k| (i + 1) * (j + 1) * (k + 1) / 5 }
+      grid.mask(1, 0.5).to_a.should eq [0, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 0]
+      grid.to_a.should eq [0.2, 0.4, 0.6, 0.4, 0.8, 1.2, 0.4, 0.8, 1.2, 0.8, 1.6, 2.4]
+    end
+
     it "returns a masked grid by a range" do
       grid = make_grid(2, 2, 3) { |i, j, k| (i + 1) * (j + 1) * (k + 1) }
       grid.mask(2..4.5).to_a.should eq [0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0]
@@ -485,6 +491,12 @@ describe Chem::Spatial::Grid do
       grid = make_grid(2, 3, 2) { |i, j, k| i + j + k }
       grid.mask! 3
       grid.to_a.should eq [0, 0, 0, 0, 0, 3, 0, 0, 0, 3, 3, 0]
+    end
+
+    it "masks a grid in-place by a number+-delta" do
+      grid = make_grid(2, 2, 3) { |i, j, k| (i + j + k) / 5 }
+      grid.mask! 0.5, 0.1
+      grid.to_a.should eq [0, 0, 0.4, 0, 0.4, 0.6, 0, 0.4, 0.6, 0.4, 0.6, 0]
     end
 
     it "masks a grid in-place by a range" do
