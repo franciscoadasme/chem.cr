@@ -383,6 +383,38 @@ module Chem::Spatial
       mask { |ele| pattern === ele }
     end
 
+    # Masks a grid by the passed block. Elements for which the passed block returns
+    # `false` are set to 0.
+    #
+    # Optimized version for creating a mask and apply it to the same grid, i.e., `grid *
+    # grid.mask { ... }`, by avoiding creation of intermediate grids.
+    #
+    # ```
+    # grid = Grid.new({2, 2, 2}, Bounds[10, 10, 10]) { |i, j, k| i + j + k }
+    # grid.to_a # => [0, 1, 1, 2, 1, 2, 2, 3]
+    # grid.mask! &.>(1)
+    # grid.to_a # => [0, 0, 0, 2, 0, 2, 2, 3]
+    # ```
+    def mask!(& : Float64 -> Bool) : self
+      map! { |ele| (yield ele) ? ele : 0.0 }
+    end
+
+    # Masks a grid by *pattern*. Elements for which `pattern === element` returns
+    # `false` are set to 0.
+    #
+    # Optimized version for creating a mask and apply it to the same grid, i.e., `grid *
+    # grid.mask(*pattern*)`, by avoiding creation of intermediate grids.
+    #
+    # ```
+    # grid = Grid.new({2, 2, 3}, Bounds[1, 1, 1]) { |i, j, k| (i + 1) * (j + 1) * (k + 1) }
+    # grid.to_a # => [1, 2, 3, 2, 4, 6, 2, 4, 6, 4, 8, 12]
+    # grid.mask! 2..4.5
+    # grid.to_a # => [0, 2, 3, 2, 4, 0, 2, 4, 0, 4, 0, 0]
+    # ```
+    def mask!(pattern) : self
+      mask! { |ele| pattern === ele }
+    end
+
     def ni : Int32
       dim[0]
     end
