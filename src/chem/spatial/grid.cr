@@ -402,8 +402,9 @@ module Chem::Spatial
     # Masks a grid by the passed block. Elements for which the passed block returns
     # `false` are set to 0.
     #
-    # Optimized version for creating a mask and apply it to the same grid, i.e., `grid *
-    # grid.mask { ... }`, by avoiding creation of intermediate grids.
+    # Optimized version of creating a mask and applying it to the same grid, but avoids
+    # creating intermediate grids. This is equivalent to `grid = grid * grid.mask
+    # { ... }`.
     #
     # ```
     # grid = Grid.new({2, 2, 2}, Bounds[10, 10, 10]) { |i, j, k| i + j + k }
@@ -418,8 +419,9 @@ module Chem::Spatial
     # Masks a grid by *pattern*. Elements for which `pattern === element` returns
     # `false` are set to 0.
     #
-    # Optimized version for creating a mask and apply it to the same grid, i.e., `grid *
-    # grid.mask(*pattern*)`, by avoiding creation of intermediate grids.
+    # Optimized version of creating a mask and applying it to the same grid, but avoids
+    # creating intermediate grids. This is equivalent to `grid = grid *
+    # grid.mask(pattern)`
     #
     # ```
     # grid = Grid.new({2, 2, 3}, Bounds[1, 1, 1]) { |i, j, k| (i + 1) * (j + 1) * (k + 1) }
@@ -434,8 +436,9 @@ module Chem::Spatial
     # Masks a grid by *value*+/-*delta*. Elements for which `(value - ele).abs > delta`
     # returns `true` are set to 0.
     #
-    # Optimized version for creating a mask and applying it to the same grid, i.e.,
-    # `grid * grid.mask(value, delta)`, by avoiding creation of intermediate grids.
+    # Optimized version of creating a mask and applying it to the same grid, but avoids
+    # creating intermediate grids. This is equivalent to `grid = grid * grid.mask(value,
+    # delta)`
     #
     # ```
     # grid = Grid.new({2, 2, 3}, Bounds[1, 1, 1]) { |i, j, k| (i + j + k) / 5 }
