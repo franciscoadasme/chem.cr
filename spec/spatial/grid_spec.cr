@@ -512,6 +512,22 @@ describe Chem::Spatial::Grid do
     end
   end
 
+  describe "#mask_by_index" do
+    it "returns a grid mask" do
+      grid = make_grid(2, 2, 2)
+      grid.mask_by_index { |i, j, k| k == 1 }.to_a.should eq [0, 1, 0, 1, 0, 1, 0, 1]
+      grid.to_a.should eq [0, 1, 2, 3, 4, 5, 6, 7]
+    end
+  end
+
+  describe "#mask_by_index!" do
+    it "masks a grid in-place by index" do
+      grid = make_grid(2, 2, 2)
+      grid.mask_by_index! { |i, j, k| i == 1 }
+      grid.to_a.should eq [0, 0, 0, 0, 4, 5, 6, 7]
+    end
+  end
+
   describe "#ni" do
     it "returns the number of points along the first axis" do
       make_grid(2, 6, 1).ni.should eq 2

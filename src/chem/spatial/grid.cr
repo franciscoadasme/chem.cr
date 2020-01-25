@@ -450,6 +450,39 @@ module Chem::Spatial
       mask! (value - delta)..(value + delta)
     end
 
+    # Returns a grid mask. Indexes for which the passed block returns `true` are set to
+    # 1, otherwise 0.
+    #
+    # Grid masks are very useful to deal with multiple grids, and when points are to be
+    # selected based on one grid only.
+    #
+    # ```
+    # grid = Grid.new({2, 2, 2}, Bounds[10, 10, 10]) { |i, j, k| i * 4 + j * 2 + k }
+    # grid.to_a                                    # => [0, 1, 2, 3, 4, 5, 6, 7]
+    # grid.mask_by_index { |i, j, k| k == 1 }.to_a # => [0, 1, 0, 1, 0, 1, 0, 1]
+    # grid.to_a                                    # => [0, 1, 2, 3, 4, 5, 6, 7]
+    # ```
+    def mask_by_index(& : Int32, Int32, Int32 -> Bool) : self
+      map_with_index { |_, i, j, k| (yield i, j, k) ? 1.0 : 0.0 }
+    end
+
+    # Masks a grid by index. Indexes for which the passed block returns `false` are set
+    # to 0.
+    #
+    # Optimized version of creating a mask and applying it to the same grid, but avoids
+    # creating intermediate grids. This is equivalent to `grid = grid *
+    # grid.mask_by_index { ... }`
+    #
+    # ```
+    # grid = Grid.new({2, 2, 2}, Bounds[1, 1, 1]) { |i, j, k| i * 4 + j * 2 + k }
+    # grid.to_a # => [0, 1, 2, 3, 4, 5, 6, 7]
+    # grid.mask_by_index! { |i, j, k| i == 1 }
+    # grid.to_a # => [0, 0, 0, 0, 4, 5, 6, 7]
+    # ```
+    def mask_by_index!(& : Int32, Int32, Int32 -> Bool) : self
+      map_with_index! { |ele, i, j, k| (yield i, j, k) ? ele : 0.0 }
+    end
+
     def ni : Int32
       dim[0]
     end
