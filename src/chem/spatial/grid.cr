@@ -450,6 +450,39 @@ module Chem::Spatial
       mask! (value - delta)..(value + delta)
     end
 
+    # Returns a grid mask. Coordinates for which the passed block returns `true` are set
+    # to 1, otherwise 0.
+    #
+    # Grid masks are very useful to deal with multiple grids, and when points are to be
+    # selected based on one grid only.
+    #
+    # ```
+    # grid = Grid.new({2, 2, 2}, Bounds[10, 10, 10]) { |i, j, k| i * 4 + j * 2 + k }
+    # grid.to_a                           # => [0, 1, 2, 3, 4, 5, 6, 7]
+    # grid.mask_by_coords(&.x.==(0)).to_a # => [1, 1, 1, 1, 0, 0, 0, 0]
+    # grid.to_a                           # => [0, 1, 2, 3, 4, 5, 6, 7]
+    # ```
+    def mask_by_coords(& : Vector -> Bool) : self
+      map_with_coords { |_, vec| (yield vec) ? 1.0 : 0.0 }
+    end
+
+    # Masks a grid by coordinates. Coordinates for which the passed block returns
+    # `false` are set to 0.
+    #
+    # Optimized version of creating a mask and applying it to the same grid, but avoids
+    # creating intermediate grids. This is equivalent to `grid = grid *
+    # grid.mask_by_coords { ... }`
+    #
+    # ```
+    # grid = Grid.new({2, 2, 2}, Bounds[5, 5, 5]) { |i, j, k| i * 4 + j * 2 + k }
+    # grid.to_a # => [0, 1, 2, 3, 4, 5, 6, 7]
+    # grid.mask_by_coords! { |vec| vec.y == 5 }
+    # grid.to_a # => [0, 0, 2, 3, 0, 0, 6, 7]
+    # ```
+    def mask_by_coords!(& : Vector -> Bool) : self
+      map_with_coords! { |ele, vec| (yield vec) ? ele : 0.0 }
+    end
+
     # Returns a grid mask. Indexes for which the passed block returns `true` are set to
     # 1, otherwise 0.
     #

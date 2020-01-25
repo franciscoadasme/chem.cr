@@ -512,6 +512,22 @@ describe Chem::Spatial::Grid do
     end
   end
 
+  describe "#mask_by_coords" do
+    it "returns a grid mask" do
+      grid = make_grid(2, 2, 2, Bounds[1, 1, 1])
+      grid.mask_by_coords(&.x.==(0)).to_a.should eq [1, 1, 1, 1, 0, 0, 0, 0]
+      grid.to_a.should eq [0, 1, 2, 3, 4, 5, 6, 7]
+    end
+  end
+
+  describe "#mask_by_coords!" do
+    it "masks a grid in-place by coordinates" do
+      grid = make_grid(2, 2, 2, Bounds[5, 5, 5])
+      grid.mask_by_coords! { |vec| vec.y == 5 }
+      grid.to_a.should eq [0, 0, 2, 3, 0, 0, 6, 7]
+    end
+  end
+
   describe "#mask_by_index" do
     it "returns a grid mask" do
       grid = make_grid(2, 2, 2)
