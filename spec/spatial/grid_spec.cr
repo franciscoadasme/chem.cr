@@ -301,6 +301,11 @@ describe Chem::Spatial::Grid do
       make_grid(2, 3, 1) { |i, j, k| i * 100 + j * 10 + k }.each { |ele| ary << ele }
       ary.should eq [0, 10, 20, 100, 110, 120]
     end
+
+    it "returns an iterator" do
+      grid = make_grid(2, 3, 2) { |i, j, k| i * 6 + j * 2 + k }
+      grid.each.to_a.should eq (0..11).to_a
+    end
   end
 
   describe "#each_coords" do

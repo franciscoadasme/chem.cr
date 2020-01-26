@@ -4,6 +4,9 @@ module Chem::Spatial
   #       - coords to i: ?
   # TODO: implement functionality from vmd's volmap
   class Grid
+    include Enumerable(Float64)
+    include Iterable(Float64)
+
     alias Dimensions = Tuple(Int32, Int32, Int32)
     alias Index = Tuple(Int32, Int32, Int32)
     record Info, bounds : Bounds, dim : Dimensions
@@ -252,6 +255,10 @@ module Chem::Spatial
       Grid.build(@dim, @bounds) do |buffer|
         buffer.copy_from @buffer, size
       end
+    end
+
+    def each : Iterator(Float64)
+      ItemIterator.new(self)
     end
 
     def each(& : Float64 ->) : Nil
@@ -567,6 +574,11 @@ module Chem::Spatial
     end
 
     @[AlwaysInline]
+    def unsafe_fetch(i : Int) : Float64
+      @buffer[i]
+    end
+
+    @[AlwaysInline]
     def unsafe_fetch(i : Int, j : Int, k : Int) : Float64
       to_unsafe[unsafe_index(i, j, k)]
     end
@@ -603,13 +615,28 @@ module Chem::Spatial
     end
 
     @[AlwaysInline]
-    protected def unsafe_fetch(i : Int) : Float64
-      @buffer[i]
-    end
-
-    @[AlwaysInline]
     private def unsafe_index(i : Int, j : Int, k : Int) : Int
       i * nj * nk + j * nk + k
+    end
+
+    private class ItemIterator
+      include Iterator(Float64)
+
+      @size : Int32
+
+      def initialize(@grid : Grid, @index = 0)
+        @size = @grid.size
+      end
+
+      def next : Float64 | Iterator::Stop
+        if @index < @size
+          value = @grid.unsafe_fetch @index
+          @index += 1
+          value
+        else
+          stop
+        end
+      end
     end
   end
 end
