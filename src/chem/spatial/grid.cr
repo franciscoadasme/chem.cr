@@ -351,6 +351,171 @@ module Chem::Spatial
       self
     end
 
+    # Returns a grid mask. Elements for which the passed block returns `true` are set to
+    # 1, otherwise 0.
+    #
+    # Grid masks are very useful to deal with multiple grids, and when points are to be
+    # selected based on one grid only.
+    #
+    # ```
+    # grid = Grid.new({2, 2, 2}, Bounds[10, 10, 10]) { |i, j, k| i + j + k }
+    # grid.to_a              # => [0, 1, 1, 2, 1, 2, 2, 3]
+    # grid.mask(&.>(1)).to_a # => [0, 0, 0, 1, 0, 1, 1, 1]
+    # grid.to_a              # => [0, 1, 1, 2, 1, 2, 2, 3]
+    # ```
+    def mask(& : Float64 -> Bool) : self
+      map { |ele| (yield ele) ? 1.0 : 0.0 }
+    end
+
+    # Returns a grid mask. Elements for which `pattern === element` returns `true` are
+    # set to 1, otherwise 0.
+    #
+    # Grid masks are very useful to deal with multiple grids, and when points are to be
+    # selected based on one grid only.
+    #
+    # ```
+    # grid = Grid.new({2, 2, 3}, Bounds[1, 1, 1]) { |i, j, k| (i + 1) * (j + 1) * (k + 1) }
+    # grid.to_a              # => [1, 2, 3, 2, 4, 6, 2, 4, 6, 4, 8, 12]
+    # grid.mask(2..4.5).to_a # => [0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0]
+    # grid.to_a              # => [1, 2, 3, 2, 4, 6, 2, 4, 6, 4, 8, 12]
+    # ```
+    def mask(pattern) : self
+      mask { |ele| pattern === ele }
+    end
+
+    # Returns a grid mask. Elements for which `(value - ele).abs <= delta` returns
+    # `true` are set to 1, otherwise 0.
+    #
+    # Grid masks are very useful to deal with multiple grids, and when points are to be
+    # selected based on one grid only.
+    #
+    # ```
+    # grid = Grid.new({2, 2, 3}, Bounds[1, 1, 1]) { |i, j, k| (i + 1) * (j + 1) * (k + 1) / 5 }
+    # grid.to_a              # => [0.2, 0.4, 0.6, 0.4, 0.8, 1.2, 0.4, 0.8, 1.2, 0.8, 1.6, 2.4]
+    # grid.mask(1, 0.5).to_a # => [0, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 0]
+    # grid.to_a              # => [0.2, 0.4, 0.6, 0.4, 0.8, 1.2, 0.4, 0.8, 1.2, 0.8, 1.6, 2.4]
+    # ```
+    def mask(value : Number, delta : Number) : self
+      mask (value - delta)..(value + delta)
+    end
+
+    # Masks a grid by the passed block. Elements for which the passed block returns
+    # `false` are set to 0.
+    #
+    # Optimized version of creating a mask and applying it to the same grid, but avoids
+    # creating intermediate grids. This is equivalent to `grid = grid * grid.mask
+    # { ... }`.
+    #
+    # ```
+    # grid = Grid.new({2, 2, 2}, Bounds[10, 10, 10]) { |i, j, k| i + j + k }
+    # grid.to_a # => [0, 1, 1, 2, 1, 2, 2, 3]
+    # grid.mask! &.>(1)
+    # grid.to_a # => [0, 0, 0, 2, 0, 2, 2, 3]
+    # ```
+    def mask!(& : Float64 -> Bool) : self
+      map! { |ele| (yield ele) ? ele : 0.0 }
+    end
+
+    # Masks a grid by *pattern*. Elements for which `pattern === element` returns
+    # `false` are set to 0.
+    #
+    # Optimized version of creating a mask and applying it to the same grid, but avoids
+    # creating intermediate grids. This is equivalent to `grid = grid *
+    # grid.mask(pattern)`
+    #
+    # ```
+    # grid = Grid.new({2, 2, 3}, Bounds[1, 1, 1]) { |i, j, k| (i + 1) * (j + 1) * (k + 1) }
+    # grid.to_a # => [1, 2, 3, 2, 4, 6, 2, 4, 6, 4, 8, 12]
+    # grid.mask! 2..4.5
+    # grid.to_a # => [0, 2, 3, 2, 4, 0, 2, 4, 0, 4, 0, 0]
+    # ```
+    def mask!(pattern) : self
+      mask! { |ele| pattern === ele }
+    end
+
+    # Masks a grid by *value*+/-*delta*. Elements for which `(value - ele).abs > delta`
+    # returns `true` are set to 0.
+    #
+    # Optimized version of creating a mask and applying it to the same grid, but avoids
+    # creating intermediate grids. This is equivalent to `grid = grid * grid.mask(value,
+    # delta)`
+    #
+    # ```
+    # grid = Grid.new({2, 2, 3}, Bounds[1, 1, 1]) { |i, j, k| (i + j + k) / 5 }
+    # grid.to_a # => [0.0, 0.2, 0.4, 0.2, 0.4, 0.6, 0.2, 0.4, 0.6, 0.4, 0.6, 0.8]
+    # grid.mask! 0.5, 0.1
+    # grid.to_a # => [0.0, 0.0, 0.4, 0.0, 0.4, 0.6, 0.0, 0.4, 0.6, 0.4, 0.6, 0.0]
+    # ```
+    def mask!(value : Number, delta : Number) : self
+      mask! (value - delta)..(value + delta)
+    end
+
+    # Returns a grid mask. Coordinates for which the passed block returns `true` are set
+    # to 1, otherwise 0.
+    #
+    # Grid masks are very useful to deal with multiple grids, and when points are to be
+    # selected based on one grid only.
+    #
+    # ```
+    # grid = Grid.new({2, 2, 2}, Bounds[10, 10, 10]) { |i, j, k| i * 4 + j * 2 + k }
+    # grid.to_a                           # => [0, 1, 2, 3, 4, 5, 6, 7]
+    # grid.mask_by_coords(&.x.==(0)).to_a # => [1, 1, 1, 1, 0, 0, 0, 0]
+    # grid.to_a                           # => [0, 1, 2, 3, 4, 5, 6, 7]
+    # ```
+    def mask_by_coords(& : Vector -> Bool) : self
+      map_with_coords { |_, vec| (yield vec) ? 1.0 : 0.0 }
+    end
+
+    # Masks a grid by coordinates. Coordinates for which the passed block returns
+    # `false` are set to 0.
+    #
+    # Optimized version of creating a mask and applying it to the same grid, but avoids
+    # creating intermediate grids. This is equivalent to `grid = grid *
+    # grid.mask_by_coords { ... }`
+    #
+    # ```
+    # grid = Grid.new({2, 2, 2}, Bounds[5, 5, 5]) { |i, j, k| i * 4 + j * 2 + k }
+    # grid.to_a # => [0, 1, 2, 3, 4, 5, 6, 7]
+    # grid.mask_by_coords! { |vec| vec.y == 5 }
+    # grid.to_a # => [0, 0, 2, 3, 0, 0, 6, 7]
+    # ```
+    def mask_by_coords!(& : Vector -> Bool) : self
+      map_with_coords! { |ele, vec| (yield vec) ? ele : 0.0 }
+    end
+
+    # Returns a grid mask. Indexes for which the passed block returns `true` are set to
+    # 1, otherwise 0.
+    #
+    # Grid masks are very useful to deal with multiple grids, and when points are to be
+    # selected based on one grid only.
+    #
+    # ```
+    # grid = Grid.new({2, 2, 2}, Bounds[10, 10, 10]) { |i, j, k| i * 4 + j * 2 + k }
+    # grid.to_a                                    # => [0, 1, 2, 3, 4, 5, 6, 7]
+    # grid.mask_by_index { |i, j, k| k == 1 }.to_a # => [0, 1, 0, 1, 0, 1, 0, 1]
+    # grid.to_a                                    # => [0, 1, 2, 3, 4, 5, 6, 7]
+    # ```
+    def mask_by_index(& : Int32, Int32, Int32 -> Bool) : self
+      map_with_index { |_, i, j, k| (yield i, j, k) ? 1.0 : 0.0 }
+    end
+
+    # Masks a grid by index. Indexes for which the passed block returns `false` are set
+    # to 0.
+    #
+    # Optimized version of creating a mask and applying it to the same grid, but avoids
+    # creating intermediate grids. This is equivalent to `grid = grid *
+    # grid.mask_by_index { ... }`
+    #
+    # ```
+    # grid = Grid.new({2, 2, 2}, Bounds[1, 1, 1]) { |i, j, k| i * 4 + j * 2 + k }
+    # grid.to_a # => [0, 1, 2, 3, 4, 5, 6, 7]
+    # grid.mask_by_index! { |i, j, k| i == 1 }
+    # grid.to_a # => [0, 0, 0, 0, 4, 5, 6, 7]
+    # ```
+    def mask_by_index!(& : Int32, Int32, Int32 -> Bool) : self
+      map_with_index! { |ele, i, j, k| (yield i, j, k) ? ele : 0.0 }
+    end
+
     def ni : Int32
       dim[0]
     end

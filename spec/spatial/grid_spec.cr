@@ -460,6 +460,90 @@ describe Chem::Spatial::Grid do
     end
   end
 
+  describe "#mask" do
+    it "returns a masked grid by a number" do
+      grid = make_grid(2, 2, 2) { |i, j, k| i + j + k }
+      grid.mask(2).to_a.should eq [0, 0, 0, 1, 0, 1, 1, 0]
+      grid.to_a.should eq [0, 1, 1, 2, 1, 2, 2, 3]
+    end
+
+    it "returns a masked grid by a number+-delta" do
+      grid = make_grid(2, 2, 3) { |i, j, k| (i + 1) * (j + 1) * (k + 1) / 5 }
+      grid.mask(1, 0.5).to_a.should eq [0, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 0]
+      grid.to_a.should eq [0.2, 0.4, 0.6, 0.4, 0.8, 1.2, 0.4, 0.8, 1.2, 0.8, 1.6, 2.4]
+    end
+
+    it "returns a masked grid by a range" do
+      grid = make_grid(2, 2, 3) { |i, j, k| (i + 1) * (j + 1) * (k + 1) }
+      grid.mask(2..4.5).to_a.should eq [0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0]
+      grid.to_a.should eq [1, 2, 3, 2, 4, 6, 2, 4, 6, 4, 8, 12]
+    end
+
+    it "returns a masked grid with a block" do
+      grid = make_grid(2, 2, 3) { |i, j, k| (i + 1) / (j + 1) * (k + 1) }
+      grid.mask(&.<(2)).to_a.should eq [1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0]
+      grid.to_a.should eq [1, 2, 3, 0.5, 1, 1.5, 2, 4, 6, 1, 2, 3]
+    end
+  end
+
+  describe "#mask!" do
+    it "masks a grid in-place by a number" do
+      grid = make_grid(2, 3, 2) { |i, j, k| i + j + k }
+      grid.mask! 3
+      grid.to_a.should eq [0, 0, 0, 0, 0, 3, 0, 0, 0, 3, 3, 0]
+    end
+
+    it "masks a grid in-place by a number+-delta" do
+      grid = make_grid(2, 2, 3) { |i, j, k| (i + j + k) / 5 }
+      grid.mask! 0.5, 0.1
+      grid.to_a.should eq [0, 0, 0.4, 0, 0.4, 0.6, 0, 0.4, 0.6, 0.4, 0.6, 0]
+    end
+
+    it "masks a grid in-place by a range" do
+      grid = make_grid(2, 3, 2) { |i, j, k| (i + 1) * (j + 1) * (k + 1) }
+      grid.mask! 3..10
+      grid.to_a.should eq [0, 0, 0, 4, 3, 6, 0, 4, 4, 8, 6, 0]
+    end
+
+    it "masks a grid in-place with a block" do
+      grid = make_grid(2, 3, 2) { |i, j, k| (i + 1) * (j + 1) * (k + 1) }
+      grid.mask! &.>(4.1)
+      grid.to_a.should eq [0, 0, 0, 0, 0, 6, 0, 0, 0, 8, 6, 12]
+    end
+  end
+
+  describe "#mask_by_coords" do
+    it "returns a grid mask" do
+      grid = make_grid(2, 2, 2, Bounds[1, 1, 1])
+      grid.mask_by_coords(&.x.==(0)).to_a.should eq [1, 1, 1, 1, 0, 0, 0, 0]
+      grid.to_a.should eq [0, 1, 2, 3, 4, 5, 6, 7]
+    end
+  end
+
+  describe "#mask_by_coords!" do
+    it "masks a grid in-place by coordinates" do
+      grid = make_grid(2, 2, 2, Bounds[5, 5, 5])
+      grid.mask_by_coords! { |vec| vec.y == 5 }
+      grid.to_a.should eq [0, 0, 2, 3, 0, 0, 6, 7]
+    end
+  end
+
+  describe "#mask_by_index" do
+    it "returns a grid mask" do
+      grid = make_grid(2, 2, 2)
+      grid.mask_by_index { |i, j, k| k == 1 }.to_a.should eq [0, 1, 0, 1, 0, 1, 0, 1]
+      grid.to_a.should eq [0, 1, 2, 3, 4, 5, 6, 7]
+    end
+  end
+
+  describe "#mask_by_index!" do
+    it "masks a grid in-place by index" do
+      grid = make_grid(2, 2, 2)
+      grid.mask_by_index! { |i, j, k| i == 1 }
+      grid.to_a.should eq [0, 0, 0, 0, 4, 5, 6, 7]
+    end
+  end
+
   describe "#ni" do
     it "returns the number of points along the first axis" do
       make_grid(2, 6, 1).ni.should eq 2
