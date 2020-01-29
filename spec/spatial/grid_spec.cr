@@ -688,6 +688,12 @@ describe Chem::Spatial::Grid do
     end
   end
 
+  describe "#sum" do
+    it "returns the sum of all values" do
+      make_grid(2, 3, 2).sum.should eq (0..11).sum
+    end
+  end
+
   describe "#to_a" do
     it "returns an array containing all elements" do
       make_grid(2, 2, 2).to_a.should eq (0..7).to_a
