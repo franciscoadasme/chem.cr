@@ -649,6 +649,12 @@ describe Chem::Spatial::Grid do
     end
   end
 
+  describe "#min" do
+    it "returns the minimum value" do
+      ((make_grid(2, 3, 2) - 5) * 25).min.should eq -125
+    end
+  end
+
   describe "#ni" do
     it "returns the number of points along the first axis" do
       make_grid(2, 6, 1).ni.should eq 2
