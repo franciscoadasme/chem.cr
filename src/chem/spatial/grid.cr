@@ -4,8 +4,10 @@ module Chem::Spatial
   #       - coords to i: ?
   # TODO: implement functionality from vmd's volmap
   class Grid
+    include Indexable(Float64)
+
     alias Dimensions = Tuple(Int32, Int32, Int32)
-    alias Index = Tuple(Int32, Int32, Int32)
+    alias Location = Tuple(Int32, Int32, Int32)
     record Info, bounds : Bounds, dim : Dimensions
 
     getter bounds : Bounds
@@ -123,9 +125,9 @@ module Chem::Spatial
 
     def self.new(dim : Dimensions,
                  bounds : Bounds,
-                 &block : Int32, Int32, Int32 -> Number)
-      new(dim, bounds).map_with_index! do |_, i, j, k|
-        (yield i, j, k).to_f
+                 &block : Location -> Number)
+      new(dim, bounds).map_with_loc! do |_, loc|
+        (yield loc).to_f
       end
     end
 
@@ -153,12 +155,12 @@ module Chem::Spatial
       #   value.clamp(0, 1)
       # end
       structure.each_atom do |atom|
-        grid.each_index(atom.coords, atom.vdw_radius + delta) do |i, j, k, d|
+        grid.each_loc(atom.coords, atom.vdw_radius + delta) do |loc, d|
           too_close = false
-          kdtree.each_neighbor(grid.coords_at(i, j, k), within: vdw_cutoff) do |other, od|
+          kdtree.each_neighbor(grid.coords_at(loc), within: vdw_cutoff) do |other, od|
             too_close = true if Math.sqrt(od) < other.vdw_radius - delta
           end
-          grid[i, j, k] = 1 if !too_close && (d - atom.vdw_radius).abs < delta
+          grid[loc] = 1 if !too_close && (d - atom.vdw_radius).abs < delta
         end
       end
       grid
@@ -181,8 +183,8 @@ module Chem::Spatial
 
     def ==(rhs : self) : Bool
       return false unless @dim == rhs.dim && @bounds == rhs.bounds
-      size.times do |i|
-        return false if unsafe_fetch(i) != rhs.unsafe_fetch(i)
+      each_with_index do |ele, i|
+        return false if ele != rhs.unsafe_fetch(i)
       end
       true
     end
@@ -190,8 +192,8 @@ module Chem::Spatial
     {% for op in %w(+ - * /) %}
       def {{op.id}}(rhs : Number) : self
         Grid.build(@dim, @bounds) do |buffer|
-          size.times do |i|
-            buffer[i] = unsafe_fetch(i) {{op.id}} rhs
+          each_with_index do |ele, i|
+            buffer[i] = ele {{op.id}} rhs
           end
         end
       end
@@ -199,53 +201,73 @@ module Chem::Spatial
       def {{op.id}}(rhs : self) : self
         raise ArgumentError.new "Incompatible grid" unless @dim == rhs.dim
         Grid.build(@dim, @bounds) do |buffer|
-          size.times do |i|
-            buffer[i] = unsafe_fetch(i) {{op.id}} rhs.unsafe_fetch(i)
+          each_with_index do |ele, i|
+            buffer[i] = ele {{op.id}} rhs.unsafe_fetch(i)
           end
         end
       end
     {% end %}
 
     @[AlwaysInline]
-    def [](i : Int, j : Int, k : Int) : Float64
-      self[i, j, k]? || raise IndexError.new
-    end
-
-    @[AlwaysInline]
-    def [](vec : Vector) : Float64
-      self[vec]? || raise IndexError.new
+    def [](*args, **options) : Float64
+      self[*args, **options]? || raise IndexError.new
     end
 
     @[AlwaysInline]
     def []?(i : Int, j : Int, k : Int) : Float64?
-      if i_ = internal_index?(i, j, k)
-        unsafe_fetch i_
-      else
-        nil
+      self[Location.new(i, j, k)]?
+    end
+
+    @[AlwaysInline]
+    def []?(loc : Location) : Float64?
+      if i = index(loc)
+        unsafe_fetch i
       end
     end
 
     # TODO: add interpolation (check ARBInterp)
     @[AlwaysInline]
     def []?(vec : Vector) : Float64?
-      if index = index(vec)
-        unsafe_fetch index[0], index[1], index[2]
+      if i = index(vec)
+        unsafe_fetch i
       end
     end
 
     @[AlwaysInline]
-    def []=(i : Int, j : Int, k : Int, value : Float64) : Float64
-      raise IndexError.new unless i_ = internal_index?(i, j, k)
-      @buffer[i_] = value
+    def []=(i : Int, value : Float64) : Float64
+      i += size if i < 0
+      raise IndexError.new unless 0 <= i < size
+      @buffer[i] = value
     end
 
-    def coords_at(i : Int, j : Int, k : Int) : Vector
-      coords_at?(i, j, k) || raise IndexError.new
+    @[AlwaysInline]
+    def []=(i : Int, j : Int, k : Int, value : Float64) : Float64
+      self[Location.new(i, j, k)] = value
+    end
+
+    @[AlwaysInline]
+    def []=(loc : Location, value : Float64) : Float64
+      raise IndexError.new unless i = index(loc)
+      @buffer[i] = value
+    end
+
+    def coords_at(*args, **options) : Vector
+      coords_at?(*args, **options) || raise IndexError.new
+    end
+
+    def coords_at?(i : Int) : Vector?
+      if loc = loc_at?(i)
+        coords_at? loc
+      end
     end
 
     def coords_at?(i : Int, j : Int, k : Int) : Vector?
-      return unless internal_index?(i, j, k)
-      unsafe_coords_at i, j, k
+      coords_at?(Location.new(i, j, k))
+    end
+
+    def coords_at?(loc : Location) : Vector?
+      return unless index(loc)
+      unsafe_coords_at(loc)
     end
 
     def dup : self
@@ -254,62 +276,80 @@ module Chem::Spatial
       end
     end
 
-    def each(& : Float64 ->) : Nil
-      size.times do |i_|
-        yield unsafe_fetch(i_)
-      end
-    end
-
     def each_coords(& : Vector ->) : Nil
-      each_index do |i, j, k|
-        yield unsafe_coords_at(i, j, k)
+      each_loc do |loc|
+        yield unsafe_coords_at(loc)
       end
     end
 
-    def each_index(& : Int32, Int32, Int32 ->) : Nil
+    def each_loc(& : Location ->) : Nil
       ni.times do |i|
         nj.times do |j|
           nk.times do |k|
-            yield i, j, k
+            yield Location.new(i, j, k)
           end
         end
       end
     end
 
-    def each_index(vec : Vector, cutoff : Number, & : Int32, Int32, Int32, Float64 ->) : Nil
-      return unless index = index(vec)
+    def each_loc(vec : Vector, cutoff : Number, & : Location, Float64 ->) : Nil
+      return unless loc = loc_at?(vec)
       di, dj, dk = resolution.map { |ele| (cutoff / ele).to_i }
       cutoff *= cutoff
-      ((index[0] - di - 1)..(index[0] + di + 1)).clamp(0..ni - 1).each do |i|
-        ((index[1] - dj - 1)..(index[1] + dj + 1)).clamp(0..nj - 1).each do |j|
-          ((index[2] - dk - 1)..(index[2] + dk + 1)).clamp(0..nk - 1).each do |k|
-            d = Spatial.squared_distance vec, unsafe_coords_at(i, j, k)
-            yield i, j, k, Math.sqrt(d) if d < cutoff
+      ((loc[0] - di - 1)..(loc[0] + di + 1)).clamp(0..ni - 1).each do |i|
+        ((loc[1] - dj - 1)..(loc[1] + dj + 1)).clamp(0..nj - 1).each do |j|
+          ((loc[2] - dk - 1)..(loc[2] + dk + 1)).clamp(0..nk - 1).each do |k|
+            new_loc = Location.new i, j, k
+            d = Spatial.squared_distance vec, unsafe_coords_at(new_loc)
+            yield new_loc, Math.sqrt(d) if d < cutoff
           end
         end
       end
     end
 
     def each_with_coords(& : Float64, Vector ->) : Nil
-      each_index do |i, j, k|
-        yield unsafe_fetch(i, j, k), unsafe_coords_at(i, j, k)
+      each_index do |i|
+        yield unsafe_fetch(i), unsafe_coords_at(unsafe_loc_at(i))
       end
     end
 
-    def each_with_index(& : Float64, Int32, Int32, Int32 ->) : Nil
-      each_index do |i, j, k|
-        yield unsafe_fetch(i, j, k), i, j, k
+    def each_with_loc(& : Float64, Location ->) : Nil
+      each_with_index do |ele, i|
+        yield ele, unsafe_loc_at(i)
       end
     end
 
-    def index(vec : Vector) : Index?
+    def index(loc : Location) : Int32?
+      loc = loc.map_with_index { |ele, i| ele < 0 ? ele + @dim[i] : ele }
+      loc.each_with_index do |ele, i|
+        return unless 0 <= ele < @dim[i]
+      end
+      unsafe_index loc
+    end
+
+    def index(vec : Vector) : Int32?
+      if loc = loc_at?(vec)
+        unsafe_index loc
+      end
+    end
+
+    def index!(*args, **options) : Int32
+      index(*args, **options) || raise IndexError.new
+    end
+
+    def loc_at(*args, **options) : Location
+      loc_at?(*args, **options) || raise IndexError.new
+    end
+
+    def loc_at?(i : Int) : Location?
+      i += size if i < 0
+      unsafe_loc_at(i) if 0 <= i < size
+    end
+
+    def loc_at?(vec : Vector) : Location?
       return unless bounds.includes? vec
       vec = (vec - origin).to_fractional bounds.basis
       (vec * @dim.map &.-(1)).round.to_t.map &.to_i
-    end
-
-    def index!(vec : Vector) : Index
-      index(vec) || raise IndexError.new
     end
 
     def map(& : Float64 -> Float64) : self
@@ -330,23 +370,34 @@ module Chem::Spatial
     end
 
     def map_with_coords!(& : Float64, Vector -> Number) : self
-      size.times do |i_|
-        i, j, k = raw_to_index i_
-        @buffer[i_] = (yield @buffer[i_], unsafe_coords_at(i, j, k)).to_f
+      each_with_index do |ele, i|
+        @buffer[i] = (yield ele, unsafe_coords_at(unsafe_loc_at(i))).to_f
       end
       self
     end
 
-    def map_with_index(& : Float64, Int32, Int32, Int32 -> Number) : self
-      dup.map_with_index! do |ele, i, j, k|
-        yield ele, i, j, k
+    def map_with_index(& : Float64, Int32 -> Number) : self
+      dup.map_with_index! do |ele, i|
+        yield ele, i
       end
     end
 
-    def map_with_index!(& : Float64, Int32, Int32, Int32 -> Number) : self
-      size.times do |i_|
-        i, j, k = raw_to_index i_
-        @buffer[i_] = (yield @buffer[i_], i, j, k).to_f
+    def map_with_index!(& : Float64, Int32 -> Number) : self
+      each_with_index do |ele, i|
+        @buffer[i] = (yield ele, i).to_f
+      end
+      self
+    end
+
+    def map_with_loc(& : Float64, Location -> Number) : self
+      dup.map_with_loc! do |ele, loc|
+        yield ele, loc
+      end
+    end
+
+    def map_with_loc!(& : Float64, Location -> Number) : self
+      each_with_index do |ele, i|
+        @buffer[i] = (yield ele, unsafe_loc_at(i)).to_f
       end
       self
     end
@@ -491,12 +542,12 @@ module Chem::Spatial
     #
     # ```
     # grid = Grid.new({2, 2, 2}, Bounds[10, 10, 10]) { |i, j, k| i * 4 + j * 2 + k }
-    # grid.to_a                                    # => [0, 1, 2, 3, 4, 5, 6, 7]
-    # grid.mask_by_index { |i, j, k| k == 1 }.to_a # => [0, 1, 0, 1, 0, 1, 0, 1]
-    # grid.to_a                                    # => [0, 1, 2, 3, 4, 5, 6, 7]
+    # grid.to_a                       # => [0, 1, 2, 3, 4, 5, 6, 7]
+    # grid.mask_by_index(&.>(4)).to_a # => [0, 0, 0, 0, 0, 1, 1, 1]
+    # grid.to_a                       # => [0, 1, 2, 3, 4, 5, 6, 7]
     # ```
-    def mask_by_index(& : Int32, Int32, Int32 -> Bool) : self
-      map_with_index { |_, i, j, k| (yield i, j, k) ? 1.0 : 0.0 }
+    def mask_by_index(& : Int32 -> Bool) : self
+      map_with_index { |_, i| (yield i) ? 1.0 : 0.0 }
     end
 
     # Masks a grid by index. Indexes for which the passed block returns `false` are set
@@ -509,11 +560,44 @@ module Chem::Spatial
     # ```
     # grid = Grid.new({2, 2, 2}, Bounds[1, 1, 1]) { |i, j, k| i * 4 + j * 2 + k }
     # grid.to_a # => [0, 1, 2, 3, 4, 5, 6, 7]
-    # grid.mask_by_index! { |i, j, k| i == 1 }
+    # grid.mask_by_index! &.<(3)
+    # grid.to_a # => [0, 1, 2, 0, 0, 0, 0, 0]
+    # ```
+    def mask_by_index!(& : Int32 -> Bool) : self
+      map_with_index! { |ele, i| (yield i) ? ele : 0.0 }
+    end
+
+    # Returns a grid mask. Locations for which the passed block returns `true` are set
+    # to 1, otherwise 0.
+    #
+    # Grid masks are very useful to deal with multiple grids, and when points are to be
+    # selected based on one grid only.
+    #
+    # ```
+    # grid = Grid.new({2, 2, 2}, Bounds[10, 10, 10]) { |i, j, k| i * 4 + j * 2 + k }
+    # grid.to_a                                  # => [0, 1, 2, 3, 4, 5, 6, 7]
+    # grid.mask_by_loc { |i, j, k| k == 1 }.to_a # => [0, 1, 0, 1, 0, 1, 0, 1]
+    # grid.to_a                                  # => [0, 1, 2, 3, 4, 5, 6, 7]
+    # ```
+    def mask_by_loc(& : Location -> Bool) : self
+      map_with_loc { |_, loc| (yield loc) ? 1.0 : 0.0 }
+    end
+
+    # Masks a grid by location. Locations for which the passed block returns `false` are
+    # set to 0.
+    #
+    # Optimized version of creating a mask and applying it to the same grid, but avoids
+    # creating intermediate grids. This is equivalent to `grid = grid * grid.mask_by_loc
+    # { ... }`
+    #
+    # ```
+    # grid = Grid.new({2, 2, 2}, Bounds[1, 1, 1]) { |i, j, k| i * 4 + j * 2 + k }
+    # grid.to_a # => [0, 1, 2, 3, 4, 5, 6, 7]
+    # grid.mask_by_loc! { |(i, j, k)| i == 1 }
     # grid.to_a # => [0, 0, 0, 0, 4, 5, 6, 7]
     # ```
-    def mask_by_index!(& : Int32, Int32, Int32 -> Bool) : self
-      map_with_index! { |ele, i, j, k| (yield i, j, k) ? ele : 0.0 }
+    def mask_by_loc!(& : Location -> Bool) : self
+      map_with_loc! { |ele, loc| (yield loc) ? ele : 0.0 }
     end
 
     def ni : Int32
@@ -551,7 +635,7 @@ module Chem::Spatial
       new_nk = nk // dk
       new_nk += 1 if new_nk % dk > 0
       Grid.new({new_ni, new_nj, new_nk}, bounds) do |i, j, k|
-        unsafe_fetch i * di, j * dj, k * dk
+        unsafe_fetch unsafe_index(Location.new(i * di, j * dj, k * dk))
       end
     end
 
@@ -567,49 +651,38 @@ module Chem::Spatial
     end
 
     @[AlwaysInline]
-    def unsafe_fetch(i : Int, j : Int, k : Int) : Float64
-      to_unsafe[unsafe_index(i, j, k)]
+    def unsafe_fetch(i : Int) : Float64
+      @buffer[i]
+    end
+
+    @[AlwaysInline]
+    def unsafe_fetch(loc : Location) : Float64
+      unsafe_fetch unsafe_index(loc)
     end
 
     private def check_dim : Nil
       raise ArgumentError.new "Invalid dimensions" unless dim.all?(&.>(0))
     end
 
-    private def internal_index?(i : Int, j : Int, k : Int) : Int32?
-      i += ni if i < 0
-      j += nj if j < 0
-      k += nk if k < 0
-      if 0 <= i < ni && 0 <= j < nj && 0 <= k < nk
-        unsafe_index i, j, k
-      else
-        nil
-      end
+    @[AlwaysInline]
+    private def unsafe_coords_at(loc : Location) : Vector
+      vi = ni == 1 ? Vector.zero : bounds.i / (ni - 1)
+      vj = nj == 1 ? Vector.zero : bounds.j / (nj - 1)
+      vk = nk == 1 ? Vector.zero : bounds.k / (nk - 1)
+      origin + loc[0] * vi + loc[1] * vj + loc[2] * vk
     end
 
     @[AlwaysInline]
-    private def raw_to_index(i_ : Int) : Index
+    private def unsafe_index(loc : Location) : Int
+      loc[0] * nj * nk + loc[1] * nk + loc[2]
+    end
+
+    @[AlwaysInline]
+    private def unsafe_loc_at(i_ : Int) : Location
       i = i_ // (nj * nk)
       j = (i_ // nk) % nj
       k = i_ % nk
       {i, j, k}
-    end
-
-    @[AlwaysInline]
-    private def unsafe_coords_at(i : Int, j : Int, k : Int) : Vector
-      vi = ni == 1 ? Vector.zero : bounds.i / (ni - 1)
-      vj = nj == 1 ? Vector.zero : bounds.j / (nj - 1)
-      vk = nk == 1 ? Vector.zero : bounds.k / (nk - 1)
-      origin + i * vi + j * vj + k * vk
-    end
-
-    @[AlwaysInline]
-    protected def unsafe_fetch(i : Int) : Float64
-      @buffer[i]
-    end
-
-    @[AlwaysInline]
-    private def unsafe_index(i : Int, j : Int, k : Int) : Int
-      i * nj * nk + j * nk + k
     end
   end
 end

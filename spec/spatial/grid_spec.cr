@@ -204,8 +204,13 @@ describe Chem::Spatial::Grid do
   end
 
   describe "#[]" do
-    it "fails when indexes are out of bounds" do
+    it "fails when index is out of bounds" do
+      expect_raises(IndexError) { make_grid(2, 3, 2)[192] }
+    end
+
+    it "fails when location is out of bounds" do
       expect_raises(IndexError) { make_grid(2, 3, 2)[2, 24, 0] }
+      expect_raises(IndexError) { make_grid(2, 3, 2)[{1, 67, 198}] }
     end
 
     it "fails when coordinates are out of bounds" do
@@ -215,14 +220,22 @@ describe Chem::Spatial::Grid do
   end
 
   describe "#[]?" do
-    it "returns the value at the indexes" do
+    it "returns the value at the index" do
+      grid = make_grid 2, 3, 2
+      grid[0]?.should eq 0
+      grid[5]?.should eq 5
+      grid[11]?.should eq 11
+      grid[-1]?.should eq 11
+    end
+
+    it "returns the value at the location" do
       grid = make_grid 2, 3, 2
       grid[0, 0, 0]?.should eq 0
       grid[0, 1, 1]?.should eq 3
-      grid[1, 2, 0]?.should eq 10
-      grid[1, 2, 1]?.should eq 11
+      grid[{1, 2, 0}]?.should eq 10
+      grid[{1, 2, 1}]?.should eq 11
       grid[0, -3, -2]?.should eq 0
-      grid[-1, -1, -1]?.should eq 11
+      grid[{-1, -1, -1}]?.should eq 11
     end
 
     it "returns the value at the coordinates" do
@@ -238,7 +251,11 @@ describe Chem::Spatial::Grid do
       grid[V[2.65, 3.24, 4.97]]?.should eq 263  # no interpolation
     end
 
-    it "returns nil when indexes are out of bounds" do
+    it "returns nil when index is out of bounds" do
+      make_grid(2, 3, 2)[100]?.should be_nil
+    end
+
+    it "returns nil when location is out of bounds" do
       grid = make_grid 2, 3, 2
       grid[3, 5, 10]?.should be_nil
       grid[-10, 1, 1]?.should be_nil
@@ -251,36 +268,61 @@ describe Chem::Spatial::Grid do
   end
 
   describe "#[]=" do
-    it "sets a value at the indexes" do
+    it "sets a value at the index" do
+      grid = make_grid 2, 3, 2
+      grid[4] = 1234
+      grid[-1] = 999
+      grid.to_a.should eq [0, 1, 2, 3, 1234, 5, 6, 7, 8, 9, 10, 999]
+    end
+
+    it "sets a value at the location" do
       grid = make_grid 10, 10, 10
       grid[4, 7, 1] = 1234
       grid[4, 7, 1].should eq 1234
+      grid[{6, 5, 9}] = -9999
+      grid[{6, 5, 9}].should eq -9999
     end
   end
 
   describe "#coords_at" do
-    it "fails when indexes are out of bounds" do
+    it "fails when index is out of bounds" do
+      expect_raises(IndexError) { make_grid(2, 3, 4).coords_at 285 }
+    end
+
+    it "fails when location is out of bounds" do
       grid = make_grid 10, 10, 10, Bounds.new(V[1, 2, 3], S[10, 20, 30])
       expect_raises(IndexError) { grid.coords_at 20, 35, 1 }
     end
   end
 
   describe "#coords_at?" do
-    it "returns the coordinates at indexes" do
+    it "returns the coordinates at index" do
+      grid = make_grid 11, 11, 11, Bounds.new(V[8, 5, 4], S[10, 10, 10])
+      grid.coords_at?(0).should eq V[8, 5, 4]
+      grid.coords_at?(1330).should eq V[18, 15, 14]
+      grid.coords_at?(-1).should eq V[18, 15, 14]
+      grid.coords_at?(75).should eq V[8, 11, 13]
+    end
+
+    it "returns the coordinates at location" do
       grid = make_grid 11, 11, 11, Bounds.new(V[1, 2, 3], S[10, 20, 30])
       grid.coords_at?(0, 0, 0).should eq V[1, 2, 3]
       grid.coords_at?(10, 10, 10).should eq V[11, 22, 33]
       grid.coords_at?(3, 5, 0).should eq V[4, 12, 3]
     end
 
-    it "returns the coordinates at indexes (non-orthogonal)" do
+    it "returns the coordinates at location (non-orthogonal)" do
       grid = make_grid 11, 11, 11, Bounds.new(V[1, 2, 3], S[10, 10, 5], 90, 90, 120)
       grid.coords_at?(0, 0, 0).should eq V[1, 2, 3]
       grid.coords_at?(10, 10, 10).not_nil!.should be_close V[6, 10.660, 8], 1e-3
       grid.coords_at?(3, 5, 0).not_nil!.should be_close V[1.5, 6.330, 3], 1e-3
     end
 
-    it "returns nil when indexes are out of bounds" do
+    it "returns nil when index is out of bounds" do
+      make_grid(2, 2, 2).coords_at?(356).should be_nil
+    end
+
+    it "returns nil when location is out of bounds" do
       grid = make_grid 10, 10, 10, Bounds.new(V[1, 2, 3], S[10, 20, 30])
       grid.coords_at?(20, 35, 1).should be_nil
     end
@@ -301,6 +343,11 @@ describe Chem::Spatial::Grid do
       make_grid(2, 3, 1) { |i, j, k| i * 100 + j * 10 + k }.each { |ele| ary << ele }
       ary.should eq [0, 10, 20, 100, 110, 120]
     end
+
+    it "returns an iterator" do
+      grid = make_grid(2, 3, 2) { |i, j, k| i * 6 + j * 2 + k }
+      grid.each.to_a.should eq (0..11).to_a
+    end
   end
 
   describe "#each_coords" do
@@ -317,28 +364,28 @@ describe Chem::Spatial::Grid do
     end
   end
 
-  describe "#each_index" do
-    it "yields each index" do
-      ary = [] of Grid::Index
-      Grid[2, 2, 2].each_index { |i, j, k| ary << {i, j, k} }
+  describe "#each_loc" do
+    it "yields each loc" do
+      ary = [] of Grid::Location
+      Grid[2, 2, 2].each_loc { |i, j, k| ary << {i, j, k} }
       ary.should eq [
         {0, 0, 0}, {0, 0, 1}, {0, 1, 0}, {0, 1, 1}, {1, 0, 0}, {1, 0, 1}, {1, 1, 0},
         {1, 1, 1},
       ]
     end
 
-    it "yields each index within a cutoff distance of a given position" do
+    it "yields each loc within a cutoff distance of a given position" do
       grid = Grid.new({5, 10, 20}, Bounds.new(V[1, 2, 3], S[2, 2, 2]))
       vec, cutoff = V[2, 3, 5], 0.5
 
-      expected = [] of Grid::Index
-      grid.each_index do |i, j, k|
+      expected = [] of Grid::Location
+      grid.each_loc do |i, j, k|
         d = Chem::Spatial.squared_distance grid.coords_at(i, j, k), vec
         expected << {i, j, k} if d < cutoff**2
       end
 
-      ary = [] of Grid::Index
-      grid.each_index(vec, cutoff) { |i, j, k| ary << {i, j, k} }
+      ary = [] of Grid::Location
+      grid.each_loc(vec, cutoff) { |(i, j, k)| ary << {i, j, k} }
       ary.sort!.should eq expected.sort!
     end
   end
@@ -361,48 +408,71 @@ describe Chem::Spatial::Grid do
     end
   end
 
-  describe "#each_with_index" do
-    it "yields each element with its index" do
-      hash = {} of Grid::Index => Float64
-      grid = make_grid(2, 3, 1) { |i, j, k| i * 100 + j * 10 + k }
-      grid.each_with_index { |ele, i, j, k| hash[{i, j, k}] = ele }
-      hash.should eq({
-        {0, 0, 0} => 0,
-        {0, 1, 0} => 10,
-        {0, 2, 0} => 20,
-        {1, 0, 0} => 100,
-        {1, 1, 0} => 110,
-        {1, 2, 0} => 120,
-      })
-    end
-  end
-
   describe "#index" do
+    it "returns the index at the location" do
+      grid = make_grid 2, 3, 2
+      grid.index({0, 1, 1}).should eq 3
+    end
+
     it "returns the index at the coordinates" do
-      grid = make_grid 6, 10, 8, Bounds.new(V[2, 3, 4], S[1, 1, 1])
-      grid.index(V[2, 3, 4]).should eq({0, 0, 0})
-      grid.index(V[3, 4, 5]).should eq({5, 9, 7})
-      grid.index(V[2.45, 3.4, 4.4]).should eq({2, 4, 3})
-      grid.index(V[2.16, 3.75, 4.87]).should eq({1, 7, 6})
-    end
-
-    it "returns the index at the coordinates (non-orthogonal)" do
-      grid = make_grid 11, 11, 11, Bounds.new(V[4, 3, 2], S[5, 5, 4], 90, 100, 90)
-      grid.index(V[4, 3, 2]).should eq({0, 0, 0})
-      grid.index(V[8.305, 8, 5.939]).should eq({10, 10, 10})
-      grid.index(V[4.5, 6.21, 2.63]).should eq({1, 6, 2})
-      grid.index(V[7.4, 4.91, 5.4]).should eq({8, 4, 9})
-    end
-
-    it "returns nil when coordinates are out of bounds" do
-      make_grid(8, 8, 8, Bounds[7, 1, 2]).index(V[7.1, 0.5, 1.2]).should be_nil
+      grid = make_grid 11, 11, 11, Bounds.new(V[8, 1, 5], S[10, 10, 10])
+      grid.index(V[13, 7, 12]).should eq 678
     end
   end
 
   describe "#index!" do
+    it "fails when location is out of bounds" do
+      expect_raises(IndexError) { make_grid(2, 3, 2).index!({10, 10, 10}) }
+    end
+
+    it "fails when vector is out of bounds" do
+      expect_raises(IndexError) do
+        make_grid(2, 3, 2, Bounds[10, 10, 10]).index! V[26, 23, 0.1]
+      end
+    end
+  end
+
+  describe "#loc_at" do
+    it "fails when index is out of bounds" do
+      expect_raises(IndexError) { make_grid(8, 8, 8).loc_at 1267 }
+    end
+
     it "fails when coordinates are out of bounds" do
       grid = make_grid(8, 8, 8, Bounds[7, 1, 2])
-      expect_raises(IndexError) { grid.index! V[7.1, 0.5, 1.2] }
+      expect_raises(IndexError) { grid.loc_at V[7.1, 0.5, 1.2] }
+    end
+  end
+
+  describe "#loc_at?" do
+    it "returns the location at the index" do
+      grid = make_grid 2, 3, 2
+      grid.loc_at?(0).should eq({0, 0, 0})
+      grid.loc_at?(5).should eq({0, 2, 1})
+      grid.loc_at?(11).should eq({1, 2, 1})
+    end
+
+    it "returns the location at the coordinates" do
+      grid = make_grid 6, 10, 8, Bounds.new(V[2, 3, 4], S[1, 1, 1])
+      grid.loc_at?(V[2, 3, 4]).should eq({0, 0, 0})
+      grid.loc_at?(V[3, 4, 5]).should eq({5, 9, 7})
+      grid.loc_at?(V[2.45, 3.4, 4.4]).should eq({2, 4, 3})
+      grid.loc_at?(V[2.16, 3.75, 4.87]).should eq({1, 7, 6})
+    end
+
+    it "returns the location at the coordinates (non-orthogonal)" do
+      grid = make_grid 11, 11, 11, Bounds.new(V[4, 3, 2], S[5, 5, 4], 90, 100, 90)
+      grid.loc_at?(V[4, 3, 2]).should eq({0, 0, 0})
+      grid.loc_at?(V[8.305, 8, 5.939]).should eq({10, 10, 10})
+      grid.loc_at?(V[4.5, 6.21, 2.63]).should eq({1, 6, 2})
+      grid.loc_at?(V[7.4, 4.91, 5.4]).should eq({8, 4, 9})
+    end
+
+    it "returns nil when index is out of bounds" do
+      make_grid(2, 3, 2).loc_at?(120).should be_nil
+    end
+
+    it "returns nil when coordinates are out of bounds" do
+      make_grid(8, 8, 8, Bounds[7, 1, 2]).loc_at?(V[7.1, 0.5, 1.2]).should be_nil
     end
   end
 
@@ -443,19 +513,38 @@ describe Chem::Spatial::Grid do
   end
 
   describe "#map_with_index" do
-    it "modifies the grid yielding each element and its index" do
+    it "returns a grid mapped by yielding each element and its index" do
       grid = make_grid 2, 3, 1
-      other = grid.map_with_index { |ele, i, j, k| i * 1000 + j * 100 + k * 10 + ele }
+      other = grid.map_with_index { |ele, i| ele * i }
+      grid.to_a.should eq [0, 1, 2, 3, 4, 5]
+      other.to_a.should eq [0, 1, 4, 9, 16, 25]
+      other.dim.should eq({2, 3, 1})
+      other.bounds.should eq Bounds.zero
+    end
+  end
+
+  describe "#map_with_index!" do
+    it "maps in-place by yielding each element and its index" do
+      grid = make_grid 2, 3, 1
+      grid.map_with_index! { |ele, i| ele * i }
+      grid.to_a.should eq [0, 1, 4, 9, 16, 25]
+    end
+  end
+
+  describe "#map_with_loc" do
+    it "returns a grid mapped by yielding each element and its location" do
+      grid = make_grid 2, 3, 1
+      other = grid.map_with_loc { |ele, (i, j, k)| i * 1000 + j * 100 + k * 10 + ele }
       grid.to_a.should eq [0, 1, 2, 3, 4, 5]
       other.to_a.should eq [0, 101, 202, 1003, 1104, 1205]
       other.bounds.should eq Bounds.zero
     end
   end
 
-  describe "#map_with_index!" do
-    it "modifies the grid yielding each element and its index" do
+  describe "#map_with_loc!" do
+    it "maps in-place by yielding each element and its location" do
       grid = make_grid 2, 3, 1
-      grid.map_with_index! { |ele, i, j, k| i * 1000 + j * 100 + k * 10 + ele }
+      grid.map_with_loc! { |ele, (i, j, k)| i * 1000 + j * 100 + k * 10 + ele }
       grid.to_a.should eq [0, 101, 202, 1003, 1104, 1205]
     end
   end
@@ -531,7 +620,7 @@ describe Chem::Spatial::Grid do
   describe "#mask_by_index" do
     it "returns a grid mask" do
       grid = make_grid(2, 2, 2)
-      grid.mask_by_index { |i, j, k| k == 1 }.to_a.should eq [0, 1, 0, 1, 0, 1, 0, 1]
+      grid.mask_by_index { |i| i < 4 }.to_a.should eq [1, 1, 1, 1, 0, 0, 0, 0]
       grid.to_a.should eq [0, 1, 2, 3, 4, 5, 6, 7]
     end
   end
@@ -539,8 +628,30 @@ describe Chem::Spatial::Grid do
   describe "#mask_by_index!" do
     it "masks a grid in-place by index" do
       grid = make_grid(2, 2, 2)
-      grid.mask_by_index! { |i, j, k| i == 1 }
+      grid.mask_by_index! { |i| 1 <= i < 6 }
+      grid.to_a.should eq [0, 1, 2, 3, 4, 5, 0, 0]
+    end
+  end
+
+  describe "#mask_by_loc" do
+    it "returns a grid mask" do
+      grid = make_grid(2, 2, 2)
+      grid.mask_by_loc { |(i, j, k)| k == 1 }.to_a.should eq [0, 1, 0, 1, 0, 1, 0, 1]
+      grid.to_a.should eq [0, 1, 2, 3, 4, 5, 6, 7]
+    end
+  end
+
+  describe "#mask_by_loc!" do
+    it "masks a grid in-place by location" do
+      grid = make_grid(2, 2, 2)
+      grid.mask_by_loc! { |(i, j, k)| i == 1 }
       grid.to_a.should eq [0, 0, 0, 0, 4, 5, 6, 7]
+    end
+  end
+
+  describe "#min" do
+    it "returns the minimum value" do
+      ((make_grid(2, 3, 2) - 5) * 25).min.should eq -125
     end
   end
 
@@ -580,6 +691,12 @@ describe Chem::Spatial::Grid do
       grid.dim.should eq({2, 2, 2})
       grid.resolution.should eq({1, 1, 1})
       grid.to_a.should eq [0, 2, 12, 14, 32, 34, 44, 46]
+    end
+  end
+
+  describe "#sum" do
+    it "returns the sum of all values" do
+      make_grid(2, 3, 2).sum.should eq (0..11).sum
     end
   end
 

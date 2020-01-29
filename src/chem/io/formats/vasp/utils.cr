@@ -67,7 +67,7 @@ module Chem::VASP
         i = i_ % nx
         j = (i_ // nx) % ny
         k = i_ // (ny * nx)
-        format "%18.11E", (yield grid.unsafe_fetch(i, j, k))
+        format "%18.11E", (yield grid.unsafe_fetch({i, j, k}))
         @io << '\n' if (i_ + 1) % 5 == 0
       end
       @io << '\n' unless grid.size % 5 == 0

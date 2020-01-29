@@ -46,13 +46,11 @@ module Chem::Cube
     end
 
     private def write_array(grid : Spatial::Grid) : Nil
-      i = 0
-      grid.each do |ele|
-        i += 1
+      grid.each_with_index do |ele, i|
         format "%13.5E", ele
-        @io << '\n' if i % 6 == 0
+        @io << '\n' if (i + 1) % 6 == 0
       end
-      @io << '\n' unless i % 6 == 0
+      @io << '\n' unless grid.size % 6 == 0
     end
 
     private def write_atoms : Nil
