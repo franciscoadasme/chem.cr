@@ -47,13 +47,11 @@ module Chem::DX
 
     private def write_array(grid : Spatial::Grid) : Nil
       formatl "object 3 class array type double rank 0 items %d data follows", grid.size
-      i = 0
-      grid.each do |ele|
-        i += 1
+      grid.each_with_index do |ele, i|
         format "%16.8f", ele
-        @io << '\n' if i % 3 == 0
+        @io << '\n' if (i + 1) % 3 == 0
       end
-      @io << '\n' unless i % 3 == 0
+      @io << '\n' unless grid.size % 3 == 0
     end
 
     private def write_connections(grid : Spatial::Grid) : Nil

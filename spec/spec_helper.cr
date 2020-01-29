@@ -186,7 +186,7 @@ def make_grid(nx : Int,
               nz : Int,
               bounds : Bounds = Bounds.zero,
               &block : Int32, Int32, Int32 -> Number) : Grid
-  Grid.new({nx, ny, nz}, bounds).map_with_index! do |_, i, j, k|
+  Grid.new({nx, ny, nz}, bounds).map_with_loc! do |_, (i, j, k)|
     (yield i, j, k).to_f
   end
 end
