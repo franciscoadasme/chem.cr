@@ -123,7 +123,7 @@ module Chem::Spatial
     # lat.j # => Vector[-1, 1.732, 0.0]
     # lat.k # => Vector[0.0, 0.0, 3.0]
     #
-    # vec = V[1, 1, 1.5]
+    # vec = Vector[1, 1, 1.5]
     # vec.image(lat, 1, 0, 0) # => Vector[3.0, 1.0, 1.5]
     # vec.image(lat, 0, 1, 0) # => Vector[0.0, 2.732, 1.5]
     # vec.image(lat, 0, 0, 1) # => Vector[1.0, 1.0, 4.5]

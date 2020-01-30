@@ -89,15 +89,15 @@ module Chem::Spatial
     #
     # ```
     # structure = Chem::Structure.build do
-    #   atom :O, V[1, 2, 3]
-    #   atom :H, V[4, 5, 6]
-    #   atom :H, V[7, 8, 9]
+    #   atom :O, Vector[1, 2, 3]
+    #   atom :H, Vector[4, 5, 6]
+    #   atom :H, Vector[7, 8, 9]
     # end
     # structure.coords.center # => [4.0 5.0 6.0]
     # structure.coords.com    # => [1.5035248 2.5035248 3.5035248]
     # ```
     def com : Vector
-      center = V[0, 0, 0]
+      center = Vector[0, 0, 0]
       total_mass = 0.0
       each_with_atom do |vec, atom|
         center += atom.mass * vec
