@@ -696,6 +696,22 @@ describe Chem::Spatial::Grid do
     end
   end
 
+  describe "#mean" do
+    it "returns the arithmetic mean" do
+      make_grid(2, 3, 4).mean.should eq 11.5
+    end
+
+    it "returns the arithmetic mean along an axis" do
+      make_grid(2, 3, 4).mean(axis: 0).should eq [5.5, 17.5]
+      make_grid(2, 3, 4).mean(axis: 1).should eq [7.5, 11.5, 15.5]
+      make_grid(2, 3, 4).mean(axis: 2).should eq [10, 11, 12, 13]
+    end
+
+    it "fails when axis is out of bounds" do
+      expect_raises(IndexError) { make_grid(2, 2, 2).mean(axis: 4) }
+    end
+  end
+
   describe "#min" do
     it "returns the minimum value" do
       ((make_grid(2, 3, 2) - 5) * 25).min.should eq -125

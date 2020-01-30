@@ -651,6 +651,37 @@ module Chem::Spatial
       map_with_loc! { |ele, loc| (yield loc) ? ele : 0.0 }
     end
 
+    # Returns the arithmetic mean of the grid elements.
+    #
+    # ```
+    # grid = Grid.new({2, 3, 4}, Bounds[1, 1, 1]) { |i, j, k| i * 12 + j * 4 + k }
+    # grid.mean # => 11.5
+    # ```
+    def mean : Float64
+      sum / size
+    end
+
+    # Returns the arithmetic mean along *axis*. Axis is specified as an
+    # integer: 0-2 refer to the direction of the first, second or third
+    # basis vector, respectively.
+    #
+    # Raises IndexError is *axis* is out of bounds.
+    #
+    # ```
+    # grid = Grid.new({2, 3, 4}, Bounds[1, 1, 1]) { |i, j, k| i * 12 + j * 4 + k }
+    # grid.mean(axis: 0) # => [5.5, 17.5]
+    # grid.mean(axis: 1) # => [7.5, 11.5, 15.5]
+    # grid.mean(axis: 2) # => [10, 11, 12, 13]
+    # grid.mean(axis: 3) # raises IndexError
+    # ```
+    def mean(axis : Int) : Array(Float64)
+      values = Array(Float64).new @dim[axis]
+      each_axial_slice(axis, reuse: true) do |slice|
+        values << slice.sum / slice.size
+      end
+      values
+    end
+
     def ni : Int32
       dim[0]
     end
