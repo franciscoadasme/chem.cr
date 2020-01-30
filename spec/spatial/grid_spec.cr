@@ -409,6 +409,27 @@ describe Chem::Spatial::Grid do
       ary.should eq [[0, 2, 4, 6, 8, 10], [1, 3, 5, 7, 9, 11]]
     end
 
+    it "reuses an array" do
+      ary = [] of Array(Float64)
+      buffer = [] of Float64
+      make_grid(2, 3, 2).each_axial_slice(2, buffer) do |slice|
+        slice.should be buffer
+        ary << slice.dup
+      end
+      ary.should eq [[0, 2, 4, 6, 8, 10], [1, 3, 5, 7, 9, 11]]
+    end
+
+    it "creates and reuses an array" do
+      ary = [] of Array(Float64)
+      buffer = nil
+      make_grid(2, 3, 2).each_axial_slice(2, reuse: true) do |slice|
+        buffer ||= slice
+        slice.should be buffer
+        ary << slice.dup
+      end
+      ary.should eq [[0, 2, 4, 6, 8, 10], [1, 3, 5, 7, 9, 11]]
+    end
+
     it "fails when axis is out of bounds" do
       expect_raises(IndexError) do
         make_grid(2, 2, 2).each_axial_slice(5) { }
