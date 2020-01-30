@@ -682,6 +682,27 @@ module Chem::Spatial
       values
     end
 
+    # Returns the arithmetic mean along *axis* with its coordinates.
+    # Axis is specified as an integer: 0-2 refer to the direction of the
+    # first, second or third basis vector, respectively.
+    #
+    # Raises IndexError is *axis* is out of bounds.
+    #
+    # ```
+    # grid = Grid.new({2, 3, 5}, Bounds[1, 1, 1]) { |i, j, k| i * 12 + j * 4 + k }
+    # grid.mean(axis: 1) # => [{9.5, 0.0}, {14.5, 0.5}, {19.5, 1.0}]
+    # ```
+    def mean_with_coords(axis : Int) : Array(Tuple(Float64, Float64))
+      delta = resolution[axis]
+      i = 0
+      ary = Array(Tuple(Float64, Float64)).new @dim[axis]
+      each_axial_slice(axis, reuse: true) do |slice|
+        ary << {slice.sum / slice.size, i * delta}
+        i += 1
+      end
+      ary
+    end
+
     def ni : Int32
       dim[0]
     end
