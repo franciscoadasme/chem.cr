@@ -390,6 +390,32 @@ describe Chem::Spatial::Grid do
     end
   end
 
+  describe "#each_axial_slice" do
+    it "yields each yz slice" do
+      ary = [] of Array(Float64)
+      make_grid(2, 3, 2).each_axial_slice(0) { |slice| ary << slice }
+      ary.should eq [(0..5).to_a, (6..11).to_a]
+    end
+
+    it "yields each xz slice" do
+      ary = [] of Array(Float64)
+      make_grid(2, 3, 2).each_axial_slice(1) { |slice| ary << slice }
+      ary.should eq [[0, 1, 6, 7], [2, 3, 8, 9], [4, 5, 10, 11]]
+    end
+
+    it "yields each xy slice" do
+      ary = [] of Array(Float64)
+      make_grid(2, 3, 2).each_axial_slice(2) { |slice| ary << slice }
+      ary.should eq [[0, 2, 4, 6, 8, 10], [1, 3, 5, 7, 9, 11]]
+    end
+
+    it "fails when axis is out of bounds" do
+      expect_raises(IndexError) do
+        make_grid(2, 2, 2).each_axial_slice(5) { }
+      end
+    end
+  end
+
   describe "#each_with_coords" do
     it "yields each element with its coordinates" do
       hash = {} of Vector => Float64

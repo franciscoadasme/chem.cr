@@ -276,6 +276,57 @@ module Chem::Spatial
       end
     end
 
+    # Iterates over slices along *axis*. Axis is specified as an
+    # integer: 0-2 refer to the direction of the first, second or third
+    # basis vector, respectively.
+    #
+    # ```
+    # grid = Grid.new({2, 3, 2}, Bounds[1, 1, 1]) { |i, j, k| i * 6 + j * 2 + k }
+    # grid.to_a # => [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    # slices = [] of Array(Float64)
+    # grid.each_axial_slice(axis: 1) { |slice| slices << slice }
+    # slices # => [[0, 1, 6, 7], [2, 3, 8, 9], [4, 5, 10, 11]]
+    # ```
+    #
+    # When using read-only slices, one can specify the *reuse* option to
+    # prevent many memory allocations:
+    #
+    # * If *reuse* is an `Array`, this array will be reused.
+    # * If *reuse* is true, the method will create a new array and reuse
+    #   it.
+    # * If *reuse* is false (default), a new array is created and
+    #   yielded on each iteration.
+    def each_axial_slice(axis : Int,
+                         reuse : Bool | Array(Float64) = false,
+                         & : Array(Float64) ->) : Nil
+      njk = nj * nk
+      case axis
+      when 0
+        each_axial_slice(ni, njk, reuse) do |buffer, i|
+          njk.times { |i_| buffer << unsafe_fetch(i * njk + i_) }
+          yield buffer
+        end
+      when 1
+        each_axial_slice(nj, ni * nk, reuse) do |buffer, j|
+          ni.times do |i|
+            nk.times { |i_| buffer << unsafe_fetch(i * njk + j * nk + i_) }
+          end
+          yield buffer
+        end
+      when 2
+        each_axial_slice(nk, ni * nj, reuse) do |buffer, k|
+          ni.times do |i|
+            nj.times do |j|
+              buffer << unsafe_fetch(i * njk + j * nk + k)
+            end
+          end
+          yield buffer
+        end
+      else
+        raise IndexError.new
+      end
+    end
+
     def each_coords(& : Vector ->) : Nil
       each_loc do |loc|
         yield unsafe_coords_at(loc)
@@ -662,6 +713,17 @@ module Chem::Spatial
 
     private def check_dim : Nil
       raise ArgumentError.new "Invalid dimensions" unless dim.all?(&.>(0))
+    end
+
+    private def each_axial_slice(n : Int,
+                                 size : Int,
+                                 reuse : Array(Float64) | Bool,
+                                 & : Array(Float64), Int32 ->) : Nil
+      buffer = reuse.is_a?(Array) ? reuse.clear : Array(Float64).new(size)
+      n.times do |i|
+        yield buffer, i
+        buffer = reuse ? buffer.clear : Array(Float64).new(size)
+      end
     end
 
     @[AlwaysInline]
