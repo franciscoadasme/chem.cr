@@ -86,11 +86,11 @@ module Chem::Spatial
     w1 = (w1 + w2).normalize
 
     tz = (w1 - v1).cross(w3 - v3).normalize
+    tz *= tz.dot(v1).sign # ensures that rotation axis points forwards
 
     c1 = (coord[0][:ca] + coord[0][:c] + coord[1][:n] + coord[1][:ca]) / 4
     c2 = (coord[1][:ca] + coord[1][:c] + coord[2][:n] + coord[2][:ca]) / 4
     zeta = tz.dot(c2 - c1)
-    tz, zeta = -tz, -zeta if zeta < 0
 
     {tz, rotation_angle(tz, v1, w1), zeta}
   end
