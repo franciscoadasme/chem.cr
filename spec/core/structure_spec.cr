@@ -86,4 +86,89 @@ describe Chem::Structure do
       Chem::Structure.new.periodic?.should be_false
     end
   end
+
+  describe "#write" do
+    structure = Structure.build(guess_topology: false) do
+      title "ICN"
+      lattice 5, 10, 10
+      atom :I, V[-2, 0, 0]
+      atom :C, V[0, 0, 0]
+      atom :N, V[1.5, 0, 0]
+    end
+
+    it "writes a structure into a file" do
+      path = File.tempname ".xyz"
+      structure.write path
+      File.read(path).should eq <<-EOS
+        3
+        ICN
+        I         -2.00000        0.00000        0.00000
+        C          0.00000        0.00000        0.00000
+        N          1.50000        0.00000        0.00000\n
+        EOS
+      File.delete path
+    end
+
+    it "writes a structure into a file without extension" do
+      path = File.tempname "POSCAR", ""
+      structure.write path
+      File.read(path).should eq <<-EOS
+        ICN
+           1.00000000000000
+             5.0000000000000000    0.0000000000000000    0.0000000000000000
+             0.0000000000000000   10.0000000000000000    0.0000000000000000
+             0.0000000000000000    0.0000000000000000   10.0000000000000000
+           I    C    N 
+             1     1     1
+        Cartesian
+           -2.0000000000000000    0.0000000000000000    0.0000000000000000
+            0.0000000000000000    0.0000000000000000    0.0000000000000000
+            1.5000000000000000    0.0000000000000000    0.0000000000000000\n
+        EOS
+      File.delete path
+    end
+
+    it "writes a structure into a file with specified file format" do
+      path = File.tempname ".pdb"
+      structure.write path, :xyz
+      File.read(path).should eq <<-EOS
+        3
+        ICN
+        I         -2.00000        0.00000        0.00000
+        C          0.00000        0.00000        0.00000
+        N          1.50000        0.00000        0.00000\n
+        EOS
+      File.delete path
+    end
+
+    it "writes a structure into an IO" do
+      io = IO::Memory.new
+      structure.write io, :xyz
+      io.to_s.should eq <<-EOS
+        3
+        ICN
+        I         -2.00000        0.00000        0.00000
+        C          0.00000        0.00000        0.00000
+        N          1.50000        0.00000        0.00000\n
+        EOS
+    end
+
+    it "accepts file format as string" do
+      io = IO::Memory.new
+      structure.write io, "xyz"
+      io.to_s.should eq <<-EOS
+        3
+        ICN
+        I         -2.00000        0.00000        0.00000
+        C          0.00000        0.00000        0.00000
+        N          1.50000        0.00000        0.00000\n
+        EOS
+    end
+
+    it "raises on invalid file format" do
+      expect_raises ArgumentError do
+        structure.write IO::Memory.new, "asd"
+      end
+    end
+  end
 end
