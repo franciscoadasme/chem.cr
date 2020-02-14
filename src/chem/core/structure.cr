@@ -197,7 +197,7 @@ module Chem
     end
 
     def write(path : Path | String) : Nil
-      format = IO::FileFormat.from_ext File.extname(path)
+      format = IO::FileFormat.from_filename path
       write path, format
     end
 
