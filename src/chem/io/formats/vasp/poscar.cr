@@ -14,9 +14,10 @@ module Chem::VASP::Poscar
       check_open
       raise Spatial::NotPeriodicError.new unless lattice
 
+      atoms = atoms.atoms.to_a.sort_by! &.serial
       coordinate_system = @fractional ? "Direct" : "Cartesian"
       ele_tally = count_elements atoms
-      has_constraints = atoms.each_atom.any? &.constraint
+      has_constraints = atoms.any? &.constraint
 
       @io.puts title.gsub(/ *\n */, ' ')
       write lattice
@@ -25,7 +26,7 @@ module Chem::VASP::Poscar
       @io.puts coordinate_system
 
       ele_tally.each do |ele, _|
-        atoms.each_atom.select(&.element.==(ele)).each do |atom|
+        atoms.each.select(&.element.==(ele)).each do |atom|
           vec = atom.coords
           if @fractional
             vec = vec.to_fractional lattice
@@ -45,8 +46,8 @@ module Chem::VASP::Poscar
       write structure, structure.lattice, structure.title
     end
 
-    private def count_elements(atoms : AtomCollection) : Array(Tuple(Element, Int32))
-      ele_tally = atoms.each_atom.map(&.element).tally.to_a
+    private def count_elements(atoms : Enumerable(Atom)) : Array(Tuple(Element, Int32))
+      ele_tally = atoms.map(&.element).tally.to_a
       if order = @ele_order
         ele_tally.sort_by! do |(k, _)|
           order.index(k) || raise ArgumentError.new "#{k.inspect} not found in specified order"
