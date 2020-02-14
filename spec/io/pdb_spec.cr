@@ -133,14 +133,14 @@ describe Chem::PDB do
 
     it "parses experiment with multiple methods" do
       structure = Chem::Structure.from_pdb IO::Memory.new <<-EOS
-        HEADER    CHAPERONE                               14-FEB-13   4J7Z              
-        TITLE     THERMUS THERMOPHILUS DNAJ J- AND G/F-DOMAINS                          
-        EXPDTA    X-RAY DIFFRACTION; EPR                                                
-        ATOM      1  N   ALA A   1       5.606   4.546  11.941  1.00  3.73           N  
-        ATOM      2  CA  ALA A   1       5.598   5.767  11.082  1.00  3.56           C  
-        ATOM      3  C   ALA A   1       6.441   5.527   9.850  1.00  4.13           C  
-        ATOM      4  O   ALA A   1       6.052   5.933   8.744  1.00  4.36           O  
-        ATOM      5  CB  ALA A   1       6.022   6.977  11.891  1.00  4.80           C  
+        HEADER    CHAPERONE                               14-FEB-13   4J7Z
+        TITLE     THERMUS THERMOPHILUS DNAJ J- AND G/F-DOMAINS
+        EXPDTA    X-RAY DIFFRACTION; EPR
+        ATOM      1  N   ALA A   1       5.606   4.546  11.941  1.00  3.73           N
+        ATOM      2  CA  ALA A   1       5.598   5.767  11.082  1.00  3.56           C
+        ATOM      3  C   ALA A   1       6.441   5.527   9.850  1.00  4.13           C
+        ATOM      4  O   ALA A   1       6.052   5.933   8.744  1.00  4.36           O
+        ATOM      5  CB  ALA A   1       6.022   6.977  11.891  1.00  4.80           C
         EOS
       structure.experiment.should_not be_nil
       expt = structure.experiment.not_nil!
@@ -387,15 +387,15 @@ describe Chem::PDB::Writer do
   it "writes an atom collection" do
     structure = load_file "1crn.pdb", topology: :none
     structure.residues[4].to_pdb.should eq <<-EOS
-      REMARK   4                                                                      
-      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
-      ATOM      1  N   PRO A   5       9.561   9.108  13.563  1.00  3.96           N  
-      ATOM      2  CA  PRO A   5       9.448   9.034  15.012  1.00  4.25           C  
-      ATOM      3  C   PRO A   5       9.288   7.670  15.606  1.00  4.96           C  
-      ATOM      4  O   PRO A   5       9.490   7.519  16.819  1.00  7.44           O  
-      ATOM      5  CB  PRO A   5       8.230   9.957  15.345  1.00  5.11           C  
-      ATOM      6  CG  PRO A   5       7.338   9.786  14.114  1.00  5.24           C  
-      ATOM      7  CD  PRO A   5       8.366   9.804  12.958  1.00  5.20           C  
+      REMARK   4
+      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11
+      ATOM      1  N   PRO A   5       9.561   9.108  13.563  1.00  3.96           N
+      ATOM      2  CA  PRO A   5       9.448   9.034  15.012  1.00  4.25           C
+      ATOM      3  C   PRO A   5       9.288   7.670  15.606  1.00  4.96           C
+      ATOM      4  O   PRO A   5       9.490   7.519  16.819  1.00  7.44           O
+      ATOM      5  CB  PRO A   5       8.230   9.957  15.345  1.00  5.11           C
+      ATOM      6  CG  PRO A   5       7.338   9.786  14.114  1.00  5.24           C
+      ATOM      7  CD  PRO A   5       8.366   9.804  12.958  1.00  5.20           C
       END                                                                             \n
       EOS
   end
@@ -409,15 +409,15 @@ describe Chem::PDB::Writer do
   it "keeps original atom numbering" do
     structure = load_file "1crn.pdb"
     structure.residues[4].to_pdb(renumber: false).should eq <<-EOS
-      REMARK   4                                                                      
-      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
-      ATOM     27  N   PRO A   5       9.561   9.108  13.563  1.00  3.96           N  
-      ATOM     28  CA  PRO A   5       9.448   9.034  15.012  1.00  4.25           C  
-      ATOM     29  C   PRO A   5       9.288   7.670  15.606  1.00  4.96           C  
-      ATOM     30  O   PRO A   5       9.490   7.519  16.819  1.00  7.44           O  
-      ATOM     31  CB  PRO A   5       8.230   9.957  15.345  1.00  5.11           C  
-      ATOM     32  CG  PRO A   5       7.338   9.786  14.114  1.00  5.24           C  
-      ATOM     33  CD  PRO A   5       8.366   9.804  12.958  1.00  5.20           C  
+      REMARK   4
+      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11
+      ATOM     27  N   PRO A   5       9.561   9.108  13.563  1.00  3.96           N
+      ATOM     28  CA  PRO A   5       9.448   9.034  15.012  1.00  4.25           C
+      ATOM     29  C   PRO A   5       9.288   7.670  15.606  1.00  4.96           C
+      ATOM     30  O   PRO A   5       9.490   7.519  16.819  1.00  7.44           O
+      ATOM     31  CB  PRO A   5       8.230   9.957  15.345  1.00  5.11           C
+      ATOM     32  CG  PRO A   5       7.338   9.786  14.114  1.00  5.24           C
+      ATOM     33  CD  PRO A   5       8.366   9.804  12.958  1.00  5.20           C
       END                                                                             \n
       EOS
   end
@@ -435,11 +435,11 @@ describe Chem::PDB::Writer do
     end
 
     structure.to_pdb(bonds: true).should eq <<-EOS
-      REMARK   4                                                                      
-      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
-      HETATM    1  I1  ICN A   1      -1.000   0.000   0.000  1.00  0.00           I  
-      HETATM    2  C1  ICN A   1       0.000   0.000   0.000  1.00  0.00           C  
-      HETATM    3  N1  ICN A   1       1.000   0.000   0.000  1.00  0.00           N  
+      REMARK   4
+      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11
+      HETATM    1  I1  ICN A   1      -1.000   0.000   0.000  1.00  0.00           I
+      HETATM    2  C1  ICN A   1       0.000   0.000   0.000  1.00  0.00           C
+      HETATM    3  N1  ICN A   1       1.000   0.000   0.000  1.00  0.00           N
       CONECT    1    2
       CONECT    2    1    3    3    3
       CONECT    3    2    2    2
@@ -469,11 +469,11 @@ describe Chem::PDB::Writer do
     end
 
     structure.residues[1].to_pdb(bonds: true).should eq <<-EOS
-      REMARK   4                                                                      
-      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
-      HETATM    1  I1  ICN A   2      -4.000   0.000   0.000  1.00  0.00           I  
-      HETATM    2  C1  ICN A   2      -3.000   0.000   0.000  1.00  0.00           C  
-      HETATM    3  N1  ICN A   2      -2.000   0.000   0.000  1.00  0.00           N  
+      REMARK   4
+      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11
+      HETATM    1  I1  ICN A   2      -4.000   0.000   0.000  1.00  0.00           I
+      HETATM    2  C1  ICN A   2      -3.000   0.000   0.000  1.00  0.00           C
+      HETATM    3  N1  ICN A   2      -2.000   0.000   0.000  1.00  0.00           N
       CONECT    1    2
       CONECT    2    1    3    3    3
       CONECT    3    2    2    2
@@ -497,12 +497,12 @@ describe Chem::PDB::Writer do
 
     bonds = [structure.atoms[0].bonds[structure.atoms[2]]]
     structure.to_pdb(bonds: bonds).should eq <<-EOS
-      REMARK   4                                                                      
-      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
-      HETATM    1  C1  CH3 A   1       0.000   0.000   0.000  1.00  0.00           C  
-      HETATM    2  H1  CH3 A   1       0.000  -1.000   0.000  1.00  0.00           H  
-      HETATM    3  H2  CH3 A   1       1.000   0.000   0.000  1.00  0.00           H  
-      HETATM    4  H3  CH3 A   1       0.000   1.000   0.000  1.00  0.00           H  
+      REMARK   4
+      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11
+      HETATM    1  C1  CH3 A   1       0.000   0.000   0.000  1.00  0.00           C
+      HETATM    2  H1  CH3 A   1       0.000  -1.000   0.000  1.00  0.00           H
+      HETATM    3  H2  CH3 A   1       1.000   0.000   0.000  1.00  0.00           H
+      HETATM    4  H3  CH3 A   1       0.000   1.000   0.000  1.00  0.00           H
       CONECT    1    3
       CONECT    3    1
       END                                                                             \n
@@ -526,14 +526,34 @@ describe Chem::PDB::Writer do
     structure.residues[0].number = 10_231
 
     structure.to_pdb(bonds: true, renumber: false).should eq <<-EOS
-      REMARK   4                                                                      
-      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
-      HETATM99999  I1  ICN AA06F      -1.000   0.000   0.000  1.00  0.00           I  
-      HETATMA0000  C1  ICN AA06F       0.000   0.000   0.000  1.00  0.00           C  
-      HETATMA2W9F  N1  ICN AA06F       1.000   0.000   0.000  1.00  0.00           N  
+      REMARK   4
+      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11
+      HETATM99999  I1  ICN AA06F      -1.000   0.000   0.000  1.00  0.00           I
+      HETATMA0000  C1  ICN AA06F       0.000   0.000   0.000  1.00  0.00           C
+      HETATMA2W9F  N1  ICN AA06F       1.000   0.000   0.000  1.00  0.00           N
       CONECT99999A0000
       CONECTA000099999A2W9FA2W9FA2W9F
       CONECTA2W9FA0000A0000A0000
+      END                                                                             \n
+      EOS
+  end
+
+  it "writes four-letter residue names (#45)" do
+    structure = Chem::Structure.build(guess_topology: false) do
+      residue "DMPG" do
+        atom "C13", V[9.194, 10.488, 13.865]
+        atom "H13A", V[8.843, 9.508, 14.253]
+        atom "H13B", V[10.299, 10.527, 13.756]
+        atom "OC3", V[8.600, 10.828, 12.580]
+      end
+    end
+    structure.to_pdb.should eq <<-EOS
+      REMARK   4
+      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11
+      HETATM    1  C13 DMPGA   1       9.194  10.488  13.865  1.00  0.00           C
+      HETATM    2 H13A DMPGA   1       8.843   9.508  14.253  1.00  0.00           H
+      HETATM    3 H13B DMPGA   1      10.299  10.527  13.756  1.00  0.00           H
+      HETATM    4  OC3 DMPGA   1       8.600  10.828  12.580  1.00  0.00           O
       END                                                                             \n
       EOS
   end

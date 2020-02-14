@@ -121,11 +121,11 @@ module Chem::PDB
     end
 
     private def write(atom : Atom) : Nil
-      @io.printf "%-6s%5s %4s %3s %s%4s%1s   %8.3f%8.3f%8.3f%6.2f%6.2f          %2s%2s\n",
+      @io.printf "%-6s%5s %4s %-4s%s%4s%1s   %8.3f%8.3f%8.3f%6.2f%6.2f          %2s%2s\n",
         (atom.residue.protein? ? "ATOM" : "HETATM"),
         PDB::Hybrid36.encode(@renumber ? index(atom) : atom.serial, width: 5),
-        atom.name.ljust(3),
-        atom.residue.name,
+        atom.name[..3].ljust(3),
+        atom.residue.name[..3],
         atom.chain.id,
         PDB::Hybrid36.encode(atom.residue.number, width: 4),
         atom.residue.insertion_code,
