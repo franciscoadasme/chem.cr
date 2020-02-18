@@ -210,7 +210,7 @@ describe Topology::Perception do
       structure.residues[0].atoms.map(&.name).should eq %w(
         N CA HA C O CB HB1 HB2 HB3 H1 H2)
       structure.residues[1].atoms.map(&.name).should eq %w(
-        N H CA HA C O CB HB CG1 HG11 HG12 CD HD1 HD2 HD3 CG2 HG21 HG22 HG23 OXT HXT)
+        N H CA HA C O CB HB CG1 HG11 HG12 CD1 HD11 HD12 HD13 CG2 HG21 HG22 HG23 OXT HXT)
     end
 
     it "guesses the topology of two peptide chains" do

@@ -132,7 +132,7 @@ module Chem::Topology::Templates
     name "ILE"
     code 'I'
     sidechain do
-      main "CB-CG1-CD"
+      main "CB-CG1-CD1"
       branch "CB-CG2"
     end
   end
