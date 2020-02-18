@@ -51,9 +51,10 @@ module Chem
     end
 
     def each_residue(&block : Residue ->)
+      residues = Set(Residue).new
       each do |atom|
-        yield if atom.residue == prev_residue
-        prev_residue = atom.residue
+        yield atom.residue unless residues.includes?(atom.residue)
+        residues << atom.residue
       end
     end
 

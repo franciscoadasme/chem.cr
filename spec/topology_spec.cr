@@ -28,26 +28,6 @@ describe Chem::AtomCollection do
   end
 end
 
-describe Chem::AtomView do
-  atoms = fake_structure.atoms
-
-  describe "#[]" do
-    it "gets atom by zero-based index" do
-      atoms[4].name.should eq "CB"
-    end
-
-    it "gets atom by serial number" do
-      atoms[serial: 5].name.should eq "CB"
-    end
-  end
-
-  describe "#size" do
-    it "returns the number of chains" do
-      atoms.size.should eq 25
-    end
-  end
-end
-
 describe Chem::BondArray do
   describe "#[]" do
     st = fake_structure
