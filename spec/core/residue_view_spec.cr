@@ -28,6 +28,14 @@ describe Chem::ResidueView do
     end
   end
 
+  describe "#each_chain" do
+    it "yields each chain" do
+      chains = [] of Chem::Chain
+      fake_structure.residues.each_chain { |chain| chains << chain }
+      chains.map(&.id).should eq ['A', 'B']
+    end
+  end
+
   describe "#size" do
     it "returns the number of residues" do
       residues.size.should eq 7

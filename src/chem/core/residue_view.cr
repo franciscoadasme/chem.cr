@@ -38,9 +38,10 @@ module Chem
     end
 
     def each_chain(&block : Chain ->)
+      chains = Set(Chain).new
       each do |residue|
-        yield if residue.chain == prev_chain
-        prev_chain = residue.chain
+        yield residue.chain unless chains.includes?(residue.chain)
+        chains << residue.chain
       end
     end
 
