@@ -6,21 +6,27 @@ module Chem::Topology::Perception
   MAX_CHAINS          =  62 # chain id is alphanumeric: A-Z, a-z or 0-9
   MAX_COVALENT_RADIUS = 5.0
 
-  def assign_templates(structure : Structure, unknown_residues : Array(Residue)? = nil) : Nil
+  def assign_templates(structure : Structure) : Array(Atom)
+    unknown_atoms = [] of Atom
     structure.each_residue do |residue|
       if res_t = Templates[residue.name]?
         assign_bonds residue, res_t
         assign_formal_charges residue, res_t
+        residue.each_atom do |atom|
+          unknown_atoms << atom unless res_t[atom.name]?
+        end
       else
-        unknown_residues.try &.<<(residue)
+        unknown_atoms.concat residue.each_atom
       end
     end
+    unknown_atoms
   end
 
-  def guess_bonds(structure : Structure) : Nil
+  def guess_bonds(structure : Structure, atoms : AtomCollection? = nil) : Nil
     kdtree = Spatial::KDTree.new structure, radius: MAX_COVALENT_RADIUS
-    guess_connectivity kdtree, structure
-    guess_bond_orders structure if structure.has_hydrogens?
+    atoms ||= structure
+    guess_connectivity kdtree, atoms
+    guess_bond_orders atoms if structure.has_hydrogens?
   end
 
   def guess_formal_charges(atoms : AtomCollection) : Nil
@@ -63,9 +69,15 @@ module Chem::Topology::Perception
     return unless structure.n_atoms > 0
     use_templates ||= structure.n_residues > 1 || structure.each_residue.first.name != "UNK"
     if use_templates
-      unknown_residues = [] of Residue
-      assign_templates structure, unknown_residues
-      sanitize_residues structure, unknown_residues unless unknown_residues.empty?
+      unknown_atoms = AtomView.new assign_templates(structure)
+      guess_bonds structure, unknown_atoms
+      if structure.has_hydrogens?
+        bonded_atoms = unknown_atoms.flat_map &.each_bonded_atom
+        guess_formal_charges AtomView.new(unknown_atoms.to_a.concat(bonded_atoms).uniq)
+      end
+      structure.each_residue do |residue|
+        residue.kind = guess_residue_type residue unless Templates[residue.name]?
+      end
     else
       guess_bonds structure
       guess_formal_charges structure if structure.has_hydrogens?
@@ -219,17 +231,5 @@ module Chem::Topology::Perception
       matches << MatchData.new("UNK", :other, atom_map)
     end
     matches
-  end
-
-  private def sanitize_residues(structure : Structure, residues : Array(Residue)) : Nil
-    kdtree = Spatial::KDTree.new structure, radius: MAX_COVALENT_RADIUS
-    residues.each do |residue|
-      residue.kind = guess_residue_type residue
-      guess_connectivity kdtree, residue
-      if structure.has_hydrogens?
-        guess_bond_orders residue
-        guess_formal_charges residue
-      end
-    end
   end
 end
