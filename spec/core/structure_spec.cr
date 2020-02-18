@@ -28,7 +28,7 @@ describe Chem::Structure do
       other.n_chains.should eq 1
       other.n_residues.should eq 46
       other.n_atoms.should eq 327
-      other.bonds.size.should eq 336
+      other.bonds.size.should eq 337
       other.chains.map(&.id).should eq ['A']
       other.dig('A', 32).name.should eq "CYS"
       other.dig('A', 32).secondary_structure.beta_strand?.should be_true
