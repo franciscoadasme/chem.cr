@@ -13,6 +13,14 @@ describe Chem::AtomView do
     end
   end
 
+  describe "#each_chain" do
+    it "yields each chain" do
+      chains = [] of Chem::Chain
+      atoms.each_chain { |chain| chains << chain }
+      chains.map(&.id).should eq ['A', 'B']
+    end
+  end
+
   describe "#each_residue" do
     it "yields each residue" do
       residues = [] of Chem::Residue
