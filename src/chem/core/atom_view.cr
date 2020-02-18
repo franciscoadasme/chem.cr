@@ -40,9 +40,10 @@ module Chem
     end
 
     def each_chain(&block : Chain ->)
+      chains = Set(Chain).new
       each do |atom|
-        yield if atom.chain == prev_chain
-        prev_chain = atom.chain
+        yield atom.chain unless chains.includes?(atom.chain)
+        chains << atom.chain
       end
     end
 
@@ -51,9 +52,10 @@ module Chem
     end
 
     def each_residue(&block : Residue ->)
+      residues = Set(Residue).new
       each do |atom|
-        yield if atom.residue == prev_residue
-        prev_residue = atom.residue
+        yield atom.residue unless residues.includes?(atom.residue)
+        residues << atom.residue
       end
     end
 
