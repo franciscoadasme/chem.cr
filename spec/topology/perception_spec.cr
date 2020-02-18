@@ -281,6 +281,22 @@ describe Topology::Perception do
       residues[0].atoms.map(&.name).should eq %w(N1 C1 C2 O1 C3 O2 H1 H2 H3 H4 C4 H5 H6 H7)
       residues[1].atoms.map(&.name).should eq %w(N1 C1 C2 O1 S1 H1 H2 H3)
     end
+
+    it "guesses the topology of non-standard atoms (#21)" do
+      structure = load_file "5e5v.pdb", topology: :templates
+      structure.dig('A', 1, "N").bonded_atoms.map(&.name).sort!.should eq %w(CA H1 H2 H3)
+      structure.dig('A', 1, "N").bonds.map(&.order).sort!.should eq [1, 1, 1, 1]
+      structure.dig('A', 1, "N").formal_charge.should eq 1
+      structure.dig('A', 7, "OXT").bonded_atoms.map(&.name).should eq %w(C)
+      structure.dig('A', 7, "OXT").bonds.map(&.order).sort!.should eq [1]
+      structure.dig('A', 7, "OXT").formal_charge.should eq -1
+      structure.dig('B', 1, "N").bonded_atoms.map(&.name).sort!.should eq %w(CA H1 H2 H3)
+      structure.dig('B', 1, "N").bonds.map(&.order).sort!.should eq [1, 1, 1, 1]
+      structure.dig('B', 1, "N").formal_charge.should eq 1
+      structure.dig('B', 7, "OXT").bonded_atoms.map(&.name).should eq %w(C)
+      structure.dig('B', 7, "OXT").bonds.map(&.order).sort!.should eq [1]
+      structure.dig('B', 7, "OXT").formal_charge.should eq -1
+    end
   end
 
   describe "#renumber_by_connectivity" do
