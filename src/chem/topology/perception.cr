@@ -28,7 +28,7 @@ module Chem::Topology::Perception
       atom.formal_charge = if atom.element.ionic?
                              atom.max_valency
                            else
-                             atom.valency - atom.nominal_valency
+                             atom.bonds.sum(&.order) - atom.nominal_valency
                            end
     end
   end
