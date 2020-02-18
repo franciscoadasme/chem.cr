@@ -157,7 +157,7 @@ module Chem::Topology::Perception
       kdtree.each_neighbor(atom, within: MAX_COVALENT_RADIUS) do |other, d|
         next if other.element.ionic? ||
                 atom.bonded?(other) ||
-                other.valency >= other.max_valency ||
+                (other.element.hydrogen? && other.bonds.size > 0) ||
                 d > PeriodicTable.covalent_cutoff(atom, other)
         if atom.element.hydrogen? && atom.bonds.size == 1
           next unless d < atom.bonds[0].squared_distance
