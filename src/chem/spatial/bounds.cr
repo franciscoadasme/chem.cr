@@ -77,6 +77,23 @@ module Chem::Spatial
       @origin
     end
 
+    # Returns a bounds with its extents expanded by *padding* in every
+    # direction. Note that its size is actually increased by `padding *
+    # 2`.
+    #
+    # ```
+    # bounds = Bounds.new Vector[1, 5, 3], S[10, 5, 12]
+    # bounds.center # => Vector[6.0, 7.5, 9.0]
+    # bounds = bounds.pad(2.5)
+    # bounds.size   # => Size[15, 10, 17]
+    # bounds.center # => Vector[6.0, 7.5, 9.0]
+    # ```
+    def pad(padding : Number) : self
+      raise ArgumentError.new "Padding cannot be negative" if padding < 0
+      new_origin = @origin - i.resize(padding) - j.resize(padding) - k.resize(padding)
+      Bounds.new new_origin, i.pad(padding * 2), j.pad(padding * 2), k.pad(padding * 2)
+    end
+
     def volume : Float64
       @basis.i.dot @basis.j.cross(@basis.k)
     end

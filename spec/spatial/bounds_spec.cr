@@ -110,6 +110,32 @@ describe Chem::Spatial::Bounds do
     end
   end
 
+  describe "#pad" do
+    context "given an orthogonal bounds" do
+      it "returns a padded bounds" do
+        bounds = Bounds[10, 10, 10]
+        padded = bounds.pad(2)
+        padded.size.should eq S[14, 14, 14]
+        padded.center.should eq bounds.center
+      end
+    end
+
+    context "given a non-orthogonal bounds" do
+      it "returns a padded bounds" do
+        bounds = Bounds.new(S[4, 7, 8.5], 90, 120, 90)
+        padded = bounds.pad(0.5)
+        padded.size.should eq S[5, 8, 9.5]
+        padded.center.should be_close bounds.center, 1e-15
+      end
+    end
+
+    it "raises on negative padding" do
+      expect_raises ArgumentError, "Padding cannot be negative" do
+        Bounds[1, 1, 1].pad -5
+      end
+    end
+  end
+
   describe "#volume" do
     it "returns the volume enclosed by the bounds" do
       Bounds[10, 20, 30].volume.should eq 6_000
