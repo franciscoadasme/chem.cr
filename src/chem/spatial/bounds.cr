@@ -57,6 +57,26 @@ module Chem::Spatial
       end
     end
 
+    # Returns maximum edge.
+    #
+    # ```
+    # bounds = Bounds.new V[1.5, 3, -0.4], S[10, 10, 12], 90, 90, 120
+    # bounds.max # => Vector[6.5, 11.66, 11.6]
+    # ```
+    def max : Vector
+      @origin + i + j + k
+    end
+
+    # Returns minimum edge. This is equivalent to the origin.
+    #
+    # ```
+    # bounds = Bounds.new V[1.5, 3, -0.4], S[10, 10, 12], 90, 90, 120
+    # bounds.min # => Vector[1.5, 3, -0.4]
+    # ```
+    def min : Vector
+      @origin
+    end
+
     def volume : Float64
       @basis.i.dot @basis.j.cross(@basis.k)
     end

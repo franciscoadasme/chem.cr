@@ -80,6 +80,36 @@ describe Chem::Spatial::Bounds do
     end
   end
 
+  describe "#max" do
+    context "given an orthogonal bounds" do
+      it "returns the maximum edge" do
+        Bounds[10, 5, 8].max.should eq V[10, 5, 8]
+      end
+    end
+
+    context "given a non-orthogonal bounds" do
+      it "returns the maximum edge" do
+        bounds = Bounds.new(V[1.5, 3, -0.4], S[10, 10, 12], 90, 90, 120)
+        bounds.max.should be_close V[6.5, 11.66, 11.6], 1e-3
+      end
+    end
+  end
+
+  describe "#min" do
+    context "given an orthogonal bounds" do
+      it "returns the minimum edge (origin)" do
+        Bounds[10, 5, 8].min.should eq V[0, 0, 0]
+      end
+    end
+
+    context "given a non-orthogonal bounds" do
+      it "returns the minimum edge (origin)" do
+        bounds = Bounds.new(V[1.5, 3, -0.4], S[10, 10, 12], 90, 90, 120)
+        bounds.min.should eq V[1.5, 3, -0.4]
+      end
+    end
+  end
+
   describe "#volume" do
     it "returns the volume enclosed by the bounds" do
       Bounds[10, 20, 30].volume.should eq 6_000
