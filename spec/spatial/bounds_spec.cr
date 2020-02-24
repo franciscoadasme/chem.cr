@@ -110,6 +110,16 @@ describe Chem::Spatial::Bounds do
     end
   end
 
+  describe "#translate" do
+    it "translates the origin" do
+      bounds = Bounds.new V[-5, 1, 20], S[10, 10, 10], 90, 90, 120
+      bounds = bounds.translate(V[1, 2, 10])
+      bounds.min.should eq V[-4, 3, 30]
+      bounds.size.should eq S[10, 10, 10]
+      bounds.angles.map(&.round).should eq({90, 90, 120})
+    end
+  end
+
   describe "#pad" do
     context "given an orthogonal bounds" do
       it "returns a padded bounds" do

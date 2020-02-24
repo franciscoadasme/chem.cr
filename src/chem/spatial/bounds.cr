@@ -94,6 +94,16 @@ module Chem::Spatial
       Bounds.new new_origin, i.pad(padding * 2), j.pad(padding * 2), k.pad(padding * 2)
     end
 
+    # Returns a bounds translated by *offset*.
+    #
+    # ```
+    # bounds = Bounds.new V[-5, 1, 20], S[10, 10, 10], 90, 90, 120
+    # bounds.translate(V[1, 2, 10]).min # => Vector[-4.0, 3.0, 30.0]
+    # ```
+    def translate(offset : Vector) : self
+      Bounds.new @origin + offset, basis
+    end
+
     def volume : Float64
       @basis.i.dot @basis.j.cross(@basis.k)
     end
