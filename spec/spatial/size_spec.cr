@@ -28,25 +28,25 @@ describe Chem::Spatial::Size do
   describe "#[]" do
     it "raises if index is out of bounds" do
       expect_raises IndexError do
-        Size[10, 20, 30][4]
+        S[10, 20, 30][4]
       end
     end
   end
 
   describe "#[]?" do
     it "returns the element at index" do
-      size = Size[10, 20, 30]
-      size[0].should eq 10
-      size[1].should eq 20
-      size[2].should eq 30
+      size = S[10, 20, 30]
+      size[0]?.should eq 10
+      size[1]?.should eq 20
+      size[2]?.should eq 30
     end
 
     it "returns nil if index is out of bounds" do
-      Size[10, 20, 30][4].should be_nil
+      S[10, 20, 30][4]?.should be_nil
     end
 
     it "returns nil if index is negative" do
-      Size[10, 20, 30][-1].should be_nil
+      S[10, 20, 30][-1]?.should be_nil
     end
   end
 
