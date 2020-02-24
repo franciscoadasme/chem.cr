@@ -45,17 +45,34 @@ module Chem::Spatial::PBC
                           &block : Atom, Vector ->)
     raise Error.new "Radius cannot be negative" if radius < 0
 
-    padding = Vector[radius / lattice.a, radius / lattice.b, radius / lattice.c].clamp(..0.5)
-    offset = (lattice.bounds.center - atoms.coords.center).to_fractional lattice
+    # Check if atoms are wrapped, otherwise use offset to bring atoms to
+    # primary cell
+    bounds = atoms.coords.bounds
+    p1, p2 = bounds.origin.to_fractional(lattice), bounds.max.to_fractional(lattice)
+    wrapped = p1.to_a.all?(&.>=(0)) && p2.to_a.all?(&.<=(1))
+    offset = wrapped ? Vector.zero : (lattice.bounds.center - bounds.center)
+    offset = offset.to_fractional(lattice)
+
+    extents = StaticArray(Range(Float64, Float64), 3).new 0.0..0.0
+    padding = (0..2).map { |i| (radius / lattice.size[i]).clamp(..0.5) }
+
     atoms.each_atom do |atom|
-      fcoords = atom.coords.to_fractional lattice                     # convert to fractional coords
-      w_fcoords = fcoords - fcoords.floor                             # wrap to primary unit cell
-      ax_offset = (fcoords + offset).map { |ele| ele < 0.5 ? 1 : -1 } # compute offset per axis
-      ax_pad = (w_fcoords - w_fcoords.round).abs
+      vec = atom.coords.to_fractional(lattice) + offset
+      img_sense = vec.map { |ele| ele < 0.5 ? 1 : -1 }
+      3.times do |i|
+        x, px = vec[i], padding[i]
+        extents[i] = case x
+                     when .<(0) then (x - px)..(x + 1 + px)
+                     when .>(1) then (1 - x - px)..(x + px)
+                     else            -px..(1 + px)
+                     end
+      end
 
       ADJACENT_IMAGE_IDXS.each do |img_idx|
-        next unless 3.times.all? { |i| img_idx[i] * ax_pad[i] <= padding[i] }
-        yield atom, (fcoords + ax_offset * img_idx).to_cartesian(lattice)
+        img_vec = vec + img_sense * img_idx
+        if 3.times.all? { |i| extents[i].includes? img_vec[i] }
+          yield atom, (img_vec - offset).to_cartesian(lattice)
+        end
       end
     end
   end
