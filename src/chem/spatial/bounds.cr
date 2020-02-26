@@ -47,6 +47,34 @@ module Chem::Spatial
       @origin + (@basis.i + @basis.j + @basis.k) * 0.5
     end
 
+    # Yields bounds' vertices.
+    #
+    # ```
+    # Bounds[5, 10, 20].each_vertex { |vec| puts vec }
+    # ```
+    #
+    # Prints:
+    #
+    # ```text
+    # Vector[0.0, 0.0, 0.0]
+    # Vector[0.0, 0.0, 20.0]
+    # Vector[0.0, 10.0, 0.0]
+    # Vector[0.0, 10.0, 20.0]
+    # Vector[5.0, 0.0, 0.0]
+    # Vector[5.0, 0.0, 20.0]
+    # Vector[5.0, 10.0, 0.0]
+    # Vector[5.0, 10.0, 20.0]
+    # ```
+    def each_vertex(& : Vector ->) : Nil
+      2.times do |di|
+        2.times do |dj|
+          2.times do |dk|
+            yield @origin + i * di + j * dj + k * dk
+          end
+        end
+      end
+    end
+
     def includes?(vec : Vector) : Bool
       vec -= @origin unless @origin.zero?
       if alpha == 90 && beta == 90 && gamma == 90 && i.y == 0 && i.z == 0
@@ -102,6 +130,18 @@ module Chem::Spatial
     # ```
     def translate(offset : Vector) : self
       Bounds.new @origin + offset, basis
+    end
+
+    # Returns bounds' vertices.
+    #
+    # ```
+    # bounds = Bounds[5, 10, 20]
+    # bounds.vertices # => [Vector[0.0, 0.0, 0.0], Vector[0.0, 0.0, 20.0], ...]
+    # ```
+    def vertices : Array(Vector)
+      vertices = [] of Vector
+      each_vertex { |vec| vertices << vec }
+      vertices
     end
 
     def volume : Float64

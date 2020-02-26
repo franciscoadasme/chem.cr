@@ -62,6 +62,26 @@ describe Chem::Spatial::Bounds do
     end
   end
 
+  describe "#each_vertex" do
+    it "yields bounds' vertices" do
+      bounds = Bounds.new S[8.77, 9.5, 24.74], 88.22, 80, 70.34
+      bounds = bounds.translate -bounds.center
+      vertices = [] of Vector
+      bounds.each_vertex { |vec| vertices << vec }
+      vertices.size.should eq 8
+      vertices.should be_close [
+        V[-8.131, -4.114, -12.177],
+        V[-3.835, -4.832, 12.177],
+        V[-4.935, 4.832, -12.177],
+        V[-0.639, 4.114, 12.177],
+        V[0.639, -4.114, -12.177],
+        V[4.935, -4.832, 12.177],
+        V[3.835, 4.832, -12.177],
+        V[8.131, 4.114, 12.177],
+      ], 1e-3
+    end
+  end
+
   describe "#includes?" do
     it "tells if a vector is within the primary unit cell" do
       Bounds[10, 20, 30].includes?(V[1, 2, 3]).should be_true
@@ -143,6 +163,23 @@ describe Chem::Spatial::Bounds do
       expect_raises ArgumentError, "Padding cannot be negative" do
         Bounds[1, 1, 1].pad -5
       end
+    end
+  end
+
+  describe "#vertices" do
+    it "returns bounds' vertices" do
+      vertices = Bounds.new(S[10, 10, 10], 90, 90, 120).vertices
+      vertices.size.should eq 8
+      vertices.should be_close [
+        V[0, 0, 0],
+        V[0, 0, 10],
+        V[-5, 8.660, 0],
+        V[-5, 8.660, 10],
+        V[10, 0, 0],
+        V[10, 0, 10],
+        V[5, 8.660, 0],
+        V[5, 8.660, 10],
+      ], 1e-3
     end
   end
 
