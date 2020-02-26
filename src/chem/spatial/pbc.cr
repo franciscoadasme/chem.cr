@@ -48,8 +48,7 @@ module Chem::Spatial::PBC
     # Check if atoms are wrapped, otherwise use offset to bring atoms to
     # primary cell
     bounds = atoms.coords.bounds
-    p1, p2 = bounds.origin.to_fractional(lattice), bounds.max.to_fractional(lattice)
-    wrapped = p1.to_a.all?(&.>=(0)) && p2.to_a.all?(&.<=(1))
+    wrapped = lattice.bounds.includes?(bounds)
     offset = wrapped ? Vector.zero : (lattice.bounds.center - bounds.center)
     offset = offset.to_fractional(lattice)
 
