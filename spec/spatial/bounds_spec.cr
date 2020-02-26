@@ -98,6 +98,24 @@ describe Chem::Spatial::Bounds do
       lattice.includes?(V[-3, 10, 2]).should be_true
       lattice.includes?(V[-3, 2, 2]).should be_false
     end
+
+    context "given a bounds" do
+      it "returns true when enclosed" do
+        bounds = Bounds.new S[10, 10, 10], 90, 90, 120
+        bounds.includes?(Bounds.new(V[1, 2, 3], S[5, 4, 6])).should be_true
+        bounds.includes?(Bounds.new(S[5, 4, 6])).should be_true
+      end
+
+      it "returns false when intersected" do
+        bounds = Bounds.new S[10, 10, 10], 90, 90, 120
+        bounds.includes?(Bounds.new(V[-1, 2, -4.3], S[5, 4, 6])).should be_false
+      end
+
+      it "returns false when out of bounds" do
+        bounds = Bounds.new S[10, 10, 10], 90, 90, 120
+        bounds.includes?(Bounds.new(V[-1, 2, -4.3], S[5, 4, 6])).should be_false
+      end
+    end
   end
 
   describe "#max" do

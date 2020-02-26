@@ -75,6 +75,21 @@ module Chem::Spatial
       end
     end
 
+    # Returns `true` if the current instance contains *bounds*, `false`
+    # otherwise.
+    #
+    # It effectively checks if every vertex of *bounds* is contained by
+    # the current instance.
+    #
+    # ```
+    # bounds = Bounds.new S[10, 10, 10], 90, 90, 120
+    # bounds.includes? Bounds.new(Size[5, 4, 6])                     # => true
+    # bounds.includes? Bounds.new(Vector[-1, 2, -4], Size[5, 4, 6])) # => false
+    # ```
+    def includes?(bounds : Bounds) : Bool
+      bounds.vertices.all? { |vec| includes?(vec) }
+    end
+
     def includes?(vec : Vector) : Bool
       vec -= @origin unless @origin.zero?
       if alpha == 90 && beta == 90 && gamma == 90 && i.y == 0 && i.z == 0
