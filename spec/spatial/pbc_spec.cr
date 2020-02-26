@@ -64,33 +64,52 @@ describe Chem::Spatial::PBC do
         V[11, 8.5, 3.5], V[1, -1.5, 3.5], V[11, -1.5, 3.5],
         V[7.5, 11.5, 9.5], V[7.5, 1.5, -0.5], V[7.5, 11.5, -0.5],
       ].sort_by! &.to_a
+      vectors.size.should eq expected.size
       vectors.should be_close expected, 1e-8
     end
 
     it "yields periodic images within cutoff for a off-center non-orthogonal lattice" do
       structure = load_file "5e61--off-center.poscar", topology: :none
+      lattice = structure.lattice.not_nil!
+      atoms = structure.atoms
 
-      lat = structure.lattice.not_nil!
-      v1 = structure.atoms[29].coords
-      v2 = structure.atoms[192].coords
-
-      vectors = PBC.adjacent_images(structure, radius: 5)
-        .select! { |atom, _| {30, 193}.includes?(atom.serial) }
+      vectors = PBC.adjacent_images(structure, radius: 2)
+        .select! { |atom, _|
+          {17, 30, 66, 116, 127, 175, 188, 193}.includes?(atom.serial)
+        }
         .map(&.[1])
         .sort_by!(&.to_a)
-      expected = [
-        v1.image(lat, -1, -1, 0),
-        v1.image(lat, -1, -1, 1),
-        v1.image(lat, -1, 0, 0),
-        v1.image(lat, -1, 0, 1),
-        v1.image(lat, 0, -1, 0),
-        v1.image(lat, 0, -1, 1),
-        v1.image(lat, 0, 0, 1),
-        v2.image(lat, 0, -1, 0),
-        v2.image(lat, 1, -1, 0),
-        v2.image(lat, 1, 0, 0),
-      ].sort_by!(&.to_a)
 
+      expected = [
+        atoms[29].coords.image(lattice, 0, 0, 1),
+        atoms[29].coords.image(lattice, -1, 0, 0),
+        atoms[29].coords.image(lattice, -1, 0, 1),
+        atoms[65].coords.image(lattice, 0, -1, -1),
+        atoms[65].coords.image(lattice, 0, -1, 0),
+        atoms[65].coords.image(lattice, 0, 0, -1),
+        atoms[65].coords.image(lattice, 1, -1, -1),
+        atoms[65].coords.image(lattice, 1, -1, 0),
+        atoms[65].coords.image(lattice, 1, 0, 0),
+        atoms[65].coords.image(lattice, 1, 0, -1),
+        atoms[115].coords.image(lattice, -1, 0, 0),
+        atoms[115].coords.image(lattice, -1, 0, 1),
+        atoms[115].coords.image(lattice, -1, 1, 0),
+        atoms[115].coords.image(lattice, -1, 1, 1),
+        atoms[115].coords.image(lattice, 0, 0, 1),
+        atoms[115].coords.image(lattice, 0, 1, 0),
+        atoms[115].coords.image(lattice, 0, 1, 1),
+        atoms[126].coords.image(lattice, 1, 0, 0),
+        atoms[174].coords.image(lattice, -1, 0, 0),
+        atoms[174].coords.image(lattice, -1, 1, 0),
+        atoms[174].coords.image(lattice, 0, 1, 0),
+        atoms[187].coords.image(lattice, -1, 0, 0),
+        atoms[187].coords.image(lattice, -1, 0, 1),
+        atoms[187].coords.image(lattice, 0, 0, 1),
+        atoms[192].coords.image(lattice, 0, -1, 0),
+        atoms[192].coords.image(lattice, 1, -1, 0),
+        atoms[192].coords.image(lattice, 1, 0, 0),
+      ].sort_by!(&.to_a)
+      vectors.size.should eq expected.size
       vectors.should be_close expected, 1e-6
     end
 

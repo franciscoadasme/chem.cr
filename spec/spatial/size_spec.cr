@@ -25,6 +25,31 @@ describe Chem::Spatial::Size do
     end
   end
 
+  describe "#[]" do
+    it "raises if index is out of bounds" do
+      expect_raises IndexError do
+        S[10, 20, 30][4]
+      end
+    end
+  end
+
+  describe "#[]?" do
+    it "returns the element at index" do
+      size = S[10, 20, 30]
+      size[0]?.should eq 10
+      size[1]?.should eq 20
+      size[2]?.should eq 30
+    end
+
+    it "returns nil if index is out of bounds" do
+      S[10, 20, 30][4]?.should be_nil
+    end
+
+    it "returns nil if index is negative" do
+      S[10, 20, 30][-1]?.should be_nil
+    end
+  end
+
   describe "#volume" do
     it "returns the volume enclosed by the bounds" do
       S[6, 4, 23].volume.should eq 552
