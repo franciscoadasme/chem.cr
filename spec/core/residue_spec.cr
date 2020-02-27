@@ -173,4 +173,14 @@ describe Chem::Residue do
       load_file("cis-trans.pdb", topology: :templates).residues[0].trans?.should be_false
     end
   end
+
+  describe "#to_s" do
+    it "returns a string representation" do
+      residues = load_file("insertion_codes.pdb").residues
+      residues[0].to_s.should eq "A:TRP75"
+      residues[1].to_s.should eq "A:GLY75A"
+      residues[2].to_s.should eq "A:SER75B"
+      residues[-1].to_s.should eq "A:VAL76"
+    end
+  end
 end
