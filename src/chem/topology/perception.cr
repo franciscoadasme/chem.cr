@@ -6,20 +6,8 @@ class Chem::Topology::Perception
   def initialize(@structure : Structure)
   end
 
-  def assign_templates : Array(Atom)
-    unknown_atoms = [] of Atom
-    @structure.each_residue do |residue|
-      if res_t = Templates[residue.name]?
-        assign_bonds residue, res_t
-        assign_formal_charges residue, res_t
-        residue.each_atom do |atom|
-          unknown_atoms << atom unless res_t[atom.name]?
-        end
-      else
-        unknown_atoms.concat residue.each_atom
-      end
-    end
-    unknown_atoms
+  def assign_templates : Nil
+    TemplateMatcher.new(@structure).match_and_patch
   end
 
   def guess_bonds : Nil
@@ -66,12 +54,14 @@ class Chem::Topology::Perception
   def guess_topology : Nil
     return unless @structure.n_atoms > 0
     if has_topology?
-      unknown_atoms = AtomView.new assign_templates
-      guess_connectivity unknown_atoms
+      matcher = TemplateMatcher.new @structure
+      matcher.match_and_patch
+      unmatched_atoms = AtomView.new matcher.unmatched_atoms
+      guess_connectivity unmatched_atoms
       if has_hydrogens?
-        guess_bond_orders unknown_atoms
-        bonded_atoms = unknown_atoms.flat_map &.each_bonded_atom
-        guess_formal_charges AtomView.new(unknown_atoms.to_a.concat(bonded_atoms).uniq)
+        guess_bond_orders unmatched_atoms
+        bonded_atoms = unmatched_atoms.flat_map &.each_bonded_atom
+        guess_formal_charges AtomView.new(unmatched_atoms.to_a.concat(bonded_atoms).uniq)
       end
 
       if bond_t = link_bond(structure)
@@ -119,31 +109,6 @@ class Chem::Topology::Perception
     atom = largest_atom
     max_covalent_distance = Math.sqrt PeriodicTable.covalent_cutoff(atom, atom)
     Spatial::KDTree.new @structure, radius: max_covalent_distance
-  end
-
-  private def assign_bond(residue : Residue, other : Residue, bond_t : BondType) : Nil
-    if (i = residue[bond_t[0]]?) && (j = other[bond_t[1]]?) && !i.bonded?(j)
-      i.bonds.add j, bond_t.order if i.within_covalent_distance?(j)
-    end
-  end
-
-  private def assign_bonds(residue : Residue, res_t : ResidueType) : Nil
-    res_t.bonds.each { |bond_t| assign_bond residue, residue, bond_t }
-    if bond_t = res_t.link_bond
-      if prev_res = residue.previous
-        assign_bond prev_res, residue, bond_t
-      end
-      if next_res = residue.next
-        assign_bond residue, next_res, bond_t
-      end
-    end
-  end
-
-  private def assign_formal_charges(residue : Residue, res_t : ResidueType) : Nil
-    res_t.each_atom_type do |atom_t|
-      next unless atom = residue[atom_t.name]?
-      atom.formal_charge = atom_t.formal_charge
-    end
   end
 
   private def detect_residues(atoms : AtomCollection) : Array(Array(MatchData))
@@ -242,5 +207,56 @@ class Chem::Topology::Perception
 
   private def has_topology? : Bool
     @structure.n_residues > 1 || @structure.each_residue.first.name != "UNK"
+  end
+
+  private class TemplateMatcher
+    getter unmatched_atoms = [] of Atom
+
+    def initialize(@residues : ResidueCollection)
+    end
+
+    def match_and_patch : Nil
+      @residues.each_residue do |residue|
+        if res_t = Templates[residue.name]?
+          patch residue, res_t
+        else
+          @unmatched_atoms.concat residue.each_atom
+        end
+      end
+    end
+
+    def patch(atom : Atom, atom_t : AtomType) : Nil
+      atom.formal_charge = atom_t.formal_charge
+    end
+
+    def patch(lhs : Residue, rhs : Residue, bond_t : BondType) : Nil
+      if (i = lhs[bond_t.first]?) && (j = rhs[bond_t.second]?) && !i.bonded?(j)
+        i.bonds.add j, bond_t.order if i.within_covalent_distance?(j)
+      end
+    end
+
+    def patch(residue : Residue, res_t : ResidueType) : Nil
+      residue.each_atom do |atom|
+        if atom_t = res_t[atom.name]?
+          patch atom, atom_t
+        else
+          @unmatched_atoms << atom
+        end
+      end
+
+      res_t.bonds.each { |bond_t| patch residue, residue, bond_t }
+      if bond_t = res_t.link_bond
+        patch_link_bond residue, bond_t
+      end
+    end
+
+    def patch_link_bond(residue : Residue, bond_t : BondType)
+      if prev_res = residue.previous
+        patch prev_res, residue, bond_t
+      end
+      if next_res = residue.next
+        patch residue, next_res, bond_t
+      end
+    end
   end
 end
