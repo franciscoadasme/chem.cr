@@ -64,6 +64,32 @@ describe Chem::Residue do
     end
   end
 
+  describe "#bonded_residues" do
+    it "returns bonded residues" do
+      residues = load_file("residue_kind_unknown_covalent_ligand.pdb").residues
+      residues[0].bonded_residues.map(&.name).should eq %w(ALA)
+      residues[1].bonded_residues.map(&.name).should eq %w(GLY CYS)
+      residues[2].bonded_residues.map(&.name).should eq %w(ALA JG7)
+      residues[3].bonded_residues.map(&.name).should eq %w(CYS)
+    end
+
+    context "given a periodic peptide chain" do
+      it "returns two residues for every residue" do
+        load_file("hlx_gly.poscar").each_residue do |residue|
+          residue.bonded_residues.map(&.name).should eq %w(GLY GLY)
+        end
+      end
+    end
+
+    context "given water molecules" do
+      it "returns an empty array" do
+        load_file("waters.xyz").each_residue do |residue|
+          residue.bonded_residues.empty?.should be_true
+        end
+      end
+    end
+  end
+
   describe "#cis?" do
     it "returns true when residue is in the cis conformation" do
       load_file("cis-trans.pdb", topology: :templates).residues[2].cis?.should be_true

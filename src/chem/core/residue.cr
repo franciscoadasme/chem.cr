@@ -94,6 +94,28 @@ module Chem
       bonded? other, bond_t.first, bond_t.second
     end
 
+    # Returns bonded residues. Residues may be bonded through any atom.
+    #
+    # Returned residues are ordered by their chain id, residue number
+    # and insertion code if present (refer to #<=>).
+    #
+    # ```
+    # residues = Structure.read("ala-phe-asn-thr.pdb")
+    # residues[0].bonded_residues.map(&.name) # => ["PHE"]
+    # residues[1].bonded_residues.map(&.name) # => ["ALA", "ASN"]
+    # residues[2].bonded_residues.map(&.name) # => ["PHE", "THR"]
+    # residues[3].bonded_residues.map(&.name) # => ["ALA", "ASN"]
+    # ```
+    def bonded_residues : Array(Residue)
+      residues = Set(Residue).new
+      @atoms.each do |atom|
+        atom.each_bonded_atom do |other|
+          residues << other.residue unless other.residue == self
+        end
+      end
+      residues.to_a.sort!
+    end
+
     def chain=(new_chain : Chain) : Chain
       @chain.delete self
       @chain = new_chain
