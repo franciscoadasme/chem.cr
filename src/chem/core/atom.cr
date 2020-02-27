@@ -32,6 +32,23 @@ module Chem
       @residue << self
     end
 
+    # The comparison operator.
+    #
+    # Returns `-1`, `0` or `1` depending on whether `self` precedes
+    # *rhs*, equals to *rhs* or comes after *rhs*. The comparison is
+    # done based on atom serial.
+    #
+    # ```
+    # atoms = Structure.read("peptide.pdb").atoms
+    #
+    # atoms[0] <=> atoms[1] # => -1
+    # atoms[1] <=> atoms[1] # => 0
+    # atoms[2] <=> atoms[1] # => 1
+    # ```
+    def <=>(rhs : self) : Int32
+      @serial <=> rhs.serial
+    end
+
     def bonded?(to other : self) : Bool
       !bonds[other]?.nil?
     end
