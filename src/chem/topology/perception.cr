@@ -3,8 +3,7 @@ require "./templates/all"
 module Chem::Topology::Perception
   extend self
 
-  MAX_CHAINS          =  62 # chain id is alphanumeric: A-Z, a-z or 0-9
-  MAX_COVALENT_RADIUS = 5.0
+  MAX_CHAINS = 62 # chain id is alphanumeric: A-Z, a-z or 0-9
 
   def assign_templates(structure : Structure) : Array(Atom)
     unknown_atoms = [] of Atom
@@ -23,9 +22,11 @@ module Chem::Topology::Perception
   end
 
   def guess_bonds(structure : Structure, atoms : AtomCollection? = nil) : Nil
-    kdtree = Spatial::KDTree.new structure, radius: MAX_COVALENT_RADIUS
+    ele = structure.each_atom.max_by(&.covalent_radius).element
+    max_covalent_distance = Math.sqrt PeriodicTable.covalent_cutoff(ele, ele)
+    kdtree = Spatial::KDTree.new structure, radius: max_covalent_distance
     atoms ||= structure
-    guess_connectivity kdtree, atoms
+    guess_connectivity kdtree, atoms, ele
     guess_bond_orders atoms if structure.has_hydrogens?
   end
 
@@ -163,10 +164,13 @@ module Chem::Topology::Perception
     end
   end
 
-  private def guess_connectivity(kdtree : Spatial::KDTree, atoms : AtomCollection) : Nil
+  private def guess_connectivity(kdtree : Spatial::KDTree,
+                                 atoms : AtomCollection,
+                                 largest_ele : Element) : Nil
     atoms.each_atom do |atom|
       next if atom.element.ionic?
-      kdtree.each_neighbor(atom, within: MAX_COVALENT_RADIUS) do |other, d|
+      covalent_distance = Math.sqrt PeriodicTable.covalent_cutoff(atom.element, largest_ele)
+      kdtree.each_neighbor(atom, within: covalent_distance) do |other, d|
         next if other.element.ionic? ||
                 atom.bonded?(other) ||
                 (other.element.hydrogen? && other.bonds.size > 0) ||
