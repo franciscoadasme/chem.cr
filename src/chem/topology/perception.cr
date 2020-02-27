@@ -83,29 +83,7 @@ module Chem::Topology::Perception
       guess_bonds structure
       guess_formal_charges structure if structure.has_hydrogens?
       guess_residues structure
-      renumber_by_connectivity structure
-    end
-  end
-
-  def renumber_by_connectivity(structure : Structure) : Nil
-    structure.each_chain do |chain|
-      next unless chain.n_residues > 1
-      next unless link_bond = chain.each_residue.compact_map do |residue|
-                    Templates[residue.name]?.try &.link_bond
-                  end.first?
-
-      res_map = chain.each_residue.to_h do |residue|
-        {guess_previous_residue(residue, link_bond), residue}
-      end
-      res_map[nil] = chain.residues.first unless res_map.has_key? nil
-
-      prev_res = nil
-      chain.n_residues.times do |i|
-        next_res = res_map[prev_res]
-        next_res.number = i + 1
-        prev_res = next_res
-      end
-      chain.reset_cache
+      structure.residues.renumber_by_connectivity
     end
   end
 
@@ -182,28 +160,6 @@ module Chem::Topology::Perception
         atom.bonds.add other
       end
     end
-  end
-
-  private def guess_previous_residue(residue : Residue, link_bond : BondType) : Residue?
-    prev_res = nil
-    if atom = residue[link_bond.second]?
-      prev_res = atom.each_bonded_atom.find(&.name.==(link_bond.first)).try &.residue
-      prev_res ||= atom.each_bonded_atom.find do |atom|
-        element = PeriodicTable[atom_name: link_bond.first]
-        atom.element == element && atom.residue != residue
-      end.try &.residue
-    else
-      elements = {PeriodicTable[atom_name: link_bond.first],
-                  PeriodicTable[atom_name: link_bond.second]}
-      residue.each_atom do |atom|
-        next unless atom.element == elements[1]
-        prev_res = atom.each_bonded_atom.find do |atom|
-          atom.element == elements[0] && atom.residue != residue
-        end.try &.residue
-        break if prev_res
-      end
-    end
-    prev_res
   end
 
   private def guess_residue_type(res : Residue) : Residue::Kind
