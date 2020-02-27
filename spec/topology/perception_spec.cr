@@ -6,7 +6,7 @@ describe Topology::Perception do
       st = fake_structure
       r1, r2, r3 = st.residues
 
-      Topology::Perception.new(st).guess_topology use_templates: true
+      Topology::Perception.new(st).assign_templates
 
       [r1, r2, r3].map(&.protein?).should eq [true, true, true]
       [r1, r2, r3].map(&.formal_charge).should eq [-1, 0, 0]

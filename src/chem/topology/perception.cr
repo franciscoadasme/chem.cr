@@ -63,7 +63,7 @@ class Chem::Topology::Perception
     end
   end
 
-  def guess_topology(use_templates : Bool? = nil) : Nil
+  def guess_topology : Nil
     return unless @structure.n_atoms > 0
     use_templates ||= @structure.n_residues > 1 || @structure.each_residue.first.name != "UNK"
     if use_templates

@@ -148,7 +148,7 @@ def load_file(path : String, topology level : TopologyLevel? = nil) : Structure
   structure = Chem::Structure.read path, guess_topology: level.nil?
   if level
     perception = Topology::Perception.new structure
-    perception.guess_topology use_templates: true if level.templates?
+    perception.guess_topology if level.templates?
     if level > TopologyLevel::Templates
       perception.guess_bonds
       perception.guess_formal_charges(structure) if structure.has_hydrogens?
