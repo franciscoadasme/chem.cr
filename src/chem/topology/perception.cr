@@ -1,13 +1,14 @@
 require "./templates/all"
 
-module Chem::Topology::Perception
-  extend self
-
+class Chem::Topology::Perception
   MAX_CHAINS = 62 # chain id is alphanumeric: A-Z, a-z or 0-9
 
-  def assign_templates(structure : Structure) : Array(Atom)
+  def initialize(@structure : Structure)
+  end
+
+  def assign_templates : Array(Atom)
     unknown_atoms = [] of Atom
-    structure.each_residue do |residue|
+    @structure.each_residue do |residue|
       if res_t = Templates[residue.name]?
         assign_bonds residue, res_t
         assign_formal_charges residue, res_t
@@ -21,13 +22,9 @@ module Chem::Topology::Perception
     unknown_atoms
   end
 
-  def guess_bonds(structure : Structure, atoms : AtomCollection? = nil) : Nil
-    ele = structure.each_atom.max_by(&.covalent_radius).element
-    max_covalent_distance = Math.sqrt PeriodicTable.covalent_cutoff(ele, ele)
-    kdtree = Spatial::KDTree.new structure, radius: max_covalent_distance
-    atoms ||= structure
-    guess_connectivity kdtree, atoms, ele
-    guess_bond_orders atoms if structure.has_hydrogens?
+  def guess_bonds : Nil
+    guess_connectivity @structure
+    guess_bond_orders @structure if has_hydrogens?
   end
 
   def guess_formal_charges(atoms : AtomCollection) : Nil
@@ -49,9 +46,9 @@ module Chem::Topology::Perception
   # fragments and residues grouped by kind are assigned to their own unique chain as
   # long as there are less residue groups than the chain limit (62), otherwise all
   # residues are assigned to the same chain.
-  def guess_residues(structure : Structure) : Nil
-    matches_per_fragment = detect_residues structure
-    builder = Structure::Builder.new structure.clear
+  def guess_residues : Nil
+    matches_per_fragment = detect_residues @structure
+    builder = Structure::Builder.new @structure.clear
     matches_per_fragment.each do |matches|
       builder.chain do
         matches.each do |m|
@@ -66,13 +63,14 @@ module Chem::Topology::Perception
     end
   end
 
-  def guess_topology(structure : Structure, use_templates : Bool? = nil) : Nil
-    return unless structure.n_atoms > 0
-    use_templates ||= structure.n_residues > 1 || structure.each_residue.first.name != "UNK"
+  def guess_topology(use_templates : Bool? = nil) : Nil
+    return unless @structure.n_atoms > 0
+    use_templates ||= @structure.n_residues > 1 || @structure.each_residue.first.name != "UNK"
     if use_templates
-      unknown_atoms = AtomView.new assign_templates(structure)
-      guess_bonds structure, unknown_atoms
-      if structure.has_hydrogens?
+      unknown_atoms = AtomView.new assign_templates
+      guess_connectivity unknown_atoms
+      if has_hydrogens?
+        guess_bond_orders unknown_atoms
         bonded_atoms = unknown_atoms.flat_map &.each_bonded_atom
         guess_formal_charges AtomView.new(unknown_atoms.to_a.concat(bonded_atoms).uniq)
       end
@@ -83,15 +81,15 @@ module Chem::Topology::Perception
         end
       end
     else
-      guess_bonds structure
-      guess_formal_charges structure if structure.has_hydrogens?
-      guess_residues structure
-      renumber_by_connectivity structure
+      guess_bonds
+      guess_formal_charges @structure if has_hydrogens?
+      guess_residues
+      renumber_by_connectivity
     end
   end
 
-  def renumber_by_connectivity(structure : Structure) : Nil
-    structure.each_chain do |chain|
+  def renumber_by_connectivity : Nil
+    @structure.each_chain do |chain|
       next unless chain.n_residues > 1
       next unless bond_t = link_bond(chain)
 
@@ -108,6 +106,20 @@ module Chem::Topology::Perception
       end
       chain.reset_cache
     end
+  end
+
+  private getter? has_hydrogens : Bool do
+    @structure.has_hydrogens?
+  end
+
+  private getter largest_atom : Atom do
+    @structure.each_atom.max_by &.covalent_radius
+  end
+
+  private getter kdtree : Spatial::KDTree do
+    atom = largest_atom
+    max_covalent_distance = Math.sqrt PeriodicTable.covalent_cutoff(atom, atom)
+    Spatial::KDTree.new @structure, radius: max_covalent_distance
   end
 
   private def assign_bond(residue : Residue, other : Residue, bond_t : BondType) : Nil
@@ -165,13 +177,11 @@ module Chem::Topology::Perception
     end
   end
 
-  private def guess_connectivity(kdtree : Spatial::KDTree,
-                                 atoms : AtomCollection,
-                                 largest_ele : Element) : Nil
+  private def guess_connectivity(atoms : AtomCollection) : Nil
     atoms.each_atom do |atom|
       next if atom.element.ionic?
-      covalent_distance = Math.sqrt PeriodicTable.covalent_cutoff(atom.element, largest_ele)
-      kdtree.each_neighbor(atom, within: covalent_distance) do |other, d|
+      cutoff = Math.sqrt PeriodicTable.covalent_cutoff(atom, largest_atom)
+      kdtree.each_neighbor(atom, within: cutoff) do |other, d|
         next if other.element.ionic? ||
                 atom.bonded?(other) ||
                 (other.element.hydrogen? && other.bonds.size > 0) ||
