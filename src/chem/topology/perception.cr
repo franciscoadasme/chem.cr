@@ -65,8 +65,7 @@ class Chem::Topology::Perception
 
   def guess_topology : Nil
     return unless @structure.n_atoms > 0
-    use_templates ||= @structure.n_residues > 1 || @structure.each_residue.first.name != "UNK"
-    if use_templates
+    if has_topology?
       unknown_atoms = AtomView.new assign_templates
       guess_connectivity unknown_atoms
       if has_hydrogens?
@@ -239,5 +238,9 @@ class Chem::Topology::Perception
       bond_t = Templates[residue.name]?.try &.link_bond
       return bond_t if bond_t
     end
+  end
+
+  private def has_topology? : Bool
+    @structure.n_residues > 1 || @structure.each_residue.first.name != "UNK"
   end
 end
