@@ -11,6 +11,29 @@ describe Chem::Residue do
     end
   end
 
+  describe "#<=>" do
+    context "given insertion codes" do
+      it "compares based on insertion codes" do
+        residues = load_file("insertion_codes.pdb").residues
+        (residues[0] <=> residues[1]).<(0).should be_true
+        (residues[1] <=> residues[1]).should eq 0
+        (residues[2] <=> residues[1]).>(0).should be_true
+        (residues[0] <=> residues[-1]).<(0).should be_true
+      end
+    end
+
+    context "given multiple chains" do
+      it "compares based on chain id" do
+        residues = load_file("5e5v.pdb").residues
+        (residues[0] <=> residues[1]).<(0).should be_true
+        (residues[1] <=> residues[1]).should eq 0
+        (residues[2] <=> residues[1]).>(0).should be_true
+        # same number, different chain
+        (residues[0] <=> residues[7]).<(0).should be_true
+      end
+    end
+  end
+
   describe "#bonded?" do
     it "tells if two residues are bonded through any pair of atoms" do
       structure = fake_structure include_bonds: true

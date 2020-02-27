@@ -24,6 +24,23 @@ module Chem
       self
     end
 
+    # The comparison operator.
+    #
+    # Returns `-1`, `0` or `1` depending on whether `self` precedes
+    # *rhs*, equals to *rhs* or comes after *rhs*. The comparison is
+    # done based on chain identifier.
+    #
+    # ```
+    # chains = Structure.read("peptide.pdb").chains
+    #
+    # chains[0] <=> chains[1] # => -1
+    # chains[1] <=> chains[1] # => 0
+    # chains[2] <=> chains[1] # => 1
+    # ```
+    def <=>(rhs : self) : Int32
+      @id <=> rhs.id
+    end
+
     def [](number : Int32, insertion_code : Char? = nil) : Residue
       @residue_table[{number, insertion_code}]
     end

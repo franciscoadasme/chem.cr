@@ -1,6 +1,7 @@
 module Chem
   class Residue
     include AtomCollection
+    include Comparable(Residue)
 
     enum Kind
       Protein
@@ -35,6 +36,37 @@ module Chem
                    @chain : Chain)
       assign_kind_from_templates
       @chain << self
+    end
+
+    # The comparison operator.
+    #
+    # Returns `-1`, `0` or `1` depending on whether `self` precedes
+    # *rhs*, equals to *rhs* or comes after *rhs*. The comparison is
+    # done based on chain id, residue number, and insertion code if
+    # present.
+    #
+    # ```
+    # residues = Structure.read "peptide.pdb"
+    # residues[0] # => <Residue A:TRP1>
+    # residues[1] # => <Residue A:GLY1A>
+    # residues[2] # => <Residue A:SER1B>
+    # residues[3] # => <Residue A:ASN1C>
+    # residues[4] # => <Residue A:VAL2>
+    # residues[5] # => <Residue B:THR1>
+    # residues[6] # => <Residue B:ASN2>
+    #
+    # residues[0] <=> residues[1] # => -1
+    # residues[1] <=> residues[1] # => 0
+    # residues[2] <=> residues[1] # => 1
+    # residues[0] <=> residues[5] # => -1
+    # residues[5] <=> residues[6] # => -1
+    # ```
+    def <=>(rhs : self) : Int32
+      c = chain.id <=> rhs.chain.id
+      return c unless c.zero?
+      c = number <=> rhs.number
+      return c unless c.zero?
+      (insertion_code || 'A'.pred) <=> (rhs.insertion_code || 'A'.pred)
     end
 
     protected def <<(atom : Atom) : self
