@@ -193,6 +193,7 @@ module Chem
       io << ':'
       io << @name
       io << @number
+      io << @insertion_code
     end
 
     def trans? : Bool
