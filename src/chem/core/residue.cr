@@ -77,6 +77,38 @@ module Chem
 
     delegate dssp, to: @secondary_structure
 
+    # Returns the atom that matches *atom_t*.
+    #
+    # Atom must match both atom type's name and element, otherwise it
+    # raises `IndexError`.
+    #
+    # ```
+    # residue = Structure.read("peptide.pdb").residues[0]
+    # residue[Topology::AtomType("CA")]               # => <Atom A:TRP1:CA(2)
+    # residue[Topology::AtomType("CA", element: "N")] # raises IndexError
+    # residue[Topology::AtomType("CX")]               # raises IndexError
+    # ```
+    def [](atom_t : Topology::AtomType) : Atom
+      self[atom_t]? || raise IndexError.new "Cannot find atom for atom type: #{atom_t}"
+    end
+
+    # Returns the atom that matches *atom_t*.
+    #
+    # Atom must match both atom type's name and element, otherwise it
+    # returns `nil`.
+    #
+    # ```
+    # residue = Structure.read("peptide.pdb").residues[0]
+    # residue[Topology::AtomType("CA")]               # => <Atom A:TRP1:CA(2)
+    # residue[Topology::AtomType("CA", element: "N")] # => nil
+    # residue[Topology::AtomType("CX")]               # => nil
+    # ```
+    def []?(atom_t : Topology::AtomType) : Atom?
+      if atom = self[atom_t.name]?
+        atom if atom.element == atom_t.element
+      end
+    end
+
     def bonded?(other : self) : Bool
       return false if other.same?(self)
       each_atom.any? do |a1|
