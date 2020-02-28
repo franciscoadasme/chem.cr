@@ -83,7 +83,7 @@ module Chem::Topology::Templates
           @atom_table[atom_t] = String.build do |io|
             bonded_atoms = res_t.bonded_atoms(atom_t)
             if (bond = res_t.link_bond) && bond.includes?(atom_t)
-              bonded_atoms << res_t[bond.other(atom_t)]
+              bonded_atoms << bond.other(atom_t)
             end
 
             io << atom_t.element.symbol

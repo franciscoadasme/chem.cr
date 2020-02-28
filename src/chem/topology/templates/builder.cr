@@ -123,17 +123,17 @@ module Chem::Topology::Templates
       atom_type?(name) || fatal "Unknown atom type #{name}"
     end
 
-    private def add_bond(atom_name : String, other : String, order : Int = 1)
-      bond = @bonds.find { |bond| bond.includes?(atom_name) && bond.includes?(other) }
+    private def add_bond(atom_t : AtomType, other : AtomType, order : Int = 1)
+      bond = @bonds.find { |bond| bond.includes?(atom_t) && bond.includes?(other) }
       if bond && bond.order != order
-        fatal "Bond #{atom_name}#{bond.to_char}#{other} already exists"
+        fatal "Bond #{atom_t.name}#{bond.to_char}#{other.name} already exists"
       elsif bond.nil?
-        @bonds << BondType.new atom_name, other, order
+        @bonds << BondType.new atom_t, other, order
       end
     end
 
-    private def add_bond(atom_t : AtomType, other : AtomType, order : Int = 1)
-      add_bond atom_t.name, other.name, order
+    private def add_bond(atom_name : String, other : String, order : Int = 1)
+      add_bond atom_type(atom_name), atom_type(other), order
     end
 
     private def add_missing_hydrogens
@@ -199,10 +199,8 @@ module Chem::Topology::Templates
 
     private def parse_bond(spec : String)
       if spec =~ BOND_REGEX
-        _, atom_name, bond_str, other = $~
-        atom_type! atom_name
-        atom_type! other
-        BondType.new atom_name, other, parse_bond_order(bond_str[0])
+        _, lhs, bond_str, rhs = $~
+        BondType.new atom_type!(lhs), atom_type!(rhs), parse_bond_order(bond_str[0])
       else
         parse_exception "Invalid bond specification \"#{spec}\""
       end

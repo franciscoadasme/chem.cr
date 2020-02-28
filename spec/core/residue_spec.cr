@@ -34,6 +34,40 @@ describe Chem::Residue do
     end
   end
 
+  describe "#[]" do
+    it "raises when no atom matches atom type" do
+      residue = fake_structure.residues[0]
+      expect_raises IndexError do
+        residue[Topology::AtomType.new("CX9")]
+      end
+    end
+
+    it "raises when atom names match but elements don't" do
+      residue = fake_structure.residues[0]
+      expect_raises IndexError do
+        residue[Topology::AtomType.new("CA", element: "N")]
+      end
+    end
+  end
+
+  describe "#[]?" do
+    it "returns atom that matches atom type" do
+      residue = fake_structure.residues[0]
+      residue[Topology::AtomType.new("CA")]?.should eq residue["CA"]
+      residue[Topology::AtomType.new("OD1")]?.should eq residue["OD1"]
+    end
+
+    it "returns nil when no atom matches atom type" do
+      residue = fake_structure.residues[0]
+      residue[Topology::AtomType.new("CX9")]?.should be_nil
+    end
+
+    it "returns nil when atom names match but elements don't" do
+      residue = fake_structure.residues[0]
+      residue[Topology::AtomType.new("CA", element: "N")]?.should be_nil
+    end
+  end
+
   describe "#bonded?" do
     it "tells if two residues are bonded through any pair of atoms" do
       structure = fake_structure include_bonds: true
