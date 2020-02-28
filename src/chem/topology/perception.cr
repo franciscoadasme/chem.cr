@@ -110,7 +110,7 @@ module Chem::Topology::Perception
   end
 
   private def assign_bond(residue : Residue, other : Residue, bond_t : BondType) : Nil
-    if (i = residue[bond_t.first]?) && (j = other[bond_t.second]?) && !i.bonded?(j)
+    if (i = residue[bond_t[0]]?) && (j = other[bond_t[1]]?) && !i.bonded?(j)
       i.bonds.add j, bond_t.order if i.within_covalent_distance?(j)
     end
   end
@@ -186,19 +186,16 @@ module Chem::Topology::Perception
 
   private def guess_previous_residue(residue : Residue, link_bond : BondType) : Residue?
     prev_res = nil
-    if atom = residue[link_bond.second]?
-      prev_res = atom.each_bonded_atom.find(&.name.==(link_bond.first)).try &.residue
+    if atom = residue[link_bond[1]]?
+      prev_res = atom.each_bonded_atom.find(&.name.==(link_bond[0].name)).try &.residue
       prev_res ||= atom.each_bonded_atom.find do |atom|
-        element = PeriodicTable[atom_name: link_bond.first]
-        atom.element == element && atom.residue != residue
+        atom.element == link_bond[0].element && atom.residue != residue
       end.try &.residue
     else
-      elements = {PeriodicTable[atom_name: link_bond.first],
-                  PeriodicTable[atom_name: link_bond.second]}
       residue.each_atom do |atom|
-        next unless atom.element == elements[1]
+        next unless atom.element == link_bond[1].element
         prev_res = atom.each_bonded_atom.find do |atom|
-          atom.element == elements[0] && atom.residue != residue
+          atom.element == link_bond[0].element && atom.residue != residue
         end.try &.residue
         break if prev_res
       end

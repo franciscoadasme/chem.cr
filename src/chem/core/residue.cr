@@ -116,14 +116,16 @@ module Chem
       end
     end
 
-    def bonded?(other : self, lhs : String, rhs : String) : Bool
+    def bonded?(other : self,
+                lhs : Topology::AtomType | String,
+                rhs : Topology::AtomType | String) : Bool
       return false if other.same?(self)
       return false unless (a = self[lhs]?) && (b = other[rhs]?)
       a.bonded? b
     end
 
     def bonded?(other : self, bond_t : Topology::BondType) : Bool
-      bonded? other, bond_t.first, bond_t.second
+      bonded? other, bond_t[0], bond_t[1]
     end
 
     # Returns bonded residues. Residues may be bonded through any atom.
