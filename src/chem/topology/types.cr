@@ -35,7 +35,7 @@ module Chem::Topology
     end
   end
 
-  struct BondType
+  class BondType
     include Indexable(AtomType)
 
     getter order : Int32
