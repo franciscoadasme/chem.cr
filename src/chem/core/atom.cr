@@ -73,6 +73,20 @@ module Chem
       io << ">"
     end
 
+    # Matches *self* against *atom_t*.
+    #
+    # Checking for a match considers both atom name and element.
+    #
+    # ```
+    # atom = Structure.read("peptide.pdb").dig 'A', 1, "CA"
+    # atom.match?(Topology::AtomType.new("CA"))               # => true
+    # atom.match?(Topology::AtomType.new("CA", element: "N")) # => false
+    # atom.match?(Topology::AtomType.new("ND2"))              # => false
+    # ```
+    def match?(atom_t : Topology::AtomType) : Bool
+      @name == atom_t.name && @element == atom_t.element
+    end
+
     def missing_valency : Int32
       (nominal_valency - valency).clamp 0..
     end

@@ -30,6 +30,15 @@ describe Chem::Atom do
     end
   end
 
+  describe "#match?" do
+    it "tells if atom matches atom type" do
+      atom = Structure.build(guess_topology: false) { atom "CD2", V[0, 0, 0] }.atoms[0]
+      atom.match?(Topology::AtomType.new("CD2", element: "C")).should be_true
+      atom.match?(Topology::AtomType.new("CD2", element: "N")).should be_false
+      atom.match?(Topology::AtomType.new("ND2")).should be_false
+    end
+  end
+
   describe "#missing_valency" do
     it "returns number of bonds to reach closest nominal valency (no bonds)" do
       structure = Structure.build(guess_topology: false) do
