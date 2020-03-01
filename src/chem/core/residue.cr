@@ -116,6 +116,10 @@ module Chem
       end
     end
 
+    def bonded?(other : self, bond_t : Topology::BondType) : Bool
+      bonded? other, bond_t[0], bond_t[1]
+    end
+
     def bonded?(other : self,
                 lhs : Topology::AtomType | String,
                 rhs : Topology::AtomType | String) : Bool
