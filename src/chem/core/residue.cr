@@ -134,11 +134,12 @@ module Chem
     # and insertion code if present (refer to #<=>).
     #
     # ```
-    # residues = Structure.read("ala-phe-asn-thr.pdb")
-    # residues[0].bonded_residues.map(&.name) # => ["PHE"]
-    # residues[1].bonded_residues.map(&.name) # => ["ALA", "ASN"]
-    # residues[2].bonded_residues.map(&.name) # => ["PHE", "THR"]
-    # residues[3].bonded_residues.map(&.name) # => ["ALA", "ASN"]
+    # # Covalent ligand (JG7) is bonded to CYS sidechain
+    # residues = Structure.read("ala-cys-thr-jg7.pdb").residues
+    # residues[0].bonded_residues.map(&.name) # => ["CYS"]
+    # residues[1].bonded_residues.map(&.name) # => ["ALA", "THR", "JG7"]
+    # residues[2].bonded_residues.map(&.name) # => ["CYS"]
+    # residues[3].bonded_residues.map(&.name) # => ["CYS"]
     # ```
     def bonded_residues : Array(Residue)
       residues = Set(Residue).new
