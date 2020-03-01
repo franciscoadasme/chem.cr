@@ -105,7 +105,7 @@ module Chem
     # ```
     def []?(atom_t : Topology::AtomType) : Atom?
       if atom = self[atom_t.name]?
-        atom if atom.element == atom_t.element
+        atom if atom.match?(atom_t)
       end
     end
 
