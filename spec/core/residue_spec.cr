@@ -119,6 +119,10 @@ describe Chem::Residue do
       it "returns false when residue is itself" do
         a1.bonded?(a1, "C", "N").should be_false
       end
+
+      it "returns false when bond order is different" do
+        a1.bonded?(a2, "C", "N", 2).should be_false
+      end
     end
 
     context "given an atom type and element" do
@@ -146,6 +150,11 @@ describe Chem::Residue do
       it "returns false when residue is itself" do
         atom_t = Topology::AtomType.new "C"
         a1.bonded?(a1, atom_t, PeriodicTable::N).should be_false
+      end
+
+      it "returns false when bond order is different" do
+        atom_t = Topology::AtomType.new "C"
+        a1.bonded?(a2, atom_t, PeriodicTable::N, 2).should be_false
       end
     end
 
@@ -175,6 +184,11 @@ describe Chem::Residue do
         atom_t = Topology::AtomType.new "N"
         a1.bonded?(a1, PeriodicTable::C, atom_t).should be_false
       end
+
+      it "returns false when bond order is different" do
+        atom_t = Topology::AtomType.new "N"
+        a1.bonded?(a2, PeriodicTable::C, atom_t, 2).should be_false
+      end
     end
 
     context "given two elements" do
@@ -194,6 +208,10 @@ describe Chem::Residue do
 
       it "returns false when residue is itself" do
         a1.bonded?(a1, PeriodicTable::C, PeriodicTable::N).should be_false
+      end
+
+      it "returns false when bond order is different" do
+        a1.bonded?(a2, PeriodicTable::C, PeriodicTable::N, 2).should be_false
       end
     end
   end

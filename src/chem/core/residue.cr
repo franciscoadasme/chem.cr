@@ -191,33 +191,60 @@ module Chem
     #
     # If *order* is specified, it also check for bond order, otherwise
     # it is ignored:
+    #
+    # ```
+    # residues[0].bonded? residues[1], "C", "N"    # => true
+    # residues[0].bonded? residues[1], "C", "N", 1 # => true
+    # residues[0].bonded? residues[1], "C", "N", 2 # => false
+    # ```
     def bonded?(other : self,
                 lhs : Topology::AtomType | String,
-                rhs : Topology::AtomType | String) : Bool
+                rhs : Topology::AtomType | String,
+                order : Int? = nil) : Bool
       return false if other.same?(self)
       return false unless (a = self[lhs]?) && (b = other[rhs]?)
-      a.bonded? b
+      return false unless bond = a.bonds[b]?
+      bond.order == (order || bond.order)
     end
 
-    def bonded?(other : self, lhs : Topology::AtomType | String, rhs : Element) : Bool
     # :ditto:
+    def bonded?(other : self,
+                lhs : Topology::AtomType | String,
+                rhs : Element,
+                order : Int? = nil) : Bool
       return false if other.same?(self)
       return false unless a = self[lhs]?
-      other.each_atom.any? { |b| b === rhs && a.bonded?(b) }
+      other.each_atom.any? do |b|
+        if b === rhs && (bond = a.bonds[b]?)
+          bond.order == (order || bond.order)
+        end
+      end
     end
 
-    def bonded?(other : self, lhs : Element, rhs : Topology::AtomType | String) : Bool
     # :ditto:
+    def bonded?(other : self,
+                lhs : Element,
+                rhs : Topology::AtomType | String,
+                order : Int? = nil) : Bool
       return false if other.same?(self)
       return false unless b = other[rhs]?
-      @atoms.any? { |a| a === lhs && a.bonded?(b) }
+      @atoms.any? do |a|
+        if a === lhs && (bond = a.bonds[b]?)
+          bond.order == (order || bond.order)
+        end
+      end
     end
 
-    def bonded?(other : self, lhs : Element, rhs : Element) : Bool
     # :ditto:
+    def bonded?(other : self, lhs : Element, rhs : Element, order : Int? = nil) : Bool
       return false if other.same?(self)
       @atoms.any? do |a|
-        a === lhs && other.each_atom.any? { |b| b === rhs && a.bonded?(b) }
+        next unless a === lhs
+        other.each_atom.any? do |b|
+          if b === rhs && (bond = a.bonds[b]?)
+            bond.order == (order || bond.order)
+          end
+        end
       end
     end
 
