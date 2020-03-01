@@ -109,6 +109,17 @@ module Chem
       end
     end
 
+    # Returns true if `self` is bonded to *other*, otherwise false.
+    # Residues may be bonded by any two atoms.
+    #
+    # ```
+    # # Covalent ligand (JG7) is bonded to CYS sidechain
+    # residues = Structure.read("ala-cys-thr-jg7.pdb").residues
+    # residues[0].bonded?(residues[1]) # => true
+    # residues[1].bonded?(residues[2]) # => true
+    # residues[2].bonded?(residues[3]) # => false
+    # residues[1].bonded?(residues[3]) # => true
+    # ```
     def bonded?(other : self) : Bool
       return false if other.same?(self)
       each_atom.any? do |a1|
@@ -116,10 +127,70 @@ module Chem
       end
     end
 
+    # Returns true if `self` is bonded to *other* through *bond_t*,
+    # otherwise false.
+    #
+    # ```
+    # # Covalent ligand (JG7) is bonded to CYS sidechain
+    # residues = Structure.read("ala-cys-thr-jg7.pdb").residues
+    # bond_t = Topology::BondType.new "C", "N"
+    # residues[0].bonded?(residues[1], bond_t) # => true
+    # residues[1].bonded?(residues[2], bond_t) # => true
+    # residues[2].bonded?(residues[3], bond_t) # => false
+    # residues[1].bonded?(residues[3], bond_t) # => false
+    # ```
     def bonded?(other : self, bond_t : Topology::BondType) : Bool
       bonded? other, bond_t[0], bond_t[1]
     end
 
+    # Returns true if `self` is bonded to *other* through a bond between
+    # *lhs* and *rhs*, otherwise false.
+    #
+    # ```
+    # # Covalent ligand (JG7) is bonded to CYS sidechain
+    # residues = Structure.read("ala-cys-thr-jg7.pdb").residues
+    # ```
+    #
+    # One can use atom names, atom types or elements:
+    #
+    # ```
+    # a, b = Topology::AtomType.new("C"), Topology::AtomType.new("N")
+    # residues[0].bonded? residues[1], "C", "N"            # => true
+    # residues[0].bonded? residues[1], a, b                # => true
+    # residues[0].bonded? residues[1], a, PeriodicTable::N # => true
+    # residues[0].bonded? residues[1], PeriodicTable::C, b # => true
+    # residues[1].bonded? residues[2], a, b                # => true
+    # residues[1].bonded? residues[3], a, b                # => false
+    # residues[2].bonded? residues[3], a, b                # => false
+    # ```
+    #
+    # Note that *lhs* and *rhs* are looked up in `self` and *other*,
+    # respectively, i.e., the arguments are not interchangeable:
+    #
+    # ```
+    # residues[0].bonded? residues[1], "C", "N" # => true
+    # residues[0].bonded? residues[1], "N", "C" # => false
+    # ```
+    #
+    # When atom names or atom types are specified, this method returns
+    # false if missing:
+    #
+    # ```
+    # missing_atom_t = Topology::AtomType.new("OZ5")
+    # residues[0].bonded? residues[1], "CX1", "N"             # => false
+    # residues[0].bonded? residues[1], missing_atom_t, "N"    # => false
+    # residues[0].bonded? residues[1], "C", PeriodicTable::Mg # => false
+    # ```
+    #
+    # When elements are specified, all atoms of that element are tested:
+    #
+    # ```
+    # residues[1].bonded? residues[2], "C", PeriodicTable::N  # => true
+    # residues[1].bonded? residues[2], "SG", PeriodicTable::C # => true
+    # ```
+    #
+    # If *order* is specified, it also check for bond order, otherwise
+    # it is ignored:
     def bonded?(other : self,
                 lhs : Topology::AtomType | String,
                 rhs : Topology::AtomType | String) : Bool
@@ -129,18 +200,21 @@ module Chem
     end
 
     def bonded?(other : self, lhs : Topology::AtomType | String, rhs : Element) : Bool
+    # :ditto:
       return false if other.same?(self)
       return false unless a = self[lhs]?
       other.each_atom.any? { |b| b === rhs && a.bonded?(b) }
     end
 
     def bonded?(other : self, lhs : Element, rhs : Topology::AtomType | String) : Bool
+    # :ditto:
       return false if other.same?(self)
       return false unless b = other[rhs]?
       @atoms.any? { |a| a === lhs && a.bonded?(b) }
     end
 
     def bonded?(other : self, lhs : Element, rhs : Element) : Bool
+    # :ditto:
       return false if other.same?(self)
       @atoms.any? do |a|
         a === lhs && other.each_atom.any? { |b| b === rhs && a.bonded?(b) }
