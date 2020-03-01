@@ -10,6 +10,21 @@ describe Chem::Atom do
     end
   end
 
+  describe "#===" do
+    atom = Structure.build(guess_topology: false) { atom "NG1", V[0, 0, 0] }.atoms[0]
+
+    it "tells if atom matches atom type" do
+      (atom === Topology::AtomType.new("NG1")).should be_true
+      (atom === Topology::AtomType.new("NG1", element: "O")).should be_false
+      (atom === Topology::AtomType.new("CA")).should be_false
+    end
+
+    it "tells if atom matches element" do
+      (atom === PeriodicTable::N).should be_true
+      (atom === PeriodicTable::O).should be_false
+    end
+  end
+
   describe "#each_bonded_atom" do
     structure = Structure.build do
       atom :I, V[-1, 0, 0]

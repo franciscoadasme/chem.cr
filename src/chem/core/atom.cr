@@ -32,6 +32,45 @@ module Chem
       @residue << self
     end
 
+    # Case equality. This is equivalent to `#match?`.
+    #
+    # ```
+    # structure = Structure.read "peptide.pdb"
+    # desc = case structure.dig('A', 5, "CA")
+    #        when Topology::AtomType("C")  then "carbonyl carbon"
+    #        when Topology::AtomType("CA") then "alpha carbon"
+    #        when Topology::AtomType("CB") then "beta carbon"
+    #        when Topology::AtomType("CG") then "gamma carbon"
+    #        when Topology::AtomType("CD") then "delta carbon"
+    #        when PeriodicTable::C         then "carbon"
+    #        else                               "non-carbon"
+    #        end
+    # desc # => "alpha carbon"
+    # ```
+    def ===(atom_t : Topology::AtomType) : Bool
+      match? atom_t
+    end
+
+    # Case equality. Returns true if atom's element is *element*,
+    # otherwise false.
+    #
+    # ```
+    # structure = Structure.read "peptide.pdb"
+    # desc = case structure.dig('A', 5, "CK")
+    #        when Topology::AtomType("C")  then "carbonyl carbon"
+    #        when Topology::AtomType("CA") then "alpha carbon"
+    #        when Topology::AtomType("CB") then "beta carbon"
+    #        when Topology::AtomType("CG") then "gamma carbon"
+    #        when Topology::AtomType("CD") then "delta carbon"
+    #        when PeriodicTable::C         then "carbon"
+    #        else                               "non-carbon"
+    #        end
+    # desc # => "non-carbon"
+    # ```
+    def ===(element : Element) : Bool
+      @element == element
+    end
+
     # The comparison operator.
     #
     # Returns `-1`, `0` or `1` depending on whether `self` precedes
