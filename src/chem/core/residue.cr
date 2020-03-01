@@ -124,8 +124,23 @@ module Chem
       a.bonded? b
     end
 
-    def bonded?(other : self, bond_t : Topology::BondType) : Bool
-      bonded? other, bond_t[0], bond_t[1]
+    def bonded?(other : self, lhs : Topology::AtomType | String, rhs : Element) : Bool
+      return false if other.same?(self)
+      return false unless a = self[lhs]?
+      other.each_atom.any? { |b| b === rhs && a.bonded?(b) }
+    end
+
+    def bonded?(other : self, lhs : Element, rhs : Topology::AtomType | String) : Bool
+      return false if other.same?(self)
+      return false unless b = other[rhs]?
+      @atoms.any? { |a| a === lhs && a.bonded?(b) }
+    end
+
+    def bonded?(other : self, lhs : Element, rhs : Element) : Bool
+      return false if other.same?(self)
+      @atoms.any? do |a|
+        a === lhs && other.each_atom.any? { |b| b === rhs && a.bonded?(b) }
+      end
     end
 
     # Returns bonded residues. Residues may be bonded through any atom.

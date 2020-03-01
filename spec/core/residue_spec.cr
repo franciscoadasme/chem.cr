@@ -91,6 +91,30 @@ describe Chem::Residue do
       structure.dig('A', 1).bonded?(structure.dig('B', 1), bond_t).should be_false
     end
 
+    it "tells if two residues are bonded through atom type-element" do
+      atom_t = Chem::Topology::AtomType.new "C"
+      residues = fake_structure(include_bonds: true).residues
+      residues[0].bonded?(residues[1], atom_t, PeriodicTable::N).should be_true
+      residues[0].bonded?(residues[1], atom_t, PeriodicTable::C).should be_false
+      residues[1].bonded?(residues[2], atom_t, PeriodicTable::N).should be_false
+    end
+
+    it "tells if two residues are bonded through element-atom type" do
+      atom_t = Chem::Topology::AtomType.new "N"
+      residues = fake_structure(include_bonds: true).residues
+      residues[0].bonded?(residues[1], PeriodicTable::C, atom_t).should be_true
+      residues[0].bonded?(residues[1], PeriodicTable::N, atom_t).should be_false
+      residues[1].bonded?(residues[2], PeriodicTable::C, atom_t).should be_false
+    end
+
+    it "tells if two residues are bonded through element-element" do
+      residues = fake_structure(include_bonds: true).residues
+      residues[0].bonded?(residues[1], PeriodicTable::C, PeriodicTable::N).should be_true
+      residues[0].bonded?(residues[1], PeriodicTable::N, PeriodicTable::C).should be_true
+      residues[0].bonded?(residues[1], PeriodicTable::C, PeriodicTable::O).should be_false
+      residues[1].bonded?(residues[2], PeriodicTable::C, PeriodicTable::N).should be_false
+    end
+
     it "returns false when residue is itself" do
       structure = fake_structure include_bonds: true
       structure.dig('A', 1).bonded?(structure.dig('A', 1)).should be_false
