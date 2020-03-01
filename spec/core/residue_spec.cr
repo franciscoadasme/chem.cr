@@ -69,56 +69,132 @@ describe Chem::Residue do
   end
 
   describe "#bonded?" do
-    it "tells if two residues are bonded through any pair of atoms" do
-      structure = fake_structure include_bonds: true
-      structure.dig('A', 1).bonded?(structure.dig('A', 2)).should be_true
-      structure.dig('A', 1).bonded?(structure.dig('B', 1)).should be_false
+    a1, a2, b1 = fake_structure(include_bonds: true).residues
+
+    context "given a residue" do
+      it "tells if two residues are bonded through any pair of atoms" do
+        a1.bonded?(a2).should be_true
+        a2.bonded?(b1).should be_false
+      end
+
+      it "returns false when residue is itself" do
+        a1.bonded?(a1).should be_false
+      end
     end
 
-    it "tells if two residues are bonded through a specific pair of atoms" do
-      structure = fake_structure include_bonds: true
-      structure.dig('A', 1).bonded?(structure.dig('A', 2), "C", "N").should be_true
-      structure.dig('A', 1).bonded?(structure.dig('A', 2), "CB", "CA").should be_false
-      structure.dig('A', 1).bonded?(structure.dig('B', 1), "C", "N").should be_false
-      structure.dig('A', 2).bonded?(structure.dig('A', 1), "C", "N").should be_false
+    context "given a bond type" do
+      it "tells if two residues are bonded" do
+        bond_t = Topology::BondType.new "C", "N"
+        a1.bonded?(a2, bond_t).should be_true
+        a2.bonded?(b1, bond_t).should be_false
+      end
+
+      it "returns false if bond is inverted" do
+        a1.bonded?(a2, Topology::BondType.new("N", "C")).should be_false
+      end
+
+      it "returns false if an atom if missing" do
+        a1.bonded?(a2, Topology::BondType.new("C", "CX1")).should be_false
+      end
+
+      it "returns false when residue is itself" do
+        a1.bonded?(a1, Topology::BondType.new("C", "N")).should be_false
+      end
     end
 
-    it "tells if two residues are bonded through a specific bond type" do
-      bond_t = Chem::Topology::BondType.new "C", "N"
-      structure = fake_structure include_bonds: true
-      structure.dig('A', 1).bonded?(structure.dig('A', 2), bond_t).should be_true
-      structure.dig('A', 2).bonded?(structure.dig('A', 1), bond_t).should be_false
-      structure.dig('A', 1).bonded?(structure.dig('B', 1), bond_t).should be_false
+    context "given two atom names" do
+      it "tells if two residues are bonded" do
+        a1.bonded?(a2, "C", "N").should be_true
+        a2.bonded?(b1, "C", "N").should be_false
+      end
+
+      it "returns false when bond is inverted" do
+        a1.bonded?(a2, "N", "C").should be_false
+      end
+
+      it "returns false when an atom if missing" do
+        a1.bonded?(a2, "X", "Y").should be_false
+      end
+
+      it "returns false when residue is itself" do
+        a1.bonded?(a1, "C", "N").should be_false
+      end
     end
 
-    it "tells if two residues are bonded through atom type-element" do
-      atom_t = Chem::Topology::AtomType.new "C"
-      residues = fake_structure(include_bonds: true).residues
-      residues[0].bonded?(residues[1], atom_t, PeriodicTable::N).should be_true
-      residues[0].bonded?(residues[1], atom_t, PeriodicTable::C).should be_false
-      residues[1].bonded?(residues[2], atom_t, PeriodicTable::N).should be_false
+    context "given an atom type and element" do
+      it "tells if two residues are bonded through atom type-element" do
+        atom_t = Topology::AtomType.new "C"
+        a1.bonded?(a2, atom_t, PeriodicTable::N).should be_true
+        a2.bonded?(b1, atom_t, PeriodicTable::N).should be_false
+      end
+
+      it "returns false when bond is inverted" do
+        atom_t = Topology::AtomType.new "N"
+        a1.bonded?(a2, atom_t, PeriodicTable::C).should be_false
+      end
+
+      it "returns false when atom type is missing" do
+        atom_t = Topology::AtomType.new "CY2"
+        a1.bonded?(a2, atom_t, PeriodicTable::N).should be_false
+      end
+
+      it "returns false when element is missing" do
+        atom_t = Topology::AtomType.new "C"
+        a1.bonded?(a2, atom_t, PeriodicTable::Zn).should be_false
+      end
+
+      it "returns false when residue is itself" do
+        atom_t = Topology::AtomType.new "C"
+        a1.bonded?(a1, atom_t, PeriodicTable::N).should be_false
+      end
     end
 
-    it "tells if two residues are bonded through element-atom type" do
-      atom_t = Chem::Topology::AtomType.new "N"
-      residues = fake_structure(include_bonds: true).residues
-      residues[0].bonded?(residues[1], PeriodicTable::C, atom_t).should be_true
-      residues[0].bonded?(residues[1], PeriodicTable::N, atom_t).should be_false
-      residues[1].bonded?(residues[2], PeriodicTable::C, atom_t).should be_false
+    context "given an element and atom type" do
+      it "tells if two residues are bonded through element-atom type" do
+        atom_t = Topology::AtomType.new "N"
+        a1.bonded?(a2, PeriodicTable::C, atom_t).should be_true
+        a2.bonded?(b1, PeriodicTable::C, atom_t).should be_false
+      end
+
+      it "returns false when bond is inverted" do
+        atom_t = Topology::AtomType.new "C"
+        a1.bonded?(a2, PeriodicTable::N, atom_t).should be_false
+      end
+
+      it "returns false when atom type is missing" do
+        atom_t = Topology::AtomType.new "NY2"
+        a1.bonded?(a2, PeriodicTable::C, atom_t).should be_false
+      end
+
+      it "returns false when element is missing" do
+        atom_t = Topology::AtomType.new "N"
+        a1.bonded?(a2, PeriodicTable::Zn, atom_t).should be_false
+      end
+
+      it "returns false when residue is itself" do
+        atom_t = Topology::AtomType.new "N"
+        a1.bonded?(a1, PeriodicTable::C, atom_t).should be_false
+      end
     end
 
-    it "tells if two residues are bonded through element-element" do
-      residues = fake_structure(include_bonds: true).residues
-      residues[0].bonded?(residues[1], PeriodicTable::C, PeriodicTable::N).should be_true
-      residues[0].bonded?(residues[1], PeriodicTable::N, PeriodicTable::C).should be_true
-      residues[0].bonded?(residues[1], PeriodicTable::C, PeriodicTable::O).should be_false
-      residues[1].bonded?(residues[2], PeriodicTable::C, PeriodicTable::N).should be_false
-    end
+    context "given two elements" do
+      it "tells if two residues are bonded through element-element" do
+        a1.bonded?(a2, PeriodicTable::C, PeriodicTable::N).should be_true
+        a2.bonded?(b1, PeriodicTable::C, PeriodicTable::N).should be_false
+      end
 
-    it "returns false when residue is itself" do
-      structure = fake_structure include_bonds: true
-      structure.dig('A', 1).bonded?(structure.dig('A', 1)).should be_false
-      structure.dig('B', 1).bonded?(structure.dig('B', 1)).should be_false
+      it "returns false when bond is inverted" do
+        a1.bonded?(a2, PeriodicTable::N, PeriodicTable::C).should be_false
+      end
+
+      it "returns false when element is missing" do
+        a1.bonded?(a2, PeriodicTable::Zn, PeriodicTable::N).should be_false
+        a1.bonded?(a2, PeriodicTable::C, PeriodicTable::Zn).should be_false
+      end
+
+      it "returns false when residue is itself" do
+        a1.bonded?(a1, PeriodicTable::C, PeriodicTable::N).should be_false
+      end
     end
   end
 
