@@ -107,6 +107,15 @@ describe Chem::Residue do
       residues[3].bonded_residues.map(&.name).should eq %w(CYS)
     end
 
+    it "returns residues bonded via bond type" do
+      residues = load_file("residue_kind_unknown_covalent_ligand.pdb").residues
+      bond_t = Topology::BondType.new("C", "N")
+      residues[0].bonded_residues(bond_t).map(&.name).should eq %w(ALA)
+      residues[1].bonded_residues(bond_t).map(&.name).should eq %w(GLY CYS)
+      residues[2].bonded_residues(bond_t).map(&.name).should eq %w(ALA)
+      residues[3].bonded_residues(bond_t).map(&.name).should eq %w()
+    end
+
     context "given a periodic peptide chain" do
       it "returns two residues for every residue" do
         load_file("hlx_gly.poscar").each_residue do |residue|
