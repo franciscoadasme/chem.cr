@@ -139,8 +139,15 @@ module Chem
     # residues[2].bonded?(residues[3], bond_t) # => false
     # residues[1].bonded?(residues[3], bond_t) # => false
     # ```
+    #
+    # Note that bond order is taken into account, e.g.:
+    #
+    # ```
+    # bond_t = Topology::BondType.new "C", "N", order: 2
+    # residues[0].bonded?(residues[1], bond_t) # => false
+    # ```
     def bonded?(other : self, bond_t : Topology::BondType) : Bool
-      bonded? other, bond_t[0], bond_t[1]
+      bonded? other, bond_t[0], bond_t[1], bond_t.order
     end
 
     # Returns true if `self` is bonded to *other* through a bond between

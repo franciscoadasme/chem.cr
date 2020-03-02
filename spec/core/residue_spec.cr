@@ -100,6 +100,10 @@ describe Chem::Residue do
       it "returns false when residue is itself" do
         a1.bonded?(a1, Topology::BondType.new("C", "N")).should be_false
       end
+
+      it "returns false when bond order is different" do
+        a1.bonded?(a2, Topology::BondType.new("C", "N", 2)).should be_false
+      end
     end
 
     context "given two atom names" do
