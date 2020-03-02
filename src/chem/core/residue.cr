@@ -140,6 +140,15 @@ module Chem
     # residues[1].bonded?(residues[3], bond_t) # => false
     # ```
     #
+    # Bond check follows the directionality of *bond_t*, that is, the
+    # left and right atoms are looked up in `self` and *other*,
+    # respectively:
+    #
+    # ```
+    # residues[0].bonded?(residues[1], bond_t) # => true
+    # residues[1].bonded?(residues[0], bond_t) # => false
+    # ```
+    #
     # Note that bond order is taken into account, e.g.:
     #
     # ```
