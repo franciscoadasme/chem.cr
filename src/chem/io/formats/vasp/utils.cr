@@ -55,6 +55,31 @@ module Chem::VASP
       super input, sync_close: sync_close
     end
 
+    # Writes a formatted number to the IO following Fortran's scientific
+    # notation convention.
+    #
+    # Numbers always start with a leading zero (e.g., "0.123E+00" vs
+    # "1.230E-01"), which is replaced by a minus sign for negative
+    # numbers (e.g., "-.123" vs "-0.123"). This ensures that the minus
+    # sign doesn't change number width, e.g., "0.123" and "-.123".
+    private def format_array_element(value : Float64) : Nil
+      if value == 0
+        @io.printf "%18.11E", value
+      else
+        s = sprintf "%.10E", value
+        if value > 0
+          exp = s[13..].to_i + 1
+          @io << " 0." << s[0] << s[2..11]
+        else
+          exp = s[14..].to_i + 1
+          @io << " -." << s[1] << s[3..12]
+        end
+        @io << 'E'
+        @io << (exp < 0 ? '-' : '+')
+        @io.printf "%02d", exp.abs
+      end
+    end
+
     private def incompatible_expcetion : Nil
       raise ArgumentError.new("Incompatible structure and grid")
     end
@@ -67,7 +92,7 @@ module Chem::VASP
         i = i_ % nx
         j = (i_ // nx) % ny
         k = i_ // (ny * nx)
-        format "%18.11E", (yield grid.unsafe_fetch({i, j, k}))
+        format_array_element(yield grid.unsafe_fetch({i, j, k}))
         @io << '\n' if (i_ + 1) % 5 == 0
       end
       @io << '\n' unless grid.size % 5 == 0
