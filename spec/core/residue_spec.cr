@@ -89,6 +89,12 @@ describe Chem::Residue do
         a2.bonded?(b1, bond_t).should be_false
       end
 
+      it "tells if two residues are bonded by element-based search" do
+        bond_t = Topology::BondType.new "C", "NX"
+        a1.bonded?(a2, bond_t, strict: false).should be_true
+        a2.bonded?(b1, bond_t, strict: false).should be_false
+      end
+
       it "returns false if bond is inverted" do
         a1.bonded?(a2, Topology::BondType.new("N", "C")).should be_false
       end

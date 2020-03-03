@@ -155,8 +155,18 @@ module Chem
     # bond_t = Topology::BondType.new "C", "N", order: 2
     # residues[0].bonded?(residues[1], bond_t) # => false
     # ```
-    def bonded?(other : self, bond_t : Topology::BondType) : Bool
-      bonded? other, bond_t[0], bond_t[1], bond_t.order
+    #
+    # If *strict* is false, it uses elements only instead to look for
+    # bonded atoms, and bond order is ignored.
+    #
+    # ```
+    # bond_t = Topology::BondType.new "C", "NX", order: 2
+    # residues[0].bonded?(residues[1], bond_t)                # => false
+    # residues[0].bonded?(residues[1], bond_t, strict: false) # => true
+    # ```
+    def bonded?(other : self, bond_t : Topology::BondType, strict : Bool = true) : Bool
+      bonded?(other, bond_t[0], bond_t[1], bond_t.order) ||
+        (!strict && bonded?(other, bond_t[0].element, bond_t[1].element))
     end
 
     # Returns true if `self` is bonded to *other* through a bond between
