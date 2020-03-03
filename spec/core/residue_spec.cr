@@ -229,13 +229,24 @@ describe Chem::Residue do
       residues[3].bonded_residues.map(&.name).should eq %w(CYS)
     end
 
-    it "returns residues bonded via bond type" do
-      residues = load_file("residue_kind_unknown_covalent_ligand.pdb").residues
-      bond_t = Topology::BondType.new("C", "N")
-      residues[0].bonded_residues(bond_t).map(&.name).should eq %w(ALA)
-      residues[1].bonded_residues(bond_t).map(&.name).should eq %w(GLY CYS)
-      residues[2].bonded_residues(bond_t).map(&.name).should eq %w(ALA)
-      residues[3].bonded_residues(bond_t).map(&.name).should eq %w()
+    context "given a bond type" do
+      it "returns residues bonded via X(i)-Y(j)" do
+        residues = load_file("residue_kind_unknown_covalent_ligand.pdb").residues
+        bond_t = Topology::BondType.new("C", "N")
+        residues[0].bonded_residues(bond_t).map(&.name).should eq %w(ALA)
+        residues[1].bonded_residues(bond_t).map(&.name).should eq %w(CYS)
+        residues[2].bonded_residues(bond_t).map(&.name).should eq %w()
+        residues[3].bonded_residues(bond_t).map(&.name).should eq %w()
+      end
+
+      it "returns residues bonded via X(i)-Y(j) or X(j)-Y(i)" do
+        residues = load_file("residue_kind_unknown_covalent_ligand.pdb").residues
+        bond_t = Topology::BondType.new("C", "N")
+        residues[0].bonded_residues(bond_t, forward_only: false).map(&.name).should eq %w(ALA)
+        residues[1].bonded_residues(bond_t, forward_only: false).map(&.name).should eq %w(GLY CYS)
+        residues[2].bonded_residues(bond_t, forward_only: false).map(&.name).should eq %w(ALA)
+        residues[3].bonded_residues(bond_t, forward_only: false).map(&.name).should eq %w()
+      end
     end
 
     context "given a periodic peptide chain" do

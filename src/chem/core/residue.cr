@@ -289,9 +289,6 @@ module Chem
 
     # Returns residues bonded through *bond_t*.
     #
-    # Unlike #bonded?, this method ignores bond directionality (A-B), so
-    # residues may be bonded either via A or B.
-    #
     # Returned residues are ordered by their chain id, residue number
     # and insertion code if present (refer to #<=>).
     #
@@ -300,13 +297,25 @@ module Chem
     # residues = Structure.read("ala-cys-thr-jg7.pdb").residues
     # bond_t = Topology::BondType.new("C", "N")
     # residues[0].bonded_residues(bond_t).map(&.name) # => ["CYS"]
-    # residues[1].bonded_residues(bond_t).map(&.name) # => ["ALA", "THR"]
-    # residues[2].bonded_residues(bond_t).map(&.name) # => ["CYS"]
+    # residues[1].bonded_residues(bond_t).map(&.name) # => ["THR"]
+    # residues[2].bonded_residues(bond_t).map(&.name) # => []
     # residues[3].bonded_residues(bond_t).map(&.name) # => []
     # ```
-    def bonded_residues(bond_t : Topology::BondType) : Array(Residue)
+    #
+    # If *forward_only* is false, then bond directionality is ignored:
+    #
+    # ```
+    # residues[0].bonded_residues(bond_t, forward_only: true).map(&.name) # => ["CYS"]
+    # residues[1].bonded_residues(bond_t, forward_only: true).map(&.name) # => ["ALA", "THR"]
+    # residues[2].bonded_residues(bond_t, forward_only: true).map(&.name) # => ["CYS"]
+    # residues[3].bonded_residues(bond_t, forward_only: true).map(&.name) # => []
+    # ```
+    def bonded_residues(bond_t : Topology::BondType,
+                        forward_only : Bool = true) : Array(Residue)
       bonded_residues.select! do |residue|
-        bonded?(residue, bond_t) || residue.bonded?(self, bond_t)
+        bonded = bonded?(residue, bond_t)
+        bonded ||= residue.bonded?(self, bond_t) unless forward_only
+        bonded
       end
     end
 
