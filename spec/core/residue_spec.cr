@@ -253,6 +253,15 @@ describe Chem::Residue do
         residues[2].bonded_residues(bond_t, forward_only: false).map(&.name).should eq %w(ALA)
         residues[3].bonded_residues(bond_t, forward_only: false).map(&.name).should eq %w()
       end
+
+      it "returns bonded residues using fuzzy search" do
+        residues = load_file("residue_kind_unknown_covalent_ligand.pdb").residues
+        bond_t = Topology::BondType.new("C", "NX")
+        residues[0].bonded_residues(bond_t, strict: false).map(&.name).should eq %w(ALA)
+        residues[1].bonded_residues(bond_t, strict: false).map(&.name).should eq %w(CYS)
+        residues[2].bonded_residues(bond_t, strict: false).map(&.name).should eq %w()
+        residues[3].bonded_residues(bond_t, strict: false).map(&.name).should eq %w()
+      end
     end
 
     context "given a periodic peptide chain" do

@@ -320,11 +320,25 @@ module Chem
     # residues[2].bonded_residues(bond_t, forward_only: true).map(&.name) # => ["CYS"]
     # residues[3].bonded_residues(bond_t, forward_only: true).map(&.name) # => []
     # ```
+    #
+    # If *strict* is false, bond search checks elements only, and bond
+    # order is ignored (fuzzy search). In the following example, using
+    # `strict: false` makes that any C-N bond is accepted regardless of
+    # atom names or bond order:
+    #
+    # ```
+    # bond_t = Topology::BondType.new "C", "NX", order: 2
+    # residues[0].bonded_residues(bond_t, strict: false).map(&.name) # => ["CYS"]
+    # residues[1].bonded_residues(bond_t, strict: false).map(&.name) # => ["THR"]
+    # residues[2].bonded_residues(bond_t, strict: false).map(&.name) # => []
+    # residues[3].bonded_residues(bond_t, strict: false).map(&.name) # => []
+    # ```
     def bonded_residues(bond_t : Topology::BondType,
-                        forward_only : Bool = true) : Array(Residue)
+                        forward_only : Bool = true,
+                        strict : Bool = true) : Array(Residue)
       bonded_residues.select! do |residue|
-        bonded = bonded?(residue, bond_t)
-        bonded ||= residue.bonded?(self, bond_t) unless forward_only
+        bonded = bonded?(residue, bond_t, strict)
+        bonded ||= residue.bonded?(self, bond_t, strict) unless forward_only
         bonded
       end
     end
