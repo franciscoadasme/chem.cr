@@ -105,10 +105,21 @@ module Chem
     # ```
     def []?(atom_t : Topology::AtomType) : Atom?
       if atom = self[atom_t.name]?
-        atom if atom.element == atom_t.element
+        atom if atom.match?(atom_t)
       end
     end
 
+    # Returns true if `self` is bonded to *other*, otherwise false.
+    # Residues may be bonded by any two atoms.
+    #
+    # ```
+    # # Covalent ligand (JG7) is bonded to CYS sidechain
+    # residues = Structure.read("ala-cys-thr-jg7.pdb").residues
+    # residues[0].bonded?(residues[1]) # => true
+    # residues[1].bonded?(residues[2]) # => true
+    # residues[2].bonded?(residues[3]) # => false
+    # residues[1].bonded?(residues[3]) # => true
+    # ```
     def bonded?(other : self) : Bool
       return false if other.same?(self)
       each_atom.any? do |a1|
@@ -116,16 +127,151 @@ module Chem
       end
     end
 
-    def bonded?(other : self,
-                lhs : Topology::AtomType | String,
-                rhs : Topology::AtomType | String) : Bool
-      return false if other.same?(self)
-      return false unless (a = self[lhs]?) && (b = other[rhs]?)
-      a.bonded? b
+    # Returns true if `self` is bonded to *other* through *bond_t*,
+    # otherwise false.
+    #
+    # ```
+    # # Covalent ligand (JG7) is bonded to CYS sidechain
+    # residues = Structure.read("ala-cys-thr-jg7.pdb").residues
+    # bond_t = Topology::BondType.new "C", "N"
+    # residues[0].bonded?(residues[1], bond_t) # => true
+    # residues[1].bonded?(residues[2], bond_t) # => true
+    # residues[2].bonded?(residues[3], bond_t) # => false
+    # residues[1].bonded?(residues[3], bond_t) # => false
+    # ```
+    #
+    # Bond check follows the directionality of *bond_t*, that is, the
+    # left and right atoms are looked up in `self` and *other*,
+    # respectively:
+    #
+    # ```
+    # residues[0].bonded?(residues[1], bond_t) # => true
+    # residues[1].bonded?(residues[0], bond_t) # => false
+    # ```
+    #
+    # Note that bond order is taken into account, e.g.:
+    #
+    # ```
+    # bond_t = Topology::BondType.new "C", "N", order: 2
+    # residues[0].bonded?(residues[1], bond_t) # => false
+    # ```
+    #
+    # If *strict* is false, it uses elements only instead to look for
+    # bonded atoms, and bond order is ignored.
+    #
+    # ```
+    # bond_t = Topology::BondType.new "C", "NX", order: 2
+    # residues[0].bonded?(residues[1], bond_t)                # => false
+    # residues[0].bonded?(residues[1], bond_t, strict: false) # => true
+    # ```
+    def bonded?(other : self, bond_t : Topology::BondType, strict : Bool = true) : Bool
+      bonded?(other, bond_t[0], bond_t[1], bond_t.order) ||
+        (!strict && bonded?(other, bond_t[0].element, bond_t[1].element))
     end
 
-    def bonded?(other : self, bond_t : Topology::BondType) : Bool
-      bonded? other, bond_t[0], bond_t[1]
+    # Returns true if `self` is bonded to *other* through a bond between
+    # *lhs* and *rhs*, otherwise false.
+    #
+    # ```
+    # # Covalent ligand (JG7) is bonded to CYS sidechain
+    # residues = Structure.read("ala-cys-thr-jg7.pdb").residues
+    # ```
+    #
+    # One can use atom names, atom types or elements:
+    #
+    # ```
+    # a, b = Topology::AtomType.new("C"), Topology::AtomType.new("N")
+    # residues[0].bonded? residues[1], "C", "N"            # => true
+    # residues[0].bonded? residues[1], a, b                # => true
+    # residues[0].bonded? residues[1], a, PeriodicTable::N # => true
+    # residues[0].bonded? residues[1], PeriodicTable::C, b # => true
+    # residues[1].bonded? residues[2], a, b                # => true
+    # residues[1].bonded? residues[3], a, b                # => false
+    # residues[2].bonded? residues[3], a, b                # => false
+    # ```
+    #
+    # Note that *lhs* and *rhs* are looked up in `self` and *other*,
+    # respectively, i.e., the arguments are not interchangeable:
+    #
+    # ```
+    # residues[0].bonded? residues[1], "C", "N" # => true
+    # residues[0].bonded? residues[1], "N", "C" # => false
+    # ```
+    #
+    # When atom names or atom types are specified, this method returns
+    # false if missing:
+    #
+    # ```
+    # missing_atom_t = Topology::AtomType.new("OZ5")
+    # residues[0].bonded? residues[1], "CX1", "N"             # => false
+    # residues[0].bonded? residues[1], missing_atom_t, "N"    # => false
+    # residues[0].bonded? residues[1], "C", PeriodicTable::Mg # => false
+    # ```
+    #
+    # When elements are specified, all atoms of that element are tested:
+    #
+    # ```
+    # residues[1].bonded? residues[2], "C", PeriodicTable::N  # => true
+    # residues[1].bonded? residues[2], "SG", PeriodicTable::C # => true
+    # ```
+    #
+    # If *order* is specified, it also check for bond order, otherwise
+    # it is ignored:
+    #
+    # ```
+    # residues[0].bonded? residues[1], "C", "N"    # => true
+    # residues[0].bonded? residues[1], "C", "N", 1 # => true
+    # residues[0].bonded? residues[1], "C", "N", 2 # => false
+    # ```
+    def bonded?(other : self,
+                lhs : Topology::AtomType | String,
+                rhs : Topology::AtomType | String,
+                order : Int? = nil) : Bool
+      return false if other.same?(self)
+      return false unless (a = self[lhs]?) && (b = other[rhs]?)
+      return false unless bond = a.bonds[b]?
+      bond.order == (order || bond.order)
+    end
+
+    # :ditto:
+    def bonded?(other : self,
+                lhs : Topology::AtomType | String,
+                rhs : Element,
+                order : Int? = nil) : Bool
+      return false if other.same?(self)
+      return false unless a = self[lhs]?
+      other.each_atom.any? do |b|
+        if b === rhs && (bond = a.bonds[b]?)
+          bond.order == (order || bond.order)
+        end
+      end
+    end
+
+    # :ditto:
+    def bonded?(other : self,
+                lhs : Element,
+                rhs : Topology::AtomType | String,
+                order : Int? = nil) : Bool
+      return false if other.same?(self)
+      return false unless b = other[rhs]?
+      @atoms.any? do |a|
+        if a === lhs && (bond = a.bonds[b]?)
+          bond.order == (order || bond.order)
+        end
+      end
+    end
+
+    # :ditto:
+    def bonded?(other : self, lhs : Element, rhs : Element, order : Int? = nil) : Bool
+      return false if other.same?(self)
+      @atoms.any? do |a|
+        next unless a === lhs
+        other.each_atom.any? do |b|
+          if b === rhs && (bond = a.bonds[b]?)
+            bond.order == (order || bond.order)
+          end
+        end
+      end
     end
 
     # Returns bonded residues. Residues may be bonded through any atom.
@@ -134,11 +280,12 @@ module Chem
     # and insertion code if present (refer to #<=>).
     #
     # ```
-    # residues = Structure.read("ala-phe-asn-thr.pdb")
-    # residues[0].bonded_residues.map(&.name) # => ["PHE"]
-    # residues[1].bonded_residues.map(&.name) # => ["ALA", "ASN"]
-    # residues[2].bonded_residues.map(&.name) # => ["PHE", "THR"]
-    # residues[3].bonded_residues.map(&.name) # => ["ALA", "ASN"]
+    # # Covalent ligand (JG7) is bonded to CYS sidechain
+    # residues = Structure.read("ala-cys-thr-jg7.pdb").residues
+    # residues[0].bonded_residues.map(&.name) # => ["CYS"]
+    # residues[1].bonded_residues.map(&.name) # => ["ALA", "THR", "JG7"]
+    # residues[2].bonded_residues.map(&.name) # => ["CYS"]
+    # residues[3].bonded_residues.map(&.name) # => ["CYS"]
     # ```
     def bonded_residues : Array(Residue)
       residues = Set(Residue).new
@@ -148,6 +295,52 @@ module Chem
         end
       end
       residues.to_a.sort!
+    end
+
+    # Returns residues bonded through *bond_t*.
+    #
+    # Returned residues are ordered by their chain id, residue number
+    # and insertion code if present (refer to #<=>).
+    #
+    # ```
+    # # Covalent ligand (JG7) is bonded to CYS sidechain
+    # residues = Structure.read("ala-cys-thr-jg7.pdb").residues
+    # bond_t = Topology::BondType.new("C", "N")
+    # residues[0].bonded_residues(bond_t).map(&.name) # => ["CYS"]
+    # residues[1].bonded_residues(bond_t).map(&.name) # => ["THR"]
+    # residues[2].bonded_residues(bond_t).map(&.name) # => []
+    # residues[3].bonded_residues(bond_t).map(&.name) # => []
+    # ```
+    #
+    # If *forward_only* is false, then bond directionality is ignored:
+    #
+    # ```
+    # residues[0].bonded_residues(bond_t, forward_only: true).map(&.name) # => ["CYS"]
+    # residues[1].bonded_residues(bond_t, forward_only: true).map(&.name) # => ["ALA", "THR"]
+    # residues[2].bonded_residues(bond_t, forward_only: true).map(&.name) # => ["CYS"]
+    # residues[3].bonded_residues(bond_t, forward_only: true).map(&.name) # => []
+    # ```
+    #
+    # If *strict* is false, bond search checks elements only, and bond
+    # order is ignored (fuzzy search). In the following example, using
+    # `strict: false` makes that any C-N bond is accepted regardless of
+    # atom names or bond order:
+    #
+    # ```
+    # bond_t = Topology::BondType.new "C", "NX", order: 2
+    # residues[0].bonded_residues(bond_t, strict: false).map(&.name) # => ["CYS"]
+    # residues[1].bonded_residues(bond_t, strict: false).map(&.name) # => ["THR"]
+    # residues[2].bonded_residues(bond_t, strict: false).map(&.name) # => []
+    # residues[3].bonded_residues(bond_t, strict: false).map(&.name) # => []
+    # ```
+    def bonded_residues(bond_t : Topology::BondType,
+                        forward_only : Bool = true,
+                        strict : Bool = true) : Array(Residue)
+      bonded_residues.select! do |residue|
+        bonded = bonded?(residue, bond_t, strict)
+        bonded ||= residue.bonded?(self, bond_t, strict) unless forward_only
+        bonded
+      end
     end
 
     def chain=(new_chain : Chain) : Chain
