@@ -230,7 +230,7 @@ class Chem::Topology::Perception
     end
 
     def patch(lhs : Residue, rhs : Residue, bond_t : BondType) : Nil
-      if (i = lhs[bond_t.first]?) && (j = rhs[bond_t.second]?) && !i.bonded?(j)
+      if (i = lhs[bond_t[0]]?) && (j = rhs[bond_t[1]]?) && !i.bonded?(j)
         i.bonds.add j, bond_t.order if i.within_covalent_distance?(j)
       end
     end
