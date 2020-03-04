@@ -66,7 +66,7 @@ class Chem::Topology::Perception
 
       if bond_t = link_bond(@structure)
         @structure.each_residue do |residue|
-          residue.kind = guess_residue_type residue, bond_t unless Templates[residue.name]?
+          residue.kind = guess_residue_type residue, bond_t unless residue.type
         end
       end
     else
@@ -199,10 +199,7 @@ class Chem::Topology::Perception
   end
 
   private def link_bond(residues : ResidueCollection) : BondType?
-    residues.each_residue do |residue|
-      bond_t = Templates[residue.name]?.try &.link_bond
-      return bond_t if bond_t
-    end
+    residues.each_residue.compact_map(&.type.try(&.link_bond)).first?
   end
 
   private def has_topology? : Bool

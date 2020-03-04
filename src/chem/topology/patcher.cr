@@ -7,7 +7,7 @@ module Chem::Topology
 
     def match_and_patch : Nil
       @residues.each_residue do |residue|
-        if res_t = Templates[residue.name]?
+        if res_t = residue.type
           patch residue, res_t
         else
           @unmatched_atoms.concat residue.each_atom
