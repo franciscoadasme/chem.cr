@@ -227,31 +227,3 @@ describe Chem::ChainView do
     end
   end
 end
-
-describe Chem::ResidueCollection do
-  st = fake_structure
-
-  describe "#each_residue" do
-    it "iterates over each residue when called with block" do
-      ary = [] of String
-      st.each_residue { |residue| ary << residue.name }
-      ary.should eq ["ASP", "PHE", "SER"]
-    end
-
-    it "returns an iterator when called without block" do
-      st.each_residue.should be_a Iterator(Chem::Residue)
-    end
-  end
-
-  describe "#n_residues" do
-    it "returns the number of residues" do
-      st.n_residues.should eq 3
-    end
-  end
-
-  describe "#residues" do
-    it "returns a residue view" do
-      st.residues.should be_a Chem::ResidueView
-    end
-  end
-end
