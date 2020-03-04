@@ -1,66 +1,11 @@
 require "../spec_helper"
 
 describe Topology::Perception do
-  describe "#assign_templates" do
-    it "guesses bonds and types based on templates" do
-      st = fake_structure
-      r1, r2, r3 = st.residues
-
-      Topology::Perception.new(st).assign_templates
-
-      [r1, r2, r3].map(&.protein?).should eq [true, true, true]
-      [r1, r2, r3].map(&.formal_charge).should eq [-1, 0, 0]
-
-      r1["N"].bonded_atoms.map(&.name).should eq ["CA"]
-
-      r1["N"].bonds[r1["CA"]].order.should eq 1
-      r1["CA"].bonds[r1["C"]].order.should eq 1
-      r1["C"].bonds[r1["O"]].order.should eq 2
-      r1["CA"].bonds[r1["CB"]].order.should eq 1
-      r1["CB"].bonds[r1["CG"]].order.should eq 1
-      r1["CG"].bonds[r1["OD1"]].order.should eq 2
-      r1["CG"].bonds[r1["OD2"]].order.should eq 1
-
-      r1["C"].bonded_atoms.map(&.name).should eq ["CA", "O", "N"]
-      r2["N"].bonded_atoms.map(&.name).should eq ["C", "CA"]
-
-      r2["N"].bonds[r2["CA"]].order.should eq 1
-      r2["CA"].bonds[r2["C"]].order.should eq 1
-      r2["C"].bonds[r2["O"]].order.should eq 2
-      r2["CA"].bonds[r2["CB"]].order.should eq 1
-      r2["CB"].bonds[r2["CG"]].order.should eq 1
-      r2["CG"].bonds[r2["CD1"]].order.should eq 2
-      r2["CD1"].bonds[r2["CE1"]].order.should eq 1
-      r2["CE1"].bonds[r2["CZ"]].order.should eq 2
-      r2["CZ"].bonds[r2["CE2"]].order.should eq 1
-      r2["CE2"].bonds[r2["CD2"]].order.should eq 2
-      r2["CD2"].bonds[r2["CG"]].order.should eq 1
-
-      r2["C"].bonded_atoms.map(&.name).should eq ["CA", "O"]
-      r3["N"].bonded_atoms.map(&.name).should eq ["CA"]
-
-      r3["N"].bonds[r3["CA"]].order.should eq 1
-      r3["CA"].bonds[r3["C"]].order.should eq 1
-      r3["C"].bonds[r3["O"]].order.should eq 2
-      r3["CA"].bonds[r3["CB"]].order.should eq 1
-      r3["CB"].bonds[r3["OG"]].order.should eq 1
-
-      r3["C"].bonded_atoms.map(&.name).should eq ["CA", "O"]
-    end
-
     it "guesses bonds of unknown residues" do
       structure = load_file "residue_kind_unknown_covalent_ligand.pdb", topology: :templates
       structure.dig('A', 148, "C20").bonded?(structure.dig('A', 147, "SG")).should be_true
       structure.dig('A', 148, "C20").bonded?(structure.dig('A', 148, "N21")).should be_true
       structure.dig('A', 148, "S2").bonded?(structure.dig('A', 148, "O23")).should be_true
-    end
-
-    it "does not connect consecutive residues when there are far away" do
-      st = load_file "protein_gap.pdb", topology: :templates
-      r1, r2, r3, r4 = st.residues
-      r1["C"].bonds[r2["N"]]?.should_not be_nil
-      r2["C"].bonds[r3["N"]]?.should be_nil
-      r3["C"].bonds[r4["N"]]?.should_not be_nil
     end
 
     it "guesses kind of unknown residue when previous is known" do
