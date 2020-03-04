@@ -64,8 +64,8 @@ class Chem::Topology::Perception
         guess_formal_charges AtomView.new(unmatched_atoms.to_a.concat(bonded_atoms).uniq)
       end
 
-      if bond_t = link_bond(structure)
-        structure.each_residue do |residue|
+      if bond_t = link_bond(@structure)
+        @structure.each_residue do |residue|
           residue.kind = guess_residue_type residue, bond_t unless Templates[residue.name]?
         end
       end
