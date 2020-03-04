@@ -209,11 +209,13 @@ module Chem::Topology::Perception
 
     if (other = prev_res || next_res) && (bond_t = Templates[other.name]?.try(&.link_bond))
       if prev_res && next_res && prev_res.kind == next_res.kind
-        kind = other.kind if prev_res.bonded?(res, bond_t) && res.bonded?(next_res, bond_t)
+        bonded = prev_res.bonded?(res, bond_t[0], bond_t[1].element) &&
+                 res.bonded?(next_res, bond_t[0].element, bond_t[1])
+        kind = other.kind if bonded
       elsif prev_res
-        kind = prev_res.kind if prev_res.bonded?(res, bond_t)
+        kind = prev_res.kind if prev_res.bonded?(res, bond_t[0], bond_t[1].element)
       elsif next_res
-        kind = next_res.kind if res.bonded?(next_res, bond_t)
+        kind = next_res.kind if res.bonded?(next_res, bond_t[0].element, bond_t[1])
       end
     end
 
