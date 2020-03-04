@@ -76,8 +76,11 @@ module Chem::Topology::Perception
         bonded_atoms = unknown_atoms.flat_map &.each_bonded_atom
         guess_formal_charges AtomView.new(unknown_atoms.to_a.concat(bonded_atoms).uniq)
       end
-      structure.each_residue do |residue|
-        residue.kind = guess_residue_type residue unless Templates[residue.name]?
+
+      if bond_t = link_bond(structure)
+        structure.each_residue do |residue|
+          residue.kind = guess_residue_type residue, bond_t unless Templates[residue.name]?
+        end
       end
     else
       guess_bonds structure
@@ -201,11 +204,11 @@ module Chem::Topology::Perception
     prev_res
   end
 
-  private def guess_residue_type(res : Residue) : Residue::Kind
+  private def guess_residue_type(res : Residue, bond_t : BondType) : Residue::Kind
     kind = Residue::Kind::Other
     prev_res, next_res = res.previous, res.next
 
-    if (other = prev_res || next_res) && (bond_t = Templates[other.name]?.try(&.link_bond))
+    if other = prev_res || next_res
       if prev_res && next_res && prev_res.kind == next_res.kind
         bonded = prev_res.bonded?(res, bond_t[0], bond_t[1].element) &&
                  res.bonded?(next_res, bond_t[0].element, bond_t[1])
