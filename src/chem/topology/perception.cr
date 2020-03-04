@@ -90,12 +90,10 @@ module Chem::Topology::Perception
   def renumber_by_connectivity(structure : Structure) : Nil
     structure.each_chain do |chain|
       next unless chain.n_residues > 1
-      next unless link_bond = chain.each_residue.compact_map do |residue|
-                    Templates[residue.name]?.try &.link_bond
-                  end.first?
+      next unless bond_t = link_bond(chain)
 
       res_map = chain.each_residue.to_h do |residue|
-        {guess_previous_residue(residue, link_bond), residue}
+        {guess_previous_residue(residue, bond_t), residue}
       end
       res_map[nil] = chain.residues.first unless res_map.has_key? nil
 
@@ -234,5 +232,12 @@ module Chem::Topology::Perception
       matches << MatchData.new("UNK", :other, atom_map)
     end
     matches
+  end
+
+  private def link_bond(residues : ResidueCollection) : BondType?
+    residues.each_residue do |residue|
+      bond_t = Templates[residue.name]?.try &.link_bond
+      return bond_t if bond_t
+    end
   end
 end
