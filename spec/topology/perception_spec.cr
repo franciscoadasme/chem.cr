@@ -1,49 +1,6 @@
 require "../spec_helper"
 
 describe Topology::Perception do
-    it "guesses bonds of unknown residues" do
-      structure = load_file "residue_kind_unknown_covalent_ligand.pdb", topology: :templates
-      structure.dig('A', 148, "C20").bonded?(structure.dig('A', 147, "SG")).should be_true
-      structure.dig('A', 148, "C20").bonded?(structure.dig('A', 148, "N21")).should be_true
-      structure.dig('A', 148, "S2").bonded?(structure.dig('A', 148, "O23")).should be_true
-    end
-
-    it "guesses kind of unknown residue when previous is known" do
-      st = load_file "residue_kind_unknown_previous.pdb", topology: :templates
-      st.residues[1].protein?.should be_true
-    end
-
-    it "guesses kind of unknown residue when next is known" do
-      st = load_file "residue_kind_unknown_next.pdb", topology: :templates
-      st.residues[0].protein?.should be_true
-    end
-
-    it "guesses kind of unknown residue when its flanked by known residues" do
-      st = load_file "residue_kind_unknown_flanked.pdb", topology: :templates
-      st.residues[1].protein?.should be_true
-    end
-
-    it "does not guess kind of unknown residue" do
-      st = load_file "residue_kind_unknown_single.pdb", topology: :templates
-      st.residues[0].other?.should be_true
-    end
-
-    it "does not guess kind of unknown residue when its not connected to others" do
-      st = load_file "residue_kind_unknown_next_gap.pdb", topology: :templates
-      st.residues.first.other?.should be_true
-    end
-
-    it "does not guess kind of unknown residue when it's not bonded by link bond" do
-      structure = load_file "residue_kind_unknown_covalent_ligand.pdb", topology: :templates
-      structure.residues.map(&.kind.to_s).should eq %w(Protein Protein Protein Other)
-    end
-
-    it "guess kind of unknown residue with non-standard atom names" do
-      st = load_file "residue_unknown_non_standard_names.pdb", topology: :templates
-      st.residues.all?(&.protein?).should be_true
-    end
-  end
-
   describe "#guess_bonds" do
     it "guesses bonds from geometry" do
       atoms = load_file("AlaIle--unwrapped.poscar", topology: :bonds).atoms
@@ -246,6 +203,52 @@ describe Topology::Perception do
       structure.dig('B', 7, "OXT").bonded_atoms.map(&.name).should eq %w(C)
       structure.dig('B', 7, "OXT").bonds.map(&.order).sort!.should eq [1]
       structure.dig('B', 7, "OXT").formal_charge.should eq -1
+    end
+  end
+
+  describe "#guess_topology" do
+    context "given a molecule with topology" do
+      it "guesses bonds of unknown residues" do
+        structure = load_file "residue_kind_unknown_covalent_ligand.pdb", topology: :templates
+        structure.dig('A', 148, "C20").bonded?(structure.dig('A', 147, "SG")).should be_true
+        structure.dig('A', 148, "C20").bonded?(structure.dig('A', 148, "N21")).should be_true
+        structure.dig('A', 148, "S2").bonded?(structure.dig('A', 148, "O23")).should be_true
+      end
+
+      it "guesses kind of unknown residue when previous is known" do
+        st = load_file "residue_kind_unknown_previous.pdb", topology: :templates
+        st.residues[1].protein?.should be_true
+      end
+
+      it "guesses kind of unknown residue when next is known" do
+        st = load_file "residue_kind_unknown_next.pdb", topology: :templates
+        st.residues[0].protein?.should be_true
+      end
+
+      it "guesses kind of unknown residue when its flanked by known residues" do
+        st = load_file "residue_kind_unknown_flanked.pdb", topology: :templates
+        st.residues[1].protein?.should be_true
+      end
+
+      it "does not guess kind of unknown residue" do
+        st = load_file "residue_kind_unknown_single.pdb", topology: :templates
+        st.residues[0].other?.should be_true
+      end
+
+      it "does not guess kind of unknown residue when its not connected to others" do
+        st = load_file "residue_kind_unknown_next_gap.pdb", topology: :templates
+        st.residues.first.other?.should be_true
+      end
+
+      it "does not guess kind of unknown residue when it's not bonded by link bond" do
+        structure = load_file "residue_kind_unknown_covalent_ligand.pdb", topology: :templates
+        structure.residues.map(&.kind.to_s).should eq %w(Protein Protein Protein Other)
+      end
+
+      it "guess kind of unknown residue with non-standard atom names" do
+        st = load_file "residue_unknown_non_standard_names.pdb", topology: :templates
+        st.residues.all?(&.protein?).should be_true
+      end
     end
   end
 
