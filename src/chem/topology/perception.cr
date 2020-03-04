@@ -205,22 +205,9 @@ module Chem::Topology::Perception
   end
 
   private def guess_residue_type(res : Residue, bond_t : BondType) : Residue::Kind
-    kind = Residue::Kind::Other
-    prev_res, next_res = res.previous, res.next
-
-    if other = prev_res || next_res
-      if prev_res && next_res && prev_res.kind == next_res.kind
-        bonded = prev_res.bonded?(res, bond_t[0], bond_t[1].element) &&
-                 res.bonded?(next_res, bond_t[0].element, bond_t[1])
-        kind = other.kind if bonded
-      elsif prev_res
-        kind = prev_res.kind if prev_res.bonded?(res, bond_t[0], bond_t[1].element)
-      elsif next_res
-        kind = next_res.kind if res.bonded?(next_res, bond_t[0].element, bond_t[1])
-      end
-    end
-
-    kind
+    bonded_residues = res.bonded_residues bond_t, forward_only: false, strict: false
+    types = bonded_residues.map(&.kind).uniq!.reject!(&.other?)
+    types.size == 1 ? types[0] : Residue::Kind::Other
   end
 
   private def guess_unmatched(atoms : Array(Atom)) : Array(MatchData)
