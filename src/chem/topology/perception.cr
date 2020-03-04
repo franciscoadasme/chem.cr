@@ -76,8 +76,11 @@ module Chem::Topology::Perception
         bonded_atoms = unknown_atoms.flat_map &.each_bonded_atom
         guess_formal_charges AtomView.new(unknown_atoms.to_a.concat(bonded_atoms).uniq)
       end
-      structure.each_residue do |residue|
-        residue.kind = guess_residue_type residue unless Templates[residue.name]?
+
+      if bond_t = link_bond(structure)
+        structure.each_residue do |residue|
+          residue.kind = guess_residue_type residue, bond_t unless Templates[residue.name]?
+        end
       end
     else
       guess_bonds structure
@@ -90,12 +93,10 @@ module Chem::Topology::Perception
   def renumber_by_connectivity(structure : Structure) : Nil
     structure.each_chain do |chain|
       next unless chain.n_residues > 1
-      next unless link_bond = chain.each_residue.compact_map do |residue|
-                    Templates[residue.name]?.try &.link_bond
-                  end.first?
+      next unless bond_t = link_bond(chain)
 
       res_map = chain.each_residue.to_h do |residue|
-        {guess_previous_residue(residue, link_bond), residue}
+        {guess_previous_residue(residue, bond_t), residue}
       end
       res_map[nil] = chain.residues.first unless res_map.has_key? nil
 
@@ -203,21 +204,10 @@ module Chem::Topology::Perception
     prev_res
   end
 
-  private def guess_residue_type(res : Residue) : Residue::Kind
-    kind = Residue::Kind::Other
-    prev_res, next_res = res.previous, res.next
-
-    if (other = prev_res || next_res) && (bond_t = Templates[other.name]?.try(&.link_bond))
-      if prev_res && next_res && prev_res.kind == next_res.kind
-        kind = other.kind if prev_res.bonded?(res, bond_t) && res.bonded?(next_res, bond_t)
-      elsif prev_res
-        kind = prev_res.kind if prev_res.bonded?(res, bond_t)
-      elsif next_res
-        kind = next_res.kind if res.bonded?(next_res, bond_t)
-      end
-    end
-
-    kind
+  private def guess_residue_type(res : Residue, bond_t : BondType) : Residue::Kind
+    bonded_residues = res.bonded_residues bond_t, forward_only: false, strict: false
+    types = bonded_residues.map(&.kind).uniq!.reject!(&.other?)
+    types.size == 1 ? types[0] : Residue::Kind::Other
   end
 
   private def guess_unmatched(atoms : Array(Atom)) : Array(MatchData)
@@ -232,5 +222,12 @@ module Chem::Topology::Perception
       matches << MatchData.new("UNK", :other, atom_map)
     end
     matches
+  end
+
+  private def link_bond(residues : ResidueCollection) : BondType?
+    residues.each_residue do |residue|
+      bond_t = Templates[residue.name]?.try &.link_bond
+      return bond_t if bond_t
+    end
   end
 end

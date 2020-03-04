@@ -92,6 +92,11 @@ describe Topology::Perception do
       structure = load_file "residue_kind_unknown_covalent_ligand.pdb", topology: :templates
       structure.residues.map(&.kind.to_s).should eq %w(Protein Protein Protein Other)
     end
+
+    it "guess kind of unknown residue with non-standard atom names" do
+      st = load_file "residue_unknown_non_standard_names.pdb", topology: :templates
+      st.residues.all?(&.protein?).should be_true
+    end
   end
 
   describe "#guess_bonds" do
