@@ -462,7 +462,7 @@ module Chem
     end
 
     def polymer? : Bool
-      protein? || dna? || !Topology::Templates[name]?.try(&.link_bond).nil?
+      !!(protein? || dna? || type.try(&.monomer?))
     end
 
     def ramachandran_angles : Tuple(Float64, Float64)
@@ -481,6 +481,13 @@ module Chem
       (angle = omega?) ? angle.abs > 150 : false
     end
 
+    # Returns associated residue type if registered, otherwise nil.
+    #
+    # The type of a residue is fetched by its name.
+    def type : Topology::ResidueType?
+      Topology::Templates[@name]?
+    end
+
     {% for member in Kind.constants %}
       def {{member.underscore.id}}? : Bool
         @kind == Kind::{{member}}
@@ -488,7 +495,7 @@ module Chem
     {% end %}
 
     private def assign_kind_from_templates : Nil
-      @kind = Topology::Templates[@name]?.try(&.kind) || Residue::Kind::Other
+      @kind = type.try(&.kind) || Kind::Other
     end
 
     # Copies `self` into *chain*

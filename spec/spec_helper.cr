@@ -147,13 +147,11 @@ def load_file(path : String, topology level : TopologyLevel? = nil) : Structure
   path = File.join "spec", "data", path
   structure = Chem::Structure.read path, guess_topology: level.nil?
   if level
-    Topology::Perception.guess_topology structure, use_templates: true if level.templates?
-    if level > TopologyLevel::Templates
-      Topology::Perception.guess_bonds structure
-      Topology::Perception.guess_formal_charges structure if structure.has_hydrogens?
-    end
-    Topology::Perception.guess_residues structure if level > TopologyLevel::Bonds
-    Topology::Perception.renumber_by_connectivity structure if level > TopologyLevel::Guess
+    perception = Topology::Perception.new structure
+    perception.guess_topology if level.templates?
+    perception.guess_bonds if level > TopologyLevel::Templates
+    perception.guess_residues if level > TopologyLevel::Bonds
+    structure.renumber_by_connectivity if level > TopologyLevel::Guess
   end
   structure
 end

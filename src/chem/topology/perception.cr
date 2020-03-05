@@ -1,43 +1,13 @@
 require "./templates/all"
 
-module Chem::Topology::Perception
-  extend self
-
+class Chem::Topology::Perception
   MAX_CHAINS = 62 # chain id is alphanumeric: A-Z, a-z or 0-9
 
-  def assign_templates(structure : Structure) : Array(Atom)
-    unknown_atoms = [] of Atom
-    structure.each_residue do |residue|
-      if res_t = Templates[residue.name]?
-        assign_bonds residue, res_t
-        assign_formal_charges residue, res_t
-        residue.each_atom do |atom|
-          unknown_atoms << atom unless res_t[atom.name]?
-        end
-      else
-        unknown_atoms.concat residue.each_atom
-      end
-    end
-    unknown_atoms
+  def initialize(@structure : Structure)
   end
 
-  def guess_bonds(structure : Structure, atoms : AtomCollection? = nil) : Nil
-    ele = structure.each_atom.max_by(&.covalent_radius).element
-    max_covalent_distance = Math.sqrt PeriodicTable.covalent_cutoff(ele, ele)
-    kdtree = Spatial::KDTree.new structure, radius: max_covalent_distance
-    atoms ||= structure
-    guess_connectivity kdtree, atoms, ele
-    guess_bond_orders atoms if structure.has_hydrogens?
-  end
-
-  def guess_formal_charges(atoms : AtomCollection) : Nil
-    atoms.each_atom do |atom|
-      atom.formal_charge = if atom.element.ionic?
-                             atom.max_valency
-                           else
-                             atom.bonds.sum(&.order) - atom.nominal_valency
-                           end
-    end
+  def guess_bonds : Nil
+    guess_bonds @structure
   end
 
   # Guesses residues from existing bonds.
@@ -49,9 +19,9 @@ module Chem::Topology::Perception
   # fragments and residues grouped by kind are assigned to their own unique chain as
   # long as there are less residue groups than the chain limit (62), otherwise all
   # residues are assigned to the same chain.
-  def guess_residues(structure : Structure) : Nil
-    matches_per_fragment = detect_residues structure
-    builder = Structure::Builder.new structure.clear
+  def guess_residues : Nil
+    matches_per_fragment = detect_residues @structure
+    builder = Structure::Builder.new @structure.clear
     matches_per_fragment.each do |matches|
       builder.chain do
         matches.each do |m|
@@ -66,91 +36,41 @@ module Chem::Topology::Perception
     end
   end
 
-  def guess_topology(structure : Structure, use_templates : Bool? = nil) : Nil
-    return unless structure.n_atoms > 0
-    use_templates ||= structure.n_residues > 1 || structure.each_residue.first.name != "UNK"
-    if use_templates
-      unknown_atoms = AtomView.new assign_templates(structure)
-      guess_bonds structure, unknown_atoms
-      if structure.has_hydrogens?
-        bonded_atoms = unknown_atoms.flat_map &.each_bonded_atom
-        guess_formal_charges AtomView.new(unknown_atoms.to_a.concat(bonded_atoms).uniq)
+  def guess_topology : Nil
+    return unless @structure.n_atoms > 0
+    if has_topology?
+      patcher = Patcher.new @structure
+      patcher.match_and_patch
+      unmatched_atoms = AtomView.new patcher.unmatched_atoms
+      build_connectivity unmatched_atoms
+      if has_hydrogens?
+        assign_bond_orders unmatched_atoms
+        bonded_atoms = unmatched_atoms.flat_map &.each_bonded_atom
+        assign_formal_charges AtomView.new(unmatched_atoms.to_a.concat(bonded_atoms).uniq)
       end
-
-      if bond_t = link_bond(structure)
-        structure.each_residue do |residue|
-          residue.kind = guess_residue_type residue, bond_t unless Templates[residue.name]?
-        end
-      end
+      assign_residue_types
     else
-      guess_bonds structure
-      guess_formal_charges structure if structure.has_hydrogens?
-      guess_residues structure
-      renumber_by_connectivity structure
+      guess_bonds
+      guess_residues
+      @structure.renumber_by_connectivity
     end
   end
 
-  def renumber_by_connectivity(structure : Structure) : Nil
-    structure.each_chain do |chain|
-      next unless chain.n_residues > 1
-      next unless bond_t = link_bond(chain)
-
-      res_map = chain.each_residue.to_h do |residue|
-        {guess_previous_residue(residue, bond_t), residue}
-      end
-      res_map[nil] = chain.residues.first unless res_map.has_key? nil
-
-      prev_res = nil
-      chain.n_residues.times do |i|
-        next_res = res_map[prev_res]
-        next_res.number = i + 1
-        prev_res = next_res
-      end
-      chain.reset_cache
-    end
+  private getter? has_hydrogens : Bool do
+    @structure.has_hydrogens?
   end
 
-  private def assign_bond(residue : Residue, other : Residue, bond_t : BondType) : Nil
-    if (i = residue[bond_t[0]]?) && (j = other[bond_t[1]]?) && !i.bonded?(j)
-      i.bonds.add j, bond_t.order if i.within_covalent_distance?(j)
-    end
+  private getter largest_atom : Atom do
+    @structure.each_atom.max_by &.covalent_radius
   end
 
-  private def assign_bonds(residue : Residue, res_t : ResidueType) : Nil
-    res_t.bonds.each { |bond_t| assign_bond residue, residue, bond_t }
-    if bond_t = res_t.link_bond
-      if prev_res = residue.previous
-        assign_bond prev_res, residue, bond_t
-      end
-      if next_res = residue.next
-        assign_bond residue, next_res, bond_t
-      end
-    end
+  private getter kdtree : Spatial::KDTree do
+    atom = largest_atom
+    max_covalent_distance = Math.sqrt PeriodicTable.covalent_cutoff(atom, atom)
+    Spatial::KDTree.new @structure, radius: max_covalent_distance
   end
 
-  private def assign_formal_charges(residue : Residue, res_t : ResidueType) : Nil
-    res_t.each_atom_type do |atom_t|
-      next unless atom = residue[atom_t.name]?
-      atom.formal_charge = atom_t.formal_charge
-    end
-  end
-
-  private def detect_residues(atoms : AtomCollection) : Array(Array(MatchData))
-    fragments = [] of Array(MatchData)
-    atoms.each_fragment do |frag|
-      detector = Templates::Detector.new frag
-      matches = [] of MatchData
-      matches.concat detector.matches
-      matches.concat guess_unmatched(detector.unmatched_atoms)
-      fragments << matches
-    end
-
-    polymers, other = fragments.partition &.size.>(1)
-    other = other.flatten.sort_by!(&.reskind).group_by(&.reskind).values
-    polymers.size + other.size <= MAX_CHAINS ? polymers + other : [fragments.flatten]
-  end
-
-  private def guess_bond_orders(atoms : AtomCollection) : Nil
+  private def assign_bond_orders(atoms : AtomCollection) : Nil
     atoms.each_atom do |atom|
       next if atom.element.ionic?
       missing_bonds = atom.missing_valency
@@ -165,13 +85,34 @@ module Chem::Topology::Perception
     end
   end
 
-  private def guess_connectivity(kdtree : Spatial::KDTree,
-                                 atoms : AtomCollection,
-                                 largest_ele : Element) : Nil
+  private def assign_formal_charges(atoms : AtomCollection) : Nil
+    atoms.each_atom do |atom|
+      atom.formal_charge = if atom.element.ionic?
+                             atom.max_valency
+                           else
+                             atom.bonds.sum(&.order) - atom.nominal_valency
+                           end
+    end
+  end
+
+  private def assign_residue_types : Nil
+    return unless bond_t = @structure.link_bond
+    @structure.each_residue do |residue|
+      next if residue.type
+      types = residue
+        .bonded_residues(bond_t, forward_only: false, strict: false)
+        .map(&.kind)
+        .uniq!
+        .reject!(&.other?)
+      residue.kind = types.size == 1 ? types[0] : Residue::Kind::Other
+    end
+  end
+
+  private def build_connectivity(atoms : AtomCollection) : Nil
     atoms.each_atom do |atom|
       next if atom.element.ionic?
-      covalent_distance = Math.sqrt PeriodicTable.covalent_cutoff(atom.element, largest_ele)
-      kdtree.each_neighbor(atom, within: covalent_distance) do |other, d|
+      cutoff = Math.sqrt PeriodicTable.covalent_cutoff(atom, largest_atom)
+      kdtree.each_neighbor(atom, within: cutoff) do |other, d|
         next if other.element.ionic? ||
                 atom.bonded?(other) ||
                 (other.element.hydrogen? && other.bonds.size > 0) ||
@@ -185,49 +126,42 @@ module Chem::Topology::Perception
     end
   end
 
-  private def guess_previous_residue(residue : Residue, link_bond : BondType) : Residue?
-    prev_res = nil
-    if atom = residue[link_bond[1]]?
-      prev_res = atom.each_bonded_atom.find(&.name.==(link_bond[0].name)).try &.residue
-      prev_res ||= atom.each_bonded_atom.find do |atom|
-        atom.element == link_bond[0].element && atom.residue != residue
-      end.try &.residue
-    else
-      residue.each_atom do |atom|
-        next unless atom.element == link_bond[1].element
-        prev_res = atom.each_bonded_atom.find do |atom|
-          atom.element == link_bond[0].element && atom.residue != residue
-        end.try &.residue
-        break if prev_res
+  private def detect_residues(atoms : AtomCollection) : Array(Array(MatchData))
+    fragments = [] of Array(MatchData)
+    atoms.each_fragment do |frag|
+      detector = Templates::Detector.new frag
+      matches = [] of MatchData
+      matches.concat detector.matches
+      AtomView.new(detector.unmatched_atoms).each_fragment do |frag|
+        matches << make_match(frag)
       end
+      fragments << matches
     end
-    prev_res
+
+    polymers, other = fragments.partition &.size.>(1)
+    other = other.flatten.sort_by!(&.reskind).group_by(&.reskind).values
+    polymers.size + other.size <= MAX_CHAINS ? polymers + other : [fragments.flatten]
   end
 
-  private def guess_residue_type(res : Residue, bond_t : BondType) : Residue::Kind
-    bonded_residues = res.bonded_residues bond_t, forward_only: false, strict: false
-    types = bonded_residues.map(&.kind).uniq!.reject!(&.other?)
-    types.size == 1 ? types[0] : Residue::Kind::Other
+  private def guess_bonds(atoms : AtomCollection) : Nil
+    build_connectivity atoms
+    if has_hydrogens?
+      assign_bond_orders atoms
+      assign_formal_charges atoms
+    end
   end
 
-  private def guess_unmatched(atoms : Array(Atom)) : Array(MatchData)
-    matches = [] of MatchData
-    AtomView.new(atoms).each_fragment do |frag|
-      atom_map = Hash(String, Atom).new initial_capacity: frag.size
-      ele_index = Hash(Element, Int32).new default_value: 0
-      frag.each do |atom|
-        name = "#{atom.element.symbol}#{ele_index[atom.element] += 1}"
-        atom_map[name] = atom
-      end
-      matches << MatchData.new("UNK", :other, atom_map)
-    end
-    matches
+  private def has_topology? : Bool
+    @structure.n_residues > 1 || @structure.each_residue.first.name != "UNK"
   end
 
-  private def link_bond(residues : ResidueCollection) : BondType?
-    residues.each_residue do |residue|
-      bond_t = Templates[residue.name]?.try &.link_bond
-      return bond_t if bond_t
+  private def make_match(atoms : Enumerable(Atom)) : MatchData
+    atom_map = Hash(String, Atom).new initial_capacity: atoms.size
+    ele_index = Hash(Element, Int32).new default_value: 0
+    atoms.each do |atom|
+      name = "#{atom.element.symbol}#{ele_index[atom.element] += 1}"
+      atom_map[name] = atom
     end
+    MatchData.new("UNK", :other, atom_map)
   end
 end

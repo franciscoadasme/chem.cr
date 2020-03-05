@@ -51,7 +51,7 @@ module Chem
 
     def build : Structure
       transform_aromatic_bonds
-      Topology::Perception.guess_topology @structure if @guess_topology
+      Topology::Perception.new(@structure).guess_topology if @guess_topology
       @structure
     end
 
