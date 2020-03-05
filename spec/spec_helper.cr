@@ -149,10 +149,7 @@ def load_file(path : String, topology level : TopologyLevel? = nil) : Structure
   if level
     perception = Topology::Perception.new structure
     perception.guess_topology if level.templates?
-    if level > TopologyLevel::Templates
-      perception.guess_bonds
-      perception.guess_formal_charges(structure) if structure.has_hydrogens?
-    end
+    perception.guess_bonds if level > TopologyLevel::Templates
     perception.guess_residues if level > TopologyLevel::Bonds
     structure.renumber_by_connectivity if level > TopologyLevel::Guess
   end
