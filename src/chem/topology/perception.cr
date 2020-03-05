@@ -48,12 +48,7 @@ class Chem::Topology::Perception
         bonded_atoms = unmatched_atoms.flat_map &.each_bonded_atom
         assign_formal_charges AtomView.new(unmatched_atoms.to_a.concat(bonded_atoms).uniq)
       end
-
-      if bond_t = @structure.link_bond
-        @structure.each_residue do |residue|
-          residue.kind = assign_residue_type residue, bond_t unless residue.type
-        end
-      end
+      assign_residue_types
     else
       guess_bonds
       guess_residues
@@ -100,10 +95,17 @@ class Chem::Topology::Perception
     end
   end
 
-  private def assign_residue_type(res : Residue, bond_t : BondType) : Residue::Kind
-    bonded_residues = res.bonded_residues bond_t, forward_only: false, strict: false
-    types = bonded_residues.map(&.kind).uniq!.reject!(&.other?)
-    types.size == 1 ? types[0] : Residue::Kind::Other
+  private def assign_residue_types : Nil
+    return unless bond_t = @structure.link_bond
+    @structure.each_residue do |residue|
+      next if residue.type
+      types = residue
+        .bonded_residues(bond_t, forward_only: false, strict: false)
+        .map(&.kind)
+        .uniq!
+        .reject!(&.other?)
+      residue.kind = types.size == 1 ? types[0] : Residue::Kind::Other
+    end
   end
 
   private def build_connectivity(atoms : AtomCollection) : Nil
