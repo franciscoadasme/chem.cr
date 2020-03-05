@@ -6,10 +6,6 @@ class Chem::Topology::Perception
   def initialize(@structure : Structure)
   end
 
-  def assign_templates : Nil
-    Patcher.new(@structure).match_and_patch
-  end
-
   def guess_bonds : Nil
     guess_connectivity @structure
     guess_bond_orders @structure if has_hydrogens?
