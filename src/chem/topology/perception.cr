@@ -132,7 +132,9 @@ class Chem::Topology::Perception
       detector = Templates::Detector.new frag
       matches = [] of MatchData
       matches.concat detector.matches
-      matches.concat guess_unmatched(detector.unmatched_atoms)
+      AtomView.new(detector.unmatched_atoms).each_fragment do |frag|
+        matches << make_match(frag)
+      end
       fragments << matches
     end
 
@@ -149,21 +151,17 @@ class Chem::Topology::Perception
     end
   end
 
-  private def guess_unmatched(atoms : Array(Atom)) : Array(MatchData)
-    matches = [] of MatchData
-    AtomView.new(atoms).each_fragment do |frag|
-      atom_map = Hash(String, Atom).new initial_capacity: frag.size
-      ele_index = Hash(Element, Int32).new default_value: 0
-      frag.each do |atom|
-        name = "#{atom.element.symbol}#{ele_index[atom.element] += 1}"
-        atom_map[name] = atom
-      end
-      matches << MatchData.new("UNK", :other, atom_map)
-    end
-    matches
-  end
-
   private def has_topology? : Bool
     @structure.n_residues > 1 || @structure.each_residue.first.name != "UNK"
+  end
+
+  private def make_match(atoms : Enumerable(Atom)) : MatchData
+    atom_map = Hash(String, Atom).new initial_capacity: atoms.size
+    ele_index = Hash(Element, Int32).new default_value: 0
+    atoms.each do |atom|
+      name = "#{atom.element.symbol}#{ele_index[atom.element] += 1}"
+      atom_map[name] = atom
+    end
+    MatchData.new("UNK", :other, atom_map)
   end
 end
