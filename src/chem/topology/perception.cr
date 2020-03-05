@@ -64,7 +64,7 @@ class Chem::Topology::Perception
         guess_formal_charges AtomView.new(unmatched_atoms.to_a.concat(bonded_atoms).uniq)
       end
 
-      if bond_t = link_bond(@structure)
+      if bond_t = @structure.link_bond
         @structure.each_residue do |residue|
           residue.kind = guess_residue_type residue, bond_t unless residue.type
         end
@@ -80,7 +80,7 @@ class Chem::Topology::Perception
   def renumber_by_connectivity : Nil
     @structure.each_chain do |chain|
       next unless chain.n_residues > 1
-      next unless bond_t = link_bond(chain)
+      next unless bond_t = chain.link_bond
 
       res_map = chain.each_residue.to_h do |residue|
         {guess_previous_residue(residue, bond_t), residue}
@@ -196,10 +196,6 @@ class Chem::Topology::Perception
       matches << MatchData.new("UNK", :other, atom_map)
     end
     matches
-  end
-
-  private def link_bond(residues : ResidueCollection) : BondType?
-    residues.each_residue.compact_map(&.type.try(&.link_bond)).first?
   end
 
   private def has_topology? : Bool
