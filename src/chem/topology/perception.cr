@@ -73,27 +73,7 @@ class Chem::Topology::Perception
       guess_bonds
       guess_formal_charges @structure if has_hydrogens?
       guess_residues
-      renumber_by_connectivity
-    end
-  end
-
-  def renumber_by_connectivity : Nil
-    @structure.each_chain do |chain|
-      next unless chain.n_residues > 1
-      next unless bond_t = chain.link_bond
-
-      res_map = chain.each_residue.to_h do |residue|
-        {guess_previous_residue(residue, bond_t), residue}
-      end
-      res_map[nil] = chain.residues.first unless res_map.has_key? nil
-
-      prev_res = nil
-      chain.n_residues.times do |i|
-        next_res = res_map[prev_res]
-        next_res.number = i + 1
-        prev_res = next_res
-      end
-      chain.reset_cache
+      @structure.renumber_by_connectivity
     end
   end
 
@@ -157,25 +137,6 @@ class Chem::Topology::Perception
         atom.bonds.add other
       end
     end
-  end
-
-  private def guess_previous_residue(residue : Residue, link_bond : BondType) : Residue?
-    prev_res = nil
-    if atom = residue[link_bond[1]]?
-      prev_res = atom.each_bonded_atom.find(&.name.==(link_bond[0].name)).try &.residue
-      prev_res ||= atom.each_bonded_atom.find do |atom|
-        atom.element == link_bond[0].element && atom.residue != residue
-      end.try &.residue
-    else
-      residue.each_atom do |atom|
-        next unless atom.element == link_bond[1].element
-        prev_res = atom.each_bonded_atom.find do |atom|
-          atom.element == link_bond[0].element && atom.residue != residue
-        end.try &.residue
-        break if prev_res
-      end
-    end
-    prev_res
   end
 
   private def guess_residue_type(res : Residue, bond_t : BondType) : Residue::Kind
