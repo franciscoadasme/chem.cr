@@ -114,6 +114,7 @@ describe Topology::Perception do
       structure.chains.map(&.id).should eq ['A']
       structure.residues.map(&.name).should eq %w(ALA ILE)
       structure.residues.map(&.number).should eq [1, 2]
+      structure.residues.all?(&.protein?).should be_true
       structure.residues[0].atoms.map(&.name).should eq %w(
         N CA HA C O CB HB1 HB2 HB3 H1 H2)
       structure.residues[1].atoms.map(&.name).should eq %w(
@@ -126,6 +127,7 @@ describe Topology::Perception do
       structure.each_chain do |chain|
         chain.residues.map(&.name).should eq %w(PHE GLY ALA ILE LEU SER SER)
         chain.residues.map(&.number).should eq (1..7).to_a
+        chain.residues.all?(&.protein?).should be_true
         chain.residues[0].atoms.map(&.name).should eq %w(
           N CA HA C O CB HB1 HB2 CG CD1 HD1 CE1 HE1 CZ HZ CE2 HE2 CD2 HD2 H1 H2)
         chain.residues[5].atoms.map(&.name).should eq %w(
@@ -138,23 +140,28 @@ describe Topology::Perception do
     it "guesses the topology of two peptides off-center (issue #3)" do
       chains = load_file("5e61--off-center.poscar", topology: :guess).chains
       chains.map(&.id).should eq ['A', 'B']
-      chains[0].residues.map(&.name).sort!.should eq %w(ALA GLY ILE LEU PHE SER SER)
-      chains[0].residues.map(&.number).should eq (1..7).to_a
-      chains[1].residues.map(&.name).sort!.should eq %w(ALA GLY ILE LEU PHE SER SER)
-      chains[1].residues.map(&.number).should eq (1..7).to_a
+      chains.each do |chain|
+        chain.residues.map(&.name).sort!.should eq %w(ALA GLY ILE LEU PHE SER SER)
+        chain.residues.map(&.number).should eq (1..7).to_a
+        chain.residues.all?(&.protein?).should be_true
+      end
     end
 
     it "guesses the topology of a broken peptide with waters" do
-      chains = load_file("5e5v--unwrapped.poscar", topology: :guess).chains
+      chains = load_file("5e5v--unwrapped.poscar").chains
       chains.map(&.id).should eq ['A', 'B', 'C', 'D']
       chains[0].residues.map(&.name).sort!.should eq %w(ALA ASN GLY ILE LEU PHE SER)
       chains[0].residues.map(&.number).should eq (1..7).to_a
+      chains[0].residues.all?(&.protein?).should be_true
       chains[1].residues.map(&.name).sort!.should eq %w(ALA GLY ILE LEU PHE SER UNK)
       chains[1].residues.map(&.number).should eq (1..7).to_a
+      chains[1].residues.all?(&.protein?).should be_true
       chains[2].residues.map(&.name).should eq %w(HOH HOH HOH HOH HOH HOH HOH)
       chains[2].residues.map(&.number).should eq (1..7).to_a
+      chains[2].residues.all?(&.solvent?).should be_true
       chains[3].residues.map(&.name).should eq %w(UNK)
       chains[3].residues.map(&.number).should eq [1]
+      chains[3].residues.all?(&.other?).should be_true
     end
 
     it "guesses the topology of a periodic peptide" do
@@ -162,6 +169,7 @@ describe Topology::Perception do
       chains.map(&.id).should eq ['A']
       chains[0].residues.map(&.name).should eq ["GLY"] * 13
       chains[0].residues.map(&.number).should eq (1..13).to_a
+      chains[0].residues.all?(&.protein?).should be_true
     end
 
     it "guesses the topology of many fragments (beyond max chain id)" do
@@ -172,14 +180,16 @@ describe Topology::Perception do
       structure.chains.map(&.id).should eq ['A']
       structure.residues.map(&.name).should eq ["PHE"] * 144
       structure.residues.map(&.number).should eq (1..144).to_a
+      structure.residues.all?(&.protein?).should be_true
     end
 
     it "detects multiple residues for unmatched atoms (#16)" do
-      structure = load_file "peptide_unknown_residues.xyz", topology: :guess
+      structure = load_file "peptide_unknown_residues.xyz"
       structure.n_residues.should eq 9
-      structure.residues.map(&.name).should eq %w(ALA LEU VAL THR LEU SER ALA UNK UNK)
-      structure.residues[7].n_atoms.should eq 14
-      structure.residues[8].n_atoms.should eq 8
+      structure.residues.map(&.name).should eq %w(ALA LEU UNK VAL THR LEU SER UNK ALA)
+      structure.residues[2].n_atoms.should eq 14
+      structure.residues[7].n_atoms.should eq 8
+      structure.residues.all?(&.protein?).should be_true
     end
 
     it "renames unmatched atoms" do

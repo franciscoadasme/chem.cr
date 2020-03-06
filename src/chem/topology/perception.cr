@@ -48,12 +48,12 @@ class Chem::Topology::Perception
         bonded_atoms = unmatched_atoms.flat_map &.each_bonded_atom
         assign_formal_charges AtomView.new(unmatched_atoms.to_a.concat(bonded_atoms).uniq)
       end
-      assign_residue_types
     else
       guess_bonds
       guess_residues
       @structure.renumber_by_connectivity
     end
+    assign_residue_types
   end
 
   private getter? has_hydrogens : Bool do
