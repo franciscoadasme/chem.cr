@@ -39,7 +39,7 @@ module Chem::Spatial
   end
 
   @[AlwaysInline]
-  def squared_distance(p1 : Vector, p2 : Vector) : Float64
-    (p1.x - p2.x)**2 + (p1.y - p2.y)**2 + (p1.z - p2.z)**2
+  def squared_distance(a : Vector, b : Vector) : Float64
+    (a.x - b.x)**2 + (a.y - b.y)**2 + (a.z - b.z)**2
   end
 end
