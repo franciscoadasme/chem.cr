@@ -64,5 +64,30 @@ describe Chem::Spatial do
       Chem::Spatial.squared_distance(v1, v2).should eq 17
       Chem::Spatial.squared_distance(v1.inv, v2).should eq 61
     end
+
+    context "given a orthogonal cell" do
+      it "returns minimum image convention's distance" do
+        l = Lattice.new S[10, 20, 30]
+        [
+          {V[1, 1, 1], V[5, 5, 5], 47.999999},
+          {V[1, 1, 1], V[9, 18, 27], 29.0},
+        ].each do |(a, b, expected)|
+          Chem::Spatial.squared_distance(a, b, l).should be_close expected, 1e-3
+        end
+      end
+    end
+
+    context "given a non-orthogonal cell" do
+      it "returns minimum image convention's distance" do
+        l = Lattice.new S[8.77, 9.5, 24.74], 88.22, 80, 70.34
+        [
+          {V[0.82, 1.29, 20.12], V[8.15, 1.41, 19.61], 2.3481},
+          {V[3.37, 3.04, 16.5], V[5.35, 4.07, 17.456], 5.895236},
+          {V[0.4, 1.12, 12.79], V[8.55, 1.99, 13.88], 2.3294},
+        ].each do |(a, b, expected)|
+          Chem::Spatial.squared_distance(a, b, l).should be_close expected, 1e-6
+        end
+      end
+    end
   end
 end

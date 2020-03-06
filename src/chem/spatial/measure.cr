@@ -42,4 +42,9 @@ module Chem::Spatial
   def squared_distance(a : Vector, b : Vector) : Float64
     (a.x - b.x)**2 + (a.y - b.y)**2 + (a.z - b.z)**2
   end
+
+  @[AlwaysInline]
+  def squared_distance(a : Vector, b : Vector, lattice : Lattice) : Float64
+    squared_distance a, b.wrap(lattice, around: a)
+  end
 end
