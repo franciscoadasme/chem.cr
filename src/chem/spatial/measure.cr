@@ -25,12 +25,8 @@ module Chem::Spatial
     dihedral p2 - p1, p3 - p2, p4 - p3
   end
 
-  def distance(a1 : Atom, a2 : Atom) : Float64
-    distance a1.coords, a2.coords
-  end
-
-  def distance(p1 : Vector, p2 : Vector) : Float64
-    Math.sqrt squared_distance(p1, p2)
+  def distance(*args, **options) : Float64
+    Math.sqrt squared_distance(*args, **options)
   end
 
   def distance(q1 : Quaternion, q2 : Quaternion) : Float64
@@ -38,8 +34,8 @@ module Chem::Spatial
     Math.acos 2 * q1.dot(q2)**2 - 1
   end
 
-  def squared_distance(a1 : Atom, a2 : Atom) : Float64
-    squared_distance a1.coords, a2.coords
+  def squared_distance(a1 : Atom, a2 : Atom, *args, **options) : Float64
+    squared_distance a1.coords, a2.coords, *args, **options
   end
 
   @[AlwaysInline]
