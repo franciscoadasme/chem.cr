@@ -87,6 +87,44 @@ describe Chem::Spatial do
       Chem::Spatial.dihedral(p3, p4, p5, p6).should be_close 59.96536627, 1e-8
       Chem::Spatial.dihedral(p4, p5, p6, p7).should be_close -179.99997738, 1e-8
     end
+
+    context "given an orthogonal cell" do
+      it "returns the dihedral angle using minimum-image convention" do
+        lattice = Lattice.new S[8.77, 9.5, 24.74], 88.22, 80, 70.34
+        [
+          {
+            V[12.305217, 5.828416, 13.900538],
+            V[11.346216, 5.428415, 12.976539],
+            V[10.297216, 4.611416, 13.357537],
+            V[10.218218, 4.169416, 14.671537],
+            -1.147971,
+          },
+          {
+            V[10.642056, 1.612213, 17.949539],
+            V[11.487057, 1.516212, 19.189539],
+            V[3.994056, 0.691212, 19.091537],
+            V[4.774056, 1.122212, 17.841537],
+            49.13,
+          },
+          {
+            V[10.998161, 5.544204, 5.704],
+            V[10.404161, 7.649203, 6.601],
+            V[8.769001, 1.017, 6.131],
+            V[9.765001, 1.086, 5.126],
+            14.647226,
+          },
+          {
+            V[10.013162, 6.172204, 2.062],
+            V[10.640162, 5.509203, 0.89],
+            V[6.923217, 5.407415, 24.324539],
+            V[7.546217, 4.534415, 23.237539],
+            176.497757,
+          },
+        ].each do |(a, b, c, d, expected)|
+          Chem::Spatial.dihedral(a, b, c, d, lattice).should be_close expected, 1e-2
+        end
+      end
+    end
   end
 
   describe ".squared_distance" do

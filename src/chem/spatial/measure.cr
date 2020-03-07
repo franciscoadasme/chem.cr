@@ -21,12 +21,19 @@ module Chem::Spatial
     ab.dot(c) < 0 ? -angle : angle
   end
 
-  def dihedral(a : Atom, b : Atom, c : Atom, d : Atom) : Float64
-    dihedral a.coords, b.coords, c.coords, d.coords
+  def dihedral(a : Atom, b : Atom, c : Atom, d : Atom, *args, **options) : Float64
+    dihedral a.coords, b.coords, c.coords, d.coords, *args, **options
   end
 
   def dihedral(a : Vector, b : Vector, c : Vector, d : Vector) : Float64
     dihedral b - a, c - b, d - c
+  end
+
+  def dihedral(a : Vector, b : Vector, c : Vector, d : Vector, lattice : Lattice) : Float64
+    a = a.wrap lattice, around: b
+    c = c.wrap lattice, around: b
+    d = d.wrap lattice, around: c
+    dihedral a, b, c, d
   end
 
   def distance(*args, **options) : Float64
