@@ -18,6 +18,13 @@ describe Chem::Spatial do
     it "returns 90 degrees when vectors are perpendicular to each other" do
       Chem::Spatial.angle(Vector[1, 0, 0], Vector[0, 1, 0]).should eq 90
     end
+
+    it "returns the angle between three vectors" do
+      a = V[9.792, 7.316, 11.31]
+      b = V[9.021, 7.918, 12.368]
+      c = V[8.58, 9.109, 12.362]
+      Chem::Spatial.angle(a, b, c).should be_close 125.038109, 1e-6
+    end
   end
 
   describe ".distance" do

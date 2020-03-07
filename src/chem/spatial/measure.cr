@@ -8,7 +8,7 @@ module Chem::Spatial
   end
 
   def angle(p1 : Vector, p2 : Vector, p3 : Vector) : Float64
-    angle p2 - p1, p3 - p2
+    angle p1 - p2, p3 - p2
   end
 
   def dihedral(v1 : Vector, v2 : Vector, v3 : Vector) : Float64
