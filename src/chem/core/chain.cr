@@ -15,10 +15,6 @@ module Chem
     end
 
     protected def <<(residue : Residue) : self
-      if prev_res = @residues.last?
-        residue.previous = prev_res
-        prev_res.next = residue
-      end
       @residues << residue
       @residue_table[{residue.number, residue.insertion_code}] = residue
       self
@@ -154,13 +150,9 @@ module Chem
     def reset_cache : Nil
       @residue_table.clear
       @residues.sort_by! { |residue| {residue.number, (residue.insertion_code || ' ')} }
-      @residues.each_with_index do |residue, i|
-        residue.previous = @residues[i - 1]?
-        residue.next = @residues[i + 1]?
+      @residues.each do |residue|
         @residue_table[{residue.number, residue.insertion_code}] = residue
       end
-      @residues.first?.try &.previous=(nil)
-      @residues.last?.try &.next=(nil)
     end
   end
 end

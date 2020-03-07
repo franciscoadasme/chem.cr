@@ -18,9 +18,7 @@ module Chem
     property insertion_code : Char?
     property kind : Kind = :other
     property name : String
-    property next : Residue?
     property number : Int32
-    property previous : Residue?
     property secondary_structure : Protein::SecondaryStructure = :none
 
     delegate :[], :[]?, to: @atom_table
@@ -407,8 +405,24 @@ module Chem
       str
     end
 
+    # Returns the following residue if exists, otherwise `nil`.
+    #
+    # It uses the link bond type of the associated residue type, if
+    # present, to search for the next residue. Thus, link bond
+    # determines the direction, e.g., C(i)-N(i+1). Be aware that atom
+    # types must match exactly to find a residue.
+    #
+    # Note that for branched polymers, where multiple residues can be
+    # connected to the same residue (branching point), it returns the
+    # first residue.
+    def next : Residue?
+      if bond_t = type.try(&.link_bond)
+        bonded_residues(bond_t).first?
+      end
+    end
+
     def omega : Float64
-      if (prev_res = previous) && bonded?(prev_res)
+      if prev_res = previous
         Spatial.dihedral prev_res["CA"], prev_res["C"], self["N"], self["CA"]
       else
         raise Error.new "#{self} is terminal"
@@ -416,17 +430,16 @@ module Chem
     end
 
     def omega? : Float64?
-      return nil unless prev_res = self.previous
-      return nil unless bonded? prev_res
-      return nil unless ca1 = prev_res["CA"]?
-      return nil unless c = prev_res["C"]?
-      return nil unless n = self["N"]?
-      return nil unless ca2 = self["CA"]?
-      Spatial.dihedral ca1, c, n, ca2
+      if (ca1 = previous.try(&.[]?("CA"))) &&
+         (c = previous.try(&.[]?("C"))) &&
+         (n = self["N"]?) &&
+         (ca2 = self["CA"]?)
+        Spatial.dihedral ca1, c, n, ca2
+      end
     end
 
     def phi : Float64
-      if (prev_res = previous) && bonded?(prev_res)
+      if prev_res = previous
         Spatial.dihedral prev_res["C"], self["N"], self["CA"], self["C"]
       else
         raise Error.new "#{self} is terminal"
@@ -434,17 +447,32 @@ module Chem
     end
 
     def phi? : Float64?
-      return nil unless prev_res = previous
-      return nil unless bonded? prev_res
-      return nil unless ca1 = prev_res["C"]?
-      return nil unless n = self["N"]?
-      return nil unless ca2 = self["CA"]?
-      return nil unless c = self["C"]?
-      Spatial.dihedral ca1, n, ca2, c
+      if (ca1 = previous.try(&.[]?("C"))) &&
+         (n = self["N"]?) &&
+         (ca2 = self["CA"]?) &&
+         (c = self["C"]?)
+        Spatial.dihedral ca1, n, ca2, c
+      end
+    end
+
+    # Returns the preceding residue if exists, otherwise `nil`.
+    #
+    # It uses the link bond type of the associated residue type, if
+    # present, to search for the next residue. Thus, link bond
+    # determines the direction, e.g., C(i-1)-N(i). Be aware that atom
+    # types must match exactly to find a residue.
+    #
+    # Note that for branched polymers, where multiple residues can be
+    # connected to the same residue (branching point), it returns the
+    # last residue.
+    def previous : Residue?
+      if bond_t = type.try(&.link_bond)
+        bonded_residues.select!(&.bonded?(self, bond_t)).last?
+      end
     end
 
     def psi : Float64
-      if (next_res = self.next) && bonded?(next_res)
+      if next_res = self.next
         Spatial.dihedral self["N"], self["CA"], self["C"], next_res["N"]
       else
         raise Error.new "#{self} is terminal"
@@ -452,13 +480,12 @@ module Chem
     end
 
     def psi? : Float64?
-      return nil unless next_res = self.next
-      return nil unless bonded? next_res
-      return nil unless n1 = self["N"]?
-      return nil unless ca = self["CA"]?
-      return nil unless c = self["C"]?
-      return nil unless n2 = next_res["N"]?
-      Spatial.dihedral n1, ca, c, n2
+      if (n1 = self["N"]?) &&
+         (ca = self["CA"]?) &&
+         (c = self["C"]?) &&
+         (n2 = self.next.try(&.[]?("N")))
+        Spatial.dihedral n1, ca, c, n2
+      end
     end
 
     def polymer? : Bool

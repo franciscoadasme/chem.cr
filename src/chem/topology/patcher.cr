@@ -6,12 +6,17 @@ module Chem::Topology
     end
 
     def match_and_patch : Nil
+      prev_res = nil
       @residues.each_residue do |residue|
         if res_t = residue.type
           patch residue, res_t
+          if prev_res && (bond_t = res_t.link_bond)
+            patch prev_res, residue, bond_t
+          end
         else
           @unmatched_atoms.concat residue.each_atom
         end
+        prev_res = residue
       end
     end
 
@@ -35,18 +40,6 @@ module Chem::Topology
       end
 
       res_t.bonds.each { |bond_t| patch residue, residue, bond_t }
-      if bond_t = res_t.link_bond
-        patch_link_bond residue, bond_t
-      end
-    end
-
-    def patch_link_bond(residue : Residue, bond_t : BondType)
-      if prev_res = residue.previous
-        patch prev_res, residue, bond_t
-      end
-      if next_res = residue.next
-        patch residue, next_res, bond_t
-      end
     end
   end
 end
