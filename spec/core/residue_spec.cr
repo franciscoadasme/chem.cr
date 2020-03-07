@@ -319,6 +319,15 @@ describe Chem::Residue do
     end
   end
 
+  describe "#next" do
+    context "given a periodic peptide" do
+      it "returns a residue for the last residue" do
+        residues = load_file("hlx_gly.poscar").residues.map &.next
+        residues.map(&.try(&.number)).should eq (2..13).to_a + [1]
+      end
+    end
+  end
+
   describe "#omega" do
     it "returns torsion angle omega" do
       st = fake_structure include_bonds: true
@@ -370,6 +379,15 @@ describe Chem::Residue do
     it "returns nil when residue is at the start" do
       st = fake_structure include_bonds: true
       st.residues[0].phi?.should be_nil
+    end
+  end
+
+  describe "#previous" do
+    context "given a periodic peptide" do
+      it "returns a residue for 13] + the first residue" do
+        residues = load_file("hlx_gly.poscar").residues.map &.previous
+        residues.map(&.try(&.number)).should eq [13] + (1..12).to_a
+      end
     end
   end
 
