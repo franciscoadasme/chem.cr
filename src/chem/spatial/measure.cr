@@ -1,14 +1,14 @@
 module Chem::Spatial
-  def angle(v1 : Vector, v2 : Vector) : Float64
-    Math.atan2(v1.cross(v2).size, v1.dot(v2)).degrees
+  def angle(a : Vector, b : Vector) : Float64
+    Math.atan2(a.cross(b).size, a.dot(b)).degrees
   end
 
-  def angle(a1 : Atom, a2 : Atom, a3 : Atom) : Float64
-    angle a1.coords, a2.coords, a3.coords
+  def angle(a : Atom, b : Atom, c : Atom) : Float64
+    angle a.coords, b.coords, c.coords
   end
 
-  def angle(p1 : Vector, p2 : Vector, p3 : Vector) : Float64
-    angle p1 - p2, p3 - p2
+  def angle(a : Vector, b : Vector, c : Vector) : Float64
+    angle a - b, c - b
   end
 
   def dihedral(v1 : Vector, v2 : Vector, v3 : Vector) : Float64
