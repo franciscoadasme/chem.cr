@@ -15,18 +15,18 @@ module Chem::Spatial
     angle a.wrap(lattice, around: b), b, c.wrap(lattice, around: b)
   end
 
-  def dihedral(v1 : Vector, v2 : Vector, v3 : Vector) : Float64
-    v12 = v1.cross v2
-    angle = angle v12, v2.cross(v3)
-    v12.dot(v3) < 0 ? -angle : angle
+  def dihedral(a : Vector, b : Vector, c : Vector) : Float64
+    ab = a.cross b
+    angle = angle ab, b.cross(c)
+    ab.dot(c) < 0 ? -angle : angle
   end
 
-  def dihedral(a1 : Atom, a2 : Atom, a3 : Atom, a4 : Atom) : Float64
-    dihedral a1.coords, a2.coords, a3.coords, a4.coords
+  def dihedral(a : Atom, b : Atom, c : Atom, d : Atom) : Float64
+    dihedral a.coords, b.coords, c.coords, d.coords
   end
 
-  def dihedral(p1 : Vector, p2 : Vector, p3 : Vector, p4 : Vector) : Float64
-    dihedral p2 - p1, p3 - p2, p4 - p3
+  def dihedral(a : Vector, b : Vector, c : Vector, d : Vector) : Float64
+    dihedral b - a, c - b, d - c
   end
 
   def distance(*args, **options) : Float64
