@@ -3,16 +3,16 @@ module Chem::Spatial
     Math.atan2(a.cross(b).size, a.dot(b)).degrees
   end
 
-  def angle(a : Atom, b : Atom, c : Atom, *args, **options) : Float64
-    angle a.coords, b.coords, c.coords, *args, **options
+  def angle(a : Atom, b : Atom, c : Atom, lattice : Lattice? = nil) : Float64
+    angle a.coords, b.coords, c.coords, lattice
   end
 
-  def angle(a : Vector, b : Vector, c : Vector) : Float64
+  def angle(a : Vector, b : Vector, c : Vector, lattice : Lattice? = nil) : Float64
+    if lattice
+      a = a.wrap lattice, around: b
+      c = c.wrap lattice, around: b
+    end
     angle a - b, c - b
-  end
-
-  def angle(a : Vector, b : Vector, c : Vector, lattice : Lattice) : Float64
-    angle a.wrap(lattice, around: b), b, c.wrap(lattice, around: b)
   end
 
   def dihedral(a : Vector, b : Vector, c : Vector) : Float64
@@ -25,15 +25,17 @@ module Chem::Spatial
     dihedral a.coords, b.coords, c.coords, d.coords, *args, **options
   end
 
-  def dihedral(a : Vector, b : Vector, c : Vector, d : Vector) : Float64
+  def dihedral(a : Vector,
+               b : Vector,
+               c : Vector,
+               d : Vector,
+               lattice : Lattice? = nil) : Float64
+    if lattice
+      a = a.wrap lattice, around: b
+      c = c.wrap lattice, around: b
+      d = d.wrap lattice, around: c
+    end
     dihedral b - a, c - b, d - c
-  end
-
-  def dihedral(a : Vector, b : Vector, c : Vector, d : Vector, lattice : Lattice) : Float64
-    a = a.wrap lattice, around: b
-    c = c.wrap lattice, around: b
-    d = d.wrap lattice, around: c
-    dihedral a, b, c, d
   end
 
   def distance(*args, **options) : Float64
@@ -45,17 +47,13 @@ module Chem::Spatial
     Math.acos 2 * q1.dot(q2)**2 - 1
   end
 
-  def squared_distance(a1 : Atom, a2 : Atom, *args, **options) : Float64
-    squared_distance a1.coords, a2.coords, *args, **options
+  def squared_distance(a : Atom, b : Atom, lattice : Lattice? = nil) : Float64
+    squared_distance a.coords, b.coords, lattice
   end
 
   @[AlwaysInline]
-  def squared_distance(a : Vector, b : Vector) : Float64
+  def squared_distance(a : Vector, b : Vector, lattice : Lattice? = nil) : Float64
+    b = b.wrap lattice, around: a if lattice
     (a.x - b.x)**2 + (a.y - b.y)**2 + (a.z - b.z)**2
-  end
-
-  @[AlwaysInline]
-  def squared_distance(a : Vector, b : Vector, lattice : Lattice) : Float64
-    squared_distance a, b.wrap(lattice, around: a)
   end
 end
