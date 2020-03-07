@@ -25,6 +25,29 @@ describe Chem::Spatial do
       c = V[8.58, 9.109, 12.362]
       Chem::Spatial.angle(a, b, c).should be_close 125.038109, 1e-6
     end
+
+    context "given a non-orthogonal cell" do
+      it "returns minimum image convention's angle" do
+        lattice = Lattice.new S[8.497, 43.560, 53.640], 85.149, 81.972, 76.480
+        [
+          {V[10.683, 3.591, 15.02],
+           V[11.078, 4.897, 15.343],
+           V[3.775, 5.420, 14.839],
+           120.408979},
+          {V[9.555289, 9.838655, 18.734480],
+           V[10.217254, 9.477283, 17.936636],
+           V[11.142755, 9.133494, 18.416052],
+           107.103893},
+          {V[17.561918, 42.708153, 11.227142],
+           V[7.452369, 1.107032, 10.529989],
+           V[8.070801, 0.735140, 9.680935],
+           108.222383,
+          },
+        ].each do |(a, b, c, expected)|
+          Chem::Spatial.angle(a, b, c, lattice).should be_close expected, 1e-6
+        end
+      end
+    end
   end
 
   describe ".distance" do
