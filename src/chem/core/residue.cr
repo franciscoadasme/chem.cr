@@ -18,9 +18,7 @@ module Chem
     property insertion_code : Char?
     property kind : Kind = :other
     property name : String
-    property next : Residue?
     property number : Int32
-    property previous : Residue?
     property secondary_structure : Protein::SecondaryStructure = :none
 
     delegate :[], :[]?, to: @atom_table
@@ -407,6 +405,22 @@ module Chem
       str
     end
 
+    # Returns the following residue if exists, otherwise `nil`.
+    #
+    # It uses the link bond type of the associated residue type, if
+    # present, to search for the next residue. Thus, link bond
+    # determines the direction, e.g., C(i)-N(i+1). Be aware that atom
+    # types must match exactly to find a residue.
+    #
+    # Note that for branched polymers, where multiple residues can be
+    # connected to the same residue (branching point), it returns the
+    # first residue.
+    def next : Residue?
+      if bond_t = type.try(&.link_bond)
+        bonded_residues(bond_t).first?
+      end
+    end
+
     def omega : Float64
       if (prev_res = previous) && bonded?(prev_res)
         Spatial.dihedral prev_res["CA"], prev_res["C"], self["N"], self["CA"]
@@ -441,6 +455,22 @@ module Chem
       return nil unless ca2 = self["CA"]?
       return nil unless c = self["C"]?
       Spatial.dihedral ca1, n, ca2, c
+    end
+
+    # Returns the preceding residue if exists, otherwise `nil`.
+    #
+    # It uses the link bond type of the associated residue type, if
+    # present, to search for the next residue. Thus, link bond
+    # determines the direction, e.g., C(i-1)-N(i). Be aware that atom
+    # types must match exactly to find a residue.
+    #
+    # Note that for branched polymers, where multiple residues can be
+    # connected to the same residue (branching point), it returns the
+    # last residue.
+    def previous : Residue?
+      if bond_t = type.try(&.link_bond)
+        bonded_residues.select!(&.bonded?(self, bond_t)).last?
+      end
     end
 
     def psi : Float64
