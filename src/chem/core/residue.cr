@@ -422,11 +422,7 @@ module Chem
     end
 
     def omega : Float64
-      if prev_res = previous
-        Spatial.dihedral prev_res["CA"], prev_res["C"], self["N"], self["CA"]
-      else
-        raise Error.new "#{self} is terminal"
-      end
+      omega? || raise Error.new "#{self} is terminal"
     end
 
     def omega? : Float64?
@@ -439,11 +435,7 @@ module Chem
     end
 
     def phi : Float64
-      if prev_res = previous
-        Spatial.dihedral prev_res["C"], self["N"], self["CA"], self["C"]
-      else
-        raise Error.new "#{self} is terminal"
-      end
+      phi? || raise Error.new "#{self} is terminal"
     end
 
     def phi? : Float64?
@@ -472,11 +464,7 @@ module Chem
     end
 
     def psi : Float64
-      if next_res = self.next
-        Spatial.dihedral self["N"], self["CA"], self["C"], next_res["N"]
-      else
-        raise Error.new "#{self} is terminal"
-      end
+      psi? || raise Error.new "#{self} is terminal"
     end
 
     def psi? : Float64?
