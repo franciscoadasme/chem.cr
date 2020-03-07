@@ -127,9 +127,10 @@ module Chem
     end
 
     def secondary_structure(ri : Residue, rj : Residue, type : Protein::SecondaryStructure)
-      loop do
-        ri.secondary_structure = type
-        break unless ri != rj && (ri = ri.next)
+      @structure.each_residue do |residue|
+        if ri <= residue <= rj
+          residue.secondary_structure = type
+        end
       end
     end
 
