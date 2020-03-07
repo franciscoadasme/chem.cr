@@ -14,10 +14,7 @@ module Chem::Spatial
   end
 
   def hlxparams(res : Residue) : HlxParams?
-    return unless res.protein?
-    return unless prev_res = res.previous
-    return unless next_res = res.next
-    return unless prev_res.bonded?(res) && res.bonded?(next_res)
+    return unless res.protein? && (prev_res = res.previous) && (next_res = res.next)
 
     coord = {
       {ca: prev_res["CA"].coords, c: prev_res["C"].coords},
