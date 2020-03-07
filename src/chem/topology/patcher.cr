@@ -44,9 +44,6 @@ module Chem::Topology
       if prev_res = residue.previous
         patch prev_res, residue, bond_t
       end
-      if next_res = residue.next
-        patch residue, next_res, bond_t
-      end
     end
   end
 end

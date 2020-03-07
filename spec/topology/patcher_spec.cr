@@ -11,6 +11,11 @@ describe Topology::Patcher do
       [r1, r2, r3].all?(&.protein?).should be_true
       [r1, r2, r3].map(&.formal_charge).should eq [-1, 0, 0]
 
+      r1.bonded?(r2).should be_true
+      r1.bonded?(r3).should be_false
+      r2.bonded?(r1).should be_true
+      r2.bonded?(r3).should be_false
+
       r1["N"].bonded_atoms.map(&.name).should eq ["CA"]
 
       r1["N"].bonds[r1["CA"]].order.should eq 1
@@ -22,7 +27,7 @@ describe Topology::Patcher do
       r1["CG"].bonds[r1["OD2"]].order.should eq 1
 
       r1["C"].bonded_atoms.map(&.name).should eq ["CA", "O", "N"]
-      r2["N"].bonded_atoms.map(&.name).should eq ["C", "CA"]
+      r2["N"].bonded_atoms.map(&.name).should eq ["CA", "C"]
 
       r2["N"].bonds[r2["CA"]].order.should eq 1
       r2["CA"].bonds[r2["C"]].order.should eq 1
