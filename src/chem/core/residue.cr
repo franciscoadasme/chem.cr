@@ -430,7 +430,7 @@ module Chem
          (c = previous.try(&.[]?("C"))) &&
          (n = self["N"]?) &&
          (ca2 = self["CA"]?)
-        Spatial.dihedral ca1, c, n, ca2
+        Spatial.dihedral ca1, c, n, ca2, structure.lattice
       end
     end
 
@@ -443,7 +443,7 @@ module Chem
          (n = self["N"]?) &&
          (ca2 = self["CA"]?) &&
          (c = self["C"]?)
-        Spatial.dihedral ca1, n, ca2, c
+        Spatial.dihedral ca1, n, ca2, c, structure.lattice
       end
     end
 
@@ -472,7 +472,7 @@ module Chem
          (ca = self["CA"]?) &&
          (c = self["C"]?) &&
          (n2 = self.next.try(&.[]?("N")))
-        Spatial.dihedral n1, ca, c, n2
+        Spatial.dihedral n1, ca, c, n2, structure.lattice
       end
     end
 
