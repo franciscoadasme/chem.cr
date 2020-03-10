@@ -24,5 +24,17 @@ describe Chem::Spatial do
       st.residues[2].hlxparams.should be_nil
       st.residues[3].hlxparams.should be_nil
     end
+
+    context "given a periodic peptide" do
+      it "returns helical parameters" do
+        structure = load_file "hlx_gly.poscar"
+        structure.each_residue.map(&.hlxparams).each do |params|
+          params = params.should_not be_nil
+          params.theta.should be_close 166.15, 1e-2
+          params.zeta.should be_close 2.91, 1e-3
+          params.radius.should be_close 1.931, 1e-3
+        end
+      end
+    end
   end
 end

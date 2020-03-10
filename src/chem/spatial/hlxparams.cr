@@ -13,14 +13,26 @@ module Chem::Spatial
     end
   end
 
-  def hlxparams(res : Residue) : HlxParams?
+  def hlxparams(res : Residue, lattice : Lattice? = nil) : HlxParams?
     return unless res.protein? && (prev_res = res.previous) && (next_res = res.next)
 
-    coord = {
-      {ca: prev_res["CA"].coords, c: prev_res["C"].coords},
-      {n: res["N"].coords, ca: res["CA"].coords, c: res["C"].coords},
-      {n: next_res["N"].coords, ca: next_res["CA"].coords},
-    }
+    coord =
+      if lattice
+        ca2 = res["CA"].coords
+        n2 = res["N"].coords.wrap lattice, around: ca2
+        c2 = res["C"].coords.wrap lattice, around: ca2
+        c1 = prev_res["C"].coords.wrap lattice, around: n2
+        ca1 = prev_res["CA"].coords.wrap lattice, around: c1
+        n3 = next_res["N"].coords.wrap lattice, around: c2
+        ca3 = next_res["CA"].coords.wrap lattice, around: n2
+        { {ca: ca1, c: c1}, {n: n2, ca: ca2, c: c2}, {n: n3, ca: ca3} }
+      else
+        {
+          {ca: prev_res["CA"].coords, c: prev_res["C"].coords},
+          {n: res["N"].coords, ca: res["CA"].coords, c: res["C"].coords},
+          {n: next_res["N"].coords, ca: next_res["CA"].coords},
+        }
+      end
 
     tz, theta, zeta = rotation coord
     chirality = chirality res, coord

@@ -386,7 +386,7 @@ module Chem
     end
 
     def hlxparams : Spatial::HlxParams?
-      Spatial.hlxparams self
+      Spatial.hlxparams self, structure.lattice
     end
 
     def inspect(io : ::IO) : Nil
