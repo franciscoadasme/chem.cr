@@ -15,10 +15,11 @@ module Chem
     property residue : Residue
     property serial : Int32
     property temperature_factor : Float64 = 0
+    property vdw_radius : Float64
 
     delegate x, y, z, to: @coords
     delegate chain, to: @residue
-    delegate atomic_number, covalent_radius, max_valency, vdw_radius, to: @element
+    delegate atomic_number, covalent_radius, max_valency, to: @element
 
     def initialize(@name : String,
                    @serial : Int32,
@@ -29,9 +30,11 @@ module Chem
                    mass : Number? = nil,
                    @occupancy : Float64 = 1,
                    @partial_charge : Float64 = 0.0,
-                   @temperature_factor : Float64 = 0)
+                   @temperature_factor : Float64 = 0,
+                   vdw_radius : Number? = nil)
       @element = element || PeriodicTable[atom_name: @name]
       @mass = (mass || @element.mass).to_f
+      @vdw_radius = (vdw_radius || @element.vdw_radius).to_f
       @residue << self
     end
 
