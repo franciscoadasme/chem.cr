@@ -21,30 +21,34 @@ module Chem::Spatial
         ca2 = res["CA"].coords
         n2 = res["N"].coords.wrap lattice, around: ca2
         c2 = res["C"].coords.wrap lattice, around: ca2
+        cb2 = res["CB"]?.try &.coords.wrap(lattice, around: ca2)
         c1 = prev_res["C"].coords.wrap lattice, around: n2
         ca1 = prev_res["CA"].coords.wrap lattice, around: c1
         n3 = next_res["N"].coords.wrap lattice, around: c2
         ca3 = next_res["CA"].coords.wrap lattice, around: n2
-        { {ca: ca1, c: c1}, {n: n2, ca: ca2, c: c2}, {n: n3, ca: ca3} }
+        { {ca: ca1, c: c1}, {n: n2, ca: ca2, c: c2, cb: cb2}, {n: n3, ca: ca3} }
       else
         {
           {ca: prev_res["CA"].coords, c: prev_res["C"].coords},
-          {n: res["N"].coords, ca: res["CA"].coords, c: res["C"].coords},
+          {n:  res["N"].coords,
+           ca: res["CA"].coords,
+           c:  res["C"].coords,
+           cb: res["CB"].try(&.coords)},
           {n: next_res["N"].coords, ca: next_res["CA"].coords},
         }
       end
 
     tz, theta, zeta = rotation coord
-    chirality = chirality res, coord
+    chirality = chirality coord
     zeta, tz, theta = -zeta, -tz, 2 * Math::PI - theta if chirality < 0
     HlxParams.new tz, theta.degrees, zeta, radius(coord, theta)
   rescue KeyError
     nil
   end
 
-  private def chirality(res, coord) : Int32
+  private def chirality(coord) : Int32
     chirality = 1
-    if c_CB = res["CB"]?.try(&.coords)
+    if c_CB = coord[1][:cb]
       d1 = coord[1][:n] - coord[1][:ca]
       d2 = c_CB - coord[1][:ca]
       d3 = coord[1][:c] - coord[1][:ca]
@@ -60,7 +64,7 @@ module Chem::Spatial
     else
       phi = dihedral coord[0][:c], coord[1][:n], coord[1][:ca], coord[1][:c]
       chirality = -1 if phi > 0
-      chirality = -1 if res.name != "GLY" && 0 < phi <= 125
+      # chirality = -1 if res.name != "GLY" && 0 < phi <= 125
     end
     chirality
   end
