@@ -76,21 +76,21 @@ module Chem::Spatial
 
   private def rotation(coord) : Tuple(Vector, Float64, Float64)
     v1 = coord[0][:c] - coord[0][:ca]
-    v2 = coord[1][:n] - coord[0][:ca]
+    v2 = coord[1][:n] - coord[0][:c]
     v3 = v1.cross(v2).normalize
-    v1 = (v1 + v2).normalize
+    v1 = v1.normalize
 
     w1 = coord[1][:c] - coord[1][:ca]
-    w2 = coord[2][:n] - coord[1][:ca]
+    w2 = coord[2][:n] - coord[1][:c]
     w3 = w1.cross(w2).normalize
-    w1 = (w1 + w2).normalize
+    w1 = w1.normalize
 
     tz = (w1 - v1).cross(w3 - v3).normalize
+    tz *= tz.dot(v1).sign # ensures that rotation axis points forwards
 
     c1 = (coord[0][:ca] + coord[0][:c] + coord[1][:n] + coord[1][:ca]) / 4
     c2 = (coord[1][:ca] + coord[1][:c] + coord[2][:n] + coord[2][:ca]) / 4
     zeta = tz.dot(c2 - c1)
-    tz, zeta = -tz, -zeta if zeta < 0
 
     {tz, rotation_angle(tz, v1, w1), zeta}
   end

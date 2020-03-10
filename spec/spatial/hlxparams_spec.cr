@@ -12,6 +12,15 @@ describe Chem::Spatial do
       end
     end
 
+    it "correctly detects handedness of low-rise residues" do
+      structure = load_file "hlx_phe--theta-90.000--c-26.10.pdb"
+      structure.residues.map { |r| r.hlxparams.try(&.theta) || 0 }.should be_close [
+        80.2, 107.6, 80.5, 106.2, 81.6, 107.6, 78.7, 111.5, 80.6, 106.0, 86.4,
+        104.8, 79.8, 108.6, 79.9, 108.2, 81.5, 106.3, 80.4, 107.4, 80.6, 107.6,
+        80.9, 106.9,
+      ], 1e-1
+    end
+
     it "returns nil when residue is terminal" do
       st = load_file "hlxparam.pdb"
       st.residues.first.hlxparams.should be_nil

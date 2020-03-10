@@ -1,0 +1,368 @@
+TITLE     Gly theta=90.000 c=26.10 in bohrs                                     
+REMARK   4                                                                      
+REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
+CRYST1   16.384   20.317   27.623  90.00  90.00  90.00 P 1           1          
+ATOM      1  N   GLY A   1       8.621  11.558  27.316  1.00  0.00           N  
+ATOM      2  H   GLY A   1       8.265  11.176  26.440  1.00  0.00           H  
+ATOM      3  CA  GLY A   1       7.611  12.064   0.597  1.00  0.00           C  
+ATOM      4  HA1 GLY A   1       8.101  12.661   1.375  1.00  0.00           H  
+ATOM      5  HA2 GLY A   1       6.911  12.710   0.047  1.00  0.00           H  
+ATOM      6  C   GLY A   1       6.811  10.958   1.303  1.00  0.00           C  
+ATOM      7  O   GLY A   1       6.618  11.016   2.539  1.00  0.00           O  
+ATOM      8  N   GLY A   2       6.362   9.920   0.579  1.00  0.00           N  
+ATOM      9  H   GLY A   2       6.401   9.972  -0.444  1.00  0.00           H  
+ATOM     10  CA  GLY A   2       5.693   8.806   1.233  1.00  0.00           C  
+ATOM     11  HA1 GLY A   2       4.829   9.153   1.816  1.00  0.00           H  
+ATOM     12  HA2 GLY A   2       5.351   8.119   0.449  1.00  0.00           H  
+ATOM     13  C   GLY A   2       6.579   8.028   2.216  1.00  0.00           C  
+ATOM     14  O   GLY A   2       6.072   7.437   3.181  1.00  0.00           O  
+ATOM     15  N   GLY A   3       7.907   8.042   1.956  1.00  0.00           N  
+ATOM     16  H   GLY A   3       8.259   8.446   1.089  1.00  0.00           H  
+ATOM     17  CA  GLY A   3       8.915   7.512   2.846  1.00  0.00           C  
+ATOM     18  HA1 GLY A   3       9.610   6.871   2.283  1.00  0.00           H  
+ATOM     19  HA2 GLY A   3       8.422   6.905   3.613  1.00  0.00           H  
+ATOM     20  C   GLY A   3       9.724   8.596   3.574  1.00  0.00           C  
+ATOM     21  O   GLY A   3       9.937   8.492   4.804  1.00  0.00           O  
+ATOM     22  N   GLY A   4      10.161   9.662   2.883  1.00  0.00           N  
+ATOM     23  H   GLY A   4      10.125   9.639   1.859  1.00  0.00           H  
+ATOM     24  CA  GLY A   4      10.830  10.758   3.567  1.00  0.00           C  
+ATOM     25  HA1 GLY A   4      11.700  10.398   4.133  1.00  0.00           H  
+ATOM     26  HA2 GLY A   4      11.166  11.467   2.800  1.00  0.00           H  
+ATOM     27  C   GLY A   4       9.946  11.503   4.577  1.00  0.00           C  
+ATOM     28  O   GLY A   4      10.449  12.042   5.573  1.00  0.00           O  
+ATOM     29  N   GLY A   5       8.622  11.523   4.300  1.00  0.00           N  
+ATOM     30  H   GLY A   5       8.267  11.155   3.417  1.00  0.00           H  
+ATOM     31  CA  GLY A   5       7.612  12.020   5.207  1.00  0.00           C  
+ATOM     32  HA1 GLY A   5       6.903  12.658   4.659  1.00  0.00           H  
+ATOM     33  HA2 GLY A   5       8.098  12.619   5.985  1.00  0.00           H  
+ATOM     34  C   GLY A   5       6.828  10.906   5.917  1.00  0.00           C  
+ATOM     35  O   GLY A   5       6.626  10.977   7.150  1.00  0.00           O  
+ATOM     36  N   GLY A   6       6.405   9.849   5.202  1.00  0.00           N  
+ATOM     37  H   GLY A   6       6.439   9.897   4.179  1.00  0.00           H  
+ATOM     38  CA  GLY A   6       5.734   8.736   5.855  1.00  0.00           C  
+ATOM     39  HA1 GLY A   6       5.372   8.063   5.068  1.00  0.00           H  
+ATOM     40  HA2 GLY A   6       4.880   9.087   6.450  1.00  0.00           H  
+ATOM     41  C   GLY A   6       6.613   7.926   6.819  1.00  0.00           C  
+ATOM     42  O   GLY A   6       6.094   7.283   7.743  1.00  0.00           O  
+ATOM     43  N   GLY A   7       7.946   7.980   6.591  1.00  0.00           N  
+ATOM     44  H   GLY A   7       8.302   8.408   5.736  1.00  0.00           H  
+ATOM     45  CA  GLY A   7       8.952   7.407   7.460  1.00  0.00           C  
+ATOM     46  HA1 GLY A   7       8.451   6.799   8.222  1.00  0.00           H  
+ATOM     47  HA2 GLY A   7       9.624   6.759   6.877  1.00  0.00           H  
+ATOM     48  C   GLY A   7       9.787   8.474   8.183  1.00  0.00           C  
+ATOM     49  O   GLY A   7       9.946   8.424   9.424  1.00  0.00           O  
+ATOM     50  N   GLY A   8      10.299   9.483   7.456  1.00  0.00           N  
+ATOM     51  H   GLY A   8      10.263   9.429   6.433  1.00  0.00           H  
+ATOM     52  CA  GLY A   8      10.992  10.583   8.106  1.00  0.00           C  
+ATOM     53  HA1 GLY A   8      11.377  11.245   7.322  1.00  0.00           H  
+ATOM     54  HA2 GLY A   8      11.827  10.217   8.718  1.00  0.00           H  
+ATOM     55  C   GLY A   8      10.120  11.415   9.057  1.00  0.00           C  
+ATOM     56  O   GLY A   8      10.650  12.058   9.974  1.00  0.00           O  
+ATOM     57  N   GLY A   9       8.784  11.374   8.836  1.00  0.00           N  
+ATOM     58  H   GLY A   9       8.428  10.940   7.989  1.00  0.00           H  
+ATOM     59  CA  GLY A   9       7.793  11.920   9.738  1.00  0.00           C  
+ATOM     60  HA1 GLY A   9       7.127  12.612   9.203  1.00  0.00           H  
+ATOM     61  HA2 GLY A   9       8.309  12.489  10.519  1.00  0.00           H  
+ATOM     62  C   GLY A   9       6.939  10.845  10.424  1.00  0.00           C  
+ATOM     63  O   GLY A   9       6.704  10.910  11.655  1.00  0.00           O  
+ATOM     64  N   GLY A  10       6.478   9.809   9.707  1.00  0.00           N  
+ATOM     65  H   GLY A  10       6.492   9.871   8.683  1.00  0.00           H  
+ATOM     66  CA  GLY A  10       5.786   8.719  10.380  1.00  0.00           C  
+ATOM     67  HA1 GLY A  10       5.509   7.984   9.614  1.00  0.00           H  
+ATOM     68  HA2 GLY A  10       4.881   9.075  10.891  1.00  0.00           H  
+ATOM     69  C   GLY A  10       6.640   8.042  11.460  1.00  0.00           C  
+ATOM     70  O   GLY A  10       6.123   7.629  12.509  1.00  0.00           O  
+ATOM     71  N   GLY A  11       7.961   7.931  11.188  1.00  0.00           N  
+ATOM     72  H   GLY A  11       8.346   8.219  10.286  1.00  0.00           H  
+ATOM     73  CA  GLY A  11       8.946   7.540  12.169  1.00  0.00           C  
+ATOM     74  HA1 GLY A  11       8.458   6.959  12.960  1.00  0.00           H  
+ATOM     75  HA2 GLY A  11       9.707   6.908  11.688  1.00  0.00           H  
+ATOM     76  C   GLY A  11       9.658   8.717  12.852  1.00  0.00           C  
+ATOM     77  O   GLY A  11       9.890   8.671  14.081  1.00  0.00           O  
+ATOM     78  N   GLY A  12       9.998   9.793  12.122  1.00  0.00           N  
+ATOM     79  H   GLY A  12       9.962   9.729  11.103  1.00  0.00           H  
+ATOM     80  CA  GLY A  12      10.629  10.943  12.754  1.00  0.00           C  
+ATOM     81  HA1 GLY A  12      11.533  10.644  13.300  1.00  0.00           H  
+ATOM     82  HA2 GLY A  12      10.913  11.639  11.952  1.00  0.00           H  
+ATOM     83  C   GLY A  12       9.753  11.689  13.767  1.00  0.00           C  
+ATOM     84  O   GLY A  12      10.283  12.302  14.709  1.00  0.00           O  
+ATOM     85  N   PHE A  13       8.419  11.633  13.559  1.00  0.00           N  
+ATOM     86  H   PHE A  13       8.037  11.258  12.681  1.00  0.00           H  
+ATOM     87  CA  PHE A  13       7.442  12.191  14.474  1.00  0.00           C  
+ATOM     88  HA  PHE A  13       8.014  12.681  15.274  1.00  0.00           H  
+ATOM     89  C   PHE A  13       6.633  11.080  15.165  1.00  0.00           C  
+ATOM     90  O   PHE A  13       6.410  11.142  16.397  1.00  0.00           O  
+ATOM     91  CB  PHE A  13       6.468  13.213  13.827  1.00  0.00           C  
+ATOM     92  HB1 PHE A  13       5.983  13.755  14.655  1.00  0.00           H  
+ATOM     93  HB2 PHE A  13       5.671  12.671  13.300  1.00  0.00           H  
+ATOM     94  CG  PHE A  13       7.095  14.185  12.855  1.00  0.00           C  
+ATOM     95  CD1 PHE A  13       6.400  14.509  11.682  1.00  0.00           C  
+ATOM     96  HD1 PHE A  13       5.429  14.046  11.496  1.00  0.00           H  
+ATOM     97  CE1 PHE A  13       6.936  15.396  10.747  1.00  0.00           C  
+ATOM     98  HE1 PHE A  13       6.377  15.632   9.841  1.00  0.00           H  
+ATOM     99  CZ  PHE A  13       8.192  15.963  10.966  1.00  0.00           C  
+ATOM    100  HZ  PHE A  13       8.625  16.641  10.230  1.00  0.00           H  
+ATOM    101  CE2 PHE A  13       8.895  15.649  12.131  1.00  0.00           C  
+ATOM    102  HE2 PHE A  13       9.880  16.081  12.308  1.00  0.00           H  
+ATOM    103  CD2 PHE A  13       8.350  14.773  13.072  1.00  0.00           C  
+ATOM    104  HD2 PHE A  13       8.924  14.534  13.968  1.00  0.00           H  
+ATOM    105  N   GLY A  14       6.199  10.034  14.438  1.00  0.00           N  
+ATOM    106  H   GLY A  14       6.309  10.026  13.420  1.00  0.00           H  
+ATOM    107  CA  GLY A  14       5.542   8.914  15.092  1.00  0.00           C  
+ATOM    108  HA1 GLY A  14       4.699   9.259  15.705  1.00  0.00           H  
+ATOM    109  HA2 GLY A  14       5.173   8.243  14.309  1.00  0.00           H  
+ATOM    110  C   GLY A  14       6.450   8.112  16.036  1.00  0.00           C  
+ATOM    111  O   GLY A  14       5.961   7.459  16.969  1.00  0.00           O  
+ATOM    112  N   GLY A  15       7.778   8.188  15.782  1.00  0.00           N  
+ATOM    113  H   GLY A  15       8.104   8.639  14.931  1.00  0.00           H  
+ATOM    114  CA  GLY A  15       8.808   7.647  16.642  1.00  0.00           C  
+ATOM    115  HA1 GLY A  15       8.331   7.024  17.407  1.00  0.00           H  
+ATOM    116  HA2 GLY A  15       9.497   7.023  16.055  1.00  0.00           H  
+ATOM    117  C   GLY A  15       9.616   8.733  17.368  1.00  0.00           C  
+ATOM    118  O   GLY A  15       9.816   8.647  18.602  1.00  0.00           O  
+ATOM    119  N   GLY A  16      10.058   9.789  16.667  1.00  0.00           N  
+ATOM    120  H   GLY A  16      10.044   9.740  15.642  1.00  0.00           H  
+ATOM    121  CA  GLY A  16      10.715  10.899  17.340  1.00  0.00           C  
+ATOM    122  HA1 GLY A  16      11.597  10.560  17.899  1.00  0.00           H  
+ATOM    123  HA2 GLY A  16      11.029  11.612  16.566  1.00  0.00           H  
+ATOM    124  C   GLY A  16       9.828  11.630  18.357  1.00  0.00           C  
+ATOM    125  O   GLY A  16      10.333  12.192  19.339  1.00  0.00           O  
+ATOM    126  N   GLY A  17       8.498  11.612  18.104  1.00  0.00           N  
+ATOM    127  H   GLY A  17       8.143  11.223  17.232  1.00  0.00           H  
+ATOM    128  CA  GLY A  17       7.489  12.077  19.030  1.00  0.00           C  
+ATOM    129  HA1 GLY A  17       7.974  12.682  19.804  1.00  0.00           H  
+ATOM    130  HA2 GLY A  17       6.759  12.703  18.496  1.00  0.00           H  
+ATOM    131  C   GLY A  17       6.739  10.940  19.738  1.00  0.00           C  
+ATOM    132  O   GLY A  17       6.561  10.984  20.977  1.00  0.00           O  
+ATOM    133  N   GLY A  18       6.316   9.890  19.015  1.00  0.00           N  
+ATOM    134  H   GLY A  18       6.314   9.965  17.993  1.00  0.00           H  
+ATOM    135  CA  GLY A  18       5.677   8.757  19.668  1.00  0.00           C  
+ATOM    136  HA1 GLY A  18       5.363   8.060  18.881  1.00  0.00           H  
+ATOM    137  HA2 GLY A  18       4.795   9.077  20.240  1.00  0.00           H  
+ATOM    138  C   GLY A  18       6.573   8.009  20.665  1.00  0.00           C  
+ATOM    139  O   GLY A  18       6.073   7.437  21.645  1.00  0.00           O  
+ATOM    140  N   GLY A  19       7.899   8.023  20.399  1.00  0.00           N  
+ATOM    141  H   GLY A  19       8.254   8.409  19.522  1.00  0.00           H  
+ATOM    142  CA  GLY A  19       8.913   7.520  21.299  1.00  0.00           C  
+ATOM    143  HA1 GLY A  19       9.610   6.868  20.751  1.00  0.00           H  
+ATOM    144  HA2 GLY A  19       8.426   6.927  22.082  1.00  0.00           H  
+ATOM    145  C   GLY A  19       9.718   8.626  21.997  1.00  0.00           C  
+ATOM    146  O   GLY A  19       9.936   8.561  23.229  1.00  0.00           O  
+ATOM    147  N   GLY A  20      10.148   9.675  21.274  1.00  0.00           N  
+ATOM    148  H   GLY A  20      10.089   9.638  20.252  1.00  0.00           H  
+ATOM    149  CA  GLY A  20      10.816  10.787  21.932  1.00  0.00           C  
+ATOM    150  HA1 GLY A  20      11.690  10.441  22.500  1.00  0.00           H  
+ATOM    151  HA2 GLY A  20      11.142  11.485  21.151  1.00  0.00           H  
+ATOM    152  C   GLY A  20       9.935  11.545  22.935  1.00  0.00           C  
+ATOM    153  O   GLY A  20      10.447  12.123  23.905  1.00  0.00           O  
+ATOM    154  N   GLY A  21       8.605  11.527  22.686  1.00  0.00           N  
+ATOM    155  H   GLY A  21       8.247  11.130  21.818  1.00  0.00           H  
+ATOM    156  CA  GLY A  21       7.600  12.034  23.593  1.00  0.00           C  
+ATOM    157  HA1 GLY A  21       6.888  12.666  23.041  1.00  0.00           H  
+ATOM    158  HA2 GLY A  21       8.092  12.644  24.358  1.00  0.00           H  
+ATOM    159  C   GLY A  21       6.817  10.931  24.320  1.00  0.00           C  
+ATOM    160  O   GLY A  21       6.631  11.010  25.556  1.00  0.00           O  
+ATOM    161  N   GLY A  22       6.374   9.873  23.620  1.00  0.00           N  
+ATOM    162  H   GLY A  22       6.393   9.911  22.596  1.00  0.00           H  
+ATOM    163  CA  GLY A  22       5.724   8.763  24.298  1.00  0.00           C  
+ATOM    164  HA1 GLY A  22       5.377   8.065  23.526  1.00  0.00           H  
+ATOM    165  HA2 GLY A  22       4.863   9.109  24.886  1.00  0.00           H  
+ATOM    166  C   GLY A  22       6.628   8.004  25.280  1.00  0.00           C  
+ATOM    167  O   GLY A  22       6.138   7.414  26.254  1.00  0.00           O  
+ATOM    168  N   GLY A  23       7.952   8.035  25.006  1.00  0.00           N  
+ATOM    169  H   GLY A  23       8.292   8.435  24.132  1.00  0.00           H  
+ATOM    170  CA  GLY A  23       8.980   7.534  25.892  1.00  0.00           C  
+ATOM    171  HA1 GLY A  23       9.692   6.920  25.322  1.00  0.00           H  
+ATOM    172  HA2 GLY A  23       8.512   6.910  26.661  1.00  0.00           H  
+ATOM    173  C   GLY A  23       9.753   8.649  26.613  1.00  0.00           C  
+ATOM    174  O   GLY A  23       9.941   8.582  27.849  1.00  0.00           O  
+ATOM    175  N   GLY A  24      10.185   9.705  25.903  1.00  0.00           N  
+ATOM    176  H   GLY A  24      10.155   9.665  24.880  1.00  0.00           H  
+ATOM    177  CA  GLY A  24      10.837  10.821  26.571  1.00  0.00           C  
+ATOM    178  HA1 GLY A  24      11.713  10.482  27.140  1.00  0.00           H  
+ATOM    179  HA2 GLY A  24      11.161  11.524  25.794  1.00  0.00           H  
+ATOM    180  C   GLY A  24       9.949  11.569  27.576  1.00  0.00           C  
+ATOM    181  O   GLY A  24      10.455  12.135  28.556  1.00  0.00           O  
+TER     182      GLY A  24                                                      
+CONECT    1    2    3  180
+CONECT    2    1
+CONECT    3    1    4    5    6
+CONECT    4    3
+CONECT    5    3
+CONECT    6    3    7    7    8
+CONECT    7    6    6
+CONECT    8    6    9   10
+CONECT    9    8
+CONECT   10    8   11   12   13
+CONECT   11   10
+CONECT   12   10
+CONECT   13   10   14   14   15
+CONECT   14   13   13
+CONECT   15   13   16   17
+CONECT   16   15
+CONECT   17   15   18   19   20
+CONECT   18   17
+CONECT   19   17
+CONECT   20   17   21   21   22
+CONECT   21   20   20
+CONECT   22   20   23   24
+CONECT   23   22
+CONECT   24   22   25   26   27
+CONECT   25   24
+CONECT   26   24
+CONECT   27   24   28   28   29
+CONECT   28   27   27
+CONECT   29   27   30   31
+CONECT   30   29
+CONECT   31   29   32   33   34
+CONECT   32   31
+CONECT   33   31
+CONECT   34   31   35   35   36
+CONECT   35   34   34
+CONECT   36   34   37   38
+CONECT   37   36
+CONECT   38   36   39   40   41
+CONECT   39   38
+CONECT   40   38
+CONECT   41   38   42   42   43
+CONECT   42   41   41
+CONECT   43   41   44   45
+CONECT   44   43
+CONECT   45   43   46   47   48
+CONECT   46   45
+CONECT   47   45
+CONECT   48   45   49   49   50
+CONECT   49   48   48
+CONECT   50   48   51   52
+CONECT   51   50
+CONECT   52   50   53   54   55
+CONECT   53   52
+CONECT   54   52
+CONECT   55   52   56   56   57
+CONECT   56   55   55
+CONECT   57   55   58   59
+CONECT   58   57
+CONECT   59   57   60   61   62
+CONECT   60   59
+CONECT   61   59
+CONECT   62   59   63   63   64
+CONECT   63   62   62
+CONECT   64   62   65   66
+CONECT   65   64
+CONECT   66   64   67   68   69
+CONECT   67   66
+CONECT   68   66
+CONECT   69   66   70   70   71
+CONECT   70   69   69
+CONECT   71   69   72   73
+CONECT   72   71
+CONECT   73   71   74   75   76
+CONECT   74   73
+CONECT   75   73
+CONECT   76   73   77   77   78
+CONECT   77   76   76
+CONECT   78   76   79   80
+CONECT   79   78
+CONECT   80   78   81   82   83
+CONECT   81   80
+CONECT   82   80
+CONECT   83   80   84   84   85
+CONECT   84   83   83
+CONECT   85   83   86   87
+CONECT   86   85
+CONECT   87   85   88   89   91
+CONECT   88   87
+CONECT   89   87   90   90  105
+CONECT   90   89   89
+CONECT   91   87   92   93   94
+CONECT   92   91
+CONECT   93   91
+CONECT   94   91   95   95  103
+CONECT   95   94   94   96   97
+CONECT   96   95
+CONECT   97   95   98   99   99
+CONECT   98   97
+CONECT   99   97   97  100  101
+CONECT  100   99
+CONECT  101   99  102  103  103
+CONECT  102  101
+CONECT  103   94  101  101  104
+CONECT  104  103
+CONECT  105   89  106  107
+CONECT  106  105
+CONECT  107  105  108  109  110
+CONECT  108  107
+CONECT  109  107
+CONECT  110  107  111  111  112
+CONECT  111  110  110
+CONECT  112  110  113  114
+CONECT  113  112
+CONECT  114  112  115  116  117
+CONECT  115  114
+CONECT  116  114
+CONECT  117  114  118  118  119
+CONECT  118  117  117
+CONECT  119  117  120  121
+CONECT  120  119
+CONECT  121  119  122  123  124
+CONECT  122  121
+CONECT  123  121
+CONECT  124  121  125  125  126
+CONECT  125  124  124
+CONECT  126  124  127  128
+CONECT  127  126
+CONECT  128  126  129  130  131
+CONECT  129  128
+CONECT  130  128
+CONECT  131  128  132  132  133
+CONECT  132  131  131
+CONECT  133  131  134  135
+CONECT  134  133
+CONECT  135  133  136  137  138
+CONECT  136  135
+CONECT  137  135
+CONECT  138  135  139  139  140
+CONECT  139  138  138
+CONECT  140  138  141  142
+CONECT  141  140
+CONECT  142  140  143  144  145
+CONECT  143  142
+CONECT  144  142
+CONECT  145  142  146  146  147
+CONECT  146  145  145
+CONECT  147  145  148  149
+CONECT  148  147
+CONECT  149  147  150  151  152
+CONECT  150  149
+CONECT  151  149
+CONECT  152  149  153  153  154
+CONECT  153  152  152
+CONECT  154  152  155  156
+CONECT  155  154
+CONECT  156  154  157  158  159
+CONECT  157  156
+CONECT  158  156
+CONECT  159  156  160  160  161
+CONECT  160  159  159
+CONECT  161  159  162  163
+CONECT  162  161
+CONECT  163  161  164  165  166
+CONECT  164  163
+CONECT  165  163
+CONECT  166  163  167  167  168
+CONECT  167  166  166
+CONECT  168  166  169  170
+CONECT  169  168
+CONECT  170  168  171  172  173
+CONECT  171  170
+CONECT  172  170
+CONECT  173  170  174  174  175
+CONECT  174  173  173
+CONECT  175  173  176  177
+CONECT  176  175
+CONECT  177  175  178  179  180
+CONECT  178  177
+CONECT  179  177
+CONECT  180    1  177  181  181
+CONECT  181  180  180
+END                                                                             
