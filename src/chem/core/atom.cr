@@ -33,8 +33,18 @@ module Chem
                    @temperature_factor : Float64 = 0,
                    vdw_radius : Number? = nil)
       @element = element || PeriodicTable[atom_name: @name]
-      @mass = (mass || @element.mass).to_f
-      @vdw_radius = (vdw_radius || @element.vdw_radius).to_f
+      @mass = if mass
+                raise ArgumentError.new("Negative mass") if mass < 0
+                mass.to_f
+              else
+                @element.mass
+              end
+      @vdw_radius = if vdw_radius
+                      raise ArgumentError.new("Negative vdW radius") if vdw_radius < 0
+                      vdw_radius.to_f
+                    else
+                      @element.vdw_radius
+                    end
       @residue << self
     end
 
