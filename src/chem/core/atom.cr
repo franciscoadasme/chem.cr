@@ -9,15 +9,17 @@ module Chem
     property element : Element
     property formal_charge : Int32 = 0
     property name : String
+    property mass : Float64
     property occupancy : Float64 = 1
     property partial_charge : Float64 = 0.0
     property residue : Residue
     property serial : Int32
     property temperature_factor : Float64 = 0
+    property vdw_radius : Float64
 
     delegate x, y, z, to: @coords
     delegate chain, to: @residue
-    delegate atomic_number, covalent_radius, mass, max_valency, vdw_radius, to: @element
+    delegate atomic_number, covalent_radius, max_valency, to: @element
 
     def initialize(@name : String,
                    @serial : Int32,
@@ -25,10 +27,24 @@ module Chem
                    @residue : Residue,
                    element : Element? = nil,
                    @formal_charge : Int32 = 0,
+                   mass : Number? = nil,
                    @occupancy : Float64 = 1,
                    @partial_charge : Float64 = 0.0,
-                   @temperature_factor : Float64 = 0)
+                   @temperature_factor : Float64 = 0,
+                   vdw_radius : Number? = nil)
       @element = element || PeriodicTable[atom_name: @name]
+      @mass = if mass
+                raise ArgumentError.new("Negative mass") if mass < 0
+                mass.to_f
+              else
+                @element.mass
+              end
+      @vdw_radius = if vdw_radius
+                      raise ArgumentError.new("Negative vdW radius") if vdw_radius < 0
+                      vdw_radius.to_f
+                    else
+                      @element.vdw_radius
+                    end
       @residue << self
     end
 
