@@ -340,6 +340,15 @@ describe Chem::Residue do
         st.residues[0].omega
       end
     end
+
+    context "given a periodic peptide" do
+      it "returns omega using minimum-image convention" do
+        structure = load_file "hlx_gly.poscar"
+        structure.each_residue do |residue|
+          residue.omega.should be_close -171.64, 1e-2
+        end
+      end
+    end
   end
 
   describe "#omega?" do
@@ -365,6 +374,15 @@ describe Chem::Residue do
       st = fake_structure include_bonds: true
       expect_raises Chem::Error, "A:ASP1 is terminal" do
         st.residues[0].phi
+      end
+    end
+
+    context "given a periodic peptide" do
+      it "returns phi using minimum-image convention" do
+        structure = load_file "hlx_gly.poscar"
+        structure.each_residue do |residue|
+          residue.phi.should be_close -80.33, 1e-2
+        end
       end
     end
   end
@@ -401,6 +419,15 @@ describe Chem::Residue do
       st = fake_structure include_bonds: true
       expect_raises Chem::Error, "A:PHE2 is terminal" do
         st.residues[1].psi
+      end
+    end
+
+    context "given a periodic peptide" do
+      it "returns psi using minimum-image convention" do
+        structure = load_file "hlx_gly.poscar"
+        structure.each_residue do |residue|
+          residue.psi.should be_close 58.2, 1e-2
+        end
       end
     end
   end

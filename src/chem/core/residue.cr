@@ -386,7 +386,7 @@ module Chem
     end
 
     def hlxparams : Spatial::HlxParams?
-      Spatial.hlxparams self
+      Spatial.hlxparams self, structure.lattice
     end
 
     def inspect(io : ::IO) : Nil
@@ -422,11 +422,7 @@ module Chem
     end
 
     def omega : Float64
-      if prev_res = previous
-        Spatial.dihedral prev_res["CA"], prev_res["C"], self["N"], self["CA"]
-      else
-        raise Error.new "#{self} is terminal"
-      end
+      omega? || raise Error.new "#{self} is terminal"
     end
 
     def omega? : Float64?
@@ -434,16 +430,12 @@ module Chem
          (c = previous.try(&.[]?("C"))) &&
          (n = self["N"]?) &&
          (ca2 = self["CA"]?)
-        Spatial.dihedral ca1, c, n, ca2
+        Spatial.dihedral ca1, c, n, ca2, structure.lattice
       end
     end
 
     def phi : Float64
-      if prev_res = previous
-        Spatial.dihedral prev_res["C"], self["N"], self["CA"], self["C"]
-      else
-        raise Error.new "#{self} is terminal"
-      end
+      phi? || raise Error.new "#{self} is terminal"
     end
 
     def phi? : Float64?
@@ -451,7 +443,7 @@ module Chem
          (n = self["N"]?) &&
          (ca2 = self["CA"]?) &&
          (c = self["C"]?)
-        Spatial.dihedral ca1, n, ca2, c
+        Spatial.dihedral ca1, n, ca2, c, structure.lattice
       end
     end
 
@@ -472,11 +464,7 @@ module Chem
     end
 
     def psi : Float64
-      if next_res = self.next
-        Spatial.dihedral self["N"], self["CA"], self["C"], next_res["N"]
-      else
-        raise Error.new "#{self} is terminal"
-      end
+      psi? || raise Error.new "#{self} is terminal"
     end
 
     def psi? : Float64?
@@ -484,7 +472,7 @@ module Chem
          (ca = self["CA"]?) &&
          (c = self["C"]?) &&
          (n2 = self.next.try(&.[]?("N")))
-        Spatial.dihedral n1, ca, c, n2
+        Spatial.dihedral n1, ca, c, n2, structure.lattice
       end
     end
 

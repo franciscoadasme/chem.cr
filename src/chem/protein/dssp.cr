@@ -24,6 +24,9 @@ require "./dssp/*"
 #   when residue numbers are not consecutive. This implementation instead checks that
 #   the C(*i*)–N(*i*+1) bond length is within covalent distance.
 #
+# FIXME: it does not work correctly for periodic structures that have
+# bonds between atoms at opposite ends.
+#
 # NOTE: This implementation of DSSP is currently 50% slower than pure C++ solutions, so
 # keep this in mind when assigning the secondary structure of many structures.
 #
