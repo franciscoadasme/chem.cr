@@ -374,6 +374,13 @@ describe Chem::PDB do
       end
       st.residues.map { |res| {res.number, res.insertion_code} }.should eq resids
     end
+
+    it "does not assign bonds for skipped atoms" do
+      # it triggered IndexError for skipped atoms, but cannot test
+      # whether bonds are assigned from PDB or not since missing bonds
+      # are automatically guessed
+      Structure.from_pdb "spec/data/pdb/1crn.pdb", chains: ['C']
+    end
   end
 end
 
