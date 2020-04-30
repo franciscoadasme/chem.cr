@@ -302,9 +302,7 @@ module Chem::PDB
     end
 
     private def assign_bonds(builder : Structure::Builder) : Nil
-      @pdb_bonds.each do |(i, j), order|
-        builder.bond serial_to_index(i), serial_to_index(j), order
-      end
+      builder.bonds @pdb_bonds
     end
 
     private def assign_secondary_structure(builder : Structure::Builder) : Nil
