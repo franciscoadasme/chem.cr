@@ -238,9 +238,7 @@ module Chem::PDB
 
     @alt_locs : Hash(Residue, Array(AlternateLocation))?
     @chains : Set(Char)?
-    @offsets : Array(Tuple(Int32, Int32))?
     @seek_bonds = true
-    @serial = 0
     @ss_elements = [] of SecondaryStructureElement
 
     def initialize(input : ::IO | Path | String,
@@ -281,10 +279,6 @@ module Chem::PDB
       end
     end
 
-    private def add_offset_at(serial : Int32) : Nil
-      offsets << {serial, serial - @serial - 1}
-    end
-
     private def add_sec(type : Protein::SecondaryStructure, i : ResidueId, j : ResidueId)
       @ss_elements << SecondaryStructureElement.new type, i, j
     end
@@ -315,10 +309,6 @@ module Chem::PDB
       read(0, 6).rstrip.downcase
     end
 
-    private def offsets : Array(Tuple(Int32, Int32))
-      @offsets ||= [] of Tuple(Int32, Int32)
-    end
-
     private def parse_atom(builder : Structure::Builder) : Nil
       return if (chains = @chains) && !chains.includes?(read(21))
       return if @alt_loc && (alt_loc = read?(16)) && alt_loc != @alt_loc
@@ -333,9 +323,6 @@ module Chem::PDB
         formal_charge: read?(78, 2).try(&.reverse.to_i?) || 0,
         occupancy: read_float(54, 6),
         temperature_factor: read_float(60, 6)
-
-      add_offset_at atom.serial if atom.serial - @serial > 1
-      @serial = atom.serial
 
       if !@alt_loc && (alt_loc = read?(16))
         alt_loc(atom.residue, alt_loc, read(17, 4).strip) << atom
@@ -501,10 +488,6 @@ module Chem::PDB
         alt_locs.sort! { |a, b| b.occupancy <=> a.occupancy }
         alt_locs.each(within: 1..) do |alt_loc|
           alt_loc.each_atom do |atom|
-            unless @pdb_bonds.empty?
-              i = offsets.bsearch_index { |(i, _)| i > atom.serial } || -1
-              offsets.insert i, {atom.serial, 1}
-            end
             residue.delete atom
           end
         end
@@ -527,15 +510,6 @@ module Chem::PDB
         end
       end
       @seek_bonds = false
-    end
-
-    private def serial_to_index(serial : Int32) : Int32
-      index = serial - 1
-      offsets.each do |loc, offset|
-        break if loc > serial
-        index -= offset
-      end
-      index
     end
 
     private alias ResidueId = Tuple(Char, Int32, Char?)
