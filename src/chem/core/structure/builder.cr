@@ -49,6 +49,20 @@ module Chem
       bond
     end
 
+    def bonds(bond_table : Hash(Tuple(Int32, Int32), Int32)) : Nil
+      atom_table = {} of Int32 => Atom
+      atom_serials = Set(Int32).new bond_table.size * 2
+      bond_table.each_key { |(i, j)| atom_serials << i << j }
+      @structure.each_atom do |atom|
+        atom_table[atom.serial] = atom if atom_serials.includes?(atom.serial)
+      end
+      bond_table.each do |(i, j), order|
+        if (lhs = atom_table[i]?) && (rhs = atom_table[j]?)
+          lhs.bonds.add rhs, order
+        end
+      end
+    end
+
     def build : Structure
       transform_aromatic_bonds
       Topology::Perception.new(@structure).guess_topology if @guess_topology
