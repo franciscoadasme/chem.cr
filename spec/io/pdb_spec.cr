@@ -381,6 +381,14 @@ describe Chem::PDB do
       # are automatically guessed
       Structure.from_pdb "spec/data/pdb/1crn.pdb", chains: ['C']
     end
+
+    it "parses first chain" do
+      structure = Structure.from_pdb "spec/data/pdb/multiple_chains.pdb", chains: "first"
+      structure.n_chains.should eq 1
+      structure.n_residues.should eq 2
+      structure.n_atoms.should eq 14
+      structure.chains[0].id.should eq 'J'
+    end
   end
 end
 

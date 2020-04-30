@@ -237,17 +237,17 @@ module Chem::PDB
     @pdb_title = ""
 
     @alt_locs : Hash(Residue, Array(AlternateLocation))?
-    @chains : Set(Char)?
+    @chains : Set(Char) | String | Nil
     @seek_bonds = true
     @ss_elements = [] of SecondaryStructureElement
 
     def initialize(input : ::IO | Path | String,
                    @alt_loc : Char? = nil,
-                   chains : Enumerable(Char)? = nil,
+                   chains : Enumerable(Char) | String | Nil = nil,
                    guess_topology : Bool = true,
                    @het : Bool = true)
       super input, guess_topology
-      @chains = chains.try &.to_set
+      @chains = chains.is_a?(Enumerable) ? chains.to_set : chains
       parse_header
     end
 
@@ -310,10 +310,15 @@ module Chem::PDB
     end
 
     private def parse_atom(builder : Structure::Builder) : Nil
-      return if (chains = @chains) && !chains.includes?(read(21))
       return if @alt_loc && (alt_loc = read?(16)) && alt_loc != @alt_loc
 
-      builder.chain read(21) if read(21).alphanumeric?
+      chid = read(21)
+      case chains = @chains
+      when Set     then return unless chains.includes? chid
+      when "first" then return if chid != (builder.current_chain.try(&.id) || chid)
+      end
+
+      builder.chain chid if chid.alphanumeric?
       builder.residue read(17, 4).strip, read_serial(22, 4), read?(26)
       atom = builder.atom \
         read(12, 4).strip,
