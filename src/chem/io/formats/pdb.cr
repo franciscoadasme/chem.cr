@@ -296,7 +296,7 @@ module Chem::PDB
     end
 
     private def assign_bonds(builder : Structure::Builder) : Nil
-      builder.bonds @pdb_bonds
+      builder.bonds @pdb_bonds unless @pdb_bonds.empty?
     end
 
     private def assign_secondary_structure(builder : Structure::Builder) : Nil
