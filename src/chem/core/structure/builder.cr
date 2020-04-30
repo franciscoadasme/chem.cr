@@ -87,6 +87,14 @@ module Chem
       with self yield self
     end
 
+    def current_chain : Chain?
+      @chain
+    end
+
+    def current_residue : Residue?
+      @residue
+    end
+
     def expt(expt : Structure::Experiment?)
       @structure.experiment = expt
     end
