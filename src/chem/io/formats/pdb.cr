@@ -317,7 +317,7 @@ module Chem::PDB
 
       chid = read(21)
       case chains = @chains
-      when Set     then return unless chains.includes? chid
+      when Set     then return unless chid.in?(chains)
       when "first" then return if chid != (builder.current_chain.try(&.id) || chid)
       else              nil
       end
@@ -454,7 +454,7 @@ module Chem::PDB
     private def parse_sequence : Nil
       @pdb_seq = Protein::Sequence.build do |aminoacids|
         each_record_of("seqres") do
-          next if (chains = @chains) && !chains.includes?(read(11))
+          next if (chains = @chains) && !read(11).in?(chains)
           read(19, 60).split.each { |name| aminoacids << Protein::AminoAcid[name] }
         end
       end

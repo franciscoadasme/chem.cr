@@ -54,7 +54,7 @@ module Chem
       atom_serials = Set(Int32).new bond_table.size * 2
       bond_table.each_key { |(i, j)| atom_serials << i << j }
       @structure.each_atom do |atom|
-        atom_table[atom.serial] = atom if atom_serials.includes?(atom.serial)
+        atom_table[atom.serial] = atom if atom.serial.in?(atom_serials)
       end
       bond_table.each do |(i, j), order|
         if (lhs = atom_table[i]?) && (rhs = atom_table[j]?)

@@ -82,7 +82,7 @@ module Chem::Topology::Templates
         res_t.each_atom_type do |atom_t|
           @atom_table[atom_t] = String.build do |io|
             bonded_atoms = res_t.bonded_atoms(atom_t)
-            if (bond = res_t.link_bond) && bond.includes?(atom_t)
+            if (bond = res_t.link_bond) && atom_t.in?(bond)
               bonded_atoms << bond.other(atom_t)
             end
 
@@ -111,7 +111,7 @@ module Chem::Topology::Templates
     end
 
     private def mapped?(atom : Atom, atom_map : Hash(Atom, String)) : Bool
-      !@atoms.includes?(atom) || atom_map.has_key?(atom)
+      !atom.in?(@atoms) || atom_map.has_key?(atom)
     end
 
     private def mapped?(atom_t : AtomType, atom_map : Hash(Atom, String)) : Bool

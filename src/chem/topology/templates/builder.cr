@@ -124,7 +124,7 @@ module Chem::Topology::Templates
     end
 
     private def add_bond(atom_t : AtomType, other : AtomType, order : Int = 1)
-      bond = @bonds.find { |bond| bond.includes?(atom_t) && bond.includes?(other) }
+      bond = @bonds.find { |bond| atom_t.in?(bond) && other.in?(bond) }
       if bond && bond.order != order
         fatal "Bond #{atom_t.name}#{bond.to_char}#{other.name} already exists"
       elsif bond.nil?
@@ -181,7 +181,7 @@ module Chem::Topology::Templates
     private def missing_bonds(atom_t : AtomType) : Int32
       valency = atom_t.valency
       if bond = @link_bond
-        valency -= bond.order if bond.includes?(atom_t)
+        valency -= bond.order if atom_t.in?(bond)
       end
       valency - @bonds.each.select(&.includes?(atom_t.name)).map(&.order).sum
     end

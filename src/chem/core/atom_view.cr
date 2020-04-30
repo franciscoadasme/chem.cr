@@ -42,7 +42,7 @@ module Chem
     def each_chain(&block : Chain ->)
       chains = Set(Chain).new
       each do |atom|
-        yield atom.chain unless chains.includes?(atom.chain)
+        yield atom.chain unless atom.chain.in?(chains)
         chains << atom.chain
       end
     end
@@ -54,7 +54,7 @@ module Chem
     def each_residue(&block : Residue ->)
       residues = Set(Residue).new
       each do |atom|
-        yield atom.residue unless residues.includes?(atom.residue)
+        yield atom.residue unless atom.residue.in?(residues)
         residues << atom.residue
       end
     end

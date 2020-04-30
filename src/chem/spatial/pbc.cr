@@ -55,7 +55,7 @@ module Chem::Spatial::PBC
 
       ADJACENT_IMAGE_IDXS.each do |img_idx|
         img_vec = vec + img_sense * img_idx
-        if (0..2).all? { |i| extents[i].includes? img_vec[i] }
+        if (0..2).all? { |i| img_vec[i].in? extents[i] }
           yield atom, (img_vec - offset).to_cartesian(lattice)
         end
       end
@@ -74,7 +74,7 @@ module Chem::Spatial::PBC
   end
 
   private def assemble_fragment(atom, center, moved_atoms) : Nil
-    return if moved_atoms.includes? atom
+    return if atom.in?(moved_atoms)
 
     atom.coords -= (atom.coords - center).round
     moved_atoms << atom

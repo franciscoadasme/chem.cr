@@ -36,7 +36,7 @@ module Chem::Protein::Stride
       exec = ENV["STRIDE_BIN"]? || Process.find_executable("stride")
       if exec && File.executable?(exec)
         output = `"#{exec}" #{pdbfile}`
-        raise "stride executable failed" unless output.includes? "ASG"
+        raise "stride executable failed" unless "ASG".in?(output)
         output
       else
         raise "Cannot find stride executable"
