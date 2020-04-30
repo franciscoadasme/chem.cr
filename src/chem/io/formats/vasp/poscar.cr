@@ -58,7 +58,7 @@ module Chem::VASP::Poscar
 
     private def write(constraint : Constraint) : Nil
       {:x, :y, :z}.each do |axis|
-        @io.printf "%4s", constraint.includes?(axis) ? 'F' : 'T'
+        @io.printf "%4s", axis.in?(constraint) ? 'F' : 'T'
       end
     end
 

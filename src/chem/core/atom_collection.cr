@@ -23,12 +23,12 @@ module Chem
     def each_fragment(& : AtomView ->) : Nil
       atoms = Set(Atom).new(n_atoms).concat each_atom
       each_atom do |atom|
-        next unless atoms.includes?(atom)
+        next unless atom.in?(atoms)
         atoms.delete atom
         fragment = [atom]
         fragment.each do |a|
           a.each_bonded_atom do |b|
-            next unless atoms.includes?(b)
+            next unless b.in?(atoms)
             fragment << b
             atoms.delete b
           end

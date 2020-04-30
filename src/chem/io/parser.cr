@@ -625,7 +625,7 @@ module Chem
 
     def each(indexes : Enumerable(Int), &block : Structure ->)
       (indexes.max + 1).times do |i|
-        if indexes.includes? i
+        if i.in?(indexes)
           value = self.next
           raise IndexError.new if value.is_a?(Stop)
           yield value

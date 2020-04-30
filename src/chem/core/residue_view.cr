@@ -40,7 +40,7 @@ module Chem
     def each_chain(&block : Chain ->)
       chains = Set(Chain).new
       each do |residue|
-        yield residue.chain unless chains.includes?(residue.chain)
+        yield residue.chain unless residue.chain.in?(chains)
         chains << residue.chain
       end
     end

@@ -398,7 +398,7 @@ module Chem::Spatial
     end
 
     def loc_at?(vec : Vector) : Location?
-      return unless bounds.includes? vec
+      return unless vec.in?(bounds)
       vec = (vec - origin).to_fractional bounds.basis
       (vec * @dim.map &.-(1)).round.to_t.map &.to_i
     end

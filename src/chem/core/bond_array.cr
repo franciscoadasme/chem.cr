@@ -25,7 +25,7 @@ module Chem
     end
 
     def add(bond : Bond) : Bond
-      unless @bonds.includes? bond
+      unless bond.in?(@bonds)
         other_bonds = bond.other(@atom).bonds
         # validate_bond! bond
         # other_bonds.validate_bond! bond
@@ -54,7 +54,7 @@ module Chem
     end
 
     def delete(bond : Bond)
-      return unless @bonds.includes? bond
+      return unless bond.in? @bonds
       @bonds.delete bond
       bond.other(@atom).bonds.delete bond
     end
