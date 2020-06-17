@@ -73,8 +73,6 @@ module Chem
       self
     end
 
-    delegate dssp, to: @secondary_structure
-
     # Returns the atom that matches *atom_t*.
     #
     # Atom must match both atom type's name and element, otherwise it
@@ -369,6 +367,10 @@ module Chem
 
     def dig?(name : String) : Atom?
       self[name]?
+    end
+
+    def dssp : Char
+      @secondary_structure.code
     end
 
     def each_atom : Iterator(Atom)

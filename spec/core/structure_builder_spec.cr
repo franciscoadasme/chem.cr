@@ -253,7 +253,7 @@ describe Chem::Structure::Builder do
     structure = Chem::Structure.build do
       chain { %w(PHE ARG ALA).each { |name| residue name } }
       chain { %w(ILE VAL).each { |name| residue name } }
-      secondary_structure({'A', 1, nil}, {'A', 2, nil}, :helix_alpha)
+      secondary_structure({'A', 1, nil}, {'A', 2, nil}, :right_handed_helix_alpha)
       secondary_structure({'B', 2, nil}, {'B', 2, nil}, :beta_strand)
     end
 

@@ -407,9 +407,9 @@ module Chem::PDB
 
     private def parse_helix : Nil
       kind = case read_int(38, 2)
-             when 1 then Protein::SecondaryStructure::HelixAlpha
-             when 3 then Protein::SecondaryStructure::HelixPi
-             when 5 then Protein::SecondaryStructure::Helix3_10
+             when 1 then Protein::SecondaryStructure::RightHandedHelixAlpha
+             when 3 then Protein::SecondaryStructure::RightHandedHelixPi
+             when 5 then Protein::SecondaryStructure::RightHandedHelix3_10
              else        Protein::SecondaryStructure::None
              end
       add_sec kind,

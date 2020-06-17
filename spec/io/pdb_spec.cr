@@ -198,7 +198,7 @@ describe Chem::PDB do
 
     it "parses secondary structure information when sheet type is missing" do
       st = load_file "secondary_structure_missing_type.pdb"
-      st.residues.map(&.secondary_structure.dssp).should eq "0EE00EEEEE0".chars
+      st.residues.map(&.secondary_structure.code).should eq "0EE00EEEEE0".chars
     end
 
     it "parses bonds" do
@@ -321,7 +321,7 @@ describe Chem::PDB do
       structure.n_atoms.should eq 310
       structure.chains.map(&.id).should eq ['B']
       structure.sequence.to_s.should eq "GIEPLGPVDEDQGEHYLFAGG"
-      structure['B'][18].secondary_structure.dssp.should eq 'E'
+      structure['B'][18].secondary_structure.code.should eq 'E'
     end
 
     it "parses only protein" do
