@@ -27,7 +27,7 @@ describe Chem::Protein::SecondaryStructure do
 
   describe ".[]" do
     it "fails when code is invalid" do
-      expect_raises Exception, "Unknown secondary structure code: X" do
+      expect_raises Exception, "Invalid secondary structure code: X" do
         Chem::Protein::SecondaryStructure['X']
       end
     end
@@ -128,6 +128,25 @@ describe Chem::Protein::SecondaryStructure do
     end
   end
 
+  describe "#min_size" do
+    it "returns secondary structure's minimum size" do
+      sec(:bend).min_size.should eq 1
+      sec(:beta_bridge).min_size.should eq 1
+      sec(:beta_strand).min_size.should eq 2
+      sec(:left_handed_helix2_7).min_size.should eq 2
+      sec(:left_handed_helix3_10).min_size.should eq 3
+      sec(:left_handed_helix_alpha).min_size.should eq 4
+      sec(:left_handed_helix_pi).min_size.should eq 5
+      sec(:none).min_size.should eq 1
+      sec(:polyproline).min_size.should eq 3
+      sec(:right_handed_helix2_7).min_size.should eq 2
+      sec(:right_handed_helix3_10).min_size.should eq 3
+      sec(:right_handed_helix_alpha).min_size.should eq 4
+      sec(:right_handed_helix_pi).min_size.should eq 5
+      sec(:turn).min_size.should eq 1
+    end
+  end
+
   describe "#regular?" do
     it "tells if it's a regular secondary structure" do
       sec(:bend).regular?.should be_false
@@ -173,6 +192,14 @@ describe Chem::Protein::SecondaryStructureType do
       sectype(:coil).code.should eq 'C'
       sectype(:extended).code.should eq 'E'
       sectype(:helical).code.should eq 'H'
+    end
+  end
+
+  describe "#min_size" do
+    it "returns secondary structure type's minimum size" do
+      sectype(:coil).min_size.should eq 1
+      sectype(:extended).min_size.should eq 2
+      sectype(:helical).min_size.should eq 3
     end
   end
 

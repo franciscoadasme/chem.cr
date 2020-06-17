@@ -101,6 +101,19 @@ module Chem::Protein
       end
     end
 
+    # Returns nominal secondary structure's minimum size.
+    def min_size : Int32
+      case self
+      when .beta_strand? then 2
+      when .helix2_7?    then 2
+      when .helix3_10?   then 3
+      when .helix_alpha? then 4
+      when .helix_pi?    then 5
+      when .polyproline? then 3
+      else                    1
+      end
+    end
+
     # Returns `true` if it's a regular secondary structure, otherwise
     # `false`.
     #
@@ -167,6 +180,15 @@ module Chem::Protein
       when .extended? then 'E'
       when .helical?  then 'H'
       else                 'C'
+      end
+    end
+
+    # Returns nominal secondary structure type's minimum size.
+    def min_size : Int32
+      case self
+      when .extended? then 2
+      when .helical?  then 3
+      else                 1
       end
     end
 
