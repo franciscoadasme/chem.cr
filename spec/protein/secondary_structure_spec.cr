@@ -52,6 +52,24 @@ describe Chem::Protein::SecondaryStructure do
     end
   end
 
+  describe "#equals?" do
+    it "tells if two secondary structures are the same" do
+      sec(:right_handed_helix_alpha).equals?(:right_handed_helix_alpha).should be_true
+      sec(:right_handed_helix_alpha).equals?(:right_handed_helix_pi).should be_false
+      sec(:right_handed_helix_alpha).equals?(:left_handed_helix_alpha).should be_false
+      sec(:beta_strand).equals?(:polyproline).should be_false
+      sec(:beta_strand).equals?(:bend).should be_false
+    end
+
+    it "tells if two secondary structures are of the same type" do
+      sec(:right_handed_helix_alpha).equals?(:right_handed_helix_alpha, strict: false).should be_true
+      sec(:right_handed_helix_alpha).equals?(:right_handed_helix_pi, strict: false).should be_true
+      sec(:right_handed_helix_alpha).equals?(:left_handed_helix_alpha, strict: false).should be_true
+      sec(:beta_strand).equals?(:polyproline, strict: false).should be_true
+      sec(:beta_strand).equals?(:bend, strict: false).should be_false
+    end
+  end
+
   describe "#helix2_7?" do
     it "tells if it's a 2.2_7-helix regardless of handedness" do
       sec(:bend).helix2_7?.should be_false

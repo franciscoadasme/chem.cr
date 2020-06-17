@@ -101,6 +101,26 @@ module Chem::Protein
       end
     end
 
+    # Returns `true` if secondary structures are equal.
+    #
+    # If `strict` is `true`, secondary structures are compared by their
+    # identity, otherwise they're compared by their computed type.
+    #
+    # ```
+    # SecondaryStructure::RightHandedHelixAlpha.equals?(:right_handed_helix_alpha) # => true
+    # SecondaryStructure::RightHandedHelixAlpha.equals?(:right_handed_helix_pi)    # => false
+    # SecondaryStructure::RightHandedHelixAlpha.equals?(:left_handed_helix_alpha)  # => false
+    # SecondaryStructure::BetaStrand.equals?(:polyproline)                         # => true
+    # SecondaryStructure::BetaStrand.equals?(:bend)                                # => false
+    #
+    # SecondaryStructure::RightHandedHelixAlpha.equals?(:right_handed_helix_pi, strict: false) # => true
+    # SecondaryStructure::BetaStrand.equals?(:polyproline, strict: false)                      # => true
+    # SecondaryStructure::BetaStrand.equals?(:bend, strict: false)                             # => false
+    # ```
+    def equals?(rhs : self, strict : Bool = true) : Bool
+      strict ? self == rhs : type == rhs.type
+    end
+
     # Returns nominal secondary structure's minimum size.
     def min_size : Int32
       case self
