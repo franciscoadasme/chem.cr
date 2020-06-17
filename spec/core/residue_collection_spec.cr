@@ -51,6 +51,14 @@ describe Chem::ResidueCollection do
     end
   end
 
+  describe "#reset_secondary_structure" do
+    it "sets secondary structure to none" do
+      s = load_file "1crn.pdb"
+      s.reset_secondary_structure
+      s.each_residue.all?(&.secondary_structure.none?).should be_true
+    end
+  end
+
   describe "#residues" do
     it "returns a residue view" do
       fake_structure.residues.should be_a Chem::ResidueView

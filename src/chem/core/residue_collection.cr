@@ -28,6 +28,12 @@ module Chem
       end
     end
 
+    # Sets secondary structure of every residue to none.
+    def reset_secondary_structure : self
+      each_residue &.secondary_structure=(:none)
+      self
+    end
+
     def residues : ResidueView
       residues = Array(Residue).new n_residues
       each_residue { |residue| residues << residue }
