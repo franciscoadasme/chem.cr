@@ -188,3 +188,9 @@ def make_grid(nx : Int,
     (yield i, j, k).to_f
   end
 end
+
+macro enum_cast(decl)
+  def {{decl.var}}(name : {{decl.type}}) : {{decl.type}}
+    name
+  end
+end

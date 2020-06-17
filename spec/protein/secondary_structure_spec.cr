@@ -230,14 +230,5 @@ describe Chem::Protein::SecondaryStructureType do
   end
 end
 
-private def sec(
-  name : Chem::Protein::SecondaryStructure
-) : Chem::Protein::SecondaryStructure
-  name
-end
-
-private def sectype(
-  name : Chem::Protein::SecondaryStructureType
-) : Chem::Protein::SecondaryStructureType
-  name
-end
+private enum_cast sec : Chem::Protein::SecondaryStructure
+private enum_cast sectype : Chem::Protein::SecondaryStructureType
