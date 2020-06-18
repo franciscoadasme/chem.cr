@@ -295,6 +295,14 @@ describe Chem::Residue do
     end
   end
 
+  describe "#dextro?" do
+    it "tells if it's dextrorotatory" do
+      load_file("l-d-peptide.pdb").residues.map(&.dextro?).should eq [
+        false, false, true, true, false, false,
+      ]
+    end
+  end
+
   describe "#inspect" do
     it "returns a delimited string representation" do
       structure = Chem::Structure.new
@@ -303,6 +311,14 @@ describe Chem::Residue do
       Chem::Residue.new("ARG", 234, chain).inspect.should eq "<Residue A:ARG234>"
       chain = Chem::Chain.new 'B', structure
       Chem::Residue.new("ALA", 7453, chain).inspect.should eq "<Residue B:ALA7453>"
+    end
+  end
+
+  describe "#levo?" do
+    it "tells if it's levorotatory" do
+      load_file("l-d-peptide.pdb").residues.map(&.levo?).should eq [
+        false, true, false, false, true, false,
+      ]
     end
   end
 

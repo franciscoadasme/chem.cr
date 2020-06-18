@@ -361,6 +361,22 @@ module Chem
       atom
     end
 
+    # Returns `true` is residue is dextrorotatory, otherwise `false`.
+    #
+    # A residue is considered to be dextrorotatory if the improper angle
+    # C-CA-C-CB is negative.
+    #
+    # Note that this method returns `false` if the residue doesn't have
+    # any of such atoms, therefore it's not always equal to the inverse
+    # of `#levo?`.
+    def dextro? : Bool
+      if (n = self["N"]?) && (ca = self["CA"]?) && (c = self["C"]?) && (cb = self["CB"]?)
+        Spatial.improper(n, ca, c, cb) < 0
+      else
+        false
+      end
+    end
+
     def dig(name : String) : Atom
       self[name]
     end
@@ -395,6 +411,22 @@ module Chem
       io << "<Residue "
       to_s io
       io << '>'
+    end
+
+    # Returns `true` is residue is levorotatory, otherwise `false`.
+    #
+    # A residue is considered to be levorotatory if the improper angle
+    # C-CA-C-CB is positive.
+    #
+    # Note that this method returns `false` if the residue doesn't have
+    # any of such atoms, therefore it's not always equal to the inverse
+    # of `#dextro?`.
+    def levo? : Bool
+      if (n = self["N"]?) && (ca = self["CA"]?) && (c = self["C"]?) && (cb = self["CB"]?)
+        Spatial.improper(n, ca, c, cb) > 0
+      else
+        false
+      end
     end
 
     def n_atoms : Int32
