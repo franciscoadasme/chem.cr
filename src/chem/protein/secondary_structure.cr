@@ -59,7 +59,6 @@ module Chem::Protein
       when 'H'           then RightHandedHelixAlpha
       when 'I'           then RightHandedHelixPi
       when 'T', 't'      then Turn
-      else                    nil
       end
     end
 
@@ -83,21 +82,20 @@ module Chem::Protein
     # - `'0'` : None
     def code : Char
       case self
-      when .bend?                     then 'S'
-      when .beta_bridge?              then 'B'
-      when .beta_strand?              then 'E'
-      when .left_handed_helix2_7?     then 'f'
-      when .left_handed_helix3_10?    then 'g'
-      when .left_handed_helix_alpha?  then 'h'
-      when .left_handed_helix_pi?     then 'i'
-      when .none?                     then '0'
-      when .polyproline?              then 'P'
-      when .right_handed_helix2_7?    then 'F'
-      when .right_handed_helix3_10?   then 'G'
-      when .right_handed_helix_alpha? then 'H'
-      when .right_handed_helix_pi?    then 'I'
-      when .turn?                     then 'T'
-      else                                 raise "BUG: unreachable"
+      in .bend?                     then 'S'
+      in .beta_bridge?              then 'B'
+      in .beta_strand?              then 'E'
+      in .left_handed_helix2_7?     then 'f'
+      in .left_handed_helix3_10?    then 'g'
+      in .left_handed_helix_alpha?  then 'h'
+      in .left_handed_helix_pi?     then 'i'
+      in .none?                     then '0'
+      in .polyproline?              then 'P'
+      in .right_handed_helix2_7?    then 'F'
+      in .right_handed_helix3_10?   then 'G'
+      in .right_handed_helix_alpha? then 'H'
+      in .right_handed_helix_pi?    then 'I'
+      in .turn?                     then 'T'
       end
     end
 
@@ -197,18 +195,18 @@ module Chem::Protein
     # - `'C'` : Coil
     def code : Char
       case self
-      when .extended? then 'E'
-      when .helical?  then 'H'
-      else                 'C'
+      in .extended? then 'E'
+      in .helical?  then 'H'
+      in .coil?     then 'C'
       end
     end
 
     # Returns nominal secondary structure type's minimum size.
     def min_size : Int32
       case self
-      when .extended? then 2
-      when .helical?  then 3
-      else                 1
+      in .extended? then 2
+      in .helical?  then 3
+      in .coil?     then 1
       end
     end
 

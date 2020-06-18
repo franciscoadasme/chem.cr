@@ -253,8 +253,6 @@ module Chem::Topology::Templates
         add_bond "CA", "HA"
         link_adjacent_by "C-N"
         root "CA"
-      else
-        nil
       end
     end
   end

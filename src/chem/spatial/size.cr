@@ -53,7 +53,6 @@ module Chem::Spatial
       when 0 then @x
       when 1 then @y
       when 2 then @z
-      else        nil
       end
     end
 

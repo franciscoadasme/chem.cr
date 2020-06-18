@@ -72,7 +72,7 @@ module Chem::Topology::Templates
       atoms.each do |atom|
         @atom_table[atom] = String.build do |io|
           io << atom.element.symbol
-          atom.bonded_atoms.map(&.element.symbol).sort!.join "", io
+          atom.bonded_atoms.map(&.element.symbol).sort!.join io, ""
         end
       end
     end
@@ -87,7 +87,7 @@ module Chem::Topology::Templates
             end
 
             io << atom_t.element.symbol
-            bonded_atoms.map(&.element.symbol).sort!.join "", io
+            bonded_atoms.map(&.element.symbol).sort!.join io, ""
           end
         end
       end

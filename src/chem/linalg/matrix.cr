@@ -100,8 +100,6 @@ module Chem::Linalg
     def []?(i : Int, j : Int) : Float64?
       if k = internal_index?(i, j)
         unsafe_fetch k
-      else
-        nil
       end
     end
 

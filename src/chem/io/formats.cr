@@ -130,8 +130,6 @@ module Chem::IO
                 {{format}}
             {% end %}
           {% end %}
-          else
-            nil
           end
         {% end %}
       end

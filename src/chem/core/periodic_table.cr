@@ -17,8 +17,6 @@ module Chem::PeriodicTable
             {{@type}}::{{name}}
         {% end %}
       {% end %}
-      else
-        nil
       end
     {% end %}
   end
@@ -32,8 +30,6 @@ module Chem::PeriodicTable
             {{@type}}::{{name}}
         {% end %}
       {% end %}
-      else
-        nil
       end
     {% end %}
   end
@@ -47,8 +43,6 @@ module Chem::PeriodicTable
             {{@type}}::{{name}}
         {% end %}
       {% end %}
-      else
-        nil
       end
     {% end %}
   end

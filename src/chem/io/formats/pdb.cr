@@ -25,7 +25,6 @@ module Chem::PDB
       case chr
       when .ascii_uppercase? then num - 10*36**(width - 1) + 10**width
       when .ascii_lowercase? then num + 16*36**(width - 1) + 10**width
-      else                        nil
       end
     end
 
@@ -39,9 +38,9 @@ module Chem::PDB
       out_of_range num if num < 1 - 10**(width - 1)
       return io.printf "%#{width}d", num if num < 10**width
       num -= 10**width
-      return (num + 10*36**(width - 1)).to_s 36, io, upcase: true if num < 26*36**(width - 1)
+      return (num + 10*36**(width - 1)).to_s io, base: 36, upcase: true if num < 26*36**(width - 1)
       num -= 26*36**(width - 1)
-      return (num + 10*36**(width - 1)).to_s 36, io if num < 26*36**(width - 1)
+      return (num + 10*36**(width - 1)).to_s io, base: 36 if num < 26*36**(width - 1)
       out_of_range num
     end
 
@@ -260,8 +259,6 @@ module Chem::PDB
           return parse_model
         when "end", "master"
           break
-        else
-          nil
         end
       end
       stop
@@ -276,8 +273,6 @@ module Chem::PDB
         when "endmdl"
           next_record
           break
-        else
-          nil
         end
       end
     end
@@ -319,7 +314,6 @@ module Chem::PDB
       case chains = @chains
       when Set     then return unless chid.in?(chains)
       when "first" then return if chid != (builder.current_chain.try(&.id) || chid)
-      else              nil
       end
 
       builder.chain chid if chid.alphanumeric?
@@ -368,18 +362,14 @@ module Chem::PDB
         when "jrnl"
           case read(12, 4).strip.downcase
           when "doi" then doi = read(19, 60).strip
-          else            nil
           end
         when "remark"
           next if read(10, 70).blank? # skip remark first line
           case read_int(7, 3)
           when 2 then resolution = read_float?(23, 7)
-          else        nil
           end
         when "title"
           title += read(10, 70).rstrip.squeeze ' '
-        else
-          nil
         end
       end
 
@@ -400,7 +390,6 @@ module Chem::PDB
         when "sheet"                                       then parse_sheet
         when "header", "title", "expdta", "jrnl", "remark" then parse_expt
         when "seqres"                                      then parse_sequence
-        else                                                    nil
         end
       end
     end
@@ -441,7 +430,6 @@ module Chem::PDB
           when "conect"        then parse_bonds if @seek_bonds
           when "model"         then seek_bonds if @seek_bonds; break
           when "master", "end" then break
-          else                      nil
           end
         end
 
@@ -474,8 +462,6 @@ module Chem::PDB
         PeriodicTable::X
       when String
         PeriodicTable[symbol]? || parse_exception "Unknown element"
-      else
-        nil
       end
     end
 
@@ -521,8 +507,6 @@ module Chem::PDB
             parse_bonds
           when "atom", "hetatm", "endmdl", "ter"
             break
-          else
-            nil
           end
         end
       end
