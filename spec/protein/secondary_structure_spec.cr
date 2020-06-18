@@ -229,6 +229,3 @@ describe Chem::Protein::SecondaryStructureType do
     end
   end
 end
-
-private enum_cast sec : Chem::Protein::SecondaryStructure
-private enum_cast sectype : Chem::Protein::SecondaryStructureType

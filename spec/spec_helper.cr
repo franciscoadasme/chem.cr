@@ -194,3 +194,6 @@ macro enum_cast(decl)
     name
   end
 end
+
+enum_cast sec : Chem::Protein::SecondaryStructure
+enum_cast sectype : Chem::Protein::SecondaryStructureType
