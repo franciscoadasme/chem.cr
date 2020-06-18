@@ -85,6 +85,15 @@ module Chem::Linalg
       diagonal size, initial_value: 1
     end
 
+    def self.read(path : Path | String, rows : Number, columns : Number) : self
+      build(rows, columns) do |buffer|
+        i = -1
+        File.each_line(path) do |line|
+          line.split.each { |num| buffer[i += 1] = num.to_f }
+        end
+      end
+    end
+
     def self.square(size : Int, initial_value : Float64? = nil) : self
       Matrix.new size, size, initial_value
     end
