@@ -47,6 +47,18 @@ module Chem::Spatial
     Math.acos 2 * q1.dot(q2)**2 - 1
   end
 
+  def improper(a : Atom, b : Atom, c : Atom, d : Atom, *args, **options) : Float64
+    improper a.coords, b.coords, c.coords, d.coords, *args, **options
+  end
+
+  def improper(a : Vector,
+               b : Vector,
+               c : Vector,
+               d : Vector,
+               lattice : Lattice? = nil) : Float64
+    dihedral b, a, c, d, lattice
+  end
+
   def squared_distance(a : Atom, b : Atom, lattice : Lattice? = nil) : Float64
     squared_distance a.coords, b.coords, lattice
   end
