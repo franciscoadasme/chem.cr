@@ -445,11 +445,11 @@ module Chem
       end
 
       def read_float?(range : Range(Int, Int)) : Float64?
-        read?(range).try &.to_f
+        read?(range).try &.to_f?
       end
 
       def read_float?(start : Int, count : Int) : Float64?
-        read?(start, count).try &.to_f
+        read?(start, count).try &.to_f?
       end
 
       def read_int(range : Range(Int, Int)) : Int32
