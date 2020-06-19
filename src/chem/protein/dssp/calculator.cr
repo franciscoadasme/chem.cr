@@ -24,7 +24,7 @@ module Chem::Protein::DSSP
         next unless @helices[{i, 3}].start? && @helices[{i - 1, 3}].start?
         next if i.upto(i + 2).any? { |j| !sec(j).none? && !sec(j).helix3_10? }
         i.upto(i + 2).each do |j|
-          res(j).secondary_structure = :right_handed_helix3_10
+          res(j).sec = :right_handed_helix3_10
         end
       end
     end
@@ -33,7 +33,7 @@ module Chem::Protein::DSSP
       1.upto(@residues.size - 5) do |i|
         next unless @helices[{i, 4}].start? && @helices[{i - 1, 4}].start?
         i.upto(i + 3) do |j|
-          res(j).secondary_structure = :right_handed_helix_alpha
+          res(j).sec = :right_handed_helix_alpha
         end
       end
     end
@@ -42,9 +42,9 @@ module Chem::Protein::DSSP
       1.upto(@residues.size - 2) do |i|
         next unless sec(i).none?
         if turn? i
-          res(i).secondary_structure = :turn
+          res(i).sec = :turn
         elsif bend? i
-          res(i).secondary_structure = :bend
+          res(i).sec = :bend
         end
       end
     end
@@ -57,7 +57,7 @@ module Chem::Protein::DSSP
         ss = bridge.i.size > 1 ? SecondaryStructure::BetaStrand : SecondaryStructure::BetaBridge
         {bridge.i, bridge.j}.each do |idxs|
           idxs.first.upto(idxs.last) do |i|
-            res(i).secondary_structure = ss unless res(i).secondary_structure.beta_strand?
+            res(i).sec = ss unless res(i).sec.beta_strand?
           end
         end
       end
@@ -77,7 +77,7 @@ module Chem::Protein::DSSP
                   !sec(j).none? && !sec(j).helix_pi? && !sec(j).helix_alpha?
                 end
         i.upto(i + 4).each do |j|
-          res(j).secondary_structure = :right_handed_helix_pi
+          res(j).sec = :right_handed_helix_pi
         end
       end
     end
@@ -250,11 +250,11 @@ module Chem::Protein::DSSP
     end
 
     private def reset_secondary_structure : Nil
-      @residues.each { |res| res.secondary_structure = :none }
+      @residues.each &.sec=(:none)
     end
 
     private def sec(at index : Int) : Protein::SecondaryStructure
-      res(at: index).secondary_structure
+      res(at: index).sec
     end
 
     private def turn?(i : Int) : Bool

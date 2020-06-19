@@ -123,7 +123,7 @@ describe Chem::ResidueCollection do
     it "sets secondary structure to none" do
       s = load_file "1crn.pdb"
       s.reset_secondary_structure
-      s.each_residue.all?(&.secondary_structure.none?).should be_true
+      s.each_residue.all?(&.sec.none?).should be_true
     end
   end
 

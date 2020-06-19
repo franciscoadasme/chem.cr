@@ -134,7 +134,7 @@ st.atoms.each { |atom| atom.constraint = :z }
 # total charge
 st.atoms.sum_of &.partial_charge
 # iterate over secondary structure elements
-st.residues.chunk(&.secondary_structure).each do |sec, residues|
+st.residues.chunk(&.sec).each do |sec, residues|
   sec # => HelixAlpha
   residues # => [<Residue A:ARG1>, <Residue A:LEU2>, ...]
 end

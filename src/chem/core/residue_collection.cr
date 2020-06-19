@@ -40,9 +40,7 @@ module Chem
     ) : Iterator(ResidueView)
       each_residue
         .select(&.protein?)
-        .chunk_while(reuse) do |i, j|
-          i.secondary_structure.equals?(j.secondary_structure, strict) && i.bonded?(j)
-        end
+        .chunk_while(reuse) { |i, j| i.sec.equals?(j.sec, strict) && i.bonded?(j) }
         .map { |residues| ResidueView.new residues }
     end
 
@@ -91,14 +89,13 @@ module Chem
       accum = reuse.is_a?(Array) ? reuse : [] of Residue
       each_residue do |j|
         next unless j.protein?
-        if (i = accum.last?) &&
-           (!i.secondary_structure.equals?(j.secondary_structure, strict) || !i.bonded?(j))
-          yield ResidueView.new(accum), accum[0].secondary_structure
+        if (i = accum.last?) && (!i.sec.equals?(j.sec, strict) || !i.bonded?(j))
+          yield ResidueView.new(accum), accum[0].sec
           reuse ? accum.clear : (accum = [] of Residue)
         end
         accum << j
       end
-      yield ResidueView.new(accum), accum[0].secondary_structure unless accum.empty?
+      yield ResidueView.new(accum), accum[0].sec unless accum.empty?
     end
 
     def link_bond : Topology::BondType?
@@ -127,7 +124,7 @@ module Chem
 
     # Sets secondary structure of every residue to none.
     def reset_secondary_structure : self
-      each_residue &.secondary_structure=(:none)
+      each_residue &.sec=(:none)
       self
     end
 

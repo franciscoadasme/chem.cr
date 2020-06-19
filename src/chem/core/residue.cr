@@ -19,7 +19,7 @@ module Chem
     property kind : Kind = :other
     property name : String
     property number : Int32
-    property secondary_structure : Protein::SecondaryStructure = :none
+    property sec : Protein::SecondaryStructure = :none
 
     delegate :[], :[]?, to: @atom_table
     delegate structure, to: @chain
@@ -386,7 +386,7 @@ module Chem
     end
 
     def dssp : Char
-      @secondary_structure.code
+      @sec.code
     end
 
     def each_atom : Iterator(Atom)
@@ -554,7 +554,7 @@ module Chem
     protected def copy_to(chain : Chain) : self
       residue = Residue.new @name, @number, @insertion_code, chain
       residue.kind = @kind
-      residue.secondary_structure = @secondary_structure
+      residue.sec = @sec
       each_atom &.copy_to(residue)
       residue
     end

@@ -48,7 +48,7 @@ module Chem::Protein::DSSP
   # ```
   # st = Structure.read "1aho.pdb"
   # Chem::Protein::DSSP.assign_secondary_structure st
-  # st['A'][20].secondary_structure # => HelixAlpha
+  # st['A'][20].sec # => HelixAlpha
   # ```
   def assign_secondary_structure(residues : ResidueCollection) : Nil
     Calculator.new(residues).assign!

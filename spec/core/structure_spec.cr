@@ -31,7 +31,7 @@ describe Chem::Structure do
       other.bonds.size.should eq 337
       other.chains.map(&.id).should eq ['A']
       other.dig('A', 32).name.should eq "CYS"
-      other.dig('A', 32).secondary_structure.beta_strand?.should be_true
+      other.dig('A', 32).sec.beta_strand?.should be_true
       other.dig('A', 32, "CA").coords.should eq V[8.140, 11.694, 9.635]
 
       other.lattice.should eq structure.lattice

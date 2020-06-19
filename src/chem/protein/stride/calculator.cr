@@ -7,7 +7,7 @@ module Chem::Protein::Stride
     def assign
       run_stride
       each_record do |chain, resnum, inscode, ss|
-        @structure[chain][resnum, inscode].secondary_structure = ss
+        @structure[chain][resnum, inscode].sec = ss
       end
     end
 

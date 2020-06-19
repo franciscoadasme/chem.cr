@@ -151,7 +151,7 @@ module Chem
     def secondary_structure(ri : Residue, rj : Residue, type : Protein::SecondaryStructure)
       @structure.each_residue do |residue|
         if ri <= residue <= rj
-          residue.secondary_structure = type
+          residue.sec = type
         end
       end
     end
