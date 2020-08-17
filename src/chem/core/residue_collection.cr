@@ -141,6 +141,17 @@ module Chem
       ResidueView.new residues
     end
 
+    def sec=(sec : Protein::SecondaryStructure) : Protein::SecondaryStructure
+      each_residue &.sec=(sec)
+      sec
+    end
+
+    def sec=(seclist : Array(Protein::SecondaryStructure)) : Array(Protein::SecondaryStructure)
+      raise ArgumentError.new "Mismatch secondary structure list" if seclist.size != n_residues
+      each_residue.zip(seclist) { |res, sec| res.sec = sec }
+      seclist
+    end
+
     def secondary_structures(strict : Bool = true, handedness : Bool = true) : Array(ResidueView)
       elements = [] of ResidueView
       each_secondary_structure(strict: strict, handedness: handedness) do |ele|
