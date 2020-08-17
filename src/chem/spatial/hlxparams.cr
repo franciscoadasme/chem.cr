@@ -33,7 +33,7 @@ module Chem::Spatial
           {n:  res["N"].coords,
            ca: res["CA"].coords,
            c:  res["C"].coords,
-           cb: res["CB"].try(&.coords)},
+           cb: res["CB"]?.try(&.coords)},
           {n: next_res["N"].coords, ca: next_res["CA"].coords},
         }
       end

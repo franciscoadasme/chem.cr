@@ -465,11 +465,11 @@ module Chem
       end
 
       def read_int?(range : Range(Int, Int)) : Int32?
-        read?(range).try &.to_i
+        read?(range).try &.to_i?
       end
 
       def read_int?(start : Int, count : Int) : Int32?
-        read?(start, count).try &.to_i
+        read?(start, count).try &.to_i?
       end
 
       def skip_until(name : String) : Nil
