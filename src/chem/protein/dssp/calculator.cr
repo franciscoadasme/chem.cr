@@ -19,12 +19,28 @@ module Chem::Protein::DSSP
       assign_bends_and_turns
     end
 
+    private def alpha_angle(index : Int) : Float64
+      if (j = res(index)["CA"]?) &&
+         (i = res(index).previous.try(&.["CA"]?)) &&
+         (k = res(index).next.try(&.["CA"]?)) &&
+         (l = res(index).next.try(&.next).try(&.["CA"]?))
+        Spatial.dihedral i, j, k, l
+      else
+        360.0
+      end
+    end
+
     private def assign_3_10_helices : Nil
       1.upto(@residues.size - 4) do |i|
         next unless @helices[{i, 3}].start? && @helices[{i - 1, 3}].start?
         next if i.upto(i + 2).any? { |j| !sec(j).none? && !sec(j).helix3_10? }
-        i.upto(i + 2).each do |j|
-          res(j).sec = :right_handed_helix3_10
+        sec = if chirality(i, i + 2) >= 0
+                SecondaryStructure::RightHandedHelix3_10
+              else
+                SecondaryStructure::LeftHandedHelix3_10
+              end
+        i.upto(i + 2) do |j|
+          res(j).sec = sec
         end
       end
     end
@@ -32,8 +48,13 @@ module Chem::Protein::DSSP
     private def assign_alpha_helices : Nil
       1.upto(@residues.size - 5) do |i|
         next unless @helices[{i, 4}].start? && @helices[{i - 1, 4}].start?
+        sec = if chirality(i, i + 3) >= 0
+                SecondaryStructure::RightHandedHelixAlpha
+              else
+                SecondaryStructure::LeftHandedHelixAlpha
+              end
         i.upto(i + 3) do |j|
-          res(j).sec = :right_handed_helix_alpha
+          res(j).sec = sec
         end
       end
     end
@@ -70,14 +91,23 @@ module Chem::Protein::DSSP
       assign_pi_helices
     end
 
+    private def chirality(i : Int, j : Int) : Int32
+      (i..j).sum { |k| alpha_angle(k) > 0 ? 1 : -1 }.sign
+    end
+
     private def assign_pi_helices : Nil
       1.upto(@residues.size - 6) do |i|
         next unless @helices[{i, 5}].start? && @helices[{i - 1, 5}].start?
         next if i.upto(i + 4).any? do |j|
                   !sec(j).none? && !sec(j).helix_pi? && !sec(j).helix_alpha?
                 end
-        i.upto(i + 4).each do |j|
-          res(j).sec = :right_handed_helix_pi
+        sec = if chirality(i, i + 4) >= 0
+                SecondaryStructure::RightHandedHelixPi
+              else
+                SecondaryStructure::LeftHandedHelixPi
+              end
+        i.upto(i + 4) do |j|
+          res(j).sec = sec
         end
       end
     end
