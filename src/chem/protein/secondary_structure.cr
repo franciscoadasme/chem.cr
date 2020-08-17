@@ -115,8 +115,37 @@ module Chem::Protein
     # SecondaryStructure::BetaStrand.equals?(:polyproline, strict: false)                      # => true
     # SecondaryStructure::BetaStrand.equals?(:bend, strict: false)                             # => false
     # ```
-    def equals?(rhs : self, strict : Bool = true) : Bool
-      strict ? self == rhs : type == rhs.type
+    def equals?(rhs : self, strict : Bool = true, handedness : Bool = true) : Bool
+      if strict
+        self == rhs
+      elsif handedness
+        type == rhs.type && self.handedness == rhs.handedness
+      else
+        type == rhs.type
+      end
+    end
+
+    def handedness : Symbol?
+      case self
+      in .left_handed_helix3_10?,
+         .left_handed_helix_alpha?,
+         .left_handed_helix_gamma?,
+         .left_handed_helix_pi?
+        :left
+      in .right_handed_helix3_10?,
+         .right_handed_helix_alpha?,
+         .right_handed_helix_gamma?,
+         .right_handed_helix_pi?
+        :right
+      in .bend?,
+         .beta_bridge?,
+         .beta_strand?,
+         .none?,
+         .polyproline?,
+         .turn?,
+         .uniform?
+        nil
+      end
     end
 
     # Returns nominal secondary structure's minimum size.

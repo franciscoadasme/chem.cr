@@ -61,12 +61,39 @@ describe Chem::Protein::SecondaryStructure do
       sec(:beta_strand).equals?(:bend).should be_false
     end
 
-    it "tells if two secondary structures are of the same type" do
+    it "tells if two secondary structures are of the same type and handedness" do
       sec(:right_handed_helix_alpha).equals?(:right_handed_helix_alpha, strict: false).should be_true
       sec(:right_handed_helix_alpha).equals?(:right_handed_helix_pi, strict: false).should be_true
-      sec(:right_handed_helix_alpha).equals?(:left_handed_helix_alpha, strict: false).should be_true
+      sec(:right_handed_helix_alpha).equals?(:left_handed_helix_alpha, strict: false).should be_false
       sec(:beta_strand).equals?(:polyproline, strict: false).should be_true
       sec(:beta_strand).equals?(:bend, strict: false).should be_false
+    end
+
+    it "tells if two secondary structures are of the same type" do
+      sec(:right_handed_helix_alpha).equals?(:right_handed_helix_alpha, strict: false, handedness: false).should be_true
+      sec(:right_handed_helix_alpha).equals?(:right_handed_helix_pi, strict: false, handedness: false).should be_true
+      sec(:right_handed_helix_alpha).equals?(:left_handed_helix_alpha, strict: false, handedness: false).should be_true
+      sec(:beta_strand).equals?(:polyproline, strict: false, handedness: false).should be_true
+      sec(:beta_strand).equals?(:bend, strict: false, handedness: false).should be_false
+    end
+  end
+
+  describe "#handedness" do
+    it "returns handedness or nil" do
+      sec(:bend).handedness.should be_nil
+      sec(:beta_bridge).handedness.should be_nil
+      sec(:beta_strand).handedness.should be_nil
+      sec(:left_handed_helix2_7).handedness.should eq :left
+      sec(:left_handed_helix3_10).handedness.should eq :left
+      sec(:left_handed_helix_alpha).handedness.should eq :left
+      sec(:left_handed_helix_pi).handedness.should eq :left
+      sec(:none).handedness.should be_nil
+      sec(:polyproline).handedness.should be_nil
+      sec(:right_handed_helix2_7).handedness.should eq :right
+      sec(:right_handed_helix3_10).handedness.should eq :right
+      sec(:right_handed_helix_alpha).handedness.should eq :right
+      sec(:right_handed_helix_pi).handedness.should eq :right
+      sec(:turn).handedness.should be_nil
     end
   end
 

@@ -8,8 +8,9 @@ module Chem
     #
     # SSEs are defined as segments of consecutive, bonded residues that
     # have the same secondary structure. If `strict` is `false`,
-    # residues are grouped by their secondary structure type. See
-    # `Protein::SecondaryStructure#equals?`.
+    # residues are grouped by their secondary structure type. If
+    # `handedness` is `false`, handedness is not taken into account when
+    # `strict` is `false`. See `Protein::SecondaryStructure#equals?`.
     #
     # Let's say a `structure` has 25 residues with two beta strands
     # spanning residues 3-12 and 18-23, then:
@@ -36,11 +37,14 @@ module Chem
     # each slice of interest is to be used in a read-only fashion.
     def each_secondary_structure(
       reuse : Bool | Array(Residue) = false,
-      strict : Bool = true
+      strict : Bool = true,
+      handedness : Bool = true
     ) : Iterator(ResidueView)
       each_residue
         .select(&.protein?)
-        .chunk_while(reuse) { |i, j| i.sec.equals?(j.sec, strict) && i.bonded?(j) }
+        .chunk_while(reuse) do |i, j|
+          i.sec.equals?(j.sec, strict, handedness) && i.bonded?(j)
+        end
         .map { |residues| ResidueView.new residues }
     end
 
@@ -49,8 +53,9 @@ module Chem
     #
     # SSEs are defined as segments of consecutive, bonded residues that
     # have the same secondary structure. If `strict` is `false`,
-    # residues are grouped by their secondary structure type. See
-    # `Protein::SecondaryStructure#equals?`.
+    # residues are grouped by their secondary structure type. If
+    # `handedness` is `false`, handedness is not taken into account when
+    # `strict` is `false`. See `Protein::SecondaryStructure#equals?`.
     #
     # Let's say a `structure` has 25 residues with two beta strands
     # spanning residues 3-12 and 18-23, then:
@@ -84,12 +89,14 @@ module Chem
     def each_secondary_structure(
       reuse : Bool | Array(Residue) = false,
       strict : Bool = true,
+      handedness : Bool = true,
       & : ResidueView, Protein::SecondaryStructure ->
     ) : Nil
       accum = reuse.is_a?(Array) ? reuse : [] of Residue
       each_residue do |j|
         next unless j.protein?
-        if (i = accum.last?) && (!i.sec.equals?(j.sec, strict) || !i.bonded?(j))
+        if (i = accum.last?) &&
+           (!i.sec.equals?(j.sec, strict, handedness) || !i.bonded?(j))
           yield ResidueView.new(accum), accum[0].sec
           reuse ? accum.clear : (accum = [] of Residue)
         end
@@ -134,10 +141,12 @@ module Chem
       ResidueView.new residues
     end
 
-    def secondary_structures(strict : Bool = true) : Array(ResidueView)
-      secs = [] of ResidueView
-      each_secondary_structure(strict: strict) { |sec| secs << sec }
-      secs
+    def secondary_structures(strict : Bool = true, handedness : Bool = true) : Array(ResidueView)
+      elements = [] of ResidueView
+      each_secondary_structure(strict: strict, handedness: handedness) do |ele|
+        elements << ele
+      end
+      elements
     end
 
     private def guess_previous_residue(residue : Residue, link_bond : Topology::BondType) : Residue?
