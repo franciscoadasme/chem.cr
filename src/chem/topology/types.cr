@@ -65,6 +65,10 @@ module Chem::Topology
       io << "<BondType " << self[0].name << to_char << self[1].name << '>'
     end
 
+    def inverse : self
+      BondType.new self[1], self[0], @order
+    end
+
     def other(atom_t : AtomType) : AtomType
       case atom_t
       when self[0]

@@ -446,13 +446,18 @@ module Chem
     # determines the direction, e.g., C(i)-N(i+1). Be aware that atom
     # types must match exactly to find a residue.
     #
-    # Note that for branched polymers, where multiple residues can be
-    # connected to the same residue (branching point), it returns the
-    # first residue.
+    # Otherwise, it returns a bonded residue whose number and insertion
+    # code come just after those of `self`.
+    #
+    # Note that when multiple residues can be connected to the same
+    # residue (e.g., branched polymers), it returns the first residue
+    # among them.
     def next : Residue?
       if bond_t = type.try(&.link_bond)
-        bonded_residues(bond_t).first?
-      end
+        bonded_residues bond_t
+      else
+        bonded_residues.select! &.>(self)
+      end.sort!.first?
     end
 
     def omega : Float64
@@ -484,17 +489,22 @@ module Chem
     # Returns the preceding residue if exists, otherwise `nil`.
     #
     # It uses the link bond type of the associated residue type, if
-    # present, to search for the next residue. Thus, link bond
+    # present, to search for the previous residue. Thus, link bond
     # determines the direction, e.g., C(i-1)-N(i). Be aware that atom
     # types must match exactly to find a residue.
     #
-    # Note that for branched polymers, where multiple residues can be
-    # connected to the same residue (branching point), it returns the
-    # last residue.
+    # Otherwise, it returns a bonded residue whose number and insertion
+    # code come just before those of `self`.
+    #
+    # Note that when multiple residues can be connected to the same
+    # residue (e.g., branched polymers), it returns the last residue
+    # among them.
     def previous : Residue?
       if bond_t = type.try(&.link_bond)
-        bonded_residues.select!(&.bonded?(self, bond_t)).last?
-      end
+        bonded_residues bond_t.inverse
+      else
+        bonded_residues.select! &.<(self)
+      end.sort!.last?
     end
 
     def psi : Float64
