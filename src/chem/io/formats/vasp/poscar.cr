@@ -144,8 +144,6 @@ module Chem::VASP::Poscar
         parse_coordinate_system
 
         @elements.size.times { parse_atom builder }
-
-        @io.skip_to_end # ensure end of file as POSCAR doesn't support multiple entries
       end
     end
 
