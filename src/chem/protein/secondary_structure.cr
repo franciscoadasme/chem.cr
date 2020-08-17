@@ -3,15 +3,15 @@ module Chem::Protein
     Bend
     BetaBridge
     BetaStrand
-    LeftHandedHelix2_7
     LeftHandedHelix3_10
     LeftHandedHelixAlpha
+    LeftHandedHelixGamma
     LeftHandedHelixPi
     None
     Polyproline
-    RightHandedHelix2_7
     RightHandedHelix3_10
     RightHandedHelixAlpha
+    RightHandedHelixGamma
     RightHandedHelixPi
     Turn
 
@@ -48,15 +48,15 @@ module Chem::Protein
       when 'S', 's'      then Bend
       when 'B', 'b'      then BetaBridge
       when 'E', 'e'      then BetaStrand
-      when 'f'           then LeftHandedHelix2_7
       when 'g'           then LeftHandedHelix3_10
       when 'h'           then LeftHandedHelixAlpha
+      when 'f'           then LeftHandedHelixGamma
       when 'i'           then LeftHandedHelixPi
       when '0', 'C', 'c' then None
       when 'P', 'p'      then Polyproline
-      when 'F'           then RightHandedHelix2_7
       when 'G'           then RightHandedHelix3_10
       when 'H'           then RightHandedHelixAlpha
+      when 'F'           then RightHandedHelixGamma
       when 'I'           then RightHandedHelixPi
       when 'T', 't'      then Turn
       end
@@ -85,15 +85,15 @@ module Chem::Protein
       in .bend?                     then 'S'
       in .beta_bridge?              then 'B'
       in .beta_strand?              then 'E'
-      in .left_handed_helix2_7?     then 'f'
       in .left_handed_helix3_10?    then 'g'
       in .left_handed_helix_alpha?  then 'h'
+      in .left_handed_helix_gamma?  then 'f'
       in .left_handed_helix_pi?     then 'i'
       in .none?                     then '0'
       in .polyproline?              then 'P'
-      in .right_handed_helix2_7?    then 'F'
       in .right_handed_helix3_10?   then 'G'
       in .right_handed_helix_alpha? then 'H'
+      in .right_handed_helix_gamma? then 'F'
       in .right_handed_helix_pi?    then 'I'
       in .turn?                     then 'T'
       end
@@ -123,9 +123,9 @@ module Chem::Protein
     def min_size : Int32
       case self
       when .beta_strand? then 2
-      when .helix2_7?    then 2
       when .helix3_10?   then 3
       when .helix_alpha? then 4
+      when .helix_gamma? then 3
       when .helix_pi?    then 5
       when .polyproline? then 3
       else                    1
@@ -159,16 +159,18 @@ module Chem::Protein
     # ```
     def type : SecondaryStructureType
       case self
-      when .helix3_10?, .helix_alpha?, .helix_pi?
+      in .left_handed_helix3_10?, .left_handed_helix_alpha?, .left_handed_helix_pi?,
+         .right_handed_helix3_10?, .right_handed_helix_alpha?, .right_handed_helix_pi?
         SecondaryStructureType::Helical
-      when .beta_bridge?, .beta_strand?, .helix2_7?, .polyproline?
+      in .beta_bridge?, .beta_strand?, .left_handed_helix_gamma?, .polyproline?,
+         .right_handed_helix_gamma?
         SecondaryStructureType::Extended
-      else
+      in .bend?, .none?, .turn?, .uniform?
         SecondaryStructureType::Coil
       end
     end
 
-    {% for sec in %w(helix2_7 helix3_10 helix_alpha helix_pi) %}
+    {% for sec in %w(helix_gamma helix3_10 helix_alpha helix_pi) %}
       def {{sec.id}}?
         left_handed_{{sec.id}}? || right_handed_{{sec.id}}?
       end
