@@ -365,8 +365,11 @@ module Chem::PDB
           end
         when "remark"
           next if read(10, 70).blank? # skip remark first line
-          case read_int(7, 3)
+          case read_int?(7, 3)
           when 2 then resolution = read_float?(23, 7)
+          when nil
+            pdbid = read(11, 4)
+            date = Time.local
           end
         when "title"
           title += read(10, 70).rstrip.squeeze ' '
