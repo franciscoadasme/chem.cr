@@ -14,6 +14,7 @@ module Chem::Protein
     RightHandedHelixGamma
     RightHandedHelixPi
     Turn
+    Uniform
 
     # Returns the secondary structure by one-letter code.
     #
@@ -59,6 +60,7 @@ module Chem::Protein
       when 'F'           then RightHandedHelixGamma
       when 'I'           then RightHandedHelixPi
       when 'T', 't'      then Turn
+      when 'U', 'u'      then Uniform
       end
     end
 
@@ -96,6 +98,7 @@ module Chem::Protein
       in .right_handed_helix_gamma? then 'F'
       in .right_handed_helix_pi?    then 'I'
       in .turn?                     then 'T'
+      in .uniform?                  then 'U'
       end
     end
 
