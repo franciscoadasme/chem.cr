@@ -1,9 +1,9 @@
+require "baked_file_system"
 require "yaml"
 
 module Chem::Protein
   class QUESSO < SecondaryStructureCalculator
     CURVATURE_CUTOFF = 60
-    DATA_DIR         = "#{__DIR__}/../../../data/quesso"
 
     getter? blend_elements : Bool
 
@@ -152,24 +152,23 @@ module Chem::Protein
       end
 
       class_getter basins : Array(Basin) do
-        File.open(File.join(DATA_DIR, "basins.yml")) do |io|
-          YAML.parse(io).as_a.map do |attrs|
-            Basin.new Protein::SecondaryStructure.parse(attrs["sec"].as_s),
-              attrs["x0"].as_f.scale(X_EXTENT),
-              attrs["y0"].as_f.scale(Y_EXTENT),
-              attrs["sigma_x"].as_f.scale(X_EXTENT),
-              attrs["sigma_y"].as_f.scale(Y_EXTENT),
-              attrs["height"].as_f,
-              attrs["rot"].as_f,
-              attrs["offset"].as_f
-          end
+        io = Files.get("basins.yml")
+        YAML.parse(io).as_a.map do |attrs|
+          Basin.new Protein::SecondaryStructure.parse(attrs["sec"].as_s),
+            attrs["x0"].as_f.scale(X_EXTENT),
+            attrs["y0"].as_f.scale(Y_EXTENT),
+            attrs["sigma_x"].as_f.scale(X_EXTENT),
+            attrs["sigma_y"].as_f.scale(Y_EXTENT),
+            attrs["height"].as_f,
+            attrs["rot"].as_f,
+            attrs["offset"].as_f
         end
       end
 
       def self.load
         EnergySurface.new(
-          Linalg::Matrix.read(File.join(DATA_DIR, "dxx.npy"), 400, 400),
-          Linalg::Matrix.read(File.join(DATA_DIR, "dyy.npy"), 400, 400),
+          Linalg::Matrix.read(Files.get("dxx.npy"), 400, 400),
+          Linalg::Matrix.read(Files.get("dyy.npy"), 400, 400),
         )
       end
 
@@ -210,6 +209,11 @@ module Chem::Protein
         x, y = walk x, y, steps if x > 0
         find_basin x, y, check_proximity
       end
+    end
+
+    class Files
+      extend BakedFileSystem
+      bake_folder "../../../data/quesso"
     end
 
     class SecondaryStructureBlender
