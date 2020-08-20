@@ -19,17 +19,9 @@ require "../spec_helper"
     it "assigns secondary structure (1dpo, insertion codes)" do
       structure = load_file "1dpo.pdb", topology: :templates
       Chem::Protein::Stride.assign structure
-      structure['A'][183].sec.beta_strand?.should be_true
-      structure['A'][184].sec.none?.should be_true
-      structure['A'][184, 'A'].sec.turn?.should be_true
-    end
-
-    it "calculates secondary structure (1cbn)" do
-      structure = load_file "1cbn.pdb", topology: :templates
-      ss_table = Chem::Protein::Stride.calculate structure
-      ss_table[structure['A'][7]].helix_alpha?.should be_true
-      ss_table[structure['A'][45]].turn?.should be_true
-      ss_table[structure['A'][46]].none?.should be_true
+      structure.dig('A', 183).sec.beta_strand?.should be_true
+      structure.dig('A', 184).sec.none?.should be_true
+      structure.dig('A', 184, 'A').sec.turn?.should be_true
     end
   end
 {% end %}

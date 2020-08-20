@@ -86,9 +86,15 @@ module Chem::Linalg
     end
 
     def self.read(path : Path | String, rows : Number, columns : Number) : self
+      File.open(path) do |io|
+        read io, rows, columns
+      end
+    end
+
+    def self.read(io, rows : Number, columns : Number) : self
       build(rows, columns) do |buffer|
         i = -1
-        File.each_line(path) do |line|
+        io.each_line do |line|
           line.split.each { |num| buffer[i += 1] = num.to_f }
         end
       end

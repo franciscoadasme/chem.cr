@@ -256,4 +256,19 @@ module Chem::Protein
       !coil?
     end
   end
+
+  abstract class SecondaryStructureCalculator
+    def initialize(@structure : Structure)
+    end
+
+    abstract def assign : Nil
+
+    def self.assign(structure : Structure, **options) : Nil
+      new(structure, **options).assign
+    end
+
+    protected def reset_secondary_structure : Nil
+      @structure.reset_secondary_structure
+    end
+  end
 end
