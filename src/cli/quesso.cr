@@ -6,8 +6,12 @@ VERSION_DATE = "2020-08-02"
 
 input_file = ""
 output_file = STDOUT
+beta = ""
 OptionParser.parse do |parser|
   parser.banner = "Usage: quesso [-o|--output PDB] PDB"
+  parser.on("-b", "--beta", "Write curvature value to PDB beta column") do
+    beta = "curvature"
+  end
   parser.on("-o OUTPUT", "--output OUTPUT", "PDB output file") do |str|
     output_file = str
   end
@@ -48,15 +52,18 @@ abort "error: missing input file" unless input_file
 begin
   structure = Chem::Structure.from_pdb input_file.not_nil!
   structure.each_residue do |residue|
-    curvature = 0.0
-    if (h1 = residue.previous.try(&.hlxparams)) &&
-       (h2 = residue.hlxparams) &&
-       (h3 = residue.next.try(&.hlxparams))
-      dprev = Chem::Spatial.distance h1.q, h2.q
-      dnext = Chem::Spatial.distance h2.q, h3.q
-      curvature = ((dprev + dnext) / 2).degrees
+    case beta
+    when "curvature"
+      curvature = 0.0
+      if (h1 = residue.previous.try(&.hlxparams)) &&
+         (h2 = residue.hlxparams) &&
+         (h3 = residue.next.try(&.hlxparams))
+        dprev = Chem::Spatial.distance h1.q, h2.q
+        dnext = Chem::Spatial.distance h2.q, h3.q
+        curvature = ((dprev + dnext) / 2).degrees
+      end
+      residue.each_atom &.temperature_factor=(curvature)
     end
-    residue.each_atom &.temperature_factor=(curvature)
   end
   Chem::Protein::QUESSO.assign structure
   structure.to_pdb output_file
