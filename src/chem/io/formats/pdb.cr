@@ -207,7 +207,9 @@ module Chem::PDB
       helix_id = sheet_id = 0
       structure.secondary_structures
         .select!(&.[0].sec.regular?)
-        .sort_by! { |residues| residues[0].sec.beta_strand? ? 1 : -1 }
+        .sort_by! do |residues|
+          {residues[0].sec.beta_strand? ? 1 : -1, residues[0]}
+        end
         .each do |residues|
           case residues[0].sec
           when .beta_strand?
