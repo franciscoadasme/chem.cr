@@ -190,6 +190,7 @@ module Chem::PDB
         write_title structure.title unless structure.title.blank?
       end
       write_pdb_version structure.experiment.try(&.pdb_accession)
+      write_sec structure
       write structure.lattice.not_nil! if structure.periodic?
     end
 
@@ -200,6 +201,73 @@ module Chem::PDB
         PDB_VERSION,
         PDB_VERSION_DATE.to_s("%d-%^b-%y"),
         WHITESPACE
+    end
+
+    private def write_sec(structure : Structure) : Nil
+      helix_id = sheet_id = 0
+      structure.secondary_structures
+        .select!(&.[0].sec.regular?)
+        .sort_by! { |residues| residues[0].sec.beta_strand? ? 1 : -1 }
+        .each do |residues|
+          case residues[0].sec
+          when .beta_strand?
+            write_sheet (sheet_id += 1), residues
+          when .left_handed_helix3_10?
+            write_helix (helix_id += 1), residues, helix_type: 11
+          when .left_handed_helix_alpha?
+            write_helix (helix_id += 1), residues, helix_type: 6
+          when .left_handed_helix_gamma?
+            write_helix (helix_id += 1), residues, helix_type: 8
+          when .left_handed_helix_pi?
+            write_helix (helix_id += 1), residues, helix_type: 13
+          when .polyproline?
+            write_helix (helix_id += 1), residues, helix_type: 10
+          when .right_handed_helix3_10?
+            write_helix (helix_id += 1), residues, helix_type: 5
+          when .right_handed_helix_alpha?
+            write_helix (helix_id += 1), residues, helix_type: 1
+          when .right_handed_helix_gamma?
+            write_helix (helix_id += 1), residues, helix_type: 4
+          when .right_handed_helix_pi?
+            write_helix (helix_id += 1), residues, helix_type: 3
+          end
+        end
+    end
+
+    private def write_helix(id : Int, residues : ResidueView, helix_type : Int) : Nil
+      @io.printf "%-6s %3d %3d %3s %s %4d%1s %3s %s %4d%1s%2d%30s%6d    \n",
+        "HELIX",
+        id,
+        id,
+        residues[0].name,
+        residues[0].chain.id,
+        residues[0].number,
+        residues[0].insertion_code,
+        residues[-1].name,
+        residues[-1].chain.id,
+        residues[-1].number,
+        residues[-1].insertion_code,
+        helix_type,
+        "",
+        residues.size
+    end
+
+    private def write_sheet(id : Int, residues : ResidueView) : Nil
+      @io.printf "%-6s %3d %3s%2s %3s %1s%4d%1s %3s %1s%4d%1s%2s%40s\n",
+        "SHEET",
+        id,  # strand number
+        nil, # sheet identifier
+        nil, # number of strands in sheet
+        residues[0].name,
+        residues[0].chain.id,
+        residues[0].number,
+        residues[0].insertion_code,
+        residues[-1].name,
+        residues[-1].chain.id,
+        residues[-1].number,
+        residues[-1].insertion_code,
+        nil, # strand sense (first strand = 0, parallel = 1, anti-parallel = -1)
+        ""
     end
 
     private def write_ter(prev_res : Residue) : Nil

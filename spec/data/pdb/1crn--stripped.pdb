@@ -5,6 +5,10 @@ EXPDTA    X-RAY DIFFRACTION
 JRNL        DOI    10.1073/PNAS.81.19.6014                                      
 REMARK   4                                                                      
 REMARK   4 1CRN COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
+HELIX    1   1 ILE A    7  PRO A   19  1                                  13    
+HELIX    2   2 GLU A   23  THR A   30  1                                   8    
+SHEET    1       THR A   1  CYS A   4                                           
+SHEET    2       CYS A  32  ILE A  35                                           
 CRYST1   40.960   18.650   22.520  90.00  90.77  90.00 P 1           1          
 ATOM      1  N   THR A   1      17.047  14.099   3.625  1.00 13.79           N  
 ATOM      2  CA  THR A   1      16.967  12.784   4.338  1.00 10.80           C  
@@ -174,7 +178,7 @@ ATOM    165  CB  GLU A  23       9.648  13.285   0.660  1.00  6.16           C
 ATOM    166  CG  GLU A  23      10.440  12.093   0.063  1.00  7.48           C  
 ATOM    167  CD  GLU A  23      11.941  12.170   0.391  1.00  9.40           C  
 ATOM    168  OE1 GLU A  23      12.416  13.225   0.681  1.00 10.40           O  
-ATOM    169  OE2 GLU A  23      12.539  11.070   0.292  1.00 13.32           O  
+ATOM    169  OE2 GLU A  23      12.539  11.070   0.292  1.00 13.32           O1-
 ATOM    170  N   ALA A  24       7.212  15.334   0.966  1.00  4.56           N  
 ATOM    171  CA  ALA A  24       6.614  16.317   1.913  1.00  4.49           C  
 ATOM    172  C   ALA A  24       5.212  15.936   2.350  1.00  4.10           C  
@@ -306,7 +310,7 @@ ATOM    297  O   ASP A  43      11.720  11.040  17.428  1.00  7.29           O
 ATOM    298  CB  ASP A  43      12.933  12.737  19.580  1.00  6.72           C  
 ATOM    299  CG  ASP A  43      13.140  14.094  18.958  1.00  8.59           C  
 ATOM    300  OD1 ASP A  43      14.109  14.303  18.212  1.00  9.59           O  
-ATOM    301  OD2 ASP A  43      12.267  14.963  19.265  1.00 11.45           O  
+ATOM    301  OD2 ASP A  43      12.267  14.963  19.265  1.00 11.45           O1-
 ATOM    302  N   TYR A  44      13.725  11.174  16.425  1.00  5.22           N  
 ATOM    303  CA  TYR A  44      13.257  10.745  15.081  1.00  5.56           C  
 ATOM    304  C   TYR A  44      14.275   9.687  14.612  1.00  4.61           C  

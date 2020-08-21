@@ -394,7 +394,7 @@ end
 
 describe Chem::PDB::Writer do
   it "writes a structure" do
-    structure = load_file "1crn.pdb", topology: :none
+    structure = load_file "1crn.pdb", topology: :templates
     expected = File.read "spec/data/pdb/1crn--stripped.pdb"
     structure.to_pdb.should eq expected
   end
