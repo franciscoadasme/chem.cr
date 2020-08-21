@@ -10,4 +10,11 @@ dependencies:
   baked_file_system:
     github: schovi/baked_file_system
 
+executables:
+  - quesso
+
+targets:
+  quesso:
+    main: src/cli/quesso.cr
+
 license: MIT
