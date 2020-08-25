@@ -110,22 +110,15 @@ module Chem
     end
 
     def renumber_by_connectivity : Nil
-      each_residue.map(&.chain).uniq.each do |chain|
-        next unless chain.n_residues > 1
-        next unless bond_t = chain.link_bond
-
-        res_map = chain.each_residue.index_by do |residue|
-          residue.bonded_residues(bond_t.inverse)[0]? ||
-            residue.bonded_residues(bond_t.inverse, strict: false)[0]?
-        end
-        res_map.compare_by_identity
-        res_map[nil] = chain.residues.first unless res_map.has_key? nil
-
-        prev_res = nil
-        chain.n_residues.times do |i|
-          next_res = res_map[prev_res]
-          next_res.number = i + 1
-          prev_res = next_res
+      each_residue.group_by(&.chain).each do |chain, residues|
+        num = 0
+        while residue = residues.find(&.previous(strict: false, use_numbering: false).nil?) ||
+                        residues[0]?
+          while residue && residue.in?(residues)
+            residue.number = (num += 1)
+            residues.reject! &.same?(residue)
+            residue = residue.next
+          end
         end
         chain.reset_cache
       end
