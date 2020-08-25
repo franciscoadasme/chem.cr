@@ -117,6 +117,7 @@ module Chem
         res_map = chain.each_residue.to_h do |residue|
           {guess_previous_residue(residue, bond_t), residue}
         end
+        res_map.compare_by_identity
         res_map[nil] = chain.residues.first unless res_map.has_key? nil
 
         prev_res = nil
