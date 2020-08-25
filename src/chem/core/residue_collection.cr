@@ -114,8 +114,9 @@ module Chem
         next unless chain.n_residues > 1
         next unless bond_t = chain.link_bond
 
-        res_map = chain.each_residue.to_h do |residue|
-          {guess_previous_residue(residue, bond_t), residue}
+        res_map = chain.each_residue.index_by do |residue|
+          residue.bonded_residues(bond_t.inverse)[0]? ||
+            residue.bonded_residues(bond_t.inverse, strict: false)[0]?
         end
         res_map.compare_by_identity
         res_map[nil] = chain.residues.first unless res_map.has_key? nil
@@ -159,25 +160,6 @@ module Chem
         elements << ele
       end
       elements
-    end
-
-    private def guess_previous_residue(residue : Residue, link_bond : Topology::BondType) : Residue?
-      prev_res = nil
-      if atom = residue[link_bond[1]]?
-        prev_res = atom.each_bonded_atom.find(&.name.==(link_bond[0].name)).try &.residue
-        prev_res ||= atom.each_bonded_atom.find do |atom|
-          atom.element == link_bond[0].element && atom.residue != residue
-        end.try &.residue
-      else
-        residue.each_atom do |atom|
-          next unless atom.element == link_bond[1].element
-          prev_res = atom.each_bonded_atom.find do |atom|
-            atom.element == link_bond[0].element && atom.residue != residue
-          end.try &.residue
-          break if prev_res
-        end
-      end
-      prev_res
     end
   end
 end
