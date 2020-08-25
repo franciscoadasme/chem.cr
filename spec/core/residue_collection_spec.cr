@@ -117,6 +117,24 @@ describe Chem::ResidueCollection do
         b.previous.should eq a
       end
     end
+
+    it "does not depend on current residue numbering (#82)" do
+      [
+        "polyala-trp--theta-80.000--c-19.91.poscar",
+        "polyala-trp--theta-180.000--c-10.00.poscar",
+      ].each do |filename|
+        residues = load_file(filename, topology: :guess).residues
+        residues.renumber_by_connectivity
+        residues = residues.to_a.sort_by(&.number)
+        residues.map(&.number).should eq (1..residues.size).to_a
+        residues.each_with_index do |residue, i|
+          j = i + 1
+          j = 0 if j >= residues.size
+          residues[j].number.should eq j + 1
+          residue.bonded?(residues[j]).should be_true
+        end
+      end
+    end
   end
 
   describe "#reset_secondary_structure" do
