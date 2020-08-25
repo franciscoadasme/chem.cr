@@ -448,19 +448,20 @@ module Chem
     # `false`.
     #
     # Otherwise, it returns a bonded residue whose number and insertion
-    # code come just after those of `self`.
+    # code come just after those of `self`. This fallback can be
+    # disabled by setting *use_numbering* to `false`.
     #
     # Note that when multiple residues can be connected to the same
     # residue (e.g., branched polymers), it returns the first residue
     # among them.
-    def next(strict : Bool = true) : Residue?
+    def next(strict : Bool = true, use_numbering : Bool = true) : Residue?
       if bond_t = type.try(&.link_bond)
         residues = bonded_residues bond_t
         residues = bonded_residues bond_t, strict: false if residues.empty? && !strict
-        residues
-      else
-        bonded_residues.select! &.>(self)
-      end.sort!.first?
+        residues.sort!.first?
+      elsif use_numbering
+        bonded_residues.select!(&.>(self)).sort!.first?
+      end
     end
 
     def omega : Float64
@@ -498,19 +499,20 @@ module Chem
     # `false`.
     #
     # Otherwise, it returns a bonded residue whose number and insertion
-    # code come just before those of `self`.
+    # code come just before those of `self`. This fallback can be
+    # disabled by setting *use_numbering* to `false`.
     #
     # Note that when multiple residues can be connected to the same
     # residue (e.g., branched polymers), it returns the last residue
     # among them.
-    def previous(strict : Bool = true) : Residue?
+    def previous(strict : Bool = true, use_numbering : Bool = true) : Residue?
       if bond_t = type.try(&.link_bond).try(&.inverse)
         residues = bonded_residues bond_t
         residues = bonded_residues bond_t, strict: false if residues.empty? && !strict
-        residues
-      else
-        bonded_residues.select! &.<(self)
-      end.sort!.last?
+        residues.sort!.last?
+      elsif use_numbering
+        bonded_residues.select!(&.<(self)).sort!.last?
+      end
     end
 
     def psi : Float64
