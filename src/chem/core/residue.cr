@@ -444,20 +444,24 @@ module Chem
     # It uses the link bond type of the associated residue type, if
     # present, to search for the next residue. Thus, link bond
     # determines the direction, e.g., C(i)-N(i+1). Be aware that atom
-    # types must match exactly to find a residue.
+    # types must match exactly to find a residue unless *strict* is
+    # `false`.
     #
     # Otherwise, it returns a bonded residue whose number and insertion
-    # code come just after those of `self`.
+    # code come just after those of `self`. This fallback can be
+    # disabled by setting *use_numbering* to `false`.
     #
     # Note that when multiple residues can be connected to the same
     # residue (e.g., branched polymers), it returns the first residue
     # among them.
-    def next : Residue?
+    def next(strict : Bool = true, use_numbering : Bool = true) : Residue?
       if bond_t = type.try(&.link_bond)
-        bonded_residues bond_t
-      else
-        bonded_residues.select! &.>(self)
-      end.sort!.first?
+        residues = bonded_residues bond_t
+        residues = bonded_residues bond_t, strict: false if residues.empty? && !strict
+        residues.sort!.first?
+      elsif use_numbering
+        bonded_residues.select!(&.>(self)).sort!.first?
+      end
     end
 
     def omega : Float64
@@ -491,20 +495,24 @@ module Chem
     # It uses the link bond type of the associated residue type, if
     # present, to search for the previous residue. Thus, link bond
     # determines the direction, e.g., C(i-1)-N(i). Be aware that atom
-    # types must match exactly to find a residue.
+    # types must match exactly to find a residue unless *strict* is
+    # `false`.
     #
     # Otherwise, it returns a bonded residue whose number and insertion
-    # code come just before those of `self`.
+    # code come just before those of `self`. This fallback can be
+    # disabled by setting *use_numbering* to `false`.
     #
     # Note that when multiple residues can be connected to the same
     # residue (e.g., branched polymers), it returns the last residue
     # among them.
-    def previous : Residue?
-      if bond_t = type.try(&.link_bond)
-        bonded_residues bond_t.inverse
-      else
-        bonded_residues.select! &.<(self)
-      end.sort!.last?
+    def previous(strict : Bool = true, use_numbering : Bool = true) : Residue?
+      if bond_t = type.try(&.link_bond).try(&.inverse)
+        residues = bonded_residues bond_t
+        residues = bonded_residues bond_t, strict: false if residues.empty? && !strict
+        residues.sort!.last?
+      elsif use_numbering
+        bonded_residues.select!(&.<(self)).sort!.last?
+      end
     end
 
     def psi : Float64
