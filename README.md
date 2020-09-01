@@ -1,5 +1,9 @@
 # chem.cr
 
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/franciscoadasme/chem.cr/Crystal%20CI.svg)
+![Version](https://img.shields.io/github/v/release/franciscoadasme/chem.cr.svg?label=version)
+[![License](https://img.shields.io/github/license/franciscoadasme/chem.cr.svg)](https://github.com/franciscoadasme/chem.cr/blob/master/LICENSE)
+
 A modern library written in [Crystal](https://crystal-lang.org) primarily
 designed for manipulating molecular files created by computational chemistry
 programs. It aims to be both fast and easy to use.
