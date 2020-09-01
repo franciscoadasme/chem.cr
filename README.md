@@ -1,7 +1,7 @@
 # chem.cr
 
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/franciscoadasme/chem.cr/Crystal%20CI.svg)
-![Version](https://img.shields.io/github/v/release/franciscoadasme/chem.cr.svg?label=version)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/franciscoadasme/chem.cr/Crystal%20CI.svg)](https://github.com/franciscoadasme/chem.cr/actions?query=workflow%3A%22Crystal+CI%22)
+[![Version](https://img.shields.io/github/v/release/franciscoadasme/chem.cr.svg?label=version)](https://github.com/franciscoadasme/chem.cr/releases/latest)
 [![License](https://img.shields.io/github/license/franciscoadasme/chem.cr.svg)](https://github.com/franciscoadasme/chem.cr/blob/master/LICENSE)
 
 A modern library written in [Crystal](https://crystal-lang.org) primarily
