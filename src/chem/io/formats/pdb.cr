@@ -528,7 +528,7 @@ module Chem::PDB
     end
 
     private def read_element : Element?
-      case symbol = read?(76, 2).try(&.lstrip)
+      case symbol = read?(76, 2).try(&.strip)
       when "D" # deuterium
         PeriodicTable::D
       when "X" # unknown, e.g., ASX
