@@ -389,6 +389,18 @@ describe Chem::PDB do
       structure.n_atoms.should eq 14
       structure.chains[0].id.should eq 'J'
     end
+
+    it "parses left-justified element (#84)" do
+      io = IO::Memory.new <<-EOS
+        ATOM      1  N   GLY     1     -20.286 -37.665  -6.811  1.00  0.00          N
+        ATOM      2  H1  GLY     1     -20.247 -38.062  -5.872  1.00  0.00          H
+        ATOM      3  H2  GLY     1     -20.074 -36.616  -6.704  1.00  0.00          H
+        ATOM      4  H3  GLY     1     -21.301 -37.774  -7.185  1.00  0.00          H
+        ATOM      5  CA  GLY     1     -19.299 -38.321  -7.682  1.00  0.00          C
+        EOS
+      s = Chem::Structure.from_pdb io
+      s.atoms.map(&.element.symbol).should eq %w(N H H H C)
+    end
   end
 end
 
