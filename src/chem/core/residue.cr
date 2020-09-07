@@ -357,7 +357,7 @@ module Chem
 
     def delete(atom : Atom) : Atom?
       atom = @atoms.delete atom
-      @atom_table.delete atom.name if atom
+      @atom_table.delete(atom.name) if atom && @atom_table[atom.name]?.same?(atom)
       atom
     end
 
