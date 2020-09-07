@@ -41,6 +41,37 @@ describe Chem::Structure do
     end
   end
 
+  describe "#delete" do
+    it "deletes a chain" do
+      structure = Structure.build do
+        3.times { chain { } }
+      end
+      structure.n_chains.should eq 3
+      structure.chains.map(&.id).should eq "ABC".chars
+
+      structure.delete structure.chains[1]
+      structure.n_chains.should eq 2
+      structure.chains.map(&.id).should eq "AC".chars
+      structure.dig?('B').should be_nil
+    end
+
+    it "does not delete another chain with the same id from the internal table (#86)" do
+      structure = Structure.new
+      Chain.new 'A', structure
+      Chain.new 'B', structure
+      Chain.new 'A', structure
+
+      structure.n_chains.should eq 3
+      structure.chains.map(&.id).should eq "ABA".chars
+
+      structure.delete structure.chains[0]
+
+      structure.n_chains.should eq 2
+      structure.chains.map(&.id).should eq "BA".chars
+      structure.dig('A').should be structure.chains[1]
+    end
+  end
+
   describe "#dig" do
     structure = fake_structure
 

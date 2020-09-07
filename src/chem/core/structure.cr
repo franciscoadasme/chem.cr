@@ -91,10 +91,10 @@ module Chem
       Spatial::CoordinatesProxy.new self, @lattice
     end
 
-    def delete(chain : Chain) : Chain?
-      chain = @chains.delete chain
-      @chain_table.delete(chain.id) if chain
-      chain
+    def delete(ch : Chain) : Chain?
+      ch = @chains.delete ch
+      @chain_table.delete(ch.id) if ch && @chain_table[ch.id]?.same?(ch)
+      ch
     end
 
     def dig(id : Char) : Chain

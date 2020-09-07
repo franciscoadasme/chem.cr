@@ -53,7 +53,10 @@ module Chem
 
     def delete(residue : Residue) : Residue?
       residue = @residues.delete residue
-      @residue_table.delete({residue.number, residue.insertion_code}) if residue
+      if residue
+        resid = {residue.number, residue.insertion_code}
+        @residue_table.delete(resid) if @residue_table[resid]?.same?(residue)
+      end
       residue
     end
 
