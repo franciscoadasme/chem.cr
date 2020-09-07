@@ -1,3 +1,10 @@
+# 0.4.1 (2020-09-07)
+
+Some hot fixes
+
+- Support for left-justified element in PDB (#87)
+- Check entity before deleting entry in cache table (#88)
+
 # 0.4.0 (2020-08-22)
 
 This small release mainly focuses on manipulating secondary structure and introduces a novel algorithm termed QUESSO.
