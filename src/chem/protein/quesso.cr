@@ -48,10 +48,10 @@ module Chem::Protein
         rise = h.zeta.scale(0, 4)
         twist = h.theta.scale(0, 360)
         if !strict
-          QUESSO.pes.walk_to_closest_basin(rise, twist, check_proximity: false) ||
+          QUESSO.pes.basin(rise, twist, check_proximity: false) ||
             SecondaryStructure::None
         elsif (curv = compute_curvature(residue)) && curv <= CURVATURE_CUTOFF
-          QUESSO.pes.walk_to_closest_basin(rise, twist) || SecondaryStructure::Uniform
+          QUESSO.pes.basin(rise, twist) || SecondaryStructure::Uniform
         else
           SecondaryStructure::Bend
         end
@@ -195,9 +195,8 @@ module Chem::Protein
         {dx, dy}
       end
 
-      def find_basin(x : Float64,
-                     y : Float64,
-                     check_proximity : Bool = true) : SecondaryStructure?
+      def basin(x : Float64, y : Float64, check_proximity : Bool = true) : SecondaryStructure?
+        x, y = walk x, y if x > 0
         sec = nil
         min_distance = Float64::MAX
         @basins.each do |basin|
@@ -211,23 +210,13 @@ module Chem::Protein
         sec
       end
 
-      def walk(x : Float64, y : Float64, steps : Int, gamma : Float = 2.5e-4) : Tuple(Float64, Float64)
+      def walk(x : Float64, y : Float64, steps : Int = 10, gamma : Float = 2.5e-4) : Tuple(Float64, Float64)
         steps.times do
           dx, dy = diff(x, y)
           x += dx * gamma
           y += dy * gamma
         end
         {x, y}
-      end
-
-      def walk_to_closest_basin(
-        x : Float64,
-        y : Float64,
-        steps : Int = 10,
-        check_proximity : Bool = true
-      ) : SecondaryStructure?
-        x, y = walk x, y, steps if x > 0
-        find_basin x, y, check_proximity
       end
     end
 
