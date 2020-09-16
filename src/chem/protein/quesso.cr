@@ -122,8 +122,12 @@ module Chem::Protein
       getter sigma_x : Float64
       getter sigma_y : Float64
       getter height : Float64
-      getter rot : Float64
+      getter theta : Float64
       getter offset : Float64
+
+      @a : Float64
+      @b : Float64
+      @c : Float64
 
       def initialize(@sec : SecondaryStructure,
                      @x0 : Float64,
@@ -131,54 +135,66 @@ module Chem::Protein
                      @sigma_x : Float64,
                      @sigma_y : Float64,
                      @height : Float64,
-                     @rot : Float64,
+                     @theta : Float64,
                      @offset : Float64)
-        @rot = rot.radians
+        @a = (Math.cos(@theta)**2) / (2*@sigma_x**2) + (Math.sin(@theta)**2) / (2*@sigma_y**2)
+        @b = -(Math.sin(2*@theta)) / (4*@sigma_x**2) + (Math.sin(2*@theta)) / (4*@sigma_y**2)
+        @c = (Math.sin(@theta)**2) / (2*@sigma_x**2) + (Math.cos(@theta)**2) / (2*@sigma_y**2)
+      end
+
+      def eval(x : Float64, y : Float64) : Float64
+        @height * eval_exp(x - @x0, y - @y0) + @offset
+      end
+
+      def diffx(x : Float64, y : Float64) : Float64
+        dx = x - @x0
+        dy = y - @y0
+        @height * (-2*dx*@a - dy*2*@b) * eval_exp(dx, dy)
+      end
+
+      def diffy(x : Float64, y : Float64) : Float64
+        dx = x - @x0
+        dy = y - @y0
+        @height * (-2*dy*@c - dx*2*@b) * eval_exp(dx, dy)
       end
 
       def includes?(x : Float64, y : Float64) : Bool
-        rotcos = Math.cos -@rot
-        rotsin = Math.sin -@rot
+        rotcos = Math.cos -@theta
+        rotsin = Math.sin -@theta
         (rotcos * (x - @x0) + rotsin * (y - @y0))**2 / @sigma_x**2 +
           (rotsin * (x - @x0) - rotcos * (y - @y0))**2 / @sigma_y**2 <= 4.5
+      end
+
+      private def eval_exp(dx : Float64, dy : Float64) : Float64
+        Math.exp -(@a*dx**2 + 2*@b*dx*dy + @c*dy**2)
       end
     end
 
     private class EnergySurface
-      X_EXTENT = 0..4
-      Y_EXTENT = 0..360
-
-      def initialize(@dx : Linalg::Matrix, @dy : Linalg::Matrix)
+      def initialize(@basins : Array(Basin))
       end
 
-      class_getter basins : Array(Basin) do
-        io = Files.get("basins.yml")
-        YAML.parse(io).as_a.map do |attrs|
+      def self.load : self
+        basins = YAML.parse(Files.get("basins.yml")).as_a.map do |attrs|
           Basin.new Protein::SecondaryStructure.parse(attrs["sec"].as_s),
-            attrs["x0"].as_f.scale(X_EXTENT),
-            attrs["y0"].as_f.scale(Y_EXTENT),
-            attrs["sigma_x"].as_f.scale(X_EXTENT),
-            attrs["sigma_y"].as_f.scale(Y_EXTENT),
+            attrs["x0"].as_f.scale(0, 4),
+            attrs["y0"].as_f.scale(0, 360),
+            attrs["sigma_x"].as_f.scale(0, 4),
+            attrs["sigma_y"].as_f.scale(0, 360),
             attrs["height"].as_f,
-            attrs["rot"].as_f,
+            attrs["rot"].as_f.radians,
             attrs["offset"].as_f
         end
-      end
-
-      def self.load
-        EnergySurface.new(
-          Linalg::Matrix.read(Files.get("dxx.npy"), 400, 400),
-          Linalg::Matrix.read(Files.get("dyy.npy"), 400, 400),
-        )
+        EnergySurface.new basins
       end
 
       def find_basin(x : Float64,
                      y : Float64,
                      check_proximity : Bool = true) : SecondaryStructure?
-        x, y = x.scale(X_EXTENT), y.scale(Y_EXTENT)
+        x, y = x.scale(0, 4), y.scale(0, 360)
         sec = nil
         min_distance = Float64::MAX
-        EnergySurface.basins.each do |basin|
+        @basins.each do |basin|
           next if check_proximity && !basin.includes?(x, y)
           d = (x - basin.x0)**2 + (y - basin.y0)**2
           if d < min_distance
@@ -189,15 +205,13 @@ module Chem::Protein
         sec
       end
 
-      def walk(x : Float64, y : Float64, steps : Int) : Tuple(Float64, Float64)
-        x, y = x.scale(X_EXTENT), y.scale(Y_EXTENT)
+      def walk(x : Float64, y : Float64, steps : Int, gamma : Float = 2.5e-4) : Tuple(Float64, Float64)
+        x, y = x.scale(0, 4), y.scale(0, 360)
         steps.times do
-          i = (x * (@dx.rows - 1)).to_i
-          j = (y * (@dx.columns - 1)).to_i
-          x += @dx[i, j]
-          y += @dy[i, j]
+          x += @basins.sum(&.diffx(x, y)) * gamma
+          y += @basins.sum(&.diffy(x, y)) * gamma
         end
-        {x.unscale(X_EXTENT), y.unscale(Y_EXTENT)}
+        {x.unscale(0, 4), y.unscale(0, 360)}
       end
 
       def walk_to_closest_basin(
