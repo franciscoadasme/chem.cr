@@ -146,16 +146,11 @@ module Chem::Protein
         @height * eval_exp(x - @x0, y - @y0) + @offset
       end
 
-      def diffx(x : Float64, y : Float64) : Float64
+      def diff(x : Float64, y : Float64) : Tuple(Float64, Float64)
         dx = x - @x0
         dy = y - @y0
-        @height * (-2*dx*@a - dy*2*@b) * eval_exp(dx, dy)
-      end
-
-      def diffy(x : Float64, y : Float64) : Float64
-        dx = x - @x0
-        dy = y - @y0
-        @height * (-2*dy*@c - dx*2*@b) * eval_exp(dx, dy)
+        e = eval_exp(dx, dy)
+        {@height * (-2*dx*@a - dy*2*@b) * e, @height * (-2*dy*@c - dx*2*@b) * e}
       end
 
       def includes?(x : Float64, y : Float64) : Bool
@@ -188,6 +183,16 @@ module Chem::Protein
         EnergySurface.new basins
       end
 
+      def diff(x : Float64, y : Float64) : Tuple(Float64, Float64)
+        dx, dy = 0.0, 0.0
+        @basins.each do |basin|
+          dx_, dy_ = basin.diff(x, y)
+          dx += dx_
+          dy += dy_
+        end
+        {dx, dy}
+      end
+
       def find_basin(x : Float64,
                      y : Float64,
                      check_proximity : Bool = true) : SecondaryStructure?
@@ -208,8 +213,9 @@ module Chem::Protein
       def walk(x : Float64, y : Float64, steps : Int, gamma : Float = 2.5e-4) : Tuple(Float64, Float64)
         x, y = x.scale(0, 4), y.scale(0, 360)
         steps.times do
-          x += @basins.sum(&.diffx(x, y)) * gamma
-          y += @basins.sum(&.diffy(x, y)) * gamma
+          dx, dy = diff(x, y)
+          x += dx * gamma
+          y += dy * gamma
         end
         {x.unscale(0, 4), y.unscale(0, 360)}
       end
