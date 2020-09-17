@@ -34,21 +34,6 @@ module Chem::Protein
       EnergySurface.new basins
     end
 
-    protected def self.sec_at(
-      rise : Float64,
-      twist : Float64,
-      check_proximity : Bool = true
-    ) : SecondaryStructure?
-      rise, twist = pes.walk rise, twist if rise > 0
-      pes.basins.min_by do |basin|
-        if check_proximity && !basin.includes?(rise, twist)
-          Float64::MAX
-        else
-          (rise - basin.x0)**2 + (twist - basin.y0)**2
-        end
-      end.sec
-    end
-
     private def assign_secondary_structure
       @residues.each do |residue|
         residue.sec = compute_secondary_structure residue
@@ -72,10 +57,11 @@ module Chem::Protein
       if h = residue.hlxparams
         rise = h.zeta.scale(0, 4)
         twist = h.theta.scale(0, 360)
+        rise, twist = QUESSO.pes.walk rise, twist if rise > 0
         if !strict
-          QUESSO.sec_at(rise, twist, check_proximity: false) || SecondaryStructure::None
+          QUESSO.pes.basin(rise, twist, check_proximity: false).sec || SecondaryStructure::None
         elsif (curv = compute_curvature(residue)) && curv <= CURVATURE_CUTOFF
-          QUESSO.sec_at(rise, twist) || SecondaryStructure::Uniform
+          QUESSO.pes.basin(rise, twist).sec || SecondaryStructure::Uniform
         else
           SecondaryStructure::Bend
         end
@@ -192,9 +178,17 @@ module Chem::Protein
     end
 
     private class EnergySurface
-      getter basins : Array(Basin)
-
       def initialize(@basins : Array(Basin))
+      end
+
+      def basin(x : Float64, y : Float64, check_proximity : Bool = true) : Basin?
+        @basins.min_by do |basin|
+          if check_proximity && !basin.includes?(x, y)
+            Float64::MAX
+          else
+            (x - basin.x0)**2 + (y - basin.y0)**2
+          end
+        end
       end
 
       def diff(x : Float64, y : Float64) : Tuple(Float64, Float64)
