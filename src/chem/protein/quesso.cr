@@ -21,7 +21,17 @@ module Chem::Protein
     end
 
     protected class_getter pes : EnergySurface do
-      EnergySurface.load
+      basins = YAML.parse(Files.get("basins.yml")).as_a.map do |attrs|
+        Basin.new Protein::SecondaryStructure.parse(attrs["sec"].as_s),
+          attrs["x0"].as_f.scale(0, 4),
+          attrs["y0"].as_f.scale(0, 360),
+          attrs["sigma_x"].as_f.scale(0, 4),
+          attrs["sigma_y"].as_f.scale(0, 360),
+          attrs["height"].as_f,
+          attrs["rot"].as_f.radians,
+          attrs["offset"].as_f
+      end
+      EnergySurface.new basins
     end
 
     private def assign_secondary_structure
@@ -169,20 +179,6 @@ module Chem::Protein
 
     private class EnergySurface
       def initialize(@basins : Array(Basin))
-      end
-
-      def self.load : self
-        basins = YAML.parse(Files.get("basins.yml")).as_a.map do |attrs|
-          Basin.new Protein::SecondaryStructure.parse(attrs["sec"].as_s),
-            attrs["x0"].as_f.scale(0, 4),
-            attrs["y0"].as_f.scale(0, 360),
-            attrs["sigma_x"].as_f.scale(0, 4),
-            attrs["sigma_y"].as_f.scale(0, 360),
-            attrs["height"].as_f,
-            attrs["rot"].as_f.radians,
-            attrs["offset"].as_f
-        end
-        EnergySurface.new basins
       end
 
       def diff(x : Float64, y : Float64) : Tuple(Float64, Float64)
