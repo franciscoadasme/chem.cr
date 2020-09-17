@@ -34,6 +34,25 @@ module Chem::Protein
       EnergySurface.new basins
     end
 
+    protected def self.sec_at(
+      rise : Float64,
+      twist : Float64,
+      check_proximity : Bool = true
+    ) : SecondaryStructure?
+      rise, twist = pes.walk rise, twist if rise > 0
+      sec = nil
+      min_distance = Float64::MAX
+      pes.basins.each do |basin|
+        next if check_proximity && !basin.includes?(rise, twist)
+        d = (rise - basin.x0)**2 + (twist - basin.y0)**2
+        if d < min_distance
+          sec = basin.sec
+          min_distance = d
+        end
+      end
+      sec
+    end
+
     private def assign_secondary_structure
       @residues.each do |residue|
         residue.sec = compute_secondary_structure residue
@@ -58,10 +77,9 @@ module Chem::Protein
         rise = h.zeta.scale(0, 4)
         twist = h.theta.scale(0, 360)
         if !strict
-          QUESSO.pes.basin(rise, twist, check_proximity: false) ||
-            SecondaryStructure::None
+          QUESSO.sec_at(rise, twist, check_proximity: false) || SecondaryStructure::None
         elsif (curv = compute_curvature(residue)) && curv <= CURVATURE_CUTOFF
-          QUESSO.pes.basin(rise, twist) || SecondaryStructure::Uniform
+          QUESSO.sec_at(rise, twist) || SecondaryStructure::Uniform
         else
           SecondaryStructure::Bend
         end
@@ -178,6 +196,8 @@ module Chem::Protein
     end
 
     private class EnergySurface
+      getter basins : Array(Basin)
+
       def initialize(@basins : Array(Basin))
       end
 
@@ -189,21 +209,6 @@ module Chem::Protein
           dy += dy_
         end
         {dx, dy}
-      end
-
-      def basin(x : Float64, y : Float64, check_proximity : Bool = true) : SecondaryStructure?
-        x, y = walk x, y if x > 0
-        sec = nil
-        min_distance = Float64::MAX
-        @basins.each do |basin|
-          next if check_proximity && !basin.includes?(x, y)
-          d = (x - basin.x0)**2 + (y - basin.y0)**2
-          if d < min_distance
-            sec = basin.sec
-            min_distance = d
-          end
-        end
-        sec
       end
 
       def walk(x : Float64, y : Float64, steps : Int = 10, gamma : Float = 2.5e-4) : Tuple(Float64, Float64)
