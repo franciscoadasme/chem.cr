@@ -40,17 +40,13 @@ module Chem::Protein
       check_proximity : Bool = true
     ) : SecondaryStructure?
       rise, twist = pes.walk rise, twist if rise > 0
-      sec = nil
-      min_distance = Float64::MAX
-      pes.basins.each do |basin|
-        next if check_proximity && !basin.includes?(rise, twist)
-        d = (rise - basin.x0)**2 + (twist - basin.y0)**2
-        if d < min_distance
-          sec = basin.sec
-          min_distance = d
+      pes.basins.min_by do |basin|
+        if check_proximity && !basin.includes?(rise, twist)
+          Float64::MAX
+        else
+          (rise - basin.x0)**2 + (twist - basin.y0)**2
         end
-      end
-      sec
+      end.sec
     end
 
     private def assign_secondary_structure
