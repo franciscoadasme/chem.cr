@@ -59,7 +59,7 @@ module Chem::Protein
         twist = h.theta.scale(0, 360)
         rise, twist = QUESSO.pes.walk rise, twist if rise > 0
         if !strict
-          QUESSO.pes.basin(rise, twist, check_proximity: false).try(&.sec) || SecondaryStructure::None
+          QUESSO.pes.basin(rise, twist).try(&.sec) || SecondaryStructure::None
         elsif (curv = compute_curvature(residue)) && curv <= CURVATURE_CUTOFF
           QUESSO.pes.basin(rise, twist).try(&.sec) || SecondaryStructure::Uniform
         else
@@ -181,11 +181,11 @@ module Chem::Protein
       def initialize(@basins : Array(Basin))
       end
 
-      def basin(x : Float64, y : Float64, check_proximity : Bool = true) : Basin?
+      def basin(x : Float64, y : Float64) : Basin?
         nearest_basin = nil
         min_distance = Float64::MAX
         @basins.each do |basin|
-          next if check_proximity && !basin.includes?(x, y)
+          next unless basin.includes?(x, y)
           d = (x - basin.x0)**2 + (y - basin.y0)**2
           if d < min_distance
             nearest_basin = basin
