@@ -11,8 +11,7 @@ module Chem::Protein
       super structure
       @residues = ResidueView.new structure.residues.to_a.select(&.protein?)
       @curvature = Array(Float64?).new @residues.size, nil
-      @rise = Array(Float64?).new @residues.size, nil
-      @twist = Array(Float64?).new @residues.size, nil
+      @raw_sec = Array(SecondaryStructure?).new @residues.size, nil
 
       @resindex = Hash(Tuple(Char, Int32, Char?), Int32).new @residues.size
       @residues.each_with_index do |residue, i|
@@ -45,8 +44,7 @@ module Chem::Protein
     private def assign_secondary_structure
       @residues.each_with_index do |res, i|
         next unless h2 = res.hlxparams
-        @rise[i] = h2.zeta.scale(0, 4)
-        @twist[i] = h2.theta.scale(0, 360)
+
         pred = @residues[i - 1] if i > 0 && res.bonded?(@residues[i - 1])
         succ = @residues[i + 1] if i < @residues.size - 1 && res.bonded?(@residues[i + 1])
         if (h1 = pred.try(&.hlxparams)) && (h3 = succ.try(&.hlxparams))
@@ -54,6 +52,12 @@ module Chem::Protein
           dnext = Spatial.distance h2.q, h3.q
           @curvature[i] = ((dprev + dnext) / 2).degrees
         end
+
+        rise = h2.zeta.scale(0, 4)
+        twist = h2.theta.scale(0, 360)
+        rise, twist = QUESSO.pes.walk rise, twist if rise > 0
+        @raw_sec[i] = QUESSO.pes.basin(rise, twist).try(&.sec)
+
         res.sec = compute_secondary_structure res
       end
     end
@@ -63,17 +67,12 @@ module Chem::Protein
       strict : Bool = true
     ) : SecondaryStructure
       i = @resindex[{residue.chain.id, residue.number, residue.insertion_code}]
-      if (rise = @rise[i]) && (twist = @twist[i])
-        rise, twist = QUESSO.pes.walk rise, twist if rise > 0
-        if !strict
-          QUESSO.pes.basin(rise, twist).try(&.sec) || SecondaryStructure::None
-        elsif (curv = @curvature[i]) && curv <= CURVATURE_CUTOFF
-          QUESSO.pes.basin(rise, twist).try(&.sec) || SecondaryStructure::Uniform
-        else
-          SecondaryStructure::Bend
-        end
+      if !strict
+        @raw_sec[i] || SecondaryStructure::None
+      elsif (curv = @curvature[i]) && curv <= CURVATURE_CUTOFF
+        @raw_sec[i] || SecondaryStructure::Uniform
       else
-        SecondaryStructure::None
+        SecondaryStructure::Bend
       end
     end
 
