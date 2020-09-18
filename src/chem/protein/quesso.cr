@@ -10,6 +10,14 @@ module Chem::Protein
     def initialize(structure : Structure, @blend_elements : Bool = true)
       super structure
       @residues = ResidueView.new structure.residues.to_a.select(&.protein?)
+      @curvature = Array(Float64?).new @residues.size, nil
+      @rise = Array(Float64?).new @residues.size, nil
+      @twist = Array(Float64?).new @residues.size, nil
+
+      @resindex = Hash(Tuple(Char, Int32, Char?), Int32).new @residues.size
+      @residues.each_with_index do |residue, i|
+        @resindex[{residue.chain.id, residue.number, residue.insertion_code}] = i
+      end
     end
 
     def assign : Nil
@@ -35,18 +43,18 @@ module Chem::Protein
     end
 
     private def assign_secondary_structure
-      @residues.each do |residue|
-        residue.sec = compute_secondary_structure residue
-      end
-    end
-
-    private def compute_curvature(residue : Residue) : Float64?
-      if (h1 = residue.previous.try(&.hlxparams)) &&
-         (h2 = residue.hlxparams) &&
-         (h3 = residue.next.try(&.hlxparams))
-        dprev = Spatial.distance h1.q, h2.q
-        dnext = Spatial.distance h2.q, h3.q
-        ((dprev + dnext) / 2).degrees
+      @residues.each_with_index do |res, i|
+        next unless h2 = res.hlxparams
+        @rise[i] = h2.zeta.scale(0, 4)
+        @twist[i] = h2.theta.scale(0, 360)
+        pred = @residues[i - 1] if i > 0 && res.bonded?(@residues[i - 1])
+        succ = @residues[i + 1] if i < @residues.size - 1 && res.bonded?(@residues[i + 1])
+        if (h1 = pred.try(&.hlxparams)) && (h3 = succ.try(&.hlxparams))
+          dprev = Spatial.distance h1.q, h2.q
+          dnext = Spatial.distance h2.q, h3.q
+          @curvature[i] = ((dprev + dnext) / 2).degrees
+        end
+        res.sec = compute_secondary_structure res
       end
     end
 
@@ -54,13 +62,12 @@ module Chem::Protein
       residue : Residue,
       strict : Bool = true
     ) : SecondaryStructure
-      if h = residue.hlxparams
-        rise = h.zeta.scale(0, 4)
-        twist = h.theta.scale(0, 360)
+      i = @resindex[{residue.chain.id, residue.number, residue.insertion_code}]
+      if (rise = @rise[i]) && (twist = @twist[i])
         rise, twist = QUESSO.pes.walk rise, twist if rise > 0
         if !strict
           QUESSO.pes.basin(rise, twist).try(&.sec) || SecondaryStructure::None
-        elsif (curv = compute_curvature(residue)) && curv <= CURVATURE_CUTOFF
+        elsif (curv = @curvature[i]) && curv <= CURVATURE_CUTOFF
           QUESSO.pes.basin(rise, twist).try(&.sec) || SecondaryStructure::Uniform
         else
           SecondaryStructure::Bend
@@ -115,7 +122,7 @@ module Chem::Protein
 
     private def unset_element(residues : ResidueView) : Nil
       residues.each do |residue|
-        residue.sec = if curv = compute_curvature(residue)
+        residue.sec = if curv = @curvature[@resindex[{residue.chain.id, residue.number, residue.insertion_code}]]
                         if curv <= CURVATURE_CUTOFF
                           SecondaryStructure::Uniform
                         else
