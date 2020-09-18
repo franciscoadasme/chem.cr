@@ -67,12 +67,14 @@ module Chem::Protein
       strict : Bool = true
     ) : SecondaryStructure
       i = @resindex[{residue.chain.id, residue.number, residue.insertion_code}]
-      if !strict
-        @raw_sec[i] || SecondaryStructure::None
-      elsif (curv = @curvature[i]) && curv <= CURVATURE_CUTOFF
-        @raw_sec[i] || SecondaryStructure::Uniform
+      if strict
+        if (curv = @curvature[i]) && curv <= CURVATURE_CUTOFF
+          @raw_sec[i] || SecondaryStructure::Uniform
+        else
+          SecondaryStructure::Bend
+        end
       else
-        SecondaryStructure::Bend
+        @raw_sec[i] || SecondaryStructure::None
       end
     end
 
