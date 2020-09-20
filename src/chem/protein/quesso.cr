@@ -1,6 +1,3 @@
-require "baked_file_system"
-require "yaml"
-
 module Chem::Protein
   class QUESSO < SecondaryStructureCalculator
     CURVATURE_CUTOFF = 60
@@ -22,17 +19,132 @@ module Chem::Protein
       normalize_regular_elements
     end
 
+    protected class_getter basins : Array(Basin) do
+      [
+        Basin.new(
+          sec: SecondaryStructure::RightHandedHelixPi,
+          x0: 1.15.scale(0, 4),
+          y0: 78.4.scale(0, 360),
+          sigma_x: 0.158.scale(0, 4),
+          sigma_y: 8.31.scale(0, 360),
+          height: 11.08,
+          theta: -20.0.radians,
+          offset: -60_896.0,
+        ),
+        Basin.new(
+          sec: SecondaryStructure::RightHandedHelixAlpha,
+          x0: 1.47.scale(0, 4),
+          y0: 97.1.scale(0, 360),
+          sigma_x: 0.160.scale(0, 4),
+          sigma_y: 12.04.scale(0, 360),
+          height: 8.84,
+          theta: -20.0.radians,
+          offset: 2_879_597.0,
+        ),
+        Basin.new(
+          sec: SecondaryStructure::RightHandedHelix3_10,
+          x0: 1.96.scale(0, 4),
+          y0: 113.2.scale(0, 360),
+          sigma_x: 0.343.scale(0, 4),
+          sigma_y: 21.10.scale(0, 360),
+          height: 10.24,
+          theta: -20.0.radians,
+          offset: 1_330_117.0,
+        ),
+        Basin.new(
+          sec: SecondaryStructure::RightHandedHelixGamma,
+          x0: 2.79.scale(0, 4),
+          y0: 168.2.scale(0, 360),
+          sigma_x: 0.185.scale(0, 4),
+          sigma_y: 36.0.scale(0, 360),
+          height: 6.79,
+          theta: 16.9.radians,
+          offset: 96_962.0,
+        ),
+        Basin.new(
+          sec: SecondaryStructure::Polyproline,
+          x0: 3.06.scale(0, 4),
+          y0: 239.6.scale(0, 360),
+          sigma_x: 0.4.scale(0, 4),
+          sigma_y: 18.93.scale(0, 360),
+          height: 2.86,
+          theta: -161.8.radians,
+          offset: -2_226_279.0,
+        ),
+        Basin.new(
+          sec: SecondaryStructure::BetaStrand,
+          x0: 3.48.scale(0, 4),
+          y0: 180.0.scale(0, 360),
+          sigma_x: 0.264.scale(0, 4),
+          sigma_y: 36.0.scale(0, 360),
+          height: 5.74,
+          theta: 12.6.radians,
+          offset: -2_019_507.0,
+        ),
+        Basin.new(
+          sec: SecondaryStructure::LeftHandedHelixPi,
+          x0: -1.16.scale(0, 4),
+          y0: 82.0.scale(0, 360),
+          sigma_x: 0.158.scale(0, 4),
+          sigma_y: 8.31.scale(0, 360),
+          height: 0.0,
+          theta: 0.0.radians,
+          offset: 0.0,
+        ),
+        Basin.new(
+          sec: SecondaryStructure::LeftHandedHelixAlpha,
+          x0: -1.47.scale(0, 4),
+          y0: 96.5.scale(0, 360),
+          sigma_x: 0.160.scale(0, 4),
+          sigma_y: 12.04.scale(0, 360),
+          height: 0.0,
+          theta: 0.0.radians,
+          offset: 0.0,
+        ),
+        Basin.new(
+          sec: SecondaryStructure::LeftHandedHelix3_10,
+          x0: -1.93.scale(0, 4),
+          y0: 115.5.scale(0, 360),
+          sigma_x: 0.343.scale(0, 4),
+          sigma_y: 21.10.scale(0, 360),
+          height: 0.0,
+          theta: 0.0.radians,
+          offset: 0.0,
+        ),
+        Basin.new(
+          sec: SecondaryStructure::LeftHandedHelixGamma,
+          x0: -2.81.scale(0, 4),
+          y0: 170.0.scale(0, 360),
+          sigma_x: 0.185.scale(0, 4),
+          sigma_y: 36.0.scale(0, 360),
+          height: 0.0,
+          theta: 0.0.radians,
+          offset: 0.0,
+        ),
+        Basin.new(
+          sec: SecondaryStructure::Polyproline,
+          x0: -3.06.scale(0, 4),
+          y0: 239.6.scale(0, 360),
+          sigma_x: 0.4.scale(0, 4),
+          sigma_y: 18.93.scale(0, 360),
+          height: 0.0,
+          theta: 0.0.radians,
+          offset: 0.0,
+        ),
+        Basin.new(
+          sec: SecondaryStructure::BetaStrand,
+          x0: -3.48.scale(0, 4),
+          y0: 180.0.scale(0, 360),
+          sigma_x: 0.264.scale(0, 4),
+          sigma_y: 36.0.scale(0, 360),
+          height: 0.0,
+          theta: 0.0.radians,
+          offset: 0.0,
+        ),
+      ]
+    end
+
     protected class_getter pes : EnergySurface do
-      basins = YAML.parse(Files.get("basins.yml")).as_a.map do |attrs|
-        Basin.new Protein::SecondaryStructure.parse(attrs["sec"].as_s),
-          attrs["x0"].as_f.scale(0, 4),
-          attrs["y0"].as_f.scale(0, 360),
-          attrs["sigma_x"].as_f.scale(0, 4),
-          attrs["sigma_y"].as_f.scale(0, 360),
-          attrs["height"].as_f,
-          attrs["rot"].as_f.radians,
-          attrs["offset"].as_f
-      end
       EnergySurface.new basins
     end
 
@@ -190,11 +302,6 @@ module Chem::Protein
         end
         {x, y}
       end
-    end
-
-    class Files
-      extend BakedFileSystem
-      bake_folder "../../../data/quesso"
     end
 
     class SecondaryStructureBlender

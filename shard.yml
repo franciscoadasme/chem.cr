@@ -6,10 +6,6 @@ authors:
 
 crystal: 0.35
 
-dependencies:
-  baked_file_system:
-    github: schovi/baked_file_system
-
 executables:
   - quesso
 
