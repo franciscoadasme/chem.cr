@@ -55,11 +55,7 @@ module Chem::Protein
           @raw_sec[i] = basin.sec
         end
 
-        res.sec = if (@curvature[i] || Float64::MAX) <= CURVATURE_CUTOFF
-                    @raw_sec[i]
-                  else
-                    SecondaryStructure::Bend
-                  end
+        res.sec = @raw_sec[i] if (@curvature[i] || Float64::MAX) <= CURVATURE_CUTOFF
       end
     end
 
@@ -87,7 +83,7 @@ module Chem::Protein
             SecondaryStructureBlender.new(ele).blend
           end
           min_size = ele.all?(&.sec.==(sec)) ? sec.min_size : sec.type.min_size
-          unset_sec_at offset, ele.size if ele.size < min_size
+          ele.sec = :none if ele.size < min_size
         end
         offset += ele.size
       end
@@ -106,20 +102,6 @@ module Chem::Protein
           end
           offset += left.size
         end
-    end
-
-    private def unset_sec_at(start : Int, count : Int) : Nil
-      start.upto(start + count - 1) do |i|
-        @residues[i].sec = if curvature = @curvature[i]
-                             if curvature <= CURVATURE_CUTOFF
-                               SecondaryStructure::Uniform
-                             else
-                               SecondaryStructure::Bend
-                             end
-                           else
-                             SecondaryStructure::None
-                           end
-      end
     end
 
     private struct Basin
