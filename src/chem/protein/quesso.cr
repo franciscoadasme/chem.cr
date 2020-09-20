@@ -85,14 +85,16 @@ module Chem::Protein
     end
 
     private def normalize_regular_elements : Nil
+      offset = 0
       @residues.each_secondary_structure(reuse: true, strict: false) do |ele, sec|
         if sec.type.regular?
           if blend_elements? && ele.any?(&.sec.!=(sec))
             SecondaryStructureBlender.new(ele).blend
           end
           min_size = ele.all?(&.sec.==(sec)) ? sec.min_size : sec.type.min_size
-          unset_element ele if ele.size < min_size
+          unset_sec_at offset, ele.size if ele.size < min_size
         end
+        offset += ele.size
       end
     end
 
@@ -111,17 +113,17 @@ module Chem::Protein
         end
     end
 
-    private def unset_element(residues : ResidueView) : Nil
-      residues.each do |residue|
-        residue.sec = if curv = @curvature[@resindex[{residue.chain.id, residue.number, residue.insertion_code}]]
-                        if curv <= CURVATURE_CUTOFF
-                          SecondaryStructure::Uniform
-                        else
-                          SecondaryStructure::Bend
-                        end
-                      else
-                        SecondaryStructure::None
-                      end
+    private def unset_sec_at(start : Int, count : Int) : Nil
+      start.upto(start + count - 1) do |i|
+        @residues[i].sec = if curvature = @curvature[i]
+                             if curvature <= CURVATURE_CUTOFF
+                               SecondaryStructure::Uniform
+                             else
+                               SecondaryStructure::Bend
+                             end
+                           else
+                             SecondaryStructure::None
+                           end
       end
     end
 
