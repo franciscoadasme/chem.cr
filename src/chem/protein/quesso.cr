@@ -12,11 +12,6 @@ module Chem::Protein
       @residues = ResidueView.new structure.residues.to_a.select(&.protein?)
       @curvature = Array(Float64?).new @residues.size, nil
       @raw_sec = Array(SecondaryStructure).new @residues.size, SecondaryStructure::None
-
-      @resindex = Hash(Tuple(Char, Int32, Char?), Int32).new @residues.size
-      @residues.each_with_index do |residue, i|
-        @resindex[{residue.chain.id, residue.number, residue.insertion_code}] = i
-      end
     end
 
     def assign : Nil
