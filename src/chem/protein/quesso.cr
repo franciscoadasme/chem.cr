@@ -53,9 +53,8 @@ module Chem::Protein
         rise, twist = QUESSO.pes.walk rise, twist if rise > 0
         if basin = QUESSO.pes.basin(rise, twist)
           @raw_sec[i] = basin.sec
+          res.sec = basin.sec if (@curvature[i] || Float64::MAX) <= CURVATURE_CUTOFF
         end
-
-        res.sec = @raw_sec[i] if (@curvature[i] || Float64::MAX) <= CURVATURE_CUTOFF
       end
     end
 
