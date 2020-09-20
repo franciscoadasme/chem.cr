@@ -107,15 +107,17 @@ module Chem::Protein
     end
 
     private def reassign_enclosed_elements : Nil
+      offset = 0
       @residues
         .each_secondary_structure(strict: false)
         .each_cons(3, reuse: true) do |(left, ele, right)|
           if ele[0].sec.type.coil? &&
              left[0].sec.type.regular? &&
              left[0].sec.type == right[0].sec.type
-            seclist = ele.map { |r| compute_secondary_structure r, strict: false }
+            seclist = @raw_sec[offset + left.size, ele.size].map { |sec| sec || SecondaryStructure::None }
             ele.sec = seclist if seclist.all?(&.type.==(left[0].sec.type))
           end
+          offset += left.size
         end
     end
 
