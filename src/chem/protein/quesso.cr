@@ -79,20 +79,18 @@ module Chem::Protein
     end
 
     private def extend_elements
+      offset = 0
       @residues.each_secondary_structure(reuse: true) do |ele, sec|
-        next unless sec.regular?
-        2.times do |i|
-          res = ele[i == 0 ? 0 : -1]
-          while (res = (i == 0 ? res.previous : res.next)) &&
-                (res.sec.bend? || res.sec.none?)
-            other_sec = compute_secondary_structure res, strict: false
-            if other_sec == sec
-              res.sec = other_sec
-            else
-              break
+        if sec.regular?
+          {-1, 1}.each do |sense|
+            i = offset + (sense > 0 ? ele.size : -1)
+            while 0 <= i < @residues.size && @raw_sec[i] == sec
+              @residues[i].sec = sec
+              i += sense
             end
           end
         end
+        offset += ele.size
       end
     end
 
