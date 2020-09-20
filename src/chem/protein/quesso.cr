@@ -11,7 +11,7 @@ module Chem::Protein
       super structure
       @residues = ResidueView.new structure.residues.to_a.select(&.protein?)
       @curvature = Array(Float64?).new @residues.size, nil
-      @raw_sec = Array(SecondaryStructure?).new @residues.size, nil
+      @raw_sec = Array(SecondaryStructure).new @residues.size, SecondaryStructure::None
 
       @resindex = Hash(Tuple(Char, Int32, Char?), Int32).new @residues.size
       @residues.each_with_index do |residue, i|
@@ -56,7 +56,9 @@ module Chem::Protein
         rise = h2.zeta.scale(0, 4)
         twist = h2.theta.scale(0, 360)
         rise, twist = QUESSO.pes.walk rise, twist if rise > 0
-        @raw_sec[i] = QUESSO.pes.basin(rise, twist).try(&.sec)
+        if basin = QUESSO.pes.basin(rise, twist)
+          @raw_sec[i] = basin.sec
+        end
 
         res.sec = compute_secondary_structure res
       end
@@ -69,12 +71,12 @@ module Chem::Protein
       i = @resindex[{residue.chain.id, residue.number, residue.insertion_code}]
       if strict
         if (curv = @curvature[i]) && curv <= CURVATURE_CUTOFF
-          @raw_sec[i] || SecondaryStructure::Uniform
+          @raw_sec[i]
         else
           SecondaryStructure::Bend
         end
       else
-        @raw_sec[i] || SecondaryStructure::None
+        @raw_sec[i]
       end
     end
 
@@ -114,7 +116,7 @@ module Chem::Protein
           if ele[0].sec.type.coil? &&
              left[0].sec.type.regular? &&
              left[0].sec.type == right[0].sec.type
-            seclist = @raw_sec[offset + left.size, ele.size].map { |sec| sec || SecondaryStructure::None }
+            seclist = @raw_sec[offset + left.size, ele.size]
             ele.sec = seclist if seclist.all?(&.type.==(left[0].sec.type))
           end
           offset += left.size
