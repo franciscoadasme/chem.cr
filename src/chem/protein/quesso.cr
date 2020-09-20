@@ -37,12 +37,13 @@ module Chem::Protein
     end
 
     private def assign_secondary_structure
+      hlxparams = @residues.map(&.hlxparams)
       @residues.each_with_index do |res, i|
-        next unless h2 = res.hlxparams
+        next unless h2 = hlxparams[i]
 
-        pred = @residues[i - 1] if i > 0 && res.bonded?(@residues[i - 1])
-        succ = @residues[i + 1] if i < @residues.size - 1 && res.bonded?(@residues[i + 1])
-        if (h1 = pred.try(&.hlxparams)) && (h3 = succ.try(&.hlxparams))
+        h1 = hlxparams[i - 1] if i > 0 && res.bonded?(@residues[i - 1])
+        h3 = hlxparams[i + 1] if i < @residues.size - 1 && res.bonded?(@residues[i + 1])
+        if h1 && h3
           dprev = Spatial.distance h1.q, h2.q
           dnext = Spatial.distance h2.q, h3.q
           @curvature[i] = ((dprev + dnext) / 2).degrees
