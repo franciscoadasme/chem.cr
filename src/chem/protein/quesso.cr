@@ -60,23 +60,11 @@ module Chem::Protein
           @raw_sec[i] = basin.sec
         end
 
-        res.sec = compute_secondary_structure res
-      end
-    end
-
-    private def compute_secondary_structure(
-      residue : Residue,
-      strict : Bool = true
-    ) : SecondaryStructure
-      i = @resindex[{residue.chain.id, residue.number, residue.insertion_code}]
-      if strict
-        if (curv = @curvature[i]) && curv <= CURVATURE_CUTOFF
-          @raw_sec[i]
-        else
-          SecondaryStructure::Bend
-        end
-      else
-        @raw_sec[i]
+        res.sec = if (@curvature[i] || Float64::MAX) <= CURVATURE_CUTOFF
+                    @raw_sec[i]
+                  else
+                    SecondaryStructure::Bend
+                  end
       end
     end
 
