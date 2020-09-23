@@ -87,9 +87,9 @@ module Chem::Protein
           y0: 82.0.scale(0, 360),
           sigma_x: 0.158.scale(0, 4),
           sigma_y: 8.31.scale(0, 360),
-          height: 0.0,
-          theta: 0.0.radians,
-          offset: 0.0,
+          height: 11.08,
+          theta: 20.0.radians,
+          offset: -60_896.0,
         ),
         Basin.new(
           sec: SecondaryStructure::LeftHandedHelixAlpha,
@@ -97,9 +97,9 @@ module Chem::Protein
           y0: 96.5.scale(0, 360),
           sigma_x: 0.160.scale(0, 4),
           sigma_y: 12.04.scale(0, 360),
-          height: 0.0,
-          theta: 0.0.radians,
-          offset: 0.0,
+          height: 8.84,
+          theta: 20.0.radians,
+          offset: 2_879_597.0,
         ),
         Basin.new(
           sec: SecondaryStructure::LeftHandedHelix3_10,
@@ -107,9 +107,9 @@ module Chem::Protein
           y0: 115.5.scale(0, 360),
           sigma_x: 0.343.scale(0, 4),
           sigma_y: 21.10.scale(0, 360),
-          height: 0.0,
-          theta: 0.0.radians,
-          offset: 0.0,
+          height: 10.24,
+          theta: 20.0.radians,
+          offset: 1_330_117.0,
         ),
         Basin.new(
           sec: SecondaryStructure::LeftHandedHelixGamma,
@@ -117,9 +117,9 @@ module Chem::Protein
           y0: 170.0.scale(0, 360),
           sigma_x: 0.185.scale(0, 4),
           sigma_y: 36.0.scale(0, 360),
-          height: 0.0,
-          theta: 0.0.radians,
-          offset: 0.0,
+          height: 6.79,
+          theta: -16.9.radians,
+          offset: 96_962.0,
         ),
         Basin.new(
           sec: SecondaryStructure::Polyproline,
@@ -127,9 +127,9 @@ module Chem::Protein
           y0: 239.6.scale(0, 360),
           sigma_x: 0.4.scale(0, 4),
           sigma_y: 18.93.scale(0, 360),
-          height: 0.0,
-          theta: 0.0.radians,
-          offset: 0.0,
+          height: 2.86,
+          theta: 161.8.radians,
+          offset: -2_226_279.0,
         ),
         Basin.new(
           sec: SecondaryStructure::BetaStrand,
@@ -137,9 +137,9 @@ module Chem::Protein
           y0: 180.0.scale(0, 360),
           sigma_x: 0.264.scale(0, 4),
           sigma_y: 36.0.scale(0, 360),
-          height: 0.0,
-          theta: 0.0.radians,
-          offset: 0.0,
+          height: 5.74,
+          theta: -12.6.radians,
+          offset: -2_019_507.0,
         ),
       ]
     end
@@ -167,7 +167,7 @@ module Chem::Protein
         rise = h2.zeta.scale(0, 4)
         twist = h2.theta.scale(0, 360)
         pes = QUESSO.pes[rise >= 0 ? 1 : -1]
-        rise, twist = pes.walk rise, twist if rise > 0
+        rise, twist = pes.walk rise, twist
         if basin = pes.basin(rise, twist)
           @raw_sec[i] = basin.sec
           res.sec = basin.sec if (@curvature[i] || Float64::MAX) <= CURVATURE_CUTOFF
