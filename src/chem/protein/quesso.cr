@@ -7,7 +7,7 @@ module Chem::Protein
     def initialize(structure : Structure, @blend_elements : Bool = true)
       super structure
       @residues = ResidueView.new structure.residues.to_a.select(&.protein?)
-      @curvature = Array(Float64?).new @residues.size, nil
+      @curvature = Array(Float64).new @residues.size, Float64::MAX
       @raw_sec = Array(SecondaryStructure).new @residues.size, SecondaryStructure::None
     end
 
@@ -170,7 +170,7 @@ module Chem::Protein
         rise, twist = pes.walk rise, twist
         if basin = pes.basin(rise, twist)
           @raw_sec[i] = basin.sec
-          res.sec = basin.sec if (@curvature[i] || Float64::MAX) <= CURVATURE_CUTOFF
+          res.sec = basin.sec if @curvature[i] <= CURVATURE_CUTOFF
         end
       end
     end
