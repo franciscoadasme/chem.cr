@@ -144,8 +144,11 @@ module Chem::Protein
       ]
     end
 
-    protected class_getter pes : EnergySurface do
-      EnergySurface.new basins
+    protected class_getter pes : Hash(Int32, EnergySurface) do
+      {
+         1 => EnergySurface.new(basins[..5]),
+        -1 => EnergySurface.new(basins[6..]),
+      }
     end
 
     private def assign_secondary_structure
@@ -163,8 +166,9 @@ module Chem::Protein
 
         rise = h2.zeta.scale(0, 4)
         twist = h2.theta.scale(0, 360)
-        rise, twist = QUESSO.pes.walk rise, twist if rise > 0
-        if basin = QUESSO.pes.basin(rise, twist)
+        pes = QUESSO.pes[rise >= 0 ? 1 : -1]
+        rise, twist = pes.walk rise, twist if rise > 0
+        if basin = pes.basin(rise, twist)
           @raw_sec[i] = basin.sec
           res.sec = basin.sec if (@curvature[i] || Float64::MAX) <= CURVATURE_CUTOFF
         end
