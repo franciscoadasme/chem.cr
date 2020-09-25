@@ -4,6 +4,34 @@ module Chem
     abstract def each_residue(&block : Residue ->)
     abstract def n_residues : Int32
 
+    # Iterates over residue-wise fragments.
+    #
+    # A fragment is an array of inter-connected residues. Fragments are
+    # dinamically computed by iterating over `Residue#bonded_residues`
+    # of the selected residues.
+    #
+    # NOTE: fragments are scoped to the current list of residues such
+    # that bonded residues not contained in the list are omitted, e.g.,
+    # given the list of residues [1, 2, 3, 4, 7, 8] belonging to the
+    # sequence 1-2-3-4-5-6 7-8-9, this method will return [[1, 2, 3, 4],
+    # [7, 8]], not [[1, 2, 3, 4, 5, 6], [7, 8, 9]].
+    def each_residue_fragment(& : ResidueView ->) : Nil
+      residues = Set(Residue).new(n_residues).concat each_residue
+      each_residue do |residue|
+        next unless residue.in?(residues)
+        residues.delete residue
+        fragment = [residue]
+        fragment.each do |residue|
+          residue.bonded_residues.each do |residue|
+            next unless residue.in?(residues)
+            fragment << residue
+            residues.delete residue
+          end
+        end
+        yield ResidueView.new(fragment.sort!)
+      end
+    end
+
     # Returns an iterator over secondary structure elements (SSEs).
     #
     # SSEs are defined as segments of consecutive, bonded residues that
@@ -128,6 +156,13 @@ module Chem
     def reset_secondary_structure : self
       each_residue &.sec=(:none)
       self
+    end
+
+    # Returns residue-wise fragments. See #each_residue_fragment.
+    def residue_fragments : Array(ResidueView)
+      fragments = [] of ResidueView
+      each_residue_fragment { |fragment| fragments << fragment }
+      fragments
     end
 
     def residues : ResidueView
