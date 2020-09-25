@@ -145,6 +145,18 @@ describe Chem::ResidueCollection do
     end
   end
 
+  describe "#residue_fragments" do
+    it "returns fragments of residues" do
+      structure = load_file("cylindrin--size-09.pdb")
+      fragments = structure.residue_fragments
+      fragments.size.should eq 6
+      fragments.map(&.size).should eq [9] * 6
+      fragments.map(&.map(&.chain.id).uniq!.join).should eq %w(A A B B C C)
+      fragments.map(&.map(&.number)).should eq [(2..10).to_a, (15..23).to_a] * 3
+      fragments.map(&.map(&.name)).should eq [%w(LEU LYS VAL LEU GLY ASP VAL ILE GLU)] * 6
+    end
+  end
+
   describe "#residues" do
     it "returns a residue view" do
       fake_structure.residues.should be_a Chem::ResidueView
