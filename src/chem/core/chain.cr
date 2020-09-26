@@ -134,6 +134,20 @@ module Chem
       @residues.size
     end
 
+    def renumber_by_connectivity : Nil
+      num = 0
+      residues = @residues.to_set
+      while residue = residues.find(&.previous(strict: false, use_numbering: false).nil?) ||
+                      residues.first?
+        while residue && residue.in?(residues)
+          residue.number = (num += 1)
+          residues.delete residue
+          residue = residue.next
+        end
+      end
+      reset_cache
+    end
+
     def structure=(new_structure : Structure) : Structure
       @structure.delete self
       @structure = new_structure
