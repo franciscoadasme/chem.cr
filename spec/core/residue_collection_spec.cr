@@ -87,56 +87,6 @@ describe Chem::ResidueCollection do
     end
   end
 
-  describe "#renumber_by_connectivity" do
-    it "renumbers residues in ascending order based on the link bond" do
-      structure = load_file "5e5v--unwrapped.poscar", topology: :guess
-      structure.renumber_by_connectivity
-
-      chains = structure.chains
-      chains[0].residues.map(&.number).should eq (1..7).to_a
-      chains[0].residues.map(&.name).should eq %w(ASN PHE GLY ALA ILE LEU SER)
-      chains[1].residues.map(&.number).should eq (1..7).to_a
-      chains[1].residues.map(&.name).should eq %w(UNK PHE GLY ALA ILE LEU SER)
-      chains[2].residues.map(&.name).should eq %w(HOH HOH HOH HOH HOH HOH HOH)
-      chains[2].residues.map(&.number).should eq (1..7).to_a
-      chains[3].residues.map(&.name).should eq %w(UNK)
-      chains[3].residues.map(&.number).should eq [1]
-
-      chains[0].residues[0].previous.should be_nil
-      chains[0].residues[3].previous.try(&.name).should eq "GLY"
-      chains[0].residues[3].next.try(&.name).should eq "ILE"
-      chains[0].residues[-1].next.should be_nil
-    end
-
-    it "renumbers residues of a periodic peptide" do
-      structure = load_file "hlx_gly.poscar", topology: :renumber
-
-      structure.each_residue.cons(2, reuse: true).each do |(a, b)|
-        a["C"].bonded?(b["N"]).should be_true
-        a.next.should eq b
-        b.previous.should eq a
-      end
-    end
-
-    it "does not depend on current residue numbering (#82)" do
-      [
-        "polyala-trp--theta-80.000--c-19.91.poscar",
-        "polyala-trp--theta-180.000--c-10.00.poscar",
-      ].each do |filename|
-        residues = load_file(filename, topology: :guess).residues
-        residues.renumber_by_connectivity
-        residues = residues.to_a.sort_by(&.number)
-        residues.map(&.number).should eq (1..residues.size).to_a
-        residues.each_with_index do |residue, i|
-          j = i + 1
-          j = 0 if j >= residues.size
-          residues[j].number.should eq j + 1
-          residue.bonded?(residues[j]).should be_true
-        end
-      end
-    end
-  end
-
   describe "#reset_secondary_structure" do
     it "sets secondary structure to none" do
       s = load_file "1crn.pdb"

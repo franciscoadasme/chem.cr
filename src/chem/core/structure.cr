@@ -179,6 +179,21 @@ module Chem
       !!@lattice
     end
 
+    def renumber_by_connectivity : Nil
+      each_residue.group_by(&.chain).each do |chain, residues|
+        num = 0
+        while residue = residues.find(&.previous(strict: false, use_numbering: false).nil?) ||
+                        residues[0]?
+          while residue && residue.in?(residues)
+            residue.number = (num += 1)
+            residues.reject! &.same?(residue)
+            residue = residue.next
+          end
+        end
+        chain.reset_cache
+      end
+    end
+
     def to_s(io : ::IO)
       io << "<Structure"
       io << " " << title.inspect unless title.blank?
