@@ -1,6 +1,3 @@
-require "baked_file_system"
-require "yaml"
-
 module Chem::Protein
   class QUESSO < SecondaryStructureCalculator
     CURVATURE_CUTOFF = 60
@@ -10,6 +7,7 @@ module Chem::Protein
     def initialize(structure : Structure, @blend_elements : Bool = true)
       super structure
       @residues = ResidueView.new structure.residues.to_a.select(&.protein?)
+      @raw_sec = Array(SecondaryStructure).new @residues.size, SecondaryStructure::None
     end
 
     def assign : Nil
@@ -20,99 +18,206 @@ module Chem::Protein
       normalize_regular_elements
     end
 
-    protected class_getter pes : EnergySurface do
-      EnergySurface.load
+    protected class_getter basins : Array(Basin) do
+      [
+        Basin.new(
+          sec: SecondaryStructure::RightHandedHelixPi,
+          x0: 1.15.scale(0, 4),
+          y0: 78.4.scale(0, 360),
+          sigma_x: 0.158.scale(0, 4),
+          sigma_y: 8.31.scale(0, 360),
+          height: 11.08,
+          theta: -20.0.radians,
+          offset: -60_896.0,
+        ),
+        Basin.new(
+          sec: SecondaryStructure::RightHandedHelixAlpha,
+          x0: 1.47.scale(0, 4),
+          y0: 97.1.scale(0, 360),
+          sigma_x: 0.160.scale(0, 4),
+          sigma_y: 12.04.scale(0, 360),
+          height: 8.84,
+          theta: -20.0.radians,
+          offset: 2_879_597.0,
+        ),
+        Basin.new(
+          sec: SecondaryStructure::RightHandedHelix3_10,
+          x0: 1.96.scale(0, 4),
+          y0: 113.2.scale(0, 360),
+          sigma_x: 0.343.scale(0, 4),
+          sigma_y: 21.10.scale(0, 360),
+          height: 10.24,
+          theta: -20.0.radians,
+          offset: 1_330_117.0,
+        ),
+        Basin.new(
+          sec: SecondaryStructure::RightHandedHelixGamma,
+          x0: 2.79.scale(0, 4),
+          y0: 168.2.scale(0, 360),
+          sigma_x: 0.185.scale(0, 4),
+          sigma_y: 36.0.scale(0, 360),
+          height: 6.79,
+          theta: 16.9.radians,
+          offset: 96_962.0,
+        ),
+        Basin.new(
+          sec: SecondaryStructure::Polyproline,
+          x0: 3.06.scale(0, 4),
+          y0: 239.6.scale(0, 360),
+          sigma_x: 0.4.scale(0, 4),
+          sigma_y: 18.93.scale(0, 360),
+          height: 2.86,
+          theta: -161.8.radians,
+          offset: -2_226_279.0,
+        ),
+        Basin.new(
+          sec: SecondaryStructure::BetaStrand,
+          x0: 3.48.scale(0, 4),
+          y0: 180.0.scale(0, 360),
+          sigma_x: 0.264.scale(0, 4),
+          sigma_y: 36.0.scale(0, 360),
+          height: 5.74,
+          theta: 12.6.radians,
+          offset: -2_019_507.0,
+        ),
+        Basin.new(
+          sec: SecondaryStructure::LeftHandedHelixPi,
+          x0: -1.16.scale(0, 4),
+          y0: 82.0.scale(0, 360),
+          sigma_x: 0.158.scale(0, 4),
+          sigma_y: 8.31.scale(0, 360),
+          height: 11.08,
+          theta: 20.0.radians,
+          offset: -60_896.0,
+        ),
+        Basin.new(
+          sec: SecondaryStructure::LeftHandedHelixAlpha,
+          x0: -1.47.scale(0, 4),
+          y0: 96.5.scale(0, 360),
+          sigma_x: 0.160.scale(0, 4),
+          sigma_y: 12.04.scale(0, 360),
+          height: 8.84,
+          theta: 20.0.radians,
+          offset: 2_879_597.0,
+        ),
+        Basin.new(
+          sec: SecondaryStructure::LeftHandedHelix3_10,
+          x0: -1.93.scale(0, 4),
+          y0: 115.5.scale(0, 360),
+          sigma_x: 0.343.scale(0, 4),
+          sigma_y: 21.10.scale(0, 360),
+          height: 10.24,
+          theta: 20.0.radians,
+          offset: 1_330_117.0,
+        ),
+        Basin.new(
+          sec: SecondaryStructure::LeftHandedHelixGamma,
+          x0: -2.81.scale(0, 4),
+          y0: 170.0.scale(0, 360),
+          sigma_x: 0.185.scale(0, 4),
+          sigma_y: 36.0.scale(0, 360),
+          height: 6.79,
+          theta: -16.9.radians,
+          offset: 96_962.0,
+        ),
+        Basin.new(
+          sec: SecondaryStructure::Polyproline,
+          x0: -3.06.scale(0, 4),
+          y0: 239.6.scale(0, 360),
+          sigma_x: 0.4.scale(0, 4),
+          sigma_y: 18.93.scale(0, 360),
+          height: 2.86,
+          theta: 161.8.radians,
+          offset: -2_226_279.0,
+        ),
+        Basin.new(
+          sec: SecondaryStructure::BetaStrand,
+          x0: -3.48.scale(0, 4),
+          y0: 180.0.scale(0, 360),
+          sigma_x: 0.264.scale(0, 4),
+          sigma_y: 36.0.scale(0, 360),
+          height: 5.74,
+          theta: -12.6.radians,
+          offset: -2_019_507.0,
+        ),
+      ]
+    end
+
+    protected class_getter pes : Hash(Int32, EnergySurface) do
+      {
+         1 => EnergySurface.new(basins[..5]),
+        -1 => EnergySurface.new(basins[6..]),
+      }
     end
 
     private def assign_secondary_structure
-      @residues.each do |residue|
-        residue.sec = compute_secondary_structure residue
-      end
-    end
+      curvature = Array(Float64).new @residues.size, Float64::MAX
+      hlxparams = @residues.map(&.hlxparams)
+      @residues.each_with_index do |res, i|
+        next unless h2 = hlxparams[i]
 
-    private def compute_curvature(residue : Residue) : Float64?
-      if (h1 = residue.previous.try(&.hlxparams)) &&
-         (h2 = residue.hlxparams) &&
-         (h3 = residue.next.try(&.hlxparams))
-        dprev = Spatial.distance h1.q, h2.q
-        dnext = Spatial.distance h2.q, h3.q
-        ((dprev + dnext) / 2).degrees
-      end
-    end
-
-    private def compute_secondary_structure(
-      residue : Residue,
-      strict : Bool = true
-    ) : SecondaryStructure
-      if h = residue.hlxparams
-        if !strict
-          QUESSO.pes.walk_to_closest_basin(h.zeta, h.theta, check_proximity: false) ||
-            SecondaryStructure::None
-        elsif (curv = compute_curvature(residue)) && curv <= CURVATURE_CUTOFF
-          QUESSO.pes.walk_to_closest_basin(h.zeta, h.theta) || SecondaryStructure::Uniform
-        else
-          SecondaryStructure::Bend
+        h1 = hlxparams[i - 1] if i > 0 && res.bonded?(@residues[i - 1])
+        h3 = hlxparams[i + 1] if i < @residues.size - 1 && res.bonded?(@residues[i + 1])
+        if h1 && h3
+          dprev = Spatial.distance h1.q, h2.q
+          dnext = Spatial.distance h2.q, h3.q
+          curvature[i] = ((dprev + dnext) / 2).degrees
         end
-      else
-        SecondaryStructure::None
+
+        rise = h2.zeta.scale(0, 4)
+        twist = h2.theta.scale(0, 360)
+        pes = QUESSO.pes[rise >= 0 ? 1 : -1]
+        rise, twist = pes.walk rise, twist
+        if basin = pes.basin(rise, twist)
+          @raw_sec[i] = basin.sec
+          res.sec = basin.sec if curvature[i] <= CURVATURE_CUTOFF
+        end
       end
     end
 
     private def extend_elements
+      offset = 0
       @residues.each_secondary_structure(reuse: true) do |ele, sec|
-        next unless sec.regular?
-        2.times do |i|
-          res = ele[i == 0 ? 0 : -1]
-          while (res = (i == 0 ? res.previous : res.next)) &&
-                (res.sec.bend? || res.sec.none?)
-            other_sec = compute_secondary_structure res, strict: false
-            if other_sec == sec
-              res.sec = other_sec
-            else
-              break
+        if sec.regular?
+          {-1, 1}.each do |sense|
+            i = offset + (sense > 0 ? ele.size : -1)
+            while 0 <= i < @residues.size && @raw_sec[i] == sec
+              @residues[i].sec = sec
+              i += sense
             end
           end
         end
+        offset += ele.size
       end
     end
 
     private def normalize_regular_elements : Nil
+      offset = 0
       @residues.each_secondary_structure(reuse: true, strict: false) do |ele, sec|
         if sec.type.regular?
           if blend_elements? && ele.any?(&.sec.!=(sec))
             SecondaryStructureBlender.new(ele).blend
           end
           min_size = ele.all?(&.sec.==(sec)) ? sec.min_size : sec.type.min_size
-          unset_element ele if ele.size < min_size
+          ele.sec = :none if ele.size < min_size
         end
+        offset += ele.size
       end
     end
 
     private def reassign_enclosed_elements : Nil
+      offset = 0
       @residues
         .each_secondary_structure(strict: false)
         .each_cons(3, reuse: true) do |(left, ele, right)|
           if ele[0].sec.type.coil? &&
              left[0].sec.type.regular? &&
              left[0].sec.type == right[0].sec.type
-            seclist = ele.map { |r| compute_secondary_structure r, strict: false }
+            seclist = @raw_sec[offset + left.size, ele.size]
             ele.sec = seclist if seclist.all?(&.type.==(left[0].sec.type))
           end
+          offset += left.size
         end
-    end
-
-    private def unset_element(residues : ResidueView) : Nil
-      residues.each do |residue|
-        residue.sec = if curv = compute_curvature(residue)
-                        if curv <= CURVATURE_CUTOFF
-                          SecondaryStructure::Uniform
-                        else
-                          SecondaryStructure::Bend
-                        end
-                      else
-                        SecondaryStructure::None
-                      end
-      end
     end
 
     private struct Basin
@@ -122,8 +227,12 @@ module Chem::Protein
       getter sigma_x : Float64
       getter sigma_y : Float64
       getter height : Float64
-      getter rot : Float64
+      getter theta : Float64
       getter offset : Float64
+
+      @a : Float64
+      @b : Float64
+      @c : Float64
 
       def initialize(@sec : SecondaryStructure,
                      @x0 : Float64,
@@ -131,89 +240,72 @@ module Chem::Protein
                      @sigma_x : Float64,
                      @sigma_y : Float64,
                      @height : Float64,
-                     @rot : Float64,
+                     @theta : Float64,
                      @offset : Float64)
-        @rot = rot.radians
+        @a = (Math.cos(@theta)**2) / (2*@sigma_x**2) + (Math.sin(@theta)**2) / (2*@sigma_y**2)
+        @b = -(Math.sin(2*@theta)) / (4*@sigma_x**2) + (Math.sin(2*@theta)) / (4*@sigma_y**2)
+        @c = (Math.sin(@theta)**2) / (2*@sigma_x**2) + (Math.cos(@theta)**2) / (2*@sigma_y**2)
+      end
+
+      def eval(x : Float64, y : Float64) : Float64
+        @height * eval_exp(x - @x0, y - @y0) + @offset
+      end
+
+      def diff(x : Float64, y : Float64) : Tuple(Float64, Float64)
+        dx = x - @x0
+        dy = y - @y0
+        e = eval_exp(dx, dy)
+        {@height * (-2*dx*@a - dy*2*@b) * e, @height * (-2*dy*@c - dx*2*@b) * e}
       end
 
       def includes?(x : Float64, y : Float64) : Bool
-        rotcos = Math.cos -@rot
-        rotsin = Math.sin -@rot
+        rotcos = Math.cos -@theta
+        rotsin = Math.sin -@theta
         (rotcos * (x - @x0) + rotsin * (y - @y0))**2 / @sigma_x**2 +
           (rotsin * (x - @x0) - rotcos * (y - @y0))**2 / @sigma_y**2 <= 4.5
+      end
+
+      private def eval_exp(dx : Float64, dy : Float64) : Float64
+        Math.exp -(@a*dx**2 + 2*@b*dx*dy + @c*dy**2)
       end
     end
 
     private class EnergySurface
-      X_EXTENT = 0..4
-      Y_EXTENT = 0..360
-
-      def initialize(@dx : Linalg::Matrix, @dy : Linalg::Matrix)
+      def initialize(@basins : Array(Basin))
       end
 
-      class_getter basins : Array(Basin) do
-        io = Files.get("basins.yml")
-        YAML.parse(io).as_a.map do |attrs|
-          Basin.new Protein::SecondaryStructure.parse(attrs["sec"].as_s),
-            attrs["x0"].as_f.scale(X_EXTENT),
-            attrs["y0"].as_f.scale(Y_EXTENT),
-            attrs["sigma_x"].as_f.scale(X_EXTENT),
-            attrs["sigma_y"].as_f.scale(Y_EXTENT),
-            attrs["height"].as_f,
-            attrs["rot"].as_f,
-            attrs["offset"].as_f
-        end
-      end
-
-      def self.load
-        EnergySurface.new(
-          Linalg::Matrix.read(Files.get("dxx.npy"), 400, 400),
-          Linalg::Matrix.read(Files.get("dyy.npy"), 400, 400),
-        )
-      end
-
-      def find_basin(x : Float64,
-                     y : Float64,
-                     check_proximity : Bool = true) : SecondaryStructure?
-        x, y = x.scale(X_EXTENT), y.scale(Y_EXTENT)
-        sec = nil
+      def basin(x : Float64, y : Float64) : Basin?
+        nearest_basin = nil
         min_distance = Float64::MAX
-        EnergySurface.basins.each do |basin|
-          next if check_proximity && !basin.includes?(x, y)
+        @basins.each do |basin|
+          next unless basin.includes?(x, y)
           d = (x - basin.x0)**2 + (y - basin.y0)**2
           if d < min_distance
-            sec = basin.sec
+            nearest_basin = basin
             min_distance = d
           end
         end
-        sec
+        nearest_basin
       end
 
-      def walk(x : Float64, y : Float64, steps : Int) : Tuple(Float64, Float64)
-        x, y = x.scale(X_EXTENT), y.scale(Y_EXTENT)
-        steps.times do
-          i = (x * (@dx.rows - 1)).to_i
-          j = (y * (@dx.columns - 1)).to_i
-          x += @dx[i, j]
-          y += @dy[i, j]
+      def diff(x : Float64, y : Float64) : Tuple(Float64, Float64)
+        dx, dy = 0.0, 0.0
+        @basins.each do |basin|
+          dx_, dy_ = basin.diff(x, y)
+          dx += dx_
+          dy += dy_
         end
-        {x.unscale(X_EXTENT), y.unscale(Y_EXTENT)}
+        {dx, dy}
       end
 
-      def walk_to_closest_basin(
-        x : Float64,
-        y : Float64,
-        steps : Int = 10,
-        check_proximity : Bool = true
-      ) : SecondaryStructure?
-        x, y = walk x, y, steps if x > 0
-        find_basin x, y, check_proximity
+      def walk(x : Float64, y : Float64, steps : Int = 10, gamma : Float = 2.5e-4) : Tuple(Float64, Float64)
+        steps.times do
+          dx, dy = diff(x, y)
+          x += dx * gamma
+          y += dy * gamma
+        end
+        {x, y}
       end
-    end
-
-    class Files
-      extend BakedFileSystem
-      bake_folder "../../../data/quesso"
     end
 
     class SecondaryStructureBlender
