@@ -121,7 +121,7 @@ describe Chem::Structure do
   describe "#renumber_by_connectivity" do
     it "renumbers residues in ascending order based on the link bond" do
       structure = load_file "5e5v--unwrapped.poscar", topology: :guess
-      structure.renumber_by_connectivity
+      structure.renumber_by_connectivity split_chains: false
 
       chains = structure.chains
       chains[0].residues.map(&.number).should eq (1..7).to_a
@@ -165,6 +165,28 @@ describe Chem::Structure do
           residue.bonded?(residues[j]).should be_true
         end
       end
+    end
+
+    it "does not split chains (#85)" do
+      structure = load_file "cylindrin--size-09.pdb"
+      structure.renumber_by_connectivity split_chains: false
+      structure.chains.map(&.id).should eq "ABC".chars
+      structure.chains.map(&.n_residues).should eq [18] * 3
+      structure.chains.map(&.residues.map(&.number)).should eq [(1..18).to_a] * 3
+      structure.chains.map(&.residues.map(&.name)).should eq [
+        %w(LEU LYS VAL LEU GLY ASP VAL ILE GLU LEU LYS VAL LEU GLY ASP VAL ILE GLU),
+      ] * 3
+    end
+
+    it "splits chains (#85)" do
+      structure = load_file "cylindrin--size-09.pdb"
+      structure.renumber_by_connectivity split_chains: true
+      structure.chains.map(&.id).should eq "ABCDEF".chars
+      structure.chains.map(&.n_residues).should eq [9] * 6
+      structure.chains.map(&.residues.map(&.number)).should eq [(1..9).to_a] * 6
+      structure.chains.map(&.residues.map(&.name)).should eq [
+        %w(LEU LYS VAL LEU GLY ASP VAL ILE GLU),
+      ] * 6
     end
   end
 

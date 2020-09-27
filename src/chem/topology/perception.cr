@@ -51,7 +51,7 @@ class Chem::Topology::Perception
     else
       guess_bonds
       guess_residues
-      @structure.renumber_by_connectivity
+      @structure.renumber_by_connectivity split_chains: false
     end
     assign_residue_types
   end

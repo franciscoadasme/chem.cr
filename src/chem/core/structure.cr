@@ -179,9 +179,17 @@ module Chem
       !!@lattice
     end
 
-    def renumber_by_connectivity : Nil
-      each_chain do |chain|
-        chain.renumber_by_connectivity
+    def renumber_by_connectivity(split_chains : Bool = true) : Nil
+      if split_chains
+        id = 'A'.pred
+        residues.residue_fragments.each do |residues|
+          chain = dig?(id = id.succ) || Chain.new id, self
+          chain.clear
+          residues.each &.chain=(chain)
+          chain.renumber_by_connectivity
+        end
+      else
+        each_chain &.renumber_by_connectivity
       end
     end
 
