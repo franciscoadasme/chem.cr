@@ -73,6 +73,16 @@ module Chem
       self
     end
 
+    # Returns `true` if this residue is the same as *rhs*, else `false`.
+    #
+    # NOTE: overrides the equality operator included by `Comparable`,
+    # which uses the `<=>` operator thus returning true for two
+    # different residues that have the same chain id, number and
+    # insertion code.
+    def ==(rhs : self) : Bool
+      same?(rhs)
+    end
+
     # Returns the atom that matches *atom_t*.
     #
     # Atom must match both atom type's name and element, otherwise it

@@ -179,6 +179,28 @@ module Chem
       !!@lattice
     end
 
+    # Renumber chain and residues based on bond information.
+    #
+    # Residue fragments are assigned to unique chains unless
+    # *split_chains* is `false`, which keeps existing chains intact.
+    # Residue ordering is computed based on the link bond if available.
+    #
+    # NOTE: existing chains are reused to re-arrang the residues among
+    # them, so avoid caching them before calling this.
+    def renumber_by_connectivity(split_chains : Bool = true) : Nil
+      if split_chains
+        id = 'A'.pred
+        residues.residue_fragments.each do |residues|
+          chain = dig?(id = id.succ) || Chain.new id, self
+          chain.clear
+          residues.each &.chain=(chain)
+          chain.renumber_by_connectivity
+        end
+      else
+        each_chain &.renumber_by_connectivity
+      end
+    end
+
     def to_s(io : ::IO)
       io << "<Structure"
       io << " " << title.inspect unless title.blank?
