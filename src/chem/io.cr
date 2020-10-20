@@ -1,3 +1,4 @@
+require "./io/text_parser"
 require "./io/parser"
 require "./io/writer"
 require "./io/formats"
