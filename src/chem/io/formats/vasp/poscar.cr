@@ -78,7 +78,7 @@ module Chem::VASP::Poscar
   end
 
   @[IO::FileType(format: Poscar, names: %w(POSCAR* CONTCAR*))]
-  class Parser < Structure::Parser
+  class Reader < Structure::Reader
     include IO::PullParser
 
     @elements = [] of Element

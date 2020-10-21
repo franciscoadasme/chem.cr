@@ -295,7 +295,7 @@ module Chem::PDB
   end
 
   @[IO::FileType(format: PDB, ext: %w(ent pdb))]
-  class Parser < Structure::Parser
+  class Reader < Structure::Reader
     include IO::ColumnBasedParser
 
     @pdb_bonds = Hash(Tuple(Int32, Int32), Int32).new 0
@@ -309,14 +309,19 @@ module Chem::PDB
     @seek_bonds = true
     @ss_elements = [] of SecondaryStructureElement
 
-    def initialize(input : ::IO | Path | String,
+    def initialize(input : ::IO,
                    @alt_loc : Char? = nil,
                    chains : Enumerable(Char) | String | Nil = nil,
                    guess_topology : Bool = true,
-                   @het : Bool = true)
-      super input, guess_topology
+                   @het : Bool = true,
+                   sync_close : Bool = true)
+      super input, guess_topology, sync_close: sync_close
       @chains = chains.is_a?(Enumerable) ? chains.to_set : chains
       parse_header
+    end
+
+    def self.new(path : Path | String, **options) : self
+      new ::IO::Memory.new(File.read(path)), **options, sync_close: true
     end
 
     def next : Structure | Iterator::Stop

@@ -98,7 +98,7 @@ module Chem::Mol2
   end
 
   @[IO::FileType(format: Mol2, ext: %w(mol2))]
-  class Parser < Structure::Parser
+  class Reader < Structure::Reader
     include IO::PullParser
 
     def next : Structure | Iterator::Stop

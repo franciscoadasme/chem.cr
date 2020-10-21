@@ -1,15 +1,6 @@
 module Chem
   module IO
-    abstract class Parser(T)
-      abstract def parse : T
-
-      def initialize(@io : ::IO)
-      end
-
-      def initialize(path : Path | String)
-        @io = ::IO::Memory.new File.read(path)
-      end
-
+    module Parser
       def eof? : Bool
         if bytes = @io.peek
           bytes.empty?
@@ -24,6 +15,8 @@ module Chem
     end
 
     module ParserWithLocation
+      include Parser
+
       @prev_pos : Int32 | Int64 = 0
 
       def parse_exception(msg : String)
@@ -351,6 +344,8 @@ module Chem
     end
 
     module ColumnBasedParser
+      include Parser
+
       @line = ""
       @line_number = 0
       @cursor = 0..0
@@ -494,6 +489,8 @@ module Chem
     end
 
     module AsciiParser
+      include Parser
+
       @buffer = Bytes.new 8192
       @bytes_read = -1
       @pos = 0
@@ -614,13 +611,49 @@ module Chem
     end
   end
 
-  abstract class Structure::Parser < IO::Parser(Structure)
+  abstract class IO::Reader(T)
+    abstract def read_entry : T
+
+    property? sync_close = false
+    getter? closed = false
+
+    def initialize(@io : ::IO, @sync_close : Bool = true)
+    end
+
+    def self.new(path : Path | String) : self
+      new ::IO::Memory.new(File.read(path)), sync_close: true
+    end
+
+    def self.open(io : ::IO, sync_close : Bool = true, **options)
+      reader = new io, **options, sync_close: sync_close
+      yield reader ensure reader.close
+    end
+
+    def self.open(path : Path | String, **options)
+      reader = new path, **options
+      yield reader ensure reader.close
+    end
+
+    def close
+      return if @closed
+      @closed = true
+      @io.close if @sync_close
+    end
+  end
+
+  abstract class Structure::Reader < IO::Reader(Structure)
     include Iterator(Structure)
 
     abstract def skip_structure : Nil
 
-    def initialize(input : ::IO | Path | String, @guess_topology : Bool = true)
-      super input
+    def initialize(input : ::IO,
+                   @guess_topology : Bool = true,
+                   sync_close : Bool = true)
+      super input, sync_close
+    end
+
+    def self.new(path : Path | String, guess_topology : Bool = true) : self
+      new ::IO::Memory.new(File.read(path)), guess_topology, sync_close: true
     end
 
     def each(indexes : Enumerable(Int), &block : Structure ->)
@@ -635,7 +668,7 @@ module Chem
       end
     end
 
-    def parse : Structure
+    def read_entry : Structure
       first? || parse_exception "Empty content"
     end
 
@@ -691,27 +724,29 @@ module Chem
     end
   end
 
-  abstract class Spatial::Grid::Parser < IO::Parser(Spatial::Grid)
+  abstract class Spatial::Grid::Reader < IO::Reader(Spatial::Grid)
     abstract def info : Spatial::Grid::Info
   end
 
   macro finished
-    {% for parser in IO::Parser.all_subclasses.select(&.annotation(IO::FileType)) %}
-      {% format = parser.annotation(IO::FileType)[:format].id.underscore %}
+    {% for reader in IO::Reader.all_subclasses.select(&.annotation(IO::FileType)) %}
+      {% format = reader.annotation(IO::FileType)[:format].id.underscore %}
 
-      {% type = parser.ancestors.reject(&.type_vars.empty?)[0].type_vars[0] %}
+      {% type = reader.ancestors.reject(&.type_vars.empty?)[0].type_vars[0] %}
       {% keyword = type.class.id.ends_with?("Module") ? "module" : nil %}
       {% keyword = type < Reference ? "class" : "struct" unless keyword %}
 
       {{keyword.id}} ::{{type.id}}
         def self.from_{{format.id}}(input : ::IO | Path | String, *args, **options) : self
-          {{parser}}.new(input, *args, **options).parse
+          {{reader}}.open(input, *args, **options) do |reader|
+            reader.read_entry
+          end
         end
       end
 
       class ::Array(T)
         def self.from_{{format.id}}(input : ::IO | Path | String, *args, **options) : self
-          {{parser}}.new(input, *args, **options).to_a
+          {{reader}}.new(input, *args, **options).to_a
         end
 
         def self.from_{{format.id}}(input : ::IO | Path | String,
@@ -719,7 +754,9 @@ module Chem
                                     *args,
                                     **options) : self
           ary = Array(Chem::Structure).new indexes.size
-          {{parser}}.new(input, *args, **options).each(indexes) { |st| ary << st }
+          {{reader}}.open(input, *args, **options) do |reader|
+            reader.each(indexes) { |st| ary << st }
+          end
           ary
         end
       end

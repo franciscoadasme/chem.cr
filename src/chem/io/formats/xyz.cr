@@ -17,7 +17,7 @@ module Chem::XYZ
   end
 
   @[IO::FileType(format: XYZ, ext: %w(xyz))]
-  class Parser < Structure::Parser
+  class Parser < Structure::Reader
     include IO::PullParser
 
     def next : Structure | Iterator::Stop

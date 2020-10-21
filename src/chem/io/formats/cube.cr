@@ -1,6 +1,6 @@
 module Chem::Cube
   @[IO::FileType(format: Cube, ext: %w(cube))]
-  class Parser < Spatial::Grid::Parser
+  class Reader < Spatial::Grid::Reader
     include IO::AsciiParser
 
     BOHR_TO_ANGS = 0.529177210859
@@ -19,7 +19,7 @@ module Chem::Cube
       Spatial::Grid::Info.new bounds, {nx, ny, nz}
     end
 
-    def parse : Spatial::Grid
+    def read_entry : Spatial::Grid
       Spatial::Grid.build(info) do |buffer, size|
         size.times do |i|
           buffer[i] = read_float

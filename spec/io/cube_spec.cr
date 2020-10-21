@@ -1,6 +1,6 @@
 require "../spec_helper"
 
-describe Chem::Cube::Parser do
+describe Chem::Cube::Reader do
   it "parses a cube file" do
     grid = Grid.from_cube "spec/data/cube/20.cube"
     grid.dim.should eq({20, 20, 20})

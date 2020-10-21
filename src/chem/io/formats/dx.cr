@@ -1,6 +1,6 @@
 module Chem::DX
   @[IO::FileType(format: DX, ext: %w(dx))]
-  class Parser < Spatial::Grid::Parser
+  class Reader < Spatial::Grid::Reader
     include IO::AsciiParser
 
     def info : Spatial::Grid::Info
@@ -21,7 +21,7 @@ module Chem::DX
       Spatial::Grid::Info.new bounds, {ni, nj, nk}
     end
 
-    def parse : Spatial::Grid
+    def read_entry : Spatial::Grid
       Spatial::Grid.build(info) do |buffer, size|
         size.times do |i|
           buffer[i] = read_float

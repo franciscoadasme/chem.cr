@@ -41,7 +41,7 @@ module Chem::DFTB::Gen
   end
 
   @[IO::FileType(format: Gen, ext: %w(gen))]
-  class Parser < Structure::Parser
+  class Reader < Structure::Reader
     include IO::PullParser
 
     @elements = [] of Element

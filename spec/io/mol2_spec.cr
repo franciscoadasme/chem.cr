@@ -1,6 +1,6 @@
 require "../spec_helper"
 
-describe Chem::Mol2::Parser do
+describe Chem::Mol2::Reader do
   it "parses a Mol2 file" do
     content = <<-EOS
       # Name: benzene

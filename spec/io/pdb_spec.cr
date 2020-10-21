@@ -290,7 +290,7 @@ describe Chem::PDB do
 
     it "parses selected models (iterator)" do
       path = "spec/data/pdb/models.pdb"
-      st_list = PDB::Parser.new(path).select(indexes: [1, 3]).to_a
+      st_list = PDB::Reader.new(path).select(indexes: [1, 3]).to_a
       st_list.size.should eq 2
       xs = {7.212, 22.055}
       st_list.zip(xs) do |st, x|
@@ -302,7 +302,7 @@ describe Chem::PDB do
     end
 
     it "skip models" do
-      parser = PDB::Parser.new "spec/data/pdb/models.pdb"
+      parser = PDB::Reader.new "spec/data/pdb/models.pdb"
       parser.skip_structure
       parser.first.atoms[0].coords.should eq V[7.212, 15.334, 0.966]
       parser.skip_structure
@@ -310,7 +310,7 @@ describe Chem::PDB do
     end
 
     it "skip models (iterator)" do
-      parser = PDB::Parser.new "spec/data/pdb/models.pdb"
+      parser = PDB::Reader.new "spec/data/pdb/models.pdb"
       parser.skip(3).first.atoms[0].coords.should eq V[22.055, 14.701, 7.032]
     end
 
