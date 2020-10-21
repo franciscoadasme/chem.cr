@@ -209,6 +209,39 @@ class Chem::IO::TextParser
     end
   end
 
+  def scan(& : Char -> Bool) : String
+    bytes = scan_bytes { |byte| yield byte.unsafe_chr }
+    String.new bytes
+  end
+
+  def scan(*sets : Char | Enumerable(Char)) : String
+    scan sets
+  end
+
+  def scan(sets : Enumerable) : String
+    scan do |chr|
+      sets.any? &.===(chr)
+    end
+  end
+
+  def scan_bytes(& : UInt8 -> Bool) : Bytes
+    bytes = Bytes.empty
+    until eof?
+      view = @buffer.take_while { |byte| yield byte }
+      if view.empty?
+        break
+      elsif view.size < @buffer.size
+        bytes = bytes.concat view
+        @buffer += view.size
+        break
+      else
+        bytes = bytes.concat @buffer
+        @buffer = Bytes.empty
+      end
+    end
+    bytes
+  end
+
   def skip_bytes(count : Int) : self
     while count > @buffer.size
       count -= @buffer.size

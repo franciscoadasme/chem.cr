@@ -398,6 +398,38 @@ describe Chem::IO::TextParser do
     end
   end
 
+  describe "#scan" do
+    it "reads characters until block returns false" do
+      parser = TextParser.new IO::Memory.new("123 abcdef \r\n56.7"), 8
+      parser.scan(&.ascii_number?).should eq "123"
+      parser.scan(&.ascii_letter?).should eq ""
+      parser.scan(&.ascii_whitespace?).should eq " "
+      parser.scan(&.ascii_letter?).should eq "abcdef"
+      parser.scan { true }.should eq " \r\n56.7"
+      parser.scan { true }.empty?.should be_true
+    end
+
+    it "reads characters in charset" do
+      parser = TextParser.new IO::Memory.new("abc:_:def\n"), 6
+      parser.scan('a'..'z').should eq "abc"
+      parser.scan(':', '_').should eq ":_:"
+      parser.scan(['d', 'e', 'z']).should eq "de"
+      parser.scan('0'..'9').should eq ""
+      parser.read_to_end.should eq "f\n"
+    end
+  end
+
+  describe "#scan_bytes" do
+    it "reads bytes until block returns false" do
+      parser = TextParser.new IO::Memory.new("123 hello\nabcdef \r\n567"), 8
+      parser.scan_bytes(&.chr.number?).should eq "123".to_slice
+      parser.scan_bytes(&.chr.whitespace?).should eq " ".to_slice
+      parser.scan_bytes(&.chr.letter?).should eq "hello".to_slice
+      parser.scan_bytes { true }.should eq "\nabcdef \r\n567".to_slice
+      parser.scan_bytes { true }.empty?.should be_true
+    end
+  end
+
   describe "#skip_bytes" do
     it "reads and discards N bytes" do
       io = IO::Memory.new("123 hello")
