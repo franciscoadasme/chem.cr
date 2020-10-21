@@ -342,6 +342,21 @@ describe Chem::IO::TextParser do
     end
   end
 
+  describe "#read_line" do
+    it "reads a line" do
+      parser = TextParser.new IO::Memory.new("Lorem ipsum\ndolor sit amet\r\nabc")
+      parser.read_line.should eq "Lorem ipsum"
+      parser.read_line.should eq "dolor sit amet"
+      parser.read_line.should eq "abc"
+    end
+
+    it "fails at eof" do
+      expect_raises IO::EOFError do
+        TextParser.new(IO::Memory.new).read_line
+      end
+    end
+  end
+
   describe "#read_to_end" do
     it "reads the rest of the IO" do
       parser = TextParser.new IO::Memory.new("123 hello")

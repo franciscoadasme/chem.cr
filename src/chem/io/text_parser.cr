@@ -183,6 +183,14 @@ class Chem::IO::TextParser
     end
   end
 
+  def read_line : String
+    raise ::IO::EOFError.new if eof?
+    bytes = read_bytes_until '\n'
+    bytes = bytes[0, bytes.size - 1] if bytes[-1]? === '\r'
+    @buffer += 1 unless @buffer.empty?
+    String.new bytes
+  end
+
   def read_to_end : String
     String.new read_bytes_to_end
   end
