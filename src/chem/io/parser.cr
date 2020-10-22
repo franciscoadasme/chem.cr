@@ -618,6 +618,7 @@ module Chem
     getter? closed = false
 
     def initialize(@io : ::IO, @sync_close : Bool = true)
+      @parser = TextParser.new @io
     end
 
     def self.new(path : Path | String) : self
@@ -638,6 +639,10 @@ module Chem
       return if @closed
       @closed = true
       @io.close if @sync_close
+    end
+
+    def parse_exception(msg : String)
+      raise ParseException.new msg
     end
   end
 
