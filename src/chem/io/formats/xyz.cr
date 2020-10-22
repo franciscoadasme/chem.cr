@@ -17,7 +17,7 @@ module Chem::XYZ
   end
 
   @[IO::FileType(format: XYZ, ext: %w(xyz))]
-  class Parser < Structure::Reader
+  class Reader < Structure::Reader
     def next : Structure | Iterator::Stop
       @parser.skip_whitespace
       @parser.eof? ? stop : read_next

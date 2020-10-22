@@ -1,6 +1,6 @@
 require "../spec_helper"
 
-describe Chem::XYZ::Parser do
+describe Chem::XYZ::Reader do
   it "parses a XYZ file" do
     symbols = ["N", "C", "C", "O", "C", "H", "H", "H", "H", "H", "N", "C", "C", "O",
                "C", "S", "H", "H", "H", "H", "H", "N", "C", "C", "O", "C", "H", "H",
