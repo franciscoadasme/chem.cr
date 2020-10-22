@@ -209,6 +209,16 @@ class Chem::IO::TextParser
     end
   end
 
+  def read_word : String
+    read_word? || raise ::IO::EOFError.new
+  end
+
+  def read_word? : String?
+    skip_whitespace
+    bytes = scan_bytes &.ascii_whitespace?.!
+    String.new(bytes) unless bytes.empty?
+  end
+
   def scan(& : Char -> Bool) : String
     bytes = scan_bytes { |byte| yield byte.unsafe_chr }
     String.new bytes

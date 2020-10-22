@@ -398,6 +398,30 @@ describe Chem::IO::TextParser do
     end
   end
 
+  describe "#read_word" do
+    it "fails at eof" do
+      expect_raises(IO::EOFError) do
+        TextParser.new(IO::Memory.new).read_word
+      end
+    end
+  end
+
+  describe "#read_word?" do
+    it "reads consecutive non-whitespace characters" do
+      str = "The quick\n brown\t\tfox jumps \t\nover the lazy dog"
+      parser = TextParser.new IO::Memory.new(str)
+      ary = [] of String
+      while word = parser.read_word?
+        ary << word
+      end
+      ary.should eq str.split(/\s+/)
+    end
+
+    it "returns nil at eof" do
+      TextParser.new(IO::Memory.new).read_word?.should be_nil
+    end
+  end
+
   describe "#scan" do
     it "reads characters until block returns false" do
       parser = TextParser.new IO::Memory.new("123 abcdef \r\n56.7"), 8
