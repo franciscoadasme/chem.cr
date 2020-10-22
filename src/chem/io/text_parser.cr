@@ -215,8 +215,8 @@ class Chem::IO::TextParser
 
   def read_word? : String?
     skip_whitespace
-    bytes = scan_bytes &.ascii_whitespace?.!
-    String.new(bytes) unless bytes.empty?
+    word = scan 'A'..'z', '0'..'9', '_', '-'
+    word unless word.empty?
   end
 
   def scan(& : Char -> Bool) : String
