@@ -79,32 +79,28 @@ module Chem::VASP::Poscar
 
   @[IO::FileType(format: Poscar, names: %w(POSCAR* CONTCAR*))]
   class Reader < Structure::Reader
-    include IO::PullParser
-
     @elements = [] of Element
     @fractional = false
     @has_constraints = false
     @scale_factor = 1.0
 
     def next : Structure | Iterator::Stop
-      eof? ? stop : parse_next
+      @parser.eof? ? stop : read_next
     end
 
     def skip_structure : Nil
       @io.skip_to_end
     end
 
-    private def parse_atom(builder : Structure::Builder) : Nil
-      vec = read_vector
+    private def read_atom(builder : Structure::Builder) : Nil
+      vec = @parser.read_vector
       vec = @fractional ? vec.to_cartesian(builder.lattice!) : vec * @scale_factor
       atom = builder.atom @elements.shift, vec
       atom.constraint = read_constraint if @has_constraints
     end
 
-    private def parse_coordinate_system : Nil
-      skip_whitespace
-      line = read_line
-      case line[0].downcase
+    private def read_coordinate_system : Nil
+      case @parser.skip_whitespace.read.downcase
       when 'c', 'k' # cartesian
         @fractional = false
       when 'd' # direct
@@ -112,63 +108,56 @@ module Chem::VASP::Poscar
       else
         parse_exception "Invalid coordinate type (expected either Cartesian or Direct)"
       end
+      @parser.skip_line
     end
 
-    private def parse_elements : Nil
-      skip_whitespace
-      parse_exception "Expected element symbols (vasp 5+)" if check &.number?
-      elements = scan_delimited(&.letter?).map { |symbol| PeriodicTable[symbol] }
-      counts = read_atom_counts elements.size
-      elements.zip(counts) do |ele, count|
-        count.times { @elements << ele }
+    private def read_elements : Nil
+      ele = [] of Element
+      while @parser.skip_whitespace.check(&.letter?)
+        sym = @parser.read_word
+        ele << (PeriodicTable[sym]? || parse_exception "Unknown element named #{sym}")
       end
-      skip_line
+      parse_exception "Expected element symbols (vasp 5+)" if ele.empty?
+      ele.size.times do |i|
+        count = @parser.read_int? || parse_exception "Couldn't read number of atoms for #{ele[i].symbol}"
+        count.times { @elements << ele[i] }
+      end
+      @parser.skip_line
     end
 
-    private def parse_lattice(builder : Structure::Builder) : Nil
+    private def read_lattice(builder : Structure::Builder) : Nil
       builder.lattice \
-        @scale_factor * read_vector,
-        @scale_factor * read_vector,
-        @scale_factor * read_vector
+        @scale_factor * @parser.read_vector,
+        @scale_factor * @parser.read_vector,
+        @scale_factor * @parser.read_vector
     end
 
-    private def parse_next : Structure
+    private def read_next : Structure
       Structure.build(@guess_topology) do |builder|
-        builder.title read_line
+        builder.title @parser.read_line
 
-        @scale_factor = read_float
-        skip_line
-        parse_lattice builder
-        parse_elements
-        parse_selective_dynamics
-        parse_coordinate_system
+        @scale_factor = @parser.read_float
+        @parser.skip_line
+        read_lattice builder
+        read_elements
+        read_selective_dynamics
+        read_coordinate_system
 
-        @elements.size.times { parse_atom builder }
+        @elements.size.times { read_atom builder }
       end
     end
 
-    private def parse_selective_dynamics : Nil
-      skip_whitespace
-      @has_constraints = if check_in_set "sS"
-                           skip_line
+    private def read_selective_dynamics : Nil
+      @has_constraints = if @parser.skip_whitespace.check(&.in?('s', 'S'))
+                           @parser.skip_line
                            true
                          else
                            false
                          end
     end
 
-    private def read_atom_counts(n : Int) : Array(Int32)
-      Array(Int32).new(n) do |i|
-        read_int
-      rescue ex : IO::ParseException
-        ex.message = "Expected #{n - i} more number(s) of atoms per atomic species"
-        raise ex
-      end
-    end
-
     private def read_bool : Bool
-      skip_whitespace
-      case flag = read
+      case flag = @parser.skip_whitespace.read
       when 'F' then false
       when 'T' then true
       else          parse_exception "Invalid boolean flag (expected either T or F)"
