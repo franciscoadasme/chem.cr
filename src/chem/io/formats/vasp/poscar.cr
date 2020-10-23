@@ -79,102 +79,87 @@ module Chem::VASP::Poscar
 
   @[IO::FileType(format: Poscar, names: %w(POSCAR* CONTCAR*))]
   class Reader < Structure::Reader
-    @elements = [] of Element
-    @fractional = false
-    @has_constraints = false
-    @scale_factor = 1.0
-
     def next : Structure | Iterator::Stop
       @parser.eof? ? stop : read_next
     end
 
     def skip_structure : Nil
-      @io.skip_to_end
-    end
-
-    private def read_atom(builder : Structure::Builder) : Nil
-      vec = @parser.read_vector
-      vec = @fractional ? vec.to_cartesian(builder.lattice!) : vec * @scale_factor
-      atom = builder.atom @elements.shift, vec
-      atom.constraint = read_constraint if @has_constraints
-    end
-
-    private def read_coordinate_system : Nil
-      case @parser.skip_whitespace.read.downcase
-      when 'c', 'k' # cartesian
-        @fractional = false
-      when 'd' # direct
-        @fractional = true
-      else
-        parse_exception "Invalid coordinate type (expected either Cartesian or Direct)"
-      end
-      @parser.skip_line
-    end
-
-    private def read_elements : Nil
-      ele = [] of Element
-      while @parser.skip_whitespace.check(&.letter?)
-        sym = @parser.read_word
-        ele << (PeriodicTable[sym]? || parse_exception "Unknown element named #{sym}")
-      end
-      parse_exception "Expected element symbols (vasp 5+)" if ele.empty?
-      ele.size.times do |i|
-        count = @parser.read_int? || parse_exception "Couldn't read number of atoms for #{ele[i].symbol}"
-        count.times { @elements << ele[i] }
-      end
-      @parser.skip_line
-    end
-
-    private def read_lattice(builder : Structure::Builder) : Nil
-      builder.lattice \
-        @scale_factor * @parser.read_vector,
-        @scale_factor * @parser.read_vector,
-        @scale_factor * @parser.read_vector
-    end
-
-    private def read_next : Structure
-      Structure.build(@guess_topology) do |builder|
-        builder.title @parser.read_line
-
-        @scale_factor = @parser.read_float
-        @parser.skip_line
-        read_lattice builder
-        read_elements
-        read_selective_dynamics
-        read_coordinate_system
-
-        @elements.size.times { read_atom builder }
-      end
-    end
-
-    private def read_selective_dynamics : Nil
-      @has_constraints = if @parser.skip_whitespace.check(&.in?('s', 'S'))
-                           @parser.skip_line
-                           true
-                         else
-                           false
-                         end
-    end
-
-    private def read_bool : Bool
-      case flag = @parser.skip_whitespace.read
-      when 'F' then false
-      when 'T' then true
-      else          parse_exception "Invalid boolean flag (expected either T or F)"
-      end
+      @parser.skip_to_end
     end
 
     private def read_constraint : Constraint?
-      case {read_bool, read_bool, read_bool}
-      when {true, true, true}    then nil
-      when {false, true, true}   then Constraint::X
-      when {true, false, true}   then Constraint::Y
-      when {true, true, false}   then Constraint::Z
-      when {false, false, true}  then Constraint::XY
-      when {false, true, false}  then Constraint::XZ
-      when {true, false, false}  then Constraint::YZ
-      when {false, false, false} then Constraint::XYZ
-      else                            raise "BUG: unreachable"
+      cx = @parser.skip_whitespace.read
+      cy = @parser.skip_whitespace.read
+      cz = @parser.skip_whitespace.read
+      case {cx, cy, cz}
+      when {'T', 'T', 'T'} then nil
+      when {'F', 'T', 'T'} then Constraint::X
+      when {'T', 'F', 'T'} then Constraint::Y
+      when {'T', 'T', 'F'} then Constraint::Z
+      when {'F', 'F', 'T'} then Constraint::XY
+      when {'F', 'T', 'F'} then Constraint::XZ
+      when {'T', 'F', 'F'} then Constraint::YZ
+      when {'F', 'F', 'F'} then Constraint::XYZ
+      else
+        parse_exception "Couldn't read constraint flags"
+      end
+    end
+
+    private def read_coordinate_system : Symbol
+      case @parser.skip_whitespace.read.downcase
+      when 'c', 'k' # cartesian
+        @parser.skip_line
+        :cartesian
+      when 'd' # direct
+        @parser.skip_line
+        :fractional
+      else
+        parse_exception "Couldn't read coordinates type"
+      end
+    end
+
+    private def read_lattice : Tuple(Lattice, Float64)
+      scale_factor = @parser.read_float
+      lattice = Lattice.new @parser.read_vector, @parser.read_vector, @parser.read_vector
+      {lattice * scale_factor, scale_factor}
+    end
+
+    private def read_next : Structure
+      title = @parser.read_line.strip
+      lattice, scale_factor = read_lattice
+      element_counts = read_species
+      constrained = @parser.skip_whitespace.check &.in?('s', 'S')
+      @parser.skip_line if constrained
+      fractional = read_coordinate_system == :fractional
+
+      Structure.build(@guess_topology) do |builder|
+        builder.title title
+        builder.lattice lattice
+        element_counts.each do |ele, count|
+          count.times do
+            vec = @parser.read_vector
+            vec = fractional ? vec.to_cartesian(lattice) : vec * scale_factor
+            atom = builder.atom ele, vec
+            atom.constraint = read_constraint if constrained
+          end
+        end
+      end
+    end
+
+    private def read_species : Array(Tuple(Element, Int32))
+      elements = [] of Element
+      while @parser.skip_whitespace.check(&.letter?)
+        sym = @parser.read_word
+        ele = PeriodicTable[sym]? || parse_exception "Unknown element named #{sym}"
+        elements << ele
+      end
+      parse_exception "Couldn't read atom species" if elements.empty?
+      elements.map do |ele|
+        if count = @parser.read_int?
+          {ele, count}
+        else
+          parse_exception "Couldn't read number of atoms for #{ele.symbol}"
+        end
       end
     end
   end
