@@ -454,6 +454,17 @@ describe Chem::IO::TextParser do
     end
   end
 
+  describe "#skip" do
+    it "reads and discards characters in charset" do
+      parser = TextParser.new IO::Memory.new("abc:_:def\n"), 6
+      parser.skip('a'..'z').peek.should eq ':'
+      parser.skip(':', '_').peek.should eq 'd'
+      parser.skip(['d', 'e', 'z']).peek.should eq 'f'
+      parser.skip('0'..'9').peek.should eq 'f'
+      parser.skip('a'..'z', '\n').eof?.should be_true
+    end
+  end
+
   describe "#skip_bytes" do
     it "reads and discards N bytes" do
       io = IO::Memory.new("123 hello")

@@ -252,6 +252,17 @@ class Chem::IO::TextParser
     bytes
   end
 
+  def skip(*sets : Char | Enumerable(Char)) : self
+    skip sets
+  end
+
+  def skip(sets : Enumerable) : self
+    skip_while do |byte|
+      sets.any? &.===(byte.unsafe_chr)
+    end
+    self
+  end
+
   def skip_bytes(count : Int) : self
     while count > @buffer.size
       count -= @buffer.size
