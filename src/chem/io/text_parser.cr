@@ -233,7 +233,7 @@ class Chem::IO::TextParser
 
   def read_word? : String?
     skip_whitespace
-    word = scan 'A'..'z', '0'..'9', '_', '-'
+    word = scan &.ord.ascii_word?
     word unless word.empty?
   end
 
