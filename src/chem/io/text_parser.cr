@@ -290,8 +290,8 @@ class Chem::IO::TextParser
     end
   end
 
-  def skip_until(delim : Char) : self
-    skip_until delim.ord
+  def skip_until(*delim : Char) : self
+    skip_until *delim.map(&.ord)
   end
 
   def skip_until(*bytes : Int) : self
