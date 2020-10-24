@@ -60,6 +60,20 @@ class Chem::IO::TextParser
     @buffer[0, Math.min(count, @buffer.size)]
   end
 
+  def peek_line : String?
+    return if eof?
+
+    i = @buffer.unsafe_index('\n'.ord)
+    fill_buffer(fully: false) unless i
+    i = @buffer.unsafe_index('\n'.ord) || @buffer.size
+
+    if i > 0
+      bytes = @buffer[0, i]
+      bytes = @buffer[0, i] if bytes[-1]? === '\r'
+      String.new bytes
+    end
+  end
+
   def read : Char
     read? || raise ::IO::EOFError.new
   end

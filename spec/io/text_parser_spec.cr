@@ -119,6 +119,26 @@ describe Chem::IO::TextParser do
     end
   end
 
+  describe "#peek_line" do
+    it "returns current line without advancing IO position" do
+      io = IO::Memory.new "The quick\n brown\t\tfox jumps \t\nover the lazy dog"
+      parser = TextParser.new io, 20
+      parser.peek_line.should eq "The quick"
+      parser.read_line.should eq "The quick"
+      parser.peek_line.should eq " brown\t\tfox jumps \t"
+      parser.read_line.should eq " brown\t\tfox jumps \t"
+      parser.peek_line.should eq "over the lazy dog"
+      parser.read_line.should eq "over the lazy dog"
+      parser.peek_line.should be_nil
+    end
+
+    it "returns nil at end of file" do
+      parser = TextParser.new IO::Memory.new
+      parser.peek_line.should eq nil
+      parser.peek_line.should eq nil
+    end
+  end
+
   describe "#read" do
     it "reads N characters" do
       parser = TextParser.new IO::Memory.new("123 hello"), 4
