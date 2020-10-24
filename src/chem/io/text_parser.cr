@@ -68,6 +68,10 @@ class Chem::IO::TextParser
     read_byte?.try(&.unsafe_chr)
   end
 
+  def read(count : Int) : String
+    String.new read_bytes(count)
+  end
+
   def read_byte : UInt8
     read_byte? || raise ::IO::EOFError.new
   end

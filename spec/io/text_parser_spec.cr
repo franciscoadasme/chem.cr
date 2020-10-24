@@ -120,6 +120,14 @@ describe Chem::IO::TextParser do
   end
 
   describe "#read" do
+    it "reads N characters" do
+      parser = TextParser.new IO::Memory.new("123 hello"), 4
+      parser.read(5).should eq "123 h"
+      parser.read(3).should eq "ell"
+      parser.read(5).should eq "o"
+      parser.read(4).empty?.should be_true
+    end
+
     it "raises at end of file" do
       parser = TextParser.new IO::Memory.new("123 hello"), 4
       expect_raises IO::EOFError do
@@ -129,7 +137,7 @@ describe Chem::IO::TextParser do
   end
 
   describe "#read?" do
-    it "reads a byte" do
+    it "reads a character" do
       parser = TextParser.new IO::Memory.new("123 hello"), 4
       parser.read?.should eq '1'
       parser.read?.should eq '2'
