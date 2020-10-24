@@ -282,6 +282,10 @@ class Chem::IO::TextParser
     self
   end
 
+  def skip_spaces : self
+    skip ' ', '\t'
+  end
+
   def skip_to_end : self
     @io.skip_to_end
     @buffer = Bytes.empty

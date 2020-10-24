@@ -493,6 +493,17 @@ describe Chem::IO::TextParser do
     end
   end
 
+  describe "#skip_spaces" do
+    it "reads and discards horizontal spaces" do
+      parser = TextParser.new IO::Memory.new("abc \t\ndef\thello\r\n123"), 6
+      parser.read(3).should eq "abc"
+      parser.skip_spaces.read(4).should eq "\ndef"
+      parser.skip_spaces.read(5).should eq "hello"
+      parser.skip_spaces.read(5).should eq "\r\n123"
+      parser.skip_spaces.read?.should be_nil
+    end
+  end
+
   describe "#skip_to_end" do
     it "reads and discards the rest of the IO" do
       io = IO::Memory.new("123 hello")
