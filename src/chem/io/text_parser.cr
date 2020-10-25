@@ -46,6 +46,21 @@ class Chem::IO::TextParser
     @buffer.empty? && fill_buffer == 0
   end
 
+  def eol?(ignore_spaces : Bool = true) : Bool
+    return true if eof?
+
+    offset = 0
+    if ignore_spaces
+      until @buffer.empty? && fill_buffer(fully: false) == 0
+        offset = @buffer.take_while(&.in?(32, 9)).size
+        break if offset < @buffer.size
+      end
+    end
+    bytes = @buffer + offset
+    char = bytes.unsafe_fetch(0).unsafe_chr unless bytes.empty?
+    char == '\r' || char == '\n'
+  end
+
   def peek : Char?
     peek_byte.try(&.unsafe_chr)
   end

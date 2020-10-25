@@ -70,6 +70,26 @@ describe Chem::IO::TextParser do
     end
   end
 
+  describe "#eol?" do
+    it "tells if it is at the end of line" do
+      parser = TextParser.new IO::Memory.new("123 \nhello\r\n\t world"), 10
+      parser.eol?.should be_false
+      parser.skip_while(&.ascii_number?).eol?.should be_true
+      parser.skip_whitespace.eol?.should be_false
+      parser.skip_while(&.ascii_letter?).eol?.should be_true
+      parser.skip('\r', '\n').eol?.should be_false
+      parser.skip_whitespace.eol?.should be_false
+      parser.skip_while(&.ascii_letter?).eol?.should be_true
+    end
+
+    it "doesn't ignore spaces" do
+      parser = TextParser.new IO::Memory.new("123 \nhello"), 10
+      parser.eol?.should be_false
+      parser.skip_while(&.ascii_number?).eol?(ignore_spaces: false).should be_false
+      parser.skip_spaces.eol?(ignore_spaces: false).should be_true
+    end
+  end
+
   describe "#peek" do
     it "returns a char without advancing IO position" do
       io = IO::Memory.new "hello"
