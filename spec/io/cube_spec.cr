@@ -54,7 +54,7 @@ describe Chem::Cube::Reader do
         1    0.000000    7.340606    5.669178    5.111259
        -0.25568E-04  0.59213E-05  0.81068E-05  0.10868E-04
       EOF
-    expect_raises IO::Error, "not supported" do
+    expect_raises ParseException, "not supported" do
       Grid.from_cube io
     end
   end

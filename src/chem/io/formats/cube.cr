@@ -1,28 +1,27 @@
 module Chem::Cube
   @[IO::FileType(format: Cube, ext: %w(cube))]
   class Reader < Spatial::Grid::Reader
-    include IO::AsciiParser
-
     BOHR_TO_ANGS = 0.529177210859
 
     def info : Spatial::Grid::Info
-      skip_lines 2
-      n_atoms = read_int
-      raise ::IO::Error.new "Cube with multiple densities not supported" if n_atoms < 0
+      2.times { @parser.skip_line }
+      n_atoms = @parser.read_int
+      parse_exception "Cube with multiple densities not supported" if n_atoms < 0
 
-      origin = read_vector * BOHR_TO_ANGS
-      nx, i = read_int, read_vector * BOHR_TO_ANGS
-      ny, j = read_int, read_vector * BOHR_TO_ANGS
-      nz, k = read_int, read_vector * BOHR_TO_ANGS
-      skip_lines n_atoms + 1
-      bounds = Spatial::Bounds.new origin, i * nx, j * ny, k * nz
+      origin = @parser.read_vector * BOHR_TO_ANGS
+      nx, vi = @parser.read_int, @parser.read_vector * BOHR_TO_ANGS
+      ny, vj = @parser.read_int, @parser.read_vector * BOHR_TO_ANGS
+      nz, vk = @parser.read_int, @parser.read_vector * BOHR_TO_ANGS
+      (n_atoms + 1).times { @parser.skip_line }
+
+      bounds = Spatial::Bounds.new origin, vi * nx, vj * ny, vk * nz
       Spatial::Grid::Info.new bounds, {nx, ny, nz}
     end
 
     def read_entry : Spatial::Grid
       Spatial::Grid.build(info) do |buffer, size|
         size.times do |i|
-          buffer[i] = read_float
+          buffer[i] = @parser.read_float
         end
       end
     end
