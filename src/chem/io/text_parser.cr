@@ -348,6 +348,7 @@ class Chem::IO::TextParser
   end
 
   def skip_word : self
+    skip_whitespace
     skip_until &.ascii_whitespace?
     self
   end

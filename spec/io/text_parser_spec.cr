@@ -610,10 +610,9 @@ describe Chem::IO::TextParser do
       io = IO::Memory.new "The quick\n brown\t\tfox jumps \t\r\nover the lazy dog\n"
       parser = TextParser.new io, 4
       parser.skip_word
-      parser.read.should eq ' '
-      parser.read.should eq 'q'
+      parser.peek(2).should eq " q"
       parser.skip_word
-      parser.read.should eq '\n'
+      parser.peek(3).should eq "\n b"
     end
   end
 end
