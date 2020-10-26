@@ -18,6 +18,18 @@ class Chem::IO::TextParser
     peek == byte
   end
 
+  def check(*charsets : Char | Enumerable(Char)) : Bool
+    check charsets
+  end
+
+  def check(charsets : Enumerable) : Bool
+    if char = peek
+      charsets.any? &.===(char)
+    else
+      false
+    end
+  end
+
   def check(str : String) : Bool
     peek_bytes(str.bytesize) == str.to_slice
   end

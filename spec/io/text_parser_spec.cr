@@ -11,6 +11,15 @@ describe Chem::IO::TextParser do
       parser.read.should eq 'L'
     end
 
+    it "checks current character in charsets" do
+      parser = TextParser.new IO::Memory.new("Lorem ipsum"), 4
+      parser.check('L', 'l').should be_true
+      parser.check('o', 'O').should be_false
+      parser.check('A'..'Z', '0'..'9').should be_true
+      parser.check('a'..'z').should be_false
+      parser.read.should eq 'L'
+    end
+
     it "checks current character (block)" do
       parser = TextParser.new IO::Memory.new("Lorem ipsum"), 4
       parser.check(&.letter?).should be_true
