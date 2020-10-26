@@ -42,72 +42,67 @@ module Chem::DFTB::Gen
 
   @[IO::FileType(format: Gen, ext: %w(gen))]
   class Reader < Structure::Reader
-    include IO::PullParser
-
+    @builder = uninitialized Structure::Builder
     @elements = [] of Element
     @fractional = false
+    @n_atoms = 0
     @periodic = false
 
     def next : Structure | Iterator::Stop
-      skip_whitespace
-      eof? ? stop : parse_next
+      @parser.skip_whitespace
+      @parser.eof? ? stop : read_next
     end
 
     def skip_structure : Nil
-      @io.skip_to_end
+      @parser.skip_to_end
     end
 
-    private def parse_atom(builder : Structure::Builder) : Nil
-      skip_spaces.skip(&.number?).skip_spaces
-      builder.atom read_element, read_vector
-      skip_line
-    end
-
-    private def parse_elements : Nil
-      loop do
-        skip_spaces
-        break unless check &.letter?
-        @elements << PeriodicTable[scan(&.letter?)]
-      end
-      skip_line
-    end
-
-    private def parse_geometry_type : Nil
-      skip_spaces
-      case read
+    private def parse_coord_type : Nil
+      case @parser.skip_spaces.read
       when 'F' then @fractional = @periodic = true
       when 'S' then @periodic = true
       when 'C' then @fractional = @periodic = false
       else          parse_exception "Invalid geometry type"
       end
-      skip_line
+      @parser.skip_line
     end
 
-    private def parse_lattice(builder : Structure::Builder) : Nil
-      skip_line
-      builder.lattice read_vector, read_vector, read_vector
-    end
-
-    private def parse_next : Structure
-      Structure.build(@guess_topology) do |builder|
-        n_atoms = read_int
-        parse_geometry_type
-        parse_elements
-        n_atoms.times { parse_atom builder }
-
-        parse_lattice builder if @periodic
-
-        @io.skip_to_end # ensure end of file as Gen doesn't support multiple entries
-
-        structure = builder.build
-        structure.coords.to_cartesian! if @fractional
+    private def parse_elements : Nil
+      @elements.clear
+      until @parser.eol?
+        @elements << PeriodicTable[@parser.read_word]
       end
+      @parser.skip_line
     end
 
-    private def read_element : Element
-      @elements[read_int - 1]
-    rescue IndexError
-      parse_exception "Invalid element index"
+    private def parse_header : Nil
+      @n_atoms = @parser.read_int
+      parse_coord_type
+      parse_elements
+    end
+
+    private def read_atom : Atom
+      @parser.skip_spaces.skip_while(&.ascii_number?).skip_spaces
+      ele = @elements[@parser.read_int - 1]? || parse_exception "Invalid element index"
+      vec = @parser.read_vector
+      @parser.skip_line
+      @builder.atom ele, vec
+    end
+
+    private def read_next : Structure
+      parse_header
+
+      @builder = Structure::Builder.new guess_topology: @guess_topology
+      @n_atoms.times { read_atom }
+      if @periodic
+        @parser.skip_line
+        @builder.lattice @parser.read_vector, @parser.read_vector, @parser.read_vector
+      end
+      @parser.skip_to_end # ensure end of file as Gen doesn't support multiple entries
+
+      structure = @builder.build
+      structure.coords.to_cartesian! if @fractional
+      structure
     end
   end
 end
