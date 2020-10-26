@@ -119,7 +119,7 @@ module Chem::Mol2
       name = @parser.skip_spaces.scan 'A'..'z', '0'..'9'
       coords = @parser.read_vector
       element = PeriodicTable[@parser.read_word]
-      @parser.skip('.').skip_word # skip atom type
+      @parser.skip('.').skip_word if @parser.check('.') # ignore sybyl type
       unless @parser.eol?
         resid = @parser.read_int
         resname = @parser.skip_spaces.read_word
