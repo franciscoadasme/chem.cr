@@ -99,6 +99,15 @@ describe Chem::IO::TextParser do
       parser.read.should eq 'h'
     end
 
+    it "returns up to N characters without advancing IO position" do
+      parser = TextParser.new IO::Memory.new("hello world"), 4
+      parser.peek(4).should eq "hell"
+      parser.peek(3).should eq "hel"
+      parser.read(8).should eq "hello wo"
+      parser.peek(10).should eq "rld"
+      parser.read_to_end.should eq "rld"
+    end
+
     it "returns nil at end of file" do
       parser = TextParser.new IO::Memory.new
       parser.peek.should eq nil

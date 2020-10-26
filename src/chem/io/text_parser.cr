@@ -65,6 +65,10 @@ class Chem::IO::TextParser
     peek_byte.try(&.unsafe_chr)
   end
 
+  def peek(count : Int) : String
+    String.new peek_bytes(count)
+  end
+
   def peek_byte : UInt8?
     return nil if eof?
     @buffer.unsafe_fetch(0)
