@@ -79,12 +79,28 @@ module Chem::VASP::Poscar
 
   @[IO::FileType(format: Poscar, names: %w(POSCAR* CONTCAR*))]
   class Reader < Structure::Reader
+    @builder = uninitialized Structure::Builder
+    @constrained = false
+    @fractional = false
+    @lattice = uninitialized Lattice
+    @scale_factor = 1.0
+    @species = [] of Element
+    @title = ""
+
     def next : Structure | Iterator::Stop
       @parser.eof? ? stop : read_next
     end
 
     def skip_structure : Nil
       @parser.skip_to_end
+    end
+
+    private def read_atom : Atom
+      vec = @parser.read_vector
+      vec = @fractional ? vec.to_cartesian(@lattice) : vec * @scale_factor
+      atom = @builder.atom @species.shift, vec
+      atom.constraint = read_constraint if @constrained
+      atom
     end
 
     private def read_constraint : Constraint?
@@ -105,48 +121,40 @@ module Chem::VASP::Poscar
       end
     end
 
-    private def read_coordinate_system : Symbol
+    private def read_coordinate_system : Nil
       case @parser.skip_whitespace.read.downcase
       when 'c', 'k' # cartesian
         @parser.skip_line
-        :cartesian
+        @fractional = false
       when 'd' # direct
         @parser.skip_line
-        :fractional
+        @fractional = true
       else
         parse_exception "Couldn't read coordinates type"
       end
     end
 
-    private def read_lattice : Tuple(Lattice, Float64)
-      scale_factor = @parser.read_float
-      lattice = Lattice.new @parser.read_vector, @parser.read_vector, @parser.read_vector
-      {lattice * scale_factor, scale_factor}
+    private def read_header : Nil
+      @title = @parser.read_line.strip
+      @scale_factor = @parser.read_float
+      @lattice = Lattice.new @parser.read_vector, @parser.read_vector, @parser.read_vector
+      @lattice *= @scale_factor if @scale_factor != 1.0
+      read_species
+      @constrained = @parser.skip_whitespace.check &.in?('s', 'S')
+      @parser.skip_line if @constrained
+      read_coordinate_system
     end
 
     private def read_next : Structure
-      title = @parser.read_line.strip
-      lattice, scale_factor = read_lattice
-      element_counts = read_species
-      constrained = @parser.skip_whitespace.check &.in?('s', 'S')
-      @parser.skip_line if constrained
-      fractional = read_coordinate_system == :fractional
-
-      Structure.build(@guess_topology) do |builder|
-        builder.title title
-        builder.lattice lattice
-        element_counts.each do |ele, count|
-          count.times do
-            vec = @parser.read_vector
-            vec = fractional ? vec.to_cartesian(lattice) : vec * scale_factor
-            atom = builder.atom ele, vec
-            atom.constraint = read_constraint if constrained
-          end
-        end
-      end
+      read_header
+      @builder = Structure::Builder.new guess_topology: @guess_topology
+      @builder.title @title
+      @builder.lattice @lattice
+      @species.size.times { read_atom }
+      @builder.build
     end
 
-    private def read_species : Array(Tuple(Element, Int32))
+    private def read_species : Nil
       elements = [] of Element
       while @parser.skip_whitespace.check(&.letter?)
         sym = @parser.read_word
@@ -154,9 +162,10 @@ module Chem::VASP::Poscar
         elements << ele
       end
       parse_exception "Couldn't read atom species" if elements.empty?
+      @species.clear
       elements.map do |ele|
         if count = @parser.read_int?
-          {ele, count}
+          count.times { @species << ele }
         else
           parse_exception "Couldn't read number of atoms for #{ele.symbol}"
         end
