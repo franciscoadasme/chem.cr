@@ -1,37 +1,27 @@
 module Chem::DX
   @[IO::FileType(format: DX, ext: %w(dx))]
   class Reader < Spatial::Grid::Reader
-    include IO::AsciiParser
-
     def info : Spatial::Grid::Info
-      skip_comments
-      skip_words 5
-      ni, nj, nk = read_int, read_int, read_int
-      skip_word # origin
-      origin = read_vector
-      skip_word # delta
-      i = read_vector * (ni - 1)
-      skip_word # delta
-      j = read_vector * (nj - 1)
-      skip_word # delta
-      k = read_vector * (nk - 1)
-      skip_lines 3
+      while @parser.skip_whitespace.peek == '#'
+        @parser.skip_line
+      end
 
-      bounds = Spatial::Bounds.new origin, i, j, k
+      5.times { @parser.skip_word }
+      ni, nj, nk = @parser.read_int, @parser.read_int, @parser.read_int
+      @parser.skip_word # origin
+      origin = @parser.read_vector
+      vi, vj, vk = {ni, nj, nk}.map { |n| @parser.skip_word.read_vector * (n - 1) }
+      3.times { @parser.skip_line }
+
+      bounds = Spatial::Bounds.new origin, vi, vj, vk
       Spatial::Grid::Info.new bounds, {ni, nj, nk}
     end
 
     def read_entry : Spatial::Grid
       Spatial::Grid.build(info) do |buffer, size|
         size.times do |i|
-          buffer[i] = read_float
+          buffer[i] = @parser.read_float
         end
-      end
-    end
-
-    private def skip_comments : Nil
-      while peek == '#'
-        skip_line
       end
     end
   end
