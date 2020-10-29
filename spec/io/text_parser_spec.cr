@@ -31,8 +31,11 @@ describe Chem::IO::TextParser do
       parser = TextParser.new IO::Memory.new("Lorem ipsum"), 6
       parser.check("Lorem").should be_true
       parser.check("orem").should be_false
+      parser.check("ipsum", "Lorem").should be_true
       parser.read_bytes(6).should eq "Lorem ".to_slice
+      parser.check("Lorem", "ipsum").should be_true
       parser.check("ipsum ").should be_false
+      parser.check("lorem", "Lorem").should be_false
     end
 
     it "returns false at end of file" do

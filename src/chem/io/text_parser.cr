@@ -34,6 +34,14 @@ class Chem::IO::TextParser
     peek_bytes(str.bytesize) == str.to_slice
   end
 
+  def check(*strings : String) : Bool
+    check strings
+  end
+
+  def check(strings : Enumerable(String)) : Bool
+    strings.any? { |str| check str }
+  end
+
   def count_bytes_while(offset : Int = 0, & : UInt8 -> Bool) : Int32
     while offset < @buffer.size || fill_buffer(fully: false) > 0
       (@buffer + offset).each do |byte|
