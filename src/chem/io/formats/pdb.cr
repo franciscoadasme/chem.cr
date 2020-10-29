@@ -296,6 +296,8 @@ module Chem::PDB
 
   @[IO::FileType(format: PDB, ext: %w(ent pdb))]
   class Reader < Structure::Reader
+    private alias ResidueId = Tuple(Char, Int32, Char?)
+
     @pdb_bonds = Hash(Tuple(Int32, Int32), Int32).new 0
     @pdb_expt : Structure::Experiment?
     @pdb_lattice : Lattice?
@@ -564,33 +566,8 @@ module Chem::PDB
       }
     end
 
-    private def read_element : Element?
-      case symbol = read?(76, 2).try(&.strip)
-      when "D" # deuterium
-        PeriodicTable::D
-      when "X" # unknown, e.g., ASX
-        PeriodicTable::X
-      when String
-        PeriodicTable[symbol]? || parse_exception "Unknown element"
-      end
-    end
-
     private def read_het? : Bool
       @het
-    end
-
-    private def read_serial(start : Int, count : Int) : Int32
-      Hybrid36.decode read(start, count), count
-    end
-
-    private def read_serial?(start : Int, count : Int) : Int32?
-      if str = read?(start, count)
-        Hybrid36.decode str, count
-      end
-    end
-
-    private def read_vector : Spatial::Vector
-      Spatial::Vector.new read_float(30, 8), read_float(38, 8), read_float(46, 8)
     end
 
     private def resolve_alternate_locations : Nil
@@ -607,25 +584,6 @@ module Chem::PDB
       end
       table.clear
     end
-
-    private def seek_bonds
-      prev_pos = @io.pos
-      @io.seek 0, ::IO::Seek::End
-      buffer = Bytes.new 8192
-      bytes = Bytes.empty?
-      until @parser.eof?
-        case @parser.skip_whitespace
-        when .check("CONECT")
-          parse_bonds
-        when .check("ATOM", "HETATM", "ENDMDL", "TER")
-          break
-        end
-      end
-      @io.pos = prev_pos
-      @seek_bonds = false
-    end
-
-    private alias ResidueId = Tuple(Char, Int32, Char?)
 
     private struct AlternateLocation
       getter id : Char
@@ -650,10 +608,5 @@ module Chem::PDB
         @atoms.sum(&.occupancy) / @atoms.size
       end
     end
-
-    private record SecondaryStructureElement,
-      type : Protein::SecondaryStructure,
-      start : ResidueId,
-      end : ResidueId
   end
 end
