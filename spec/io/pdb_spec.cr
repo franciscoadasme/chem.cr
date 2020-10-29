@@ -118,13 +118,13 @@ describe Chem::PDB do
 
     it "parses a PDB file with experimental header" do
       st = load_file "1crn.pdb"
-      st.title.should eq "1crn"
+      st.title.should eq "1CRN"
       st.experiment.should_not be_nil
       exp = st.experiment.not_nil!
       exp.deposition_date.should eq Time.utc(1981, 4, 30)
       exp.doi.should eq "10.1073/PNAS.81.19.6014"
       exp.method.x_ray_diffraction?.should be_true
-      exp.pdb_accession.should eq "1crn"
+      exp.pdb_accession.should eq "1CRN"
       exp.resolution.should eq 1.5
       exp.title.should eq "WATER STRUCTURE OF A HYDROPHOBIC PROTEIN AT ATOMIC " \
                           "RESOLUTION. PENTAGON RINGS OF WATER MOLECULES IN CRYSTALS " \
@@ -208,7 +208,7 @@ describe Chem::PDB do
       st.atoms[115].bonds[st.atoms[187]].order.should eq 1
     end
 
-    it "parses bonds when multiple models" do
+    pending "parses bonds when multiple models" do
       models = Array(Chem::Structure).from_pdb "spec/data/pdb/models.pdb"
       models.size.should eq 4
       models.each do |st|
