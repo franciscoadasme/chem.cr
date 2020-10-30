@@ -325,7 +325,7 @@ module Chem::PDB
                    sync_close : Bool = true)
       super input, guess_topology, sync_close: sync_close
       @chains = chains.is_a?(Enumerable) ? chains.to_set : chains
-      parse_header
+      read_header
     end
 
     def self.new(path : Path | String, **options) : self
@@ -336,7 +336,7 @@ module Chem::PDB
       until @parser.eof?
         case @parser.skip_whitespace
         when .check("ATOM", "HETATM", "MODEL")
-          return parse_model
+          return read_next
         when .check("END", "MASTER")
           break
         else
@@ -383,7 +383,7 @@ module Chem::PDB
       end
     end
 
-    private def parse_atom(line : String) : Nil
+    private def read_atom(line : String) : Nil
       alt_loc = line[16].presence
       return if @alt_loc && alt_loc && alt_loc != @alt_loc
 
@@ -414,7 +414,7 @@ module Chem::PDB
       alt_loc(atom.residue, alt_loc, resname) << atom if !@alt_loc && alt_loc
     end
 
-    private def parse_bonds(line : String) : Nil
+    private def read_bonds(line : String) : Nil
       i = Hybrid36.decode line[6, 5]
       (11..).step(5).each do |start|
         break unless j = line[start, 5]?.presence.try { |str| Hybrid36.decode(str) }
@@ -422,7 +422,7 @@ module Chem::PDB
       end
     end
 
-    private def parse_header
+    private def read_header
       aminoacids = [] of Protein::AminoAcid
       date = doi = pdbid = resolution = nil
       method = Structure::Experiment::Method::XRayDiffraction
@@ -484,7 +484,11 @@ module Chem::PDB
       @pdb_seq = Protein::Sequence.new aminoacids unless aminoacids.empty?
     end
 
-    private def parse_model : Structure
+    private def read_het? : Bool
+      @het
+    end
+
+    private def read_next : Structure
       @parser.skip_line if @parser.check("MODEL")
 
       @builder = Structure::Builder.new guess_topology: @guess_topology
@@ -499,11 +503,11 @@ module Chem::PDB
 
         case line = @parser.read_line
         when .starts_with?("ATOM")
-          parse_atom line
+          read_atom line
         when .starts_with?("HETATM")
-          parse_atom(line) if read_het?
+          read_atom(line) if read_het?
         when .starts_with?("CONECT")
-          parse_bonds line
+          read_bonds line
         end
       end
       @parser.skip_line if @parser.check("ENDMDL")
@@ -513,10 +517,6 @@ module Chem::PDB
       assign_secondary_structure
 
       @builder.build
-    end
-
-    private def read_het? : Bool
-      @het
     end
 
     private def resolve_alternate_locations : Nil
