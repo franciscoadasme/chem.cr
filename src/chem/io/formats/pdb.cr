@@ -310,6 +310,7 @@ module Chem::PDB
     @pdb_lattice : Lattice?
     @pdb_seq : Protein::Sequence?
     @pdb_title = ""
+    @pdb_header = false
 
     @alt_locs : Hash(Residue, Array(AlternateLocation))?
     @builder = uninitialized Structure::Builder
@@ -325,7 +326,6 @@ module Chem::PDB
                    sync_close : Bool = true)
       super input, guess_topology, sync_close: sync_close
       @chains = chains.is_a?(Enumerable) ? chains.to_set : chains
-      read_header
     end
 
     def self.new(path : Path | String, **options) : self
@@ -333,6 +333,7 @@ module Chem::PDB
     end
 
     def next : Structure | Iterator::Stop
+      read_header unless @pdb_header
       until @parser.eof?
         case @parser.skip_whitespace
         when .check("ATOM", "HETATM", "MODEL")
@@ -347,6 +348,7 @@ module Chem::PDB
     end
 
     def skip_structure : Nil
+      read_header unless @pdb_header
       @parser.skip_line if @parser.skip_whitespace.check("MODEL")
       until @parser.eof?
         case @parser.skip_whitespace
@@ -482,6 +484,8 @@ module Chem::PDB
         @pdb_title = title
       end
       @pdb_seq = Protein::Sequence.new aminoacids unless aminoacids.empty?
+
+      @pdb_header = true
     end
 
     private def read_het? : Bool
