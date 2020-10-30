@@ -1,13 +1,13 @@
 module Chem::VASP
   module GridReader
     def info : Spatial::Grid::Info
-      @parser.skip_line
-      scale = @parser.read_float
-      vi = scale * @parser.read_vector
-      vj = scale * @parser.read_vector
-      vk = scale * @parser.read_vector
+      @io.skip_line
+      scale = @io.read_float
+      vi = scale * @io.read_vector
+      vj = scale * @io.read_vector
+      vk = scale * @io.read_vector
       skip_atoms
-      nx, ny, nz = @parser.read_int, @parser.read_int, @parser.read_int
+      nx, ny, nz = @io.read_int, @io.read_int, @io.read_int
 
       bounds = Spatial::Bounds.new Spatial::Vector.origin, vi, vj, vk
       Spatial::Grid::Info.new bounds, {nx, ny, nz}
@@ -21,7 +21,7 @@ module Chem::VASP
         nz.times do |k|
           ny.times do |j|
             nx.times do |i|
-              buffer[i * nyz + j * nz + k] = yield @parser.read_float
+              buffer[i * nyz + j * nz + k] = yield @io.read_float
             end
           end
         end
@@ -32,19 +32,19 @@ module Chem::VASP
       n_atoms = 0
       n_elements = 0
       loop do
-        if @parser.skip_whitespace.check(&.ascii_number?)
-          n_atoms += @parser.read_int
+        if @io.skip_whitespace.check(&.ascii_number?)
+          n_atoms += @io.read_int
           n_elements -= 1
           break if n_elements == 0
         else
-          @parser.read_word
+          @io.read_word
           n_elements += 1
         end
       end
-      @parser.skip_line
-      @parser.skip_line if @parser.skip_whitespace.check('s', 'S')
-      @parser.skip_line
-      n_atoms.times { @parser.skip_line }
+      @io.skip_line
+      @io.skip_line if @io.skip_whitespace.check('s', 'S')
+      @io.skip_line
+      n_atoms.times { @io.skip_line }
     end
   end
 

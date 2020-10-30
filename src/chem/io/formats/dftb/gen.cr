@@ -49,43 +49,43 @@ module Chem::DFTB::Gen
     @periodic = false
 
     def next : Structure | Iterator::Stop
-      @parser.skip_whitespace
-      @parser.eof? ? stop : read_next
+      @io.skip_whitespace
+      @io.eof? ? stop : read_next
     end
 
     def skip_structure : Nil
-      @parser.skip_to_end
+      @io.skip_to_end
     end
 
     private def parse_coord_type : Nil
-      case @parser.skip_spaces.read
+      case @io.skip_spaces.read
       when 'F' then @fractional = @periodic = true
       when 'S' then @periodic = true
       when 'C' then @fractional = @periodic = false
       else          parse_exception "Invalid geometry type"
       end
-      @parser.skip_line
+      @io.skip_line
     end
 
     private def parse_elements : Nil
       @elements.clear
-      until @parser.eol?
-        @elements << PeriodicTable[@parser.read_word]
+      until @io.eol?
+        @elements << PeriodicTable[@io.read_word]
       end
-      @parser.skip_line
+      @io.skip_line
     end
 
     private def parse_header : Nil
-      @n_atoms = @parser.read_int
+      @n_atoms = @io.read_int
       parse_coord_type
       parse_elements
     end
 
     private def read_atom : Atom
-      @parser.skip_spaces.skip_while(&.ascii_number?).skip_spaces
-      ele = @elements[@parser.read_int - 1]? || parse_exception "Invalid element index"
-      vec = @parser.read_vector
-      @parser.skip_line
+      @io.skip_spaces.skip_while(&.ascii_number?).skip_spaces
+      ele = @elements[@io.read_int - 1]? || parse_exception "Invalid element index"
+      vec = @io.read_vector
+      @io.skip_line
       @builder.atom ele, vec
     end
 
@@ -95,10 +95,10 @@ module Chem::DFTB::Gen
       @builder = Structure::Builder.new guess_topology: @guess_topology
       @n_atoms.times { read_atom }
       if @periodic
-        @parser.skip_line
-        @builder.lattice @parser.read_vector, @parser.read_vector, @parser.read_vector
+        @io.skip_line
+        @builder.lattice @io.read_vector, @io.read_vector, @io.read_vector
       end
-      @parser.skip_to_end # ensure end of file as Gen doesn't support multiple entries
+      @io.skip_to_end # ensure end of file as Gen doesn't support multiple entries
 
       structure = @builder.build
       structure.coords.to_cartesian! if @fractional

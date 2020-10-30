@@ -19,27 +19,27 @@ module Chem::XYZ
   @[IO::FileType(format: XYZ, ext: %w(xyz))]
   class Reader < Structure::Reader
     def next : Structure | Iterator::Stop
-      @parser.skip_whitespace
-      @parser.eof? ? stop : read_next
+      @io.skip_whitespace
+      @io.eof? ? stop : read_next
     end
 
     private def read_next : Structure
       Structure.build(@guess_topology) do |builder|
-        n_atoms = @parser.read_int
-        @parser.skip_line
-        builder.title @parser.read_line.strip
+        n_atoms = @io.read_int
+        @io.skip_line
+        builder.title @io.read_line.strip
         n_atoms.times do
-          builder.atom PeriodicTable[@parser.read_word], @parser.read_vector
-          @parser.skip_line
+          builder.atom PeriodicTable[@io.read_word], @io.read_vector
+          @io.skip_line
         end
       end
     end
 
     def skip_structure : Nil
-      @parser.skip_whitespace
-      return if @parser.eof?
-      n_atoms = @parser.read_int
-      (n_atoms + 2).times { @parser.skip_line }
+      @io.skip_whitespace
+      return if @io.eof?
+      n_atoms = @io.read_int
+      (n_atoms + 2).times { @io.skip_line }
     end
   end
 end

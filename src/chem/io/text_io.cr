@@ -1,5 +1,7 @@
-class Chem::IO::TextParser
+class Chem::IO::TextIO
   @buffer = Bytes.empty
+
+  delegate close, to: @io
 
   def initialize(@io : ::IO, buffer_size = 8192)
     @buffer_ = Bytes.new buffer_size

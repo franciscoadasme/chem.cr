@@ -617,8 +617,8 @@ module Chem
     property? sync_close = false
     getter? closed = false
 
-    def initialize(@io : ::IO, @sync_close : Bool = true)
-      @parser = TextParser.new @io
+    def initialize(io : ::IO, @sync_close : Bool = true)
+      @io = TextIO.new io
     end
 
     def self.new(path : Path | String) : self

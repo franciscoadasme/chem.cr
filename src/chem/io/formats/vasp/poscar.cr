@@ -88,15 +88,15 @@ module Chem::VASP::Poscar
     @title = ""
 
     def next : Structure | Iterator::Stop
-      @parser.eof? ? stop : read_next
+      @io.eof? ? stop : read_next
     end
 
     def skip_structure : Nil
-      @parser.skip_to_end
+      @io.skip_to_end
     end
 
     private def read_atom : Atom
-      vec = @parser.read_vector
+      vec = @io.read_vector
       vec = @fractional ? vec.to_cartesian(@lattice) : vec * @scale_factor
       atom = @builder.atom @species.shift, vec
       atom.constraint = read_constraint if @constrained
@@ -104,9 +104,9 @@ module Chem::VASP::Poscar
     end
 
     private def read_constraint : Constraint?
-      cx = @parser.skip_whitespace.read
-      cy = @parser.skip_whitespace.read
-      cz = @parser.skip_whitespace.read
+      cx = @io.skip_whitespace.read
+      cy = @io.skip_whitespace.read
+      cz = @io.skip_whitespace.read
       case {cx, cy, cz}
       when {'T', 'T', 'T'} then nil
       when {'F', 'T', 'T'} then Constraint::X
@@ -122,12 +122,12 @@ module Chem::VASP::Poscar
     end
 
     private def read_coordinate_system : Nil
-      case @parser.skip_whitespace.read.downcase
+      case @io.skip_whitespace.read.downcase
       when 'c', 'k' # cartesian
-        @parser.skip_line
+        @io.skip_line
         @fractional = false
       when 'd' # direct
-        @parser.skip_line
+        @io.skip_line
         @fractional = true
       else
         parse_exception "Couldn't read coordinates type"
@@ -135,13 +135,13 @@ module Chem::VASP::Poscar
     end
 
     private def read_header : Nil
-      @title = @parser.read_line.strip
-      @scale_factor = @parser.read_float
-      @lattice = Lattice.new @parser.read_vector, @parser.read_vector, @parser.read_vector
+      @title = @io.read_line.strip
+      @scale_factor = @io.read_float
+      @lattice = Lattice.new @io.read_vector, @io.read_vector, @io.read_vector
       @lattice *= @scale_factor if @scale_factor != 1.0
       read_species
-      @constrained = @parser.skip_whitespace.check &.in?('s', 'S')
-      @parser.skip_line if @constrained
+      @constrained = @io.skip_whitespace.check &.in?('s', 'S')
+      @io.skip_line if @constrained
       read_coordinate_system
     end
 
@@ -156,15 +156,15 @@ module Chem::VASP::Poscar
 
     private def read_species : Nil
       elements = [] of Element
-      while @parser.skip_whitespace.check(&.letter?)
-        sym = @parser.read_word
+      while @io.skip_whitespace.check(&.letter?)
+        sym = @io.read_word
         ele = PeriodicTable[sym]? || parse_exception "Unknown element named #{sym}"
         elements << ele
       end
       parse_exception "Couldn't read atom species" if elements.empty?
       @species.clear
       elements.map do |ele|
-        if count = @parser.read_int?
+        if count = @io.read_int?
           count.times { @species << ele }
         else
           parse_exception "Couldn't read number of atoms for #{ele.symbol}"

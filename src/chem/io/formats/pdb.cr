@@ -334,14 +334,14 @@ module Chem::PDB
 
     def next : Structure | Iterator::Stop
       read_header unless @pdb_header
-      until @parser.eof?
-        case @parser.skip_whitespace
+      until @io.eof?
+        case @io.skip_whitespace
         when .check("ATOM", "HETATM", "MODEL")
           return read_next
         when .check("END", "MASTER")
           break
         else
-          @parser.skip_line
+          @io.skip_line
         end
       end
       stop
@@ -349,16 +349,16 @@ module Chem::PDB
 
     def skip_structure : Nil
       read_header unless @pdb_header
-      @parser.skip_line if @parser.skip_whitespace.check("MODEL")
-      until @parser.eof?
-        case @parser.skip_whitespace
+      @io.skip_line if @io.skip_whitespace.check("MODEL")
+      until @io.eof?
+        case @io.skip_whitespace
         when .check("ENDMDL")
-          @parser.skip_line
+          @io.skip_line
           break
         when .check("MODEL", "END", "MASTER")
           break
         else
-          @parser.skip_line
+          @io.skip_line
         end
       end
     end
@@ -430,10 +430,10 @@ module Chem::PDB
       method = Structure::Experiment::Method::XRayDiffraction
       title = ""
 
-      until @parser.eof?
-        break if @parser.skip_whitespace.check("ATOM", "HETATM", "MODEL")
+      until @io.eof?
+        break if @io.skip_whitespace.check("ATOM", "HETATM", "MODEL")
 
-        case line = @parser.read_line
+        case line = @io.read_line
         when .starts_with?("CRYST1")
           size = Spatial::Size.new line[6, 9].to_f, line[15, 9].to_f, line[24, 9].to_f
           @pdb_lattice = Lattice.new size, line[33, 7].to_f, line[40, 7].to_f, line[47, 7].to_f
@@ -493,7 +493,7 @@ module Chem::PDB
     end
 
     private def read_next : Structure
-      @parser.skip_line if @parser.check("MODEL")
+      @io.skip_line if @io.check("MODEL")
 
       @builder = Structure::Builder.new guess_topology: @guess_topology
       @builder.title @pdb_title
@@ -503,10 +503,10 @@ module Chem::PDB
 
       @pdb_bonds.clear
       @serial = 0
-      until @parser.eof?
-        break if @parser.skip_whitespace.check("END", "MODEL", "MASTER")
+      until @io.eof?
+        break if @io.skip_whitespace.check("END", "MODEL", "MASTER")
 
-        case line = @parser.read_line
+        case line = @io.read_line
         when .starts_with?("ATOM")
           read_atom line
         when .starts_with?("HETATM")
@@ -515,7 +515,7 @@ module Chem::PDB
           read_bonds line
         end
       end
-      @parser.skip_line if @parser.check("ENDMDL")
+      @io.skip_line if @io.check("ENDMDL")
 
       resolve_alternate_locations unless @alt_loc
       assign_bonds

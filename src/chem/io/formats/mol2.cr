@@ -106,75 +106,75 @@ module Chem::Mol2
 
     def next : Structure | Iterator::Stop
       skip_to_tag
-      !@parser.eof? ? read_next : stop
+      !@io.eof? ? read_next : stop
     end
 
     def skip_structure : Nil
-      @parser.skip_line if @parser.skip_whitespace.check(TAG_MOLECULE)
+      @io.skip_line if @io.skip_whitespace.check(TAG_MOLECULE)
       skip_to_tag TAG_MOLECULE
     end
 
     private def read_atom : Atom
-      serial = @parser.read_int
-      name = @parser.skip_spaces.scan 'A'..'z', '0'..'9'
-      coords = @parser.read_vector
-      element = PeriodicTable[@parser.read_word]
-      @parser.skip('.').skip_word if @parser.check('.') # ignore sybyl type
-      unless @parser.eol?
-        resid = @parser.read_int
-        resname = @parser.skip_spaces.read_word
+      serial = @io.read_int
+      name = @io.skip_spaces.scan 'A'..'z', '0'..'9'
+      coords = @io.read_vector
+      element = PeriodicTable[@io.read_word]
+      @io.skip('.').skip_word if @io.check('.') # ignore sybyl type
+      unless @io.eol?
+        resid = @io.read_int
+        resname = @io.skip_spaces.read_word
         @builder.residue resname[..2], resid
-        charge = @parser.read_float if @include_charges
+        charge = @io.read_float if @include_charges
       end
-      @parser.skip_line
+      @io.skip_line
       @builder.atom name, coords, element: element, partial_charge: (charge || 0.0)
     end
 
     private def read_bond : Nil
-      serial = @parser.read_int
-      i = @parser.read_int - 1
-      j = @parser.read_int - 1
-      bond_type = @parser.skip_spaces.scan('a'..'z', '0'..'9')
+      serial = @io.read_int
+      i = @io.read_int - 1
+      j = @io.read_int - 1
+      bond_type = @io.skip_spaces.scan('a'..'z', '0'..'9')
       bond_order = case bond_type
                    when "1", "2", "3"    then bond_type.to_i
                    when "am", "ar", "du" then 1
                    else                       0
                    end
-      @parser.skip_line
+      @io.skip_line
       @builder.bond i, j, bond_order, aromatic: bond_type == "ar" if bond_order > 0
     end
 
     private def read_header : Nil
-      if @parser.check(TAG_MOLECULE)
-        @parser.skip_line
+      if @io.check(TAG_MOLECULE)
+        @io.skip_line
       else
         parse_exception "Invalid tag for structure"
       end
 
-      @title = @parser.read_line.strip
-      @n_atoms = @parser.read_int
-      @n_bonds = @parser.read_int
-      @parser.skip_line
-      @parser.skip_line
-      @include_charges = @parser.read_line.strip != "NO_CHARGES"
+      @title = @io.read_line.strip
+      @n_atoms = @io.read_int
+      @n_bonds = @io.read_int
+      @io.skip_line
+      @io.skip_line
+      @include_charges = @io.read_line.strip != "NO_CHARGES"
     end
 
     private def read_next : Structure
       read_header
       @builder = Structure::Builder.new guess_topology: false
       @builder.title @title
-      until @parser.eof?
-        case @parser.skip_whitespace
+      until @io.eof?
+        case @io.skip_whitespace
         when .check(TAG_ATOMS)
-          @parser.skip_line
+          @io.skip_line
           @n_atoms.times { read_atom }
         when .check(TAG_BONDS)
-          @parser.skip_line
+          @io.skip_line
           @n_bonds.times { read_bond }
         when .check(TAG_MOLECULE)
           break
         else
-          @parser.skip_line
+          @io.skip_line
         end
       end
       @builder.build
@@ -185,9 +185,9 @@ module Chem::Mol2
     end
 
     private def skip_to_tag(tag : String) : Nil
-      until @parser.eof?
-        break if @parser.skip_whitespace.check(tag)
-        @parser.skip_line
+      until @io.eof?
+        break if @io.skip_whitespace.check(tag)
+        @io.skip_line
       end
     end
   end

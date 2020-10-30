@@ -2,16 +2,16 @@ module Chem::DX
   @[IO::FileType(format: DX, ext: %w(dx))]
   class Reader < Spatial::Grid::Reader
     def info : Spatial::Grid::Info
-      while @parser.skip_whitespace.peek == '#'
-        @parser.skip_line
+      while @io.skip_whitespace.peek == '#'
+        @io.skip_line
       end
 
-      5.times { @parser.skip_word }
-      ni, nj, nk = @parser.read_int, @parser.read_int, @parser.read_int
-      @parser.skip_word # origin
-      origin = @parser.read_vector
-      vi, vj, vk = {ni, nj, nk}.map { |n| @parser.skip_word.read_vector * (n - 1) }
-      3.times { @parser.skip_line }
+      5.times { @io.skip_word }
+      ni, nj, nk = @io.read_int, @io.read_int, @io.read_int
+      @io.skip_word # origin
+      origin = @io.read_vector
+      vi, vj, vk = {ni, nj, nk}.map { |n| @io.skip_word.read_vector * (n - 1) }
+      3.times { @io.skip_line }
 
       bounds = Spatial::Bounds.new origin, vi, vj, vk
       Spatial::Grid::Info.new bounds, {ni, nj, nk}
@@ -20,7 +20,7 @@ module Chem::DX
     def read_entry : Spatial::Grid
       Spatial::Grid.build(info) do |buffer, size|
         size.times do |i|
-          buffer[i] = @parser.read_float
+          buffer[i] = @io.read_float
         end
       end
     end
