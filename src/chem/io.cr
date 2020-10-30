@@ -1,5 +1,5 @@
 require "./io/text_io"
-require "./io/parser"
+require "./io/reader"
 require "./io/writer"
 require "./io/formats"
 
