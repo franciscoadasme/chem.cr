@@ -208,7 +208,7 @@ describe Chem::PDB do
       st.atoms[115].bonds[st.atoms[187]].order.should eq 1
     end
 
-    pending "parses bonds when multiple models" do
+    it "parses bonds when multiple models" do
       models = Array(Chem::Structure).from_pdb "spec/data/pdb/models.pdb"
       models.size.should eq 4
       models.each do |st|

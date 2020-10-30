@@ -355,7 +355,7 @@ module Chem::PDB
         when .check("ENDMDL")
           @parser.skip_line
           break
-        when .check("MODEL", "CONECT", "END", "MASTER")
+        when .check("MODEL", "END", "MASTER")
           break
         else
           @parser.skip_line
@@ -501,6 +501,7 @@ module Chem::PDB
       @builder.expt @pdb_expt
       @builder.seq @pdb_seq
 
+      @pdb_bonds.clear
       @serial = 0
       until @parser.eof?
         break if @parser.skip_whitespace.check("END", "MODEL", "MASTER")
