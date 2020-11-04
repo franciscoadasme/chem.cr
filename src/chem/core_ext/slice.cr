@@ -15,6 +15,13 @@ struct Slice(T)
     Slice(T).new ptr, new_size
   end
 
+  def skip(& : T -> Bool) : self
+    each_with_index do |ele, i|
+      return self + i unless yield ele
+    end
+    Slice(T).empty
+  end
+
   def take_while(& : T -> Bool) : self
     each_with_index do |ele, i|
       return Slice(T).new(@pointer, i) unless yield ele

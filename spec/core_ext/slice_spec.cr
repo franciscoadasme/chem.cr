@@ -19,6 +19,23 @@ describe Slice do
     end
   end
 
+  describe "#skip" do
+    it "returns a shifted slice" do
+      slice = "abc def".to_slice
+      slice.skip(&.chr.letter?).should eq slice[3, 4]
+    end
+
+    it "returns itself" do
+      slice = "abcdef".to_slice
+      slice.skip(&.chr.number?).should eq slice
+    end
+
+    it "returns an empty slice" do
+      slice = "abcDEF".to_slice
+      slice.skip(&.chr.letter?).should eq Bytes.empty
+    end
+  end
+
   describe "#take_while" do
     it "returns a slice with elements" do
       slice = "abc def".to_slice

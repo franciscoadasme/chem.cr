@@ -344,9 +344,7 @@ class Chem::IO::TextIO
   end
 
   def skip_until(& : UInt8 -> Bool) : self
-    skip_impl do
-      @buffer.index { |byte| yield byte }
-    end
+    skip_while { |byte| !(yield byte) }
   end
 
   def skip_until(*delim : Char) : self
@@ -354,15 +352,22 @@ class Chem::IO::TextIO
   end
 
   def skip_until(*bytes : Int) : self
-    skip_impl do
-      @buffer.unsafe_index(*bytes)
+    until eof?
+      if i = @buffer.unsafe_index(*bytes)
+        @buffer += i
+        break
+      end
+      @buffer = Bytes.empty
     end
+    self
   end
 
   def skip_while(& : UInt8 -> Bool) : self
-    skip_impl do
-      @buffer.index { |byte| !(yield byte) }
+    until eof?
+      @buffer = @buffer.skip { |byte| yield byte }
+      break unless @buffer.empty?
     end
+    self
   end
 
   def skip_whitespace : self
@@ -389,16 +394,5 @@ class Chem::IO::TextIO
 
   private def parse_exception(message : String) : NoReturn
     raise ParseException.new(message)
-  end
-
-  private def skip_impl(& : -> Int32?) : self
-    until eof?
-      if i = yield
-        @buffer += i
-        break
-      end
-      @buffer = Bytes.empty
-    end
-    self
   end
 end
