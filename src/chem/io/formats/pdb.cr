@@ -329,7 +329,7 @@ module Chem::PDB
     end
 
     def self.new(path : Path | String, **options) : self
-      new ::IO::Memory.new(File.read(path)), **options, sync_close: true
+      new File.open(path), **options, sync_close: true
     end
 
     def next : Structure | Iterator::Stop

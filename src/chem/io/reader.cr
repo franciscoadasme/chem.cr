@@ -10,7 +10,7 @@ module Chem
     end
 
     def self.new(path : Path | String) : self
-      new ::IO::Memory.new(File.read(path)), sync_close: true
+      new File.open(path), sync_close: true
     end
 
     def self.open(io : ::IO, sync_close : Bool = true, **options)
@@ -46,7 +46,7 @@ module Chem
     end
 
     def self.new(path : Path | String, guess_topology : Bool = true) : self
-      new ::IO::Memory.new(File.read(path)), guess_topology, sync_close: true
+      new File.open(path), guess_topology, sync_close: true
     end
 
     def each(indexes : Enumerable(Int), &block : Structure ->)
