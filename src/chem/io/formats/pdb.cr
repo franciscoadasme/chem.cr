@@ -442,7 +442,7 @@ module Chem::PDB
           method = Structure::Experiment::Method.parse str
         when .starts_with?("HEADER")
           date = line[50, 9]?.try { |str| Time.parse_utc str, "%d-%^b-%y" }
-          pdbid = line[62, 4]?
+          pdbid = line[62, 4]?.presence
         when .starts_with?("HELIX")
           sec = HELIX_TYPES[line[38, 2].to_i]? || parse_exception "Invalid helix type"
           ri = {line[19], Hybrid36.decode(line[21, 4]), line[25].presence}
