@@ -170,7 +170,9 @@ module Chem::Protein
         rise, twist = pes.walk rise, twist
         if basin = pes.basin(rise, twist)
           @raw_sec[i] = basin.sec
-          res.sec = basin.sec if curvature[i] <= CURVATURE_CUTOFF
+          if basin.includes?(rise, twist) && curvature[i] <= CURVATURE_CUTOFF
+            res.sec = basin.sec
+          end
         end
       end
     end
@@ -278,7 +280,6 @@ module Chem::Protein
         nearest_basin = nil
         min_distance = Float64::MAX
         @basins.each do |basin|
-          next unless basin.includes?(x, y)
           d = (x - basin.x0)**2 + (y - basin.y0)**2
           if d < min_distance
             nearest_basin = basin
