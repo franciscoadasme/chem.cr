@@ -43,7 +43,7 @@ module Chem
 
   macro finished
     {% for writer in IO::Writer.all_subclasses.select(&.annotation(IO::FileType)) %}
-      {% format = writer.annotation(IO::FileType)[:format].id.underscore %}
+      {% format = writer.annotation(IO::FileType)[:format].id.downcase %}
 
       {% type = writer.superclass.type_vars[0] %}
       {% keyword = type.class.id.ends_with?("Module") ? "module" : nil %}
