@@ -6,13 +6,17 @@ VERSION_DATE = "2020-08-02"
 
 input_file = ""
 output_file = STDOUT
+output_type = "structure"
 beta = ""
 OptionParser.parse do |parser|
   parser.banner = "Usage: quesso [-o|--output PDB] PDB"
   parser.on("-b", "--beta", "Write curvature value to PDB beta column") do
     beta = "curvature"
   end
-  parser.on("-o OUTPUT", "--output OUTPUT", "PDB output file") do |str|
+  parser.on("--pymol", "Write a PyMOL Commnad Script (*.pml) file") do
+    output_type = "pymol"
+  end
+  parser.on("-o OUTPUT", "--output OUTPUT", "Output file") do |str|
     output_file = str
   end
   parser.on("-h", "--help", "Show this help") do
@@ -65,8 +69,12 @@ begin
       residue.each_atom &.temperature_factor=(curvature)
     end
   end
-  Chem::Protein::QUESSO.assign structure
-  structure.to_pdb output_file
+  Chem::Protein::DSSP.assign structure
+
+  case output_type
+  when "pymol" then structure.to_pymol output_file, input_file.not_nil!
+  else              structure.to_pdb output_file
+  end
 rescue ex : Chem::IO::ParseException
   abort ex.to_s_with_location
 end
