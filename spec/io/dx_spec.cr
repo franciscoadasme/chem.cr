@@ -1,6 +1,6 @@
 require "../spec_helper"
 
-describe Chem::DX::Parser do
+describe Chem::DX::Reader do
   it "parses a DX file" do
     io = IO::Memory.new <<-EOS
       # comment line 1

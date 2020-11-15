@@ -52,30 +52,32 @@ describe Chem::VASP::Poscar do
       ex = expect_raises(Chem::IO::ParseException) do
         load_file "no_symbols.poscar"
       end
-      ex.to_s_with_location.should eq <<-EOS
-        In line 6:4:
+      ex.to_s.should eq "Couldn't read atom species"
+      # ex.to_s_with_location.should eq <<-EOS
+      #   In line 6:4:
 
-         4 |  0.5 0.0 0.5
-         5 |  0.5 0.5 0.0
-         6 |    1 1
-                ^
-        Error: Expected element symbols (vasp 5+)
-        EOS
+      #    4 |  0.5 0.0 0.5
+      #    5 |  0.5 0.5 0.0
+      #    6 |    1 1
+      #           ^
+      #   Error: Expected element symbols (vasp 5+)
+      #   EOS
     end
 
     it "fails when there are missing atomic species counts" do
       ex = expect_raises(Chem::IO::ParseException) do
         load_file "mismatch.poscar"
       end
-      ex.to_s_with_location.should eq <<-EOS
-        In line 8:1:
+      ex.to_s.should eq "Couldn't read number of atoms for N"
+      # ex.to_s_with_location.should eq <<-EOS
+      #   In line 8:1:
 
-         6 |    C N
-         7 |    1
-         8 | Direct
-             ^
-        Error: Expected 1 more number(s) of atoms per atomic species
-        EOS
+      #    6 |    C N
+      #    7 |    1
+      #    8 | Direct
+      #        ^
+      #   Error: Expected 1 more number(s) of atoms per atomic species
+      #   EOS
     end
 
     it "fails when constraint flags are invalid" do
@@ -94,15 +96,16 @@ describe Chem::VASP::Poscar do
             0.25 0.25 0.25 A T F
           EOS
       end
-      ex.to_s_with_location.should eq <<-EOS
-        In line 11:18:
-        
-          9 | Direct
-         10 |   0.00 0.00 0.00 T T T
-         11 |   0.25 0.25 0.25 A T F
-                               ^
-        Error: Invalid boolean flag (expected either T or F)
-        EOS
+      ex.to_s.should eq "Couldn't read constraint flags"
+      # ex.to_s_with_location.should eq <<-EOS
+      #   In line 11:18:
+
+      #     9 | Direct
+      #    10 |   0.00 0.00 0.00 T T T
+      #    11 |   0.25 0.25 0.25 A T F
+      #                          ^
+      #   Error: Invalid boolean flag (expected either T or F)
+      #   EOS
     end
   end
 end

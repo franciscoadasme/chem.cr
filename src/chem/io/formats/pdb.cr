@@ -295,60 +295,72 @@ module Chem::PDB
   end
 
   @[IO::FileType(format: PDB, ext: %w(ent pdb))]
-  class Parser < Structure::Parser
-    include IO::ColumnBasedParser
+  class Reader < Structure::Reader
+    private alias ResidueId = Tuple(Char, Int32, Char?)
+    private alias Sec = Protein::SecondaryStructure
+
+    HELIX_TYPES = {
+      1 => Sec::RightHandedHelixAlpha,
+      3 => Sec::RightHandedHelixPi,
+      5 => Sec::RightHandedHelix3_10,
+    }
 
     @pdb_bonds = Hash(Tuple(Int32, Int32), Int32).new 0
     @pdb_expt : Structure::Experiment?
     @pdb_lattice : Lattice?
     @pdb_seq : Protein::Sequence?
     @pdb_title = ""
+    @pdb_header = false
 
     @alt_locs : Hash(Residue, Array(AlternateLocation))?
+    @builder = uninitialized Structure::Builder
     @chains : Set(Char) | String | Nil
     @seek_bonds = true
-    @ss_elements = [] of SecondaryStructureElement
+    @sec = [] of Tuple(Protein::SecondaryStructure, ResidueId, ResidueId)
 
-    def initialize(input : ::IO | Path | String,
+    def initialize(input : ::IO,
                    @alt_loc : Char? = nil,
                    chains : Enumerable(Char) | String | Nil = nil,
                    guess_topology : Bool = true,
-                   @het : Bool = true)
-      super input, guess_topology
+                   @het : Bool = true,
+                   sync_close : Bool = true)
+      super input, guess_topology, sync_close: sync_close
       @chains = chains.is_a?(Enumerable) ? chains.to_set : chains
-      parse_header
+    end
+
+    def self.new(path : Path | String, **options) : self
+      new File.open(path), **options, sync_close: true
     end
 
     def next : Structure | Iterator::Stop
-      each_record do |name|
-        case name
-        when "atom", "hetatm"
-          return parse_model
-        when "model"
-          next_record
-          return parse_model
-        when "end", "master"
+      read_header unless @pdb_header
+      until @io.eof?
+        case @io.skip_whitespace
+        when .check("ATOM", "HETATM", "MODEL")
+          return read_next
+        when .check("END", "MASTER")
           break
+        else
+          @io.skip_line
         end
       end
       stop
     end
 
     def skip_structure : Nil
-      next_record if current_record == "model"
-      each_record do |name|
-        case name
-        when "model", "conect", "end", "master"
+      read_header unless @pdb_header
+      @io.skip_line if @io.skip_whitespace.check("MODEL")
+      until @io.eof?
+        case @io.skip_whitespace
+        when .check("ENDMDL")
+          @io.skip_line
           break
-        when "endmdl"
-          next_record
+        when .check("MODEL", "END", "MASTER")
           break
+        else
+          @io.skip_line
         end
       end
-    end
-
-    private def add_sec(type : Protein::SecondaryStructure, i : ResidueId, j : ResidueId)
-      @ss_elements << SecondaryStructureElement.new type, i, j
     end
 
     private def alt_loc(residue : Residue, id : Char, resname : String) : AlternateLocation
@@ -363,86 +375,105 @@ module Chem::PDB
       end
     end
 
-    private def assign_bonds(builder : Structure::Builder) : Nil
-      builder.bonds @pdb_bonds unless @pdb_bonds.empty?
+    private def assign_bonds : Nil
+      @builder.bonds @pdb_bonds unless @pdb_bonds.empty?
     end
 
-    private def assign_secondary_structure(builder : Structure::Builder) : Nil
-      @ss_elements.each do |ele|
-        builder.secondary_structure ele.start, ele.end, ele.type
+    private def assign_secondary_structure : Nil
+      @sec.each do |(sec, ri, rj)|
+        @builder.secondary_structure ri, rj, sec
       end
     end
 
-    private def current_record : String
-      read(0, 6).rstrip.downcase
-    end
+    private def read_atom(line : String) : Nil
+      alt_loc = line[16].presence
+      return if @alt_loc && alt_loc && alt_loc != @alt_loc
 
-    private def parse_atom(builder : Structure::Builder) : Nil
-      return if @alt_loc && (alt_loc = read?(16)) && alt_loc != @alt_loc
-
-      chid = read(21)
+      chid = line[21]
       case chains = @chains
       when Set     then return unless chid.in?(chains)
-      when "first" then return if chid != (builder.current_chain.try(&.id) || chid)
+      when "first" then return if chid != (@builder.current_chain.try(&.id) || chid)
       end
 
-      builder.chain chid if chid.alphanumeric?
-      builder.residue read(17, 4).strip, read_serial(22, 4), read?(26)
-      atom = builder.atom \
-        read(12, 4).strip,
-        read_serial(6, 5),
-        read_vector,
-        element: read_element,
-        formal_charge: read?(78, 2).try(&.reverse.to_i?) || 0,
-        occupancy: read_float(54, 6),
-        temperature_factor: read_float(60, 6)
+      ele = case symbol = line[76, 2]?.presence.try(&.strip)
+            when "D"    then PeriodicTable::D
+            when "X"    then PeriodicTable::X
+            when String then PeriodicTable[symbol]
+            end
 
-      if !@alt_loc && (alt_loc = read?(16))
-        alt_loc(atom.residue, alt_loc, read(17, 4).strip) << atom
-      end
+      @builder.chain chid if chid.alphanumeric?
+      resname = line[17, 4].strip
+      @builder.residue resname, Hybrid36.decode(line[22, 4]), line[26].presence
+      atom = @builder.atom \
+        line[12, 4].strip,
+        Hybrid36.decode(line[6, 5]),
+        Spatial::Vector.new(line[30, 8].to_f, line[38, 8].to_f, line[46, 8].to_f),
+        element: ele,
+        formal_charge: line[78, 2]?.try(&.reverse.to_i?) || 0,
+        occupancy: line[54, 6].to_f,
+        temperature_factor: line[60, 6].to_f
+
+      alt_loc(atom.residue, alt_loc, resname) << atom if !@alt_loc && alt_loc
     end
 
-    private def parse_bonds : Nil
-      i = read_serial 6, 5
+    private def read_bonds(line : String) : Nil
+      i = Hybrid36.decode line[6, 5]
       (11..).step(5).each do |start|
-        if j = read_serial?(start, 5)
-          @pdb_bonds[{i, j}] += 1 unless i > j # skip redundant bonds
-        else
-          break
-        end
+        break unless j = line[start, 5]?.presence.try { |str| Hybrid36.decode(str) }
+        @pdb_bonds[{i, j}] += 1 unless i > j # skip redundant bonds
       end
     end
 
-    private def parse_expt : Nil
-      title = ""
-      method = Structure::Experiment::Method::XRayDiffraction
+    private def read_header
+      aminoacids = [] of Protein::AminoAcid
       date = doi = pdbid = resolution = nil
+      method = Structure::Experiment::Method::XRayDiffraction
+      title = ""
 
-      each_record do |name|
-        case name
-        when "atom", "hetatm", "cryst1", "model", "seqres", "helix", "sheet"
-          back_to_beginning_of_line
-          break
-        when "expdta"
-          raw_method = read(10, 70).split(';')[0].delete "- "
-          method = Structure::Experiment::Method.parse raw_method
-        when "header"
-          date = Time.parse_utc read(50, 9), "%d-%^b-%y"
-          pdbid = read(62, 4).downcase
-        when "jrnl"
-          case read(12, 4).strip.downcase
-          when "doi" then doi = read(19, 60).strip
+      until @io.eof?
+        break if @io.skip_whitespace.check("ATOM", "HETATM", "MODEL")
+
+        case line = @io.read_line
+        when .starts_with?("CRYST1")
+          size = Spatial::Size.new line[6, 9].to_f, line[15, 9].to_f, line[24, 9].to_f
+          @pdb_lattice = Lattice.new size, line[33, 7].to_f, line[40, 7].to_f, line[47, 7].to_f
+        when .starts_with?("EXPDTA")
+          str = line[10, 70].split(';')[0].delete "- "
+          method = Structure::Experiment::Method.parse str
+        when .starts_with?("HEADER")
+          date = line[50, 9]?.try { |str| Time.parse_utc str, "%d-%^b-%y" }
+          pdbid = line[62, 4]?.presence
+        when .starts_with?("HELIX")
+          sec = HELIX_TYPES[line[38, 2].to_i]? || parse_exception "Invalid helix type"
+          ri = {line[19], Hybrid36.decode(line[21, 4]), line[25].presence}
+          rj = {line[31], Hybrid36.decode(line[33, 4]), line[37].presence}
+          parse_exception "Different chain ids in HELIX record" if ri[0] != rj[0]
+          @sec << {sec, ri, rj}
+        when .starts_with?("JRNL")
+          case line[12, 4].strip
+          when "DOI" then doi = line[19, 60].strip
           end
-        when "remark"
-          next if read(10, 70).blank? # skip remark first line
-          case read_int?(7, 3)
-          when 2 then resolution = read_float?(23, 7)
+        when .starts_with?("REMARK")
+          case line[7, 3].presence.try(&.lstrip)
+          when "2"
+            resolution = line[23, 7].to_f?
           when nil
-            pdbid = read(11, 4)
-            date = Time.local
+            pdbid = line[11, 4].presence
+            date = Time::UNIX_EPOCH if pdbid
           end
-        when "title"
-          title += read(10, 70).rstrip.squeeze ' '
+        when .starts_with?("SEQRES")
+          if @chains.nil? || @chains.try(&.includes?(line[11]))
+            line[19, 60].split.each do |resname|
+              aminoacids << Protein::AminoAcid[resname]
+            end
+          end
+        when .starts_with?("SHEET")
+          ri = {line[21], Hybrid36.decode(line[22, 4]), line[26].presence}
+          rj = {line[21], Hybrid36.decode(line[33, 4]), line[37].presence}
+          parse_exception "Different chain ids in SHEET record" if ri[0] != rj[0]
+          @sec << {Sec::BetaStrand, ri, rj}
+        when .starts_with?("TITLE")
+          title += line[10, 70].rstrip.squeeze ' '
         end
       end
 
@@ -452,108 +483,45 @@ module Chem::PDB
       else
         @pdb_title = title
       end
-    end
+      @pdb_seq = Protein::Sequence.new aminoacids unless aminoacids.empty?
 
-    private def parse_header
-      each_record do |name|
-        case name
-        when "atom", "hetatm", "model"                     then break
-        when "cryst1"                                      then parse_lattice
-        when "helix"                                       then parse_helix
-        when "sheet"                                       then parse_sheet
-        when "header", "title", "expdta", "jrnl", "remark" then parse_expt
-        when "seqres"                                      then parse_sequence
-        end
-      end
-    end
-
-    private def parse_helix : Nil
-      kind = case read_int(38, 2)
-             when 1 then Protein::SecondaryStructure::RightHandedHelixAlpha
-             when 3 then Protein::SecondaryStructure::RightHandedHelixPi
-             when 5 then Protein::SecondaryStructure::RightHandedHelix3_10
-             else        Protein::SecondaryStructure::None
-             end
-      add_sec kind,
-        {read(19), read_int(21, 4), read?(25)},
-        {read(19), read_int(33, 4), read?(37)}
-    end
-
-    private def parse_lattice
-      size = Spatial::Size.new read_float(6, 9), read_float(15, 9), read_float(24, 9)
-      @pdb_lattice = Lattice.new \
-        size,
-        alpha: read_float(33, 7),
-        beta: read_float(40, 7),
-        gamma: read_float(47, 7)
-    end
-
-    private def parse_model : Structure
-      @serial = 0
-      Structure.build(@guess_topology) do |builder|
-        title @pdb_title
-        lattice @pdb_lattice
-        expt @pdb_expt
-        seq @pdb_seq
-
-        each_record do |name|
-          case name
-          when "atom"          then parse_atom builder
-          when "hetatm"        then parse_atom builder if read_het?
-          when "conect"        then parse_bonds if @seek_bonds
-          when "model"         then seek_bonds if @seek_bonds; break
-          when "master", "end" then break
-          end
-        end
-
-        resolve_alternate_locations unless @alt_loc
-        assign_bonds builder
-        assign_secondary_structure builder
-      end
-    end
-
-    private def parse_sequence : Nil
-      @pdb_seq = Protein::Sequence.build do |aminoacids|
-        each_record_of("seqres") do
-          next if (chains = @chains) && !read(11).in?(chains)
-          read(19, 60).split.each { |name| aminoacids << Protein::AminoAcid[name] }
-        end
-      end
-    end
-
-    private def parse_sheet : Nil
-      add_sec :beta_strand,
-        {read(21), read_int(22, 4), read?(26)},
-        {read(21), read_int(33, 4), read?(37)}
-    end
-
-    private def read_element : Element?
-      case symbol = read?(76, 2).try(&.strip)
-      when "D" # deuterium
-        PeriodicTable::D
-      when "X" # unknown, e.g., ASX
-        PeriodicTable::X
-      when String
-        PeriodicTable[symbol]? || parse_exception "Unknown element"
-      end
+      @pdb_header = true
     end
 
     private def read_het? : Bool
       @het
     end
 
-    private def read_serial(start : Int, count : Int) : Int32
-      Hybrid36.decode read(start, count), count
-    end
+    private def read_next : Structure
+      @io.skip_line if @io.check("MODEL")
 
-    private def read_serial?(start : Int, count : Int) : Int32?
-      if str = read?(start, count)
-        Hybrid36.decode str, count
+      @builder = Structure::Builder.new guess_topology: @guess_topology
+      @builder.title @pdb_title
+      @builder.lattice @pdb_lattice
+      @builder.expt @pdb_expt
+      @builder.seq @pdb_seq
+
+      @pdb_bonds.clear
+      @serial = 0
+      until @io.eof?
+        break if @io.skip_whitespace.check("END", "MODEL", "MASTER")
+
+        case line = @io.read_line
+        when .starts_with?("ATOM")
+          read_atom line
+        when .starts_with?("HETATM")
+          read_atom(line) if read_het?
+        when .starts_with?("CONECT")
+          read_bonds line
+        end
       end
-    end
+      @io.skip_line if @io.check("ENDMDL")
 
-    private def read_vector : Spatial::Vector
-      Spatial::Vector.new read_float(30, 8), read_float(38, 8), read_float(46, 8)
+      resolve_alternate_locations unless @alt_loc
+      assign_bonds
+      assign_secondary_structure
+
+      @builder.build
     end
 
     private def resolve_alternate_locations : Nil
@@ -570,23 +538,6 @@ module Chem::PDB
       end
       table.clear
     end
-
-    private def seek_bonds
-      read_context do
-        @io.seek 0, ::IO::Seek::End
-        each_record_reversed do |name|
-          case name
-          when "conect"
-            parse_bonds
-          when "atom", "hetatm", "endmdl", "ter"
-            break
-          end
-        end
-      end
-      @seek_bonds = false
-    end
-
-    private alias ResidueId = Tuple(Char, Int32, Char?)
 
     private struct AlternateLocation
       getter id : Char
@@ -611,10 +562,5 @@ module Chem::PDB
         @atoms.sum(&.occupancy) / @atoms.size
       end
     end
-
-    private record SecondaryStructureElement,
-      type : Protein::SecondaryStructure,
-      start : ResidueId,
-      end : ResidueId
   end
 end

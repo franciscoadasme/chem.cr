@@ -32,13 +32,13 @@ module Chem
       format = IO::FileFormat.parse format if format.is_a?(String)
       {% begin %}
         case format
-        {% for parser in Parser.subclasses.select(&.annotation(IO::FileType)) %}
-          {% format = parser.annotation(IO::FileType)[:format].id.underscore %}
+        {% for reader in Reader.subclasses.select(&.annotation(IO::FileType)) %}
+          {% format = reader.annotation(IO::FileType)[:format].id.underscore %}
           when .{{format.id}}?
             from_{{format.id}} input, guess_topology: guess_topology
         {% end %}
         else
-          raise "No structure parser associated with file format #{format}"
+          raise "No structure reader associated with file format #{format}"
         end
       {% end %}
     end

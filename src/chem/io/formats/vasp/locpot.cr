@@ -1,10 +1,9 @@
 module Chem::VASP::Locpot
   @[IO::FileType(format: Locpot, names: %w(LOCPOT*))]
-  class Parser < Spatial::Grid::Parser
-    include IO::AsciiParser
-    include GridParser
+  class Reader < Spatial::Grid::Reader
+    include GridReader
 
-    def parse : Spatial::Grid
+    def read_entry : Spatial::Grid
       info = self.info
       read_array info, &.itself
     end
