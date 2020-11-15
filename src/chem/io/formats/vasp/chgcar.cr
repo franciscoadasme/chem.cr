@@ -1,10 +1,9 @@
 module Chem::VASP::Chgcar
   @[IO::FileType(format: Chgcar, names: %w(CHGCAR*))]
-  class Parser < Spatial::Grid::Parser
-    include IO::AsciiParser
-    include VASP::GridParser
+  class Reader < Spatial::Grid::Reader
+    include GridReader
 
-    def parse : Spatial::Grid
+    def read_entry : Spatial::Grid
       info = self.info
       volume = info.bounds.volume
       read_array info, &./(volume)

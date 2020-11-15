@@ -11,6 +11,10 @@ module Chem
       new Spatial::Basis.new(*args, **options)
     end
 
+    def *(value : Number) : self
+      Lattice.new i * value, j * value, k * value
+    end
+
     def a=(value : Float64) : Float64
       @basis = Spatial::Basis.new i.resize(value), j, k
       value

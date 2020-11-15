@@ -78,114 +78,97 @@ module Chem::VASP::Poscar
   end
 
   @[IO::FileType(format: Poscar, names: %w(POSCAR* CONTCAR*))]
-  class Parser < Structure::Parser
-    include IO::PullParser
-
-    @elements = [] of Element
+  class Reader < Structure::Reader
+    @builder = uninitialized Structure::Builder
+    @constrained = false
     @fractional = false
-    @has_constraints = false
+    @lattice = uninitialized Lattice
     @scale_factor = 1.0
+    @species = [] of Element
+    @title = ""
 
     def next : Structure | Iterator::Stop
-      eof? ? stop : parse_next
+      @io.eof? ? stop : read_next
     end
 
     def skip_structure : Nil
       @io.skip_to_end
     end
 
-    private def parse_atom(builder : Structure::Builder) : Nil
-      vec = read_vector
-      vec = @fractional ? vec.to_cartesian(builder.lattice!) : vec * @scale_factor
-      atom = builder.atom @elements.shift, vec
-      atom.constraint = read_constraint if @has_constraints
-    end
-
-    private def parse_coordinate_system : Nil
-      skip_whitespace
-      line = read_line
-      case line[0].downcase
-      when 'c', 'k' # cartesian
-        @fractional = false
-      when 'd' # direct
-        @fractional = true
-      else
-        parse_exception "Invalid coordinate type (expected either Cartesian or Direct)"
-      end
-    end
-
-    private def parse_elements : Nil
-      skip_whitespace
-      parse_exception "Expected element symbols (vasp 5+)" if check &.number?
-      elements = scan_delimited(&.letter?).map { |symbol| PeriodicTable[symbol] }
-      counts = read_atom_counts elements.size
-      elements.zip(counts) do |ele, count|
-        count.times { @elements << ele }
-      end
-      skip_line
-    end
-
-    private def parse_lattice(builder : Structure::Builder) : Nil
-      builder.lattice \
-        @scale_factor * read_vector,
-        @scale_factor * read_vector,
-        @scale_factor * read_vector
-    end
-
-    private def parse_next : Structure
-      Structure.build(@guess_topology) do |builder|
-        builder.title read_line
-
-        @scale_factor = read_float
-        skip_line
-        parse_lattice builder
-        parse_elements
-        parse_selective_dynamics
-        parse_coordinate_system
-
-        @elements.size.times { parse_atom builder }
-      end
-    end
-
-    private def parse_selective_dynamics : Nil
-      skip_whitespace
-      @has_constraints = if check_in_set "sS"
-                           skip_line
-                           true
-                         else
-                           false
-                         end
-    end
-
-    private def read_atom_counts(n : Int) : Array(Int32)
-      Array(Int32).new(n) do |i|
-        read_int
-      rescue ex : IO::ParseException
-        ex.message = "Expected #{n - i} more number(s) of atoms per atomic species"
-        raise ex
-      end
-    end
-
-    private def read_bool : Bool
-      skip_whitespace
-      case flag = read
-      when 'F' then false
-      when 'T' then true
-      else          parse_exception "Invalid boolean flag (expected either T or F)"
-      end
+    private def read_atom : Atom
+      vec = @io.read_vector
+      vec = @fractional ? vec.to_cartesian(@lattice) : vec * @scale_factor
+      atom = @builder.atom @species.shift, vec
+      atom.constraint = read_constraint if @constrained
+      atom
     end
 
     private def read_constraint : Constraint?
-      case {read_bool, read_bool, read_bool}
-      when {true, true, true}    then nil
-      when {false, true, true}   then Constraint::X
-      when {true, false, true}   then Constraint::Y
-      when {true, true, false}   then Constraint::Z
-      when {false, false, true}  then Constraint::XY
-      when {false, true, false}  then Constraint::XZ
-      when {true, false, false}  then Constraint::YZ
-      when {false, false, false} then Constraint::XYZ
-      else                            raise "BUG: unreachable"
+      cx = @io.skip_whitespace.read
+      cy = @io.skip_whitespace.read
+      cz = @io.skip_whitespace.read
+      case {cx, cy, cz}
+      when {'T', 'T', 'T'} then nil
+      when {'F', 'T', 'T'} then Constraint::X
+      when {'T', 'F', 'T'} then Constraint::Y
+      when {'T', 'T', 'F'} then Constraint::Z
+      when {'F', 'F', 'T'} then Constraint::XY
+      when {'F', 'T', 'F'} then Constraint::XZ
+      when {'T', 'F', 'F'} then Constraint::YZ
+      when {'F', 'F', 'F'} then Constraint::XYZ
+      else
+        parse_exception "Couldn't read constraint flags"
+      end
+    end
+
+    private def read_coordinate_system : Nil
+      case @io.skip_whitespace.read.downcase
+      when 'c', 'k' # cartesian
+        @io.skip_line
+        @fractional = false
+      when 'd' # direct
+        @io.skip_line
+        @fractional = true
+      else
+        parse_exception "Couldn't read coordinates type"
+      end
+    end
+
+    private def read_header : Nil
+      @title = @io.read_line.strip
+      @scale_factor = @io.read_float
+      @lattice = Lattice.new @io.read_vector, @io.read_vector, @io.read_vector
+      @lattice *= @scale_factor if @scale_factor != 1.0
+      read_species
+      @constrained = @io.skip_whitespace.check &.in?('s', 'S')
+      @io.skip_line if @constrained
+      read_coordinate_system
+    end
+
+    private def read_next : Structure
+      read_header
+      @builder = Structure::Builder.new guess_topology: @guess_topology
+      @builder.title @title
+      @builder.lattice @lattice
+      @species.size.times { read_atom }
+      @builder.build
+    end
+
+    private def read_species : Nil
+      elements = [] of Element
+      while @io.skip_whitespace.check(&.letter?)
+        sym = @io.read_word
+        ele = PeriodicTable[sym]? || parse_exception "Unknown element named #{sym}"
+        elements << ele
+      end
+      parse_exception "Couldn't read atom species" if elements.empty?
+      @species.clear
+      elements.map do |ele|
+        if count = @io.read_int?
+          count.times { @species << ele }
+        else
+          parse_exception "Couldn't read number of atoms for #{ele.symbol}"
+        end
       end
     end
   end

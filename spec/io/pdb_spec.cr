@@ -118,13 +118,13 @@ describe Chem::PDB do
 
     it "parses a PDB file with experimental header" do
       st = load_file "1crn.pdb"
-      st.title.should eq "1crn"
+      st.title.should eq "1CRN"
       st.experiment.should_not be_nil
       exp = st.experiment.not_nil!
       exp.deposition_date.should eq Time.utc(1981, 4, 30)
       exp.doi.should eq "10.1073/PNAS.81.19.6014"
       exp.method.x_ray_diffraction?.should be_true
-      exp.pdb_accession.should eq "1crn"
+      exp.pdb_accession.should eq "1CRN"
       exp.resolution.should eq 1.5
       exp.title.should eq "WATER STRUCTURE OF A HYDROPHOBIC PROTEIN AT ATOMIC " \
                           "RESOLUTION. PENTAGON RINGS OF WATER MOLECULES IN CRYSTALS " \
@@ -290,7 +290,7 @@ describe Chem::PDB do
 
     it "parses selected models (iterator)" do
       path = "spec/data/pdb/models.pdb"
-      st_list = PDB::Parser.new(path).select(indexes: [1, 3]).to_a
+      st_list = PDB::Reader.new(path).select(indexes: [1, 3]).to_a
       st_list.size.should eq 2
       xs = {7.212, 22.055}
       st_list.zip(xs) do |st, x|
@@ -302,7 +302,7 @@ describe Chem::PDB do
     end
 
     it "skip models" do
-      parser = PDB::Parser.new "spec/data/pdb/models.pdb"
+      parser = PDB::Reader.new "spec/data/pdb/models.pdb"
       parser.skip_structure
       parser.first.atoms[0].coords.should eq V[7.212, 15.334, 0.966]
       parser.skip_structure
@@ -310,7 +310,7 @@ describe Chem::PDB do
     end
 
     it "skip models (iterator)" do
-      parser = PDB::Parser.new "spec/data/pdb/models.pdb"
+      parser = PDB::Reader.new "spec/data/pdb/models.pdb"
       parser.skip(3).first.atoms[0].coords.should eq V[22.055, 14.701, 7.032]
     end
 
