@@ -410,8 +410,8 @@ module Chem::PDB
         Spatial::Vector.new(line[30, 8].to_f, line[38, 8].to_f, line[46, 8].to_f),
         element: ele,
         formal_charge: line[78, 2]?.try(&.reverse.to_i?) || 0,
-        occupancy: line[54, 6].to_f,
-        temperature_factor: line[60, 6].to_f
+        occupancy: line[54, 6]?.presence.try(&.to_f) || 0.0,
+        temperature_factor: line[60, 6]?.presence.try(&.to_f) || 0.0
 
       alt_loc(atom.residue, alt_loc, resname) << atom if !@alt_loc && alt_loc
     end
