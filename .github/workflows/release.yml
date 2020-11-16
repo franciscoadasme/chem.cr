@@ -22,12 +22,12 @@ jobs:
         ln -s /usr/lib/libxml2.2.dylib /usr/local/lib/liblibxml2.tbd.dylib
         shards build --release --stats --progress
     - name: Compress binary
-      run: zip -r -X ./bin/psique.zip ./bin/psique
+      run: zip -rjX ./psique.zip ./bin/psique
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2
       with:
         name: psique-darwin
-        path: ./bin/psique.zip
+        path: ./psique.zip
   build-linux:
     runs-on: ubuntu-latest
     container:
