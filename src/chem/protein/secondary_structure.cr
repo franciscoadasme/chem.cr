@@ -99,6 +99,18 @@ module Chem::Protein
       end
     end
 
+    def color : Colorize::ColorRGB
+      Colorize::ColorRGB.from_hex case self
+      in .left_handed_helix3_10?, .right_handed_helix3_10?     then "#E88BC4"
+      in .left_handed_helix_alpha?, .right_handed_helix_alpha? then "#E41A1C"
+      in .left_handed_helix_pi?, .right_handed_helix_pi?       then "#6A3D9B"
+      in .left_handed_helix_gamma?, .right_handed_helix_gamma? then "#F4A261"
+      in .beta_strand?                                         then "#2A9D8F"
+      in .polyproline?                                         then "#E9C46A"
+      in .bend?, .beta_bridge?, .none?, .turn?                 then "#C8C8C8"
+      end
+    end
+
     # Returns `true` if secondary structures are equal.
     #
     # If `strict` is `true`, secondary structures are compared by their
