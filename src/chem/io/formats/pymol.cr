@@ -27,7 +27,7 @@ module Chem::PyMOL
     }
 
     def initialize(io : ::IO | Path | String,
-                   @path : String | Path,
+                   @path : String | Path | Nil = nil,
                    *,
                    sync_close : Bool = false)
       super io, sync_close: sync_close
@@ -49,8 +49,8 @@ module Chem::PyMOL
     end
 
     private def write_header : Nil
+      @io.puts "load #{@path}" if @path
       @io.puts <<-EOS
-        load #{@path}
         hide everything
         show cartoon
         bg_color white
