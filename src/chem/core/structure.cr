@@ -229,7 +229,7 @@ module Chem
         case format
         {% for writer in IO::Writer.all_subclasses.select(&.annotation(IO::FileType)) %}
           {% if (type = writer.superclass.type_vars[0]) && type <= AtomCollection %}
-            {% format = writer.annotation(IO::FileType)[:format].id.underscore %}
+            {% format = writer.annotation(IO::FileType)[:format].id.downcase %}
             when .{{format.id}}?
               to_{{format.id}} output
           {% end %}

@@ -82,6 +82,12 @@ module Chem::IO
         {{format.id}}
       {% end %}
 
+      {% for format in file_formats %}
+        def {{format.id.downcase}}? : Bool
+          self == {{format}}
+        end
+      {% end %}
+
       # Returns the file format associated with *extname*, or raises `ArgumentError`
       # otherwise.
       #
