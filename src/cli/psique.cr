@@ -1,8 +1,8 @@
 require "option_parser"
 require "../chem"
 
-VERSION      = "1.0.1"
-VERSION_DATE = "2020-11-15"
+VERSION      = "1.1.1"
+VERSION_DATE = "2020-11-16"
 
 input_file = ""
 output_file = STDOUT
@@ -13,13 +13,13 @@ OptionParser.parse do |parser|
   parser.on("-b", "--beta", "Write curvature value to PDB beta column") do
     beta = "curvature"
   end
-  parser.on("--pymol", "Write a PyMOL Commnad Script (*.pml) file") do
+  parser.on("--pymol", "Write a PyMOL commnad script (*.pml) file") do
     output_type = "pymol"
   end
-  parser.on("--vmd", "Write a VMD Commnad Script (*.vmd) file") do
+  parser.on("--vmd", "Write a VMD commnad script (*.vmd) file") do
     output_type = "vmd"
   end
-  parser.on("--stride", "Use STRIDE output (*.stride) file format") do
+  parser.on("--stride", "Write a STRIDE output (*.stride) file") do
     output_type = "stride"
   end
   parser.on("-o OUTPUT", "--output OUTPUT", "Output file") do |str|
@@ -30,16 +30,24 @@ OptionParser.parse do |parser|
   end
   parser.on("-h", "--help", "Show this help") do
     puts <<-EOS
-      PSIQUE is a protein secondary structure assignment based on local helix
-      paramaters, quaternions, and a quantum-mechanical energy-driven criterion
-      for secondary structure classification. The algorithm can identify six
-      classes (alpha-, 3_10-, pi- and gamma-helices, PP-II ribbon helix, and
-      beta-strand) and their handedness.
+      PSIQUE: Protein Secondary structure Identification on the basis of
+      QUaternions and Electronic structure calculations
+
+      PSIQUE is a geometry-based secondary structure assignment method that
+      uses local helix paramaters, quaternions, and a classification criterion
+      derived from DFT calculations of polyalanine. The algorithm can identify
+      common (alpha-, 3_10-, pi-helices and and beta-strand) and rare (PP-II
+      ribbon helix and gamma-helices) secondary structures, including
+      handedness if appropiate.
 
       The information of the protein secondary structure is written in the PDB
       header. Special codes are used for some structures not included in the
       standard format: 11 for left-handed 3_10-helix and 13 for left-handed
-      pi-helix.
+      pi-helix. Alternatively, output can be written in other file formats
+      that can be read in analysis and visualization packages.
+
+      Please cite:
+      F. Adasme-Carreño, et al., XXXXXX, XXXX, X (XX), XXX-XXX
       EOS
     puts
     puts parser
