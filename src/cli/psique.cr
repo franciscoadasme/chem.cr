@@ -10,8 +10,17 @@ output_type = "structure"
 beta = ""
 OptionParser.parse do |parser|
   parser.banner = "Usage: psique [-o|--output PDB] PDB"
-  parser.on("-b", "--beta", "Write curvature value to PDB beta column") do
-    beta = "curvature"
+  parser.on(
+    "-b PARAM",
+    "--beta PARAM",
+    "Write parameter value to PDB beta column. " \
+    "Must be one of: rise, twist, or curvature"
+  ) do |str|
+    if str.in?("rise", "twist", "curvature")
+      beta = str
+    else
+      abort "error: invalid parameter #{str}"
+    end
   end
   parser.on("--pymol", "Write a PyMOL commnad script (*.pml) file") do
     output_type = "pymol"
@@ -84,6 +93,12 @@ begin
         curvature = ((dprev + dnext) / 2).degrees
       end
       residue.each_atom &.temperature_factor=(curvature)
+    when "rise"
+      rise = residue.hlxparams.try(&.zeta) || 0.0
+      residue.each_atom &.temperature_factor=(rise)
+    when "twist"
+      twist = residue.hlxparams.try(&.theta) || 0.0
+      residue.each_atom &.temperature_factor=(twist)
     end
   end
   Chem::Protein::PSIQUE.assign structure
