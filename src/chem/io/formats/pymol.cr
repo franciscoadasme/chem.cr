@@ -54,16 +54,20 @@ module Chem::PyMOL
         hide everything
         show cartoon
         bg_color white
-        set_color col-protein, [200, 200, 200]
-        set_color col-310, [232, 139, 196]
-        set_color col-alpha, [228, 26, 28]
-        set_color col-gamma, [200, 200, 200]
-        set_color col-pi, [106, 61, 155]
-        set_color col-pp, [256, 127, 0]
-        set_color col-strand, [128, 77, 0]
+        set_color col-protein, #{seccolor(:none)}
+        set_color col-310, #{seccolor(:right_handed_helix3_10)}
+        set_color col-alpha, #{seccolor(:right_handed_helix_alpha)}
+        set_color col-gamma, #{seccolor(:right_handed_helix_gamma)}
+        set_color col-pi, #{seccolor(:right_handed_helix_pi)}
+        set_color col-pp, #{seccolor(:polyproline)}
+        set_color col-strand, #{seccolor(:beta_strand)}
         color col-protein, all
         alter all, ss = '0'
         EOS
+    end
+
+    private def seccolor(sec : Protein::SecondaryStructure) : Array(UInt8)
+      sec.color.to_a
     end
   end
 end
