@@ -16,6 +16,9 @@ OptionParser.parse do |parser|
   parser.on("--pymol", "Write a PyMOL Commnad Script (*.pml) file") do
     output_type = "pymol"
   end
+  parser.on("--vmd", "Write a VMD Commnad Script (*.vmd) file") do
+    output_type = "vmd"
+  end
   parser.on("--stride", "Use STRIDE output (*.stride) file format") do
     output_type = "stride"
   end
@@ -79,6 +82,7 @@ begin
 
   case output_type
   when "pymol"  then structure.to_pymol output_file, input_file.not_nil!
+  when "vmd"    then structure.to_vmd output_file, input_file.not_nil!
   when "stride" then structure.to_stride output_file
   else               structure.to_pdb output_file
   end

@@ -1,0 +1,31 @@
+display resetview
+color Structure "Alpha Helix" 29
+color change rgb 29 0.894 0.102 0.11
+color Structure "3_10_Helix" 13
+color change rgb 13 0.91 0.545 0.769
+color Structure "Pi_Helix" 11
+color change rgb 11 0.416 0.239 0.608
+# used for gamma-helix
+color Structure "Bridge_Beta" 32
+color change rgb 32 0.957 0.635 0.38
+# used for polyproline
+color Structure "Turn" 17
+color change rgb 17 0.914 0.769 0.416
+color Structure "Extended_Beta" 20
+color change rgb 20 0.165 0.616 0.561
+color Structure "Coil" 6
+color change rgb 6 0.784 0.784 0.784
+color Display Background white
+mol new pdb/1crn.pdb
+mol delrep top top
+mol representation NewCartoon
+mol color Structure
+mol addrep top
+[atomselect top "chain A and resid 1 to 4"] set structure E
+[atomselect top "chain A and resid 5 to 6"] set structure C
+[atomselect top "chain A and resid 7 to 19"] set structure H
+[atomselect top "chain A and resid 20 to 22"] set structure C
+[atomselect top "chain A and resid 23 to 30"] set structure H
+[atomselect top "chain A and resid 31 to 31"] set structure C
+[atomselect top "chain A and resid 32 to 35"] set structure E
+[atomselect top "chain A and resid 36 to 46"] set structure C
