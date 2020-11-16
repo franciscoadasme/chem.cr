@@ -22,9 +22,10 @@ require "./chem/core/lattice"
 require "./chem/core/structure"
 require "./chem/core/structure/*"
 
-require "./chem/io"
 require "./chem/protein"
 require "./chem/topology"
+
+require "./chem/io"
 
 module Chem
   class Error < Exception; end
