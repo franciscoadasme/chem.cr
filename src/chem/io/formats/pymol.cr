@@ -35,7 +35,7 @@ module Chem::PyMOL
 
     def write(structure : Structure) : Nil
       check_open
-      write_header
+      header
       structure.each_secondary_structure do |residues, sec|
         next unless code = CODES[sec]?
         ch = residues[0].chain.id
@@ -45,14 +45,15 @@ module Chem::PyMOL
         @io.puts "alter #{sel}, ss = '#{code}'"
         @io.puts "color col-#{SHORT_NAMES[sec]}, #{sel}"
       end
-      @io.puts "zoom all"
     end
 
-    private def write_header : Nil
+    private def header
       @io.puts "load #{@path}" if @path
       @io.puts <<-EOS
+        set cartoon_discrete_colors, on
         hide everything
         show cartoon
+        zoom all
         bg_color white
         set_color col-protein, #{seccolor(:none)}
         set_color col-310, #{seccolor(:right_handed_helix3_10)}
