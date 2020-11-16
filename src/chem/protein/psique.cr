@@ -1,5 +1,5 @@
 module Chem::Protein
-  class QUESSO < SecondaryStructureCalculator
+  class PSIQUE < SecondaryStructureCalculator
     CURVATURE_CUTOFF = 60
 
     getter? blend_elements : Bool
@@ -166,7 +166,7 @@ module Chem::Protein
 
         rise = h2.zeta.scale(0, 4)
         twist = h2.theta.scale(0, 360)
-        pes = QUESSO.pes[rise >= 0 ? 1 : -1]
+        pes = PSIQUE.pes[rise >= 0 ? 1 : -1]
         rise, twist = pes.walk rise, twist
         if basin = pes.basin(rise, twist)
           @raw_sec[i] = basin.sec

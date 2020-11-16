@@ -4,5 +4,5 @@ require "./protein/secondary_structure"
 require "./protein/sequence"
 
 require "./protein/dssp"
-require "./protein/quesso"
+require "./protein/psique"
 require "./protein/stride"

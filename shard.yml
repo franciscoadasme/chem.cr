@@ -7,10 +7,10 @@ authors:
 crystal: 0.35
 
 executables:
-  - quesso
+  - psique
 
 targets:
-  quesso:
-    main: src/cli/quesso.cr
+  psique:
+    main: src/cli/psique.cr
 
 license: MIT

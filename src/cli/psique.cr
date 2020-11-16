@@ -1,27 +1,33 @@
 require "option_parser"
 require "../chem"
 
-VERSION      = "1.0.0-rc"
-VERSION_DATE = "2020-08-02"
+VERSION      = "1.0.1"
+VERSION_DATE = "2020-11-15"
 
 input_file = ""
 output_file = STDOUT
 output_type = "structure"
 beta = ""
 OptionParser.parse do |parser|
-  parser.banner = "Usage: quesso [-o|--output PDB] PDB"
+  parser.banner = "Usage: psique [-o|--output PDB] PDB"
   parser.on("-b", "--beta", "Write curvature value to PDB beta column") do
     beta = "curvature"
   end
   parser.on("--pymol", "Write a PyMOL Commnad Script (*.pml) file") do
     output_type = "pymol"
   end
+  parser.on("--stride", "Use STRIDE output (*.stride) file format") do
+    output_type = "stride"
+  end
   parser.on("-o OUTPUT", "--output OUTPUT", "Output file") do |str|
+    output_file = str
+  end
+  parser.on("-f OUTPUT", "Alias for -o/--output") do |str|
     output_file = str
   end
   parser.on("-h", "--help", "Show this help") do
     puts <<-EOS
-      QUESSO is a protein secondary structure assignment based on local helix
+      PSIQUE is a protein secondary structure assignment based on local helix
       paramaters, quaternions, and a quantum-mechanical energy-driven criterion
       for secondary structure classification. The algorithm can identify six
       classes (alpha-, 3_10-, pi- and gamma-helices, PP-II ribbon helix, and
@@ -37,7 +43,7 @@ OptionParser.parse do |parser|
     exit
   end
   parser.on("--version", "show version") do
-    puts "QUESSO #{VERSION} (#{VERSION_DATE})"
+    puts "PSIQUE #{VERSION} (#{VERSION_DATE})"
   end
 
   parser.invalid_option do |flag|
@@ -69,12 +75,13 @@ begin
       residue.each_atom &.temperature_factor=(curvature)
     end
   end
-  Chem::Protein::DSSP.assign structure
+  Chem::Protein::PSIQUE.assign structure
 
   case output_type
-  when "pymol" then structure.to_pymol output_file, input_file.not_nil!
-  else              structure.to_pdb output_file
+  when "pymol"  then structure.to_pymol output_file, input_file.not_nil!
+  when "stride" then structure.to_stride output_file
+  else               structure.to_pdb output_file
   end
 rescue ex : Chem::IO::ParseException
-  abort ex.to_s_with_location
+  abort "error: #{ex} in #{input_file}"
 end
