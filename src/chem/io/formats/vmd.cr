@@ -74,7 +74,7 @@ module Chem::VMD
       when .helix_gamma? then 32 # orange3
       when .polyproline? then 17 # yellow2
       when .beta_strand? then 20 # green3
-      else                    6 # silver
+      else                    6  # silver
       end
     end
   end
