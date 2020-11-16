@@ -1,0 +1,85 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-macos:
+    runs-on: macos-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Install Crystal
+      run: brew install openssl crystal && brew uninstall --ignore-dependencies llvm && brew install llvm@9
+    - name: Install dependencies
+      run: shards install --production
+    - name: Build the binary
+      env:
+        LLVM_CONFIG: /usr/local/opt/llvm@9/bin/llvm-config
+      run: |
+        ln -s /usr/lib/libxml2.2.dylib /usr/local/lib/liblibxml2.tbd.dylib
+        shards build --release --stats --progress
+    - name: Compress binary
+      run: zip -r -X ./bin/psique.zip ./bin/psique
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: psique-darwin
+        path: ./bin/psique.zip
+  build-linux:
+    runs-on: ubuntu-latest
+    container:
+      image: crystallang/crystal
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: shards install --production
+      - name: Build binary
+        run: |
+          shards build --release --static --stats --progress
+      - name: Compress binary
+        run: gzip ./bin/psique
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: psique-linux
+          path: ./bin/psique.gz
+  release:
+    needs: [build-macos, build-linux]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+        with:
+          path: ./artifacts
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+      - name: Attach linux binary
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./artifacts/psique-linux/psique.gz
+          asset_name: psique-linux.gz
+          asset_content_type: application/gzip
+      - name: Attach macOS binary
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./artifacts/psique-darwin/psique.zip
+          asset_name: psique-darwin.zip
+          asset_content_type: application/zip
