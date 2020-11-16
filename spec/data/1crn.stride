@@ -1,0 +1,76 @@
+REM  --------------------------------------------------------------------  1CRN
+REM                                                                        1CRN
+REM  PSIQUE: Protein Secondary structure Identification on the basis       1CRN
+REM  of QUaternions and Electronic structure calculations                  1CRN
+REM                                                                        1CRN
+REM  Please cite:                                                          1CRN
+REM  F. Adasme-Carreño, et al., XXXXXX, XXXX, X (XX), XXX-XXX              1CRN
+REM                                                                        1CRN
+REM  ----------------------- General information ------------------------  1CRN
+REM                                                                        1CRN
+HDR                                          30-APR-81   1CRN              1CRN
+REM                                                                        1CRN
+REM  ------------------- Secondary structure summary --------------------  1CRN
+REM                                                                        1CRN
+CHN  1crn.pdb A                                                            1CRN
+REM                                                                        1CRN
+REM                .         .         .         .                         1CRN
+SEQ  1    TTCCPSIVARSNFNVCRLPGTPEAICATYTGCIIIPGATCPGDYAN       46          1CRN
+STR       EEEE  HHHHHHHHHHHHH   HHHHHHHH EEEE                              1CRN
+REM                                                                        1CRN
+REM                                                                        1CRN
+REM                                                                        1CRN
+LOC  AlphaHelix   ILE     7 A      PRO     19 A                            1CRN
+LOC  AlphaHelix   GLU    23 A      THR     30 A                            1CRN
+LOC  Strand       THR     1 A      CYS      4 A                            1CRN
+LOC  Strand       CYS    32 A      ILE     35 A                            1CRN
+REM                                                                        1CRN
+REM  ------------- Detailed secondary structure assignment --------------  1CRN
+REM                                                                        1CRN
+REM  |---Residue---|    |--Structure--|   |-Phi-|   |-Psi-|  |-Area-|      1CRN
+ASG  THR A    1    1    E        Strand    360.00    147.66       0.0      1CRN
+ASG  THR A    2    2    E        Strand   -107.83    144.35       0.0      1CRN
+ASG  CYS A    3    3    E        Strand   -131.17    133.29       0.0      1CRN
+ASG  CYS A    4    4    E        Strand   -118.90    151.20       0.0      1CRN
+ASG  PRO A    5    5    C          Coil    -76.18    -18.98       0.0      1CRN
+ASG  SER A    6    6    C          Coil   -157.92    166.03       0.0      1CRN
+ASG  ILE A    7    7    H    AlphaHelix    -63.58    -42.10       0.0      1CRN
+ASG  VAL A    8    8    H    AlphaHelix    -55.93    -44.56       0.0      1CRN
+ASG  ALA A    9    9    H    AlphaHelix    -61.36    -43.78       0.0      1CRN
+ASG  ARG A   10   10    H    AlphaHelix    -63.19    -43.30       0.0      1CRN
+ASG  SER A   11   11    H    AlphaHelix    -61.21    -42.43       0.0      1CRN
+ASG  ASN A   12   12    H    AlphaHelix    -64.92    -39.49       0.0      1CRN
+ASG  PHE A   13   13    H    AlphaHelix    -59.10    -47.21       0.0      1CRN
+ASG  ASN A   14   14    H    AlphaHelix    -62.82    -35.23       0.0      1CRN
+ASG  VAL A   15   15    H    AlphaHelix    -69.24    -41.22       0.0      1CRN
+ASG  CYS A   16   16    H    AlphaHelix    -56.67    -36.00       0.0      1CRN
+ASG  ARG A   17   17    H    AlphaHelix    -77.07    -16.13       0.0      1CRN
+ASG  LEU A   18   18    H    AlphaHelix    -53.21    -46.17       0.0      1CRN
+ASG  PRO A   19   19    H    AlphaHelix    -77.19     -7.60       0.0      1CRN
+ASG  GLY A   20   20    C          Coil    106.26      7.31       0.0      1CRN
+ASG  THR A   21   21    C          Coil    -52.67    136.34       0.0      1CRN
+ASG  PRO A   22   22    C          Coil    -56.98    146.62       0.0      1CRN
+ASG  GLU A   23   23    H    AlphaHelix    -56.41    -36.19       0.0      1CRN
+ASG  ALA A   24   24    H    AlphaHelix    -63.43    -34.86       0.0      1CRN
+ASG  ILE A   25   25    H    AlphaHelix    -74.77    -37.89       0.0      1CRN
+ASG  CYS A   26   26    H    AlphaHelix    -64.95    -31.69       0.0      1CRN
+ASG  ALA A   27   27    H    AlphaHelix    -62.04    -54.03       0.0      1CRN
+ASG  THR A   28   28    H    AlphaHelix    -68.78    -25.49       0.0      1CRN
+ASG  TYR A   29   29    H    AlphaHelix    -67.59    -36.30       0.0      1CRN
+ASG  THR A   30   30    H    AlphaHelix   -108.96    -18.47       0.0      1CRN
+ASG  GLY A   31   31    C          Coil     91.82     -3.07       0.0      1CRN
+ASG  CYS A   32   32    E        Strand    -69.52    164.38       0.0      1CRN
+ASG  ILE A   33   33    E        Strand   -129.76    157.03       0.0      1CRN
+ASG  ILE A   34   34    E        Strand   -111.56    129.59       0.0      1CRN
+ASG  ILE A   35   35    E        Strand   -124.13    158.13       0.0      1CRN
+ASG  PRO A   36   36    C          Coil    -78.15    -24.35       0.0      1CRN
+ASG  GLY A   37   37    C          Coil    -89.74   -161.71       0.0      1CRN
+ASG  ALA A   38   38    C          Coil   -120.81      1.24       0.0      1CRN
+ASG  THR A   39   39    C          Coil   -114.63    104.51       0.0      1CRN
+ASG  CYS A   40   40    C          Coil    -75.53    145.36       0.0      1CRN
+ASG  PRO A   41   41    C          Coil    -71.20    162.75       0.0      1CRN
+ASG  GLY A   42   42    C          Coil    -61.89    -23.11       0.0      1CRN
+ASG  ASP A   43   43    C          Coil    -89.70     -2.01       0.0      1CRN
+ASG  TYR A   44   44    C          Coil   -130.33     60.01       0.0      1CRN
+ASG  ALA A   45   45    C          Coil    -88.77     -2.53       0.0      1CRN
+ASG  ASN A   46   46    C          Coil   -112.85    360.00       0.0      1CRN
