@@ -54,6 +54,9 @@ OptionParser.parse do |parser|
       standard format: 11 for left-handed 3_10-helix and 13 for left-handed
       pi-helix. Alternatively, the output can be written in other file formats
       that can be read in analysis and visualization packages.
+
+      Check https://github.com/franciscoadasme/chem.cr/wiki/PSIQUE for more
+      information.
       EOS
     puts
     puts parser
