@@ -1,7 +1,7 @@
 require "option_parser"
 require "../chem"
 
-VERSION      = "1.1.1"
+VERSION      = "1.1.2"
 VERSION_DATE = "2020-11-16"
 
 input_file = ""
