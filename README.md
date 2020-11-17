@@ -12,10 +12,10 @@ programs. It aims to be both fast and easy to use.
 functionality, documentation, etc. and there will be breaking changes.
 
 [Features](#features) | [Installation](#installation) | [Usage](#usage)
-| [Tools](#tools) | [Benchmarks](#benchmarks) | [Roadmap](#roadmap) |
-[Testing](#testing) | [Similar software](#similar-software) |
-[Contributing](#contributing) | [Contributors](#contributors) |
-[License](#license)
+| [Tools](https://github.com/franciscoadasme/chem.cr/wiki#tools)
+[Benchmarks](#benchmarks) | [Roadmap](#roadmap) | [Testing](#testing) |
+[Similar software](#similar-software) | [Contributing](#contributing) |
+[Contributors](#contributors) | [License](#license)
 
 ## Features
 
@@ -33,7 +33,8 @@ functionality, documentation, etc. and there will be breaking changes.
 
 **NOTE** Tools such as `psique` may be download separately from the
 [releases][7] page or built from source if required. Refer to the
-[Tools](#tools) section for more information.
+[Wiki](https://github.com/franciscoadasme/chem.cr/wiki) for more
+information.
 
 First check that the Crystal compiler is installed correctly:
 
@@ -293,19 +294,6 @@ st.coords.translate! -st.coords.center
 st.coords.wrap
 ...
 ```
-
-## Tools
-
-Additional tools built upon the `chem` module are available in the `cli`
-directory. These tools can be download individually from the
-[releases](https://github.com/franciscoadasme/chem.cr/releases/latest)
-page or built from source by running the `shards build` command on a
-local copy of this repository. The available tools are the following:
-
-- `psique` is a command-line program that runs the PSIQUE method for
-  secondary structure assignment on a PDB file. Refer to the [wiki
-  page](https://github.com/franciscoadasme/chem.cr/wiki/PSIQUE) for
-  details on installation and usage.
 
 ## Benchmarks
 
