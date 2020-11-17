@@ -64,10 +64,11 @@ OptionParser.parse do |parser|
   end
   parser.on("--version", "show version") do
     puts "PSIQUE #{VERSION} (#{VERSION_DATE})"
+    exit
   end
 
   parser.invalid_option do |flag|
-    STDERR.puts "ERROR: #{flag} is not a valid option."
+    STDERR.puts "error: #{flag} is not a valid option."
     STDERR.puts parser
     exit
   end
