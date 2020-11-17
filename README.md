@@ -11,7 +11,11 @@ programs. It aims to be both fast and easy to use.
 **IMPORTANT**: this library is in alpha stage, meaning that there is missing
 functionality, documentation, etc. and there will be breaking changes.
 
-[Features](#features) | [Installation](#installation) | [Usage](#usage) | [Tools](#tools) | [Benchmarks](#benchmarks) | [Roadmap](#roadmap) | [Testing](#testing) | [Similar software](#similar-software) | [Contributing](#contributing) | [Contributors](#contributors) | [License](#license)
+[Features](#features) | [Installation](#installation) | [Usage](#usage)
+| [Tools](#tools) | [Benchmarks](#benchmarks) | [Roadmap](#roadmap) |
+[Testing](#testing) | [Similar software](#similar-software) |
+[Contributing](#contributing) | [Contributors](#contributors) |
+[License](#license)
 
 ## Features
 
