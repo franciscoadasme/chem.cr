@@ -11,6 +11,8 @@ programs. It aims to be both fast and easy to use.
 **IMPORTANT**: this library is in alpha stage, meaning that there is missing
 functionality, documentation, etc. and there will be breaking changes.
 
+[Features](#features) | [Installation](#installation) | [Usage](#usage) | [Tools](#tools) | [Benchmarks](#benchmarks) | [Roadmap](#roadmap) | [Testing](#testing) | [Similar software](#similar-software) | [Contributing](#contributing) | [Contributors](#contributors) | [License](#license)
+
 ## Features
 
 - Object-oriented API for accessing and manipulating molecules. It follows the
@@ -39,13 +41,6 @@ dependencies:
 
 - To run STRIDE analysis, you'll need to set `STRIDE_BIN` to the STRIDE
   executable path.
-
-### Tools
-
-Command-line tools can be download individually from the
-[releases](https://github.com/franciscoadasme/chem.cr/releases/latest)
-page or built from source by running the `shards build` command on a
-local copy. See below for a list of available tools.
 
 ## Usage
 
