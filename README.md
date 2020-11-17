@@ -40,6 +40,13 @@ dependencies:
 - To run STRIDE analysis, you'll need to set `STRIDE_BIN` to the STRIDE
   executable path.
 
+### Tools
+
+Command-line tools can be download individually from the
+[releases](https://github.com/franciscoadasme/chem.cr/releases/latest)
+page or built from source by running the `shards build` command on a
+local copy. See below for a list of available tools.
+
 ## Usage
 
 First require the `chem` module:
@@ -211,6 +218,20 @@ st.coords.translate! -st.coords.center
 st.coords.wrap
 ...
 ```
+
+## Tools
+
+Additional tools built upon the `chem` module are available in the
+repository in the `cli` directory. These tools can be download
+individually from the
+[releases](https://github.com/franciscoadasme/chem.cr/releases/latest)
+page or built from source by running the `shards build` command on a
+local copy.
+
+- `psique` is a command-line program that runs the PSIQUE method for
+  secondary structure assignment on a PDB file. Refer to the [wiki
+  page](https://github.com/franciscoadasme/chem.cr/wiki/PSIQUE) for more
+  information.
 
 ## Benchmarks
 
