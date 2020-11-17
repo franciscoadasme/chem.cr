@@ -44,6 +44,10 @@ Default target: x86_64-unknown-linux-gnu
 If the command fails, you need to install the crystal compiler by
 following [these steps][3].
 
+**NOTE** Tools such as `psique` may be download separetely from the
+[releases][7] page or built from source if required. Refer to the
+[Tools](#tools) section for more information.
+
 ### Using Shards
 
 Crystal handles dependencies by listing the packages on a `shard.yml`
@@ -126,7 +130,6 @@ require other files. Either way, write the following to avoid typing the
 ```crystal
 include Chem
 ```
-
 
 Let's first read a structure:
 
@@ -293,17 +296,16 @@ st.coords.wrap
 
 ## Tools
 
-Additional tools built upon the `chem` module are available in the
-repository in the `cli` directory. These tools can be download
-individually from the
+Additional tools built upon the `chem` module are available in the `cli`
+directory. These tools can be download individually from the
 [releases](https://github.com/franciscoadasme/chem.cr/releases/latest)
 page or built from source by running the `shards build` command on a
-local copy.
+local copy of this repository. The available tools are the following:
 
 - `psique` is a command-line program that runs the PSIQUE method for
   secondary structure assignment on a PDB file. Refer to the [wiki
-  page](https://github.com/franciscoadasme/chem.cr/wiki/PSIQUE) for more
-  information.
+  page](https://github.com/franciscoadasme/chem.cr/wiki/PSIQUE) for
+  details on installation and usage.
 
 ## Benchmarks
 
@@ -466,3 +468,4 @@ Licensed under the MIT license, see the separate LICENSE file.
 [4]: https://crystal-lang.org/reference/using_the_compiler/#creating-a-crystal-project
 [5]: https://crystal-lang.org/reference/the_shards_command/
 [6]: https://crystal-lang.org/reference/syntax_and_semantics/requiring_files.html
+[7]: https://github.com/franciscoadasme/chem.cr/releases/latest
