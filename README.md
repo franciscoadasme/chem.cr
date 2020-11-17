@@ -31,6 +31,10 @@ functionality, documentation, etc. and there will be breaking changes.
 
 ## Installation
 
+**NOTE** Tools such as `psique` may be download separately from the
+[releases][7] page or built from source if required. Refer to the
+[Tools](#tools) section for more information.
+
 First check that the Crystal compiler is installed correctly:
 
 ```sh
@@ -43,10 +47,6 @@ Default target: x86_64-unknown-linux-gnu
 
 If the command fails, you need to install the crystal compiler by
 following [these steps][3].
-
-**NOTE** Tools such as `psique` may be download separetely from the
-[releases][7] page or built from source if required. Refer to the
-[Tools](#tools) section for more information.
 
 ### Using Shards
 
