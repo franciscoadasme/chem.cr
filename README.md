@@ -3,9 +3,9 @@
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/franciscoadasme/chem.cr/Crystal%20CI.svg)](https://github.com/franciscoadasme/chem.cr/actions?query=workflow%3A%22Crystal+CI%22)
 [![Version](https://img.shields.io/github/v/release/franciscoadasme/chem.cr.svg?label=version)](https://github.com/franciscoadasme/chem.cr/releases/latest)
 [![License](https://img.shields.io/github/license/franciscoadasme/chem.cr.svg)](https://github.com/franciscoadasme/chem.cr/blob/master/LICENSE)
-
-A modern library written in [Crystal](https://crystal-lang.org) primarily
-designed for manipulating molecular files created by computational chemistry
+****
+A modern library written in [Crystal][1] primarily designed for
+manipulating molecular files created by computational chemistry
 programs. It aims to be both fast and easy to use.
 
 **IMPORTANT**: this library is in alpha stage, meaning that there is missing
@@ -19,9 +19,8 @@ functionality, documentation, etc. and there will be breaking changes.
 
 ## Features
 
-- Object-oriented API for accessing and manipulating molecules. It follows the
-  topology commonly used in [Protein Data
-  Bank](https://en.wikipedia.org/wiki/Protein_Data_Bank_(file_format)) (PDB)
+- Object-oriented API for accessing and manipulating molecules. It
+  follows the topology commonly used in [Protein Data Bank][2] (PDB)
   file format: Structure (or model) → Chain → Residue → Atom.
 - Type safety (assigning a number to the atom's name will result in a
   compilation error)
@@ -32,7 +31,42 @@ functionality, documentation, etc. and there will be breaking changes.
 
 ## Installation
 
-Add this to your application's `shard.yml`:
+First check that the Crystal compiler is installed correctly:
+
+```sh
+$ crystal --version
+Crystal 0.35.1 [5999ae29b] (2020-06-19)
+
+LLVM: 8.0.0
+Default target: x86_64-unknown-linux-gnu
+```
+
+If the command fails, you need to install the crystal compiler by
+following [these steps][3].
+
+### Using Shards
+
+Crystal handles dependencies by listing the packages on a `shard.yml`
+file in a Crystal project. First, create a new project:
+
+```sh
+$ crystal init app myapp
+    create  myapp/.gitignore
+    create  myapp/.editorconfig
+    create  myapp/LICENSE
+    create  myapp/README.md
+    create  myapp/.travis.yml
+    create  myapp/shard.yml
+    create  myapp/src/myapp.cr
+    create  myapp/src/myapp/version.cr
+    create  myapp/spec/spec_helper.cr
+    create  myapp/spec/myapp_spec.cr
+Initialized empty Git repository in /home/crystal/myapp/.git/
+$ cd myapp
+```
+
+Read more about projects at the [Crystal guides][4]. Add this to your
+application's `shard.yml`:
 
 ```yaml
 dependencies:
@@ -41,6 +75,29 @@ dependencies:
     version: ~> 0.1
 ```
 
+Then, resolve and install missing dependencies:
+
+```sh
+shards install
+```
+
+Dependencies are installed into the `lib` folder. More about
+dependencies at the [Shards guides][5].
+
+### Manual download
+
+Either clone the repository or download a copy of the `chem` module to
+your local machine:
+
+```sh
+tag=$(curl -s https://api.github.com/repos/franciscoadasme/chem.cr/releases/latest | grep "tag_name" | cut -d\" -f4)
+wget https://github.com/franciscoadasme/chem.cr/archive/$tag.tar.gz -O chem.cr-${tag#v}.tar.gz
+tar xvf chem.cr-${tag#v}.tar.gz
+```
+
+This will download the latest version of the `chem` module to a folder
+named `chem.cr-X.Y.Z`, where `X.Y.Z` stands for the current version.
+
 ### Requirements
 
 - To run STRIDE analysis, you'll need to set `STRIDE_BIN` to the STRIDE
@@ -48,17 +105,33 @@ dependencies:
 
 ## Usage
 
-First require the `chem` module:
+First require the `chem` module. If you used Shards to installed the
+dependencies:
 
 ```crystal
 require "chem"
-include Chem # avoids typing Chem:: prefix
 ```
+
+Or if you download a copy named `chem.cr-X.Y.Z` and it is placed at the
+parent directory:
+
+```crystal
+require "../chem.cr-X.Y.Z/src/chem"
+```
+
+Refer to the [Crystal guides][6] for more information about how to
+require other files. Either way, write the following to avoid typing the
+`Chem::` prefix:
+
+```crystal
+include Chem
+```
+
 
 Let's first read a structure:
 
 ```crystal
-st = Strucuture.read "/path/to/file.pdb"
+st = Structure.read "/path/to/file.pdb"
 st # => <Structure "1cbn": 644 atoms, 47 residues, periodic>
 ```
 
@@ -386,3 +459,10 @@ each one of them is good in their own right so please do check them out if
 ## License
 
 Licensed under the MIT license, see the separate LICENSE file.
+
+[1]: https://crystal-lang.org
+[2]: https://en.wikipedia.org/wiki/Protein_Data_Bank_(file_format)
+[3]: https://crystal-lang.org/install
+[4]: https://crystal-lang.org/reference/using_the_compiler/#creating-a-crystal-project
+[5]: https://crystal-lang.org/reference/the_shards_command/
+[6]: https://crystal-lang.org/reference/syntax_and_semantics/requiring_files.html
