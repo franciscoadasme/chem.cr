@@ -43,20 +43,17 @@ OptionParser.parse do |parser|
       QUaternions and Electronic structure calculations
 
       PSIQUE is a geometry-based secondary structure assignment method that
-      uses local helix paramaters, quaternions, and a classification criterion
+      uses local helix parameters, quaternions, and a classification criterion
       derived from DFT calculations of polyalanine. The algorithm can identify
-      common (alpha-, 3_10-, pi-helices and and beta-strand) and rare (PP-II
+      common (alpha-, 3_10-, pi-helices and beta-strand) and rare (PP-II
       ribbon helix and gamma-helices) secondary structures, including
-      handedness if appropiate.
+      handedness if appropriate.
 
       The information of the protein secondary structure is written in the PDB
       header. Special codes are used for some structures not included in the
       standard format: 11 for left-handed 3_10-helix and 13 for left-handed
-      pi-helix. Alternatively, output can be written in other file formats
+      pi-helix. Alternatively, the output can be written in other file formats
       that can be read in analysis and visualization packages.
-
-      Please cite:
-      F. Adasme-Carreño, et al., XXXXXX, XXXX, X (XX), XXX-XXX
       EOS
     puts
     puts parser
