@@ -208,7 +208,7 @@ describe Chem::PDB do
       st.atoms[115].bonds[st.atoms[187]].order.should eq 1
     end
 
-    it "parses bonds when multiple models" do
+    pending "parses bonds when multiple models" do
       models = Array(Chem::Structure).from_pdb "spec/data/pdb/models.pdb"
       models.size.should eq 4
       models.each do |st|
@@ -263,7 +263,7 @@ describe Chem::PDB do
       residues.map(&.insertion_code).should eq [nil, 'A', 'B', 'C', 'D', 'E', nil]
     end
 
-    it "parses multiple models" do
+    pending "parses multiple models" do
       st_list = Array(Chem::Structure).from_pdb "spec/data/pdb/models.pdb"
       st_list.size.should eq 4
       xs = {5.606, 7.212, 5.408, 22.055}
@@ -275,7 +275,7 @@ describe Chem::PDB do
       end
     end
 
-    it "parses selected models" do
+    pending "parses selected models" do
       path = "spec/data/pdb/models.pdb"
       st_list = Array(Chem::Structure).from_pdb path, indexes: [1, 3]
       st_list.size.should eq 2
@@ -288,7 +288,7 @@ describe Chem::PDB do
       end
     end
 
-    it "parses selected models (iterator)" do
+    pending "parses selected models (iterator)" do
       path = "spec/data/pdb/models.pdb"
       st_list = PDB::Reader.new(path).select(indexes: [1, 3]).to_a
       st_list.size.should eq 2
@@ -301,7 +301,7 @@ describe Chem::PDB do
       end
     end
 
-    it "skip models" do
+    pending "skip models" do
       parser = PDB::Reader.new "spec/data/pdb/models.pdb"
       parser.skip_structure
       parser.first.atoms[0].coords.should eq V[7.212, 15.334, 0.966]
@@ -309,7 +309,7 @@ describe Chem::PDB do
       parser.first.atoms[0].coords.should eq V[22.055, 14.701, 7.032]
     end
 
-    it "skip models (iterator)" do
+    pending "skip models (iterator)" do
       parser = PDB::Reader.new "spec/data/pdb/models.pdb"
       parser.skip(3).first.atoms[0].coords.should eq V[22.055, 14.701, 7.032]
     end

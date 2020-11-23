@@ -1,9 +1,15 @@
 module Chem::VASP::Chgcar
-  @[IO::FileType(format: Chgcar, names: %w(CHGCAR*))]
+  @[IO::FileType(Spatial::Grid, format: Chgcar, names: %w(CHGCAR*))]
   class Reader < Spatial::Grid::Reader
+    include IO::Reader(Spatial::Grid)
     include GridReader
 
-    def read_entry : Spatial::Grid
+    def initialize(io : ::IO, @sync_close : Bool = false)
+      @io = IO::TextIO.new io
+    end
+
+    def read : Spatial::Grid
+      check_eof skip_lines: false
       info = self.info
       volume = info.bounds.volume
       read_array info, &./(volume)

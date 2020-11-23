@@ -1,6 +1,12 @@
 module Chem::DX
-  @[IO::FileType(format: DX, ext: %w(dx))]
+  @[IO::FileType(Spatial::Grid, format: DX, ext: %w(dx))]
   class Reader < Spatial::Grid::Reader
+    include IO::Reader(Spatial::Grid)
+
+    def initialize(io : ::IO, @sync_close : Bool = false)
+      @io = IO::TextIO.new io
+    end
+
     def info : Spatial::Grid::Info
       while @io.skip_whitespace.peek == '#'
         @io.skip_line
@@ -17,7 +23,8 @@ module Chem::DX
       Spatial::Grid::Info.new bounds, {ni, nj, nk}
     end
 
-    def read_entry : Spatial::Grid
+    def read : Spatial::Grid
+      check_eof
       Spatial::Grid.build(info) do |buffer, size|
         size.times do |i|
           buffer[i] = @io.read_float
