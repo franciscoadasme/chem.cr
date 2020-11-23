@@ -6,6 +6,20 @@ module Chem
     abstract def read : T
 
     macro included
+      setup_initializer_hook
+    end
+
+    def close
+      return if @closed
+      @closed = true
+      @io.close if @sync_close
+    end
+
+    def parse_exception(msg : String)
+      raise ParseException.new msg
+    end
+
+    private macro generate_initializer
       def self.new(path : Path | String, **options) : self
         new File.open(path), **options, sync_close: true
       end
@@ -21,14 +35,16 @@ module Chem
       end
     end
 
-    def close
-      return if @closed
-      @closed = true
-      @io.close if @sync_close
-    end
-
-    def parse_exception(msg : String)
-      raise ParseException.new msg
+    private macro setup_initializer_hook
+      macro finished
+        {% unless @type.module? || @type.abstract? %}
+          generate_initializer
+        {% end %}
+      end
+  
+      macro included
+        setup_initializer_hook
+      end
     end
 
     protected def check_eof(skip_lines : Bool = true)
