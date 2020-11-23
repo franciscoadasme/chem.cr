@@ -25,6 +25,7 @@ module Chem::Cube
     end
 
     def read : Spatial::Grid
+      check_open
       check_eof skip_lines: false
       Spatial::Grid.build(info) do |buffer, size|
         size.times do |i|

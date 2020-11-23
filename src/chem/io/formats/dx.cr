@@ -24,6 +24,7 @@ module Chem::DX
     end
 
     def read : Spatial::Grid
+      check_open
       check_eof
       Spatial::Grid.build(info) do |buffer, size|
         size.times do |i|

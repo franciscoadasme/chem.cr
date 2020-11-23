@@ -39,6 +39,11 @@ module Chem
       end
       raise ::IO::EOFError.new if @io.eof?
     end
+
+    protected def check_open
+      raise ::IO::Error.new "Closed IO" if closed?
+    end
+  end
   end
 
   abstract class Spatial::Grid::Reader

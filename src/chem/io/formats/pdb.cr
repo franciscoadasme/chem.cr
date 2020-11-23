@@ -335,6 +335,7 @@ module Chem::PDB
     end
 
     def read : Structure
+      check_open
       check_eof
       read_header unless @pdb_header
       unless @io.skip_whitespace.check("ATOM", "HETATM", "MODEL")

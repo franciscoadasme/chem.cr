@@ -61,6 +61,7 @@ module Chem::DFTB::Gen
     end
 
     def read : Structure
+      check_open
       check_eof
       parse_header
       @builder = Structure::Builder.new guess_topology: @guess_topology

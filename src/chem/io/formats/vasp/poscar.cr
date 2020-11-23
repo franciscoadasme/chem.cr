@@ -100,6 +100,7 @@ module Chem::VASP::Poscar
     end
 
     def read : Structure
+      check_open
       check_eof skip_lines: false
       read_header
       @builder = Structure::Builder.new guess_topology: @guess_topology

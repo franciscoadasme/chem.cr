@@ -9,6 +9,7 @@ module Chem::VASP::Chgcar
     end
 
     def read : Spatial::Grid
+      check_open
       check_eof skip_lines: false
       info = self.info
       volume = info.bounds.volume
