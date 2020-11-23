@@ -27,6 +27,7 @@ module Chem::XYZ
     end
 
     def read : Structure
+      check_open
       check_eof
       Structure.build(@guess_topology) do |builder|
         n_atoms = @io.read_int

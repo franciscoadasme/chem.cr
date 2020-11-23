@@ -9,6 +9,7 @@ module Chem::VASP::Locpot
     end
 
     def read : Spatial::Grid
+      check_open
       check_eof skip_lines: false
       info = self.info
       read_array info, &.itself

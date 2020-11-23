@@ -113,6 +113,7 @@ module Chem::Mol2
     end
 
     def read : Structure
+      check_open
       check_eof
       read_header
       @builder = Structure::Builder.new guess_topology: false
