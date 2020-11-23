@@ -16,7 +16,7 @@ describe Chem::XYZ::Reader do
     structure.atoms[-1].coords.should eq V[0.72200, 0.70700, 7.66970]
   end
 
-  it "parses a XYZ file with multiple structures" do
+  pending "parses a XYZ file with multiple structures" do
     structures = Array(Chem::Structure).from_xyz "spec/data/xyz/coo.trj.xyz"
 
     structures.size.should eq 4
@@ -28,7 +28,7 @@ describe Chem::XYZ::Reader do
     end
   end
 
-  it "parses selected structures of a XYZ file with multiple structures" do
+  pending "parses selected structures of a XYZ file with multiple structures" do
     path = "spec/data/xyz/coo.trj.xyz"
     structures = Array(Chem::Structure).from_xyz path, indexes: [1, 3]
 
@@ -38,7 +38,7 @@ describe Chem::XYZ::Reader do
     structures.map(&.atoms[1].z).should eq [1.2, 1.4]
   end
 
-  it "fails when structure index is invalid" do
+  pending "fails when structure index is invalid" do
     expect_raises IndexError do
       Array(Chem::Structure).from_xyz "spec/data/xyz/coo.trj.xyz", indexes: [5]
     end

@@ -77,8 +77,10 @@ module Chem::VASP::Poscar
     end
   end
 
-  @[IO::FileType(format: Poscar, names: %w(POSCAR* CONTCAR*))]
-  class Reader < Structure::Reader
+  @[IO::FileType(Structure, format: Poscar, names: %w(POSCAR* CONTCAR*))]
+  class Reader
+    include IO::Reader(Structure)
+
     @builder = uninitialized Structure::Builder
     @constrained = false
     @fractional = false
@@ -87,12 +89,24 @@ module Chem::VASP::Poscar
     @species = [] of Element
     @title = ""
 
-    def next : Structure | Iterator::Stop
-      @io.eof? ? stop : read_next
+    def initialize(io : ::IO,
+                   @guess_topology : Bool = true,
+                   @sync_close : Bool = false)
+      @io = IO::TextIO.new io
     end
 
-    def skip_structure : Nil
-      @io.skip_to_end
+    def self.new(path : Path | String, **options) : self
+      new File.open(path), **options, sync_close: true
+    end
+
+    def read : Structure
+      check_eof skip_lines: false
+      read_header
+      @builder = Structure::Builder.new guess_topology: @guess_topology
+      @builder.title @title
+      @builder.lattice @lattice
+      @species.size.times { read_atom }
+      @builder.build
     end
 
     private def read_atom : Atom
@@ -143,15 +157,6 @@ module Chem::VASP::Poscar
       @constrained = @io.skip_whitespace.check &.in?('s', 'S')
       @io.skip_line if @constrained
       read_coordinate_system
-    end
-
-    private def read_next : Structure
-      read_header
-      @builder = Structure::Builder.new guess_topology: @guess_topology
-      @builder.title @title
-      @builder.lattice @lattice
-      @species.size.times { read_atom }
-      @builder.build
     end
 
     private def read_species : Nil

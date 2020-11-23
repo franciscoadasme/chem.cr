@@ -40,21 +40,40 @@ module Chem::DFTB::Gen
     end
   end
 
-  @[IO::FileType(format: Gen, ext: %w(gen))]
-  class Reader < Structure::Reader
+  @[IO::FileType(Structure, format: Gen, ext: %w(gen))]
+  class Reader
+    include IO::Reader(Structure)
+
     @builder = uninitialized Structure::Builder
     @elements = [] of Element
     @fractional = false
     @n_atoms = 0
     @periodic = false
 
-    def next : Structure | Iterator::Stop
-      @io.skip_whitespace
-      @io.eof? ? stop : read_next
+    def initialize(io : ::IO,
+                   @guess_topology : Bool = true,
+                   @sync_close : Bool = false)
+      @io = IO::TextIO.new io
     end
 
-    def skip_structure : Nil
-      @io.skip_to_end
+    def self.new(path : Path | String, **options) : self
+      new File.open(path), **options, sync_close: true
+    end
+
+    def read : Structure
+      check_eof
+      parse_header
+      @builder = Structure::Builder.new guess_topology: @guess_topology
+      @n_atoms.times { read_atom }
+      if @periodic
+        @io.skip_line
+        @builder.lattice @io.read_vector, @io.read_vector, @io.read_vector
+      end
+      @io.skip_to_end # ensure end of file as Gen doesn't support multiple entries
+
+      structure = @builder.build
+      structure.coords.to_cartesian! if @fractional
+      structure
     end
 
     private def parse_coord_type : Nil
@@ -87,22 +106,6 @@ module Chem::DFTB::Gen
       vec = @io.read_vector
       @io.skip_line
       @builder.atom ele, vec
-    end
-
-    private def read_next : Structure
-      parse_header
-
-      @builder = Structure::Builder.new guess_topology: @guess_topology
-      @n_atoms.times { read_atom }
-      if @periodic
-        @io.skip_line
-        @builder.lattice @io.read_vector, @io.read_vector, @io.read_vector
-      end
-      @io.skip_to_end # ensure end of file as Gen doesn't support multiple entries
-
-      structure = @builder.build
-      structure.coords.to_cartesian! if @fractional
-      structure
     end
   end
 end

@@ -91,8 +91,10 @@ module Chem::Mol2
     end
   end
 
-  @[IO::FileType(format: Mol2, ext: %w(mol2))]
-  class Reader < Structure::Reader
+  @[IO::FileType(Structure, format: Mol2, ext: %w(mol2))]
+  class Reader
+    include IO::Reader(Structure)
+
     TAG          = "@<TRIPOS>"
     TAG_ATOMS    = "@<TRIPOS>ATOM"
     TAG_BONDS    = "@<TRIPOS>BOND"
@@ -104,9 +106,32 @@ module Chem::Mol2
     @n_bonds = 0
     @title = ""
 
-    def next : Structure | Iterator::Stop
-      skip_to_tag
-      !@io.eof? ? read_next : stop
+    def initialize(io : ::IO,
+                   @guess_topology : Bool = true,
+                   @sync_close : Bool = false)
+      @io = IO::TextIO.new io
+    end
+
+    def read : Structure
+      check_eof
+      read_header
+      @builder = Structure::Builder.new guess_topology: false
+      @builder.title @title
+      until @io.eof?
+        case @io.skip_whitespace
+        when .check(TAG_ATOMS)
+          @io.skip_line
+          @n_atoms.times { read_atom }
+        when .check(TAG_BONDS)
+          @io.skip_line
+          @n_bonds.times { read_bond }
+        when .check(TAG_MOLECULE)
+          break
+        else
+          @io.skip_line
+        end
+      end
+      @builder.build
     end
 
     def skip_structure : Nil
@@ -145,11 +170,9 @@ module Chem::Mol2
     end
 
     private def read_header : Nil
-      if @io.check(TAG_MOLECULE)
-        @io.skip_line
-      else
-        parse_exception "Invalid tag for structure"
-      end
+      skip_to_tag TAG_MOLECULE
+      parse_exception "Invalid tag for structure" if @io.eof?
+      @io.skip_line
 
       @title = @io.read_line.strip
       @n_atoms = @io.read_int
@@ -157,31 +180,6 @@ module Chem::Mol2
       @io.skip_line
       @io.skip_line
       @include_charges = @io.read_line.strip != "NO_CHARGES"
-    end
-
-    private def read_next : Structure
-      read_header
-      @builder = Structure::Builder.new guess_topology: false
-      @builder.title @title
-      until @io.eof?
-        case @io.skip_whitespace
-        when .check(TAG_ATOMS)
-          @io.skip_line
-          @n_atoms.times { read_atom }
-        when .check(TAG_BONDS)
-          @io.skip_line
-          @n_bonds.times { read_bond }
-        when .check(TAG_MOLECULE)
-          break
-        else
-          @io.skip_line
-        end
-      end
-      @builder.build
-    end
-
-    private def skip_to_tag : Nil
-      skip_to_tag TAG
     end
 
     private def skip_to_tag(tag : String) : Nil

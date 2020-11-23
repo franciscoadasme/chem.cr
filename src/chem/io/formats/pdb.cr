@@ -294,8 +294,10 @@ module Chem::PDB
     end
   end
 
-  @[IO::FileType(format: PDB, ext: %w(ent pdb))]
-  class Reader < Structure::Reader
+  @[IO::FileType(Structure, format: PDB, ext: %w(ent pdb))]
+  class Reader
+    include IO::Reader(Structure)
+
     private alias ResidueId = Tuple(Char, Int32, Char?)
     private alias Sec = Protein::SecondaryStructure
 
@@ -318,13 +320,13 @@ module Chem::PDB
     @seek_bonds = true
     @sec = [] of Tuple(Protein::SecondaryStructure, ResidueId, ResidueId)
 
-    def initialize(input : ::IO,
+    def initialize(io : ::IO,
                    @alt_loc : Char? = nil,
                    chains : Enumerable(Char) | String | Nil = nil,
-                   guess_topology : Bool = true,
+                   @guess_topology : Bool = true,
                    @het : Bool = true,
-                   sync_close : Bool = true)
-      super input, guess_topology, sync_close: sync_close
+                   @sync_close : Bool = false)
+      @io = IO::TextIO.new io
       @chains = chains.is_a?(Enumerable) ? chains.to_set : chains
     end
 
@@ -332,19 +334,41 @@ module Chem::PDB
       new File.open(path), **options, sync_close: true
     end
 
-    def next : Structure | Iterator::Stop
+    def read : Structure
+      check_eof
       read_header unless @pdb_header
+      unless @io.skip_whitespace.check("ATOM", "HETATM", "MODEL")
+        parse_exception "Empty content"
+      end
+
+      @io.skip_line if @io.check("MODEL")
+      @builder = Structure::Builder.new guess_topology: @guess_topology
+      @builder.title @pdb_title
+      @builder.lattice @pdb_lattice
+      @builder.expt @pdb_expt
+      @builder.seq @pdb_seq
+
+      @pdb_bonds.clear
+      @serial = 0
       until @io.eof?
-        case @io.skip_whitespace
-        when .check("ATOM", "HETATM", "MODEL")
-          return read_next
-        when .check("END", "MASTER")
-          break
-        else
-          @io.skip_line
+        break if @io.skip_whitespace.check("END", "MODEL", "MASTER")
+
+        case line = @io.read_line
+        when .starts_with?("ATOM")
+          read_atom line
+        when .starts_with?("HETATM")
+          read_atom(line) if read_het?
+        when .starts_with?("CONECT")
+          read_bonds line
         end
       end
-      stop
+      @io.skip_line if @io.check("ENDMDL")
+
+      resolve_alternate_locations unless @alt_loc
+      assign_bonds
+      assign_secondary_structure
+
+      @builder.build
     end
 
     def skip_structure : Nil
@@ -490,38 +514,6 @@ module Chem::PDB
 
     private def read_het? : Bool
       @het
-    end
-
-    private def read_next : Structure
-      @io.skip_line if @io.check("MODEL")
-
-      @builder = Structure::Builder.new guess_topology: @guess_topology
-      @builder.title @pdb_title
-      @builder.lattice @pdb_lattice
-      @builder.expt @pdb_expt
-      @builder.seq @pdb_seq
-
-      @pdb_bonds.clear
-      @serial = 0
-      until @io.eof?
-        break if @io.skip_whitespace.check("END", "MODEL", "MASTER")
-
-        case line = @io.read_line
-        when .starts_with?("ATOM")
-          read_atom line
-        when .starts_with?("HETATM")
-          read_atom(line) if read_het?
-        when .starts_with?("CONECT")
-          read_bonds line
-        end
-      end
-      @io.skip_line if @io.check("ENDMDL")
-
-      resolve_alternate_locations unless @alt_loc
-      assign_bonds
-      assign_secondary_structure
-
-      @builder.build
     end
 
     private def resolve_alternate_locations : Nil

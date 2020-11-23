@@ -16,14 +16,18 @@ module Chem::XYZ
     end
   end
 
-  @[IO::FileType(format: XYZ, ext: %w(xyz))]
-  class Reader < Structure::Reader
-    def next : Structure | Iterator::Stop
-      @io.skip_whitespace
-      @io.eof? ? stop : read_next
+  @[IO::FileType(Structure, format: XYZ, ext: %w(xyz))]
+  class Reader
+    include IO::Reader(Structure)
+
+    def initialize(io : ::IO,
+                   @guess_topology : Bool = true,
+                   @sync_close : Bool = false)
+      @io = IO::TextIO.new io
     end
 
-    private def read_next : Structure
+    def read : Structure
+      check_eof
       Structure.build(@guess_topology) do |builder|
         n_atoms = @io.read_int
         @io.skip_line

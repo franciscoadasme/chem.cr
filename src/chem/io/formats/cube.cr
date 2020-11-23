@@ -1,7 +1,13 @@
 module Chem::Cube
-  @[IO::FileType(format: Cube, ext: %w(cube))]
+  @[IO::FileType(Spatial::Grid, format: Cube, ext: %w(cube))]
   class Reader < Spatial::Grid::Reader
+    include IO::Reader(Spatial::Grid)
+
     BOHR_TO_ANGS = 0.529177210859
+
+    def initialize(io : ::IO, @sync_close : Bool = false)
+      @io = IO::TextIO.new io
+    end
 
     def info : Spatial::Grid::Info
       2.times { @io.skip_line }
@@ -18,7 +24,8 @@ module Chem::Cube
       Spatial::Grid::Info.new bounds, {nx, ny, nz}
     end
 
-    def read_entry : Spatial::Grid
+    def read : Spatial::Grid
+      check_eof skip_lines: false
       Spatial::Grid.build(info) do |buffer, size|
         size.times do |i|
           buffer[i] = @io.read_float

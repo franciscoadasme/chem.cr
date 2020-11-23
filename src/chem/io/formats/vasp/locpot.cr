@@ -1,9 +1,15 @@
 module Chem::VASP::Locpot
-  @[IO::FileType(format: Locpot, names: %w(LOCPOT*))]
+  @[IO::FileType(Spatial::Grid, format: Locpot, names: %w(LOCPOT*))]
   class Reader < Spatial::Grid::Reader
+    include IO::Reader(Spatial::Grid)
     include GridReader
 
-    def read_entry : Spatial::Grid
+    def initialize(io : ::IO, @sync_close : Bool = false)
+      @io = IO::TextIO.new io
+    end
+
+    def read : Spatial::Grid
+      check_eof skip_lines: false
       info = self.info
       read_array info, &.itself
     end
