@@ -93,7 +93,7 @@ module Chem::Mol2
 
   @[IO::FileType(Structure, format: Mol2, ext: %w(mol2))]
   class Reader
-    include IO::Reader(Structure)
+    include IO::MultiReader(Structure)
 
     TAG          = "@<TRIPOS>"
     TAG_ATOMS    = "@<TRIPOS>ATOM"
@@ -112,9 +112,9 @@ module Chem::Mol2
       @io = IO::TextIO.new io
     end
 
-    def read : Structure
+    def read_next : Structure?
       check_open
-      check_eof
+      return if @io.skip_whitespace.eof?
       read_header
       @builder = Structure::Builder.new guess_topology: false
       @builder.title @title
@@ -135,9 +135,9 @@ module Chem::Mol2
       @builder.build
     end
 
-    def skip_structure : Nil
+    def skip : Nil
       @io.skip_line if @io.skip_whitespace.check(TAG_MOLECULE)
-      skip_to_tag TAG_MOLECULE
+      skip_until_tag TAG_MOLECULE
     end
 
     private def read_atom : Atom
@@ -171,7 +171,7 @@ module Chem::Mol2
     end
 
     private def read_header : Nil
-      skip_to_tag TAG_MOLECULE
+      skip_until_tag TAG_MOLECULE
       parse_exception "Invalid tag for structure" if @io.eof?
       @io.skip_line
 
@@ -183,7 +183,7 @@ module Chem::Mol2
       @include_charges = @io.read_line.strip != "NO_CHARGES"
     end
 
-    private def skip_to_tag(tag : String) : Nil
+    private def skip_until_tag(tag : String) : Nil
       until @io.eof?
         break if @io.skip_whitespace.check(tag)
         @io.skip_line

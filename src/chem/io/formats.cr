@@ -21,6 +21,7 @@ module Chem::IO
     enum FileFormat
       {% writers = Writer.all_subclasses.select &.annotation(FileType) %}
       {% readers = Reader.includers.select(&.annotation(FileType)) %}
+      {% readers += MultiReader.includers.select(&.annotation(FileType)) %}
       {% klasses = readers + writers %}
       {% file_types = klasses.map &.annotation(IO::FileType) %}
 

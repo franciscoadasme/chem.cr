@@ -60,6 +60,34 @@ module Chem
       raise ::IO::Error.new "Closed IO" if closed?
     end
   end
+
+  module IO::MultiReader(T)
+    include IO::Reader(T)
+
+    abstract def read_next : T?
+    abstract def skip : Nil
+
+    def each(& : T ->)
+      while ele = read_next
+        yield ele
+      end
+    end
+
+    def each(indexes : Enumerable(Int), & : T ->)
+      (indexes.max + 1).times do |i|
+        if i.in?(indexes)
+          ele = read_next
+          raise IndexError.new unless ele
+          yield ele
+        else
+          skip
+        end
+      end
+    end
+
+    def read : T
+      read_next || raise ::IO::EOFError.new
+    end
   end
 
   abstract class Spatial::Grid::Reader
@@ -69,7 +97,8 @@ module Chem
   end
 
   macro finished
-    {% for reader in IO::Reader.includers.select(&.annotation(IO::FileType)) %}
+    {% includers = IO::Reader.includers + IO::MultiReader.includers %}
+    {% for reader in includers.select(&.annotation(IO::FileType)) %}
       {% type = reader.annotation(IO::FileType)[0].resolve %}
       {% keyword = "class" if type.class? %}
       {% keyword = "struct" if type.struct? %}
@@ -82,6 +111,29 @@ module Chem
           end
         end
       end
+
+      {% if reader < IO::MultiReader %}
+        class ::Array(T)
+          def self.from_{{format.id}}(input : ::IO | Path | String, *args, **options) : self
+            {{reader}}.open(input, *args, **options) do |reader|
+              ary = [] of T
+              reader.each { |ele| ary << ele }
+              ary
+            end
+          end
+
+          def self.from_{{format.id}}(input : ::IO | Path | String, 
+                                      indexes : Enumerable(Int),
+                                      *args,
+                                      **options) : self
+            {{reader}}.open(input, *args, **options) do |reader|
+              ary = [] of T
+              reader.each(indexes) { |ele| ary << ele }
+              ary
+            end
+          end
+        end
+      {% end %}
     {% end %}
   end
 end

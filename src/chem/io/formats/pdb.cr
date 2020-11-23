@@ -296,7 +296,7 @@ module Chem::PDB
 
   @[IO::FileType(Structure, format: PDB, ext: %w(ent pdb))]
   class Reader
-    include IO::Reader(Structure)
+    include IO::MultiReader(Structure)
 
     private alias ResidueId = Tuple(Char, Int32, Char?)
     private alias Sec = Protein::SecondaryStructure
@@ -334,9 +334,9 @@ module Chem::PDB
       new File.open(path), **options, sync_close: true
     end
 
-    def read : Structure
+    def read_next : Structure?
       check_open
-      check_eof
+      return if @io.skip_whitespace.eof? || @io.check("END", "MASTER")
       read_header unless @pdb_header
       unless @io.skip_whitespace.check("ATOM", "HETATM", "MODEL")
         parse_exception "Empty content"
@@ -372,7 +372,7 @@ module Chem::PDB
       @builder.build
     end
 
-    def skip_structure : Nil
+    def skip : Nil
       read_header unless @pdb_header
       @io.skip_line if @io.skip_whitespace.check("MODEL")
       until @io.eof?

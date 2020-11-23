@@ -18,7 +18,7 @@ module Chem::XYZ
 
   @[IO::FileType(Structure, format: XYZ, ext: %w(xyz))]
   class Reader
-    include IO::Reader(Structure)
+    include IO::MultiReader(Structure)
 
     def initialize(io : ::IO,
                    @guess_topology : Bool = true,
@@ -26,9 +26,9 @@ module Chem::XYZ
       @io = IO::TextIO.new io
     end
 
-    def read : Structure
+    def read_next : Structure?
       check_open
-      check_eof
+      return if @io.skip_whitespace.eof?
       Structure.build(@guess_topology) do |builder|
         n_atoms = @io.read_int
         @io.skip_line
@@ -40,9 +40,9 @@ module Chem::XYZ
       end
     end
 
-    def skip_structure : Nil
-      @io.skip_whitespace
-      return if @io.eof?
+    def skip : Nil
+      check_open
+      return if @io.skip_whitespace.eof?
       n_atoms = @io.read_int
       (n_atoms + 2).times { @io.skip_line }
     end
