@@ -32,7 +32,7 @@ module Chem
       format = IO::FileFormat.parse format if format.is_a?(String)
       {% begin %}
         case format
-        {% for reader in IO::Reader.includers
+        {% for reader in (IO::Reader.includers + IO::MultiReader.includers)
                            .select { |t| (ann = t.annotation(IO::FileType)) &&
                              (n = ann[0]) &&
                              n.resolve == Structure } %}

@@ -148,7 +148,7 @@ describe Chem::Mol2::Reader do
     atoms[8].bonds[atoms[9]].order.should eq 2
   end
 
-  pending "parses multiple structures" do
+  it "parses multiple structures" do
     ary = Array(Chem::Structure).from_mol2 "spec/data/mol2/molecules.mol2"
     ary.size.should eq 12
 
