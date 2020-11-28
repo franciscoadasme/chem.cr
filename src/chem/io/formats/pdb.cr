@@ -307,6 +307,11 @@ module Chem::PDB
       5 => Sec::RightHandedHelix3_10,
     }
 
+    needs alt_loc : Char? = nil
+    needs chains : Enumerable(Char) | String | Nil = nil
+    needs guess_topology : Bool = true
+    needs het : Bool = true
+
     @pdb_bonds = Hash(Tuple(Int32, Int32), Int32).new 0
     @pdb_expt : Structure::Experiment?
     @pdb_lattice : Lattice?
@@ -316,23 +321,8 @@ module Chem::PDB
 
     @alt_locs : Hash(Residue, Array(AlternateLocation))?
     @builder = uninitialized Structure::Builder
-    @chains : Set(Char) | String | Nil
     @seek_bonds = true
     @sec = [] of Tuple(Protein::SecondaryStructure, ResidueId, ResidueId)
-
-    def initialize(io : ::IO,
-                   @alt_loc : Char? = nil,
-                   chains : Enumerable(Char) | String | Nil = nil,
-                   @guess_topology : Bool = true,
-                   @het : Bool = true,
-                   @sync_close : Bool = false)
-      @io = IO::TextIO.new io
-      @chains = chains.is_a?(Enumerable) ? chains.to_set : chains
-    end
-
-    def self.new(path : Path | String, **options) : self
-      new File.open(path), **options, sync_close: true
-    end
 
     def read_next : Structure?
       check_open
@@ -416,8 +406,8 @@ module Chem::PDB
 
       chid = line[21]
       case chains = @chains
-      when Set     then return unless chid.in?(chains)
-      when "first" then return if chid != (@builder.current_chain.try(&.id) || chid)
+      when Enumerable then return unless chid.in?(chains)
+      when "first"    then return if chid != (@builder.current_chain.try(&.id) || chid)
       end
 
       ele = case symbol = line[76, 2]?.presence.try(&.strip)

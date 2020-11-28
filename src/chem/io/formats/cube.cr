@@ -5,10 +5,6 @@ module Chem::Cube
 
     BOHR_TO_ANGS = 0.529177210859
 
-    def initialize(io : ::IO, @sync_close : Bool = false)
-      @io = IO::TextIO.new io
-    end
-
     def info : Spatial::Grid::Info
       2.times { @io.skip_line }
       n_atoms = @io.read_int

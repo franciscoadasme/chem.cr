@@ -5,7 +5,28 @@ module Chem
 
     abstract def read : T
 
+    macro needs(decl)
+      {% unless decl.is_a?(TypeDeclaration) %}
+        {% raise "'needs' expects a type declaration like 'name : String', " \
+                 "got: '#{decl}' in #{@type}" %}
+      {% end %}
+      {% if decl.var.stringify.ends_with?("?") %}
+        {% raise "Don't use '?' with 'needs', got '#{decl}' in #{@type}. " \
+                 "A question method is generated if the type is Bool" %}
+      {% end %}
+      {% if decl.var.stringify.starts_with?("@") %}
+        {% raise "Don't use '@' with 'needs', got '#{decl}' in #{@type}" %}
+      {% end %}
+      {% ASSIGNS << decl %}
+      
+      def {{decl.var}}{% if decl.type.resolve == Bool %}?{% end %}
+        @{{decl.var}}
+      end
+    end
+
     macro included
+      ASSIGNS = [] of Nil
+      
       setup_initializer_hook
     end
 
@@ -20,17 +41,66 @@ module Chem
     end
 
     private macro generate_initializer
-      def self.new(path : Path | String, **options) : self
-        new File.open(path), **options, sync_close: true
+      {% assigns = ASSIGNS.sort_by do |decl|
+           has_explicit_value =
+             decl.type.is_a?(Metaclass) ||
+               decl.type.types.map(&.id).includes?(Nil.id) ||
+               decl.value ||
+               decl.value == nil ||
+               decl.value == false
+           has_explicit_value ? 1 : 0
+         end %}
+
+      def initialize(
+        io : ::IO,
+        {% for assign in assigns %}
+          @{{assign}},
+        {% end %}
+        @sync_close : Bool = false,
+      )
+        @io = IO::TextIO.new io
+      end
+      
+      def self.new(
+        path : Path | String,
+        {% for decl in assigns %}
+          {{decl}},
+        {% end %}
+      ) : self
+        new File.open(path),
+          {% for decl in assigns %}
+            {{decl.var}},
+          {% end %}
+          sync_close: true
       end
 
-      def self.open(io : ::IO, sync_close : Bool = true, **options)
-        reader = new io, **options, sync_close: sync_close
+      def self.open(
+        io : ::IO,
+        {% for decl in assigns %}
+          {{decl}},
+        {% end %}
+        sync_close : Bool = false,
+        &
+      )
+        reader = new io,
+          {% for decl in assigns %}
+            {{decl.var}},
+          {% end %}
+          sync_close: sync_close
         yield reader ensure reader.close
       end
 
-      def self.open(path : Path | String, **options)
-        reader = new path, **options
+      def self.open(
+        path : Path | String,
+        {% for decl in assigns %}
+          {{decl}},
+        {% end %}
+        &
+      )
+        reader = new path{% unless assigns.empty? %},{% end %}
+          {% for decl, i in assigns %}
+            {{decl.var}}{% if i < assigns.size - 1 %},{% end %}
+          {% end %}
         yield reader ensure reader.close
       end
     end
@@ -43,6 +113,8 @@ module Chem
       end
   
       macro included
+        ASSIGNS = [] of Nil
+
         setup_initializer_hook
       end
     end

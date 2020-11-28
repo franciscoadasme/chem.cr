@@ -100,17 +100,13 @@ module Chem::Mol2
     TAG_BONDS    = "@<TRIPOS>BOND"
     TAG_MOLECULE = "@<TRIPOS>MOLECULE"
 
+    needs guess_topology : Bool = true
+
     @builder = uninitialized Structure::Builder
     @include_charges = true
     @n_atoms = 0
     @n_bonds = 0
     @title = ""
-
-    def initialize(io : ::IO,
-                   @guess_topology : Bool = true,
-                   @sync_close : Bool = false)
-      @io = IO::TextIO.new io
-    end
 
     def read_next : Structure?
       check_open

@@ -81,6 +81,8 @@ module Chem::VASP::Poscar
   class Reader
     include IO::Reader(Structure)
 
+    needs guess_topology : Bool = true
+
     @builder = uninitialized Structure::Builder
     @constrained = false
     @fractional = false
@@ -88,16 +90,6 @@ module Chem::VASP::Poscar
     @scale_factor = 1.0
     @species = [] of Element
     @title = ""
-
-    def initialize(io : ::IO,
-                   @guess_topology : Bool = true,
-                   @sync_close : Bool = false)
-      @io = IO::TextIO.new io
-    end
-
-    def self.new(path : Path | String, **options) : self
-      new File.open(path), **options, sync_close: true
-    end
 
     def read : Structure
       check_open

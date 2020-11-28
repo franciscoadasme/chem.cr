@@ -4,10 +4,6 @@ module Chem::VASP::Chgcar
     include IO::Reader(Spatial::Grid)
     include GridReader
 
-    def initialize(io : ::IO, @sync_close : Bool = false)
-      @io = IO::TextIO.new io
-    end
-
     def read : Spatial::Grid
       check_open
       check_eof skip_lines: false
