@@ -20,11 +20,7 @@ module Chem::XYZ
   class Reader
     include IO::MultiReader(Structure)
 
-    def initialize(io : ::IO,
-                   @guess_topology : Bool = true,
-                   @sync_close : Bool = false)
-      @io = IO::TextIO.new io
-    end
+    needs guess_topology : Bool = true
 
     def read_next : Structure?
       check_open

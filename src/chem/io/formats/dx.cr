@@ -3,10 +3,6 @@ module Chem::DX
   class Reader < Spatial::Grid::Reader
     include IO::Reader(Spatial::Grid)
 
-    def initialize(io : ::IO, @sync_close : Bool = false)
-      @io = IO::TextIO.new io
-    end
-
     def info : Spatial::Grid::Info
       while @io.skip_whitespace.peek == '#'
         @io.skip_line

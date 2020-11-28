@@ -44,21 +44,13 @@ module Chem::DFTB::Gen
   class Reader
     include IO::Reader(Structure)
 
+    needs guess_topology : Bool = true
+
     @builder = uninitialized Structure::Builder
     @elements = [] of Element
     @fractional = false
     @n_atoms = 0
     @periodic = false
-
-    def initialize(io : ::IO,
-                   @guess_topology : Bool = true,
-                   @sync_close : Bool = false)
-      @io = IO::TextIO.new io
-    end
-
-    def self.new(path : Path | String, **options) : self
-      new File.open(path), **options, sync_close: true
-    end
 
     def read : Structure
       check_open
