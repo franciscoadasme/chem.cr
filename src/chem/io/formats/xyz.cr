@@ -19,6 +19,7 @@ module Chem::XYZ
   @[IO::FileType(Structure, format: XYZ, ext: %w(xyz))]
   class Reader
     include IO::Reader(Structure)
+    include IO::TextReader(Structure)
     include IO::MultiReader(Structure)
 
     needs guess_topology : Bool = true

@@ -43,6 +43,7 @@ module Chem::DFTB::Gen
   @[IO::FileType(Structure, format: Gen, ext: %w(gen))]
   class Reader
     include IO::Reader(Structure)
+    include IO::TextReader(Structure)
 
     needs guess_topology : Bool = true
 
