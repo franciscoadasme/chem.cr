@@ -296,6 +296,7 @@ module Chem::PDB
 
   @[IO::FileType(Structure, format: PDB, ext: %w(ent pdb))]
   class Reader
+    include IO::Reader(Structure)
     include IO::MultiReader(Structure)
 
     private alias ResidueId = Tuple(Char, Int32, Char?)
