@@ -2,6 +2,7 @@ module Chem::Cube
   @[IO::FileType(Spatial::Grid, format: Cube, ext: %w(cube))]
   class Reader
     include IO::Reader(Spatial::Grid)
+    include IO::TextReader(Spatial::Grid)
     include Spatial::Grid::Reader
 
     BOHR_TO_ANGS = 0.529177210859

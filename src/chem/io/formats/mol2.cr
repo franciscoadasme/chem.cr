@@ -94,6 +94,7 @@ module Chem::Mol2
   @[IO::FileType(Structure, format: Mol2, ext: %w(mol2))]
   class Reader
     include IO::Reader(Structure)
+    include IO::TextReader(Structure)
     include IO::MultiReader(Structure)
 
     TAG          = "@<TRIPOS>"

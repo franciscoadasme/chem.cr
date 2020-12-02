@@ -2,6 +2,7 @@ module Chem::DX
   @[IO::FileType(Spatial::Grid, format: DX, ext: %w(dx))]
   class Reader
     include IO::Reader(Spatial::Grid)
+    include IO::TextReader(Spatial::Grid)
     include Spatial::Grid::Reader
 
     def info : Spatial::Grid::Info

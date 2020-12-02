@@ -2,6 +2,7 @@ module Chem::VASP::Chgcar
   @[IO::FileType(Spatial::Grid, format: Chgcar, names: %w(CHGCAR*))]
   class Reader
     include IO::Reader(Spatial::Grid)
+    include IO::TextReader(Spatial::Grid)
     include Spatial::Grid::Reader
     include GridReader
 

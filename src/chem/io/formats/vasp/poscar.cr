@@ -80,6 +80,7 @@ module Chem::VASP::Poscar
   @[IO::FileType(Structure, format: Poscar, names: %w(POSCAR* CONTCAR*))]
   class Reader
     include IO::Reader(Structure)
+    include IO::TextReader(Structure)
 
     needs guess_topology : Bool = true
 
