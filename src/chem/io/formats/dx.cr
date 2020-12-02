@@ -1,7 +1,8 @@
 module Chem::DX
   @[IO::FileType(Spatial::Grid, format: DX, ext: %w(dx))]
-  class Reader < Spatial::Grid::Reader
+  class Reader
     include IO::Reader(Spatial::Grid)
+    include Spatial::Grid::Reader
 
     def info : Spatial::Grid::Info
       while @io.skip_whitespace.peek == '#'
