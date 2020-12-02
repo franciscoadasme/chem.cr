@@ -134,8 +134,6 @@ module Chem
   end
 
   module IO::MultiReader(T)
-    include IO::Reader(T)
-
     abstract def read_next : T?
     abstract def skip : Nil
 
@@ -169,7 +167,7 @@ module Chem
   end
 
   macro finished
-    {% includers = IO::Reader.includers + IO::MultiReader.includers %}
+    {% includers = IO::Reader.includers %}
     {% for reader in includers.select(&.annotation(IO::FileType)) %}
       {% type = reader.annotation(IO::FileType)[0].resolve %}
       {% keyword = "class" if type.class? %}
