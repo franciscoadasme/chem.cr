@@ -113,7 +113,7 @@ module Chem::Spatial
     def self.info(input : ::IO | Path | String, format : IO::FileFormat) : Info
       {% begin %}
         case format
-        {% for parser in Reader.subclasses.select(&.annotation(IO::FileType)) %}
+        {% for parser in Reader.includers.select(&.annotation(IO::FileType)) %}
           when .{{parser.annotation(IO::FileType)[:format].id.underscore.id}}?
             {{parser}}.new(input).info
         {% end %}

@@ -1,7 +1,8 @@
 module Chem::VASP::Locpot
   @[IO::FileType(Spatial::Grid, format: Locpot, names: %w(LOCPOT*))]
-  class Reader < Spatial::Grid::Reader
+  class Reader
     include IO::Reader(Spatial::Grid)
+    include Spatial::Grid::Reader
     include GridReader
 
     def read : Spatial::Grid

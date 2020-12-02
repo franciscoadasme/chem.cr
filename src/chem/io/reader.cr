@@ -160,9 +160,7 @@ module Chem
     end
   end
 
-  abstract class Spatial::Grid::Reader
-    include IO::Reader(Spatial::Grid)
-
+  module Spatial::Grid::Reader
     abstract def info : Spatial::Grid::Info
   end
 
