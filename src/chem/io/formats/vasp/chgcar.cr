@@ -1,5 +1,5 @@
 module Chem::VASP::Chgcar
-  @[IO::FileType(Spatial::Grid, format: Chgcar, names: %w(CHGCAR*))]
+  @[IO::FileType(format: Chgcar, encoded: Spatial::Grid, names: %w(CHGCAR*))]
   class Reader
     include IO::Reader(Spatial::Grid)
     include IO::TextReader(Spatial::Grid)
@@ -15,7 +15,7 @@ module Chem::VASP::Chgcar
     end
   end
 
-  @[IO::FileType(format: Chgcar, names: %w(CHGCAR*))]
+  @[IO::FileType(format: Chgcar, encoded: Spatial::Grid, names: %w(CHGCAR*))]
   class Writer < IO::Writer(Spatial::Grid)
     include VASP::GridWriter
 

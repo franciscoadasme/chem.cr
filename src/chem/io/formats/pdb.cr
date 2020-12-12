@@ -53,7 +53,7 @@ module Chem::PDB
     end
   end
 
-  @[IO::FileType(format: PDB, ext: %w(ent pdb))]
+  @[IO::FileType(format: PDB, encoded: Structure, ext: %w(ent pdb))]
   class Writer < IO::Writer(AtomCollection)
     PDB_VERSION      = "3.30"
     PDB_VERSION_DATE = Time.local 2011, 7, 13
@@ -294,7 +294,7 @@ module Chem::PDB
     end
   end
 
-  @[IO::FileType(Structure, format: PDB, ext: %w(ent pdb))]
+  @[IO::FileType(format: PDB, encoded: Structure, ext: %w(ent pdb))]
   class Reader
     include IO::Reader(Structure)
     include IO::TextReader(Structure)

@@ -200,7 +200,7 @@ module Chem
   macro finished
     {% includers = IO::Reader.includers %}
     {% for reader in includers.select(&.annotation(IO::FileType)) %}
-      {% type = reader.annotation(IO::FileType)[0].resolve %}
+      {% type = reader.annotation(IO::FileType)[:encoded].resolve %}
       {% keyword = "class" if type.class? %}
       {% keyword = "struct" if type.struct? %}
       {% format = reader.annotation(IO::FileType)[:format].id.underscore %}

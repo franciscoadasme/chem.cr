@@ -1,5 +1,5 @@
 module Chem::DX
-  @[IO::FileType(Spatial::Grid, format: DX, ext: %w(dx))]
+  @[IO::FileType(format: DX, encoded: Spatial::Grid, ext: %w(dx))]
   class Reader
     include IO::Reader(Spatial::Grid)
     include IO::TextReader(Spatial::Grid)
@@ -32,7 +32,7 @@ module Chem::DX
     end
   end
 
-  @[IO::FileType(format: DX, ext: %w(dx))]
+  @[IO::FileType(format: DX, encoded: Spatial::Grid, ext: %w(dx))]
   class Writer < IO::Writer(Spatial::Grid)
     def write(grid : Spatial::Grid) : Nil
       check_open
