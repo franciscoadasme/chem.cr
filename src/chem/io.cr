@@ -1,3 +1,4 @@
+require "./io/file_type"
 require "./io/text_io"
 require "./io/reader"
 require "./io/writer"

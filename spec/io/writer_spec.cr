@@ -20,7 +20,7 @@ describe Chem::IO::Writer do
   end
 end
 
-@[Chem::IO::FileType(format: Document, ext: %w(pdf doc docx rtf))]
+@[Chem::IO::FileType(format: Document, encoded: String, ext: %w(pdf doc docx rtf))]
 class Document::Writer < Chem::IO::Writer(String)
   def write(obj : String) : Nil
     @io << '<' << obj << '>'

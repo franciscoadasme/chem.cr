@@ -1,5 +1,5 @@
 class Chem::Protein::Stride < Chem::Protein::SecondaryStructureCalculator
-  @[IO::FileType(format: Stride, ext: %w(stride))]
+  @[IO::FileType(format: Stride, encoded: Structure, ext: %w(stride))]
   class Writer < IO::Writer(Structure)
     @pdbid = "0000"
 

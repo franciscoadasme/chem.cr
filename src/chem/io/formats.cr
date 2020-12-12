@@ -1,83 +1,11 @@
 module Chem::IO
-  # Marks a class as a provider of a file format.
-  #
-  # A file type associates extensions and/or file names with a file format, and links
-  # the latter to the annotated classes. If the file format does not exist, it is
-  # registered.
-  #
-  # This annotation accepts the file format (required), and either an array of
-  # extensions (without leading dot) or an array of file names, or both. File names can
-  # include wildcards (*) to denote either prefix (e.g., "Foo*"), suffix (e.g., "*Bar"),
-  # or both (e.g., "*Baz*").
-  #
-  # ```
-  # @[FileType(format: Log, ext: %w(txt log out), names: %w(LOG *OUT))]
-  # class LogParser
-  # end
-  # ```
-  annotation FileType; end
-
   macro finished
+    {% file_types = [] of FileType %}
+    {% Reader.includers.each { |t| (ann = t.annotation(FileType)) && file_types << ann } %}
+    {% Writer.all_subclasses.each { |t| (ann = t.annotation(FileType)) && file_types << ann } %}
+    {% file_formats = file_types.map(&.[:format].id).uniq.sort %}
+
     enum FileFormat
-      {% writers = Writer.all_subclasses.select &.annotation(FileType) %}
-      {% readers = Reader.includers.select(&.annotation(FileType)) %}
-      {% klasses = readers + writers %}
-      {% file_types = klasses.map &.annotation(IO::FileType) %}
-
-      # check missing annotation arguments
-      {% for klass in klasses %}
-        {% t = klass.annotation(FileType) %}
-        {% klass.raise "FileType annotation on #{klass} must set `format`" unless t[:format] %}
-        {% if !t[:ext] && !t[:names] %}
-          {% klass.raise "FileType annotation on #{klass} must set either `ext` or `names`" %}
-        {% end %}
-      {% end %}
-
-      # check duplicate file formats
-      {% file_formats = file_types.map(&.[:format].id).uniq.sort %}
-      {% for format in file_formats %}
-        {% for ary in [readers, writers] %}
-          {% ary = ary.select &.annotation(IO::FileType)[:format].id.==(format) %}
-          {% if ary.size > 1 %}
-            {% ary[1].raise "#{format} file format is already associated with " \
-                            "#{ary[0]}" %}
-          {% end %}
-        {% end %}
-      {% end %}
-
-      # check duplicate file extensions (different file formats)
-      {% format_by_ext = {} of String => MacroId %}
-      {% klass_by_ext = {} of String => MacroId %}
-      {% format_by_name = {} of String => MacroId %}
-      {% klass_by_name = {} of String => MacroId %}
-      {% for klass in klasses %}
-        {% format = klass.annotation(IO::FileType)[:format].id %}
-        {% if extnames = klass.annotation(IO::FileType)[:ext] %}
-          {% for ext in extnames %}
-            {% if (other = format_by_ext[ext]) && other != format %}
-              {% klass.raise ".#{ext.id} extension declared in #{klass} is already " \
-                             "associated with file format #{other} via " \
-                             "#{klass_by_ext[ext]}" %}
-            {% end %}
-            {% format_by_ext[ext] = format %}
-            {% klass_by_ext[ext] = klass %}
-          {% end %}
-        {% end %}
-
-        {% if names = klass.annotation(IO::FileType)[:names] %}
-          {% for name in names %}
-            {% key = name.tr("*", "").camelcase.underscore %}
-            {% if (other = format_by_name[key]) && other != format %}
-              {% klass.raise "File name #{name} declared in #{klass} is already " \
-                             "associated with file format #{other} via " \
-                             "#{klass_by_name[name]}" %}
-            {% end %}
-            {% format_by_name[key] = format %}
-            {% klass_by_name[key] = klass %}
-          {% end %}
-        {% end %}
-      {% end %}
-
       {% for format in file_formats %}
         {{format.id}}
       {% end %}

@@ -34,7 +34,7 @@ module Chem
         case format
         {% for reader in (IO::Reader.includers + IO::MultiReader.includers)
                            .select { |t| (ann = t.annotation(IO::FileType)) &&
-                             (n = ann[0]) &&
+                             (n = ann[:encoded]) &&
                              n.resolve == Structure } %}
           {% format = reader.annotation(IO::FileType)[:format].id.underscore %}
           when .{{format.id}}?
