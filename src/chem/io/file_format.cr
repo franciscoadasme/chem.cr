@@ -5,6 +5,12 @@ module Chem::IO
     {% Writer.all_subclasses.each { |t| (ann = t.annotation(FileType)) && file_types << ann } %}
     {% file_formats = file_types.map(&.[:format].id).uniq.sort %}
 
+    # List of the available file formats.
+    #
+    # This enum is populated based on the file formats declared on the
+    # classes annotated with the `FileType` annotation. Methods that
+    # deals with extensions and file names uses the information declared
+    # in the corresponding annotations.
     enum FileFormat
       {% for format in file_formats %}
         {{format.id}}
@@ -200,5 +206,3 @@ module Chem::IO
     end
   end
 end
-
-require "./formats/*"

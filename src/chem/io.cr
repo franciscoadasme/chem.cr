@@ -2,7 +2,8 @@ require "./io/file_type"
 require "./io/text_io"
 require "./io/reader"
 require "./io/writer"
-require "./io/formats"
+require "./io/file_format"
+require "./io/formats/*"
 
 module Chem::IO
   class ParseException < Exception; end
