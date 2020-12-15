@@ -1,5 +1,6 @@
 require "./chem/core_ext/*"
 
+require "./chem/assignable"
 require "./chem/linalg"
 require "./chem/spatial"
 
@@ -25,6 +26,7 @@ require "./chem/core/structure/*"
 require "./chem/protein"
 require "./chem/topology"
 
+require "./chem/io_wrapper"
 require "./chem/io"
 
 module Chem
