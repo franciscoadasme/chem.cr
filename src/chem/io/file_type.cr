@@ -67,7 +67,7 @@ module Chem::IO
 
   macro finished
     {% readers = Reader.includers.select &.annotation(FileType) %}
-    {% writers = Writer.all_subclasses.select &.annotation(FileType) %}
+    {% writers = Writer.includers.select &.annotation(FileType) %}
     {% types = readers + writers %}
     {% file_types = types.map &.annotation(IO::FileType) %}
 
@@ -84,7 +84,7 @@ module Chem::IO
 
       {% format = ann[:format].id %}
       {% raise "`format` is missing in FileType annotation for #{t}" unless format %}
-      
+
       {% if extnames = ann[:ext] %}
         {% for ext in extnames %}
           {% if (other = format_by_ext[ext]) && other != format %}

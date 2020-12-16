@@ -34,14 +34,12 @@ module Chem::Cube
   end
 
   @[IO::FileType(format: Cube, encoded: Spatial::Grid, ext: %w(cube))]
-  class Writer < IO::Writer(Spatial::Grid)
+  class Writer
+    include IO::Writer(Spatial::Grid)
+
     ANGS_TO_BOHR = 1.88972612478289694072
 
-    def initialize(input : ::IO | Path | String,
-                   @atoms : AtomCollection,
-                   sync_close : Bool = false)
-      super input
-    end
+    needs atoms : AtomCollection
 
     def write(grid : Spatial::Grid) : Nil
       check_open

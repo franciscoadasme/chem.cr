@@ -1,12 +1,9 @@
 module Chem::DFTB::Gen
-  @[IO::FileType(format: Gen, encoded: Structure, ext: %w(gen))]
-  class Writer < IO::Writer(AtomCollection)
-    def initialize(output : ::IO | Path | String,
-                   @fractional : Bool = false,
-                   *,
-                   sync_close : Bool = false)
-      super output, sync_close: sync_close
-    end
+  @[IO::FileType(format: Gen, encoded: AtomCollection, ext: %w(gen))]
+  class Writer
+    include IO::Writer(AtomCollection)
+
+    needs fractional : Bool = false
 
     def write(atoms : AtomCollection, lattice : Lattice? = nil) : Nil
       check_open

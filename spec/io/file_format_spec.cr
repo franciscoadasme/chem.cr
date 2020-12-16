@@ -10,12 +10,16 @@ class CAD::Reader
 end
 
 @[Chem::IO::FileType(format: Image, encoded: String, ext: %w(bmp jpg png tiff))]
-class Image::Writer < Chem::IO::Writer(String)
+class Image::Writer
+  include Chem::IO::Writer(String)
+
   def write(obj : String) : Nil; end
 end
 
 @[Chem::IO::FileType(format: License, encoded: String, ext: %w(lic), names: %w(SPEC LIC* *KE *any*))]
-class License::Writer < Chem::IO::Writer(String)
+class License::Writer
+  include Chem::IO::Writer(String)
+
   def write(obj : String) : Nil; end
 end
 

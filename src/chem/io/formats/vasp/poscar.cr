@@ -1,14 +1,11 @@
 module Chem::VASP::Poscar
-  @[IO::FileType(format: Poscar, encoded: Structure, ext: %w(poscar), names: %w(POSCAR* CONTCAR*))]
-  class Writer < IO::Writer(AtomCollection)
-    def initialize(io : ::IO | Path | String,
-                   order @ele_order : Array(Element)? = nil,
-                   @fractional : Bool = false,
-                   @wrap : Bool = false,
-                   *,
-                   sync_close : Bool = false)
-      super io, sync_close: sync_close
-    end
+  @[IO::FileType(format: Poscar, encoded: AtomCollection, ext: %w(poscar), names: %w(POSCAR* CONTCAR*))]
+  class Writer
+    include IO::Writer(AtomCollection)
+
+    needs order : Array(Element)?
+    needs fractional : Bool = false
+    needs wrap : Bool = false
 
     def write(atoms : AtomCollection, lattice : Lattice? = nil, title : String = "") : Nil
       check_open
@@ -48,9 +45,9 @@ module Chem::VASP::Poscar
 
     private def count_elements(atoms : Enumerable(Atom)) : Array(Tuple(Element, Int32))
       ele_tally = atoms.map(&.element).tally.to_a
-      if order = @ele_order
+      if ele_order = @order
         ele_tally.sort_by! do |(k, _)|
-          order.index(k) || raise ArgumentError.new "#{k.inspect} not found in specified order"
+          ele_order.index(k) || raise ArgumentError.new "#{k.inspect} not found in specified order"
         end
       end
       ele_tally

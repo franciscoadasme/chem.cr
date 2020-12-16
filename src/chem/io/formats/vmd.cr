@@ -1,12 +1,9 @@
 module Chem::VMD
   @[IO::FileType(format: VMD, encoded: Structure, ext: %w(vmd))]
-  class Writer < IO::Writer(Structure)
-    def initialize(io : ::IO | Path | String,
-                   @path : String | Path | Nil = nil,
-                   *,
-                   sync_close : Bool = false)
-      super io, sync_close: sync_close
-    end
+  class Writer
+    include IO::Writer(Structure)
+
+    needs source_file : String | Path | Nil
 
     def write(structure : Structure) : Nil
       check_open
@@ -41,7 +38,7 @@ module Chem::VMD
         color change rgb 6 #{seccolor(:none).join ' '}
         color Display Background white
         EOS
-      @io.puts "mol new #{@path}" if @path
+      @io.puts "mol new #{@source_file}" if @source_file
       @io.puts <<-EOS
         mol delrep top top
         mol representation NewCartoon

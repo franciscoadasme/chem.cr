@@ -15,8 +15,11 @@ module Chem::VASP::Locpot
   end
 
   @[IO::FileType(format: Locpot, encoded: Spatial::Grid, names: %w(LOCPOT*))]
-  class Writer < IO::Writer(Spatial::Grid)
+  class Writer
+    include IO::Writer(Spatial::Grid)
     include GridWriter
+
+    needs structure : Structure
 
     def write(grid : Spatial::Grid) : Nil
       incompatible_expcetion if (lat = @structure.lattice) && lat.size != grid.bounds.size

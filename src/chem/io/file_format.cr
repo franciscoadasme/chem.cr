@@ -2,7 +2,7 @@ module Chem::IO
   macro finished
     {% file_types = [] of FileType %}
     {% Reader.includers.each { |t| (ann = t.annotation(FileType)) && file_types << ann } %}
-    {% Writer.all_subclasses.each { |t| (ann = t.annotation(FileType)) && file_types << ann } %}
+    {% Writer.includers.each { |t| (ann = t.annotation(FileType)) && file_types << ann } %}
     {% file_formats = file_types.map(&.[:format].id).uniq.sort %}
 
     # List of the available file formats.

@@ -1,6 +1,8 @@
 module Chem::PyMOL
   @[IO::FileType(format: PyMOL, encoded: Structure, ext: %w(pml))]
-  class Writer < IO::Writer(Structure)
+  class Writer
+    include IO::Writer(Structure)
+
     CODES = {
       Protein::SecondaryStructure::BetaStrand            => 'S',
       Protein::SecondaryStructure::LeftHandedHelix3_10   => 'H',
@@ -26,12 +28,7 @@ module Chem::PyMOL
       Protein::SecondaryStructure::Polyproline           => "pp",
     }
 
-    def initialize(io : ::IO | Path | String,
-                   @path : String | Path | Nil = nil,
-                   *,
-                   sync_close : Bool = false)
-      super io, sync_close: sync_close
-    end
+    needs source_file : String | Path | Nil
 
     def write(structure : Structure) : Nil
       check_open
@@ -48,7 +45,7 @@ module Chem::PyMOL
     end
 
     private def header
-      @io.puts "load #{@path}" if @path
+      @io.puts "load #{@source_file}" if @source_file
       @io.puts <<-EOS
         set cartoon_discrete_colors, on
         hide everything

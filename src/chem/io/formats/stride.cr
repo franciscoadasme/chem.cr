@@ -1,14 +1,11 @@
 class Chem::Protein::Stride < Chem::Protein::SecondaryStructureCalculator
   @[IO::FileType(format: Stride, encoded: Structure, ext: %w(stride))]
-  class Writer < IO::Writer(Structure)
-    @pdbid = "0000"
+  class Writer
+    include IO::Writer(Structure)
 
-    def initialize(io : ::IO | Path | String,
-                   @path : String | Path | Nil = nil,
-                   *,
-                   sync_close : Bool = false)
-      super io, sync_close: sync_close
-    end
+    needs source_file : String | Path | Nil
+
+    @pdbid = "0000"
 
     def write(structure : Structure) : Nil
       check_open
@@ -137,7 +134,7 @@ class Chem::Protein::Stride < Chem::Protein::SecondaryStructureCalculator
     private def summary(structure : Structure)
       title "Secondary structure summary"
       structure.each_chain do |chain|
-        record "CHN", "%s %c", @path, chain.id
+        record "CHN", "%s %c", @source_file, chain.id
         seq chain.residues
       end
       2.times { spacer }

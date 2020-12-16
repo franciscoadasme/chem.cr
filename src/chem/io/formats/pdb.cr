@@ -53,23 +53,20 @@ module Chem::PDB
     end
   end
 
-  @[IO::FileType(format: PDB, encoded: Structure, ext: %w(ent pdb))]
-  class Writer < IO::Writer(AtomCollection)
+  @[IO::FileType(format: PDB, encoded: AtomCollection, ext: %w(ent pdb))]
+  class Writer
+    include IO::Writer(AtomCollection)
+
     PDB_VERSION      = "3.30"
     PDB_VERSION_DATE = Time.local 2011, 7, 13
     WHITESPACE       = ' '
 
+    needs bonds : Bool | Array(Bond) = false
+    needs renumber : Bool = true
+
     @atom_index_table = {} of Int32 => Int32
     @record_index = 0
     @model = 0
-
-    def initialize(io : ::IO | Path | String,
-                   @bonds : Bool | Array(Bond) = false,
-                   @renumber : Bool = true,
-                   *,
-                   sync_close : Bool = false)
-      super io, sync_close: sync_close
-    end
 
     def close : Nil
       write_bonds
