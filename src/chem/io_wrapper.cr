@@ -1,6 +1,8 @@
 module IOWrapper
   include Assignable
 
+  FILE_MODE = "r"
+
   # Whether to close the enclosed `IO` when closing this reader.
   property? sync_close = false
 
@@ -51,7 +53,7 @@ module IOWrapper
         {{decl}}{% if nilable %} = nil{% end %},
       {% end %}
     ) : self
-      new File.open(path),
+      new File.new(path, FILE_MODE),
         {% for decl in args %}
           {{decl.var}},
         {% end %}
