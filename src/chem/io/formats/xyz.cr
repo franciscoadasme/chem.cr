@@ -1,6 +1,8 @@
 module Chem::XYZ
-  @[IO::FileType(format: XYZ, encoded: Structure, ext: %w(xyz))]
-  class Writer < IO::Writer(AtomCollection)
+  @[IO::FileType(format: XYZ, encoded: AtomCollection, ext: %w(xyz))]
+  class Writer
+    include IO::Writer(AtomCollection)
+
     def write(atoms : AtomCollection, title : String = "") : Nil
       check_open
 

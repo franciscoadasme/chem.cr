@@ -230,9 +230,10 @@ module Chem
       format = IO::FileFormat.parse format if format.is_a?(String)
       {% begin %}
         case format
-        {% for writer in IO::Writer.all_subclasses.select(&.annotation(IO::FileType)) %}
-          {% if (type = writer.superclass.type_vars[0]) && type <= AtomCollection %}
-            {% format = writer.annotation(IO::FileType)[:format].id.downcase %}
+        {% for writer in IO::Writer.includers.select(&.annotation(IO::FileType)) %}
+          {% ann = writer.annotation IO::FileType %}
+          {% if Structure <= ann[:encoded].resolve %}
+            {% format = ann[:format].id.downcase %}
             when .{{format.id}}?
               to_{{format.id}} output
           {% end %}

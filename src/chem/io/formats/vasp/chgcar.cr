@@ -16,8 +16,11 @@ module Chem::VASP::Chgcar
   end
 
   @[IO::FileType(format: Chgcar, encoded: Spatial::Grid, names: %w(CHGCAR*))]
-  class Writer < IO::Writer(Spatial::Grid)
-    include VASP::GridWriter
+  class Writer
+    include IO::Writer(Spatial::Grid)
+    include GridWriter
+
+    needs structure : Structure
 
     def write(grid : Spatial::Grid) : Nil
       incompatible_expcetion if (lat = @structure.lattice) && lat.size != grid.bounds.size
