@@ -104,8 +104,6 @@ module Chem::Mol2
     TAG_BONDS    = "@<TRIPOS>BOND"
     TAG_MOLECULE = "@<TRIPOS>MOLECULE"
 
-    needs guess_topology : Bool = true
-
     @builder = uninitialized Structure::Builder
     @include_charges = true
     @n_atoms = 0

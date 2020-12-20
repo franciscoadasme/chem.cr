@@ -21,31 +21,6 @@ module Chem
       builder.build
     end
 
-    def self.read(path : Path | String, guess_topology : Bool = true) : self
-      format = IO::FileFormat.from_filename File.basename(path)
-      read path, format, guess_topology
-    end
-
-    def self.read(input : ::IO | Path | String,
-                  format : IO::FileFormat | String,
-                  guess_topology : Bool = true) : self
-      format = IO::FileFormat.parse format if format.is_a?(String)
-      {% begin %}
-        case format
-        {% for reader in (IO::Reader.includers + IO::MultiReader.includers)
-                           .select { |t| (ann = t.annotation(IO::FileType)) &&
-                             (n = ann[:encoded]) &&
-                             n.resolve == Structure } %}
-          {% format = reader.annotation(IO::FileType)[:format].id.underscore %}
-          when .{{format.id}}?
-            from_{{format.id}} input, guess_topology: guess_topology
-        {% end %}
-        else
-          raise "No structure reader associated with file format #{format}"
-        end
-      {% end %}
-    end
-
     protected def <<(chain : Chain) : self
       @chains << chain
       @chain_table[chain.id] = chain
@@ -219,29 +194,6 @@ module Chem
       raise Spatial::NotPeriodicError.new unless lattice = @lattice
       Spatial::PBC.unwrap self, lattice
       self
-    end
-
-    def write(path : Path | String) : Nil
-      format = IO::FileFormat.from_filename path
-      write path, format
-    end
-
-    def write(output : ::IO | Path | String, format : IO::FileFormat | String) : Nil
-      format = IO::FileFormat.parse format if format.is_a?(String)
-      {% begin %}
-        case format
-        {% for writer in IO::Writer.includers.select(&.annotation(IO::FileType)) %}
-          {% ann = writer.annotation IO::FileType %}
-          {% if Structure <= ann[:encoded].resolve %}
-            {% format = ann[:format].id.downcase %}
-            when .{{format.id}}?
-              to_{{format.id}} output
-          {% end %}
-        {% end %}
-        else
-          raise "No structure writer associated with file format #{format}"
-        end
-      {% end %}
     end
 
     protected def reset_cache : Nil

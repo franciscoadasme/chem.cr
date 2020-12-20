@@ -82,45 +82,4 @@ module Chem
   module Spatial::Grid::Reader
     abstract def info : Spatial::Grid::Info
   end
-
-  macro finished
-    {% includers = IO::Reader.includers %}
-    {% for reader in includers.select(&.annotation(IO::FileType)) %}
-      {% type = reader.annotation(IO::FileType)[:encoded].resolve %}
-      {% keyword = "class" if type.class? %}
-      {% keyword = "struct" if type.struct? %}
-      {% format = reader.annotation(IO::FileType)[:format].id.underscore %}
-
-      {{keyword.id}} ::{{type.id}}
-        def self.from_{{format.id}}(input : ::IO | Path | String, *args, **options) : self
-          {{reader}}.open(input, *args, **options) do |reader|
-            reader.read
-          end
-        end
-      end
-
-      {% if reader < IO::MultiReader %}
-        class ::Array(T)
-          def self.from_{{format.id}}(input : ::IO | Path | String, *args, **options) : self
-            {{reader}}.open(input, *args, **options) do |reader|
-              ary = [] of T
-              reader.each { |ele| ary << ele }
-              ary
-            end
-          end
-
-          def self.from_{{format.id}}(input : ::IO | Path | String,
-                                      indexes : Enumerable(Int),
-                                      *args,
-                                      **options) : self
-            {{reader}}.open(input, *args, **options) do |reader|
-              ary = [] of T
-              reader.each(indexes) { |ele| ary << ele }
-              ary
-            end
-          end
-        end
-      {% end %}
-    {% end %}
-  end
 end

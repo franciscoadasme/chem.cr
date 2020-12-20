@@ -50,15 +50,16 @@ module Assignable
       {% raise "Don't use '@' with 'needs', got '#{decl}' in #{@type}" %}
     {% end %}
     {% ASSIGNS << decl %}
-    
+
     def {{decl.var}}{% if decl.type.resolve == Bool %}?{% end %}
       @{{decl.var}}
     end
   end
 
   macro included
+    # :nodoc:
     ASSIGNS = [] of Nil
-    
+
     setup_initializer_hook
   end
 
@@ -90,6 +91,7 @@ module Assignable
     end
 
     macro included
+      # :nodoc:
       ASSIGNS = [] of Nil
 
       setup_initializer_hook
