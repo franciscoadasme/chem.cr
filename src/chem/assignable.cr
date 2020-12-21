@@ -1,3 +1,43 @@
+# The `Assignable` mixin provides a convenience way to declare arguments
+# that are needed for instantiation. This is helpful to avoid repeating
+# the arguments that are needed by one or more superclasses in the
+# `initialize` method of every subclass.
+#
+# Instantiation arguments are declared by using the `needs` macro, which
+# registers the arguments and define getters.
+#
+# The declared arguments are then used to define an `initialize` method.
+# If the type of an argument is nilable and no default value is given,
+# it will default to `nil`. The `generate_initializer` macro may be
+# overwritten to customize the `initialize` method with additional
+# arguments.
+#
+# NOTE: the argument order may change in the `initialize` method as
+# nilable and arguments with a default value are written last. To avoid
+# confusion, make sure to always list the arguments in the same order as
+# you would write them in an `initialize` method.
+#
+# ```crystal
+# struct Foo
+#   include Assignable
+#
+#   needs bar : Int32
+#   needs baz : String?
+#   needs active : Bool = true
+# end
+#
+# foo = Foo.new # fails to compile since bar is required
+#
+# foo = Foo.new 0
+# foo.bar     # => 0
+# foo.baz     # => nil
+# foo.active? # => true
+#
+# foo = Foo.new 101, "none", active: false
+# foo.bar     # => 101
+# foo.baz     # => "none"
+# foo.active? # => false
+# ```
 module Assignable
   # Declares a required argument for an instance of the type to be
   # initialized.
@@ -5,38 +45,7 @@ module Assignable
   # It expects a type declaration, which is used to declare an instance
   # variable and getter with the same name. If the type of the argument
   # is `Bool`, it will generate a question method (ending with '?')
-  # instead. If the type of the argument is nilable and no default value
-  # is given, it will default to `nil`.
-  #
-  # It also generates an `initialize` method based on the declared type
-  # declarations.
-  #
-  # **NOTE**: the argument order may change in the `initialize` method
-  # as nilable and arguments with a default value are written last. To
-  # avoid confusion, make sure to always list the arguments in the same
-  # order as you would write them in an `initialize` method.
-  #
-  # ```crystal
-  # struct Foo
-  #   include Assignable
-  #
-  #   needs bar : Int32
-  #   needs baz : String?
-  #   needs active : Bool = true
-  # end
-  #
-  # foo = Foo.new # fails to compile since bar is required
-  #
-  # foo = Foo.new 0
-  # foo.bar     # => 0
-  # foo.baz     # => nil
-  # foo.active? # => true
-  #
-  # foo = Foo.new 101, "none", active: false
-  # foo.bar     # => 101
-  # foo.baz     # => "none"
-  # foo.active? # => false
-  # ```
+  # instead.
   macro needs(decl)
     {% unless decl.is_a?(TypeDeclaration) %}
       {% raise "'needs' expects a type declaration like 'name : String', " \
@@ -64,7 +73,10 @@ module Assignable
     setup_initializer_hook
   end
 
-  private macro generate_initializer
+  # Defines an `initialize` method based on the declared instantiation
+  # arguments. This may be overwritten by including types to customize
+  # the `initialize` method with additional arguments.
+  macro generate_initializer
     {% args = (ASSIGNABLES[@type] || [] of TypeDeclaration).sort_by do |decl|
          has_explicit_value =
            decl.type.is_a?(Metaclass) ||
