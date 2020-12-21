@@ -20,7 +20,7 @@ module Chem
 
     macro included
       macro finished
-        \{% assigns = ASSIGNS.sort_by do |decl|
+        \{% assigns = (ASSIGNABLES[@type] || [] of TypeDeclaration).sort_by do |decl|
              has_explicit_value =
                decl.type.is_a?(Metaclass) ||
                  decl.type.types.map(&.id).includes?(Nil.id) ||

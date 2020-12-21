@@ -22,7 +22,7 @@ module IOWrapper
   end
 
   private macro generate_initializer
-    {% args = ASSIGNS.sort_by do |decl|
+    {% args = (ASSIGNABLES[@type] || [] of TypeDeclaration).sort_by do |decl|
          has_explicit_value =
            decl.type.is_a?(Metaclass) ||
              decl.type.types.map(&.id).includes?(Nil.id) ||

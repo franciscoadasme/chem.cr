@@ -49,22 +49,23 @@ module Assignable
     {% if decl.var.stringify.starts_with?("@") %}
       {% raise "Don't use '@' with 'needs', got '#{decl}' in #{@type}" %}
     {% end %}
-    {% ASSIGNS << decl %}
+    {% ASSIGNABLES[@type] = [] of TypeDeclaraction unless ASSIGNABLES[@type] %}
+    {% ASSIGNABLES[@type] << decl %}
 
     def {{decl.var}}{% if decl.type.resolve == Bool %}?{% end %}
       @{{decl.var}}
     end
   end
 
-  macro included
-    # :nodoc:
-    ASSIGNS = [] of Nil
+  # :nodoc:
+  ASSIGNABLES = {} of Nil => Nil
 
+  macro included
     setup_initializer_hook
   end
 
   private macro generate_initializer
-    {% args = ASSIGNS.sort_by do |decl|
+    {% args = (ASSIGNABLES[@type] || [] of TypeDeclaration).sort_by do |decl|
          has_explicit_value =
            decl.type.is_a?(Metaclass) ||
              decl.type.types.map(&.id).includes?(Nil.id) ||
@@ -91,9 +92,6 @@ module Assignable
     end
 
     macro included
-      # :nodoc:
-      ASSIGNS = [] of Nil
-
       setup_initializer_hook
     end
   end
