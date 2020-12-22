@@ -1,7 +1,8 @@
+@[Chem::IO::FileType(ext: %w(mol2))]
 module Chem::Mol2
-  @[IO::FileType(format: Mol2, encoded: AtomCollection, ext: %w(mol2))]
   class Writer
     include IO::Writer(AtomCollection)
+    include IO::Writer(Structure)
 
     @atom_table = {} of Atom => Int32
     @res_table = {} of Residue => Int32
@@ -93,7 +94,6 @@ module Chem::Mol2
     end
   end
 
-  @[IO::FileType(format: Mol2, encoded: Structure, ext: %w(mol2))]
   class Reader
     include IO::Reader(Structure)
     include IO::TextReader(Structure)

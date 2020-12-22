@@ -20,11 +20,13 @@ describe Chem::IO::Writer do
   end
 end
 
-@[Chem::IO::FileType(format: Document, encoded: String, ext: %w(pdf doc docx rtf))]
-class Document::Writer
-  include Chem::IO::Writer(String)
+@[Chem::IO::FileType(ext: %w(pdf doc docx rtf))]
+module Chem::Document
+  class Writer
+    include Chem::IO::Writer(String)
 
-  def write(obj : String) : Nil
-    @io << '<' << obj << '>'
+    def write(obj : String) : Nil
+      @io << '<' << obj << '>'
+    end
   end
 end

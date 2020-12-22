@@ -1,3 +1,4 @@
+@[Chem::IO::FileType(ext: %w(ent pdb))]
 module Chem::PDB
   module Hybrid36
     extend self
@@ -53,9 +54,9 @@ module Chem::PDB
     end
   end
 
-  @[IO::FileType(format: PDB, encoded: AtomCollection, ext: %w(ent pdb))]
   class Writer
     include IO::Writer(AtomCollection)
+    include IO::Writer(Structure)
 
     PDB_VERSION      = "3.30"
     PDB_VERSION_DATE = Time.local 2011, 7, 13
@@ -291,7 +292,6 @@ module Chem::PDB
     end
   end
 
-  @[IO::FileType(format: PDB, encoded: Structure, ext: %w(ent pdb))]
   class Reader
     include IO::Reader(Structure)
     include IO::TextReader(Structure)

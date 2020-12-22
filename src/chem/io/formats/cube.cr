@@ -1,5 +1,5 @@
+@[Chem::IO::FileType(ext: %w(cube))]
 module Chem::Cube
-  @[IO::FileType(format: Cube, encoded: Spatial::Grid, ext: %w(cube))]
   class Reader
     include IO::Reader(Spatial::Grid)
     include IO::TextReader(Spatial::Grid)
@@ -33,7 +33,6 @@ module Chem::Cube
     end
   end
 
-  @[IO::FileType(format: Cube, encoded: Spatial::Grid, ext: %w(cube))]
   class Writer
     include IO::Writer(Spatial::Grid)
 

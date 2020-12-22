@@ -112,10 +112,27 @@ module Chem::Spatial
 
     def self.info(input : ::IO | Path | String, format : IO::FileFormat) : Info
       {% begin %}
+        {% annotated_types = [] of TypeNode %}
+        {% nodes = [Chem] %}
+        {% for node in nodes %}
+          {% annotated_types << node if node.annotation(IO::FileType) %}
+          {% for c in node.constants.map { |c| node.constant(c) } %}
+            {% nodes << c if c.is_a?(TypeNode) && (c.class? || c.struct? || c.module?) %}
+          {% end %}
+        {% end %}
+
         case format
-        {% for parser in Reader.includers.select(&.annotation(IO::FileType)) %}
-          when .{{parser.annotation(IO::FileType)[:format].id.underscore.id}}?
-            {{parser}}.new(input).info
+        {% for type in annotated_types %}
+          {% ann = type.annotation(IO::FileType) %}
+          {% if reader = type.constant(ann[:reader] || "Reader") %}
+            {% encoded_types = reader.resolve.ancestors.select(&.<(IO::Reader))
+                 .map(&.type_vars[0]) %}
+            {% if encoded_types.any?(&.==(Grid)) %}
+              {% format = type.name.split("::")[-1].id %}
+              when .{{format.downcase.id}}?
+                {{reader}}.new(input).info
+            {% end %}
+          {% end %}
         {% end %}
         else
           raise ArgumentError.new "#{format} not supported for Grid"

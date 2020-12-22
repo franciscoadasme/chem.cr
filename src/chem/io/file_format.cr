@@ -1,9 +1,22 @@
 module Chem::IO
   macro finished
-    {% file_types = [] of FileType %}
-    {% Reader.includers.each { |t| (ann = t.annotation(FileType)) && file_types << ann } %}
-    {% Writer.includers.each { |t| (ann = t.annotation(FileType)) && file_types << ann } %}
-    {% file_formats = file_types.map(&.[:format].id).uniq.sort %}
+    # gather annotated types
+    {% types = [] of TypeNode %}
+    {% nodes = [Chem] %}
+    {% for node in nodes %}
+      {% types << node if node.annotation(FileType) %}
+      {% for c in node.constants.map { |c| node.constant(c) } %}
+        {% nodes << c if c.is_a?(TypeNode) && (c.class? || c.struct? || c.module?) %}
+      {% end %}
+    {% end %}
+
+    {% file_types = {} of MacroId => Annotation %}
+    {% for type in types %}
+      {% ann = type.annotation(FileType) %}
+      # last component of the fully qualified type name (Foo::Bar::Baz => Baz)
+      {% format = type.name.split("::")[-1].id %}
+      {% file_types[format] = ann %}
+    {% end %}
 
     # List of the available file formats.
     #
@@ -12,11 +25,11 @@ module Chem::IO
     # deals with extensions and file names uses the information declared
     # in the corresponding annotations.
     enum FileFormat
-      {% for format in file_formats %}
+      {% for format in file_types.keys.sort %}
         {{format.id}}
       {% end %}
 
-      {% for format in file_formats %}
+      {% for format in file_types.keys.sort %}
         def {{format.id.downcase}}? : Bool
           self == {{format}}
         end
@@ -56,17 +69,9 @@ module Chem::IO
       def self.from_ext?(extname : String) : self?
         {% begin %}
           case extname.downcase
-          {% for format in file_formats %}
-            {% extensions = [] of MacroId %}
-            {% for file_type in file_types.select(&.[:format].id.==(format)) %}
-              {% if extnames = file_type[:ext] %}
-                {% for ext in extnames %}
-                  {% extensions << ext %}
-                {% end %}
-              {% end %}
-            {% end %}
-            {% unless extensions.empty? %}
-              when {{extensions.uniq.map { |ext| ".#{ext.downcase.id}" }.splat}}
+          {% for format, ann in file_types %}
+            {% if ext = ann[:ext] %}
+              when {{ext.map { |ext| ".#{ext.downcase.id}" }.splat}}
                 {{format}}
             {% end %}
           {% end %}
@@ -156,50 +161,39 @@ module Chem::IO
       # FileFormat.from_stem?("Imi")      # => nil
       # ```
       def self.from_stem?(stem : String) : self?
-        stem = stem.camelcase.downcase
-        {% for format in file_formats %}
-          {% file_names = [] of StringLiteral %}
-          {% for file_type in file_types.select(&.[:format].id.==(format)) %}
-            {% if names = file_type[:names] %}
-              {% for name in names %}
-                {% file_names << name.id.stringify.camelcase.downcase %}
+        {% begin %}
+          case stem.camelcase.downcase
+          {% for format, ann in file_types %}
+            {% if names = ann[:names] %}
+              {% for name in names.sort %}
+                {% name = name.id.stringify.camelcase.downcase %}
+                {% if name =~ /\*\w+\*/ %}
+                  when .includes?({{name[1..-2]}}) then {{format}}
+                {% elsif name.starts_with? "*" %}
+                  when .ends_with?({{name[1..-1]}}) then {{format}}
+                {% elsif name.ends_with? "*" %}
+                  when .starts_with?({{name[0..-2]}}) then {{format}}
+                {% else %}
+                  when .==({{name}}) then {{format}}
+                {% end %}
               {% end %}
             {% end %}
           {% end %}
-
-          {% for name in file_names.uniq.sort %}
-            {% if name =~ /\*\w+\*/ %}
-              return {{format}} if stem.includes? {{name[1..-2]}}
-            {% elsif name.starts_with? "*" %}
-              return {{format}} if stem.ends_with? {{name[1..-1]}}
-            {% elsif name.ends_with? "*" %}
-              return {{format}} if stem.starts_with? {{name[0..-2]}}
-            {% else %}
-              return {{format}} if stem == {{name}}
-            {% end %}
-          {% end %}
+          end
         {% end %}
       end
 
       def extnames : Array(String)
         {% begin %}
           case self
-          {% for format in file_formats %}
-            {% extensions = [] of MacroId %}
-            {% for file_type in file_types.select(&.[:format].id.==(format)) %}
-              {% if extnames = file_type[:ext] %}
-                {% for ext in extnames %}
-                  {% extensions << ext %}
-                {% end %}
-              {% end %}
-            {% end %}
-            {% unless extensions.empty? %}
+          {% for format, ann in file_types %}
+            {% if ext = ann[:ext] %}
               when {{format}}
-                {{extensions.uniq.map { |ext| ".#{ext.id}" }}}
+                {{ext.map { |ext| ".#{ext.id}" }}}
             {% end %}
           {% end %}
           else
-            raise "BUG: unreachable"
+            [] of String
           end
         {% end %}
       end

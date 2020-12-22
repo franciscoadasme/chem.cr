@@ -1,7 +1,8 @@
+@[Chem::IO::FileType(ext: %w(gen))]
 module Chem::DFTB::Gen
-  @[IO::FileType(format: Gen, encoded: AtomCollection, ext: %w(gen))]
   class Writer
     include IO::Writer(AtomCollection)
+    include IO::Writer(Structure)
 
     needs fractional : Bool = false
 
@@ -37,7 +38,6 @@ module Chem::DFTB::Gen
     end
   end
 
-  @[IO::FileType(format: Gen, encoded: Structure, ext: %w(gen))]
   class Reader
     include IO::Reader(Structure)
     include IO::TextReader(Structure)

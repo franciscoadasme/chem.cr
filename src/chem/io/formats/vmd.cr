@@ -1,5 +1,5 @@
+@[Chem::IO::FileType(ext: %w(vmd))]
 module Chem::VMD
-  @[IO::FileType(format: VMD, encoded: Structure, ext: %w(vmd))]
   class Writer
     include IO::Writer(Structure)
 

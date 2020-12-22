@@ -1,5 +1,5 @@
+@[Chem::IO::FileType(names: %w(LOCPOT*))]
 module Chem::VASP::Locpot
-  @[IO::FileType(format: Locpot, encoded: Spatial::Grid, names: %w(LOCPOT*))]
   class Reader
     include IO::Reader(Spatial::Grid)
     include IO::TextReader(Spatial::Grid)
@@ -14,7 +14,6 @@ module Chem::VASP::Locpot
     end
   end
 
-  @[IO::FileType(format: Locpot, encoded: Spatial::Grid, names: %w(LOCPOT*))]
   class Writer
     include IO::Writer(Spatial::Grid)
     include GridWriter
