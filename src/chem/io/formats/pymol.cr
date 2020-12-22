@@ -1,5 +1,5 @@
+@[Chem::IO::FileType(ext: %w(pml))]
 module Chem::PyMOL
-  @[IO::FileType(format: PyMOL, encoded: Structure, ext: %w(pml))]
   class Writer
     include IO::Writer(Structure)
 

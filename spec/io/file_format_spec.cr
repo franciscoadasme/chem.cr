@@ -1,26 +1,34 @@
 require "../spec_helper"
 
-@[Chem::IO::FileType(format: CAD, encoded: String, ext: %w(cad))]
-class CAD::Reader
-  include Chem::IO::Reader(String)
+module Chem
+  @[Chem::IO::FileType(ext: %w(cad))]
+  module CAD
+    class Reader
+      include Chem::IO::Reader(String)
 
-  def read : String
-    ""
+      def read : String
+        ""
+      end
+    end
   end
-end
 
-@[Chem::IO::FileType(format: Image, encoded: String, ext: %w(bmp jpg png tiff))]
-class Image::Writer
-  include Chem::IO::Writer(String)
+  @[Chem::IO::FileType(ext: %w(bmp jpg png tiff))]
+  module Image
+    class Writer
+      include Chem::IO::Writer(String)
 
-  def write(obj : String) : Nil; end
-end
+      def write(obj : String) : Nil; end
+    end
+  end
 
-@[Chem::IO::FileType(format: License, encoded: String, ext: %w(lic), names: %w(SPEC LIC* *KE *any*))]
-class License::Writer
-  include Chem::IO::Writer(String)
+  @[Chem::IO::FileType(ext: %w(lic), names: %w(SPEC LIC* *KE *any*))]
+  module License
+    class Writer
+      include Chem::IO::Writer(String)
 
-  def write(obj : String) : Nil; end
+      def write(obj : String) : Nil; end
+    end
+  end
 end
 
 describe Chem::IO::FileFormat do

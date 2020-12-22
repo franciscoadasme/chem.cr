@@ -1,5 +1,5 @@
+@[Chem::IO::FileType(ext: %w(stride))]
 class Chem::Protein::Stride < Chem::Protein::SecondaryStructureCalculator
-  @[IO::FileType(format: Stride, encoded: Structure, ext: %w(stride))]
   class Writer
     include IO::Writer(Structure)
 

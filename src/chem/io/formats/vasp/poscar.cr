@@ -1,7 +1,8 @@
+@[Chem::IO::FileType(ext: %w(poscar), names: %w(POSCAR* CONTCAR*))]
 module Chem::VASP::Poscar
-  @[IO::FileType(format: Poscar, encoded: AtomCollection, ext: %w(poscar), names: %w(POSCAR* CONTCAR*))]
   class Writer
     include IO::Writer(AtomCollection)
+    include IO::Writer(Structure)
 
     needs order : Array(Element)?
     needs fractional : Bool = false
@@ -74,7 +75,6 @@ module Chem::VASP::Poscar
     end
   end
 
-  @[IO::FileType(format: Poscar, encoded: Structure, names: %w(POSCAR* CONTCAR*))]
   class Reader
     include IO::Reader(Structure)
     include IO::TextReader(Structure)
