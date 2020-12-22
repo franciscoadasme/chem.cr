@@ -2,7 +2,7 @@ module Chem
   module IO::Reader(T)
     include IOWrapper
 
-    abstract def read : T
+    abstract def read(type : T.class) : T
 
     @io : ::IO
 
@@ -74,7 +74,7 @@ module Chem
       end
     end
 
-    def read : T
+    def read(type : T.class) : T
       read_next || raise ::IO::EOFError.new
     end
   end

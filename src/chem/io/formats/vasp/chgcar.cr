@@ -6,7 +6,7 @@ module Chem::VASP::Chgcar
     include Spatial::Grid::Reader
     include GridReader
 
-    def read : Spatial::Grid
+    def read(type : Spatial::Grid.class) : Spatial::Grid
       check_open
       check_eof skip_lines: false
       info = self.info

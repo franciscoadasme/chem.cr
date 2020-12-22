@@ -21,7 +21,7 @@ module Chem::DX
       Spatial::Grid::Info.new bounds, {ni, nj, nk}
     end
 
-    def read : Spatial::Grid
+    def read(type : Spatial::Grid.class) : Spatial::Grid
       check_open
       check_eof
       Spatial::Grid.build(info) do |buffer, size|
