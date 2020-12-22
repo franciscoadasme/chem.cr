@@ -236,7 +236,7 @@ module Chem::IO
                                         *args,
                                         **options) : self
               {{reader}}.open(input, *args, **options) do |reader|
-                reader.read
+                reader.read {{encoded_type}}
               end
             end
           {% end %}

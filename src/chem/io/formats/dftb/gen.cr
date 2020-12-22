@@ -50,7 +50,7 @@ module Chem::DFTB::Gen
     @n_atoms = 0
     @periodic = false
 
-    def read : Structure
+    def read(type : Structure.class) : Structure
       check_open
       check_eof
       parse_header

@@ -89,7 +89,7 @@ module Chem::VASP::Poscar
     @species = [] of Element
     @title = ""
 
-    def read : Structure
+    def read(type : Structure.class) : Structure
       check_open
       check_eof skip_lines: false
       read_header

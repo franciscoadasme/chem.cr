@@ -6,7 +6,7 @@ module Chem
     class Reader
       include Chem::IO::Reader(String)
 
-      def read : String
+      def read(type : String.class) : String
         ""
       end
     end
