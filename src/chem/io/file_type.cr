@@ -83,14 +83,18 @@ module Chem::IO
   # frame.atoms[0].to_foo(io)
   # ```
   #
+  # NOTE: annotated types must be declared within the `Chem` module,
+  # otherwise they won't be recognized.
+  #
   # This annotation accepts the following named arguments:
   #
   # - **ext**: an array of extensions (without leading dot).
   # - **names**: an array of file names. File names can include
   #   wildcards (`"*"`) to denote either prefix (e.g., `"Foo*"`), suffix
-  #   (e.g., `"*Bar"`), or both (e.g., `"*Baz*"`).
-  # - **reader**: reader class name. Defaults to `"Reader"`.
-  # - **writer**: writer class name. Defaults to `"Writer"`.
+  #   (e.g., `"*Bar"`), or both (e.g., `"*Baz*"`). Refer to
+  #   `FileFormat#from_stem` for details.
+  # - **reader**: reader class name. Defaults to "Reader".
+  # - **writer**: writer class name. Defaults to "Writer".
   #
   # If the *encoded type* also declares an `Info` type, `.info` methods
   # will be generated on it to get the information directly from an IO
