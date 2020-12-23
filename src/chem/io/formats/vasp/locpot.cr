@@ -3,13 +3,12 @@ module Chem::VASP::Locpot
   class Reader
     include IO::Reader(Spatial::Grid)
     include IO::TextReader(Spatial::Grid)
-    include Spatial::Grid::Reader
     include GridReader
 
     def read(type : Spatial::Grid.class) : Spatial::Grid
       check_open
       check_eof skip_lines: false
-      info = self.info
+      info = read_info Spatial::Grid
       read_array info, &.itself
     end
   end

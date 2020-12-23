@@ -92,14 +92,31 @@ module Chem::IO
   # - **reader**: reader class name. Defaults to `"Reader"`.
   # - **writer**: writer class name. Defaults to `"Writer"`.
   #
+  # If the *encoded type* also declares an `Info` type, `.info` methods
+  # will be generated on it to get the information directly from an IO
+  # or a file. The reader classes of the file formats that supports this
+  # feature must implement the `#read_info(type : T.class) : T::Info`
+  # method, otherwise this hook is not triggered for the *encoded type*.
+  # Following the example above:
+  #
+  # ```
+  # record Frame::Info, title : String, size : Int32
+  #
+  # class Chem::Foo::Reader
+  #   def read_info(type : Frame.class) : Frame::Info
+  #     Frame::Info.new @io.gets.to_i, @io.gets
+  #   end
+  # end
+  #
+  # io.rewind
+  # Frame.info(io, :foo) # => Frame::Info(@title="Three waters", @size=9)
+  # ```
+  #
   # The `FileFormat` enum is populated based on the information of this
   # annotation, where extensions and file names are associated with the
   # corresponding file format. It is also used to generate read
   # (`#from_*`) and write (`#to_*`) methods for the encoded types when
   # appropiate.
-  #
-  # NOTE: annotated types must be declared within the `Chem` module,
-  # otherwise they won't be recognized.
   annotation FileType; end
 
   macro finished
@@ -280,6 +297,67 @@ module Chem::IO
               end
             {% end %}
           end
+
+          {% if info_type = encoded_type.constant("Info") %}
+            {% info_type = info_type.resolve %}
+            {% canonical_info_type = info_type.stringify.gsub(/^\w+::/, "").id %}
+            # select types that declare `read_info(type : T.class) : T::Info` method
+            {% info_types = types.select do |t|
+                 reader = reader_table[t]
+                 methods = [] of Def
+                 ([reader] + reader.ancestors).each do |other|
+                   methods += other.methods.select do |m|
+                     m.name == "read_info" && (ret = m.return_type) &&
+                       ret.resolve == info_type &&
+                       m.args.size == 1 &&
+                       "#{encoded_type}.class".ends_with?(m.args[0].restriction.stringify)
+                   end
+                 end
+                 !methods.empty?
+               end %}
+            {% if !info_types.empty? %}
+              {% info_formats = info_types.map { |t| "`#{canonical_formats[t]}`".id } %}
+
+              # Returns a `{{canonical_info_type}}` instance holding the
+              # information of the object encoded in the specified file.
+              # The file format is chosen based on the filename (refer
+              # to `IO::FileFormat#from_filename`).
+              #
+              # The supported file formats are {{info_formats.splat}}.
+              #
+              # Raises `ArgumentError` when the file format couldn't be
+              # determined.
+              def self.info(path : Path | String) : {{info_type}}
+                info path, IO::FileFormat.from_filename(path)
+              end
+
+              # Returns a `{{canonical_info_type}}` instance holding the
+              # information of the object encoded in the specified file
+              # using the given file format.
+              #
+              # The supported file formats are {{info_formats.splat}}.
+              #
+              # Raises `ArgumentError` when *format* is invalid.
+              def self.info(input : ::IO | Path | String,
+                            format : IO::FileFormat | String) : {{info_type}}
+                format = IO::FileFormat.parse format if format.is_a?(String)
+                {% begin %}
+                  case format
+                  {% for type in info_types %}
+                    {% format = formats[type].id.downcase %}
+                    {% reader = reader_table[type] %}
+                    when .{{format.id}}?
+                      {{reader}}.open(input) do |reader|
+                        reader.read_info({{encoded_type}})
+                      end
+                  {% end %}
+                  else
+                    raise ArgumentError.new "#{format} does not encode {{info_type}}"
+                  end
+                {% end %}
+              end
+            {% end %}
+          {% end %}
         {% end %}
 
         {% if types = write_table[encoded_type] %}

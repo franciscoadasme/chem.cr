@@ -3,11 +3,20 @@ module Chem::Cube
   class Reader
     include IO::Reader(Spatial::Grid)
     include IO::TextReader(Spatial::Grid)
-    include Spatial::Grid::Reader
 
     BOHR_TO_ANGS = 0.529177210859
 
-    def info : Spatial::Grid::Info
+    def read(type : Spatial::Grid.class) : Spatial::Grid
+      check_open
+      check_eof skip_lines: false
+      Spatial::Grid.build(read_info(Spatial::Grid)) do |buffer, size|
+        size.times do |i|
+          buffer[i] = @io.read_float
+        end
+      end
+    end
+
+    def read_info(type : Spatial::Grid.class) : Spatial::Grid::Info
       2.times { @io.skip_line }
       n_atoms = @io.read_int
       parse_exception "Cube with multiple densities not supported" if n_atoms < 0
@@ -20,16 +29,6 @@ module Chem::Cube
 
       bounds = Spatial::Bounds.new origin, vi * nx, vj * ny, vk * nz
       Spatial::Grid::Info.new bounds, {nx, ny, nz}
-    end
-
-    def read(type : Spatial::Grid.class) : Spatial::Grid
-      check_open
-      check_eof skip_lines: false
-      Spatial::Grid.build(info) do |buffer, size|
-        size.times do |i|
-          buffer[i] = @io.read_float
-        end
-      end
     end
   end
 
