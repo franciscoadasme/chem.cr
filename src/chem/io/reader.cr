@@ -78,8 +78,4 @@ module Chem
       read_next || raise ::IO::EOFError.new
     end
   end
-
-  module Spatial::Grid::Reader
-    abstract def info : Spatial::Grid::Info
-  end
 end

@@ -3,9 +3,18 @@ module Chem::DX
   class Reader
     include IO::Reader(Spatial::Grid)
     include IO::TextReader(Spatial::Grid)
-    include Spatial::Grid::Reader
 
-    def info : Spatial::Grid::Info
+    def read(type : Spatial::Grid.class) : Spatial::Grid
+      check_open
+      check_eof
+      Spatial::Grid.build(read_info(Spatial::Grid)) do |buffer, size|
+        size.times do |i|
+          buffer[i] = @io.read_float
+        end
+      end
+    end
+
+    def read_info(type : Spatial::Grid.class) : Spatial::Grid::Info
       while @io.skip_whitespace.peek == '#'
         @io.skip_line
       end
@@ -19,16 +28,6 @@ module Chem::DX
 
       bounds = Spatial::Bounds.new origin, vi, vj, vk
       Spatial::Grid::Info.new bounds, {ni, nj, nk}
-    end
-
-    def read(type : Spatial::Grid.class) : Spatial::Grid
-      check_open
-      check_eof
-      Spatial::Grid.build(info) do |buffer, size|
-        size.times do |i|
-          buffer[i] = @io.read_float
-        end
-      end
     end
   end
 
