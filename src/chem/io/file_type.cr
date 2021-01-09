@@ -27,7 +27,7 @@ module Chem::IO
   # @[FileType(ext: %w(foo), names: %w(foo_*))]
   # module Chem::Foo
   #   class Reader
-  #     include IO::Reader(Frame)
+  #     include IO::FormatReader(Frame)
   #
   #     def read : Frame
   #       n = @io.gets.to_i
@@ -42,8 +42,8 @@ module Chem::IO
   #   end
   #
   #   class Writer
-  #     include IO::Writer(Frame)
-  #     include IO::Writer(Atom)
+  #     include IO::FormatWriter(Frame)
+  #     include IO::FormatWriter(Atom)
   #
   #     def write(frame : Frame) : Nil
   #       @io.puts frame.coords.size
@@ -194,7 +194,7 @@ module Chem::IO
       {% if reader = annotated_type.constant(ann[:reader] || "Reader") %}
         # encoded types are detected from the type vars from the
         # included modules (include Reader(Structure) => Structure)
-        {% for type in reader.resolve.ancestors.select(&.<(Reader)).map(&.type_vars[0]) %}
+        {% for type in reader.resolve.ancestors.select(&.<(FormatReader)).map(&.type_vars[0]) %}
           {% unless read_table[type] %}
             {% read_table[type] = [] of TypeNode %}
           {% end %}
@@ -208,8 +208,8 @@ module Chem::IO
       # gather encoded types for writing
       {% if writer = annotated_type.constant(ann[:writer] || "Writer") %}
         # encoded types are detected from the type vars from the
-        # included modules (include Writer(Structure) => Structure)
-        {% for type in writer.resolve.ancestors.select(&.<(Writer)).map(&.type_vars[0]) %}
+        # included modules (include FormatWriter(Structure) => Structure)
+        {% for type in writer.resolve.ancestors.select(&.<(FormatWriter)).map(&.type_vars[0]) %}
           {% for type in type.union_types %}
             {% unless write_table[type] %}
               {% write_table[type] = [] of TypeNode %}
@@ -247,7 +247,7 @@ module Chem::IO
             # Returns the object encoded in *input* using the
             # `{{canonical_format}}` file format. Arguments are fowarded
             # to `{{canonical_reader}}`.
-            {% if reader < MultiReader %}
+            {% if reader < MultiFormatReader %}
               #
               # This method returns the first entry only. Use
               # `Array#from_{{format.id}}` or `{{canonical_reader}}` to
@@ -434,7 +434,7 @@ module Chem::IO
 
       {% if types = read_table[encoded_type] %}
         {% for type in types %}
-          {% if (reader = reader_table[type]) && reader < MultiReader %}
+          {% if (reader = reader_table[type]) && reader < MultiFormatReader %}
             {% format = formats[type].id.downcase %}
 
             class ::Array(T)

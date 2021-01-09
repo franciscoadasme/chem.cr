@@ -55,8 +55,8 @@ module Chem::PDB
   end
 
   class Writer
-    include IO::Writer(AtomCollection)
-    include IO::Writer(Structure)
+    include IO::FormatWriter(AtomCollection)
+    include IO::FormatWriter(Structure)
 
     PDB_VERSION      = "3.30"
     PDB_VERSION_DATE = Time.local 2011, 7, 13
@@ -293,9 +293,9 @@ module Chem::PDB
   end
 
   class Reader
-    include IO::Reader(Structure)
-    include IO::TextReader(Structure)
-    include IO::MultiReader(Structure)
+    include IO::FormatReader(Structure)
+    include IO::TextFormatReader(Structure)
+    include IO::MultiFormatReader(Structure)
 
     private alias ResidueId = Tuple(Char, Int32, Char?)
     private alias Sec = Protein::SecondaryStructure

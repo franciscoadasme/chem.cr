@@ -1,7 +1,7 @@
 @[Chem::IO::FileType(ext: %w(pml))]
 module Chem::PyMOL
   class Writer
-    include IO::Writer(Structure)
+    include IO::FormatWriter(Structure)
 
     CODES = {
       Protein::SecondaryStructure::BetaStrand            => 'S',
