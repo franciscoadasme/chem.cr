@@ -76,6 +76,8 @@ module Assignable
   # Defines an `initialize` method based on the declared instantiation
   # arguments. This may be overwritten by including types to customize
   # the `initialize` method with additional arguments.
+  #
+  # NOTE: Do not call this method directly.
   macro generate_initializer
     {% args = (ASSIGNABLES[@type] || [] of TypeDeclaration).sort_by do |decl|
          has_explicit_value =
