@@ -1,8 +1,8 @@
 @[Chem::IO::FileType(ext: %w(poscar), names: %w(POSCAR* CONTCAR*))]
 module Chem::VASP::Poscar
   class Writer
-    include IO::Writer(AtomCollection)
-    include IO::Writer(Structure)
+    include IO::FormatWriter(AtomCollection)
+    include IO::FormatWriter(Structure)
 
     needs order : Array(Element)?
     needs fractional : Bool = false
@@ -76,8 +76,8 @@ module Chem::VASP::Poscar
   end
 
   class Reader
-    include IO::Reader(Structure)
-    include IO::TextReader(Structure)
+    include IO::FormatReader(Structure)
+    include IO::TextFormatReader(Structure)
 
     needs guess_topology : Bool = true
 

@@ -1,8 +1,8 @@
 @[Chem::IO::FileType(names: %w(CHGCAR*))]
 module Chem::VASP::Chgcar
   class Reader
-    include IO::Reader(Spatial::Grid)
-    include IO::TextReader(Spatial::Grid)
+    include IO::FormatReader(Spatial::Grid)
+    include IO::TextFormatReader(Spatial::Grid)
     include GridReader
 
     def read(type : Spatial::Grid.class) : Spatial::Grid
@@ -15,7 +15,7 @@ module Chem::VASP::Chgcar
   end
 
   class Writer
-    include IO::Writer(Spatial::Grid)
+    include IO::FormatWriter(Spatial::Grid)
     include GridWriter
 
     needs structure : Structure

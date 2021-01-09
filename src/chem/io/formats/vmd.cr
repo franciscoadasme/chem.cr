@@ -1,7 +1,7 @@
 @[Chem::IO::FileType(ext: %w(vmd))]
 module Chem::VMD
   class Writer
-    include IO::Writer(Structure)
+    include IO::FormatWriter(Structure)
 
     needs source_file : String | Path | Nil
 

@@ -1,8 +1,8 @@
 @[Chem::IO::FileType(ext: %w(mol2))]
 module Chem::Mol2
   class Writer
-    include IO::Writer(AtomCollection)
-    include IO::Writer(Structure)
+    include IO::FormatWriter(AtomCollection)
+    include IO::FormatWriter(Structure)
 
     @atom_table = {} of Atom => Int32
     @res_table = {} of Residue => Int32
@@ -95,9 +95,9 @@ module Chem::Mol2
   end
 
   class Reader
-    include IO::Reader(Structure)
-    include IO::TextReader(Structure)
-    include IO::MultiReader(Structure)
+    include IO::FormatReader(Structure)
+    include IO::TextFormatReader(Structure)
+    include IO::MultiFormatReader(Structure)
 
     TAG          = "@<TRIPOS>"
     TAG_ATOMS    = "@<TRIPOS>ATOM"

@@ -1,7 +1,7 @@
 require "./io/file_type"
 require "./io/text_io"
-require "./io/reader"
-require "./io/writer"
+require "./io/format_reader"
+require "./io/format_writer"
 require "./io/file_format"
 require "./io/formats/*"
 

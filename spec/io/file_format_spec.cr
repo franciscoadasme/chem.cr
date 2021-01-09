@@ -4,7 +4,7 @@ module Chem
   @[Chem::IO::FileType(ext: %w(cad))]
   module CAD
     class Reader
-      include Chem::IO::Reader(String)
+      include Chem::IO::FormatReader(String)
 
       def read(type : String.class) : String
         ""
@@ -15,7 +15,7 @@ module Chem
   @[Chem::IO::FileType(ext: %w(bmp jpg png tiff))]
   module Image
     class Writer
-      include Chem::IO::Writer(String)
+      include Chem::IO::FormatWriter(String)
 
       def write(obj : String) : Nil; end
     end
@@ -24,7 +24,7 @@ module Chem
   @[Chem::IO::FileType(ext: %w(lic), names: %w(SPEC LIC* *KE *any*))]
   module License
     class Writer
-      include Chem::IO::Writer(String)
+      include Chem::IO::FormatWriter(String)
 
       def write(obj : String) : Nil; end
     end
