@@ -8,8 +8,8 @@ module Chem::IO
   # component of the fully qualified name is used as the file format
   # (e.g., `Baz` for `Foo::Bar::Baz`) The ability of a type to read or
   # write is determined by the declaration of a reader (includes the
-  # `Reader` mixin) and writer (includes the `Writer` mixin) class,
-  # respectively.
+  # `FormatReader` mixin) and writer (includes the `FormatWriter` mixin)
+  # class, respectively.
   #
   # The *encoded types* are dictated by the type variables of the
   # included mixins. A class can declare encoded multiple types by
