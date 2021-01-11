@@ -460,7 +460,7 @@ describe Chem::IO::TextIO do
       parser.read_vector?.should eq Chem::Spatial::Vector[1.2, 3.4, 5.6]
     end
 
-    it "reads a vector" do
+    it "returns nil if a vector couldn't be read" do
       io = IO::Memory.new "1.2 abcdef"
       parser = TextIO.new io
       parser.read_vector?.should be_nil
@@ -469,7 +469,7 @@ describe Chem::IO::TextIO do
 
   describe "#read_word" do
     it "fails at eof" do
-      expect_raises(IO::EOFError) do
+      expect_raises(Chem::IO::ParseException) do
         TextIO.new(IO::Memory.new).read_word
       end
     end
