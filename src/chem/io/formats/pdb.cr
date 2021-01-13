@@ -1,41 +1,228 @@
+# The PDB module provides capabilities for reading and writing RCSB
+# Protein Data Bank (PDB) files.
+#
+# The PDB file format is a text-based fixed-column width format that
+# stores atomic coordinates, crystallographic structure factors and NMR
+# experimental data. Aside from coordinates, it may also includes the
+# names of molecules, primary and secondary structure information,
+# sequence database references, where appropriate, and ligand and
+# biological assembly information, details about data collection and
+# structure solution, and bibliographic citations. It is mainly focused
+# on storing protein and nucleic acid structures. Further details found
+# at the [PDB file format
+# documentation](https://www.wwpdb.org/documentation/file-format)
+# webpage.
+#
+# The PDB file format encodes one or more molecular structures and so
+# the information is stored in `Structure` instances. The following
+# information is read from/write to a PDB file:
+#
+# * Atomic coordinates
+# * Bonding information (if present)
+# * Topology information (chain->residue->atom)
+# * Unit cell (if present)
+# * Experiment data (if present)
+# * Protein secondary structure (if present)
+#
+# Atom/residue numbers use the [hybrid-36](http://cci.lbl.gov/hybrid_36)
+# representation to circumvent the hard numeric limits on the PDB file
+# format. See the `PDB::Hybrid36` module.
+#
+# Registered file extensions for PDB are: `.ent` and `.pdb`.
+#
+# ### Reading PDB files
+#
+# The `PDB::Reader` class reads PDB entries sequentially from an `IO` or
+# file. Use either the `#each` method to yield every entry or
+# `#read_next` method to read the next entry only.
+#
+# ```
+# PDB::Reader.open("/path/to/pdb") do |reader|
+#   reader.each do |structure|
+#     ...
+#   end
+#
+#   # or
+#
+#   while structure = reader.read_next
+#     .
+#   end
+# end
+# ```
+#
+# Alternatively, use the convenience `Structure.from_pdb` and
+# `Array.from_pdb` methods to read the first or all entries in a PDB
+# file, respectively.
+#
+# ```
+# Structure.from_pdb "/path/to/pdb" # => <Structure ...>
+# # or
+# Array(Structure).from_pdb "/path/to/pdb" # => [<Structure ...>, ...]
+# ```
+#
+# Similarly, the general `Structure#read` method can be used to read a
+# PDB file, but the file format is determined on runtime.
+#
+# ### Writing PDB files
+#
+# The `PDB::Writer` class writes PDB entries sequentially to an `IO` or
+# file. Use the `#write` method to write an instance of a compatible
+# type. It can be called multiple times.
+#
+# ```
+# PDB::Writer.open("/path/to/pdb") do |writer|
+#   writer.write structure1
+#   writer.write structure2
+#   ...
+# end
+# ```
+#
+# Alternatively, use the convenience `Structure#to_pdb` methods to write
+# a single entry in a PDB file.
+#
+# ```
+# structure = Structure.build do |builder|
+#   ...
+# end
+# structure.to_pdb "/path/to/pdb"
+# ```
 @[Chem::IO::FileType(ext: %w(ent pdb))]
 module Chem::PDB
+  # The `PDB::Hybrid36` module provides capabilities for the encoding
+  # and decoding of numbers in the
+  # [hybrid-36](http://cci.lbl.gov/hybrid_36) representation.
+  #
+  # The PDB file format cannot accomodate atom serial and residue
+  # sequence numbers larger than 99,999 (5 characters) and 9,999 (4
+  # characters), respectively, due to the fixed-column width format. In
+  # contrast, the hybrid-36 counting system accommodates up to
+  # 87,440,031 and 2,436,111 using 5 and 4 characters, respectively. The
+  # hybrid-36 format is backward compatible with the formal PDB
+  # specification, where the distinction between "standard" and
+  # "extended" PDB files becomes evident beyond the PDB's hard limit,
+  # e.g.:
+  #
+  # ```text
+  # ATOM  99998  SD  MET L9999      48.231 -64.383  -9.257  1.00 11.54
+  # ATOM  99999  CE  MET L9999      49.398 -63.242 -10.211  1.00 14.60
+  # ATOM  A0000  N   VAL LA000      52.228 -67.689 -12.196  1.00  8.76
+  # ATOM  A0001  CA  VAL LA000      53.657 -67.774 -12.458  1.00  3.40
+  # ```
   module Hybrid36
-    extend self
-
-    def decode(str : String) : Int32?
-      decode str, str.size
+    # Returns the result of interpreting *str* as an integer using the
+    # hybrid-36 representation. Returns zero for a blank string. Raises
+    # `ArgumentError` if *str* couldn't be interpreted as a number.
+    #
+    # ```
+    # PDB::Hybrid36.decode "    "  # => 0
+    # PDB::Hybrid36.decode "-999"  # => -999
+    # PDB::Hybrid36.decode "5959"  # => 5959
+    # PDB::Hybrid36.decode "9999"  # => 9999
+    # PDB::Hybrid36.decode "A000"  # => 10000
+    # PDB::Hybrid36.decode "A001"  # => 10001
+    # PDB::Hybrid36.decode "ZZZZ"  # => 1223055
+    # PDB::Hybrid36.decode "a000"  # => 1223056
+    # PDB::Hybrid36.decode " a000" # raises ArgumentError
+    # PDB::Hybrid36.decode "abc"   # raises ArgumentError
+    # ```
+    def self.decode(str : String) : Int32
+      decode?(str) || invalid_literal str
     end
 
-    def decode(str : String, width : Int) : Int32
-      decode?(str, width) || invalid_literal str
-    end
-
-    def decode?(str : String) : Int32?
-      decode? str, str.size
-    end
-
-    def decode?(str : String, width : Int) : Int32?
-      return unless str.size == width
+    # Returns the result of interpreting *str* as an integer using the
+    # hybrid-36 representation. Returns zero for a blank string. Returns
+    # `nil` if *str* couldn't be interpreted as a number.
+    #
+    # ```
+    # PDB::Hybrid36.decode? "    "  # => 0
+    # PDB::Hybrid36.decode? "-999"  # => -999
+    # PDB::Hybrid36.decode? "5959"  # => 5959
+    # PDB::Hybrid36.decode? "9999"  # => 9999
+    # PDB::Hybrid36.decode? "A000"  # => 10000
+    # PDB::Hybrid36.decode? "A001"  # => 10001
+    # PDB::Hybrid36.decode? "ZZZZ"  # => 1223055
+    # PDB::Hybrid36.decode? "a000"  # => 1223056
+    # PDB::Hybrid36.decode? " a000" # => nil
+    # PDB::Hybrid36.decode? "abc"   # => nil
+    # ```
+    def self.decode?(str : String) : Int32?
       return 0 if str.blank?
 
       chr = str[0]
       return str.to_i? if chr == '-' || chr == ' ' || chr.ascii_number?
-      return unless num = str.to_i?(base: 36)
-
-      case chr
-      when .ascii_uppercase? then num - 10*36**(width - 1) + 10**width
-      when .ascii_lowercase? then num + 16*36**(width - 1) + 10**width
+      if num = str.to_i?(base: 36)
+        width = str.bytesize
+        case chr
+        when .ascii_uppercase? then num - 10*36**(width - 1) + 10**width
+        when .ascii_lowercase? then num + 16*36**(width - 1) + 10**width
+        end
       end
     end
 
-    def encode(num : Int, width : Int) : String
+    # Returns the result of encoding *num* in the hybrid-36
+    # representation. Raises `ArgumentError` if *num* is out of range.
+    #
+    # *width* indicates the number of characters used for encoding,
+    # which dictates the smallest and largest value possible to be
+    # encoded.
+    #
+    # ```
+    # PDB::Hybrid36.encode 123, width: 4        # => " 123"
+    # PDB::Hybrid36.encode 1234, width: 4       # => "1234"
+    # PDB::Hybrid36.encode 9999, width: 4       # => "9999"
+    # PDB::Hybrid36.encode 10_000, width: 4     # => "A000"
+    # PDB::Hybrid36.encode 10_004, width: 4     # => "A004"
+    # PDB::Hybrid36.encode 45_449_632, width: 5 # => "b0000"
+    # PDB::Hybrid36.encode -9999, width: 4      # raises ArgumentError
+    # PDB::Hybrid36.encode 2_436_112, width: 4  # raises ArgumentError
+    # ```
+    def self.encode(num : Int, width : Int) : String
       String.build do |io|
         encode io, num, width
       end
     end
 
-    def encode(io : ::IO, num : Int, width : Int) : Nil
+    # Writes the result of encoding *num* in the hybrid-36
+    # representation to *io*. Raises `ArgumentError` if *num* is out of
+    # range.
+    #
+    # *width* indicates the number of characters used for encoding,
+    # which dictates the smallest and largest value possible to be
+    # encoded.
+    #
+    # ```
+    # io = IO::Memory.new
+    # PDB::Hybrid36.encode io, 123, width: 4
+    # io.puts
+    # PDB::Hybrid36.encode io, 9999, width: 4
+    # io.puts
+    # PDB::Hybrid36.encode io, 10_000, width: 4
+    # io.puts
+    # PDB::Hybrid36.encode io, 10_004, width: 4
+    # io.puts
+    # PDB::Hybrid36.encode io, 45_449_632, width: 5
+    # io.puts
+    # puts io.to_s
+    # ```
+    #
+    # Prints:
+    #
+    # ```text
+    # 123
+    # 1234
+    # 9999
+    # A000
+    # A004
+    # b0000
+    # ```
+    #
+    # Out of range values fail to be encoded:
+    #
+    # ```
+    # PDB::Hybrid36.encode io, -9999, width: 4     # raises ArgumentError
+    # PDB::Hybrid36.encode io, 2_436_112, width: 4 # raises ArgumentError
+    # ```
+    def self.encode(io : ::IO, num : Int, width : Int) : Nil
       out_of_range num if num < 1 - 10**(width - 1)
       return io.printf "%#{width}d", num if num < 10**width
       num -= 10**width
@@ -45,24 +232,45 @@ module Chem::PDB
       out_of_range num
     end
 
-    private def invalid_literal(str : String)
+    # Raises `ArgumentError` for invalid literals
+    private def self.invalid_literal(str : String)
       raise ArgumentError.new "Invalid number literal: #{str}"
     end
 
-    private def out_of_range(num : Int)
+    # Raises `ArgumentError` for a value out of range
+    private def self.out_of_range(num : Int)
       raise ArgumentError.new "Value out of range"
     end
   end
 
+  # Writes entries sequentially to a PDB file. The current
+  # implementation conforms to the [PDB format
+  # v3.3](https://www.wwpdb.org/documentation/file-format-content/format33/v3.3.html).
+  #
+  # ```
+  # PDB::Writer.open("/path/to/pdb") do |writer|
+  #   writer.write structure1
+  #   writer.write structure2
+  #   ...
+  # end
+  # ```
+  #
+  # Atom/residue numbers are written in the
+  # [hybrid-36](http://cci.lbl.gov/hybrid_36) representation. See the
+  # `PDB::Hybrid36` module.
   class Writer
     include IO::FormatWriter(AtomCollection)
     include IO::FormatWriter(Structure)
 
-    PDB_VERSION      = "3.30"
-    PDB_VERSION_DATE = Time.local 2011, 7, 13
-    WHITESPACE       = ' '
+    private PDB_VERSION      = "3.30"
+    private PDB_VERSION_DATE = Time.local 2011, 7, 13
+    private WHITESPACE       = ' '
 
+    # Writes CONECT records for the given bonds. If `true`, write all
+    # bonds in the given structure or compatible instance.
     needs bonds : Bool | Array(Bond) = false
+    # If `true`, atom serial numbers will start from 1 upon writing
+    # instead of the current atom numbering.
     needs renumber : Bool = true
 
     @atom_index_table = {} of Int32 => Int32
@@ -75,6 +283,10 @@ module Chem::PDB
       super
     end
 
+    # Write the atoms in *atoms* sequentially to the `IO` encoded in the
+    # PDB file format.
+    #
+    # NOTE: original alternate location is not written.
     def write(atoms : AtomCollection) : Nil
       check_open
       @record_index = 0
@@ -87,6 +299,14 @@ module Chem::PDB
       @model += 1
     end
 
+    # Write the atoms in *structure* sequentially to the `IO` encoded in
+    # the PDB file format.
+    #
+    # Experiment, secondary structure and unit cell information is
+    # written in the header if present. `TER` records are written after
+    # each polymer chain.
+    #
+    # NOTE: original alternate location is not written.
     def write(structure : Structure) : Nil
       check_open
       @record_index = 0
@@ -292,6 +512,37 @@ module Chem::PDB
     end
   end
 
+  # Reads the entries sequentially in a PDB file. Use either the `#each`
+  # method to yield every entry or `#read_next` method to read the next
+  # entry only.
+  #
+  # ```
+  # PDB::Reader.open("/path/to/pdb") do |reader|
+  #   reader.each do |structure|
+  #     ...
+  #   end
+  #
+  #   # or
+  #
+  #   while structure = reader.read_next
+  #     ...
+  #   end
+  # end
+  # ```
+  #
+  # This implementation supports for alternate locations on both atom
+  # positions and residue types, where the latter implies that the
+  # number of atoms may vary among the alternate locations of the same
+  # residue. However, alternate location information is not stored after
+  # reading.
+  #
+  # Atom/residue numbers are decoded using the
+  # [hybrid-36](http://cci.lbl.gov/hybrid_36) representation. See the
+  # `PDB::Hybrid36` module.
+  #
+  # NOTE: The current implementation conforms to the [PDB format
+  # v3.3](https://www.wwpdb.org/documentation/file-format-content/format33/v3.3.html).
+  # Files that use an older specification may fail to read.
   class Reader
     include IO::FormatReader(Structure)
     include IO::TextFormatReader(Structure)
@@ -300,15 +551,25 @@ module Chem::PDB
     private alias ResidueId = Tuple(Char, Int32, Char?)
     private alias Sec = Protein::SecondaryStructure
 
+    # :nodoc:
     HELIX_TYPES = {
       1 => Sec::RightHandedHelixAlpha,
       3 => Sec::RightHandedHelixPi,
       5 => Sec::RightHandedHelix3_10,
     }
 
+    # Alternate location to read only. If `nil`, the atom positions and
+    # topology information of each residue with multiple alternate
+    # locations will be set to that of highest occupancy.
     needs alt_loc : Char? = nil
+    # List of chain identifiers to read. If present, other chains will
+    # be discarded. Use the special value `"first"` to select the first
+    # chain regardless of its identifier.
     needs chains : Enumerable(Char) | String | Nil = nil
+    # Triggers bond and topology perception after reading. See
+    # `Structure::Builder#build` for more information.
     needs guess_topology : Bool = true
+    # Indicates whether to read HET atoms.
     needs het : Bool = true
 
     @pdb_bonds = Hash(Tuple(Int32, Int32), Int32).new 0
