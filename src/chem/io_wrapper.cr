@@ -118,7 +118,8 @@ module IOWrapper
        end %}
 
     # Creates a new reader from the given *io*. The arguments are those
-    # marked as needed for instantiation.
+    # marked as needed for instantiation and the instance variables of
+    # the same name are set to the passed values.
     def initialize(
       @io : ::IO,
       {% for decl in args %}
@@ -130,7 +131,8 @@ module IOWrapper
     end
 
     # Creates a new reader from the given *path*. The arguments are
-    # those marked as needed for instantiation.
+    # those marked as needed for instantiation and the instance
+    # variables of the same name are set to the passed values.
     #
     # An `IO` object will be created and open for the given *path*,
     # which will be closed when closing this object (equivalent to set
@@ -151,7 +153,8 @@ module IOWrapper
 
     # Creates a new reader from the given *io*, yields it to the given
     # block, and closes it at the end. The arguments are those marked as
-    # needed for instantiation.
+    # needed for instantiation and the instance variables of the same
+    # name are set to the passed values.
     def self.open(
       io : ::IO,
       {% for decl in args %}
@@ -171,7 +174,8 @@ module IOWrapper
 
     # Creates a new reader from the given *path*, yields it to the given
     # block, and closes it at the end. The arguments are those marked as
-    # needed for instantiation.
+    # needed for instantiation and the instance variables of the same
+    # name are set to the passed values.
     def self.open(
       path : Path | String,
       {% for decl in args %}
