@@ -45,7 +45,7 @@ module Chem
     # File open mode. May be overriden by including types.
     FILE_MODE = "w"
 
-    # Write `obj` to the IO encoded in the file format.
+    # Writes *obj* to the `IO` encoded in the file format.
     abstract def write(obj : T) : Nil
 
     @io : ::IO
