@@ -50,7 +50,7 @@ module Chem::Topology::Templates
     description "Cysteine"
     name "CYS"
     code 'C'
-    sidechain "CB-SG"
+    sidechain "CB-SG(2)"
   end
 
   aminoacid do
@@ -158,7 +158,7 @@ module Chem::Topology::Templates
     description "Methionine "
     name "MET"
     code 'M'
-    sidechain "CB-CG-SD-CE"
+    sidechain "CB-CG-SD(2)-CE"
   end
 
   aminoacid do
