@@ -4,7 +4,7 @@ version: 0.5.5
 authors:
   - Francisco Adasme <francisco.adasme@gmail.com>
 
-crystal: 0.35
+crystal: 0.36.1
 
 executables:
   - psique
