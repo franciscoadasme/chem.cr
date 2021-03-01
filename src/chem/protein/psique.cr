@@ -2,16 +2,22 @@ module Chem::Protein
   class PSIQUE < SecondaryStructureCalculator
     CURVATURE_CUTOFF = 60
 
+    HBOND_DISTANCE       = 1.5..2.6 # hydrogen---acceptor
+    HBOND_MIN_ANGLE      = 120      # donor-hydrogen---acceptor
+    MIN_RESIDUE_DISTANCE =   3
+
     getter? blend_elements : Bool
 
     def initialize(structure : Structure, @blend_elements : Bool = true)
       super structure
       @residues = ResidueView.new structure.residues.to_a.select(&.protein?)
       @raw_sec = Array(SecondaryStructure).new @residues.size, SecondaryStructure::None
+      @bridged_residues = Set(Residue).new @residues.size
     end
 
     def assign : Nil
       reset_secondary_structure
+      update_bridged_residues
       assign_secondary_structure
       extend_elements
       reassign_enclosed_elements
@@ -164,17 +170,37 @@ module Chem::Protein
           curvature[i] = ((dprev + dnext) / 2).degrees
         end
 
-        rise = h2.zeta.scale(0, 4)
-        twist = h2.theta.scale(0, 360)
-        pes = PSIQUE.pes[rise >= 0 ? 1 : -1]
-        rise, twist = pes.walk rise, twist
+        raw_rise = h2.zeta.scale(0, 4)
+        raw_twist = h2.theta.scale(0, 360)
+        pes = PSIQUE.pes[raw_rise >= 0 ? 1 : -1]
+        rise, twist = pes.walk raw_rise, raw_twist
+        basin_ok = false
         if basin = pes.basin(rise, twist)
+          case basin.sec
+          when .beta_strand?
+            # ensure that the residue forms or is between h-bond bridges
+            next unless in_bridge?(res)
+          when .polyproline?, .helix_gamma?
+            # check for beta_strand if the residue forms or is between h-bond bridges
+            if in_bridge?(res) && pes.basin(:beta_strand).includes?(raw_rise, raw_twist)
+              basin = pes.basin :beta_strand
+              basin_ok = true
+            end
+          end
+
           @raw_sec[i] = basin.sec
-          if basin.includes?(rise, twist) && curvature[i] <= CURVATURE_CUTOFF
+          if (basin_ok || basin.includes?(rise, twist)) &&
+             curvature[i] <= CURVATURE_CUTOFF
             res.sec = basin.sec
           end
         end
       end
+    end
+
+    private def in_bridge?(residue : Residue) : Bool
+      residue.in?(@bridged_residues) ||
+        (residue.previous.in?(@bridged_residues) &&
+          residue.next.in?(@bridged_residues))
     end
 
     private def extend_elements
@@ -193,8 +219,16 @@ module Chem::Protein
       end
     end
 
+    private def guess_hydrogen(residue : Residue) : Spatial::Vector
+      n = residue.dig("N").coords
+      if (pred = residue.previous) && (c = pred.dig?("C")) && (o = pred.dig?("O"))
+        n + (c.coords - o.coords).normalize
+      else
+        n
+      end
+    end
+
     private def normalize_regular_elements : Nil
-      offset = 0
       @residues.each_secondary_structure(reuse: true, strict: false) do |ele, sec|
         if sec.type.regular?
           if blend_elements? && ele.any?(&.sec.!=(sec))
@@ -203,7 +237,6 @@ module Chem::Protein
           min_size = ele.all?(&.sec.==(sec)) ? sec.min_size : sec.type.min_size
           ele.sec = :none if ele.size < min_size
         end
-        offset += ele.size
       end
     end
 
@@ -220,6 +253,26 @@ module Chem::Protein
           end
           offset += left.size
         end
+    end
+
+    private def update_bridged_residues
+      kdtree = Spatial::KDTree.new @residues
+      @bridged_residues.clear
+      @residues.each do |residue|
+        next if residue.name == "PRO" && residue.in?(@bridged_residues)
+        next unless donor = residue.dig?("N")
+        h = residue.dig?("H").try(&.coords) || guess_hydrogen(residue)
+        kdtree.each_neighbor(h, within: HBOND_DISTANCE.end) do |acceptor|
+          if acceptor.residue != residue &&
+             acceptor.name == "O" &&
+             (residue.chain != acceptor.chain ||
+             (residue.number - acceptor.residue.number).abs >= MIN_RESIDUE_DISTANCE) &&
+             Spatial.distance(h, acceptor.coords).in?(HBOND_DISTANCE) &&
+             Spatial.angle(donor.coords, h, acceptor.coords) >= HBOND_MIN_ANGLE
+            @bridged_residues << residue << acceptor.residue
+          end
+        end
+      end
     end
 
     private struct Basin
@@ -273,7 +326,14 @@ module Chem::Protein
     end
 
     private class EnergySurface
+      @basin_table : Hash(SecondaryStructure, Basin)
+
       def initialize(@basins : Array(Basin))
+        @basin_table = @basins.index_by &.sec
+      end
+
+      def basin(sec : SecondaryStructure) : Basin
+        @basin_table[sec]
       end
 
       def basin(x : Float64, y : Float64) : Basin?
@@ -386,6 +446,7 @@ module Chem::Protein
         (-2..2)
           .compact_map { |offset| self[i, offset] if offset != 0 }
           .uniq!
+          .reject!(&.==(@residues.unsafe_fetch(i).sec))
           .to_h { |sec| {sec, score(i, sec)} }
       end
     end
