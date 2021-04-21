@@ -7,13 +7,13 @@
 # are avoided as much as possible.
 #
 # NOTE: Only ASCII enconding is supported.
-class Chem::IO::TextIO
+class IO::Text
   @buffer = Bytes.empty
 
   # Closes the underlying `IO`.
   delegate close, to: @io
 
-  # Creates a new `TextIO` that wraps *io* and sets an internal buffer
+  # Creates a new `IO::Text` that wraps *io* and sets an internal buffer
   # of size *buffer_size*.
   #
   # NOTE: *buffer_size* should be large enough to hold the entire string
@@ -27,7 +27,7 @@ class Chem::IO::TextIO
   # returns the returned value. Returns `false` at end of file.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("abcdef")
+  # io = IO::Text.new IO::Memory.new("abcdef")
   # io.check &.alphanumeric? # => true
   # io.check &.number?       # => false
   # io.read                  # => 'a'
@@ -41,7 +41,7 @@ class Chem::IO::TextIO
   # Returns `false` at end of file.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("abcdef")
+  # io = IO::Text.new IO::Memory.new("abcdef")
   # io.check 97  # => true
   # io.check 128 # => false
   # io.read_byte # => 97
@@ -54,7 +54,7 @@ class Chem::IO::TextIO
   # `false`. Returns `false` at end of file.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("abcdef")
+  # io = IO::Text.new IO::Memory.new("abcdef")
   # io.check 'A' # => false
   # io.check 'a' # => true
   # io.read      # => 'a'
@@ -67,7 +67,7 @@ class Chem::IO::TextIO
   # collection, else `false`. Returns `false` at end of file.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("abcdef")
+  # io = IO::Text.new IO::Memory.new("abcdef")
   # io.check 'A', 'a', 'B', 'b'   # => true
   # io.check ['A', 'a', 'B', 'b'] # => true
   # io.check 'b', 'B'             # => false
@@ -91,7 +91,7 @@ class Chem::IO::TextIO
   # available bytes is less than the bytesize of *str*.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("abcdef")
+  # io = IO::Text.new IO::Memory.new("abcdef")
   # io.check "abcd"    # => true
   # io.check "abcdef"  # => true
   # io.check "abcdefg" # => false
@@ -107,7 +107,7 @@ class Chem::IO::TextIO
   # at end of file.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("abcdef")
+  # io = IO::Text.new IO::Memory.new("abcdef")
   # io.check "def", "abcd"       # => true
   # io.check %w(def abcd)        # => true
   # io.check "abcdef", "abcdefg" # => true
@@ -130,7 +130,7 @@ class Chem::IO::TextIO
   # count from.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("123 hello world")
+  # io = IO::Text.new IO::Memory.new("123 hello world")
   # io.count_bytes_while(&.chr.number?)    # => 3
   # io.read(4)                             # => "123 "
   # io.count_bytes_while(&.chr.lowercase?) # => 5
@@ -151,7 +151,7 @@ class Chem::IO::TextIO
   # Consumes and yields consecutive bytes in the `IO`.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("abcdef 123")
+  # io = IO::Text.new IO::Memory.new("abcdef 123")
   # io.each_byte do |byte|
   #   break if byte.chr.whitespace?
   #   print byte.chr, ' '
@@ -183,7 +183,7 @@ class Chem::IO::TextIO
   # else `false`.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("123 hello")
+  # io = IO::Text.new IO::Memory.new("123 hello")
   # io.eof? # => false
   # io.skip_to_end
   # io.eof? # => true
@@ -196,7 +196,7 @@ class Chem::IO::TextIO
   # else `false`. Returns `true` at end of file.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("123 \nhello\r\n\t world")
+  # io = IO::Text.new IO::Memory.new("123 \nhello\r\n\t world")
   # io.eol?                 # => false
   # io.read(3)              # => "123"
   # io.eol?                 # => true
@@ -214,7 +214,7 @@ class Chem::IO::TextIO
   # *ignore_spaces* is `false`.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("123 \nhello")
+  # io = IO::Text.new IO::Memory.new("123 \nhello")
   # io.eol?                       # => false
   # io.read(3)                    # => "123"
   # io.eol?                       # => true
@@ -242,7 +242,7 @@ class Chem::IO::TextIO
   # else `nil`.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("hello")
+  # io = IO::Text.new IO::Memory.new("hello")
   # io.peek    # => 'h'
   # io.peek    # => 'h'
   # io.read(5) # => "hello"
@@ -256,7 +256,7 @@ class Chem::IO::TextIO
   # Returns an empty string at end of file.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("hello world")
+  # io = IO::Text.new IO::Memory.new("hello world")
   # io.peek(4)  # => "hell"
   # io.peek(3)  # => "hel"
   # io.read(8)  # => "hello wo"
@@ -273,7 +273,7 @@ class Chem::IO::TextIO
   # else `nil`.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("hello")
+  # io = IO::Text.new IO::Memory.new("hello")
   # io.peek_byte # => 104
   # io.peek_byte # => 104
   # io.read(5)   # => "hello"
@@ -288,7 +288,7 @@ class Chem::IO::TextIO
   # Returns an empty slice at end of file.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("hello world")
+  # io = IO::Text.new IO::Memory.new("hello world")
   # io.peek_bytes(4)  # => Bytes[104, 101, 108, 108]
   # io.peek_bytes(3)  # => Bytes[104, 101, 108]
   # io.read(8)        # => "hello wo"
@@ -306,7 +306,7 @@ class Chem::IO::TextIO
   # string at end of file.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("The quick\n brown\t\tfox\njumps")
+  # io = IO::Text.new IO::Memory.new("The quick\n brown\t\tfox\njumps")
   # io.peek_line # => "The quick"
   # io.read_line # => "The quick"
   # io.peek_line # => " brown\t\tfox"
@@ -330,7 +330,7 @@ class Chem::IO::TextIO
   # are no more characters in the `IO`.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("hello")
+  # io = IO::Text.new IO::Memory.new("hello")
   # io.read # => 'h'
   # io.read # => 'e'
   # io.read # => 'l'
@@ -346,7 +346,7 @@ class Chem::IO::TextIO
   # more characters in the `IO`.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("hello")
+  # io = IO::Text.new IO::Memory.new("hello")
   # io.read? # => 'h'
   # io.read? # => 'e'
   # io.read? # => 'l'
@@ -362,7 +362,7 @@ class Chem::IO::TextIO
   # at end of file.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("123 hello")
+  # io = IO::Text.new IO::Memory.new("123 hello")
   # io.read(5) # => "123 h"
   # io.read(3) # => "ell"
   # io.read(5) # => "o"
@@ -376,7 +376,7 @@ class Chem::IO::TextIO
   # are no more bytes in the `IO`.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("hello")
+  # io = IO::Text.new IO::Memory.new("hello")
   # io.read_byte # => 104
   # io.read_byte # => 101
   # io.read_byte # => 108
@@ -392,7 +392,7 @@ class Chem::IO::TextIO
   # more bytes in the `IO`.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("hello")
+  # io = IO::Text.new IO::Memory.new("hello")
   # io.read_byte? # => 104
   # io.read_byte? # => 101
   # io.read_byte? # => 108
@@ -412,7 +412,7 @@ class Chem::IO::TextIO
   # of file.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("123 hello")
+  # io = IO::Text.new IO::Memory.new("123 hello")
   # io.read_bytes(2)  # => Bytes[49, 50]
   # io.read_bytes(5)  # => Bytes[51, 32, 104, 101, 108]
   # io.read_bytes(10) # => Bytes[108, 111]
@@ -434,7 +434,7 @@ class Chem::IO::TextIO
   # are no more bytes in the `IO`.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("123 hello")
+  # io = IO::Text.new IO::Memory.new("123 hello")
   # io.read(5)           # => "123 h"
   # io.read_bytes_to_end # => Bytes[101, 108, 108, 111]
   # io.read_bytes_to_end # => Bytes[]
@@ -454,7 +454,7 @@ class Chem::IO::TextIO
   # more bytes in the `IO`.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("123 hello")
+  # io = IO::Text.new IO::Memory.new("123 hello")
   # io.read_bytes_until(' ') # => Bytes[49, 50, 51]
   # io.read_bytes_until(108) # => Bytes[32, 104, 101]
   # io.read_bytes_until('Z') # => Bytes[108, 108, 111]
@@ -492,7 +492,7 @@ class Chem::IO::TextIO
   # disallowed unless *strict* is `false`.
   #
   # ```
-  # io = TextIO.new IO::Memory.new(" -123.45 1.23abc")
+  # io = IO::Text.new IO::Memory.new(" -123.45 1.23abc")
   # io.read_float                # => -123.45
   # io.read                      # => ' '
   # io.read_float                # raises ParseException
@@ -518,7 +518,7 @@ class Chem::IO::TextIO
   # disallowed unless *strict* is `false`.
   #
   # ```
-  # io = TextIO.new IO::Memory.new(" -123.45 1.23abc")
+  # io = IO::Text.new IO::Memory.new(" -123.45 1.23abc")
   # io.read_float?                # => -123.45
   # io.read                       # => ' '
   # io.read_float?                # => nil
@@ -560,7 +560,7 @@ class Chem::IO::TextIO
   # the number are disallowed unless *strict* is `false`.
   #
   # ```
-  # io = TextIO.new IO::Memory.new(" -123 1.23abc")
+  # io = IO::Text.new IO::Memory.new(" -123 1.23abc")
   # io.read_int                # => -123
   # io.read                    # => ' '
   # io.read_int                # raises ParseException
@@ -586,7 +586,7 @@ class Chem::IO::TextIO
   # the number are disallowed unless *strict* is `false`.
   #
   # ```
-  # io = TextIO.new IO::Memory.new(" -123 1.23abc")
+  # io = IO::Text.new IO::Memory.new(" -123 1.23abc")
   # io.read_int?                # => -123
   # io.read                     # => ' '
   # io.read_int?                # => nil
@@ -640,7 +640,7 @@ class Chem::IO::TextIO
   # returned string.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("Lorem ipsum\ndolor sit amet\r\nabc")
+  # io = IO::Text.new IO::Memory.new("Lorem ipsum\ndolor sit amet\r\nabc")
   # io.read_line # => "Lorem ipsum"
   # io.read_line # => "dolor sit amet"
   # io.read_line # => "abc"
@@ -658,7 +658,7 @@ class Chem::IO::TextIO
   # string if there are no more characters in the `IO`.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("123 hello")
+  # io = IO::Text.new IO::Memory.new("123 hello")
   # io.read(2)     # => "12"
   # io.read_to_end # => "3 hello"
   # io.read_to_end # => ""
@@ -673,7 +673,7 @@ class Chem::IO::TextIO
   # are no more characters in the `IO`.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("123 hello")
+  # io = IO::Text.new IO::Memory.new("123 hello")
   # io.read_until(' ') # => "123"
   # io.read_until('o') # => " hell"
   # io.read_until('Z') # => "o"
@@ -691,7 +691,7 @@ class Chem::IO::TextIO
   # floating-point numbers separated by whitespace. See `#read_float?`.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("1.2 3.4 5.6 7.8 9.0")
+  # io = IO::Text.new IO::Memory.new("1.2 3.4 5.6 7.8 9.0")
   # io.read_vector? # => Chem::Spatial::Vector[1.2, 3.4, 5.6]
   # io.read_vector? # raises ParseException
   # ```
@@ -709,7 +709,7 @@ class Chem::IO::TextIO
   # floating-point numbers separated by whitespace. See `#read_float?`.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("1.2 3.4 5.6 7.8 9.0")
+  # io = IO::Text.new IO::Memory.new("1.2 3.4 5.6 7.8 9.0")
   # io.read_vector? # => Chem::Spatial::Vector[1.2, 3.4, 5.6]
   # io.read_vector? # => nil
   # ```
@@ -733,7 +733,7 @@ class Chem::IO::TextIO
   #
   # ```
   # str = "The 123 quick\n brown!\t\tfox-jumps"
-  # io = TextIO.new IO::Memory.new(str)
+  # io = IO::Text.new IO::Memory.new(str)
   # io.read_word # => "The"
   # io.read_word # => "123"
   # io.read_word # => "quick"
@@ -759,7 +759,7 @@ class Chem::IO::TextIO
   #
   # ```
   # str = "The 123 quick\n brown!\t\tfox-jumps"
-  # io = TextIO.new IO::Memory.new(str)
+  # io = IO::Text.new IO::Memory.new(str)
   # io.read_word? # => "The"
   # io.read_word? # => "123"
   # io.read_word? # => "quick"
@@ -781,7 +781,7 @@ class Chem::IO::TextIO
   # immediately or there are no more characters in the `IO`.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("123 abcdef \r\n56.7")
+  # io = IO::Text.new IO::Memory.new("123 abcdef \r\n56.7")
   # io.scan(&.number?)     # => "123"
   # io.scan(&.letter?)     # => ""
   # io.scan(&.whitespace?) # => " "
@@ -801,7 +801,7 @@ class Chem::IO::TextIO
   # the `IO`.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("123 abcdef \r\n56.7")
+  # io = IO::Text.new IO::Memory.new("123 abcdef \r\n56.7")
   # io.scan 'a'..'z', '1'..'9', '\r', '\n'   # => "123"
   # io.scan 'a'..'z'                         # => ""
   # io.scan [' ', '\t', '\r', '\n']          # => " "
@@ -826,7 +826,7 @@ class Chem::IO::TextIO
   # immediately or there are no more bytes in the `IO`.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("123 \t\nabc|def")
+  # io = IO::Text.new IO::Memory.new("123 \t\nabc|def")
   # io.scan_bytes(&.chr.number?)     # => Bytes[49, 50, 51]
   # io.scan_bytes(&.chr.letter?)     # => Bytes[]
   # io.scan_bytes(&.chr.whitespace?) # => Bytes[32, 9, 13, 10]
@@ -857,7 +857,7 @@ class Chem::IO::TextIO
   # included in the given collection. Returns `self`.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("abc:_:def\n")
+  # io = IO::Text.new IO::Memory.new("abc:_:def\n")
   # io.skip('a'..'z').peek        # => ':'
   # io.skip(':', '_').peek        # => 'd'
   # io.skip(['d', 'e', 'z']).peek # => 'f'
@@ -879,7 +879,7 @@ class Chem::IO::TextIO
   # Reads and discards up to *count* bytes in the `IO`. Returns `self`.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("123 hello")
+  # io = IO::Text.new IO::Memory.new("123 hello")
   # io.skip_bytes(4).read  # => 'h'
   # io.skip_bytes(3).read  # => 'o'
   # io.skip_bytes(10).eof? # => true
@@ -896,7 +896,7 @@ class Chem::IO::TextIO
   # Reads and discards the current line in the `IO`. Returns `self`.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("123 hello\nabcdef \r\n567")
+  # io = IO::Text.new IO::Memory.new("123 hello\nabcdef \r\n567")
   # io.skip_line.read # => 'a'
   # io.skip_line.read # => '5'
   # io.skip_line.eof? # => true
@@ -911,7 +911,7 @@ class Chem::IO::TextIO
   # `self`.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("abc \t\ndef\thello\r\n123")
+  # io = IO::Text.new IO::Memory.new("abc \t\ndef\thello\r\n123")
   # io.read(3)             # => "abc"
   # io.skip_spaces.read(4) # => "\ndef"
   # io.skip_spaces.read(5) # => "hello"
@@ -926,7 +926,7 @@ class Chem::IO::TextIO
   # bytes. Returns `self`.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("123 hello")
+  # io = IO::Text.new IO::Memory.new("123 hello")
   # io.skip_to_end
   # io.eof? # => true
   # ```
@@ -940,7 +940,7 @@ class Chem::IO::TextIO
   # block returns `true`. Returns `self`.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("  \t  \nhello")
+  # io = IO::Text.new IO::Memory.new("  \t  \nhello")
   # io.skip_until(&.chr.letter?)
   # io.read_to_end # => "hello"
   # ```
@@ -955,7 +955,7 @@ class Chem::IO::TextIO
   # included in the given collection. Returns `self`.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("123 hello")
+  # io = IO::Text.new IO::Memory.new("123 hello")
   # io.skip_until 'h', 'H'
   # io.read # => 'h'
   # ```
@@ -979,7 +979,7 @@ class Chem::IO::TextIO
   # given block return `true`. Returns `self`.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("  \t  \nhello")
+  # io = IO::Text.new IO::Memory.new("  \t  \nhello")
   # io.skip_while &.chr.whitespace?
   # io.peek # => 'h'
   # io.skip_while &.chr.number?
@@ -999,7 +999,7 @@ class Chem::IO::TextIO
   # Returns `self`.
   #
   # ```
-  # io = TextIO.new IO::Memory.new("  \t  \nhello")
+  # io = IO::Text.new IO::Memory.new("  \t  \nhello")
   # io.skip_whitespace.read # => 'h'
   # ```
   def skip_whitespace : self
@@ -1017,7 +1017,7 @@ class Chem::IO::TextIO
   #
   # ```
   # str = "The quick\n brown\t\tfox jumps \t\r\nover the lazy # dog\n"
-  # io = TextIO.new IO::Memory.new str
+  # io = IO::Text.new IO::Memory.new str
   # io.skip_word
   # io.peek(2) # => " q"
   # io.skip_word

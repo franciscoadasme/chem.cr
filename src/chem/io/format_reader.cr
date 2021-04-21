@@ -73,10 +73,10 @@ module Chem
   end
 
   # The `TextFormatReader` mixin changes the underlying IO to be a
-  # `TextIO` instance. The latter provides several convenience methods
+  # `IO::Text` instance. The latter provides several convenience methods
   # from reading from a plain text file format.
   module IO::TextFormatReader(T)
-    @io : TextIO
+    @io : ::IO::Text
 
     macro included
       macro finished
@@ -97,7 +97,7 @@ module Chem
           \{% end %}
           @sync_close : Bool = false,
         )
-          @io = IO::TextIO.new io
+          @io = ::IO::Text.new io
         end
       end
     end
