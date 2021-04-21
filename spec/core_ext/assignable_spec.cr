@@ -1,4 +1,4 @@
-require "./spec_helper"
+require "../spec_helper"
 
 describe Assignable do
   it "generates initialize, instance variables and getters" do
