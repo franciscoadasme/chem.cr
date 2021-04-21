@@ -21,7 +21,7 @@
 #
 # ```
 # class KeyValueBuilder
-#   include IOWrapper
+#   include IO::Wrapper
 #
 #   needs int_format : String
 #   needs float_format : String
@@ -74,7 +74,7 @@
 #   builder.write "baz", "FooBarBaz"
 # end
 # ```
-module IOWrapper
+module IO::Wrapper
   include Assignable
 
   # File open mode. May be overriden by including types.

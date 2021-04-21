@@ -17,7 +17,7 @@ module Chem
   # Use the `Assignable.needs` macro to declare reading options, which
   # will be included as arguments in the `initialize` method that is
   # generated on compilation time in the concrete class via the
-  # `IOWrapper` mixin.
+  # `IO::Wrapper` mixin.
   #
   # ```
   # class NumberReader
@@ -48,7 +48,7 @@ module Chem
   # annotation to trigger automated read method generation for encoded
   # types.
   module IO::FormatReader(T)
-    include IOWrapper
+    include ::IO::Wrapper
 
     # Reads the encoded object of type `T` from the IO. Raises
     # `ParseException` if an object couldn't be read or `EOFError` when

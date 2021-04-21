@@ -15,7 +15,7 @@ module Chem
   # Use the `Assignable.needs` macro to declare writing options, which
   # will be included as arguments in the `initialize` method that is
   # generated on compilation time in the concrete class via the
-  # `IOWrapper` mixin.
+  # `IO::Wrapper` mixin.
   #
   # ```
   # class NumberWriter
@@ -40,7 +40,7 @@ module Chem
   # annotation to trigger automated write method generation for encoded
   # types.
   module IO::FormatWriter(T)
-    include IOWrapper
+    include ::IO::Wrapper
 
     # File open mode. May be overriden by including types.
     FILE_MODE = "w"

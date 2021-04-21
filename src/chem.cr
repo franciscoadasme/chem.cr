@@ -25,7 +25,6 @@ require "./chem/core/structure/*"
 require "./chem/protein"
 require "./chem/topology"
 
-require "./chem/io_wrapper"
 require "./chem/io"
 
 module Chem
