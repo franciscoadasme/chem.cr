@@ -467,7 +467,7 @@ describe IO::Text do
 
   describe "#read_word" do
     it "fails at eof" do
-      expect_raises(Chem::IO::ParseException) do
+      expect_raises(Chem::ParseException) do
         IO::Text.new(IO::Memory.new).read_word
       end
     end

@@ -110,6 +110,6 @@ begin
   when "stride" then structure.to_stride output_file
   else               structure.to_pdb output_file
   end
-rescue ex : Chem::IO::ParseException
+rescue ex : Chem::ParseException
   abort "error: #{ex} in #{input_file}"
 end

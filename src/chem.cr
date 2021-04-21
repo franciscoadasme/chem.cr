@@ -1,4 +1,5 @@
 require "./chem/core_ext/**"
+require "./chem/err"
 
 require "./chem/linalg"
 require "./chem/spatial"
@@ -25,7 +26,11 @@ require "./chem/core/structure/*"
 require "./chem/protein"
 require "./chem/topology"
 
-require "./chem/io"
+require "./chem/format_reader"
+require "./chem/format_writer"
+require "./chem/file_type"
+require "./chem/file_format"
+require "./chem/formats/*"
 
 module Chem
   class Error < Exception; end

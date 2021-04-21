@@ -96,7 +96,7 @@ module IO::Wrapper
 
   # Raises an `IO::Error` if the underlying IO is closed.
   protected def check_open
-    raise ::IO::Error.new "Closed IO" if closed?
+    raise IO::Error.new "Closed IO" if closed?
   end
 
   # Defines `initialize` and `open` methods based on the declared
@@ -121,7 +121,7 @@ module IO::Wrapper
     # marked as needed for instantiation and the instance variables of
     # the same name are set to the passed values.
     def initialize(
-      @io : ::IO,
+      @io : IO,
       {% for decl in args %}
         {% nilable = decl.value.is_a?(Nop) && decl.type.resolve.nilable? %}
         @{{decl}}{% if nilable %} = nil{% end %},
@@ -156,7 +156,7 @@ module IO::Wrapper
     # needed for instantiation and the instance variables of the same
     # name are set to the passed values.
     def self.open(
-      io : ::IO,
+      io : IO,
       {% for decl in args %}
         {% nilable = decl.value.is_a?(Nop) && decl.type.resolve.nilable? %}
         {{decl}}{% if nilable %} = nil{% end %},

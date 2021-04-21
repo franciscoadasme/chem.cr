@@ -21,8 +21,8 @@ module Chem
   #
   # ```
   # class NumberReader
-  #   include IO::FormatReader(Int32)
-  #   include IO::FormatReader(Float64)
+  #   include FormatReader(Int32)
+  #   include FormatReader(Float64)
   #
   #   def read(type : Int32.class) : Int32
   #     @io.gets.to_i
@@ -47,8 +47,8 @@ module Chem
   # Modules declaring a reader class may be marked by the `FileType`
   # annotation to trigger automated read method generation for encoded
   # types.
-  module IO::FormatReader(T)
-    include ::IO::Wrapper
+  module FormatReader(T)
+    include IO::Wrapper
 
     # Reads the encoded object of type `T` from the IO. Raises
     # `ParseException` if an object couldn't be read or `EOFError` when
@@ -59,7 +59,7 @@ module Chem
     # may not be reversible.
     abstract def read(type : T.class) : T
 
-    @io : ::IO
+    @io : IO
 
     # Shorthand method for raising a `ParseException` exception.
     protected def parse_exception(msg : String)
@@ -68,15 +68,15 @@ module Chem
 
     # Raises an `IO::EOFError` if the underlying IO is at the end.
     protected def check_eof
-      raise ::IO::EOFError.new if @io.peek.nil?
+      raise IO::EOFError.new if @io.peek.nil?
     end
   end
 
   # The `TextFormatReader` mixin changes the underlying IO to be a
   # `IO::Text` instance. The latter provides several convenience methods
   # from reading from a plain text file format.
-  module IO::TextFormatReader(T)
-    @io : ::IO::Text
+  module TextFormatReader(T)
+    @io : IO::Text
 
     macro included
       macro finished
@@ -91,13 +91,13 @@ module Chem
            end %}
 
         def initialize(
-          io : ::IO,
+          io : IO,
           \{% for decl in assigns %}
             @\{{decl}},
           \{% end %}
           @sync_close : Bool = false,
         )
-          @io = ::IO::Text.new io
+          @io = IO::Text.new io
         end
       end
     end
@@ -113,7 +113,7 @@ module Chem
       else
         @io.skip_spaces
       end
-      raise ::IO::EOFError.new if @io.eof?
+      raise IO::EOFError.new if @io.eof?
     end
   end
 
@@ -122,7 +122,7 @@ module Chem
   #
   # Including types must provide the `#read_next` and `#skip` methods to
   # read and discard an entry in the IO, respectively.
-  module IO::MultiFormatReader(T)
+  module MultiFormatReader(T)
     # Returns the next entry in the IO, or `nil` if there are no more
     # entries. Raises `ParseException` if an object couldn't be read.
     #
@@ -167,7 +167,7 @@ module Chem
     # read as the state of the underlying IO and reader could be changed
     # and they may not be reversible.
     def read(type : T.class) : T
-      read_next || raise ::IO::EOFError.new
+      read_next || raise IO::EOFError.new
     end
   end
 end

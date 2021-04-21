@@ -103,7 +103,7 @@ module Chem::Spatial
                     unsafe_fetch(4) * unsafe_fetch(1)) * inv_det
     end
 
-    def inspect(io : ::IO)
+    def inspect(io : IO)
       io << "AffineTransform[["
       16.times do |index|
         i = index // 4

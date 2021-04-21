@@ -51,7 +51,7 @@ module Chem::VASP
   module GridWriter
     @write_header = true
 
-    def initialize(input : ::IO | Path | String,
+    def initialize(input : IO | Path | String,
                    @structure : Structure,
                    *,
                    sync_close : Bool = false)

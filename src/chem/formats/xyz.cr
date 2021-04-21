@@ -1,8 +1,8 @@
-@[Chem::IO::FileType(ext: %w(xyz))]
+@[Chem::FileType(ext: %w(xyz))]
 module Chem::XYZ
   class Writer
-    include IO::FormatWriter(AtomCollection)
-    include IO::FormatWriter(Structure)
+    include FormatWriter(AtomCollection)
+    include FormatWriter(Structure)
 
     def write(atoms : AtomCollection, title : String = "") : Nil
       check_open
@@ -20,9 +20,9 @@ module Chem::XYZ
   end
 
   class Reader
-    include IO::FormatReader(Structure)
-    include IO::TextFormatReader(Structure)
-    include IO::MultiFormatReader(Structure)
+    include FormatReader(Structure)
+    include TextFormatReader(Structure)
+    include MultiFormatReader(Structure)
 
     needs guess_topology : Bool = true
 

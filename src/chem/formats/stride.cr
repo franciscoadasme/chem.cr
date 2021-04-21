@@ -1,7 +1,7 @@
-@[Chem::IO::FileType(ext: %w(stride))]
+@[Chem::FileType(ext: %w(stride))]
 class Chem::Protein::Stride < Chem::Protein::SecondaryStructureCalculator
   class Writer
-    include IO::FormatWriter(Structure)
+    include FormatWriter(Structure)
 
     needs source_file : String | Path | Nil
 

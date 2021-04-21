@@ -1,8 +1,8 @@
-@[Chem::IO::FileType(ext: %w(gen))]
+@[Chem::FileType(ext: %w(gen))]
 module Chem::DFTB::Gen
   class Writer
-    include IO::FormatWriter(AtomCollection)
-    include IO::FormatWriter(Structure)
+    include FormatWriter(AtomCollection)
+    include FormatWriter(Structure)
 
     needs fractional : Bool = false
 
@@ -39,8 +39,8 @@ module Chem::DFTB::Gen
   end
 
   class Reader
-    include IO::FormatReader(Structure)
-    include IO::TextFormatReader(Structure)
+    include FormatReader(Structure)
+    include TextFormatReader(Structure)
 
     needs guess_topology : Bool = true
 

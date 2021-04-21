@@ -86,7 +86,7 @@
 # end
 # structure.to_pdb "/path/to/pdb"
 # ```
-@[Chem::IO::FileType(ext: %w(ent pdb))]
+@[Chem::FileType(ext: %w(ent pdb))]
 module Chem::PDB
   # The `PDB::Hybrid36` module provides capabilities for the encoding
   # and decoding of numbers in the
@@ -222,7 +222,7 @@ module Chem::PDB
     # PDB::Hybrid36.encode io, -9999, width: 4     # raises ArgumentError
     # PDB::Hybrid36.encode io, 2_436_112, width: 4 # raises ArgumentError
     # ```
-    def self.encode(io : ::IO, num : Int, width : Int) : Nil
+    def self.encode(io : IO, num : Int, width : Int) : Nil
       out_of_range num if num < 1 - 10**(width - 1)
       return io.printf "%#{width}d", num if num < 10**width
       num -= 10**width
@@ -259,8 +259,8 @@ module Chem::PDB
   # [hybrid-36](http://cci.lbl.gov/hybrid_36) representation. See the
   # `PDB::Hybrid36` module.
   class Writer
-    include IO::FormatWriter(AtomCollection)
-    include IO::FormatWriter(Structure)
+    include FormatWriter(AtomCollection)
+    include FormatWriter(Structure)
 
     private PDB_VERSION      = "3.30"
     private PDB_VERSION_DATE = Time.local 2011, 7, 13
@@ -544,9 +544,9 @@ module Chem::PDB
   # v3.3](https://www.wwpdb.org/documentation/file-format-content/format33/v3.3.html).
   # Files that use an older specification may fail to read.
   class Reader
-    include IO::FormatReader(Structure)
-    include IO::TextFormatReader(Structure)
-    include IO::MultiFormatReader(Structure)
+    include FormatReader(Structure)
+    include TextFormatReader(Structure)
+    include MultiFormatReader(Structure)
 
     private alias ResidueId = Tuple(Char, Int32, Char?)
     private alias Sec = Protein::SecondaryStructure

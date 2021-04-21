@@ -19,7 +19,7 @@ module Chem
   #
   # ```
   # class NumberWriter
-  #   include IO::FormatWriter(Int32)
+  #   include FormatWriter(Int32)
   #
   #   needs format : String
   #
@@ -39,8 +39,8 @@ module Chem
   # Modules declaring a writer class may be marked by the `FileType`
   # annotation to trigger automated write method generation for encoded
   # types.
-  module IO::FormatWriter(T)
-    include ::IO::Wrapper
+  module FormatWriter(T)
+    include IO::Wrapper
 
     # File open mode. May be overriden by including types.
     FILE_MODE = "w"
@@ -48,7 +48,7 @@ module Chem
     # Writes *obj* to the `IO` encoded in the file format.
     abstract def write(obj : T) : Nil
 
-    @io : ::IO
+    @io : IO
 
     # Writes a formatted string to the IO. For details on the format
     # string, see `sprintf`.

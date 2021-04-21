@@ -51,7 +51,7 @@ module Chem
       vec
     end
 
-    def inspect(io : ::IO) : Nil
+    def inspect(io : IO) : Nil
       io << "<Lattice "
       i.to_s io
       io << ", "

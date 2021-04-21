@@ -13,7 +13,7 @@ alias Lattice = Chem::Lattice
 alias M = Chem::Linalg::Matrix
 alias PBC = Chem::Spatial::PBC
 alias PDB = Chem::PDB
-alias ParseException = Chem::IO::ParseException
+alias ParseException = Chem::ParseException
 alias PeriodicTable = Chem::PeriodicTable
 alias Q = Chem::Spatial::Quaternion
 alias S = Chem::Spatial::Size
@@ -145,7 +145,7 @@ end
 def load_file(path : String, topology level : TopologyLevel? = nil) : Structure
   path = File.join File.extname(path)[1..], path unless File.extname(path).blank?
   path = File.join "spec", "data", path
-  structure = case Chem::IO::FileFormat.from_filename(path)
+  structure = case Chem::FileFormat.from_filename(path)
               when .pdb?    then Chem::Structure.from_pdb path, guess_topology: level.nil?
               when .xyz?    then Chem::Structure.from_xyz path, guess_topology: level.nil?
               when .poscar? then Chem::Structure.from_poscar path, guess_topology: level.nil?

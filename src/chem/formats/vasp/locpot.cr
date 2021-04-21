@@ -1,8 +1,8 @@
-@[Chem::IO::FileType(names: %w(LOCPOT*))]
+@[Chem::FileType(names: %w(LOCPOT*))]
 module Chem::VASP::Locpot
   class Reader
-    include IO::FormatReader(Spatial::Grid)
-    include IO::TextFormatReader(Spatial::Grid)
+    include FormatReader(Spatial::Grid)
+    include TextFormatReader(Spatial::Grid)
     include GridReader
 
     def read(type : Spatial::Grid.class) : Spatial::Grid
@@ -14,7 +14,7 @@ module Chem::VASP::Locpot
   end
 
   class Writer
-    include IO::FormatWriter(Spatial::Grid)
+    include FormatWriter(Spatial::Grid)
     include GridWriter
 
     needs structure : Structure

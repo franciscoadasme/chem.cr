@@ -417,7 +417,7 @@ module Chem
       Spatial.hlxparams self, structure.lattice
     end
 
-    def inspect(io : ::IO) : Nil
+    def inspect(io : IO) : Nil
       io << "<Residue "
       to_s io
       io << '>'
@@ -546,7 +546,7 @@ module Chem
       {phi, psi}
     end
 
-    def to_s(io : ::IO)
+    def to_s(io : IO)
       io << chain.id
       io << ':'
       io << @name

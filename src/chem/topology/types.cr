@@ -13,7 +13,7 @@ module Chem::Topology
       @valency = valency || nominal_valency
     end
 
-    def inspect(io : ::IO) : Nil
+    def inspect(io : IO) : Nil
       io << "<AtomType "
       to_s io
       io << '>'
@@ -23,7 +23,7 @@ module Chem::Topology
       name[@element.symbol.size..]
     end
 
-    def to_s(io : ::IO)
+    def to_s(io : IO)
       io << @name
       io << '(' << @valency << ')' unless @valency == nominal_valency
       io << (@formal_charge > 0 ? '+' : '-') unless @formal_charge == 0
@@ -61,7 +61,7 @@ module Chem::Topology
       any? &.name.==(name)
     end
 
-    def inspect(io : ::IO) : Nil
+    def inspect(io : IO) : Nil
       io << "<BondType " << self[0].name << to_char << self[1].name << '>'
     end
 
@@ -168,7 +168,7 @@ module Chem::Topology
       @atom_types.each.map(&.formal_charge).sum
     end
 
-    def inspect(io : ::IO) : Nil
+    def inspect(io : IO) : Nil
       io << "<ResidueType " << @name
       io << '(' << @code << ')' if @code
       io << ", " << @kind.to_s.downcase unless @kind.other?

@@ -1,4 +1,4 @@
-module Chem::IO
+module Chem
   macro finished
     # gather annotated types
     {% types = [] of TypeNode %}

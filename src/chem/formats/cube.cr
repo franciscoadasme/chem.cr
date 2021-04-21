@@ -1,8 +1,8 @@
-@[Chem::IO::FileType(ext: %w(cube))]
+@[Chem::FileType(ext: %w(cube))]
 module Chem::Cube
   class Reader
-    include IO::FormatReader(Spatial::Grid)
-    include IO::TextFormatReader(Spatial::Grid)
+    include FormatReader(Spatial::Grid)
+    include TextFormatReader(Spatial::Grid)
 
     BOHR_TO_ANGS = 0.529177210859
 
@@ -33,7 +33,7 @@ module Chem::Cube
   end
 
   class Writer
-    include IO::FormatWriter(Spatial::Grid)
+    include FormatWriter(Spatial::Grid)
 
     ANGS_TO_BOHR = 1.88972612478289694072
 

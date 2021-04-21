@@ -137,7 +137,7 @@ module Chem
       size == 0
     end
 
-    def inspect(io : ::IO)
+    def inspect(io : IO)
       to_s io
     end
 
@@ -179,7 +179,7 @@ module Chem
       end
     end
 
-    def to_s(io : ::IO)
+    def to_s(io : IO)
       io << "<Structure"
       io << " " << title.inspect unless title.blank?
       io << ": "

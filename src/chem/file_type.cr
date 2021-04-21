@@ -1,4 +1,4 @@
-module Chem::IO
+module Chem
   # Marks a type to be associated with a file format.
   #
   # An annotated type must provide implementations for either reading or
@@ -27,7 +27,7 @@ module Chem::IO
   # @[FileType(ext: %w(foo), names: %w(foo_*))]
   # module Chem::Foo
   #   class Reader
-  #     include IO::FormatReader(Frame)
+  #     include FormatReader(Frame)
   #
   #     def read : Frame
   #       n = @io.gets.to_i
@@ -42,8 +42,8 @@ module Chem::IO
   #   end
   #
   #   class Writer
-  #     include IO::FormatWriter(Frame)
-  #     include IO::FormatWriter(Atom)
+  #     include FormatWriter(Frame)
+  #     include FormatWriter(Atom)
   #
   #     def write(frame : Frame) : Nil
   #       @io.puts frame.coords.size
@@ -253,7 +253,7 @@ module Chem::IO
               # `Array#from_{{format.id}}` or `{{canonical_reader}}` to
               # get multiple entries instead.
             {% end %}
-            def self.from_{{format.id}}(input : ::IO | Path | String,
+            def self.from_{{format.id}}(input : IO | Path | String,
                                         *args,
                                         **options) : self
               {{reader}}.open(input, *args, **options) do |reader|
@@ -266,7 +266,7 @@ module Chem::IO
 
           # Returns the object encoded in the specified file. The file
           # format is chosen based on the filename (refer to
-          # `IO::FileFormat#from_filename`).
+          # `FileFormat#from_filename`).
           #
           # The supported file formats are {{read_formats.splat}}. Use
           # `#from_*` methods to customize how the object is decoded in
@@ -275,7 +275,7 @@ module Chem::IO
           # Raises `ArgumentError` when the file format couldn't be
           # determined.
           def self.read(path : Path | String) : self
-            read path, IO::FileFormat.from_filename(path)
+            read path, FileFormat.from_filename(path)
           end
 
           # Returns the object encoded in the specified file using the
@@ -286,9 +286,9 @@ module Chem::IO
           # the corresponding file format.
           #
           # Raises `ArgumentError` when *format* is invalid.
-          def self.read(input : ::IO | Path | String,
-                        format : IO::FileFormat | String) : self
-            format = IO::FileFormat.parse format if format.is_a?(String)
+          def self.read(input : IO | Path | String,
+                        format : FileFormat | String) : self
+            format = FileFormat.parse format if format.is_a?(String)
             {% begin %}
               case format
               {% for reader in types %}
@@ -325,14 +325,14 @@ module Chem::IO
               # Returns a `{{canonical_info_type}}` instance holding the
               # information of the object encoded in the specified file.
               # The file format is chosen based on the filename (refer
-              # to `IO::FileFormat#from_filename`).
+              # to `FileFormat#from_filename`).
               #
               # The supported file formats are {{info_formats.splat}}.
               #
               # Raises `ArgumentError` when the file format couldn't be
               # determined.
               def self.info(path : Path | String) : {{info_type}}
-                info path, IO::FileFormat.from_filename(path)
+                info path, FileFormat.from_filename(path)
               end
 
               # Returns a `{{canonical_info_type}}` instance holding the
@@ -342,9 +342,9 @@ module Chem::IO
               # The supported file formats are {{info_formats.splat}}.
               #
               # Raises `ArgumentError` when *format* is invalid.
-              def self.info(input : ::IO | Path | String,
-                            format : IO::FileFormat | String) : {{info_type}}
-                format = IO::FileFormat.parse format if format.is_a?(String)
+              def self.info(input : IO | Path | String,
+                            format : FileFormat | String) : {{info_type}}
+                format = FileFormat.parse format if format.is_a?(String)
                 {% begin %}
                   case format
                   {% for type in info_types %}
@@ -385,7 +385,7 @@ module Chem::IO
             # Writes this object to *output* using the
             # `{{canonical_format}}` file format. Arguments are fowarded
             # to `{{canonical_writer}}`.
-            def to_{{format.id}}(output : ::IO | Path | String, *args, **options) : Nil
+            def to_{{format.id}}(output : IO | Path | String, *args, **options) : Nil
               {{writer}}.open(output, *args, **options) do |writer|
                 writer.write self
               end
@@ -396,7 +396,7 @@ module Chem::IO
 
           # Writes this object to the specified file. The file format is
           # chosen based on the filename (refer to
-          # `IO::FileFormat#from_filename`).
+          # `FileFormat#from_filename`).
           #
           # The supported file formats are {{write_formats.splat}}. Use
           # `#to_*` methods to customize how the object is written in
@@ -405,7 +405,7 @@ module Chem::IO
           # Raises `ArgumentError` when the file format couldn't be
           # determined.
           def write(path : Path | String) : Nil
-            write path, IO::FileFormat.from_filename(path)
+            write path, FileFormat.from_filename(path)
           end
 
           # Writes this object to *output* using the given file format.
@@ -415,8 +415,8 @@ module Chem::IO
           # the corresponding file format.
           #
           # Raises `ArgumentError` when *format* is invalid.
-          def write(output : ::IO | Path | String, format : IO::FileFormat | String) : Nil
-            format = IO::FileFormat.parse format if format.is_a?(String)
+          def write(output : IO | Path | String, format : FileFormat | String) : Nil
+            format = FileFormat.parse format if format.is_a?(String)
             {% begin %}
               case format
               {% for writer in types %}
@@ -443,7 +443,7 @@ module Chem::IO
               # to `{{reader}}`.
               #
               # NOTE: Only works for `{{encoded_type}}`.
-              def self.from_{{format.id}}(input : ::IO | Path | String,
+              def self.from_{{format.id}}(input : IO | Path | String,
                       *args,
                       **options) : self
                 {{reader}}.open(input, *args, **options) do |reader|
@@ -459,7 +459,7 @@ module Chem::IO
               # `{{reader}}`.
               #
               # NOTE: Only works for `{{encoded_type}}`.
-              def self.from_{{format.id}}(input : ::IO | Path | String,
+              def self.from_{{format.id}}(input : IO | Path | String,
                                           indexes : Enumerable(Int),
                                           *args,
                                           **options) : self
