@@ -67,7 +67,7 @@
 #
 # Alternatively, the above could be written as:
 #
-# ```crystal
+# ```
 # KeyValueBuilder.open(io, int_format: "%8d", float_format: "%8.3f") do |builder|
 #   builder.write "foo", 123
 #   builder.write "bar", 341.12

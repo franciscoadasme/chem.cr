@@ -17,7 +17,7 @@
 # confusion, make sure to always list the arguments in the same order as
 # you would write them in an `initialize` method.
 #
-# ```crystal
+# ```
 # struct Foo
 #   include Assignable
 #
