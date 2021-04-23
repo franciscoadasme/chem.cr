@@ -2,7 +2,7 @@
 module Chem::Cube
   class Reader
     include FormatReader(Spatial::Grid)
-    include TextFormatReader(Spatial::Grid)
+    include TextFormatReader
 
     BOHR_TO_ANGS = 0.529177210859
 

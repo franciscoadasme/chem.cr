@@ -96,8 +96,8 @@ module Chem::Mol2
 
   class Reader
     include FormatReader(Structure)
-    include TextFormatReader(Structure)
     include MultiFormatReader(Structure)
+    include TextFormatReader
 
     TAG          = "@<TRIPOS>"
     TAG_ATOMS    = "@<TRIPOS>ATOM"

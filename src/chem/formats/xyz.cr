@@ -21,8 +21,8 @@ module Chem::XYZ
 
   class Reader
     include FormatReader(Structure)
-    include TextFormatReader(Structure)
     include MultiFormatReader(Structure)
+    include TextFormatReader
 
     needs guess_topology : Bool = true
 

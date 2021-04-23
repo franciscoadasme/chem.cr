@@ -2,7 +2,7 @@
 module Chem::DX
   class Reader
     include FormatReader(Spatial::Grid)
-    include TextFormatReader(Spatial::Grid)
+    include TextFormatReader
 
     def read(type : Spatial::Grid.class) : Spatial::Grid
       check_open

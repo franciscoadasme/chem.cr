@@ -75,7 +75,7 @@ module Chem
   # The `TextFormatReader` mixin changes the underlying IO to be a
   # `IO::Text` instance. The latter provides several convenience methods
   # from reading from a plain text file format.
-  module TextFormatReader(T)
+  module TextFormatReader
     @io : IO::Text
 
     macro included

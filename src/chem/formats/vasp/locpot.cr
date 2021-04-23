@@ -2,7 +2,7 @@
 module Chem::VASP::Locpot
   class Reader
     include FormatReader(Spatial::Grid)
-    include TextFormatReader(Spatial::Grid)
+    include TextFormatReader
     include GridReader
 
     def read(type : Spatial::Grid.class) : Spatial::Grid

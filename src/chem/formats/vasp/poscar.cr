@@ -77,7 +77,7 @@ module Chem::VASP::Poscar
 
   class Reader
     include FormatReader(Structure)
-    include TextFormatReader(Structure)
+    include TextFormatReader
 
     needs guess_topology : Bool = true
 

@@ -545,8 +545,8 @@ module Chem::PDB
   # Files that use an older specification may fail to read.
   class Reader
     include FormatReader(Structure)
-    include TextFormatReader(Structure)
     include MultiFormatReader(Structure)
+    include TextFormatReader
 
     private alias ResidueId = Tuple(Char, Int32, Char?)
     private alias Sec = Protein::SecondaryStructure
