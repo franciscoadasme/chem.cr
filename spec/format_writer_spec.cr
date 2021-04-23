@@ -17,6 +17,12 @@ describe Chem::FormatWriter do
       "baz".to_document path
       File.read(path).should eq "<baz>"
     end
+
+    it "writes an array" do
+      io = IO::Memory.new
+      %w(foo bar baz).to_document io
+      io.to_s.should eq "<foo><bar><baz>"
+    end
   end
 end
 

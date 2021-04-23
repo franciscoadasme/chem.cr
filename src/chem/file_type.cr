@@ -151,6 +151,8 @@ module Chem
     {% type_by_name = {} of String => MacroId %}
     # encoded_type => associated writing types
     {% write_table = {} of TypeNode => ArrayLiteral(TypeNode) %}
+    # annotated type => encoded types
+    {% write_type_table = {} of TypeNode => TypeNode %}
     # annotated type => writer class (declared within the annotated type)
     {% writer_table = {} of TypeNode => TypeNode %}
 
@@ -207,6 +209,10 @@ module Chem
 
       # gather encoded types for writing
       {% if writer = annotated_type.constant(ann[:writer] || "Writer") %}
+        {% unless write_type_table[annotated_type] %}
+          {% write_type_table[annotated_type] = [] of TypeNode %}
+        {% end %}
+
         # encoded types are detected from the type vars from the
         # included modules (include FormatWriter(Structure) => Structure)
         {% for type in writer.resolve.ancestors.select(&.<(FormatWriter)).map(&.type_vars[0]) %}
@@ -216,6 +222,7 @@ module Chem
             {% end %}
             {% encoded_types << type %}
             {% write_table[type] << annotated_type %}
+            {% write_type_table[annotated_type] << type %}
             {% n_types += 1 %}
           {% end %}
         {% end %}
@@ -473,6 +480,25 @@ module Chem
           {% end %}
         {% end %}
       {% end %}
+    {% end %}
+
+    {% for writing_type, encoded_types in write_type_table %}
+      {% format = formats[writing_type].id.downcase %}
+      {% writer = writer_table[writing_type] %}
+
+      class ::Array(T)
+        # Writes the elements to *output* using the `{{writing_type}}`
+        # file format. Arguments are fowarded to `{{writer}}`.
+        #
+        # NOTE: Only works for `{{encoded_types.splat}}`.
+        def to_{{format.id}}(output : IO | Path | String, *args, **options) : Nil
+          {{writer}}.open(output, *args, **options) do |writer|
+            each do |ele|
+              writer.write ele
+            end
+          end
+        end
+      end
     {% end %}
   end
 end
