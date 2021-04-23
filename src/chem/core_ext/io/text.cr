@@ -482,7 +482,7 @@ class IO::Text
   end
 
   # Returns the result of interpreting the next characters in the `IO`
-  # as a decimal floating-point number. Raises `ParseException` if a
+  # as a decimal floating-point number. Raises `ArgumentError` if a
   # number couldn't be read.
   #
   # This method discards any leading whitespace first. Then, it reads as
@@ -495,9 +495,9 @@ class IO::Text
   # io = IO::Text.new IO::Memory.new(" -123.45 1.23abc")
   # io.read_float                # => -123.45
   # io.read                      # => ' '
-  # io.read_float                # raises ParseException
+  # io.read_float                # raises ArgumentError
   # io.read_float(strict: false) # => 1.23
-  # io.read_float                # raises ParseException
+  # io.read_float                # raises ArgumentError
   # io.read(4)                   # => "abc"
   # ```
   #
@@ -552,7 +552,7 @@ class IO::Text
   end
 
   # Returns the result of interpreting the next characters in the `IO`
-  # as an integer. Raises `ParseException` if a number couldn't be read.
+  # as an integer. Raises `ArgumentError` if a number couldn't be read.
   #
   # This method discards any leading whitespace first. Then, it reads as
   # many characters as possible that can be converted into a valid
@@ -563,11 +563,11 @@ class IO::Text
   # io = IO::Text.new IO::Memory.new(" -123 1.23abc")
   # io.read_int                # => -123
   # io.read                    # => ' '
-  # io.read_int                # raises ParseException
+  # io.read_int                # raises ArgumentError
   # io.read_int(strict: false) # => 1
-  # io.read_int                # raises ParseException
+  # io.read_int                # raises ArgumentError
   # io.read(3)                 # => ".23"
-  # io.read_int                # raises ParseException
+  # io.read_int                # raises ArgumentError
   # io.read(3)                 # => "abc"
   # ```
   #
@@ -685,7 +685,7 @@ class IO::Text
   end
 
   # Returns the result of interpreting the next characters in the `IO`
-  # as a vector. Raises `ParseException` if a vector couldn't be read.
+  # as a vector. Raises `ArgumentError` if a vector couldn't be read.
   #
   # A vector expression is defined as three consecutive decimal
   # floating-point numbers separated by whitespace. See `#read_float?`.
@@ -693,7 +693,7 @@ class IO::Text
   # ```
   # io = IO::Text.new IO::Memory.new("1.2 3.4 5.6 7.8 9.0")
   # io.read_vector? # => Chem::Spatial::Vector[1.2, 3.4, 5.6]
-  # io.read_vector? # raises ParseException
+  # io.read_vector? # raises ArgumentError
   # ```
   #
   # NOTE: This method advances the `IO` even though a vector could be
@@ -723,7 +723,7 @@ class IO::Text
   end
 
   # Read consecutive word characters in the `IO`. Raises
-  # `ParseException` if a word couldn't be read.
+  # `ArgumentError` if a word couldn't be read.
   #
   # Word characters are the same defined in regular expressions:
   # uppercase and lowercase letters, numbers, and underscore, but also
@@ -738,10 +738,10 @@ class IO::Text
   # io.read_word # => "123"
   # io.read_word # => "quick"
   # io.read_word # => "brown"
-  # io.read_word # raises ParseException
+  # io.read_word # raises ArgumentError
   # io.read      # => '!'
   # io.read_word # => "fox-jumps"
-  # io.read_word # raises ParseException
+  # io.read_word # raises ArgumentError
   # io.eof?      # => true
   # ```
   def read_word : String
@@ -1048,8 +1048,8 @@ class IO::Text
     read_bytes
   end
 
-  # Raises a `ParseException` exception with *message*.
+  # Raises a `ArgumentError` exception with *message*.
   private def parse_exception(message : String) : NoReturn
-    raise ParseException.new(message)
+    raise ArgumentError.new(message)
   end
 end
