@@ -209,7 +209,7 @@ describe Chem::PDB do
     end
 
     it "parses bonds when multiple models" do
-      models = Array(Chem::Structure).from_pdb "spec/data/pdb/models.pdb"
+      models = Array(Chem::Structure).from_pdb "spec/data/pdb/models_repeated_conect.pdb"
       models.size.should eq 4
       models.each do |st|
         st.atoms[0].bonds[st.atoms[1]].order.should eq 1
@@ -264,7 +264,7 @@ describe Chem::PDB do
     end
 
     it "parses multiple models" do
-      st_list = Array(Chem::Structure).from_pdb "spec/data/pdb/models.pdb"
+      st_list = Array(Chem::Structure).from_pdb "spec/data/pdb/models_repeated_conect.pdb"
       st_list.size.should eq 4
       xs = {5.606, 7.212, 5.408, 22.055}
       st_list.zip(xs) do |st, x|
@@ -276,7 +276,7 @@ describe Chem::PDB do
     end
 
     it "parses selected models" do
-      path = "spec/data/pdb/models.pdb"
+      path = "spec/data/pdb/models_repeated_conect.pdb"
       st_list = Array(Chem::Structure).from_pdb path, indexes: [1, 3]
       st_list.size.should eq 2
       xs = {7.212, 22.055}
@@ -289,7 +289,7 @@ describe Chem::PDB do
     end
 
     it "skip models" do
-      parser = PDB::Reader.new "spec/data/pdb/models.pdb"
+      parser = PDB::Reader.new "spec/data/pdb/models_repeated_conect.pdb"
       parser.skip
       structure = parser.read_next.should_not be_nil
       structure.atoms[0].coords.should eq V[7.212, 15.334, 0.966]
