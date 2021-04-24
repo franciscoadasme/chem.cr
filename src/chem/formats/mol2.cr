@@ -2,12 +2,14 @@
 module Chem::Mol2
   class Writer
     include FormatWriter(AtomCollection)
+    include MultiFormatWriter(AtomCollection)
     include FormatWriter(Structure)
+    include MultiFormatWriter(Structure)
 
     @atom_table = {} of Atom => Int32
     @res_table = {} of Residue => Int32
 
-    def write(atoms : AtomCollection) : Nil
+    private def write(atoms : AtomCollection) : Nil
       check_open
       reset_index
       write_header "",
@@ -18,7 +20,7 @@ module Chem::Mol2
       section "bond" { atoms.bonds.each_with_index { |bond, i| write bond, i + 1 } }
     end
 
-    def write(structure : Structure) : Nil
+    private def write(structure : Structure) : Nil
       check_open
       reset_index
       write_header structure.title,

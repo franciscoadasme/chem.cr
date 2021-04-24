@@ -393,8 +393,12 @@ module Chem
             # `{{canonical_format}}` file format. Arguments are fowarded
             # to `{{canonical_writer}}`.
             def to_{{format.id}}(output : IO | Path | String, *args, **options) : Nil
+              {% if writer < MultiFormatWriter %}
+                options = options.merge total_entries: 1
+              {% end %}
               {{writer}}.open(output, *args, **options) do |writer|
-                writer.write self
+                {% method = writer < MultiFormatWriter ? "<<" : "write" %}
+                writer.{{method.id}} self
               end
             end
           {% end %}
@@ -485,20 +489,31 @@ module Chem
     {% for writing_type, encoded_types in write_type_table %}
       {% format = formats[writing_type].id.downcase %}
       {% writer = writer_table[writing_type] %}
+      {% if writer < MultiFormatWriter %}
+        class ::Array(T)
+          # Returns a string representation of the elements encoded
+          # using the `{{writing_type}}` file format. Arguments are
+          # fowarded to `{{writer}}`.
+          def to_{{format.id}}(*args, **options) : String
+            String.build do |io|
+              to_{{format.id}} io, *args, **options
+            end
+          end
 
-      class ::Array(T)
-        # Writes the elements to *output* using the `{{writing_type}}`
-        # file format. Arguments are fowarded to `{{writer}}`.
-        #
-        # NOTE: Only works for `{{encoded_types.splat}}`.
-        def to_{{format.id}}(output : IO | Path | String, *args, **options) : Nil
-          {{writer}}.open(output, *args, **options) do |writer|
-            each do |ele|
-              writer.write ele
+          # Writes the elements to *output* using the `{{writing_type}}`
+          # file format. Arguments are fowarded to `{{writer}}`.
+          #
+          # NOTE: Only works for `{{encoded_types.splat}}`.
+          def to_{{format.id}}(output : IO | Path | String, *args, **options) : Nil
+            options = options.merge total_entries: size
+            {{writer}}.open(output, *args, **options) do |writer|
+              each do |ele|
+                writer << ele
+              end
             end
           end
         end
-      end
+      {% end %}
     {% end %}
   end
 end

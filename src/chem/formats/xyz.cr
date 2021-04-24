@@ -2,9 +2,11 @@
 module Chem::XYZ
   class Writer
     include FormatWriter(AtomCollection)
+    include MultiFormatWriter(AtomCollection)
     include FormatWriter(Structure)
+    include MultiFormatWriter(Structure)
 
-    def write(atoms : AtomCollection, title : String = "") : Nil
+    private def write(atoms : AtomCollection, title : String = "") : Nil
       check_open
 
       @io.puts atoms.n_atoms
@@ -14,7 +16,7 @@ module Chem::XYZ
       end
     end
 
-    def write(structure : Structure) : Nil
+    private def write(structure : Structure) : Nil
       write structure, structure.title
     end
   end

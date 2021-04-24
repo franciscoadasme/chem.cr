@@ -568,4 +568,23 @@ describe Chem::PDB::Writer do
       END                                                                             \n
       EOS
   end
+
+  it "writes multiple entries" do
+    path = "spec/data/pdb/models.pdb"
+    entries = Array(Structure).from_pdb path
+    entries.to_pdb.should eq File.read(path)
+  end
+
+  it "writes an indeterminate number of entries" do
+    path = "spec/data/pdb/models.pdb"
+    entries = Array(Structure).from_pdb path
+
+    io = IO::Memory.new
+    Chem::PDB::Writer.open(io) do |writer|
+      entries.each do |entry|
+        writer << entry
+      end
+    end
+    io.to_s.should eq File.read(path).gsub(/NUMMDL.+\n/, "")
+  end
 end

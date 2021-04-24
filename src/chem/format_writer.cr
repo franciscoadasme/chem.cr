@@ -63,4 +63,41 @@ module Chem
       @io << '\n'
     end
   end
+
+  # The `MultiFormatWriter` mixin provides an interface for writing in a
+  # file format that can hold a variable number of objects.
+  #
+  # It implements the `<<` operator and provides the logic for keeping
+  # the total number of entries (`#total_entries` in including types)
+  # and how many of them has been written so far.
+  #
+  # NOTE: Including types must implement the `#write` method as
+  # **private** to ensure correctness (e.g., only calling `<<` would be
+  # allowed).
+  module MultiFormatWriter(T)
+    @entry_index = 0
+
+    macro included
+      {% if @type.methods.select(&.name.==("total_entries")).empty? %}
+        # Total number of entries to be writtern. A value of `nil`
+        # indicates that it could not be determinate.
+        needs total_entries : Int32? = nil
+      {% end %}
+    end
+
+    # Writes *obj* encoded in the file format to the `IO`. It keeps
+    # count of the number of objects written to the `IO`. This ends up
+    # calling `#write(obj)`.
+    def <<(obj : T) : self
+      write obj
+      @entry_index += 1
+      self
+    end
+
+    # Returns `true` if multiple entries or an indeterminate number of
+    # entries are to be written, else `false`.
+    def multi? : Bool
+      (@total_entries || Int32::MAX) > 1
+    end
+  end
 end

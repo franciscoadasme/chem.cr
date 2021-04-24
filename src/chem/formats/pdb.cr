@@ -260,7 +260,9 @@ module Chem::PDB
   # `PDB::Hybrid36` module.
   class Writer
     include FormatWriter(AtomCollection)
+    include MultiFormatWriter(AtomCollection)
     include FormatWriter(Structure)
+    include MultiFormatWriter(Structure)
 
     private PDB_VERSION      = "3.30"
     private PDB_VERSION_DATE = Time.local 2011, 7, 13
@@ -275,7 +277,6 @@ module Chem::PDB
 
     @atom_index_table = {} of Int32 => Int32
     @record_index = 0
-    @model = 0
 
     def close : Nil
       write_bonds
@@ -287,16 +288,14 @@ module Chem::PDB
     # PDB file format.
     #
     # NOTE: original alternate location is not written.
-    def write(atoms : AtomCollection) : Nil
+    def <<(atoms : AtomCollection) : self
       check_open
       @record_index = 0
       @bonds = atoms.bonds if @bonds == true
-
-      write_pdb_version if @model == 0
-
-      atoms.each_atom { |atom| write atom }
-
-      @model += 1
+      write_pdb_version if @entry_index == 0
+      write atoms
+      @entry_index += 1
+      self
     end
 
     # Write the atoms in *structure* sequentially to the `IO` encoded in
@@ -307,23 +306,15 @@ module Chem::PDB
     # each polymer chain.
     #
     # NOTE: original alternate location is not written.
-    def write(structure : Structure) : Nil
+    def <<(structure : Structure) : self
       check_open
       @record_index = 0
       @bonds = structure.bonds if @bonds == true
-
-      write_header structure if @model == 0
-
-      structure.each_chain do |chain|
-        p_res = nil
-        chain.each_residue do |residue|
-          residue.each_atom { |atom| write atom }
-          p_res = residue
-        end
-        write_ter p_res if p_res && p_res.polymer?
+      if @entry_index == 0
+        write_header structure
+        formatl "NUMMDL    %-4d%-66s", @total_entries, ' ' if multi? && @total_entries
       end
-
-      @model += 1
+      super
     end
 
     private def index(atom : Atom) : Int32
@@ -354,6 +345,12 @@ module Chem::PDB
         (sprintf("%+d", atom.formal_charge).reverse if atom.formal_charge != 0)
     end
 
+    private def write(atoms : AtomCollection) : Nil
+      formatl "MODEL     %4d%-66s", @entry_index + 1, ' ' if multi?
+      atoms.each_atom { |atom| write atom }
+      formatl "%-80s", "ENDMDL" if multi?
+    end
+
     private def write(expt : Structure::Experiment) : Nil
       raw_method = expt.method.to_s.underscore.upcase.gsub('_', ' ').gsub "X RAY", "X-RAY"
 
@@ -376,6 +373,19 @@ module Chem::PDB
         lattice.gamma,
         "P 1", # default space group
         1      # default Z value
+    end
+
+    private def write(structure : Structure) : Nil
+      formatl "MODEL     %4d%-66s", @entry_index + 1, ' ' if multi?
+      structure.each_chain do |chain|
+        p_res = nil
+        chain.each_residue do |residue|
+          residue.each_atom { |atom| write atom }
+          p_res = residue
+        end
+        write_ter p_res if p_res && p_res.polymer?
+      end
+      formatl "%-80s", "ENDMDL" if multi?
     end
 
     private def write_bonds : Nil
