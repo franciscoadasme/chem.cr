@@ -66,25 +66,30 @@
 # ### Writing PDB files
 #
 # The `PDB::Writer` class writes PDB entries sequentially to an `IO` or
-# file. Use the `#write` method to write an instance of a compatible
-# type. It can be called multiple times.
+# file. Use the `#<<` method to write an instance of a compatible type.
+# It can be called multiple times.
 #
 # ```
 # PDB::Writer.open("/path/to/pdb") do |writer|
-#   writer.write structure1
-#   writer.write structure2
+#   writer << structure1
+#   writer << structure2
 #   ...
 # end
 # ```
 #
-# Alternatively, use the convenience `Structure#to_pdb` methods to write
-# a single entry in a PDB file.
+# Alternatively, use the convenience `Structure#to_pdb` or
+# `Array#to_pdb` methods to write a single or multiple entries to a PDB
+# file.
 #
 # ```
 # structure = Structure.build do |builder|
 #   ...
 # end
 # structure.to_pdb "/path/to/pdb"
+#
+# # or
+#
+# [structure1, structure2, ...].to_pdb "/path/to/pdb"
 # ```
 @[Chem::FileType(ext: %w(ent pdb))]
 module Chem::PDB
