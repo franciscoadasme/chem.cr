@@ -1,5 +1,96 @@
+# The Mol2 module provides capabilities for reading and writing Mol2
+# files.
+#
+# The Mol2 file format is a molecular file format produced by Tripos
+# Inc. It is a plain text format that stores atomic coordinates,
+# chemical bond information, and metadata about chemical compounds. It
+# is used, for instance, in many docking codes such as
+# [DOCK](http://dock.compbio.ucsf.edu). The full specification can be
+# found in the [Mol2 file format
+# documentation](http://chemyang.ccnu.edu.cn/ccb/server/AIMMS/mol2.pdf).
+#
+# The Mol2 file format can encode one or more `Structure` instances. The
+# following information is read from/write to a Mol2 file:
+#
+# * Atomic coordinates
+# * Topology information (residue->atom). Chains are automatically created.
+# * Partial charges
+# * Bonding information
+#
+# Registered file extensions for Mol2 are: `.mol2`.
+#
+# ### Reading Mol2 files
+#
+# The `Mol2::Reader` class reads Mol2 entries sequentially from an `IO`
+# or file. Use either the `#each` method to yield every entry or
+# `#read_next` method to read the next entry only.
+#
+# ```
+# Mol2::Reader.open("/path/to/mol2") do |reader|
+#   reader.each do |structure|
+#     ...
+#   end
+#
+#   # or
+#
+#   while structure = reader.read_next
+#     .
+#   end
+# end
+# ```
+#
+# Alternatively, use the convenience `Structure.from_mol2` and
+# `Array.from_mol2` methods to read the first or all entries in a Mol2
+# file, respectively.
+#
+# ```
+# Structure.from_mol2 "/path/to/mol2" # => <Structure ...>
+# # or
+# Array(Structure).from_mol2 "/path/to/mol2" # => [<Structure ...>, ...]
+# ```
+#
+# Similarly, the general `Structure#read` method can be used to read a
+# Mol2 file, but the file format is determined on runtime.
+#
+# ### Writing Mol2 files
+#
+# The `Mol2::Writer` class writes Mol2 entries sequentially to an `IO`
+# or file. Use the `#<<` method to write an instance of a compatible
+# type. It can be called multiple times.
+#
+# ```
+# Mol2::Writer.open("/path/to/mol2") do |writer|
+#   writer << structure1
+#   writer << structure2
+#   ...
+# end
+# ```
+#
+# Alternatively, use the convenience `Structure#to_mol2` or
+# `Array#to_mol2` methods to write a single or multiple entries to a
+# Mol2 file.
+#
+# ```
+# structure = Structure.build do |builder|
+#   ...
+# end
+# structure.to_mol2 "/path/to/mol2"
+#
+# # or
+#
+# [structure1, structure2, ...].to_mol2 "/path/to/mol2"
+# ```
 @[Chem::FileType(ext: %w(mol2))]
 module Chem::Mol2
+  # Writes entries sequentially to a Mol2 file.
+  #
+  # ```
+  # Mol2::Writer.open("/path/to/mol2") do |writer|
+  #   writer << structure1
+  #   writer << structure2
+  #   ...
+  # end
+  # ```
   class Writer
     include FormatWriter(AtomCollection)
     include MultiFormatWriter(AtomCollection)
@@ -96,15 +187,32 @@ module Chem::Mol2
     end
   end
 
+  # Reads the entries sequentially in a Mol2 file. Use either the
+  # `#each` method to yield every entry or `#read_next` method to read
+  # the next entry only.
+  #
+  # ```
+  # Mol2::Reader.open("/path/to/mol2") do |reader|
+  #   reader.each do |structure|
+  #     ...
+  #   end
+  #
+  #   # or
+  #
+  #   while structure = reader.read_next
+  #     ...
+  #   end
+  # end
+  # ```
   class Reader
     include FormatReader(Structure)
     include MultiFormatReader(Structure)
     include TextFormatReader
 
-    TAG          = "@<TRIPOS>"
-    TAG_ATOMS    = "@<TRIPOS>ATOM"
-    TAG_BONDS    = "@<TRIPOS>BOND"
-    TAG_MOLECULE = "@<TRIPOS>MOLECULE"
+    private TAG          = "@<TRIPOS>"
+    private TAG_ATOMS    = "@<TRIPOS>ATOM"
+    private TAG_BONDS    = "@<TRIPOS>BOND"
+    private TAG_MOLECULE = "@<TRIPOS>MOLECULE"
 
     @builder = uninitialized Structure::Builder
     @include_charges = true
