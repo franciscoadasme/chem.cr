@@ -233,7 +233,11 @@ module Chem
         {% writer_table[annotated_type] = writer %}
       {% end %}
 
-      # check readers/writers
+      # check for missing reader/writer
+      {% unless reader_table[annotated_type] || writer_table[annotated_type] %}
+        {% raise "#{annotated_type} does not declare a Reader nor Writer type" %}
+      {% end %}
+
       {% if n_types == 0 %}
         {% raise "#{annotated_type} does not declare readers or writers" %}
       {% end %}
