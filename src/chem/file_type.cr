@@ -172,22 +172,26 @@ module Chem
 
       # check duplicate extensions
       {% if extnames = ann[:ext] %}
-        {% if ext = extnames.find { |ext| type_by_ext[ext] } %}
-          {% raise ".#{ext.id} extension declared in FileType annotation " \
-                   "for #{annotated_type} is already associated with file " \
-                   "format #{other} via #{type_by_ext[ext]}" %}
+        {% for ext in extnames %}
+          {% if type = type_by_ext[ext] %}
+            {% raise ".#{ext.id} extension declared in FileType annotation \
+                      for #{annotated_type} is already associated with file \
+                      format #{formats[type]} via #{type}" %}
+          {% end %}
           {% type_by_ext[ext] = annotated_type %}
         {% end %}
       {% end %}
 
       # check duplicate file names
       {% if names = ann[:names] %}
-        {% names = names.map { |n| n.tr("*", "").camelcase.underscore } %}
-        {% if name = names.find { |n| type_by_name[n] } %}
-          {% raise "Filename #{name} declared in FileType annotation" \
-                   "for #{annotated_type} is already associated with file " \
-                   "format #{other} via #{type_by_name[name]}" %}
-          {% type_by_name[name] = annotated_type %}
+        {% for name in names %}
+          {% key = name.tr("*", "").camelcase.underscore %}
+          {% if type = type_by_name[key] %}
+            {% raise "Filename #{name.id} declared in FileType annotation \
+                      for #{annotated_type} is already associated with file \
+                      format #{formats[type]} via #{type}" %}
+          {% end %}
+          {% type_by_name[key] = annotated_type %}
         {% end %}
       {% end %}
 
