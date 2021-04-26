@@ -1,7 +1,7 @@
 require "./spec_helper"
 
 describe Chem::FileType do
-  it "checks for reader/writer" do
+  it "checks for missing reader/writer" do
     assert_error <<-EOS, "Chem::Foo does not declare a Reader nor Writer type"
       @[Chem::FileType]
       module Chem::Foo; end
@@ -9,7 +9,7 @@ describe Chem::FileType do
   end
 
   it "checks for missing encoded types" do
-    assert_error <<-EOS, "Chem::Foo does not declare readers or writers"
+    assert_error <<-EOS, "Chem::Foo does not declare an encoded type"
       @[Chem::FileType]
       module Chem::Foo
         class Reader; end

@@ -238,8 +238,9 @@ module Chem
         {% raise "#{annotated_type} does not declare a Reader nor Writer type" %}
       {% end %}
 
+      # check for missing encoded types
       {% if n_types == 0 %}
-        {% raise "#{annotated_type} does not declare readers or writers" %}
+        {% raise "#{annotated_type} does not declare an encoded type" %}
       {% end %}
     {% end %}
 
