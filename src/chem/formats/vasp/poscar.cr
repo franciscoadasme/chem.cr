@@ -1,13 +1,91 @@
+# The Poscar module provides capabilities for reading and writing in the
+# [VASP](https://www.vasp.at/)'s Poscar file format.
+#
+# The Poscar file format is a plain text format that encodes a periodic
+# molecular structure, e.g., a molecular crystal. It stores atomic
+# coordinates, unit cell information, velocities and predictor-corrector
+# coordinates for a molecular dynamics simulation. Further details can
+# be found at the [Poscar file format
+# specification](https://www.vasp.at/wiki/index.php/POSCAR) webpage.
+#
+# The Poscar file format encodes one `Structure` instance. The following
+# information is read from/write to a Poscar file:
+#
+# * Atomic coordinates
+# * Atom constraints
+# * Unit cell
+#
+# Files starting with `POSCAR` and `CONTCAR` or with the file extension
+# `.poscar` are recognized as Poscar files.
+#
+# ### Reading Poscar files
+#
+# The `Poscar::Reader` class reads an entry from an `IO` or file via the
+# `#read` method.
+#
+# ```
+# Poscar::Reader.open("/path/to/poscar") do |reader|
+#   reader.read Structure
+# end
+# ```
+#
+# Alternatively, use the convenience `Structure.from_poscar` to read the
+# structure in a Poscar file.
+#
+# ```
+# Structure.from_poscar "/path/to/poscar" # => <Structure ...>
+# ```
+#
+# Similarly, the general `Structure#read` method can be used to read a
+# Poscar file, but the file format is determined on runtime.
+#
+# ### Writing Poscar files
+#
+# The `Poscar::Writer` class writes a `Structure` instance to an `IO` or
+# file using the `#write` method (note that it raises on multiple
+# calls). Alternatively, use the convenience `Structure#to_poscar`
+# and `Structure#write` methods.
+#
+# ```
+# Poscar::Writer.open("/path/to/poscar") do |writer|
+#   writer.write structure
+# end
+# # or
+# structure.to_poscar "/path/to/poscar"
+# # or
+# structure.write "/path/to/poscar"
+# ```
 @[Chem::FileType(ext: %w(poscar), names: %w(POSCAR* CONTCAR*))]
 module Chem::VASP::Poscar
+  # Writes an entry to a Poscar file.
+  #
+  # The current implementation conforms to VASP 5.x, where atomic
+  # species are written to the Poscar file. The scale factor is always
+  # set to 1. The order of the elements can be controlled by the `order`
+  # argument when creating a writer, otherwise is guessed from the atom
+  # order.
+  #
+  # ```
+  # Poscar::Writer.open("/path/to/poscar") do |writer|
+  #   writer.write structure
+  # end
+  # ```
   class Writer
     include FormatWriter(AtomCollection)
     include FormatWriter(Structure)
 
+    # Order in which elements are to be written. If `nil`, elements are
+    # written in the order they appear in the structure.
     needs order : Array(Element)?
+    # If `true`, write reduced coordinates, else Cartesian coordinates.
     needs fractional : Bool = false
+    # If `true`, wrap coordinates within the primary unit cell before
+    # writing them.
     needs wrap : Bool = false
 
+    # Writes *atoms* to the IO encoded in the Poscar file format using
+    # *lattice*. If given, *title* will be written as the comment in the
+    # header.
     def write(atoms : AtomCollection, lattice : Lattice? = nil, title : String = "") : Nil
       check_open
       raise Spatial::NotPeriodicError.new unless lattice
@@ -40,6 +118,8 @@ module Chem::VASP::Poscar
       end
     end
 
+    # Writes *structure* to the IO. Raises `NotPeriodicError` when
+    # *structure* is not periodic (`structure.lattice` returns `nil`.)
     def write(structure : Structure) : Nil
       write structure, structure.lattice, structure.title
     end
@@ -75,10 +155,28 @@ module Chem::VASP::Poscar
     end
   end
 
+  # Reads the entry in a Poscar file. Use the `#read` method to get a
+  # `Structure` instance.
+  #
+  # The current implementation conforms to VASP 5.x, where atomic
+  # species are expected to be present in the Poscar file. If missing
+  # (VASP 4.x and earlier), an error will be raised.
+  #
+  # Reduced (fractional) coordinates are transformed to Cartesian
+  # coordinates. Lattice parameters and atom coordinates are scaled
+  # using the scale factor.
+  #
+  # ```
+  # Poscar::Reader.open("/path/to/poscar") do |reader|
+  #   reader.read Structure
+  # end
+  # ```
   class Reader
     include FormatReader(Structure)
     include TextFormatReader
 
+    # Triggers bond and topology perception after reading. See
+    # `Structure::Builder#build` for more information.
     needs guess_topology : Bool = true
 
     @builder = uninitialized Structure::Builder
