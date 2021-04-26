@@ -187,7 +187,10 @@ def assert_error(code : String, message : String, file = __FILE__, line = __LINE
   else
     actual_error = buffer.to_s.lines[-1].gsub("Error: ", "")
     if actual_error != message
-      fail "Expected error #{message.inspect}, got #{actual_error.inspect}", file, line
+      fail <<-EOS, file, line
+        Expected error: #{message}
+                   got: #{actual_error}
+        EOS
     end
   end
   buffer.close
