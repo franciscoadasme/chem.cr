@@ -174,6 +174,25 @@ def load_hlxparams_data
   end
 end
 
+def assert_error(code : String, message : String, file = __FILE__, line = __LINE__) : Nil
+  tempfile = File.tempfile do |f|
+    libpath = Path.new(Dir.current).join("src", "chem").relative_to Path[f.path]
+    f.puts "require #{libpath.to_s.inspect}"
+    f << code
+  end
+  buffer = IO::Memory.new
+  result = Process.run("crystal", ["run", "--no-color", "--no-codegen", tempfile.path], error: buffer)
+  if result.success?
+    fail "Expected an error but the code compiled successfully", file, line
+  else
+    actual_error = buffer.to_s.lines[-1].gsub("Error: ", "")
+    if actual_error != message
+      fail "Expected error #{message.inspect}, got #{actual_error.inspect}", file, line
+    end
+  end
+  buffer.close
+end
+
 def make_grid(nx : Int,
               ny : Int,
               nz : Int,
