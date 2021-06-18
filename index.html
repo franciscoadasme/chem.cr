@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.36.1">
+<meta name="crystal_docs.project_version" content="0.5.6">
+<meta name="crystal_docs.project_name" content="chem.cr">
+
+
+
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/doc.js"></script>
+
+  <meta name="repository-name" content="chem.cr">
+  <title>chem.cr 0.5.6</title>
+  <script type="text/javascript">
+  CrystalDocs.base_path = "";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="index.html">
+          chem.cr
+        </a>
+      </h1>
+
+      <span class="project-version">
+        0.5.6
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class=" " data-id="chem.cr/toplevel" data-name="top level namespace">
+      <a href="toplevel.html">Top Level Namespace</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Array" data-name="array(t)">
+      <a href="Array.html">Array</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Char" data-name="char">
+      <a href="Char.html">Char</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem" data-name="chem">
+      <a href="Chem.html">Chem</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/ArrayView" data-name="chem::arrayview(t)">
+      <a href="Chem/ArrayView.html">ArrayView</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Atom" data-name="chem::atom">
+      <a href="Chem/Atom.html">Atom</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/AtomCollection" data-name="chem::atomcollection">
+      <a href="Chem/AtomCollection.html">AtomCollection</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/AtomView" data-name="chem::atomview">
+      <a href="Chem/AtomView.html">AtomView</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Bias" data-name="chem::bias">
+      <a href="Chem/Bias.html">Bias</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Bond" data-name="chem::bond">
+      <a href="Chem/Bond.html">Bond</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Bond/Kind" data-name="chem::bond::kind">
+      <a href="Chem/Bond/Kind.html">Kind</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/BondArray" data-name="chem::bondarray">
+      <a href="Chem/BondArray.html">BondArray</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Chain" data-name="chem::chain">
+      <a href="Chem/Chain.html">Chain</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ChainCollection" data-name="chem::chaincollection">
+      <a href="Chem/ChainCollection.html">ChainCollection</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ChainView" data-name="chem::chainview">
+      <a href="Chem/ChainView.html">ChainView</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Constraint" data-name="chem::constraint">
+      <a href="Chem/Constraint.html">Constraint</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Cube" data-name="chem::cube">
+      <a href="Chem/Cube.html">Cube</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Cube/Reader" data-name="chem::cube::reader">
+      <a href="Chem/Cube/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Cube/Writer" data-name="chem::cube::writer">
+      <a href="Chem/Cube/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/DFTB" data-name="chem::dftb">
+      <a href="Chem/DFTB.html">DFTB</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="chem.cr/Chem/DFTB/Gen" data-name="chem::dftb::gen">
+      <a href="Chem/DFTB/Gen.html">Gen</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/DFTB/Gen/Reader" data-name="chem::dftb::gen::reader">
+      <a href="Chem/DFTB/Gen/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/DFTB/Gen/Writer" data-name="chem::dftb::gen::writer">
+      <a href="Chem/DFTB/Gen/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/DX" data-name="chem::dx">
+      <a href="Chem/DX.html">DX</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/DX/Reader" data-name="chem::dx::reader">
+      <a href="Chem/DX/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/DX/Writer" data-name="chem::dx::writer">
+      <a href="Chem/DX/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Element" data-name="chem::element">
+      <a href="Chem/Element.html">Element</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Error" data-name="chem::error">
+      <a href="Chem/Error.html">Error</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/IO" data-name="chem::io">
+      <a href="Chem/IO.html">IO</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/FileFormat" data-name="chem::io::fileformat">
+      <a href="Chem/IO/FileFormat.html">FileFormat</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/FileType" data-name="chem::io::filetype">
+      <a href="Chem/IO/FileType.html">FileType</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/ParseException" data-name="chem::io::parseexception">
+      <a href="Chem/IO/ParseException.html">ParseException</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/Reader" data-name="chem::io::reader(t)">
+      <a href="Chem/IO/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/TextIO" data-name="chem::io::textio">
+      <a href="Chem/IO/TextIO.html">TextIO</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/Writer" data-name="chem::io::writer(t)">
+      <a href="Chem/IO/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Lattice" data-name="chem::lattice">
+      <a href="Chem/Lattice.html">Lattice</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Linalg" data-name="chem::linalg">
+      <a href="Chem/Linalg.html">Linalg</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Linalg/Error" data-name="chem::linalg::error">
+      <a href="Chem/Linalg/Error.html">Error</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Linalg/Matrix" data-name="chem::linalg::matrix">
+      <a href="Chem/Linalg/Matrix.html">Matrix</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Mol2" data-name="chem::mol2">
+      <a href="Chem/Mol2.html">Mol2</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Mol2/Reader" data-name="chem::mol2::reader">
+      <a href="Chem/Mol2/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Mol2/Writer" data-name="chem::mol2::writer">
+      <a href="Chem/Mol2/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/PDB" data-name="chem::pdb">
+      <a href="Chem/PDB.html">PDB</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/PDB/Hybrid36" data-name="chem::pdb::hybrid36">
+      <a href="Chem/PDB/Hybrid36.html">Hybrid36</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/PDB/Reader" data-name="chem::pdb::reader">
+      <a href="Chem/PDB/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/PDB/Writer" data-name="chem::pdb::writer">
+      <a href="Chem/PDB/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/PeriodicTable" data-name="chem::periodictable">
+      <a href="Chem/PeriodicTable.html">PeriodicTable</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Protein" data-name="chem::protein">
+      <a href="Chem/Protein.html">Protein</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/AminoAcid" data-name="chem::protein::aminoacid">
+      <a href="Chem/Protein/AminoAcid.html">AminoAcid</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/AminoAcids" data-name="chem::protein::aminoacids">
+      <a href="Chem/Protein/AminoAcids.html">AminoAcids</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/DSSP" data-name="chem::protein::dssp">
+      <a href="Chem/Protein/DSSP.html">DSSP</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Protein/PSIQUE" data-name="chem::protein::psique">
+      <a href="Chem/Protein/PSIQUE.html">PSIQUE</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/PSIQUE/SecondaryStructureBlender" data-name="chem::protein::psique::secondarystructureblender">
+      <a href="Chem/Protein/PSIQUE/SecondaryStructureBlender.html">SecondaryStructureBlender</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/SecondaryStructure" data-name="chem::protein::secondarystructure">
+      <a href="Chem/Protein/SecondaryStructure.html">SecondaryStructure</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/SecondaryStructureCalculator" data-name="chem::protein::secondarystructurecalculator">
+      <a href="Chem/Protein/SecondaryStructureCalculator.html">SecondaryStructureCalculator</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/SecondaryStructureType" data-name="chem::protein::secondarystructuretype">
+      <a href="Chem/Protein/SecondaryStructureType.html">SecondaryStructureType</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/Sequence" data-name="chem::protein::sequence">
+      <a href="Chem/Protein/Sequence.html">Sequence</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Protein/Stride" data-name="chem::protein::stride">
+      <a href="Chem/Protein/Stride.html">Stride</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/Stride/Writer" data-name="chem::protein::stride::writer">
+      <a href="Chem/Protein/Stride/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/PyMOL" data-name="chem::pymol">
+      <a href="Chem/PyMOL.html">PyMOL</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/PyMOL/Writer" data-name="chem::pymol::writer">
+      <a href="Chem/PyMOL/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Residue" data-name="chem::residue">
+      <a href="Chem/Residue.html">Residue</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Residue/Kind" data-name="chem::residue::kind">
+      <a href="Chem/Residue/Kind.html">Kind</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueCollection" data-name="chem::residuecollection">
+      <a href="Chem/ResidueCollection.html">ResidueCollection</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueView" data-name="chem::residueview">
+      <a href="Chem/ResidueView.html">ResidueView</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Spatial" data-name="chem::spatial">
+      <a href="Chem/Spatial.html">Spatial</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="chem.cr/Chem/Spatial/AffineTransform" data-name="chem::spatial::affinetransform">
+      <a href="Chem/Spatial/AffineTransform.html">AffineTransform</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/AffineTransform/ScalingFactors" data-name="chem::spatial::affinetransform::scalingfactors">
+      <a href="Chem/Spatial/AffineTransform/ScalingFactors.html">ScalingFactors</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Basis" data-name="chem::spatial::basis">
+      <a href="Chem/Spatial/Basis.html">Basis</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Bounds" data-name="chem::spatial::bounds">
+      <a href="Chem/Spatial/Bounds.html">Bounds</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/CoordinatesProxy" data-name="chem::spatial::coordinatesproxy">
+      <a href="Chem/Spatial/CoordinatesProxy.html">CoordinatesProxy</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Error" data-name="chem::spatial::error">
+      <a href="Chem/Spatial/Error.html">Error</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Spatial/Grid" data-name="chem::spatial::grid">
+      <a href="Chem/Spatial/Grid.html">Grid</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Grid/Dimensions" data-name="chem::spatial::grid::dimensions">
+      <a href="Chem/Spatial/Grid/Dimensions.html">Dimensions</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Grid/Info" data-name="chem::spatial::grid::info">
+      <a href="Chem/Spatial/Grid/Info.html">Info</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Grid/Location" data-name="chem::spatial::grid::location">
+      <a href="Chem/Spatial/Grid/Location.html">Location</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Grid/Reader" data-name="chem::spatial::grid::reader">
+      <a href="Chem/Spatial/Grid/Reader.html">Reader</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/HlxParams" data-name="chem::spatial::hlxparams">
+      <a href="Chem/Spatial/HlxParams.html">HlxParams</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/KDTree" data-name="chem::spatial::kdtree">
+      <a href="Chem/Spatial/KDTree.html">KDTree</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/NotPeriodicError" data-name="chem::spatial::notperiodicerror">
+      <a href="Chem/Spatial/NotPeriodicError.html">NotPeriodicError</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/PBC" data-name="chem::spatial::pbc">
+      <a href="Chem/Spatial/PBC.html">PBC</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Quaternion" data-name="chem::spatial::quaternion">
+      <a href="Chem/Spatial/Quaternion.html">Quaternion</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Size" data-name="chem::spatial::size">
+      <a href="Chem/Spatial/Size.html">Size</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Vector" data-name="chem::spatial::vector">
+      <a href="Chem/Spatial/Vector.html">Vector</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Structure" data-name="chem::structure">
+      <a href="Chem/Structure.html">Structure</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Structure/Builder" data-name="chem::structure::builder">
+      <a href="Chem/Structure/Builder.html">Builder</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Structure/Experiment" data-name="chem::structure::experiment">
+      <a href="Chem/Structure/Experiment.html">Experiment</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Structure/Experiment/Method" data-name="chem::structure::experiment::method">
+      <a href="Chem/Structure/Experiment/Method.html">Method</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Structure/Reader" data-name="chem::structure::reader">
+      <a href="Chem/Structure/Reader.html">Reader</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Topology" data-name="chem::topology">
+      <a href="Chem/Topology.html">Topology</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/AtomType" data-name="chem::topology::atomtype">
+      <a href="Chem/Topology/AtomType.html">AtomType</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/BondType" data-name="chem::topology::bondtype">
+      <a href="Chem/Topology/BondType.html">BondType</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/MatchData" data-name="chem::topology::matchdata">
+      <a href="Chem/Topology/MatchData.html">MatchData</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Patcher" data-name="chem::topology::patcher">
+      <a href="Chem/Topology/Patcher.html">Patcher</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Perception" data-name="chem::topology::perception">
+      <a href="Chem/Topology/Perception.html">Perception</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/ResidueType" data-name="chem::topology::residuetype">
+      <a href="Chem/Topology/ResidueType.html">ResidueType</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Topology/Templates" data-name="chem::topology::templates">
+      <a href="Chem/Topology/Templates.html">Templates</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="chem.cr/Chem/Topology/Templates/Builder" data-name="chem::topology::templates::builder">
+      <a href="Chem/Topology/Templates/Builder.html">Builder</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Templates/Builder/ParseException" data-name="chem::topology::templates::builder::parseexception">
+      <a href="Chem/Topology/Templates/Builder/ParseException.html">ParseException</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Templates/Detector" data-name="chem::topology::templates::detector">
+      <a href="Chem/Topology/Templates/Detector.html">Detector</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Templates/Error" data-name="chem::topology::templates::error">
+      <a href="Chem/Topology/Templates/Error.html">Error</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/VASP" data-name="chem::vasp">
+      <a href="Chem/VASP.html">VASP</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="chem.cr/Chem/VASP/Chgcar" data-name="chem::vasp::chgcar">
+      <a href="Chem/VASP/Chgcar.html">Chgcar</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Chgcar/Reader" data-name="chem::vasp::chgcar::reader">
+      <a href="Chem/VASP/Chgcar/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Chgcar/Writer" data-name="chem::vasp::chgcar::writer">
+      <a href="Chem/VASP/Chgcar/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/GridReader" data-name="chem::vasp::gridreader">
+      <a href="Chem/VASP/GridReader.html">GridReader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/GridWriter" data-name="chem::vasp::gridwriter">
+      <a href="Chem/VASP/GridWriter.html">GridWriter</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/VASP/Locpot" data-name="chem::vasp::locpot">
+      <a href="Chem/VASP/Locpot.html">Locpot</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Locpot/Reader" data-name="chem::vasp::locpot::reader">
+      <a href="Chem/VASP/Locpot/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Locpot/Writer" data-name="chem::vasp::locpot::writer">
+      <a href="Chem/VASP/Locpot/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/VASP/Poscar" data-name="chem::vasp::poscar">
+      <a href="Chem/VASP/Poscar.html">Poscar</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Poscar/Reader" data-name="chem::vasp::poscar::reader">
+      <a href="Chem/VASP/Poscar/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Poscar/Writer" data-name="chem::vasp::poscar::writer">
+      <a href="Chem/VASP/Poscar/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/VMD" data-name="chem::vmd">
+      <a href="Chem/VMD.html">VMD</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/VMD/Writer" data-name="chem::vmd::writer">
+      <a href="Chem/VMD/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/XYZ" data-name="chem::xyz">
+      <a href="Chem/XYZ.html">XYZ</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/XYZ/Reader" data-name="chem::xyz::reader">
+      <a href="Chem/XYZ/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/XYZ/Writer" data-name="chem::xyz::writer">
+      <a href="Chem/XYZ/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Colorize" data-name="colorize">
+      <a href="Colorize.html">Colorize</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Colorize/ColorRGB" data-name="colorize::colorrgb">
+      <a href="Colorize/ColorRGB.html">ColorRGB</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Indexable" data-name="indexable(t)">
+      <a href="Indexable.html">Indexable</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Int" data-name="int">
+      <a href="Int.html">Int</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Number" data-name="number">
+      <a href="Number.html">Number</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Range" data-name="range(b, e)">
+      <a href="Range.html">Range</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Slice" data-name="slice(t)">
+      <a href="Slice.html">Slice</a>
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1><a id="chem.cr" class="anchor" href="#chem.cr">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>chem.cr</h1>
+
+<p><a href="https://github.com/franciscoadasme/chem.cr/actions?query=workflow%3A%22Crystal+CI%22"><img src="https://img.shields.io/github/workflow/status/franciscoadasme/chem.cr/Crystal%20CI.svg" alt="GitHub Workflow Status"/></a>
+<a href="https://github.com/franciscoadasme/chem.cr/releases/latest"><img src="https://img.shields.io/github/v/release/franciscoadasme/chem.cr.svg?label=version" alt="Version"/></a>
+<a href="https://github.com/franciscoadasme/chem.cr/blob/master/LICENSE"><img src="https://img.shields.io/github/license/franciscoadasme/chem.cr.svg" alt="License"/></a></p>
+
+<hr/><p>A modern library written in [Crystal][1] primarily designed for
+manipulating molecular files created by computational chemistry
+programs. It aims to be both fast and easy to use.</p>
+
+<p><strong>NOTE</strong>: PSIQUE can be found <a href="https://github.com/franciscoadasme/chem.cr/wiki/PSIQUE">here</a></p>
+
+<p><strong>IMPORTANT</strong>: this library is in alpha stage, meaning that there is missing
+functionality, documentation, etc. and there will be breaking changes.</p>
+
+<p><a href="#features">Features</a> | 
+<a href="#installation">Installation</a> | 
+<a href="#usage">Usage</a> | 
+<a href="https://github.com/franciscoadasme/chem.cr/wiki#tools">Tools</a> |
+<a href="#benchmarks">Benchmarks</a> |
+<a href="#roadmap">Roadmap</a> |
+<a href="#testing">Testing</a> |
+<a href="#similar-software">Similar software</a> |
+<a href="#contributing">Contributing</a> |
+<a href="#contributors">Contributors</a> |
+<a href="#license">License</a></p>
+
+<h2><a id="features" class="anchor" href="#features">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Features</h2>
+
+<ul><li>Object-oriented API for accessing and manipulating molecules. It
+  follows the topology commonly used in [Protein Data Bank][2] (PDB)
+  file format: Structure (or model) → Chain → Residue → Atom.</li><li>Type safety (assigning a number to the atom's name will result in a
+  compilation error)</li><li>Support for periodic molecular structures</li><li>Support for several file formats (and many more to come...)</li><li>Iterator-based file reading (avoids reading all data into memory)</li><li>Fast performance (see Benchmarks below)</li></ul>
+
+<h2><a id="installation" class="anchor" href="#installation">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Installation</h2>
+
+<p><strong>NOTE</strong> Tools such as <code>psique</code> may be download separately from the
+[releases][7] page or built from source if required. Refer to the
+<a href="https://github.com/franciscoadasme/chem.cr/wiki">Wiki</a> for more
+information.</p>
+
+<p>First check that the Crystal compiler is installed correctly:</p>
+
+<pre><code class="language-sh">$ crystal --version
+Crystal 0.35.1 [5999ae29b] (2020-06-19)
+
+LLVM: 8.0.0
+Default target: x86_64-unknown-linux-gnu</code></pre>
+
+<p>If the command fails, you need to install the crystal compiler by
+following [these steps][3].</p>
+
+<h3><a id="using-shards" class="anchor" href="#using-shards">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Using Shards</h3>
+
+<p>Crystal handles dependencies by listing the packages on a <code>shard.yml</code>
+file in a Crystal project. First, create a new project:</p>
+
+<pre><code class="language-sh">$ crystal init app myapp
+    create  myapp/.gitignore
+    create  myapp/.editorconfig
+    create  myapp/LICENSE
+    create  myapp/README.md
+    create  myapp/.travis.yml
+    create  myapp/shard.yml
+    create  myapp/src/myapp.cr
+    create  myapp/src/myapp/version.cr
+    create  myapp/spec/spec_helper.cr
+    create  myapp/spec/myapp_spec.cr
+Initialized empty Git repository in /home/crystal/myapp/.git/
+$ cd myapp</code></pre>
+
+<p>Read more about projects at the [Crystal guides][4]. Add this to your
+application's <code>shard.yml</code>:</p>
+
+<pre><code class="language-yaml">dependencies:
+  chem:
+    github: franciscoadasme/chem.cr
+    version: ~> 0.1</code></pre>
+
+<p>Then, resolve and install missing dependencies:</p>
+
+<pre><code class="language-sh">shards install</code></pre>
+
+<p>Dependencies are installed into the <code>lib</code> folder. More about
+dependencies at the [Shards guides][5].</p>
+
+<h3><a id="manual-download" class="anchor" href="#manual-download">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Manual download</h3>
+
+<p>Either clone the repository or download a copy of the <code>chem</code> module to
+your local machine:</p>
+
+<pre><code class="language-sh">tag=$(curl -s https://api.github.com/repos/franciscoadasme/chem.cr/releases/latest | grep "tag_name" | cut -d\" -f4)
+wget https://github.com/franciscoadasme/chem.cr/archive/$tag.tar.gz -O chem.cr-${tag#v}.tar.gz
+tar xvf chem.cr-${tag#v}.tar.gz</code></pre>
+
+<p>This will download the latest version of the <code>chem</code> module to a folder
+named <code>chem.cr-X.Y.Z</code>, where <code>X.Y.Z</code> stands for the current version.</p>
+
+<h3><a id="requirements" class="anchor" href="#requirements">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Requirements</h3>
+
+<ul><li>To run STRIDE analysis, you'll need to set <code>STRIDE_BIN</code> to the STRIDE
+  executable path.</li></ul>
+
+<h2><a id="usage" class="anchor" href="#usage">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Usage</h2>
+
+<p>First require the <code>chem</code> module. If you used Shards to installed the
+dependencies:</p>
+
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;chem&quot;</span></code></pre>
+
+<p>Or if you download a copy named <code>chem.cr-X.Y.Z</code> and it is placed at the
+parent directory:</p>
+
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;../chem.cr-X.Y.Z/src/chem&quot;</span></code></pre>
+
+<p>Refer to the [Crystal guides][6] for more information about how to
+require other files. Either way, write the following to avoid typing the
+<code><a href="Chem.html">Chem</a>::</code> prefix:</p>
+
+<pre><code class="language-crystal"><span class="k">include</span> <span class="t">Chem</span></code></pre>
+
+<p>Let's first read a structure:</p>
+
+<pre><code class="language-crystal">st <span class="o">=</span> <span class="t">Structure</span>.read <span class="s">&quot;/path/to/file.pdb&quot;</span>
+st <span class="c"># =&gt; &lt;Structure &quot;1cbn&quot;: 644 atoms, 47 residues, periodic&gt;</span></code></pre>
+
+<p>You can also use a custom read method that accepts specific options:</p>
+
+<pre><code class="language-crystal"><span class="t">Structure</span>.from_pdb <span class="s">&quot;/path/to/file.pdb&quot;</span>
+<span class="t">Structure</span>.from_pdb <span class="s">&quot;/path/to/file.pdb&quot;</span>, chains: [<span class="s">&#39;A&#39;</span>] <span class="c"># read only chain A</span>
+<span class="t">Structure</span>.from_pdb <span class="s">&quot;/path/to/file.pdb&quot;</span>, het: <span class="n">false</span> <span class="c"># skip HET atoms</span>
+<span class="t">Structure</span>.from_pdb <span class="s">&quot;/path/to/file.pdb&quot;</span>, alt_loc: <span class="s">&#39;A&#39;</span> <span class="c"># select alternate location A</span></code></pre>
+
+<p>You can access PDB header information via the <code>#experiment</code> property:</p>
+
+<pre><code class="language-crystal"><span class="k">if</span> expt <span class="o">=</span> st.experiment <span class="c"># check if experiment data is present</span>
+  expt.title <span class="c"># =&gt; &quot;ATOMIC RESOLUTION (0.83 ANGSTROMS) CRYSTAL STRUCTURE...&quot;</span>
+  expt.kind <span class="c"># =&gt; XRayDiffraction</span>
+  expt.resolution <span class="c"># =&gt; 0.83</span>
+  expt.deposition_date <span class="c"># =&gt; 1991-10-11</span>
+  ...
+<span class="k">end</span></code></pre>
+
+<p>You can also read many structures at once:</p>
+
+<pre><code class="language-crystal"><span class="c"># read all models</span>
+<span class="t">Array</span>(<span class="t">Structure</span>).from_pdb <span class="s">&quot;/path/to/file.pdb&quot;</span>
+<span class="c"># read 2th and 5th models</span>
+<span class="t">Array</span>(<span class="t">Structure</span>).from_pdb <span class="s">&quot;/path/to/file.pdb&quot;</span>, indexes: [<span class="n">1</span>, <span class="n">4</span>]</code></pre>
+
+<p>Alternatively, you could use an IO iterator to read one by one:</p>
+
+<pre><code class="language-crystal"><span class="t">PDB</span><span class="t">::</span><span class="t">Parser</span>.<span class="k">new</span>(<span class="s">&quot;/path/to/file.pdb&quot;</span>).each { <span class="o">|</span>st<span class="o">|</span> ... }
+<span class="t">PDB</span><span class="t">::</span><span class="t">Parser</span>.<span class="k">new</span>(<span class="s">&quot;/path/to/file.pdb&quot;</span>).each(indexes: [<span class="n">1</span>, <span class="n">4</span>]) { <span class="o">|</span>st<span class="o">|</span> ... }</code></pre>
+
+<h3><a id="topology-access" class="anchor" href="#topology-access">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Topology access</h3>
+
+<p>You can access topology objects using the bracket syntax (like a hash or
+associative array or dictionary):</p>
+
+<pre><code class="language-crystal">st[<span class="s">&#39;A&#39;</span>] <span class="c"># =&gt; &lt;Chain A&gt;</span>
+st[<span class="s">&#39;A&#39;</span>][<span class="n">10</span>] <span class="c"># =&gt; &lt;Residue A:ARG10&gt;</span>
+st[<span class="s">&#39;A&#39;</span>][<span class="n">10</span>][<span class="s">&quot;CA&quot;</span>] <span class="c"># =&gt; &lt;Atom A:ARG10:CA(146)&gt;</span></code></pre>
+
+<p>Alternatively, you can use the <code>#dig</code> and <code>#dig?</code> methods:</p>
+
+<pre><code class="language-crystal">st.dig <span class="s">&#39;A&#39;</span> <span class="c"># =&gt; &lt;Chain A&gt;</span>
+st.dig <span class="s">&#39;A&#39;</span>, <span class="n">10</span> <span class="c"># =&gt; &lt;Residue A:ARG10&gt;</span>
+st.dig <span class="s">&#39;A&#39;</span>, <span class="n">10</span>, <span class="s">&quot;CA&quot;</span> <span class="c"># =&gt; &lt;Atom A:ARG10:CA(146)&gt;</span>
+
+st.dig <span class="s">&#39;A&#39;</span>, <span class="n">10</span>, <span class="s">&quot;CJ&quot;</span> <span class="c"># causes an error because &quot;CJ&quot; doesn&#39;t exist</span>
+st.dig? <span class="s">&#39;A&#39;</span>, <span class="n">10</span>, <span class="s">&quot;CJ&quot;</span> <span class="c"># =&gt; nil</span></code></pre>
+
+<p>Each topology object have several modifiable properties:</p>
+
+<pre><code class="language-crystal">atom <span class="o">=</span> st.dig <span class="s">&#39;A&#39;</span>, <span class="n">10</span>, <span class="s">&quot;CA&quot;</span>
+atom.element.name <span class="c"># =&gt; Carbon</span>
+atom.coords <span class="c"># =&gt; [8.47 4.577 8.764]</span>
+atom.occupancy <span class="c"># =&gt; 1.0</span>
+atom.bonded_atoms.map <span class="o">&amp;</span>.name <span class="c"># =&gt; [&quot;N&quot;, &quot;C&quot;, &quot;HA&quot;, &quot;CB&quot;]</span></code></pre>
+
+<p>Thanks to Crystal's powerful standard library, manipulating topology objects is
+very easy:</p>
+
+<pre><code class="language-crystal"><span class="c"># ramachandran angles</span>
+st.residues.map { <span class="o">|</span>r<span class="o">|</span> {r.phi, r.psi} } <span class="c"># =&gt; [{129.5, 90.1}, ...]</span>
+<span class="c"># renumber residues starting from 1</span>
+st.residues.each_with_index { <span class="o">|</span>res, i<span class="o">|</span> res.number <span class="o">=</span> i <span class="o">+</span> <span class="n">1</span> }
+<span class="c"># constrain Z-axis</span>
+st.atoms.each { <span class="o">|</span>atom<span class="o">|</span> atom.constraint <span class="o">=</span> <span class="n">:z</span> }
+<span class="c"># total charge</span>
+st.atoms.sum_of <span class="o">&amp;</span>.partial_charge
+<span class="c"># iterate over secondary structure elements</span>
+st.residues.chunk(<span class="o">&amp;</span>.sec).each <span class="k">do</span> <span class="o">|</span>sec, residues<span class="o">|</span>
+  sec <span class="c"># =&gt; HelixAlpha</span>
+  residues <span class="c"># =&gt; [&lt;Residue A:ARG1&gt;, &lt;Residue A:LEU2&gt;, ...]</span>
+<span class="k">end</span></code></pre>
+
+<p>Here <code>#residues</code> and <code>#atoms</code> return an array of <code>Residue</code> and <code>Atom</code> instances,
+respectively. Collections also provide iterator-based access, e.g.,
+<code>#each_atom</code>, that avoids expensive memory allocations:</p>
+
+<pre><code class="language-crystal">st.atoms.any? <span class="o">&amp;</span>.constraint <span class="c"># array allocation to just check a condition</span>
+st.each_atom.any? <span class="o">&amp;</span>.constraint <span class="c"># faster!</span></code></pre>
+
+<h3><a id="atom-selection" class="anchor" href="#atom-selection">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Atom selection</h3>
+
+<p>Right now, there is no custom language to select a subset of atoms. However,
+thanks to Crystal, one can achieve a similar result with an intuitive syntax:</p>
+
+<pre><code class="language-crystal">st.atoms.<span class="k">select</span> { <span class="o">|</span>atom<span class="o">|</span> atom.partial_charge <span class="o">&gt;</span> <span class="n">0</span> }
+<span class="c"># or</span>
+st.atoms.<span class="k">select</span> <span class="o">&amp;</span>.partial_charge.<span class="o">&gt;</span>(<span class="n">0</span>)
+<span class="c"># compared to a custom language</span>
+st.atoms.<span class="k">select</span> <span class="s">&quot;partial_charge &gt; 0&quot;</span>
+
+<span class="c"># select atoms within a cylinder of radius = 4 A and centered at the origin</span>
+st.atoms.<span class="k">select</span> { <span class="o">|</span>atom<span class="o">|</span> atom.x<span class="o">**</span><span class="n">2</span> <span class="o">+</span> atom.y<span class="o">**</span><span class="n">2</span> <span class="o">&lt;</span> <span class="n">4</span> }
+<span class="c"># compared to a custom language</span>
+st.atoms.<span class="k">select</span> <span class="s">&quot;sqrt(x) + sqrt(y) &lt; 4&quot;</span> <span class="c"># or &quot;x**2 + y**2 &lt; 4&quot;</span></code></pre>
+
+<p>One advantage to using Crystal itself is that it provides type-safety: doing
+something like <code>atom.name**2</code> will result in a compilation error, whereas using
+a custom language will probably produce a confusing error during runtime.
+Additionally, the code block can be as big and complex as necessary with
+multiple intermediary computations. Furthermore, a negative condition may be
+confusing and not be trivial to write, but in Crystal you would simply use
+<code>#reject</code> instead.</p>
+
+<p>Finally, the above also works for chain and residue collections:</p>
+
+<pre><code class="language-crystal"><span class="c"># select protein chains</span>
+st.chains.<span class="k">select</span> <span class="o">&amp;</span>.each_residue.any?(<span class="o">&amp;</span>.protein?)
+<span class="c"># select only solvent residues</span>
+st.residues.<span class="k">select</span> <span class="o">&amp;</span>.solvent?
+<span class="c"># select residues with any atom within 5 A of the first CA atom</span>
+<span class="c"># (this is equivalent to &quot;same residue as&quot; or &quot;fillres&quot; in other libraries)</span>
+ca <span class="o">=</span> st.dig <span class="s">&#39;A&#39;</span>, <span class="n">1</span>, <span class="s">&quot;CA&quot;</span>
+st.residues.<span class="k">select</span> <span class="k">do</span> <span class="o">|</span>res<span class="o">|</span>
+  res.each_atom.any? { <span class="o">|</span>atom<span class="o">|</span> <span class="t">Spatial</span>.distance(atom, ca) <span class="o">&lt;</span> <span class="n">5</span> }
+<span class="k">end</span>
+<span class="c"># or</span>
+st.atoms.<span class="k">select</span> { <span class="o">|</span>atom<span class="o">|</span> <span class="t">Spatial</span>.distance(atom, ca) <span class="o">&lt;</span> <span class="n">5</span> }.residues</code></pre>
+
+<h3><a id="coordinates-manipulation" class="anchor" href="#coordinates-manipulation">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Coordinates manipulation</h3>
+
+<p>All coordinates manipulation is done using a <code>CoordinatesProxy</code> instance,
+available for any atom collection (i.e., structure, chain or residue) via
+<code>#coords</code>:</p>
+
+<pre><code class="language-crystal"><span class="c"># geometric center</span>
+st.coords.center
+<span class="c"># center at origin</span>
+st.coords.translate! <span class="o">-</span>st.coords.center
+<span class="c"># wraps atoms into the primary unit cell</span>
+st.coords.wrap
+...</code></pre>
+
+<h2><a id="benchmarks" class="anchor" href="#benchmarks">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Benchmarks</h2>
+
+<p><code>chem.cr</code> is implemented in pure Crystal, making it as fast or even faster than
+some C-powered packages.</p>
+
+<p>The benchmark is designed as follows:</p>
+
+<ul><li>The tests are implemented using the functionality documented by each library
+  in tutorials, examples, etc. Optimized versions may be faster but require
+  advanced (possibly undocumented) usage.</li><li>Tests are run ten times (except for 1HTQ, 3 times) and the elapsed time for
+  each run is averaged.</li><li>Parsing PDB files</li><ul><li><a href="http://www.rcsb.org/pdb/explore/explore.do?structureId=1crn">1CRN</a> -</li></ul>
+
+<pre><code class="language-crystal">hydrophobic protein (<span class="n">327</span> atoms).</code></pre>
+
+<ul><li><a href="http://www.rcsb.org/pdb/explore/explore.do?structureId=3jyv">3JYV</a> - 80S</li></ul>
+
+<pre><code class="language-crystal">rRNA (<span class="n">57</span>,<span class="n">327</span> atoms).</code></pre>
+
+<ul><li><a href="http://www.rcsb.org/pdb/explore/explore.do?structureId=1htq">1HTQ</a> -</li></ul>
+
+<pre><code class="language-crystal">multicopy glutamine synthetase (<span class="n">10</span> models <span class="k">of</span> <span class="n">97</span>,<span class="n">872</span> atoms).</code></pre>
+
+<ul><li>Counting the number of alanine residues in adenylate kinase (1AKE, 3816
+  atoms).</li><li>Calculating the distance between residues 50 and 60 of chain A in adenylate
+  kinase (1AKE, 3816 atoms).</li><li>Calculating the Ramachandran phi/psi angles in adenylate kinase (1AKE, 3816
+  atoms).</li></ul>
+
+<p><strong>IMPORTANT</strong>: direct comparison of parsing times should be taken with a grain
+of salt because each library does something slightly different, e.g., error
+checking. Some of this functionality is listed below. Nonetheless, these results
+gives an overall picture in terms of the expected performance.</p>
+
+<p>|                      | Biopython | chem.cr | Chemfiles | MDAnalysis | MDTraj | schrodinger |   VMD |
+| -------------------- | --------: | ------: | --------: | ---------: | -----: | ----------: | ----: |
+| Parse 1CRN [ms]      |     6.521 |   1.028 |     1.668 |      5.059 | 11.923 |      45.497 | 2.285 |
+| Parse 3JYV [s]       |     0.837 |   0.086 |     0.199 |      0.404 |  1.490 |       0.766 | 0.162 |
+| Parse 1HTQ [s]       |    16.146 |   1.673 |     2.540 |      1.387 | 18.969 |      11.997 | 0.236 |
+| Count [ms]           |     0.210 |   0.009 |     0.322 |      0.041 |  0.079 |      25.997 | 0.165 |
+| Distance [ms]        |     0.172 |   0.000 |     1.016 |      0.382 |  0.990 |      43.101 | 0.379 |
+| Ramachandran [ms]    |   110.450 |   0.607 |         - |    690.201 |  4.947 |      68.758 | 1.814 |
+|                      |           |         |           |            |        |             |       |
+| License              | Biopython |     MIT |       BSD |      GPLv2 |   LGPL | Proprietary |   VMD |
+| Parse Header         |       yes |     yes |       yes |         no |     no |          no |    no |
+| Parse CONECT         |        no |     yes |       yes |         no |    yes |         yes |   yes |
+| Guess bonds          |        no |      no |       yes |         no |    yes |         yes |   yes |
+| Hybrid36             |        no |     yes |        no |        yes |     no |          no |    no |
+| Hierarchical parsing |       yes |     yes |        no |         no |     no |          no |    no |
+| Supports disorder    |       yes |     yes |        no |         no |    yes |         yes |    no |</p>
+
+<p>Latest update: 2019-11-10</p>
+
+<p>Scripts and details are provided at <a href="https://github.com/franciscoadasme/pdb-bench">pdb-bench</a>.</p>
+
+<h2><a id="roadmap" class="anchor" href="#roadmap">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Roadmap</h2>
+
+<h3><a id="topology-manipulation" class="anchor" href="#topology-manipulation">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Topology manipulation</h3>
+
+<ul><li>[x] Automatic connectivity detection (includes periodic systems)</li><li>[x] Automatic bond order assignment</li><li>[x] Residue templates (basic impl.)</li><ul><li>[ ] Custom terminal groups</li></ul><li>[x] Automatic topology assignment (chain, residue names, atom names) based on
+  residue templates</li><li>[ ] Atom wildcards (<code>"C*"</code> will select <code>"C"</code>, <code>"CA"</code>, <code>"CB"</code>, etc.)</li><li>[ ] Atom selection language</li></ul>
+
+<h3><a id="input-and-output" class="anchor" href="#input-and-output">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Input and Output</h3>
+
+<ul><li>[x] Automatic file format detection</li><li>[x] Support for per-file format options (e.g., select PDB chain)</li><li>[x] Friendly errors (message with error location)</li><li>[x] Iterator-based IO</li><li>[ ] Compressed files (.gz and .xz)</li><li>[ ] Trajectory support</li></ul>
+
+<h4><a id="file-formats" class="anchor" href="#file-formats">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>File formats</h4>
+
+<ul><li>[x] DFTB+'s Gen format</li><li>[ ] Macromolecular Crystallographic Information Framework (CIF)</li><li>[ ] MacroMolecular Transmission Format (MMTF)</li><li>[x] PDB</li><li>[x] Tripos Mol2</li><li>[x] VASP's Poscar</li><li>[x] XYZ</li><li>[ ] and many more</li></ul>
+
+<h3><a id="analysis" class="anchor" href="#analysis">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Analysis</h3>
+
+<ul><li>[x] Coordinates manipulation (via <code>CoordinatesProxy</code>)</li><li>[x] Spatial calculations (distance, angle, dihedral, quaternions, affine
+  transformations)</li><li>[x] Periodic boundary conditions (PBC) support (topology-aware wrap and
+  unwrap)</li><li>[x] Secondary structure assignment</li><ul><li>[x] DSSP (native implementation)</li><li>[x] STRIDE (uses external program for now)</li></ul><li>[x] Nearest neighbor search (via native k-d tree impl.)</li><li>[ ] RMSD</li><li>[ ] Structure superposition</li><li>[ ] Intermolecular interactions (H-bonds, etc.)</li><li>[ ] Volumetric data</li><li>[ ] Parallel processing</li></ul>
+
+<h3><a id="other" class="anchor" href="#other">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Other</h3>
+
+<ul><li>[ ] Documentation</li><li>[ ] Guides</li><li>[ ] Workflows (handle calculation pipelines)</li><li>[ ] More tests</li></ul>
+
+<h2><a id="testing" class="anchor" href="#testing">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Testing</h2>
+
+<p>Run the tests with <code>crystal spec</code>.</p>
+
+<h2><a id="similar-software" class="anchor" href="#similar-software">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Similar software</h2>
+
+<p>There are several libraries providing similar functionality. Here we list some
+of them and provide one or more reasons for why we didn't use them. However,
+each one of them is good in their own right so please do check them out if
+<code>chem.cr</code> does not work for you.</p>
+
+<ul><li><a href="http://chemfiles.org/">Chemfiles</a> is a library for reading and writing
+  chemistry files written in C++, but can also be used from other languages such
+  as Python. It is mainly focused on simulation trajectories and does not
+  provide an object-oriented topology access.</li><li><a href="https://openbabel.org/wiki/Main_Page">OpenBabel</a> is a massive C++ library
+  providing support for more than 110 formats. Its API is very complex to use.</li><li><a href="http://mdtraj.org/latest/">MDTraj</a>, <a href="http://www.mdanalysis.org/">MDAnalysis</a>,
+  <a href="https://cclib.github.io">cclib</a>, <a href="https://pymatgen.org">pymatgen</a>,
+  <a href="http://prody.csb.pitt.edu">prody</a>, <a href="https://biopython.org">Biopython</a> and
+  more are written in Python, which usually means two things: (1) no type safety
+  makes them sometimes difficult to use if there is not enough documentation
+  (more common than one may think), (2) one usually have to deal with C for
+  performance critical code.</li><li><a href="http://www.ks.uiuc.edu/Research/vmd/">VMD</a> and
+  <a href="https://schrodinger.com/">Schrodinger</a> are very popular software for
+  molecular visualization that provide an API in Tcl and/or Python to manipulate
+  molecules. However, these usually suffer from poor documentation.</li></ul>
+
+<h2><a id="contributing" class="anchor" href="#contributing">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Contributing</h2>
+
+<ol><li>Fork it (&lt;https://github.com/franciscoadasme/chem.cr/fork>)</li><li>Create your feature branch (<code>git checkout -b my-new-feature</code>)</li><li>Commit your changes (<code>git commit -am 'Add some feature'</code>)</li><li>Push to the branch (<code>git push origin my-new-feature</code>)</li><li>Create a new Pull Request</li></ol>
+
+<h2><a id="contributors" class="anchor" href="#contributors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Contributors</h2>
+
+<ul><li><a href="https://github.com/franciscoadasme">franciscoadasme</a> Francisco Adasme -
+  creator, maintainer</li></ul>
+
+<h2><a id="license" class="anchor" href="#license">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>License</h2>
+
+<p>Licensed under the MIT license, see the separate LICENSE file.</p>
+
+<p>[1]: https://crystal-lang.org
+[2]: https://en.wikipedia.org/wiki/Protein_Data_Bank_(file_format)
+[3]: https://crystal-lang.org/install
+[4]: https://crystal-lang.org/reference/using_the_compiler/#creating-a-crystal-project
+[5]: https://crystal-lang.org/reference/the_shards_command/
+[6]: https://crystal-lang.org/reference/syntax_and_semantics/requiring_files.html
+[7]: https://github.com/franciscoadasme/chem.cr/releases/latest</p>
+</div>
+</body>
+</html>

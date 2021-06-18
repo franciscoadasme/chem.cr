@@ -1,0 +1,1865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.36.1">
+<meta name="crystal_docs.project_version" content="0.5.6">
+<meta name="crystal_docs.project_name" content="chem.cr">
+
+
+
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../js/doc.js"></script>
+
+  <meta name="repository-name" content="chem.cr">
+  <title>Chem::Spatial::Bounds - chem.cr 0.5.6</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../../";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../../index.html">
+          chem.cr
+        </a>
+      </h1>
+
+      <span class="project-version">
+        0.5.6
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class=" " data-id="chem.cr/toplevel" data-name="top level namespace">
+      <a href="../../toplevel.html">Top Level Namespace</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Array" data-name="array(t)">
+      <a href="../../Array.html">Array</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Char" data-name="char">
+      <a href="../../Char.html">Char</a>
+      
+    </li>
+  
+  <li class="parent open current" data-id="chem.cr/Chem" data-name="chem">
+      <a href="../../Chem.html">Chem</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/ArrayView" data-name="chem::arrayview(t)">
+      <a href="../../Chem/ArrayView.html">ArrayView</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Atom" data-name="chem::atom">
+      <a href="../../Chem/Atom.html">Atom</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/AtomCollection" data-name="chem::atomcollection">
+      <a href="../../Chem/AtomCollection.html">AtomCollection</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/AtomView" data-name="chem::atomview">
+      <a href="../../Chem/AtomView.html">AtomView</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Bias" data-name="chem::bias">
+      <a href="../../Chem/Bias.html">Bias</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Bond" data-name="chem::bond">
+      <a href="../../Chem/Bond.html">Bond</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Bond/Kind" data-name="chem::bond::kind">
+      <a href="../../Chem/Bond/Kind.html">Kind</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/BondArray" data-name="chem::bondarray">
+      <a href="../../Chem/BondArray.html">BondArray</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Chain" data-name="chem::chain">
+      <a href="../../Chem/Chain.html">Chain</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ChainCollection" data-name="chem::chaincollection">
+      <a href="../../Chem/ChainCollection.html">ChainCollection</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ChainView" data-name="chem::chainview">
+      <a href="../../Chem/ChainView.html">ChainView</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Constraint" data-name="chem::constraint">
+      <a href="../../Chem/Constraint.html">Constraint</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Cube" data-name="chem::cube">
+      <a href="../../Chem/Cube.html">Cube</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Cube/Reader" data-name="chem::cube::reader">
+      <a href="../../Chem/Cube/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Cube/Writer" data-name="chem::cube::writer">
+      <a href="../../Chem/Cube/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/DFTB" data-name="chem::dftb">
+      <a href="../../Chem/DFTB.html">DFTB</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="chem.cr/Chem/DFTB/Gen" data-name="chem::dftb::gen">
+      <a href="../../Chem/DFTB/Gen.html">Gen</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/DFTB/Gen/Reader" data-name="chem::dftb::gen::reader">
+      <a href="../../Chem/DFTB/Gen/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/DFTB/Gen/Writer" data-name="chem::dftb::gen::writer">
+      <a href="../../Chem/DFTB/Gen/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/DX" data-name="chem::dx">
+      <a href="../../Chem/DX.html">DX</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/DX/Reader" data-name="chem::dx::reader">
+      <a href="../../Chem/DX/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/DX/Writer" data-name="chem::dx::writer">
+      <a href="../../Chem/DX/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Element" data-name="chem::element">
+      <a href="../../Chem/Element.html">Element</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Error" data-name="chem::error">
+      <a href="../../Chem/Error.html">Error</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/IO" data-name="chem::io">
+      <a href="../../Chem/IO.html">IO</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/FileFormat" data-name="chem::io::fileformat">
+      <a href="../../Chem/IO/FileFormat.html">FileFormat</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/FileType" data-name="chem::io::filetype">
+      <a href="../../Chem/IO/FileType.html">FileType</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/ParseException" data-name="chem::io::parseexception">
+      <a href="../../Chem/IO/ParseException.html">ParseException</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/Reader" data-name="chem::io::reader(t)">
+      <a href="../../Chem/IO/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/TextIO" data-name="chem::io::textio">
+      <a href="../../Chem/IO/TextIO.html">TextIO</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/Writer" data-name="chem::io::writer(t)">
+      <a href="../../Chem/IO/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Lattice" data-name="chem::lattice">
+      <a href="../../Chem/Lattice.html">Lattice</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Linalg" data-name="chem::linalg">
+      <a href="../../Chem/Linalg.html">Linalg</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Linalg/Error" data-name="chem::linalg::error">
+      <a href="../../Chem/Linalg/Error.html">Error</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Linalg/Matrix" data-name="chem::linalg::matrix">
+      <a href="../../Chem/Linalg/Matrix.html">Matrix</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Mol2" data-name="chem::mol2">
+      <a href="../../Chem/Mol2.html">Mol2</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Mol2/Reader" data-name="chem::mol2::reader">
+      <a href="../../Chem/Mol2/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Mol2/Writer" data-name="chem::mol2::writer">
+      <a href="../../Chem/Mol2/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/PDB" data-name="chem::pdb">
+      <a href="../../Chem/PDB.html">PDB</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/PDB/Hybrid36" data-name="chem::pdb::hybrid36">
+      <a href="../../Chem/PDB/Hybrid36.html">Hybrid36</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/PDB/Reader" data-name="chem::pdb::reader">
+      <a href="../../Chem/PDB/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/PDB/Writer" data-name="chem::pdb::writer">
+      <a href="../../Chem/PDB/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/PeriodicTable" data-name="chem::periodictable">
+      <a href="../../Chem/PeriodicTable.html">PeriodicTable</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Protein" data-name="chem::protein">
+      <a href="../../Chem/Protein.html">Protein</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/AminoAcid" data-name="chem::protein::aminoacid">
+      <a href="../../Chem/Protein/AminoAcid.html">AminoAcid</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/AminoAcids" data-name="chem::protein::aminoacids">
+      <a href="../../Chem/Protein/AminoAcids.html">AminoAcids</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/DSSP" data-name="chem::protein::dssp">
+      <a href="../../Chem/Protein/DSSP.html">DSSP</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Protein/PSIQUE" data-name="chem::protein::psique">
+      <a href="../../Chem/Protein/PSIQUE.html">PSIQUE</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/PSIQUE/SecondaryStructureBlender" data-name="chem::protein::psique::secondarystructureblender">
+      <a href="../../Chem/Protein/PSIQUE/SecondaryStructureBlender.html">SecondaryStructureBlender</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/SecondaryStructure" data-name="chem::protein::secondarystructure">
+      <a href="../../Chem/Protein/SecondaryStructure.html">SecondaryStructure</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/SecondaryStructureCalculator" data-name="chem::protein::secondarystructurecalculator">
+      <a href="../../Chem/Protein/SecondaryStructureCalculator.html">SecondaryStructureCalculator</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/SecondaryStructureType" data-name="chem::protein::secondarystructuretype">
+      <a href="../../Chem/Protein/SecondaryStructureType.html">SecondaryStructureType</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/Sequence" data-name="chem::protein::sequence">
+      <a href="../../Chem/Protein/Sequence.html">Sequence</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Protein/Stride" data-name="chem::protein::stride">
+      <a href="../../Chem/Protein/Stride.html">Stride</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/Stride/Writer" data-name="chem::protein::stride::writer">
+      <a href="../../Chem/Protein/Stride/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/PyMOL" data-name="chem::pymol">
+      <a href="../../Chem/PyMOL.html">PyMOL</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/PyMOL/Writer" data-name="chem::pymol::writer">
+      <a href="../../Chem/PyMOL/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Residue" data-name="chem::residue">
+      <a href="../../Chem/Residue.html">Residue</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Residue/Kind" data-name="chem::residue::kind">
+      <a href="../../Chem/Residue/Kind.html">Kind</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueCollection" data-name="chem::residuecollection">
+      <a href="../../Chem/ResidueCollection.html">ResidueCollection</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueView" data-name="chem::residueview">
+      <a href="../../Chem/ResidueView.html">ResidueView</a>
+      
+    </li>
+  
+  <li class="parent open current" data-id="chem.cr/Chem/Spatial" data-name="chem::spatial">
+      <a href="../../Chem/Spatial.html">Spatial</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="chem.cr/Chem/Spatial/AffineTransform" data-name="chem::spatial::affinetransform">
+      <a href="../../Chem/Spatial/AffineTransform.html">AffineTransform</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/AffineTransform/ScalingFactors" data-name="chem::spatial::affinetransform::scalingfactors">
+      <a href="../../Chem/Spatial/AffineTransform/ScalingFactors.html">ScalingFactors</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Basis" data-name="chem::spatial::basis">
+      <a href="../../Chem/Spatial/Basis.html">Basis</a>
+      
+    </li>
+  
+  <li class=" current" data-id="chem.cr/Chem/Spatial/Bounds" data-name="chem::spatial::bounds">
+      <a href="../../Chem/Spatial/Bounds.html">Bounds</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/CoordinatesProxy" data-name="chem::spatial::coordinatesproxy">
+      <a href="../../Chem/Spatial/CoordinatesProxy.html">CoordinatesProxy</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Error" data-name="chem::spatial::error">
+      <a href="../../Chem/Spatial/Error.html">Error</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Spatial/Grid" data-name="chem::spatial::grid">
+      <a href="../../Chem/Spatial/Grid.html">Grid</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Grid/Dimensions" data-name="chem::spatial::grid::dimensions">
+      <a href="../../Chem/Spatial/Grid/Dimensions.html">Dimensions</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Grid/Info" data-name="chem::spatial::grid::info">
+      <a href="../../Chem/Spatial/Grid/Info.html">Info</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Grid/Location" data-name="chem::spatial::grid::location">
+      <a href="../../Chem/Spatial/Grid/Location.html">Location</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Grid/Reader" data-name="chem::spatial::grid::reader">
+      <a href="../../Chem/Spatial/Grid/Reader.html">Reader</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/HlxParams" data-name="chem::spatial::hlxparams">
+      <a href="../../Chem/Spatial/HlxParams.html">HlxParams</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/KDTree" data-name="chem::spatial::kdtree">
+      <a href="../../Chem/Spatial/KDTree.html">KDTree</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/NotPeriodicError" data-name="chem::spatial::notperiodicerror">
+      <a href="../../Chem/Spatial/NotPeriodicError.html">NotPeriodicError</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/PBC" data-name="chem::spatial::pbc">
+      <a href="../../Chem/Spatial/PBC.html">PBC</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Quaternion" data-name="chem::spatial::quaternion">
+      <a href="../../Chem/Spatial/Quaternion.html">Quaternion</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Size" data-name="chem::spatial::size">
+      <a href="../../Chem/Spatial/Size.html">Size</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Vector" data-name="chem::spatial::vector">
+      <a href="../../Chem/Spatial/Vector.html">Vector</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Structure" data-name="chem::structure">
+      <a href="../../Chem/Structure.html">Structure</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Structure/Builder" data-name="chem::structure::builder">
+      <a href="../../Chem/Structure/Builder.html">Builder</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Structure/Experiment" data-name="chem::structure::experiment">
+      <a href="../../Chem/Structure/Experiment.html">Experiment</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Structure/Experiment/Method" data-name="chem::structure::experiment::method">
+      <a href="../../Chem/Structure/Experiment/Method.html">Method</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Structure/Reader" data-name="chem::structure::reader">
+      <a href="../../Chem/Structure/Reader.html">Reader</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Topology" data-name="chem::topology">
+      <a href="../../Chem/Topology.html">Topology</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/AtomType" data-name="chem::topology::atomtype">
+      <a href="../../Chem/Topology/AtomType.html">AtomType</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/BondType" data-name="chem::topology::bondtype">
+      <a href="../../Chem/Topology/BondType.html">BondType</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/MatchData" data-name="chem::topology::matchdata">
+      <a href="../../Chem/Topology/MatchData.html">MatchData</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Patcher" data-name="chem::topology::patcher">
+      <a href="../../Chem/Topology/Patcher.html">Patcher</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Perception" data-name="chem::topology::perception">
+      <a href="../../Chem/Topology/Perception.html">Perception</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/ResidueType" data-name="chem::topology::residuetype">
+      <a href="../../Chem/Topology/ResidueType.html">ResidueType</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Topology/Templates" data-name="chem::topology::templates">
+      <a href="../../Chem/Topology/Templates.html">Templates</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="chem.cr/Chem/Topology/Templates/Builder" data-name="chem::topology::templates::builder">
+      <a href="../../Chem/Topology/Templates/Builder.html">Builder</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Templates/Builder/ParseException" data-name="chem::topology::templates::builder::parseexception">
+      <a href="../../Chem/Topology/Templates/Builder/ParseException.html">ParseException</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Templates/Detector" data-name="chem::topology::templates::detector">
+      <a href="../../Chem/Topology/Templates/Detector.html">Detector</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Templates/Error" data-name="chem::topology::templates::error">
+      <a href="../../Chem/Topology/Templates/Error.html">Error</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/VASP" data-name="chem::vasp">
+      <a href="../../Chem/VASP.html">VASP</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="chem.cr/Chem/VASP/Chgcar" data-name="chem::vasp::chgcar">
+      <a href="../../Chem/VASP/Chgcar.html">Chgcar</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Chgcar/Reader" data-name="chem::vasp::chgcar::reader">
+      <a href="../../Chem/VASP/Chgcar/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Chgcar/Writer" data-name="chem::vasp::chgcar::writer">
+      <a href="../../Chem/VASP/Chgcar/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/GridReader" data-name="chem::vasp::gridreader">
+      <a href="../../Chem/VASP/GridReader.html">GridReader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/GridWriter" data-name="chem::vasp::gridwriter">
+      <a href="../../Chem/VASP/GridWriter.html">GridWriter</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/VASP/Locpot" data-name="chem::vasp::locpot">
+      <a href="../../Chem/VASP/Locpot.html">Locpot</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Locpot/Reader" data-name="chem::vasp::locpot::reader">
+      <a href="../../Chem/VASP/Locpot/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Locpot/Writer" data-name="chem::vasp::locpot::writer">
+      <a href="../../Chem/VASP/Locpot/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/VASP/Poscar" data-name="chem::vasp::poscar">
+      <a href="../../Chem/VASP/Poscar.html">Poscar</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Poscar/Reader" data-name="chem::vasp::poscar::reader">
+      <a href="../../Chem/VASP/Poscar/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Poscar/Writer" data-name="chem::vasp::poscar::writer">
+      <a href="../../Chem/VASP/Poscar/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/VMD" data-name="chem::vmd">
+      <a href="../../Chem/VMD.html">VMD</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/VMD/Writer" data-name="chem::vmd::writer">
+      <a href="../../Chem/VMD/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/XYZ" data-name="chem::xyz">
+      <a href="../../Chem/XYZ.html">XYZ</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/XYZ/Reader" data-name="chem::xyz::reader">
+      <a href="../../Chem/XYZ/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/XYZ/Writer" data-name="chem::xyz::writer">
+      <a href="../../Chem/XYZ/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Colorize" data-name="colorize">
+      <a href="../../Colorize.html">Colorize</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Colorize/ColorRGB" data-name="colorize::colorrgb">
+      <a href="../../Colorize/ColorRGB.html">ColorRGB</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Indexable" data-name="indexable(t)">
+      <a href="../../Indexable.html">Indexable</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Int" data-name="int">
+      <a href="../../Int.html">Int</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Number" data-name="number">
+      <a href="../../Number.html">Number</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Range" data-name="range(b, e)">
+      <a href="../../Range.html">Range</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Slice" data-name="slice(t)">
+      <a href="../../Slice.html">Slice</a>
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">struct</span> Chem::Spatial::Bounds
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Chem/Spatial/Bounds.html">Chem::Spatial::Bounds</a></li><li class="superclass">Struct</li><li class="superclass">Value</li><li class="superclass">Object</li></ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      chem/spatial/bounds.cr
+    
+    <br/>
+  
+
+
+
+
+
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#[](a:Float64,b:Float64,c:Float64):self-class-method" class="signature"><strong>.[]</strong>(a : Float64, b : Float64, c : Float64) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new(origin:Vector,basis:Basis)-class-method" class="signature"><strong>.new</strong>(origin : Vector, basis : Basis)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new(vmin:Vector,vmax:Vector):self-class-method" class="signature"><strong>.new</strong>(vmin : Vector, vmax : Vector) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new(origin:Vector,*args,**options):self-class-method" class="signature"><strong>.new</strong>(origin : Vector, *args, **options) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new(*args,**options):self-class-method" class="signature"><strong>.new</strong>(*args, **options) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#zero:self-class-method" class="signature"><strong>.zero</strong> : <span class="k">self</span></a>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#+(rhs:Vector):self-instance-method" class="signature"><strong>#+</strong>(rhs : Vector) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#-(rhs:Vector):self-instance-method" class="signature"><strong>#-</strong>(rhs : Vector) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#a(*args,**options)-instance-method" class="signature"><strong>#a</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#a(*args,**options,&)-instance-method" class="signature"><strong>#a</strong>(*args, **options, &)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#alpha(*args,**options)-instance-method" class="signature"><strong>#alpha</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#alpha(*args,**options,&)-instance-method" class="signature"><strong>#alpha</strong>(*args, **options, &)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#angles(*args,**options)-instance-method" class="signature"><strong>#angles</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#angles(*args,**options,&)-instance-method" class="signature"><strong>#angles</strong>(*args, **options, &)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#b(*args,**options)-instance-method" class="signature"><strong>#b</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#b(*args,**options,&)-instance-method" class="signature"><strong>#b</strong>(*args, **options, &)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#basis:Basis-instance-method" class="signature"><strong>#basis</strong> : Basis</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#beta(*args,**options)-instance-method" class="signature"><strong>#beta</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#beta(*args,**options,&)-instance-method" class="signature"><strong>#beta</strong>(*args, **options, &)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#c(*args,**options)-instance-method" class="signature"><strong>#c</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#c(*args,**options,&)-instance-method" class="signature"><strong>#c</strong>(*args, **options, &)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#center:Vector-instance-method" class="signature"><strong>#center</strong> : Vector</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#each_vertex(&:Vector-%3E):Nil-instance-method" class="signature"><strong>#each_vertex</strong>(& : Vector -> ) : Nil</a>
+        
+          <div class="summary"><p>Yields bounds' vertices.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#gamma(*args,**options)-instance-method" class="signature"><strong>#gamma</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#gamma(*args,**options,&)-instance-method" class="signature"><strong>#gamma</strong>(*args, **options, &)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#i(*args,**options)-instance-method" class="signature"><strong>#i</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#i(*args,**options,&)-instance-method" class="signature"><strong>#i</strong>(*args, **options, &)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#includes?(bounds:Bounds):Bool-instance-method" class="signature"><strong>#includes?</strong>(bounds : Bounds) : Bool</a>
+        
+          <div class="summary"><p>Returns <code>true</code> if the current instance contains <em>bounds</em>, <code>false</code> otherwise.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#includes?(vec:Vector):Bool-instance-method" class="signature"><strong>#includes?</strong>(vec : Vector) : Bool</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#j(*args,**options,&)-instance-method" class="signature"><strong>#j</strong>(*args, **options, &)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#j(*args,**options)-instance-method" class="signature"><strong>#j</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#k(*args,**options,&)-instance-method" class="signature"><strong>#k</strong>(*args, **options, &)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#k(*args,**options)-instance-method" class="signature"><strong>#k</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#max:Vector-instance-method" class="signature"><strong>#max</strong> : Vector</a>
+        
+          <div class="summary"><p>Returns maximum edge.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#min:Vector-instance-method" class="signature"><strong>#min</strong> : Vector</a>
+        
+          <div class="summary"><p>Returns minimum edge.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#origin:Vector-instance-method" class="signature"><strong>#origin</strong> : Vector</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#pad(padding:Number):self-instance-method" class="signature"><strong>#pad</strong>(padding : Number) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a bounds with its extents expanded by <em>padding</em> in every direction.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#size(*args,**options,&)-instance-method" class="signature"><strong>#size</strong>(*args, **options, &)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#size(*args,**options)-instance-method" class="signature"><strong>#size</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#translate(offset:Vector):self-instance-method" class="signature"><strong>#translate</strong>(offset : Vector) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a bounds translated by <em>offset</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#vertices:Array(Vector)-instance-method" class="signature"><strong>#vertices</strong> : Array(Vector)</a>
+        
+          <div class="summary"><p>Returns bounds' vertices.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#volume:Float64-instance-method" class="signature"><strong>#volume</strong> : Float64</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+<div class="methods-inherited">
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="[](a:Float64,b:Float64,c:Float64):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>[]</strong>(a : Float64, b : Float64, c : Float64) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#[](a:Float64,b:Float64,c:Float64):self-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(origin:Vector,basis:Basis)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(origin : <a href="../../Chem/Spatial/Vector.html">Vector</a>, basis : <a href="../../Chem/Spatial/Basis.html">Basis</a>)
+
+        <a class="method-permalink" href="#new(origin:Vector,basis:Basis)-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(vmin:Vector,vmax:Vector):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(vmin : <a href="../../Chem/Spatial/Vector.html">Vector</a>, vmax : <a href="../../Chem/Spatial/Vector.html">Vector</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#new(vmin:Vector,vmax:Vector):self-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(origin:Vector,*args,**options):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(origin : <a href="../../Chem/Spatial/Vector.html">Vector</a>, *args, **options) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#new(origin:Vector,*args,**options):self-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(*args,**options):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(*args, **options) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#new(*args,**options):self-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="zero:self-class-method">
+      <div class="signature">
+        
+        def self.<strong>zero</strong> : <span class="k">self</span>
+
+        <a class="method-permalink" href="#zero:self-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
+
+
+
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="+(rhs:Vector):self-instance-method">
+      <div class="signature">
+        
+        def <strong>+</strong>(rhs : <a href="../../Chem/Spatial/Vector.html">Vector</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#+(rhs:Vector):self-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="-(rhs:Vector):self-instance-method">
+      <div class="signature">
+        
+        def <strong>-</strong>(rhs : <a href="../../Chem/Spatial/Vector.html">Vector</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#-(rhs:Vector):self-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="a(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>a</strong>(*args, **options)
+
+        <a class="method-permalink" href="#a(*args,**options)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="a(*args,**options,&)-instance-method">
+      <div class="signature">
+        
+        def <strong>a</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#a(*args,**options,&)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="alpha(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>alpha</strong>(*args, **options)
+
+        <a class="method-permalink" href="#alpha(*args,**options)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="alpha(*args,**options,&)-instance-method">
+      <div class="signature">
+        
+        def <strong>alpha</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#alpha(*args,**options,&)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="angles(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>angles</strong>(*args, **options)
+
+        <a class="method-permalink" href="#angles(*args,**options)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="angles(*args,**options,&)-instance-method">
+      <div class="signature">
+        
+        def <strong>angles</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#angles(*args,**options,&)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="b(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>b</strong>(*args, **options)
+
+        <a class="method-permalink" href="#b(*args,**options)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="b(*args,**options,&)-instance-method">
+      <div class="signature">
+        
+        def <strong>b</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#b(*args,**options,&)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="basis:Basis-instance-method">
+      <div class="signature">
+        
+        def <strong>basis</strong> : <a href="../../Chem/Spatial/Basis.html">Basis</a>
+
+        <a class="method-permalink" href="#basis:Basis-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="beta(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>beta</strong>(*args, **options)
+
+        <a class="method-permalink" href="#beta(*args,**options)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="beta(*args,**options,&)-instance-method">
+      <div class="signature">
+        
+        def <strong>beta</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#beta(*args,**options,&)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="c(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>c</strong>(*args, **options)
+
+        <a class="method-permalink" href="#c(*args,**options)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="c(*args,**options,&)-instance-method">
+      <div class="signature">
+        
+        def <strong>c</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#c(*args,**options,&)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="center:Vector-instance-method">
+      <div class="signature">
+        
+        def <strong>center</strong> : <a href="../../Chem/Spatial/Vector.html">Vector</a>
+
+        <a class="method-permalink" href="#center:Vector-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="each_vertex(&:Vector->):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>each_vertex</strong>(& : <a href="../../Chem/Spatial/Vector.html">Vector</a> -> ) : Nil
+
+        <a class="method-permalink" href="#each_vertex(&:Vector-%3E):Nil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Yields bounds' vertices.</p>
+
+<pre><code class="language-crystal"><span class="t">Bounds</span>[<span class="n">5</span>, <span class="n">10</span>, <span class="n">20</span>].each_vertex { <span class="o">|</span>vec<span class="o">|</span> puts vec }</code></pre>
+
+<p>Prints:</p>
+
+<pre><code class="language-text">Vector[0.0, 0.0, 0.0]
+Vector[0.0, 0.0, 20.0]
+Vector[0.0, 10.0, 0.0]
+Vector[0.0, 10.0, 20.0]
+Vector[5.0, 0.0, 0.0]
+Vector[5.0, 0.0, 20.0]
+Vector[5.0, 10.0, 0.0]
+Vector[5.0, 10.0, 20.0]</code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="gamma(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>gamma</strong>(*args, **options)
+
+        <a class="method-permalink" href="#gamma(*args,**options)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="gamma(*args,**options,&)-instance-method">
+      <div class="signature">
+        
+        def <strong>gamma</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#gamma(*args,**options,&)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="i(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>i</strong>(*args, **options)
+
+        <a class="method-permalink" href="#i(*args,**options)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="i(*args,**options,&)-instance-method">
+      <div class="signature">
+        
+        def <strong>i</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#i(*args,**options,&)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="includes?(bounds:Bounds):Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>includes?</strong>(bounds : <a href="../../Chem/Spatial/Bounds.html">Bounds</a>) : Bool
+
+        <a class="method-permalink" href="#includes?(bounds:Bounds):Bool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if the current instance contains <em>bounds</em>, <code>false</code>
+otherwise.</p>
+
+<p>It effectively checks if every vertex of <em>bounds</em> is contained by
+the current instance.</p>
+
+<pre><code class="language-crystal">bounds <span class="o">=</span> <span class="t">Bounds</span>.<span class="k">new</span> <span class="t">S</span>[<span class="n">10</span>, <span class="n">10</span>, <span class="n">10</span>], <span class="n">90</span>, <span class="n">90</span>, <span class="n">120</span>
+bounds.includes? <span class="t">Bounds</span>.<span class="k">new</span>(<span class="t">Size</span>[<span class="n">5</span>, <span class="n">4</span>, <span class="n">6</span>])                     <span class="c"># =&gt; true</span>
+bounds.includes? <span class="t">Bounds</span>.<span class="k">new</span>(<span class="t">Vector</span>[<span class="n">-1</span>, <span class="n">2</span>, <span class="n">-4</span>], <span class="t">Size</span>[<span class="n">5</span>, <span class="n">4</span>, <span class="n">6</span>])) <span class="c"># =&gt; false</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="includes?(vec:Vector):Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>includes?</strong>(vec : <a href="../../Chem/Spatial/Vector.html">Vector</a>) : Bool
+
+        <a class="method-permalink" href="#includes?(vec:Vector):Bool-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="j(*args,**options,&)-instance-method">
+      <div class="signature">
+        
+        def <strong>j</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#j(*args,**options,&)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="j(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>j</strong>(*args, **options)
+
+        <a class="method-permalink" href="#j(*args,**options)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="k(*args,**options,&)-instance-method">
+      <div class="signature">
+        
+        def <strong>k</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#k(*args,**options,&)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="k(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>k</strong>(*args, **options)
+
+        <a class="method-permalink" href="#k(*args,**options)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="max:Vector-instance-method">
+      <div class="signature">
+        
+        def <strong>max</strong> : <a href="../../Chem/Spatial/Vector.html">Vector</a>
+
+        <a class="method-permalink" href="#max:Vector-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns maximum edge.</p>
+
+<pre><code class="language-crystal">bounds <span class="o">=</span> <span class="t">Bounds</span>.<span class="k">new</span> <span class="t">V</span>[<span class="n">1.5</span>, <span class="n">3</span>, <span class="n">-0.4</span>], <span class="t">S</span>[<span class="n">10</span>, <span class="n">10</span>, <span class="n">12</span>], <span class="n">90</span>, <span class="n">90</span>, <span class="n">120</span>
+bounds.max <span class="c"># =&gt; Vector[6.5, 11.66, 11.6]</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="min:Vector-instance-method">
+      <div class="signature">
+        
+        def <strong>min</strong> : <a href="../../Chem/Spatial/Vector.html">Vector</a>
+
+        <a class="method-permalink" href="#min:Vector-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns minimum edge. This is equivalent to the origin.</p>
+
+<pre><code class="language-crystal">bounds <span class="o">=</span> <span class="t">Bounds</span>.<span class="k">new</span> <span class="t">V</span>[<span class="n">1.5</span>, <span class="n">3</span>, <span class="n">-0.4</span>], <span class="t">S</span>[<span class="n">10</span>, <span class="n">10</span>, <span class="n">12</span>], <span class="n">90</span>, <span class="n">90</span>, <span class="n">120</span>
+bounds.min <span class="c"># =&gt; Vector[1.5, 3, -0.4]</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="origin:Vector-instance-method">
+      <div class="signature">
+        
+        def <strong>origin</strong> : <a href="../../Chem/Spatial/Vector.html">Vector</a>
+
+        <a class="method-permalink" href="#origin:Vector-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="pad(padding:Number):self-instance-method">
+      <div class="signature">
+        
+        def <strong>pad</strong>(padding : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#pad(padding:Number):self-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a bounds with its extents expanded by <em>padding</em> in every
+direction. Note that its size is actually increased by <code>padding *
+2</code>.</p>
+
+<pre><code class="language-crystal">bounds <span class="o">=</span> <span class="t">Bounds</span>.<span class="k">new</span> <span class="t">Vector</span>[<span class="n">1</span>, <span class="n">5</span>, <span class="n">3</span>], <span class="t">S</span>[<span class="n">10</span>, <span class="n">5</span>, <span class="n">12</span>]
+bounds.center <span class="c"># =&gt; Vector[6.0, 7.5, 9.0]</span>
+bounds <span class="o">=</span> bounds.pad(<span class="n">2.5</span>)
+bounds.size   <span class="c"># =&gt; Size[15, 10, 17]</span>
+bounds.center <span class="c"># =&gt; Vector[6.0, 7.5, 9.0]</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="size(*args,**options,&)-instance-method">
+      <div class="signature">
+        
+        def <strong>size</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#size(*args,**options,&)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="size(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>size</strong>(*args, **options)
+
+        <a class="method-permalink" href="#size(*args,**options)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="translate(offset:Vector):self-instance-method">
+      <div class="signature">
+        
+        def <strong>translate</strong>(offset : <a href="../../Chem/Spatial/Vector.html">Vector</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#translate(offset:Vector):self-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a bounds translated by <em>offset</em>.</p>
+
+<pre><code class="language-crystal">bounds <span class="o">=</span> <span class="t">Bounds</span>.<span class="k">new</span> <span class="t">V</span>[<span class="n">-5</span>, <span class="n">1</span>, <span class="n">20</span>], <span class="t">S</span>[<span class="n">10</span>, <span class="n">10</span>, <span class="n">10</span>], <span class="n">90</span>, <span class="n">90</span>, <span class="n">120</span>
+bounds.translate(<span class="t">V</span>[<span class="n">1</span>, <span class="n">2</span>, <span class="n">10</span>]).min <span class="c"># =&gt; Vector[-4.0, 3.0, 30.0]</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="vertices:Array(Vector)-instance-method">
+      <div class="signature">
+        
+        def <strong>vertices</strong> : <a href="../../Array.html">Array</a>(<a href="../../Chem/Spatial/Vector.html">Vector</a>)
+
+        <a class="method-permalink" href="#vertices:Array(Vector)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns bounds' vertices.</p>
+
+<pre><code class="language-crystal">bounds <span class="o">=</span> <span class="t">Bounds</span>[<span class="n">5</span>, <span class="n">10</span>, <span class="n">20</span>]
+bounds.vertices <span class="c"># =&gt; [Vector[0.0, 0.0, 0.0], Vector[0.0, 0.0, 20.0], ...]</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="volume:Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>volume</strong> : Float64
+
+        <a class="method-permalink" href="#volume:Float64-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
+
+
+
+</div>
+
+</body>
+</html>

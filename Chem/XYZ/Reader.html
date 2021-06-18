@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.36.1">
+<meta name="crystal_docs.project_version" content="0.5.6">
+<meta name="crystal_docs.project_name" content="chem.cr">
+
+
+
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../js/doc.js"></script>
+
+  <meta name="repository-name" content="chem.cr">
+  <title>Chem::XYZ::Reader - chem.cr 0.5.6</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../../";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../../index.html">
+          chem.cr
+        </a>
+      </h1>
+
+      <span class="project-version">
+        0.5.6
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class=" " data-id="chem.cr/toplevel" data-name="top level namespace">
+      <a href="../../toplevel.html">Top Level Namespace</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Array" data-name="array(t)">
+      <a href="../../Array.html">Array</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Char" data-name="char">
+      <a href="../../Char.html">Char</a>
+      
+    </li>
+  
+  <li class="parent open current" data-id="chem.cr/Chem" data-name="chem">
+      <a href="../../Chem.html">Chem</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/ArrayView" data-name="chem::arrayview(t)">
+      <a href="../../Chem/ArrayView.html">ArrayView</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Atom" data-name="chem::atom">
+      <a href="../../Chem/Atom.html">Atom</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/AtomCollection" data-name="chem::atomcollection">
+      <a href="../../Chem/AtomCollection.html">AtomCollection</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/AtomView" data-name="chem::atomview">
+      <a href="../../Chem/AtomView.html">AtomView</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Bias" data-name="chem::bias">
+      <a href="../../Chem/Bias.html">Bias</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Bond" data-name="chem::bond">
+      <a href="../../Chem/Bond.html">Bond</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Bond/Kind" data-name="chem::bond::kind">
+      <a href="../../Chem/Bond/Kind.html">Kind</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/BondArray" data-name="chem::bondarray">
+      <a href="../../Chem/BondArray.html">BondArray</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Chain" data-name="chem::chain">
+      <a href="../../Chem/Chain.html">Chain</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ChainCollection" data-name="chem::chaincollection">
+      <a href="../../Chem/ChainCollection.html">ChainCollection</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ChainView" data-name="chem::chainview">
+      <a href="../../Chem/ChainView.html">ChainView</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Constraint" data-name="chem::constraint">
+      <a href="../../Chem/Constraint.html">Constraint</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Cube" data-name="chem::cube">
+      <a href="../../Chem/Cube.html">Cube</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Cube/Reader" data-name="chem::cube::reader">
+      <a href="../../Chem/Cube/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Cube/Writer" data-name="chem::cube::writer">
+      <a href="../../Chem/Cube/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/DFTB" data-name="chem::dftb">
+      <a href="../../Chem/DFTB.html">DFTB</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="chem.cr/Chem/DFTB/Gen" data-name="chem::dftb::gen">
+      <a href="../../Chem/DFTB/Gen.html">Gen</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/DFTB/Gen/Reader" data-name="chem::dftb::gen::reader">
+      <a href="../../Chem/DFTB/Gen/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/DFTB/Gen/Writer" data-name="chem::dftb::gen::writer">
+      <a href="../../Chem/DFTB/Gen/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/DX" data-name="chem::dx">
+      <a href="../../Chem/DX.html">DX</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/DX/Reader" data-name="chem::dx::reader">
+      <a href="../../Chem/DX/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/DX/Writer" data-name="chem::dx::writer">
+      <a href="../../Chem/DX/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Element" data-name="chem::element">
+      <a href="../../Chem/Element.html">Element</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Error" data-name="chem::error">
+      <a href="../../Chem/Error.html">Error</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/IO" data-name="chem::io">
+      <a href="../../Chem/IO.html">IO</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/FileFormat" data-name="chem::io::fileformat">
+      <a href="../../Chem/IO/FileFormat.html">FileFormat</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/FileType" data-name="chem::io::filetype">
+      <a href="../../Chem/IO/FileType.html">FileType</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/ParseException" data-name="chem::io::parseexception">
+      <a href="../../Chem/IO/ParseException.html">ParseException</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/Reader" data-name="chem::io::reader(t)">
+      <a href="../../Chem/IO/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/TextIO" data-name="chem::io::textio">
+      <a href="../../Chem/IO/TextIO.html">TextIO</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/Writer" data-name="chem::io::writer(t)">
+      <a href="../../Chem/IO/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Lattice" data-name="chem::lattice">
+      <a href="../../Chem/Lattice.html">Lattice</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Linalg" data-name="chem::linalg">
+      <a href="../../Chem/Linalg.html">Linalg</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Linalg/Error" data-name="chem::linalg::error">
+      <a href="../../Chem/Linalg/Error.html">Error</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Linalg/Matrix" data-name="chem::linalg::matrix">
+      <a href="../../Chem/Linalg/Matrix.html">Matrix</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Mol2" data-name="chem::mol2">
+      <a href="../../Chem/Mol2.html">Mol2</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Mol2/Reader" data-name="chem::mol2::reader">
+      <a href="../../Chem/Mol2/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Mol2/Writer" data-name="chem::mol2::writer">
+      <a href="../../Chem/Mol2/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/PDB" data-name="chem::pdb">
+      <a href="../../Chem/PDB.html">PDB</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/PDB/Hybrid36" data-name="chem::pdb::hybrid36">
+      <a href="../../Chem/PDB/Hybrid36.html">Hybrid36</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/PDB/Reader" data-name="chem::pdb::reader">
+      <a href="../../Chem/PDB/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/PDB/Writer" data-name="chem::pdb::writer">
+      <a href="../../Chem/PDB/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/PeriodicTable" data-name="chem::periodictable">
+      <a href="../../Chem/PeriodicTable.html">PeriodicTable</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Protein" data-name="chem::protein">
+      <a href="../../Chem/Protein.html">Protein</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/AminoAcid" data-name="chem::protein::aminoacid">
+      <a href="../../Chem/Protein/AminoAcid.html">AminoAcid</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/AminoAcids" data-name="chem::protein::aminoacids">
+      <a href="../../Chem/Protein/AminoAcids.html">AminoAcids</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/DSSP" data-name="chem::protein::dssp">
+      <a href="../../Chem/Protein/DSSP.html">DSSP</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Protein/PSIQUE" data-name="chem::protein::psique">
+      <a href="../../Chem/Protein/PSIQUE.html">PSIQUE</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/PSIQUE/SecondaryStructureBlender" data-name="chem::protein::psique::secondarystructureblender">
+      <a href="../../Chem/Protein/PSIQUE/SecondaryStructureBlender.html">SecondaryStructureBlender</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/SecondaryStructure" data-name="chem::protein::secondarystructure">
+      <a href="../../Chem/Protein/SecondaryStructure.html">SecondaryStructure</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/SecondaryStructureCalculator" data-name="chem::protein::secondarystructurecalculator">
+      <a href="../../Chem/Protein/SecondaryStructureCalculator.html">SecondaryStructureCalculator</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/SecondaryStructureType" data-name="chem::protein::secondarystructuretype">
+      <a href="../../Chem/Protein/SecondaryStructureType.html">SecondaryStructureType</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/Sequence" data-name="chem::protein::sequence">
+      <a href="../../Chem/Protein/Sequence.html">Sequence</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Protein/Stride" data-name="chem::protein::stride">
+      <a href="../../Chem/Protein/Stride.html">Stride</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/Stride/Writer" data-name="chem::protein::stride::writer">
+      <a href="../../Chem/Protein/Stride/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/PyMOL" data-name="chem::pymol">
+      <a href="../../Chem/PyMOL.html">PyMOL</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/PyMOL/Writer" data-name="chem::pymol::writer">
+      <a href="../../Chem/PyMOL/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Residue" data-name="chem::residue">
+      <a href="../../Chem/Residue.html">Residue</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Residue/Kind" data-name="chem::residue::kind">
+      <a href="../../Chem/Residue/Kind.html">Kind</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueCollection" data-name="chem::residuecollection">
+      <a href="../../Chem/ResidueCollection.html">ResidueCollection</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueView" data-name="chem::residueview">
+      <a href="../../Chem/ResidueView.html">ResidueView</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Spatial" data-name="chem::spatial">
+      <a href="../../Chem/Spatial.html">Spatial</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="chem.cr/Chem/Spatial/AffineTransform" data-name="chem::spatial::affinetransform">
+      <a href="../../Chem/Spatial/AffineTransform.html">AffineTransform</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/AffineTransform/ScalingFactors" data-name="chem::spatial::affinetransform::scalingfactors">
+      <a href="../../Chem/Spatial/AffineTransform/ScalingFactors.html">ScalingFactors</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Basis" data-name="chem::spatial::basis">
+      <a href="../../Chem/Spatial/Basis.html">Basis</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Bounds" data-name="chem::spatial::bounds">
+      <a href="../../Chem/Spatial/Bounds.html">Bounds</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/CoordinatesProxy" data-name="chem::spatial::coordinatesproxy">
+      <a href="../../Chem/Spatial/CoordinatesProxy.html">CoordinatesProxy</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Error" data-name="chem::spatial::error">
+      <a href="../../Chem/Spatial/Error.html">Error</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Spatial/Grid" data-name="chem::spatial::grid">
+      <a href="../../Chem/Spatial/Grid.html">Grid</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Grid/Dimensions" data-name="chem::spatial::grid::dimensions">
+      <a href="../../Chem/Spatial/Grid/Dimensions.html">Dimensions</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Grid/Info" data-name="chem::spatial::grid::info">
+      <a href="../../Chem/Spatial/Grid/Info.html">Info</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Grid/Location" data-name="chem::spatial::grid::location">
+      <a href="../../Chem/Spatial/Grid/Location.html">Location</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Grid/Reader" data-name="chem::spatial::grid::reader">
+      <a href="../../Chem/Spatial/Grid/Reader.html">Reader</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/HlxParams" data-name="chem::spatial::hlxparams">
+      <a href="../../Chem/Spatial/HlxParams.html">HlxParams</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/KDTree" data-name="chem::spatial::kdtree">
+      <a href="../../Chem/Spatial/KDTree.html">KDTree</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/NotPeriodicError" data-name="chem::spatial::notperiodicerror">
+      <a href="../../Chem/Spatial/NotPeriodicError.html">NotPeriodicError</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/PBC" data-name="chem::spatial::pbc">
+      <a href="../../Chem/Spatial/PBC.html">PBC</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Quaternion" data-name="chem::spatial::quaternion">
+      <a href="../../Chem/Spatial/Quaternion.html">Quaternion</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Size" data-name="chem::spatial::size">
+      <a href="../../Chem/Spatial/Size.html">Size</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Vector" data-name="chem::spatial::vector">
+      <a href="../../Chem/Spatial/Vector.html">Vector</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Structure" data-name="chem::structure">
+      <a href="../../Chem/Structure.html">Structure</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Structure/Builder" data-name="chem::structure::builder">
+      <a href="../../Chem/Structure/Builder.html">Builder</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Structure/Experiment" data-name="chem::structure::experiment">
+      <a href="../../Chem/Structure/Experiment.html">Experiment</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Structure/Experiment/Method" data-name="chem::structure::experiment::method">
+      <a href="../../Chem/Structure/Experiment/Method.html">Method</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Structure/Reader" data-name="chem::structure::reader">
+      <a href="../../Chem/Structure/Reader.html">Reader</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Topology" data-name="chem::topology">
+      <a href="../../Chem/Topology.html">Topology</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/AtomType" data-name="chem::topology::atomtype">
+      <a href="../../Chem/Topology/AtomType.html">AtomType</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/BondType" data-name="chem::topology::bondtype">
+      <a href="../../Chem/Topology/BondType.html">BondType</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/MatchData" data-name="chem::topology::matchdata">
+      <a href="../../Chem/Topology/MatchData.html">MatchData</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Patcher" data-name="chem::topology::patcher">
+      <a href="../../Chem/Topology/Patcher.html">Patcher</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Perception" data-name="chem::topology::perception">
+      <a href="../../Chem/Topology/Perception.html">Perception</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/ResidueType" data-name="chem::topology::residuetype">
+      <a href="../../Chem/Topology/ResidueType.html">ResidueType</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Topology/Templates" data-name="chem::topology::templates">
+      <a href="../../Chem/Topology/Templates.html">Templates</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="chem.cr/Chem/Topology/Templates/Builder" data-name="chem::topology::templates::builder">
+      <a href="../../Chem/Topology/Templates/Builder.html">Builder</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Templates/Builder/ParseException" data-name="chem::topology::templates::builder::parseexception">
+      <a href="../../Chem/Topology/Templates/Builder/ParseException.html">ParseException</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Templates/Detector" data-name="chem::topology::templates::detector">
+      <a href="../../Chem/Topology/Templates/Detector.html">Detector</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Templates/Error" data-name="chem::topology::templates::error">
+      <a href="../../Chem/Topology/Templates/Error.html">Error</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/VASP" data-name="chem::vasp">
+      <a href="../../Chem/VASP.html">VASP</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="chem.cr/Chem/VASP/Chgcar" data-name="chem::vasp::chgcar">
+      <a href="../../Chem/VASP/Chgcar.html">Chgcar</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Chgcar/Reader" data-name="chem::vasp::chgcar::reader">
+      <a href="../../Chem/VASP/Chgcar/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Chgcar/Writer" data-name="chem::vasp::chgcar::writer">
+      <a href="../../Chem/VASP/Chgcar/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/GridReader" data-name="chem::vasp::gridreader">
+      <a href="../../Chem/VASP/GridReader.html">GridReader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/GridWriter" data-name="chem::vasp::gridwriter">
+      <a href="../../Chem/VASP/GridWriter.html">GridWriter</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/VASP/Locpot" data-name="chem::vasp::locpot">
+      <a href="../../Chem/VASP/Locpot.html">Locpot</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Locpot/Reader" data-name="chem::vasp::locpot::reader">
+      <a href="../../Chem/VASP/Locpot/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Locpot/Writer" data-name="chem::vasp::locpot::writer">
+      <a href="../../Chem/VASP/Locpot/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/VASP/Poscar" data-name="chem::vasp::poscar">
+      <a href="../../Chem/VASP/Poscar.html">Poscar</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Poscar/Reader" data-name="chem::vasp::poscar::reader">
+      <a href="../../Chem/VASP/Poscar/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Poscar/Writer" data-name="chem::vasp::poscar::writer">
+      <a href="../../Chem/VASP/Poscar/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/VMD" data-name="chem::vmd">
+      <a href="../../Chem/VMD.html">VMD</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/VMD/Writer" data-name="chem::vmd::writer">
+      <a href="../../Chem/VMD/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent open current" data-id="chem.cr/Chem/XYZ" data-name="chem::xyz">
+      <a href="../../Chem/XYZ.html">XYZ</a>
+      
+        <ul>
+  
+  <li class=" current" data-id="chem.cr/Chem/XYZ/Reader" data-name="chem::xyz::reader">
+      <a href="../../Chem/XYZ/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/XYZ/Writer" data-name="chem::xyz::writer">
+      <a href="../../Chem/XYZ/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Colorize" data-name="colorize">
+      <a href="../../Colorize.html">Colorize</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Colorize/ColorRGB" data-name="colorize::colorrgb">
+      <a href="../../Colorize/ColorRGB.html">ColorRGB</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Indexable" data-name="indexable(t)">
+      <a href="../../Indexable.html">Indexable</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Int" data-name="int">
+      <a href="../../Int.html">Int</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Number" data-name="number">
+      <a href="../../Number.html">Number</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Range" data-name="range(b, e)">
+      <a href="../../Range.html">Range</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Slice" data-name="slice(t)">
+      <a href="../../Slice.html">Slice</a>
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">class</span> Chem::XYZ::Reader
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Chem/XYZ/Reader.html">Chem::XYZ::Reader</a></li><li class="superclass"><a href="../../Chem/Structure/Reader.html">Chem::Structure::Reader</a></li><li class="superclass"><a href="../../Chem/IO/Reader.html">Chem::IO::Reader</a>(<a href="../../Chem/Structure.html">Chem::Structure</a>)</li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      chem/io/formats/xyz.cr
+    
+    <br/>
+  
+
+
+
+
+
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new(input:::IO,guess_topology:Bool=true,sync_close:Bool=true)-class-method" class="signature"><strong>.new</strong>(input : ::IO, guess_topology : Bool = <span class="n">true</span>, sync_close : Bool = <span class="n">true</span>)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new(path:Path%7CString,guess_topology:Bool=true):self-class-method" class="signature"><strong>.new</strong>(path : Path | String, guess_topology : Bool = <span class="n">true</span>) : <span class="k">self</span></a>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#next:Structure%7CIterator::Stop-instance-method" class="signature"><strong>#next</strong> : Structure | Iterator::Stop</a>
+        
+          <div class="summary"><p>Returns the next element in this iterator, or <code>Iterator::Stop::INSTANCE</code> if there are no more elements.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#skip_structure:Nil-instance-method" class="signature"><strong>#skip_structure</strong> : Nil</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+<div class="methods-inherited">
+  
+    
+
+  <h3>Instance methods inherited from class <code><a href="../../Chem/Structure/Reader.html">Chem::Structure::Reader</a></code></h3>
+  
+  
+    <a href="../../Chem/Structure/Reader.html#each(indexes:Enumerable(Int),&block:Structure-%3E)-instance-method" class="tooltip">
+      <span>each(indexes : Enumerable(Int), &block : Structure -> )</span>
+    each</a>, 
+    
+  
+    <a href="../../Chem/Structure/Reader.html#read_entry:Structure-instance-method" class="tooltip">
+      <span>read_entry : Structure</span>
+    read_entry</a>, 
+    
+  
+    <a href="../../Chem/Structure/Reader.html#select(indexes:Enumerable(Int)):Iterator(Structure)-instance-method" class="tooltip">
+      <span>select(indexes : Enumerable(Int)) : Iterator(Structure)</span>
+    select</a>, 
+    
+  
+    <a href="../../Chem/Structure/Reader.html#skip(n:Int):Iterator(Structure)-instance-method" class="tooltip">
+      <span>skip(n : Int) : Iterator(Structure)</span>
+    skip</a>, 
+    
+  
+    <a href="../../Chem/Structure/Reader.html#skip_structure:Nil-instance-method" class="tooltip">
+      <span>skip_structure : Nil</span>
+    skip_structure</a>
+    
+  
+
+
+    
+
+  <h3>Constructor methods inherited from class <code><a href="../../Chem/Structure/Reader.html">Chem::Structure::Reader</a></code></h3>
+  
+  
+    <a href="../../Chem/Structure/Reader.html#new(input:::IO,guess_topology:Bool=true,sync_close:Bool=true)-class-method" class="tooltip">
+      <span>new(input : ::IO, guess_topology : Bool = <span class="n">true</span>, sync_close : Bool = <span class="n">true</span>)<br/>new(path : Path | String, guess_topology : Bool = <span class="n">true</span>) : <span class="k">self</span></span>
+    new</a>
+    
+  
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+  <h3>Instance methods inherited from class <code><a href="../../Chem/IO/Reader.html">Chem::IO::Reader</a>(<a href="../../Chem/Structure.html">Chem::Structure</a>)</code></h3>
+  
+  
+    <a href="../../Chem/IO/Reader.html#close-instance-method" class="tooltip">
+      <span>close</span>
+    close</a>, 
+    
+  
+    <a href="../../Chem/IO/Reader.html#closed?-instance-method" class="tooltip">
+      <span>closed?</span>
+    closed?</a>, 
+    
+  
+    <a href="../../Chem/IO/Reader.html#parse_exception(msg:String)-instance-method" class="tooltip">
+      <span>parse_exception(msg : String)</span>
+    parse_exception</a>, 
+    
+  
+    <a href="../../Chem/IO/Reader.html#read_entry:T-instance-method" class="tooltip">
+      <span>read_entry : T</span>
+    read_entry</a>, 
+    
+  
+    <a href="../../Chem/IO/Reader.html#sync_close=(sync_close)-instance-method" class="tooltip">
+      <span>sync_close=(sync_close)</span>
+    sync_close=</a>, 
+    
+  
+    <a href="../../Chem/IO/Reader.html#sync_close?-instance-method" class="tooltip">
+      <span>sync_close?</span>
+    sync_close?</a>
+    
+  
+
+
+    
+
+  <h3>Constructor methods inherited from class <code><a href="../../Chem/IO/Reader.html">Chem::IO::Reader</a>(<a href="../../Chem/Structure.html">Chem::Structure</a>)</code></h3>
+  
+  
+    <a href="../../Chem/IO/Reader.html#new(io:::IO,sync_close:Bool=true)-class-method" class="tooltip">
+      <span>new(io : ::IO, sync_close : Bool = <span class="n">true</span>)<br/>new(path : Path | String) : <span class="k">self</span></span>
+    new</a>
+    
+  
+
+
+    
+
+  <h3>Class methods inherited from class <code><a href="../../Chem/IO/Reader.html">Chem::IO::Reader</a>(<a href="../../Chem/Structure.html">Chem::Structure</a>)</code></h3>
+  
+  
+    <a href="../../Chem/IO/Reader.html#open(io:::IO,sync_close:Bool=true,**options,&)-class-method" class="tooltip">
+      <span>open(io : ::IO, sync_close : Bool = <span class="n">true</span>, **options, &)<br/>open(path : Path | String, **options, &)</span>
+    open</a>
+    
+  
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="new(input:::IO,guess_topology:Bool=true,sync_close:Bool=true)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(input : ::IO, guess_topology : Bool = <span class="n">true</span>, sync_close : Bool = <span class="n">true</span>)
+
+        <a class="method-permalink" href="#new(input:::IO,guess_topology:Bool=true,sync_close:Bool=true)-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(path:Path|String,guess_topology:Bool=true):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(path : Path | String, guess_topology : Bool = <span class="n">true</span>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#new(path:Path%7CString,guess_topology:Bool=true):self-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
+
+
+
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="next:Structure|Iterator::Stop-instance-method">
+      <div class="signature">
+        
+        def <strong>next</strong> : <a href="../../Chem/Structure.html">Structure</a> | Iterator::Stop
+
+        <a class="method-permalink" href="#next:Structure%7CIterator::Stop-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from module Iterator(<a href="../../Chem/Structure.html">Chem::Structure</a>)
+            </div>
+          
+          <p>Returns the next element in this iterator, or <code>Iterator::Stop::INSTANCE</code> if there
+are no more elements.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="skip_structure:Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>skip_structure</strong> : Nil
+
+        <a class="method-permalink" href="#skip_structure:Nil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
+
+
+
+</div>
+
+</body>
+</html>

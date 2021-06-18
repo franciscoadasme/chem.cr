@@ -1,0 +1,4008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.36.1">
+<meta name="crystal_docs.project_version" content="0.5.6">
+<meta name="crystal_docs.project_name" content="chem.cr">
+
+
+
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/doc.js"></script>
+
+  <meta name="repository-name" content="chem.cr">
+  <title>Chem::Element - chem.cr 0.5.6</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../index.html">
+          chem.cr
+        </a>
+      </h1>
+
+      <span class="project-version">
+        0.5.6
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class=" " data-id="chem.cr/toplevel" data-name="top level namespace">
+      <a href="../toplevel.html">Top Level Namespace</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Array" data-name="array(t)">
+      <a href="../Array.html">Array</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Char" data-name="char">
+      <a href="../Char.html">Char</a>
+      
+    </li>
+  
+  <li class="parent open current" data-id="chem.cr/Chem" data-name="chem">
+      <a href="../Chem.html">Chem</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/ArrayView" data-name="chem::arrayview(t)">
+      <a href="../Chem/ArrayView.html">ArrayView</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Atom" data-name="chem::atom">
+      <a href="../Chem/Atom.html">Atom</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/AtomCollection" data-name="chem::atomcollection">
+      <a href="../Chem/AtomCollection.html">AtomCollection</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/AtomView" data-name="chem::atomview">
+      <a href="../Chem/AtomView.html">AtomView</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Bias" data-name="chem::bias">
+      <a href="../Chem/Bias.html">Bias</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Bond" data-name="chem::bond">
+      <a href="../Chem/Bond.html">Bond</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Bond/Kind" data-name="chem::bond::kind">
+      <a href="../Chem/Bond/Kind.html">Kind</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/BondArray" data-name="chem::bondarray">
+      <a href="../Chem/BondArray.html">BondArray</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Chain" data-name="chem::chain">
+      <a href="../Chem/Chain.html">Chain</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ChainCollection" data-name="chem::chaincollection">
+      <a href="../Chem/ChainCollection.html">ChainCollection</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ChainView" data-name="chem::chainview">
+      <a href="../Chem/ChainView.html">ChainView</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Constraint" data-name="chem::constraint">
+      <a href="../Chem/Constraint.html">Constraint</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Cube" data-name="chem::cube">
+      <a href="../Chem/Cube.html">Cube</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Cube/Reader" data-name="chem::cube::reader">
+      <a href="../Chem/Cube/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Cube/Writer" data-name="chem::cube::writer">
+      <a href="../Chem/Cube/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/DFTB" data-name="chem::dftb">
+      <a href="../Chem/DFTB.html">DFTB</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="chem.cr/Chem/DFTB/Gen" data-name="chem::dftb::gen">
+      <a href="../Chem/DFTB/Gen.html">Gen</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/DFTB/Gen/Reader" data-name="chem::dftb::gen::reader">
+      <a href="../Chem/DFTB/Gen/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/DFTB/Gen/Writer" data-name="chem::dftb::gen::writer">
+      <a href="../Chem/DFTB/Gen/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/DX" data-name="chem::dx">
+      <a href="../Chem/DX.html">DX</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/DX/Reader" data-name="chem::dx::reader">
+      <a href="../Chem/DX/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/DX/Writer" data-name="chem::dx::writer">
+      <a href="../Chem/DX/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" current" data-id="chem.cr/Chem/Element" data-name="chem::element">
+      <a href="../Chem/Element.html">Element</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Error" data-name="chem::error">
+      <a href="../Chem/Error.html">Error</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/IO" data-name="chem::io">
+      <a href="../Chem/IO.html">IO</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/FileFormat" data-name="chem::io::fileformat">
+      <a href="../Chem/IO/FileFormat.html">FileFormat</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/FileType" data-name="chem::io::filetype">
+      <a href="../Chem/IO/FileType.html">FileType</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/ParseException" data-name="chem::io::parseexception">
+      <a href="../Chem/IO/ParseException.html">ParseException</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/Reader" data-name="chem::io::reader(t)">
+      <a href="../Chem/IO/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/TextIO" data-name="chem::io::textio">
+      <a href="../Chem/IO/TextIO.html">TextIO</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/Writer" data-name="chem::io::writer(t)">
+      <a href="../Chem/IO/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Lattice" data-name="chem::lattice">
+      <a href="../Chem/Lattice.html">Lattice</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Linalg" data-name="chem::linalg">
+      <a href="../Chem/Linalg.html">Linalg</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Linalg/Error" data-name="chem::linalg::error">
+      <a href="../Chem/Linalg/Error.html">Error</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Linalg/Matrix" data-name="chem::linalg::matrix">
+      <a href="../Chem/Linalg/Matrix.html">Matrix</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Mol2" data-name="chem::mol2">
+      <a href="../Chem/Mol2.html">Mol2</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Mol2/Reader" data-name="chem::mol2::reader">
+      <a href="../Chem/Mol2/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Mol2/Writer" data-name="chem::mol2::writer">
+      <a href="../Chem/Mol2/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/PDB" data-name="chem::pdb">
+      <a href="../Chem/PDB.html">PDB</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/PDB/Hybrid36" data-name="chem::pdb::hybrid36">
+      <a href="../Chem/PDB/Hybrid36.html">Hybrid36</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/PDB/Reader" data-name="chem::pdb::reader">
+      <a href="../Chem/PDB/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/PDB/Writer" data-name="chem::pdb::writer">
+      <a href="../Chem/PDB/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/PeriodicTable" data-name="chem::periodictable">
+      <a href="../Chem/PeriodicTable.html">PeriodicTable</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Protein" data-name="chem::protein">
+      <a href="../Chem/Protein.html">Protein</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/AminoAcid" data-name="chem::protein::aminoacid">
+      <a href="../Chem/Protein/AminoAcid.html">AminoAcid</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/AminoAcids" data-name="chem::protein::aminoacids">
+      <a href="../Chem/Protein/AminoAcids.html">AminoAcids</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/DSSP" data-name="chem::protein::dssp">
+      <a href="../Chem/Protein/DSSP.html">DSSP</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Protein/PSIQUE" data-name="chem::protein::psique">
+      <a href="../Chem/Protein/PSIQUE.html">PSIQUE</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/PSIQUE/SecondaryStructureBlender" data-name="chem::protein::psique::secondarystructureblender">
+      <a href="../Chem/Protein/PSIQUE/SecondaryStructureBlender.html">SecondaryStructureBlender</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/SecondaryStructure" data-name="chem::protein::secondarystructure">
+      <a href="../Chem/Protein/SecondaryStructure.html">SecondaryStructure</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/SecondaryStructureCalculator" data-name="chem::protein::secondarystructurecalculator">
+      <a href="../Chem/Protein/SecondaryStructureCalculator.html">SecondaryStructureCalculator</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/SecondaryStructureType" data-name="chem::protein::secondarystructuretype">
+      <a href="../Chem/Protein/SecondaryStructureType.html">SecondaryStructureType</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/Sequence" data-name="chem::protein::sequence">
+      <a href="../Chem/Protein/Sequence.html">Sequence</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Protein/Stride" data-name="chem::protein::stride">
+      <a href="../Chem/Protein/Stride.html">Stride</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/Stride/Writer" data-name="chem::protein::stride::writer">
+      <a href="../Chem/Protein/Stride/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/PyMOL" data-name="chem::pymol">
+      <a href="../Chem/PyMOL.html">PyMOL</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/PyMOL/Writer" data-name="chem::pymol::writer">
+      <a href="../Chem/PyMOL/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Residue" data-name="chem::residue">
+      <a href="../Chem/Residue.html">Residue</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Residue/Kind" data-name="chem::residue::kind">
+      <a href="../Chem/Residue/Kind.html">Kind</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueCollection" data-name="chem::residuecollection">
+      <a href="../Chem/ResidueCollection.html">ResidueCollection</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueView" data-name="chem::residueview">
+      <a href="../Chem/ResidueView.html">ResidueView</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Spatial" data-name="chem::spatial">
+      <a href="../Chem/Spatial.html">Spatial</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="chem.cr/Chem/Spatial/AffineTransform" data-name="chem::spatial::affinetransform">
+      <a href="../Chem/Spatial/AffineTransform.html">AffineTransform</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/AffineTransform/ScalingFactors" data-name="chem::spatial::affinetransform::scalingfactors">
+      <a href="../Chem/Spatial/AffineTransform/ScalingFactors.html">ScalingFactors</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Basis" data-name="chem::spatial::basis">
+      <a href="../Chem/Spatial/Basis.html">Basis</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Bounds" data-name="chem::spatial::bounds">
+      <a href="../Chem/Spatial/Bounds.html">Bounds</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/CoordinatesProxy" data-name="chem::spatial::coordinatesproxy">
+      <a href="../Chem/Spatial/CoordinatesProxy.html">CoordinatesProxy</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Error" data-name="chem::spatial::error">
+      <a href="../Chem/Spatial/Error.html">Error</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Spatial/Grid" data-name="chem::spatial::grid">
+      <a href="../Chem/Spatial/Grid.html">Grid</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Grid/Dimensions" data-name="chem::spatial::grid::dimensions">
+      <a href="../Chem/Spatial/Grid/Dimensions.html">Dimensions</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Grid/Info" data-name="chem::spatial::grid::info">
+      <a href="../Chem/Spatial/Grid/Info.html">Info</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Grid/Location" data-name="chem::spatial::grid::location">
+      <a href="../Chem/Spatial/Grid/Location.html">Location</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Grid/Reader" data-name="chem::spatial::grid::reader">
+      <a href="../Chem/Spatial/Grid/Reader.html">Reader</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/HlxParams" data-name="chem::spatial::hlxparams">
+      <a href="../Chem/Spatial/HlxParams.html">HlxParams</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/KDTree" data-name="chem::spatial::kdtree">
+      <a href="../Chem/Spatial/KDTree.html">KDTree</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/NotPeriodicError" data-name="chem::spatial::notperiodicerror">
+      <a href="../Chem/Spatial/NotPeriodicError.html">NotPeriodicError</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/PBC" data-name="chem::spatial::pbc">
+      <a href="../Chem/Spatial/PBC.html">PBC</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Quaternion" data-name="chem::spatial::quaternion">
+      <a href="../Chem/Spatial/Quaternion.html">Quaternion</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Size" data-name="chem::spatial::size">
+      <a href="../Chem/Spatial/Size.html">Size</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Vector" data-name="chem::spatial::vector">
+      <a href="../Chem/Spatial/Vector.html">Vector</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Structure" data-name="chem::structure">
+      <a href="../Chem/Structure.html">Structure</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Structure/Builder" data-name="chem::structure::builder">
+      <a href="../Chem/Structure/Builder.html">Builder</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Structure/Experiment" data-name="chem::structure::experiment">
+      <a href="../Chem/Structure/Experiment.html">Experiment</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Structure/Experiment/Method" data-name="chem::structure::experiment::method">
+      <a href="../Chem/Structure/Experiment/Method.html">Method</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Structure/Reader" data-name="chem::structure::reader">
+      <a href="../Chem/Structure/Reader.html">Reader</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Topology" data-name="chem::topology">
+      <a href="../Chem/Topology.html">Topology</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/AtomType" data-name="chem::topology::atomtype">
+      <a href="../Chem/Topology/AtomType.html">AtomType</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/BondType" data-name="chem::topology::bondtype">
+      <a href="../Chem/Topology/BondType.html">BondType</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/MatchData" data-name="chem::topology::matchdata">
+      <a href="../Chem/Topology/MatchData.html">MatchData</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Patcher" data-name="chem::topology::patcher">
+      <a href="../Chem/Topology/Patcher.html">Patcher</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Perception" data-name="chem::topology::perception">
+      <a href="../Chem/Topology/Perception.html">Perception</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/ResidueType" data-name="chem::topology::residuetype">
+      <a href="../Chem/Topology/ResidueType.html">ResidueType</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Topology/Templates" data-name="chem::topology::templates">
+      <a href="../Chem/Topology/Templates.html">Templates</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="chem.cr/Chem/Topology/Templates/Builder" data-name="chem::topology::templates::builder">
+      <a href="../Chem/Topology/Templates/Builder.html">Builder</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Templates/Builder/ParseException" data-name="chem::topology::templates::builder::parseexception">
+      <a href="../Chem/Topology/Templates/Builder/ParseException.html">ParseException</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Templates/Detector" data-name="chem::topology::templates::detector">
+      <a href="../Chem/Topology/Templates/Detector.html">Detector</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Templates/Error" data-name="chem::topology::templates::error">
+      <a href="../Chem/Topology/Templates/Error.html">Error</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/VASP" data-name="chem::vasp">
+      <a href="../Chem/VASP.html">VASP</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="chem.cr/Chem/VASP/Chgcar" data-name="chem::vasp::chgcar">
+      <a href="../Chem/VASP/Chgcar.html">Chgcar</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Chgcar/Reader" data-name="chem::vasp::chgcar::reader">
+      <a href="../Chem/VASP/Chgcar/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Chgcar/Writer" data-name="chem::vasp::chgcar::writer">
+      <a href="../Chem/VASP/Chgcar/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/GridReader" data-name="chem::vasp::gridreader">
+      <a href="../Chem/VASP/GridReader.html">GridReader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/GridWriter" data-name="chem::vasp::gridwriter">
+      <a href="../Chem/VASP/GridWriter.html">GridWriter</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/VASP/Locpot" data-name="chem::vasp::locpot">
+      <a href="../Chem/VASP/Locpot.html">Locpot</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Locpot/Reader" data-name="chem::vasp::locpot::reader">
+      <a href="../Chem/VASP/Locpot/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Locpot/Writer" data-name="chem::vasp::locpot::writer">
+      <a href="../Chem/VASP/Locpot/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/VASP/Poscar" data-name="chem::vasp::poscar">
+      <a href="../Chem/VASP/Poscar.html">Poscar</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Poscar/Reader" data-name="chem::vasp::poscar::reader">
+      <a href="../Chem/VASP/Poscar/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Poscar/Writer" data-name="chem::vasp::poscar::writer">
+      <a href="../Chem/VASP/Poscar/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/VMD" data-name="chem::vmd">
+      <a href="../Chem/VMD.html">VMD</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/VMD/Writer" data-name="chem::vmd::writer">
+      <a href="../Chem/VMD/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/XYZ" data-name="chem::xyz">
+      <a href="../Chem/XYZ.html">XYZ</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/XYZ/Reader" data-name="chem::xyz::reader">
+      <a href="../Chem/XYZ/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/XYZ/Writer" data-name="chem::xyz::writer">
+      <a href="../Chem/XYZ/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Colorize" data-name="colorize">
+      <a href="../Colorize.html">Colorize</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Colorize/ColorRGB" data-name="colorize::colorrgb">
+      <a href="../Colorize/ColorRGB.html">ColorRGB</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Indexable" data-name="indexable(t)">
+      <a href="../Indexable.html">Indexable</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Int" data-name="int">
+      <a href="../Int.html">Int</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Number" data-name="number">
+      <a href="../Number.html">Number</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Range" data-name="range(b, e)">
+      <a href="../Range.html">Range</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Slice" data-name="slice(t)">
+      <a href="../Slice.html">Slice</a>
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">class</span> Chem::Element
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Chem/Element.html">Chem::Element</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      chem/core/element.cr
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:13
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:18
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:22
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:26
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:30
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:34
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:39
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:44
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:49
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:54
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:58
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:64
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:70
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:74
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:78
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:83
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:88
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:93
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:97
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:103
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:109
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:113
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:117
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:121
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:125
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:129
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:133
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:137
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:141
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:145
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:149
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:153
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:157
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:161
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:165
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:170
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:174
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:178
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:182
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:186
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:190
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:194
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:198
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:202
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:206
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:210
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:214
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:218
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:222
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:226
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:230
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:234
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:238
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:243
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:247
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:251
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:255
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:259
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:263
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:267
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:271
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:274
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:278
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:282
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:286
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:290
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:294
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:298
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:302
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:306
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:310
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:314
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:318
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:322
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:326
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:330
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:334
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:338
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:342
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:346
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:350
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:354
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:358
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:362
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:365
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:368
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:371
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:374
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:377
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:381
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:385
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:389
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:393
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:397
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:401
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:405
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:409
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:412
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:415
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:418
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:420
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:422
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:424
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:426
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:428
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:430
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:432
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:434
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:436
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:438
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:440
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:442
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:444
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:446
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:448
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:450
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:452
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr:454
+    
+    <br/>
+  
+
+
+
+
+
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new(atomic_number:Int32,name:String,symbol:String,*,mass:Float64,covalent_radius:Float64=1.5,ionic:Bool=false,valencies:Array(Int32)=[]ofInt32,vdw_radius:Float64?=nil)-class-method" class="signature"><strong>.new</strong>(atomic_number : Int32, name : String, symbol : String, *, mass : Float64, covalent_radius : Float64 = <span class="n">1.5</span>, ionic : Bool = <span class="n">false</span>, valencies : Array(Int32) = <span class="o">[]</span> <span class="k">of</span> <span class="t">Int32</span>, vdw_radius : Float64? = <span class="n">nil</span>)</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#actinium?-instance-method" class="signature"><strong>#actinium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#aluminum?-instance-method" class="signature"><strong>#aluminum?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#americium?-instance-method" class="signature"><strong>#americium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#antimony?-instance-method" class="signature"><strong>#antimony?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#argon?-instance-method" class="signature"><strong>#argon?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#arsenic?-instance-method" class="signature"><strong>#arsenic?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#astatine?-instance-method" class="signature"><strong>#astatine?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#atomic_number:Int32-instance-method" class="signature"><strong>#atomic_number</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#barium?-instance-method" class="signature"><strong>#barium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#berkelium?-instance-method" class="signature"><strong>#berkelium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#beryllium?-instance-method" class="signature"><strong>#beryllium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bismuth?-instance-method" class="signature"><strong>#bismuth?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bohrium?-instance-method" class="signature"><strong>#bohrium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#boron?-instance-method" class="signature"><strong>#boron?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bromine?-instance-method" class="signature"><strong>#bromine?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#cadmium?-instance-method" class="signature"><strong>#cadmium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#calcium?-instance-method" class="signature"><strong>#calcium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#californium?-instance-method" class="signature"><strong>#californium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#carbon?-instance-method" class="signature"><strong>#carbon?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#cerium?-instance-method" class="signature"><strong>#cerium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#cesium?-instance-method" class="signature"><strong>#cesium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#chlorine?-instance-method" class="signature"><strong>#chlorine?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#chromium?-instance-method" class="signature"><strong>#chromium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#cobalt?-instance-method" class="signature"><strong>#cobalt?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#copernicium?-instance-method" class="signature"><strong>#copernicium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#copper?-instance-method" class="signature"><strong>#copper?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#covalent_radius:Float64-instance-method" class="signature"><strong>#covalent_radius</strong> : Float64</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#curium?-instance-method" class="signature"><strong>#curium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#darmstadtium?-instance-method" class="signature"><strong>#darmstadtium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dubnium?-instance-method" class="signature"><strong>#dubnium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dysprosium?-instance-method" class="signature"><strong>#dysprosium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#einsteinium?-instance-method" class="signature"><strong>#einsteinium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#erbium?-instance-method" class="signature"><strong>#erbium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#europium?-instance-method" class="signature"><strong>#europium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#fermium?-instance-method" class="signature"><strong>#fermium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#fluorine?-instance-method" class="signature"><strong>#fluorine?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#francium?-instance-method" class="signature"><strong>#francium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#gadolinium?-instance-method" class="signature"><strong>#gadolinium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#gallium?-instance-method" class="signature"><strong>#gallium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#germanium?-instance-method" class="signature"><strong>#germanium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#gold?-instance-method" class="signature"><strong>#gold?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#hafnium?-instance-method" class="signature"><strong>#hafnium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#hassium?-instance-method" class="signature"><strong>#hassium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#helium?-instance-method" class="signature"><strong>#helium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#holmium?-instance-method" class="signature"><strong>#holmium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#hydrogen?-instance-method" class="signature"><strong>#hydrogen?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#indium?-instance-method" class="signature"><strong>#indium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#inspect(io:::IO):Nil-instance-method" class="signature"><strong>#inspect</strong>(io : ::IO) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#iodine?-instance-method" class="signature"><strong>#iodine?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#ionic?:Bool-instance-method" class="signature"><strong>#ionic?</strong> : Bool</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#iridium?-instance-method" class="signature"><strong>#iridium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#iron?-instance-method" class="signature"><strong>#iron?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#krypton?-instance-method" class="signature"><strong>#krypton?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#lanthanum?-instance-method" class="signature"><strong>#lanthanum?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#lawrencium?-instance-method" class="signature"><strong>#lawrencium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#lead?-instance-method" class="signature"><strong>#lead?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#lithium?-instance-method" class="signature"><strong>#lithium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#lutetium?-instance-method" class="signature"><strong>#lutetium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#magnesium?-instance-method" class="signature"><strong>#magnesium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#manganese?-instance-method" class="signature"><strong>#manganese?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#mass:Float64-instance-method" class="signature"><strong>#mass</strong> : Float64</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#max_valency:Int32-instance-method" class="signature"><strong>#max_valency</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#meitnerium?-instance-method" class="signature"><strong>#meitnerium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#mendelevium?-instance-method" class="signature"><strong>#mendelevium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#mercury?-instance-method" class="signature"><strong>#mercury?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#molybdenum?-instance-method" class="signature"><strong>#molybdenum?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#name:String-instance-method" class="signature"><strong>#name</strong> : String</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#neodymium?-instance-method" class="signature"><strong>#neodymium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#neon?-instance-method" class="signature"><strong>#neon?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#neptunium?-instance-method" class="signature"><strong>#neptunium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#nickel?-instance-method" class="signature"><strong>#nickel?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#niobium?-instance-method" class="signature"><strong>#niobium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#nitrogen?-instance-method" class="signature"><strong>#nitrogen?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#nobelium?-instance-method" class="signature"><strong>#nobelium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#osmium?-instance-method" class="signature"><strong>#osmium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#oxygen?-instance-method" class="signature"><strong>#oxygen?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#palladium?-instance-method" class="signature"><strong>#palladium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#phosphorus?-instance-method" class="signature"><strong>#phosphorus?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#platinum?-instance-method" class="signature"><strong>#platinum?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#plutonium?-instance-method" class="signature"><strong>#plutonium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#polonium?-instance-method" class="signature"><strong>#polonium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#potassium?-instance-method" class="signature"><strong>#potassium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#praseodymium?-instance-method" class="signature"><strong>#praseodymium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#proactinium?-instance-method" class="signature"><strong>#proactinium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#promethium?-instance-method" class="signature"><strong>#promethium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#radium?-instance-method" class="signature"><strong>#radium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#radon?-instance-method" class="signature"><strong>#radon?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rhenium?-instance-method" class="signature"><strong>#rhenium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rhodium?-instance-method" class="signature"><strong>#rhodium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#roentgenium?-instance-method" class="signature"><strong>#roentgenium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rubidium?-instance-method" class="signature"><strong>#rubidium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#ruthenium?-instance-method" class="signature"><strong>#ruthenium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rutherfordium?-instance-method" class="signature"><strong>#rutherfordium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#samarium?-instance-method" class="signature"><strong>#samarium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#scandium?-instance-method" class="signature"><strong>#scandium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#seaborgium?-instance-method" class="signature"><strong>#seaborgium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#selenium?-instance-method" class="signature"><strong>#selenium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#silicon?-instance-method" class="signature"><strong>#silicon?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#silver?-instance-method" class="signature"><strong>#silver?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#sodium?-instance-method" class="signature"><strong>#sodium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#strontium?-instance-method" class="signature"><strong>#strontium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#sulfur?-instance-method" class="signature"><strong>#sulfur?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#symbol:String-instance-method" class="signature"><strong>#symbol</strong> : String</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#tantalum?-instance-method" class="signature"><strong>#tantalum?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#technetium?-instance-method" class="signature"><strong>#technetium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#tellurium?-instance-method" class="signature"><strong>#tellurium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#terbium?-instance-method" class="signature"><strong>#terbium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#thallium?-instance-method" class="signature"><strong>#thallium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#thorium?-instance-method" class="signature"><strong>#thorium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#thulium?-instance-method" class="signature"><strong>#thulium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#tin?-instance-method" class="signature"><strong>#tin?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#titanium?-instance-method" class="signature"><strong>#titanium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#tungsten?-instance-method" class="signature"><strong>#tungsten?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#ununhexium?-instance-method" class="signature"><strong>#ununhexium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#ununoctium?-instance-method" class="signature"><strong>#ununoctium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#ununpentium?-instance-method" class="signature"><strong>#ununpentium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#ununquadium?-instance-method" class="signature"><strong>#ununquadium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#ununseptium?-instance-method" class="signature"><strong>#ununseptium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#ununtrium?-instance-method" class="signature"><strong>#ununtrium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#uranium?-instance-method" class="signature"><strong>#uranium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#valencies:Array(Int32)-instance-method" class="signature"><strong>#valencies</strong> : Array(Int32)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#vanadium?-instance-method" class="signature"><strong>#vanadium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#vdw_radius:Float64-instance-method" class="signature"><strong>#vdw_radius</strong> : Float64</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#xenon?-instance-method" class="signature"><strong>#xenon?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#ytterbium?-instance-method" class="signature"><strong>#ytterbium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#yttrium?-instance-method" class="signature"><strong>#yttrium?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#zinc?-instance-method" class="signature"><strong>#zinc?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#zirconium?-instance-method" class="signature"><strong>#zirconium?</strong></a>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+<div class="methods-inherited">
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="new(atomic_number:Int32,name:String,symbol:String,*,mass:Float64,covalent_radius:Float64=1.5,ionic:Bool=false,valencies:Array(Int32)=[]ofInt32,vdw_radius:Float64?=nil)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(atomic_number : Int32, name : String, symbol : String, *, mass : Float64, covalent_radius : Float64 = <span class="n">1.5</span>, ionic : Bool = <span class="n">false</span>, valencies : <a href="../Array.html">Array</a>(Int32) = <span class="o">[]</span> <span class="k">of</span> <span class="t">Int32</span>, vdw_radius : Float64? = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#new(atomic_number:Int32,name:String,symbol:String,*,mass:Float64,covalent_radius:Float64=1.5,ionic:Bool=false,valencies:Array(Int32)=[]ofInt32,vdw_radius:Float64?=nil)-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
+
+
+
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="actinium?-instance-method">
+      <div class="signature">
+        
+        def <strong>actinium?</strong>
+
+        <a class="method-permalink" href="#actinium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="aluminum?-instance-method">
+      <div class="signature">
+        
+        def <strong>aluminum?</strong>
+
+        <a class="method-permalink" href="#aluminum?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="americium?-instance-method">
+      <div class="signature">
+        
+        def <strong>americium?</strong>
+
+        <a class="method-permalink" href="#americium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="antimony?-instance-method">
+      <div class="signature">
+        
+        def <strong>antimony?</strong>
+
+        <a class="method-permalink" href="#antimony?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="argon?-instance-method">
+      <div class="signature">
+        
+        def <strong>argon?</strong>
+
+        <a class="method-permalink" href="#argon?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="arsenic?-instance-method">
+      <div class="signature">
+        
+        def <strong>arsenic?</strong>
+
+        <a class="method-permalink" href="#arsenic?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="astatine?-instance-method">
+      <div class="signature">
+        
+        def <strong>astatine?</strong>
+
+        <a class="method-permalink" href="#astatine?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="atomic_number:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>atomic_number</strong> : Int32
+
+        <a class="method-permalink" href="#atomic_number:Int32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="barium?-instance-method">
+      <div class="signature">
+        
+        def <strong>barium?</strong>
+
+        <a class="method-permalink" href="#barium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="berkelium?-instance-method">
+      <div class="signature">
+        
+        def <strong>berkelium?</strong>
+
+        <a class="method-permalink" href="#berkelium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="beryllium?-instance-method">
+      <div class="signature">
+        
+        def <strong>beryllium?</strong>
+
+        <a class="method-permalink" href="#beryllium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bismuth?-instance-method">
+      <div class="signature">
+        
+        def <strong>bismuth?</strong>
+
+        <a class="method-permalink" href="#bismuth?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bohrium?-instance-method">
+      <div class="signature">
+        
+        def <strong>bohrium?</strong>
+
+        <a class="method-permalink" href="#bohrium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="boron?-instance-method">
+      <div class="signature">
+        
+        def <strong>boron?</strong>
+
+        <a class="method-permalink" href="#boron?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bromine?-instance-method">
+      <div class="signature">
+        
+        def <strong>bromine?</strong>
+
+        <a class="method-permalink" href="#bromine?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="cadmium?-instance-method">
+      <div class="signature">
+        
+        def <strong>cadmium?</strong>
+
+        <a class="method-permalink" href="#cadmium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="calcium?-instance-method">
+      <div class="signature">
+        
+        def <strong>calcium?</strong>
+
+        <a class="method-permalink" href="#calcium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="californium?-instance-method">
+      <div class="signature">
+        
+        def <strong>californium?</strong>
+
+        <a class="method-permalink" href="#californium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="carbon?-instance-method">
+      <div class="signature">
+        
+        def <strong>carbon?</strong>
+
+        <a class="method-permalink" href="#carbon?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="cerium?-instance-method">
+      <div class="signature">
+        
+        def <strong>cerium?</strong>
+
+        <a class="method-permalink" href="#cerium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="cesium?-instance-method">
+      <div class="signature">
+        
+        def <strong>cesium?</strong>
+
+        <a class="method-permalink" href="#cesium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="chlorine?-instance-method">
+      <div class="signature">
+        
+        def <strong>chlorine?</strong>
+
+        <a class="method-permalink" href="#chlorine?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="chromium?-instance-method">
+      <div class="signature">
+        
+        def <strong>chromium?</strong>
+
+        <a class="method-permalink" href="#chromium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="cobalt?-instance-method">
+      <div class="signature">
+        
+        def <strong>cobalt?</strong>
+
+        <a class="method-permalink" href="#cobalt?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="copernicium?-instance-method">
+      <div class="signature">
+        
+        def <strong>copernicium?</strong>
+
+        <a class="method-permalink" href="#copernicium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="copper?-instance-method">
+      <div class="signature">
+        
+        def <strong>copper?</strong>
+
+        <a class="method-permalink" href="#copper?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="covalent_radius:Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>covalent_radius</strong> : Float64
+
+        <a class="method-permalink" href="#covalent_radius:Float64-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="curium?-instance-method">
+      <div class="signature">
+        
+        def <strong>curium?</strong>
+
+        <a class="method-permalink" href="#curium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="darmstadtium?-instance-method">
+      <div class="signature">
+        
+        def <strong>darmstadtium?</strong>
+
+        <a class="method-permalink" href="#darmstadtium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dubnium?-instance-method">
+      <div class="signature">
+        
+        def <strong>dubnium?</strong>
+
+        <a class="method-permalink" href="#dubnium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dysprosium?-instance-method">
+      <div class="signature">
+        
+        def <strong>dysprosium?</strong>
+
+        <a class="method-permalink" href="#dysprosium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="einsteinium?-instance-method">
+      <div class="signature">
+        
+        def <strong>einsteinium?</strong>
+
+        <a class="method-permalink" href="#einsteinium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="erbium?-instance-method">
+      <div class="signature">
+        
+        def <strong>erbium?</strong>
+
+        <a class="method-permalink" href="#erbium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="europium?-instance-method">
+      <div class="signature">
+        
+        def <strong>europium?</strong>
+
+        <a class="method-permalink" href="#europium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="fermium?-instance-method">
+      <div class="signature">
+        
+        def <strong>fermium?</strong>
+
+        <a class="method-permalink" href="#fermium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="fluorine?-instance-method">
+      <div class="signature">
+        
+        def <strong>fluorine?</strong>
+
+        <a class="method-permalink" href="#fluorine?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="francium?-instance-method">
+      <div class="signature">
+        
+        def <strong>francium?</strong>
+
+        <a class="method-permalink" href="#francium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="gadolinium?-instance-method">
+      <div class="signature">
+        
+        def <strong>gadolinium?</strong>
+
+        <a class="method-permalink" href="#gadolinium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="gallium?-instance-method">
+      <div class="signature">
+        
+        def <strong>gallium?</strong>
+
+        <a class="method-permalink" href="#gallium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="germanium?-instance-method">
+      <div class="signature">
+        
+        def <strong>germanium?</strong>
+
+        <a class="method-permalink" href="#germanium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="gold?-instance-method">
+      <div class="signature">
+        
+        def <strong>gold?</strong>
+
+        <a class="method-permalink" href="#gold?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="hafnium?-instance-method">
+      <div class="signature">
+        
+        def <strong>hafnium?</strong>
+
+        <a class="method-permalink" href="#hafnium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="hassium?-instance-method">
+      <div class="signature">
+        
+        def <strong>hassium?</strong>
+
+        <a class="method-permalink" href="#hassium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="helium?-instance-method">
+      <div class="signature">
+        
+        def <strong>helium?</strong>
+
+        <a class="method-permalink" href="#helium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="holmium?-instance-method">
+      <div class="signature">
+        
+        def <strong>holmium?</strong>
+
+        <a class="method-permalink" href="#holmium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="hydrogen?-instance-method">
+      <div class="signature">
+        
+        def <strong>hydrogen?</strong>
+
+        <a class="method-permalink" href="#hydrogen?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="indium?-instance-method">
+      <div class="signature">
+        
+        def <strong>indium?</strong>
+
+        <a class="method-permalink" href="#indium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="inspect(io:::IO):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>inspect</strong>(io : ::IO) : Nil
+
+        <a class="method-permalink" href="#inspect(io:::IO):Nil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="iodine?-instance-method">
+      <div class="signature">
+        
+        def <strong>iodine?</strong>
+
+        <a class="method-permalink" href="#iodine?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ionic?:Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>ionic?</strong> : Bool
+
+        <a class="method-permalink" href="#ionic?:Bool-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="iridium?-instance-method">
+      <div class="signature">
+        
+        def <strong>iridium?</strong>
+
+        <a class="method-permalink" href="#iridium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="iron?-instance-method">
+      <div class="signature">
+        
+        def <strong>iron?</strong>
+
+        <a class="method-permalink" href="#iron?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="krypton?-instance-method">
+      <div class="signature">
+        
+        def <strong>krypton?</strong>
+
+        <a class="method-permalink" href="#krypton?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="lanthanum?-instance-method">
+      <div class="signature">
+        
+        def <strong>lanthanum?</strong>
+
+        <a class="method-permalink" href="#lanthanum?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="lawrencium?-instance-method">
+      <div class="signature">
+        
+        def <strong>lawrencium?</strong>
+
+        <a class="method-permalink" href="#lawrencium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="lead?-instance-method">
+      <div class="signature">
+        
+        def <strong>lead?</strong>
+
+        <a class="method-permalink" href="#lead?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="lithium?-instance-method">
+      <div class="signature">
+        
+        def <strong>lithium?</strong>
+
+        <a class="method-permalink" href="#lithium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="lutetium?-instance-method">
+      <div class="signature">
+        
+        def <strong>lutetium?</strong>
+
+        <a class="method-permalink" href="#lutetium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="magnesium?-instance-method">
+      <div class="signature">
+        
+        def <strong>magnesium?</strong>
+
+        <a class="method-permalink" href="#magnesium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="manganese?-instance-method">
+      <div class="signature">
+        
+        def <strong>manganese?</strong>
+
+        <a class="method-permalink" href="#manganese?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="mass:Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>mass</strong> : Float64
+
+        <a class="method-permalink" href="#mass:Float64-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="max_valency:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>max_valency</strong> : Int32
+
+        <a class="method-permalink" href="#max_valency:Int32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="meitnerium?-instance-method">
+      <div class="signature">
+        
+        def <strong>meitnerium?</strong>
+
+        <a class="method-permalink" href="#meitnerium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="mendelevium?-instance-method">
+      <div class="signature">
+        
+        def <strong>mendelevium?</strong>
+
+        <a class="method-permalink" href="#mendelevium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="mercury?-instance-method">
+      <div class="signature">
+        
+        def <strong>mercury?</strong>
+
+        <a class="method-permalink" href="#mercury?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="molybdenum?-instance-method">
+      <div class="signature">
+        
+        def <strong>molybdenum?</strong>
+
+        <a class="method-permalink" href="#molybdenum?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="name:String-instance-method">
+      <div class="signature">
+        
+        def <strong>name</strong> : String
+
+        <a class="method-permalink" href="#name:String-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="neodymium?-instance-method">
+      <div class="signature">
+        
+        def <strong>neodymium?</strong>
+
+        <a class="method-permalink" href="#neodymium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="neon?-instance-method">
+      <div class="signature">
+        
+        def <strong>neon?</strong>
+
+        <a class="method-permalink" href="#neon?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="neptunium?-instance-method">
+      <div class="signature">
+        
+        def <strong>neptunium?</strong>
+
+        <a class="method-permalink" href="#neptunium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="nickel?-instance-method">
+      <div class="signature">
+        
+        def <strong>nickel?</strong>
+
+        <a class="method-permalink" href="#nickel?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="niobium?-instance-method">
+      <div class="signature">
+        
+        def <strong>niobium?</strong>
+
+        <a class="method-permalink" href="#niobium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="nitrogen?-instance-method">
+      <div class="signature">
+        
+        def <strong>nitrogen?</strong>
+
+        <a class="method-permalink" href="#nitrogen?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="nobelium?-instance-method">
+      <div class="signature">
+        
+        def <strong>nobelium?</strong>
+
+        <a class="method-permalink" href="#nobelium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="osmium?-instance-method">
+      <div class="signature">
+        
+        def <strong>osmium?</strong>
+
+        <a class="method-permalink" href="#osmium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="oxygen?-instance-method">
+      <div class="signature">
+        
+        def <strong>oxygen?</strong>
+
+        <a class="method-permalink" href="#oxygen?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="palladium?-instance-method">
+      <div class="signature">
+        
+        def <strong>palladium?</strong>
+
+        <a class="method-permalink" href="#palladium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="phosphorus?-instance-method">
+      <div class="signature">
+        
+        def <strong>phosphorus?</strong>
+
+        <a class="method-permalink" href="#phosphorus?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="platinum?-instance-method">
+      <div class="signature">
+        
+        def <strong>platinum?</strong>
+
+        <a class="method-permalink" href="#platinum?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="plutonium?-instance-method">
+      <div class="signature">
+        
+        def <strong>plutonium?</strong>
+
+        <a class="method-permalink" href="#plutonium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="polonium?-instance-method">
+      <div class="signature">
+        
+        def <strong>polonium?</strong>
+
+        <a class="method-permalink" href="#polonium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="potassium?-instance-method">
+      <div class="signature">
+        
+        def <strong>potassium?</strong>
+
+        <a class="method-permalink" href="#potassium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="praseodymium?-instance-method">
+      <div class="signature">
+        
+        def <strong>praseodymium?</strong>
+
+        <a class="method-permalink" href="#praseodymium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="proactinium?-instance-method">
+      <div class="signature">
+        
+        def <strong>proactinium?</strong>
+
+        <a class="method-permalink" href="#proactinium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="promethium?-instance-method">
+      <div class="signature">
+        
+        def <strong>promethium?</strong>
+
+        <a class="method-permalink" href="#promethium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="radium?-instance-method">
+      <div class="signature">
+        
+        def <strong>radium?</strong>
+
+        <a class="method-permalink" href="#radium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="radon?-instance-method">
+      <div class="signature">
+        
+        def <strong>radon?</strong>
+
+        <a class="method-permalink" href="#radon?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rhenium?-instance-method">
+      <div class="signature">
+        
+        def <strong>rhenium?</strong>
+
+        <a class="method-permalink" href="#rhenium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rhodium?-instance-method">
+      <div class="signature">
+        
+        def <strong>rhodium?</strong>
+
+        <a class="method-permalink" href="#rhodium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="roentgenium?-instance-method">
+      <div class="signature">
+        
+        def <strong>roentgenium?</strong>
+
+        <a class="method-permalink" href="#roentgenium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rubidium?-instance-method">
+      <div class="signature">
+        
+        def <strong>rubidium?</strong>
+
+        <a class="method-permalink" href="#rubidium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ruthenium?-instance-method">
+      <div class="signature">
+        
+        def <strong>ruthenium?</strong>
+
+        <a class="method-permalink" href="#ruthenium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rutherfordium?-instance-method">
+      <div class="signature">
+        
+        def <strong>rutherfordium?</strong>
+
+        <a class="method-permalink" href="#rutherfordium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="samarium?-instance-method">
+      <div class="signature">
+        
+        def <strong>samarium?</strong>
+
+        <a class="method-permalink" href="#samarium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="scandium?-instance-method">
+      <div class="signature">
+        
+        def <strong>scandium?</strong>
+
+        <a class="method-permalink" href="#scandium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="seaborgium?-instance-method">
+      <div class="signature">
+        
+        def <strong>seaborgium?</strong>
+
+        <a class="method-permalink" href="#seaborgium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="selenium?-instance-method">
+      <div class="signature">
+        
+        def <strong>selenium?</strong>
+
+        <a class="method-permalink" href="#selenium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="silicon?-instance-method">
+      <div class="signature">
+        
+        def <strong>silicon?</strong>
+
+        <a class="method-permalink" href="#silicon?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="silver?-instance-method">
+      <div class="signature">
+        
+        def <strong>silver?</strong>
+
+        <a class="method-permalink" href="#silver?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="sodium?-instance-method">
+      <div class="signature">
+        
+        def <strong>sodium?</strong>
+
+        <a class="method-permalink" href="#sodium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="strontium?-instance-method">
+      <div class="signature">
+        
+        def <strong>strontium?</strong>
+
+        <a class="method-permalink" href="#strontium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="sulfur?-instance-method">
+      <div class="signature">
+        
+        def <strong>sulfur?</strong>
+
+        <a class="method-permalink" href="#sulfur?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="symbol:String-instance-method">
+      <div class="signature">
+        
+        def <strong>symbol</strong> : String
+
+        <a class="method-permalink" href="#symbol:String-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="tantalum?-instance-method">
+      <div class="signature">
+        
+        def <strong>tantalum?</strong>
+
+        <a class="method-permalink" href="#tantalum?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="technetium?-instance-method">
+      <div class="signature">
+        
+        def <strong>technetium?</strong>
+
+        <a class="method-permalink" href="#technetium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="tellurium?-instance-method">
+      <div class="signature">
+        
+        def <strong>tellurium?</strong>
+
+        <a class="method-permalink" href="#tellurium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="terbium?-instance-method">
+      <div class="signature">
+        
+        def <strong>terbium?</strong>
+
+        <a class="method-permalink" href="#terbium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="thallium?-instance-method">
+      <div class="signature">
+        
+        def <strong>thallium?</strong>
+
+        <a class="method-permalink" href="#thallium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="thorium?-instance-method">
+      <div class="signature">
+        
+        def <strong>thorium?</strong>
+
+        <a class="method-permalink" href="#thorium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="thulium?-instance-method">
+      <div class="signature">
+        
+        def <strong>thulium?</strong>
+
+        <a class="method-permalink" href="#thulium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="tin?-instance-method">
+      <div class="signature">
+        
+        def <strong>tin?</strong>
+
+        <a class="method-permalink" href="#tin?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="titanium?-instance-method">
+      <div class="signature">
+        
+        def <strong>titanium?</strong>
+
+        <a class="method-permalink" href="#titanium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="tungsten?-instance-method">
+      <div class="signature">
+        
+        def <strong>tungsten?</strong>
+
+        <a class="method-permalink" href="#tungsten?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ununhexium?-instance-method">
+      <div class="signature">
+        
+        def <strong>ununhexium?</strong>
+
+        <a class="method-permalink" href="#ununhexium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ununoctium?-instance-method">
+      <div class="signature">
+        
+        def <strong>ununoctium?</strong>
+
+        <a class="method-permalink" href="#ununoctium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ununpentium?-instance-method">
+      <div class="signature">
+        
+        def <strong>ununpentium?</strong>
+
+        <a class="method-permalink" href="#ununpentium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ununquadium?-instance-method">
+      <div class="signature">
+        
+        def <strong>ununquadium?</strong>
+
+        <a class="method-permalink" href="#ununquadium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ununseptium?-instance-method">
+      <div class="signature">
+        
+        def <strong>ununseptium?</strong>
+
+        <a class="method-permalink" href="#ununseptium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ununtrium?-instance-method">
+      <div class="signature">
+        
+        def <strong>ununtrium?</strong>
+
+        <a class="method-permalink" href="#ununtrium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="uranium?-instance-method">
+      <div class="signature">
+        
+        def <strong>uranium?</strong>
+
+        <a class="method-permalink" href="#uranium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="valencies:Array(Int32)-instance-method">
+      <div class="signature">
+        
+        def <strong>valencies</strong> : <a href="../Array.html">Array</a>(Int32)
+
+        <a class="method-permalink" href="#valencies:Array(Int32)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="vanadium?-instance-method">
+      <div class="signature">
+        
+        def <strong>vanadium?</strong>
+
+        <a class="method-permalink" href="#vanadium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="vdw_radius:Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>vdw_radius</strong> : Float64
+
+        <a class="method-permalink" href="#vdw_radius:Float64-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="xenon?-instance-method">
+      <div class="signature">
+        
+        def <strong>xenon?</strong>
+
+        <a class="method-permalink" href="#xenon?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ytterbium?-instance-method">
+      <div class="signature">
+        
+        def <strong>ytterbium?</strong>
+
+        <a class="method-permalink" href="#ytterbium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="yttrium?-instance-method">
+      <div class="signature">
+        
+        def <strong>yttrium?</strong>
+
+        <a class="method-permalink" href="#yttrium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="zinc?-instance-method">
+      <div class="signature">
+        
+        def <strong>zinc?</strong>
+
+        <a class="method-permalink" href="#zinc?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="zirconium?-instance-method">
+      <div class="signature">
+        
+        def <strong>zirconium?</strong>
+
+        <a class="method-permalink" href="#zirconium?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
+
+
+
+</div>
+
+</body>
+</html>

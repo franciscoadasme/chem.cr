@@ -1,0 +1,1798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.36.1">
+<meta name="crystal_docs.project_version" content="0.5.6">
+<meta name="crystal_docs.project_name" content="chem.cr">
+
+
+
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/doc.js"></script>
+
+  <meta name="repository-name" content="chem.cr">
+  <title>Chem::PeriodicTable - chem.cr 0.5.6</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../index.html">
+          chem.cr
+        </a>
+      </h1>
+
+      <span class="project-version">
+        0.5.6
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class=" " data-id="chem.cr/toplevel" data-name="top level namespace">
+      <a href="../toplevel.html">Top Level Namespace</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Array" data-name="array(t)">
+      <a href="../Array.html">Array</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Char" data-name="char">
+      <a href="../Char.html">Char</a>
+      
+    </li>
+  
+  <li class="parent open current" data-id="chem.cr/Chem" data-name="chem">
+      <a href="../Chem.html">Chem</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/ArrayView" data-name="chem::arrayview(t)">
+      <a href="../Chem/ArrayView.html">ArrayView</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Atom" data-name="chem::atom">
+      <a href="../Chem/Atom.html">Atom</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/AtomCollection" data-name="chem::atomcollection">
+      <a href="../Chem/AtomCollection.html">AtomCollection</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/AtomView" data-name="chem::atomview">
+      <a href="../Chem/AtomView.html">AtomView</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Bias" data-name="chem::bias">
+      <a href="../Chem/Bias.html">Bias</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Bond" data-name="chem::bond">
+      <a href="../Chem/Bond.html">Bond</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Bond/Kind" data-name="chem::bond::kind">
+      <a href="../Chem/Bond/Kind.html">Kind</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/BondArray" data-name="chem::bondarray">
+      <a href="../Chem/BondArray.html">BondArray</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Chain" data-name="chem::chain">
+      <a href="../Chem/Chain.html">Chain</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ChainCollection" data-name="chem::chaincollection">
+      <a href="../Chem/ChainCollection.html">ChainCollection</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ChainView" data-name="chem::chainview">
+      <a href="../Chem/ChainView.html">ChainView</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Constraint" data-name="chem::constraint">
+      <a href="../Chem/Constraint.html">Constraint</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Cube" data-name="chem::cube">
+      <a href="../Chem/Cube.html">Cube</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Cube/Reader" data-name="chem::cube::reader">
+      <a href="../Chem/Cube/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Cube/Writer" data-name="chem::cube::writer">
+      <a href="../Chem/Cube/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/DFTB" data-name="chem::dftb">
+      <a href="../Chem/DFTB.html">DFTB</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="chem.cr/Chem/DFTB/Gen" data-name="chem::dftb::gen">
+      <a href="../Chem/DFTB/Gen.html">Gen</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/DFTB/Gen/Reader" data-name="chem::dftb::gen::reader">
+      <a href="../Chem/DFTB/Gen/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/DFTB/Gen/Writer" data-name="chem::dftb::gen::writer">
+      <a href="../Chem/DFTB/Gen/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/DX" data-name="chem::dx">
+      <a href="../Chem/DX.html">DX</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/DX/Reader" data-name="chem::dx::reader">
+      <a href="../Chem/DX/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/DX/Writer" data-name="chem::dx::writer">
+      <a href="../Chem/DX/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Element" data-name="chem::element">
+      <a href="../Chem/Element.html">Element</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Error" data-name="chem::error">
+      <a href="../Chem/Error.html">Error</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/IO" data-name="chem::io">
+      <a href="../Chem/IO.html">IO</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/FileFormat" data-name="chem::io::fileformat">
+      <a href="../Chem/IO/FileFormat.html">FileFormat</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/FileType" data-name="chem::io::filetype">
+      <a href="../Chem/IO/FileType.html">FileType</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/ParseException" data-name="chem::io::parseexception">
+      <a href="../Chem/IO/ParseException.html">ParseException</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/Reader" data-name="chem::io::reader(t)">
+      <a href="../Chem/IO/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/TextIO" data-name="chem::io::textio">
+      <a href="../Chem/IO/TextIO.html">TextIO</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/Writer" data-name="chem::io::writer(t)">
+      <a href="../Chem/IO/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Lattice" data-name="chem::lattice">
+      <a href="../Chem/Lattice.html">Lattice</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Linalg" data-name="chem::linalg">
+      <a href="../Chem/Linalg.html">Linalg</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Linalg/Error" data-name="chem::linalg::error">
+      <a href="../Chem/Linalg/Error.html">Error</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Linalg/Matrix" data-name="chem::linalg::matrix">
+      <a href="../Chem/Linalg/Matrix.html">Matrix</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Mol2" data-name="chem::mol2">
+      <a href="../Chem/Mol2.html">Mol2</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Mol2/Reader" data-name="chem::mol2::reader">
+      <a href="../Chem/Mol2/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Mol2/Writer" data-name="chem::mol2::writer">
+      <a href="../Chem/Mol2/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/PDB" data-name="chem::pdb">
+      <a href="../Chem/PDB.html">PDB</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/PDB/Hybrid36" data-name="chem::pdb::hybrid36">
+      <a href="../Chem/PDB/Hybrid36.html">Hybrid36</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/PDB/Reader" data-name="chem::pdb::reader">
+      <a href="../Chem/PDB/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/PDB/Writer" data-name="chem::pdb::writer">
+      <a href="../Chem/PDB/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" current" data-id="chem.cr/Chem/PeriodicTable" data-name="chem::periodictable">
+      <a href="../Chem/PeriodicTable.html">PeriodicTable</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Protein" data-name="chem::protein">
+      <a href="../Chem/Protein.html">Protein</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/AminoAcid" data-name="chem::protein::aminoacid">
+      <a href="../Chem/Protein/AminoAcid.html">AminoAcid</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/AminoAcids" data-name="chem::protein::aminoacids">
+      <a href="../Chem/Protein/AminoAcids.html">AminoAcids</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/DSSP" data-name="chem::protein::dssp">
+      <a href="../Chem/Protein/DSSP.html">DSSP</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Protein/PSIQUE" data-name="chem::protein::psique">
+      <a href="../Chem/Protein/PSIQUE.html">PSIQUE</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/PSIQUE/SecondaryStructureBlender" data-name="chem::protein::psique::secondarystructureblender">
+      <a href="../Chem/Protein/PSIQUE/SecondaryStructureBlender.html">SecondaryStructureBlender</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/SecondaryStructure" data-name="chem::protein::secondarystructure">
+      <a href="../Chem/Protein/SecondaryStructure.html">SecondaryStructure</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/SecondaryStructureCalculator" data-name="chem::protein::secondarystructurecalculator">
+      <a href="../Chem/Protein/SecondaryStructureCalculator.html">SecondaryStructureCalculator</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/SecondaryStructureType" data-name="chem::protein::secondarystructuretype">
+      <a href="../Chem/Protein/SecondaryStructureType.html">SecondaryStructureType</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/Sequence" data-name="chem::protein::sequence">
+      <a href="../Chem/Protein/Sequence.html">Sequence</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Protein/Stride" data-name="chem::protein::stride">
+      <a href="../Chem/Protein/Stride.html">Stride</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/Stride/Writer" data-name="chem::protein::stride::writer">
+      <a href="../Chem/Protein/Stride/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/PyMOL" data-name="chem::pymol">
+      <a href="../Chem/PyMOL.html">PyMOL</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/PyMOL/Writer" data-name="chem::pymol::writer">
+      <a href="../Chem/PyMOL/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Residue" data-name="chem::residue">
+      <a href="../Chem/Residue.html">Residue</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Residue/Kind" data-name="chem::residue::kind">
+      <a href="../Chem/Residue/Kind.html">Kind</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueCollection" data-name="chem::residuecollection">
+      <a href="../Chem/ResidueCollection.html">ResidueCollection</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueView" data-name="chem::residueview">
+      <a href="../Chem/ResidueView.html">ResidueView</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Spatial" data-name="chem::spatial">
+      <a href="../Chem/Spatial.html">Spatial</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="chem.cr/Chem/Spatial/AffineTransform" data-name="chem::spatial::affinetransform">
+      <a href="../Chem/Spatial/AffineTransform.html">AffineTransform</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/AffineTransform/ScalingFactors" data-name="chem::spatial::affinetransform::scalingfactors">
+      <a href="../Chem/Spatial/AffineTransform/ScalingFactors.html">ScalingFactors</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Basis" data-name="chem::spatial::basis">
+      <a href="../Chem/Spatial/Basis.html">Basis</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Bounds" data-name="chem::spatial::bounds">
+      <a href="../Chem/Spatial/Bounds.html">Bounds</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/CoordinatesProxy" data-name="chem::spatial::coordinatesproxy">
+      <a href="../Chem/Spatial/CoordinatesProxy.html">CoordinatesProxy</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Error" data-name="chem::spatial::error">
+      <a href="../Chem/Spatial/Error.html">Error</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Spatial/Grid" data-name="chem::spatial::grid">
+      <a href="../Chem/Spatial/Grid.html">Grid</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Grid/Dimensions" data-name="chem::spatial::grid::dimensions">
+      <a href="../Chem/Spatial/Grid/Dimensions.html">Dimensions</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Grid/Info" data-name="chem::spatial::grid::info">
+      <a href="../Chem/Spatial/Grid/Info.html">Info</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Grid/Location" data-name="chem::spatial::grid::location">
+      <a href="../Chem/Spatial/Grid/Location.html">Location</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Grid/Reader" data-name="chem::spatial::grid::reader">
+      <a href="../Chem/Spatial/Grid/Reader.html">Reader</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/HlxParams" data-name="chem::spatial::hlxparams">
+      <a href="../Chem/Spatial/HlxParams.html">HlxParams</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/KDTree" data-name="chem::spatial::kdtree">
+      <a href="../Chem/Spatial/KDTree.html">KDTree</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/NotPeriodicError" data-name="chem::spatial::notperiodicerror">
+      <a href="../Chem/Spatial/NotPeriodicError.html">NotPeriodicError</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/PBC" data-name="chem::spatial::pbc">
+      <a href="../Chem/Spatial/PBC.html">PBC</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Quaternion" data-name="chem::spatial::quaternion">
+      <a href="../Chem/Spatial/Quaternion.html">Quaternion</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Size" data-name="chem::spatial::size">
+      <a href="../Chem/Spatial/Size.html">Size</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Vector" data-name="chem::spatial::vector">
+      <a href="../Chem/Spatial/Vector.html">Vector</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Structure" data-name="chem::structure">
+      <a href="../Chem/Structure.html">Structure</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Structure/Builder" data-name="chem::structure::builder">
+      <a href="../Chem/Structure/Builder.html">Builder</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Structure/Experiment" data-name="chem::structure::experiment">
+      <a href="../Chem/Structure/Experiment.html">Experiment</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Structure/Experiment/Method" data-name="chem::structure::experiment::method">
+      <a href="../Chem/Structure/Experiment/Method.html">Method</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Structure/Reader" data-name="chem::structure::reader">
+      <a href="../Chem/Structure/Reader.html">Reader</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Topology" data-name="chem::topology">
+      <a href="../Chem/Topology.html">Topology</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/AtomType" data-name="chem::topology::atomtype">
+      <a href="../Chem/Topology/AtomType.html">AtomType</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/BondType" data-name="chem::topology::bondtype">
+      <a href="../Chem/Topology/BondType.html">BondType</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/MatchData" data-name="chem::topology::matchdata">
+      <a href="../Chem/Topology/MatchData.html">MatchData</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Patcher" data-name="chem::topology::patcher">
+      <a href="../Chem/Topology/Patcher.html">Patcher</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Perception" data-name="chem::topology::perception">
+      <a href="../Chem/Topology/Perception.html">Perception</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/ResidueType" data-name="chem::topology::residuetype">
+      <a href="../Chem/Topology/ResidueType.html">ResidueType</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Topology/Templates" data-name="chem::topology::templates">
+      <a href="../Chem/Topology/Templates.html">Templates</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="chem.cr/Chem/Topology/Templates/Builder" data-name="chem::topology::templates::builder">
+      <a href="../Chem/Topology/Templates/Builder.html">Builder</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Templates/Builder/ParseException" data-name="chem::topology::templates::builder::parseexception">
+      <a href="../Chem/Topology/Templates/Builder/ParseException.html">ParseException</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Templates/Detector" data-name="chem::topology::templates::detector">
+      <a href="../Chem/Topology/Templates/Detector.html">Detector</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Templates/Error" data-name="chem::topology::templates::error">
+      <a href="../Chem/Topology/Templates/Error.html">Error</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/VASP" data-name="chem::vasp">
+      <a href="../Chem/VASP.html">VASP</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="chem.cr/Chem/VASP/Chgcar" data-name="chem::vasp::chgcar">
+      <a href="../Chem/VASP/Chgcar.html">Chgcar</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Chgcar/Reader" data-name="chem::vasp::chgcar::reader">
+      <a href="../Chem/VASP/Chgcar/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Chgcar/Writer" data-name="chem::vasp::chgcar::writer">
+      <a href="../Chem/VASP/Chgcar/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/GridReader" data-name="chem::vasp::gridreader">
+      <a href="../Chem/VASP/GridReader.html">GridReader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/GridWriter" data-name="chem::vasp::gridwriter">
+      <a href="../Chem/VASP/GridWriter.html">GridWriter</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/VASP/Locpot" data-name="chem::vasp::locpot">
+      <a href="../Chem/VASP/Locpot.html">Locpot</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Locpot/Reader" data-name="chem::vasp::locpot::reader">
+      <a href="../Chem/VASP/Locpot/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Locpot/Writer" data-name="chem::vasp::locpot::writer">
+      <a href="../Chem/VASP/Locpot/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/VASP/Poscar" data-name="chem::vasp::poscar">
+      <a href="../Chem/VASP/Poscar.html">Poscar</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Poscar/Reader" data-name="chem::vasp::poscar::reader">
+      <a href="../Chem/VASP/Poscar/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Poscar/Writer" data-name="chem::vasp::poscar::writer">
+      <a href="../Chem/VASP/Poscar/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/VMD" data-name="chem::vmd">
+      <a href="../Chem/VMD.html">VMD</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/VMD/Writer" data-name="chem::vmd::writer">
+      <a href="../Chem/VMD/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/XYZ" data-name="chem::xyz">
+      <a href="../Chem/XYZ.html">XYZ</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/XYZ/Reader" data-name="chem::xyz::reader">
+      <a href="../Chem/XYZ/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/XYZ/Writer" data-name="chem::xyz::writer">
+      <a href="../Chem/XYZ/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Colorize" data-name="colorize">
+      <a href="../Colorize.html">Colorize</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Colorize/ColorRGB" data-name="colorize::colorrgb">
+      <a href="../Colorize/ColorRGB.html">ColorRGB</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Indexable" data-name="indexable(t)">
+      <a href="../Indexable.html">Indexable</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Int" data-name="int">
+      <a href="../Int.html">Int</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Number" data-name="number">
+      <a href="../Number.html">Number</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Range" data-name="range(b, e)">
+      <a href="../Range.html">Range</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Slice" data-name="slice(t)">
+      <a href="../Slice.html">Slice</a>
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">module</span> Chem::PeriodicTable
+
+</h1>
+
+
+
+
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p><span class="flag purple">NOTE</span>  Standard atom weights (in Da) are taken from Meija, J., et al., Pure Appl.
+Chem., 2016, 88 (3), pp 265-291,
+doi:<a href="https://dx.doi.org/10.1515/pac-2015-0305">10.1515/pac-2015-0305</a></p>
+
+<p><span class="flag purple">NOTE</span>  Covalent radii (in Å) are taken from Cordero, B., et al., Dalton Trans., 2008,
+21, pp 2832-2838, doi:<a href="https://dx.doi.org/10.1039/b801115j">10.1039/b801115j</a>. Missing
+values are set to 1.5 Å</p>
+
+<p><span class="flag purple">NOTE</span>  vdW radii (in Å) are taken from Alvarez, S., Dalton Trans., 2013, 42, pp
+8617-8636, doi:<a href="https://dx.doi.org/10.1039/c3dt50599e">10.1039/c3dt50599e</a>. Missing
+values are set to covalent radius + 0.9 Å</p>
+
+
+
+
+
+
+
+  <h2>
+    <a id="extended-modules" class="anchor" href="#extended-modules">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Extended Modules
+  </h2>
+  <ul class="other-types-list">
+    
+      <li class="other-type"><a href="../Chem/PeriodicTable.html">Chem::PeriodicTable</a></li>
+    
+  </ul>
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      chem/core/periodic_table.cr
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/elements.cr
+    
+    <br/>
+  
+    
+      chem/core/periodic_table/macros.cr
+    
+    <br/>
+  
+
+
+
+  
+    <h2>
+      <a id="constant-summary" class="anchor" href="#constant-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+      Constant Summary
+    </h2>
+  
+  <dl>
+    
+      <dt class="entry-const" id="Ac">
+        <strong>Ac</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">2.15</span>, mass: <span class="n">227</span>, vdw_radius: <span class="n">2.8</span>, atomic_number: <span class="n">89</span>, name: <span class="s">&quot;Actinium&quot;</span>, symbol: <span class="s">&quot;Ac&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Ag">
+        <strong>Ag</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.45</span>, mass: <span class="n">107.8682</span>, vdw_radius: <span class="n">2.53</span>, atomic_number: <span class="n">47</span>, name: <span class="s">&quot;Silver&quot;</span>, symbol: <span class="s">&quot;Ag&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Al">
+        <strong>Al</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.21</span>, mass: <span class="n">26.9815</span>, vdw_radius: <span class="n">2.25</span>, atomic_number: <span class="n">13</span>, name: <span class="s">&quot;Aluminum&quot;</span>, symbol: <span class="s">&quot;Al&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Am">
+        <strong>Am</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.80</span>, mass: <span class="n">243</span>, vdw_radius: <span class="n">2.83</span>, atomic_number: <span class="n">95</span>, name: <span class="s">&quot;Americium&quot;</span>, symbol: <span class="s">&quot;Am&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Ar">
+        <strong>Ar</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.06</span>, mass: <span class="n">39.948</span>, vdw_radius: <span class="n">1.83</span>, atomic_number: <span class="n">18</span>, name: <span class="s">&quot;Argon&quot;</span>, symbol: <span class="s">&quot;Ar&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="As">
+        <strong>As</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.19</span>, mass: <span class="n">74.9216</span>, vdw_radius: <span class="n">1.88</span>, atomic_number: <span class="n">33</span>, name: <span class="s">&quot;Arsenic&quot;</span>, symbol: <span class="s">&quot;As&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="At">
+        <strong>At</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.5</span>, mass: <span class="n">210</span>, atomic_number: <span class="n">85</span>, name: <span class="s">&quot;Astatine&quot;</span>, symbol: <span class="s">&quot;At&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Au">
+        <strong>Au</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.36</span>, mass: <span class="n">196.9666</span>, vdw_radius: <span class="n">2.32</span>, atomic_number: <span class="n">79</span>, name: <span class="s">&quot;Gold&quot;</span>, symbol: <span class="s">&quot;Au&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="B">
+        <strong>B</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">0.84</span>, mass: <span class="n">10.811</span>, vdw_radius: <span class="n">1.91</span>, atomic_number: <span class="n">5</span>, name: <span class="s">&quot;Boron&quot;</span>, symbol: <span class="s">&quot;B&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Ba">
+        <strong>Ba</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">2.15</span>, mass: <span class="n">137.327</span>, vdw_radius: <span class="n">3.03</span>, atomic_number: <span class="n">56</span>, name: <span class="s">&quot;Barium&quot;</span>, symbol: <span class="s">&quot;Ba&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Be">
+        <strong>Be</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">0.96</span>, mass: <span class="n">9.0122</span>, vdw_radius: <span class="n">1.98</span>, atomic_number: <span class="n">4</span>, name: <span class="s">&quot;Beryllium&quot;</span>, symbol: <span class="s">&quot;Be&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Bh">
+        <strong>Bh</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(mass: <span class="n">264</span>, atomic_number: <span class="n">107</span>, name: <span class="s">&quot;Bohrium&quot;</span>, symbol: <span class="s">&quot;Bh&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Bi">
+        <strong>Bi</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.48</span>, mass: <span class="n">208.9804</span>, vdw_radius: <span class="n">2.54</span>, atomic_number: <span class="n">83</span>, name: <span class="s">&quot;Bismuth&quot;</span>, symbol: <span class="s">&quot;Bi&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Bk">
+        <strong>Bk</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(mass: <span class="n">247</span>, vdw_radius: <span class="n">3.4</span>, atomic_number: <span class="n">97</span>, name: <span class="s">&quot;Berkelium&quot;</span>, symbol: <span class="s">&quot;Bk&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Br">
+        <strong>Br</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.20</span>, mass: <span class="n">79.904</span>, valencies: [<span class="n">1</span>], vdw_radius: <span class="n">1.86</span>, atomic_number: <span class="n">35</span>, name: <span class="s">&quot;Bromine&quot;</span>, symbol: <span class="s">&quot;Br&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="C">
+        <strong>C</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">0.76</span>, mass: <span class="n">12.0107</span>, valencies: [<span class="n">4</span>], vdw_radius: <span class="n">1.77</span>, atomic_number: <span class="n">6</span>, name: <span class="s">&quot;Carbon&quot;</span>, symbol: <span class="s">&quot;C&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Ca">
+        <strong>Ca</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.76</span>, mass: <span class="n">40.078</span>, ionic: <span class="n">true</span>, valencies: [<span class="n">2</span>], vdw_radius: <span class="n">2.62</span>, atomic_number: <span class="n">20</span>, name: <span class="s">&quot;Calcium&quot;</span>, symbol: <span class="s">&quot;Ca&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Cd">
+        <strong>Cd</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.44</span>, mass: <span class="n">112.411</span>, vdw_radius: <span class="n">2.49</span>, atomic_number: <span class="n">48</span>, name: <span class="s">&quot;Cadmium&quot;</span>, symbol: <span class="s">&quot;Cd&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Ce">
+        <strong>Ce</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">2.04</span>, mass: <span class="n">140.116</span>, vdw_radius: <span class="n">2.88</span>, atomic_number: <span class="n">58</span>, name: <span class="s">&quot;Cerium&quot;</span>, symbol: <span class="s">&quot;Ce&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Cf">
+        <strong>Cf</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(mass: <span class="n">251</span>, vdw_radius: <span class="n">3.05</span>, atomic_number: <span class="n">98</span>, name: <span class="s">&quot;Californium&quot;</span>, symbol: <span class="s">&quot;Cf&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Cl">
+        <strong>Cl</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.02</span>, mass: <span class="n">35.453</span>, valencies: [<span class="n">1</span>], vdw_radius: <span class="n">1.82</span>, atomic_number: <span class="n">17</span>, name: <span class="s">&quot;Chlorine&quot;</span>, symbol: <span class="s">&quot;Cl&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Cm">
+        <strong>Cm</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.69</span>, mass: <span class="n">247</span>, vdw_radius: <span class="n">3.05</span>, atomic_number: <span class="n">96</span>, name: <span class="s">&quot;Curium&quot;</span>, symbol: <span class="s">&quot;Cm&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Cn">
+        <strong>Cn</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(mass: <span class="n">285</span>, atomic_number: <span class="n">112</span>, name: <span class="s">&quot;Copernicium&quot;</span>, symbol: <span class="s">&quot;Cn&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Co">
+        <strong>Co</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.50</span>, mass: <span class="n">58.9331</span>, vdw_radius: <span class="n">2.4</span>, atomic_number: <span class="n">27</span>, name: <span class="s">&quot;Cobalt&quot;</span>, symbol: <span class="s">&quot;Co&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Cr">
+        <strong>Cr</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.39</span>, mass: <span class="n">51.9961</span>, vdw_radius: <span class="n">2.45</span>, atomic_number: <span class="n">24</span>, name: <span class="s">&quot;Chromium&quot;</span>, symbol: <span class="s">&quot;Cr&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Cs">
+        <strong>Cs</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">2.44</span>, mass: <span class="n">132.9055</span>, vdw_radius: <span class="n">3.48</span>, atomic_number: <span class="n">55</span>, name: <span class="s">&quot;Cesium&quot;</span>, symbol: <span class="s">&quot;Cs&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Cu">
+        <strong>Cu</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.32</span>, mass: <span class="n">63.546</span>, vdw_radius: <span class="n">2.38</span>, atomic_number: <span class="n">29</span>, name: <span class="s">&quot;Copper&quot;</span>, symbol: <span class="s">&quot;Cu&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="D">
+        <strong>D</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(<span class="n">1</span>, <span class="s">&quot;Deuterium&quot;</span>, <span class="s">&quot;D&quot;</span>, covalent_radius: <span class="n">0.31</span>, mass: <span class="n">2.0141</span>, valencies: [<span class="n">1</span>], vdw_radius: <span class="n">1.2</span>)</code>
+      </dt>
+      
+      <dd class="entry-const-doc">
+        <p>Special elements that are used internally</p>
+      </dd>
+      
+    
+      <dt class="entry-const" id="Db">
+        <strong>Db</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(mass: <span class="n">262</span>, atomic_number: <span class="n">105</span>, name: <span class="s">&quot;Dubnium&quot;</span>, symbol: <span class="s">&quot;Db&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Ds">
+        <strong>Ds</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(mass: <span class="n">281</span>, atomic_number: <span class="n">110</span>, name: <span class="s">&quot;Darmstadtium&quot;</span>, symbol: <span class="s">&quot;Ds&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Dy">
+        <strong>Dy</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.92</span>, mass: <span class="n">162.5</span>, vdw_radius: <span class="n">2.87</span>, atomic_number: <span class="n">66</span>, name: <span class="s">&quot;Dysprosium&quot;</span>, symbol: <span class="s">&quot;Dy&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Er">
+        <strong>Er</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.89</span>, mass: <span class="n">167.259</span>, vdw_radius: <span class="n">2.83</span>, atomic_number: <span class="n">68</span>, name: <span class="s">&quot;Erbium&quot;</span>, symbol: <span class="s">&quot;Er&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Es">
+        <strong>Es</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(mass: <span class="n">252</span>, vdw_radius: <span class="n">2.7</span>, atomic_number: <span class="n">99</span>, name: <span class="s">&quot;Einsteinium&quot;</span>, symbol: <span class="s">&quot;Es&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Eu">
+        <strong>Eu</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.98</span>, mass: <span class="n">151.964</span>, vdw_radius: <span class="n">2.87</span>, atomic_number: <span class="n">63</span>, name: <span class="s">&quot;Europium&quot;</span>, symbol: <span class="s">&quot;Eu&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="F">
+        <strong>F</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">0.57</span>, mass: <span class="n">18.9984</span>, valencies: [<span class="n">1</span>], vdw_radius: <span class="n">1.46</span>, atomic_number: <span class="n">9</span>, name: <span class="s">&quot;Fluorine&quot;</span>, symbol: <span class="s">&quot;F&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Fe">
+        <strong>Fe</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.52</span>, mass: <span class="n">55.845</span>, vdw_radius: <span class="n">2.44</span>, atomic_number: <span class="n">26</span>, name: <span class="s">&quot;Iron&quot;</span>, symbol: <span class="s">&quot;Fe&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Fm">
+        <strong>Fm</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(mass: <span class="n">257</span>, atomic_number: <span class="n">100</span>, name: <span class="s">&quot;Fermium&quot;</span>, symbol: <span class="s">&quot;Fm&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Fr">
+        <strong>Fr</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">2.6</span>, mass: <span class="n">223</span>, atomic_number: <span class="n">87</span>, name: <span class="s">&quot;Francium&quot;</span>, symbol: <span class="s">&quot;Fr&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Ga">
+        <strong>Ga</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.22</span>, mass: <span class="n">69.723</span>, vdw_radius: <span class="n">2.32</span>, atomic_number: <span class="n">31</span>, name: <span class="s">&quot;Gallium&quot;</span>, symbol: <span class="s">&quot;Ga&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Gd">
+        <strong>Gd</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.96</span>, mass: <span class="n">157.25</span>, vdw_radius: <span class="n">2.83</span>, atomic_number: <span class="n">64</span>, name: <span class="s">&quot;Gadolinium&quot;</span>, symbol: <span class="s">&quot;Gd&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Ge">
+        <strong>Ge</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.20</span>, mass: <span class="n">72.64</span>, vdw_radius: <span class="n">2.29</span>, atomic_number: <span class="n">32</span>, name: <span class="s">&quot;Germanium&quot;</span>, symbol: <span class="s">&quot;Ge&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="H">
+        <strong>H</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">0.31</span>, mass: <span class="n">1.0079</span>, valencies: [<span class="n">1</span>], vdw_radius: <span class="n">1.2</span>, atomic_number: <span class="n">1</span>, name: <span class="s">&quot;Hydrogen&quot;</span>, symbol: <span class="s">&quot;H&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="He">
+        <strong>He</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">0.2</span>, mass: <span class="n">4.0026</span>, vdw_radius: <span class="n">1.43</span>, atomic_number: <span class="n">2</span>, name: <span class="s">&quot;Helium&quot;</span>, symbol: <span class="s">&quot;He&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Hf">
+        <strong>Hf</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.75</span>, mass: <span class="n">178.49</span>, vdw_radius: <span class="n">2.63</span>, atomic_number: <span class="n">72</span>, name: <span class="s">&quot;Hafnium&quot;</span>, symbol: <span class="s">&quot;Hf&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Hg">
+        <strong>Hg</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.32</span>, mass: <span class="n">200.59</span>, vdw_radius: <span class="n">2.45</span>, atomic_number: <span class="n">80</span>, name: <span class="s">&quot;Mercury&quot;</span>, symbol: <span class="s">&quot;Hg&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Ho">
+        <strong>Ho</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.92</span>, mass: <span class="n">164.9303</span>, vdw_radius: <span class="n">2.81</span>, atomic_number: <span class="n">67</span>, name: <span class="s">&quot;Holmium&quot;</span>, symbol: <span class="s">&quot;Ho&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Hs">
+        <strong>Hs</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(mass: <span class="n">277</span>, atomic_number: <span class="n">108</span>, name: <span class="s">&quot;Hassium&quot;</span>, symbol: <span class="s">&quot;Hs&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="I">
+        <strong>I</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.39</span>, mass: <span class="n">126.9045</span>, valencies: [<span class="n">1</span>], vdw_radius: <span class="n">2.04</span>, atomic_number: <span class="n">53</span>, name: <span class="s">&quot;Iodine&quot;</span>, symbol: <span class="s">&quot;I&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="In">
+        <strong>In</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.42</span>, mass: <span class="n">114.818</span>, vdw_radius: <span class="n">2.43</span>, atomic_number: <span class="n">49</span>, name: <span class="s">&quot;Indium&quot;</span>, symbol: <span class="s">&quot;In&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Ir">
+        <strong>Ir</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.41</span>, mass: <span class="n">192.217</span>, vdw_radius: <span class="n">2.41</span>, atomic_number: <span class="n">77</span>, name: <span class="s">&quot;Iridium&quot;</span>, symbol: <span class="s">&quot;Ir&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="K">
+        <strong>K</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">2.03</span>, mass: <span class="n">39.0983</span>, ionic: <span class="n">true</span>, valencies: [<span class="n">1</span>], vdw_radius: <span class="n">2.73</span>, atomic_number: <span class="n">19</span>, name: <span class="s">&quot;Potassium&quot;</span>, symbol: <span class="s">&quot;K&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Kr">
+        <strong>Kr</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.16</span>, mass: <span class="n">83.798</span>, vdw_radius: <span class="n">2.25</span>, atomic_number: <span class="n">36</span>, name: <span class="s">&quot;Krypton&quot;</span>, symbol: <span class="s">&quot;Kr&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="La">
+        <strong>La</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">2.07</span>, mass: <span class="n">138.9055</span>, vdw_radius: <span class="n">2.98</span>, atomic_number: <span class="n">57</span>, name: <span class="s">&quot;Lanthanum&quot;</span>, symbol: <span class="s">&quot;La&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Li">
+        <strong>Li</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.28</span>, mass: <span class="n">6.941</span>, vdw_radius: <span class="n">2.12</span>, atomic_number: <span class="n">3</span>, name: <span class="s">&quot;Lithium&quot;</span>, symbol: <span class="s">&quot;Li&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Lr">
+        <strong>Lr</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(mass: <span class="n">262</span>, atomic_number: <span class="n">103</span>, name: <span class="s">&quot;Lawrencium&quot;</span>, symbol: <span class="s">&quot;Lr&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Lu">
+        <strong>Lu</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.87</span>, mass: <span class="n">174.967</span>, vdw_radius: <span class="n">2.74</span>, atomic_number: <span class="n">71</span>, name: <span class="s">&quot;Lutetium&quot;</span>, symbol: <span class="s">&quot;Lu&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Md">
+        <strong>Md</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(mass: <span class="n">258</span>, atomic_number: <span class="n">101</span>, name: <span class="s">&quot;Mendelevium&quot;</span>, symbol: <span class="s">&quot;Md&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Mg">
+        <strong>Mg</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.41</span>, mass: <span class="n">24.305</span>, ionic: <span class="n">true</span>, valencies: [<span class="n">2</span>], vdw_radius: <span class="n">2.51</span>, atomic_number: <span class="n">12</span>, name: <span class="s">&quot;Magnesium&quot;</span>, symbol: <span class="s">&quot;Mg&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Mn">
+        <strong>Mn</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.61</span>, mass: <span class="n">54.938</span>, vdw_radius: <span class="n">2.45</span>, atomic_number: <span class="n">25</span>, name: <span class="s">&quot;Manganese&quot;</span>, symbol: <span class="s">&quot;Mn&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Mo">
+        <strong>Mo</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.54</span>, mass: <span class="n">95.94</span>, vdw_radius: <span class="n">2.45</span>, atomic_number: <span class="n">42</span>, name: <span class="s">&quot;Molybdenum&quot;</span>, symbol: <span class="s">&quot;Mo&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Mt">
+        <strong>Mt</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(mass: <span class="n">268</span>, atomic_number: <span class="n">109</span>, name: <span class="s">&quot;Meitnerium&quot;</span>, symbol: <span class="s">&quot;Mt&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="N">
+        <strong>N</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">0.71</span>, mass: <span class="n">14.0067</span>, valencies: [<span class="n">3</span>], vdw_radius: <span class="n">1.66</span>, atomic_number: <span class="n">7</span>, name: <span class="s">&quot;Nitrogen&quot;</span>, symbol: <span class="s">&quot;N&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Na">
+        <strong>Na</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.66</span>, mass: <span class="n">22.9898</span>, ionic: <span class="n">true</span>, valencies: [<span class="n">1</span>], vdw_radius: <span class="n">2.5</span>, atomic_number: <span class="n">11</span>, name: <span class="s">&quot;Sodium&quot;</span>, symbol: <span class="s">&quot;Na&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Nb">
+        <strong>Nb</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.64</span>, mass: <span class="n">92.9064</span>, vdw_radius: <span class="n">2.56</span>, atomic_number: <span class="n">41</span>, name: <span class="s">&quot;Niobium&quot;</span>, symbol: <span class="s">&quot;Nb&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Nd">
+        <strong>Nd</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">2.01</span>, mass: <span class="n">144.242</span>, vdw_radius: <span class="n">2.95</span>, atomic_number: <span class="n">60</span>, name: <span class="s">&quot;Neodymium&quot;</span>, symbol: <span class="s">&quot;Nd&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Ne">
+        <strong>Ne</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">0.5</span>, mass: <span class="n">20.1797</span>, vdw_radius: <span class="n">1.58</span>, atomic_number: <span class="n">10</span>, name: <span class="s">&quot;Neon&quot;</span>, symbol: <span class="s">&quot;Ne&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Ni">
+        <strong>Ni</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.24</span>, mass: <span class="n">58.6934</span>, vdw_radius: <span class="n">2.4</span>, atomic_number: <span class="n">28</span>, name: <span class="s">&quot;Nickel&quot;</span>, symbol: <span class="s">&quot;Ni&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="No">
+        <strong>No</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(mass: <span class="n">259</span>, atomic_number: <span class="n">102</span>, name: <span class="s">&quot;Nobelium&quot;</span>, symbol: <span class="s">&quot;No&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Np">
+        <strong>Np</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.90</span>, mass: <span class="n">237</span>, vdw_radius: <span class="n">2.82</span>, atomic_number: <span class="n">93</span>, name: <span class="s">&quot;Neptunium&quot;</span>, symbol: <span class="s">&quot;Np&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="O">
+        <strong>O</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">0.66</span>, mass: <span class="n">15.9994</span>, valencies: [<span class="n">2</span>], vdw_radius: <span class="n">1.5</span>, atomic_number: <span class="n">8</span>, name: <span class="s">&quot;Oxygen&quot;</span>, symbol: <span class="s">&quot;O&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Os">
+        <strong>Os</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.44</span>, mass: <span class="n">190.23</span>, vdw_radius: <span class="n">2.48</span>, atomic_number: <span class="n">76</span>, name: <span class="s">&quot;Osmium&quot;</span>, symbol: <span class="s">&quot;Os&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="P">
+        <strong>P</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.07</span>, mass: <span class="n">30.9738</span>, valencies: [<span class="n">3</span>, <span class="n">5</span>], vdw_radius: <span class="n">1.9</span>, atomic_number: <span class="n">15</span>, name: <span class="s">&quot;Phosphorus&quot;</span>, symbol: <span class="s">&quot;P&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Pa">
+        <strong>Pa</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">2.00</span>, mass: <span class="n">231.0359</span>, vdw_radius: <span class="n">2.88</span>, atomic_number: <span class="n">91</span>, name: <span class="s">&quot;Proactinium&quot;</span>, symbol: <span class="s">&quot;Pa&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Pb">
+        <strong>Pb</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.46</span>, mass: <span class="n">207.2</span>, vdw_radius: <span class="n">2.6</span>, atomic_number: <span class="n">82</span>, name: <span class="s">&quot;Lead&quot;</span>, symbol: <span class="s">&quot;Pb&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Pd">
+        <strong>Pd</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.39</span>, mass: <span class="n">106.42</span>, vdw_radius: <span class="n">2.15</span>, atomic_number: <span class="n">46</span>, name: <span class="s">&quot;Palladium&quot;</span>, symbol: <span class="s">&quot;Pd&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Pm">
+        <strong>Pm</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.9</span>, mass: <span class="n">145</span>, atomic_number: <span class="n">61</span>, name: <span class="s">&quot;Promethium&quot;</span>, symbol: <span class="s">&quot;Pm&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Po">
+        <strong>Po</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.40</span>, mass: <span class="n">209</span>, atomic_number: <span class="n">84</span>, name: <span class="s">&quot;Polonium&quot;</span>, symbol: <span class="s">&quot;Po&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Pr">
+        <strong>Pr</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">2.03</span>, mass: <span class="n">140.9077</span>, vdw_radius: <span class="n">2.92</span>, atomic_number: <span class="n">59</span>, name: <span class="s">&quot;Praseodymium&quot;</span>, symbol: <span class="s">&quot;Pr&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Pt">
+        <strong>Pt</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.36</span>, mass: <span class="n">195.084</span>, vdw_radius: <span class="n">2.29</span>, atomic_number: <span class="n">78</span>, name: <span class="s">&quot;Platinum&quot;</span>, symbol: <span class="s">&quot;Pt&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Pu">
+        <strong>Pu</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.87</span>, mass: <span class="n">244</span>, vdw_radius: <span class="n">2.81</span>, atomic_number: <span class="n">94</span>, name: <span class="s">&quot;Plutonium&quot;</span>, symbol: <span class="s">&quot;Pu&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Ra">
+        <strong>Ra</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">2.21</span>, mass: <span class="n">226</span>, atomic_number: <span class="n">88</span>, name: <span class="s">&quot;Radium&quot;</span>, symbol: <span class="s">&quot;Ra&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Rb">
+        <strong>Rb</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">2.20</span>, mass: <span class="n">85.4678</span>, vdw_radius: <span class="n">3.21</span>, atomic_number: <span class="n">37</span>, name: <span class="s">&quot;Rubidium&quot;</span>, symbol: <span class="s">&quot;Rb&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Re">
+        <strong>Re</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.51</span>, mass: <span class="n">186.207</span>, vdw_radius: <span class="n">2.49</span>, atomic_number: <span class="n">75</span>, name: <span class="s">&quot;Rhenium&quot;</span>, symbol: <span class="s">&quot;Re&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Rf">
+        <strong>Rf</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(mass: <span class="n">261</span>, atomic_number: <span class="n">104</span>, name: <span class="s">&quot;Rutherfordium&quot;</span>, symbol: <span class="s">&quot;Rf&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Rg">
+        <strong>Rg</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(mass: <span class="n">272</span>, atomic_number: <span class="n">111</span>, name: <span class="s">&quot;Roentgenium&quot;</span>, symbol: <span class="s">&quot;Rg&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Rh">
+        <strong>Rh</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.42</span>, mass: <span class="n">102.9055</span>, vdw_radius: <span class="n">2.44</span>, atomic_number: <span class="n">45</span>, name: <span class="s">&quot;Rhodium&quot;</span>, symbol: <span class="s">&quot;Rh&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Rn">
+        <strong>Rn</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.5</span>, mass: <span class="n">222</span>, atomic_number: <span class="n">86</span>, name: <span class="s">&quot;Radon&quot;</span>, symbol: <span class="s">&quot;Rn&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Ru">
+        <strong>Ru</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.46</span>, mass: <span class="n">101.07</span>, vdw_radius: <span class="n">2.46</span>, atomic_number: <span class="n">44</span>, name: <span class="s">&quot;Ruthenium&quot;</span>, symbol: <span class="s">&quot;Ru&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="S">
+        <strong>S</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.05</span>, mass: <span class="n">32.065</span>, valencies: [<span class="n">2</span>, <span class="n">6</span>], vdw_radius: <span class="n">1.89</span>, atomic_number: <span class="n">16</span>, name: <span class="s">&quot;Sulfur&quot;</span>, symbol: <span class="s">&quot;S&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Sb">
+        <strong>Sb</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.39</span>, mass: <span class="n">121.76</span>, vdw_radius: <span class="n">2.47</span>, atomic_number: <span class="n">51</span>, name: <span class="s">&quot;Antimony&quot;</span>, symbol: <span class="s">&quot;Sb&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Sc">
+        <strong>Sc</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.70</span>, mass: <span class="n">44.9559</span>, vdw_radius: <span class="n">2.58</span>, atomic_number: <span class="n">21</span>, name: <span class="s">&quot;Scandium&quot;</span>, symbol: <span class="s">&quot;Sc&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Se">
+        <strong>Se</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.20</span>, mass: <span class="n">78.96</span>, vdw_radius: <span class="n">1.82</span>, atomic_number: <span class="n">34</span>, name: <span class="s">&quot;Selenium&quot;</span>, symbol: <span class="s">&quot;Se&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Sg">
+        <strong>Sg</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(mass: <span class="n">266</span>, atomic_number: <span class="n">106</span>, name: <span class="s">&quot;Seaborgium&quot;</span>, symbol: <span class="s">&quot;Sg&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Si">
+        <strong>Si</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.11</span>, mass: <span class="n">28.0855</span>, vdw_radius: <span class="n">2.19</span>, atomic_number: <span class="n">14</span>, name: <span class="s">&quot;Silicon&quot;</span>, symbol: <span class="s">&quot;Si&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Sm">
+        <strong>Sm</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.98</span>, mass: <span class="n">150.36</span>, vdw_radius: <span class="n">2.9</span>, atomic_number: <span class="n">62</span>, name: <span class="s">&quot;Samarium&quot;</span>, symbol: <span class="s">&quot;Sm&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Sn">
+        <strong>Sn</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.39</span>, mass: <span class="n">118.71</span>, vdw_radius: <span class="n">2.42</span>, atomic_number: <span class="n">50</span>, name: <span class="s">&quot;Tin&quot;</span>, symbol: <span class="s">&quot;Sn&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Sr">
+        <strong>Sr</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.95</span>, mass: <span class="n">87.62</span>, vdw_radius: <span class="n">2.84</span>, atomic_number: <span class="n">38</span>, name: <span class="s">&quot;Strontium&quot;</span>, symbol: <span class="s">&quot;Sr&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Ta">
+        <strong>Ta</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.70</span>, mass: <span class="n">180.9479</span>, vdw_radius: <span class="n">2.53</span>, atomic_number: <span class="n">73</span>, name: <span class="s">&quot;Tantalum&quot;</span>, symbol: <span class="s">&quot;Ta&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Tb">
+        <strong>Tb</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.94</span>, mass: <span class="n">158.9254</span>, vdw_radius: <span class="n">2.79</span>, atomic_number: <span class="n">65</span>, name: <span class="s">&quot;Terbium&quot;</span>, symbol: <span class="s">&quot;Tb&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Tc">
+        <strong>Tc</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.47</span>, mass: <span class="n">98</span>, vdw_radius: <span class="n">2.44</span>, atomic_number: <span class="n">43</span>, name: <span class="s">&quot;Technetium&quot;</span>, symbol: <span class="s">&quot;Tc&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Te">
+        <strong>Te</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.38</span>, mass: <span class="n">127.6</span>, vdw_radius: <span class="n">1.99</span>, atomic_number: <span class="n">52</span>, name: <span class="s">&quot;Tellurium&quot;</span>, symbol: <span class="s">&quot;Te&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Th">
+        <strong>Th</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">2.06</span>, mass: <span class="n">232.0381</span>, vdw_radius: <span class="n">2.93</span>, atomic_number: <span class="n">90</span>, name: <span class="s">&quot;Thorium&quot;</span>, symbol: <span class="s">&quot;Th&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Ti">
+        <strong>Ti</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.60</span>, mass: <span class="n">47.867</span>, vdw_radius: <span class="n">2.46</span>, atomic_number: <span class="n">22</span>, name: <span class="s">&quot;Titanium&quot;</span>, symbol: <span class="s">&quot;Ti&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Tl">
+        <strong>Tl</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.45</span>, mass: <span class="n">204.3833</span>, vdw_radius: <span class="n">2.47</span>, atomic_number: <span class="n">81</span>, name: <span class="s">&quot;Thallium&quot;</span>, symbol: <span class="s">&quot;Tl&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Tm">
+        <strong>Tm</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.90</span>, mass: <span class="n">168.9342</span>, vdw_radius: <span class="n">2.79</span>, atomic_number: <span class="n">69</span>, name: <span class="s">&quot;Thulium&quot;</span>, symbol: <span class="s">&quot;Tm&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="U">
+        <strong>U</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.96</span>, mass: <span class="n">238.0289</span>, vdw_radius: <span class="n">2.71</span>, atomic_number: <span class="n">92</span>, name: <span class="s">&quot;Uranium&quot;</span>, symbol: <span class="s">&quot;U&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Uuh">
+        <strong>Uuh</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(mass: <span class="n">292</span>, atomic_number: <span class="n">116</span>, name: <span class="s">&quot;Ununhexium&quot;</span>, symbol: <span class="s">&quot;Uuh&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Uuo">
+        <strong>Uuo</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(mass: <span class="n">294</span>, atomic_number: <span class="n">118</span>, name: <span class="s">&quot;Ununoctium&quot;</span>, symbol: <span class="s">&quot;Uuo&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Uup">
+        <strong>Uup</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(mass: <span class="n">288</span>, atomic_number: <span class="n">115</span>, name: <span class="s">&quot;Ununpentium&quot;</span>, symbol: <span class="s">&quot;Uup&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Uuq">
+        <strong>Uuq</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(mass: <span class="n">289</span>, atomic_number: <span class="n">114</span>, name: <span class="s">&quot;Ununquadium&quot;</span>, symbol: <span class="s">&quot;Uuq&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Uus">
+        <strong>Uus</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(mass: <span class="n">291</span>, atomic_number: <span class="n">117</span>, name: <span class="s">&quot;Ununseptium&quot;</span>, symbol: <span class="s">&quot;Uus&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Uut">
+        <strong>Uut</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(mass: <span class="n">284</span>, atomic_number: <span class="n">113</span>, name: <span class="s">&quot;Ununtrium&quot;</span>, symbol: <span class="s">&quot;Uut&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="V">
+        <strong>V</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.53</span>, mass: <span class="n">50.9415</span>, vdw_radius: <span class="n">2.42</span>, atomic_number: <span class="n">23</span>, name: <span class="s">&quot;Vanadium&quot;</span>, symbol: <span class="s">&quot;V&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="W">
+        <strong>W</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.62</span>, mass: <span class="n">183.84</span>, vdw_radius: <span class="n">2.57</span>, atomic_number: <span class="n">74</span>, name: <span class="s">&quot;Tungsten&quot;</span>, symbol: <span class="s">&quot;W&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="X">
+        <strong>X</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(<span class="n">0</span>, <span class="s">&quot;Unknown&quot;</span>, <span class="s">&quot;X&quot;</span>, mass: <span class="n">0</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Xe">
+        <strong>Xe</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.40</span>, mass: <span class="n">131.293</span>, vdw_radius: <span class="n">2.06</span>, atomic_number: <span class="n">54</span>, name: <span class="s">&quot;Xenon&quot;</span>, symbol: <span class="s">&quot;Xe&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Y">
+        <strong>Y</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.90</span>, mass: <span class="n">88.9059</span>, vdw_radius: <span class="n">2.75</span>, atomic_number: <span class="n">39</span>, name: <span class="s">&quot;Yttrium&quot;</span>, symbol: <span class="s">&quot;Y&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Yb">
+        <strong>Yb</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.87</span>, mass: <span class="n">173.04</span>, vdw_radius: <span class="n">2.8</span>, atomic_number: <span class="n">70</span>, name: <span class="s">&quot;Ytterbium&quot;</span>, symbol: <span class="s">&quot;Yb&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Zn">
+        <strong>Zn</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.22</span>, mass: <span class="n">65.409</span>, vdw_radius: <span class="n">2.39</span>, atomic_number: <span class="n">30</span>, name: <span class="s">&quot;Zinc&quot;</span>, symbol: <span class="s">&quot;Zn&quot;</span>)</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Zr">
+        <strong>Zr</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(covalent_radius: <span class="n">1.75</span>, mass: <span class="n">91.224</span>, vdw_radius: <span class="n">2.52</span>, atomic_number: <span class="n">40</span>, name: <span class="s">&quot;Zirconium&quot;</span>, symbol: <span class="s">&quot;Zr&quot;</span>)</code>
+      </dt>
+      
+    
+  </dl>
+
+
+
+
+
+
+
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#[](*args,**options):Element-instance-method" class="signature"><strong>#[]</strong>(*args, **options) : Element</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#[]?(number:Int32):Element?-instance-method" class="signature"><strong>#[]?</strong>(number : Int32) : Element?</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#[]?(symbol:String%7CChar):Element?-instance-method" class="signature"><strong>#[]?</strong>(symbol : String | Char) : Element?</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#[]?(*,name:String):Element?-instance-method" class="signature"><strong>#[]?</strong>(*, name : String) : Element?</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#[]?(*,atom_name:String):Element?-instance-method" class="signature"><strong>#[]?</strong>(*, atom_name : String) : Element?</a>
+        
+          <div class="summary"><p><span class="flag orange">TODO</span>  rename to guess_element? TODO test different atom names</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#covalent_cutoff(ele:Element,other:Element):Float64-instance-method" class="signature"><strong>#covalent_cutoff</strong>(ele : Element, other : Element) : Float64</a>
+        
+          <div class="summary"><p><span class="flag purple">NOTE</span>  The additional term (0.3 Å) is taken from the covalent radii reference, which states that about 96% of the surveyed bonds are within three standard deviations of the sum of the radii, where the found average standard deviation is about 0.1 Å.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#covalent_cutoff(atom:Atom,other:Atom):Float64-instance-method" class="signature"><strong>#covalent_cutoff</strong>(atom : Atom, other : Atom) : Float64</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#elements:Tuple-instance-method" class="signature"><strong>#elements</strong> : Tuple</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <h2>
+    <a id="macro-summary" class="anchor" href="#macro-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Macro Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#element(symbol,name,**options)-macro" class="signature"><strong>element</strong>(symbol, name, **options)</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+<div class="methods-inherited">
+  
+</div>
+
+
+
+
+
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="[](*args,**options):Element-instance-method">
+      <div class="signature">
+        
+        def <strong>[]</strong>(*args, **options) : <a href="../Chem/Element.html">Element</a>
+
+        <a class="method-permalink" href="#[](*args,**options):Element-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[]?(number:Int32):Element?-instance-method">
+      <div class="signature">
+        
+        def <strong>[]?</strong>(number : Int32) : <a href="../Chem/Element.html">Element</a>?
+
+        <a class="method-permalink" href="#[]?(number:Int32):Element?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[]?(symbol:String|Char):Element?-instance-method">
+      <div class="signature">
+        
+        def <strong>[]?</strong>(symbol : String | <a href="../Char.html">Char</a>) : <a href="../Chem/Element.html">Element</a>?
+
+        <a class="method-permalink" href="#[]?(symbol:String%7CChar):Element?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[]?(*,name:String):Element?-instance-method">
+      <div class="signature">
+        
+        def <strong>[]?</strong>(*, name : String) : <a href="../Chem/Element.html">Element</a>?
+
+        <a class="method-permalink" href="#[]?(*,name:String):Element?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[]?(*,atom_name:String):Element?-instance-method">
+      <div class="signature">
+        
+        def <strong>[]?</strong>(*, atom_name : String) : <a href="../Chem/Element.html">Element</a>?
+
+        <a class="method-permalink" href="#[]?(*,atom_name:String):Element?-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p><span class="flag orange">TODO</span>  rename to guess_element?</p>
+
+<p><span class="flag orange">TODO</span>  test different atom names</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="covalent_cutoff(ele:Element,other:Element):Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>covalent_cutoff</strong>(ele : <a href="../Chem/Element.html">Element</a>, other : <a href="../Chem/Element.html">Element</a>) : Float64
+
+        <a class="method-permalink" href="#covalent_cutoff(ele:Element,other:Element):Float64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p><span class="flag purple">NOTE</span>  The additional term (0.3 Å) is taken from the covalent radii reference,
+which states that about 96% of the surveyed bonds are within three standard
+deviations of the sum of the radii, where the found average standard deviation is
+about 0.1 Å.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="covalent_cutoff(atom:Atom,other:Atom):Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>covalent_cutoff</strong>(atom : <a href="../Chem/Atom.html">Atom</a>, other : <a href="../Chem/Atom.html">Atom</a>) : Float64
+
+        <a class="method-permalink" href="#covalent_cutoff(atom:Atom,other:Atom):Float64-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="elements:Tuple-instance-method">
+      <div class="signature">
+        
+        def <strong>elements</strong> : Tuple
+
+        <a class="method-permalink" href="#elements:Tuple-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
+
+
+  <h2>
+    <a id="macro-detail" class="anchor" href="#macro-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Macro Detail
+  </h2>
+  
+    <div class="entry-detail" id="element(symbol,name,**options)-macro">
+      <div class="signature">
+        
+        macro <strong>element</strong>(symbol, name, **options)
+
+        <a class="method-permalink" href="#element(symbol,name,**options)-macro">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
+
+</div>
+
+</body>
+</html>

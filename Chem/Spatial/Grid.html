@@ -1,0 +1,3432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.36.1">
+<meta name="crystal_docs.project_version" content="0.5.6">
+<meta name="crystal_docs.project_name" content="chem.cr">
+
+
+
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../js/doc.js"></script>
+
+  <meta name="repository-name" content="chem.cr">
+  <title>Chem::Spatial::Grid - chem.cr 0.5.6</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../../";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../../index.html">
+          chem.cr
+        </a>
+      </h1>
+
+      <span class="project-version">
+        0.5.6
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class=" " data-id="chem.cr/toplevel" data-name="top level namespace">
+      <a href="../../toplevel.html">Top Level Namespace</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Array" data-name="array(t)">
+      <a href="../../Array.html">Array</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Char" data-name="char">
+      <a href="../../Char.html">Char</a>
+      
+    </li>
+  
+  <li class="parent open current" data-id="chem.cr/Chem" data-name="chem">
+      <a href="../../Chem.html">Chem</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/ArrayView" data-name="chem::arrayview(t)">
+      <a href="../../Chem/ArrayView.html">ArrayView</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Atom" data-name="chem::atom">
+      <a href="../../Chem/Atom.html">Atom</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/AtomCollection" data-name="chem::atomcollection">
+      <a href="../../Chem/AtomCollection.html">AtomCollection</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/AtomView" data-name="chem::atomview">
+      <a href="../../Chem/AtomView.html">AtomView</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Bias" data-name="chem::bias">
+      <a href="../../Chem/Bias.html">Bias</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Bond" data-name="chem::bond">
+      <a href="../../Chem/Bond.html">Bond</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Bond/Kind" data-name="chem::bond::kind">
+      <a href="../../Chem/Bond/Kind.html">Kind</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/BondArray" data-name="chem::bondarray">
+      <a href="../../Chem/BondArray.html">BondArray</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Chain" data-name="chem::chain">
+      <a href="../../Chem/Chain.html">Chain</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ChainCollection" data-name="chem::chaincollection">
+      <a href="../../Chem/ChainCollection.html">ChainCollection</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ChainView" data-name="chem::chainview">
+      <a href="../../Chem/ChainView.html">ChainView</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Constraint" data-name="chem::constraint">
+      <a href="../../Chem/Constraint.html">Constraint</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Cube" data-name="chem::cube">
+      <a href="../../Chem/Cube.html">Cube</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Cube/Reader" data-name="chem::cube::reader">
+      <a href="../../Chem/Cube/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Cube/Writer" data-name="chem::cube::writer">
+      <a href="../../Chem/Cube/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/DFTB" data-name="chem::dftb">
+      <a href="../../Chem/DFTB.html">DFTB</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="chem.cr/Chem/DFTB/Gen" data-name="chem::dftb::gen">
+      <a href="../../Chem/DFTB/Gen.html">Gen</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/DFTB/Gen/Reader" data-name="chem::dftb::gen::reader">
+      <a href="../../Chem/DFTB/Gen/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/DFTB/Gen/Writer" data-name="chem::dftb::gen::writer">
+      <a href="../../Chem/DFTB/Gen/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/DX" data-name="chem::dx">
+      <a href="../../Chem/DX.html">DX</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/DX/Reader" data-name="chem::dx::reader">
+      <a href="../../Chem/DX/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/DX/Writer" data-name="chem::dx::writer">
+      <a href="../../Chem/DX/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Element" data-name="chem::element">
+      <a href="../../Chem/Element.html">Element</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Error" data-name="chem::error">
+      <a href="../../Chem/Error.html">Error</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/IO" data-name="chem::io">
+      <a href="../../Chem/IO.html">IO</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/FileFormat" data-name="chem::io::fileformat">
+      <a href="../../Chem/IO/FileFormat.html">FileFormat</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/FileType" data-name="chem::io::filetype">
+      <a href="../../Chem/IO/FileType.html">FileType</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/ParseException" data-name="chem::io::parseexception">
+      <a href="../../Chem/IO/ParseException.html">ParseException</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/Reader" data-name="chem::io::reader(t)">
+      <a href="../../Chem/IO/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/TextIO" data-name="chem::io::textio">
+      <a href="../../Chem/IO/TextIO.html">TextIO</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/Writer" data-name="chem::io::writer(t)">
+      <a href="../../Chem/IO/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Lattice" data-name="chem::lattice">
+      <a href="../../Chem/Lattice.html">Lattice</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Linalg" data-name="chem::linalg">
+      <a href="../../Chem/Linalg.html">Linalg</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Linalg/Error" data-name="chem::linalg::error">
+      <a href="../../Chem/Linalg/Error.html">Error</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Linalg/Matrix" data-name="chem::linalg::matrix">
+      <a href="../../Chem/Linalg/Matrix.html">Matrix</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Mol2" data-name="chem::mol2">
+      <a href="../../Chem/Mol2.html">Mol2</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Mol2/Reader" data-name="chem::mol2::reader">
+      <a href="../../Chem/Mol2/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Mol2/Writer" data-name="chem::mol2::writer">
+      <a href="../../Chem/Mol2/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/PDB" data-name="chem::pdb">
+      <a href="../../Chem/PDB.html">PDB</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/PDB/Hybrid36" data-name="chem::pdb::hybrid36">
+      <a href="../../Chem/PDB/Hybrid36.html">Hybrid36</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/PDB/Reader" data-name="chem::pdb::reader">
+      <a href="../../Chem/PDB/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/PDB/Writer" data-name="chem::pdb::writer">
+      <a href="../../Chem/PDB/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/PeriodicTable" data-name="chem::periodictable">
+      <a href="../../Chem/PeriodicTable.html">PeriodicTable</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Protein" data-name="chem::protein">
+      <a href="../../Chem/Protein.html">Protein</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/AminoAcid" data-name="chem::protein::aminoacid">
+      <a href="../../Chem/Protein/AminoAcid.html">AminoAcid</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/AminoAcids" data-name="chem::protein::aminoacids">
+      <a href="../../Chem/Protein/AminoAcids.html">AminoAcids</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/DSSP" data-name="chem::protein::dssp">
+      <a href="../../Chem/Protein/DSSP.html">DSSP</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Protein/PSIQUE" data-name="chem::protein::psique">
+      <a href="../../Chem/Protein/PSIQUE.html">PSIQUE</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/PSIQUE/SecondaryStructureBlender" data-name="chem::protein::psique::secondarystructureblender">
+      <a href="../../Chem/Protein/PSIQUE/SecondaryStructureBlender.html">SecondaryStructureBlender</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/SecondaryStructure" data-name="chem::protein::secondarystructure">
+      <a href="../../Chem/Protein/SecondaryStructure.html">SecondaryStructure</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/SecondaryStructureCalculator" data-name="chem::protein::secondarystructurecalculator">
+      <a href="../../Chem/Protein/SecondaryStructureCalculator.html">SecondaryStructureCalculator</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/SecondaryStructureType" data-name="chem::protein::secondarystructuretype">
+      <a href="../../Chem/Protein/SecondaryStructureType.html">SecondaryStructureType</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/Sequence" data-name="chem::protein::sequence">
+      <a href="../../Chem/Protein/Sequence.html">Sequence</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Protein/Stride" data-name="chem::protein::stride">
+      <a href="../../Chem/Protein/Stride.html">Stride</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/Stride/Writer" data-name="chem::protein::stride::writer">
+      <a href="../../Chem/Protein/Stride/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/PyMOL" data-name="chem::pymol">
+      <a href="../../Chem/PyMOL.html">PyMOL</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/PyMOL/Writer" data-name="chem::pymol::writer">
+      <a href="../../Chem/PyMOL/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Residue" data-name="chem::residue">
+      <a href="../../Chem/Residue.html">Residue</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Residue/Kind" data-name="chem::residue::kind">
+      <a href="../../Chem/Residue/Kind.html">Kind</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueCollection" data-name="chem::residuecollection">
+      <a href="../../Chem/ResidueCollection.html">ResidueCollection</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueView" data-name="chem::residueview">
+      <a href="../../Chem/ResidueView.html">ResidueView</a>
+      
+    </li>
+  
+  <li class="parent open current" data-id="chem.cr/Chem/Spatial" data-name="chem::spatial">
+      <a href="../../Chem/Spatial.html">Spatial</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="chem.cr/Chem/Spatial/AffineTransform" data-name="chem::spatial::affinetransform">
+      <a href="../../Chem/Spatial/AffineTransform.html">AffineTransform</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/AffineTransform/ScalingFactors" data-name="chem::spatial::affinetransform::scalingfactors">
+      <a href="../../Chem/Spatial/AffineTransform/ScalingFactors.html">ScalingFactors</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Basis" data-name="chem::spatial::basis">
+      <a href="../../Chem/Spatial/Basis.html">Basis</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Bounds" data-name="chem::spatial::bounds">
+      <a href="../../Chem/Spatial/Bounds.html">Bounds</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/CoordinatesProxy" data-name="chem::spatial::coordinatesproxy">
+      <a href="../../Chem/Spatial/CoordinatesProxy.html">CoordinatesProxy</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Error" data-name="chem::spatial::error">
+      <a href="../../Chem/Spatial/Error.html">Error</a>
+      
+    </li>
+  
+  <li class="parent open current" data-id="chem.cr/Chem/Spatial/Grid" data-name="chem::spatial::grid">
+      <a href="../../Chem/Spatial/Grid.html">Grid</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Grid/Dimensions" data-name="chem::spatial::grid::dimensions">
+      <a href="../../Chem/Spatial/Grid/Dimensions.html">Dimensions</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Grid/Info" data-name="chem::spatial::grid::info">
+      <a href="../../Chem/Spatial/Grid/Info.html">Info</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Grid/Location" data-name="chem::spatial::grid::location">
+      <a href="../../Chem/Spatial/Grid/Location.html">Location</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Grid/Reader" data-name="chem::spatial::grid::reader">
+      <a href="../../Chem/Spatial/Grid/Reader.html">Reader</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/HlxParams" data-name="chem::spatial::hlxparams">
+      <a href="../../Chem/Spatial/HlxParams.html">HlxParams</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/KDTree" data-name="chem::spatial::kdtree">
+      <a href="../../Chem/Spatial/KDTree.html">KDTree</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/NotPeriodicError" data-name="chem::spatial::notperiodicerror">
+      <a href="../../Chem/Spatial/NotPeriodicError.html">NotPeriodicError</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/PBC" data-name="chem::spatial::pbc">
+      <a href="../../Chem/Spatial/PBC.html">PBC</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Quaternion" data-name="chem::spatial::quaternion">
+      <a href="../../Chem/Spatial/Quaternion.html">Quaternion</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Size" data-name="chem::spatial::size">
+      <a href="../../Chem/Spatial/Size.html">Size</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Vector" data-name="chem::spatial::vector">
+      <a href="../../Chem/Spatial/Vector.html">Vector</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Structure" data-name="chem::structure">
+      <a href="../../Chem/Structure.html">Structure</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Structure/Builder" data-name="chem::structure::builder">
+      <a href="../../Chem/Structure/Builder.html">Builder</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Structure/Experiment" data-name="chem::structure::experiment">
+      <a href="../../Chem/Structure/Experiment.html">Experiment</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Structure/Experiment/Method" data-name="chem::structure::experiment::method">
+      <a href="../../Chem/Structure/Experiment/Method.html">Method</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Structure/Reader" data-name="chem::structure::reader">
+      <a href="../../Chem/Structure/Reader.html">Reader</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Topology" data-name="chem::topology">
+      <a href="../../Chem/Topology.html">Topology</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/AtomType" data-name="chem::topology::atomtype">
+      <a href="../../Chem/Topology/AtomType.html">AtomType</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/BondType" data-name="chem::topology::bondtype">
+      <a href="../../Chem/Topology/BondType.html">BondType</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/MatchData" data-name="chem::topology::matchdata">
+      <a href="../../Chem/Topology/MatchData.html">MatchData</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Patcher" data-name="chem::topology::patcher">
+      <a href="../../Chem/Topology/Patcher.html">Patcher</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Perception" data-name="chem::topology::perception">
+      <a href="../../Chem/Topology/Perception.html">Perception</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/ResidueType" data-name="chem::topology::residuetype">
+      <a href="../../Chem/Topology/ResidueType.html">ResidueType</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Topology/Templates" data-name="chem::topology::templates">
+      <a href="../../Chem/Topology/Templates.html">Templates</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="chem.cr/Chem/Topology/Templates/Builder" data-name="chem::topology::templates::builder">
+      <a href="../../Chem/Topology/Templates/Builder.html">Builder</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Templates/Builder/ParseException" data-name="chem::topology::templates::builder::parseexception">
+      <a href="../../Chem/Topology/Templates/Builder/ParseException.html">ParseException</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Templates/Detector" data-name="chem::topology::templates::detector">
+      <a href="../../Chem/Topology/Templates/Detector.html">Detector</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Templates/Error" data-name="chem::topology::templates::error">
+      <a href="../../Chem/Topology/Templates/Error.html">Error</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/VASP" data-name="chem::vasp">
+      <a href="../../Chem/VASP.html">VASP</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="chem.cr/Chem/VASP/Chgcar" data-name="chem::vasp::chgcar">
+      <a href="../../Chem/VASP/Chgcar.html">Chgcar</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Chgcar/Reader" data-name="chem::vasp::chgcar::reader">
+      <a href="../../Chem/VASP/Chgcar/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Chgcar/Writer" data-name="chem::vasp::chgcar::writer">
+      <a href="../../Chem/VASP/Chgcar/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/GridReader" data-name="chem::vasp::gridreader">
+      <a href="../../Chem/VASP/GridReader.html">GridReader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/GridWriter" data-name="chem::vasp::gridwriter">
+      <a href="../../Chem/VASP/GridWriter.html">GridWriter</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/VASP/Locpot" data-name="chem::vasp::locpot">
+      <a href="../../Chem/VASP/Locpot.html">Locpot</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Locpot/Reader" data-name="chem::vasp::locpot::reader">
+      <a href="../../Chem/VASP/Locpot/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Locpot/Writer" data-name="chem::vasp::locpot::writer">
+      <a href="../../Chem/VASP/Locpot/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/VASP/Poscar" data-name="chem::vasp::poscar">
+      <a href="../../Chem/VASP/Poscar.html">Poscar</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Poscar/Reader" data-name="chem::vasp::poscar::reader">
+      <a href="../../Chem/VASP/Poscar/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Poscar/Writer" data-name="chem::vasp::poscar::writer">
+      <a href="../../Chem/VASP/Poscar/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/VMD" data-name="chem::vmd">
+      <a href="../../Chem/VMD.html">VMD</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/VMD/Writer" data-name="chem::vmd::writer">
+      <a href="../../Chem/VMD/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/XYZ" data-name="chem::xyz">
+      <a href="../../Chem/XYZ.html">XYZ</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/XYZ/Reader" data-name="chem::xyz::reader">
+      <a href="../../Chem/XYZ/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/XYZ/Writer" data-name="chem::xyz::writer">
+      <a href="../../Chem/XYZ/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Colorize" data-name="colorize">
+      <a href="../../Colorize.html">Colorize</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Colorize/ColorRGB" data-name="colorize::colorrgb">
+      <a href="../../Colorize/ColorRGB.html">ColorRGB</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Indexable" data-name="indexable(t)">
+      <a href="../../Indexable.html">Indexable</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Int" data-name="int">
+      <a href="../../Int.html">Int</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Number" data-name="number">
+      <a href="../../Number.html">Number</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Range" data-name="range(b, e)">
+      <a href="../../Range.html">Range</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Slice" data-name="slice(t)">
+      <a href="../../Slice.html">Slice</a>
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">class</span> Chem::Spatial::Grid
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Chem/Spatial/Grid.html">Chem::Spatial::Grid</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+
+
+
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p><span class="flag orange">TODO</span>  add support for non-cubic grids (use lattice instead of bounds?)</p>
+
+<pre><code class="language-crystal">  <span class="o">-</span> i to coords: origin.x <span class="o">+</span> (i <span class="o">/</span> nx) <span class="o">*</span> lattice.a
+  <span class="o">-</span> coords to i: ?</code></pre>
+
+<p><span class="flag orange">TODO</span>  implement functionality from vmd's volmap</p>
+
+
+
+
+
+  <h2>
+    <a id="included-modules" class="anchor" href="#included-modules">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Included Modules
+  </h2>
+  <ul class="other-types-list">
+    
+      <li class="other-type"><a href="../../Indexable.html">Indexable(Float64)</a></li>
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      chem/io/reader.cr
+    
+    <br/>
+  
+    
+      chem/io/writer.cr
+    
+    <br/>
+  
+    
+      chem/spatial/grid.cr
+    
+    <br/>
+  
+
+
+
+
+
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#[](ni:Int,nj:Int,nk:Int):self-class-method" class="signature"><strong>.[]</strong>(ni : Int, nj : Int, nk : Int) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#atom_distance(structure:Structure,dim:Dimensions,bounds:Bounds?=nil):self-class-method" class="signature"><strong>.atom_distance</strong>(structure : Structure, dim : Dimensions, bounds : Bounds? = <span class="n">nil</span>) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#atom_distance_like(other:self%7CInfo,structure:Structure):self-class-method" class="signature"><strong>.atom_distance_like</strong>(other : <span class="k">self</span> | Info, structure : Structure) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a grid filled with the distances to the nearest atom.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#build(dim:Dimensions,bounds:Bounds,&block:Pointer(Float64),Int32-%3E):self-class-method" class="signature"><strong>.build</strong>(dim : Dimensions, bounds : Bounds, &block : Pointer(Float64), Int32 -> ) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#build(info:Info,&:Pointer(Float64),Int32-%3E):self-class-method" class="signature"><strong>.build</strong>(info : Info, & : Pointer(Float64), Int32 -> ) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Creates a new <code><a href="../../Chem/Spatial/Grid.html">Grid</a></code> with <em>info</em> and yields a buffer to be filled.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#empty_like(other:self%7CInfo):self-class-method" class="signature"><strong>.empty_like</strong>(other : <span class="k">self</span> | Info) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a zero-filled grid with the same bounds and points as <em>other</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#fill_like(other:self%7CInfo,value:Number):self-class-method" class="signature"><strong>.fill_like</strong>(other : <span class="k">self</span> | Info, value : Number) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a grid with the same bounds and points as <em>other</em> filled with <em>value</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#from_chgcar(input:::IO%7CPath%7CString,*args,**options):self-class-method" class="signature"><strong>.from_chgcar</strong>(input : ::IO | Path | String, *args, **options) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#from_cube(input:::IO%7CPath%7CString,*args,**options):self-class-method" class="signature"><strong>.from_cube</strong>(input : ::IO | Path | String, *args, **options) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#from_dx(input:::IO%7CPath%7CString,*args,**options):self-class-method" class="signature"><strong>.from_dx</strong>(input : ::IO | Path | String, *args, **options) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#from_locpot(input:::IO%7CPath%7CString,*args,**options):self-class-method" class="signature"><strong>.from_locpot</strong>(input : ::IO | Path | String, *args, **options) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new(dim:Dimensions,bounds:Bounds,&block:Location-%3ENumber)-class-method" class="signature"><strong>.new</strong>(dim : Dimensions, bounds : Bounds, &block : Location -> Number)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new(dim:Dimensions,bounds:Bounds)-class-method" class="signature"><strong>.new</strong>(dim : Dimensions, bounds : Bounds)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new(dim:Dimensions,bounds:Bounds,initial_value:Float64)-class-method" class="signature"><strong>.new</strong>(dim : Dimensions, bounds : Bounds, initial_value : Float64)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#vdw_mask(structure:Structure,dim:Dimensions,bounds:Bounds?=nil,delta:Float64=0.02):self-class-method" class="signature"><strong>.vdw_mask</strong>(structure : Structure, dim : Dimensions, bounds : Bounds? = <span class="n">nil</span>, delta : Float64 = <span class="n">0.02</span>) : <span class="k">self</span></a>
+        
+          <div class="summary"><p><span class="flag orange">TODO</span>  add more tests FIXME: check delta calculation (grid.resolution.min / 2 shouldn't be enough?)</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#vdw_mask_like(other:self%7CInfo,structure:Structure,delta:Float64=0.02):self-class-method" class="signature"><strong>.vdw_mask_like</strong>(other : <span class="k">self</span> | Info, structure : Structure, delta : Float64 = <span class="n">0.02</span>) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a grid mask with the points at the vdW spheres set to 1.</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <h2>
+    <a id="class-method-summary" class="anchor" href="#class-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#info(input:::IO%7CPath%7CString,format:IO::FileFormat):Info-class-method" class="signature"><strong>.info</strong>(input : ::IO | Path | String, format : IO::FileFormat) : Info</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#info(path:Path%7CString):Info-class-method" class="signature"><strong>.info</strong>(path : Path | String) : Info</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#*(rhs:self):self-instance-method" class="signature"><strong>#*</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#*(rhs:Number):self-instance-method" class="signature"><strong>#*</strong>(rhs : Number) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#+(rhs:self):self-instance-method" class="signature"><strong>#+</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#+(rhs:Number):self-instance-method" class="signature"><strong>#+</strong>(rhs : Number) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#-(rhs:self):self-instance-method" class="signature"><strong>#-</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#-(rhs:Number):self-instance-method" class="signature"><strong>#-</strong>(rhs : Number) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#/(rhs:self):self-instance-method" class="signature"><strong>#/</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#/(rhs:Number):self-instance-method" class="signature"><strong>#/</strong>(rhs : Number) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#==(rhs:self):Bool-instance-method" class="signature"><strong>#==</strong>(rhs : <span class="k">self</span>) : Bool</a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this reference is the same as <em>other</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#[](*args,**options):Float64-instance-method" class="signature"><strong>#[]</strong>(*args, **options) : Float64</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#[]=(i:Int,j:Int,k:Int,value:Float64):Float64-instance-method" class="signature"><strong>#[]=</strong>(i : Int, j : Int, k : Int, value : Float64) : Float64</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#[]=(i:Int,value:Float64):Float64-instance-method" class="signature"><strong>#[]=</strong>(i : Int, value : Float64) : Float64</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#[]=(loc:Location,value:Float64):Float64-instance-method" class="signature"><strong>#[]=</strong>(loc : Location, value : Float64) : Float64</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#[]?(i:Int,j:Int,k:Int):Float64?-instance-method" class="signature"><strong>#[]?</strong>(i : Int, j : Int, k : Int) : Float64?</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#[]?(vec:Vector):Float64?-instance-method" class="signature"><strong>#[]?</strong>(vec : Vector) : Float64?</a>
+        
+          <div class="summary"><p><span class="flag orange">TODO</span>  add interpolation (check ARBInterp)</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#[]?(loc:Location):Float64?-instance-method" class="signature"><strong>#[]?</strong>(loc : Location) : Float64?</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bounds:Bounds-instance-method" class="signature"><strong>#bounds</strong> : Bounds</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#coords_at(*args,**options):Vector-instance-method" class="signature"><strong>#coords_at</strong>(*args, **options) : Vector</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#coords_at?(loc:Location):Vector?-instance-method" class="signature"><strong>#coords_at?</strong>(loc : Location) : Vector?</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#coords_at?(i:Int,j:Int,k:Int):Vector?-instance-method" class="signature"><strong>#coords_at?</strong>(i : Int, j : Int, k : Int) : Vector?</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#coords_at?(i:Int):Vector?-instance-method" class="signature"><strong>#coords_at?</strong>(i : Int) : Vector?</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dim:Dimensions-instance-method" class="signature"><strong>#dim</strong> : Dimensions</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dup:self-instance-method" class="signature"><strong>#dup</strong> : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a shallow copy of this object.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#each_axial_slice(axis:Int,reuse:Bool%7CArray(Float64)=false,&:Array(Float64)-%3E):Nil-instance-method" class="signature"><strong>#each_axial_slice</strong>(axis : Int, reuse : Bool | Array(Float64) = <span class="n">false</span>, & : Array(Float64) -> ) : Nil</a>
+        
+          <div class="summary"><p>Iterates over slices along <em>axis</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#each_coords(&:Vector-%3E):Nil-instance-method" class="signature"><strong>#each_coords</strong>(& : Vector -> ) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#each_loc(vec:Vector,cutoff:Number,&:Location,Float64-%3E):Nil-instance-method" class="signature"><strong>#each_loc</strong>(vec : Vector, cutoff : Number, & : Location, Float64 -> ) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#each_loc(&:Location-%3E):Nil-instance-method" class="signature"><strong>#each_loc</strong>(& : Location -> ) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#each_with_coords(&:Float64,Vector-%3E):Nil-instance-method" class="signature"><strong>#each_with_coords</strong>(& : Float64, Vector -> ) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#each_with_loc(&:Float64,Location-%3E):Nil-instance-method" class="signature"><strong>#each_with_loc</strong>(& : Float64, Location -> ) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#includes?(*args,**options,&)-instance-method" class="signature"><strong>#includes?</strong>(*args, **options, &)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#includes?(*args,**options)-instance-method" class="signature"><strong>#includes?</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#index(vec:Vector):Int32?-instance-method" class="signature"><strong>#index</strong>(vec : Vector) : Int32?</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#index(loc:Location):Int32?-instance-method" class="signature"><strong>#index</strong>(loc : Location) : Int32?</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#index!(*args,**options):Int32-instance-method" class="signature"><strong>#index!</strong>(*args, **options) : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#loc_at(*args,**options):Location-instance-method" class="signature"><strong>#loc_at</strong>(*args, **options) : Location</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#loc_at?(vec:Vector):Location?-instance-method" class="signature"><strong>#loc_at?</strong>(vec : Vector) : Location?</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#loc_at?(i:Int):Location?-instance-method" class="signature"><strong>#loc_at?</strong>(i : Int) : Location?</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#map(&:Float64-%3EFloat64):self-instance-method" class="signature"><strong>#map</strong>(& : Float64 -> Float64) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns an <code><a href="../../Array.html">Array</a></code> with the results of running the block against each element of the collection.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#map!(&:Float64-%3EFloat64):self-instance-method" class="signature"><strong>#map!</strong>(& : Float64 -> Float64) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#map_with_coords(&:Float64,Vector-%3ENumber):self-instance-method" class="signature"><strong>#map_with_coords</strong>(& : Float64, Vector -> Number) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#map_with_coords!(&:Float64,Vector-%3ENumber):self-instance-method" class="signature"><strong>#map_with_coords!</strong>(& : Float64, Vector -> Number) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#map_with_index(&:Float64,Int32-%3ENumber):self-instance-method" class="signature"><strong>#map_with_index</strong>(& : Float64, Int32 -> Number) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Like <code><a href="../../Chem/Spatial/Grid.html#map(&:Float64-%3EFloat64):self-instance-method">#map</a></code>, but the block gets passed both the element and its index.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#map_with_index!(&:Float64,Int32-%3ENumber):self-instance-method" class="signature"><strong>#map_with_index!</strong>(& : Float64, Int32 -> Number) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#map_with_loc(&:Float64,Location-%3ENumber):self-instance-method" class="signature"><strong>#map_with_loc</strong>(& : Float64, Location -> Number) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#map_with_loc!(&:Float64,Location-%3ENumber):self-instance-method" class="signature"><strong>#map_with_loc!</strong>(& : Float64, Location -> Number) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#mask(&:Float64-%3EBool):self-instance-method" class="signature"><strong>#mask</strong>(& : Float64 -> Bool) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a grid mask.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#mask(value:Number,delta:Number):self-instance-method" class="signature"><strong>#mask</strong>(value : Number, delta : Number) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a grid mask.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#mask(pattern):self-instance-method" class="signature"><strong>#mask</strong>(pattern) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a grid mask.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#mask!(pattern):self-instance-method" class="signature"><strong>#mask!</strong>(pattern) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Masks a grid by <em>pattern</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#mask!(value:Number,delta:Number):self-instance-method" class="signature"><strong>#mask!</strong>(value : Number, delta : Number) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Masks a grid by <em>value</em>+/-<em>delta</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#mask!(&:Float64-%3EBool):self-instance-method" class="signature"><strong>#mask!</strong>(& : Float64 -> Bool) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Masks a grid by the passed block.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#mask_by_coords(&:Vector-%3EBool):self-instance-method" class="signature"><strong>#mask_by_coords</strong>(& : Vector -> Bool) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a grid mask.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#mask_by_coords!(&:Vector-%3EBool):self-instance-method" class="signature"><strong>#mask_by_coords!</strong>(& : Vector -> Bool) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Masks a grid by coordinates.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#mask_by_index(&:Int32-%3EBool):self-instance-method" class="signature"><strong>#mask_by_index</strong>(& : Int32 -> Bool) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a grid mask.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#mask_by_index!(&:Int32-%3EBool):self-instance-method" class="signature"><strong>#mask_by_index!</strong>(& : Int32 -> Bool) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Masks a grid by index.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#mask_by_loc(&:Location-%3EBool):self-instance-method" class="signature"><strong>#mask_by_loc</strong>(& : Location -> Bool) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a grid mask.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#mask_by_loc!(&:Location-%3EBool):self-instance-method" class="signature"><strong>#mask_by_loc!</strong>(& : Location -> Bool) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Masks a grid by location.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#mean(axis:Int):Array(Float64)-instance-method" class="signature"><strong>#mean</strong>(axis : Int) : Array(Float64)</a>
+        
+          <div class="summary"><p>Returns the arithmetic mean along <em>axis</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#mean:Float64-instance-method" class="signature"><strong>#mean</strong> : Float64</a>
+        
+          <div class="summary"><p>Returns the arithmetic mean of the grid elements.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#mean_with_coords(axis:Int):Array(Tuple(Float64,Float64))-instance-method" class="signature"><strong>#mean_with_coords</strong>(axis : Int) : Array(Tuple(Float64, Float64))</a>
+        
+          <div class="summary"><p>Returns the arithmetic mean along <em>axis</em> with its coordinates.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#ni:Int32-instance-method" class="signature"><strong>#ni</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#nj:Int32-instance-method" class="signature"><strong>#nj</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#nk:Int32-instance-method" class="signature"><strong>#nk</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#origin(*args,**options)-instance-method" class="signature"><strong>#origin</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#origin(*args,**options,&)-instance-method" class="signature"><strong>#origin</strong>(*args, **options, &)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#resolution:Tuple(Float64,Float64,Float64)-instance-method" class="signature"><strong>#resolution</strong> : Tuple(Float64, Float64, Float64)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#size:Int32-instance-method" class="signature"><strong>#size</strong> : Int32</a>
+        
+          <div class="summary"><p>Returns the number of elements in this container.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#step(di:Int,dj:Int,dk:Int):self-instance-method" class="signature"><strong>#step</strong>(di : Int, dj : Int, dk : Int) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#step(n:Int):self-instance-method" class="signature"><strong>#step</strong>(n : Int) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_a:Array(Float64)-instance-method" class="signature"><strong>#to_a</strong> : Array(Float64)</a>
+        
+          <div class="summary"><p>Returns an <code><a href="../../Array.html">Array</a></code> with all the elements in the collection.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_chgcar(*args,**options):String-instance-method" class="signature"><strong>#to_chgcar</strong>(*args, **options) : String</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_chgcar(output:::IO%7CPath%7CString,*args,**options):Nil-instance-method" class="signature"><strong>#to_chgcar</strong>(output : ::IO | Path | String, *args, **options) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_cube(output:::IO%7CPath%7CString,*args,**options):Nil-instance-method" class="signature"><strong>#to_cube</strong>(output : ::IO | Path | String, *args, **options) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_cube(*args,**options):String-instance-method" class="signature"><strong>#to_cube</strong>(*args, **options) : String</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_dx(*args,**options):String-instance-method" class="signature"><strong>#to_dx</strong>(*args, **options) : String</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_dx(output:::IO%7CPath%7CString,*args,**options):Nil-instance-method" class="signature"><strong>#to_dx</strong>(output : ::IO | Path | String, *args, **options) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_locpot(output:::IO%7CPath%7CString,*args,**options):Nil-instance-method" class="signature"><strong>#to_locpot</strong>(output : ::IO | Path | String, *args, **options) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_locpot(*args,**options):String-instance-method" class="signature"><strong>#to_locpot</strong>(*args, **options) : String</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_unsafe:Pointer(Float64)-instance-method" class="signature"><strong>#to_unsafe</strong> : Pointer(Float64)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#unsafe_fetch(loc:Location):Float64-instance-method" class="signature"><strong>#unsafe_fetch</strong>(loc : Location) : Float64</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#unsafe_fetch(i:Int):Float64-instance-method" class="signature"><strong>#unsafe_fetch</strong>(i : Int) : Float64</a>
+        
+          <div class="summary"><p>Returns the element at the given <em>index</em>, without doing any bounds check.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#volume(*args,**options)-instance-method" class="signature"><strong>#volume</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#volume(*args,**options,&)-instance-method" class="signature"><strong>#volume</strong>(*args, **options, &)</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+<div class="methods-inherited">
+  
+    
+
+  <h3>Instance methods inherited from module <code><a href="../../Indexable.html">Indexable(Float64)</a></code></h3>
+  
+  
+    <a href="../../Indexable.html#index!(ofobject,offset:Int=0):Int-instance-method" class="tooltip">
+      <span>index!(of object, offset : Int = <span class="n">0</span>) : Int<br/>index!(offset : Int = <span class="n">0</span>, &block : T -> Bool) : Int</span>
+    index!</a>
+    
+  
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="[](ni:Int,nj:Int,nk:Int):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>[]</strong>(ni : <a href="../../Int.html">Int</a>, nj : <a href="../../Int.html">Int</a>, nk : <a href="../../Int.html">Int</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#[](ni:Int,nj:Int,nk:Int):self-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="atom_distance(structure:Structure,dim:Dimensions,bounds:Bounds?=nil):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>atom_distance</strong>(structure : <a href="../../Chem/Structure.html">Structure</a>, dim : <a href="../../Chem/Spatial/Grid/Dimensions.html">Dimensions</a>, bounds : <a href="../../Chem/Spatial/Bounds.html">Bounds</a>? = <span class="n">nil</span>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#atom_distance(structure:Structure,dim:Dimensions,bounds:Bounds?=nil):self-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="atom_distance_like(other:self|Info,structure:Structure):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>atom_distance_like</strong>(other : <span class="k">self</span> | <a href="../../Chem/Spatial/Grid/Info.html">Info</a>, structure : <a href="../../Chem/Structure.html">Structure</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#atom_distance_like(other:self%7CInfo,structure:Structure):self-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a grid filled with the distances to the nearest atom. It will have the
+same bounds and points as <em>other</em>.</p>
+
+<pre><code class="language-crystal">structure <span class="o">=</span> <span class="t">Structure</span>.read <span class="s">&quot;path/to/file&quot;</span>
+info <span class="o">=</span> <span class="t">Grid</span><span class="t">::</span><span class="t">Info</span>.<span class="k">new</span> <span class="t">Bounds</span>[<span class="n">1.5</span>, <span class="n">2.135</span>, <span class="n">6.12</span>], {<span class="n">10</span>, <span class="n">10</span>, <span class="n">10</span>}
+grid <span class="o">=</span> <span class="t">Grid</span>.atom_distance structure, info.dim, info.bounds
+<span class="t">Grid</span>.atom_distance_like(info, structure) <span class="o">==</span> grid <span class="c"># =&gt; true</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="build(dim:Dimensions,bounds:Bounds,&block:Pointer(Float64),Int32->):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>build</strong>(dim : <a href="../../Chem/Spatial/Grid/Dimensions.html">Dimensions</a>, bounds : <a href="../../Chem/Spatial/Bounds.html">Bounds</a>, &block : Pointer(Float64), Int32 -> ) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#build(dim:Dimensions,bounds:Bounds,&block:Pointer(Float64),Int32-%3E):self-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="build(info:Info,&:Pointer(Float64),Int32->):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>build</strong>(info : <a href="../../Chem/Spatial/Grid/Info.html">Info</a>, & : Pointer(Float64), Int32 -> ) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#build(info:Info,&:Pointer(Float64),Int32-%3E):self-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Creates a new <code><a href="../../Chem/Spatial/Grid.html">Grid</a></code> with <em>info</em> and yields a buffer to be filled.</p>
+
+<p>This method is <strong>unsafe</strong>, but it is usually used to initialize the buffer in a
+linear fashion, e.g., reading values from a file.</p>
+
+<pre><code class="language-crystal"><span class="t">Grid</span>.build(<span class="t">Grid</span>.info(<span class="s">&quot;/path/to/file&quot;</span>)) <span class="k">do</span> <span class="o">|</span>buffer, size<span class="o">|</span>
+  size.times <span class="k">do</span> <span class="o">|</span>i<span class="o">|</span>
+    buffer[i] <span class="o">=</span> read_value
+  <span class="k">end</span>
+<span class="k">end</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="empty_like(other:self|Info):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>empty_like</strong>(other : <span class="k">self</span> | <a href="../../Chem/Spatial/Grid/Info.html">Info</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#empty_like(other:self%7CInfo):self-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a zero-filled grid with the same bounds and points as <em>other</em>.</p>
+
+<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.from_dx <span class="s">&quot;/path/to/grid&quot;</span>
+other <span class="o">=</span> <span class="t">Grid</span>.empty_like grid
+other.bounds <span class="o">==</span> grid.bounds <span class="c"># =&gt; true</span>
+other.dim <span class="o">==</span> grid.dim       <span class="c"># =&gt; true</span>
+other.to_a.minmax           <span class="c"># =&gt; {0.0, 0.0}</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="fill_like(other:self|Info,value:Number):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>fill_like</strong>(other : <span class="k">self</span> | <a href="../../Chem/Spatial/Grid/Info.html">Info</a>, value : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#fill_like(other:self%7CInfo,value:Number):self-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a grid with the same bounds and points as <em>other</em> filled with <em>value</em>.</p>
+
+<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.from_dx <span class="s">&quot;/path/to/grid&quot;</span>
+other <span class="o">=</span> <span class="t">Grid</span>.fill_like grid, <span class="n">2345.123</span>
+other.bounds <span class="o">==</span> grid.bounds <span class="c"># =&gt; true</span>
+other.dim <span class="o">==</span> grid.dim       <span class="c"># =&gt; true</span>
+other.to_a.minmax           <span class="c"># =&gt; {2345.123, 2345.123}</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="from_chgcar(input:::IO|Path|String,*args,**options):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>from_chgcar</strong>(input : ::IO | Path | String, *args, **options) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#from_chgcar(input:::IO%7CPath%7CString,*args,**options):self-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="from_cube(input:::IO|Path|String,*args,**options):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>from_cube</strong>(input : ::IO | Path | String, *args, **options) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#from_cube(input:::IO%7CPath%7CString,*args,**options):self-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="from_dx(input:::IO|Path|String,*args,**options):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>from_dx</strong>(input : ::IO | Path | String, *args, **options) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#from_dx(input:::IO%7CPath%7CString,*args,**options):self-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="from_locpot(input:::IO|Path|String,*args,**options):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>from_locpot</strong>(input : ::IO | Path | String, *args, **options) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#from_locpot(input:::IO%7CPath%7CString,*args,**options):self-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(dim:Dimensions,bounds:Bounds,&block:Location->Number)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(dim : <a href="../../Chem/Spatial/Grid/Dimensions.html">Dimensions</a>, bounds : <a href="../../Chem/Spatial/Bounds.html">Bounds</a>, &block : <a href="../../Chem/Spatial/Grid/Location.html">Location</a> -> <a href="../../Number.html">Number</a>)
+
+        <a class="method-permalink" href="#new(dim:Dimensions,bounds:Bounds,&block:Location-%3ENumber)-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(dim:Dimensions,bounds:Bounds)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(dim : <a href="../../Chem/Spatial/Grid/Dimensions.html">Dimensions</a>, bounds : <a href="../../Chem/Spatial/Bounds.html">Bounds</a>)
+
+        <a class="method-permalink" href="#new(dim:Dimensions,bounds:Bounds)-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(dim:Dimensions,bounds:Bounds,initial_value:Float64)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(dim : <a href="../../Chem/Spatial/Grid/Dimensions.html">Dimensions</a>, bounds : <a href="../../Chem/Spatial/Bounds.html">Bounds</a>, initial_value : Float64)
+
+        <a class="method-permalink" href="#new(dim:Dimensions,bounds:Bounds,initial_value:Float64)-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="vdw_mask(structure:Structure,dim:Dimensions,bounds:Bounds?=nil,delta:Float64=0.02):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>vdw_mask</strong>(structure : <a href="../../Chem/Structure.html">Structure</a>, dim : <a href="../../Chem/Spatial/Grid/Dimensions.html">Dimensions</a>, bounds : <a href="../../Chem/Spatial/Bounds.html">Bounds</a>? = <span class="n">nil</span>, delta : Float64 = <span class="n">0.02</span>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#vdw_mask(structure:Structure,dim:Dimensions,bounds:Bounds?=nil,delta:Float64=0.02):self-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p><span class="flag orange">TODO</span>  add more tests</p>
+
+<p><span class="flag yellow">FIXME</span>  check delta calculation (grid.resolution.min / 2 shouldn't be enough?)</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="vdw_mask_like(other:self|Info,structure:Structure,delta:Float64=0.02):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>vdw_mask_like</strong>(other : <span class="k">self</span> | <a href="../../Chem/Spatial/Grid/Info.html">Info</a>, structure : <a href="../../Chem/Structure.html">Structure</a>, delta : Float64 = <span class="n">0.02</span>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#vdw_mask_like(other:self%7CInfo,structure:Structure,delta:Float64=0.02):self-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a grid mask with the points at the vdW spheres set to 1. It will have the
+same bounds and points as <em>other</em>.</p>
+
+<pre><code class="language-crystal">structure <span class="o">=</span> <span class="t">Structure</span>.read <span class="s">&quot;path/to/file&quot;</span>
+info <span class="o">=</span> <span class="t">Grid</span><span class="t">::</span><span class="t">Info</span>.<span class="k">new</span> <span class="t">Bounds</span>[<span class="n">5.213</span>, <span class="n">6.823</span>, <span class="n">10.352</span>], {<span class="n">20</span>, <span class="n">25</span>, <span class="n">40</span>}
+grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, info.dim, info.bounds
+<span class="t">Grid</span>.vdw_mask_like(info, structure) <span class="o">==</span> grid <span class="c"># =&gt; true</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
+
+
+  <h2>
+    <a id="class-method-detail" class="anchor" href="#class-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="info(input:::IO|Path|String,format:IO::FileFormat):Info-class-method">
+      <div class="signature">
+        
+        def self.<strong>info</strong>(input : ::IO | Path | String, format : <a href="../../Chem/IO/FileFormat.html">IO::FileFormat</a>) : <a href="../../Chem/Spatial/Grid/Info.html">Info</a>
+
+        <a class="method-permalink" href="#info(input:::IO%7CPath%7CString,format:IO::FileFormat):Info-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="info(path:Path|String):Info-class-method">
+      <div class="signature">
+        
+        def self.<strong>info</strong>(path : Path | String) : <a href="../../Chem/Spatial/Grid/Info.html">Info</a>
+
+        <a class="method-permalink" href="#info(path:Path%7CString):Info-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
+
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="*(rhs:self):self-instance-method">
+      <div class="signature">
+        
+        def <strong>*</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#*(rhs:self):self-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="*(rhs:Number):self-instance-method">
+      <div class="signature">
+        
+        def <strong>*</strong>(rhs : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#*(rhs:Number):self-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="+(rhs:self):self-instance-method">
+      <div class="signature">
+        
+        def <strong>+</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#+(rhs:self):self-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="+(rhs:Number):self-instance-method">
+      <div class="signature">
+        
+        def <strong>+</strong>(rhs : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#+(rhs:Number):self-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="-(rhs:self):self-instance-method">
+      <div class="signature">
+        
+        def <strong>-</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#-(rhs:self):self-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="-(rhs:Number):self-instance-method">
+      <div class="signature">
+        
+        def <strong>-</strong>(rhs : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#-(rhs:Number):self-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="/(rhs:self):self-instance-method">
+      <div class="signature">
+        
+        def <strong>/</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#/(rhs:self):self-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="/(rhs:Number):self-instance-method">
+      <div class="signature">
+        
+        def <strong>/</strong>(rhs : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#/(rhs:Number):self-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="==(rhs:self):Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>==</strong>(rhs : <span class="k">self</span>) : Bool
+
+        <a class="method-permalink" href="#==(rhs:self):Bool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from class Reference
+            </div>
+          
+          <p>Returns <code>true</code> if this reference is the same as <em>other</em>. Invokes <code>same?</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[](*args,**options):Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>[]</strong>(*args, **options) : Float64
+
+        <a class="method-permalink" href="#[](*args,**options):Float64-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[]=(i:Int,j:Int,k:Int,value:Float64):Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>[]=</strong>(i : <a href="../../Int.html">Int</a>, j : <a href="../../Int.html">Int</a>, k : <a href="../../Int.html">Int</a>, value : Float64) : Float64
+
+        <a class="method-permalink" href="#[]=(i:Int,j:Int,k:Int,value:Float64):Float64-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[]=(i:Int,value:Float64):Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>[]=</strong>(i : <a href="../../Int.html">Int</a>, value : Float64) : Float64
+
+        <a class="method-permalink" href="#[]=(i:Int,value:Float64):Float64-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[]=(loc:Location,value:Float64):Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>[]=</strong>(loc : <a href="../../Chem/Spatial/Grid/Location.html">Location</a>, value : Float64) : Float64
+
+        <a class="method-permalink" href="#[]=(loc:Location,value:Float64):Float64-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[]?(i:Int,j:Int,k:Int):Float64?-instance-method">
+      <div class="signature">
+        
+        def <strong>[]?</strong>(i : <a href="../../Int.html">Int</a>, j : <a href="../../Int.html">Int</a>, k : <a href="../../Int.html">Int</a>) : Float64?
+
+        <a class="method-permalink" href="#[]?(i:Int,j:Int,k:Int):Float64?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[]?(vec:Vector):Float64?-instance-method">
+      <div class="signature">
+        
+        def <strong>[]?</strong>(vec : <a href="../../Chem/Spatial/Vector.html">Vector</a>) : Float64?
+
+        <a class="method-permalink" href="#[]?(vec:Vector):Float64?-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p><span class="flag orange">TODO</span>  add interpolation (check ARBInterp)</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[]?(loc:Location):Float64?-instance-method">
+      <div class="signature">
+        
+        def <strong>[]?</strong>(loc : <a href="../../Chem/Spatial/Grid/Location.html">Location</a>) : Float64?
+
+        <a class="method-permalink" href="#[]?(loc:Location):Float64?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bounds:Bounds-instance-method">
+      <div class="signature">
+        
+        def <strong>bounds</strong> : <a href="../../Chem/Spatial/Bounds.html">Bounds</a>
+
+        <a class="method-permalink" href="#bounds:Bounds-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="coords_at(*args,**options):Vector-instance-method">
+      <div class="signature">
+        
+        def <strong>coords_at</strong>(*args, **options) : <a href="../../Chem/Spatial/Vector.html">Vector</a>
+
+        <a class="method-permalink" href="#coords_at(*args,**options):Vector-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="coords_at?(loc:Location):Vector?-instance-method">
+      <div class="signature">
+        
+        def <strong>coords_at?</strong>(loc : <a href="../../Chem/Spatial/Grid/Location.html">Location</a>) : <a href="../../Chem/Spatial/Vector.html">Vector</a>?
+
+        <a class="method-permalink" href="#coords_at?(loc:Location):Vector?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="coords_at?(i:Int,j:Int,k:Int):Vector?-instance-method">
+      <div class="signature">
+        
+        def <strong>coords_at?</strong>(i : <a href="../../Int.html">Int</a>, j : <a href="../../Int.html">Int</a>, k : <a href="../../Int.html">Int</a>) : <a href="../../Chem/Spatial/Vector.html">Vector</a>?
+
+        <a class="method-permalink" href="#coords_at?(i:Int,j:Int,k:Int):Vector?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="coords_at?(i:Int):Vector?-instance-method">
+      <div class="signature">
+        
+        def <strong>coords_at?</strong>(i : <a href="../../Int.html">Int</a>) : <a href="../../Chem/Spatial/Vector.html">Vector</a>?
+
+        <a class="method-permalink" href="#coords_at?(i:Int):Vector?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dim:Dimensions-instance-method">
+      <div class="signature">
+        
+        def <strong>dim</strong> : <a href="../../Chem/Spatial/Grid/Dimensions.html">Dimensions</a>
+
+        <a class="method-permalink" href="#dim:Dimensions-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dup:self-instance-method">
+      <div class="signature">
+        
+        def <strong>dup</strong> : <span class="k">self</span>
+
+        <a class="method-permalink" href="#dup:self-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from class Reference
+            </div>
+          
+          <p>Returns a shallow copy of this object.</p>
+
+<p>This allocates a new object and copies the contents of
+<code>self</code> into it.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="each_axial_slice(axis:Int,reuse:Bool|Array(Float64)=false,&:Array(Float64)->):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>each_axial_slice</strong>(axis : <a href="../../Int.html">Int</a>, reuse : Bool | <a href="../../Array.html">Array</a>(Float64) = <span class="n">false</span>, & : <a href="../../Array.html">Array</a>(Float64) -> ) : Nil
+
+        <a class="method-permalink" href="#each_axial_slice(axis:Int,reuse:Bool%7CArray(Float64)=false,&:Array(Float64)-%3E):Nil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Iterates over slices along <em>axis</em>. Axis is specified as an
+integer: 0-2 refer to the direction of the first, second or third
+basis vector, respectively.</p>
+
+<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">3</span>, <span class="n">2</span>}, <span class="t">Bounds</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">6</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">2</span> <span class="o">+</span> k }
+grid.to_a <span class="c"># =&gt; [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]</span>
+slices <span class="o">=</span> <span class="o">[]</span> <span class="k">of</span> <span class="t">Array</span>(<span class="t">Float64</span>)
+grid.each_axial_slice(axis: <span class="n">1</span>) { <span class="o">|</span>slice<span class="o">|</span> slices <span class="o">&lt;&lt;</span> slice }
+slices <span class="c"># =&gt; [[0, 1, 6, 7], [2, 3, 8, 9], [4, 5, 10, 11]]</span></code></pre>
+
+<p>When using read-only slices, one can specify the <em>reuse</em> option to
+prevent many memory allocations:</p>
+
+<ul><li>If <em>reuse</em> is an <code><a href="../../Array.html">Array</a></code>, this array will be reused.</li><li>If <em>reuse</em> is true, the method will create a new array and reuse
+  it.</li><li>If <em>reuse</em> is false (default), a new array is created and
+  yielded on each iteration.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="each_coords(&:Vector->):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>each_coords</strong>(& : <a href="../../Chem/Spatial/Vector.html">Vector</a> -> ) : Nil
+
+        <a class="method-permalink" href="#each_coords(&:Vector-%3E):Nil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="each_loc(vec:Vector,cutoff:Number,&:Location,Float64->):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>each_loc</strong>(vec : <a href="../../Chem/Spatial/Vector.html">Vector</a>, cutoff : <a href="../../Number.html">Number</a>, & : <a href="../../Chem/Spatial/Grid/Location.html">Location</a>, Float64 -> ) : Nil
+
+        <a class="method-permalink" href="#each_loc(vec:Vector,cutoff:Number,&:Location,Float64-%3E):Nil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="each_loc(&:Location->):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>each_loc</strong>(& : <a href="../../Chem/Spatial/Grid/Location.html">Location</a> -> ) : Nil
+
+        <a class="method-permalink" href="#each_loc(&:Location-%3E):Nil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="each_with_coords(&:Float64,Vector->):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>each_with_coords</strong>(& : Float64, <a href="../../Chem/Spatial/Vector.html">Vector</a> -> ) : Nil
+
+        <a class="method-permalink" href="#each_with_coords(&:Float64,Vector-%3E):Nil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="each_with_loc(&:Float64,Location->):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>each_with_loc</strong>(& : Float64, <a href="../../Chem/Spatial/Grid/Location.html">Location</a> -> ) : Nil
+
+        <a class="method-permalink" href="#each_with_loc(&:Float64,Location-%3E):Nil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="includes?(*args,**options,&)-instance-method">
+      <div class="signature">
+        
+        def <strong>includes?</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#includes?(*args,**options,&)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="includes?(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>includes?</strong>(*args, **options)
+
+        <a class="method-permalink" href="#includes?(*args,**options)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="index(vec:Vector):Int32?-instance-method">
+      <div class="signature">
+        
+        def <strong>index</strong>(vec : <a href="../../Chem/Spatial/Vector.html">Vector</a>) : Int32?
+
+        <a class="method-permalink" href="#index(vec:Vector):Int32?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="index(loc:Location):Int32?-instance-method">
+      <div class="signature">
+        
+        def <strong>index</strong>(loc : <a href="../../Chem/Spatial/Grid/Location.html">Location</a>) : Int32?
+
+        <a class="method-permalink" href="#index(loc:Location):Int32?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="index!(*args,**options):Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>index!</strong>(*args, **options) : Int32
+
+        <a class="method-permalink" href="#index!(*args,**options):Int32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="loc_at(*args,**options):Location-instance-method">
+      <div class="signature">
+        
+        def <strong>loc_at</strong>(*args, **options) : <a href="../../Chem/Spatial/Grid/Location.html">Location</a>
+
+        <a class="method-permalink" href="#loc_at(*args,**options):Location-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="loc_at?(vec:Vector):Location?-instance-method">
+      <div class="signature">
+        
+        def <strong>loc_at?</strong>(vec : <a href="../../Chem/Spatial/Vector.html">Vector</a>) : <a href="../../Chem/Spatial/Grid/Location.html">Location</a>?
+
+        <a class="method-permalink" href="#loc_at?(vec:Vector):Location?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="loc_at?(i:Int):Location?-instance-method">
+      <div class="signature">
+        
+        def <strong>loc_at?</strong>(i : <a href="../../Int.html">Int</a>) : <a href="../../Chem/Spatial/Grid/Location.html">Location</a>?
+
+        <a class="method-permalink" href="#loc_at?(i:Int):Location?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="map(&:Float64->Float64):self-instance-method">
+      <div class="signature">
+        
+        def <strong>map</strong>(& : Float64 -> Float64) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#map(&:Float64-%3EFloat64):self-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from module Enumerable(Float64)
+            </div>
+          
+          <p>Returns an <code><a href="../../Array.html">Array</a></code> with the results of running the block against each element of the collection.</p>
+
+<pre><code class="language-crystal">[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>].map { <span class="o">|</span>i<span class="o">|</span> i <span class="o">*</span> <span class="n">10</span> } <span class="c"># =&gt; [10, 20, 30]</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="map!(&:Float64->Float64):self-instance-method">
+      <div class="signature">
+        
+        def <strong>map!</strong>(& : Float64 -> Float64) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#map!(&:Float64-%3EFloat64):self-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="map_with_coords(&:Float64,Vector->Number):self-instance-method">
+      <div class="signature">
+        
+        def <strong>map_with_coords</strong>(& : Float64, <a href="../../Chem/Spatial/Vector.html">Vector</a> -> <a href="../../Number.html">Number</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#map_with_coords(&:Float64,Vector-%3ENumber):self-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="map_with_coords!(&:Float64,Vector->Number):self-instance-method">
+      <div class="signature">
+        
+        def <strong>map_with_coords!</strong>(& : Float64, <a href="../../Chem/Spatial/Vector.html">Vector</a> -> <a href="../../Number.html">Number</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#map_with_coords!(&:Float64,Vector-%3ENumber):self-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="map_with_index(&:Float64,Int32->Number):self-instance-method">
+      <div class="signature">
+        
+        def <strong>map_with_index</strong>(& : Float64, Int32 -> <a href="../../Number.html">Number</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#map_with_index(&:Float64,Int32-%3ENumber):self-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from module Enumerable(Float64)
+            </div>
+          
+          <p>Like <code><a href="../../Chem/Spatial/Grid.html#map(&:Float64-%3EFloat64):self-instance-method">#map</a></code>, but the block gets passed both the element and its index.</p>
+
+<pre><code class="language-crystal">[<span class="s">&quot;Alice&quot;</span>, <span class="s">&quot;Bob&quot;</span>].map_with_index { <span class="o">|</span>name, i<span class="o">|</span> <span class="s">&quot;User #</span><span class="i">#{</span>i<span class="i">}</span><span class="s">: </span><span class="i">#{</span>name<span class="i">}</span><span class="s">&quot;</span> }
+<span class="c"># =&gt; [&quot;User #0: Alice&quot;, &quot;User #1: Bob&quot;]</span></code></pre>
+
+<p>Accepts an optional <em>offset</em> parameter, which tells it to start counting
+from there.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="map_with_index!(&:Float64,Int32->Number):self-instance-method">
+      <div class="signature">
+        
+        def <strong>map_with_index!</strong>(& : Float64, Int32 -> <a href="../../Number.html">Number</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#map_with_index!(&:Float64,Int32-%3ENumber):self-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="map_with_loc(&:Float64,Location->Number):self-instance-method">
+      <div class="signature">
+        
+        def <strong>map_with_loc</strong>(& : Float64, <a href="../../Chem/Spatial/Grid/Location.html">Location</a> -> <a href="../../Number.html">Number</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#map_with_loc(&:Float64,Location-%3ENumber):self-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="map_with_loc!(&:Float64,Location->Number):self-instance-method">
+      <div class="signature">
+        
+        def <strong>map_with_loc!</strong>(& : Float64, <a href="../../Chem/Spatial/Grid/Location.html">Location</a> -> <a href="../../Number.html">Number</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#map_with_loc!(&:Float64,Location-%3ENumber):self-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="mask(&:Float64->Bool):self-instance-method">
+      <div class="signature">
+        
+        def <strong>mask</strong>(& : Float64 -> Bool) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#mask(&:Float64-%3EBool):self-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a grid mask. Elements for which the passed block returns <code>true</code> are set to
+1, otherwise 0.</p>
+
+<p>Grid masks are very useful to deal with multiple grids, and when points are to be
+selected based on one grid only.</p>
+
+<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">2</span>, <span class="n">2</span>}, <span class="t">Bounds</span>[<span class="n">10</span>, <span class="n">10</span>, <span class="n">10</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">+</span> j <span class="o">+</span> k }
+grid.to_a              <span class="c"># =&gt; [0, 1, 1, 2, 1, 2, 2, 3]</span>
+grid.mask(<span class="o">&amp;</span>.<span class="o">&gt;</span>(<span class="n">1</span>)).to_a <span class="c"># =&gt; [0, 0, 0, 1, 0, 1, 1, 1]</span>
+grid.to_a              <span class="c"># =&gt; [0, 1, 1, 2, 1, 2, 2, 3]</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="mask(value:Number,delta:Number):self-instance-method">
+      <div class="signature">
+        
+        def <strong>mask</strong>(value : <a href="../../Number.html">Number</a>, delta : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#mask(value:Number,delta:Number):self-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a grid mask. Elements for which <code>(value - ele).abs <= delta</code> returns
+<code>true</code> are set to 1, otherwise 0.</p>
+
+<p>Grid masks are very useful to deal with multiple grids, and when points are to be
+selected based on one grid only.</p>
+
+<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">2</span>, <span class="n">3</span>}, <span class="t">Bounds</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> (i <span class="o">+</span> <span class="n">1</span>) <span class="o">*</span> (j <span class="o">+</span> <span class="n">1</span>) <span class="o">*</span> (k <span class="o">+</span> <span class="n">1</span>) <span class="o">/</span> <span class="n">5</span> }
+grid.to_a              <span class="c"># =&gt; [0.2, 0.4, 0.6, 0.4, 0.8, 1.2, 0.4, 0.8, 1.2, 0.8, 1.6, 2.4]</span>
+grid.mask(<span class="n">1</span>, <span class="n">0.5</span>).to_a <span class="c"># =&gt; [0, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 0]</span>
+grid.to_a              <span class="c"># =&gt; [0.2, 0.4, 0.6, 0.4, 0.8, 1.2, 0.4, 0.8, 1.2, 0.8, 1.6, 2.4]</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="mask(pattern):self-instance-method">
+      <div class="signature">
+        
+        def <strong>mask</strong>(pattern) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#mask(pattern):self-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a grid mask. Elements for which <code>pattern === element</code> returns <code>true</code> are
+set to 1, otherwise 0.</p>
+
+<p>Grid masks are very useful to deal with multiple grids, and when points are to be
+selected based on one grid only.</p>
+
+<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">2</span>, <span class="n">3</span>}, <span class="t">Bounds</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> (i <span class="o">+</span> <span class="n">1</span>) <span class="o">*</span> (j <span class="o">+</span> <span class="n">1</span>) <span class="o">*</span> (k <span class="o">+</span> <span class="n">1</span>) }
+grid.to_a              <span class="c"># =&gt; [1, 2, 3, 2, 4, 6, 2, 4, 6, 4, 8, 12]</span>
+grid.mask(<span class="n">2</span>..<span class="n">4.5</span>).to_a <span class="c"># =&gt; [0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0]</span>
+grid.to_a              <span class="c"># =&gt; [1, 2, 3, 2, 4, 6, 2, 4, 6, 4, 8, 12]</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="mask!(pattern):self-instance-method">
+      <div class="signature">
+        
+        def <strong>mask!</strong>(pattern) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#mask!(pattern):self-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Masks a grid by <em>pattern</em>. Elements for which <code>pattern === element</code> returns
+<code>false</code> are set to 0.</p>
+
+<p>Optimized version of creating a mask and applying it to the same grid, but avoids
+creating intermediate grids. This is equivalent to <code>grid = grid *
+grid.mask(pattern)</code></p>
+
+<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">2</span>, <span class="n">3</span>}, <span class="t">Bounds</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> (i <span class="o">+</span> <span class="n">1</span>) <span class="o">*</span> (j <span class="o">+</span> <span class="n">1</span>) <span class="o">*</span> (k <span class="o">+</span> <span class="n">1</span>) }
+grid.to_a <span class="c"># =&gt; [1, 2, 3, 2, 4, 6, 2, 4, 6, 4, 8, 12]</span>
+grid.mask! <span class="n">2</span>..<span class="n">4.5</span>
+grid.to_a <span class="c"># =&gt; [0, 2, 3, 2, 4, 0, 2, 4, 0, 4, 0, 0]</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="mask!(value:Number,delta:Number):self-instance-method">
+      <div class="signature">
+        
+        def <strong>mask!</strong>(value : <a href="../../Number.html">Number</a>, delta : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#mask!(value:Number,delta:Number):self-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Masks a grid by <em>value</em>+/-<em>delta</em>. Elements for which <code>(value - ele).abs > delta</code>
+returns <code>true</code> are set to 0.</p>
+
+<p>Optimized version of creating a mask and applying it to the same grid, but avoids
+creating intermediate grids. This is equivalent to <code>grid = grid * grid.mask(value,
+delta)</code></p>
+
+<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">2</span>, <span class="n">3</span>}, <span class="t">Bounds</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> (i <span class="o">+</span> j <span class="o">+</span> k) <span class="o">/</span> <span class="n">5</span> }
+grid.to_a <span class="c"># =&gt; [0.0, 0.2, 0.4, 0.2, 0.4, 0.6, 0.2, 0.4, 0.6, 0.4, 0.6, 0.8]</span>
+grid.mask! <span class="n">0.5</span>, <span class="n">0.1</span>
+grid.to_a <span class="c"># =&gt; [0.0, 0.0, 0.4, 0.0, 0.4, 0.6, 0.0, 0.4, 0.6, 0.4, 0.6, 0.0]</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="mask!(&:Float64->Bool):self-instance-method">
+      <div class="signature">
+        
+        def <strong>mask!</strong>(& : Float64 -> Bool) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#mask!(&:Float64-%3EBool):self-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Masks a grid by the passed block. Elements for which the passed block returns
+<code>false</code> are set to 0.</p>
+
+<p>Optimized version of creating a mask and applying it to the same grid, but avoids
+creating intermediate grids. This is equivalent to <code>grid = grid * grid.mask
+{ ... }</code>.</p>
+
+<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">2</span>, <span class="n">2</span>}, <span class="t">Bounds</span>[<span class="n">10</span>, <span class="n">10</span>, <span class="n">10</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">+</span> j <span class="o">+</span> k }
+grid.to_a <span class="c"># =&gt; [0, 1, 1, 2, 1, 2, 2, 3]</span>
+grid.mask! <span class="o">&amp;</span>.<span class="o">&gt;</span>(<span class="n">1</span>)
+grid.to_a <span class="c"># =&gt; [0, 0, 0, 2, 0, 2, 2, 3]</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="mask_by_coords(&:Vector->Bool):self-instance-method">
+      <div class="signature">
+        
+        def <strong>mask_by_coords</strong>(& : <a href="../../Chem/Spatial/Vector.html">Vector</a> -> Bool) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#mask_by_coords(&:Vector-%3EBool):self-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a grid mask. Coordinates for which the passed block returns <code>true</code> are set
+to 1, otherwise 0.</p>
+
+<p>Grid masks are very useful to deal with multiple grids, and when points are to be
+selected based on one grid only.</p>
+
+<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">2</span>, <span class="n">2</span>}, <span class="t">Bounds</span>[<span class="n">10</span>, <span class="n">10</span>, <span class="n">10</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">4</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">2</span> <span class="o">+</span> k }
+grid.to_a                           <span class="c"># =&gt; [0, 1, 2, 3, 4, 5, 6, 7]</span>
+grid.mask_by_coords(<span class="o">&amp;</span>.x.<span class="o">==</span>(<span class="n">0</span>)).to_a <span class="c"># =&gt; [1, 1, 1, 1, 0, 0, 0, 0]</span>
+grid.to_a                           <span class="c"># =&gt; [0, 1, 2, 3, 4, 5, 6, 7]</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="mask_by_coords!(&:Vector->Bool):self-instance-method">
+      <div class="signature">
+        
+        def <strong>mask_by_coords!</strong>(& : <a href="../../Chem/Spatial/Vector.html">Vector</a> -> Bool) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#mask_by_coords!(&:Vector-%3EBool):self-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Masks a grid by coordinates. Coordinates for which the passed block returns
+<code>false</code> are set to 0.</p>
+
+<p>Optimized version of creating a mask and applying it to the same grid, but avoids
+creating intermediate grids. This is equivalent to <code>grid = grid *
+grid.mask_by_coords { ... }</code></p>
+
+<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">2</span>, <span class="n">2</span>}, <span class="t">Bounds</span>[<span class="n">5</span>, <span class="n">5</span>, <span class="n">5</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">4</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">2</span> <span class="o">+</span> k }
+grid.to_a <span class="c"># =&gt; [0, 1, 2, 3, 4, 5, 6, 7]</span>
+grid.mask_by_coords! { <span class="o">|</span>vec<span class="o">|</span> vec.y <span class="o">==</span> <span class="n">5</span> }
+grid.to_a <span class="c"># =&gt; [0, 0, 2, 3, 0, 0, 6, 7]</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="mask_by_index(&:Int32->Bool):self-instance-method">
+      <div class="signature">
+        
+        def <strong>mask_by_index</strong>(& : Int32 -> Bool) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#mask_by_index(&:Int32-%3EBool):self-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a grid mask. Indexes for which the passed block returns <code>true</code> are set to
+1, otherwise 0.</p>
+
+<p>Grid masks are very useful to deal with multiple grids, and when points are to be
+selected based on one grid only.</p>
+
+<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">2</span>, <span class="n">2</span>}, <span class="t">Bounds</span>[<span class="n">10</span>, <span class="n">10</span>, <span class="n">10</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">4</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">2</span> <span class="o">+</span> k }
+grid.to_a                       <span class="c"># =&gt; [0, 1, 2, 3, 4, 5, 6, 7]</span>
+grid.mask_by_index(<span class="o">&amp;</span>.<span class="o">&gt;</span>(<span class="n">4</span>)).to_a <span class="c"># =&gt; [0, 0, 0, 0, 0, 1, 1, 1]</span>
+grid.to_a                       <span class="c"># =&gt; [0, 1, 2, 3, 4, 5, 6, 7]</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="mask_by_index!(&:Int32->Bool):self-instance-method">
+      <div class="signature">
+        
+        def <strong>mask_by_index!</strong>(& : Int32 -> Bool) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#mask_by_index!(&:Int32-%3EBool):self-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Masks a grid by index. Indexes for which the passed block returns <code>false</code> are set
+to 0.</p>
+
+<p>Optimized version of creating a mask and applying it to the same grid, but avoids
+creating intermediate grids. This is equivalent to <code>grid = grid *
+grid.mask_by_index { ... }</code></p>
+
+<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">2</span>, <span class="n">2</span>}, <span class="t">Bounds</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">4</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">2</span> <span class="o">+</span> k }
+grid.to_a <span class="c"># =&gt; [0, 1, 2, 3, 4, 5, 6, 7]</span>
+grid.mask_by_index! <span class="o">&amp;</span>.<span class="o">&lt;</span>(<span class="n">3</span>)
+grid.to_a <span class="c"># =&gt; [0, 1, 2, 0, 0, 0, 0, 0]</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="mask_by_loc(&:Location->Bool):self-instance-method">
+      <div class="signature">
+        
+        def <strong>mask_by_loc</strong>(& : <a href="../../Chem/Spatial/Grid/Location.html">Location</a> -> Bool) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#mask_by_loc(&:Location-%3EBool):self-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a grid mask. Locations for which the passed block returns <code>true</code> are set
+to 1, otherwise 0.</p>
+
+<p>Grid masks are very useful to deal with multiple grids, and when points are to be
+selected based on one grid only.</p>
+
+<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">2</span>, <span class="n">2</span>}, <span class="t">Bounds</span>[<span class="n">10</span>, <span class="n">10</span>, <span class="n">10</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">4</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">2</span> <span class="o">+</span> k }
+grid.to_a                                  <span class="c"># =&gt; [0, 1, 2, 3, 4, 5, 6, 7]</span>
+grid.mask_by_loc { <span class="o">|</span>i, j, k<span class="o">|</span> k <span class="o">==</span> <span class="n">1</span> }.to_a <span class="c"># =&gt; [0, 1, 0, 1, 0, 1, 0, 1]</span>
+grid.to_a                                  <span class="c"># =&gt; [0, 1, 2, 3, 4, 5, 6, 7]</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="mask_by_loc!(&:Location->Bool):self-instance-method">
+      <div class="signature">
+        
+        def <strong>mask_by_loc!</strong>(& : <a href="../../Chem/Spatial/Grid/Location.html">Location</a> -> Bool) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#mask_by_loc!(&:Location-%3EBool):self-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Masks a grid by location. Locations for which the passed block returns <code>false</code> are
+set to 0.</p>
+
+<p>Optimized version of creating a mask and applying it to the same grid, but avoids
+creating intermediate grids. This is equivalent to <code>grid = grid * grid.mask_by_loc
+{ ... }</code></p>
+
+<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">2</span>, <span class="n">2</span>}, <span class="t">Bounds</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">4</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">2</span> <span class="o">+</span> k }
+grid.to_a <span class="c"># =&gt; [0, 1, 2, 3, 4, 5, 6, 7]</span>
+grid.mask_by_loc! { <span class="o">|</span>(i, j, k)<span class="o">|</span> i <span class="o">==</span> <span class="n">1</span> }
+grid.to_a <span class="c"># =&gt; [0, 0, 0, 0, 4, 5, 6, 7]</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="mean(axis:Int):Array(Float64)-instance-method">
+      <div class="signature">
+        
+        def <strong>mean</strong>(axis : <a href="../../Int.html">Int</a>) : <a href="../../Array.html">Array</a>(Float64)
+
+        <a class="method-permalink" href="#mean(axis:Int):Array(Float64)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the arithmetic mean along <em>axis</em>. Axis is specified as an
+integer: 0-2 refer to the direction of the first, second or third
+basis vector, respectively.</p>
+
+<p>Raises IndexError is <em>axis</em> is out of bounds.</p>
+
+<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">3</span>, <span class="n">4</span>}, <span class="t">Bounds</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">12</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">4</span> <span class="o">+</span> k }
+grid.mean(axis: <span class="n">0</span>) <span class="c"># =&gt; [5.5, 17.5]</span>
+grid.mean(axis: <span class="n">1</span>) <span class="c"># =&gt; [7.5, 11.5, 15.5]</span>
+grid.mean(axis: <span class="n">2</span>) <span class="c"># =&gt; [10, 11, 12, 13]</span>
+grid.mean(axis: <span class="n">3</span>) <span class="c"># raises IndexError</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="mean:Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>mean</strong> : Float64
+
+        <a class="method-permalink" href="#mean:Float64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the arithmetic mean of the grid elements.</p>
+
+<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">3</span>, <span class="n">4</span>}, <span class="t">Bounds</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">12</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">4</span> <span class="o">+</span> k }
+grid.mean <span class="c"># =&gt; 11.5</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="mean_with_coords(axis:Int):Array(Tuple(Float64,Float64))-instance-method">
+      <div class="signature">
+        
+        def <strong>mean_with_coords</strong>(axis : <a href="../../Int.html">Int</a>) : <a href="../../Array.html">Array</a>(Tuple(Float64, Float64))
+
+        <a class="method-permalink" href="#mean_with_coords(axis:Int):Array(Tuple(Float64,Float64))-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the arithmetic mean along <em>axis</em> with its coordinates.
+Axis is specified as an integer: 0-2 refer to the direction of the
+first, second or third basis vector, respectively.</p>
+
+<p>Raises IndexError is <em>axis</em> is out of bounds.</p>
+
+<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">3</span>, <span class="n">5</span>}, <span class="t">Bounds</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">12</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">4</span> <span class="o">+</span> k }
+grid.mean(axis: <span class="n">1</span>) <span class="c"># =&gt; [{9.5, 0.0}, {14.5, 0.5}, {19.5, 1.0}]</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ni:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>ni</strong> : Int32
+
+        <a class="method-permalink" href="#ni:Int32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="nj:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>nj</strong> : Int32
+
+        <a class="method-permalink" href="#nj:Int32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="nk:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>nk</strong> : Int32
+
+        <a class="method-permalink" href="#nk:Int32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="origin(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>origin</strong>(*args, **options)
+
+        <a class="method-permalink" href="#origin(*args,**options)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="origin(*args,**options,&)-instance-method">
+      <div class="signature">
+        
+        def <strong>origin</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#origin(*args,**options,&)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="resolution:Tuple(Float64,Float64,Float64)-instance-method">
+      <div class="signature">
+        
+        def <strong>resolution</strong> : Tuple(Float64, Float64, Float64)
+
+        <a class="method-permalink" href="#resolution:Tuple(Float64,Float64,Float64)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="size:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>size</strong> : Int32
+
+        <a class="method-permalink" href="#size:Int32-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from module <a href="../../Indexable.html">Indexable(Float64)</a>
+            </div>
+          
+          <p>Returns the number of elements in this container.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="step(di:Int,dj:Int,dk:Int):self-instance-method">
+      <div class="signature">
+        
+        def <strong>step</strong>(di : <a href="../../Int.html">Int</a>, dj : <a href="../../Int.html">Int</a>, dk : <a href="../../Int.html">Int</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#step(di:Int,dj:Int,dk:Int):self-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="step(n:Int):self-instance-method">
+      <div class="signature">
+        
+        def <strong>step</strong>(n : <a href="../../Int.html">Int</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#step(n:Int):self-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_a:Array(Float64)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_a</strong> : <a href="../../Array.html">Array</a>(Float64)
+
+        <a class="method-permalink" href="#to_a:Array(Float64)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from module <a href="../../Indexable.html">Indexable(Float64)</a>
+            </div>
+          
+          <p>Returns an <code><a href="../../Array.html">Array</a></code> with all the elements in the collection.</p>
+
+<pre><code class="language-crystal">{<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>}.to_a <span class="c"># =&gt; [1, 2, 3]</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_chgcar(*args,**options):String-instance-method">
+      <div class="signature">
+        
+        def <strong>to_chgcar</strong>(*args, **options) : String
+
+        <a class="method-permalink" href="#to_chgcar(*args,**options):String-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_chgcar(output:::IO|Path|String,*args,**options):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>to_chgcar</strong>(output : ::IO | Path | String, *args, **options) : Nil
+
+        <a class="method-permalink" href="#to_chgcar(output:::IO%7CPath%7CString,*args,**options):Nil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_cube(output:::IO|Path|String,*args,**options):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>to_cube</strong>(output : ::IO | Path | String, *args, **options) : Nil
+
+        <a class="method-permalink" href="#to_cube(output:::IO%7CPath%7CString,*args,**options):Nil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_cube(*args,**options):String-instance-method">
+      <div class="signature">
+        
+        def <strong>to_cube</strong>(*args, **options) : String
+
+        <a class="method-permalink" href="#to_cube(*args,**options):String-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_dx(*args,**options):String-instance-method">
+      <div class="signature">
+        
+        def <strong>to_dx</strong>(*args, **options) : String
+
+        <a class="method-permalink" href="#to_dx(*args,**options):String-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_dx(output:::IO|Path|String,*args,**options):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>to_dx</strong>(output : ::IO | Path | String, *args, **options) : Nil
+
+        <a class="method-permalink" href="#to_dx(output:::IO%7CPath%7CString,*args,**options):Nil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_locpot(output:::IO|Path|String,*args,**options):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>to_locpot</strong>(output : ::IO | Path | String, *args, **options) : Nil
+
+        <a class="method-permalink" href="#to_locpot(output:::IO%7CPath%7CString,*args,**options):Nil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_locpot(*args,**options):String-instance-method">
+      <div class="signature">
+        
+        def <strong>to_locpot</strong>(*args, **options) : String
+
+        <a class="method-permalink" href="#to_locpot(*args,**options):String-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_unsafe:Pointer(Float64)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_unsafe</strong> : Pointer(Float64)
+
+        <a class="method-permalink" href="#to_unsafe:Pointer(Float64)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="unsafe_fetch(loc:Location):Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>unsafe_fetch</strong>(loc : <a href="../../Chem/Spatial/Grid/Location.html">Location</a>) : Float64
+
+        <a class="method-permalink" href="#unsafe_fetch(loc:Location):Float64-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="unsafe_fetch(i:Int):Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>unsafe_fetch</strong>(i : <a href="../../Int.html">Int</a>) : Float64
+
+        <a class="method-permalink" href="#unsafe_fetch(i:Int):Float64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from module <a href="../../Indexable.html">Indexable(Float64)</a>
+            </div>
+          
+          <p>Returns the element at the given <em>index</em>, without doing any bounds check.</p>
+
+<p><code><a href="../../Indexable.html">Indexable</a></code> makes sure to invoke this method with <em>index</em> in <code>0..<a href="../../Chem/Spatial/Grid.html#size:Int32-instance-method">.size</a></code>,
+so converting negative indices to positive ones is not needed here.</p>
+
+<p>Clients never invoke this method directly. Instead, they access
+elements with <code><a href="../../Chem/Spatial/Grid.html#[](*args,**options):Float64-instance-method">#[](index)</a></code> and <code><a href="../../Chem/Spatial/Grid.html#[]?(vec:Vector):Float64?-instance-method">#[]?(index)</a></code>.</p>
+
+<p>This method should only be directly invoked if you are absolutely
+sure the index is in bounds, to avoid a bounds check for a small boost
+of performance.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="volume(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>volume</strong>(*args, **options)
+
+        <a class="method-permalink" href="#volume(*args,**options)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="volume(*args,**options,&)-instance-method">
+      <div class="signature">
+        
+        def <strong>volume</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#volume(*args,**options,&)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
+
+
+
+</div>
+
+</body>
+</html>

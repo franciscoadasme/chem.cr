@@ -1,0 +1,2198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.36.1">
+<meta name="crystal_docs.project_version" content="0.5.6">
+<meta name="crystal_docs.project_name" content="chem.cr">
+
+
+
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/doc.js"></script>
+
+  <meta name="repository-name" content="chem.cr">
+  <title>Chem::Structure - chem.cr 0.5.6</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../index.html">
+          chem.cr
+        </a>
+      </h1>
+
+      <span class="project-version">
+        0.5.6
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class=" " data-id="chem.cr/toplevel" data-name="top level namespace">
+      <a href="../toplevel.html">Top Level Namespace</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Array" data-name="array(t)">
+      <a href="../Array.html">Array</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Char" data-name="char">
+      <a href="../Char.html">Char</a>
+      
+    </li>
+  
+  <li class="parent open current" data-id="chem.cr/Chem" data-name="chem">
+      <a href="../Chem.html">Chem</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/ArrayView" data-name="chem::arrayview(t)">
+      <a href="../Chem/ArrayView.html">ArrayView</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Atom" data-name="chem::atom">
+      <a href="../Chem/Atom.html">Atom</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/AtomCollection" data-name="chem::atomcollection">
+      <a href="../Chem/AtomCollection.html">AtomCollection</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/AtomView" data-name="chem::atomview">
+      <a href="../Chem/AtomView.html">AtomView</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Bias" data-name="chem::bias">
+      <a href="../Chem/Bias.html">Bias</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Bond" data-name="chem::bond">
+      <a href="../Chem/Bond.html">Bond</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Bond/Kind" data-name="chem::bond::kind">
+      <a href="../Chem/Bond/Kind.html">Kind</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/BondArray" data-name="chem::bondarray">
+      <a href="../Chem/BondArray.html">BondArray</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Chain" data-name="chem::chain">
+      <a href="../Chem/Chain.html">Chain</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ChainCollection" data-name="chem::chaincollection">
+      <a href="../Chem/ChainCollection.html">ChainCollection</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ChainView" data-name="chem::chainview">
+      <a href="../Chem/ChainView.html">ChainView</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Constraint" data-name="chem::constraint">
+      <a href="../Chem/Constraint.html">Constraint</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Cube" data-name="chem::cube">
+      <a href="../Chem/Cube.html">Cube</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Cube/Reader" data-name="chem::cube::reader">
+      <a href="../Chem/Cube/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Cube/Writer" data-name="chem::cube::writer">
+      <a href="../Chem/Cube/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/DFTB" data-name="chem::dftb">
+      <a href="../Chem/DFTB.html">DFTB</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="chem.cr/Chem/DFTB/Gen" data-name="chem::dftb::gen">
+      <a href="../Chem/DFTB/Gen.html">Gen</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/DFTB/Gen/Reader" data-name="chem::dftb::gen::reader">
+      <a href="../Chem/DFTB/Gen/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/DFTB/Gen/Writer" data-name="chem::dftb::gen::writer">
+      <a href="../Chem/DFTB/Gen/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/DX" data-name="chem::dx">
+      <a href="../Chem/DX.html">DX</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/DX/Reader" data-name="chem::dx::reader">
+      <a href="../Chem/DX/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/DX/Writer" data-name="chem::dx::writer">
+      <a href="../Chem/DX/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Element" data-name="chem::element">
+      <a href="../Chem/Element.html">Element</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Error" data-name="chem::error">
+      <a href="../Chem/Error.html">Error</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/IO" data-name="chem::io">
+      <a href="../Chem/IO.html">IO</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/FileFormat" data-name="chem::io::fileformat">
+      <a href="../Chem/IO/FileFormat.html">FileFormat</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/FileType" data-name="chem::io::filetype">
+      <a href="../Chem/IO/FileType.html">FileType</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/ParseException" data-name="chem::io::parseexception">
+      <a href="../Chem/IO/ParseException.html">ParseException</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/Reader" data-name="chem::io::reader(t)">
+      <a href="../Chem/IO/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/TextIO" data-name="chem::io::textio">
+      <a href="../Chem/IO/TextIO.html">TextIO</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/IO/Writer" data-name="chem::io::writer(t)">
+      <a href="../Chem/IO/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Lattice" data-name="chem::lattice">
+      <a href="../Chem/Lattice.html">Lattice</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Linalg" data-name="chem::linalg">
+      <a href="../Chem/Linalg.html">Linalg</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Linalg/Error" data-name="chem::linalg::error">
+      <a href="../Chem/Linalg/Error.html">Error</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Linalg/Matrix" data-name="chem::linalg::matrix">
+      <a href="../Chem/Linalg/Matrix.html">Matrix</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Mol2" data-name="chem::mol2">
+      <a href="../Chem/Mol2.html">Mol2</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Mol2/Reader" data-name="chem::mol2::reader">
+      <a href="../Chem/Mol2/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Mol2/Writer" data-name="chem::mol2::writer">
+      <a href="../Chem/Mol2/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/PDB" data-name="chem::pdb">
+      <a href="../Chem/PDB.html">PDB</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/PDB/Hybrid36" data-name="chem::pdb::hybrid36">
+      <a href="../Chem/PDB/Hybrid36.html">Hybrid36</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/PDB/Reader" data-name="chem::pdb::reader">
+      <a href="../Chem/PDB/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/PDB/Writer" data-name="chem::pdb::writer">
+      <a href="../Chem/PDB/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/PeriodicTable" data-name="chem::periodictable">
+      <a href="../Chem/PeriodicTable.html">PeriodicTable</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Protein" data-name="chem::protein">
+      <a href="../Chem/Protein.html">Protein</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/AminoAcid" data-name="chem::protein::aminoacid">
+      <a href="../Chem/Protein/AminoAcid.html">AminoAcid</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/AminoAcids" data-name="chem::protein::aminoacids">
+      <a href="../Chem/Protein/AminoAcids.html">AminoAcids</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/DSSP" data-name="chem::protein::dssp">
+      <a href="../Chem/Protein/DSSP.html">DSSP</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Protein/PSIQUE" data-name="chem::protein::psique">
+      <a href="../Chem/Protein/PSIQUE.html">PSIQUE</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/PSIQUE/SecondaryStructureBlender" data-name="chem::protein::psique::secondarystructureblender">
+      <a href="../Chem/Protein/PSIQUE/SecondaryStructureBlender.html">SecondaryStructureBlender</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/SecondaryStructure" data-name="chem::protein::secondarystructure">
+      <a href="../Chem/Protein/SecondaryStructure.html">SecondaryStructure</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/SecondaryStructureCalculator" data-name="chem::protein::secondarystructurecalculator">
+      <a href="../Chem/Protein/SecondaryStructureCalculator.html">SecondaryStructureCalculator</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/SecondaryStructureType" data-name="chem::protein::secondarystructuretype">
+      <a href="../Chem/Protein/SecondaryStructureType.html">SecondaryStructureType</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/Sequence" data-name="chem::protein::sequence">
+      <a href="../Chem/Protein/Sequence.html">Sequence</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Protein/Stride" data-name="chem::protein::stride">
+      <a href="../Chem/Protein/Stride.html">Stride</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/Stride/Writer" data-name="chem::protein::stride::writer">
+      <a href="../Chem/Protein/Stride/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/PyMOL" data-name="chem::pymol">
+      <a href="../Chem/PyMOL.html">PyMOL</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/PyMOL/Writer" data-name="chem::pymol::writer">
+      <a href="../Chem/PyMOL/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Residue" data-name="chem::residue">
+      <a href="../Chem/Residue.html">Residue</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Residue/Kind" data-name="chem::residue::kind">
+      <a href="../Chem/Residue/Kind.html">Kind</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueCollection" data-name="chem::residuecollection">
+      <a href="../Chem/ResidueCollection.html">ResidueCollection</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueView" data-name="chem::residueview">
+      <a href="../Chem/ResidueView.html">ResidueView</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Spatial" data-name="chem::spatial">
+      <a href="../Chem/Spatial.html">Spatial</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="chem.cr/Chem/Spatial/AffineTransform" data-name="chem::spatial::affinetransform">
+      <a href="../Chem/Spatial/AffineTransform.html">AffineTransform</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/AffineTransform/ScalingFactors" data-name="chem::spatial::affinetransform::scalingfactors">
+      <a href="../Chem/Spatial/AffineTransform/ScalingFactors.html">ScalingFactors</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Basis" data-name="chem::spatial::basis">
+      <a href="../Chem/Spatial/Basis.html">Basis</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Bounds" data-name="chem::spatial::bounds">
+      <a href="../Chem/Spatial/Bounds.html">Bounds</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/CoordinatesProxy" data-name="chem::spatial::coordinatesproxy">
+      <a href="../Chem/Spatial/CoordinatesProxy.html">CoordinatesProxy</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Error" data-name="chem::spatial::error">
+      <a href="../Chem/Spatial/Error.html">Error</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Spatial/Grid" data-name="chem::spatial::grid">
+      <a href="../Chem/Spatial/Grid.html">Grid</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Grid/Dimensions" data-name="chem::spatial::grid::dimensions">
+      <a href="../Chem/Spatial/Grid/Dimensions.html">Dimensions</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Grid/Info" data-name="chem::spatial::grid::info">
+      <a href="../Chem/Spatial/Grid/Info.html">Info</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Grid/Location" data-name="chem::spatial::grid::location">
+      <a href="../Chem/Spatial/Grid/Location.html">Location</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Grid/Reader" data-name="chem::spatial::grid::reader">
+      <a href="../Chem/Spatial/Grid/Reader.html">Reader</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/HlxParams" data-name="chem::spatial::hlxparams">
+      <a href="../Chem/Spatial/HlxParams.html">HlxParams</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/KDTree" data-name="chem::spatial::kdtree">
+      <a href="../Chem/Spatial/KDTree.html">KDTree</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/NotPeriodicError" data-name="chem::spatial::notperiodicerror">
+      <a href="../Chem/Spatial/NotPeriodicError.html">NotPeriodicError</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/PBC" data-name="chem::spatial::pbc">
+      <a href="../Chem/Spatial/PBC.html">PBC</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Quaternion" data-name="chem::spatial::quaternion">
+      <a href="../Chem/Spatial/Quaternion.html">Quaternion</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Size" data-name="chem::spatial::size">
+      <a href="../Chem/Spatial/Size.html">Size</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Vector" data-name="chem::spatial::vector">
+      <a href="../Chem/Spatial/Vector.html">Vector</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent open current" data-id="chem.cr/Chem/Structure" data-name="chem::structure">
+      <a href="../Chem/Structure.html">Structure</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Structure/Builder" data-name="chem::structure::builder">
+      <a href="../Chem/Structure/Builder.html">Builder</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Structure/Experiment" data-name="chem::structure::experiment">
+      <a href="../Chem/Structure/Experiment.html">Experiment</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Structure/Experiment/Method" data-name="chem::structure::experiment::method">
+      <a href="../Chem/Structure/Experiment/Method.html">Method</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Structure/Reader" data-name="chem::structure::reader">
+      <a href="../Chem/Structure/Reader.html">Reader</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Topology" data-name="chem::topology">
+      <a href="../Chem/Topology.html">Topology</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/AtomType" data-name="chem::topology::atomtype">
+      <a href="../Chem/Topology/AtomType.html">AtomType</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/BondType" data-name="chem::topology::bondtype">
+      <a href="../Chem/Topology/BondType.html">BondType</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/MatchData" data-name="chem::topology::matchdata">
+      <a href="../Chem/Topology/MatchData.html">MatchData</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Patcher" data-name="chem::topology::patcher">
+      <a href="../Chem/Topology/Patcher.html">Patcher</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Perception" data-name="chem::topology::perception">
+      <a href="../Chem/Topology/Perception.html">Perception</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/ResidueType" data-name="chem::topology::residuetype">
+      <a href="../Chem/Topology/ResidueType.html">ResidueType</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Topology/Templates" data-name="chem::topology::templates">
+      <a href="../Chem/Topology/Templates.html">Templates</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="chem.cr/Chem/Topology/Templates/Builder" data-name="chem::topology::templates::builder">
+      <a href="../Chem/Topology/Templates/Builder.html">Builder</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Templates/Builder/ParseException" data-name="chem::topology::templates::builder::parseexception">
+      <a href="../Chem/Topology/Templates/Builder/ParseException.html">ParseException</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Templates/Detector" data-name="chem::topology::templates::detector">
+      <a href="../Chem/Topology/Templates/Detector.html">Detector</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Templates/Error" data-name="chem::topology::templates::error">
+      <a href="../Chem/Topology/Templates/Error.html">Error</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/VASP" data-name="chem::vasp">
+      <a href="../Chem/VASP.html">VASP</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="chem.cr/Chem/VASP/Chgcar" data-name="chem::vasp::chgcar">
+      <a href="../Chem/VASP/Chgcar.html">Chgcar</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Chgcar/Reader" data-name="chem::vasp::chgcar::reader">
+      <a href="../Chem/VASP/Chgcar/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Chgcar/Writer" data-name="chem::vasp::chgcar::writer">
+      <a href="../Chem/VASP/Chgcar/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/GridReader" data-name="chem::vasp::gridreader">
+      <a href="../Chem/VASP/GridReader.html">GridReader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/GridWriter" data-name="chem::vasp::gridwriter">
+      <a href="../Chem/VASP/GridWriter.html">GridWriter</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/VASP/Locpot" data-name="chem::vasp::locpot">
+      <a href="../Chem/VASP/Locpot.html">Locpot</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Locpot/Reader" data-name="chem::vasp::locpot::reader">
+      <a href="../Chem/VASP/Locpot/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Locpot/Writer" data-name="chem::vasp::locpot::writer">
+      <a href="../Chem/VASP/Locpot/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/VASP/Poscar" data-name="chem::vasp::poscar">
+      <a href="../Chem/VASP/Poscar.html">Poscar</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Poscar/Reader" data-name="chem::vasp::poscar::reader">
+      <a href="../Chem/VASP/Poscar/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Poscar/Writer" data-name="chem::vasp::poscar::writer">
+      <a href="../Chem/VASP/Poscar/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/VMD" data-name="chem::vmd">
+      <a href="../Chem/VMD.html">VMD</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/VMD/Writer" data-name="chem::vmd::writer">
+      <a href="../Chem/VMD/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/XYZ" data-name="chem::xyz">
+      <a href="../Chem/XYZ.html">XYZ</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/XYZ/Reader" data-name="chem::xyz::reader">
+      <a href="../Chem/XYZ/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/XYZ/Writer" data-name="chem::xyz::writer">
+      <a href="../Chem/XYZ/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Colorize" data-name="colorize">
+      <a href="../Colorize.html">Colorize</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Colorize/ColorRGB" data-name="colorize::colorrgb">
+      <a href="../Colorize/ColorRGB.html">ColorRGB</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Indexable" data-name="indexable(t)">
+      <a href="../Indexable.html">Indexable</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Int" data-name="int">
+      <a href="../Int.html">Int</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Number" data-name="number">
+      <a href="../Number.html">Number</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Range" data-name="range(b, e)">
+      <a href="../Range.html">Range</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Slice" data-name="slice(t)">
+      <a href="../Slice.html">Slice</a>
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">class</span> Chem::Structure
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Chem/Structure.html">Chem::Structure</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="included-modules" class="anchor" href="#included-modules">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Included Modules
+  </h2>
+  <ul class="other-types-list">
+    
+      <li class="other-type"><a href="../Chem/AtomCollection.html">Chem::AtomCollection</a></li>
+    
+      <li class="other-type"><a href="../Chem/ChainCollection.html">Chem::ChainCollection</a></li>
+    
+      <li class="other-type"><a href="../Chem/ResidueCollection.html">Chem::ResidueCollection</a></li>
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      chem/core/structure.cr
+    
+    <br/>
+  
+    
+      chem/io/reader.cr
+    
+    <br/>
+  
+    
+      chem/io/writer.cr
+    
+    <br/>
+  
+
+
+
+
+
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#build(guess_topology:Bool=true,&):self-class-method" class="signature"><strong>.build</strong>(guess_topology : Bool = <span class="n">true</span>, &) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#from_gen(input:::IO%7CPath%7CString,*args,**options):self-class-method" class="signature"><strong>.from_gen</strong>(input : ::IO | Path | String, *args, **options) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#from_mol2(input:::IO%7CPath%7CString,*args,**options):self-class-method" class="signature"><strong>.from_mol2</strong>(input : ::IO | Path | String, *args, **options) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#from_pdb(input:::IO%7CPath%7CString,*args,**options):self-class-method" class="signature"><strong>.from_pdb</strong>(input : ::IO | Path | String, *args, **options) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#from_poscar(input:::IO%7CPath%7CString,*args,**options):self-class-method" class="signature"><strong>.from_poscar</strong>(input : ::IO | Path | String, *args, **options) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#from_xyz(input:::IO%7CPath%7CString,*args,**options):self-class-method" class="signature"><strong>.from_xyz</strong>(input : ::IO | Path | String, *args, **options) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#read(path:Path%7CString,guess_topology:Bool=true):self-class-method" class="signature"><strong>.read</strong>(path : Path | String, guess_topology : Bool = <span class="n">true</span>) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#read(input:::IO%7CPath%7CString,format:IO::FileFormat%7CString,guess_topology:Bool=true):self-class-method" class="signature"><strong>.read</strong>(input : ::IO | Path | String, format : IO::FileFormat | String, guess_topology : Bool = <span class="n">true</span>) : <span class="k">self</span></a>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#[](*args,**options)-instance-method" class="signature"><strong>#[]</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#[](*args,**options,&)-instance-method" class="signature"><strong>#[]</strong>(*args, **options, &)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#[]?(*args,**options)-instance-method" class="signature"><strong>#[]?</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#[]?(*args,**options,&)-instance-method" class="signature"><strong>#[]?</strong>(*args, **options, &)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#biases:Array(Chem::Bias)-instance-method" class="signature"><strong>#biases</strong> : Array(Chem::Bias)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#clear:self-instance-method" class="signature"><strong>#clear</strong> : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#clone:self-instance-method" class="signature"><strong>#clone</strong> : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a deep copy of <code>self</code>, that is, every chain/residue/atom is copied.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#coords:Spatial::CoordinatesProxy-instance-method" class="signature"><strong>#coords</strong> : Spatial::CoordinatesProxy</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#delete(ch:Chain):Chain?-instance-method" class="signature"><strong>#delete</strong>(ch : Chain) : Chain?</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dig(id:Char,*subindexes)-instance-method" class="signature"><strong>#dig</strong>(id : Char, *subindexes)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dig(id:Char):Chain-instance-method" class="signature"><strong>#dig</strong>(id : Char) : Chain</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dig?(id:Char,*subindexes)-instance-method" class="signature"><strong>#dig?</strong>(id : Char, *subindexes)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dig?(id:Char):Chain?-instance-method" class="signature"><strong>#dig?</strong>(id : Char) : Chain?</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#each_atom(&block:Atom-%3E)-instance-method" class="signature"><strong>#each_atom</strong>(&block : Atom -> )</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#each_atom:Iterator(Atom)-instance-method" class="signature"><strong>#each_atom</strong> : Iterator(Atom)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#each_chain(&block:Chain-%3E)-instance-method" class="signature"><strong>#each_chain</strong>(&block : Chain -> )</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#each_chain:Iterator(Chain)-instance-method" class="signature"><strong>#each_chain</strong> : Iterator(Chain)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#each_residue(&block:Residue-%3E)-instance-method" class="signature"><strong>#each_residue</strong>(&block : Residue -> )</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#each_residue:Iterator(Residue)-instance-method" class="signature"><strong>#each_residue</strong> : Iterator(Residue)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#empty?-instance-method" class="signature"><strong>#empty?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#experiment:Structure::Experiment?-instance-method" class="signature"><strong>#experiment</strong> : Structure::Experiment?</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#experiment=(experiment:Structure::Experiment?)-instance-method" class="signature"><strong>#experiment=</strong>(experiment : Structure::Experiment?)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#inspect(io:::IO)-instance-method" class="signature"><strong>#inspect</strong>(io : ::IO)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#lattice:Lattice?-instance-method" class="signature"><strong>#lattice</strong> : Lattice?</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#lattice=(lattice:Lattice?)-instance-method" class="signature"><strong>#lattice=</strong>(lattice : Lattice?)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#n_atoms:Int32-instance-method" class="signature"><strong>#n_atoms</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#n_chains:Int32-instance-method" class="signature"><strong>#n_chains</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#n_residues:Int32-instance-method" class="signature"><strong>#n_residues</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#periodic?:Bool-instance-method" class="signature"><strong>#periodic?</strong> : Bool</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#renumber_by_connectivity(split_chains:Bool=true):Nil-instance-method" class="signature"><strong>#renumber_by_connectivity</strong>(split_chains : Bool = <span class="n">true</span>) : Nil</a>
+        
+          <div class="summary"><p>Renumber chain and residues based on bond information.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#sequence:Protein::Sequence?-instance-method" class="signature"><strong>#sequence</strong> : Protein::Sequence?</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#sequence=(sequence:Protein::Sequence?)-instance-method" class="signature"><strong>#sequence=</strong>(sequence : Protein::Sequence?)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#title:String-instance-method" class="signature"><strong>#title</strong> : String</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#title=(title:String)-instance-method" class="signature"><strong>#title=</strong>(title : String)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_pymol(output:::IO%7CPath%7CString,*args,**options):Nil-instance-method" class="signature"><strong>#to_pymol</strong>(output : ::IO | Path | String, *args, **options) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_pymol(*args,**options):String-instance-method" class="signature"><strong>#to_pymol</strong>(*args, **options) : String</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_s(io:::IO)-instance-method" class="signature"><strong>#to_s</strong>(io : ::IO)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_stride(output:::IO%7CPath%7CString,*args,**options):Nil-instance-method" class="signature"><strong>#to_stride</strong>(output : ::IO | Path | String, *args, **options) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_stride(*args,**options):String-instance-method" class="signature"><strong>#to_stride</strong>(*args, **options) : String</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_vmd(output:::IO%7CPath%7CString,*args,**options):Nil-instance-method" class="signature"><strong>#to_vmd</strong>(output : ::IO | Path | String, *args, **options) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_vmd(*args,**options):String-instance-method" class="signature"><strong>#to_vmd</strong>(*args, **options) : String</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#unwrap:self-instance-method" class="signature"><strong>#unwrap</strong> : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#write(output:::IO%7CPath%7CString,format:IO::FileFormat%7CString):Nil-instance-method" class="signature"><strong>#write</strong>(output : ::IO | Path | String, format : IO::FileFormat | String) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#write(path:Path%7CString):Nil-instance-method" class="signature"><strong>#write</strong>(path : Path | String) : Nil</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+<div class="methods-inherited">
+  
+    
+
+  <h3>Instance methods inherited from module <code><a href="../Chem/ResidueCollection.html">Chem::ResidueCollection</a></code></h3>
+  
+  
+    <a href="../Chem/ResidueCollection.html#each_residue:Iterator(Residue)-instance-method" class="tooltip">
+      <span>each_residue : Iterator(Residue)<br/>each_residue(&block : Residue -> )</span>
+    each_residue</a>, 
+    
+  
+    <a href="../Chem/ResidueCollection.html#each_residue_fragment(&:ResidueView-%3E):Nil-instance-method" class="tooltip">
+      <span>each_residue_fragment(& : ResidueView -> ) : Nil</span>
+    each_residue_fragment</a>, 
+    
+  
+    <a href="../Chem/ResidueCollection.html#each_secondary_structure(reuse:Bool%7CArray(Residue)=false,strict:Bool=true,handedness:Bool=true):Iterator(ResidueView)-instance-method" class="tooltip">
+      <span>each_secondary_structure(reuse : Bool | Array(Residue) = <span class="n">false</span>, strict : Bool = <span class="n">true</span>, handedness : Bool = <span class="n">true</span>) : Iterator(ResidueView)<br/>each_secondary_structure(reuse : Bool | Array(Residue) = <span class="n">false</span>, strict : Bool = <span class="n">true</span>, handedness : Bool = <span class="n">true</span>, & : ResidueView, Protein::SecondaryStructure -> ) : Nil</span>
+    each_secondary_structure</a>, 
+    
+  
+    <a href="../Chem/ResidueCollection.html#link_bond:Topology::BondType?-instance-method" class="tooltip">
+      <span>link_bond : Topology::BondType?</span>
+    link_bond</a>, 
+    
+  
+    <a href="../Chem/ResidueCollection.html#n_residues:Int32-instance-method" class="tooltip">
+      <span>n_residues : Int32</span>
+    n_residues</a>, 
+    
+  
+    <a href="../Chem/ResidueCollection.html#reset_secondary_structure:self-instance-method" class="tooltip">
+      <span>reset_secondary_structure : <span class="k">self</span></span>
+    reset_secondary_structure</a>, 
+    
+  
+    <a href="../Chem/ResidueCollection.html#residue_fragments:Array(ResidueView)-instance-method" class="tooltip">
+      <span>residue_fragments : Array(ResidueView)</span>
+    residue_fragments</a>, 
+    
+  
+    <a href="../Chem/ResidueCollection.html#residues:ResidueView-instance-method" class="tooltip">
+      <span>residues : ResidueView</span>
+    residues</a>, 
+    
+  
+    <a href="../Chem/ResidueCollection.html#sec=(seclist:Array(Protein::SecondaryStructure)):Array(Protein::SecondaryStructure)-instance-method" class="tooltip">
+      <span>sec=(seclist : Array(Protein::SecondaryStructure)) : Array(Protein::SecondaryStructure)<br/>sec=(sec : Protein::SecondaryStructure) : Protein::SecondaryStructure</span>
+    sec=</a>, 
+    
+  
+    <a href="../Chem/ResidueCollection.html#secondary_structures(strict:Bool=true,handedness:Bool=true):Array(ResidueView)-instance-method" class="tooltip">
+      <span>secondary_structures(strict : Bool = <span class="n">true</span>, handedness : Bool = <span class="n">true</span>) : Array(ResidueView)</span>
+    secondary_structures</a>
+    
+  
+
+
+    
+
+
+    
+
+
+  
+    
+
+  <h3>Instance methods inherited from module <code><a href="../Chem/ChainCollection.html">Chem::ChainCollection</a></code></h3>
+  
+  
+    <a href="../Chem/ChainCollection.html#chains:ChainView-instance-method" class="tooltip">
+      <span>chains : ChainView</span>
+    chains</a>, 
+    
+  
+    <a href="../Chem/ChainCollection.html#each_chain:Iterator(Chain)-instance-method" class="tooltip">
+      <span>each_chain : Iterator(Chain)<br/>each_chain(&block : Chain -> )</span>
+    each_chain</a>, 
+    
+  
+    <a href="../Chem/ChainCollection.html#n_chains:Int32-instance-method" class="tooltip">
+      <span>n_chains : Int32</span>
+    n_chains</a>
+    
+  
+
+
+    
+
+
+    
+
+
+  
+    
+
+  <h3>Instance methods inherited from module <code><a href="../Chem/AtomCollection.html">Chem::AtomCollection</a></code></h3>
+  
+  
+    <a href="../Chem/AtomCollection.html#atoms:AtomView-instance-method" class="tooltip">
+      <span>atoms : AtomView</span>
+    atoms</a>, 
+    
+  
+    <a href="../Chem/AtomCollection.html#bonds:Array(Bond)-instance-method" class="tooltip">
+      <span>bonds : Array(Bond)</span>
+    bonds</a>, 
+    
+  
+    <a href="../Chem/AtomCollection.html#coords:Spatial::CoordinatesProxy-instance-method" class="tooltip">
+      <span>coords : Spatial::CoordinatesProxy</span>
+    coords</a>, 
+    
+  
+    <a href="../Chem/AtomCollection.html#each_atom:Iterator(Atom)-instance-method" class="tooltip">
+      <span>each_atom : Iterator(Atom)<br/>each_atom(&block : Atom -> )</span>
+    each_atom</a>, 
+    
+  
+    <a href="../Chem/AtomCollection.html#each_fragment(&:AtomView-%3E):Nil-instance-method" class="tooltip">
+      <span>each_fragment(& : AtomView -> ) : Nil</span>
+    each_fragment</a>, 
+    
+  
+    <a href="../Chem/AtomCollection.html#formal_charge:Int32-instance-method" class="tooltip">
+      <span>formal_charge : Int32</span>
+    formal_charge</a>, 
+    
+  
+    <a href="../Chem/AtomCollection.html#formal_charges:Array(Int32)-instance-method" class="tooltip">
+      <span>formal_charges : Array(Int32)</span>
+    formal_charges</a>, 
+    
+  
+    <a href="../Chem/AtomCollection.html#fragments:Array(AtomView)-instance-method" class="tooltip">
+      <span>fragments : Array(AtomView)</span>
+    fragments</a>, 
+    
+  
+    <a href="../Chem/AtomCollection.html#has_hydrogens?:Bool-instance-method" class="tooltip">
+      <span>has_hydrogens? : Bool</span>
+    has_hydrogens?</a>, 
+    
+  
+    <a href="../Chem/AtomCollection.html#n_atoms:Int32-instance-method" class="tooltip">
+      <span>n_atoms : Int32</span>
+    n_atoms</a>, 
+    
+  
+    <a href="../Chem/AtomCollection.html#to_gen(output:::IO%7CPath%7CString,*args,**options):Nil-instance-method" class="tooltip">
+      <span>to_gen(output : ::IO | Path | String, *args, **options) : Nil<br/>to_gen(*args, **options) : String</span>
+    to_gen</a>, 
+    
+  
+    <a href="../Chem/AtomCollection.html#to_mol2(output:::IO%7CPath%7CString,*args,**options):Nil-instance-method" class="tooltip">
+      <span>to_mol2(output : ::IO | Path | String, *args, **options) : Nil<br/>to_mol2(*args, **options) : String</span>
+    to_mol2</a>, 
+    
+  
+    <a href="../Chem/AtomCollection.html#to_pdb(output:::IO%7CPath%7CString,*args,**options):Nil-instance-method" class="tooltip">
+      <span>to_pdb(output : ::IO | Path | String, *args, **options) : Nil<br/>to_pdb(*args, **options) : String</span>
+    to_pdb</a>, 
+    
+  
+    <a href="../Chem/AtomCollection.html#to_poscar(output:::IO%7CPath%7CString,*args,**options):Nil-instance-method" class="tooltip">
+      <span>to_poscar(output : ::IO | Path | String, *args, **options) : Nil<br/>to_poscar(*args, **options) : String</span>
+    to_poscar</a>, 
+    
+  
+    <a href="../Chem/AtomCollection.html#to_xyz(output:::IO%7CPath%7CString,*args,**options):Nil-instance-method" class="tooltip">
+      <span>to_xyz(output : ::IO | Path | String, *args, **options) : Nil<br/>to_xyz(*args, **options) : String</span>
+    to_xyz</a>
+    
+  
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="build(guess_topology:Bool=true,&):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>build</strong>(guess_topology : Bool = <span class="n">true</span>, &) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#build(guess_topology:Bool=true,&):self-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="from_gen(input:::IO|Path|String,*args,**options):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>from_gen</strong>(input : ::IO | Path | String, *args, **options) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#from_gen(input:::IO%7CPath%7CString,*args,**options):self-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="from_mol2(input:::IO|Path|String,*args,**options):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>from_mol2</strong>(input : ::IO | Path | String, *args, **options) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#from_mol2(input:::IO%7CPath%7CString,*args,**options):self-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="from_pdb(input:::IO|Path|String,*args,**options):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>from_pdb</strong>(input : ::IO | Path | String, *args, **options) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#from_pdb(input:::IO%7CPath%7CString,*args,**options):self-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="from_poscar(input:::IO|Path|String,*args,**options):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>from_poscar</strong>(input : ::IO | Path | String, *args, **options) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#from_poscar(input:::IO%7CPath%7CString,*args,**options):self-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="from_xyz(input:::IO|Path|String,*args,**options):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>from_xyz</strong>(input : ::IO | Path | String, *args, **options) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#from_xyz(input:::IO%7CPath%7CString,*args,**options):self-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="read(path:Path|String,guess_topology:Bool=true):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>read</strong>(path : Path | String, guess_topology : Bool = <span class="n">true</span>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#read(path:Path%7CString,guess_topology:Bool=true):self-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="read(input:::IO|Path|String,format:IO::FileFormat|String,guess_topology:Bool=true):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>read</strong>(input : ::IO | Path | String, format : <a href="../Chem/IO/FileFormat.html">IO::FileFormat</a> | String, guess_topology : Bool = <span class="n">true</span>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#read(input:::IO%7CPath%7CString,format:IO::FileFormat%7CString,guess_topology:Bool=true):self-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
+
+
+
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="[](*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>[]</strong>(*args, **options)
+
+        <a class="method-permalink" href="#[](*args,**options)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[](*args,**options,&)-instance-method">
+      <div class="signature">
+        
+        def <strong>[]</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#[](*args,**options,&)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[]?(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>[]?</strong>(*args, **options)
+
+        <a class="method-permalink" href="#[]?(*args,**options)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[]?(*args,**options,&)-instance-method">
+      <div class="signature">
+        
+        def <strong>[]?</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#[]?(*args,**options,&)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="biases:Array(Chem::Bias)-instance-method">
+      <div class="signature">
+        
+        def <strong>biases</strong> : <a href="../Array.html">Array</a>(<a href="../Chem/Bias.html">Chem::Bias</a>)
+
+        <a class="method-permalink" href="#biases:Array(Chem::Bias)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="clear:self-instance-method">
+      <div class="signature">
+        
+        def <strong>clear</strong> : <span class="k">self</span>
+
+        <a class="method-permalink" href="#clear:self-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="clone:self-instance-method">
+      <div class="signature">
+        
+        def <strong>clone</strong> : <span class="k">self</span>
+
+        <a class="method-permalink" href="#clone:self-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a deep copy of <code>self</code>, that is, every chain/residue/atom is copied.</p>
+
+<p>Unlike array-like classes in the language, <code>#dup</code> (shallow copy) is not possible.</p>
+
+<pre><code class="language-crystal">structure <span class="o">=</span> <span class="t">Structure</span>.<span class="k">new</span> <span class="s">&quot;/path/to/file.pdb&quot;</span>
+other <span class="o">=</span> structure.clone
+other <span class="o">==</span> structure     <span class="c"># =&gt; true</span>
+other.same?(structure) <span class="c"># =&gt; false</span>
+
+structure.dig(<span class="s">&#39;A&#39;</span>, <span class="n">23</span>, <span class="s">&quot;OG&quot;</span>).partial_charge         <span class="c"># =&gt; 0.0</span>
+other.dig(<span class="s">&#39;A&#39;</span>, <span class="n">23</span>, <span class="s">&quot;OG&quot;</span>).partial_charge             <span class="c"># =&gt; 0.0</span>
+structure.dig(<span class="s">&#39;A&#39;</span>, <span class="n">23</span>, <span class="s">&quot;OG&quot;</span>).partial_charge <span class="o">=</span> <span class="n">0.635</span> <span class="c"># =&gt; 0.635</span>
+other.dig(<span class="s">&#39;A&#39;</span>, <span class="n">23</span>, <span class="s">&quot;OG&quot;</span>).partial_charge             <span class="c"># =&gt; 0.0</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="coords:Spatial::CoordinatesProxy-instance-method">
+      <div class="signature">
+        
+        def <strong>coords</strong> : <a href="../Chem/Spatial/CoordinatesProxy.html">Spatial::CoordinatesProxy</a>
+
+        <a class="method-permalink" href="#coords:Spatial::CoordinatesProxy-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="delete(ch:Chain):Chain?-instance-method">
+      <div class="signature">
+        
+        def <strong>delete</strong>(ch : <a href="../Chem/Chain.html">Chain</a>) : <a href="../Chem/Chain.html">Chain</a>?
+
+        <a class="method-permalink" href="#delete(ch:Chain):Chain?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dig(id:Char,*subindexes)-instance-method">
+      <div class="signature">
+        
+        def <strong>dig</strong>(id : <a href="../Char.html">Char</a>, *subindexes)
+
+        <a class="method-permalink" href="#dig(id:Char,*subindexes)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dig(id:Char):Chain-instance-method">
+      <div class="signature">
+        
+        def <strong>dig</strong>(id : <a href="../Char.html">Char</a>) : <a href="../Chem/Chain.html">Chain</a>
+
+        <a class="method-permalink" href="#dig(id:Char):Chain-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dig?(id:Char,*subindexes)-instance-method">
+      <div class="signature">
+        
+        def <strong>dig?</strong>(id : <a href="../Char.html">Char</a>, *subindexes)
+
+        <a class="method-permalink" href="#dig?(id:Char,*subindexes)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dig?(id:Char):Chain?-instance-method">
+      <div class="signature">
+        
+        def <strong>dig?</strong>(id : <a href="../Char.html">Char</a>) : <a href="../Chem/Chain.html">Chain</a>?
+
+        <a class="method-permalink" href="#dig?(id:Char):Chain?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="each_atom(&block:Atom->)-instance-method">
+      <div class="signature">
+        
+        def <strong>each_atom</strong>(&block : <a href="../Chem/Atom.html">Atom</a> -> )
+
+        <a class="method-permalink" href="#each_atom(&block:Atom-%3E)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="each_atom:Iterator(Atom)-instance-method">
+      <div class="signature">
+        
+        def <strong>each_atom</strong> : Iterator(<a href="../Chem/Atom.html">Atom</a>)
+
+        <a class="method-permalink" href="#each_atom:Iterator(Atom)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="each_chain(&block:Chain->)-instance-method">
+      <div class="signature">
+        
+        def <strong>each_chain</strong>(&block : <a href="../Chem/Chain.html">Chain</a> -> )
+
+        <a class="method-permalink" href="#each_chain(&block:Chain-%3E)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="each_chain:Iterator(Chain)-instance-method">
+      <div class="signature">
+        
+        def <strong>each_chain</strong> : Iterator(<a href="../Chem/Chain.html">Chain</a>)
+
+        <a class="method-permalink" href="#each_chain:Iterator(Chain)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="each_residue(&block:Residue->)-instance-method">
+      <div class="signature">
+        
+        def <strong>each_residue</strong>(&block : <a href="../Chem/Residue.html">Residue</a> -> )
+
+        <a class="method-permalink" href="#each_residue(&block:Residue-%3E)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="each_residue:Iterator(Residue)-instance-method">
+      <div class="signature">
+        
+        def <strong>each_residue</strong> : Iterator(<a href="../Chem/Residue.html">Residue</a>)
+
+        <a class="method-permalink" href="#each_residue:Iterator(Residue)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="empty?-instance-method">
+      <div class="signature">
+        
+        def <strong>empty?</strong>
+
+        <a class="method-permalink" href="#empty?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="experiment:Structure::Experiment?-instance-method">
+      <div class="signature">
+        
+        def <strong>experiment</strong> : <a href="../Chem/Structure/Experiment.html">Structure::Experiment</a>?
+
+        <a class="method-permalink" href="#experiment:Structure::Experiment?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="experiment=(experiment:Structure::Experiment?)-instance-method">
+      <div class="signature">
+        
+        def <strong>experiment=</strong>(experiment : <a href="../Chem/Structure/Experiment.html">Structure::Experiment</a>?)
+
+        <a class="method-permalink" href="#experiment=(experiment:Structure::Experiment?)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="inspect(io:::IO)-instance-method">
+      <div class="signature">
+        
+        def <strong>inspect</strong>(io : ::IO)
+
+        <a class="method-permalink" href="#inspect(io:::IO)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="lattice:Lattice?-instance-method">
+      <div class="signature">
+        
+        def <strong>lattice</strong> : <a href="../Chem/Lattice.html">Lattice</a>?
+
+        <a class="method-permalink" href="#lattice:Lattice?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="lattice=(lattice:Lattice?)-instance-method">
+      <div class="signature">
+        
+        def <strong>lattice=</strong>(lattice : <a href="../Chem/Lattice.html">Lattice</a>?)
+
+        <a class="method-permalink" href="#lattice=(lattice:Lattice?)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="n_atoms:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>n_atoms</strong> : Int32
+
+        <a class="method-permalink" href="#n_atoms:Int32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="n_chains:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>n_chains</strong> : Int32
+
+        <a class="method-permalink" href="#n_chains:Int32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="n_residues:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>n_residues</strong> : Int32
+
+        <a class="method-permalink" href="#n_residues:Int32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="periodic?:Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>periodic?</strong> : Bool
+
+        <a class="method-permalink" href="#periodic?:Bool-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="renumber_by_connectivity(split_chains:Bool=true):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>renumber_by_connectivity</strong>(split_chains : Bool = <span class="n">true</span>) : Nil
+
+        <a class="method-permalink" href="#renumber_by_connectivity(split_chains:Bool=true):Nil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Renumber chain and residues based on bond information.</p>
+
+<p>Residue fragments are assigned to unique chains unless
+<em>split_chains</em> is <code>false</code>, which keeps existing chains intact.
+Residue ordering is computed based on the link bond if available.</p>
+
+<p><span class="flag purple">NOTE</span>  existing chains are reused to re-arrang the residues among
+them, so avoid caching them before calling this.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="sequence:Protein::Sequence?-instance-method">
+      <div class="signature">
+        
+        def <strong>sequence</strong> : <a href="../Chem/Protein/Sequence.html">Protein::Sequence</a>?
+
+        <a class="method-permalink" href="#sequence:Protein::Sequence?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="sequence=(sequence:Protein::Sequence?)-instance-method">
+      <div class="signature">
+        
+        def <strong>sequence=</strong>(sequence : <a href="../Chem/Protein/Sequence.html">Protein::Sequence</a>?)
+
+        <a class="method-permalink" href="#sequence=(sequence:Protein::Sequence?)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="title:String-instance-method">
+      <div class="signature">
+        
+        def <strong>title</strong> : String
+
+        <a class="method-permalink" href="#title:String-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="title=(title:String)-instance-method">
+      <div class="signature">
+        
+        def <strong>title=</strong>(title : String)
+
+        <a class="method-permalink" href="#title=(title:String)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_pymol(output:::IO|Path|String,*args,**options):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>to_pymol</strong>(output : ::IO | Path | String, *args, **options) : Nil
+
+        <a class="method-permalink" href="#to_pymol(output:::IO%7CPath%7CString,*args,**options):Nil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_pymol(*args,**options):String-instance-method">
+      <div class="signature">
+        
+        def <strong>to_pymol</strong>(*args, **options) : String
+
+        <a class="method-permalink" href="#to_pymol(*args,**options):String-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_s(io:::IO)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_s</strong>(io : ::IO)
+
+        <a class="method-permalink" href="#to_s(io:::IO)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_stride(output:::IO|Path|String,*args,**options):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>to_stride</strong>(output : ::IO | Path | String, *args, **options) : Nil
+
+        <a class="method-permalink" href="#to_stride(output:::IO%7CPath%7CString,*args,**options):Nil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_stride(*args,**options):String-instance-method">
+      <div class="signature">
+        
+        def <strong>to_stride</strong>(*args, **options) : String
+
+        <a class="method-permalink" href="#to_stride(*args,**options):String-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_vmd(output:::IO|Path|String,*args,**options):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>to_vmd</strong>(output : ::IO | Path | String, *args, **options) : Nil
+
+        <a class="method-permalink" href="#to_vmd(output:::IO%7CPath%7CString,*args,**options):Nil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_vmd(*args,**options):String-instance-method">
+      <div class="signature">
+        
+        def <strong>to_vmd</strong>(*args, **options) : String
+
+        <a class="method-permalink" href="#to_vmd(*args,**options):String-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="unwrap:self-instance-method">
+      <div class="signature">
+        
+        def <strong>unwrap</strong> : <span class="k">self</span>
+
+        <a class="method-permalink" href="#unwrap:self-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="write(output:::IO|Path|String,format:IO::FileFormat|String):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>write</strong>(output : ::IO | Path | String, format : <a href="../Chem/IO/FileFormat.html">IO::FileFormat</a> | String) : Nil
+
+        <a class="method-permalink" href="#write(output:::IO%7CPath%7CString,format:IO::FileFormat%7CString):Nil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="write(path:Path|String):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>write</strong>(path : Path | String) : Nil
+
+        <a class="method-permalink" href="#write(path:Path%7CString):Nil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
+
+
+
+</div>
+
+</body>
+</html>
