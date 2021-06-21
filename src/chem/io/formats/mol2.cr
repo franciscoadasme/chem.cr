@@ -116,7 +116,7 @@ module Chem::Mol2
 
     private def read_atom : Atom
       serial = @io.read_int
-      name = @io.skip_spaces.scan 'A'..'z', '0'..'9'
+      name = @io.skip_spaces.read_until ' '
       coords = @io.read_vector
       element = PeriodicTable[@io.read_word]
       @io.skip('.').skip_word if @io.check('.') # ignore sybyl type

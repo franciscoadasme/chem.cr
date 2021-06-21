@@ -167,6 +167,11 @@ describe Chem::Mol2::Reader do
     atoms[7].bonded?(atoms[34]).should be_true
     atoms[13].bonded?(atoms[19]).should be_true
   end
+
+  it "reads weird atom names" do
+    structure = load_file "weird_names.mol2"
+    structure.atoms[12].name.should eq "C1'"
+  end
 end
 
 describe Chem::Mol2::Writer do
