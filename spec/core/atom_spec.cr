@@ -25,6 +25,30 @@ describe Chem::Atom do
     end
   end
 
+  describe "#bonded?" do
+    it "tells if two atoms are bonded" do
+      structure = Structure.build do
+        atom :O, V[2.336, 3.448, 7.781]
+        atom :H, V[1.446, 3.485, 7.315]
+        atom :H, V[2.977, 2.940, 7.234]
+      end
+      structure.atoms[0].bonded?(structure.atoms[1]).should be_true
+      structure.atoms[0].bonded?(structure.atoms[2]).should be_true
+      structure.atoms[1].bonded?(structure.atoms[2]).should be_false
+    end
+
+    it "returns false when atom is itself" do
+      structure = Structure.build do
+        atom :O, V[2.336, 3.448, 7.781]
+        atom :H, V[1.446, 3.485, 7.315]
+        atom :H, V[2.977, 2.940, 7.234]
+      end
+      structure.atoms[0].bonded?(structure.atoms[0]).should be_false
+      structure.atoms[1].bonded?(structure.atoms[1]).should be_false
+      structure.atoms[2].bonded?(structure.atoms[2]).should be_false
+    end
+  end
+
   describe "#each_bonded_atom" do
     structure = Structure.build do
       atom :I, V[-1, 0, 0]

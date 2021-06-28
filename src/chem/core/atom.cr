@@ -105,7 +105,7 @@ module Chem
     end
 
     def bonded?(to other : self) : Bool
-      !bonds[other]?.nil?
+      bonds.any? &.other(self).==(other)
     end
 
     def bonded_atoms : Array(Atom)
