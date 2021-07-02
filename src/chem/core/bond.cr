@@ -34,6 +34,10 @@ module Chem
       @first == other.second && @second == other.first
     end
 
+    def bonded?(other : self) : Bool
+      @first.in?(other) || @second.in?(other)
+    end
+
     def distance : Float64
       Math.sqrt squared_distance
     end
@@ -87,6 +91,10 @@ module Chem
       when 3 then '#'
       else        raise "BUG: unreachable"
       end
+    end
+
+    def to_s(io : ::IO) : Nil
+      io << @first.name << to_char << @second.name
     end
   end
 end
