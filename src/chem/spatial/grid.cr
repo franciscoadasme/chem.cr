@@ -107,10 +107,10 @@ module Chem::Spatial
     end
 
     def self.info(path : Path | String) : Info
-      info path, IO::FileFormat.from_filename File.basename(path)
+      info path, IO::Format.from_filename File.basename(path)
     end
 
-    def self.info(input : ::IO | Path | String, format : IO::FileFormat) : Info
+    def self.info(input : ::IO | Path | String, format : IO::Format) : Info
       {% begin %}
         case format
         {% for parser in Reader.subclasses.select(&.annotation(IO::FileType)) %}

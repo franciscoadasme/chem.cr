@@ -22,14 +22,14 @@ module Chem
     end
 
     def self.read(path : Path | String, guess_topology : Bool = true) : self
-      format = IO::FileFormat.from_filename File.basename(path)
+      format = IO::Format.from_filename File.basename(path)
       read path, format, guess_topology
     end
 
     def self.read(input : ::IO | Path | String,
-                  format : IO::FileFormat | String,
+                  format : IO::Format | String,
                   guess_topology : Bool = true) : self
-      format = IO::FileFormat.parse format if format.is_a?(String)
+      format = IO::Format.parse format if format.is_a?(String)
       {% begin %}
         case format
         {% for reader in Reader.subclasses.select(&.annotation(IO::FileType)) %}
@@ -219,12 +219,12 @@ module Chem
     end
 
     def write(path : Path | String) : Nil
-      format = IO::FileFormat.from_filename path
+      format = IO::Format.from_filename path
       write path, format
     end
 
-    def write(output : ::IO | Path | String, format : IO::FileFormat | String) : Nil
-      format = IO::FileFormat.parse format if format.is_a?(String)
+    def write(output : ::IO | Path | String, format : IO::Format | String) : Nil
+      format = IO::Format.parse format if format.is_a?(String)
       {% begin %}
         case format
         {% for writer in IO::Writer.all_subclasses.select(&.annotation(IO::FileType)) %}

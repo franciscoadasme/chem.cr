@@ -18,7 +18,7 @@ module Chem::IO
   annotation FileType; end
 
   macro finished
-    enum FileFormat
+    enum Format
       {% writers = Writer.all_subclasses.select &.annotation(FileType) %}
       {% readers = Reader.all_subclasses.select(&.annotation(FileType)) %}
       {% klasses = readers + writers %}
@@ -95,10 +95,10 @@ module Chem::IO
       # @[FileType(format: Image, ext: %w(tiff png jpg))]
       # ...
       #
-      # FileFormat.from_ext("img.tiff") # => FileFormat::Image
-      # FileFormat.from_ext("img.TIFF") # => FileFormat::Image
-      # FileFormat.from_ext("img.png")  # => FileFormat::Image
-      # FileFormat.from_ext("img.txt")  # => raises ArgumentError
+      # Format.from_ext("img.tiff") # => Format::Image
+      # Format.from_ext("img.TIFF") # => Format::Image
+      # Format.from_ext("img.png")  # => Format::Image
+      # Format.from_ext("img.txt")  # => raises ArgumentError
       # ```
       #
       # NOTE: it performs a case-insensitive search so .tiff and .TIFF return the same.
@@ -112,10 +112,10 @@ module Chem::IO
       # @[FileType(format: Image, ext: %w(tiff png jpg))]
       # ...
       #
-      # FileFormat.from_ext?("img.tiff") # => FileFormat::Image
-      # FileFormat.from_ext?("img.TIFF") # => FileFormat::Image
-      # FileFormat.from_ext?("img.png")  # => FileFormat::Image
-      # FileFormat.from_ext?("img.txt")  # => nil
+      # Format.from_ext?("img.tiff") # => Format::Image
+      # Format.from_ext?("img.TIFF") # => Format::Image
+      # Format.from_ext?("img.png")  # => Format::Image
+      # Format.from_ext?("img.txt")  # => nil
       # ```
       #
       # NOTE: it performs a case-insensitive search so .tiff and .TIFF return the same.
@@ -151,12 +151,12 @@ module Chem::IO
       # @[FileType(format: Image, ext: %w(tiff png jpg), names: %w(IMG*))]
       # ...
       #
-      # FileFormat.from_filename("IMG_2314.tiff") # => FileFormat::Image
-      # FileFormat.from_filename("IMG_2314.png")  # => FileFormat::Image
-      # FileFormat.from_filename("IMG_2314")      # => FileFormat::Image
-      # FileFormat.from_filename("img_2314")      # => FileFormat::Image
-      # FileFormat.from_filename("img2314")       # => FileFormat::Image
-      # FileFormat.from_filename("Imi")           # => raises ArgumentError
+      # Format.from_filename("IMG_2314.tiff") # => Format::Image
+      # Format.from_filename("IMG_2314.png")  # => Format::Image
+      # Format.from_filename("IMG_2314")      # => Format::Image
+      # Format.from_filename("img_2314")      # => Format::Image
+      # Format.from_filename("img2314")       # => Format::Image
+      # Format.from_filename("Imi")           # => raises ArgumentError
       # ```
       def self.from_filename(filename : Path | String) : self
         format = from_filename? filename
@@ -173,12 +173,12 @@ module Chem::IO
       # @[FileType(format: Image, ext: %w(tiff png jpg), names: %w(IMG*))]
       # ...
       #
-      # FileFormat.from_filename?("IMG_2314.tiff") # => FileFormat::Image
-      # FileFormat.from_filename?("IMG_2314.png")  # => FileFormat::Image
-      # FileFormat.from_filename?("IMG_2314")      # => FileFormat::Image
-      # FileFormat.from_filename?("img_2314")      # => FileFormat::Image
-      # FileFormat.from_filename?("img2314")       # => FileFormat::Image
-      # FileFormat.from_filename?("Imi")           # => nil
+      # Format.from_filename?("IMG_2314.tiff") # => Format::Image
+      # Format.from_filename?("IMG_2314.png")  # => Format::Image
+      # Format.from_filename?("IMG_2314")      # => Format::Image
+      # Format.from_filename?("img_2314")      # => Format::Image
+      # Format.from_filename?("img2314")       # => Format::Image
+      # Format.from_filename?("Imi")           # => nil
       # ```
       def self.from_filename?(filename : Path | String) : self?
         filename = Path[filename] unless filename.is_a?(Path)
@@ -197,10 +197,10 @@ module Chem::IO
       # @[FileType(format: Image, names: %w(IMG*))]
       # ...
       #
-      # FileFormat.from_stem("IMG_2314") # => FileFormat::Image
-      # FileFormat.from_stem("img_2314") # => FileFormat::Image
-      # FileFormat.from_stem("img2314")  # => FileFormat::Image
-      # FileFormat.from_stem("Imi")      # => raises ArgumentError
+      # Format.from_stem("IMG_2314") # => Format::Image
+      # Format.from_stem("img_2314") # => Format::Image
+      # Format.from_stem("img2314")  # => Format::Image
+      # Format.from_stem("Imi")      # => raises ArgumentError
       # ```
       def self.from_stem(stem : Path | String) : self
         from_stem?(stem) || raise ArgumentError.new "File format not found for #{stem}"
@@ -216,10 +216,10 @@ module Chem::IO
       # @[FileType(format: Image, names: %w(IMG*))]
       # ...
       #
-      # FileFormat.from_stem?("IMG_2314") # => FileFormat::Image
-      # FileFormat.from_stem?("img_2314") # => FileFormat::Image
-      # FileFormat.from_stem?("img2314")  # => FileFormat::Image
-      # FileFormat.from_stem?("Imi")      # => nil
+      # Format.from_stem?("IMG_2314") # => Format::Image
+      # Format.from_stem?("img_2314") # => Format::Image
+      # Format.from_stem?("img2314")  # => Format::Image
+      # Format.from_stem?("Imi")      # => nil
       # ```
       def self.from_stem?(stem : String) : self?
         stem = stem.camelcase.downcase
