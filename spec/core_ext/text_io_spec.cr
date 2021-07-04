@@ -1,8 +1,6 @@
 require "../spec_helper"
 
-alias TextIO = Chem::IO::TextIO
-
-describe Chem::IO::TextIO do
+describe TextIO do
   describe "#check" do
     it "checks current character" do
       parser = TextIO.new IO::Memory.new("Lorem ipsum"), 4

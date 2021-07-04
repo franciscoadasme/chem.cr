@@ -1,4 +1,3 @@
-require "./io/text_io"
 require "./io/formats"
 
 module Chem::IO

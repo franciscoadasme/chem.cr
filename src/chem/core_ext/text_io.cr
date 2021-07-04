@@ -1,4 +1,4 @@
-class Chem::IO::TextIO
+class TextIO
   @buffer = Bytes.empty
 
   delegate close, to: @io
