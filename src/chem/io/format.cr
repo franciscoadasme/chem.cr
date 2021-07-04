@@ -3,62 +3,8 @@ module Chem::IO
     enum Format
       {% writers = FormatWriter.all_subclasses.select &.annotation(RegisterFormat) %}
       {% readers = FormatReader.all_subclasses.select(&.annotation(RegisterFormat)) %}
-      {% klasses = readers + writers %}
-      {% file_types = klasses.map &.annotation(IO::RegisterFormat) %}
-
-      # check missing annotation arguments
-      {% for klass in klasses %}
-        {% t = klass.annotation(RegisterFormat) %}
-        {% klass.raise "RegisterFormat annotation on #{klass} must set `format`" unless t[:format] %}
-        {% if !t[:ext] && !t[:names] %}
-          {% klass.raise "RegisterFormat annotation on #{klass} must set either `ext` or `names`" %}
-        {% end %}
-      {% end %}
-
-      # check duplicate file formats
-      {% file_formats = file_types.map(&.[:format].id).uniq.sort %}
-      {% for format in file_formats %}
-        {% for ary in [readers, writers] %}
-          {% ary = ary.select &.annotation(IO::RegisterFormat)[:format].id.==(format) %}
-          {% if ary.size > 1 %}
-            {% ary[1].raise "#{format} file format is already associated with " \
-                            "#{ary[0]}" %}
-          {% end %}
-        {% end %}
-      {% end %}
-
-      # check duplicate file extensions (different file formats)
-      {% format_by_ext = {} of String => MacroId %}
-      {% klass_by_ext = {} of String => MacroId %}
-      {% format_by_name = {} of String => MacroId %}
-      {% klass_by_name = {} of String => MacroId %}
-      {% for klass in klasses %}
-        {% format = klass.annotation(IO::RegisterFormat)[:format].id %}
-        {% if extnames = klass.annotation(IO::RegisterFormat)[:ext] %}
-          {% for ext in extnames %}
-            {% if (other = format_by_ext[ext]) && other != format %}
-              {% klass.raise ".#{ext.id} extension declared in #{klass} is already " \
-                             "associated with file format #{other} via " \
-                             "#{klass_by_ext[ext]}" %}
-            {% end %}
-            {% format_by_ext[ext] = format %}
-            {% klass_by_ext[ext] = klass %}
-          {% end %}
-        {% end %}
-
-        {% if names = klass.annotation(IO::RegisterFormat)[:names] %}
-          {% for name in names %}
-            {% key = name.tr("*", "").camelcase.underscore %}
-            {% if (other = format_by_name[key]) && other != format %}
-              {% klass.raise "File name #{name} declared in #{klass} is already " \
-                             "associated with file format #{other} via " \
-                             "#{klass_by_name[name]}" %}
-            {% end %}
-            {% format_by_name[key] = format %}
-            {% klass_by_name[key] = klass %}
-          {% end %}
-        {% end %}
-      {% end %}
+      {% annotations = (readers + writers).map &.annotation(IO::RegisterFormat) %}
+      {% file_formats = annotations.map(&.[:format].id).uniq.sort %}
 
       {% for format in file_formats %}
         {{format.id}}
@@ -106,8 +52,8 @@ module Chem::IO
           case extname.downcase
           {% for format in file_formats %}
             {% extensions = [] of MacroId %}
-            {% for file_type in file_types.select(&.[:format].id.==(format)) %}
-              {% if extnames = file_type[:ext] %}
+            {% for ann in annotations.select(&.[:format].id.==(format)) %}
+              {% if extnames = ann[:ext] %}
                 {% for ext in extnames %}
                   {% extensions << ext %}
                 {% end %}
@@ -207,8 +153,8 @@ module Chem::IO
         stem = stem.camelcase.downcase
         {% for format in file_formats %}
           {% file_names = [] of StringLiteral %}
-          {% for file_type in file_types.select(&.[:format].id.==(format)) %}
-            {% if names = file_type[:names] %}
+          {% for ann in annotations.select(&.[:format].id.==(format)) %}
+            {% if names = ann[:names] %}
               {% for name in names %}
                 {% file_names << name.id.stringify.camelcase.downcase %}
               {% end %}
@@ -234,8 +180,8 @@ module Chem::IO
           case self
           {% for format in file_formats %}
             {% extensions = [] of MacroId %}
-            {% for file_type in file_types.select(&.[:format].id.==(format)) %}
-              {% if extnames = file_type[:ext] %}
+            {% for ann in annotations.select(&.[:format].id.==(format)) %}
+              {% if extnames = ann[:ext] %}
                 {% for ext in extnames %}
                   {% extensions << ext %}
                 {% end %}

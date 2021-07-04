@@ -120,39 +120,4 @@ module Chem
   abstract class Spatial::Grid::Reader < FormatReader(Spatial::Grid)
     abstract def info : Spatial::Grid::Info
   end
-
-  macro finished
-    {% for reader in FormatReader.all_subclasses.select(&.annotation(IO::RegisterFormat)) %}
-      {% format = reader.annotation(IO::RegisterFormat)[:format].id.underscore %}
-
-      {% type = reader.ancestors.reject(&.type_vars.empty?)[0].type_vars[0] %}
-      {% keyword = type.class.id.ends_with?("Module") ? "module" : nil %}
-      {% keyword = type < Reference ? "class" : "struct" unless keyword %}
-
-      {{keyword.id}} ::{{type.id}}
-        def self.from_{{format.id}}(input : ::IO | Path | String, *args, **options) : self
-          {{reader}}.open(input, *args, **options) do |reader|
-            reader.read_entry
-          end
-        end
-      end
-
-      class ::Array(T)
-        def self.from_{{format.id}}(input : ::IO | Path | String, *args, **options) : self
-          {{reader}}.new(input, *args, **options).to_a
-        end
-
-        def self.from_{{format.id}}(input : ::IO | Path | String,
-                                    indexes : Array(Int),
-                                    *args,
-                                    **options) : self
-          ary = Array(Chem::Structure).new indexes.size
-          {{reader}}.open(input, *args, **options) do |reader|
-            reader.each(indexes) { |st| ary << st }
-          end
-          ary
-        end
-      end
-    {% end %}
-  end
 end
