@@ -1,6 +1,4 @@
-require "./io/register_format"
-require "./io/format"
-require "./io/formats"
+require "./io/**"
 
 module Chem::IO
   class ParseException < Exception; end
