@@ -1,7 +1,7 @@
 require "../spec_helper"
 
 @[Chem::IO::FileType(format: CAD, ext: %w(cad))]
-class CAD::Reader < Chem::IO::FormatReader(String)
+class CAD::Reader < Chem::FormatReader(String)
   def read_entry : String
     "foo"
   end
