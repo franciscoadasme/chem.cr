@@ -1,6 +1,6 @@
 module Chem::VASP::Poscar
   @[IO::FileType(format: Poscar, ext: %w(poscar), names: %w(POSCAR* CONTCAR*))]
-  class Writer < IO::FormatWriter(AtomCollection)
+  class Writer < FormatWriter(AtomCollection)
     def initialize(io : ::IO | Path | String,
                    order @ele_order : Array(Element)? = nil,
                    @fractional : Bool = false,

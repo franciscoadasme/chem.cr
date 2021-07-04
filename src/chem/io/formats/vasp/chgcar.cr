@@ -11,7 +11,7 @@ module Chem::VASP::Chgcar
   end
 
   @[IO::FileType(format: Chgcar, names: %w(CHGCAR*))]
-  class Writer < IO::FormatWriter(Spatial::Grid)
+  class Writer < FormatWriter(Spatial::Grid)
     include VASP::GridWriter
 
     def write(grid : Spatial::Grid) : Nil

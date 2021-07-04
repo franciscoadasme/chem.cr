@@ -1,6 +1,6 @@
 class Chem::Protein::Stride < Chem::Protein::SecondaryStructureCalculator
   @[IO::FileType(format: Stride, ext: %w(stride))]
-  class Writer < IO::FormatWriter(Structure)
+  class Writer < FormatWriter(Structure)
     @pdbid = "0000"
 
     def initialize(io : ::IO | Path | String,

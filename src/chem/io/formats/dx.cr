@@ -27,7 +27,7 @@ module Chem::DX
   end
 
   @[IO::FileType(format: DX, ext: %w(dx))]
-  class Writer < IO::FormatWriter(Spatial::Grid)
+  class Writer < FormatWriter(Spatial::Grid)
     def write(grid : Spatial::Grid) : Nil
       check_open
       write_header grid

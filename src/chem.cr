@@ -26,6 +26,7 @@ require "./chem/protein"
 require "./chem/topology"
 
 require "./chem/format_reader"
+require "./chem/format_writer"
 require "./chem/io"
 
 module Chem

@@ -8,12 +8,12 @@ class CAD::Reader < Chem::FormatReader(String)
 end
 
 @[Chem::IO::FileType(format: Image, ext: %w(bmp jpg png tiff))]
-class Image::Writer < Chem::IO::FormatWriter(String)
+class Image::Writer < Chem::FormatWriter(String)
   def write(obj : String) : Nil; end
 end
 
 @[Chem::IO::FileType(format: License, ext: %w(lic), names: %w(SPEC LIC* *KE *any*))]
-class License::Writer < Chem::IO::FormatWriter(String)
+class License::Writer < Chem::FormatWriter(String)
   def write(obj : String) : Nil; end
 end
 

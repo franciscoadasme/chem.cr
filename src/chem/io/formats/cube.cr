@@ -28,7 +28,7 @@ module Chem::Cube
   end
 
   @[IO::FileType(format: Cube, ext: %w(cube))]
-  class Writer < IO::FormatWriter(Spatial::Grid)
+  class Writer < FormatWriter(Spatial::Grid)
     ANGS_TO_BOHR = 1.88972612478289694072
 
     def initialize(input : ::IO | Path | String,
