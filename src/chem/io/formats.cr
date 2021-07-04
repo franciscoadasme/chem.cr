@@ -20,7 +20,7 @@ module Chem::IO
   macro finished
     enum Format
       {% writers = Writer.all_subclasses.select &.annotation(FileType) %}
-      {% readers = Reader.all_subclasses.select(&.annotation(FileType)) %}
+      {% readers = FormatReader.all_subclasses.select(&.annotation(FileType)) %}
       {% klasses = readers + writers %}
       {% file_types = klasses.map &.annotation(IO::FileType) %}
 

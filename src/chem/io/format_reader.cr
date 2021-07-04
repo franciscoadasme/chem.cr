@@ -1,5 +1,5 @@
 module Chem
-  abstract class IO::Reader(T)
+  abstract class IO::FormatReader(T)
     abstract def read_entry : T
 
     property? sync_close = false
@@ -34,7 +34,7 @@ module Chem
     end
   end
 
-  abstract class Structure::Reader < IO::Reader(Structure)
+  abstract class Structure::Reader < IO::FormatReader(Structure)
     include Iterator(Structure)
 
     abstract def skip_structure : Nil
@@ -117,12 +117,12 @@ module Chem
     end
   end
 
-  abstract class Spatial::Grid::Reader < IO::Reader(Spatial::Grid)
+  abstract class Spatial::Grid::Reader < IO::FormatReader(Spatial::Grid)
     abstract def info : Spatial::Grid::Info
   end
 
   macro finished
-    {% for reader in IO::Reader.all_subclasses.select(&.annotation(IO::FileType)) %}
+    {% for reader in IO::FormatReader.all_subclasses.select(&.annotation(IO::FileType)) %}
       {% format = reader.annotation(IO::FileType)[:format].id.underscore %}
 
       {% type = reader.ancestors.reject(&.type_vars.empty?)[0].type_vars[0] %}
