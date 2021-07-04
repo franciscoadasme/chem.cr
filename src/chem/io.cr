@@ -1,3 +1,4 @@
+require "./io/file_type"
 require "./io/format"
 require "./io/formats"
 
