@@ -1,5 +1,5 @@
 module Chem::VASP::Locpot
-  @[IO::FileType(format: Locpot, names: %w(LOCPOT*))]
+  @[IO::RegisterFormat(format: Locpot, names: %w(LOCPOT*))]
   class Reader < Spatial::Grid::Reader
     include GridReader
 
@@ -9,7 +9,7 @@ module Chem::VASP::Locpot
     end
   end
 
-  @[IO::FileType(format: Locpot, names: %w(LOCPOT*))]
+  @[IO::RegisterFormat(format: Locpot, names: %w(LOCPOT*))]
   class Writer < FormatWriter(Spatial::Grid)
     include GridWriter
 

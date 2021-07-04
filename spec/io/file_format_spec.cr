@@ -1,18 +1,18 @@
 require "../spec_helper"
 
-@[Chem::IO::FileType(format: CAD, ext: %w(cad))]
+@[Chem::IO::RegisterFormat(format: CAD, ext: %w(cad))]
 class CAD::Reader < Chem::FormatReader(String)
   def read_entry : String
     "foo"
   end
 end
 
-@[Chem::IO::FileType(format: Image, ext: %w(bmp jpg png tiff))]
+@[Chem::IO::RegisterFormat(format: Image, ext: %w(bmp jpg png tiff))]
 class Image::Writer < Chem::FormatWriter(String)
   def write(obj : String) : Nil; end
 end
 
-@[Chem::IO::FileType(format: License, ext: %w(lic), names: %w(SPEC LIC* *KE *any*))]
+@[Chem::IO::RegisterFormat(format: License, ext: %w(lic), names: %w(SPEC LIC* *KE *any*))]
 class License::Writer < Chem::FormatWriter(String)
   def write(obj : String) : Nil; end
 end

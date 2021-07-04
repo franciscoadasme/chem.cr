@@ -122,8 +122,8 @@ module Chem
   end
 
   macro finished
-    {% for reader in FormatReader.all_subclasses.select(&.annotation(IO::FileType)) %}
-      {% format = reader.annotation(IO::FileType)[:format].id.underscore %}
+    {% for reader in FormatReader.all_subclasses.select(&.annotation(IO::RegisterFormat)) %}
+      {% format = reader.annotation(IO::RegisterFormat)[:format].id.underscore %}
 
       {% type = reader.ancestors.reject(&.type_vars.empty?)[0].type_vars[0] %}
       {% keyword = type.class.id.ends_with?("Module") ? "module" : nil %}

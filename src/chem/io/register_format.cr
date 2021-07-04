@@ -1,5 +1,5 @@
 module Chem::IO
-  # Marks a class as a provider of a file format.
+  # Registers a file format.
   #
   # A file type associates extensions and/or file names with a file format, and links
   # the latter to the annotated classes. If the file format does not exist, it is
@@ -11,9 +11,9 @@ module Chem::IO
   # or both (e.g., "*Baz*").
   #
   # ```
-  # @[FileType(format: Log, ext: %w(txt log out), names: %w(LOG *OUT))]
+  # @[RegisterFormat(format: Log, ext: %w(txt log out), names: %w(LOG *OUT))]
   # class LogParser
   # end
   # ```
-  annotation FileType; end
+  annotation RegisterFormat; end
 end

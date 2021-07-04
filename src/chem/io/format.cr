@@ -1,17 +1,17 @@
 module Chem::IO
   macro finished
     enum Format
-      {% writers = FormatWriter.all_subclasses.select &.annotation(FileType) %}
-      {% readers = FormatReader.all_subclasses.select(&.annotation(FileType)) %}
+      {% writers = FormatWriter.all_subclasses.select &.annotation(RegisterFormat) %}
+      {% readers = FormatReader.all_subclasses.select(&.annotation(RegisterFormat)) %}
       {% klasses = readers + writers %}
-      {% file_types = klasses.map &.annotation(IO::FileType) %}
+      {% file_types = klasses.map &.annotation(IO::RegisterFormat) %}
 
       # check missing annotation arguments
       {% for klass in klasses %}
-        {% t = klass.annotation(FileType) %}
-        {% klass.raise "FileType annotation on #{klass} must set `format`" unless t[:format] %}
+        {% t = klass.annotation(RegisterFormat) %}
+        {% klass.raise "RegisterFormat annotation on #{klass} must set `format`" unless t[:format] %}
         {% if !t[:ext] && !t[:names] %}
-          {% klass.raise "FileType annotation on #{klass} must set either `ext` or `names`" %}
+          {% klass.raise "RegisterFormat annotation on #{klass} must set either `ext` or `names`" %}
         {% end %}
       {% end %}
 
@@ -19,7 +19,7 @@ module Chem::IO
       {% file_formats = file_types.map(&.[:format].id).uniq.sort %}
       {% for format in file_formats %}
         {% for ary in [readers, writers] %}
-          {% ary = ary.select &.annotation(IO::FileType)[:format].id.==(format) %}
+          {% ary = ary.select &.annotation(IO::RegisterFormat)[:format].id.==(format) %}
           {% if ary.size > 1 %}
             {% ary[1].raise "#{format} file format is already associated with " \
                             "#{ary[0]}" %}
@@ -33,8 +33,8 @@ module Chem::IO
       {% format_by_name = {} of String => MacroId %}
       {% klass_by_name = {} of String => MacroId %}
       {% for klass in klasses %}
-        {% format = klass.annotation(IO::FileType)[:format].id %}
-        {% if extnames = klass.annotation(IO::FileType)[:ext] %}
+        {% format = klass.annotation(IO::RegisterFormat)[:format].id %}
+        {% if extnames = klass.annotation(IO::RegisterFormat)[:ext] %}
           {% for ext in extnames %}
             {% if (other = format_by_ext[ext]) && other != format %}
               {% klass.raise ".#{ext.id} extension declared in #{klass} is already " \
@@ -46,7 +46,7 @@ module Chem::IO
           {% end %}
         {% end %}
 
-        {% if names = klass.annotation(IO::FileType)[:names] %}
+        {% if names = klass.annotation(IO::RegisterFormat)[:names] %}
           {% for name in names %}
             {% key = name.tr("*", "").camelcase.underscore %}
             {% if (other = format_by_name[key]) && other != format %}
@@ -74,7 +74,7 @@ module Chem::IO
       # otherwise.
       #
       # ```
-      # @[FileType(format: Image, ext: %w(tiff png jpg))]
+      # @[RegisterFormat(format: Image, ext: %w(tiff png jpg))]
       # ...
       #
       # Format.from_ext("img.tiff") # => Format::Image
@@ -91,7 +91,7 @@ module Chem::IO
       # Returns the file format associated with *extname*, or `nil` otherwise.
       #
       # ```
-      # @[FileType(format: Image, ext: %w(tiff png jpg))]
+      # @[RegisterFormat(format: Image, ext: %w(tiff png jpg))]
       # ...
       #
       # Format.from_ext?("img.tiff") # => Format::Image
@@ -130,7 +130,7 @@ module Chem::IO
       # search with the stem in *filename* via `.from_stem?`.
       #
       # ```
-      # @[FileType(format: Image, ext: %w(tiff png jpg), names: %w(IMG*))]
+      # @[RegisterFormat(format: Image, ext: %w(tiff png jpg), names: %w(IMG*))]
       # ...
       #
       # Format.from_filename("IMG_2314.tiff") # => Format::Image
@@ -152,7 +152,7 @@ module Chem::IO
       # search with the stem in *filename* via `.from_stem?`.
       #
       # ```
-      # @[FileType(format: Image, ext: %w(tiff png jpg), names: %w(IMG*))]
+      # @[RegisterFormat(format: Image, ext: %w(tiff png jpg), names: %w(IMG*))]
       # ...
       #
       # Format.from_filename?("IMG_2314.tiff") # => Format::Image
@@ -176,7 +176,7 @@ module Chem::IO
       # and `"chg_car"`.
       #
       # ```
-      # @[FileType(format: Image, names: %w(IMG*))]
+      # @[RegisterFormat(format: Image, names: %w(IMG*))]
       # ...
       #
       # Format.from_stem("IMG_2314") # => Format::Image
@@ -195,7 +195,7 @@ module Chem::IO
       # and `"chg_car"`.
       #
       # ```
-      # @[FileType(format: Image, names: %w(IMG*))]
+      # @[RegisterFormat(format: Image, names: %w(IMG*))]
       # ...
       #
       # Format.from_stem?("IMG_2314") # => Format::Image

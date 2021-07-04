@@ -1,4 +1,4 @@
-require "./io/file_type"
+require "./io/register_format"
 require "./io/format"
 require "./io/formats"
 

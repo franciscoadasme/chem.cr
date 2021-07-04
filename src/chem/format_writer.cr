@@ -42,8 +42,8 @@ module Chem
   end
 
   macro finished
-    {% for writer in FormatWriter.all_subclasses.select(&.annotation(IO::FileType)) %}
-      {% format = writer.annotation(IO::FileType)[:format].id.downcase %}
+    {% for writer in FormatWriter.all_subclasses.select(&.annotation(IO::RegisterFormat)) %}
+      {% format = writer.annotation(IO::RegisterFormat)[:format].id.downcase %}
 
       {% type = writer.superclass.type_vars[0] %}
       {% keyword = type.class.id.ends_with?("Module") ? "module" : nil %}
