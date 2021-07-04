@@ -10,7 +10,7 @@ module Chem::VASP::Locpot
   end
 
   @[IO::FileType(format: Locpot, names: %w(LOCPOT*))]
-  class Writer < IO::Writer(Spatial::Grid)
+  class Writer < IO::FormatWriter(Spatial::Grid)
     include GridWriter
 
     def write(grid : Spatial::Grid) : Nil

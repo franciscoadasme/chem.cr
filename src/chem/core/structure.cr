@@ -227,7 +227,7 @@ module Chem
       format = IO::Format.parse format if format.is_a?(String)
       {% begin %}
         case format
-        {% for writer in IO::Writer.all_subclasses.select(&.annotation(IO::FileType)) %}
+        {% for writer in IO::FormatWriter.all_subclasses.select(&.annotation(IO::FileType)) %}
           {% if (type = writer.superclass.type_vars[0]) && type <= AtomCollection %}
             {% format = writer.annotation(IO::FileType)[:format].id.downcase %}
             when .{{format.id}}?

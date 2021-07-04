@@ -1,6 +1,6 @@
 module Chem::DFTB::Gen
   @[IO::FileType(format: Gen, ext: %w(gen))]
-  class Writer < IO::Writer(AtomCollection)
+  class Writer < IO::FormatWriter(AtomCollection)
     def initialize(output : ::IO | Path | String,
                    @fractional : Bool = false,
                    *,

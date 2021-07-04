@@ -54,7 +54,7 @@ module Chem::PDB
   end
 
   @[IO::FileType(format: PDB, ext: %w(ent pdb))]
-  class Writer < IO::Writer(AtomCollection)
+  class Writer < IO::FormatWriter(AtomCollection)
     PDB_VERSION      = "3.30"
     PDB_VERSION_DATE = Time.local 2011, 7, 13
     WHITESPACE       = ' '

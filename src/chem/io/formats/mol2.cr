@@ -1,6 +1,6 @@
 module Chem::Mol2
   @[IO::FileType(format: Mol2, ext: %w(mol2))]
-  class Writer < IO::Writer(AtomCollection)
+  class Writer < IO::FormatWriter(AtomCollection)
     @atom_table = {} of Atom => Int32
     @res_table = {} of Residue => Int32
 

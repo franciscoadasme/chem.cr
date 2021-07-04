@@ -1,6 +1,6 @@
 module Chem::PyMOL
   @[IO::FileType(format: PyMOL, ext: %w(pml))]
-  class Writer < IO::Writer(Structure)
+  class Writer < IO::FormatWriter(Structure)
     CODES = {
       Protein::SecondaryStructure::BetaStrand            => 'S',
       Protein::SecondaryStructure::LeftHandedHelix3_10   => 'H',

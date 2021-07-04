@@ -1,5 +1,5 @@
 module Chem
-  abstract class IO::Writer(T)
+  abstract class IO::FormatWriter(T)
     abstract def write(obj : T) : Nil
 
     property? sync_close = false
@@ -42,7 +42,7 @@ module Chem
   end
 
   macro finished
-    {% for writer in IO::Writer.all_subclasses.select(&.annotation(IO::FileType)) %}
+    {% for writer in IO::FormatWriter.all_subclasses.select(&.annotation(IO::FileType)) %}
       {% format = writer.annotation(IO::FileType)[:format].id.downcase %}
 
       {% type = writer.superclass.type_vars[0] %}

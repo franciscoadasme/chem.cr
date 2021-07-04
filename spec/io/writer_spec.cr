@@ -1,6 +1,6 @@
 require "../spec_helper"
 
-describe Chem::IO::Writer do
+describe Chem::IO::FormatWriter do
   describe "#to_document" do
     it "returns a string" do
       "foo".to_document.should eq "<foo>"
@@ -21,7 +21,7 @@ describe Chem::IO::Writer do
 end
 
 @[Chem::IO::FileType(format: Document, ext: %w(pdf doc docx rtf))]
-class Document::Writer < Chem::IO::Writer(String)
+class Document::Writer < Chem::IO::FormatWriter(String)
   def write(obj : String) : Nil
     @io << '<' << obj << '>'
   end

@@ -1,6 +1,6 @@
 module Chem::VMD
   @[IO::FileType(format: VMD, ext: %w(vmd))]
-  class Writer < IO::Writer(Structure)
+  class Writer < IO::FormatWriter(Structure)
     def initialize(io : ::IO | Path | String,
                    @path : String | Path | Nil = nil,
                    *,
