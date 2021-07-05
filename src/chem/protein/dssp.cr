@@ -362,7 +362,7 @@ module Chem::Protein
         end
       end
 
-      def to_s(io : ::IO)
+      def to_s(io : IO)
         io << @index << ':' << (parallel? ? 'p' : 'a') << ":[" << @i.size << ":"
         @i.join ',', io
         io << '/' << @j.size << ":"

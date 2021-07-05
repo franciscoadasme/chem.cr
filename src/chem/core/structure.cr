@@ -26,7 +26,7 @@ module Chem
       read path, format, guess_topology
     end
 
-    def self.read(input : ::IO | Path | String,
+    def self.read(input : IO | Path | String,
                   format : Format | String,
                   guess_topology : Bool = true) : self
       format = Format.parse format if format.is_a?(String)
@@ -159,7 +159,7 @@ module Chem
       size == 0
     end
 
-    def inspect(io : ::IO)
+    def inspect(io : IO)
       to_s io
     end
 
@@ -201,7 +201,7 @@ module Chem
       end
     end
 
-    def to_s(io : ::IO)
+    def to_s(io : IO)
       io << "<Structure"
       io << " " << title.inspect unless title.blank?
       io << ": "
@@ -223,7 +223,7 @@ module Chem
       write path, format
     end
 
-    def write(output : ::IO | Path | String, format : Format | String) : Nil
+    def write(output : IO | Path | String, format : Format | String) : Nil
       format = Format.parse format if format.is_a?(String)
       {% begin %}
         case format

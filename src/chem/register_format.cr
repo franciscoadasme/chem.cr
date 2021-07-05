@@ -85,7 +85,7 @@ module Chem
       {% keyword = type < Reference ? "class" : "struct" unless keyword %}
 
       {{keyword.id}} ::{{type.id}}
-        def self.from_{{format.id}}(input : ::IO | Path | String, *args, **options) : self
+        def self.from_{{format.id}}(input : IO | Path | String, *args, **options) : self
           {{reader}}.open(input, *args, **options) do |reader|
             reader.read_entry
           end
@@ -93,11 +93,11 @@ module Chem
       end
 
       class ::Array(T)
-        def self.from_{{format.id}}(input : ::IO | Path | String, *args, **options) : self
+        def self.from_{{format.id}}(input : IO | Path | String, *args, **options) : self
           {{reader}}.new(input, *args, **options).to_a
         end
 
-        def self.from_{{format.id}}(input : ::IO | Path | String,
+        def self.from_{{format.id}}(input : IO | Path | String,
                                     indexes : Array(Int),
                                     *args,
                                     **options) : self
@@ -124,7 +124,7 @@ module Chem
           end
         end
 
-        def to_{{format.id}}(output : ::IO | Path | String, *args, **options) : Nil
+        def to_{{format.id}}(output : IO | Path | String, *args, **options) : Nil
           {{writer}}.open(output, *args, **options) do |writer|
             writer.write self
           end

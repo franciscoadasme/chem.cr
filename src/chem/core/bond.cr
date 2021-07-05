@@ -46,7 +46,7 @@ module Chem
       @first == atom || @second == atom
     end
 
-    def inspect(io : ::IO) : Nil
+    def inspect(io : IO) : Nil
       io << "<Bond "
       @first.to_s io
       io << to_char
@@ -93,7 +93,7 @@ module Chem
       end
     end
 
-    def to_s(io : ::IO) : Nil
+    def to_s(io : IO) : Nil
       io << @first.name << to_char << @second.name
     end
   end

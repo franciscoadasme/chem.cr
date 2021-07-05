@@ -3,7 +3,7 @@ class Chem::Protein::Stride < Chem::Protein::SecondaryStructureCalculator
   class Writer < FormatWriter(Structure)
     @pdbid = "0000"
 
-    def initialize(io : ::IO | Path | String,
+    def initialize(io : IO | Path | String,
                    @path : String | Path | Nil = nil,
                    *,
                    sync_close : Bool = false)

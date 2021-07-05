@@ -253,7 +253,7 @@ module Chem::Linalg
       end
     end
 
-    def inspect(io : ::IO)
+    def inspect(io : IO)
       io << "Matrix[["
       each_with_index do |value, i, j|
         io << (j == 0 ? "], [" : ", ") if i > 0 || j > 0
@@ -402,7 +402,7 @@ module Chem::Linalg
       ary
     end
 
-    def to_s(io : ::IO)
+    def to_s(io : IO)
       io << "[["
       each_with_index do |value, i, j|
         io << (j == 0 ? "]\n [" : " ") if i > 0 || j > 0

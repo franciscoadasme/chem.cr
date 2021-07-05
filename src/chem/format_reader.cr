@@ -5,7 +5,7 @@ module Chem
     property? sync_close = false
     getter? closed = false
 
-    def initialize(io : ::IO, @sync_close : Bool = true)
+    def initialize(io : IO, @sync_close : Bool = true)
       @io = TextIO.new io
     end
 
@@ -13,7 +13,7 @@ module Chem
       new File.open(path), sync_close: true
     end
 
-    def self.open(io : ::IO, sync_close : Bool = true, **options)
+    def self.open(io : IO, sync_close : Bool = true, **options)
       reader = new io, **options, sync_close: sync_close
       yield reader ensure reader.close
     end
@@ -39,7 +39,7 @@ module Chem
 
     abstract def skip_structure : Nil
 
-    def initialize(input : ::IO,
+    def initialize(input : IO,
                    @guess_topology : Bool = true,
                    sync_close : Bool = true)
       super input, sync_close

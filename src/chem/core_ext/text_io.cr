@@ -3,7 +3,7 @@ class TextIO
 
   delegate close, to: @io
 
-  def initialize(@io : ::IO, buffer_size = 8192)
+  def initialize(@io : IO, buffer_size = 8192)
     @buffer_ = Bytes.new buffer_size
   end
 
@@ -112,7 +112,7 @@ class TextIO
   end
 
   def read : Char
-    read? || raise ::IO::EOFError.new
+    read? || raise IO::EOFError.new
   end
 
   def read? : Char?
@@ -124,7 +124,7 @@ class TextIO
   end
 
   def read_byte : UInt8
-    read_byte? || raise ::IO::EOFError.new
+    read_byte? || raise IO::EOFError.new
   end
 
   def read_byte? : UInt8?
@@ -239,7 +239,7 @@ class TextIO
   end
 
   def read_line : String
-    raise ::IO::EOFError.new if eof?
+    raise IO::EOFError.new if eof?
     bytes = read_bytes_until '\n'
     bytes = bytes[0, bytes.size - 1] if bytes[-1]? === '\r'
     @buffer += 1 unless @buffer.empty?
@@ -265,7 +265,7 @@ class TextIO
   end
 
   def read_word : String
-    read_word? || raise ::IO::EOFError.new
+    read_word? || raise IO::EOFError.new
   end
 
   def read_word? : String?

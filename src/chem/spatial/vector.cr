@@ -138,7 +138,7 @@ module Chem::Spatial
       Vector.new -@x, -@y, -@z
     end
 
-    def inspect(io : ::IO)
+    def inspect(io : IO)
       io << "Vector[" << @x << ", " << @y << ", " << @z << ']'
     end
 
@@ -203,7 +203,7 @@ module Chem::Spatial
       to_fractional lattice.basis
     end
 
-    def to_s(io : ::IO)
+    def to_s(io : IO)
       io << '[' << @x << ' ' << @y << ' ' << @z << ']'
     end
 

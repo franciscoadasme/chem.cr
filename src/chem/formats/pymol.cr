@@ -26,7 +26,7 @@ module Chem::PyMOL
       Protein::SecondaryStructure::Polyproline           => "pp",
     }
 
-    def initialize(io : ::IO | Path | String,
+    def initialize(io : IO | Path | String,
                    @path : String | Path | Nil = nil,
                    *,
                    sync_close : Bool = false)

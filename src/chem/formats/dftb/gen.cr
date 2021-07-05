@@ -1,7 +1,7 @@
 module Chem::DFTB::Gen
   @[RegisterFormat(format: Gen, ext: %w(gen))]
   class Writer < FormatWriter(AtomCollection)
-    def initialize(output : ::IO | Path | String,
+    def initialize(output : IO | Path | String,
                    @fractional : Bool = false,
                    *,
                    sync_close : Bool = false)

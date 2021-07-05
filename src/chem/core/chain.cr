@@ -118,7 +118,7 @@ module Chem
       end
     end
 
-    def inspect(io : ::IO) : Nil
+    def inspect(io : IO) : Nil
       io << "<Chain " << @id << '>'
     end
 

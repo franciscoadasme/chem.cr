@@ -34,7 +34,7 @@ module Chem::PDB
       end
     end
 
-    def encode(io : ::IO, num : Int, width : Int) : Nil
+    def encode(io : IO, num : Int, width : Int) : Nil
       out_of_range num if num < 1 - 10**(width - 1)
       return io.printf "%#{width}d", num if num < 10**width
       num -= 10**width
@@ -63,7 +63,7 @@ module Chem::PDB
     @record_index = 0
     @model = 0
 
-    def initialize(io : ::IO | Path | String,
+    def initialize(io : IO | Path | String,
                    @bonds : Bool | Array(Bond) = false,
                    @renumber : Bool = true,
                    *,
@@ -318,7 +318,7 @@ module Chem::PDB
     @seek_bonds = true
     @sec = [] of Tuple(Protein::SecondaryStructure, ResidueId, ResidueId)
 
-    def initialize(input : ::IO,
+    def initialize(input : IO,
                    @alt_loc : Char? = nil,
                    chains : Enumerable(Char) | String | Nil = nil,
                    guess_topology : Bool = true,

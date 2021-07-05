@@ -21,7 +21,7 @@ module Chem
       @vdw_radius = vdw_radius || @covalent_radius + 0.9
     end
 
-    def inspect(io : ::IO) : Nil
+    def inspect(io : IO) : Nil
       io << "<Element " << @symbol << '(' << @atomic_number << ")>"
     end
 

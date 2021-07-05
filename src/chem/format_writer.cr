@@ -5,9 +5,9 @@ module Chem
     property? sync_close = false
     getter? closed = false
 
-    @io : ::IO
+    @io : IO
 
-    def initialize(input : ::IO | Path | String, *, @sync_close : Bool = false)
+    def initialize(input : IO | Path | String, *, @sync_close : Bool = false)
       if input.is_a?(Path | String)
         input = File.new(input, "w")
         @sync_close = true
@@ -15,7 +15,7 @@ module Chem
       @io = input
     end
 
-    def self.open(io : ::IO | Path | String, *args, sync_close : Bool = false, **options)
+    def self.open(io : IO | Path | String, *args, sync_close : Bool = false, **options)
       writer = new io, *args, **options, sync_close: sync_close
       yield writer ensure writer.close
     end

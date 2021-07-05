@@ -122,7 +122,7 @@ module Chem
       end
     end
 
-    def inspect(io : ::IO)
+    def inspect(io : IO)
       io << "<Atom "
       to_s io
       io << ">"
@@ -156,7 +156,7 @@ module Chem
       new_res << self
     end
 
-    def to_s(io : ::IO)
+    def to_s(io : IO)
       io << @residue
       io << ':' << @name << '(' << @serial << ')'
     end
