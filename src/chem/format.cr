@@ -1,9 +1,9 @@
-module Chem::IO
+module Chem
   macro finished
     enum Format
       {% writers = FormatWriter.all_subclasses.select &.annotation(RegisterFormat) %}
       {% readers = FormatReader.all_subclasses.select(&.annotation(RegisterFormat)) %}
-      {% annotations = (readers + writers).map &.annotation(IO::RegisterFormat) %}
+      {% annotations = (readers + writers).map &.annotation(RegisterFormat) %}
       {% file_formats = annotations.map(&.[:format].id).uniq.sort %}
 
       {% for format in file_formats %}

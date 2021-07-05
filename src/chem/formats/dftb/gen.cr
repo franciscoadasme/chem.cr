@@ -1,5 +1,5 @@
 module Chem::DFTB::Gen
-  @[IO::RegisterFormat(format: Gen, ext: %w(gen))]
+  @[RegisterFormat(format: Gen, ext: %w(gen))]
   class Writer < FormatWriter(AtomCollection)
     def initialize(output : ::IO | Path | String,
                    @fractional : Bool = false,
@@ -40,7 +40,7 @@ module Chem::DFTB::Gen
     end
   end
 
-  @[IO::RegisterFormat(format: Gen, ext: %w(gen))]
+  @[RegisterFormat(format: Gen, ext: %w(gen))]
   class Reader < Structure::Reader
     @builder = uninitialized Structure::Builder
     @elements = [] of Element

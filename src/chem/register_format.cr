@@ -1,4 +1,4 @@
-module Chem::IO
+module Chem
   # Registers a file format.
   #
   # A file type associates extensions and/or file names with a file format, and links
@@ -78,7 +78,7 @@ module Chem::IO
     {% end %}
 
     {% for reader in readers %}
-      {% format = reader.annotation(IO::RegisterFormat)[:format].id.underscore %}
+      {% format = reader.annotation(RegisterFormat)[:format].id.underscore %}
 
       {% type = reader.ancestors.reject(&.type_vars.empty?)[0].type_vars[0] %}
       {% keyword = type.class.id.ends_with?("Module") ? "module" : nil %}

@@ -1,5 +1,5 @@
 module Chem::DX
-  @[IO::RegisterFormat(format: DX, ext: %w(dx))]
+  @[RegisterFormat(format: DX, ext: %w(dx))]
   class Reader < Spatial::Grid::Reader
     def info : Spatial::Grid::Info
       while @io.skip_whitespace.peek == '#'
@@ -26,7 +26,7 @@ module Chem::DX
     end
   end
 
-  @[IO::RegisterFormat(format: DX, ext: %w(dx))]
+  @[RegisterFormat(format: DX, ext: %w(dx))]
   class Writer < FormatWriter(Spatial::Grid)
     def write(grid : Spatial::Grid) : Nil
       check_open

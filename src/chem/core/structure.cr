@@ -22,18 +22,18 @@ module Chem
     end
 
     def self.read(path : Path | String, guess_topology : Bool = true) : self
-      format = IO::Format.from_filename File.basename(path)
+      format = Format.from_filename File.basename(path)
       read path, format, guess_topology
     end
 
     def self.read(input : ::IO | Path | String,
-                  format : IO::Format | String,
+                  format : Format | String,
                   guess_topology : Bool = true) : self
-      format = IO::Format.parse format if format.is_a?(String)
+      format = Format.parse format if format.is_a?(String)
       {% begin %}
         case format
-        {% for reader in Reader.subclasses.select(&.annotation(IO::RegisterFormat)) %}
-          {% format = reader.annotation(IO::RegisterFormat)[:format].id.underscore %}
+        {% for reader in Reader.subclasses.select(&.annotation(RegisterFormat)) %}
+          {% format = reader.annotation(RegisterFormat)[:format].id.underscore %}
           when .{{format.id}}?
             from_{{format.id}} input, guess_topology: guess_topology
         {% end %}
@@ -219,17 +219,17 @@ module Chem
     end
 
     def write(path : Path | String) : Nil
-      format = IO::Format.from_filename path
+      format = Format.from_filename path
       write path, format
     end
 
-    def write(output : ::IO | Path | String, format : IO::Format | String) : Nil
-      format = IO::Format.parse format if format.is_a?(String)
+    def write(output : ::IO | Path | String, format : Format | String) : Nil
+      format = Format.parse format if format.is_a?(String)
       {% begin %}
         case format
-        {% for writer in FormatWriter.all_subclasses.select(&.annotation(IO::RegisterFormat)) %}
+        {% for writer in FormatWriter.all_subclasses.select(&.annotation(RegisterFormat)) %}
           {% if (type = writer.superclass.type_vars[0]) && type <= AtomCollection %}
-            {% format = writer.annotation(IO::RegisterFormat)[:format].id.downcase %}
+            {% format = writer.annotation(RegisterFormat)[:format].id.downcase %}
             when .{{format.id}}?
               to_{{format.id}} output
           {% end %}

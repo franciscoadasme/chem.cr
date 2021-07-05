@@ -1,5 +1,5 @@
 module Chem::VMD
-  @[IO::RegisterFormat(format: VMD, ext: %w(vmd))]
+  @[RegisterFormat(format: VMD, ext: %w(vmd))]
   class Writer < FormatWriter(Structure)
     def initialize(io : ::IO | Path | String,
                    @path : String | Path | Nil = nil,
