@@ -1,6 +1,6 @@
-require "../../spec_helper"
+require "../spec_helper"
 
-describe Chem::DFTB::Gen::Reader do
+describe Chem::Gen::Reader do
   it "parses a non-periodic Gen file" do
     content = <<-EOS
       5  C
@@ -80,7 +80,7 @@ describe Chem::DFTB::Gen::Reader do
   end
 end
 
-describe Chem::DFTB::Gen::Writer do
+describe Chem::Gen::Writer do
   structure = Chem::Structure.build(guess_topology: false) do
     title "NaCl-O-NaCl"
     atom PeriodicTable::Cl, V[30, 15, 10]

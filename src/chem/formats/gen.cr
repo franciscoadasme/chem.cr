@@ -1,4 +1,4 @@
-module Chem::DFTB::Gen
+module Chem::Gen
   @[RegisterFormat(format: Gen, ext: %w(gen))]
   class Writer < FormatWriter(AtomCollection)
     def initialize(output : IO | Path | String,
