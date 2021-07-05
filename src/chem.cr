@@ -31,4 +31,6 @@ require "./chem/io"
 
 module Chem
   class Error < Exception; end
+
+  class ParseException < Exception; end
 end

@@ -49,7 +49,7 @@ describe Chem::VASP::Poscar do
 
     it "fails when element symbols are missing" do
       msg = "Expected element symbols (vasp 5+)"
-      ex = expect_raises(Chem::IO::ParseException) do
+      ex = expect_raises(Chem::ParseException) do
         load_file "no_symbols.poscar"
       end
       ex.to_s.should eq "Couldn't read atom species"
@@ -65,7 +65,7 @@ describe Chem::VASP::Poscar do
     end
 
     it "fails when there are missing atomic species counts" do
-      ex = expect_raises(Chem::IO::ParseException) do
+      ex = expect_raises(Chem::ParseException) do
         load_file "mismatch.poscar"
       end
       ex.to_s.should eq "Couldn't read number of atoms for N"
@@ -81,7 +81,7 @@ describe Chem::VASP::Poscar do
     end
 
     it "fails when constraint flags are invalid" do
-      ex = expect_raises Chem::IO::ParseException do
+      ex = expect_raises Chem::ParseException do
         Chem::Structure.from_poscar IO::Memory.new <<-EOS
           Cubic BN
           3.57
