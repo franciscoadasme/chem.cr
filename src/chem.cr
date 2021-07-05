@@ -29,7 +29,7 @@ require "./chem/format"
 require "./chem/register_format"
 require "./chem/format_reader"
 require "./chem/format_writer"
-require "./chem/formats/*"
+require "./chem/formats/**"
 
 module Chem
   class Error < Exception; end

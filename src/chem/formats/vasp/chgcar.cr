@@ -1,3 +1,5 @@
+require "./utils"
+
 module Chem::VASP::Chgcar
   @[RegisterFormat(format: Chgcar, names: %w(CHGCAR*))]
   class Reader < Spatial::Grid::Reader

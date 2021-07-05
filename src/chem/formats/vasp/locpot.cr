@@ -1,3 +1,5 @@
+require "./utils"
+
 module Chem::VASP::Locpot
   @[RegisterFormat(format: Locpot, names: %w(LOCPOT*))]
   class Reader < Spatial::Grid::Reader
