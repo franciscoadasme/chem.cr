@@ -198,6 +198,12 @@ end
 enum_cast sec : Chem::Protein::SecondaryStructure
 enum_cast sectype : Chem::Protein::SecondaryStructureType
 
+# Asserts that *code* compiles successfully.
+def assert_code(code : String, file = __FILE__, line = __LINE__) : Nil
+  success, output = compile_code code
+  fail "Code failed with error:\n\n#{output}" unless success
+end
+
 # Asserts that compiling *code* produces an error containing *message*.
 def assert_error(code : String, message : String, file = __FILE__, line = __LINE__) : Nil
   success, output = compile_code code
