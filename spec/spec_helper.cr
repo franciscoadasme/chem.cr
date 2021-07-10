@@ -224,7 +224,7 @@ private def compile_code(code : String) : {Bool, String}
   buffer = IO::Memory.new
   args = ["run", "--no-color", "--no-codegen", tempfile.path]
   result = Process.run("crystal", args, error: buffer)
-  {result.success?, buffer.to_s}
+  {result.success?, buffer.to_s.strip}
 ensure
   buffer.try &.close
   tempfile.try &.delete
