@@ -85,7 +85,13 @@ module ::IO::Wrapper
   # designated constructor. Positional and named arguments are copied
   # from it except for `io` and `sync_close`.
   private macro generate_convenience_constructors
-    {% if method = @type.methods.find(&.name.==("initialize")) %}
+    {% method = @type.methods.find &.name.==("initialize") %}
+    # look for #initialize in ancestors
+    {% for type in @type.ancestors %}
+      {% method ||= type.methods.find(&.name.==("initialize")) %}
+    {% end %}
+
+    {% if method %}
       {% if method.args[0].id != "io : IO" %}
         {% method.raise "First argument of `#{@type}#initialize` must be \
                          `io : IO`, not `#{method.args[0]}`" %}

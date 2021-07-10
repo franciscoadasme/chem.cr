@@ -49,6 +49,21 @@ describe IO::Wrapper do
       EOS
   end
 
+  it "finds initialize in superclass" do
+    assert_code <<-EOS
+      abstract class A
+        include IO::Wrapper
+        def initialize(@io : IO, foo : Int32, sync_close : Bool = false); end
+      end
+      abstract class B < A
+        def initialize(@io : IO, bar : String, sync_close : Bool = false); end
+      end
+      abstract class C < B; end
+      class D < C; end
+      D.open(IO::Memory.new, bar: "bar") {}
+      EOS
+  end
+
   it "fails on invalid first argument" do
     message = "First argument of `BadArgumentIO#initialize` must be \
                `io : IO`, not `foo : String`"
