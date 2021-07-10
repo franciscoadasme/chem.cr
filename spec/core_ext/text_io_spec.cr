@@ -275,7 +275,7 @@ describe TextIO do
   describe "#read_float" do
     it "raises if float cannot be read" do
       parser = TextIO.new IO::Memory.new("abc")
-      expect_raises ParseException do
+      expect_raises ArgumentError do
         parser.read_float
       end
     end
@@ -334,7 +334,7 @@ describe TextIO do
   describe "#read_int" do
     it "raises if integer cannot be read" do
       parser = TextIO.new IO::Memory.new("abc")
-      expect_raises ParseException do
+      expect_raises ArgumentError do
         parser.read_int
       end
     end
@@ -445,7 +445,7 @@ describe TextIO do
     it "raises if a vector cannot be read" do
       io = IO::Memory.new "1.2 abcdef"
       parser = TextIO.new io
-      expect_raises ParseException, "Couldn't read a vector" do
+      expect_raises ArgumentError, "Couldn't read a vector" do
         parser.read_vector
       end
     end

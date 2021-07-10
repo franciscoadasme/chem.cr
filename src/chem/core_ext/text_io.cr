@@ -393,6 +393,6 @@ class TextIO
   end
 
   private def parse_exception(message : String) : NoReturn
-    raise ParseException.new(message)
+    raise ArgumentError.new(message)
   end
 end
