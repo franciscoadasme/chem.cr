@@ -318,18 +318,14 @@ module Chem::PDB
     @seek_bonds = true
     @sec = [] of Tuple(Protein::SecondaryStructure, ResidueId, ResidueId)
 
-    def initialize(input : IO,
+    def initialize(io : IO,
                    @alt_loc : Char? = nil,
                    chains : Enumerable(Char) | String | Nil = nil,
-                   guess_topology : Bool = true,
+                   @guess_topology : Bool = true,
                    @het : Bool = true,
-                   sync_close : Bool = true)
-      super input, guess_topology, sync_close: sync_close
+                   @sync_close : Bool = false)
+      @io = TextIO.new io
       @chains = chains.is_a?(Enumerable) ? chains.to_set : chains
-    end
-
-    def self.new(path : Path | String, **options) : self
-      new File.open(path), **options, sync_close: true
     end
 
     def next : Structure | Iterator::Stop

@@ -1,33 +1,8 @@
 module Chem
   abstract class FormatReader(T)
+    include IO::Wrapper
+
     abstract def read_entry : T
-
-    property? sync_close = false
-    getter? closed = false
-
-    def initialize(io : IO, @sync_close : Bool = true)
-      @io = TextIO.new io
-    end
-
-    def self.new(path : Path | String) : self
-      new File.open(path), sync_close: true
-    end
-
-    def self.open(io : IO, sync_close : Bool = true, **options)
-      reader = new io, **options, sync_close: sync_close
-      yield reader ensure reader.close
-    end
-
-    def self.open(path : Path | String, **options)
-      reader = new path, **options
-      yield reader ensure reader.close
-    end
-
-    def close
-      return if @closed
-      @closed = true
-      @io.close if @sync_close
-    end
 
     def parse_exception(msg : String)
       raise ParseException.new msg
@@ -39,14 +14,10 @@ module Chem
 
     abstract def skip_structure : Nil
 
-    def initialize(input : IO,
+    def initialize(io : IO,
                    @guess_topology : Bool = true,
-                   sync_close : Bool = true)
-      super input, sync_close
-    end
-
-    def self.new(path : Path | String, guess_topology : Bool = true) : self
-      new File.open(path), guess_topology, sync_close: true
+                   @sync_close : Bool = false)
+      @io = TextIO.new io
     end
 
     def each(indexes : Enumerable(Int), &block : Structure ->)
@@ -119,5 +90,9 @@ module Chem
 
   abstract class Spatial::Grid::Reader < FormatReader(Spatial::Grid)
     abstract def info : Spatial::Grid::Info
+
+    def initialize(io : IO, @sync_close : Bool = false)
+      @io = TextIO.new io
+    end
   end
 end
