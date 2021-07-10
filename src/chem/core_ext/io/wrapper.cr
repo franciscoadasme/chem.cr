@@ -12,7 +12,8 @@
 # * `self.open(path : String | Path, ..., & : self ->)`
 #
 # Ellipsis stand for the positional and named arguments declared in the
-# custom constructor, if any.
+# custom constructor, if any. Note that these methods are generated for
+# non-abstract classes and structs, only.
 #
 # ```
 # class LineIO
@@ -63,9 +64,6 @@ module ::IO::Wrapper
   # Whether to close the enclosed `IO` when closing this object.
   property sync_close : Bool = false
 
-  # Creates a new object from the given *io*.
-  def initialize(@io : IO, @sync_close : Bool = false); end
-
   # Closes this object. If *sync_close* is true, it will also close the
   # enclosed `IO`.
   def close
@@ -80,26 +78,13 @@ module ::IO::Wrapper
   end
 
   macro included
-    {% if @type.class? || @type.struct? %}
-      macro finished
-        generate_convenience_constructors
-      end
-    {% elsif @type.module? %}
-      macro included
-        macro finished
-          generate_convenience_constructors
-        end
-      end
-    {% end %}
+    generator_hook
   end
 
   # Defines convenience `initialize` and `open` methods mirroring the
   # designated constructor. Positional and named arguments are copied
   # from it except for `io` and `sync_close`.
-  #
-  # NOTE: Do not call this method directly.
   private macro generate_convenience_constructors
-    {% args = [] of Nil %}
     {% if method = @type.methods.find(&.name.==("initialize")) %}
       {% if method.args[0].id != "io : IO" %}
         {% method.raise "First argument of `#{@type}#initialize` must be \
@@ -119,6 +104,11 @@ module ::IO::Wrapper
       {% args = method.args.select do |arg|
            !%w(io sync_close).includes? arg.name.stringify
          end %}
+    {% else %}
+      {% args = [] of Nil %}
+
+      # Creates a new object from the given *io*.
+      def initialize(@io : IO, @sync_close : Bool = false); end
     {% end %}
 
     # Creates a new object from the given *path*. Positional and named
@@ -182,5 +172,29 @@ module ::IO::Wrapper
         {% end %}
       yield io ensure io.close
     end
+  end
+
+  # Hook for generating convenience methods.
+  #
+  # It ensures `generate_convenience_constructors` is called on concrete
+  # classes and structs, otherwise registers itself for abstract classes
+  # and modules via the `inherited` and `included` hooks, respectively.
+  # The latter is needed to account for inheritance/inclusion chains.
+  private macro generator_hook
+    {% if @type.class? || @type.struct? %}
+      {% if @type.abstract? %}
+        macro inherited
+          generator_hook
+        end
+      {% else %}
+        macro finished
+          generate_convenience_constructors
+        end
+      {% end %}
+    {% elsif @type.module? %}
+      macro included
+        generator_hook
+      end
+    {% end %}
   end
 end

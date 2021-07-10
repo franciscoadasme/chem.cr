@@ -1,6 +1,54 @@
 require "../../spec_helper"
 
 describe IO::Wrapper do
+  it "does not generate convenience methods on abstract class" do
+    assert_error <<-EOS, "undefined method 'open' for A.class"
+      abstract class A
+        include IO::Wrapper
+      end
+      A.open(IO::Memory.new) {}
+      EOS
+  end
+
+  it "does not generate convenience methods on modules" do
+    assert_error <<-EOS, "undefined method 'open' for A:Module"
+      module A
+        include IO::Wrapper
+      end
+      A.open(IO::Memory.new) {}
+      EOS
+  end
+
+  it "generate convenience methods on subclasses" do
+    assert_code <<-EOS
+      abstract class A
+        include IO::Wrapper
+      end
+      abstract class B < A; end
+      abstract class C < B; end
+      class D < C; end
+      D.open(IO::Memory.new) {}
+      EOS
+  end
+
+  it "generate convenience methods on including types" do
+    assert_code <<-EOS
+      module A
+        include IO::Wrapper
+      end
+      module B
+        include A
+      end
+      module C
+        include B
+      end
+      class D
+        include C
+      end
+      D.open(IO::Memory.new) {}
+      EOS
+  end
+
   it "fails on invalid first argument" do
     message = "First argument of `BadArgumentIO#initialize` must be \
                `io : IO`, not `foo : String`"
