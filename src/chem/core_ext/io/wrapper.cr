@@ -173,7 +173,7 @@ module ::IO::Wrapper
     )
       io = new path{{",".id unless args.empty?}}
         {% for arg, i in args %}
-          {{arg.is_a?(TypeDeclaration) ? arg.var : arg.name}}
+          {{arg.is_a?(TypeDeclaration) ? arg.var : arg.name}} \
           {{",".id if i < args.size - 1}}
         {% end %}
       yield io ensure io.close
