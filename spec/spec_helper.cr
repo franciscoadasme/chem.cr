@@ -200,6 +200,21 @@ enum_cast sectype : Chem::Protein::SecondaryStructureType
 
 # Asserts that compiling *code* produces an error containing *message*.
 def assert_error(code : String, message : String, file = __FILE__, line = __LINE__) : Nil
+  success, output = compile_code code
+  if success
+    fail "Expected an error but the code compiled successfully", file, line
+  elsif actual_message = output.lines.select(/^Error: /).first?
+    actual_message = actual_message.gsub("Error: ", "")
+    if actual_message != message
+      fail "Expected: #{message}\n     got: #{actual_message}", file, line
+    end
+  else
+    fail "Code failed with unrecognized error:\n\n#{output}"
+  end
+end
+
+# Compile the given *code*.
+private def compile_code(code : String) : {Bool, String}
   tempfile = File.tempfile do |f|
     root = Path.new Path.new(__DIR__).parts.take_while(&.!=("spec"))
     path = root.join("src", "chem").relative_to f.path
@@ -209,19 +224,8 @@ def assert_error(code : String, message : String, file = __FILE__, line = __LINE
   buffer = IO::Memory.new
   args = ["run", "--no-color", "--no-codegen", tempfile.path]
   result = Process.run("crystal", args, error: buffer)
-  if result.success?
-    fail "Expected an error but the code compiled successfully", file, line
-  else
-    actual_message = buffer.to_s.lines.select(/^Error: /).first?.try &.gsub("Error: ", "")
-    if actual_message.nil?
-      fail "Code failed with unrecognized error:\n\n#{buffer.to_s}"
-    elsif actual_message != message
-      fail <<-EOS, file, line
-        Expected error: #{message}
-                   got: #{actual_message}
-        EOS
-    end
-  end
-  buffer.close
-  tempfile.delete
+  {result.success?, buffer.to_s}
+ensure
+  buffer.try &.close
+  tempfile.try &.delete
 end
