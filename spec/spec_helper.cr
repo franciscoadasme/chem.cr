@@ -197,3 +197,31 @@ end
 
 enum_cast sec : Chem::Protein::SecondaryStructure
 enum_cast sectype : Chem::Protein::SecondaryStructureType
+
+# Asserts that compiling *code* produces an error containing *message*.
+def assert_error(code : String, message : String, file = __FILE__, line = __LINE__) : Nil
+  tempfile = File.tempfile do |f|
+    root = Path.new Path.new(__DIR__).parts.take_while(&.!=("spec"))
+    path = root.join("src", "chem").relative_to f.path
+    f.puts "require #{path.to_s.inspect}"
+    f.puts code
+  end
+  buffer = IO::Memory.new
+  args = ["run", "--no-color", "--no-codegen", tempfile.path]
+  result = Process.run("crystal", args, error: buffer)
+  if result.success?
+    fail "Expected an error but the code compiled successfully", file, line
+  else
+    actual_message = buffer.to_s.lines.select(/^Error: /).first?.try &.gsub("Error: ", "")
+    if actual_message.nil?
+      fail "Code failed with unrecognized error:\n\n#{buffer.to_s}"
+    elsif actual_message != message
+      fail <<-EOS, file, line
+        Expected error: #{message}
+                   got: #{actual_message}
+        EOS
+    end
+  end
+  buffer.close
+  tempfile.delete
+end
