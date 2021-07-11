@@ -19,7 +19,7 @@ describe IO::Wrapper do
       EOS
   end
 
-  it "generate convenience methods on subclasses" do
+  it "generates convenience methods on subclasses" do
     assert_code <<-EOS
       abstract class A
         include IO::Wrapper
@@ -31,7 +31,7 @@ describe IO::Wrapper do
       EOS
   end
 
-  it "generate convenience methods on including types" do
+  it "generates convenience methods on including types" do
     assert_code <<-EOS
       module A
         include IO::Wrapper
