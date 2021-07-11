@@ -64,6 +64,19 @@ describe IO::Wrapper do
       EOS
   end
 
+  it "handles argument internal names" do
+    assert_code <<-EOS
+      struct A
+        include IO::Wrapper
+        def initialize(@io : IO, foo bar : Int32, sync_close : Bool = false); end
+      end
+      A.new(IO::Memory.new, foo: 1)
+      A.new("asd", foo: 1)
+      A.open(IO::Memory.new, foo: 1) {}
+      A.open("asd", foo: 1) {}
+      EOS
+  end
+
   it "fails on invalid first argument" do
     message = "First argument of `BadArgumentIO#initialize` must be \
                `io : IO`, not `foo : String`"

@@ -132,7 +132,7 @@ module ::IO::Wrapper
     ) : self
       new File.new(path, FILE_MODE),
         {% for arg in args %}
-          {{arg.is_a?(TypeDeclaration) ? arg.var : arg.name}},
+          {{arg.is_a?(TypeDeclaration) ? arg.var : arg.internal_name}},
         {% end %}
         sync_close: true
     end
@@ -150,7 +150,7 @@ module ::IO::Wrapper
     )
       io = new io,
         {% for arg in args %}
-          {{arg.is_a?(TypeDeclaration) ? arg.var : arg.name}},
+          {{arg.is_a?(TypeDeclaration) ? arg.var : arg.internal_name}},
         {% end %}
         sync_close: sync_close
       yield io ensure io.close
@@ -173,7 +173,7 @@ module ::IO::Wrapper
     )
       io = new path{{",".id unless args.empty?}}
         {% for arg, i in args %}
-          {{arg.is_a?(TypeDeclaration) ? arg.var : arg.name}} \
+          {{arg.is_a?(TypeDeclaration) ? arg.var : arg.internal_name}} \
           {{",".id if i < args.size - 1}}
         {% end %}
       yield io ensure io.close
