@@ -60,7 +60,7 @@ module Chem
               {% end %}
             {% end %}
             {% unless extensions.empty? %}
-              when {{extensions.uniq.map { |ext| ".#{ext.downcase.id}" }.splat}}
+              when {{extensions.uniq.splat}}
                 {{format}}
             {% end %}
           {% end %}
@@ -189,7 +189,7 @@ module Chem
             {% end %}
             {% unless extensions.empty? %}
               when {{format}}
-                {{extensions.uniq.map { |ext| ".#{ext.id}" }}}
+                {{extensions.uniq}}
             {% end %}
           {% end %}
           else

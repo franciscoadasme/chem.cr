@@ -1,5 +1,5 @@
 class Chem::Protein::Stride < Chem::Protein::SecondaryStructureCalculator
-  @[RegisterFormat(format: Stride, ext: %w(stride))]
+  @[RegisterFormat(format: Stride, ext: %w(.stride))]
   class Writer < FormatWriter(Structure)
     @pdbid = "0000"
 

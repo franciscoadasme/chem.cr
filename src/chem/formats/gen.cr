@@ -1,5 +1,5 @@
 module Chem::Gen
-  @[RegisterFormat(format: Gen, ext: %w(gen))]
+  @[RegisterFormat(format: Gen, ext: %w(.gen))]
   class Writer < FormatWriter(AtomCollection)
     def initialize(@io : IO,
                    @fractional : Bool = false,
@@ -38,7 +38,7 @@ module Chem::Gen
     end
   end
 
-  @[RegisterFormat(format: Gen, ext: %w(gen))]
+  @[RegisterFormat(format: Gen, ext: %w(.gen))]
   class Reader < Structure::Reader
     @builder = uninitialized Structure::Builder
     @elements = [] of Element

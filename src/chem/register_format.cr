@@ -51,9 +51,13 @@ macro finished
   {% format_by_name = {} of String => MacroId %}
   {% klass_by_name = {} of String => MacroId %}
   {% for klass in klasses %}
-    {% format = klass.annotation(Chem::RegisterFormat)[:format].id %}
-    {% if extnames = klass.annotation(Chem::RegisterFormat)[:ext] %}
+    {% ann = klass.annotation(Chem::RegisterFormat) %}
+    {% format = ann[:format].id %}
+    {% if extnames = ann[:ext] %}
       {% for ext in extnames %}
+        {% ann.raise "File extensions registered by #{klass} must start \
+                      with a dot" unless ext.starts_with?(".") %}
+
         {% if (other = format_by_ext[ext]) && other != format %}
           {% klass.raise ".#{ext.id} extension declared in #{klass} is already " \
                          "associated with file format #{other} via " \
@@ -64,7 +68,7 @@ macro finished
       {% end %}
     {% end %}
 
-    {% if names = klass.annotation(Chem::RegisterFormat)[:names] %}
+    {% if names = ann[:names] %}
       {% for name in names %}
         {% key = name.tr("*", "").camelcase.underscore %}
         {% if (other = format_by_name[key]) && other != format %}

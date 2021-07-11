@@ -1,5 +1,5 @@
 module Chem::VASP::Poscar
-  @[RegisterFormat(format: Poscar, ext: %w(poscar), names: %w(POSCAR* CONTCAR*))]
+  @[RegisterFormat(format: Poscar, ext: %w(.poscar), names: %w(POSCAR* CONTCAR*))]
   class Writer < FormatWriter(AtomCollection)
     def initialize(@io : IO,
                    order @ele_order : Array(Element)? = nil,
