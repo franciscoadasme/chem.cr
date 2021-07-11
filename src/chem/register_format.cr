@@ -82,8 +82,9 @@ macro finished
     {% format = reader.annotation(Chem::RegisterFormat)[:format].id.underscore %}
 
     {% type = reader.ancestors.reject(&.type_vars.empty?)[0].type_vars[0] %}
-    {% keyword = type.class.id.ends_with?("Module") ? "module" : nil %}
-    {% keyword = type < Reference ? "class" : "struct" unless keyword %}
+    {% keyword = "module" if type.module? %}
+    {% keyword = "class" if type.class? %}
+    {% keyword = "struct" if type.struct? %}
 
     {{keyword.id}} {{type.id}}
       def self.from_{{format.id}}(input : IO | Path | String, *args, **options) : self
@@ -115,8 +116,9 @@ macro finished
     {% format = writer.annotation(Chem::RegisterFormat)[:format].id.downcase %}
 
     {% type = writer.superclass.type_vars[0] %}
-    {% keyword = type.class.id.ends_with?("Module") ? "module" : nil %}
-    {% keyword = type < Reference ? "class" : "struct" unless keyword %}
+    {% keyword = "module" if type.module? %}
+    {% keyword = "class" if type.class? %}
+    {% keyword = "struct" if type.struct? %}
 
     {{keyword.id}} {{type.id}}
       def to_{{format.id}}(*args, **options) : String
