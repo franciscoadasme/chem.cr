@@ -1,11 +1,9 @@
 module Chem::Gen
   @[RegisterFormat(format: Gen, ext: %w(gen))]
   class Writer < FormatWriter(AtomCollection)
-    def initialize(output : IO | Path | String,
+    def initialize(@io : IO,
                    @fractional : Bool = false,
-                   *,
-                   sync_close : Bool = false)
-      super output, sync_close: sync_close
+                   @sync_close : Bool = false)
     end
 
     def write(atoms : AtomCollection, lattice : Lattice? = nil) : Nil

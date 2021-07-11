@@ -3,11 +3,9 @@ class Chem::Protein::Stride < Chem::Protein::SecondaryStructureCalculator
   class Writer < FormatWriter(Structure)
     @pdbid = "0000"
 
-    def initialize(io : IO | Path | String,
-                   @path : String | Path | Nil = nil,
-                   *,
-                   sync_close : Bool = false)
-      super io, sync_close: sync_close
+    def initialize(@io : IO,
+                   @source_path : String | Path | Nil = nil,
+                   @sync_close : Bool = false)
     end
 
     def write(structure : Structure) : Nil
@@ -137,7 +135,7 @@ class Chem::Protein::Stride < Chem::Protein::SecondaryStructureCalculator
     private def summary(structure : Structure)
       title "Secondary structure summary"
       structure.each_chain do |chain|
-        record "CHN", "%s %c", @path, chain.id
+        record "CHN", "%s %c", @source_path, chain.id
         seq chain.residues
       end
       2.times { spacer }

@@ -31,10 +31,7 @@ module Chem::Cube
   class Writer < FormatWriter(Spatial::Grid)
     ANGS_TO_BOHR = 1.88972612478289694072
 
-    def initialize(input : IO | Path | String,
-                   @atoms : AtomCollection,
-                   sync_close : Bool = false)
-      super input
+    def initialize(@io : IO, @atoms : AtomCollection, @sync_close : Bool = false)
     end
 
     def write(grid : Spatial::Grid) : Nil

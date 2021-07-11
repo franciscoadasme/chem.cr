@@ -26,11 +26,9 @@ module Chem::PyMOL
       Protein::SecondaryStructure::Polyproline           => "pp",
     }
 
-    def initialize(io : IO | Path | String,
-                   @path : String | Path | Nil = nil,
-                   *,
-                   sync_close : Bool = false)
-      super io, sync_close: sync_close
+    def initialize(@io : IO,
+                   @source_path : String | Path | Nil = nil,
+                   @sync_close : Bool = false)
     end
 
     def write(structure : Structure) : Nil
@@ -48,7 +46,7 @@ module Chem::PyMOL
     end
 
     private def header
-      @io.puts "load #{@path}" if @path
+      @io.puts "load #{@source_path}" if @source_path
       @io.puts <<-EOS
         set cartoon_discrete_colors, on
         hide everything

@@ -1,13 +1,11 @@
 module Chem::VASP::Poscar
   @[RegisterFormat(format: Poscar, ext: %w(poscar), names: %w(POSCAR* CONTCAR*))]
   class Writer < FormatWriter(AtomCollection)
-    def initialize(io : IO | Path | String,
+    def initialize(@io : IO,
                    order @ele_order : Array(Element)? = nil,
                    @fractional : Bool = false,
                    @wrap : Bool = false,
-                   *,
-                   sync_close : Bool = false)
-      super io, sync_close: sync_close
+                   @sync_close : Bool = false)
     end
 
     def write(atoms : AtomCollection, lattice : Lattice? = nil, title : String = "") : Nil

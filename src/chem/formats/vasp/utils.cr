@@ -51,11 +51,7 @@ module Chem::VASP
   module GridWriter
     @write_header = true
 
-    def initialize(input : IO | Path | String,
-                   @structure : Structure,
-                   *,
-                   sync_close : Bool = false)
-      super input, sync_close: sync_close
+    def initialize(@io : IO, @structure : Structure, @sync_close : Bool = false)
     end
 
     # Writes a formatted number to the IO following Fortran's scientific
