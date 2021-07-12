@@ -49,7 +49,7 @@ describe Chem::RegisterFormat do
       EOS
   end
 
-  it "generate read and write methods on encoded type" do
+  it "generates read and write methods on encoded type" do
     assert_code <<-EOS
       struct A; end
 
