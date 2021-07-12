@@ -23,10 +23,14 @@ macro finished
   {% annotated_types = [] of TypeNode %}
   # Maps format name to annotated type
   {% format_map = {} of String => TypeNode %}
+  # Maps annotated type to method format name
+  {% method_format_map = {} of TypeNode => MacroId %}
   # Maps extension to annotated type
   {% ext_map = {} of String => TypeNode %}
   # Maps file name pattern (without *) to annotated type
   {% name_map = {} of String => TypeNode %}
+  # Maps encoded type to a list of annotated types
+  {% encoded_map = {} of TypeNode => {read: Array(TypeNode), write: Array(TypeNode)} %}
 
   # gather annotated types under the Chem module
   {% nodes = [Chem] %}
@@ -43,6 +47,7 @@ macro finished
     # Checks for format name collisions
     {% format = ann_type.name.split("::")[-1].id %}
     {% method_format = format.downcase %}
+    {% method_format_map[ann_type] = method_format %}
     {% if type = format_map[format] %}
       {% ann.raise "Format #{format} in #{ann_type} is registered to #{type}" %}
     {% end %}
@@ -73,6 +78,11 @@ macro finished
       {% else %}
         {% reader.raise "#{reader} must include #{Chem::FormatReader}" %}
       {% end %}
+
+      # register read for encoded type
+      {% encoded_map[encoded_type] = {read: [] of TypeNode, write: [] of TypeNode} \
+           unless encoded_map[encoded_type] %}
+      {% encoded_map[encoded_type][:read] << ann_type %}
 
       {% keyword = "module" if encoded_type.module? %}
       {% keyword = "class" if encoded_type.class? %}
@@ -169,6 +179,11 @@ macro finished
         {% writer.raise "#{writer} must include #{Chem::FormatWriter}" %}
       {% end %}
 
+      # register write for encoded type
+      {% encoded_map[encoded_type] = {read: [] of TypeNode, write: [] of TypeNode} \
+           unless encoded_map[encoded_type] %}
+      {% encoded_map[encoded_type][:write] << ann_type %}
+
       {% keyword = "module" if encoded_type.module? %}
       {% keyword = "class" if encoded_type.class? %}
       {% keyword = "struct" if encoded_type.struct? %}
@@ -226,5 +241,101 @@ macro finished
         end
       end
     {% end %}
+  {% end %}
+
+  {% for encoded_type, maps in encoded_map %}
+    {% keyword = "module" if encoded_type.module? %}
+    {% keyword = "class" if encoded_type.class? %}
+    {% keyword = "struct" if encoded_type.struct? %}
+
+    # gather read/write types including those of superclasses
+    {% read_types = [] of TypeNode %}
+    {% write_types = [] of TypeNode %}
+    {% for type in encoded_map.keys.select { |t| encoded_type <= t } %}
+      {% read_types += encoded_map[type][:read] %}
+      {% write_types += encoded_map[type][:write] %}
+    {% end %}
+
+    {{keyword.id}} {{encoded_type}}
+      {% unless read_types.empty? %}
+        {% printable_formats = read_types.map do |t|
+             "`#{t.name.gsub(/Chem::/, "")}`".id
+           end.sort %}
+
+        # Returns the object encoded in the specified file. The file
+        # format is chosen based on the filename (see
+        # `Format#from_filename`). Raises `ArgumentError` if the file
+        # format cannot be determined.
+        #
+        # The supported file formats are {{printable_formats.splat}}.
+        # Use the `.from_*` methods to customize how the object is
+        # decoded in the corresponding file format.
+        def self.read(path : Path | String) : self
+          read path, Format.from_filename(path)
+        end
+
+        # Returns the object encoded in the specified file using the
+        # given file format. Raises `ArgumentError` if *format* is not
+        # supported or invalid.
+        #
+        # The supported file formats are {{printable_formats.splat}}.
+        # Use the `.from_*` methods to customize how the object is
+        # decoded in the corresponding file format.
+        def self.read(input : IO | Path | String,
+                      format : Format | String) : self
+          format = Format.parse format if format.is_a?(String)
+          {% begin %}
+            case format
+            {% for read_type in read_types %}
+              {% method_format = method_format_map[read_type] %}
+              when .{{method_format}}?
+                from_{{method_format}} input
+            {% end %}
+            else
+              raise ArgumentError.new "#{format} does not encode {{encoded_type}}"
+            end
+          {% end %}
+        end
+      {% end %}
+
+      {% unless write_types.empty? %}
+        {% printable_formats = write_types.map do |t|
+             "`#{t.name.gsub(/Chem::/, "")}`".id
+           end.sort %}
+
+        # Writes this object to the specified file. The file format is
+        # chosen based on the filename (see `Format#from_filename`).
+        # Raises `ArgumentError` if the file format cannot be
+        # determined.
+        #
+        # The supported file formats are {{printable_formats.splat}}.
+        # Use the `#to_*` methods to customize how the object is written
+        # in the corresponding file format.
+        def write(path : Path | String) : Nil
+          write path, Format.from_filename(path)
+        end
+
+        # Writes this object to *output* using the given file format.
+        # Raises `ArgumentError` if *format* is not supported or invalid.
+        #
+        # The supported file formats are {{printable_formats.splat}}. Use the
+        # `#to_*` methods to customize how the object is written in the
+        # corresponding file format.
+        def write(output : IO | Path | String, format : Format | String) : Nil
+          format = Format.parse format if format.is_a?(String)
+          {% begin %}
+            case format
+            {% for write_type in write_types %}
+              {% method_format = method_format_map[write_type] %}
+              when .{{method_format}}?
+                to_{{method_format}} output
+            {% end %}
+            else
+              raise ArgumentError.new "#{format} does not encode {{encoded_type}}"
+            end
+          {% end %}
+        end
+      {% end %}
+    end
   {% end %}
 end

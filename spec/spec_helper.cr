@@ -145,7 +145,13 @@ end
 def load_file(path : String, topology level : TopologyLevel? = nil) : Structure
   path = File.join File.extname(path)[1..], path unless File.extname(path).blank?
   path = File.join "spec", "data", path
-  structure = Chem::Structure.read path, guess_topology: level.nil?
+  structure = case Chem::Format.from_filename(path)
+              when .pdb?    then Chem::Structure.from_pdb path, guess_topology: level.nil?
+              when .xyz?    then Chem::Structure.from_xyz path, guess_topology: level.nil?
+              when .poscar? then Chem::Structure.from_poscar path, guess_topology: level.nil?
+              when .gen?    then Chem::Structure.from_gen path, guess_topology: level.nil?
+              else               Chem::Structure.read path
+              end
   if level
     perception = Topology::Perception.new structure
     perception.guess_topology if level.templates?

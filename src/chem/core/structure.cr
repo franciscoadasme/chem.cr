@@ -21,28 +21,6 @@ module Chem
       builder.build
     end
 
-    def self.read(path : Path | String, guess_topology : Bool = true) : self
-      format = Format.from_filename File.basename(path)
-      read path, format, guess_topology
-    end
-
-    def self.read(input : IO | Path | String,
-                  format : Format | String,
-                  guess_topology : Bool = true) : self
-      format = Format.parse format if format.is_a?(String)
-      {% begin %}
-        case format
-        {% for reader in Reader.subclasses %}
-          {% format = reader.name.split("::")[-2].downcase %}
-          when .{{format.id}}?
-            from_{{format.id}} input, guess_topology: guess_topology
-        {% end %}
-        else
-          raise "No structure reader associated with file format #{format}"
-        end
-      {% end %}
-    end
-
     protected def <<(chain : Chain) : self
       @chains << chain
       @chain_table[chain.id] = chain
@@ -216,28 +194,6 @@ module Chem
       raise Spatial::NotPeriodicError.new unless lattice = @lattice
       Spatial::PBC.unwrap self, lattice
       self
-    end
-
-    def write(path : Path | String) : Nil
-      format = Format.from_filename path
-      write path, format
-    end
-
-    def write(output : IO | Path | String, format : Format | String) : Nil
-      format = Format.parse format if format.is_a?(String)
-      {% begin %}
-        case format
-        {% for writer in FormatWriter.all_subclasses %}
-          {% if (type = writer.superclass.type_vars[0]) && type <= AtomCollection %}
-          {% format = writer.name.split("::")[-2].downcase %}
-            when .{{format.id}}?
-              to_{{format.id}} output
-          {% end %}
-        {% end %}
-        else
-          raise "No structure writer associated with file format #{format}"
-        end
-      {% end %}
     end
 
     protected def reset_cache : Nil
