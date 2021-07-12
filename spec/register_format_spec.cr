@@ -56,14 +56,14 @@ describe Chem::RegisterFormat do
       @[Chem::RegisterFormat]
       module Chem::Foo
         class Reader < Chem::FormatReader(A)
-          def initialize(@io : IO, foo : Int32 = 0, sync_close : Bool = false); end
+          def initialize(@io : IO, foo : Int32, sync_close : Bool = false); end
 
           def read_entry : A
             A.new
           end
         end
         class Writer < Chem::FormatWriter(A)
-          def initialize(@io : IO, bar : String = "0", sync_close : Bool = false); end
+          def initialize(@io : IO, bar : String, sync_close : Bool = false); end
           def write(obj : A) : Nil; end
         end
       end

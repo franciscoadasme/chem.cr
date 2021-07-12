@@ -31,6 +31,8 @@ macro finished
   {% name_map = {} of String => TypeNode %}
   # Maps encoded type to a list of annotated types
   {% encoded_map = {} of TypeNode => {read: Array(TypeNode), write: Array(TypeNode)} %}
+  # List of argless reader/writers (no required args in the constructor)
+  {% argless_types = [] of TypeNode %}
 
   # gather annotated types under the Chem module
   {% nodes = [Chem] %}
@@ -102,6 +104,7 @@ macro finished
       {% else %}
         {% args = [] of Nil %}
       {% end %}
+      {% argless_types << reader unless args.any? &.default_value.is_a?(Nop) %}
 
       {{keyword.id}} {{encoded_type}}
         # Returns the object encoded in *input* using the `{{ann_type}}`
@@ -202,6 +205,7 @@ macro finished
       {% else %}
         {% args = [] of Nil %}
       {% end %}
+      {% argless_types << writer unless args.any? &.default_value.is_a?(Nop) %}
 
       {{keyword.id}} {{encoded_type}}
         # Returns a string representation of this object encoded using
@@ -258,6 +262,10 @@ macro finished
 
     {{keyword.id}} {{encoded_type}}
       {% unless read_types.empty? %}
+        {% argless_read_types = read_types.select do |t|
+             reader = t.constant(ann[:reader] || "Reader")
+             argless_types.includes? reader
+           end %}
         {% printable_formats = read_types.map do |t|
              "`#{t.name.gsub(/Chem::/, "")}`".id
            end.sort %}
@@ -275,8 +283,8 @@ macro finished
         end
 
         # Returns the object encoded in the specified file using the
-        # given file format. Raises `ArgumentError` if *format* is not
-        # supported or invalid.
+        # given file format. Raises `ArgumentError` if *format* has
+        # required arguments, it is not supported or invalid.
         #
         # The supported file formats are {{printable_formats.splat}}.
         # Use the `.from_*` methods to customize how the object is
@@ -286,10 +294,15 @@ macro finished
           format = ::Chem::Format.parse format if format.is_a?(String)
           {% begin %}
             case format
-            {% for read_type in read_types %}
+            {% for read_type in argless_read_types %}
               {% method_format = method_format_map[read_type] %}
               when .{{method_format}}?
-                from_{{method_format}} input
+                {% if argless_read_types.includes?(read_type) %}
+                  from_{{method_format}} input
+                {% else %}
+                  raise ArgumentError.new "#{format} has required arguments. \
+                                           Use `.from_{{method_format}}` instead."
+                {% end %}
             {% end %}
             else
               raise ArgumentError.new "#{format} does not encode {{encoded_type}}"
@@ -299,6 +312,10 @@ macro finished
       {% end %}
 
       {% unless write_types.empty? %}
+        {% argless_write_types = write_types.select do |t|
+             writer = t.constant(ann[:writer] || "Writer")
+             argless_types.includes? writer
+           end %}
         {% printable_formats = write_types.map do |t|
              "`#{t.name.gsub(/Chem::/, "")}`".id
            end.sort %}
@@ -316,11 +333,12 @@ macro finished
         end
 
         # Writes this object to *output* using the given file format.
-        # Raises `ArgumentError` if *format* is not supported or invalid.
+        # Raises `ArgumentError` if *format* has required arguments, it
+        # is not supported or invalid.
         #
-        # The supported file formats are {{printable_formats.splat}}. Use the
-        # `#to_*` methods to customize how the object is written in the
-        # corresponding file format.
+        # The supported file formats are {{printable_formats.splat}}.
+        # Use the `#to_*` methods to customize how the object is written
+        # in the corresponding file format.
         def write(output : IO | Path | String, format : ::Chem::Format | String) : Nil
           format = ::Chem::Format.parse format if format.is_a?(String)
           {% begin %}
@@ -328,7 +346,12 @@ macro finished
             {% for write_type in write_types %}
               {% method_format = method_format_map[write_type] %}
               when .{{method_format}}?
-                to_{{method_format}} output
+                {% if argless_write_types.includes?(write_type) %}
+                  to_{{method_format}} output
+                {% else %}
+                  raise ArgumentError.new "#{format} has required arguments. \
+                                           Use `#to_{{method_format}}` instead."
+                {% end %}
             {% end %}
             else
               raise ArgumentError.new "#{format} does not encode {{encoded_type}}"
