@@ -27,7 +27,7 @@ macro finished
   {% method_format_map = {} of TypeNode => MacroId %}
   # Maps extension to annotated type
   {% ext_map = {} of String => TypeNode %}
-  # Maps file name pattern (without *) to annotated type
+  # Maps file pattern (without *) to annotated type
   {% name_map = {} of String => TypeNode %}
   # Maps encoded type to a list of annotated types
   {% encoded_map = {} of TypeNode => {read: Array(TypeNode), write: Array(TypeNode)} %}
@@ -61,11 +61,11 @@ macro finished
       {% ext_map[ext] = ann_type %}
     {% end %}
 
-    # Checks for file name pattern collisions
+    # Checks for file pattern collisions
     {% for name_spec in (ann[:names] || [] of Nil) %}
       {% key = name_spec.tr("*", "").camelcase.underscore %}
       {% if type = name_map[key] %}
-        {% ann.raise "File name pattern #{name_spec.id} in #{ann_type} is \
+        {% ann.raise "File pattern #{name_spec.id} in #{ann_type} is \
                       registered to #{type}" %}
       {% end %}
       {% name_map[key] = ann_type %}
