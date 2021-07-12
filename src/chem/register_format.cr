@@ -264,14 +264,14 @@ macro finished
 
         # Returns the object encoded in the specified file. The file
         # format is chosen based on the filename (see
-        # `Format#from_filename`). Raises `ArgumentError` if the file
-        # format cannot be determined.
+        # `Chem::Format#from_filename`). Raises `ArgumentError` if the
+        # file format cannot be determined.
         #
         # The supported file formats are {{printable_formats.splat}}.
         # Use the `.from_*` methods to customize how the object is
         # decoded in the corresponding file format.
         def self.read(path : Path | String) : self
-          read path, Format.from_filename(path)
+          read path, ::Chem::Format.from_filename(path)
         end
 
         # Returns the object encoded in the specified file using the
@@ -282,8 +282,8 @@ macro finished
         # Use the `.from_*` methods to customize how the object is
         # decoded in the corresponding file format.
         def self.read(input : IO | Path | String,
-                      format : Format | String) : self
-          format = Format.parse format if format.is_a?(String)
+                      format : ::Chem::Format | String) : self
+          format = ::Chem::Format.parse format if format.is_a?(String)
           {% begin %}
             case format
             {% for read_type in read_types %}
@@ -304,15 +304,15 @@ macro finished
            end.sort %}
 
         # Writes this object to the specified file. The file format is
-        # chosen based on the filename (see `Format#from_filename`).
-        # Raises `ArgumentError` if the file format cannot be
-        # determined.
+        # chosen based on the filename (see
+        # `Chem::Format#from_filename`). Raises `ArgumentError` if the
+        # file format cannot be determined.
         #
         # The supported file formats are {{printable_formats.splat}}.
         # Use the `#to_*` methods to customize how the object is written
         # in the corresponding file format.
         def write(path : Path | String) : Nil
-          write path, Format.from_filename(path)
+          write path, ::Chem::Format.from_filename(path)
         end
 
         # Writes this object to *output* using the given file format.
@@ -321,8 +321,8 @@ macro finished
         # The supported file formats are {{printable_formats.splat}}. Use the
         # `#to_*` methods to customize how the object is written in the
         # corresponding file format.
-        def write(output : IO | Path | String, format : Format | String) : Nil
-          format = Format.parse format if format.is_a?(String)
+        def write(output : IO | Path | String, format : ::Chem::Format | String) : Nil
+          format = ::Chem::Format.parse format if format.is_a?(String)
           {% begin %}
             case format
             {% for write_type in write_types %}
