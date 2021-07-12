@@ -1,20 +1,26 @@
 require "./spec_helper"
 
-@[Chem::RegisterFormat(format: CAD, ext: %w(.cad))]
-class CAD::Reader < Chem::FormatReader(String)
-  def read_entry : String
-    "foo"
+@[Chem::RegisterFormat(ext: %w(.cad))]
+module Chem::CAD
+  class Reader < Chem::FormatReader(String)
+    def read_entry : String
+      "foo"
+    end
   end
 end
 
-@[Chem::RegisterFormat(format: Image, ext: %w(.bmp .jpg .png .tiff))]
-class Image::Writer < Chem::FormatWriter(String)
-  def write(obj : String) : Nil; end
+@[Chem::RegisterFormat(ext: %w(.bmp .jpg .png .tiff))]
+module Chem::Image
+  class Writer < Chem::FormatWriter(String)
+    def write(obj : String) : Nil; end
+  end
 end
 
-@[Chem::RegisterFormat(format: License, ext: %w(.lic), names: %w(SPEC LIC* *KE *any*))]
-class License::Writer < Chem::FormatWriter(String)
-  def write(obj : String) : Nil; end
+@[Chem::RegisterFormat(ext: %w(.lic), names: %w(SPEC LIC* *KE *any*))]
+module Chem::License
+  class Writer < Chem::FormatWriter(String)
+    def write(obj : String) : Nil; end
+  end
 end
 
 describe Chem::Format do

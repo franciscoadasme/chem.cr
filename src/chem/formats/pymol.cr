@@ -1,5 +1,5 @@
+@[Chem::RegisterFormat(ext: %w(.pml))]
 module Chem::PyMOL
-  @[RegisterFormat(format: PyMOL, ext: %w(.pml))]
   class Writer < FormatWriter(Structure)
     CODES = {
       Protein::SecondaryStructure::BetaStrand            => 'S',

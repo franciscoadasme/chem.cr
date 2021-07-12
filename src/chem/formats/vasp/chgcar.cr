@@ -1,7 +1,7 @@
 require "./utils"
 
+@[Chem::RegisterFormat(names: %w(CHGCAR*))]
 module Chem::VASP::Chgcar
-  @[RegisterFormat(format: Chgcar, names: %w(CHGCAR*))]
   class Reader < Spatial::Grid::Reader
     include GridReader
 
@@ -12,7 +12,6 @@ module Chem::VASP::Chgcar
     end
   end
 
-  @[RegisterFormat(format: Chgcar, names: %w(CHGCAR*))]
   class Writer < FormatWriter(Spatial::Grid)
     include VASP::GridWriter
 

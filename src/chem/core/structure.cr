@@ -32,8 +32,8 @@ module Chem
       format = Format.parse format if format.is_a?(String)
       {% begin %}
         case format
-        {% for reader in Reader.subclasses.select(&.annotation(RegisterFormat)) %}
-          {% format = reader.annotation(RegisterFormat)[:format].id.underscore %}
+        {% for reader in Reader.subclasses %}
+          {% format = reader.name.split("::")[-2].downcase %}
           when .{{format.id}}?
             from_{{format.id}} input, guess_topology: guess_topology
         {% end %}
@@ -227,9 +227,9 @@ module Chem
       format = Format.parse format if format.is_a?(String)
       {% begin %}
         case format
-        {% for writer in FormatWriter.all_subclasses.select(&.annotation(RegisterFormat)) %}
+        {% for writer in FormatWriter.all_subclasses %}
           {% if (type = writer.superclass.type_vars[0]) && type <= AtomCollection %}
-            {% format = writer.annotation(RegisterFormat)[:format].id.downcase %}
+          {% format = writer.name.split("::")[-2].downcase %}
             when .{{format.id}}?
               to_{{format.id}} output
           {% end %}

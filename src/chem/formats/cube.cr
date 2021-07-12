@@ -1,5 +1,5 @@
+@[Chem::RegisterFormat(ext: %w(.cube))]
 module Chem::Cube
-  @[RegisterFormat(format: Cube, ext: %w(.cube))]
   class Reader < Spatial::Grid::Reader
     BOHR_TO_ANGS = 0.529177210859
 
@@ -27,7 +27,6 @@ module Chem::Cube
     end
   end
 
-  @[RegisterFormat(format: Cube, ext: %w(.cube))]
   class Writer < FormatWriter(Spatial::Grid)
     ANGS_TO_BOHR = 1.88972612478289694072
 

@@ -1,5 +1,5 @@
+@[Chem::RegisterFormat(ext: %w(.xyz))]
 module Chem::XYZ
-  @[RegisterFormat(format: XYZ, ext: %w(.xyz))]
   class Writer < FormatWriter(AtomCollection)
     def write(atoms : AtomCollection, title : String = "") : Nil
       check_open
@@ -16,7 +16,6 @@ module Chem::XYZ
     end
   end
 
-  @[RegisterFormat(format: XYZ, ext: %w(.xyz))]
   class Reader < Structure::Reader
     def next : Structure | Iterator::Stop
       @io.skip_whitespace

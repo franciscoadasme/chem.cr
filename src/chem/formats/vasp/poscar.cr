@@ -1,5 +1,5 @@
+@[Chem::RegisterFormat(ext: %w(.poscar), names: %w(POSCAR* CONTCAR*))]
 module Chem::VASP::Poscar
-  @[RegisterFormat(format: Poscar, ext: %w(.poscar), names: %w(POSCAR* CONTCAR*))]
   class Writer < FormatWriter(AtomCollection)
     def initialize(@io : IO,
                    order @ele_order : Array(Element)? = nil,
@@ -75,7 +75,6 @@ module Chem::VASP::Poscar
     end
   end
 
-  @[RegisterFormat(format: Poscar, names: %w(POSCAR* CONTCAR*))]
   class Reader < Structure::Reader
     @builder = uninitialized Structure::Builder
     @constrained = false

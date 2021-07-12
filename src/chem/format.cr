@@ -1,17 +1,24 @@
 module Chem
   macro finished
     enum Format
-      {% writers = FormatWriter.all_subclasses.select &.annotation(RegisterFormat) %}
-      {% readers = FormatReader.all_subclasses.select(&.annotation(RegisterFormat)) %}
-      {% annotations = (readers + writers).map &.annotation(RegisterFormat) %}
-      {% file_formats = annotations.map(&.[:format].id).uniq.sort %}
+      # gather annotated types under the Chem module
+      {% format_map = {} of MacroId => Annotation %}
+      {% nodes = [Chem] %}
+      {% for node in nodes %}
+        {% if ann = node.annotation(Chem::RegisterFormat) %}
+          {% format_map[node.name.split("::")[-1].id] = ann %}
+        {% end %}
+        {% for c in node.constants.map { |c| node.constant(c) } %}
+          {% nodes << c if c.is_a?(TypeNode) && (c.class? || c.struct? || c.module?) %}
+        {% end %}
+      {% end %}
 
-      {% for format in file_formats %}
+      {% for format in format_map.keys.sort %}
         {{format.id}}
       {% end %}
 
-      {% for format in file_formats %}
-        def {{format.id.downcase}}? : Bool
+      {% for format in format_map.keys.sort %}
+        def {{format.downcase}}? : Bool
           self == {{format}}
         end
       {% end %}
@@ -50,17 +57,9 @@ module Chem
       def self.from_ext?(extname : String) : self?
         {% begin %}
           case extname.downcase
-          {% for format in file_formats %}
-            {% extensions = [] of MacroId %}
-            {% for ann in annotations.select(&.[:format].id.==(format)) %}
-              {% if extnames = ann[:ext] %}
-                {% for ext in extnames %}
-                  {% extensions << ext %}
-                {% end %}
-              {% end %}
-            {% end %}
-            {% unless extensions.empty? %}
-              when {{extensions.uniq.splat}}
+          {% for format, ann in format_map %}
+            {% if extnames = ann[:ext] %}
+              when {{extnames.splat}}
                 {{format}}
             {% end %}
           {% end %}
@@ -150,50 +149,37 @@ module Chem
       # Format.from_stem?("Imi")      # => nil
       # ```
       def self.from_stem?(stem : String) : self?
-        stem = stem.camelcase.downcase
-        {% for format in file_formats %}
-          {% file_names = [] of StringLiteral %}
-          {% for ann in annotations.select(&.[:format].id.==(format)) %}
-            {% if names = ann[:names] %}
-              {% for name in names %}
-                {% file_names << name.id.stringify.camelcase.downcase %}
+        {% begin %}
+          case stem.camelcase.downcase
+          {% for format, ann in format_map %}
+            {% for name in (ann[:names] || [] of Nil).sort %}
+              {% name = name.id.stringify.camelcase.downcase %}
+              {% if name =~ /\*\w+\*/ %}
+                when .includes?({{name[1..-2]}}) then {{format}}
+              {% elsif name.starts_with? "*" %}
+                when .ends_with?({{name[1..-1]}}) then {{format}}
+              {% elsif name.ends_with? "*" %}
+                when .starts_with?({{name[0..-2]}}) then {{format}}
+              {% else %}
+                when .==({{name}}) then {{format}}
               {% end %}
             {% end %}
           {% end %}
-
-          {% for name in file_names.uniq.sort %}
-            {% if name =~ /\*\w+\*/ %}
-              return {{format}} if stem.includes? {{name[1..-2]}}
-            {% elsif name.starts_with? "*" %}
-              return {{format}} if stem.ends_with? {{name[1..-1]}}
-            {% elsif name.ends_with? "*" %}
-              return {{format}} if stem.starts_with? {{name[0..-2]}}
-            {% else %}
-              return {{format}} if stem == {{name}}
-            {% end %}
-          {% end %}
+          end
         {% end %}
       end
 
       def extnames : Array(String)
         {% begin %}
           case self
-          {% for format in file_formats %}
-            {% extensions = [] of MacroId %}
-            {% for ann in annotations.select(&.[:format].id.==(format)) %}
-              {% if extnames = ann[:ext] %}
-                {% for ext in extnames %}
-                  {% extensions << ext %}
-                {% end %}
-              {% end %}
-            {% end %}
-            {% unless extensions.empty? %}
-              when {{format}}
-                {{extensions.uniq}}
+          {% for format, ann in format_map %}
+            {% if extnames = ann[:ext] %}
+              when .{{format.downcase}}?
+                {{extnames}}
             {% end %}
           {% end %}
           else
-            raise "BUG: unreachable"
+            [] of String
           end
         {% end %}
       end

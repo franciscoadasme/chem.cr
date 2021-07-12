@@ -113,8 +113,9 @@ module Chem::Spatial
     def self.info(input : IO | Path | String, format : Format) : Info
       {% begin %}
         case format
-        {% for parser in Reader.subclasses.select(&.annotation(RegisterFormat)) %}
-          when .{{parser.annotation(RegisterFormat)[:format].id.underscore.id}}?
+        {% for parser in Reader.subclasses %}
+          {% format = parser.name.split("::")[-2].id.downcase %}
+          when .{{format}}?
             {{parser}}.new(input).info
         {% end %}
         else

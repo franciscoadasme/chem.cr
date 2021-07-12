@@ -1,7 +1,7 @@
 require "./utils"
 
+@[Chem::RegisterFormat(names: %w(LOCPOT*))]
 module Chem::VASP::Locpot
-  @[RegisterFormat(format: Locpot, names: %w(LOCPOT*))]
   class Reader < Spatial::Grid::Reader
     include GridReader
 
@@ -11,7 +11,6 @@ module Chem::VASP::Locpot
     end
   end
 
-  @[RegisterFormat(format: Locpot, names: %w(LOCPOT*))]
   class Writer < FormatWriter(Spatial::Grid)
     include GridWriter
 

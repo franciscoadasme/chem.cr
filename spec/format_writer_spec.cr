@@ -20,9 +20,11 @@ describe Chem::FormatWriter do
   end
 end
 
-@[Chem::RegisterFormat(format: Document, ext: %w(.pdf .doc .docx .rtf))]
-class Document::Writer < Chem::FormatWriter(String)
-  def write(obj : String) : Nil
-    @io << '<' << obj << '>'
+@[Chem::RegisterFormat(ext: %w(.pdf .doc .docx .rtf))]
+module Chem::Document
+  class Writer < Chem::FormatWriter(String)
+    def write(obj : String) : Nil
+      @io << '<' << obj << '>'
+    end
   end
 end

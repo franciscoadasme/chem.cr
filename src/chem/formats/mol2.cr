@@ -1,5 +1,5 @@
+@[Chem::RegisterFormat(ext: %w(.mol2))]
 module Chem::Mol2
-  @[RegisterFormat(format: Mol2, ext: %w(.mol2))]
   class Writer < FormatWriter(AtomCollection)
     @atom_table = {} of Atom => Int32
     @res_table = {} of Residue => Int32
@@ -91,7 +91,6 @@ module Chem::Mol2
     end
   end
 
-  @[RegisterFormat(format: Mol2, ext: %w(.mol2))]
   class Reader < Structure::Reader
     TAG          = "@<TRIPOS>"
     TAG_ATOMS    = "@<TRIPOS>ATOM"
