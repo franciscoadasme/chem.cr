@@ -75,6 +75,32 @@ module Chem
     end
   end
 
+  # Declares a common interface for reading the header information
+  # encoded in a file format.
+  #
+  # Including types must implement the `#decode_header : T` protected
+  # method, where the type variable `T` indicates the header type. Upon
+  # parsing issues, including types are expected to raise a
+  # `ParseException` exception.
+  module FormatReader::Headed(T)
+    @header : T?
+
+    # Returns the header object. Raises `ParseException` if the header
+    # cannot be decoded.
+    #
+    # NOTE: never invoke this method directly, use `#read_header`
+    # instead.
+    protected abstract def decode_header : T
+
+    # Reads the header object from the IO. Raises `IO::Error` if the
+    # reader is closed or `ParseException` if the header cannot be
+    # decoded.
+    def read_header : T
+      check_open
+      @header ||= decode_header
+    end
+  end
+
   abstract class Structure::Reader
     include FormatReader(Structure)
     include Iterator(Structure)
