@@ -46,8 +46,11 @@ module Chem
     # Returns `true` if this encoded object was already read.
     getter? read : Bool = false
 
-    # Reads the encoded object of type `T` from the IO. Raises
-    # `ParseException` if an object cannot be read.
+    # Returns the encoded object. Raises `ParseException` if the object
+    # cannot be decoded.
+    #
+    # NOTE: never invoke this method directly, use `#read_entry`
+    # instead.
     protected abstract def decode_entry : T
 
     # Reads the encoded object of type `T` from the IO. Raises
