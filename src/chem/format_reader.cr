@@ -1,10 +1,73 @@
 module Chem
+  # Declares a common interface for reading an object encoded in a file
+  # format.
+  #
+  # Including types must implement the `#decode_entry : T` protected
+  # method, where the type variable `T` indicates the encoded type. Upon
+  # parsing issues, including types are expected to raise a
+  # `ParseException` exception.
+  #
+  # Including types will behave like an IO wrapper via the `IO::Wrapper`
+  # mixin, which provides convenience constructors. Initialization
+  # arguments are gathered from the designated `#initialize` method
+  # looked up on concrete types at compilation time. The underlying IO
+  # can be accessed through the `@io` instance variable.
+  #
+  # ```
+  # struct Foo
+  #   getter num : Int32
+  #   getter str : String
+  #
+  #   def initialize(@num : Int32, @str : String); end
+  # end
+  #
+  # class Foo::Reader
+  #   include Chem::FormatReader(Foo)
+  #
+  #   def decode_entry : Foo
+  #     Foo.new num: @io.read_line.to_i, str: @io.read_line
+  #   end
+  # end
+  #
+  # io = IO::Memory.new "123\nbar\n"
+  # reader = Foo::Reader.new io
+  # reader.read? # => false
+  # obj = reader.read_entry
+  # obj.num           # => 123
+  # obj.str           # => "bar"
+  # reader.read?      # => true
+  # reader.read_entry # raises IO::Error (entry was already read)
+  # reader.close
+  # reader.read_entry # raises IO::Error (closed IO)
+  # ```
   module FormatReader(T)
     include IO::Wrapper
 
-    abstract def read_entry : T
+    # Returns `true` if this encoded object was already read.
+    getter? read : Bool = false
 
-    def parse_exception(msg : String)
+    # Reads the encoded object of type `T` from the IO. Raises
+    # `ParseException` if an object cannot be read.
+    protected abstract def decode_entry : T
+
+    # Reads the encoded object of type `T` from the IO. Raises
+    # `IO::Error` if the reader is closed or the encoded object has been
+    # already read, or `ParseException` if an object cannot be read.
+    def read_entry : T
+      check_open
+      check_read
+      obj = decode_entry
+      @read = true
+      obj
+    end
+
+    # Raises an `IO::Error` if the entry was already read.
+    protected def check_read
+      raise IO::Error.new "Entry already read" if read?
+    end
+
+    # Shorthand method for raising a `ParseException` exception.
+    protected def parse_exception(msg : String)
       raise ParseException.new msg
     end
   end
@@ -33,10 +96,6 @@ module Chem
       end
     end
 
-    def read_entry : Structure
-      first? || parse_exception "Empty content"
-    end
-
     def select(indexes : Enumerable(Int)) : Iterator(Structure)
       SelectByIndex(typeof(self)).new self, indexes
     end
@@ -44,6 +103,10 @@ module Chem
     def skip(n : Int) : Iterator(Structure)
       raise ArgumentError.new "Negative size: #{n}" if n < 0
       SkipStructure(typeof(self)).new self, n
+    end
+
+    protected def decode_entry : Structure
+      first? || parse_exception "Empty content"
     end
 
     # Specialized iterator that creates/parses only selected structures by using

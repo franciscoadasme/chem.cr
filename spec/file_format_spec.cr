@@ -5,7 +5,7 @@ module Chem::CAD
   class Reader
     include Chem::FormatReader(String)
 
-    def read_entry : String
+    protected def decode_entry : String
       "foo"
     end
   end

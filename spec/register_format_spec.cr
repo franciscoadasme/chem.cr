@@ -60,7 +60,7 @@ describe Chem::RegisterFormat do
 
           def initialize(@io : IO, foo : Int32, sync_close : Bool = false); end
 
-          def read_entry : A
+          protected def decode_entry : A
             A.new
           end
         end

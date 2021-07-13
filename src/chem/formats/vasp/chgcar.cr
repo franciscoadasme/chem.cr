@@ -5,7 +5,7 @@ module Chem::VASP::Chgcar
   class Reader < Spatial::Grid::Reader
     include GridReader
 
-    def read_entry : Spatial::Grid
+    protected def decode_entry : Spatial::Grid
       info = self.info
       volume = info.bounds.volume
       read_array info, &./(volume)

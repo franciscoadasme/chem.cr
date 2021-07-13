@@ -17,7 +17,7 @@ module Chem::DX
       Spatial::Grid::Info.new bounds, {ni, nj, nk}
     end
 
-    def read_entry : Spatial::Grid
+    protected def decode_entry : Spatial::Grid
       Spatial::Grid.build(info) do |buffer, size|
         size.times do |i|
           buffer[i] = @io.read_float
