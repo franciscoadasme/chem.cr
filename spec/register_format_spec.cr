@@ -55,7 +55,9 @@ describe Chem::RegisterFormat do
 
       @[Chem::RegisterFormat]
       module Chem::Foo
-        class Reader < Chem::FormatReader(A)
+        class Reader
+          include Chem::FormatReader(A)
+
           def initialize(@io : IO, foo : Int32, sync_close : Bool = false); end
 
           def read_entry : A

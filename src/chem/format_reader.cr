@@ -1,5 +1,5 @@
 module Chem
-  abstract class FormatReader(T)
+  module FormatReader(T)
     include IO::Wrapper
 
     abstract def read_entry : T
@@ -9,7 +9,8 @@ module Chem
     end
   end
 
-  abstract class Structure::Reader < FormatReader(Structure)
+  abstract class Structure::Reader
+    include FormatReader(Structure)
     include Iterator(Structure)
 
     abstract def skip_structure : Nil
@@ -88,7 +89,9 @@ module Chem
     end
   end
 
-  abstract class Spatial::Grid::Reader < FormatReader(Spatial::Grid)
+  abstract class Spatial::Grid::Reader
+    include FormatReader(Spatial::Grid)
+
     abstract def info : Spatial::Grid::Info
 
     def initialize(io : IO, @sync_close : Bool = false)

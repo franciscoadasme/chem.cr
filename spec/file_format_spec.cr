@@ -2,7 +2,9 @@ require "./spec_helper"
 
 @[Chem::RegisterFormat(ext: %w(.cad))]
 module Chem::CAD
-  class Reader < Chem::FormatReader(String)
+  class Reader
+    include Chem::FormatReader(String)
+
     def read_entry : String
       "foo"
     end
