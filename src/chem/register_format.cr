@@ -266,9 +266,7 @@ macro finished
              reader = t.constant(ann[:reader] || "Reader")
              argless_types.includes? reader
            end %}
-        {% printable_formats = read_types.map do |t|
-             "`#{t.name.gsub(/Chem::/, "")}`".id
-           end.sort %}
+        {% printable_formats = read_types.map { |t| "`#{t}`".id }.sort %}
 
         # Returns the object encoded in the specified file. The file
         # format is chosen based on the filename (see
@@ -316,9 +314,7 @@ macro finished
              writer = t.constant(ann[:writer] || "Writer")
              argless_types.includes? writer
            end %}
-        {% printable_formats = write_types.map do |t|
-             "`#{t.name.gsub(/Chem::/, "")}`".id
-           end.sort %}
+        {% printable_formats = write_types.map { |t| "`#{t}`".id }.sort %}
 
         # Writes this object to the specified file. The file format is
         # chosen based on the filename (see
