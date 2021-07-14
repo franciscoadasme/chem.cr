@@ -29,8 +29,10 @@ macro finished
   {% ext_map = {} of String => TypeNode %}
   # Maps file pattern (without *) to annotated type
   {% name_map = {} of String => TypeNode %}
-  # Maps encoded type to a list of annotated types
-  {% encoded_map = {} of TypeNode => {read: Array(TypeNode), write: Array(TypeNode)} %}
+  # Maps encoded type to a list of read types
+  {% read_map = {} of TypeNode => Array(TypeNode) %}
+  # Maps encoded type to a list of write types
+  {% write_map = {} of TypeNode => Array(TypeNode) %}
   # List of argless reader/writers (no required args in the constructor)
   {% argless_types = [] of TypeNode %}
 
@@ -82,9 +84,11 @@ macro finished
       {% end %}
 
       # register read for encoded type
-      {% encoded_map[encoded_type] = {read: [] of TypeNode, write: [] of TypeNode} \
-           unless encoded_map[encoded_type] %}
-      {% encoded_map[encoded_type][:read] << ann_type %}
+      {% if read_map[encoded_type] %}
+        {% read_map[encoded_type] << ann_type %}
+      {% else %}
+        {% read_map[encoded_type] = [ann_type] %}
+      {% end %}
 
       {% keyword = "module" if encoded_type.module? %}
       {% keyword = "class" if encoded_type.class? %}
@@ -183,9 +187,11 @@ macro finished
       {% end %}
 
       # register write for encoded type
-      {% encoded_map[encoded_type] = {read: [] of TypeNode, write: [] of TypeNode} \
-           unless encoded_map[encoded_type] %}
-      {% encoded_map[encoded_type][:write] << ann_type %}
+      {% if write_map[encoded_type] %}
+        {% write_map[encoded_type] << ann_type %}
+      {% else %}
+        {% write_map[encoded_type] = [ann_type] %}
+      {% end %}
 
       {% keyword = "module" if encoded_type.module? %}
       {% keyword = "class" if encoded_type.class? %}
@@ -247,7 +253,8 @@ macro finished
     {% end %}
   {% end %}
 
-  {% for encoded_type, maps in encoded_map %}
+  {% encoded_types = (read_map.keys + write_map.keys).uniq %}
+  {% for encoded_type in encoded_types %}
     {% keyword = "module" if encoded_type.module? %}
     {% keyword = "class" if encoded_type.class? %}
     {% keyword = "struct" if encoded_type.struct? %}
@@ -255,9 +262,9 @@ macro finished
     # gather read/write types including those of superclasses
     {% read_types = [] of TypeNode %}
     {% write_types = [] of TypeNode %}
-    {% for type in encoded_map.keys.select { |t| encoded_type <= t } %}
-      {% read_types += encoded_map[type][:read] %}
-      {% write_types += encoded_map[type][:write] %}
+    {% for type in encoded_types.select { |t| encoded_type <= t } %}
+      {% read_types += read_map[type] if read_map[type] %}
+      {% write_types += write_map[type] if write_map[type] %}
     {% end %}
 
     {{keyword.id}} {{encoded_type}}
