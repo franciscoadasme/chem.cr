@@ -259,16 +259,8 @@ macro finished
     {% keyword = "class" if encoded_type.class? %}
     {% keyword = "struct" if encoded_type.struct? %}
 
-    # gather read/write types including those of superclasses
-    {% read_types = [] of TypeNode %}
-    {% write_types = [] of TypeNode %}
-    {% for type in encoded_types.select { |t| encoded_type <= t } %}
-      {% read_types += read_map[type] if read_map[type] %}
-      {% write_types += write_map[type] if write_map[type] %}
-    {% end %}
-
     {{keyword.id}} {{encoded_type}}
-      {% unless read_types.empty? %}
+      {% if read_types = read_map[encoded_type] %}
         {% argless_read_types = read_types.select do |t|
              reader = t.constant(ann[:reader] || "Reader")
              argless_types.includes? reader
@@ -316,6 +308,11 @@ macro finished
         end
       {% end %}
 
+      # gather write types including those of superclasses
+      {% write_types = write_map[encoded_type] || [] of TypeNode %}
+      {% for type in write_map.keys.select { |t| encoded_type < t } %}
+        {% write_types += write_map[type] %}
+      {% end %}
       {% unless write_types.empty? %}
         {% argless_write_types = write_types.select do |t|
              writer = t.constant(ann[:writer] || "Writer")
