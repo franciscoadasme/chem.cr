@@ -12,7 +12,7 @@ describe Chem::Cube::Reader do
   end
 
   it "parses a cube file header" do
-    info = Grid.info "spec/data/cube/20.cube"
+    info = Grid::Info.from_cube "spec/data/cube/20.cube"
     info.dim.should eq({20, 20, 20})
     info.bounds.origin.should be_close V[-3.826155, -4.114553, -6.64407], 1e-6
     info.bounds.size.should be_close S[12.184834, 12.859271, 13.117308], 1e-6
@@ -31,7 +31,7 @@ describe Chem::Cube::Reader do
          1    1.000000    3.658572    8.310089   -0.667807
          1    1.000000    3.557810    7.487509   -3.515277
       EOS
-    info = Grid.info io, :cube
+    info = Grid::Info.from_cube io
     info.dim.should eq({14, 20, 22})
     info.bounds.should be_close Bounds.new(
       V[-3.826155, -4.114553, -6.64407],

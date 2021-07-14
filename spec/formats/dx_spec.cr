@@ -48,7 +48,7 @@ describe Chem::DX::Reader do
           110.00000000    111.00000000    112.00000000
           120.00000000    121.00000000    122.00000000\n
       EOS
-    info = Grid.info io, :dx
+    info = Grid::Info.from_dx io
     info.bounds.should eq Bounds.new(
       V[0.5, 0.3, 1],
       V[10, 0, 0],

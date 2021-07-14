@@ -1,7 +1,17 @@
 @[Chem::RegisterFormat(ext: %w(.dx))]
 module Chem::DX
   class Reader < Spatial::Grid::Reader
-    def info : Spatial::Grid::Info
+    include FormatReader::Headed(Spatial::Grid::Info)
+
+    protected def decode_entry : Spatial::Grid
+      Spatial::Grid.build(read_header) do |buffer, size|
+        size.times do |i|
+          buffer[i] = @io.read_float
+        end
+      end
+    end
+
+    protected def decode_header : Spatial::Grid::Info
       while @io.skip_whitespace.peek == '#'
         @io.skip_line
       end
@@ -15,14 +25,6 @@ module Chem::DX
 
       bounds = Spatial::Bounds.new origin, vi, vj, vk
       Spatial::Grid::Info.new bounds, {ni, nj, nk}
-    end
-
-    protected def decode_entry : Spatial::Grid
-      Spatial::Grid.build(info) do |buffer, size|
-        size.times do |i|
-          buffer[i] = @io.read_float
-        end
-      end
     end
   end
 

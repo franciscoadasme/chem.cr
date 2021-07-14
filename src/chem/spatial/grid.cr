@@ -106,24 +106,6 @@ module Chem::Spatial
       new other.dim, other.bounds, value.to_f
     end
 
-    def self.info(path : Path | String) : Info
-      info path, Format.from_filename File.basename(path)
-    end
-
-    def self.info(input : IO | Path | String, format : Format) : Info
-      {% begin %}
-        case format
-        {% for parser in Reader.subclasses %}
-          {% format = parser.name.split("::")[-2].id.downcase %}
-          when .{{format}}?
-            {{parser}}.new(input).info
-        {% end %}
-        else
-          raise ArgumentError.new "#{format} not supported for Grid"
-        end
-      {% end %}
-    end
-
     def self.new(dim : Dimensions,
                  bounds : Bounds,
                  &block : Location -> Number)

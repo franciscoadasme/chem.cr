@@ -18,7 +18,7 @@ describe Chem::VASP::Locpot do
   end
 
   it "parses a LOCPOT header" do
-    info = Grid.info "spec/data/vasp/LOCPOT", :chgcar
+    info = Grid::Info.from_locpot "spec/data/vasp/LOCPOT"
     info.bounds.should be_close Bounds.new(
       V.origin,
       V[2.969072, -0.000523, -0.000907],

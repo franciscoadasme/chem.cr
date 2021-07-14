@@ -1,6 +1,6 @@
 module Chem::VASP
   module GridReader
-    def info : Spatial::Grid::Info
+    protected def decode_header : Spatial::Grid::Info
       @io.skip_line
       scale = @io.read_float
       vi = scale * @io.read_vector

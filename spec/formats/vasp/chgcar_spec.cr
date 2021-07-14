@@ -12,7 +12,7 @@ describe Chem::VASP::Chgcar do
   end
 
   it "parses a CHGCAR header" do
-    info = Grid.info "spec/data/vasp/CHGCAR", :chgcar
+    info = Grid::Info.from_chgcar "spec/data/vasp/CHGCAR"
     info.bounds.should eq Bounds[10, 10, 10]
     info.dim.should eq({2, 2, 2})
   end
