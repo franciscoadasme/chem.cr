@@ -88,4 +88,35 @@ describe Chem::RegisterFormat do
       A.new.write("a.foo")
       EOS
   end
+
+  it "generates read methods on header type" do
+    assert_code <<-EOS
+      struct A; end
+      struct A::Info; end
+
+      @[Chem::RegisterFormat]
+      module Chem::Foo
+        class Reader
+          include Chem::FormatReader(A)
+          include Chem::FormatReader::Headed(A::Info)
+
+          protected def decode_entry : A
+            A.new
+          end
+
+          protected def decode_header : A::Info
+            A::Info.new
+          end
+        end
+      end
+
+      A::Info.from_foo(IO::Memory.new).as(A::Info)
+      A::Info.from_foo("a.foo").as(A::Info)
+      A::Info.read(IO::Memory.new, Chem::Format::Foo).as(A::Info)
+      A::Info.read(IO::Memory.new, "foo").as(A::Info)
+      A::Info.read("a.foo", Chem::Format::Foo).as(A::Info)
+      A::Info.read("a.foo", "foo").as(A::Info)
+      A::Info.read("a.foo").as(A::Info)
+      EOS
+  end
 end

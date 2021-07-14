@@ -33,6 +33,8 @@ macro finished
   {% read_map = {} of TypeNode => Array(TypeNode) %}
   # Maps encoded type to a list of write types
   {% write_map = {} of TypeNode => Array(TypeNode) %}
+  # Maps encoded type to a list of header types
+  {% head_map = {} of TypeNode => Array(TypeNode) %}
   # List of argless reader/writers (no required args in the constructor)
   {% argless_types = [] of TypeNode %}
 
@@ -176,6 +178,41 @@ macro finished
           ary
         end
       end
+
+      # register header for encoded type
+      {% if header_type = reader.ancestors
+              .select(&.<=(Chem::FormatReader::Headed))
+              .map(&.type_vars[0]).first %}
+        {% if head_map[header_type] %}
+          {% head_map[header_type] << ann_type %}
+        {% else %}
+          {% head_map[header_type] = [ann_type] %}
+        {% end %}
+
+        {% keyword = "module" if header_type.module? %}
+        {% keyword = "class" if header_type.class? %}
+        {% keyword = "struct" if header_type.struct? %}
+
+        {{keyword.id}} {{header_type}}
+          # Returns the header encoded in *input* using the `{{ann_type}}`
+          # file format. Arguments are forwarded to `{{reader}}#open`.
+          def self.from_{{method_format}}(
+            input : IO | Path | String,
+            {% for arg in args %}
+              {{arg}},
+            {% end %}
+          ) : self
+            {{reader}}.open(
+              input \
+              {% for arg in args %} \
+                ,{{arg.internal_name}} \
+              {% end %}
+            ) do |reader|
+              reader.read_header
+            end
+          end
+        end
+      {% end %}
     {% end %}
 
     {% if writer = ann_type.constant(ann[:writer] || "Writer") %}
@@ -253,21 +290,27 @@ macro finished
     {% end %}
   {% end %}
 
-  {% encoded_types = (read_map.keys + write_map.keys).uniq %}
+  {% encoded_types = (read_map.keys + head_map.keys + write_map.keys).uniq %}
   {% for encoded_type in encoded_types %}
     {% keyword = "module" if encoded_type.module? %}
     {% keyword = "class" if encoded_type.class? %}
     {% keyword = "struct" if encoded_type.struct? %}
 
     {{keyword.id}} {{encoded_type}}
-      {% if read_types = read_map[encoded_type] %}
+      {% if read_types = read_map[encoded_type] || head_map[encoded_type] %}
         {% argless_read_types = read_types.select do |t|
              reader = t.constant(ann[:reader] || "Reader")
              argless_types.includes? reader
            end %}
         {% printable_formats = read_types.map { |t| "`#{t}`".id }.sort %}
 
-        # Returns the object encoded in the specified file. The file
+        {% if read_map[encoded_type] %}
+          {% type_desc = "object encoded" %}
+        {% elsif head_map[encoded_type] %}
+          {% type_desc = "header" %}
+        {% end %}
+
+        # Returns the {{type_desc}} in the specified file. The file
         # format is chosen based on the filename (see
         # `Chem::Format#from_filename`). Raises `ArgumentError` if the
         # file format cannot be determined.
@@ -279,7 +322,7 @@ macro finished
           read path, ::Chem::Format.from_filename(path)
         end
 
-        # Returns the object encoded in the specified file using the
+        # Returns the {{type_desc}} in the specified file using the
         # given file format. Raises `ArgumentError` if *format* has
         # required arguments, it is not supported or invalid.
         #
