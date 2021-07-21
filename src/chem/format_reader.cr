@@ -101,6 +101,32 @@ module Chem
     end
   end
 
+  # Declares a common interface for reading the attached object encoded
+  # in a file format.
+  #
+  # Including types must implement the `#decode_attached : T` protected
+  # method, where the type variable `T` indicates the attached object
+  # type. Upon parsing issues, including types are expected to raise a
+  # `ParseException` exception.
+  module FormatReader::Attached(T)
+    @attached : T?
+
+    # Returns the attached object. Raises `ParseException` if the object
+    # cannot be decoded.
+    #
+    # NOTE: never invoke this method directly, use `#read_attached`
+    # instead.
+    protected abstract def decode_attached : T
+
+    # Reads the attached object from the IO. Raises `IO::Error` if the
+    # reader is closed or `ParseException` if the object cannot be
+    # decoded.
+    def read_attached : T
+      check_open
+      @attached ||= decode_attached
+    end
+  end
+
   abstract class Structure::Reader
     include FormatReader(Structure)
     include Iterator(Structure)
