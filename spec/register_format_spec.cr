@@ -119,4 +119,35 @@ describe Chem::RegisterFormat do
       A::Info.read("a.foo").as(A::Info)
       EOS
   end
+
+  it "generates read methods on attached type" do
+    assert_code <<-EOS
+      struct A; end
+      struct B; end
+
+      @[Chem::RegisterFormat]
+      module Chem::Foo
+        class Reader
+          include Chem::FormatReader(A)
+          include Chem::FormatReader::Attached(B)
+
+          protected def decode_entry : A
+            A.new
+          end
+
+          protected def decode_attached : B
+            B.new
+          end
+        end
+      end
+
+      B.from_foo(IO::Memory.new).as(B)
+      B.from_foo("a.foo").as(B)
+      B.read(IO::Memory.new, Chem::Format::Foo).as(B)
+      B.read(IO::Memory.new, "foo").as(B)
+      B.read("a.foo", Chem::Format::Foo).as(B)
+      B.read("a.foo", "foo").as(B)
+      B.read("a.foo").as(B)
+      EOS
+  end
 end
