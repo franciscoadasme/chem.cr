@@ -2,8 +2,28 @@
 module Chem::Cube
   class Reader < Spatial::Grid::Reader
     include FormatReader::Headed(Spatial::Grid::Info)
+    include FormatReader::Attached(Structure)
 
     BOHR_TO_ANGS = 0.529177210859
+
+    @n_atoms = 0
+
+    def read_attached : Structure
+      read_header
+      @attached || raise "BUG: @attached is nil after reading header"
+    end
+
+    protected def decode_attached : Structure
+      Structure.build do |builder|
+        @n_atoms.times do
+          builder.atom \
+            element: PeriodicTable[@io.read_int],
+            partial_charge: @io.read_float,
+            coords: @io.read_vector
+        end
+        @io.skip_line
+      end
+    end
 
     protected def decode_entry : Spatial::Grid
       Spatial::Grid.build(read_header) do |buffer, size|
@@ -15,14 +35,16 @@ module Chem::Cube
 
     private def decode_header : Spatial::Grid::Info
       2.times { @io.skip_line }
-      n_atoms = @io.read_int
-      parse_exception "Cube with multiple densities not supported" if n_atoms < 0
+      @n_atoms = @io.read_int
+      parse_exception "Cube with multiple densities not supported" if @n_atoms < 0
 
       origin = @io.read_vector * BOHR_TO_ANGS
       nx, vi = @io.read_int, @io.read_vector * BOHR_TO_ANGS
       ny, vj = @io.read_int, @io.read_vector * BOHR_TO_ANGS
       nz, vk = @io.read_int, @io.read_vector * BOHR_TO_ANGS
-      (n_atoms + 1).times { @io.skip_line }
+      @io.skip_line
+
+      @attached = decode_attached
 
       bounds = Spatial::Bounds.new origin, vi * nx, vj * ny, vk * nz
       Spatial::Grid::Info.new bounds, {nx, ny, nz}
