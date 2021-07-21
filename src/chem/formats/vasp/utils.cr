@@ -1,15 +1,24 @@
 module Chem::VASP
   module GridReader
-    protected def decode_header : Spatial::Grid::Info
-      @io.skip_line
-      scale = @io.read_float
-      vi = scale * @io.read_vector
-      vj = scale * @io.read_vector
-      vk = scale * @io.read_vector
-      skip_atoms
-      nx, ny, nz = @io.read_int, @io.read_int, @io.read_int
+    def read_attached : Structure
+      read_header
+      @attached || raise "BUG: @attached is nil after reading header"
+    end
 
-      bounds = Spatial::Bounds.new Spatial::Vector.origin, vi, vj, vk
+    protected def decode_attached : Structure
+      # FIXME: @io should be passed directly to #from_poscar to avoid #rewind
+      Structure.from_poscar(@io.enclosed_io).tap do
+        @io.enclosed_io.rewind
+        skip_header
+      end
+    end
+
+    protected def decode_header : Spatial::Grid::Info
+      @attached = decode_attached
+      raise "BUG: lattice cannot be nil" unless lattice = @attached.try(&.lattice)
+
+      nx, ny, nz = @io.read_int, @io.read_int, @io.read_int
+      bounds = Spatial::Bounds.new Spatial::Vector.origin, lattice.basis
       Spatial::Grid::Info.new bounds, {nx, ny, nz}
     end
 
@@ -28,7 +37,8 @@ module Chem::VASP
       end
     end
 
-    private def skip_atoms : Nil
+    private def skip_header : Nil
+      5.times { @io.skip_line }
       n_atoms = 0
       n_elements = 0
       loop do

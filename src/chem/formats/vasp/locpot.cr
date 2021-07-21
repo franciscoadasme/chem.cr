@@ -4,6 +4,7 @@ require "./utils"
 module Chem::VASP::Locpot
   class Reader < Spatial::Grid::Reader
     include FormatReader::Headed(Spatial::Grid::Info)
+    include FormatReader::Attached(Structure)
     include GridReader
 
     protected def decode_entry : Spatial::Grid
