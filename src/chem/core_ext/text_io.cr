@@ -64,6 +64,10 @@ class TextIO
     end
   end
 
+  def enclosed_io : IO
+    @io
+  end
+
   def eof? : Bool
     @buffer.empty? && fill_buffer == 0
   end
