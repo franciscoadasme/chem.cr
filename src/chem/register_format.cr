@@ -86,6 +86,7 @@ macro finished
       {% else %}
         {% reader.raise "#{reader} must include #{Chem::FormatReader}" %}
       {% end %}
+      {% type_desc = encoded_type.name.split("::")[-1].underscore.gsub(/_/, " ").id %}
 
       # register read for encoded type
       {% if read_map[encoded_type] %}
@@ -115,8 +116,9 @@ macro finished
       {% argless_types << reader unless args.any? &.default_value.is_a?(Nop) %}
 
       {{keyword.id}} {{encoded_type}}
-        # Returns the object encoded in *input* using the `{{ann_type}}`
-        # file format. Arguments are forwarded to `{{reader}}#open`.
+        # Returns the {{type_desc}} encoded in *input* using the
+        # `{{ann_type}}` file format. Arguments are forwarded to
+        # `{{reader}}#open`.
         def self.from_{{method_format}}(
           input : IO | Path | String,
           {% for arg in args %}
@@ -220,6 +222,7 @@ macro finished
       {% if attached_type = reader.ancestors
               .select(&.<=(Chem::FormatReader::Attached))
               .map(&.type_vars[0]).first %}
+        {% type_desc = attached_type.name.split("::")[-1].underscore.gsub(/_/, " ").id %}
         {% if attach_map[attached_type] %}
           {% attach_map[attached_type] << ann_type %}
         {% else %}
@@ -231,7 +234,7 @@ macro finished
         {% keyword = "struct" if attached_type.struct? %}
 
         {{keyword.id}} {{attached_type}}
-          # Returns the attached object encoded in *input* using the
+          # Returns the {{type_desc}} encoded in *input* using the
           # `{{ann_type}}` file format. Arguments are forwarded to
           # `{{reader}}#open`.
           def self.from_{{method_format}}(
@@ -348,12 +351,10 @@ macro finished
            end %}
         {% printable_formats = read_types.map { |t| "`#{t}`".id }.sort %}
 
-        {% if read_map[encoded_type] %}
-          {% type_desc = "object" %}
+        {% if read_map[encoded_type] || attach_map[encoded_type] %}
+          {% type_desc = encoded_type.name.split("::")[-1].underscore.gsub(/_/, " ").id %}
         {% elsif head_map[encoded_type] %}
-          {% type_desc = "header" %}
-        {% elsif attach_map[encoded_type] %}
-          {% type_desc = "attached object" %}
+          {% type_desc = "header".id %}
         {% end %}
 
         # Returns the {{type_desc}} encoded in the specified file. The
