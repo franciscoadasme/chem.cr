@@ -334,7 +334,7 @@ macro finished
           format = ::Chem::Format.parse format if format.is_a?(String)
           {% begin %}
             case format
-            {% for read_type in argless_read_types %}
+            {% for read_type in read_types %}
               {% method_format = method_format_map[read_type] %}
               when .{{method_format}}?
                 {% if argless_read_types.includes?(read_type) %}
