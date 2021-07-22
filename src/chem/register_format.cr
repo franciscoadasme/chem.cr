@@ -183,76 +183,45 @@ macro finished
         end
       end
 
-      # register header for encoded type
-      {% if header_type = reader.ancestors
-              .select(&.<=(Chem::FormatReader::Headed))
-              .map(&.type_vars[0]).first %}
-        {% if head_map[header_type] %}
-          {% head_map[header_type] << ann_type %}
-        {% else %}
-          {% head_map[header_type] = [ann_type] %}
-        {% end %}
+      {% for mixin in [Chem::FormatReader::Headed, Chem::FormatReader::Attached] %}
+        {% if type = reader.ancestors.select(&.<=(mixin)).map(&.type_vars[0]).first %}
+          {% if mixin <= Chem::FormatReader::Headed
+               method_name = "header"
+               map = head_map
+               type_desc = "header".id
+             end %}
+          {% if mixin <= Chem::FormatReader::Attached
+               method_name = "attached"
+               map = attach_map
+               type_desc = type.name.split("::")[-1].underscore.gsub(/_/, " ").id
+             end %}
+          {% map[type] ? map[type] << ann_type : (map[type] = [ann_type]) %}
 
-        {% keyword = "module" if header_type.module? %}
-        {% keyword = "class" if header_type.class? %}
-        {% keyword = "struct" if header_type.struct? %}
+          {% keyword = "module" if type.module? %}
+          {% keyword = "class" if type.class? %}
+          {% keyword = "struct" if type.struct? %}
 
-        {{keyword.id}} {{header_type}}
-          # Returns the header encoded in *input* using the `{{ann_type}}`
-          # file format. Arguments are forwarded to `{{reader}}#open`.
-          def self.from_{{method_format}}(
-            input : IO | Path | String,
-            {% for arg in args %}
-              {{arg}},
-            {% end %}
-          ) : self
-            {{reader}}.open(
-              input \
-              {% for arg in args %} \
-                ,{{arg.internal_name}} \
+          {{keyword.id}} {{type}}
+            # Returns the {{type_desc}} encoded in *input* using the
+            # `{{ann_type}}` file format. Arguments are forwarded to
+            # `{{reader}}#open`.
+            def self.from_{{method_format}}(
+              input : IO | Path | String,
+              {% for arg in args %}
+                {{arg}},
               {% end %}
-            ) do |reader|
-              reader.read_header
+            ) : self
+              {{reader}}.open(
+                input \
+                {% for arg in args %} \
+                  ,{{arg.internal_name}} \
+                {% end %}
+              ) do |reader|
+                reader.read_{{method_name.id}}
+              end
             end
           end
-        end
-      {% end %}
-
-      # register attached for encoded type
-      {% if attached_type = reader.ancestors
-              .select(&.<=(Chem::FormatReader::Attached))
-              .map(&.type_vars[0]).first %}
-        {% type_desc = attached_type.name.split("::")[-1].underscore.gsub(/_/, " ").id %}
-        {% if attach_map[attached_type] %}
-          {% attach_map[attached_type] << ann_type %}
-        {% else %}
-          {% attach_map[attached_type] = [ann_type] %}
         {% end %}
-
-        {% keyword = "module" if attached_type.module? %}
-        {% keyword = "class" if attached_type.class? %}
-        {% keyword = "struct" if attached_type.struct? %}
-
-        {{keyword.id}} {{attached_type}}
-          # Returns the {{type_desc}} encoded in *input* using the
-          # `{{ann_type}}` file format. Arguments are forwarded to
-          # `{{reader}}#open`.
-          def self.from_{{method_format}}(
-            input : IO | Path | String,
-            {% for arg in args %}
-              {{arg}},
-            {% end %}
-          ) : self
-            {{reader}}.open(
-              input \
-              {% for arg in args %} \
-                ,{{arg.internal_name}} \
-              {% end %}
-            ) do |reader|
-              reader.read_attached
-            end
-          end
-        end
       {% end %}
     {% end %}
 
