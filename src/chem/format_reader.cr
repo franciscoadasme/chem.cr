@@ -96,8 +96,10 @@ module Chem
     # reader is closed or `ParseException` if the header cannot be
     # decoded.
     def read_header : T
-      check_open
-      @header ||= decode_header
+      @header ||= begin
+        check_open
+        decode_header
+      end
     end
   end
 
@@ -122,8 +124,10 @@ module Chem
     # reader is closed or `ParseException` if the object cannot be
     # decoded.
     def read_attached : T
-      check_open
-      @attached ||= decode_attached
+      @attached ||= begin
+        check_open
+        decode_attached
+      end
     end
   end
 
