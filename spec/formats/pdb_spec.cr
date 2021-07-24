@@ -401,6 +401,18 @@ describe Chem::PDB do
       s = Chem::Structure.from_pdb io
       s.atoms.map(&.element.symbol).should eq %w(N H H H C)
     end
+
+    it "parses a PDB header" do
+      expt = Chem::Structure::Experiment.from_pdb "spec/data/pdb/1crn.pdb"
+      expt.deposition_date.should eq Time.utc(1981, 4, 30)
+      expt.doi.should eq "10.1073/PNAS.81.19.6014"
+      expt.method.x_ray_diffraction?.should be_true
+      expt.pdb_accession.should eq "1CRN"
+      expt.resolution.should eq 1.5
+      expt.title.should eq "WATER STRUCTURE OF A HYDROPHOBIC PROTEIN AT ATOMIC \
+                            RESOLUTION. PENTAGON RINGS OF WATER MOLECULES IN CRYSTALS \
+                            OF CRAMBIN"
+    end
   end
 end
 

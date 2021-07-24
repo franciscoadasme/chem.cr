@@ -293,6 +293,8 @@ module Chem::PDB
   end
 
   class Reader < Structure::Reader
+    include FormatReader::Headed(Structure::Experiment)
+
     private alias ResidueId = Tuple(Char, Int32, Char?)
     private alias Sec = Protein::SecondaryStructure
 
@@ -303,11 +305,10 @@ module Chem::PDB
     }
 
     @pdb_bonds = Hash(Tuple(Int32, Int32), Int32).new 0
-    @pdb_expt : Structure::Experiment?
     @pdb_lattice : Lattice?
     @pdb_seq : Protein::Sequence?
     @pdb_title = ""
-    @pdb_header = false
+    @header_decoded = false
 
     @alt_locs : Hash(Residue, Array(AlternateLocation))?
     @builder = uninitialized Structure::Builder
@@ -326,7 +327,7 @@ module Chem::PDB
     end
 
     def next : Structure | Iterator::Stop
-      read_header unless @pdb_header
+      decode_header unless @header_decoded
       until @io.eof?
         case @io.skip_whitespace
         when .check("ATOM", "HETATM", "MODEL")
@@ -341,7 +342,7 @@ module Chem::PDB
     end
 
     def skip_structure : Nil
-      read_header unless @pdb_header
+      decode_header unless @header_decoded
       @io.skip_line if @io.skip_whitespace.check("MODEL")
       until @io.eof?
         case @io.skip_whitespace
@@ -354,6 +355,11 @@ module Chem::PDB
           @io.skip_line
         end
       end
+    end
+
+    def read_header : Structure::Experiment
+      decode_header unless @header_decoded
+      @header || parse_exception "Empty header"
     end
 
     private def alt_loc(residue : Residue, id : Char, resname : String) : AlternateLocation
@@ -378,46 +384,7 @@ module Chem::PDB
       end
     end
 
-    private def read_atom(line : String) : Nil
-      alt_loc = line[16].presence
-      return if @alt_loc && alt_loc && alt_loc != @alt_loc
-
-      chid = line[21]
-      case chains = @chains
-      when Set     then return unless chid.in?(chains)
-      when "first" then return if chid != (@builder.current_chain.try(&.id) || chid)
-      end
-
-      ele = case symbol = line[76, 2]?.presence.try(&.strip)
-            when "D"    then PeriodicTable::D
-            when "X"    then PeriodicTable::X
-            when String then PeriodicTable[symbol]
-            end
-
-      @builder.chain chid if chid.alphanumeric?
-      resname = line[17, 4].strip
-      @builder.residue resname, Hybrid36.decode(line[22, 4]), line[26].presence
-      atom = @builder.atom \
-        line[12, 4].strip,
-        Hybrid36.decode(line[6, 5]),
-        Spatial::Vector.new(line[30, 8].to_f, line[38, 8].to_f, line[46, 8].to_f),
-        element: ele,
-        formal_charge: line[78, 2]?.try(&.reverse.to_i?) || 0,
-        occupancy: line[54, 6]?.presence.try(&.to_f) || 0.0,
-        temperature_factor: line[60, 6]?.presence.try(&.to_f) || 0.0
-
-      alt_loc(atom.residue, alt_loc, resname) << atom if !@alt_loc && alt_loc
-    end
-
-    private def read_bonds(line : String) : Nil
-      i = Hybrid36.decode line[6, 5]
-      (11..).step(5).each do |start|
-        break unless j = line[start, 5]?.presence.try { |str| Hybrid36.decode(str) }
-        @pdb_bonds[{i, j}] += 1 unless i > j # skip redundant bonds
-      end
-    end
-
-    private def read_header
+    private def decode_header : Structure::Experiment
       aminoacids = [] of Protein::AminoAcid
       date = doi = pdbid = resolution = nil
       method = Structure::Experiment::Method::XRayDiffraction
@@ -471,14 +438,54 @@ module Chem::PDB
       end
 
       if date && pdbid
-        @pdb_expt = Structure::Experiment.new title, method, resolution, pdbid, date, doi
+        @header = Structure::Experiment.new title, method, resolution, pdbid, date, doi
         @pdb_title = pdbid
       else
         @pdb_title = title
       end
       @pdb_seq = Protein::Sequence.new aminoacids unless aminoacids.empty?
 
-      @pdb_header = true
+      @header_decoded = true
+      @header || Structure::Experiment.new "", method, nil, "", Time::UNIX_EPOCH, nil
+    end
+
+    private def read_atom(line : String) : Nil
+      alt_loc = line[16].presence
+      return if @alt_loc && alt_loc && alt_loc != @alt_loc
+
+      chid = line[21]
+      case chains = @chains
+      when Set     then return unless chid.in?(chains)
+      when "first" then return if chid != (@builder.current_chain.try(&.id) || chid)
+      end
+
+      ele = case symbol = line[76, 2]?.presence.try(&.strip)
+            when "D"    then PeriodicTable::D
+            when "X"    then PeriodicTable::X
+            when String then PeriodicTable[symbol]
+            end
+
+      @builder.chain chid if chid.alphanumeric?
+      resname = line[17, 4].strip
+      @builder.residue resname, Hybrid36.decode(line[22, 4]), line[26].presence
+      atom = @builder.atom \
+        line[12, 4].strip,
+        Hybrid36.decode(line[6, 5]),
+        Spatial::Vector.new(line[30, 8].to_f, line[38, 8].to_f, line[46, 8].to_f),
+        element: ele,
+        formal_charge: line[78, 2]?.try(&.reverse.to_i?) || 0,
+        occupancy: line[54, 6]?.presence.try(&.to_f) || 0.0,
+        temperature_factor: line[60, 6]?.presence.try(&.to_f) || 0.0
+
+      alt_loc(atom.residue, alt_loc, resname) << atom if !@alt_loc && alt_loc
+    end
+
+    private def read_bonds(line : String) : Nil
+      i = Hybrid36.decode line[6, 5]
+      (11..).step(5).each do |start|
+        break unless j = line[start, 5]?.presence.try { |str| Hybrid36.decode(str) }
+        @pdb_bonds[{i, j}] += 1 unless i > j # skip redundant bonds
+      end
     end
 
     private def read_het? : Bool
@@ -491,7 +498,7 @@ module Chem::PDB
       @builder = Structure::Builder.new guess_topology: @guess_topology
       @builder.title @pdb_title
       @builder.lattice @pdb_lattice
-      @builder.expt @pdb_expt
+      @builder.expt @header
       @builder.seq @pdb_seq
 
       @pdb_bonds.clear
