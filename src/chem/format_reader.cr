@@ -131,6 +131,59 @@ module Chem
     end
   end
 
+  # Declares a common interface for reading a variable number of objects
+  # encoded in a file format.
+  #
+  # Including types must implement the `#skip_entry` method to discard
+  # the next entry in the IO.
+  module FormatReader::MultiEntry(T)
+    # Discards the next entry in the IO without fully parsing it.
+    abstract def skip_entry : Nil
+
+    # Yields each entry in the IO to the given block.
+    def each(& : T ->) : Nil
+      while obj = next_entry
+        yield obj
+      end
+    end
+
+    # Yields entries at the specified *indexes* in the IO to the given
+    # block. Raises `IndexError` when an index is out of bounds.
+    def each(indexes : Enumerable(Int), & : T ->)
+      prev_i = -1
+      indexes.each do |i|
+        (i - prev_i - 1).times { skip_entry }
+        obj = next_entry
+        raise IndexError.new unless obj
+        yield obj
+        prev_i = i
+      end
+    end
+
+    # Returns the next entry in the IO, or `nil` if there are no more
+    # entries.
+    def next_entry : T?
+      check_open
+      obj = decode_entry
+      @read = true
+      obj
+    rescue IO::EOFError
+      nil
+    end
+
+    # Returns the next entry in the IO. Raises `ParseException` if there
+    # are no more entries.
+    def read_entry : T
+      next_entry || parse_exception (@read ? "No more entries" : "Empty content")
+    end
+
+    def to_a : Array(T)
+      ary = [] of T
+      each { |ele| ary << ele }
+      ary
+    end
+  end
+
   abstract class Structure::Reader
     include FormatReader(Structure)
     include Iterator(Structure)
