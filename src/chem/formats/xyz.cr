@@ -16,13 +16,17 @@ module Chem::XYZ
     end
   end
 
-  class Reader < Structure::Reader
-    def next : Structure | Iterator::Stop
-      @io.skip_whitespace
-      @io.eof? ? stop : read_next
+  class Reader
+    include FormatReader(Structure)
+    include FormatReader::MultiEntry(Structure)
+
+    def initialize(io : IO, @guess_topology : Bool = true, @sync_close : Bool = false)
+      @io = TextIO.new io
     end
 
-    private def read_next : Structure
+    protected def decode_entry : Structure
+      @io.skip_whitespace
+      raise IO::EOFError.new if @io.eof?
       Structure.build(@guess_topology) do |builder|
         n_atoms = @io.read_int
         @io.skip_line
@@ -34,7 +38,7 @@ module Chem::XYZ
       end
     end
 
-    def skip_structure : Nil
+    def skip_entry : Nil
       @io.skip_whitespace
       return if @io.eof?
       n_atoms = @io.read_int

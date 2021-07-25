@@ -288,30 +288,13 @@ describe Chem::PDB do
       end
     end
 
-    it "parses selected models (iterator)" do
-      path = "spec/data/pdb/models.pdb"
-      st_list = PDB::Reader.new(path).select(indexes: [1, 3]).to_a
-      st_list.size.should eq 2
-      xs = {7.212, 22.055}
-      st_list.zip(xs) do |st, x|
-        st.n_atoms.should eq 5
-        st.atoms.map(&.serial).should eq (1..5).to_a
-        st.atoms.map(&.name).should eq ["N", "CA", "C", "O", "CB"]
-        st.atoms[0].x.should eq x
-      end
-    end
-
     it "skip models" do
-      parser = PDB::Reader.new "spec/data/pdb/models.pdb"
-      parser.skip_structure
-      parser.first.atoms[0].coords.should eq V[7.212, 15.334, 0.966]
-      parser.skip_structure
-      parser.first.atoms[0].coords.should eq V[22.055, 14.701, 7.032]
-    end
-
-    it "skip models (iterator)" do
-      parser = PDB::Reader.new "spec/data/pdb/models.pdb"
-      parser.skip(3).first.atoms[0].coords.should eq V[22.055, 14.701, 7.032]
+      PDB::Reader.open("spec/data/pdb/models.pdb") do |reader|
+        reader.skip_entry
+        reader.read_entry.atoms[0].coords.should eq V[7.212, 15.334, 0.966]
+        reader.skip_entry
+        reader.read_entry.atoms[0].coords.should eq V[22.055, 14.701, 7.032]
+      end
     end
 
     it "parses selected chains" do

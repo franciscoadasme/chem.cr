@@ -91,7 +91,10 @@ module Chem::Mol2
     end
   end
 
-  class Reader < Structure::Reader
+  class Reader
+    include FormatReader(Structure)
+    include FormatReader::MultiEntry(Structure)
+
     TAG          = "@<TRIPOS>"
     TAG_ATOMS    = "@<TRIPOS>ATOM"
     TAG_BONDS    = "@<TRIPOS>BOND"
@@ -103,12 +106,11 @@ module Chem::Mol2
     @n_bonds = 0
     @title = ""
 
-    def next : Structure | Iterator::Stop
-      skip_to_tag
-      !@io.eof? ? read_next : stop
+    def initialize(io : IO, @sync_close : Bool = false)
+      @io = TextIO.new io
     end
 
-    def skip_structure : Nil
+    def skip_entry : Nil
       @io.skip_line if @io.skip_whitespace.check(TAG_MOLECULE)
       skip_to_tag TAG_MOLECULE
     end
@@ -158,7 +160,9 @@ module Chem::Mol2
       @include_charges = @io.read_line.strip != "NO_CHARGES"
     end
 
-    private def read_next : Structure
+    private def decode_entry : Structure
+      skip_to_tag
+      raise IO::EOFError.new if @io.eof?
       read_header
       @builder = Structure::Builder.new guess_topology: false
       @builder.title @title

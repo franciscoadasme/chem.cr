@@ -292,7 +292,9 @@ module Chem::PDB
     end
   end
 
-  class Reader < Structure::Reader
+  class Reader
+    include FormatReader(Structure)
+    include FormatReader::MultiEntry(Structure)
     include FormatReader::Headed(Structure::Experiment)
 
     private alias ResidueId = Tuple(Char, Int32, Char?)
@@ -326,22 +328,24 @@ module Chem::PDB
       @chains = chains.is_a?(Enumerable) ? chains.to_set : chains
     end
 
-    def next : Structure | Iterator::Stop
+    def next_entry : Structure?
       decode_header unless @header_decoded
       until @io.eof?
         case @io.skip_whitespace
         when .check("ATOM", "HETATM", "MODEL")
-          return read_next
+          obj = decode_entry
+          @read = true
+          break
         when .check("END", "MASTER")
           break
         else
           @io.skip_line
         end
       end
-      stop
+      obj
     end
 
-    def skip_structure : Nil
+    def skip_entry : Nil
       decode_header unless @header_decoded
       @io.skip_line if @io.skip_whitespace.check("MODEL")
       until @io.eof?
@@ -492,7 +496,7 @@ module Chem::PDB
       @het
     end
 
-    private def read_next : Structure
+    private def decode_entry : Structure
       @io.skip_line if @io.check("MODEL")
 
       @builder = Structure::Builder.new guess_topology: @guess_topology

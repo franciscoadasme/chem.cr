@@ -75,7 +75,13 @@ module Chem::VASP::Poscar
     end
   end
 
-  class Reader < Structure::Reader
+  class Reader
+    include FormatReader(Structure)
+
+    def initialize(io : IO, @guess_topology : Bool = true, @sync_close : Bool = false)
+      @io = TextIO.new io
+    end
+
     @builder = uninitialized Structure::Builder
     @constrained = false
     @fractional = false
@@ -83,14 +89,6 @@ module Chem::VASP::Poscar
     @scale_factor = 1.0
     @species = [] of Element
     @title = ""
-
-    def next : Structure | Iterator::Stop
-      @io.eof? ? stop : read_next
-    end
-
-    def skip_structure : Nil
-      @io.skip_to_end
-    end
 
     private def read_atom : Atom
       vec = @io.read_vector
@@ -142,7 +140,7 @@ module Chem::VASP::Poscar
       read_coordinate_system
     end
 
-    private def read_next : Structure
+    private def decode_entry : Structure
       read_header
       @builder = Structure::Builder.new guess_topology: @guess_topology
       @builder.title @title

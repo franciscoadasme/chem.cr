@@ -38,20 +38,17 @@ module Chem::Gen
     end
   end
 
-  class Reader < Structure::Reader
+  class Reader
+    include FormatReader(Structure)
+
     @builder = uninitialized Structure::Builder
     @elements = [] of Element
     @fractional = false
     @n_atoms = 0
     @periodic = false
 
-    def next : Structure | Iterator::Stop
-      @io.skip_whitespace
-      @io.eof? ? stop : read_next
-    end
-
-    def skip_structure : Nil
-      @io.skip_to_end
+    def initialize(io : IO, @guess_topology : Bool = true, @sync_close : Bool = false)
+      @io = TextIO.new io
     end
 
     private def parse_coord_type : Nil
@@ -86,7 +83,7 @@ module Chem::Gen
       @builder.atom ele, vec
     end
 
-    private def read_next : Structure
+    private def decode_entry : Structure
       parse_header
 
       @builder = Structure::Builder.new guess_topology: @guess_topology
