@@ -136,52 +136,55 @@ macro finished
         end
       end
 
-      class Array(T)
-        # Creates a new array with the entries encoded in *input* using
-        # the `{{ann_type}}` file format. Arguments are fowarded to
-        # `{{reader}}#open`.
-        #
-        # NOTE: Only works for `{{encoded_type}}`.
-        def self.from_{{method_format}}(
-          input : IO | Path | String,
-          {% for arg in args %}
-            {{arg}},
-          {% end %}
-        ) : self
-          {{reader}}.open(
-            input \
-            {% for arg in args %} \
-              ,{{arg.internal_name}} \
+      {% if reader < Chem::FormatReader::MultiEntry %}
+        class Array(T)
+          # Creates a new array of `{{encoded_type}}` with the entries
+          # encoded in *input* using the `{{ann_type}}` file format.
+          # Arguments are fowarded to `{{reader}}#open`.
+          def self.from_{{method_format}}(
+            input : IO | Path | String,
+            {% for arg in args %}
+              {{arg}},
             {% end %}
-          ) do |reader|
-            reader.to_a
+          ) : self
+            \{% unless (type = @type) <= Array({{encoded_type}}) %}
+              \{% raise "undefined method '.from_{{method_format}}' for #{type}.class" %}
+            \{% end %}
+            {{reader}}.open(
+              input \
+              {% for arg in args %} \
+                ,{{arg.internal_name}} \
+              {% end %}
+            ) do |reader|
+              Array(T).new.tap do |ary|
+                reader.each { |obj| ary << obj }
+              end
+            end
           end
-        end
 
-        # Creates a new array with the entries encoded in *input* using
-        # the `{{ann_type}}` file format. Entries listed in *indexes*
-        # are read only. Arguments are fowarded to `{{reader}}#open`.
-        #
-        # NOTE: Only works for `{{encoded_type}}`.
-        def self.from_{{method_format}}(
-          input : IO | Path | String,
-          indexes : Array(Int),
-          {% for arg in args %}
-            {{arg}},
-          {% end %}
-        ) : self
-          ary = Array(Chem::Structure).new indexes.size
-          {{reader}}.open(
-            input \
-            {% for arg in args %} \
-              ,{{arg.internal_name}} \
+          # Creates a new array of `{{encoded_type}}` with the entries
+          # at *indexes* encoded in *input* using the `{{ann_type}}`
+          # file format. Arguments are fowarded to `{{reader}}#open`.
+          def self.from_{{method_format}}(
+            input : IO | Path | String,
+            indexes : Array(Int),
+            {% for arg in args %}
+              {{arg}},
             {% end %}
-          ) do |reader|
-            reader.each(indexes) { |st| ary << st }
+          ) : self
+            {{reader}}.open(
+              input \
+              {% for arg in args %} \
+              ,{{arg.internal_name}} \
+              {% end %}
+            ) do |reader|
+              Array(T).new(indexes.size).tap do |ary|
+                reader.each(indexes) { |obj| ary << obj }
+              end
+            end
           end
-          ary
         end
-      end
+      {% end %}
 
       {% for mixin in [Chem::FormatReader::Headed, Chem::FormatReader::Attached] %}
         {% if type = reader.ancestors.select(&.<=(mixin)).map(&.type_vars[0]).first %}

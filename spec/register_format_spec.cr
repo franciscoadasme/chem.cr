@@ -150,4 +150,69 @@ describe Chem::RegisterFormat do
       B.read("a.foo").as(B)
       EOS
   end
+
+  it "generates read methods on array" do
+    assert_code <<-EOS
+      struct A; end
+
+      @[Chem::RegisterFormat]
+      module Chem::Foo
+        class Reader
+          include Chem::FormatReader(A)
+          include Chem::FormatReader::MultiEntry(A)
+
+          protected def decode_entry : A
+            A.new
+          end
+
+          def skip_entry : Nil; end
+        end
+      end
+
+      Array(A).from_foo(IO::Memory.new).as(Array(A))
+      Array(A).from_foo("a.foo").as(Array(A))
+      EOS
+  end
+
+  it "does not generate read methods on array for single-entry formats" do
+    assert_error <<-EOS, "undefined method 'from_foo' for Array(A).class"
+      struct A; end
+
+      @[Chem::RegisterFormat]
+      module Chem::Foo
+        class Reader
+          include Chem::FormatReader(A)
+
+          protected def decode_entry : A
+            2
+          end
+        end
+      end
+
+      Array(A).from_foo(IO::Memory.new)
+      EOS
+  end
+
+  it "raises on incorrect array type" do
+    message = "undefined method '.from_foo' for Array(Int32).class"
+    assert_error <<-EOS, message
+      struct A; end
+
+      @[Chem::RegisterFormat]
+      module Chem::Foo
+        class Reader
+          include Chem::FormatReader(A)
+          include Chem::FormatReader::MultiEntry(A)
+
+          protected def decode_entry : A
+            A.new
+          end
+
+          def skip_entry : Nil; end
+        end
+      end
+
+      Array(Int32).from_foo(IO::Memory.new)
+      EOS
+  end
 end
