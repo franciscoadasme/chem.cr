@@ -263,12 +263,4 @@ module Chem
       end
     end
   end
-
-  abstract class Spatial::Grid::Reader
-    include FormatReader(Spatial::Grid)
-
-    def initialize(io : IO, @sync_close : Bool = false)
-      @io = TextIO.new io
-    end
-  end
 end

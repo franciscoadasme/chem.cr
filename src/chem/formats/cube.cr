@@ -1,12 +1,17 @@
 @[Chem::RegisterFormat(ext: %w(.cube))]
 module Chem::Cube
-  class Reader < Spatial::Grid::Reader
+  class Reader
+    include FormatReader(Spatial::Grid)
     include FormatReader::Headed(Spatial::Grid::Info)
     include FormatReader::Attached(Structure)
 
     BOHR_TO_ANGS = 0.529177210859
 
     @n_atoms = 0
+
+    def initialize(io : IO, @sync_close : Bool = false)
+      @io = TextIO.new io
+    end
 
     def read_attached : Structure
       read_header

@@ -1,7 +1,12 @@
 @[Chem::RegisterFormat(ext: %w(.dx))]
 module Chem::DX
-  class Reader < Spatial::Grid::Reader
+  class Reader
+    include FormatReader(Spatial::Grid)
     include FormatReader::Headed(Spatial::Grid::Info)
+
+    def initialize(io : IO, @sync_close : Bool = false)
+      @io = TextIO.new io
+    end
 
     protected def decode_entry : Spatial::Grid
       Spatial::Grid.build(read_header) do |buffer, size|

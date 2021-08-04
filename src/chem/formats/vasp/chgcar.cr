@@ -2,10 +2,15 @@ require "./utils"
 
 @[Chem::RegisterFormat(names: %w(CHGCAR*))]
 module Chem::VASP::Chgcar
-  class Reader < Spatial::Grid::Reader
+  class Reader
+    include FormatReader(Spatial::Grid)
     include FormatReader::Headed(Spatial::Grid::Info)
     include FormatReader::Attached(Structure)
     include GridReader
+
+    def initialize(io : IO, @sync_close : Bool = false)
+      @io = TextIO.new io
+    end
 
     protected def decode_entry : Spatial::Grid
       info = read_header
