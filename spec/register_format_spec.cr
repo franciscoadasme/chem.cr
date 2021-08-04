@@ -58,14 +58,14 @@ describe Chem::RegisterFormat do
         class Reader
           include Chem::FormatReader(A)
 
-          def initialize(@io : IO, foo : Int32, sync_close : Bool = false); end
+          def initialize(@io : IO, foo : Int32 = 1, sync_close : Bool = false); end
 
           protected def decode_entry : A
             A.new
           end
         end
         class Writer < Chem::FormatWriter(A)
-          def initialize(@io : IO, bar : String, sync_close : Bool = false); end
+          def initialize(@io : IO, bar : String = "bar", sync_close : Bool = false); end
           def write(obj : A) : Nil; end
         end
       end

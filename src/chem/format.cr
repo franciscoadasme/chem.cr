@@ -1,25 +1,13 @@
 module Chem
   macro finished
     enum Format
-      # gather annotated types under the Chem module
-      {% format_map = {} of MacroId => Annotation %}
-      {% nodes = [Chem] %}
-      {% for node in nodes %}
-        {% if ann = node.annotation(Chem::RegisterFormat) %}
-          {% format_map[node.name.split("::")[-1].id] = ann %}
-        {% end %}
-        {% for c in node.constants.map { |c| node.constant(c) } %}
-          {% nodes << c if c.is_a?(TypeNode) && (c.class? || c.struct? || c.module?) %}
-        {% end %}
-      {% end %}
-
-      {% for format in format_map.keys.sort %}
+      {% for format in FORMAT_TYPES.map(&.constant("FORMAT_NAME")).sort %}
         {{format.id}}
       {% end %}
 
-      {% for format in format_map.keys.sort %}
-        def {{format.downcase}}? : Bool
-          self == {{format}}
+      {% for format in FORMAT_TYPES %}
+        def {{format.constant("FORMAT_METHOD_NAME").id}}? : Bool
+          self == {{format.constant("FORMAT_NAME").id}}
         end
       {% end %}
 
@@ -57,10 +45,10 @@ module Chem
       def self.from_ext?(extname : String) : self?
         {% begin %}
           case extname.downcase
-          {% for format, ann in format_map %}
-            {% if extnames = ann[:ext] %}
+          {% for type in FORMAT_TYPES %}
+            {% if extnames = type.annotation(RegisterFormat)[:ext] %}
               when {{extnames.splat}}
-                {{format}}
+                {{type.constant("FORMAT_NAME").id}}
             {% end %}
           {% end %}
           end
@@ -151,8 +139,10 @@ module Chem
       def self.from_stem?(stem : String) : self?
         {% begin %}
           case stem.camelcase.downcase
-          {% for format, ann in format_map %}
-            {% for name in (ann[:names] || [] of Nil).sort %}
+          {% for type in FORMAT_TYPES %}
+            {% format = type.constant("FORMAT_NAME").id %}
+            {% names = type.annotation(RegisterFormat)[:names] || [] of Nil %}
+            {% for name in names.sort %}
               {% name = name.id.stringify.camelcase.downcase %}
               {% if name =~ /\*\w+\*/ %}
                 when .includes?({{name[1..-2]}}) then {{format}}
@@ -172,9 +162,9 @@ module Chem
       def extnames : Array(String)
         {% begin %}
           case self
-          {% for format, ann in format_map %}
-            {% if extnames = ann[:ext] %}
-              when .{{format.downcase}}?
+          {% for type in FORMAT_TYPES %}
+            {% if extnames = type.annotation(RegisterFormat)[:ext] %}
+              when {{type.constant("FORMAT_NAME").id}}
                 {{extnames}}
             {% end %}
           {% end %}
