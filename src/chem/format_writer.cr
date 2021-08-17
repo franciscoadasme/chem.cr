@@ -73,5 +73,34 @@ module Chem
       raise IO::Error.new "An entry was already written to the IO" if written?
     end
   end
+
+  # The `MultiEntry` mixin provides an interface for writing in a file
+  # format that can hold a variable number of objects.
+  #
+  # It holds the total number of entries (`#total_entries`) and
+  # reimplements the `<<` operator to track how many of them has been
+  # written so far.
+  module FormatWriter::MultiEntry(T)
+    @entry_index = 0
+
+    # Total number of entries to be writtern. A value of `nil` indicates
+    # that it could not be determinate.
+    @total_entries : Int32?
+
+    # Writes *obj* to the `IO`. It keeps count of the number of entries
+    # written to the `IO`.
+    def <<(obj : T) : self
+      check_open
+      encode_entry obj
+      @entry_index += 1
+      @written = true
+      self
+    end
+
+    # Returns `true` if multiple entries or an indeterminate number of
+    # entries are to be written, else `false`.
+    def multi? : Bool
+      (@total_entries || Int32::MAX) > 1
+    end
   end
 end

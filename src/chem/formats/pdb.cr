@@ -56,6 +56,7 @@ module Chem::PDB
 
   class Writer
     include FormatWriter(AtomCollection)
+    include FormatWriter::MultiEntry(AtomCollection)
 
     PDB_VERSION      = "3.30"
     PDB_VERSION_DATE = Time.local 2011, 7, 13
