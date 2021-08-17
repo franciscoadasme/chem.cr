@@ -1,6 +1,8 @@
 @[Chem::RegisterFormat(ext: %w(.mol2))]
 module Chem::Mol2
-  class Writer < FormatWriter(AtomCollection)
+  class Writer
+    include FormatWriter(AtomCollection)
+
     @atom_table = {} of Atom => Int32
     @res_table = {} of Residue => Int32
 

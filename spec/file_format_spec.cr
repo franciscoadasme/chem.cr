@@ -13,15 +13,19 @@ end
 
 @[Chem::RegisterFormat(ext: %w(.bmp .jpg .png .tiff))]
 module Chem::Image
-  class Writer < Chem::FormatWriter(String)
     def write(obj : String) : Nil; end
+  class Writer
+    include Chem::FormatWriter(String)
+
   end
 end
 
 @[Chem::RegisterFormat(ext: %w(.lic), names: %w(SPEC LIC* *KE *any*))]
 module Chem::License
-  class Writer < Chem::FormatWriter(String)
     def write(obj : String) : Nil; end
+  class Writer
+    include Chem::FormatWriter(String)
+
   end
 end
 

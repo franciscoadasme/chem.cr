@@ -1,5 +1,5 @@
 module Chem
-  abstract class FormatWriter(T)
+  module FormatWriter(T)
     include IO::Wrapper
 
     # File open mode. May be overriden by including types.

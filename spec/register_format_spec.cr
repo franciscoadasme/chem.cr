@@ -64,7 +64,9 @@ describe Chem::RegisterFormat do
             A.new
           end
         end
-        class Writer < Chem::FormatWriter(A)
+        class Writer
+          include Chem::FormatWriter(A)
+
           def initialize(@io : IO, bar : String = "bar", sync_close : Bool = false); end
           def write(obj : A) : Nil; end
         end

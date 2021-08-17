@@ -54,7 +54,9 @@ module Chem::PDB
     end
   end
 
-  class Writer < FormatWriter(AtomCollection)
+  class Writer
+    include FormatWriter(AtomCollection)
+
     PDB_VERSION      = "3.30"
     PDB_VERSION_DATE = Time.local 2011, 7, 13
     WHITESPACE       = ' '

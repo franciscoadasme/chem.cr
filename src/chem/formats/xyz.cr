@@ -1,7 +1,8 @@
 @[Chem::RegisterFormat(ext: %w(.xyz))]
 module Chem::XYZ
-  class Writer < FormatWriter(AtomCollection)
     def write(atoms : AtomCollection, title : String = "") : Nil
+  class Writer
+    include FormatWriter(AtomCollection)
       check_open
 
       @io.puts atoms.n_atoms

@@ -22,8 +22,10 @@ end
 
 @[Chem::RegisterFormat(ext: %w(.pdf .doc .docx .rtf))]
 module Chem::Document
-  class Writer < Chem::FormatWriter(String)
     def write(obj : String) : Nil
+  class Writer
+    include Chem::FormatWriter(String)
+
       @io << '<' << obj << '>'
     end
   end

@@ -1,6 +1,8 @@
 @[Chem::RegisterFormat(ext: %w(.gen))]
 module Chem::Gen
-  class Writer < FormatWriter(AtomCollection)
+  class Writer
+    include FormatWriter(AtomCollection)
+
     def initialize(@io : IO,
                    @fractional : Bool = false,
                    @sync_close : Bool = false)

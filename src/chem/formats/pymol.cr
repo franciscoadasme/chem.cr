@@ -1,6 +1,8 @@
 @[Chem::RegisterFormat(ext: %w(.pml))]
 module Chem::PyMOL
-  class Writer < FormatWriter(Structure)
+  class Writer
+    include FormatWriter(Structure)
+
     CODES = {
       Protein::SecondaryStructure::BetaStrand            => 'S',
       Protein::SecondaryStructure::LeftHandedHelix3_10   => 'H',

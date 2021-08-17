@@ -1,6 +1,8 @@
 @[Chem::RegisterFormat(ext: %w(.stride))]
 class Chem::Protein::Stride < Chem::Protein::SecondaryStructureCalculator
-  class Writer < FormatWriter(Structure)
+  class Writer
+    include FormatWriter(Structure)
+
     @pdbid = "0000"
 
     def initialize(@io : IO,

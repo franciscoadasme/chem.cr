@@ -1,6 +1,8 @@
 @[Chem::RegisterFormat(ext: %w(.poscar), names: %w(POSCAR* CONTCAR*))]
 module Chem::VASP::Poscar
-  class Writer < FormatWriter(AtomCollection)
+  class Writer
+    include FormatWriter(AtomCollection)
+
     def initialize(@io : IO,
                    order @ele_order : Array(Element)? = nil,
                    @fractional : Bool = false,

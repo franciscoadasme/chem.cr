@@ -33,8 +33,10 @@ module Chem::DX
     end
   end
 
-  class Writer < FormatWriter(Spatial::Grid)
     def write(grid : Spatial::Grid) : Nil
+  class Writer
+    include FormatWriter(Spatial::Grid)
+
       check_open
       write_header grid
       write_connections grid

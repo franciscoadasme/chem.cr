@@ -17,7 +17,8 @@ module Chem::VASP::Locpot
     end
   end
 
-  class Writer < FormatWriter(Spatial::Grid)
+  class Writer
+    include FormatWriter(Spatial::Grid)
     include GridWriter
 
     def write(grid : Spatial::Grid) : Nil

@@ -19,7 +19,8 @@ module Chem::VASP::Chgcar
     end
   end
 
-  class Writer < FormatWriter(Spatial::Grid)
+  class Writer
+    include FormatWriter(Spatial::Grid)
     include VASP::GridWriter
 
     def write(grid : Spatial::Grid) : Nil
