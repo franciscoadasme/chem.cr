@@ -68,6 +68,7 @@ module Chem::PDB
     def initialize(@io : IO,
                    @bonds : Bool | Array(Bond) = false,
                    @renumber : Bool = true,
+                   @total_entries : Int32? = nil,
                    @sync_close : Bool = false)
     end
 
