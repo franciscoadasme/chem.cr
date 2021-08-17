@@ -6,7 +6,7 @@ module Chem::Mol2
     @atom_table = {} of Atom => Int32
     @res_table = {} of Residue => Int32
 
-    def write(atoms : AtomCollection) : Nil
+    protected def encode_entry(atoms : AtomCollection) : Nil
       check_open
       reset_index
       write_header "",
@@ -17,7 +17,7 @@ module Chem::Mol2
       section "bond" { atoms.bonds.each_with_index { |bond, i| write bond, i + 1 } }
     end
 
-    def write(structure : Structure) : Nil
+    protected def encode_entry(structure : Structure) : Nil
       check_open
       reset_index
       write_header structure.title,

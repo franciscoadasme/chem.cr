@@ -64,7 +64,7 @@ module Chem::Cube
     def initialize(@io : IO, @atoms : AtomCollection, @sync_close : Bool = false)
     end
 
-    def write(grid : Spatial::Grid) : Nil
+    protected def encode_entry(grid : Spatial::Grid) : Nil
       check_open
       write_header grid
       write_atoms

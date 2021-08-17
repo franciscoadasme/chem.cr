@@ -10,7 +10,7 @@ class Chem::Protein::Stride < Chem::Protein::SecondaryStructureCalculator
                    @sync_close : Bool = false)
     end
 
-    def write(structure : Structure) : Nil
+    protected def encode_entry(structure : Structure) : Nil
       check_open
       @pdbid = structure.experiment.try(&.pdb_accession.upcase) || "0000"
 

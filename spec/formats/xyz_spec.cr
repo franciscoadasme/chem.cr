@@ -76,7 +76,7 @@ describe Chem::XYZ::Writer do
       (1..3).each do |i|
         structure.title = "COO- Step #{i}"
         structure.coords.map! &.*(i)
-        xyz.write structure
+        xyz << structure
       end
     end
 

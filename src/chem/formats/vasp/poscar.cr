@@ -10,7 +10,7 @@ module Chem::VASP::Poscar
                    @sync_close : Bool = false)
     end
 
-    def write(atoms : AtomCollection, lattice : Lattice? = nil, title : String = "") : Nil
+    protected def encode_entry(atoms : AtomCollection, lattice : Lattice? = nil, title : String = "") : Nil
       check_open
       raise Spatial::NotPeriodicError.new unless lattice
 
@@ -42,8 +42,8 @@ module Chem::VASP::Poscar
       end
     end
 
-    def write(structure : Structure) : Nil
-      write structure, structure.lattice, structure.title
+    protected def encode_entry(structure : Structure) : Nil
+      encode_entry structure, structure.lattice, structure.title
     end
 
     private def count_elements(atoms : Enumerable(Atom)) : Array(Tuple(Element, Int32))

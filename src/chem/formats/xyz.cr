@@ -3,6 +3,7 @@ module Chem::XYZ
     def write(atoms : AtomCollection, title : String = "") : Nil
   class Writer
     include FormatWriter(AtomCollection)
+    protected def encode_entry(atoms : AtomCollection, title : String = "") : Nil
       check_open
 
       @io.puts atoms.n_atoms
@@ -12,8 +13,8 @@ module Chem::XYZ
       end
     end
 
-    def write(structure : Structure) : Nil
-      write structure, structure.title
+    protected def encode_entry(structure : Structure) : Nil
+      encode_entry structure, structure.title
     end
   end
 

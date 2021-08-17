@@ -8,7 +8,7 @@ module Chem::Gen
                    @sync_close : Bool = false)
     end
 
-    def write(atoms : AtomCollection, lattice : Lattice? = nil) : Nil
+    protected def encode_entry(atoms : AtomCollection, lattice : Lattice? = nil) : Nil
       check_open
       raise Spatial::NotPeriodicError.new if @fractional && lattice.nil?
 
@@ -29,8 +29,8 @@ module Chem::Gen
       write lattice if lattice
     end
 
-    def write(structure : Structure) : Nil
-      write structure, structure.lattice
+    protected def encode_entry(structure : Structure) : Nil
+      encode_entry structure, structure.lattice
     end
 
     private def write(lattice : Lattice) : Nil

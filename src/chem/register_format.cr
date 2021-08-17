@@ -126,7 +126,7 @@ macro finished
     {% keyword = "module" if etype.module? %}
     {% keyword = "class" if etype.class? %}
     {% keyword = "struct" if etype.struct? %}
-    
+
     {% rtypes = Chem::FORMAT_TYPES.select &.constant("READ_TYPE").id.==(etype.id) %}
     {% htypes = Chem::FORMAT_TYPES.select &.constant("HEAD_TYPE").id.==(etype.id) %}
     {% atypes = Chem::FORMAT_TYPES.select &.constant("ATTACHED_TYPE").id.==(etype.id) %}
@@ -333,7 +333,7 @@ macro finished
               ,{{arg.internal_name}} \
             {% end %}
           ) do |writer|
-            writer.write self
+            writer << self
           end
         end
       end

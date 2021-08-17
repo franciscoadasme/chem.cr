@@ -77,8 +77,7 @@ module Chem::PDB
       super
     end
 
-    def write(atoms : AtomCollection) : Nil
-      check_open
+    protected def encode_entry(atoms : AtomCollection) : Nil
       @record_index = 0
       @bonds = atoms.bonds if @bonds == true
 
@@ -89,8 +88,7 @@ module Chem::PDB
       @model += 1
     end
 
-    def write(structure : Structure) : Nil
-      check_open
+    protected def encode_entry(structure : Structure) : Nil
       @record_index = 0
       @bonds = structure.bonds if @bonds == true
 

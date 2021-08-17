@@ -33,7 +33,7 @@ module Chem::PyMOL
                    @sync_close : Bool = false)
     end
 
-    def write(structure : Structure) : Nil
+    protected def encode_entry(structure : Structure) : Nil
       check_open
       header
       structure.each_secondary_structure do |residues, sec|
