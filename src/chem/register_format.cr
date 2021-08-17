@@ -331,6 +331,9 @@ macro finished
             output \
             {% for arg in args %} \
               ,{{arg.internal_name}} \
+            {% end %} \
+            {% if writer < Chem::FormatWriter::MultiEntry %} \
+              ,total_entries: 1 \
             {% end %}
           ) do |writer|
             writer << self
