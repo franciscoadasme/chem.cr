@@ -64,7 +64,6 @@ module Chem::PDB
 
     @atom_index_table = {} of Int32 => Int32
     @record_index = 0
-    @model = 0
 
     def initialize(@io : IO,
                    @bonds : Bool | Array(Bond) = false,
@@ -82,18 +81,16 @@ module Chem::PDB
       @record_index = 0
       @bonds = atoms.bonds if @bonds == true
 
-      write_pdb_version if @model == 0
+      write_pdb_version if @entry_index == 0
 
       atoms.each_atom { |atom| write atom }
-
-      @model += 1
     end
 
     protected def encode_entry(structure : Structure) : Nil
       @record_index = 0
       @bonds = structure.bonds if @bonds == true
 
-      write_header structure if @model == 0
+      write_header structure if @entry_index == 0
 
       structure.each_chain do |chain|
         p_res = nil
@@ -103,8 +100,6 @@ module Chem::PDB
         end
         write_ter p_res if p_res && p_res.polymer?
       end
-
-      @model += 1
     end
 
     private def index(atom : Atom) : Int32

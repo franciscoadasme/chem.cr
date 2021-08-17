@@ -1,11 +1,13 @@
 @[Chem::RegisterFormat(ext: %w(.xyz))]
 module Chem::XYZ
-    def write(atoms : AtomCollection, title : String = "") : Nil
   class Writer
     include FormatWriter(AtomCollection)
-    protected def encode_entry(atoms : AtomCollection, title : String = "") : Nil
-      check_open
+    include FormatWriter::MultiEntry(AtomCollection)
 
+    def initialize(@io : IO, @total_entries : Int32? = nil, @sync_close : Bool = false)
+    end
+
+    protected def encode_entry(atoms : AtomCollection, title : String = "") : Nil
       @io.puts atoms.n_atoms
       @io.puts title.gsub(/ *\n */, ' ')
       atoms.each_atom do |atom|

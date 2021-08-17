@@ -2,12 +2,15 @@
 module Chem::Mol2
   class Writer
     include FormatWriter(AtomCollection)
+    include FormatWriter::MultiEntry(AtomCollection)
 
     @atom_table = {} of Atom => Int32
     @res_table = {} of Residue => Int32
 
+    def initialize(@io : IO, @total_entries : Int32? = nil, @sync_close : Bool = false)
+    end
+
     protected def encode_entry(atoms : AtomCollection) : Nil
-      check_open
       reset_index
       write_header "",
         atoms.n_atoms,
@@ -18,7 +21,6 @@ module Chem::Mol2
     end
 
     protected def encode_entry(structure : Structure) : Nil
-      check_open
       reset_index
       write_header structure.title,
         structure.n_atoms,
