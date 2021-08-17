@@ -266,7 +266,7 @@ macro finished
                 {% if argless_types.includes?(ftype) %}
                   from_{{method_name}} input
                 {% else %}
-                  raise ArgumentError.new "#{format} has required arguments. \
+                  raise ArgumentError.new "#{format} format has required arguments. \
                                            Use `.from_{{method_name}}` instead."
                 {% end %}
             {% end %}
@@ -372,7 +372,7 @@ macro finished
                 {% if argless_types.includes?(ftype) %}
                   to_{{method_name}} output
                 {% else %}
-                  raise ArgumentError.new "#{format} has required arguments. \
+                  raise ArgumentError.new "#{format} format has required arguments. \
                                            Use `#to_{{method_name}}` instead."
                 {% end %}
             {% end %}
