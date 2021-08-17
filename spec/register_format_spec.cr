@@ -153,7 +153,7 @@ describe Chem::RegisterFormat do
       EOS
   end
 
-  it "generates read methods on array" do
+  it "generates read and write methods on array" do
     assert_code <<-EOS
       struct A; end
 
@@ -169,10 +169,19 @@ describe Chem::RegisterFormat do
 
           def skip_entry : Nil; end
         end
+
+        class Writer
+          include Chem::FormatWriter(A)
+          include Chem::FormatWriter::MultiEntry(A)
+
+          protected def encode_entry(obj : A) : Nil; end
+        end
       end
 
       Array(A).from_foo(IO::Memory.new).as(Array(A))
       Array(A).from_foo("a.foo").as(Array(A))
+      Array(A).new.to_foo
+      Array(A).new.to_foo("a.foo")
       EOS
   end
 
