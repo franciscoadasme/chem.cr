@@ -7,25 +7,15 @@ module Chem::Mol2
     @atom_table = {} of Atom => Int32
     @res_table = {} of Residue => Int32
 
-    protected def encode_entry(atoms : AtomCollection) : Nil
+    protected def encode_entry(obj : AtomCollection) : Nil
       reset_index
-      write_header "",
-        atoms.n_atoms,
-        atoms.bonds.size,
-        atoms.each_atom.map(&.residue).uniq.sum { 1 }
-      section "atom" { atoms.each_atom { |atom| write atom } }
-      section "bond" { atoms.bonds.each_with_index { |bond, i| write bond, i + 1 } }
-    end
-
-    protected def encode_entry(structure : Structure) : Nil
-      reset_index
-      write_header structure.title,
-        structure.n_atoms,
-        structure.bonds.size,
-        structure.n_residues
-      section "atom" { structure.each_atom { |atom| write atom } }
-      section "bond" { structure.bonds.each_with_index { |bond, i| write bond, i + 1 } }
-      section "substructure" { structure.each_residue { |res| write res } }
+      write_header obj.is_a?(Structure) ? obj.title : "",
+        obj.n_atoms,
+        obj.bonds.size,
+        obj.is_a?(Structure) ? obj.n_residues : obj.each_atom.map(&.residue).uniq.sum { 1 }
+      section "atom" { obj.each_atom { |atom| write atom } }
+      section "bond" { obj.bonds.each_with_index { |bond, i| write bond, i + 1 } }
+      section "substructure" { obj.each_residue { |res| write res } } if obj.is_a?(Structure)
     end
 
     private def atom_index(atom : Atom) : Int32

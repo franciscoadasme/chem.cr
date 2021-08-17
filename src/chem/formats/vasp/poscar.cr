@@ -1,7 +1,7 @@
 @[Chem::RegisterFormat(ext: %w(.poscar), names: %w(POSCAR* CONTCAR*))]
 module Chem::VASP::Poscar
   class Writer
-    include FormatWriter(AtomCollection)
+    include FormatWriter(Structure)
 
     def initialize(@io : IO,
                    order @ele_order : Array(Element)? = nil,
@@ -10,16 +10,15 @@ module Chem::VASP::Poscar
                    @sync_close : Bool = false)
     end
 
-    protected def encode_entry(atoms : AtomCollection, lattice : Lattice? = nil, title : String = "") : Nil
-      check_open
-      raise Spatial::NotPeriodicError.new unless lattice
+    protected def encode_entry(structure : Structure) : Nil
+      raise Spatial::NotPeriodicError.new unless lattice = structure.lattice
 
-      atoms = atoms.atoms.to_a.sort_by! &.serial
+      atoms = structure.atoms.to_a.sort_by! &.serial
       coordinate_system = @fractional ? "Direct" : "Cartesian"
       ele_tally = count_elements atoms
       has_constraints = atoms.any? &.constraint
 
-      @io.puts title.gsub(/ *\n */, ' ')
+      @io.puts structure.title.gsub(/ *\n */, ' ')
       write lattice
       write_elements ele_tally
       @io.puts "Selective dynamics" if has_constraints
@@ -40,10 +39,6 @@ module Chem::VASP::Poscar
           @io.puts
         end
       end
-    end
-
-    protected def encode_entry(structure : Structure) : Nil
-      encode_entry structure, structure.lattice, structure.title
     end
 
     private def count_elements(atoms : Enumerable(Atom)) : Array(Tuple(Element, Int32))

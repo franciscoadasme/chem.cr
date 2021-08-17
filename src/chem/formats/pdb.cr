@@ -79,37 +79,27 @@ module Chem::PDB
       super
     end
 
-    protected def encode_entry(atoms : AtomCollection) : Nil
+    protected def encode_entry(obj : AtomCollection) : Nil
       @record_index = 0
-      @bonds = atoms.bonds if @bonds == true
+      @bonds = obj.bonds if @bonds == true
 
       if @entry_index == 0
-        write_pdb_version
+        obj.is_a?(Structure) ? write_header(obj) : write_pdb_version
         formatl "NUMMDL    %-4d%66s", @total_entries, ' ' if multi? && @total_entries
       end
 
       formatl "MODEL     %4d%66s", @entry_index + 1, ' ' if multi?
-      atoms.each_atom { |atom| write atom }
-      formatl "%-80s", "ENDMDL" if multi?
-    end
-
-    protected def encode_entry(structure : Structure) : Nil
-      @record_index = 0
-      @bonds = structure.bonds if @bonds == true
-
-      if @entry_index == 0
-        write_header structure
-        formatl "NUMMDL    %-4d%66s", @total_entries, ' ' if multi? && @total_entries
-      end
-
-      formatl "MODEL     %4d%66s", @entry_index + 1, ' ' if multi?
-      structure.each_chain do |chain|
-        p_res = nil
-        chain.each_residue do |residue|
-          residue.each_atom { |atom| write atom }
-          p_res = residue
+      if obj.is_a?(Structure)
+        obj.each_chain do |chain|
+          p_res = nil
+          chain.each_residue do |residue|
+            residue.each_atom { |atom| write atom }
+            p_res = residue
+          end
+          write_ter p_res if p_res && p_res.polymer?
         end
-        write_ter p_res if p_res && p_res.polymer?
+      else
+        obj.each_atom { |atom| write atom }
       end
       formatl "%-80s", "ENDMDL" if multi?
     end

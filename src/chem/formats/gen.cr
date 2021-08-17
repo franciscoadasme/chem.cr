@@ -8,18 +8,18 @@ module Chem::Gen
                    @sync_close : Bool = false)
     end
 
-    protected def encode_entry(atoms : AtomCollection, lattice : Lattice? = nil) : Nil
-      check_open
+    protected def encode_entry(obj : AtomCollection) : Nil
+      lattice = obj.lattice if obj.is_a?(Structure)
       raise Spatial::NotPeriodicError.new if @fractional && lattice.nil?
 
-      ele_table = atoms.each_atom.map(&.element).uniq.with_index.to_h
+      ele_table = obj.each_atom.map(&.element).uniq.with_index.to_h
       geometry_type = @fractional ? 'F' : (lattice ? 'S' : 'C')
 
-      @io.printf "%5d%3s\n", atoms.n_atoms, geometry_type
+      @io.printf "%5d%3s\n", obj.n_atoms, geometry_type
       ele_table.each_key { |ele| @io.printf "%3s", ele.symbol }
       @io.puts
 
-      atoms.each_atom.with_index do |atom, i|
+      obj.each_atom.with_index do |atom, i|
         ele = ele_table[atom.element] + 1
         vec = atom.coords
         vec = vec.to_fractional lattice.not_nil! if @fractional
@@ -27,10 +27,6 @@ module Chem::Gen
       end
 
       write lattice if lattice
-    end
-
-    protected def encode_entry(structure : Structure) : Nil
-      encode_entry structure, structure.lattice
     end
 
     private def write(lattice : Lattice) : Nil

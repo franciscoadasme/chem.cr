@@ -4,16 +4,12 @@ module Chem::XYZ
     include FormatWriter(AtomCollection)
     include FormatWriter::MultiEntry(AtomCollection)
 
-    protected def encode_entry(atoms : AtomCollection, title : String = "") : Nil
-      @io.puts atoms.n_atoms
-      @io.puts title.gsub(/ *\n */, ' ')
-      atoms.each_atom do |atom|
+    protected def encode_entry(obj : AtomCollection) : Nil
+      @io.puts obj.n_atoms
+      @io.puts obj.is_a?(Structure) ? obj.title.gsub(/ *\n */, ' ') : ""
+      obj.each_atom do |atom|
         @io.printf "%-3s%15.5f%15.5f%15.5f\n", atom.element.symbol, atom.x, atom.y, atom.z
       end
-    end
-
-    protected def encode_entry(structure : Structure) : Nil
-      encode_entry structure, structure.title
     end
   end
 
