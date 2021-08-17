@@ -83,7 +83,7 @@ module Chem
   module FormatWriter::MultiEntry(T)
     @entry_index = 0
 
-    # Total number of entries to be writtern. A value of `nil` indicates
+    # Total number of entries to be written. A value of `nil` indicates
     # that it could not be determinate.
     @total_entries : Int32?
 
