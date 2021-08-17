@@ -337,6 +337,55 @@ macro finished
           end
         end
       end
+
+      {% if writer < Chem::FormatWriter::MultiEntry %}
+        class Array(T)
+          # Returns a string representation of the elements encoded in
+          # the `{{ftype}}` file format. Arguments are fowarded to
+          # `{{writer}}#open`.
+          def to_{{method_name}}(
+            {% for arg in args %}
+              {{arg}},
+            {% end %}
+          ) : String
+            \{% unless (type = @type.type_vars[0]) <= {{etype}} %}
+              \{% raise "undefined method 'to_{{method_name}}' for #{@type}.class" %}
+            \{% end %}
+            String.build do |io|
+              to_{{method_name}}(
+                io \
+                {% for arg in args %} \
+                  ,{{arg.internal_name}} \
+                {% end %}
+              )
+            end
+          end
+
+          # Writes the elements to *output* using the `{{ftype}}` file
+          # format. Arguments are fowarded to `{{writer}}#open`.
+          def to_{{method_name}}(
+            output : IO | Path | String,
+            {% for arg in args %}
+              {{arg}},
+            {% end %}
+          ) : Nil
+            \{% unless (type = @type.type_vars[0]) <= {{etype}} %}
+              \{% raise "undefined method 'to_{{method_name}}' for #{@type}.class" %}
+            \{% end %}
+            {{writer}}.open(
+              output,
+              {% for arg in args %}
+                {{arg.internal_name}},
+              {% end %}
+              total_entries: size
+            ) do |writer|
+              each do |obj|
+                writer << obj
+              end
+            end
+          end
+        end
+      {% end %}
     {% end %}
 
     {% unless argless_types.empty? %}
