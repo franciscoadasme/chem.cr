@@ -4,9 +4,6 @@ module Chem::XYZ
     include FormatWriter(AtomCollection)
     include FormatWriter::MultiEntry(AtomCollection)
 
-    def initialize(@io : IO, @total_entries : Int32? = nil, @sync_close : Bool = false)
-    end
-
     protected def encode_entry(atoms : AtomCollection, title : String = "") : Nil
       @io.puts atoms.n_atoms
       @io.puts title.gsub(/ *\n */, ' ')

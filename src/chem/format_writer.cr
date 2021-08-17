@@ -87,6 +87,12 @@ module Chem
     # that it could not be determinate.
     @total_entries : Int32?
 
+    # Creates a new object from the given *io*. If the number of entries
+    # to be written is known, pass *total_entries*, otherwise set it to
+    # `nil`.
+    def initialize(@io : IO, @total_entries : Int32? = nil, @sync_close : Bool = false)
+    end
+
     # Writes *obj* to the `IO`. It keeps count of the number of entries
     # written to the `IO`.
     def <<(obj : T) : self

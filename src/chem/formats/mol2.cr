@@ -7,9 +7,6 @@ module Chem::Mol2
     @atom_table = {} of Atom => Int32
     @res_table = {} of Residue => Int32
 
-    def initialize(@io : IO, @total_entries : Int32? = nil, @sync_close : Bool = false)
-    end
-
     protected def encode_entry(atoms : AtomCollection) : Nil
       reset_index
       write_header "",
