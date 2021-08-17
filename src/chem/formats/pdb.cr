@@ -70,6 +70,7 @@ module Chem::PDB
                    @renumber : Bool = true,
                    @total_entries : Int32? = nil,
                    @sync_close : Bool = false)
+      check_total_entries
     end
 
     def close : Nil

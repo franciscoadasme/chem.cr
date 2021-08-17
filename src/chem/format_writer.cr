@@ -91,6 +91,7 @@ module Chem
     # to be written is known, pass *total_entries*, otherwise set it to
     # `nil`.
     def initialize(@io : IO, @total_entries : Int32? = nil, @sync_close : Bool = false)
+      check_total_entries
     end
 
     # Writes *obj* to the `IO`. It keeps count of the number of entries
@@ -107,6 +108,12 @@ module Chem
     # entries are to be written, else `false`.
     def multi? : Bool
       (@total_entries || Int32::MAX) > 1
+    end
+
+    protected def check_total_entries : Nil
+      if (@total_entries || Int32::MAX) < 1
+        raise ArgumentError.new "Total entries cannot be negative or zero"
+      end
     end
   end
 end
