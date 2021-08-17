@@ -292,9 +292,9 @@ macro finished
         {% constructor ||= type.methods.find(&.name.==("initialize")) %}
       {% end %}
       {% if constructor %}
-        {% args = constructor.args.select do |arg|
-             !%w(io sync_close).includes? arg.name.stringify
-           end %}
+        {% known_args = %w(io sync_close) %}
+        {% known_args << "total_entries" if writer < Chem::FormatWriter::MultiEntry %}
+        {% args = constructor.args.reject { |x| known_args.includes? x.name.stringify } %}
       {% else %}
         {% args = [] of Nil %}
       {% end %}
