@@ -1,27 +1,168 @@
 module Chem
   # Registers a file format.
   #
-  # A file type associates extensions and/or file names with a file format, and links
-  # the latter to the annotated classes. If the file format does not exist, it is
-  # registered.
+  # The annotated type provides the implementation of a *file format*
+  # that encodes an *encoded type*. The *file format* is determined from
+  # the annotated type's name, where the last component of the fully
+  # qualified name is used (e.g., `Baz` for `Foo::Bar::Baz`). An entry
+  # of the same name will be added to the `Format` enum, where the
+  # declared extensions and file patterns will be associated with the
+  # corresponding file format. This annotation accepts the following
+  # named arguments:
   #
-  # This annotation accepts the file format (required), and either an array of
-  # extensions (without leading dot) or an array of file names, or both. File names can
-  # include wildcards (*) to denote either prefix (e.g., "Foo*"), suffix (e.g., "*Bar"),
-  # or both (e.g., "*Baz*").
+  # - **ext**: an array of extensions (including leading dot).
+  # - **names**: an array of file patterns. File patterns can include
+  #   wildcards (`"*"`) to denote either prefix (e.g., `"Foo*"`), suffix
+  #   (e.g., `"*Bar"`), or both (e.g., `"*Baz*"`). Refer to
+  #   `Format#from_stem` for details.
+  # - **reader**: reader class name. Defaults to "Reader".
+  # - **writer**: writer class name. Defaults to "Writer".
+  #
+  # The ability to read or write is determined by the declaration of
+  # reader and writer classes, respectively, which must include the
+  # `FormatReader`, `FormatWriter` and other related mixins when
+  # appropiate. The *encoded type* is dictated by the type variable of
+  # the included mixins. The `FormatReader::Headed` and
+  # `FormatReader::Attached` provides interfaces to read additional
+  # information into custom objects.
+  #
+  # Convenience read (`.from_*` and `.read`) and write (`#to_*` and
+  # `#write`) methods will be generated on the *encoded types* during
+  # compilation time using the type information of the included mixins
+  # in the reader and writer class. Types declared by the
+  # `FormatReader::Headed` and `FormatReader::Attached` are also
+  # considered *encoded types*. Additionally, utility read and write
+  # methods will be generated on `Array` for file formats that can hold
+  # multiple entries, which are declared via the
+  # `FormatReader::MultiEntry` and `FormatWriter::MultiEntry` mixins.
+  #
+  # ### Example
+  #
+  # The following code registers the `Foo` format associated with the
+  # `Chem::Foo` module, which provides read and write capabilities of
+  # `A` via the `Reader` and `Writer` classes, respectively. Both
+  # declare that the `Foo` format can hold multiple entries via the
+  # corresponding `MultiEntry` mixins. The reader class also provides
+  # support for reading the header information into a `B` instance and
+  # reading secondary information into a `C` instance.
   #
   # ```
-  # @[RegisterFormat(format: Log, ext: %w(txt log out), names: %w(LOG *OUT))]
-  # class LogParser
+  # record A
+  # record B
+  # record C
+  #
+  # @[Chem::RegisterFormat(ext: %w(.foo), names: %w(foo_*))]
+  # module Chem::Foo
+  #   class Reader
+  #     include FormatReader(A)
+  #     include FormatReader::MultiEntry(A)
+  #     include FormatReader::Headed(B)
+  #     include FormatReader::Attached(C)
+  #
+  #     protected def decode_attached : C
+  #       C.new
+  #     end
+  #
+  #     protected def decode_entry : A
+  #       A.new
+  #     end
+  #
+  #     protected def decode_headed : B
+  #       B.new
+  #     end
+  #   end
+  #
+  #   class Writer
+  #     include FormatWriter(A)
+  #     include FormatWriter::MultiEntry(A)
+  #
+  #     def encode_entry(frame : A) : Nil; end
+  #   end
   # end
   # ```
+  #
+  # A member named `Foo` is added to the `Format` enum, which can be
+  # used to query the format during runtime using the `.from_*` methods.
+  #
+  # ```
+  # Chem::Format::Foo                      # => Foo
+  # Chem::Format::Foo.extnames             # => [".foo"]
+  # Chem::Format::Foo.file_patterns        # => ["foo_*"]
+  # Chem::Format.from_filename("file.foo") # => Foo
+  # Chem::Format.from_filename("foo_1")    # => Foo
+  # ```
+  #
+  # The convenience `A.from_foo` and `A.read` methods are generated
+  # during compilation time to create an `A` instance from an IO or file
+  # using the `Foo` file format. The latter can be specified via the
+  # corresponding member of the `Format` enum or as a string.
+  # Additionally, the file format can be guessed from the filename.
+  #
+  # ```
+  # # static read methods (can forward arguments to Foo::Reader)
+  # A.from_foo(IO::Memory.new) # => A()
+  # A.from_foo("a.foo")        # => A()
+  #
+  # # dynamic read methods (format is detected on runtime; no arguments)
+  # A.read(IO::Memory.new, Chem::Format::Foo) # => A()
+  # A.read(IO::Memory.new, "foo")             # => A()
+  # A.read("a.foo", Chem::Format::Foo)        # => A()
+  # A.read("a.foo", "foo")                    # => A()
+  # A.read("a.foo")                           # => A()
+  # ```
+  #
+  # The above methods are also created on the types representing the
+  # header (`B`) and attached (`C`) types. This is convenient since one
+  # does not to worry about if `X` is either the encoded type, header or
+  # attached type to be read from a `Foo` file.
+  #
+  # Similar to the read methods, `A.to_foo` and `A.write` are generated
+  # to write an `A` instance to an IO or file using the `Foo` file
+  # format.
+  #
+  # ```
+  # # static read methods (can forward arguments to Foo::Writer)
+  # A.new.to_foo                 # returns a string representation
+  # A.new.to_foo(IO::Memory.new) # writes to an IO
+  # A.new.to_foo("a.foo")        # writes to a file
+  #
+  # # dynamic read methods (format is detected on runtime; no arguments)
+  # A.new.write(IO::Memory.new, Chem::Format::A)
+  # A.new.write(IO::Memory.new, "foo")
+  # A.new.write("a.foo", Chem::Format::A)
+  # A.new.write("a.foo", "foo")
+  # A.new.write("a.foo")
+  # ```
+  #
+  # Since `Foo::Reader` and `Foo::Writer` reads and writes multiple
+  # entries (indicated by the corresponding `MultiEntry` mixin),
+  # `.from_foo` and `#to_foo` are also generated in Array during
+  # compilation time.
+  #
+  # ```
+  # Array(A).from_foo(IO::Memory.new)   # => [Foo(), ...]
+  # Array(A).from_foo("a.foo")          # => [Foo(), ...]
+  # Array(A).new.to_foo                 # returns a string representation
+  # Array(A).new.to_foo(IO::Memory.new) # writes to an IO
+  # Array(A).new.to_foo("a.foo")        # writes to a file
+  # ```
+  #
+  # Calling any of these methods on an array of unsupported types will
+  # raise a missing method error during compilation.
+  #
+  # Refer to the implementations of the supported file formats (e.g.,
+  # `PDB` and `XYZ`) for real examples.
+  #
+  # NOTE: Annotated types must be declared within the `Chem` module,
+  # otherwise they won't be recognized.
   annotation RegisterFormat; end
 
   FORMAT_TYPES = [] of Nil
 end
 
-# Gather, check and annotate types registering a format
 macro finished
+  # Gather, check and annotate types registering a format
+
   # gather annotated types under the Chem module
   {% nodes = [Chem] %}
   {% for node in nodes %}
@@ -109,8 +250,9 @@ macro finished
   {% end %}
 end
 
-# Generate methods on encoded types
 macro finished
+  # Generate methods on encoded types
+
   {% encoded_types = [] of TypeNode %}
   {% for ftype in Chem::FORMAT_TYPES %}
     {% for cname in %w(READ_TYPE HEAD_TYPE ATTACHED_TYPE WRITE_TYPE) %}
