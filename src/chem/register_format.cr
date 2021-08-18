@@ -318,7 +318,7 @@ macro finished
       {{keyword.id}} {{etype}}
         # Returns the {{type_docs.id}} encoded in *input* using the
         # `{{ftype}}` file format. Arguments are forwarded to
-        # `{{reader}}#open`.
+        # `{{reader}}.open`.
         def self.from_{{method_name}}(
           input : IO | Path | String,
           {% for arg in args %}
@@ -340,7 +340,7 @@ macro finished
         class Array(T)
           # Creates a new array of `{{etype}}` with the entries
           # encoded in *input* using the `{{ftype}}` file format.
-          # Arguments are fowarded to `{{reader}}#open`.
+          # Arguments are fowarded to `{{reader}}.open`.
           def self.from_{{method_name}}(
             input : IO | Path | String,
             {% for arg in args %}
@@ -364,7 +364,7 @@ macro finished
 
           # Creates a new array of `{{etype}}` with the entries at
           # *indexes* encoded in *input* using the `{{ftype}}` file
-          # format. Arguments are fowarded to `{{reader}}#open`.
+          # format. Arguments are fowarded to `{{reader}}.open`.
           def self.from_{{method_name}}(
             input : IO | Path | String,
             indexes : Array(Int),
@@ -460,7 +460,7 @@ macro finished
       {{keyword.id}} {{etype}}
         # Returns a string representation of the {{type_name.id}} using
         # the `{{ftype}}` file format. Arguments are fowarded to
-        # `{{writer}}#open`.
+        # `{{writer}}.open`.
         def to_{{method_name}}(
           {% for arg in args %}
             {{arg}},
@@ -477,7 +477,7 @@ macro finished
         end
 
         # Writes the {{type_name.id}} to *output* using the `{{ftype}}`
-        # file format. Arguments are fowarded to `{{writer}}#open`.
+        # file format. Arguments are fowarded to `{{writer}}.open`.
         def to_{{method_name}}(
           output : IO | Path | String,
           {% for arg in args %}
@@ -502,7 +502,7 @@ macro finished
         class Array(T)
           # Returns a string representation of the elements encoded in
           # the `{{ftype}}` file format. Arguments are fowarded to
-          # `{{writer}}#open`.
+          # `{{writer}}.open`.
           def to_{{method_name}}(
             {% for arg in args %}
               {{arg}},
@@ -522,7 +522,7 @@ macro finished
           end
 
           # Writes the elements to *output* using the `{{ftype}}` file
-          # format. Arguments are fowarded to `{{writer}}#open`.
+          # format. Arguments are fowarded to `{{writer}}.open`.
           def to_{{method_name}}(
             output : IO | Path | String,
             {% for arg in args %}
