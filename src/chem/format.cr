@@ -145,10 +145,14 @@ module Chem
       # `ArgumentError` otherwise.
       #
       # The file stem is matched against the file patterns registered by
-      # the file formats until one match is found. The comparison is
-      # made using `String#camelcase` and `String#downcase`, so the file
-      # pattern `FooBar` will match `"FOOBAR"`, `"FooBar"`,
-      # `"foobar"`, `"FOO_BAR"` and `"foo_bar"`.
+      # the file formats until one match is found. File patterns can
+      # contain valid filename characters and the `*` wildcard, which
+      # matches an unlimited number of arbitrary characters:
+      #
+      # - `"c*"` matches file stems beginning with `c`.
+      # - `"*c"` matches file stems ending with `c`.
+      # - `"*c*"` matches file stems that have `c` in them (including at
+      #   the beginning or end).
       #
       # ```
       # @[Chem::RegisterFormat(names: %w(IMG*))]
@@ -161,6 +165,10 @@ module Chem
       # Chem::Format.from_stem("himg")     # raises ArgumentError
       # Chem::Format.from_stem("foo")      # raises ArgumentError
       # ```
+      #
+      # NOTE: The comparison is made using `String#camelcase` and
+      # `String#downcase`, so the file pattern `FooBar` will match
+      # `FOOBAR`, `FooBar`, `foobar`, `FOO_BAR` and `foo_bar`.
       def self.from_stem(stem : Path | String) : self
         from_stem?(stem) || raise ArgumentError.new "File format not found for #{stem}"
       end
@@ -169,10 +177,14 @@ module Chem
       # otherwise.
       #
       # The file stem is matched against the file patterns registered by
-      # the file formats until one match is found. The comparison is
-      # made using `String#camelcase` and `String#downcase`, so the file
-      # pattern `FooBar` will match `"FOOBAR"`, `"FooBar"`, `"foobar"`,
-      # `"FOO_BAR"` and `"foo_bar"`.
+      # the file formats until one match is found. File patterns can
+      # contain valid filename characters and the `*` wildcard, which
+      # matches an unlimited number of arbitrary characters:
+      #
+      # - `"c*"` matches file stems beginning with `c`.
+      # - `"*c"` matches file stems ending with `c`.
+      # - `"*c*"` matches file stems that have `c` in them (including at
+      #   the beginning or end).
       #
       # ```
       # @[Chem::RegisterFormat(names: %w(IMG*))]
@@ -185,6 +197,10 @@ module Chem
       # Chem::Format.from_stem?("himg")     # => nil
       # Chem::Format.from_stem?("foo")      # => nil
       # ```
+      #
+      # NOTE: The comparison is made using `String#camelcase` and
+      # `String#downcase`, so the file pattern `FooBar` will match
+      # `FOOBAR`, `FooBar`, `foobar`, `FOO_BAR` and `foo_bar`.
       def self.from_stem?(stem : String) : self?
         {% begin %}
           case stem.camelcase.downcase
