@@ -232,6 +232,31 @@ module Chem
           end
         {% end %}
       end
+
+      # Returns the file patterns associated with the file format.
+      #
+      # ```
+      # @[Chem::RegisterFormat(names: %w(IMG*))]
+      # module Chem::JPEG; end
+      #   ...
+      # end
+      #
+      # Chem::Format::JPEG.file_patterns # => ["IMG*"]
+      # ```
+      def file_patterns : Array(String)
+        {% begin %}
+          case self
+          {% for type in FORMAT_TYPES %}
+            {% if names = type.annotation(RegisterFormat)[:names] %}
+              when {{type.constant("FORMAT_NAME").id}}
+                {{names}}
+            {% end %}
+          {% end %}
+          else
+            [] of String
+          end
+        {% end %}
+      end
     end
   end
 end

@@ -106,7 +106,13 @@ describe Chem::Format do
     end
   end
 
-  describe "#names" do
+  describe "#file_patterns" do
+    it "returns the file patterns" do
+      Chem::Format::License.file_patterns.should eq ["SPEC", "LIC*", "*KE", "*any*"]
+    end
+  end
+
+  describe ".names" do
     it "returns registered file formats" do
       Chem::Format.names.includes?("CAD").should be_true
       Chem::Format.names.includes?("Image").should be_true
