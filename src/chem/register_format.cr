@@ -134,6 +134,12 @@ module Chem
   # A.new.write("a.foo")
   # ```
   #
+  # These methods are not generated for header (`B`) and attached (`C`)
+  # types however, because these cannot produce a valid `Foo` file by
+  # themselves. If a header/attached object is required to write a valid
+  # file, it should be declared as a required argument in the writer
+  # (see `Cube::Writer` or `VASP::Chgcar::Writer`).
+  #
   # Since `Foo::Reader` and `Foo::Writer` reads and writes multiple
   # entries (indicated by the corresponding `MultiEntry` mixin),
   # `.from_foo` and `#to_foo` are also generated in Array during
