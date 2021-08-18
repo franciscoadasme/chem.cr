@@ -1,47 +1,80 @@
 module Chem
   macro finished
+    # List of the registered file formats.
+    #
+    # This enum is populated based on the `RegisterFormat` annotation.
+    # Methods that deals with extensions and file patterns uses the
+    # information declared in the annotations.
+    #
+    # ```
+    # @[Chem::RegisterFormat(ext: %w(.jpg .jpeg .jpe)), names: %w(IMG*)]
+    # module Chem::JPEG; end
+    #
+    # @[Chem::RegisterFormat(ext: %w(.tiff .tif))]
+    # module Chem::TIFF; end
+    #
+    # Chem::Format.names                 # => ["JPEG", "TIFF"]
+    # Chem::Format::JPEG                 # => JPEG
+    # Chem::Format::JPEG.extnames        # => [".jpg", ".jpeg", ".jpe"]
+    # Chem::Format::JPEG.file_patterns   # => ["IMG*"]
+    # Chem::Format::TIFF.extnames        # => [".tiff", ".tif"]
+    # Chem::Format::TIFF.file_patterns   # => []
+    #
+    # Chem::Format.from_ext("foo.jpg")   # => JPEG
+    # Chem::Format.from_ext("foo.tiff")  # => TIFF
+    # Chem::Format.from_stem("IMG_2015") # => JPEG
+    # ```
     enum Format
-      {% for format in FORMAT_TYPES.map(&.constant("FORMAT_NAME")).sort %}
+      {% for ftype in FORMAT_TYPES.sort_by(&.constant("FORMAT_NAME")) %}
+        {% format = ftype.constant("FORMAT_NAME") %}
+        # The {{format.id}} format implemented by `{{ftype}}`.
         {{format.id}}
       {% end %}
 
-      {% for format in FORMAT_TYPES %}
-        def {{format.constant("FORMAT_METHOD_NAME").id}}? : Bool
-          self == {{format.constant("FORMAT_NAME").id}}
+      {% for ftype in FORMAT_TYPES %}
+        {% format = ftype.constant("FORMAT_NAME").id %}
+        # Returns `true` if the member is the `{{format}}` format.
+        def {{ftype.constant("FORMAT_METHOD_NAME").id}}? : Bool
+          self == {{format}}
         end
       {% end %}
 
-      # Returns the file format associated with *extname*, or raises `ArgumentError`
-      # otherwise.
+      # Returns the file format registered to the file extension, or
+      # raises `ArgumentError` otherwise.
       #
       # ```
-      # @[RegisterFormat(format: Image, ext: %w(tiff png jpg))]
-      # ...
+      # @[Chem::RegisterFormat(ext: %w(.jpg .jpeg .jpe))]
+      # module Chem::JPEG; end
       #
-      # Format.from_ext("img.tiff") # => Format::Image
-      # Format.from_ext("img.TIFF") # => Format::Image
-      # Format.from_ext("img.png")  # => Format::Image
-      # Format.from_ext("img.txt")  # => raises ArgumentError
+      # Chem::Format.from_ext(".jpg")  # => JPEG
+      # Chem::Format.from_ext(".JPG")  # => JPEG
+      # Chem::Format.from_ext(".jpeg") # => JPEG
+      # Chem::Format.from_ext(".jpe")  # => JPEG
+      # Chem::Format.from_ext(".txt")  # raises ArgumentError
       # ```
       #
-      # NOTE: it performs a case-insensitive search so .tiff and .TIFF return the same.
+      # NOTE: It performs a case-insensitive search so .jpg and .JPG
+      # return the same.
       def self.from_ext(extname : String) : self
         from_ext?(extname) || raise ArgumentError.new "File format not found for #{extname}"
       end
 
-      # Returns the file format associated with *extname*, or `nil` otherwise.
+      # Returns the file format registered to the file extension, or
+      # `nil` otherwise.
       #
       # ```
-      # @[RegisterFormat(format: Image, ext: %w(tiff png jpg))]
-      # ...
+      # @[Chem::RegisterFormat(ext: %w(.jpg .jpeg .jpe))]
+      # module Chem::JPEG; end
       #
-      # Format.from_ext?("img.tiff") # => Format::Image
-      # Format.from_ext?("img.TIFF") # => Format::Image
-      # Format.from_ext?("img.png")  # => Format::Image
-      # Format.from_ext?("img.txt")  # => nil
+      # Chem::Format.from_ext?(".jpg")  # => JPEG
+      # Chem::Format.from_ext?(".JPG")  # => JPEG
+      # Chem::Format.from_ext?(".jpeg") # => JPEG
+      # Chem::Format.from_ext?(".jpe")  # => JPEG
+      # Chem::Format.from_ext?(".txt")  # => nil
       # ```
       #
-      # NOTE: it performs a case-insensitive search so .tiff and .TIFF return the same.
+      # NOTE: It performs a case-insensitive search so .jpg and .JPG
+      # return the same.
       def self.from_ext?(extname : String) : self?
         {% begin %}
           case extname.downcase
@@ -55,45 +88,52 @@ module Chem
         {% end %}
       end
 
-      # Returns the file format associated with *filename*, or raises `ArgumentError`
-      # otherwise.
+      # Returns the file format associated with *filename*, or raises
+      # `ArgumentError` otherwise.
       #
-      # It first looks up the file format associated with the extension in *filename*
-      # via `.from_ext?`. If this yields no result, then it executes a case-insensitive
-      # search with the stem in *filename* via `.from_stem?`.
+      # It first looks up the file format associated with the extension
+      # of *filename* via the `.from_ext?` method. If the latter returns
+      # `nil`, then it executes a case-insensitive search with the stem
+      # of *filename* via `.from_stem?`.
       #
       # ```
-      # @[RegisterFormat(format: Image, ext: %w(tiff png jpg), names: %w(IMG*))]
-      # ...
+      # @[Chem::RegisterFormat(ext: %w(.jpg .jpeg .jpe), names: %w(IMG*))]
+      # module Chem::JPEG; end
       #
-      # Format.from_filename("IMG_2314.tiff") # => Format::Image
-      # Format.from_filename("IMG_2314.png")  # => Format::Image
-      # Format.from_filename("IMG_2314")      # => Format::Image
-      # Format.from_filename("img_2314")      # => Format::Image
-      # Format.from_filename("img2314")       # => Format::Image
-      # Format.from_filename("Imi")           # => raises ArgumentError
+      # Chem::Format.from_filename("foo.jpg")      # => JPEG
+      # Chem::Format.from_filename("foo.JPG")      # => JPEG
+      # Chem::Format.from_filename("IMG_2314.jpg") # => JPEG
+      # Chem::Format.from_filename("IMG_2314.png") # => JPEG
+      # Chem::Format.from_filename("IMG_2314")     # => JPEG
+      # Chem::Format.from_filename("img_2314")     # => JPEG
+      # Chem::Format.from_filename("img2314")      # => JPEG
+      # Chem::Format.from_filename("foo")          # raises ArgumentError
       # ```
       def self.from_filename(filename : Path | String) : self
         format = from_filename? filename
         format || raise ArgumentError.new "File format not found for #{filename}"
       end
 
-      # Returns the file format associated with *filename*, or `nil` otherwise.
+      # Returns the file format associated with *filename*, or `nil`
+      # otherwise.
       #
-      # It first looks up the file format associated with the extension in *filename*
-      # via `.from_ext?`. If this yields no result, then it executes a case-insensitive
-      # search with the stem in *filename* via `.from_stem?`.
+      # It first looks up the file format associated with the extension
+      # of *filename* via the `.from_ext?` method. If the latter returns
+      # `nil`, then it executes a case-insensitive search with the stem
+      # of *filename* via `.from_stem?`.
       #
       # ```
-      # @[RegisterFormat(format: Image, ext: %w(tiff png jpg), names: %w(IMG*))]
-      # ...
+      # @[Chem::RegisterFormat(ext: %w(.jpg .jpeg .jpe), names: %w(IMG*))]
+      # module Chem::JPEG; end
       #
-      # Format.from_filename?("IMG_2314.tiff") # => Format::Image
-      # Format.from_filename?("IMG_2314.png")  # => Format::Image
-      # Format.from_filename?("IMG_2314")      # => Format::Image
-      # Format.from_filename?("img_2314")      # => Format::Image
-      # Format.from_filename?("img2314")       # => Format::Image
-      # Format.from_filename?("Imi")           # => nil
+      # Chem::Format.from_filename?("foo.jpg")      # => JPEG
+      # Chem::Format.from_filename?("foo.JPG")      # => JPEG
+      # Chem::Format.from_filename?("IMG_2314.jpg") # => JPEG
+      # Chem::Format.from_filename?("IMG_2314.png") # => JPEG
+      # Chem::Format.from_filename?("IMG_2314")     # => JPEG
+      # Chem::Format.from_filename?("img_2314")     # => JPEG
+      # Chem::Format.from_filename?("img2314")      # => JPEG
+      # Chem::Format.from_filename?("foo")          # => nil
       # ```
       def self.from_filename?(filename : Path | String) : self?
         filename = Path[filename] unless filename.is_a?(Path)
@@ -101,40 +141,49 @@ module Chem
         from_ext?(extname) || from_stem?(filename.basename(extname))
       end
 
-      # Returns the file format associated with *stem*, or raises `ArgumentError`
-      # otherwise.
+      # Returns the file format that matches the file stem, or raises
+      # `ArgumentError` otherwise.
       #
-      # The comparison is made using `String#camelcase` and `String#downcase`, so a file
-      # format named `ChgCar` will match `"CHGCAR"`, `"ChgCar"`, `"chgcar"`, `"CHG_CAR"`
-      # and `"chg_car"`.
+      # The file stem is matched against the file patterns registered by
+      # the file formats until one match is found. The comparison is
+      # made using `String#camelcase` and `String#downcase`, so the file
+      # pattern `FooBar` will match `"FOOBAR"`, `"FooBar"`,
+      # `"foobar"`, `"FOO_BAR"` and `"foo_bar"`.
       #
       # ```
-      # @[RegisterFormat(format: Image, names: %w(IMG*))]
+      # @[Chem::RegisterFormat(names: %w(IMG*))]
+      # module Chem::JPEG; end
       # ...
       #
-      # Format.from_stem("IMG_2314") # => Format::Image
-      # Format.from_stem("img_2314") # => Format::Image
-      # Format.from_stem("img2314")  # => Format::Image
-      # Format.from_stem("Imi")      # => raises ArgumentError
+      # Chem::Format.from_stem("IMG_2314") # => JPEG
+      # Chem::Format.from_stem("img_2314") # => JPEG
+      # Chem::Format.from_stem("img2314")  # => JPEG
+      # Chem::Format.from_stem("himg")     # raises ArgumentError
+      # Chem::Format.from_stem("foo")      # raises ArgumentError
       # ```
       def self.from_stem(stem : Path | String) : self
         from_stem?(stem) || raise ArgumentError.new "File format not found for #{stem}"
       end
 
-      # Returns the file format associated with *stem*, or `nil` otherwise.
+      # Returns the file format that matches the file stem, or `nil`
+      # otherwise.
       #
-      # The comparison is made using `String#camelcase` and `String#downcase`, so a file
-      # format named `ChgCar` will match `"CHGCAR"`, `"ChgCar"`, `"chgcar"`, `"CHG_CAR"`
-      # and `"chg_car"`.
+      # The file stem is matched against the file patterns registered by
+      # the file formats until one match is found. The comparison is
+      # made using `String#camelcase` and `String#downcase`, so the file
+      # pattern `FooBar` will match `"FOOBAR"`, `"FooBar"`, `"foobar"`,
+      # `"FOO_BAR"` and `"foo_bar"`.
       #
       # ```
-      # @[RegisterFormat(format: Image, names: %w(IMG*))]
+      # @[Chem::RegisterFormat(names: %w(IMG*))]
+      # module Chem::JPEG; end
       # ...
       #
-      # Format.from_stem?("IMG_2314") # => Format::Image
-      # Format.from_stem?("img_2314") # => Format::Image
-      # Format.from_stem?("img2314")  # => Format::Image
-      # Format.from_stem?("Imi")      # => nil
+      # Chem::Format.from_stem?("IMG_2314") # => JPEG
+      # Chem::Format.from_stem?("img_2314") # => JPEG
+      # Chem::Format.from_stem?("img2314")  # => JPEG
+      # Chem::Format.from_stem?("himg")     # => nil
+      # Chem::Format.from_stem?("foo")      # => nil
       # ```
       def self.from_stem?(stem : String) : self?
         {% begin %}
@@ -159,6 +208,16 @@ module Chem
         {% end %}
       end
 
+      # Returns the file extensions associated with the file format.
+      #
+      # ```
+      # @[Chem::RegisterFormat(ext: %w(.jpg .jpeg .jpe))]
+      # module Chem::JPEG
+      #   ...
+      # end
+      #
+      # Chem::Format::JPEG.extnames # => [".jpg", ".jpeg", ".jpe"]
+      # ```
       def extnames : Array(String)
         {% begin %}
           case self
