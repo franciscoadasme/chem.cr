@@ -157,6 +157,7 @@ module Chem
   # otherwise they won't be recognized.
   annotation RegisterFormat; end
 
+  # :nodoc:
   FORMAT_TYPES = [] of Nil
 end
 
@@ -226,24 +227,32 @@ macro finished
     {% keyword = "class" if ftype.class? %}
     {% keyword = "struct" if ftype.struct? %}
     {{keyword.id}} {{ftype}}
+      # :nodoc:
       FORMAT_NAME = "{{format}}"
+      # :nodoc:
       FORMAT_METHOD_NAME = "{{method_name}}"
       {% if reader %}
+        # :nodoc:
         READER = {{reader}}
       {% end %}
       {% if read_type %}
+        # :nodoc:
         READ_TYPE = {{read_type.type_vars[0]}}
       {% end %}
       {% if head_type %}
+        # :nodoc:
         HEAD_TYPE = {{head_type.type_vars[0]}}
       {% end %}
       {% if attached_type %}
+        # :nodoc:
         ATTACHED_TYPE = {{attached_type.type_vars[0]}}
       {% end %}
       {% if writer %}
+        # :nodoc:
         WRITER = {{writer}}
       {% end %}
       {% if write_type %}
+        # :nodoc:
         WRITE_TYPE = {{write_type.type_vars[0]}}
       {% end %}
     end
