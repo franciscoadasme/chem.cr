@@ -180,11 +180,5 @@ module Chem
     def read_entry : T
       next_entry || parse_exception (@read ? "No more entries" : "Empty content")
     end
-
-    def to_a : Array(T)
-      ary = [] of T
-      each { |ele| ary << ele }
-      ary
-    end
   end
 end
