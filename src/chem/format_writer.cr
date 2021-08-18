@@ -47,11 +47,13 @@ module Chem
     # File open mode. May be overriden by including types.
     FILE_MODE = "w"
 
-    # Writes *obj* to the `IO`.
+    # Writes the given object into the `IO`.
     #
     # NOTE: never invoke this method directly, use `#<<` instead.
     protected abstract def encode_entry(obj : T) : Nil
 
+    # Writes the given object into the `IO`. Raises `IO::Error` if the
+    # `IO` is closed or if an entry was already written.
     def <<(obj : T) : Nil
       check_open
       check_write
@@ -59,16 +61,21 @@ module Chem
       @written = true
     end
 
+    # Writes a formatted string to the enclosed `IO`. For details on the
+    # format string, see top-level `sprintf`.
     def format(str : String, *args, **options) : Nil
       @io.printf str, *args, **options
     end
 
+    # Writes a formatted string followed by a newline to the enclosed
+    # `IO`. For details on the format string, see top-level `sprintf`.
     def formatl(str : String, *args, **options) : Nil
       format str, *args, **options
       @io << '\n'
     end
 
-    # Raises an `IO::Error` if an entry was already written to the IO.
+    # Raises an `IO::Error` if an entry was already written to the
+    # enclosed `IO`.
     protected def check_write
       raise IO::Error.new "An entry was already written to the IO" if written?
     end
