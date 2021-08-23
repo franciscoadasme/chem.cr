@@ -417,7 +417,7 @@ macro finished
 
         # Returns the {{type_docs.id}} encoded in the specified file
         # using *format*. Raises `ArgumentError` if *format* has
-        # required arguments, it is not supported or invalid.
+        # required arguments or cannot read `{{etype}}`.
         #
         # If *input* contains multiple entries, this method returns the
         # first one only. Use `Array.read` or
@@ -580,8 +580,8 @@ macro finished
         end
 
         # Writes the {{type_name.id}} to *output* using *format*. Raises
-        # `ArgumentError` if *format* has required arguments, it is not
-        # supported or invalid.
+        # `ArgumentError` if *format* has required arguments or cannot
+        # write `{{etype}}`.
         #
         # The supported file formats are {{format_docs.splat}}. Use the
         # `#to_*` methods to customize how the object is written in the
