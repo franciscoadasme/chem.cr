@@ -313,6 +313,61 @@ module Chem
         {% end %}
       end
 
+      {% format_types = FORMAT_TYPES.select(&.constant("READ_TYPE")) %}
+      {% for etype in format_types.map(&.constant("READ_TYPE").resolve).uniq %}
+        # Returns the reader associated with the format. Raises
+        # `ArgumentError` if the format does not decode *type* or it is
+        # write only.
+        #
+        # ```
+        # Chem::Format::XYZ.reader(Chem::Structure)           # => Chem::XYZ::Reader
+        # Chem::Format::DX.reader(Chem::Spatial::Grid)        # => Chem::DX::Reader
+        # Chem::Format::XYZ.reader(Array(Chem::Structure))    # => Chem::XYZ::Reader
+        # Chem::Format::DX.reader(Array(Chem::Spatial::Grid)) # raises ArgumentError
+        # Chem::Format::VMD.reader(Chem::Structure)           # raises ArgumentError
+        # Chem::Format::XYZ.reader(Int32)                     # raises ArgumentError
+        # ```
+        def reader(type : {{etype}}.class)
+          {% begin %}
+            case self
+            {% for ftype in format_types %}
+              when {{ftype.constant("FORMAT_NAME").id}}
+                {% if ftype.constant("READ_TYPE").resolve >= etype %}
+                  {{ftype.constant("READER")}}
+                {% else %}
+                  raise ArgumentError.new("#{self} format cannot read #{type}")
+                {% end %}
+            {% end %}
+            else
+              raise ArgumentError.new("#{self} format is write only")
+            end
+          {% end %}
+        end
+      {% end %}
+
+      {% for etype in format_types
+                        .select(&.constant("READER").resolve.<=(FormatReader::MultiEntry))
+                        .map(&.constant("READ_TYPE").resolve).uniq %}
+        # :ditto:
+        def reader(type : Array({{etype}}).class)
+          {% begin %}
+            case self
+            {% for ftype in format_types %}
+              when {{ftype.constant("FORMAT_NAME").id}}
+                {% if ftype.constant("READ_TYPE").resolve >= etype &&
+                        ftype.constant("READER").resolve <= FormatReader::MultiEntry %}
+                  {{ftype.constant("READER")}}
+                {% else %}
+                  raise ArgumentError.new("#{self} format cannot read #{type}")
+                {% end %}
+            {% end %}
+            else
+              raise ArgumentError.new("#{self} format is write only")
+            end
+          {% end %}
+        end
+      {% end %}
+
       {% format_types = FORMAT_TYPES.select(&.constant("WRITE_TYPE")) %}
       {% for etype in format_types.map(&.constant("WRITE_TYPE").resolve).uniq %}
         # Returns the writer associated with the format. Raises

@@ -4,10 +4,13 @@ require "./spec_helper"
 module Chem::CAD
   class Reader
     include Chem::FormatReader(String)
+    include Chem::FormatReader::MultiEntry(String)
 
     protected def decode_entry : String
       "foo"
     end
+
+    def skip_entry : Nil; end
   end
 end
 
@@ -137,6 +140,49 @@ describe Chem::Format do
   describe "#file_patterns" do
     it "returns the file patterns" do
       Chem::Format::License.file_patterns.should eq ["SPEC", "LIC*", "*KE", "*any*"]
+    end
+  end
+
+  describe "#reader" do
+    it "returns the format's reader class" do
+      Chem::Format::XYZ.reader(Chem::Structure).should eq Chem::XYZ::Reader
+      Chem::Format::XYZ.reader(Array(Chem::Structure)).should eq Chem::XYZ::Reader
+      Chem::Format::Poscar.reader(Chem::Structure).should eq Chem::VASP::Poscar::Reader
+      Chem::Format::DX.reader(Chem::Spatial::Grid).should eq Chem::DX::Reader
+    end
+
+    it "raises if format is write only" do
+      expect_raises ArgumentError, "VMD format is write only" do
+        Chem::Format::VMD.reader(Chem::Structure)
+      end
+    end
+
+    it "raises if format does not decode the given type" do
+      expect_raises ArgumentError, "DX format cannot read Chem::Structure" do
+        Chem::Format::DX.reader(Chem::Structure)
+      end
+    end
+
+    it "raises with an array for a single-entry format" do
+      expect_raises ArgumentError, "Poscar format cannot read Array(Chem::Structure)" do
+        Chem::Format::Poscar.reader(Array(Chem::Structure))
+      end
+    end
+
+    it "raises with an array if format does not decode the given type" do
+      expect_raises ArgumentError, "XYZ format cannot read Array(String)" do
+        Chem::Format::XYZ.reader(Array(String))
+      end
+    end
+
+    it "fails for non-decoded types" do
+      assert_error "Chem::Format::PDB.reader(Int32)",
+        "no overload matches 'Chem::Format#reader' with type Int32.class"
+    end
+
+    it "fails with an array for a single-entry type" do
+      assert_error "Chem::Format::DX.reader(Array(Chem::Spatial::Grid))",
+        "no overload matches 'Chem::Format#reader' with type Array(Chem::Spatial::Grid).class"
     end
   end
 
