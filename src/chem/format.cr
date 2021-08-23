@@ -189,7 +189,6 @@ module Chem
       # ```
       # @[Chem::RegisterFormat(names: %w(IMG*))]
       # module Chem::JPEG; end
-      # ...
       #
       # Chem::Format.from_stem?("IMG_2314") # => JPEG
       # Chem::Format.from_stem?("img_2314") # => JPEG
@@ -272,9 +271,7 @@ module Chem
       #
       # ```
       # @[Chem::RegisterFormat(ext: %w(.jpg .jpeg .jpe))]
-      # module Chem::JPEG
-      #   ...
-      # end
+      # module Chem::JPEG; end
       #
       # Chem::Format::JPEG.extnames # => [".jpg", ".jpeg", ".jpe"]
       # ```
@@ -298,8 +295,6 @@ module Chem
       # ```
       # @[Chem::RegisterFormat(names: %w(IMG*))]
       # module Chem::JPEG; end
-      #   ...
-      # end
       #
       # Chem::Format::JPEG.file_patterns # => ["IMG*"]
       # ```
