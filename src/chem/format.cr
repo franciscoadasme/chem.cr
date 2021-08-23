@@ -224,6 +224,50 @@ module Chem
         {% end %}
       end
 
+      # Returns `true` if the format can write an instance of *type*.
+      #
+      # ```
+      # Chem::Format::XYZ.encodes?(Chem::AtomCollection)      # => true
+      # Chem::Format::XYZ.encodes?(Chem::Structure)           # => true
+      # Chem::Format::XYZ.encodes?(Array(Chem::Structure))    # => true
+      # Chem::Format::Poscar.encodes?(Chem::AtomCollection)   # => false
+      # Chem::Format::Poscar.encodes?(Chem::Structure)        # => true
+      # Chem::Format::Poscar.encodes?(Array(Chem::Structure)) # => false
+      # Chem::Format::XYZ.encodes?(Int32)                     # => false
+      # Chem::Format::XYZ.encodes?(Array(Int32))              # => false
+      # ```
+      def encodes?(type : Array(T).class) : Bool forall T
+        {% begin %}
+          case self
+          {% for ftype in FORMAT_TYPES %}
+            in {{ftype.constant("FORMAT_NAME").id}}
+              {% if (etype = ftype.constant("WRITE_TYPE")) %}
+                {% writer = ftype.constant("WRITER") %}
+                T <= {{etype}} && {{writer}} < FormatWriter::MultiEntry
+              {% else %}
+                false
+              {% end %}
+          {% end %}
+          end
+        {% end %}
+      end
+
+      # :ditto:
+      def encodes?(type : T.class) : Bool forall T
+        {% begin %}
+          case self
+          {% for ftype in FORMAT_TYPES %}
+            in {{ftype.constant("FORMAT_NAME").id}}
+              {% if etype = ftype.constant("WRITE_TYPE") %}
+                type <= {{etype}}
+              {% else %}
+                false
+              {% end %}
+          {% end %}
+          end
+        {% end %}
+      end
+
       # Returns the file extensions associated with the file format.
       #
       # ```

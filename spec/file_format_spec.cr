@@ -109,6 +109,24 @@ describe Chem::Format do
     end
   end
 
+  describe "#encodes?" do
+    it "tells if the format encodes a given type" do
+      Chem::Format::XYZ.encodes?(Chem::Structure).should be_true
+      Chem::Format::XYZ.encodes?(Chem::AtomCollection).should be_true
+      Chem::Format::Poscar.encodes?(Chem::Structure).should be_true
+      Chem::Format::Poscar.encodes?(Chem::AtomCollection).should be_false
+      Chem::Format::XYZ.encodes?(Int32).should be_false
+    end
+
+    it "tells if the format encodes an array of a given type" do
+      Chem::Format::XYZ.encodes?(Array(Chem::Structure)).should be_true
+      Chem::Format::XYZ.encodes?(Array(Chem::AtomCollection)).should be_true
+      Chem::Format::Poscar.encodes?(Array(Chem::Structure)).should be_false
+      Chem::Format::Poscar.encodes?(Array(Chem::AtomCollection)).should be_false
+      Chem::Format::XYZ.encodes?(Array(Int32)).should be_false
+    end
+  end
+
   describe "#extnames" do
     it "returns registered file extensions" do
       Chem::Format::Image.extnames.should eq [".bmp", ".jpg", ".png", ".tiff"]
