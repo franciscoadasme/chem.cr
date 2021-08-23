@@ -182,6 +182,11 @@ describe Chem::RegisterFormat do
       Array(A).from_foo("a.foo").as(Array(A))
       Array(A).new.to_foo
       Array(A).new.to_foo("a.foo")
+      Array(A).new.write(IO::Memory.new, Chem::Format::Foo)
+      Array(A).new.write(IO::Memory.new, "foo")
+      Array(A).new.write("a.foo", Chem::Format::Foo)
+      Array(A).new.write("a.foo", "foo")
+      Array(A).new.write("a.foo")
       EOS
   end
 

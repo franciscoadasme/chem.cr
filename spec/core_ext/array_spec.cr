@@ -32,4 +32,59 @@ describe Array do
       end
     end
   end
+
+  describe "#write" do
+    it "writes in a multiple-entry format" do
+      x = Array(Chem::Structure).from_pdb "spec/data/pdb/models.pdb"
+      String.build { |io| x.write(io, :xyz) }.should eq <<-XYZ
+        5
+
+        N          5.60600        4.54600       11.94100
+        C          5.59800        5.76700       11.08200
+        C          6.44100        5.52700        9.85000
+        O          6.05200        5.93300        8.74400
+        C          6.02200        6.97700       11.89100
+        5
+
+        N          7.21200       15.33400        0.96600
+        C          6.61400       16.31700        1.91300
+        C          5.21200       15.93600        2.35000
+        O          4.78200       16.16600        3.49500
+        C          6.60500       17.69500        1.24600
+        5
+
+        N          5.40800       13.01200        4.69400
+        C          5.87900       13.50200        6.02600
+        C          4.69600       13.90800        6.88200
+        O          4.52800       13.42200        8.02500
+        C          6.88000       14.61500        5.83000
+        5
+
+        N         22.05500       14.70100        7.03200
+        C         22.01900       13.24200        7.02000
+        C         21.94400       12.62800        8.39600
+        O         21.86900       11.38700        8.43500
+        C         23.24600       12.69700        6.27500
+
+        XYZ
+    end
+
+    it "raises for a single-entry format" do
+      expect_raises ArgumentError, "Poscar format cannot write Array(Chem::Structure)" do
+        Array(Chem::Structure).new.write(IO::Memory.new, :poscar)
+      end
+    end
+
+    it "fails for non-encoded types" do
+      message = "no overload matches 'Chem::Format#writer' with type Array(Int32).class"
+      assert_error <<-EOS, message
+        [1].write(IO::Memory.new, :xyz)
+        EOS
+    end
+
+    it "fails with an array for a single-entry type" do
+      assert_error "Array(Chem::Spatial::Grid).new.write IO::Memory.new, :xyz",
+        "no overload matches 'Chem::Format#writer' with type Array(Chem::Spatial::Grid).class"
+    end
+  end
 end
