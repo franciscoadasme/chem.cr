@@ -45,27 +45,4 @@ class Array(T)
     Slice.new(to_unsafe + start, count).sort! &block if count > 1
     self
   end
-
-  # Writes the elements to the specified file. The file format is chosen
-  # based on the filename (see `Chem::Format#from_filename`). Raises
-  # `ArgumentError` if the file format cannot be determined.
-  def write(path : Path | String) : Nil
-    write path, Chem::Format.from_filename(path)
-  end
-
-  # Writes the elements to *output* using *format*. Raises
-  # `ArgumentError` if *format* is invalid.
-  def write(output : IO | Path | String, format : String) : Nil
-    write output, Chem::Format.parse(format)
-  end
-
-  # Writes the elements to *output* using *format*. Uses
-  # `Chem::Format#writer` to get the writer on runtime.
-  def write(output : IO | Path | String, format : Chem::Format) : Nil
-    format.writer(typeof(self)).open(output, total_entries: size) do |writer|
-      each do |obj|
-        writer << obj
-      end
-    end
-  end
 end

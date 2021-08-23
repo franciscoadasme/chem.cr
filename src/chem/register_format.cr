@@ -278,6 +278,7 @@ macro finished
     {% end %}
   {% end %}
 
+  {% needs_args_map = {} of TypeNode => Bool %}
   {% for etype in encoded_types %}
     {% type_name = etype.name.split("::")[-1].underscore.gsub(/_/, " ") %}
     {% keyword = "module" if etype.module? %}
@@ -308,6 +309,7 @@ macro finished
         {% args = [] of Nil %}
       {% end %}
       {% argless_types << ftype unless args.any? &.default_value.is_a?(Nop) %}
+      {% needs_args_map[reader] = args.any? &.default_value.is_a?(Nop) %}
 
       # auxiliary values for method generation
       {% method_name = ftype.constant("FORMAT_METHOD_NAME").id %}
@@ -471,6 +473,7 @@ macro finished
         {% args = [] of Nil %}
       {% end %}
       {% argless_types << ftype unless args.any? &.default_value.is_a?(Nop) %}
+      {% needs_args_map[writer] = args.any? &.default_value.is_a?(Nop) %}
 
       {{keyword.id}} {{etype}}
         # Returns a string representation of the {{type_name.id}} using
@@ -608,4 +611,62 @@ macro finished
       end
     {% end %}
   {% end %}
+
+  class Array(T)
+    # Writes the elements to the specified file. The file format is chosen
+    # based on the filename (see `Chem::Format#from_filename`). Raises
+    # `ArgumentError` if the file format cannot be determined.
+    def write(path : Path | String) : Nil
+      write path, Chem::Format.from_filename(path)
+    end
+
+    # Writes the elements to *output* using *format*. Raises
+    # `ArgumentError` if *format* is invalid.
+    def write(output : IO | Path | String, format : String) : Nil
+      write output, Chem::Format.parse(format)
+    end
+
+    # Writes the elements to *output* using *format*. Raises
+    # `ArgumentError` if *format* cannot write the element type or it is
+    # read only.
+    def write(io : IO | Path | String, format : Chem::Format) : Nil
+      {% format_types = Chem::FORMAT_TYPES.select do |ftype|
+           (writer = ftype.constant("WRITER")) &&
+             writer.resolve <= Chem::FormatWriter::MultiEntry
+         end %}
+      {% encoded_types = format_types.map(&.constant("WRITE_TYPE")).uniq %}
+      \{% if !{{encoded_types}}.any? { |etype| @type.type_vars[0] <= etype } %}
+        \{% raise "undefined method 'write' for #{@type}" %}
+      \{% end %}
+
+      {% begin %}
+        case format
+        {% for ftype in Chem::FORMAT_TYPES.select(&.constant("WRITER")) %}
+          {% method_name = ftype.constant("FORMAT_METHOD_NAME").id %}
+          when .{{method_name}}?
+            {% if ftype.constant("WRITER").resolve <= Chem::FormatWriter::MultiEntry %}
+              {% if needs_args_map[ftype.constant("WRITER").resolve] %}
+                raise ArgumentError.new("#{format} format has required arguments. \
+                                         Use #to_{{method_name}} instead.")
+              {% else %}
+                \{% if @type.type_vars[0] <= {{ftype.constant("WRITE_TYPE")}}.resolve %}
+                  {{ftype.constant("WRITER")}}.open(io, total_entries: size) do |writer|
+                    each do |obj|
+                      writer << obj
+                    end
+                  end
+                \{% else %}
+                  raise ArgumentError.new("#{format} format cannot write #{self.class}")
+                \{% end %}
+              {% end %}
+            {% else %}
+              raise ArgumentError.new("#{format} format cannot write #{self.class}")
+            {% end %}
+        {% end %}
+        else
+          raise ArgumentError.new("#{format} format is read only")
+        end
+      {% end %}
+    end
+  end
 end

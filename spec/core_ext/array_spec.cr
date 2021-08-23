@@ -107,15 +107,13 @@ describe Array do
     end
 
     it "fails for non-encoded types" do
-      message = "no overload matches 'Chem::Format#writer' with type Array(Int32).class"
-      assert_error <<-EOS, message
-        [1].write(IO::Memory.new, :xyz)
-        EOS
+      assert_error "[1].write(IO::Memory.new, :xyz)",
+        "undefined method 'write' for Array(Int32)"
     end
 
     it "fails with an array for a single-entry type" do
       assert_error "Array(Chem::Spatial::Grid).new.write IO::Memory.new, :xyz",
-        "no overload matches 'Chem::Format#writer' with type Array(Chem::Spatial::Grid).class"
+        "undefined method 'write' for Array(Chem::Spatial::Grid)"
     end
   end
 end
