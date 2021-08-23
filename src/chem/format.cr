@@ -273,6 +273,60 @@ module Chem
           end
         {% end %}
       end
+
+      {% format_types = FORMAT_TYPES.select(&.constant("WRITE_TYPE")) %}
+      {% for etype in format_types.map(&.constant("WRITE_TYPE").resolve).uniq %}
+        # Returns the writer associated with the format. Raises
+        # `ArgumentError` if the format does not encode *type* or it is
+        # read only.
+        #
+        # ```
+        # Chem::Format::XYZ.writer(Chem::Structure)           # => Chem::XYZ::Writer
+        # Chem::Format::DX.writer(Chem::Spatial::Grid)        # => Chem::DX::Writer
+        # Chem::Format::XYZ.writer(Array(Chem::Structure))    # => Chem::XYZ::Writer
+        # Chem::Format::DX.writer(Array(Chem::Spatial::Grid)) # raises ArgumentError
+        # Chem::Format::XYZ.writer(Int32)                     # raises ArgumentError
+        # ```
+        def writer(type : {{etype}}.class)
+          {% begin %}
+            case self
+            {% for ftype in format_types %}
+              when {{ftype.constant("FORMAT_NAME").id}}
+                {% if ftype.constant("WRITE_TYPE").resolve >= etype %}
+                  {{ftype.constant("WRITER")}}
+                {% else %}
+                  raise ArgumentError.new("#{self} format cannot write #{type}")
+                {% end %}
+            {% end %}
+            else
+              raise ArgumentError.new("#{self} format is read only")
+            end
+          {% end %}
+        end
+      {% end %}
+
+      {% for etype in format_types
+                        .select(&.constant("WRITER").resolve.<=(FormatWriter::MultiEntry))
+                        .map(&.constant("WRITE_TYPE").resolve).uniq %}
+        # :ditto:
+        def writer(type : Array({{etype}}).class)
+          {% begin %}
+            case self
+            {% for ftype in format_types %}
+              when {{ftype.constant("FORMAT_NAME").id}}
+                {% if ftype.constant("WRITE_TYPE").resolve >= etype &&
+                        ftype.constant("WRITER").resolve <= FormatWriter::MultiEntry %}
+                  {{ftype.constant("WRITER")}}
+                {% else %}
+                  raise ArgumentError.new("#{self} format cannot write #{type}")
+                {% end %}
+            {% end %}
+            else
+              raise ArgumentError.new("#{self} format is read only")
+            end
+          {% end %}
+        end
+      {% end %}
     end
   end
 end

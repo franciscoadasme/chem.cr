@@ -29,6 +29,16 @@ module Chem::License
   end
 end
 
+@[Chem::RegisterFormat]
+module Chem::MultiString
+  class Writer
+    include Chem::FormatWriter(String)
+    include Chem::FormatWriter::MultiEntry(String)
+
+    protected def encode_entry(obj : String) : Nil; end
+  end
+end
+
 describe Chem::Format do
   describe ".from_ext?" do
     it "returns file format based on file extension" do
@@ -109,6 +119,52 @@ describe Chem::Format do
   describe "#file_patterns" do
     it "returns the file patterns" do
       Chem::Format::License.file_patterns.should eq ["SPEC", "LIC*", "*KE", "*any*"]
+    end
+  end
+
+  describe "#writer" do
+    it "returns the format's writer class" do
+      Chem::Format::XYZ.writer(Chem::Structure).should eq Chem::XYZ::Writer
+      Chem::Format::XYZ.writer(Chem::AtomCollection).should eq Chem::XYZ::Writer
+      Chem::Format::Poscar.writer(Chem::Structure).should eq Chem::VASP::Poscar::Writer
+      Chem::Format::DX.writer(Chem::Spatial::Grid).should eq Chem::DX::Writer
+
+      Chem::Format::XYZ.writer(Array(Chem::Structure)).should eq Chem::XYZ::Writer
+      Chem::Format::XYZ.writer(Array(Chem::AtomCollection)).should eq Chem::XYZ::Writer
+    end
+
+    it "raises if format is read only" do
+      expect_raises ArgumentError, "CAD format is read only" do
+        Chem::Format::CAD.writer(String)
+      end
+    end
+
+    it "raises if format does not encode the given type" do
+      expect_raises ArgumentError, "DX format cannot write Chem::Structure" do
+        Chem::Format::DX.writer(Chem::Structure)
+      end
+    end
+
+    it "raises with an array for a single-entry format" do
+      expect_raises ArgumentError, "Gen format cannot write Array(Chem::Structure)" do
+        Chem::Format::Gen.writer(Array(Chem::Structure))
+      end
+    end
+
+    it "raises with an array if format does not encode the given type" do
+      expect_raises ArgumentError, "XYZ format cannot write Array(String)" do
+        Chem::Format::XYZ.writer(Array(String))
+      end
+    end
+
+    it "fails for non-encoded types" do
+      assert_error "Chem::Format::PDB.writer(Int32)",
+        "no overload matches 'Chem::Format#writer' with type Int32.class"
+    end
+
+    it "fails with an array for a single-entry type" do
+      assert_error "Chem::Format::DX.writer(Array(Chem::Spatial::Grid))",
+        "no overload matches 'Chem::Format#writer' with type Array(Chem::Spatial::Grid).class"
     end
   end
 
