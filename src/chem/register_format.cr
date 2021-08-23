@@ -319,6 +319,12 @@ macro finished
         # Returns the {{type_docs.id}} encoded in *input* using the
         # `{{ftype}}` file format. Arguments are forwarded to
         # `{{reader}}.open`.
+        {% if reader < Chem::FormatReader::MultiEntry %}
+          #
+          # If *input* contains multiple entries, this method returns
+          # the first one only. Use `Array#from_{{method_name}}` or
+          # `{{reader}}#each` to get multiple entries instead.
+        {% end %}
         def self.from_{{method_name}}(
           input : IO | Path | String,
           {% for arg in args %}
@@ -398,6 +404,10 @@ macro finished
         # `Chem::Format#from_filename`). Raises `ArgumentError` if the
         # file format cannot be determined.
         #
+        # If the file contains multiple entries, this method returns the
+        # first one only. Use `Array.read` to get multiple entries
+        # instead.
+        #
         # The supported file formats are {{format_docs.splat}}. Use the
         # `.from_*` methods to customize how the object is decoded in
         # the corresponding file format if possible.
@@ -408,6 +418,11 @@ macro finished
         # Returns the {{type_docs.id}} encoded in the specified file
         # using *format*. Raises `ArgumentError` if *format* has
         # required arguments, it is not supported or invalid.
+        #
+        # If *input* contains multiple entries, this method returns the
+        # first one only. Use `Array.read` or
+        # `Chem::FormatReader::MultiEntry#each` (reader can be obtained
+        # via `Chem::Format.reader`) to get multiple entries instead.
         #
         # The supported file formats are {{format_docs.splat}}. Use the
         # `.from_*` methods to customize how the object is decoded in
