@@ -1,6 +1,37 @@
 require "../spec_helper"
 
 describe Array do
+  describe ".read" do
+    it "returns the entries in a file" do
+      x = Array(Chem::Structure).read "spec/data/pdb/models.pdb"
+      x.size.should eq 4
+    end
+
+    it "raises for a single-entry format" do
+      expect_raises ArgumentError, "Poscar format cannot read Array(Chem::Structure)" do
+        Array(Chem::Structure).read(IO::Memory.new, :poscar)
+      end
+    end
+
+    it "raises if format does not decode the given type" do
+      expect_raises ArgumentError, "DX format cannot read Array(Chem::Structure)" do
+        Array(Chem::Structure).read(IO::Memory.new, :dx)
+      end
+    end
+
+    it "fails for non-encoded types" do
+      message = "no overload matches 'Chem::Format#reader' with type Array(Int32).class"
+      assert_error <<-EOS, message
+        Array(Int32).read(IO::Memory.new, :xyz)
+        EOS
+    end
+
+    it "fails with an array for a single-entry type" do
+      assert_error "Array(Chem::Spatial::Grid).read IO::Memory.new, :xyz",
+        "no overload matches 'Chem::Format#reader' with type Array(Chem::Spatial::Grid).class"
+    end
+  end
+
   describe "#sort!" do
     it "doesn't change the array with a negative- or zero-sized range" do
       ary = [94, 70, 52, 54, 66, 95, 58, 55, 95, 88, 98, 4, 45, 95]

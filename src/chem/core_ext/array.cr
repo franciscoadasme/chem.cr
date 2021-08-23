@@ -1,4 +1,27 @@
 class Array(T)
+  # Returns the entries encoded in the specified file. The file format
+  # is chosen based on the filename (see `Chem::Format#from_filename`).
+  # Raises `ArgumentError` if the file format cannot be determined.
+  def self.read(path : Path | String) : self
+    read path, Chem::Format.from_filename(path)
+  end
+
+  # Returns the entries encoded in the specified file using *format*.
+  # Raises `ArgumentError` if *format* is invalid.
+  def self.read(input : IO | Path | String, format : String) : self
+    read input, Chem::Format.parse(format)
+  end
+
+  # Returns the entries encoded in the specified file using *format*.
+  # Uses `Chem::Format#reader` to get the reader on runtime.
+  def self.read(input : IO | Path | String, format : Chem::Format) : self
+    format.reader(self).open(input) do |reader|
+      Array(T).new.tap do |ary|
+        reader.each { |obj| ary << obj }
+      end
+    end
+  end
+
   def sort(range : Range(Int, Int)) : self
     dup.sort! range
   end

@@ -180,6 +180,11 @@ describe Chem::RegisterFormat do
 
       Array(A).from_foo(IO::Memory.new).as(Array(A))
       Array(A).from_foo("a.foo").as(Array(A))
+      Array(A).read(IO::Memory.new, Chem::Format::Foo).as(Array(A))
+      Array(A).read(IO::Memory.new, "foo").as(Array(A))
+      Array(A).read("a.foo", Chem::Format::Foo).as(Array(A))
+      Array(A).read("a.foo", "foo").as(Array(A))
+      Array(A).read("a.foo").as(Array(A))
       Array(A).new.to_foo
       Array(A).new.to_foo("a.foo")
       Array(A).new.write(IO::Memory.new, Chem::Format::Foo)
