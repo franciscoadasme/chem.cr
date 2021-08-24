@@ -410,10 +410,13 @@ macro finished
         # The file format is chosen based on the filename (see
         # `Chem::Format#from_filename`). Raises `ArgumentError` if the
         # file format cannot be determined.
+        {% if !rtypes.empty? && argless_types.any?(&.constant("WRITE_MULTI")) %}
+          #
+          # If the file contains multiple entries, this method returns
+          # the first one only. Use `Array.read` to get multiple entries
+          # instead.
+        {% end %}
         #
-        # If the file contains multiple entries, this method returns the
-        # first one only. Use `Array.read` to get multiple entries
-        # instead.
         # The supported file formats are the following:
         #
         {% for type in argless_types %}
@@ -436,11 +439,14 @@ macro finished
         # Returns the {{type_docs.id}} encoded in the specified file
         # using *format*. Raises `ArgumentError` if *format* has
         # required arguments or cannot read `{{etype}}`.
-        #
-        # If *input* contains multiple entries, this method returns the
-        # first one only. Use `Array.read` or
-        # `Chem::FormatReader::MultiEntry#each` (reader can be obtained
-        # via `Chem::Format.reader`) to get multiple entries instead.
+        {% if !rtypes.empty? && argless_types.any?(&.constant("WRITE_MULTI")) %}
+          #
+          # If *input* contains multiple entries, this method returns
+          # the first one only. Use `Array.read` or
+          # `Chem::FormatReader::MultiEntry#each` (reader can be
+          # obtained via `Chem::Format.reader`) to get multiple entries
+          # instead.
+        {% end %}
         #
         # The supported file formats are {{format_docs.splat}}. Use the
         # `.from_*` methods to customize how the object is decoded in
