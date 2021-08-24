@@ -77,7 +77,7 @@ module Chem
 
   # Declares a common interface for reading the header information
   # encoded in a file format. This is useful for cases when a file
-  # format includes useful information (by itself) in the header.
+  # format includes valuable information (by itself) in the header.
   #
   # Including types must implement the `#decode_header : T` protected
   # method, where the type variable `T` indicates the header type. Upon
@@ -106,7 +106,7 @@ module Chem
 
   # Declares a common interface for reading the attached object encoded
   # in a file format. This is useful for cases when a file format also
-  # encode an additional object but it is not part of the main content
+  # encodes an additional object but it is not part of the main content
   # (e.g., some volumetric data file formats used in computational
   # chemistry also include information of the molecule structure).
   #

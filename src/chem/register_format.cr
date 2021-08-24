@@ -29,9 +29,9 @@ module Chem
   # Convenience read (`.from_*` and `.read`) and write (`#to_*` and
   # `#write`) methods will be generated on the *encoded types* during
   # compilation time using the type information of the included mixins
-  # in the reader and writer class. Types declared by the
+  # in the reader and writer classes. Types declared by the
   # `FormatReader::Headed` and `FormatReader::Attached` are also
-  # considered *encoded types*. Additionally, utility read and write
+  # considered *encoded types*. Additionally, convenience read and write
   # methods will be generated on `Array` for file formats that can hold
   # multiple entries, which are declared via the
   # `FormatReader::MultiEntry` and `FormatWriter::MultiEntry` mixins.
@@ -141,20 +141,25 @@ module Chem
   # (see `Cube::Writer` or `VASP::Chgcar::Writer`).
   #
   # Since `Foo::Reader` and `Foo::Writer` reads and writes multiple
-  # entries (indicated by the corresponding `MultiEntry` mixin),
-  # `.from_foo` and `#to_foo` are also generated in Array during
-  # compilation time.
+  # entries (indicated by the corresponding `MultiEntry` mixins), the
+  # `.from_foo`, `.read`, `#to_foo`, and `#write` methods are also
+  # generated in `Array` during compilation time.
   #
   # ```
   # Array(A).from_foo(IO::Memory.new)   # => [Foo(), ...]
   # Array(A).from_foo("a.foo")          # => [Foo(), ...]
-  # Array(A).new.to_foo                 # returns a string representation
-  # Array(A).new.to_foo(IO::Memory.new) # writes to an IO
-  # Array(A).new.to_foo("a.foo")        # writes to a file
+  # Array(A).read(IO::Memory.new, :foo) # => [Foo(), ...]
+  # # and other overloads
+  #
+  # Array(A).new.to_foo                     # returns a string representation
+  # Array(A).new.to_foo(IO::Memory.new)     # writes to an IO
+  # Array(A).new.to_foo("a.foo")            # writes to a file
+  # Array(A).new.write IO::Memory.new, :foo # writes to an IO
+  # # and other overloads
   # ```
   #
   # Calling any of these methods on an array of unsupported types will
-  # raise a missing method error during compilation.
+  # produce a missing method error during compilation.
   #
   # Refer to the implementations of the supported file formats (e.g.,
   # `PDB` and `XYZ`) for real examples.
