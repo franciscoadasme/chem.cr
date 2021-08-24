@@ -414,10 +414,21 @@ macro finished
         # If the file contains multiple entries, this method returns the
         # first one only. Use `Array.read` to get multiple entries
         # instead.
+        # The supported file formats are the following:
         #
-        # The supported file formats are {{format_docs.splat}}. Use the
-        # `.from_*` methods to customize how the object is decoded in
-        # the corresponding file format if possible.
+        {% for type in argless_types %}
+          {% ann = type.annotation(Chem::RegisterFormat) %}
+          {% tokens = (ann["ext"] || %w()) %}
+          {% tokens += (ann["names"] || %w()).map(&.gsub(/\*/, "")) %}
+          {% if tokens.empty? %}
+            # - `{{type}}`
+          {% else %}
+            # - `{{type}}` ({{tokens.map(&.id).splat}})
+          {% end %}
+        {% end %}
+        #
+        # Use the `.from_*` methods to customize how the object is
+        # decoded in the corresponding file format if possible.
         def self.read(path : Path | String) : self
           read path, ::Chem::Format.from_filename(path)
         end
@@ -580,9 +591,21 @@ macro finished
         # `Chem::Format#from_filename`). Raises `ArgumentError` if the
         # file format cannot be determined.
         #
-        # The supported file formats are {{format_docs.splat}}. Use the
-        # `#to_*` methods to customize how the object is written in the
-        # corresponding file format if possible.
+        # The supported file formats are the following:
+        #
+        {% for type in argless_types %}
+          {% ann = type.annotation(Chem::RegisterFormat) %}
+          {% tokens = (ann["ext"] || %w()) %}
+          {% tokens += (ann["names"] || %w()).map(&.gsub(/\*/, "")) %}
+          {% if tokens.empty? %}
+            # - `{{type}}`
+          {% else %}
+            # - `{{type}}` ({{tokens.map(&.id).splat}})
+          {% end %}
+        {% end %}
+        #
+        # Use the `#to_*` methods to customize how the object is written
+        # in the corresponding file format if possible.
         def write(path : Path | String) : Nil
           write path, ::Chem::Format.from_filename(path)
         end
