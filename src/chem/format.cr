@@ -241,8 +241,7 @@ module Chem
           {% for ftype in FORMAT_TYPES %}
             in {{ftype.constant("FORMAT_NAME").id}}
               {% if (etype = ftype.constant("WRITE_TYPE")) %}
-                {% writer = ftype.constant("WRITER") %}
-                T <= {{etype}} && {{writer}} < FormatWriter::MultiEntry
+                T <= {{etype}} && {{ftype.constant("WRITE_MULTI")}}
               {% else %}
                 false
               {% end %}
@@ -346,7 +345,7 @@ module Chem
       {% end %}
 
       {% for etype in format_types
-                        .select(&.constant("READER").resolve.<=(FormatReader::MultiEntry))
+                        .select(&.constant("READ_MULTI"))
                         .map(&.constant("READ_TYPE").resolve).uniq %}
         # :ditto:
         def reader(type : Array({{etype}}).class)
@@ -355,7 +354,7 @@ module Chem
             {% for ftype in format_types %}
               when {{ftype.constant("FORMAT_NAME").id}}
                 {% if ftype.constant("READ_TYPE").resolve >= etype &&
-                        ftype.constant("READER").resolve <= FormatReader::MultiEntry %}
+                        ftype.constant("READ_MULTI") %}
                   {{ftype.constant("READER")}}
                 {% else %}
                   raise ArgumentError.new("#{self} format cannot read #{type}")
@@ -400,7 +399,7 @@ module Chem
       {% end %}
 
       {% for etype in format_types
-                        .select(&.constant("WRITER").resolve.<=(FormatWriter::MultiEntry))
+                        .select(&.constant("WRITE_MULTI"))
                         .map(&.constant("WRITE_TYPE").resolve).uniq %}
         # :ditto:
         def writer(type : Array({{etype}}).class)
@@ -409,7 +408,7 @@ module Chem
             {% for ftype in format_types %}
               when {{ftype.constant("FORMAT_NAME").id}}
                 {% if ftype.constant("WRITE_TYPE").resolve >= etype &&
-                        ftype.constant("WRITER").resolve <= FormatWriter::MultiEntry %}
+                        ftype.constant("WRITE_MULTI") %}
                   {{ftype.constant("WRITER")}}
                 {% else %}
                   raise ArgumentError.new("#{self} format cannot write #{type}")

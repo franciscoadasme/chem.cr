@@ -245,10 +245,10 @@ macro finished
       {% if reader %}
         # :nodoc:
         READER = {{reader}}
-      {% end %}
-      {% if read_type %}
         # :nodoc:
         READ_TYPE = {{read_type.type_vars[0]}}
+        # :nodoc:
+        READ_MULTI = {{reader <= Chem::FormatReader::MultiEntry}}
       {% end %}
       {% if head_type %}
         # :nodoc:
@@ -261,10 +261,10 @@ macro finished
       {% if writer %}
         # :nodoc:
         WRITER = {{writer}}
-      {% end %}
-      {% if write_type %}
         # :nodoc:
         WRITE_TYPE = {{write_type.type_vars[0]}}
+        # :nodoc:
+        WRITE_MULTI = {{writer <= Chem::FormatWriter::MultiEntry}}
       {% end %}
     end
   {% end %}
@@ -326,7 +326,7 @@ macro finished
         # Returns the {{type_docs.id}} encoded in *input* using the
         # `{{ftype}}` file format. Arguments are forwarded to
         # `{{reader}}.open`.
-        {% if reader < Chem::FormatReader::MultiEntry %}
+        {% if ftype.constant("READ_MULTI") %}
           #
           # If *input* contains multiple entries, this method returns
           # the first one only. Use `Array#from_{{method_name}}` or
@@ -349,7 +349,7 @@ macro finished
         end
       end
 
-      {% if kind == :read && reader < Chem::FormatReader::MultiEntry %}
+      {% if kind == :read && ftype.constant("READ_MULTI") %}
         class Array(T)
           # Creates a new array of `{{etype}}` with the entries
           # encoded in *input* using the `{{ftype}}` file format.
@@ -483,7 +483,7 @@ macro finished
       {% end %}
       {% if constructor %}
         {% known_args = %w(io sync_close) %}
-        {% known_args << "total_entries" if writer < Chem::FormatWriter::MultiEntry %}
+        {% known_args << "total_entries" if ftype.constant("WRITE_MULTI") %}
         {% args = constructor.args.reject { |x| known_args.includes? x.name.stringify } %}
       {% else %}
         {% args = [] of Nil %}
@@ -523,7 +523,7 @@ macro finished
             {% for arg in args %} \
               ,{{arg.internal_name}} \
             {% end %} \
-            {% if writer < Chem::FormatWriter::MultiEntry %} \
+            {% if ftype.constant("WRITE_MULTI") %} \
               ,total_entries: 1 \
             {% end %}
           ) do |writer|
@@ -532,7 +532,7 @@ macro finished
         end
       end
 
-      {% if writer < Chem::FormatWriter::MultiEntry %}
+      {% if ftype.constant("WRITE_MULTI") %}
         class Array(T)
           # Returns a string representation of the elements encoded in
           # the `{{ftype}}` file format. Arguments are fowarded to
@@ -658,10 +658,7 @@ macro finished
     # Raises `ArgumentError` if *format* cannot read the element type or
     # it is write only.
     def self.read(input : IO | Path | String, format : Chem::Format) : self
-      {% format_types = Chem::FORMAT_TYPES.select do |ftype|
-           (reader = ftype.constant("READER")) &&
-             reader.resolve <= Chem::FormatReader::MultiEntry
-         end %}
+      {% format_types = Chem::FORMAT_TYPES.select &.constant("READ_MULTI") %}
       {% encoded_types = format_types.map(&.constant("READ_TYPE")).uniq %}
       \{% if !{{encoded_types}}.any? { |etype| @type.type_vars[0] <= etype } %}
         \{% raise "undefined method 'read' for #{@type}.class" %}
@@ -672,7 +669,7 @@ macro finished
         {% for ftype in Chem::FORMAT_TYPES.select(&.constant("READER")) %}
           {% method_name = ftype.constant("FORMAT_METHOD_NAME").id %}
           when .{{method_name}}?
-            {% if ftype.constant("READER").resolve <= Chem::FormatReader::MultiEntry %}
+            {% if ftype.constant("READ_MULTI") %}
               {% if needs_args_map[ftype.constant("READER").resolve] %}
                 raise ArgumentError.new("#{format} format has required arguments. \
                                          Use .from_{{method_name}} instead.")
@@ -716,10 +713,7 @@ macro finished
     # `ArgumentError` if *format* cannot write the element type or it is
     # read only.
     def write(output : IO | Path | String, format : Chem::Format) : Nil
-      {% format_types = Chem::FORMAT_TYPES.select do |ftype|
-           (writer = ftype.constant("WRITER")) &&
-             writer.resolve <= Chem::FormatWriter::MultiEntry
-         end %}
+      {% format_types = Chem::FORMAT_TYPES.select &.constant("WRITE_MULTI") %}
       {% encoded_types = format_types.map(&.constant("WRITE_TYPE")).uniq %}
       \{% if !{{encoded_types}}.any? { |etype| @type.type_vars[0] <= etype } %}
         \{% raise "undefined method 'write' for #{@type}" %}
@@ -730,7 +724,7 @@ macro finished
         {% for ftype in Chem::FORMAT_TYPES.select(&.constant("WRITER")) %}
           {% method_name = ftype.constant("FORMAT_METHOD_NAME").id %}
           when .{{method_name}}?
-            {% if ftype.constant("WRITER").resolve <= Chem::FormatWriter::MultiEntry %}
+            {% if ftype.constant("WRITE_MULTI") %}
               {% if needs_args_map[ftype.constant("WRITER").resolve] %}
                 raise ArgumentError.new("#{format} format has required arguments. \
                                          Use #to_{{method_name}} instead.")
