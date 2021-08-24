@@ -629,7 +629,7 @@ macro finished
     # Writes the elements to *output* using *format*. Raises
     # `ArgumentError` if *format* cannot write the element type or it is
     # read only.
-    def write(io : IO | Path | String, format : Chem::Format) : Nil
+    def write(output : IO | Path | String, format : Chem::Format) : Nil
       {% format_types = Chem::FORMAT_TYPES.select do |ftype|
            (writer = ftype.constant("WRITER")) &&
              writer.resolve <= Chem::FormatWriter::MultiEntry
@@ -650,7 +650,7 @@ macro finished
                                          Use #to_{{method_name}} instead.")
               {% else %}
                 \{% if @type.type_vars[0] <= {{ftype.constant("WRITE_TYPE")}}.resolve %}
-                  {{ftype.constant("WRITER")}}.open(io, total_entries: size) do |writer|
+                  {{ftype.constant("WRITER")}}.open(output, total_entries: size) do |writer|
                     each do |obj|
                       writer << obj
                     end
