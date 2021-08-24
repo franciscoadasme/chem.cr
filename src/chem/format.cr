@@ -8,10 +8,10 @@ module Chem
     #
     # ```
     # @[Chem::RegisterFormat(ext: %w(.jpg .jpeg .jpe)), names: %w(IMG*)]
-    # module Chem::JPEG; end
+    # module JPEG; end
     #
     # @[Chem::RegisterFormat(ext: %w(.tiff .tif))]
-    # module Chem::TIFF; end
+    # module TIFF; end
     #
     # Chem::Format.names                 # => ["JPEG", "TIFF"]
     # Chem::Format::JPEG                 # => JPEG
@@ -44,7 +44,7 @@ module Chem
       #
       # ```
       # @[Chem::RegisterFormat(ext: %w(.jpg .jpeg .jpe))]
-      # module Chem::JPEG; end
+      # module JPEG; end
       #
       # Chem::Format.from_ext(".jpg")  # => JPEG
       # Chem::Format.from_ext(".JPG")  # => JPEG
@@ -64,7 +64,7 @@ module Chem
       #
       # ```
       # @[Chem::RegisterFormat(ext: %w(.jpg .jpeg .jpe))]
-      # module Chem::JPEG; end
+      # module JPEG; end
       #
       # Chem::Format.from_ext?(".jpg")  # => JPEG
       # Chem::Format.from_ext?(".JPG")  # => JPEG
@@ -98,7 +98,7 @@ module Chem
       #
       # ```
       # @[Chem::RegisterFormat(ext: %w(.jpg .jpeg .jpe), names: %w(IMG*))]
-      # module Chem::JPEG; end
+      # module JPEG; end
       #
       # Chem::Format.from_filename("foo.jpg")      # => JPEG
       # Chem::Format.from_filename("foo.JPG")      # => JPEG
@@ -124,7 +124,7 @@ module Chem
       #
       # ```
       # @[Chem::RegisterFormat(ext: %w(.jpg .jpeg .jpe), names: %w(IMG*))]
-      # module Chem::JPEG; end
+      # module JPEG; end
       #
       # Chem::Format.from_filename?("foo.jpg")      # => JPEG
       # Chem::Format.from_filename?("foo.JPG")      # => JPEG
@@ -156,8 +156,7 @@ module Chem
       #
       # ```
       # @[Chem::RegisterFormat(names: %w(IMG*))]
-      # module Chem::JPEG; end
-      # ...
+      # module JPEG; end
       #
       # Chem::Format.from_stem("IMG_2314") # => JPEG
       # Chem::Format.from_stem("img_2314") # => JPEG
@@ -188,7 +187,7 @@ module Chem
       #
       # ```
       # @[Chem::RegisterFormat(names: %w(IMG*))]
-      # module Chem::JPEG; end
+      # module JPEG; end
       #
       # Chem::Format.from_stem?("IMG_2314") # => JPEG
       # Chem::Format.from_stem?("img_2314") # => JPEG
@@ -270,7 +269,7 @@ module Chem
       #
       # ```
       # @[Chem::RegisterFormat(ext: %w(.jpg .jpeg .jpe))]
-      # module Chem::JPEG; end
+      # module JPEG; end
       #
       # Chem::Format::JPEG.extnames # => [".jpg", ".jpeg", ".jpe"]
       # ```
@@ -293,7 +292,7 @@ module Chem
       #
       # ```
       # @[Chem::RegisterFormat(names: %w(IMG*))]
-      # module Chem::JPEG; end
+      # module JPEG; end
       #
       # Chem::Format::JPEG.file_patterns # => ["IMG*"]
       # ```
@@ -332,7 +331,7 @@ module Chem
             {% for ftype in format_types %}
               when {{ftype.constant("FORMAT_NAME").id}}
                 {% if ftype.constant("READ_TYPE").resolve >= etype %}
-                  {{ftype.constant("READER")}}
+                  ::{{ftype.constant("READER")}}
                 {% else %}
                   raise ArgumentError.new("#{self} format cannot read #{type}")
                 {% end %}
@@ -355,7 +354,7 @@ module Chem
               when {{ftype.constant("FORMAT_NAME").id}}
                 {% if ftype.constant("READ_TYPE").resolve >= etype &&
                         ftype.constant("READ_MULTI") %}
-                  {{ftype.constant("READER")}}
+                  ::{{ftype.constant("READER")}}
                 {% else %}
                   raise ArgumentError.new("#{self} format cannot read #{type}")
                 {% end %}
@@ -386,7 +385,7 @@ module Chem
             {% for ftype in format_types %}
               when {{ftype.constant("FORMAT_NAME").id}}
                 {% if ftype.constant("WRITE_TYPE").resolve >= etype %}
-                  {{ftype.constant("WRITER")}}
+                  ::{{ftype.constant("WRITER")}}
                 {% else %}
                   raise ArgumentError.new("#{self} format cannot write #{type}")
                 {% end %}
@@ -409,7 +408,7 @@ module Chem
               when {{ftype.constant("FORMAT_NAME").id}}
                 {% if ftype.constant("WRITE_TYPE").resolve >= etype &&
                         ftype.constant("WRITE_MULTI") %}
-                  {{ftype.constant("WRITER")}}
+                  ::{{ftype.constant("WRITER")}}
                 {% else %}
                   raise ArgumentError.new("#{self} format cannot write #{type}")
                 {% end %}

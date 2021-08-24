@@ -52,7 +52,7 @@ module Chem
   # record C
   #
   # @[Chem::RegisterFormat(ext: %w(.foo), names: %w(foo_*))]
-  # module Chem::Foo
+  # module Foo
   #   class Reader
   #     include FormatReader(A)
   #     include FormatReader::MultiEntry(A)
@@ -163,9 +163,6 @@ module Chem
   #
   # Refer to the implementations of the supported file formats (e.g.,
   # `PDB` and `XYZ`) for real examples.
-  #
-  # NOTE: Annotated types must be declared within the `Chem` module,
-  # otherwise they won't be recognized.
   annotation RegisterFormat; end
 
   # :nodoc:
@@ -176,7 +173,7 @@ macro finished
   # Gather, check and annotate types registering a format
 
   # gather annotated types under the Chem module
-  {% nodes = [Chem] %}
+  {% nodes = [@top_level] %}
   {% for node in nodes %}
     {% Chem::FORMAT_TYPES << node if node.annotation(Chem::RegisterFormat) %}
     {% for c in node.constants.map { |c| node.constant(c) } %}

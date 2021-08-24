@@ -2,48 +2,48 @@ require "./spec_helper"
 
 describe Chem::RegisterFormat do
   it "fails on duplicate format" do
-    assert_error <<-EOS, "Format F in Chem::B::F is registered to Chem::A::F"
+    assert_error <<-EOS, "Format F in B::F is registered to A::F"
       @[Chem::RegisterFormat]
-      module Chem::A::F; end
+      module A::F; end
       @[Chem::RegisterFormat]
-      module Chem::B::F; end
+      module B::F; end
       EOS
   end
 
   it "fails on duplicate extension" do
-    assert_error <<-EOS, "Extension .txt in Chem::B is registered to Chem::A"
+    assert_error <<-EOS, "Extension .txt in B is registered to A"
       @[Chem::RegisterFormat(ext: %w(.txt))]
-      module Chem::A; end
+      module A; end
       @[Chem::RegisterFormat(ext: %w(.txt))]
-      module Chem::B; end
+      module B; end
       EOS
   end
 
   it "fails on duplicate file pattern" do
-    message = "File pattern *foo* in Chem::B is registered to Chem::A"
+    message = "File pattern *foo* in B is registered to A"
     assert_error <<-EOS, message
       @[Chem::RegisterFormat(names: %w(FOO*))]
-      module Chem::A; end
+      module A; end
       @[Chem::RegisterFormat(names: %w(*foo*))]
-      module Chem::B; end
+      module B; end
       EOS
   end
 
   it "fails on reader not including FormatReader" do
-    message = "Chem::A::Reader must include Chem::FormatReader(T)"
+    message = "A::Reader must include Chem::FormatReader(T)"
     assert_error <<-EOS, message
       @[Chem::RegisterFormat]
-      module Chem::A
+      module A
         class Reader; end
       end
       EOS
   end
 
   it "fails on writer not including FormatWriter" do
-    message = "Chem::A::Writer must include Chem::FormatWriter(T)"
+    message = "A::Writer must include Chem::FormatWriter(T)"
     assert_error <<-EOS, message
       @[Chem::RegisterFormat]
-      module Chem::A
+      module A
         class Writer; end
       end
       EOS
@@ -54,7 +54,7 @@ describe Chem::RegisterFormat do
       struct A; end
 
       @[Chem::RegisterFormat]
-      module Chem::Foo
+      module Foo
         class Reader
           include Chem::FormatReader(A)
 
@@ -97,7 +97,7 @@ describe Chem::RegisterFormat do
       struct A::Info; end
 
       @[Chem::RegisterFormat]
-      module Chem::Foo
+      module Foo
         class Reader
           include Chem::FormatReader(A)
           include Chem::FormatReader::Headed(A::Info)
@@ -128,7 +128,7 @@ describe Chem::RegisterFormat do
       struct B; end
 
       @[Chem::RegisterFormat]
-      module Chem::Foo
+      module Foo
         class Reader
           include Chem::FormatReader(A)
           include Chem::FormatReader::Attached(B)
@@ -158,7 +158,7 @@ describe Chem::RegisterFormat do
       struct A; end
 
       @[Chem::RegisterFormat]
-      module Chem::Foo
+      module Foo
         class Reader
           include Chem::FormatReader(A)
           include Chem::FormatReader::MultiEntry(A)
@@ -200,7 +200,7 @@ describe Chem::RegisterFormat do
       struct A; end
 
       @[Chem::RegisterFormat]
-      module Chem::Foo
+      module Foo
         class Reader
           include Chem::FormatReader(A)
 
@@ -220,7 +220,7 @@ describe Chem::RegisterFormat do
       struct A; end
 
       @[Chem::RegisterFormat]
-      module Chem::Foo
+      module Foo
         class Reader
           include Chem::FormatReader(A)
           include Chem::FormatReader::MultiEntry(A)

@@ -1,7 +1,7 @@
 require "./spec_helper"
 
 @[Chem::RegisterFormat(ext: %w(.cad))]
-module Chem::CAD
+module CAD
   class Reader
     include Chem::FormatReader(String)
     include Chem::FormatReader::MultiEntry(String)
@@ -15,7 +15,7 @@ module Chem::CAD
 end
 
 @[Chem::RegisterFormat(ext: %w(.bmp .jpg .png .tiff))]
-module Chem::Image
+module Image
   class Writer
     include Chem::FormatWriter(String)
 
@@ -24,7 +24,7 @@ module Chem::Image
 end
 
 @[Chem::RegisterFormat(ext: %w(.lic), names: %w(SPEC LIC* *KE *any*))]
-module Chem::License
+module License
   class Writer
     include Chem::FormatWriter(String)
 
@@ -33,7 +33,7 @@ module Chem::License
 end
 
 @[Chem::RegisterFormat]
-module Chem::MultiString
+module MultiString
   class Writer
     include Chem::FormatWriter(String)
     include Chem::FormatWriter::MultiEntry(String)

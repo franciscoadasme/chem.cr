@@ -21,7 +21,7 @@ describe Chem::FormatWriter do
 end
 
 @[Chem::RegisterFormat(ext: %w(.pdf .doc .docx .rtf))]
-module Chem::Document
+module Document
   class Writer
     include Chem::FormatWriter(String)
 
