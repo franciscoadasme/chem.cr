@@ -1425,9 +1425,12 @@ format is chosen based on the filename (see
 <code><a href="../Chem/Format.html#from_filename(filename:Path%7CString):self-class-method">Chem::Format#from_filename</a></code>). Raises <code>ArgumentError</code> if the
 file format cannot be determined.</p>
 
-<p>The supported file formats are <code><a href="../Chem/Gen.html">Chem::Gen</a></code>, <code><a href="../Chem/Mol2.html">Chem::Mol2</a></code>, <code><a href="../Chem/PDB.html">Chem::PDB</a></code>, <code><a href="../Chem/XYZ.html">Chem::XYZ</a></code>. Use the
-<code>#to_*</code> methods to customize how the object is written in the
-corresponding file format if possible.</p>
+<p>The supported file formats are the following:</p>
+
+<ul><li><code><a href="../Chem/Gen.html">Chem::Gen</a></code> (.gen)</li><li><code><a href="../Chem/Mol2.html">Chem::Mol2</a></code> (.mol2)</li><li><code><a href="../Chem/PDB.html">Chem::PDB</a></code> (.ent, .pdb)</li><li><code><a href="../Chem/XYZ.html">Chem::XYZ</a></code> (.xyz)</li></ul>
+
+<p>Use the <code>#to_*</code> methods to customize how the object is written
+in the corresponding file format if possible.</p>
         </div>
       
       <br/>

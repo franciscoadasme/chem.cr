@@ -1745,10 +1745,11 @@ the first one only. Use <code><a href="../Array.html#from_xyz(input:IO%7CPath%7C
 using <em>format</em>. Raises <code>ArgumentError</code> if <em>format</em> has
 required arguments or cannot read <code><a href="../Chem/Structure.html">Chem::Structure</a></code>.</p>
 
-<p>If <em>input</em> contains multiple entries, this method returns the
-first one only. Use <code><a href="../Array.html#read(input:IO%7CPath%7CString,format:String):self-class-method">Array.read</a></code> or
-<code><a href="../Chem/FormatReader/MultiEntry.html#each(&:T-%3E):Nil-instance-method">Chem::FormatReader::MultiEntry#each</a></code> (reader can be obtained
-via <code><a href="../Chem/Format.html#reader(type:Chem::Spatial::Grid.class)-instance-method">Chem::Format.reader</a></code>) to get multiple entries instead.</p>
+<p>If <em>input</em> contains multiple entries, this method returns
+the first one only. Use <code><a href="../Array.html#read(input:IO%7CPath%7CString,format:String):self-class-method">Array.read</a></code> or
+<code><a href="../Chem/FormatReader/MultiEntry.html#each(&:T-%3E):Nil-instance-method">Chem::FormatReader::MultiEntry#each</a></code> (reader can be
+obtained via <code><a href="../Chem/Format.html#reader(type:Chem::Spatial::Grid.class)-instance-method">Chem::Format.reader</a></code>) to get multiple entries
+instead.</p>
 
 <p>The supported file formats are <code><a href="../Chem/Cube.html">Chem::Cube</a></code>, <code><a href="../Chem/Gen.html">Chem::Gen</a></code>, <code><a href="../Chem/Mol2.html">Chem::Mol2</a></code>, <code><a href="../Chem/PDB.html">Chem::PDB</a></code>, <code><a href="../Chem/VASP/Chgcar.html">Chem::VASP::Chgcar</a></code>, <code><a href="../Chem/VASP/Locpot.html">Chem::VASP::Locpot</a></code>, <code><a href="../Chem/VASP/Poscar.html">Chem::VASP::Poscar</a></code>, <code><a href="../Chem/XYZ.html">Chem::XYZ</a></code>. Use the
 <code>.from_*</code> methods to customize how the object is decoded in
@@ -1776,13 +1777,16 @@ The file format is chosen based on the filename (see
 <code><a href="../Chem/Format.html#from_filename(filename:Path%7CString):self-class-method">Chem::Format#from_filename</a></code>). Raises <code>ArgumentError</code> if the
 file format cannot be determined.</p>
 
-<p>If the file contains multiple entries, this method returns the
-first one only. Use <code><a href="../Array.html#read(input:IO%7CPath%7CString,format:String):self-class-method">Array.read</a></code> to get multiple entries
+<p>If the file contains multiple entries, this method returns
+the first one only. Use <code><a href="../Array.html#read(input:IO%7CPath%7CString,format:String):self-class-method">Array.read</a></code> to get multiple entries
 instead.</p>
 
-<p>The supported file formats are <code><a href="../Chem/Cube.html">Chem::Cube</a></code>, <code><a href="../Chem/Gen.html">Chem::Gen</a></code>, <code><a href="../Chem/Mol2.html">Chem::Mol2</a></code>, <code><a href="../Chem/PDB.html">Chem::PDB</a></code>, <code><a href="../Chem/VASP/Chgcar.html">Chem::VASP::Chgcar</a></code>, <code><a href="../Chem/VASP/Locpot.html">Chem::VASP::Locpot</a></code>, <code><a href="../Chem/VASP/Poscar.html">Chem::VASP::Poscar</a></code>, <code><a href="../Chem/XYZ.html">Chem::XYZ</a></code>. Use the
-<code>.from_*</code> methods to customize how the object is decoded in
-the corresponding file format if possible.</p>
+<p>The supported file formats are the following:</p>
+
+<ul><li><code><a href="../Chem/Gen.html">Chem::Gen</a></code> (.gen)</li><li><code><a href="../Chem/Mol2.html">Chem::Mol2</a></code> (.mol2)</li><li><code><a href="../Chem/PDB.html">Chem::PDB</a></code> (.ent, .pdb)</li><li><code><a href="../Chem/XYZ.html">Chem::XYZ</a></code> (.xyz)</li><li><code><a href="../Chem/VASP/Poscar.html">Chem::VASP::Poscar</a></code> (.poscar, POSCAR, CONTCAR)</li><li><code><a href="../Chem/Cube.html">Chem::Cube</a></code> (.cube)</li><li><code><a href="../Chem/VASP/Chgcar.html">Chem::VASP::Chgcar</a></code> (CHGCAR)</li><li><code><a href="../Chem/VASP/Locpot.html">Chem::VASP::Locpot</a></code> (LOCPOT)</li></ul>
+
+<p>Use the <code>.from_*</code> methods to customize how the object is
+decoded in the corresponding file format if possible.</p>
         </div>
       
       <br/>
@@ -2741,9 +2745,12 @@ format is chosen based on the filename (see
 <code><a href="../Chem/Format.html#from_filename(filename:Path%7CString):self-class-method">Chem::Format#from_filename</a></code>). Raises <code>ArgumentError</code> if the
 file format cannot be determined.</p>
 
-<p>The supported file formats are <code><a href="../Chem/Gen.html">Chem::Gen</a></code>, <code><a href="../Chem/Mol2.html">Chem::Mol2</a></code>, <code><a href="../Chem/PDB.html">Chem::PDB</a></code>, <code><a href="../Chem/Protein/Stride.html">Chem::Protein::Stride</a></code>, <code><a href="../Chem/PyMOL.html">Chem::PyMOL</a></code>, <code><a href="../Chem/VASP/Poscar.html">Chem::VASP::Poscar</a></code>, <code><a href="../Chem/VMD.html">Chem::VMD</a></code>, <code><a href="../Chem/XYZ.html">Chem::XYZ</a></code>. Use the
-<code>#to_*</code> methods to customize how the object is written in the
-corresponding file format if possible.</p>
+<p>The supported file formats are the following:</p>
+
+<ul><li><code><a href="../Chem/Gen.html">Chem::Gen</a></code> (.gen)</li><li><code><a href="../Chem/Mol2.html">Chem::Mol2</a></code> (.mol2)</li><li><code><a href="../Chem/PDB.html">Chem::PDB</a></code> (.ent, .pdb)</li><li><code><a href="../Chem/PyMOL.html">Chem::PyMOL</a></code> (.pml)</li><li><code><a href="../Chem/VMD.html">Chem::VMD</a></code> (.vmd)</li><li><code><a href="../Chem/XYZ.html">Chem::XYZ</a></code> (.xyz)</li><li><code><a href="../Chem/Protein/Stride.html">Chem::Protein::Stride</a></code> (.stride)</li><li><code><a href="../Chem/VASP/Poscar.html">Chem::VASP::Poscar</a></code> (.poscar, POSCAR, CONTCAR)</li></ul>
+
+<p>Use the <code>#to_*</code> methods to customize how the object is written
+in the corresponding file format if possible.</p>
         </div>
       
       <br/>
