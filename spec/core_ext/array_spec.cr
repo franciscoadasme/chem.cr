@@ -20,15 +20,13 @@ describe Array do
     end
 
     it "fails for non-encoded types" do
-      message = "no overload matches 'Chem::Format#reader' with type Array(Int32).class"
-      assert_error <<-EOS, message
-        Array(Int32).read(IO::Memory.new, :xyz)
-        EOS
+      assert_error "Array(Int32).read(IO::Memory.new, :xyz)",
+        "undefined method 'read' for Array(Int32).class"
     end
 
     it "fails with an array for a single-entry type" do
       assert_error "Array(Chem::Spatial::Grid).read IO::Memory.new, :xyz",
-        "no overload matches 'Chem::Format#reader' with type Array(Chem::Spatial::Grid).class"
+        "undefined method 'read' for Array(Chem::Spatial::Grid).class"
     end
   end
 

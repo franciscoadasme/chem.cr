@@ -613,6 +613,64 @@ macro finished
   {% end %}
 
   class Array(T)
+    # Returns the entries encoded in the specified file. The file format
+    # is chosen based on the filename (see `Chem::Format#from_filename`).
+    # Raises `ArgumentError` if the file format cannot be determined.
+    def self.read(path : Path | String) : self
+      read path, Chem::Format.from_filename(path)
+    end
+  
+    # Returns the entries encoded in the specified file using *format*.
+    # Raises `ArgumentError` if *format* is invalid.
+    def self.read(input : IO | Path | String, format : String) : self
+      read input, Chem::Format.parse(format)
+    end
+  
+    # Returns the entries encoded in the specified file using *format*.
+    # Raises `ArgumentError` if *format* cannot read the element type or
+    # it is write only.
+    def self.read(input : IO | Path | String, format : Chem::Format) : self
+      {% format_types = Chem::FORMAT_TYPES.select do |ftype|
+           (reader = ftype.constant("READER")) &&
+             reader.resolve <= Chem::FormatReader::MultiEntry
+         end %}
+      {% encoded_types = format_types.map(&.constant("READ_TYPE")).uniq %}
+      \{% if !{{encoded_types}}.any? { |etype| @type.type_vars[0] <= etype } %}
+        \{% raise "undefined method 'read' for #{@type}.class" %}
+      \{% end %}
+
+      {% begin %}
+        case format
+        {% for ftype in Chem::FORMAT_TYPES.select(&.constant("READER")) %}
+          {% method_name = ftype.constant("FORMAT_METHOD_NAME").id %}
+          when .{{method_name}}?
+            {% if ftype.constant("READER").resolve <= Chem::FormatReader::MultiEntry %}
+              {% if needs_args_map[ftype.constant("READER").resolve] %}
+                raise ArgumentError.new("#{format} format has required arguments. \
+                                         Use .from_{{method_name}} instead.")
+              {% else %}
+                \{% if @type.type_vars[0] <= {{ftype.constant("READ_TYPE")}}.resolve %}
+                  {{ftype.constant("READER")}}.open(input) do |reader|
+                    \{{@type}}.new.tap do |ary|
+                      reader.each do |obj|
+                        ary << obj
+                      end
+                    end
+                  end
+                \{% else %}
+                  raise ArgumentError.new("#{format} format cannot read #{self.class}")
+                \{% end %}
+              {% end %}
+            {% else %}
+              raise ArgumentError.new("#{format} format cannot read #{self.class}")
+            {% end %}
+        {% end %}
+        else
+          raise ArgumentError.new("#{format} format is write only")
+        end
+      {% end %}
+    end
+
     # Writes the elements to the specified file. The file format is chosen
     # based on the filename (see `Chem::Format#from_filename`). Raises
     # `ArgumentError` if the file format cannot be determined.
