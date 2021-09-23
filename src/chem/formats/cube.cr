@@ -9,8 +9,8 @@ module Chem::Cube
 
     @n_atoms = 0
 
-    def initialize(io : IO, @sync_close : Bool = false)
-      @io = TextIO.new io
+    def initialize(@io : IO, @sync_close : Bool = false)
+      @pull = PullParser.new(@io)
     end
 
     def read_attached : Structure
@@ -22,37 +22,49 @@ module Chem::Cube
       Structure.build do |builder|
         @n_atoms.times do
           builder.atom \
-            element: PeriodicTable[@io.read_int],
-            partial_charge: @io.read_float,
-            coords: @io.read_vector
+            element: (PeriodicTable[@pull.next_i]? || @pull.error("Unknown element")),
+            partial_charge: @pull.next_f,
+            coords: read_vector
+          @pull.next_line
         end
-        @io.skip_line
       end
     end
 
     protected def decode_entry : Spatial::Grid
       Spatial::Grid.build(read_header) do |buffer, size|
-        size.times do |i|
-          buffer[i] = @io.read_float
+        i = 0
+        @pull.each_line do
+          while i < size && @pull.next_token
+            buffer[i] = @pull.float
+            i += 1
+          end
         end
       end
     end
 
     private def decode_header : Spatial::Grid::Info
-      2.times { @io.skip_line }
-      @n_atoms = @io.read_int
-      parse_exception "Cube with multiple densities not supported" if @n_atoms < 0
+      2.times { @pull.next_line }
 
-      origin = @io.read_vector * BOHR_TO_ANGS
-      nx, vi = @io.read_int, @io.read_vector * BOHR_TO_ANGS
-      ny, vj = @io.read_int, @io.read_vector * BOHR_TO_ANGS
-      nz, vk = @io.read_int, @io.read_vector * BOHR_TO_ANGS
-      @io.skip_line
+      @pull.next_line
+      @n_atoms = @pull.next_i
+      @pull.error "Cube with multiple densities not supported" if @n_atoms < 0
+      origin = read_vector * BOHR_TO_ANGS
+      @pull.next_line
+      nx, vi = @pull.next_i, read_vector * BOHR_TO_ANGS
+      @pull.next_line
+      ny, vj = @pull.next_i, read_vector * BOHR_TO_ANGS
+      @pull.next_line
+      nz, vk = @pull.next_i, read_vector * BOHR_TO_ANGS
+      @pull.next_line
 
       @attached = decode_attached
 
       bounds = Spatial::Bounds.new origin, vi * nx, vj * ny, vk * nz
       Spatial::Grid::Info.new bounds, {nx, ny, nz}
+    end
+
+    private def read_vector : Spatial::Vector
+      Spatial::Vector[@pull.next_f, @pull.next_f, @pull.next_f]
     end
   end
 
