@@ -75,8 +75,8 @@ module Chem::VASP::Poscar
   class Reader
     include FormatReader(Structure)
 
-    def initialize(io : IO, @guess_topology : Bool = true, @sync_close : Bool = false)
-      @io = TextIO.new io
+    def initialize(@io : IO, @guess_topology : Bool = true, @sync_close : Bool = false)
+      @pull = PullParser.new(@io)
     end
 
     @builder = uninitialized Structure::Builder
@@ -88,7 +88,7 @@ module Chem::VASP::Poscar
     @title = ""
 
     private def read_atom : Atom
-      vec = @io.read_vector
+      vec = Spatial::Vector.new @pull.next_f, @pull.next_f, @pull.next_f
       vec = @fractional ? vec.to_cartesian(@lattice) : vec * @scale_factor
       atom = @builder.atom @species.shift, vec
       atom.constraint = read_constraint if @constrained
@@ -96,72 +96,97 @@ module Chem::VASP::Poscar
     end
 
     private def read_constraint : Constraint?
-      cx = @io.skip_whitespace.read
-      cy = @io.skip_whitespace.read
-      cz = @io.skip_whitespace.read
-      case {cx, cy, cz}
-      when {'T', 'T', 'T'} then nil
-      when {'F', 'T', 'T'} then Constraint::X
-      when {'T', 'F', 'T'} then Constraint::Y
-      when {'T', 'T', 'F'} then Constraint::Z
-      when {'F', 'F', 'T'} then Constraint::XY
-      when {'F', 'T', 'F'} then Constraint::XZ
-      when {'T', 'F', 'F'} then Constraint::YZ
-      when {'F', 'F', 'F'} then Constraint::XYZ
-      else
-        parse_exception "Couldn't read constraint flags"
+      case {read_flag, read_flag, read_flag}
+      when {true, true, true}    then nil
+      when {false, true, true}   then Constraint::X
+      when {true, false, true}   then Constraint::Y
+      when {true, true, false}   then Constraint::Z
+      when {false, false, true}  then Constraint::XY
+      when {false, true, false}  then Constraint::XZ
+      when {true, false, false}  then Constraint::YZ
+      when {false, false, false} then Constraint::XYZ
+      else                            @pull.error "Invalid constraint flags"
       end
     end
 
     private def read_coordinate_system : Nil
-      case @io.skip_whitespace.read.downcase
-      when 'c', 'k' # cartesian
-        @io.skip_line
+      case @pull.char
+      when 'C', 'c', 'K', 'k' # cartesian
         @fractional = false
-      when 'd' # direct
-        @io.skip_line
+      when 'D', 'd' # direct
         @fractional = true
       else
-        parse_exception "Couldn't read coordinates type"
+        @pull.error "Invalid coordinate system"
+      end
+      @pull.next_line
+    end
+
+    private def read_flag : Bool
+      @pull.next_token
+      case @pull.char
+      when 'T' then true
+      when 'F' then false
+      else          @pull.error "Invalid boolean flag (expected either T or F)"
       end
     end
 
     private def read_header : Nil
-      @title = @io.read_line.strip
-      @scale_factor = @io.read_float
-      @lattice = Lattice.new @io.read_vector, @io.read_vector, @io.read_vector
+      @title = @pull.line.strip
+      @pull.next_line
+      @scale_factor = @pull.next_f
+      @pull.next_line
+
+      vi = Spatial::Vector.new @pull.next_f, @pull.next_f, @pull.next_f
+      @pull.next_line
+      vj = Spatial::Vector.new @pull.next_f, @pull.next_f, @pull.next_f
+      @pull.next_line
+      vk = Spatial::Vector.new @pull.next_f, @pull.next_f, @pull.next_f
+      @pull.next_line
+      @lattice = Lattice.new vi, vj, vk
       @lattice *= @scale_factor if @scale_factor != 1.0
+
       read_species
-      @constrained = @io.skip_whitespace.check &.in?('s', 'S')
-      @io.skip_line if @constrained
+
+      @pull.next_token
+      if @pull.char.in?('s', 'S')
+        @constrained = true
+        @pull.next_line
+        @pull.next_token
+      end
       read_coordinate_system
     end
 
     private def decode_entry : Structure
+      raise IO::EOFError.new if @pull.eof?
       read_header
       @builder = Structure::Builder.new guess_topology: @guess_topology
       @builder.title @title
       @builder.lattice @lattice
-      @species.size.times { read_atom }
+      @species.size.times do
+        read_atom
+        @pull.next_line
+      end
       @builder.build
     end
 
     private def read_species : Nil
       elements = [] of Element
-      while @io.skip_whitespace.check(&.letter?)
-        sym = @io.read_word
-        ele = PeriodicTable[sym]? || parse_exception "Unknown element named #{sym}"
+      while (str = @pull.next_s?) && str[0].ascii_letter?
+        ele = PeriodicTable[str]? || @pull.error("Unknown element")
         elements << ele
       end
-      parse_exception "Couldn't read atom species" if elements.empty?
+      @pull.error("Missing atom species") if elements.empty?
+
+      @pull.next_line
       @species.clear
       elements.map do |ele|
-        if count = @io.read_int?
+        if count = @pull.next_i?
           count.times { @species << ele }
         else
-          parse_exception "Couldn't read number of atoms for #{ele.symbol}"
+          @pull.error "Couldn't read number of atoms for #{ele.symbol}"
         end
       end
+      @pull.next_line
     end
   end
 end
