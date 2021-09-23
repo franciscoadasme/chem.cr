@@ -52,16 +52,7 @@ describe Chem::VASP::Poscar do
       ex = expect_raises(Chem::ParseException) do
         load_file "no_symbols.poscar"
       end
-      ex.to_s.should eq "Couldn't read atom species"
-      # ex.to_s_with_location.should eq <<-EOS
-      #   In line 6:4:
-
-      #    4 |  0.5 0.0 0.5
-      #    5 |  0.5 0.5 0.0
-      #    6 |    1 1
-      #           ^
-      #   Error: Expected element symbols (vasp 5+)
-      #   EOS
+      ex.to_s.should eq "Missing atom species"
     end
 
     it "fails when there are missing atomic species counts" do
@@ -96,7 +87,7 @@ describe Chem::VASP::Poscar do
             0.25 0.25 0.25 A T F
           EOS
       end
-      ex.to_s.should eq "Couldn't read constraint flags"
+      ex.to_s.should eq "Invalid boolean flag (expected either T or F)"
       # ex.to_s_with_location.should eq <<-EOS
       #   In line 11:18:
 
