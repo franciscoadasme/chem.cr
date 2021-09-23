@@ -25,6 +25,7 @@ require "./chem/core/structure/*"
 require "./chem/protein"
 require "./chem/topology"
 
+require "./chem/pull_parser"
 require "./chem/register_format"
 require "./chem/format"
 require "./chem/format_reader"
