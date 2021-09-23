@@ -8,8 +8,8 @@ module Chem::VASP::Locpot
     include FormatReader::Attached(Structure)
     include GridReader
 
-    def initialize(io : IO, @sync_close : Bool = false)
-      @io = TextIO.new io
+    def initialize(@io : IO, @sync_close : Bool = false)
+      @pull = PullParser.new(@io)
     end
 
     protected def decode_entry : Spatial::Grid

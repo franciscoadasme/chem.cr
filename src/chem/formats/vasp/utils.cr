@@ -6,18 +6,15 @@ module Chem::VASP
     end
 
     protected def decode_attached : Structure
-      # FIXME: @io should be passed directly to #from_poscar to avoid #rewind
-      Structure.from_poscar(@io.enclosed_io).tap do
-        @io.enclosed_io.rewind
-        skip_header
-      end
+      Structure.from_poscar(@io)
     end
 
     protected def decode_header : Spatial::Grid::Info
       @attached = decode_attached
       raise "BUG: lattice cannot be nil" unless lattice = @attached.try(&.lattice)
 
-      nx, ny, nz = @io.read_int, @io.read_int, @io.read_int
+      @pull.next_line
+      nx, ny, nz = @pull.next_i, @pull.next_i, @pull.next_i
       bounds = Spatial::Bounds.new Spatial::Vector.origin, lattice.basis
       Spatial::Grid::Info.new bounds, {nx, ny, nz}
     end
@@ -30,7 +27,8 @@ module Chem::VASP
         nz.times do |k|
           ny.times do |j|
             nx.times do |i|
-              buffer[i * nyz + j * nz + k] = yield @io.read_float
+              @pull.next_token || (@pull.next_line && @pull.next_token)
+              buffer[i * nyz + j * nz + k] = yield @pull.float
             end
           end
         end
@@ -38,23 +36,17 @@ module Chem::VASP
     end
 
     private def skip_header : Nil
-      5.times { @io.skip_line }
+      7.times { @pull.next_line }
       n_atoms = 0
-      n_elements = 0
-      loop do
-        if @io.skip_whitespace.check(&.ascii_number?)
-          n_atoms += @io.read_int
-          n_elements -= 1
-          break if n_elements == 0
-        else
-          @io.read_word
-          n_elements += 1
-        end
+      while @pull.next_token
+        n_atoms += @pull.int
       end
-      @io.skip_line
-      @io.skip_line if @io.skip_whitespace.check('s', 'S')
-      @io.skip_line
-      n_atoms.times { @io.skip_line }
+      @pull.next_line
+      @pull.next_token
+      @pull.next_line if @pull.char.in?('s', 'S')
+      @pull.next_line
+      n_atoms.times { @pull.next_line }
+      @pull.next_line
     end
   end
 

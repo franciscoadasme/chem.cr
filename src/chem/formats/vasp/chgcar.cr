@@ -8,14 +8,17 @@ module Chem::VASP::Chgcar
     include FormatReader::Attached(Structure)
     include GridReader
 
-    def initialize(io : IO, @sync_close : Bool = false)
-      @io = TextIO.new io
+    def initialize(@io : IO, @sync_close : Bool = false)
+      @pull = PullParser.new(@io)
     end
 
     protected def decode_entry : Spatial::Grid
       info = read_header
       volume = info.bounds.volume
       read_array info, &./(volume)
+    rescue ex : ParseException
+      puts ex.inspect_with_location
+      raise ex
     end
   end
 
