@@ -4,29 +4,41 @@ module Chem::DX
     include FormatReader(Spatial::Grid)
     include FormatReader::Headed(Spatial::Grid::Info)
 
-    def initialize(io : IO, @sync_close : Bool = false)
-      @io = TextIO.new io
+    def initialize(@io : IO, @sync_close : Bool = false)
+      @pull = PullParser.new(@io)
     end
 
     protected def decode_entry : Spatial::Grid
       Spatial::Grid.build(read_header) do |buffer, size|
-        size.times do |i|
-          buffer[i] = @io.read_float
+        i = 0
+        @pull.each_line do
+          while i < size && @pull.next_token
+            buffer[i] = @pull.float
+            i += 1
+          end
         end
       end
     end
 
     protected def decode_header : Spatial::Grid::Info
-      while @io.skip_whitespace.peek == '#'
-        @io.skip_line
+      @pull.each_line do
+        @pull.next_token
+        break unless @pull.char == '#'
       end
 
-      5.times { @io.skip_word }
-      ni, nj, nk = @io.read_int, @io.read_int, @io.read_int
-      @io.skip_word # origin
-      origin = @io.read_vector
-      vi, vj, vk = {ni, nj, nk}.map { |n| @io.skip_word.read_vector * (n - 1) }
-      3.times { @io.skip_line }
+      4.times { @pull.next_token }
+      ni, nj, nk = @pull.next_i, @pull.next_i, @pull.next_i
+      @pull.next_line
+      @pull.next_token # skip origin word
+      origin = Spatial::Vector[@pull.next_f, @pull.next_f, @pull.next_f]
+      @pull.next_line
+      vi, vj, vk = {ni, nj, nk}.map do |n|
+        @pull.next_token # skip delta word
+        delta = Spatial::Vector[@pull.next_f, @pull.next_f, @pull.next_f]
+        @pull.next_line
+        delta * (n - 1)
+      end
+      2.times { @pull.next_line }
 
       bounds = Spatial::Bounds.new origin, vi, vj, vk
       Spatial::Grid::Info.new bounds, {ni, nj, nk}
