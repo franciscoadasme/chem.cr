@@ -17,29 +17,30 @@ module Chem::XYZ
     include FormatReader(Structure)
     include FormatReader::MultiEntry(Structure)
 
-    def initialize(io : IO, @guess_topology : Bool = true, @sync_close : Bool = false)
-      @io = TextIO.new io
+    def initialize(@io : IO, @guess_topology : Bool = true, @sync_close : Bool = false)
+      @pull = PullParser.new(@io)
     end
 
     protected def decode_entry : Structure
-      @io.skip_whitespace
-      raise IO::EOFError.new if @io.eof?
+      raise IO::EOFError.new if @pull.eof?
       Structure.build(@guess_topology) do |builder|
-        n_atoms = @io.read_int
-        @io.skip_line
-        builder.title @io.read_line.strip
+        n_atoms = @pull.next_i
+        @pull.next_line
+        builder.title @pull.line.strip
+        @pull.next_line
         n_atoms.times do
-          builder.atom PeriodicTable[@io.read_word], @io.read_vector
-          @io.skip_line
+          ele = PeriodicTable[@pull.next_s]? || parse_exception("Unknown element")
+          vec = Spatial::Vector.new @pull.next_f, @pull.next_f, @pull.next_f
+          builder.atom ele, vec
+          @pull.next_line
         end
       end
     end
 
     def skip_entry : Nil
-      @io.skip_whitespace
-      return if @io.eof?
-      n_atoms = @io.read_int
-      (n_atoms + 2).times { @io.skip_line }
+      return if @pull.eof?
+      n_atoms = @pull.next_i
+      (n_atoms + 2).times { @pull.next_line }
     end
   end
 end
