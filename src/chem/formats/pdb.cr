@@ -316,52 +316,47 @@ module Chem::PDB
     @seek_bonds = true
     @sec = [] of Tuple(Protein::SecondaryStructure, ResidueId, ResidueId)
 
-    def initialize(io : IO,
+    def initialize(@io : IO,
                    @alt_loc : Char? = nil,
                    chains : Enumerable(Char) | String | Nil = nil,
                    @guess_topology : Bool = true,
                    @het : Bool = true,
                    @sync_close : Bool = false)
-      @io = TextIO.new io
+      @pull = PullParser.new(@io)
       @chains = chains.is_a?(Enumerable) ? chains.to_set : chains
     end
 
     def next_entry : Structure?
       decode_header unless @header_decoded
-      until @io.eof?
-        case @io.skip_whitespace
-        when .check("ATOM", "HETATM", "MODEL")
+      @pull.each_line do
+        case @pull.at(0, 6).str
+        when "ATOM  ", "HETATM", "MODEL "
           obj = decode_entry
           @read = true
+          return obj
+        when "END   ", "MASTER"
           break
-        when .check("END", "MASTER")
-          break
-        else
-          @io.skip_line
         end
       end
-      obj
     end
 
     def skip_entry : Nil
       decode_header unless @header_decoded
-      @io.skip_line if @io.skip_whitespace.check("MODEL")
-      until @io.eof?
-        case @io.skip_whitespace
-        when .check("ENDMDL")
-          @io.skip_line
+      @pull.next_line if @pull.at(0, 6).str == "MODEL "
+      @pull.each_line do
+        case @pull.at(0, 6).str
+        when "ENDMDL"
+          @pull.next_line
           break
-        when .check("MODEL", "END", "MASTER")
+        when "MODEL ", "END   ", "MASTER"
           break
-        else
-          @io.skip_line
         end
       end
     end
 
     def read_header : Structure::Experiment
       decode_header unless @header_decoded
-      @header || parse_exception "Empty header"
+      @header || parse_exception("Empty header")
     end
 
     private def alt_loc(residue : Residue, id : Char, resname : String) : AlternateLocation
@@ -392,50 +387,65 @@ module Chem::PDB
       method = Structure::Experiment::Method::XRayDiffraction
       title = ""
 
-      until @io.eof?
-        break if @io.skip_whitespace.check("ATOM", "HETATM", "MODEL")
-
-        case line = @io.read_line
-        when .starts_with?("CRYST1")
-          size = Spatial::Size.new line[6, 9].to_f, line[15, 9].to_f, line[24, 9].to_f
-          @pdb_lattice = Lattice.new size, line[33, 7].to_f, line[40, 7].to_f, line[47, 7].to_f
-        when .starts_with?("EXPDTA")
-          str = line[10, 70].split(';')[0].delete "- "
+      @pull.each_line do
+        case @pull.at(0, 6).str
+        when "CRYST1"
+          x = @pull.at(6, 9).float
+          y = @pull.at(15, 9).float
+          z = @pull.at(24, 9).float
+          alpha = @pull.at(33, 7).float
+          beta = @pull.at(40, 7).float
+          gamma = @pull.at(47, 7).float
+          @pdb_lattice = Lattice.new Spatial::Size.new(x, y, z), alpha, beta, gamma
+        when "EXPDTA"
+          str = @pull.at(10, 70).str.split(';')[0].delete "- "
           method = Structure::Experiment::Method.parse str
-        when .starts_with?("HEADER")
-          date = line[50, 9]?.try { |str| Time.parse_utc str, "%d-%^b-%y" }
-          pdbid = line[62, 4]?.presence
-        when .starts_with?("HELIX")
-          sec = HELIX_TYPES[line[38, 2].to_i]? || parse_exception "Invalid helix type"
-          ri = {line[19], Hybrid36.decode(line[21, 4]), line[25].presence}
-          rj = {line[31], Hybrid36.decode(line[33, 4]), line[37].presence}
-          parse_exception "Different chain ids in HELIX record" if ri[0] != rj[0]
-          @sec << {sec, ri, rj}
-        when .starts_with?("JRNL")
-          case line[12, 4].strip
-          when "DOI" then doi = line[19, 60].strip
+        when "HEADER"
+          date = @pull.at?(50, 9).str?.presence.try do |str|
+            Time.parse_utc str, "%d-%^b-%y"
           end
-        when .starts_with?("REMARK")
-          case line[7, 3].presence.try(&.lstrip)
-          when "2"
-            resolution = line[23, 7].to_f?
+          pdbid = @pull.at?(62, 4).str?.presence
+        when "HELIX "
+          sec = HELIX_TYPES[@pull.at(38, 2).int]? || @pull.error("Invalid helix type")
+          ch1 = @pull.at(19).char.presence || @pull.error("Blank chain id")
+          ch2 = @pull.at(31).char.presence || @pull.error("Blank chain id")
+          @pull.error("Different chain ids in HELIX record") if ch1 != ch2
+          num1 = seqnum_at(21, 4)
+          inscode1 = @pull.at(25).char.presence
+          num2 = seqnum_at(33, 4)
+          inscode2 = @pull.at(37).char.presence
+          @sec << {sec, {ch1, num1, inscode1}, {ch2, num2, inscode2}}
+        when "JRNL  "
+          case @pull.at(12, 4).str
+          when "DOI " then doi = @pull.at(19, 60).str.strip
+          end
+        when "REMARK"
+          case @pull.at(7, 3).str.presence
+          when "  2"
+            resolution = @pull.at(23, 7).float?
           when nil
-            pdbid = line[11, 4].presence
+            pdbid = @pull.at(11, 4).str.presence
             date = Time::UNIX_EPOCH if pdbid
           end
-        when .starts_with?("SEQRES")
-          if @chains.nil? || @chains.try(&.includes?(line[11]))
-            line[19, 60].split.each do |resname|
+        when "SEQRES"
+          if @chains.nil? || @chains.try(&.includes?(@pull.at(11).char))
+            @pull.at(19, 60).str.split.each do |resname|
               aminoacids << Protein::AminoAcid[resname]
             end
           end
-        when .starts_with?("SHEET")
-          ri = {line[21], Hybrid36.decode(line[22, 4]), line[26].presence}
-          rj = {line[21], Hybrid36.decode(line[33, 4]), line[37].presence}
-          parse_exception "Different chain ids in SHEET record" if ri[0] != rj[0]
-          @sec << {Sec::BetaStrand, ri, rj}
-        when .starts_with?("TITLE")
-          title += line[10, 70].rstrip.squeeze ' '
+        when "SHEET "
+          ch1 = @pull.at(21).char.presence || @pull.error("Blank chain id")
+          ch2 = @pull.at(32).char.presence || @pull.error("Blank chain id")
+          @pull.error("Different chain ids in SHEET record") if ch1 != ch2
+          num1 = seqnum_at(22, 4)
+          inscode1 = @pull.at(26).char.presence
+          num2 = seqnum_at(33, 4)
+          inscode2 = @pull.at(37).char.presence
+          @sec << {Sec::BetaStrand, {ch1, num1, inscode1}, {ch2, num2, inscode2}}
+        when "TITLE "
+          title += @pull.at(10, 70).str.rstrip.squeeze(' ')
+        when "ATOM  ", "HETATM", "MODEL "
+          break
         end
       end
 
@@ -451,41 +461,50 @@ module Chem::PDB
       @header || Structure::Experiment.new "", method, nil, "", Time::UNIX_EPOCH, nil
     end
 
-    private def read_atom(line : String) : Nil
-      alt_loc = line[16].presence
+    private def read_atom : Nil
+      alt_loc = @pull.at(16).char.presence
       return if @alt_loc && alt_loc && alt_loc != @alt_loc
 
-      chid = line[21]
+      chid = @pull.at(21).char
       case chains = @chains
       when Set     then return unless chid.in?(chains)
       when "first" then return if chid != (@builder.current_chain.try(&.id) || chid)
       end
 
-      ele = case symbol = line[76, 2]?.presence.try(&.strip)
+      ele = case symbol = @pull.at?(76, 2).str?.presence.try(&.strip)
             when "D"    then PeriodicTable::D
             when "X"    then PeriodicTable::X
             when String then PeriodicTable[symbol]
             end
 
       @builder.chain chid if chid.alphanumeric?
-      resname = line[17, 4].strip
-      @builder.residue resname, Hybrid36.decode(line[22, 4]), line[26].presence
+      resname = @pull.at(17, 4).str.strip
+      resnum = seqnum_at(22, 4)
+      inscode = @pull.at(26).char.presence
+      @builder.residue resname, resnum, inscode
+
+      x = @pull.at(30, 8).float
+      y = @pull.at(38, 8).float
+      z = @pull.at(46, 8).float
+      formal_charge = @pull.at?(78, 2).str?.presence.try do |str|
+        str.reverse.to_i? || @pull.error("Invalid formal charge")
+      end
       atom = @builder.atom \
-        line[12, 4].strip,
-        Hybrid36.decode(line[6, 5]),
-        Spatial::Vector.new(line[30, 8].to_f, line[38, 8].to_f, line[46, 8].to_f),
+        @pull.at(12, 4).str.strip,
+        seqnum_at(6, 5),
+        Spatial::Vector.new(x, y, z),
         element: ele,
-        formal_charge: line[78, 2]?.try(&.reverse.to_i?) || 0,
-        occupancy: line[54, 6]?.presence.try(&.to_f) || 0.0,
-        temperature_factor: line[60, 6]?.presence.try(&.to_f) || 0.0
+        formal_charge: formal_charge || 0,
+        occupancy: @pull.at(54, 6).float(default: 0),
+        temperature_factor: @pull.at(60, 6).float(default: 0)
 
       alt_loc(atom.residue, alt_loc, resname) << atom if !@alt_loc && alt_loc
     end
 
-    private def read_bonds(line : String) : Nil
-      i = Hybrid36.decode line[6, 5]
+    private def read_bonds : Nil
+      i = seqnum_at(6, 5)
       (11..).step(5).each do |start|
-        break unless j = line[start, 5]?.presence.try { |str| Hybrid36.decode(str) }
+        break unless j = seqnum_at?(start, 5)
         @pdb_bonds[{i, j}] += 1 unless i > j # skip redundant bonds
       end
     end
@@ -495,7 +514,7 @@ module Chem::PDB
     end
 
     private def decode_entry : Structure
-      @io.skip_line if @io.check("MODEL")
+      @pull.next_line if @pull.at(0, 6).str == "MODEL "
 
       @builder = Structure::Builder.new guess_topology: @guess_topology
       @builder.title @pdb_title
@@ -505,19 +524,21 @@ module Chem::PDB
 
       @pdb_bonds.clear
       @serial = 0
-      until @io.eof?
-        break if @io.skip_whitespace.check("END", "MODEL", "MASTER")
-
-        case line = @io.read_line
-        when .starts_with?("ATOM")
-          read_atom line
-        when .starts_with?("HETATM")
-          read_atom(line) if read_het?
-        when .starts_with?("CONECT")
-          read_bonds line
+      @pull.each_line do
+        case @pull.at(0, 6).str
+        when "ATOM  "
+          read_atom
+        when "HETATM"
+          read_atom if read_het?
+        when "CONECT"
+          read_bonds
+        when "ENDMDL"
+          @pull.next_line
+          break
+        when "END   ", "MODEL ", "MASTER"
+          break
         end
       end
-      @io.skip_line if @io.check("ENDMDL")
 
       resolve_alternate_locations unless @alt_loc
       assign_bonds
@@ -539,6 +560,19 @@ module Chem::PDB
         residue.reset_cache
       end
       table.clear
+    end
+
+    private def seqnum_at(start : Int, size : Int) : Int32
+      value = @pull.at(start, size).parse do |bytes|
+        Hybrid36.decode? String.new(bytes)
+      end
+      value || @pull.error("Invalid sequence number")
+    end
+
+    private def seqnum_at?(start : Int, size : Int) : Int32?
+      @pull.at?(start, size).parse do |bytes|
+        Hybrid36.decode?(String.new(bytes)) || @pull.error("Invalid sequence number")
+      end
     end
 
     private struct AlternateLocation
