@@ -45,52 +45,62 @@ module Chem::Gen
     @n_atoms = 0
     @periodic = false
 
-    def initialize(io : IO, @guess_topology : Bool = true, @sync_close : Bool = false)
-      @io = TextIO.new io
+    def initialize(@io : IO, @guess_topology : Bool = true, @sync_close : Bool = false)
+      @pull = PullParser.new(@io)
     end
 
     private def parse_coord_type : Nil
-      case @io.skip_spaces.read
+      @pull.next_token
+      case @pull.char
       when 'F' then @fractional = @periodic = true
       when 'S' then @periodic = true
       when 'C' then @fractional = @periodic = false
-      else          parse_exception "Invalid geometry type"
+      else          @pull.error("Invalid geometry type")
       end
-      @io.skip_line
+      @pull.next_line
     end
 
     private def parse_elements : Nil
       @elements.clear
-      until @io.eol?
-        @elements << PeriodicTable[@io.read_word]
+      while str = @pull.next_s?
+        element = PeriodicTable[str]? || @pull.error("Unknown element")
+        @elements << element
       end
-      @io.skip_line
+      @pull.next_line
     end
 
     private def parse_header : Nil
-      @n_atoms = @io.read_int
+      @n_atoms = @pull.next_i
       parse_coord_type
       parse_elements
     end
 
     private def read_atom : Atom
-      @io.skip_spaces.skip_while(&.ascii_number?).skip_spaces
-      ele = @elements[@io.read_int - 1]? || parse_exception "Invalid element index"
-      vec = @io.read_vector
-      @io.skip_line
+      @pull.next_s? # skip atom number
+      ele = @elements[@pull.next_i - 1]?
+      @pull.error "Invalid element index (expected 1 to #{@elements.size})" unless ele
+      vec = Spatial::Vector.new @pull.next_f, @pull.next_f, @pull.next_f
+      @pull.next_line
       @builder.atom ele, vec
     end
 
     private def decode_entry : Structure
+      raise IO::EOFError.new if @pull.eof?
+
       parse_header
 
       @builder = Structure::Builder.new guess_topology: @guess_topology
       @n_atoms.times { read_atom }
       if @periodic
-        @io.skip_line
-        @builder.lattice @io.read_vector, @io.read_vector, @io.read_vector
+        @pull.next_line # skip first lattice line
+        vi = Spatial::Vector.new @pull.next_f, @pull.next_f, @pull.next_f
+        @pull.next_line
+        vj = Spatial::Vector.new @pull.next_f, @pull.next_f, @pull.next_f
+        @pull.next_line
+        vk = Spatial::Vector.new @pull.next_f, @pull.next_f, @pull.next_f
+        @pull.next_line
+        @builder.lattice vi, vj, vk
       end
-      @io.skip_to_end # ensure end of file as Gen doesn't support multiple entries
 
       structure = @builder.build
       structure.coords.to_cartesian! if @fractional
