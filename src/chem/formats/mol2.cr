@@ -97,78 +97,77 @@ module Chem::Mol2
     @n_bonds = 0
     @title = ""
 
-    def initialize(io : IO, @sync_close : Bool = false)
-      @io = TextIO.new io
+    def initialize(@io : IO, @sync_close : Bool = false)
+      @pull = PullParser.new @io
     end
 
     def skip_entry : Nil
-      @io.skip_line if @io.skip_whitespace.check(TAG_MOLECULE)
+      @pull.next_line if @pull.next_s == TAG_MOLECULE
       skip_to_tag TAG_MOLECULE
     end
 
     private def read_atom : Atom
-      serial = @io.read_int
-      name = @io.skip_spaces.read_until ' '
-      coords = @io.read_vector
-      element = PeriodicTable[@io.read_word]
-      @io.skip('.').skip_word if @io.check('.') # ignore sybyl type
-      unless @io.eol?
-        resid = @io.read_int
-        resname = @io.skip_spaces.read_word
+      serial = @pull.next_i
+      name = @pull.next_s
+      coords = Spatial::Vector[@pull.next_f, @pull.next_f, @pull.next_f]
+      atom_type = @pull.next_s
+      symbol = atom_type[...atom_type.index('.')] # ignore sybyl type
+      element = PeriodicTable[symbol]? || @pull.error("Unknown element")
+      if @pull.next_token
+        resid = @pull.int
+        resname = @pull.next_s
         @builder.residue resname[..2], resid
-        charge = @io.read_float if @include_charges
+        charge = @pull.next_f if @include_charges
       end
-      @io.skip_line
       @builder.atom name, coords, element: element, partial_charge: (charge || 0.0)
     end
 
     private def read_bond : Nil
-      serial = @io.read_int
-      i = @io.read_int - 1
-      j = @io.read_int - 1
-      bond_type = @io.skip_spaces.scan('a'..'z', '0'..'9')
+      serial = @pull.next_i
+      i = @pull.next_i - 1
+      j = @pull.next_i - 1
+      bond_type = @pull.next_s
       bond_order = case bond_type
                    when "1", "2", "3"    then bond_type.to_i
                    when "am", "ar", "du" then 1
                    else                       0
                    end
-      @io.skip_line
       @builder.bond i, j, bond_order, aromatic: bond_type == "ar" if bond_order > 0
     end
 
     private def read_header : Nil
-      if @io.check(TAG_MOLECULE)
-        @io.skip_line
-      else
-        parse_exception "Invalid tag for structure"
-      end
-
-      @title = @io.read_line.strip
-      @n_atoms = @io.read_int
-      @n_bonds = @io.read_int
-      @io.skip_line
-      @io.skip_line
-      @include_charges = @io.read_line.strip != "NO_CHARGES"
+      @pull.error("Invalid tag for structure") unless @pull.str == TAG_MOLECULE
+      @pull.next_line
+      @title = @pull.line.strip
+      @pull.next_line
+      @n_atoms = @pull.next_i
+      @n_bonds = @pull.next_i
+      @pull.next_line
+      @pull.next_line
+      @include_charges = @pull.next_s != "NO_CHARGES"
+      @pull.next_line
     end
 
     private def decode_entry : Structure
       skip_to_tag
-      raise IO::EOFError.new if @io.eof?
+      raise IO::EOFError.new if @pull.eof?
       read_header
       @builder = Structure::Builder.new guess_topology: false
       @builder.title @title
-      until @io.eof?
-        case @io.skip_whitespace
-        when .check(TAG_ATOMS)
-          @io.skip_line
-          @n_atoms.times { read_atom }
-        when .check(TAG_BONDS)
-          @io.skip_line
-          @n_bonds.times { read_bond }
-        when .check(TAG_MOLECULE)
+      @pull.each_line do
+        case @pull.str? || @pull.next_s?
+        when TAG_ATOMS
+          @n_atoms.times do
+            @pull.next_line
+            read_atom
+          end
+        when TAG_BONDS
+          @n_bonds.times do
+            @pull.next_line
+            read_bond
+          end
+        when TAG_MOLECULE
           break
-        else
-          @io.skip_line
         end
       end
       @builder.build
@@ -179,9 +178,8 @@ module Chem::Mol2
     end
 
     private def skip_to_tag(tag : String) : Nil
-      until @io.eof?
-        break if @io.skip_whitespace.check(tag)
-        @io.skip_line
+      @pull.each_line do
+        break if (@pull.str? || @pull.next_s?).try(&.starts_with?(tag))
       end
     end
   end
