@@ -214,7 +214,7 @@ module Chem
 
     private def location : Tuple(Int32, Int32, Int32)
       return {@line_number, 0, 0} unless line = @line
-      column_number = @buffer.to_unsafe - line.to_unsafe
+      column_number = @buffer.empty? ? line.bytesize : @buffer.to_unsafe - line.to_unsafe
       {@line_number, column_number.to_i, @token_size.to_i}
     end
 
