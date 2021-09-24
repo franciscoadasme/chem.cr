@@ -36,8 +36,9 @@ module Chem
   class Error < Exception; end
 
   class ParseException < Exception
-    @line : String?
-    @location : Tuple(Int32, Int32, Int32)?
+    getter line : String?
+    getter location : Tuple(Int32, Int32, Int32)?
+    getter path : String?
 
     def initialize(@message : String); end
 
