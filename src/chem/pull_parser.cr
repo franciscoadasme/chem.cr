@@ -65,7 +65,7 @@ module Chem
       float? || error("Invalid real number")
     end
 
-    def float(default : Float64) : Float64
+    def float(if_blank default : Float64) : Float64
       if (token = current_token) && token.all?(&.unsafe_chr.ascii_whitespace?)
         default
       else
@@ -93,7 +93,7 @@ module Chem
       int? || error("Invalid integer")
     end
 
-    def int(default : Int32) : Int32
+    def int(if_blank default : Int32) : Int32
       if (token = current_token) && token.all?(&.unsafe_chr.ascii_whitespace?)
         default
       else

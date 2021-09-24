@@ -495,8 +495,8 @@ module Chem::PDB
         Spatial::Vector.new(x, y, z),
         element: ele,
         formal_charge: formal_charge || 0,
-        occupancy: @pull.at(54, 6).float(default: 0),
-        temperature_factor: @pull.at(60, 6).float(default: 0)
+        occupancy: @pull.at(54, 6).float(if_blank: 0),
+        temperature_factor: @pull.at(60, 6).float(if_blank: 0)
 
       alt_loc(atom.residue, alt_loc, resname) << atom if !@alt_loc && alt_loc
     end
