@@ -81,6 +81,7 @@ module Chem
         endptr.value = 0
         value = LibC.strtod bytes, out ptr
         endptr.value = old_value
+        return if ptr == bytes.to_unsafe # blank string
         while ptr != endptr && ptr.value.unsafe_chr.ascii_whitespace?
           ptr += 1
         end
