@@ -12,7 +12,7 @@ module Chem
     end
 
     def at(start : Int, count : Int) : self
-      set_cursor(start, count) { error("Index out of bounds") }
+      set_cursor(start, count) { error("Cursor out of current line") }
       self
     end
 
