@@ -200,7 +200,7 @@ module Chem
     end
 
     def str : String
-      str? || error("End of line")
+      str? || error("Empty token")
     end
 
     def str? : String?
