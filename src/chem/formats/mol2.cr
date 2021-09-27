@@ -1,87 +1,5 @@
 @[Chem::RegisterFormat(ext: %w(.mol2))]
 module Chem::Mol2
-  class Writer
-    include FormatWriter(AtomCollection)
-    include FormatWriter::MultiEntry(AtomCollection)
-
-    @atom_table = {} of Atom => Int32
-    @res_table = {} of Residue => Int32
-
-    protected def encode_entry(obj : AtomCollection) : Nil
-      reset_index
-      write_header obj.is_a?(Structure) ? obj.title : "",
-        obj.n_atoms,
-        obj.bonds.size,
-        obj.is_a?(Structure) ? obj.n_residues : obj.each_atom.map(&.residue).uniq.sum { 1 }
-      section "atom" { obj.each_atom { |atom| write atom } }
-      section "bond" { obj.bonds.each_with_index { |bond, i| write bond, i + 1 } }
-      section "substructure" { obj.each_residue { |res| write res } } if obj.is_a?(Structure)
-    end
-
-    private def atom_index(atom : Atom) : Int32
-      @atom_table[atom] ||= @atom_table.size + 1
-    end
-
-    private def reset_index
-      @atom_table.clear
-      @res_table.clear
-    end
-
-    private def residue_index(residue : Residue) : Int32
-      @res_table[residue] ||= @res_table.size + 1
-    end
-
-    private def section(name : String, &block : ->)
-      @io << "@<TRIPOS>" << name.upcase << '\n'
-      yield
-      @io.puts
-    end
-
-    private def write(atom : Atom)
-      @io.printf "%5d %-4s%10.4f%10.4f%10.4f %-4s%4d %3s%-4d%8.4f\n",
-        atom_index(atom),
-        atom.name,
-        atom.x,
-        atom.y,
-        atom.z,
-        atom.element.symbol,
-        residue_index(atom.residue),
-        atom.residue.name,
-        atom.residue.number,
-        atom.partial_charge
-    end
-
-    private def write(bond : Bond, i : Int32)
-      @io.printf "%5d%5d%5d%2d\n",
-        i,
-        atom_index(bond.first),
-        atom_index(bond.second),
-        bond.order
-    end
-
-    private def write(residue : Residue)
-      @io.printf "%4d %-3s%-4d %5d %-8s %1d %1s %3s %2d\n",
-        residue_index(residue),
-        residue.name[..2],
-        residue.number,
-        1,         # root_atom
-        "RESIDUE", # subst_type
-        1,         # dict_type
-        residue.chain.id,
-        residue.name[..2],
-        residue.bonds.size # inter_bonds
-    end
-
-    private def write_header(title, n_atoms, n_bonds, n_residues)
-      section "molecule" do
-        @io.puts title.gsub(/ *\n */, ' ')
-        @io.printf "%5d%5d%4d\n", n_atoms, n_bonds, n_residues
-        @io.puts "UNKNOWN"
-        @io.puts "USER_CHARGES"
-      end
-    end
-  end
-
   class Reader
     include FormatReader(Structure)
     include FormatReader::MultiEntry(Structure)
@@ -160,6 +78,88 @@ module Chem::Mol2
     private def skip_to_tag(tag : String) : Nil
       @pull.each_line do
         break if (@pull.str? || @pull.next_s?).try(&.starts_with?(tag))
+      end
+    end
+  end
+
+  class Writer
+    include FormatWriter(AtomCollection)
+    include FormatWriter::MultiEntry(AtomCollection)
+
+    @atom_table = {} of Atom => Int32
+    @res_table = {} of Residue => Int32
+
+    protected def encode_entry(obj : AtomCollection) : Nil
+      reset_index
+      write_header obj.is_a?(Structure) ? obj.title : "",
+        obj.n_atoms,
+        obj.bonds.size,
+        obj.is_a?(Structure) ? obj.n_residues : obj.each_atom.map(&.residue).uniq.sum { 1 }
+      section "atom" { obj.each_atom { |atom| write atom } }
+      section "bond" { obj.bonds.each_with_index { |bond, i| write bond, i + 1 } }
+      section "substructure" { obj.each_residue { |res| write res } } if obj.is_a?(Structure)
+    end
+
+    private def atom_index(atom : Atom) : Int32
+      @atom_table[atom] ||= @atom_table.size + 1
+    end
+
+    private def reset_index
+      @atom_table.clear
+      @res_table.clear
+    end
+
+    private def residue_index(residue : Residue) : Int32
+      @res_table[residue] ||= @res_table.size + 1
+    end
+
+    private def section(name : String, &block : ->)
+      @io << "@<TRIPOS>" << name.upcase << '\n'
+      yield
+      @io.puts
+    end
+
+    private def write(atom : Atom)
+      @io.printf "%5d %-4s%10.4f%10.4f%10.4f %-4s%4d %3s%-4d%8.4f\n",
+        atom_index(atom),
+        atom.name,
+        atom.x,
+        atom.y,
+        atom.z,
+        atom.element.symbol,
+        residue_index(atom.residue),
+        atom.residue.name,
+        atom.residue.number,
+        atom.partial_charge
+    end
+
+    private def write(bond : Bond, i : Int32)
+      @io.printf "%5d%5d%5d%2d\n",
+        i,
+        atom_index(bond.first),
+        atom_index(bond.second),
+        bond.order
+    end
+
+    private def write(residue : Residue)
+      @io.printf "%4d %-3s%-4d %5d %-8s %1d %1s %3s %2d\n",
+        residue_index(residue),
+        residue.name[..2],
+        residue.number,
+        1,         # root_atom
+        "RESIDUE", # subst_type
+        1,         # dict_type
+        residue.chain.id,
+        residue.name[..2],
+        residue.bonds.size # inter_bonds
+    end
+
+    private def write_header(title, n_atoms, n_bonds, n_residues)
+      section "molecule" do
+        @io.puts title.gsub(/ *\n */, ' ')
+        @io.printf "%5d%5d%4d\n", n_atoms, n_bonds, n_residues
+        @io.puts "UNKNOWN"
+        @io.puts "USER_CHARGES"
       end
     end
   end

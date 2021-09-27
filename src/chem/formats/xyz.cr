@@ -1,18 +1,5 @@
 @[Chem::RegisterFormat(ext: %w(.xyz))]
 module Chem::XYZ
-  class Writer
-    include FormatWriter(AtomCollection)
-    include FormatWriter::MultiEntry(AtomCollection)
-
-    protected def encode_entry(obj : AtomCollection) : Nil
-      @io.puts obj.n_atoms
-      @io.puts obj.is_a?(Structure) ? obj.title.gsub(/ *\n */, ' ') : ""
-      obj.each_atom do |atom|
-        @io.printf "%-3s%15.5f%15.5f%15.5f\n", atom.element.symbol, atom.x, atom.y, atom.z
-      end
-    end
-  end
-
   class Reader
     include FormatReader(Structure)
     include FormatReader::MultiEntry(Structure)
@@ -41,6 +28,19 @@ module Chem::XYZ
       return if @pull.eof?
       n_atoms = @pull.next_i
       (n_atoms + 2).times { @pull.next_line }
+    end
+  end
+
+  class Writer
+    include FormatWriter(AtomCollection)
+    include FormatWriter::MultiEntry(AtomCollection)
+
+    protected def encode_entry(obj : AtomCollection) : Nil
+      @io.puts obj.n_atoms
+      @io.puts obj.is_a?(Structure) ? obj.title.gsub(/ *\n */, ' ') : ""
+      obj.each_atom do |atom|
+        @io.printf "%-3s%15.5f%15.5f%15.5f\n", atom.element.symbol, atom.x, atom.y, atom.z
+      end
     end
   end
 end

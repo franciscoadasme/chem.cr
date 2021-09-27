@@ -1,77 +1,5 @@
 @[Chem::RegisterFormat(ext: %w(.poscar), names: %w(POSCAR* CONTCAR*))]
 module Chem::VASP::Poscar
-  class Writer
-    include FormatWriter(Structure)
-
-    def initialize(@io : IO,
-                   order @ele_order : Array(Element)? = nil,
-                   @fractional : Bool = false,
-                   @wrap : Bool = false,
-                   @sync_close : Bool = false)
-    end
-
-    protected def encode_entry(structure : Structure) : Nil
-      raise Spatial::NotPeriodicError.new unless lattice = structure.lattice
-
-      atoms = structure.atoms.to_a.sort_by! &.serial
-      coordinate_system = @fractional ? "Direct" : "Cartesian"
-      ele_tally = count_elements atoms
-      has_constraints = atoms.any? &.constraint
-
-      @io.puts structure.title.gsub(/ *\n */, ' ')
-      write lattice
-      write_elements ele_tally
-      @io.puts "Selective dynamics" if has_constraints
-      @io.puts coordinate_system
-
-      ele_tally.each do |ele, _|
-        atoms.each.select(&.element.==(ele)).each do |atom|
-          vec = atom.coords
-          if @fractional
-            vec = vec.to_fractional lattice
-            vec = vec.wrap if @wrap
-          elsif @wrap
-            vec = vec.wrap lattice
-          end
-
-          @io.printf "%22.16f%22.16f%22.16f", vec.x, vec.y, vec.z
-          write atom.constraint || Constraint::None if has_constraints
-          @io.puts
-        end
-      end
-    end
-
-    private def count_elements(atoms : Enumerable(Atom)) : Array(Tuple(Element, Int32))
-      ele_tally = atoms.map(&.element).tally.to_a
-      if order = @ele_order
-        ele_tally.sort_by! do |(k, _)|
-          order.index(k) || raise ArgumentError.new "#{k.inspect} not found in specified order"
-        end
-      end
-      ele_tally
-    end
-
-    private def write(constraint : Constraint) : Nil
-      {:x, :y, :z}.each do |axis|
-        @io.printf "%4s", axis.in?(constraint) ? 'F' : 'T'
-      end
-    end
-
-    private def write(lattice : Lattice) : Nil
-      @io.printf " %18.14f\n", 1.0
-      {lattice.i, lattice.j, lattice.k}.each do |vec|
-        @io.printf " %22.16f%22.16f%22.16f\n", vec.x, vec.y, vec.z
-      end
-    end
-
-    private def write_elements(ele_table) : Nil
-      ele_table.each { |(ele, _)| @io.printf "%5s", ele.symbol.ljust(2) }
-      @io.puts
-      ele_table.each { |(_, count)| @io.printf "%6d", count }
-      @io.puts
-    end
-  end
-
   class Reader
     include FormatReader(Structure)
 
@@ -167,6 +95,78 @@ module Chem::VASP::Poscar
       when 'F' then false
       else          @pull.error "Invalid boolean flag (expected either T or F)"
       end
+    end
+  end
+
+  class Writer
+    include FormatWriter(Structure)
+
+    def initialize(@io : IO,
+                   order @ele_order : Array(Element)? = nil,
+                   @fractional : Bool = false,
+                   @wrap : Bool = false,
+                   @sync_close : Bool = false)
+    end
+
+    protected def encode_entry(structure : Structure) : Nil
+      raise Spatial::NotPeriodicError.new unless lattice = structure.lattice
+
+      atoms = structure.atoms.to_a.sort_by! &.serial
+      coordinate_system = @fractional ? "Direct" : "Cartesian"
+      ele_tally = count_elements atoms
+      has_constraints = atoms.any? &.constraint
+
+      @io.puts structure.title.gsub(/ *\n */, ' ')
+      write lattice
+      write_elements ele_tally
+      @io.puts "Selective dynamics" if has_constraints
+      @io.puts coordinate_system
+
+      ele_tally.each do |ele, _|
+        atoms.each.select(&.element.==(ele)).each do |atom|
+          vec = atom.coords
+          if @fractional
+            vec = vec.to_fractional lattice
+            vec = vec.wrap if @wrap
+          elsif @wrap
+            vec = vec.wrap lattice
+          end
+
+          @io.printf "%22.16f%22.16f%22.16f", vec.x, vec.y, vec.z
+          write atom.constraint || Constraint::None if has_constraints
+          @io.puts
+        end
+      end
+    end
+
+    private def count_elements(atoms : Enumerable(Atom)) : Array(Tuple(Element, Int32))
+      ele_tally = atoms.map(&.element).tally.to_a
+      if order = @ele_order
+        ele_tally.sort_by! do |(k, _)|
+          order.index(k) || raise ArgumentError.new "#{k.inspect} not found in specified order"
+        end
+      end
+      ele_tally
+    end
+
+    private def write(constraint : Constraint) : Nil
+      {:x, :y, :z}.each do |axis|
+        @io.printf "%4s", axis.in?(constraint) ? 'F' : 'T'
+      end
+    end
+
+    private def write(lattice : Lattice) : Nil
+      @io.printf " %18.14f\n", 1.0
+      {lattice.i, lattice.j, lattice.k}.each do |vec|
+        @io.printf " %22.16f%22.16f%22.16f\n", vec.x, vec.y, vec.z
+      end
+    end
+
+    private def write_elements(ele_table) : Nil
+      ele_table.each { |(ele, _)| @io.printf "%5s", ele.symbol.ljust(2) }
+      @io.puts
+      ele_table.each { |(_, count)| @io.printf "%6d", count }
+      @io.puts
     end
   end
 end
