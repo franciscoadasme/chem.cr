@@ -1,0 +1,1952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 1.0.0">
+<meta name="crystal_docs.project_version" content="master">
+<meta name="crystal_docs.project_name" content="chem.cr">
+
+
+
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/doc.js"></script>
+
+  <meta name="repository-name" content="chem.cr">
+  <title>Chem::PullParser - chem.cr master</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../index.html">
+          chem.cr
+        </a>
+      </h1>
+
+      <span class="project-version">
+        master
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class=" " data-id="chem.cr/toplevel" data-name="top level namespace">
+      <a href="../toplevel.html">Top Level Namespace</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Array" data-name="array(t)">
+      <a href="../Array.html">Array</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Char" data-name="char">
+      <a href="../Char.html">Char</a>
+      
+    </li>
+  
+  <li class="parent open current" data-id="chem.cr/Chem" data-name="chem">
+      <a href="../Chem.html">Chem</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/ArrayView" data-name="chem::arrayview(t)">
+      <a href="../Chem/ArrayView.html">ArrayView</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Atom" data-name="chem::atom">
+      <a href="../Chem/Atom.html">Atom</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/AtomCollection" data-name="chem::atomcollection">
+      <a href="../Chem/AtomCollection.html">AtomCollection</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/AtomView" data-name="chem::atomview">
+      <a href="../Chem/AtomView.html">AtomView</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Bias" data-name="chem::bias">
+      <a href="../Chem/Bias.html">Bias</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Bond" data-name="chem::bond">
+      <a href="../Chem/Bond.html">Bond</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Bond/Kind" data-name="chem::bond::kind">
+      <a href="../Chem/Bond/Kind.html">Kind</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/BondArray" data-name="chem::bondarray">
+      <a href="../Chem/BondArray.html">BondArray</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Chain" data-name="chem::chain">
+      <a href="../Chem/Chain.html">Chain</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ChainCollection" data-name="chem::chaincollection">
+      <a href="../Chem/ChainCollection.html">ChainCollection</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ChainView" data-name="chem::chainview">
+      <a href="../Chem/ChainView.html">ChainView</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Constraint" data-name="chem::constraint">
+      <a href="../Chem/Constraint.html">Constraint</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Cube" data-name="chem::cube">
+      <a href="../Chem/Cube.html">Cube</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Cube/Reader" data-name="chem::cube::reader">
+      <a href="../Chem/Cube/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Cube/Writer" data-name="chem::cube::writer">
+      <a href="../Chem/Cube/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/DX" data-name="chem::dx">
+      <a href="../Chem/DX.html">DX</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/DX/Reader" data-name="chem::dx::reader">
+      <a href="../Chem/DX/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/DX/Writer" data-name="chem::dx::writer">
+      <a href="../Chem/DX/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Element" data-name="chem::element">
+      <a href="../Chem/Element.html">Element</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Error" data-name="chem::error">
+      <a href="../Chem/Error.html">Error</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Format" data-name="chem::format">
+      <a href="../Chem/Format.html">Format</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/FormatReader" data-name="chem::formatreader(t)">
+      <a href="../Chem/FormatReader.html">FormatReader</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/FormatReader/Attached" data-name="chem::formatreader::attached(t)">
+      <a href="../Chem/FormatReader/Attached.html">Attached</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/FormatReader/Headed" data-name="chem::formatreader::headed(t)">
+      <a href="../Chem/FormatReader/Headed.html">Headed</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/FormatReader/MultiEntry" data-name="chem::formatreader::multientry(t)">
+      <a href="../Chem/FormatReader/MultiEntry.html">MultiEntry</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/FormatWriter" data-name="chem::formatwriter(t)">
+      <a href="../Chem/FormatWriter.html">FormatWriter</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/FormatWriter/MultiEntry" data-name="chem::formatwriter::multientry(t)">
+      <a href="../Chem/FormatWriter/MultiEntry.html">MultiEntry</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Gen" data-name="chem::gen">
+      <a href="../Chem/Gen.html">Gen</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Gen/Reader" data-name="chem::gen::reader">
+      <a href="../Chem/Gen/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Gen/Writer" data-name="chem::gen::writer">
+      <a href="../Chem/Gen/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Lattice" data-name="chem::lattice">
+      <a href="../Chem/Lattice.html">Lattice</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Linalg" data-name="chem::linalg">
+      <a href="../Chem/Linalg.html">Linalg</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Linalg/Error" data-name="chem::linalg::error">
+      <a href="../Chem/Linalg/Error.html">Error</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Linalg/Matrix" data-name="chem::linalg::matrix">
+      <a href="../Chem/Linalg/Matrix.html">Matrix</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Mol2" data-name="chem::mol2">
+      <a href="../Chem/Mol2.html">Mol2</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Mol2/Reader" data-name="chem::mol2::reader">
+      <a href="../Chem/Mol2/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Mol2/Writer" data-name="chem::mol2::writer">
+      <a href="../Chem/Mol2/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ParseException" data-name="chem::parseexception">
+      <a href="../Chem/ParseException.html">ParseException</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/PDB" data-name="chem::pdb">
+      <a href="../Chem/PDB.html">PDB</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/PDB/Hybrid36" data-name="chem::pdb::hybrid36">
+      <a href="../Chem/PDB/Hybrid36.html">Hybrid36</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/PDB/Reader" data-name="chem::pdb::reader">
+      <a href="../Chem/PDB/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/PDB/Writer" data-name="chem::pdb::writer">
+      <a href="../Chem/PDB/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/PeriodicTable" data-name="chem::periodictable">
+      <a href="../Chem/PeriodicTable.html">PeriodicTable</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Protein" data-name="chem::protein">
+      <a href="../Chem/Protein.html">Protein</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/AminoAcid" data-name="chem::protein::aminoacid">
+      <a href="../Chem/Protein/AminoAcid.html">AminoAcid</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/AminoAcids" data-name="chem::protein::aminoacids">
+      <a href="../Chem/Protein/AminoAcids.html">AminoAcids</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/DSSP" data-name="chem::protein::dssp">
+      <a href="../Chem/Protein/DSSP.html">DSSP</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Protein/PSIQUE" data-name="chem::protein::psique">
+      <a href="../Chem/Protein/PSIQUE.html">PSIQUE</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/PSIQUE/SecondaryStructureBlender" data-name="chem::protein::psique::secondarystructureblender">
+      <a href="../Chem/Protein/PSIQUE/SecondaryStructureBlender.html">SecondaryStructureBlender</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/SecondaryStructure" data-name="chem::protein::secondarystructure">
+      <a href="../Chem/Protein/SecondaryStructure.html">SecondaryStructure</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/SecondaryStructureCalculator" data-name="chem::protein::secondarystructurecalculator">
+      <a href="../Chem/Protein/SecondaryStructureCalculator.html">SecondaryStructureCalculator</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/SecondaryStructureType" data-name="chem::protein::secondarystructuretype">
+      <a href="../Chem/Protein/SecondaryStructureType.html">SecondaryStructureType</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/Sequence" data-name="chem::protein::sequence">
+      <a href="../Chem/Protein/Sequence.html">Sequence</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Protein/Stride" data-name="chem::protein::stride">
+      <a href="../Chem/Protein/Stride.html">Stride</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/Stride/Writer" data-name="chem::protein::stride::writer">
+      <a href="../Chem/Protein/Stride/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" current" data-id="chem.cr/Chem/PullParser" data-name="chem::pullparser">
+      <a href="../Chem/PullParser.html">PullParser</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/PyMOL" data-name="chem::pymol">
+      <a href="../Chem/PyMOL.html">PyMOL</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/PyMOL/Writer" data-name="chem::pymol::writer">
+      <a href="../Chem/PyMOL/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/RegisterFormat" data-name="chem::registerformat">
+      <a href="../Chem/RegisterFormat.html">RegisterFormat</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Residue" data-name="chem::residue">
+      <a href="../Chem/Residue.html">Residue</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Residue/Kind" data-name="chem::residue::kind">
+      <a href="../Chem/Residue/Kind.html">Kind</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueCollection" data-name="chem::residuecollection">
+      <a href="../Chem/ResidueCollection.html">ResidueCollection</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueView" data-name="chem::residueview">
+      <a href="../Chem/ResidueView.html">ResidueView</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Spatial" data-name="chem::spatial">
+      <a href="../Chem/Spatial.html">Spatial</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="chem.cr/Chem/Spatial/AffineTransform" data-name="chem::spatial::affinetransform">
+      <a href="../Chem/Spatial/AffineTransform.html">AffineTransform</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/AffineTransform/ScalingFactors" data-name="chem::spatial::affinetransform::scalingfactors">
+      <a href="../Chem/Spatial/AffineTransform/ScalingFactors.html">ScalingFactors</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Basis" data-name="chem::spatial::basis">
+      <a href="../Chem/Spatial/Basis.html">Basis</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Bounds" data-name="chem::spatial::bounds">
+      <a href="../Chem/Spatial/Bounds.html">Bounds</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/CoordinatesProxy" data-name="chem::spatial::coordinatesproxy">
+      <a href="../Chem/Spatial/CoordinatesProxy.html">CoordinatesProxy</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Error" data-name="chem::spatial::error">
+      <a href="../Chem/Spatial/Error.html">Error</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Spatial/Grid" data-name="chem::spatial::grid">
+      <a href="../Chem/Spatial/Grid.html">Grid</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Grid/Dimensions" data-name="chem::spatial::grid::dimensions">
+      <a href="../Chem/Spatial/Grid/Dimensions.html">Dimensions</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Grid/Info" data-name="chem::spatial::grid::info">
+      <a href="../Chem/Spatial/Grid/Info.html">Info</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Grid/Location" data-name="chem::spatial::grid::location">
+      <a href="../Chem/Spatial/Grid/Location.html">Location</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/HlxParams" data-name="chem::spatial::hlxparams">
+      <a href="../Chem/Spatial/HlxParams.html">HlxParams</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/KDTree" data-name="chem::spatial::kdtree">
+      <a href="../Chem/Spatial/KDTree.html">KDTree</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/NotPeriodicError" data-name="chem::spatial::notperiodicerror">
+      <a href="../Chem/Spatial/NotPeriodicError.html">NotPeriodicError</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/PBC" data-name="chem::spatial::pbc">
+      <a href="../Chem/Spatial/PBC.html">PBC</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Quaternion" data-name="chem::spatial::quaternion">
+      <a href="../Chem/Spatial/Quaternion.html">Quaternion</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Size" data-name="chem::spatial::size">
+      <a href="../Chem/Spatial/Size.html">Size</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Vector" data-name="chem::spatial::vector">
+      <a href="../Chem/Spatial/Vector.html">Vector</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Structure" data-name="chem::structure">
+      <a href="../Chem/Structure.html">Structure</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Structure/Builder" data-name="chem::structure::builder">
+      <a href="../Chem/Structure/Builder.html">Builder</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Structure/Experiment" data-name="chem::structure::experiment">
+      <a href="../Chem/Structure/Experiment.html">Experiment</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Structure/Experiment/Method" data-name="chem::structure::experiment::method">
+      <a href="../Chem/Structure/Experiment/Method.html">Method</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Topology" data-name="chem::topology">
+      <a href="../Chem/Topology.html">Topology</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/AtomType" data-name="chem::topology::atomtype">
+      <a href="../Chem/Topology/AtomType.html">AtomType</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/BondType" data-name="chem::topology::bondtype">
+      <a href="../Chem/Topology/BondType.html">BondType</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/MatchData" data-name="chem::topology::matchdata">
+      <a href="../Chem/Topology/MatchData.html">MatchData</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Patcher" data-name="chem::topology::patcher">
+      <a href="../Chem/Topology/Patcher.html">Patcher</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Perception" data-name="chem::topology::perception">
+      <a href="../Chem/Topology/Perception.html">Perception</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/ResidueType" data-name="chem::topology::residuetype">
+      <a href="../Chem/Topology/ResidueType.html">ResidueType</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Topology/Templates" data-name="chem::topology::templates">
+      <a href="../Chem/Topology/Templates.html">Templates</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="chem.cr/Chem/Topology/Templates/Builder" data-name="chem::topology::templates::builder">
+      <a href="../Chem/Topology/Templates/Builder.html">Builder</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Templates/Builder/ParseException" data-name="chem::topology::templates::builder::parseexception">
+      <a href="../Chem/Topology/Templates/Builder/ParseException.html">ParseException</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Templates/Detector" data-name="chem::topology::templates::detector">
+      <a href="../Chem/Topology/Templates/Detector.html">Detector</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Templates/Error" data-name="chem::topology::templates::error">
+      <a href="../Chem/Topology/Templates/Error.html">Error</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/VASP" data-name="chem::vasp">
+      <a href="../Chem/VASP.html">VASP</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="chem.cr/Chem/VASP/Chgcar" data-name="chem::vasp::chgcar">
+      <a href="../Chem/VASP/Chgcar.html">Chgcar</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Chgcar/Reader" data-name="chem::vasp::chgcar::reader">
+      <a href="../Chem/VASP/Chgcar/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Chgcar/Writer" data-name="chem::vasp::chgcar::writer">
+      <a href="../Chem/VASP/Chgcar/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/GridReader" data-name="chem::vasp::gridreader">
+      <a href="../Chem/VASP/GridReader.html">GridReader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/GridWriter" data-name="chem::vasp::gridwriter">
+      <a href="../Chem/VASP/GridWriter.html">GridWriter</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/VASP/Locpot" data-name="chem::vasp::locpot">
+      <a href="../Chem/VASP/Locpot.html">Locpot</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Locpot/Reader" data-name="chem::vasp::locpot::reader">
+      <a href="../Chem/VASP/Locpot/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Locpot/Writer" data-name="chem::vasp::locpot::writer">
+      <a href="../Chem/VASP/Locpot/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/VASP/Poscar" data-name="chem::vasp::poscar">
+      <a href="../Chem/VASP/Poscar.html">Poscar</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Poscar/Reader" data-name="chem::vasp::poscar::reader">
+      <a href="../Chem/VASP/Poscar/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Poscar/Writer" data-name="chem::vasp::poscar::writer">
+      <a href="../Chem/VASP/Poscar/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/VMD" data-name="chem::vmd">
+      <a href="../Chem/VMD.html">VMD</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/VMD/Writer" data-name="chem::vmd::writer">
+      <a href="../Chem/VMD/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/XYZ" data-name="chem::xyz">
+      <a href="../Chem/XYZ.html">XYZ</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/XYZ/Reader" data-name="chem::xyz::reader">
+      <a href="../Chem/XYZ/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/XYZ/Writer" data-name="chem::xyz::writer">
+      <a href="../Chem/XYZ/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Colorize" data-name="colorize">
+      <a href="../Colorize.html">Colorize</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Colorize/ColorRGB" data-name="colorize::colorrgb">
+      <a href="../Colorize/ColorRGB.html">ColorRGB</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Indexable" data-name="indexable(t)">
+      <a href="../Indexable.html">Indexable</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Int" data-name="int">
+      <a href="../Int.html">Int</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Number" data-name="number">
+      <a href="../Number.html">Number</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Range" data-name="range(b, e)">
+      <a href="../Range.html">Range</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Slice" data-name="slice(t)">
+      <a href="../Slice.html">Slice</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/TextIO" data-name="textio">
+      <a href="../TextIO.html">TextIO</a>
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">class</span> Chem::PullParser
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Chem/PullParser.html">Chem::PullParser</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+
+
+
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>A pull parser to read a text (ASCII) document by consuming one token
+at a time.</p>
+
+<p>The parser reads line by line, which is set to an internal buffer.
+Subsequent tokens (consecutive non-whitespace characters) can be
+consumed via the <code><a href="../Chem/PullParser.html#next_token:Bytes?-instance-method">#next_token</a></code> method (although only from the
+current line). The string representation of the current token can be
+obtained via the <code><a href="../Chem/PullParser.html#str:String-instance-method">#str</a></code> methods or it can be interpreted as a
+primitive type via the specialized  <code><a href="../Chem/PullParser.html#float:Float64-instance-method">#float</a></code> and <code><a href="../Chem/PullParser.html#int:Int32-instance-method">#int</a></code> methods. It
+can be also interpreted as a custom type via the <code><a href="../Chem/PullParser.html#parse(&:Bytes-%3ET?):T?forallT-instance-method">#parse</a></code> method.
+Upon parsing issues, these methods may return <code>nil</code> or raise a
+<code><a href="../Chem/ParseException.html">ParseException</a></code> exception.</p>
+
+<p>When creating an instance, the parser must be positioned in the
+first line before consuming a token by calling <code><a href="../Chem/PullParser.html#next_line:String?-instance-method">#next_line</a></code>, using
+the yielding method <code><a href="../Chem/PullParser.html#each_line(&:String-%3E):Nil-instance-method">#each_line</a></code>, or checking for end of file via
+<code><a href="../Chem/PullParser.html#eof?:Bool-instance-method">#eof?</a></code>. Upon reading a new line, the cursor is reset and the
+current token is set to <code>nil</code>, so <code><a href="../Chem/PullParser.html#next_token:Bytes?-instance-method">#next_token</a></code> must be called
+before parsing. If the current token is not set, the parsing methods
+may return <code>nil</code> or raise an exception. Alternatively, use the
+convenience <code><a href="../Chem/PullParser.html#next_f:Float64-instance-method">#next_f</a></code>, <code><a href="../Chem/PullParser.html#next_i:Int32-instance-method">#next_i</a></code>, or <code><a href="../Chem/PullParser.html#next_s:String-instance-method">#next_s</a></code> methods that consume
+the next token and return the interpreted value.</p>
+
+<p>The <code>#next_*</code> methods always move forward into the IO or line, so
+care must be taken when calling them as invoking <code><a href="../Chem/PullParser.html#next_s?:String?-instance-method">#next_s?</a></code> twice
+will return the next two strings (if possible), not twice the same.
+For instance, calling <code><a href="../Chem/PullParser.html#next_i?:Int32?-instance-method">#next_i?</a></code> after <code><a href="../Chem/PullParser.html#next_f?:Float64?-instance-method">#next_f?</a></code> returns <code>nil</code> will
+read the next token instead of re-interpreting the current one as an
+integer. In such cases, consider using the non-advancing methods
+(<code><a href="../Chem/PullParser.html#int:Int32-instance-method">#int</a></code> instead of <code><a href="../Chem/PullParser.html#next_i:Int32-instance-method">#next_i</a></code>).</p>
+
+<p>Example:</p>
+
+<pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.<span class="k">new</span> <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.<span class="k">new</span>(<span class="s">&quot;abc def\n1234 5.6 abc\n&quot;</span>)
+pull.next_token                <span class="c"># =&gt; nil (line not read)</span>
+pull.next_line                 <span class="c"># place the parser at the first line</span>
+pull.str?                      <span class="c"># =&gt; nil (current token is nil)</span>
+pull.next_s?                   <span class="c"># =&gt; &quot;abc&quot;</span>
+pull.str?                      <span class="c"># =&gt; &quot;abc&quot; (current token was set by #next_s?)</span>
+pull.next_s?                   <span class="c"># =&gt; &quot;def&quot;</span>
+pull.next_s?                   <span class="c"># =&gt; nil (end of line)</span>
+pull.next_s                    <span class="c"># raises ParseException (no token can be consumed)</span>
+pull.next_line                 <span class="c"># place the parser at the second line</span>
+pull.next_i                    <span class="c"># =&gt; 1234</span>
+pull.next_f                    <span class="c"># =&gt; 5.6</span>
+pull.next_token                <span class="c"># =&gt; Bytes[55, 56, 57] (current token is &quot;abc&quot;)</span>
+pull.int?                      <span class="c"># =&gt; nil</span>
+pull.float?                    <span class="c"># =&gt; nil</span>
+pull.parse <span class="o">&amp;</span>.sum(<span class="o">&amp;</span>.<span class="o">+</span>(<span class="s">&#39;a&#39;</span>.ord)) <span class="c"># =&gt; 3</span>
+pull.next_token                <span class="c"># =&gt; nil (end of line)</span>
+pull.next_line                 <span class="c"># =&gt; nil (place the parser at the end of IO)</span>
+pull.next_token                <span class="c"># =&gt; nil (current line is nil)</span></code></pre>
+
+<p>Additionally, the cursor can be manually placed on the current line
+via the <code><a href="../Chem/PullParser.html#at(start:Int,count:Int):self-instance-method">#at</a></code> methods. This is useful for parsing fixed-column
+formats such as <code>#PDB</code>. The non-question variants will raise if the
+cursor is out of bounds.</p>
+
+<pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.<span class="k">new</span> <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.<span class="k">new</span>(<span class="s">&quot;abc123.45def\nABCDEF 5.16\n&quot;</span>)
+pull.next_line
+pull.at(<span class="n">3</span>, <span class="n">6</span>)     <span class="c"># returns the parser itself</span>
+pull.str          <span class="c"># =&gt; &quot;123.45&quot;</span>
+pull.float        <span class="c"># =&gt; 123.45</span>
+pull.at(<span class="n">9</span>).str    <span class="c"># =&gt; &quot;d&quot;</span>
+pull.at(<span class="n">0</span>, <span class="n">3</span>).str <span class="c"># =&gt; &quot;abc&quot;</span>
+pull.at(<span class="n">100</span>, <span class="n">5</span>)   <span class="c"># raises ParseException</span></code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/pull_parser.cr#L72" target="_blank">
+        chem/pull_parser.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+
+
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new(io:IO)-class-method" class="signature"><strong>.new</strong>(io : IO)</a>
+        
+          <div class="summary"><p>Creates a PullParser which will consume the contents of <em>io</em>.</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#at(start:Int,count:Int):self-instance-method" class="signature"><strong>#at</strong>(start : Int, count : Int) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Sets the cursor at <em>start</em> spanning <em>count</em> or less (if there aren't enough) characters in the current line.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#at(index:Int):self-instance-method" class="signature"><strong>#at</strong>(index : Int) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Sets the cursor to the character at <em>index</em> in the current line.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#at?(start:Int,count:Int):self-instance-method" class="signature"><strong>#at?</strong>(start : Int, count : Int) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Sets the cursor at <em>start</em> spanning <em>count</em> or less (if there aren't enough) characters in the current line.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#at?(index:Int):self-instance-method" class="signature"><strong>#at?</strong>(index : Int) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Sets the cursor to the character at <em>index</em> in the current line.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#char:Char-instance-method" class="signature"><strong>#char</strong> : Char</a>
+        
+          <div class="summary"><p>Returns the first character of the curren token.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#char?:Char?-instance-method" class="signature"><strong>#char?</strong> : Char?</a>
+        
+          <div class="summary"><p>Returns the first character of the curren token, or <code>nil</code> if it is not set.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#current_line:String?-instance-method" class="signature"><strong>#current_line</strong> : String?</a>
+        
+          <div class="summary"><p>Returns the current line, or <code>nil</code> if it is not set.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#each_line(&:String-%3E):Nil-instance-method" class="signature"><strong>#each_line</strong>(& : String -> ) : Nil</a>
+        
+          <div class="summary"><p>Yields each line in the enclosed IO.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#eof?:Bool-instance-method" class="signature"><strong>#eof?</strong> : Bool</a>
+        
+          <div class="summary"><p>Returns <code>true</code> at the end of file, otherwise <code>false</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#error(message:String):NoReturn-instance-method" class="signature"><strong>#error</strong>(message : String) : NoReturn</a>
+        
+          <div class="summary"><p>Raises <code><a href="../Chem/ParseException.html">ParseException</a></code> with the given message.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#float(if_blankdefault:Float64):Float64-instance-method" class="signature"><strong>#float</strong>(if_blank default : Float64) : Float64</a>
+        
+          <div class="summary"><p>Parses and returns the floating-point number represented by the current token.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#float:Float64-instance-method" class="signature"><strong>#float</strong> : Float64</a>
+        
+          <div class="summary"><p>Parses and returns the floating-point number represented by the current token.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#float?:Float64?-instance-method" class="signature"><strong>#float?</strong> : Float64?</a>
+        
+          <div class="summary"><p>Parses and returns the floating-point number represented by the current token, or <code>nil</code> if the token is not set or it is not a valid float representation.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#int(if_blankdefault:Int32):Int32-instance-method" class="signature"><strong>#int</strong>(if_blank default : Int32) : Int32</a>
+        
+          <div class="summary"><p>Parses and returns the integer represented by the current token.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#int:Int32-instance-method" class="signature"><strong>#int</strong> : Int32</a>
+        
+          <div class="summary"><p>Parses and returns the integer represented by the current token.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#int?:Int32?-instance-method" class="signature"><strong>#int?</strong> : Int32?</a>
+        
+          <div class="summary"><p>Parses and returns the integer represented by the current token, or <code>nil</code> if the token is not set or it is not a valid number.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#line:String-instance-method" class="signature"><strong>#line</strong> : String</a>
+        
+          <div class="summary"><p>Returns the current line starting at the current token if set.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#next_f:Float64-instance-method" class="signature"><strong>#next_f</strong> : Float64</a>
+        
+          <div class="summary"><p>Reads the next token in the current line, and interprets it via <code><a href="../Chem/PullParser.html#float:Float64-instance-method">#float</a></code>, which raises <code><a href="../Chem/ParseException.html">ParseException</a></code> at the end of line or if the token is an invalid representation.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#next_f?:Float64?-instance-method" class="signature"><strong>#next_f?</strong> : Float64?</a>
+        
+          <div class="summary"><p>Reads the next token in the current line, and interprets it via <code><a href="../Chem/PullParser.html#float?:Float64?-instance-method">#float?</a></code>, which returns <code>nil</code> at the end of line or if the token is an invalid representation.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#next_i:Int32-instance-method" class="signature"><strong>#next_i</strong> : Int32</a>
+        
+          <div class="summary"><p>Reads the next token in the current line, and interprets it via <code><a href="../Chem/PullParser.html#int:Int32-instance-method">#int</a></code>, which raises <code><a href="../Chem/ParseException.html">ParseException</a></code> at the end of line or if the token is an invalid representation.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#next_i?:Int32?-instance-method" class="signature"><strong>#next_i?</strong> : Int32?</a>
+        
+          <div class="summary"><p>Reads the next token in the current line, and interprets it via <code><a href="../Chem/PullParser.html#int?:Int32?-instance-method">#int?</a></code>, which returns <code>nil</code> at the end of line or if the token is an invalid representation.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#next_line:String?-instance-method" class="signature"><strong>#next_line</strong> : String?</a>
+        
+          <div class="summary"><p>Reads and returns the next line from the enclosed IO, or <code>nil</code> if called at the end of the IO.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#next_s:String-instance-method" class="signature"><strong>#next_s</strong> : String</a>
+        
+          <div class="summary"><p>Reads the next token in the current line, and interprets it via <code><a href="../Chem/PullParser.html#str:String-instance-method">#str</a></code>, which raises <code><a href="../Chem/ParseException.html">ParseException</a></code> at the end of line or if the token is an invalid representation.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#next_s?:String?-instance-method" class="signature"><strong>#next_s?</strong> : String?</a>
+        
+          <div class="summary"><p>Reads the next token in the current line, and interprets it via <code><a href="../Chem/PullParser.html#str?:String?-instance-method">#str?</a></code>, which returns <code>nil</code> at the end of line or if the token is an invalid representation.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#next_token:Bytes?-instance-method" class="signature"><strong>#next_token</strong> : Bytes?</a>
+        
+          <div class="summary"><p>Reads the next collection of consecutive non-whitespace characters in the current line and returns the corresponding bytes, or <code>nil</code> if called at the end of line.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#parse(&:Bytes-%3ET?):T?forallT-instance-method" class="signature"><strong>#parse</strong>(& : Bytes -> T?) : T? forall T</a>
+        
+          <div class="summary"><p>Yields the current token if set and returns the parsed value.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#str:String-instance-method" class="signature"><strong>#str</strong> : String</a>
+        
+          <div class="summary"><p>Returns the current token as a string.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#str?:String?-instance-method" class="signature"><strong>#str?</strong> : String?</a>
+        
+          <div class="summary"><p>Returns the current token as a string, or <code>nil</code> if it is not set.</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+<div class="methods-inherited">
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="new(io:IO)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(io : IO)
+
+        <a class="method-permalink" href="#new(io:IO)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Creates a PullParser which will consume the contents of <em>io</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/pull_parser.cr#L79" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="at(start:Int,count:Int):self-instance-method">
+      <div class="signature">
+        
+        def <strong>at</strong>(start : <a href="../Int.html">Int</a>, count : <a href="../Int.html">Int</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#at(start:Int,count:Int):self-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Sets the cursor at <em>start</em> spanning <em>count</em> or less (if there
+aren't enough) characters in the current line. Raises
+<code><a href="../Chem/ParseException.html">ParseException</a></code> if <em>start</em> is out of bounds.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/pull_parser.cr#L90" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="at(index:Int):self-instance-method">
+      <div class="signature">
+        
+        def <strong>at</strong>(index : <a href="../Int.html">Int</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#at(index:Int):self-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Sets the cursor to the character at <em>index</em> in the current line.
+Raises <code><a href="../Chem/ParseException.html">ParseException</a></code> if <em>index</em> is out of bounds.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/pull_parser.cr#L83" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="at?(start:Int,count:Int):self-instance-method">
+      <div class="signature">
+        
+        def <strong>at?</strong>(start : <a href="../Int.html">Int</a>, count : <a href="../Int.html">Int</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#at?(start:Int,count:Int):self-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Sets the cursor at <em>start</em> spanning <em>count</em> or less (if there
+aren't enough) characters in the current line. If <em>start</em> is out
+of bounds, the current token will be set to <code>nil</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/pull_parser.cr#L105" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="at?(index:Int):self-instance-method">
+      <div class="signature">
+        
+        def <strong>at?</strong>(index : <a href="../Int.html">Int</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#at?(index:Int):self-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Sets the cursor to the character at <em>index</em> in the current line.
+If <em>index</em> is out of bounds, the current token will be set to
+<code>nil</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/pull_parser.cr#L98" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="char:Char-instance-method">
+      <div class="signature">
+        
+        def <strong>char</strong> : <a href="../Char.html">Char</a>
+
+        <a class="method-permalink" href="#char:Char-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the first character of the curren token. Raises
+<code><a href="../Chem/ParseException.html">ParseException</a></code> if the token is not set.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/pull_parser.cr#L112" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="char?:Char?-instance-method">
+      <div class="signature">
+        
+        def <strong>char?</strong> : <a href="../Char.html">Char</a>?
+
+        <a class="method-permalink" href="#char?:Char?-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the first character of the curren token, or <code>nil</code> if it is
+not set.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/pull_parser.cr#L118" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="current_line:String?-instance-method">
+      <div class="signature">
+        
+        def <strong>current_line</strong> : String?
+
+        <a class="method-permalink" href="#current_line:String?-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the current line, or <code>nil</code> if it is not set.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/pull_parser.cr#L125" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="each_line(&amp;:String-&gt;):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>each_line</strong>(& : String -> ) : Nil
+
+        <a class="method-permalink" href="#each_line(&:String-%3E):Nil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Yields each line in the enclosed IO.</p>
+
+<pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.<span class="k">new</span> <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.<span class="k">new</span>(<span class="s">&quot;123 456\n789\n&quot;</span>)
+pull.each_line { <span class="o">|</span>line<span class="o">|</span> puts line }</code></pre>
+
+<p>Prints out:</p>
+
+<pre><code class="language-text">123 456
+789</code></pre>
+
+<p>Note that the current line will be also yielded if it is set.</p>
+
+<pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.<span class="k">new</span> <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.<span class="k">new</span>(<span class="s">&quot;123 456\n789\n&quot;</span>)
+pull.next_line    <span class="c"># reads and sets the current line</span>
+pull.current_line <span class="c"># =&gt; &quot;123 456&quot;</span>
+pull.each_line { <span class="o">|</span>line<span class="o">|</span> puts line }</code></pre>
+
+<p>Prints out:</p>
+
+<pre><code class="language-text">123 456
+789</code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/pull_parser.cr#L158" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="eof?:Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>eof?</strong> : Bool
+
+        <a class="method-permalink" href="#eof?:Bool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> at the end of file, otherwise <code>false</code>.</p>
+
+<p><span class="flag purple">NOTE</span>  This method attempts to read a line from the enclosed IO if
+the current line is not set, so calling <code><a href="../Chem/PullParser.html#next_line:String?-instance-method">#next_line</a></code> after this
+could inadvertently discard a line.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/pull_parser.cr#L172" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="error(message:String):NoReturn-instance-method">
+      <div class="signature">
+        
+        def <strong>error</strong>(message : String) : NoReturn
+
+        <a class="method-permalink" href="#error(message:String):NoReturn-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Raises <code><a href="../Chem/ParseException.html">ParseException</a></code> with the given message. The exception will
+hold the location of the current line and token if set.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/pull_parser.cr#L178" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="float(if_blankdefault:Float64):Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>float</strong>(if_blank default : Float64) : Float64
+
+        <a class="method-permalink" href="#float(if_blankdefault:Float64):Float64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Parses and returns the floating-point number represented by the
+current token. Returns the given default value if the token is
+blank. Raises <code><a href="../Chem/ParseException.html">ParseException</a></code> if the token is not set or it is
+not a valid float representation.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/pull_parser.cr#L198" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="float:Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>float</strong> : Float64
+
+        <a class="method-permalink" href="#float:Float64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Parses and returns the floating-point number represented by the
+current token. Raises <code><a href="../Chem/ParseException.html">ParseException</a></code> if the token is not set or
+it is not a valid float representation.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/pull_parser.cr#L190" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="float?:Float64?-instance-method">
+      <div class="signature">
+        
+        def <strong>float?</strong> : Float64?
+
+        <a class="method-permalink" href="#float?:Float64?-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Parses and returns the floating-point number represented by the
+current token, or <code>nil</code> if the token is not set or it is not a
+valid float representation.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/pull_parser.cr#L209" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="int(if_blankdefault:Int32):Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>int</strong>(if_blank default : Int32) : Int32
+
+        <a class="method-permalink" href="#int(if_blankdefault:Int32):Int32-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Parses and returns the integer represented by the current token.
+Returns the given default value if the token is blank. Raises
+<code><a href="../Chem/ParseException.html">ParseException</a></code> if the token is not set or it is not a valid
+number.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/pull_parser.cr#L237" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="int:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>int</strong> : Int32
+
+        <a class="method-permalink" href="#int:Int32-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Parses and returns the integer represented by the current token.
+Raises <code><a href="../Chem/ParseException.html">ParseException</a></code> if the token is not set or it is not a
+valid number.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/pull_parser.cr#L229" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="int?:Int32?-instance-method">
+      <div class="signature">
+        
+        def <strong>int?</strong> : Int32?
+
+        <a class="method-permalink" href="#int?:Int32?-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Parses and returns the integer represented by the current token,
+or <code>nil</code> if the token is not set or it is not a valid number.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/pull_parser.cr#L247" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="line:String-instance-method">
+      <div class="signature">
+        
+        def <strong>line</strong> : String
+
+        <a class="method-permalink" href="#line:String-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the current line starting at the current token if set. An
+empty string is returned at the end of line. Raises
+<code><a href="../Chem/ParseException.html">ParseException</a></code> at end of file.</p>
+
+<pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.<span class="k">new</span> <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.<span class="k">new</span>(<span class="s">&quot;123 456\n789\n&quot;</span>)
+pull.next_line
+<span class="c"># token is not set, returns entire line</span>
+pull.line <span class="c"># =&gt; &quot;123 456&quot;</span>
+pull.next_token
+<span class="c"># token is &quot;123&quot;, returns line starting at &quot;123&quot;</span>
+pull.line <span class="c"># =&gt; &quot;123 456&quot;</span>
+pull.next_token
+<span class="c"># token is &quot;456&quot;, returns line starting at &quot;456&quot;</span>
+pull.line <span class="c"># =&gt; &quot;456&quot;</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/pull_parser.cr#L302" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="next_f:Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>next_f</strong> : Float64
+
+        <a class="method-permalink" href="#next_f:Float64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Reads the next token in the current line, and interprets it via
+<code><a href="../Chem/PullParser.html#float:Float64-instance-method">#float</a></code>, which raises <code><a href="../Chem/ParseException.html">ParseException</a></code> at the end of
+line or if the token is an invalid representation.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/pull_parser.cr#L323" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="next_f?:Float64?-instance-method">
+      <div class="signature">
+        
+        def <strong>next_f?</strong> : Float64?
+
+        <a class="method-permalink" href="#next_f?:Float64?-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Reads the next token in the current line, and interprets it via
+<code><a href="../Chem/PullParser.html#float?:Float64?-instance-method">#float?</a></code>, which returns <code>nil</code> at the end of line or if
+the token is an invalid representation.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/pull_parser.cr#L323" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="next_i:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>next_i</strong> : Int32
+
+        <a class="method-permalink" href="#next_i:Int32-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Reads the next token in the current line, and interprets it via
+<code><a href="../Chem/PullParser.html#int:Int32-instance-method">#int</a></code>, which raises <code><a href="../Chem/ParseException.html">ParseException</a></code> at the end of
+line or if the token is an invalid representation.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/pull_parser.cr#L323" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="next_i?:Int32?-instance-method">
+      <div class="signature">
+        
+        def <strong>next_i?</strong> : Int32?
+
+        <a class="method-permalink" href="#next_i?:Int32?-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Reads the next token in the current line, and interprets it via
+<code><a href="../Chem/PullParser.html#int?:Int32?-instance-method">#int?</a></code>, which returns <code>nil</code> at the end of line or if
+the token is an invalid representation.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/pull_parser.cr#L323" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="next_line:String?-instance-method">
+      <div class="signature">
+        
+        def <strong>next_line</strong> : String?
+
+        <a class="method-permalink" href="#next_line:String?-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Reads and returns the next line from the enclosed IO, or <code>nil</code> if
+called at the end of the IO.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/pull_parser.cr#L315" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="next_s:String-instance-method">
+      <div class="signature">
+        
+        def <strong>next_s</strong> : String
+
+        <a class="method-permalink" href="#next_s:String-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Reads the next token in the current line, and interprets it via
+<code><a href="../Chem/PullParser.html#str:String-instance-method">#str</a></code>, which raises <code><a href="../Chem/ParseException.html">ParseException</a></code> at the end of
+line or if the token is an invalid representation.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/pull_parser.cr#L323" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="next_s?:String?-instance-method">
+      <div class="signature">
+        
+        def <strong>next_s?</strong> : String?
+
+        <a class="method-permalink" href="#next_s?:String?-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Reads the next token in the current line, and interprets it via
+<code><a href="../Chem/PullParser.html#str?:String?-instance-method">#str?</a></code>, which returns <code>nil</code> at the end of line or if
+the token is an invalid representation.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/pull_parser.cr#L323" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="next_token:Bytes?-instance-method">
+      <div class="signature">
+        
+        def <strong>next_token</strong> : Bytes?
+
+        <a class="method-permalink" href="#next_token:Bytes?-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Reads the next collection of consecutive non-whitespace characters
+in the current line and returns the corresponding bytes, or <code>nil</code>
+if called at the end of line.</p>
+
+<pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.<span class="k">new</span> <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.<span class="k">new</span>(<span class="s">&quot;abc def\n1234 56 789\n&quot;</span>)
+pull.next_token             <span class="c"># =&gt; nil</span>
+pull.next_line              <span class="c"># place the parser at the first line</span>
+<span class="t">String</span>.<span class="k">new</span>(pull.next_token) <span class="c"># =&gt; &quot;abc&quot;</span>
+<span class="t">String</span>.<span class="k">new</span>(pull.next_token) <span class="c"># =&gt; &quot;def&quot;</span>
+pull.next_token             <span class="c"># =&gt; nil</span>
+pull.next_line              <span class="c"># place the parser at the second line</span>
+<span class="t">String</span>.<span class="k">new</span>(pull.next_token) <span class="c"># =&gt; &quot;1234&quot;</span>
+<span class="t">String</span>.<span class="k">new</span>(pull.next_token) <span class="c"># =&gt; &quot;56&quot;</span>
+<span class="t">String</span>.<span class="k">new</span>(pull.next_token) <span class="c"># =&gt; &quot;789&quot;</span>
+pull.next_token             <span class="c"># =&gt; nil</span>
+pull.next_line              <span class="c"># place the parser at the end of IO</span>
+pull.next_token             <span class="c"># =&gt; nil</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/pull_parser.cr#L363" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="parse(&amp;:Bytes-&gt;T?):T?forallT-instance-method">
+      <div class="signature">
+        
+        def <strong>parse</strong>(& : Bytes -> T?) : T? forall T
+
+        <a class="method-permalink" href="#parse(&:Bytes-%3ET?):T?forallT-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Yields the current token if set and returns the parsed value.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/pull_parser.cr#L382" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="str:String-instance-method">
+      <div class="signature">
+        
+        def <strong>str</strong> : String
+
+        <a class="method-permalink" href="#str:String-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the current token as a string. Raises <code><a href="../Chem/ParseException.html">ParseException</a></code> if
+the token is not set.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/pull_parser.cr#L390" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="str?:String?-instance-method">
+      <div class="signature">
+        
+        def <strong>str?</strong> : String?
+
+        <a class="method-permalink" href="#str?:String?-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the current token as a string, or <code>nil</code> if it is not set.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/pull_parser.cr#L395" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+</div>
+
+</body>
+</html>
