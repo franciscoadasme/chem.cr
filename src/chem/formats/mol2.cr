@@ -91,12 +91,6 @@ module Chem::Mol2
     TAG_BONDS    = "@<TRIPOS>BOND"
     TAG_MOLECULE = "@<TRIPOS>MOLECULE"
 
-    @builder = uninitialized Structure::Builder
-    @include_charges = true
-    @n_atoms = 0
-    @n_bonds = 0
-    @title = ""
-
     def initialize(@io : IO, @sync_close : Bool = false)
       @pull = PullParser.new @io
     end
@@ -106,75 +100,61 @@ module Chem::Mol2
       skip_to_tag TAG_MOLECULE
     end
 
-    private def read_atom : Atom
-      serial = @pull.next_i
-      name = @pull.next_s
-      coords = Spatial::Vector[@pull.next_f, @pull.next_f, @pull.next_f]
-      atom_type = @pull.next_s
-      symbol = atom_type[...atom_type.index('.')] # ignore sybyl type
-      element = PeriodicTable[symbol]? || @pull.error("Unknown element")
-      if @pull.next_token
-        resid = @pull.int
-        resname = @pull.next_s
-        @builder.residue resname[..2], resid
-        charge = @pull.next_f if @include_charges
-      end
-      @builder.atom name, coords, element: element, partial_charge: (charge || 0.0)
-    end
-
-    private def read_bond : Nil
-      serial = @pull.next_i
-      i = @pull.next_i - 1
-      j = @pull.next_i - 1
-      bond_type = @pull.next_s
-      bond_order = case bond_type
-                   when "1", "2", "3"    then bond_type.to_i
-                   when "am", "ar", "du" then 1
-                   else                       0
-                   end
-      @builder.bond i, j, bond_order, aromatic: bond_type == "ar" if bond_order > 0
-    end
-
-    private def read_header : Nil
-      @pull.error("Invalid tag for structure") unless @pull.str == TAG_MOLECULE
-      @pull.next_line
-      @title = @pull.line.strip
-      @pull.next_line
-      @n_atoms = @pull.next_i
-      @n_bonds = @pull.next_i
-      @pull.next_line
-      @pull.next_line
-      @include_charges = @pull.next_s != "NO_CHARGES"
-      @pull.next_line
-    end
-
     private def decode_entry : Structure
-      skip_to_tag
+      skip_to_tag TAG_MOLECULE
+      @pull.next_line
       raise IO::EOFError.new if @pull.eof?
-      read_header
-      @builder = Structure::Builder.new guess_topology: false
-      @builder.title @title
-      @pull.each_line do
-        case @pull.str? || @pull.next_s?
-        when TAG_ATOMS
-          @n_atoms.times do
-            @pull.next_line
-            read_atom
+
+      title = @pull.line.strip
+      @pull.next_line
+      n_atoms = @pull.next_i
+      n_bonds = @pull.next_i
+      @pull.next_line
+      @pull.next_line
+      include_charges = @pull.next_s != "NO_CHARGES"
+      @pull.next_line
+
+      Structure.build(guess_topology: false) do |builder|
+        builder.title title
+        @pull.each_line do
+          case @pull.str? || @pull.next_s?
+          when TAG_ATOMS
+            n_atoms.times do
+              @pull.next_line
+              serial = @pull.next_i
+              name = @pull.next_s
+              coords = Spatial::Vector[@pull.next_f, @pull.next_f, @pull.next_f]
+              atom_type = @pull.next_s
+              symbol = atom_type[...atom_type.index('.')] # ignore sybyl type
+              element = PeriodicTable[symbol]? || @pull.error("Unknown element")
+              if @pull.next_token
+                resid = @pull.int
+                resname = @pull.next_s
+                builder.residue resname[..2], resid
+                chg = @pull.next_f if include_charges
+              end
+              builder.atom name, coords, element: element, partial_charge: (chg || 0.0)
+            end
+          when TAG_BONDS
+            n_bonds.times do
+              @pull.next_line
+              @pull.next_token # skip bond index
+              i = @pull.next_i - 1
+              j = @pull.next_i - 1
+              case bond_t = @pull.next_s
+              when "1", "2", "3"
+                builder.bond i, j, order: bond_t.to_i
+              when "ar"
+                builder.bond i, j, aromatic: true
+              when "am", "du"
+                builder.bond i, j
+              end
+            end
+          when TAG_MOLECULE
+            break
           end
-        when TAG_BONDS
-          @n_bonds.times do
-            @pull.next_line
-            read_bond
-          end
-        when TAG_MOLECULE
-          break
         end
       end
-      @builder.build
-    end
-
-    private def skip_to_tag : Nil
-      skip_to_tag TAG
     end
 
     private def skip_to_tag(tag : String) : Nil
