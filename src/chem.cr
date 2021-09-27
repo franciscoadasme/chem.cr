@@ -60,6 +60,10 @@ module Chem
       io << ':' << '\n' << '\n'
       if location = @location
         line_number, column_number, cursor_size = location
+        if cursor_size == 0
+          column_number -= 1 if column_number == 0
+          cursor_size = 1
+        end
         io << ' ' << line_number << " | " << @line << '\n'
         (column_number + line_number.to_s.bytesize + 4).times { io << ' ' }
         cursor_size.times { io << '^' }
