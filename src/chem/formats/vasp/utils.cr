@@ -34,20 +34,6 @@ module Chem::VASP
         end
       end
     end
-
-    private def skip_header : Nil
-      7.times { @pull.next_line }
-      n_atoms = 0
-      while @pull.next_token
-        n_atoms += @pull.int
-      end
-      @pull.next_line
-      @pull.next_token
-      @pull.next_line if @pull.char.in?('s', 'S')
-      @pull.next_line
-      n_atoms.times { @pull.next_line }
-      @pull.next_line
-    end
   end
 
   module GridWriter
