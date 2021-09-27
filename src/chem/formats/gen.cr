@@ -39,59 +39,42 @@ module Chem::Gen
   class Reader
     include FormatReader(Structure)
 
-    @builder = uninitialized Structure::Builder
-    @elements = [] of Element
-    @fractional = false
-    @n_atoms = 0
-    @periodic = false
-
     def initialize(@io : IO, @guess_topology : Bool = true, @sync_close : Bool = false)
       @pull = PullParser.new(@io)
-    end
-
-    private def parse_coord_type : Nil
-      @pull.next_token
-      case @pull.char
-      when 'F' then @fractional = @periodic = true
-      when 'S' then @periodic = true
-      when 'C' then @fractional = @periodic = false
-      else          @pull.error("Invalid geometry type")
-      end
-      @pull.next_line
-    end
-
-    private def parse_elements : Nil
-      @elements.clear
-      while str = @pull.next_s?
-        element = PeriodicTable[str]? || @pull.error("Unknown element")
-        @elements << element
-      end
-      @pull.next_line
-    end
-
-    private def parse_header : Nil
-      @n_atoms = @pull.next_i
-      parse_coord_type
-      parse_elements
-    end
-
-    private def read_atom : Atom
-      @pull.next_s? # skip atom number
-      ele = @elements[@pull.next_i - 1]?
-      @pull.error "Invalid element index (expected 1 to #{@elements.size})" unless ele
-      vec = Spatial::Vector.new @pull.next_f, @pull.next_f, @pull.next_f
-      @pull.next_line
-      @builder.atom ele, vec
     end
 
     private def decode_entry : Structure
       raise IO::EOFError.new if @pull.eof?
 
-      parse_header
+      n_atoms = @pull.next_i
+      fractional = periodic = false
+      case @pull.next_s
+      when "F" then fractional = periodic = true
+      when "S" then periodic = true
+      when "C" then fractional = periodic = false
+      else          @pull.error("Invalid geometry type")
+      end
+      @pull.next_line
 
-      @builder = Structure::Builder.new guess_topology: @guess_topology
-      @n_atoms.times { read_atom }
-      if @periodic
+      ele_map = [] of Element
+      while str = @pull.next_s?
+        element = PeriodicTable[str]? || @pull.error("Unknown element")
+        ele_map << element
+      end
+      @pull.next_line
+
+      structure = Structure.build(guess_topology: @guess_topology) do |builder|
+        n_atoms.times do
+          @pull.next_s? # skip atom number
+          ele = ele_map[@pull.next_i - 1]?
+          @pull.error "Invalid element index (expected 1 to #{ele_map.size})" unless ele
+          vec = Spatial::Vector.new @pull.next_f, @pull.next_f, @pull.next_f
+          @pull.next_line
+          builder.atom ele, vec
+        end
+      end
+
+      if periodic
         @pull.next_line # skip first lattice line
         vi = Spatial::Vector.new @pull.next_f, @pull.next_f, @pull.next_f
         @pull.next_line
@@ -99,11 +82,10 @@ module Chem::Gen
         @pull.next_line
         vk = Spatial::Vector.new @pull.next_f, @pull.next_f, @pull.next_f
         @pull.next_line
-        @builder.lattice vi, vj, vk
+        structure.lattice = Lattice.new vi, vj, vk
+        structure.coords.to_cartesian! if fractional
       end
 
-      structure = @builder.build
-      structure.coords.to_cartesian! if @fractional
       structure
     end
   end
