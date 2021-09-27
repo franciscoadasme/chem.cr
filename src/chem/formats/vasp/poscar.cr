@@ -79,46 +79,85 @@ module Chem::VASP::Poscar
       @pull = PullParser.new(@io)
     end
 
-    @builder = uninitialized Structure::Builder
-    @constrained = false
-    @fractional = false
-    @lattice = uninitialized Lattice
-    @scale_factor = 1.0
-    @species = [] of Element
-    @title = ""
+    private def decode_entry : Structure
+      raise IO::EOFError.new if @pull.eof?
 
-    private def read_atom : Atom
-      vec = Spatial::Vector.new @pull.next_f, @pull.next_f, @pull.next_f
-      vec = @fractional ? vec.to_cartesian(@lattice) : vec * @scale_factor
-      atom = @builder.atom @species.shift, vec
-      atom.constraint = read_constraint if @constrained
-      atom
-    end
+      title = @pull.line.strip
+      @pull.next_line
+      scale_factor = @pull.next_f
+      @pull.next_line
 
-    private def read_constraint : Constraint?
-      case {read_flag, read_flag, read_flag}
-      when {true, true, true}    then nil
-      when {false, true, true}   then Constraint::X
-      when {true, false, true}   then Constraint::Y
-      when {true, true, false}   then Constraint::Z
-      when {false, false, true}  then Constraint::XY
-      when {false, true, false}  then Constraint::XZ
-      when {true, false, false}  then Constraint::YZ
-      when {false, false, false} then Constraint::XYZ
-      else                            @pull.error "Invalid constraint flags"
+      # read lattice
+      vi = Spatial::Vector.new @pull.next_f, @pull.next_f, @pull.next_f
+      @pull.next_line
+      vj = Spatial::Vector.new @pull.next_f, @pull.next_f, @pull.next_f
+      @pull.next_line
+      vk = Spatial::Vector.new @pull.next_f, @pull.next_f, @pull.next_f
+      @pull.next_line
+      lattice = Lattice.new(vi, vj, vk) * scale_factor
+
+      # read species
+      uniq_elements = [] of Element
+      while (str = @pull.next_s?) && str[0].ascii_letter?
+        ele = PeriodicTable[str]? || @pull.error("Unknown element")
+        uniq_elements << ele
       end
-    end
+      @pull.error("Missing atom species") if uniq_elements.empty?
+      @pull.next_line
 
-    private def read_coordinate_system : Nil
+      # read atom count
+      elements = [] of Element
+      uniq_elements.map do |ele|
+        if count = @pull.next_i?
+          count.times { elements << ele }
+        else
+          @pull.error "Couldn't read number of atoms for #{ele.symbol}"
+        end
+      end
+      @pull.next_line
+
+      # read selective dynamics flag
+      constrained = false
+      @pull.next_token
+      if @pull.char.in?('s', 'S')
+        constrained = true
+        @pull.next_line
+        @pull.next_token
+      end
+
+      # read coordinate system (cartesian or direct)
+      fractional = false
       case @pull.char
       when 'C', 'c', 'K', 'k' # cartesian
-        @fractional = false
+        fractional = false
       when 'D', 'd' # direct
-        @fractional = true
+        fractional = true
       else
         @pull.error "Invalid coordinate system"
       end
       @pull.next_line
+
+      Structure.build(guess_topology: @guess_topology) do |builder|
+        builder.title title
+        builder.lattice lattice
+        elements.each do |element|
+          vec = Spatial::Vector.new @pull.next_f, @pull.next_f, @pull.next_f
+          vec = fractional ? vec.to_cartesian(lattice) : vec * scale_factor
+          atom = builder.atom element, vec
+          if constrained
+            case {read_flag, read_flag, read_flag}
+            when {false, true, true}   then atom.constraint = :x
+            when {true, false, true}   then atom.constraint = :y
+            when {true, true, false}   then atom.constraint = :z
+            when {false, false, true}  then atom.constraint = :xy
+            when {false, true, false}  then atom.constraint = :xz
+            when {true, false, false}  then atom.constraint = :yz
+            when {false, false, false} then atom.constraint = :xyz
+            end
+          end
+          @pull.next_line
+        end
+      end
     end
 
     private def read_flag : Bool
@@ -128,65 +167,6 @@ module Chem::VASP::Poscar
       when 'F' then false
       else          @pull.error "Invalid boolean flag (expected either T or F)"
       end
-    end
-
-    private def read_header : Nil
-      @title = @pull.line.strip
-      @pull.next_line
-      @scale_factor = @pull.next_f
-      @pull.next_line
-
-      vi = Spatial::Vector.new @pull.next_f, @pull.next_f, @pull.next_f
-      @pull.next_line
-      vj = Spatial::Vector.new @pull.next_f, @pull.next_f, @pull.next_f
-      @pull.next_line
-      vk = Spatial::Vector.new @pull.next_f, @pull.next_f, @pull.next_f
-      @pull.next_line
-      @lattice = Lattice.new vi, vj, vk
-      @lattice *= @scale_factor if @scale_factor != 1.0
-
-      read_species
-
-      @pull.next_token
-      if @pull.char.in?('s', 'S')
-        @constrained = true
-        @pull.next_line
-        @pull.next_token
-      end
-      read_coordinate_system
-    end
-
-    private def decode_entry : Structure
-      raise IO::EOFError.new if @pull.eof?
-      read_header
-      @builder = Structure::Builder.new guess_topology: @guess_topology
-      @builder.title @title
-      @builder.lattice @lattice
-      @species.size.times do
-        read_atom
-        @pull.next_line
-      end
-      @builder.build
-    end
-
-    private def read_species : Nil
-      elements = [] of Element
-      while (str = @pull.next_s?) && str[0].ascii_letter?
-        ele = PeriodicTable[str]? || @pull.error("Unknown element")
-        elements << ele
-      end
-      @pull.error("Missing atom species") if elements.empty?
-
-      @pull.next_line
-      @species.clear
-      elements.map do |ele|
-        if count = @pull.next_i?
-          count.times { @species << ele }
-        else
-          @pull.error "Couldn't read number of atoms for #{ele.symbol}"
-        end
-      end
-      @pull.next_line
     end
   end
 end
