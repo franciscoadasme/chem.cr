@@ -33,27 +33,66 @@ require "./chem/format_writer"
 require "./chem/formats/**"
 
 module Chem
+  # Base class for Chem errors.
   class Error < Exception; end
 
-  class ParseException < Exception
+  # Exception thrown upon parsing issues. Primarly used by `PullParser`.
+  #
+  # It can hold the location of the issue found in a text document. Call
+  # `#inspect_with_location` to print a human-friendly error showing
+  # such information.
+  #
+  # ```
+  # ex = ParseException.new(
+  #   message: "Invalid letters",
+  #   path: "path/to/file",
+  #   line: "abc def 123456 ABC DEF",
+  #   location: {247, 8, 6}
+  # )
+  # puts ex.inspect_with_location
+  # ```
+  #
+  # Prints out:
+  #
+  # ```text
+  # Found a parsing issue in path/to/file:
+  #
+  #  247 | abc def 123456 ABC DEF
+  #                ^^^^^^
+  # Error: Invalid letters
+  # ```
+  class ParseException < Error
+    # Line (if any) where the issue was found.
     getter line : String?
+    # Error location (if any). It is a triplet containing line number,
+    # column number, and cursor size where the issue is located.
     getter location : Tuple(Int32, Int32, Int32)?
+    # Path to file (if any) that produced the error.
     getter path : String?
 
+    # Creates a new exception without location.
     def initialize(@message : String); end
 
+    # Creates a new exception with location, which is a triplet
+    # containing line number, column number (starting at zero), and
+    # cursor size. The latter may be zero to represent the beginning
+    # (column number = 0) or end of line.
     def initialize(@message : String,
                    @path : String?,
                    @line : String,
                    @location : Tuple(Int32, Int32, Int32))
     end
 
+    # Returns a string representation of the error including the
+    # location.
     def inspect_with_location : String
       String.build do |io|
         inspect_with_location io
       end
     end
 
+    # Writes a string representation of the error including the location
+    # to *io*.
     def inspect_with_location(io : IO) : Nil
       io << "Found a parsing issue"
       io << " in " << @path if @path
