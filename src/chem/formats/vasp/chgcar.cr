@@ -16,9 +16,6 @@ module Chem::VASP::Chgcar
       info = read_header
       volume = info.bounds.volume
       read_array info, &./(volume)
-    rescue ex : ParseException
-      puts ex.inspect_with_location
-      raise ex
     end
   end
 
