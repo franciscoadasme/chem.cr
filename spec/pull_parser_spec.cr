@@ -53,7 +53,7 @@ describe Chem::PullParser do
 
   describe "#char" do
     it "raises on missing char" do
-      expect_raises(Chem::ParseException, "End of line") do
+      expect_raises(Chem::ParseException, "Empty token") do
         parser_for("123").char
       end
     end

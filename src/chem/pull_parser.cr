@@ -26,7 +26,7 @@ module Chem
     end
 
     def char : Char
-      char? || error("End of line")
+      char? || error("Empty token")
     end
 
     def char? : Char?
