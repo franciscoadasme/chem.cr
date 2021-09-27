@@ -53,6 +53,22 @@ module Chem
   # pull.next_line                 # => nil (place the parser at the end of IO)
   # pull.next_token                # => nil (current line is nil)
   # ```
+  #
+  # Additionally, the cursor can be manually placed on the current line
+  # via the `#at` methods. This is useful for parsing fixed-column
+  # formats such as `#PDB`. The non-question variants will raise if the
+  # cursor is out of bounds.
+  #
+  # ```
+  # pull = PullParser.new IO::Memory.new("abc123.45def\nABCDEF 5.16\n")
+  # pull.next_line
+  # pull.at(3, 6)     # returns the parser itself
+  # pull.str          # => "123.45"
+  # pull.float        # => 123.45
+  # pull.at(9).str    # => "d"
+  # pull.at(0, 3).str # => "abc"
+  # pull.at(100, 5)   # raises ParseException
+  # ```
   class PullParser
     @buffer : Bytes = Bytes.empty
     @line : String?
