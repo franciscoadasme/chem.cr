@@ -806,11 +806,6 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Int" data-name="int">
-      <a href="Int.html">Int</a>
-      
-    </li>
-  
   <li class=" " data-id="chem.cr/Number" data-name="number">
       <a href="Number.html">Number</a>
       
@@ -818,16 +813,6 @@
   
   <li class=" " data-id="chem.cr/Range" data-name="range(b, e)">
       <a href="Range.html">Range</a>
-      
-    </li>
-  
-  <li class=" " data-id="chem.cr/Slice" data-name="slice(t)">
-      <a href="Slice.html">Slice</a>
-      
-    </li>
-  
-  <li class=" " data-id="chem.cr/TextIO" data-name="textio">
-      <a href="TextIO.html">TextIO</a>
       
     </li>
   
@@ -938,14 +923,14 @@ set <span class="o">&lt;&lt;</span> <span class="n">3</span></code></pre>
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/core_ext/array.cr#L1" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/8ba098e5334f7fff4735eda0e20c988423851553/src/chem/core_ext/array.cr#L1" target="_blank">
         chem/core_ext/array.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/register_format.cr#L270" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/8ba098e5334f7fff4735eda0e20c988423851553/src/chem/register_format.cr#L270" target="_blank">
         chem/register_format.cr
       </a>
     
@@ -1220,7 +1205,7 @@ set <span class="o">&lt;&lt;</span> <span class="n">3</span></code></pre>
     <div class="entry-detail" id="from_mol2(input:IO|Path|String,indexes:Array(Int)):self-class-method">
       <div class="signature">
         
-        def self.<strong>from_mol2</strong>(input : IO | Path | String, indexes : <a href="Array.html">Array</a>(<a href="Int.html">Int</a>)) : <span class="k">self</span>
+        def self.<strong>from_mol2</strong>(input : IO | Path | String, indexes : <a href="Array.html">Array</a>(Int)) : <span class="k">self</span>
 
         <a class="method-permalink" href="#from_mol2(input:IO%7CPath%7CString,indexes:Array(Int)):self-class-method">#</a>
       </div>
@@ -1235,7 +1220,7 @@ format. Arguments are fowarded to <code><a href="Chem/Mol2/Reader.html#open(io:I
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8ba098e5334f7fff4735eda0e20c988423851553/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1258,7 +1243,7 @@ Arguments are fowarded to <code><a href="Chem/Mol2/Reader.html#open(io:IO,sync_c
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8ba098e5334f7fff4735eda0e20c988423851553/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1281,7 +1266,7 @@ Arguments are fowarded to <code><a href="Chem/PDB/Reader.html#open(io:IO,alt_loc
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8ba098e5334f7fff4735eda0e20c988423851553/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1289,7 +1274,7 @@ Arguments are fowarded to <code><a href="Chem/PDB/Reader.html#open(io:IO,alt_loc
     <div class="entry-detail" id="from_pdb(input:IO|Path|String,indexes:Array(Int),alt_loc:Char?=nil,chains:Enumerable(Char)|String|Nil=nil,guess_topology:Bool=true,het:Bool=true):self-class-method">
       <div class="signature">
         
-        def self.<strong>from_pdb</strong>(input : IO | Path | String, indexes : <a href="Array.html">Array</a>(<a href="Int.html">Int</a>), alt_loc : <a href="Char.html">Char</a>? = <span class="n">nil</span>, chains : Enumerable(<a href="Char.html">Char</a>) | String | Nil = <span class="n">nil</span>, guess_topology : Bool = <span class="n">true</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span>
+        def self.<strong>from_pdb</strong>(input : IO | Path | String, indexes : <a href="Array.html">Array</a>(Int), alt_loc : <a href="Char.html">Char</a>? = <span class="n">nil</span>, chains : Enumerable(<a href="Char.html">Char</a>) | String | Nil = <span class="n">nil</span>, guess_topology : Bool = <span class="n">true</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span>
 
         <a class="method-permalink" href="#from_pdb(input:IO%7CPath%7CString,indexes:Array(Int),alt_loc:Char?=nil,chains:Enumerable(Char)%7CString%7CNil=nil,guess_topology:Bool=true,het:Bool=true):self-class-method">#</a>
       </div>
@@ -1304,7 +1289,7 @@ format. Arguments are fowarded to <code><a href="Chem/PDB/Reader.html#open(io:IO
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8ba098e5334f7fff4735eda0e20c988423851553/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1327,7 +1312,7 @@ Arguments are fowarded to <code><a href="Chem/XYZ/Reader.html#open(io:IO,guess_t
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8ba098e5334f7fff4735eda0e20c988423851553/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1335,7 +1320,7 @@ Arguments are fowarded to <code><a href="Chem/XYZ/Reader.html#open(io:IO,guess_t
     <div class="entry-detail" id="from_xyz(input:IO|Path|String,indexes:Array(Int),guess_topology:Bool=true):self-class-method">
       <div class="signature">
         
-        def self.<strong>from_xyz</strong>(input : IO | Path | String, indexes : <a href="Array.html">Array</a>(<a href="Int.html">Int</a>), guess_topology : Bool = <span class="n">true</span>) : <span class="k">self</span>
+        def self.<strong>from_xyz</strong>(input : IO | Path | String, indexes : <a href="Array.html">Array</a>(Int), guess_topology : Bool = <span class="n">true</span>) : <span class="k">self</span>
 
         <a class="method-permalink" href="#from_xyz(input:IO%7CPath%7CString,indexes:Array(Int),guess_topology:Bool=true):self-class-method">#</a>
       </div>
@@ -1350,7 +1335,7 @@ format. Arguments are fowarded to <code><a href="Chem/XYZ/Reader.html#open(io:IO
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8ba098e5334f7fff4735eda0e20c988423851553/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1372,7 +1357,7 @@ Raises <code>ArgumentError</code> if <em>format</em> is invalid.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8ba098e5334f7fff4735eda0e20c988423851553/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1395,7 +1380,7 @@ it is write only.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8ba098e5334f7fff4735eda0e20c988423851553/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1418,7 +1403,7 @@ Raises <code>ArgumentError</code> if the file format cannot be determined.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8ba098e5334f7fff4735eda0e20c988423851553/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1440,7 +1425,7 @@ Raises <code>ArgumentError</code> if the file format cannot be determined.</p>
     <div class="entry-detail" id="sort(range:Range(Int,Int)):self-instance-method">
       <div class="signature">
         
-        def <strong>sort</strong>(range : <a href="Range.html">Range</a>(<a href="Int.html">Int</a>, <a href="Int.html">Int</a>)) : <span class="k">self</span>
+        def <strong>sort</strong>(range : <a href="Range.html">Range</a>(Int, Int)) : <span class="k">self</span>
 
         <a class="method-permalink" href="#sort(range:Range(Int,Int)):self-instance-method">#</a>
       </div>
@@ -1448,7 +1433,7 @@ Raises <code>ArgumentError</code> if the file format cannot be determined.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/core_ext/array.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8ba098e5334f7fff4735eda0e20c988423851553/src/chem/core_ext/array.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1456,7 +1441,7 @@ Raises <code>ArgumentError</code> if the file format cannot be determined.</p>
     <div class="entry-detail" id="sort(range:Range(Int,Int),&amp;block:T,T-&gt;Int32?):self-instance-method">
       <div class="signature">
         
-        def <strong>sort</strong>(range : <a href="Range.html">Range</a>(<a href="Int.html">Int</a>, <a href="Int.html">Int</a>), &block : T, T -> Int32?) : <span class="k">self</span>
+        def <strong>sort</strong>(range : <a href="Range.html">Range</a>(Int, Int), &block : T, T -> Int32?) : <span class="k">self</span>
 
         <a class="method-permalink" href="#sort(range:Range(Int,Int),&block:T,T-%3EInt32?):self-instance-method">#</a>
       </div>
@@ -1464,7 +1449,7 @@ Raises <code>ArgumentError</code> if the file format cannot be determined.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/core_ext/array.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8ba098e5334f7fff4735eda0e20c988423851553/src/chem/core_ext/array.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1472,7 +1457,7 @@ Raises <code>ArgumentError</code> if the file format cannot be determined.</p>
     <div class="entry-detail" id="sort!(range:Range(Int,Int)):self-instance-method">
       <div class="signature">
         
-        def <strong>sort!</strong>(range : <a href="Range.html">Range</a>(<a href="Int.html">Int</a>, <a href="Int.html">Int</a>)) : <span class="k">self</span>
+        def <strong>sort!</strong>(range : <a href="Range.html">Range</a>(Int, Int)) : <span class="k">self</span>
 
         <a class="method-permalink" href="#sort!(range:Range(Int,Int)):self-instance-method">#</a>
       </div>
@@ -1480,7 +1465,7 @@ Raises <code>ArgumentError</code> if the file format cannot be determined.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/core_ext/array.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8ba098e5334f7fff4735eda0e20c988423851553/src/chem/core_ext/array.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1488,7 +1473,7 @@ Raises <code>ArgumentError</code> if the file format cannot be determined.</p>
     <div class="entry-detail" id="sort!(range:Range(Int,Int),&amp;block:T,T-&gt;Int32?):self-instance-method">
       <div class="signature">
         
-        def <strong>sort!</strong>(range : <a href="Range.html">Range</a>(<a href="Int.html">Int</a>, <a href="Int.html">Int</a>), &block : T, T -> Int32?) : <span class="k">self</span>
+        def <strong>sort!</strong>(range : <a href="Range.html">Range</a>(Int, Int), &block : T, T -> Int32?) : <span class="k">self</span>
 
         <a class="method-permalink" href="#sort!(range:Range(Int,Int),&block:T,T-%3EInt32?):self-instance-method">#</a>
       </div>
@@ -1496,7 +1481,7 @@ Raises <code>ArgumentError</code> if the file format cannot be determined.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/core_ext/array.cr#L18" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8ba098e5334f7fff4735eda0e20c988423851553/src/chem/core_ext/array.cr#L18" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1518,7 +1503,7 @@ format. Arguments are fowarded to <code><a href="Chem/Mol2/Writer.html#open(io:I
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8ba098e5334f7fff4735eda0e20c988423851553/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1541,7 +1526,7 @@ the <code><a href="Chem/Mol2.html">Chem::Mol2</a></code> file format. Arguments 
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8ba098e5334f7fff4735eda0e20c988423851553/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1564,7 +1549,7 @@ the <code><a href="Chem/PDB.html">Chem::PDB</a></code> file format. Arguments ar
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8ba098e5334f7fff4735eda0e20c988423851553/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1586,7 +1571,7 @@ format. Arguments are fowarded to <code><a href="Chem/PDB/Writer.html#open(io:IO
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8ba098e5334f7fff4735eda0e20c988423851553/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1608,7 +1593,7 @@ format. Arguments are fowarded to <code><a href="Chem/XYZ/Writer.html#open(io:IO
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8ba098e5334f7fff4735eda0e20c988423851553/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1631,7 +1616,7 @@ the <code><a href="Chem/XYZ.html">Chem::XYZ</a></code> file format. Arguments ar
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8ba098e5334f7fff4735eda0e20c988423851553/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1653,7 +1638,7 @@ the <code><a href="Chem/XYZ.html">Chem::XYZ</a></code> file format. Arguments ar
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8ba098e5334f7fff4735eda0e20c988423851553/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1676,7 +1661,7 @@ read only.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8ba098e5334f7fff4735eda0e20c988423851553/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1699,7 +1684,7 @@ based on the filename (see <code><a href="Chem/Format.html#from_filename(filenam
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8ba098e5334f7fff4735eda0e20c988423851553/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>

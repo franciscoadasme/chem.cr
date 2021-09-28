@@ -806,11 +806,6 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Int" data-name="int">
-      <a href="../../../Int.html">Int</a>
-      
-    </li>
-  
   <li class=" " data-id="chem.cr/Number" data-name="number">
       <a href="../../../Number.html">Number</a>
       
@@ -818,16 +813,6 @@
   
   <li class=" " data-id="chem.cr/Range" data-name="range(b, e)">
       <a href="../../../Range.html">Range</a>
-      
-    </li>
-  
-  <li class=" " data-id="chem.cr/Slice" data-name="slice(t)">
-      <a href="../../../Slice.html">Slice</a>
-      
-    </li>
-  
-  <li class=" " data-id="chem.cr/TextIO" data-name="textio">
-      <a href="../../../TextIO.html">TextIO</a>
       
     </li>
   
@@ -887,7 +872,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/formats/vasp/poscar.cr#L101" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/8ba098e5334f7fff4735eda0e20c988423851553/src/chem/formats/vasp/poscar.cr#L101" target="_blank">
         chem/formats/vasp/poscar.cr
       </a>
     
@@ -909,12 +894,12 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new(io:IO,orderele_order:Array(Element)?=nil,fractional:Bool=false,wrap:Bool=false,sync_close:Bool=false)-class-method" class="signature"><strong>.new</strong>(io : IO, order ele_order : Array(Element)? = <span class="n">nil</span>, fractional : Bool = <span class="n">false</span>, wrap : Bool = <span class="n">false</span>, sync_close : Bool = <span class="n">false</span>)</a>
+        <a href="#new(io:IO,order:Array(Element)%7CArray(String)%7CNil=nil,fractional:Bool=false,wrap:Bool=false,sync_close:Bool=false)-class-method" class="signature"><strong>.new</strong>(io : IO, order : Array(Element) | Array(String) | Nil = <span class="n">nil</span>, fractional : Bool = <span class="n">false</span>, wrap : Bool = <span class="n">false</span>, sync_close : Bool = <span class="n">false</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new(path:Path%7CString,orderele_order:Array(Element)?=nil,fractional:Bool=false,wrap:Bool=false):self-class-method" class="signature"><strong>.new</strong>(path : Path | String, order ele_order : Array(Element)? = <span class="n">nil</span>, fractional : Bool = <span class="n">false</span>, wrap : Bool = <span class="n">false</span>) : <span class="k">self</span></a>
+        <a href="#new(path:Path%7CString,order:Array(Element)%7CArray(String)%7CNil=nil,fractional:Bool=false,wrap:Bool=false):self-class-method" class="signature"><strong>.new</strong>(path : Path | String, order : Array(Element) | Array(String) | Nil = <span class="n">nil</span>, fractional : Bool = <span class="n">false</span>, wrap : Bool = <span class="n">false</span>) : <span class="k">self</span></a>
         
           <div class="summary"><p>Creates a new object from the given <em>path</em>.</p></div>
         
@@ -935,14 +920,14 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#open(io:IO,orderele_order:Array(Element)?=nil,fractional:Bool=false,wrap:Bool=false,sync_close:Bool=false,&:self-%3E)-class-method" class="signature"><strong>.open</strong>(io : IO, order ele_order : Array(Element)? = <span class="n">nil</span>, fractional : Bool = <span class="n">false</span>, wrap : Bool = <span class="n">false</span>, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )</a>
+        <a href="#open(io:IO,order:Array(Element)%7CArray(String)%7CNil=nil,fractional:Bool=false,wrap:Bool=false,sync_close:Bool=false,&:self-%3E)-class-method" class="signature"><strong>.open</strong>(io : IO, order : Array(Element) | Array(String) | Nil = <span class="n">nil</span>, fractional : Bool = <span class="n">false</span>, wrap : Bool = <span class="n">false</span>, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )</a>
         
           <div class="summary"><p>Creates a new object from the given <em>io</em>, yields it to the given block, and closes it at the end.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#open(path:Path%7CString,orderele_order:Array(Element)?=nil,fractional:Bool=false,wrap:Bool=false,&:self-%3E)-class-method" class="signature"><strong>.open</strong>(path : Path | String, order ele_order : Array(Element)? = <span class="n">nil</span>, fractional : Bool = <span class="n">false</span>, wrap : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )</a>
+        <a href="#open(path:Path%7CString,order:Array(Element)%7CArray(String)%7CNil=nil,fractional:Bool=false,wrap:Bool=false,&:self-%3E)-class-method" class="signature"><strong>.open</strong>(path : Path | String, order : Array(Element) | Array(String) | Nil = <span class="n">nil</span>, fractional : Bool = <span class="n">false</span>, wrap : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )</a>
         
           <div class="summary"><p>Creates a new object from the given <em>path</em> yields it to the given block, and closes it at the end.</p></div>
         
@@ -1058,28 +1043,28 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(io:IO,orderele_order:Array(Element)?=nil,fractional:Bool=false,wrap:Bool=false,sync_close:Bool=false)-class-method">
+    <div class="entry-detail" id="new(io:IO,order:Array(Element)|Array(String)|Nil=nil,fractional:Bool=false,wrap:Bool=false,sync_close:Bool=false)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(io : IO, order ele_order : <a href="../../../Array.html">Array</a>(<a href="../../../Chem/Element.html">Element</a>)? = <span class="n">nil</span>, fractional : Bool = <span class="n">false</span>, wrap : Bool = <span class="n">false</span>, sync_close : Bool = <span class="n">false</span>)
+        def self.<strong>new</strong>(io : IO, order : <a href="../../../Array.html">Array</a>(<a href="../../../Chem/Element.html">Element</a>) | <a href="../../../Array.html">Array</a>(String) | Nil = <span class="n">nil</span>, fractional : Bool = <span class="n">false</span>, wrap : Bool = <span class="n">false</span>, sync_close : Bool = <span class="n">false</span>)
 
-        <a class="method-permalink" href="#new(io:IO,orderele_order:Array(Element)?=nil,fractional:Bool=false,wrap:Bool=false,sync_close:Bool=false)-class-method">#</a>
+        <a class="method-permalink" href="#new(io:IO,order:Array(Element)%7CArray(String)%7CNil=nil,fractional:Bool=false,wrap:Bool=false,sync_close:Bool=false)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/23395eee8d3e639513dc39198bfb7bafdd927e52/src/chem/formats/vasp/poscar.cr#L104" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8ba098e5334f7fff4735eda0e20c988423851553/src/chem/formats/vasp/poscar.cr#L106" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="new(path:Path|String,orderele_order:Array(Element)?=nil,fractional:Bool=false,wrap:Bool=false):self-class-method">
+    <div class="entry-detail" id="new(path:Path|String,order:Array(Element)|Array(String)|Nil=nil,fractional:Bool=false,wrap:Bool=false):self-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(path : Path | String, order ele_order : <a href="../../../Array.html">Array</a>(<a href="../../../Chem/Element.html">Element</a>)? = <span class="n">nil</span>, fractional : Bool = <span class="n">false</span>, wrap : Bool = <span class="n">false</span>) : <span class="k">self</span>
+        def self.<strong>new</strong>(path : Path | String, order : <a href="../../../Array.html">Array</a>(<a href="../../../Chem/Element.html">Element</a>) | <a href="../../../Array.html">Array</a>(String) | Nil = <span class="n">nil</span>, fractional : Bool = <span class="n">false</span>, wrap : Bool = <span class="n">false</span>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#new(path:Path%7CString,orderele_order:Array(Element)?=nil,fractional:Bool=false,wrap:Bool=false):self-class-method">#</a>
+        <a class="method-permalink" href="#new(path:Path%7CString,order:Array(Element)%7CArray(String)%7CNil=nil,fractional:Bool=false,wrap:Bool=false):self-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1111,12 +1096,12 @@ constant.</p>
     Class Method Detail
   </h2>
   
-    <div class="entry-detail" id="open(io:IO,orderele_order:Array(Element)?=nil,fractional:Bool=false,wrap:Bool=false,sync_close:Bool=false,&amp;:self-&gt;)-class-method">
+    <div class="entry-detail" id="open(io:IO,order:Array(Element)|Array(String)|Nil=nil,fractional:Bool=false,wrap:Bool=false,sync_close:Bool=false,&amp;:self-&gt;)-class-method">
       <div class="signature">
         
-        def self.<strong>open</strong>(io : IO, order ele_order : <a href="../../../Array.html">Array</a>(<a href="../../../Chem/Element.html">Element</a>)? = <span class="n">nil</span>, fractional : Bool = <span class="n">false</span>, wrap : Bool = <span class="n">false</span>, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )
+        def self.<strong>open</strong>(io : IO, order : <a href="../../../Array.html">Array</a>(<a href="../../../Chem/Element.html">Element</a>) | <a href="../../../Array.html">Array</a>(String) | Nil = <span class="n">nil</span>, fractional : Bool = <span class="n">false</span>, wrap : Bool = <span class="n">false</span>, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )
 
-        <a class="method-permalink" href="#open(io:IO,orderele_order:Array(Element)?=nil,fractional:Bool=false,wrap:Bool=false,sync_close:Bool=false,&:self-%3E)-class-method">#</a>
+        <a class="method-permalink" href="#open(io:IO,order:Array(Element)%7CArray(String)%7CNil=nil,fractional:Bool=false,wrap:Bool=false,sync_close:Bool=false,&:self-%3E)-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1132,12 +1117,12 @@ are forwarded to the constructor.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="open(path:Path|String,orderele_order:Array(Element)?=nil,fractional:Bool=false,wrap:Bool=false,&amp;:self-&gt;)-class-method">
+    <div class="entry-detail" id="open(path:Path|String,order:Array(Element)|Array(String)|Nil=nil,fractional:Bool=false,wrap:Bool=false,&amp;:self-&gt;)-class-method">
       <div class="signature">
         
-        def self.<strong>open</strong>(path : Path | String, order ele_order : <a href="../../../Array.html">Array</a>(<a href="../../../Chem/Element.html">Element</a>)? = <span class="n">nil</span>, fractional : Bool = <span class="n">false</span>, wrap : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )
+        def self.<strong>open</strong>(path : Path | String, order : <a href="../../../Array.html">Array</a>(<a href="../../../Chem/Element.html">Element</a>) | <a href="../../../Array.html">Array</a>(String) | Nil = <span class="n">nil</span>, fractional : Bool = <span class="n">false</span>, wrap : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )
 
-        <a class="method-permalink" href="#open(path:Path%7CString,orderele_order:Array(Element)?=nil,fractional:Bool=false,wrap:Bool=false,&:self-%3E)-class-method">#</a>
+        <a class="method-permalink" href="#open(path:Path%7CString,order:Array(Element)%7CArray(String)%7CNil=nil,fractional:Bool=false,wrap:Bool=false,&:self-%3E)-class-method">#</a>
       </div>
       
         <div class="doc">
