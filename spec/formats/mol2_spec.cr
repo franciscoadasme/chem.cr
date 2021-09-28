@@ -227,7 +227,7 @@ describe Chem::Mol2::Writer do
           4    1    5 2
 
       @<TRIPOS>SUBSTRUCTURE
-         1 SO445       1 RESIDUE  1 C SO4  4\n
+         1 SO445        1 RESIDUE  * C SO4\n
 
       EOS
   end

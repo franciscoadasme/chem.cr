@@ -100,7 +100,19 @@ module Chem::Mol2
         obj.is_a?(Structure) ? obj.n_residues : obj.each_atom.map(&.residue).uniq.sum { 1 }
       section "atom" { obj.each_atom { |atom| write atom } }
       section "bond" { obj.bonds.each_with_index { |bond, i| write bond, i + 1 } }
-      section "substructure" { obj.each_residue { |res| write res } } if obj.is_a?(Structure)
+      section "substructure" do
+        obj.each_residue do |residue|
+          root_atom = residue.protein? ? residue.dig("CA") : residue.atoms[0]
+          @io.printf "%4d %-8s %5d %-8s %1s %1s %3s\n",
+            residue_index(residue),
+            "#{residue.name[..2]}#{residue.number}", # subst_name
+            atom_index(root_atom),                   # root atom
+            "RESIDUE",                               # subst_type
+            residue.protein? ? 1 : '*',              # dict_type
+            residue.chain.id,                        # chain
+            residue.name[..2]                        # sub_type
+        end
+      end
       if (structure = obj.as?(Structure)) && (cell = structure.lattice)
         section "crysin" do
           formatl "%.3f %.3f %.3f %.2f %.2f %.2f 1 1",
@@ -148,19 +160,6 @@ module Chem::Mol2
         atom_index(bond.first),
         atom_index(bond.second),
         bond.order
-    end
-
-    private def write(residue : Residue)
-      @io.printf "%4d %-3s%-4d %5d %-8s %1d %1s %3s %2d\n",
-        residue_index(residue),
-        residue.name[..2],
-        residue.number,
-        1,         # root_atom
-        "RESIDUE", # subst_type
-        1,         # dict_type
-        residue.chain.id,
-        residue.name[..2],
-        residue.bonds.size # inter_bonds
     end
 
     private def write_header(title, n_atoms, n_bonds, n_residues)
