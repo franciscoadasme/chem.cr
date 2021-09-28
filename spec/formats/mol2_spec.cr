@@ -220,4 +220,16 @@ describe Chem::Mol2::Writer do
 
       EOS
   end
+
+  it "raises if structure has no bonds" do
+    structure = load_file "tac.mol2"
+    structure.atoms.each do |atom|
+      atom.bonded_atoms.each do |other|
+        atom.bonds.delete other
+      end
+    end
+    expect_raises(Chem::Error, "Structure has no bonds") do
+      structure.to_mol2
+    end
+  end
 end

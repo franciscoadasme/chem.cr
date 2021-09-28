@@ -91,6 +91,7 @@ module Chem::Mol2
 
     protected def encode_entry(obj : AtomCollection) : Nil
       reset_index
+      raise Error.new("Structure has no bonds") if obj.bonds.empty?
       write_header obj.is_a?(Structure) ? obj.title : "",
         obj.n_atoms,
         obj.bonds.size,
