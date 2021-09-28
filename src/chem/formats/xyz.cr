@@ -16,7 +16,7 @@ module Chem::XYZ
         builder.title @pull.line.strip
         @pull.next_line
         n_atoms.times do
-          ele = PeriodicTable[@pull.next_s]? || parse_exception("Unknown element")
+          ele = PeriodicTable[@pull.next_s]? || @pull.error("Unknown element")
           vec = Spatial::Vector.new @pull.next_f, @pull.next_f, @pull.next_f
           builder.atom ele, vec
           @pull.next_line

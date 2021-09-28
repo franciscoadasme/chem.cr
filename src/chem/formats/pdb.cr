@@ -66,7 +66,7 @@ module Chem::PDB
 
     def read_header : Structure::Experiment
       decode_header unless @header_decoded
-      @header || parse_exception("Empty header")
+      @header || @pull.error("Empty header")
     end
 
     private def alt_loc(residue : Residue, id : Char, resname : String) : AlternateLocation
