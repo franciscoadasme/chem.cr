@@ -224,42 +224,7 @@ describe Chem::Mol2::Writer do
   it "writes lattice" do
     structure = load_file("waters.xyz")
     structure.lattice = Chem::Lattice.new S[40.961, 18.65, 22.52], 90, 90.77, 120
-    structure.to_mol2.should eq <<-EOS
-      @<TRIPOS>MOLECULE
-      Three waters
-          9    6   3
-      UNKNOWN
-      USER_CHARGES
-
-      @<TRIPOS>ATOM
-          1 O       2.3360    3.4480    7.7810 O      1 HOH1     0.0000
-          2 H1      1.4460    3.4850    7.3150 H      1 HOH1     0.0000
-          3 H2      2.9770    2.9400    7.2340 H      1 HOH1     0.0000
-          4 O      11.7760   11.5900    8.5100 O      2 HOH2     0.0000
-          5 H1     12.7560   11.5880    8.3790 H      2 HOH2     0.0000
-          6 H2     11.3950   11.0310    7.7870 H      2 HOH2     0.0000
-          7 O       6.0150   11.2340    7.7710 O      3 HOH3     0.0000
-          8 H1      6.4400   12.0400    7.3940 H      3 HOH3     0.0000
-          9 H2      6.7380   10.8500    8.3210 H      3 HOH3     0.0000
-
-      @<TRIPOS>BOND
-          1    1    2 1
-          2    1    3 1
-          3    4    5 1
-          4    4    6 1
-          5    7    8 1
-          6    7    9 1
-
-      @<TRIPOS>SUBSTRUCTURE
-         1 HOH1        1 RESIDUE  1 A HOH  2
-         2 HOH2        1 RESIDUE  1 A HOH  2
-         3 HOH3        1 RESIDUE  1 A HOH  2
-
-      @<TRIPOS>CRYSIN
-      40.961 18.650 22.520 90.00 90.77 120.00 1 1
-
-
-      EOS
+    structure.to_mol2.should eq File.read("spec/data/mol2/water_in_box.mol2")
   end
 
   it "raises if structure has no bonds" do
