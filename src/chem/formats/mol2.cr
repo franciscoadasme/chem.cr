@@ -4,22 +4,17 @@ module Chem::Mol2
     include FormatReader(Structure)
     include FormatReader::MultiEntry(Structure)
 
-    TAG          = "@<TRIPOS>"
-    TAG_ATOMS    = "@<TRIPOS>ATOM"
-    TAG_BONDS    = "@<TRIPOS>BOND"
-    TAG_MOLECULE = "@<TRIPOS>MOLECULE"
-
     def initialize(@io : IO, @sync_close : Bool = false)
       @pull = PullParser.new @io
     end
 
     def skip_entry : Nil
-      @pull.next_line if @pull.next_s == TAG_MOLECULE
-      skip_to_tag TAG_MOLECULE
+      @pull.next_line if @pull.next_s == "@<TRIPOS>MOLECULE"
+      skip_to_tag "@<TRIPOS>MOLECULE"
     end
 
     private def decode_entry : Structure
-      skip_to_tag TAG_MOLECULE
+      skip_to_tag "@<TRIPOS>MOLECULE"
       @pull.next_line
       raise IO::EOFError.new if @pull.eof?
 
@@ -36,7 +31,7 @@ module Chem::Mol2
         builder.title title
         @pull.each_line do
           case @pull.str? || @pull.next_s?
-          when TAG_ATOMS
+          when "@<TRIPOS>ATOM"
             n_atoms.times do
               @pull.next_line
               serial = @pull.next_i
@@ -53,7 +48,7 @@ module Chem::Mol2
               end
               builder.atom name, coords, element: element, partial_charge: (chg || 0.0)
             end
-          when TAG_BONDS
+          when "@<TRIPOS>BOND"
             n_bonds.times do
               @pull.next_line
               @pull.next_token # skip bond index
@@ -68,7 +63,7 @@ module Chem::Mol2
                 builder.bond i, j
               end
             end
-          when TAG_MOLECULE
+          when "@<TRIPOS>MOLECULE"
             break
           end
         end
@@ -77,7 +72,7 @@ module Chem::Mol2
 
     private def skip_to_tag(tag : String) : Nil
       @pull.each_line do
-        break if (@pull.str? || @pull.next_s?).try(&.starts_with?(tag))
+        break if (@pull.str? || @pull.next_s?) == tag
       end
     end
   end
