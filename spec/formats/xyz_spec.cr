@@ -38,6 +38,24 @@ describe Chem::XYZ::Reader do
     structures.map(&.atoms[1].z).should eq [1.2, 1.4]
   end
 
+  it "parses a XYZ file with atomic numbers" do
+    io = IO::Memory.new <<-EOS
+      9
+      Three waters
+      8   2.336   3.448   7.781
+      1   1.446   3.485   7.315
+      1   2.977   2.940   7.234
+      8  11.776  11.590   8.510
+      1  12.756  11.588   8.379
+      1  11.395  11.031   7.787
+      8   6.015  11.234   7.771
+      1   6.440  12.040   7.394
+      1   6.738  10.850   8.321
+      EOS
+    structure = Structure.from_xyz io
+    structure.atoms.map(&.element.symbol).should eq %w(O H H O H H O H H)
+  end
+
   it "fails when structure index is invalid" do
     expect_raises IndexError do
       Array(Chem::Structure).from_xyz "spec/data/xyz/coo.trj.xyz", indexes: [5]
