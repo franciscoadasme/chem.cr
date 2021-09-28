@@ -99,6 +99,12 @@ module Chem::Mol2
       section "atom" { obj.each_atom { |atom| write atom } }
       section "bond" { obj.bonds.each_with_index { |bond, i| write bond, i + 1 } }
       section "substructure" { obj.each_residue { |res| write res } } if obj.is_a?(Structure)
+      if (structure = obj.as?(Structure)) && (cell = structure.lattice)
+        section "crysin" do
+          formatl "%.3f %.3f %.3f %.2f %.2f %.2f 1 1",
+            cell.a, cell.b, cell.c, cell.alpha, cell.beta, cell.gamma
+        end
+      end
     end
 
     private def atom_index(atom : Atom) : Int32
