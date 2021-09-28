@@ -131,8 +131,7 @@ describe Chem::VASP::Poscar::Writer do
   end
 
   it "writes a structure in the specified element order" do
-    elements = ["O", "Na", "Cl"].map { |ele| PeriodicTable[ele] }
-    structure.to_poscar(order: elements).should eq <<-EOS
+    structure.to_poscar(order: %w(O Na Cl)).should eq <<-EOS
       NaCl-O-NaCl
          1.00000000000000
           40.0000000000000000    0.0000000000000000    0.0000000000000000
@@ -220,8 +219,7 @@ describe Chem::VASP::Poscar::Writer do
   end
 
   it "does not fail when element order has extra elements (#22)" do
-    elements = %w(O Na Cl P).map { |ele| PeriodicTable[ele] }
-    structure.to_poscar(order: elements).should eq <<-EOS
+    structure.to_poscar(order: %w(O Na Cl P)).should eq <<-EOS
       NaCl-O-NaCl
          1.00000000000000
           40.0000000000000000    0.0000000000000000    0.0000000000000000

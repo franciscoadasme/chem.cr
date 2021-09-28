@@ -101,11 +101,15 @@ module Chem::VASP::Poscar
   class Writer
     include FormatWriter(Structure)
 
+    @ele_order : Array(Element)?
+
     def initialize(@io : IO,
-                   order @ele_order : Array(Element)? = nil,
+                   order : Array(Element) | Array(String) | Nil = nil,
                    @fractional : Bool = false,
                    @wrap : Bool = false,
                    @sync_close : Bool = false)
+      order = order.map { |sym| PeriodicTable[sym] } if order.is_a?(Array(String))
+      @ele_order = order
     end
 
     protected def encode_entry(structure : Structure) : Nil
