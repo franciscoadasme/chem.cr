@@ -68,7 +68,7 @@ module Chem
     # column number, and cursor size where the issue is located.
     getter location : Tuple(Int32, Int32, Int32)?
     # Path to file (if any) that produced the error.
-    getter path : String?
+    getter source_file : String?
 
     # Creates a new exception without location.
     def initialize(@message : String); end
@@ -78,7 +78,7 @@ module Chem
     # cursor size. The latter may be zero to represent the beginning
     # (column number = 0) or end of line.
     def initialize(@message : String,
-                   @path : String?,
+                   @source_file : String?,
                    @line : String,
                    @location : Tuple(Int32, Int32, Int32))
     end
@@ -95,7 +95,7 @@ module Chem
     # to *io*.
     def inspect_with_location(io : IO) : Nil
       io << "Found a parsing issue"
-      io << " in " << @path if @path
+      io << " in " << @source_file if @source_file
       io << ':' << '\n' << '\n'
       if location = @location
         line_number, column_number, cursor_size = location

@@ -5,7 +5,7 @@ describe Chem::ParseException do
     it "shows the location" do
       ex = Chem::ParseException.new(
         message: "Invalid experimental method",
-        path: "spec/data/pdb/1crn.pdb",
+        source_file: "spec/data/pdb/1crn.pdb",
         line: "EXPDTA    X-RAY DIFFRACTION",
         location: {552, 10, 5}
       )
@@ -21,7 +21,7 @@ describe Chem::ParseException do
     it "shows the location without a file" do
       ex = Chem::ParseException.new(
         message: "Invalid experimental method",
-        path: nil,
+        source_file: nil,
         line: "EXPDTA    X-RAY DIFFRACTION",
         location: {552, 10, 5}
       )
@@ -37,7 +37,7 @@ describe Chem::ParseException do
     it "shows the location at the beginning of line" do
       ex = Chem::ParseException.new(
         message: "Empty content",
-        path: "path/to/file",
+        source_file: "path/to/file",
         line: "abcdef 123456 ABCDEF",
         location: {1025, 0, 0}
       )
@@ -53,7 +53,7 @@ describe Chem::ParseException do
     it "shows the location at the end of line" do
       ex = Chem::ParseException.new(
         message: "Empty content",
-        path: "path/to/file",
+        source_file: "path/to/file",
         line: "abcdef 123456 ABCDEF",
         location: {6839, 20, 0}
       )
@@ -69,7 +69,7 @@ describe Chem::ParseException do
     it "shows the location of a character" do
       ex = Chem::ParseException.new(
         message: "Invalid character",
-        path: "path/to/file",
+        source_file: "path/to/file",
         line: "abcdef 123456 ABCDEF",
         location: {1952567, 14, 1}
       )

@@ -154,7 +154,7 @@ describe Chem::PullParser do
         pull.at(3, 3)
         pull.error "Custom message"
       end
-      ex.path.should be_nil
+      ex.source_file.should be_nil
       ex.line.should eq "ABC DEF GHI"
       ex.location.should eq({2, 3, 3})
     end
@@ -169,7 +169,7 @@ describe Chem::PullParser do
         pull.next_token
         pull.error("Custom message")
       end
-      ex.path.should eq file.path
+      ex.source_file.should eq file.path
       ex.line.should eq "abc def"
       ex.location.should eq({1, 0, 3})
       file.close
@@ -184,7 +184,7 @@ describe Chem::PullParser do
         # cursor not set (no token)
         pull.error "Custom message"
       end
-      ex.path.should be_nil
+      ex.source_file.should be_nil
       ex.line.should eq "abc def"
       ex.location.should eq({1, 0, 0})
     end
@@ -196,7 +196,7 @@ describe Chem::PullParser do
         while pull.next_token; end # end of line
         pull.error "Custom message"
       end
-      ex.path.should be_nil
+      ex.source_file.should be_nil
       ex.line.should eq "abc def"
       ex.location.should eq({1, 7, 0})
     end
