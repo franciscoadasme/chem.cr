@@ -63,6 +63,13 @@ module Chem::Mol2
                 builder.bond i, j
               end
             end
+          when "@<TRIPOS>CRYSIN"
+            @pull.next_line
+            size = Spatial::Size.new(@pull.next_f, @pull.next_f, @pull.next_f)
+            alpha = @pull.next_f
+            beta = @pull.next_f
+            gamma = @pull.next_f
+            builder.lattice Lattice.new(size, alpha, beta, gamma)
           when "@<TRIPOS>MOLECULE"
             break
           end
