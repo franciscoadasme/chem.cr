@@ -5,11 +5,6 @@ class Chem::Protein::Stride < Chem::Protein::SecondaryStructureCalculator
 
     @pdbid = "0000"
 
-    def initialize(@io : IO,
-                   @source_path : String | Path | Nil = nil,
-                   @sync_close : Bool = false)
-    end
-
     protected def encode_entry(structure : Structure) : Nil
       check_open
       @pdbid = structure.experiment.try(&.pdb_accession.upcase) || "0000"
@@ -137,7 +132,7 @@ class Chem::Protein::Stride < Chem::Protein::SecondaryStructureCalculator
     private def summary(structure : Structure)
       title "Secondary structure summary"
       structure.each_chain do |chain|
-        record "CHN", "%s %c", @source_path, chain.id
+        record "CHN", "%s %c", structure.source_file, chain.id
         seq chain.residues
       end
       2.times { spacer }

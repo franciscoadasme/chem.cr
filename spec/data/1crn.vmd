@@ -16,7 +16,7 @@ color change rgb 20 0.165 0.616 0.561
 color Structure "Coil" 6
 color change rgb 6 0.784 0.784 0.784
 color Display Background white
-mol new pdb/1crn.pdb
+mol new 1crn.pdb
 mol delrep top top
 mol representation NewCartoon
 mol color Structure

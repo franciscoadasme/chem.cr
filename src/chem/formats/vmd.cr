@@ -3,14 +3,9 @@ module Chem::VMD
   class Writer
     include FormatWriter(Structure)
 
-    def initialize(@io : IO,
-                   @source_path : String | Path | Nil = nil,
-                   @sync_close : Bool = false)
-    end
-
     protected def encode_entry(structure : Structure) : Nil
       check_open
-      header
+      header structure.source_file
       structure.each_secondary_structure do |residues, sec|
         ch = residues[0].chain.id
         first = residues[0].number
@@ -20,7 +15,7 @@ module Chem::VMD
       end
     end
 
-    private def header : Nil
+    private def header(source_file : Path?) : Nil
       @io.puts <<-EOS
         display resetview
         color Structure "Alpha Helix" 29
@@ -41,7 +36,7 @@ module Chem::VMD
         color change rgb 6 #{seccolor(:none).join ' '}
         color Display Background white
         EOS
-      @io.puts "mol new #{@source_path}" if @source_path
+      @io.puts "mol new #{source_file}" if source_file
       @io.puts <<-EOS
         mol delrep top top
         mol representation NewCartoon

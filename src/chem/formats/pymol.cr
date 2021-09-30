@@ -28,14 +28,9 @@ module Chem::PyMOL
       Protein::SecondaryStructure::Polyproline           => "pp",
     }
 
-    def initialize(@io : IO,
-                   @source_path : String | Path | Nil = nil,
-                   @sync_close : Bool = false)
-    end
-
     protected def encode_entry(structure : Structure) : Nil
       check_open
-      header
+      header structure.source_file
       structure.each_secondary_structure do |residues, sec|
         next unless code = CODES[sec]?
         ch = residues[0].chain.id
@@ -47,8 +42,8 @@ module Chem::PyMOL
       end
     end
 
-    private def header
-      @io.puts "load #{@source_path}" if @source_path
+    private def header(source_file : Path?)
+      @io.puts "load #{source_file}" if source_file
       @io.puts <<-EOS
         set cartoon_discrete_colors, on
         hide everything
