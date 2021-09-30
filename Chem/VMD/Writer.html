@@ -872,7 +872,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/865ccca6922fb56efdd8c316a57077b828ef7f5a/src/chem/formats/vmd.cr#L3" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/240be0b1b2e30f9f2759003b7efb44bc1358e3cf/src/chem/formats/vmd.cr#L3" target="_blank">
         chem/formats/vmd.cr
       </a>
     
@@ -894,12 +894,14 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new(io:IO,source_path:String%7CPath%7CNil=nil,sync_close:Bool=false)-class-method" class="signature"><strong>.new</strong>(io : IO, source_path : String | Path | Nil = <span class="n">nil</span>, sync_close : Bool = <span class="n">false</span>)</a>
+        <a href="#new(io:IO,sync_close:Bool=false)-class-method" class="signature"><strong>.new</strong>(io : IO, sync_close : Bool = <span class="n">false</span>)</a>
+        
+          <div class="summary"><p>Creates a new object from the given <em>io</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new(path:Path%7CString,source_path:String%7CPath%7CNil=nil):self-class-method" class="signature"><strong>.new</strong>(path : Path | String, source_path : String | Path | Nil = <span class="n">nil</span>) : <span class="k">self</span></a>
+        <a href="#new(path:Path%7CString):self-class-method" class="signature"><strong>.new</strong>(path : Path | String) : <span class="k">self</span></a>
         
           <div class="summary"><p>Creates a new object from the given <em>path</em>.</p></div>
         
@@ -920,14 +922,14 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#open(io:IO,source_path:String%7CPath%7CNil=nil,sync_close:Bool=false,&:self-%3E)-class-method" class="signature"><strong>.open</strong>(io : IO, source_path : String | Path | Nil = <span class="n">nil</span>, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )</a>
+        <a href="#open(io:IO,sync_close:Bool=false,&:self-%3E)-class-method" class="signature"><strong>.open</strong>(io : IO, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )</a>
         
           <div class="summary"><p>Creates a new object from the given <em>io</em>, yields it to the given block, and closes it at the end.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#open(path:Path%7CString,source_path:String%7CPath%7CNil=nil,&:self-%3E)-class-method" class="signature"><strong>.open</strong>(path : Path | String, source_path : String | Path | Nil = <span class="n">nil</span>, & : <span class="k">self</span> -> )</a>
+        <a href="#open(path:Path%7CString,&:self-%3E)-class-method" class="signature"><strong>.open</strong>(path : Path | String, & : <span class="k">self</span> -> )</a>
         
           <div class="summary"><p>Creates a new object from the given <em>path</em> yields it to the given block, and closes it at the end.</p></div>
         
@@ -1043,28 +1045,31 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(io:IO,source_path:String|Path|Nil=nil,sync_close:Bool=false)-class-method">
+    <div class="entry-detail" id="new(io:IO,sync_close:Bool=false)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(io : IO, source_path : String | Path | Nil = <span class="n">nil</span>, sync_close : Bool = <span class="n">false</span>)
+        def self.<strong>new</strong>(io : IO, sync_close : Bool = <span class="n">false</span>)
 
-        <a class="method-permalink" href="#new(io:IO,source_path:String%7CPath%7CNil=nil,sync_close:Bool=false)-class-method">#</a>
+        <a class="method-permalink" href="#new(io:IO,sync_close:Bool=false)-class-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Creates a new object from the given <em>io</em>.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/865ccca6922fb56efdd8c316a57077b828ef7f5a/src/chem/formats/vmd.cr#L6" target="_blank">View source</a>]
-        
       </div>
     </div>
   
-    <div class="entry-detail" id="new(path:Path|String,source_path:String|Path|Nil=nil):self-class-method">
+    <div class="entry-detail" id="new(path:Path|String):self-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(path : Path | String, source_path : String | Path | Nil = <span class="n">nil</span>) : <span class="k">self</span>
+        def self.<strong>new</strong>(path : Path | String) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#new(path:Path%7CString,source_path:String%7CPath%7CNil=nil):self-class-method">#</a>
+        <a class="method-permalink" href="#new(path:Path%7CString):self-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1096,12 +1101,12 @@ constant.</p>
     Class Method Detail
   </h2>
   
-    <div class="entry-detail" id="open(io:IO,source_path:String|Path|Nil=nil,sync_close:Bool=false,&amp;:self-&gt;)-class-method">
+    <div class="entry-detail" id="open(io:IO,sync_close:Bool=false,&amp;:self-&gt;)-class-method">
       <div class="signature">
         
-        def self.<strong>open</strong>(io : IO, source_path : String | Path | Nil = <span class="n">nil</span>, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )
+        def self.<strong>open</strong>(io : IO, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )
 
-        <a class="method-permalink" href="#open(io:IO,source_path:String%7CPath%7CNil=nil,sync_close:Bool=false,&:self-%3E)-class-method">#</a>
+        <a class="method-permalink" href="#open(io:IO,sync_close:Bool=false,&:self-%3E)-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1117,12 +1122,12 @@ are forwarded to the constructor.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="open(path:Path|String,source_path:String|Path|Nil=nil,&amp;:self-&gt;)-class-method">
+    <div class="entry-detail" id="open(path:Path|String,&amp;:self-&gt;)-class-method">
       <div class="signature">
         
-        def self.<strong>open</strong>(path : Path | String, source_path : String | Path | Nil = <span class="n">nil</span>, & : <span class="k">self</span> -> )
+        def self.<strong>open</strong>(path : Path | String, & : <span class="k">self</span> -> )
 
-        <a class="method-permalink" href="#open(path:Path%7CString,source_path:String%7CPath%7CNil=nil,&:self-%3E)-class-method">#</a>
+        <a class="method-permalink" href="#open(path:Path%7CString,&:self-%3E)-class-method">#</a>
       </div>
       
         <div class="doc">
