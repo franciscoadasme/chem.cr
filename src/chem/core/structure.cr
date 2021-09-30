@@ -16,13 +16,13 @@ module Chem
 
     delegate :[], :[]?, to: @chain_table
 
-    def self.build(guess_topology : Bool = true, &) : self
-      builder = Structure::Builder.new guess_topology: guess_topology
     def initialize(source_file : Path | String | Nil = nil)
       source_file = Path.new(source_file) if source_file.is_a?(String)
       @source_file = source_file.try(&.expand)
     end
 
+    def self.build(*args, **options, &) : self
+      builder = Structure::Builder.new *args, **options
       with builder yield builder
       builder.build
     end

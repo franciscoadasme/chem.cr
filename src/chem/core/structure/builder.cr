@@ -9,15 +9,16 @@ module Chem
     @residue : Residue?
     @structure : Structure
 
-    def initialize(structure : Structure? = nil, @guess_topology : Bool = true)
-      if structure
-        @structure = structure
-        structure.each_chain { |chain| @chain = chain }
-        @chain.try &.each_residue { |residue| @residue = residue }
-        @atom_serial = structure.each_atom.max_of?(&.serial) || 0
-      else
-        @structure = Structure.new
-      end
+    def initialize(*args, @guess_topology : Bool = true, **options)
+      @structure = Structure.new **options
+    end
+
+    def initialize(structure : Structure)
+      @structure = structure
+      structure.each_chain { |chain| @chain = chain }
+      @chain.try &.each_residue { |residue| @residue = residue }
+      @atom_serial = structure.each_atom.max_of?(&.serial) || 0
+      @guess_topology = true
     end
 
     def atom(coords : Spatial::Vector, **options) : Atom
