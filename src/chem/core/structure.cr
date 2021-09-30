@@ -11,12 +11,18 @@ module Chem
     property experiment : Structure::Experiment?
     property lattice : Lattice?
     property sequence : Protein::Sequence?
+    getter source_file : Path?
     property title : String = ""
 
     delegate :[], :[]?, to: @chain_table
 
     def self.build(guess_topology : Bool = true, &) : self
       builder = Structure::Builder.new guess_topology: guess_topology
+    def initialize(source_file : Path | String | Nil = nil)
+      source_file = Path.new(source_file) if source_file.is_a?(String)
+      @source_file = source_file.try(&.expand)
+    end
+
       with builder yield builder
       builder.build
     end
@@ -49,7 +55,7 @@ module Chem
     # other.dig('A', 23, "OG").partial_charge             # => 0.0
     # ```
     def clone : self
-      structure = Structure.new
+      structure = Structure.new @source_file
       structure.biases.concat @biases
       structure.experiment = @experiment
       structure.lattice = @lattice
