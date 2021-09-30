@@ -32,6 +32,7 @@ describe Chem::VASP::Locpot do
     reader = Chem::VASP::Locpot::Reader.new "spec/data/vasp/LOCPOT"
     structure = reader.read_attached
     structure.should be_a Chem::Structure
+    structure.source_file.should eq Path["spec/data/vasp/LOCPOT"].expand
     structure.n_atoms.should eq 2
     structure.atoms.map(&.element.symbol).should eq %w(Li C)
     structure.atoms[0].coords.should eq V.zero

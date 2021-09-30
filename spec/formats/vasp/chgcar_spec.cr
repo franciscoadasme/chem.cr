@@ -21,6 +21,7 @@ describe Chem::VASP::Chgcar do
     reader = Chem::VASP::Chgcar::Reader.new "spec/data/vasp/CHGCAR"
     structure = reader.read_attached
     structure.should be_a Chem::Structure
+    structure.source_file.should eq Path["spec/data/vasp/CHGCAR"].expand
     structure.n_atoms.should eq 1
     structure.atoms.map(&.element.symbol).should eq %w(O)
     structure.atoms[0].coords.should eq V.zero

@@ -19,7 +19,9 @@ module Chem::Cube
     end
 
     protected def decode_attached : Structure
-      Structure.build do |builder|
+      Structure.build(
+        source_file: (file = @io).is_a?(File) ? file.path : nil,
+      ) do |builder|
         @n_atoms.times do
           builder.atom \
             element: (PeriodicTable[@pull.next_i]? || @pull.error("Unknown element")),
