@@ -12,19 +12,28 @@ module Chem::Spatial
 
     getter bounds : Bounds
     getter dim : Dimensions
+    getter source_file : Path?
 
     @buffer : Pointer(Float64)
 
     delegate includes?, origin, volume, to: @bounds
 
-    def initialize(@dim : Dimensions, @bounds : Bounds)
+    def initialize(@dim : Dimensions,
+                   @bounds : Bounds,
+                   source_file : String | Path | Nil = nil)
       check_dim
       @buffer = Pointer(Float64).malloc size
+      source_file = Path.new(source_file) if source_file.is_a?(String)
+      @source_file = source_file.try(&.expand)
     end
 
-    def initialize(@dim : Dimensions, @bounds : Bounds, initial_value : Float64)
+    def initialize(@dim : Dimensions,
+                   @bounds : Bounds, initial_value : Float64,
+                   source_file : String | Path | Nil = nil)
       check_dim
       @buffer = Pointer(Float64).malloc size, initial_value
+      source_file = Path.new(source_file) if source_file.is_a?(String)
+      @source_file = source_file.try(&.expand)
     end
 
     def self.[](ni : Int, nj : Int, nk : Int) : self
@@ -66,16 +75,19 @@ module Chem::Spatial
     #   end
     # end
     # ```
-    def self.build(info : Info, & : Pointer(Float64), Int32 ->) : self
-      grid = empty_like info
+    def self.build(info : Info,
+                   source_file : String | Path | Nil = nil,
+                   & : Pointer(Float64), Int32 ->) : self
+      grid = new info.dim, info.bounds, source_file
       yield grid.to_unsafe, grid.size
       grid
     end
 
     def self.build(dim : Dimensions,
                    bounds : Bounds,
-                   &block : Pointer(Float64), Int32 ->) : self
-      grid = new dim, bounds
+                   source_file : String | Path | Nil = nil,
+                   & : Pointer(Float64), Int32 ->) : self
+      grid = new dim, bounds, source_file
       yield grid.to_unsafe, grid.size
       grid
     end
@@ -108,8 +120,9 @@ module Chem::Spatial
 
     def self.new(dim : Dimensions,
                  bounds : Bounds,
+                 source_file : String | Path | Nil = nil,
                  &block : Location -> Number)
-      new(dim, bounds).map_with_loc! do |_, loc|
+      new(dim, bounds, source_file).map_with_loc! do |_, loc|
         (yield loc).to_f
       end
     end
