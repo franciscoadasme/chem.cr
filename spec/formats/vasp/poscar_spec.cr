@@ -4,6 +4,7 @@ describe Chem::VASP::Poscar do
   describe ".parse" do
     it "parses a basic file" do
       st = load_file "basic.poscar"
+      st.source_file.should eq Path["spec/data/poscar/basic.poscar"].expand
       st.n_atoms.should eq 49
 
       st.atoms.count(&.element.symbol.==("C")).should eq 14
@@ -30,18 +31,21 @@ describe Chem::VASP::Poscar do
 
     it "parses a file with direct coordinates" do
       st = load_file "direct.poscar"
+      st.source_file.should eq Path["spec/data/poscar/direct.poscar"].expand
       st.atoms[0].coords.should eq Vector.origin
       st.atoms[1].coords.should be_close Vector[1.0710, 1.6065, 1.2495], 1e-15
     end
 
     it "parses a file with scaled Cartesian coordinates" do
       st = load_file "cartesian.poscar"
+      st.source_file.should eq Path["spec/data/poscar/cartesian.poscar"].expand
       st.atoms[0].coords.should eq Vector.origin
       st.atoms[1].coords.should be_close Vector[0.8925, 0.8925, 0.8925], 1e-16
     end
 
     it "parses a file with selective dynamics" do
       st = load_file "selective_dynamics.poscar"
+      st.source_file.should eq Path["spec/data/poscar/selective_dynamics.poscar"].expand
       st.atoms[0].constraint.should eq Constraint::Z
       st.atoms[1].constraint.should eq Constraint::XYZ
       st.atoms[2].constraint.should eq Constraint::Z

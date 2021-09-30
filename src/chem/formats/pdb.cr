@@ -226,7 +226,10 @@ module Chem::PDB
     private def decode_entry : Structure
       @pull.next_line if @pull.at(0, 6).str == "MODEL "
 
-      @builder = Structure::Builder.new guess_topology: @guess_topology
+      @builder = Structure::Builder.new(
+        guess_topology: @guess_topology,
+        source_file: (file = @io).is_a?(File) ? file.path : nil,
+      )
       @builder.title @pdb_title
       @builder.lattice @pdb_lattice
       @builder.expt @header

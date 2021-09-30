@@ -9,6 +9,7 @@ describe Chem::XYZ::Reader do
                "H", "H", "O", "H", "H"]
 
     structure = load_file "acama.xyz", topology: :none
+    structure.source_file.should eq Path["spec/data/xyz/acama.xyz"].expand
     structure.title.should eq "Ala-Cys-Ala-Met-Ala"
     structure.n_atoms.should eq 61
     structure.atoms.map(&.element.symbol).should eq symbols
@@ -24,6 +25,7 @@ describe Chem::XYZ::Reader do
     structures.map(&.n_atoms).should eq [3, 3, 3, 3]
     structures.map(&.atoms[1].z).should eq [1.159076, 1.2, 1.3, 1.4]
     structures.each do |structure|
+      structure.source_file.should eq Path["spec/data/xyz/coo.trj.xyz"].expand
       structure.atoms.map(&.element.symbol).should eq ["C", "O", "O"]
     end
   end

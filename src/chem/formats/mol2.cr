@@ -27,7 +27,10 @@ module Chem::Mol2
       include_charges = @pull.next_s != "NO_CHARGES"
       @pull.next_line
 
-      Structure.build(guess_topology: false) do |builder|
+      Structure.build(
+        guess_topology: false,
+        source_file: (file = @io).is_a?(File) ? file.path : nil,
+      ) do |builder|
         builder.title title
         @pull.each_line do
           case @pull.str? || @pull.next_s?

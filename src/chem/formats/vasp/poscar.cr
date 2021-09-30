@@ -65,7 +65,10 @@ module Chem::VASP::Poscar
       end
       @pull.next_line
 
-      Structure.build(guess_topology: @guess_topology) do |builder|
+      Structure.build(
+        guess_topology: @guess_topology,
+        source_file: (file = @io).is_a?(File) ? file.path : nil,
+      ) do |builder|
         builder.title title
         builder.lattice lattice
         elements.each do |element|

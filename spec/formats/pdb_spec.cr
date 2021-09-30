@@ -5,6 +5,7 @@ describe Chem::PDB do
   describe ".parse" do
     it "parses a (real) PDB file" do
       st = load_file "1h1s.pdb"
+      st.source_file.should eq Path["spec/data/pdb/1h1s.pdb"].expand
       st.n_atoms.should eq 9701
       st.formal_charge.should eq -44
 
@@ -35,6 +36,7 @@ describe Chem::PDB do
 
     it "parses a PDB file" do
       st = load_file "simple.pdb"
+      st.source_file.should eq Path["spec/data/pdb/simple.pdb"].expand
       st.experiment.should be_nil
       st.title.should eq "Glutamate"
       st.n_atoms.should eq 13
@@ -268,6 +270,7 @@ describe Chem::PDB do
       st_list.size.should eq 4
       xs = {5.606, 7.212, 5.408, 22.055}
       st_list.zip(xs) do |st, x|
+        st.source_file.should eq Path["spec/data/pdb/models.pdb"].expand
         st.n_atoms.should eq 5
         st.atoms.map(&.serial).should eq (1..5).to_a
         st.atoms.map(&.name).should eq ["N", "CA", "C", "O", "CB"]

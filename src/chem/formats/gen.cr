@@ -27,7 +27,10 @@ module Chem::Gen
       end
       @pull.next_line
 
-      structure = Structure.build(guess_topology: @guess_topology) do |builder|
+      structure = Structure.build(
+        guess_topology: @guess_topology,
+        source_file: (file = @io).is_a?(File) ? file.path : nil,
+      ) do |builder|
         n_atoms.times do
           @pull.next_s? # skip atom number
           ele = ele_map[@pull.next_i - 1]?

@@ -3,6 +3,7 @@ require "../spec_helper"
 describe Chem::Mol2::Reader do
   it "parses a Mol2 file" do
     structure = load_file "benzene.mol2"
+    structure.source_file.should eq Path["spec/data/mol2/benzene.mol2"].expand
     structure.title.should eq "benzene"
     structure.residues[0].name.should eq "BEN"
 
@@ -34,6 +35,7 @@ describe Chem::Mol2::Reader do
     symbols = atom_names.map { |name| PeriodicTable[name[0]].symbol }
 
     structure = load_file "minimal.mol2"
+    structure.source_file.should eq Path["spec/data/mol2/minimal.mol2"].expand
     structure.title.should eq "Histidine"
 
     atoms = structure.atoms
@@ -54,6 +56,7 @@ describe Chem::Mol2::Reader do
     ary.size.should eq 12
 
     structure = ary.first
+    structure.source_file.should eq Path["spec/data/mol2/molecules.mol2"].expand
     atoms = structure.atoms
     atoms[0].name.should eq "N1"
     atoms[0].element.nitrogen?.should be_true

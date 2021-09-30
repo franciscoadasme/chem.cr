@@ -10,7 +10,10 @@ module Chem::XYZ
 
     protected def decode_entry : Structure
       raise IO::EOFError.new if @pull.eof?
-      Structure.build(@guess_topology) do |builder|
+      Structure.build(
+        guess_topology: @guess_topology,
+        source_file: (file = @io).is_a?(File) ? file.path : nil,
+      ) do |builder|
         n_atoms = @pull.next_i
         @pull.next_line
         builder.title @pull.line.strip
