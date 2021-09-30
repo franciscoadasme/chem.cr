@@ -179,21 +179,21 @@ describe Chem::PDB do
 
     it "parses secondary structure information" do
       st = load_file "1crn.pdb"
-      st.residues[0].dssp.should eq 'E'
-      st.residues[1].dssp.should eq 'E'
-      st.residues[3].dssp.should eq 'E'
-      st.residues[4].dssp.should eq '0'
-      st.residues[5].dssp.should eq '0'
-      st.residues[6].dssp.should eq 'H'
-      st.residues[18].dssp.should eq 'H'
-      st.residues[19].dssp.should eq '0'
-      st.residues[31].dssp.should eq 'E'
-      st.residues[-1].dssp.should eq '0'
+      st.residues[0].sec.code.should eq 'E'
+      st.residues[1].sec.code.should eq 'E'
+      st.residues[3].sec.code.should eq 'E'
+      st.residues[4].sec.code.should eq '0'
+      st.residues[5].sec.code.should eq '0'
+      st.residues[6].sec.code.should eq 'H'
+      st.residues[18].sec.code.should eq 'H'
+      st.residues[19].sec.code.should eq '0'
+      st.residues[31].sec.code.should eq 'E'
+      st.residues[-1].sec.code.should eq '0'
     end
 
     it "parses secondary structure information with insertion codes" do
       st = load_file "secondary_structure_inscode.pdb"
-      st.residues.map(&.dssp).should eq "HHHHHH000000EEEHH000".chars
+      st.residues.map(&.sec.code).should eq "HHHHHH000000EEEHH000".chars
     end
 
     it "parses secondary structure information when sheet type is missing" do

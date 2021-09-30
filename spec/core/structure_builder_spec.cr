@@ -257,7 +257,7 @@ describe Chem::Structure::Builder do
       secondary_structure({'B', 2, nil}, {'B', 2, nil}, :beta_strand)
     end
 
-    structure.each_residue.map(&.dssp).to_a.should eq ['H', 'H', '0', '0', 'E']
+    structure.each_residue.map(&.sec.code).to_a.should eq ['H', 'H', '0', '0', 'E']
   end
 
   describe "#kekulize" do

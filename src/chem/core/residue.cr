@@ -395,10 +395,6 @@ module Chem
       self[name]?
     end
 
-    def dssp : Char
-      @sec.code
-    end
-
     def each_atom : Iterator(Atom)
       @atoms.each
     end
