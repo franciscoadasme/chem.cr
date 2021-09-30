@@ -335,10 +335,10 @@ describe Chem::Residue do
     end
   end
 
-  describe "#next" do
+  describe "#succ" do
     context "given a periodic peptide" do
       it "returns a residue for the last residue" do
-        residues = load_file("hlx_gly.poscar").residues.map &.next
+        residues = load_file("hlx_gly.poscar").residues.map &.succ
         residues.map(&.try(&.number)).should eq (2..13).to_a + [1]
       end
     end

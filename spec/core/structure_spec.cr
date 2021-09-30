@@ -135,8 +135,8 @@ describe Chem::Structure do
 
       chains[0].residues[0].pred.should be_nil
       chains[0].residues[3].pred.try(&.name).should eq "GLY"
-      chains[0].residues[3].next.try(&.name).should eq "ILE"
-      chains[0].residues[-1].next.should be_nil
+      chains[0].residues[3].succ.try(&.name).should eq "ILE"
+      chains[0].residues[-1].succ.should be_nil
     end
 
     it "renumbers residues of a periodic peptide" do
@@ -144,7 +144,7 @@ describe Chem::Structure do
 
       structure.each_residue.cons(2, reuse: true).each do |(a, b)|
         a["C"].bonded?(b["N"]).should be_true
-        a.next.should eq b
+        a.succ.should eq b
         b.pred.should eq a
       end
     end

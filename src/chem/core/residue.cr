@@ -460,7 +460,7 @@ module Chem
     # Note that when multiple residues can be connected to the same
     # residue (e.g., branched polymers), it returns the first residue
     # among them.
-    def next(strict : Bool = true, use_numbering : Bool = true) : Residue?
+    def succ(strict : Bool = true, use_numbering : Bool = true) : Residue?
       if bond_t = type.try(&.link_bond)
         residues = bonded_residues bond_t
         residues = bonded_residues bond_t, strict: false if residues.empty? && !strict
@@ -529,7 +529,7 @@ module Chem
       if (n1 = self["N"]?) &&
          (ca = self["CA"]?) &&
          (c = self["C"]?) &&
-         (n2 = self.next.try(&.[]?("N")))
+         (n2 = succ.try(&.[]?("N")))
         Spatial.dihedral n1, ca, c, n2, structure.lattice
       end
     end

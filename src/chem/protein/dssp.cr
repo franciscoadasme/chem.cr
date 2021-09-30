@@ -59,8 +59,8 @@ module Chem::Protein
     private def alpha_angle(index : Int) : Float64
       if (j = res(index)["CA"]?) &&
          (i = res(index).pred.try(&.["CA"]?)) &&
-         (k = res(index).next.try(&.["CA"]?)) &&
-         (l = res(index).next.try(&.next).try(&.["CA"]?))
+         (k = res(index).succ.try(&.["CA"]?)) &&
+         (l = res(index).succ.try(&.succ).try(&.["CA"]?))
         Spatial.dihedral i, j, k, l
       else
         360.0

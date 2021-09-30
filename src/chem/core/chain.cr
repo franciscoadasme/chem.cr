@@ -144,7 +144,7 @@ module Chem
         while residue && residue.in?(residues)
           residue.number = (num += 1)
           residues.delete residue
-          residue = residue.next(strict: false, use_numbering: false) ||
+          residue = residue.succ(strict: false, use_numbering: false) ||
                     residue.bonded_residues.find(&.in?(residues))
         end
       end

@@ -200,7 +200,7 @@ module Chem::Protein
     private def in_bridge?(residue : Residue) : Bool
       residue.in?(@bridged_residues) ||
         (residue.pred.in?(@bridged_residues) &&
-          residue.next.in?(@bridged_residues))
+          residue.succ.in?(@bridged_residues))
     end
 
     private def extend_elements
