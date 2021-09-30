@@ -2,55 +2,7 @@ require "../spec_helper"
 
 describe Chem::Mol2::Reader do
   it "parses a Mol2 file" do
-    content = <<-EOS
-      # Name: benzene
-      # Creating user name: tom
-      # Creation time: Wed Dec 28 00:18:30 1988
-
-      # Modifying user name: tom
-      # Modification time: Wed Dec 28 00:18:30 1988
-
-      @<TRIPOS>MOLECULE
-      benzene
-      12 12 1 0 0
-      SMALL
-      MULLIKEN_CHARGES
-      ****
-      Charges were calculated with b3lyp/6-31g*
-
-      @<TRIPOS>ATOM
-      1     C1    1.207    2.091    0.000    C.ar    1    BENZENE   -0.062
-      2     C2    2.414    1.394    0.000    C.ar    1    BENZENE   -0.062
-      3     C3    2.414    0.000    0.000    C.ar    1    BENZENE   -0.062
-      4     C4    1.207   -0.697    0.000    C.ar    1    BENZENE   -0.062
-      5     C5    0.000    0.000    0.000    C.ar    1    BENZENE   -0.062
-      6     C6    0.000    1.394    0.000    C.ar    1    BENZENE   -0.062
-      7     H1    1.207    3.175    0.000    H       1    BENZENE    0.062
-      8     H2    3.353    1.936    0.000    H       1    BENZENE    0.062
-      9     H3    3.353   -0.542    0.000    H       1    BENZENE    0.062
-      10    H4    1.207   -1.781    0.000    H       1    BENZENE    0.062
-      11    H5   -0.939   -0.542    0.000    H       1    BENZENE    0.062
-      12    H6   -0.939    1.936    0.000    H       1    BENZENE    0.062
-
-      @<TRIPOS>BOND
-      1     1     2    ar
-      2     1     6    ar
-      3     2     3    ar
-      4     3     4    ar
-      5     4     5    ar
-      6     5     6    ar
-      7     1     7    1
-      8     2     8    1
-      9     3     9    1
-      10    4    10    1
-      11    5    11    1
-      12    6    12    1
-
-      @<TRIPOS>SUBSTRUCTURE
-      1    BENZENE1    PERM    0    ****    ****    0    ROOT
-      EOS
-
-    structure = Chem::Structure.from_mol2 IO::Memory.new(content)
+    structure = load_file "benzene.mol2"
     structure.title.should eq "benzene"
     structure.residues[0].name.should eq "BEN"
 
@@ -77,62 +29,11 @@ describe Chem::Mol2::Reader do
   end
 
   it "parses an unformatted Mol2 file with minimal information" do
-    content = <<-EOS
-      @<TRIPOS>MOLECULE
-      Histidine
-      20 20 1 0 2
-      SMALL
-      NO_CHARGES
-
-      @<TRIPOS>ATOM
-      1 N1 -1.0947 0.5371 1.7186 N.4
-      2 C2 -0.9885 0.9170 0.2765 C.3
-      3 C3 -0.2043 -0.1565 -0.4766 C.3
-      4 C4 -2.3725 1.0376 -0.3154 C.2
-      5 O5 -2.7546 2.1336 -0.8057 O.co2
-      6 C6 1.1797 -0.2771 0.1153 C.2
-      7 N7 2.2791 0.4215 -0.2757 N.pl3
-      8 C8 1.5387 -1.0911 1.1173 C.2
-      9 C9 3.3256 0.0285 0.4990 C.2
-      10 N10 2.9039 -0.8872 1.3511 N.2
-      11 H11 -1.6259 1.2643 2.2287 H
-      12 O12 -3.1452 0.0423 -0.3188 O.co2
-      13 H13 -0.1461 0.4545 2.1242 H
-      14 H14 -0.4726 1.8710 0.1898 H
-      15 H15 -0.7202 -1.1105 -0.3899 H
-      16 H16 -0.1270 0.1200 -1.5261 H
-      17 H17 2.3126 1.1114 -1.0125 H
-      18 H18 0.8943 -1.7774 1.6466 H
-      19 H19 4.3357 0.4040 0.4286 H
-      20 H20 -1.5855 -0.3703 1.8010 H
-
-      @<TRIPOS>BOND
-      1 1 2 1
-      2 2 3 1
-      3 2 4 1
-      4 3 6 1
-      5 4 5 2
-      6 6 7 1
-      7 6 8 2
-      8 7 9 1
-      9 8 10 1
-      10 9 10 2
-      11 1 11 1
-      12 4 12 1
-      13 1 13 1
-      14 2 14 1
-      15 3 15 1
-      16 3 16 1
-      17 7 17 1
-      18 8 18 1
-      19 9 19 1
-      20 1 20 1
-      EOS
     atom_names = ["N1", "C2", "C3", "C4", "O5", "C6", "N7", "C8", "C9", "N10", "H11",
                   "O12", "H13", "H14", "H15", "H16", "H17", "H18", "H19", "H20"]
     symbols = atom_names.map { |name| PeriodicTable[name[0]].symbol }
 
-    structure = Chem::Structure.from_mol2 IO::Memory.new(content)
+    structure = load_file "minimal.mol2"
     structure.title.should eq "Histidine"
 
     atoms = structure.atoms
