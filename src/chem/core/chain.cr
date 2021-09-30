@@ -139,7 +139,7 @@ module Chem
     def renumber_by_connectivity : Nil
       num = 0
       residues = @residues.to_set
-      while residue = residues.find(&.previous(strict: false, use_numbering: false).nil?) ||
+      while residue = residues.find(&.pred(strict: false, use_numbering: false).nil?) ||
                       residues.first?
         while residue && residue.in?(residues)
           residue.number = (num += 1)

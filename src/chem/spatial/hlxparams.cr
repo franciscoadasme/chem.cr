@@ -14,7 +14,7 @@ module Chem::Spatial
   end
 
   def hlxparams(res : Residue, lattice : Lattice? = nil) : HlxParams?
-    return unless res.protein? && (prev_res = res.previous) && (next_res = res.next)
+    return unless res.protein? && (prev_res = res.pred) && (next_res = res.next)
 
     coord =
       if lattice

@@ -416,10 +416,10 @@ describe Chem::Residue do
     end
   end
 
-  describe "#previous" do
+  describe "#pred" do
     context "given a periodic peptide" do
       it "returns a residue for 13] + the first residue" do
-        residues = load_file("hlx_gly.poscar").residues.map &.previous
+        residues = load_file("hlx_gly.poscar").residues.map &.pred
         residues.map(&.try(&.number)).should eq [13] + (1..12).to_a
       end
     end

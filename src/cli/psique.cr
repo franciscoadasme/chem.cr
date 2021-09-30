@@ -86,7 +86,7 @@ begin
     case beta
     when "curvature"
       curvature = 0.0
-      if (h1 = residue.previous.try(&.hlxparams)) &&
+      if (h1 = residue.pred.try(&.hlxparams)) &&
          (h2 = residue.hlxparams) &&
          (h3 = residue.next.try(&.hlxparams))
         dprev = Chem::Spatial.distance h1.q, h2.q

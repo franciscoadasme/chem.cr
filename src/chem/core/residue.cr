@@ -475,8 +475,8 @@ module Chem
     end
 
     def omega? : Float64?
-      if (ca1 = previous.try(&.[]?("CA"))) &&
-         (c = previous.try(&.[]?("C"))) &&
+      if (ca1 = pred.try(&.[]?("CA"))) &&
+         (c = pred.try(&.[]?("C"))) &&
          (n = self["N"]?) &&
          (ca2 = self["CA"]?)
         Spatial.dihedral ca1, c, n, ca2, structure.lattice
@@ -488,7 +488,7 @@ module Chem
     end
 
     def phi? : Float64?
-      if (ca1 = previous.try(&.[]?("C"))) &&
+      if (ca1 = pred.try(&.[]?("C"))) &&
          (n = self["N"]?) &&
          (ca2 = self["CA"]?) &&
          (c = self["C"]?)
@@ -511,7 +511,7 @@ module Chem
     # Note that when multiple residues can be connected to the same
     # residue (e.g., branched polymers), it returns the last residue
     # among them.
-    def previous(strict : Bool = true, use_numbering : Bool = true) : Residue?
+    def pred(strict : Bool = true, use_numbering : Bool = true) : Residue?
       if bond_t = type.try(&.link_bond).try(&.inverse)
         residues = bonded_residues bond_t
         residues = bonded_residues bond_t, strict: false if residues.empty? && !strict
