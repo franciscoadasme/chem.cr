@@ -3,6 +3,7 @@ require "../spec_helper"
 describe Chem::Cube::Reader do
   it "parses a cube file" do
     grid = Grid.from_cube "spec/data/cube/20.cube"
+    grid.source_file.should eq Path["spec/data/cube/20.cube"].expand
     grid.dim.should eq({20, 20, 20})
     grid.origin.should be_close V[-3.826155, -4.114553, -6.64407], 1e-6
     grid.bounds.size.should be_close S[12.184834, 12.859271, 13.117308], 1e-6

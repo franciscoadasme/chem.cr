@@ -9,7 +9,10 @@ module Chem::DX
     end
 
     protected def decode_entry : Spatial::Grid
-      Spatial::Grid.build(read_header) do |buffer, size|
+      Spatial::Grid.build(
+        read_header,
+        source_file: (file = @io).is_a?(File) ? file.path : nil,
+      ) do |buffer, size|
         i = 0
         @pull.each_line do
           while i < size && @pull.next_token

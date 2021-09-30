@@ -23,7 +23,10 @@ module Chem::VASP
                            & : Float64 -> Float64) : Spatial::Grid
       nx, ny, nz = info.dim
       nyz = ny * nz
-      Spatial::Grid.build(info) do |buffer|
+      Spatial::Grid.build(
+        info,
+        source_file: (file = @io).is_a?(File) ? file.path : nil,
+      ) do |buffer|
         nz.times do |k|
           ny.times do |j|
             nx.times do |i|

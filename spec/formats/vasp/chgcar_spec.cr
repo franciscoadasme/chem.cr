@@ -3,6 +3,7 @@ require "../../spec_helper"
 describe Chem::VASP::Chgcar do
   it "parses a CHGCAR" do
     grid = Grid.from_chgcar "spec/data/vasp/CHGCAR"
+    grid.source_file.should eq Path["spec/data/vasp/CHGCAR"].expand
     grid.dim.should eq({2, 2, 2})
     grid.bounds.should eq Bounds[10, 10, 10]
     grid.volume.should eq 1_000

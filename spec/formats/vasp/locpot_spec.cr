@@ -3,6 +3,7 @@ require "../../spec_helper"
 describe Chem::VASP::Locpot do
   it "parses a LOCPOT" do
     grid = Grid.from_locpot "spec/data/vasp/LOCPOT"
+    grid.source_file.should eq Path["spec/data/vasp/LOCPOT"].expand
     grid.dim.should eq({32, 32, 32})
     grid.bounds.should be_close Bounds.new(
       V.origin,
