@@ -2,17 +2,7 @@ require "../spec_helper"
 
 describe Chem::Gen::Reader do
   it "parses a non-periodic Gen file" do
-    content = <<-EOS
-      5  C
-      Cl Na  O
-        1 1    3.0000000000E+01    1.5000000000E+01    1.0000000000E+01
-        2 2    1.0000000000E+01    5.0000000000E+00    5.0000000000E+00
-        3 3    3.0000000000E+01    1.5000000000E+01    9.0000000000E+00
-        4 2    1.0000000000E+01    1.0000000000E+01    1.2500000000E+01
-        5 1    2.0000000000E+01    1.0000000000E+01    1.0000000000E+01
-      EOS
-
-    structure = Chem::Structure.from_gen IO::Memory.new(content), guess_topology: false
+    structure = load_file "non_periodic.gen", topology: :none
     structure.lattice.should be_nil
 
     structure.n_atoms.should eq 5
@@ -27,20 +17,7 @@ describe Chem::Gen::Reader do
   end
 
   it "parses a periodic Gen file" do
-    content = <<-EOS
-      4  S
-      Cl O  Na
-        1 1    3.0000000000E+01    1.5000000000E+01    1.0000000000E+01
-        2 2    1.0000000000E+01    5.0000000000E+00    5.0000000000E+00
-        3 2    3.0000000000    1.5000000000    9.0000000000
-        4 3    1.0000000000    1.0000000000    1.2500000000
-        0.0000000000E+00    0.0000000000E+00    0.0000000000E+00
-        4.0000000000E+01    0.0000000000E+00    0.0000000000E+00
-        0.0000000000E+00    2.0000000000E+01    0.0000000000E+00
-        0.0000000000E+00    0.0000000000E+00    1.0000000000E+01
-      EOS
-
-    structure = Chem::Structure.from_gen IO::Memory.new(content), guess_topology: false
+    structure = load_file "periodic.gen", topology: :none
     structure.lattice.should_not be_nil
     structure.lattice.not_nil!.i.should eq V[40, 0, 0]
     structure.lattice.not_nil!.j.should eq V[0, 20, 0]
@@ -57,18 +34,7 @@ describe Chem::Gen::Reader do
   end
 
   it "parses a Gen file having fractional coordinates" do
-    content = <<-EOS
-      2 F
-      Ga As
-      1 1 0.0 0.0 0.0
-      2 2 0.25 0.25 0.25
-      0.000000 0.000000 0.000000
-      2.713546 2.713546 0.0
-      0.0 2.713546 2.713546
-      2.713546 0.0 2.713546
-      EOS
-
-    structure = Chem::Structure.from_gen IO::Memory.new(content), guess_topology: false
+    structure = load_file "fractional.gen", topology: :none
     structure.lattice.should_not be_nil
     structure.lattice.not_nil!.i.should eq V[2.713546, 2.713546, 0]
     structure.lattice.not_nil!.j.should eq V[0, 2.713546, 2.713546]
