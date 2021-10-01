@@ -1,6 +1,6 @@
 require "./spec_helper"
 
-describe Chem::RegisterFormat do
+describe Chem::RegisterFormat, tags: %w(register_format codegen) do
   it "fails on duplicate format" do
     assert_error <<-EOS, "Format F in B::F is registered to A::F"
       @[Chem::RegisterFormat]
@@ -257,12 +257,12 @@ describe Array do
       end
     end
 
-    it "fails for non-encoded types" do
+    it "fails for non-encoded types", tags: %w(codegen) do
       assert_error "Array(Int32).read(IO::Memory.new, :xyz)",
         "undefined method 'read' for Array(Int32).class"
     end
 
-    it "fails with an array for a single-entry type" do
+    it "fails with an array for a single-entry type", tags: %w(codegen) do
       assert_error "Array(Chem::Spatial::Grid).read IO::Memory.new, :xyz",
         "undefined method 'read' for Array(Chem::Spatial::Grid).class"
     end
@@ -310,12 +310,12 @@ describe Array do
       end
     end
 
-    it "fails for non-encoded types" do
+    it "fails for non-encoded types", tags: %w(codegen) do
       assert_error "[1].write(IO::Memory.new, :xyz)",
         "undefined method 'write' for Array(Int32)"
     end
 
-    it "fails with an array for a single-entry type" do
+    it "fails with an array for a single-entry type", tags: %w(codegen) do
       assert_error "Array(Chem::Spatial::Grid).new.write IO::Memory.new, :xyz",
         "undefined method 'write' for Array(Chem::Spatial::Grid)"
     end

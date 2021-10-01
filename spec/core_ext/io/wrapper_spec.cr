@@ -1,7 +1,7 @@
 require "../../spec_helper"
 
 describe IO::Wrapper do
-  it "does not generate convenience methods on abstract class" do
+  it "does not generate convenience methods on abstract class", tags: %w(codegen) do
     assert_error <<-EOS, "undefined method 'open' for A.class"
       abstract class A
         include IO::Wrapper
@@ -10,7 +10,7 @@ describe IO::Wrapper do
       EOS
   end
 
-  it "does not generate convenience methods on modules" do
+  it "does not generate convenience methods on modules", tags: %w(codegen) do
     assert_error <<-EOS, "undefined method 'open' for A:Module"
       module A
         include IO::Wrapper
@@ -19,7 +19,7 @@ describe IO::Wrapper do
       EOS
   end
 
-  it "generates convenience methods on subclasses" do
+  it "generates convenience methods on subclasses", tags: %w(codegen) do
     assert_code <<-EOS
       abstract class A
         include IO::Wrapper
@@ -31,7 +31,7 @@ describe IO::Wrapper do
       EOS
   end
 
-  it "generates convenience methods on including types" do
+  it "generates convenience methods on including types", tags: %w(codegen) do
     assert_code <<-EOS
       module A
         include IO::Wrapper
@@ -49,7 +49,7 @@ describe IO::Wrapper do
       EOS
   end
 
-  it "finds initialize in superclass" do
+  it "finds initialize in superclass", tags: %w(codegen) do
     assert_code <<-EOS
       abstract class A
         include IO::Wrapper
@@ -64,7 +64,7 @@ describe IO::Wrapper do
       EOS
   end
 
-  it "handles argument internal names" do
+  it "handles argument internal names", tags: %w(codegen) do
     assert_code <<-EOS
       struct A
         include IO::Wrapper
@@ -77,7 +77,7 @@ describe IO::Wrapper do
       EOS
   end
 
-  it "fails on invalid first argument" do
+  it "fails on invalid first argument", tags: %w(codegen) do
     message = "First argument of `BadArgumentIO#initialize` must be \
                `io : IO`, not `foo : String`"
     assert_error <<-EOS, message
@@ -89,7 +89,7 @@ describe IO::Wrapper do
       EOS
   end
 
-  it "fails on missing argument sync_close" do
+  it "fails on missing argument sync_close", tags: %w(codegen) do
     message = "Missing argument `sync_close : Bool = false` in \
                `MissingArgumentIO#initialize`"
     assert_error <<-EOS, message
@@ -101,7 +101,7 @@ describe IO::Wrapper do
       EOS
   end
 
-  it "fails on invalid type of argument sync_close" do
+  it "fails on invalid type of argument sync_close", tags: %w(codegen) do
     message = "Argument `sync_close` of `BadArgumentTypeIO#initialize` \
                must be `sync_close : Bool = false`, not `sync_close = 1`"
     assert_error <<-EOS, message
