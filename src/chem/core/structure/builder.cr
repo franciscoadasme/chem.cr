@@ -66,7 +66,9 @@ module Chem
 
     def build : Structure
       kekulize
-      Topology::Perception.new(@structure).guess_topology if @guess_topology
+      perception = Topology::Perception.new(@structure)
+      perception.guess_topology
+      perception.guess_residues if @guess_topology
       @structure
     end
 

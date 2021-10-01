@@ -97,7 +97,7 @@ describe Chem::ResidueCollection do
 
   describe "#residue_fragments" do
     it "returns fragments of residues" do
-      structure = load_file("cylindrin--size-09.pdb")
+      structure = load_file("cylindrin--size-09.pdb", topology: :bonds)
       fragments = structure.residue_fragments
       fragments.size.should eq 6
       fragments.map(&.size).should eq [9] * 6

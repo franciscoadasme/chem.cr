@@ -91,7 +91,7 @@ end
 
 describe Chem::Mol2::Writer do
   it "writes a structure" do
-    structure = Chem::Structure.build do
+    structure = Chem::Structure.build(guess_topology: false) do
       title "Sulfur"
 
       chain 'C' do

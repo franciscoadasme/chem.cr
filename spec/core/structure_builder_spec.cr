@@ -2,7 +2,7 @@ require "../spec_helper"
 
 describe Chem::Structure::Builder do
   it "builds a structure" do
-    st = Chem::Structure.build do
+    st = Chem::Structure.build(guess_topology: false) do
       title "Ser-Thr-Gly Val"
       chain 'F' do
         residue "SER", 1 do
@@ -62,7 +62,7 @@ describe Chem::Structure::Builder do
   end
 
   it "builds a structure (no DSL)" do
-    builder = Chem::Structure::Builder.new
+    builder = Chem::Structure::Builder.new guess_topology: false
     builder.title "Ser-Thr-Gly Val"
     builder.chain 'T'
     builder.residue "SER"
@@ -119,7 +119,7 @@ describe Chem::Structure::Builder do
   end
 
   it "names chains automatically" do
-    st = Chem::Structure.build do
+    st = Chem::Structure.build(guess_topology: false) do
       62.times do
         chain { }
       end
@@ -130,7 +130,7 @@ describe Chem::Structure::Builder do
   end
 
   it "names chains automatically after manually setting one" do
-    st = Chem::Structure.build do
+    st = Chem::Structure.build(guess_topology: false) do
       chain 'F'
       chain { }
       chain { }
@@ -150,7 +150,7 @@ describe Chem::Structure::Builder do
   end
 
   it "numbers residues automatically" do
-    st = Chem::Structure.build do
+    st = Chem::Structure.build(guess_topology: false) do
       chain do
         2.times { residue "ALA" }
       end
@@ -166,7 +166,7 @@ describe Chem::Structure::Builder do
   end
 
   it "numbers residues automatically after manually setting one" do
-    st = Chem::Structure.build do
+    st = Chem::Structure.build(guess_topology: false) do
       chain
       residue "SER", 5
       3.times { residue "ALA" }
@@ -189,7 +189,7 @@ describe Chem::Structure::Builder do
   end
 
   it "creates a chain automatically" do
-    st = Chem::Structure.build do
+    st = Chem::Structure.build(guess_topology: false) do
       residue "SER"
     end
 
@@ -250,7 +250,7 @@ describe Chem::Structure::Builder do
   end
 
   it "sets secondary structure" do
-    structure = Chem::Structure.build do
+    structure = Chem::Structure.build(guess_topology: false) do
       chain { %w(PHE ARG ALA).each { |name| residue name } }
       chain { %w(ILE VAL).each { |name| residue name } }
       secondary_structure({'A', 1, nil}, {'A', 2, nil}, :right_handed_helix_alpha)

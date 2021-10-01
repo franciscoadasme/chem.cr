@@ -45,9 +45,10 @@ describe Chem::Bond do
         bond "C1", "P1", order: 3
         bond "P1", "O1", order: 2
       end
-      structure.bonds[0].inspect.should eq "<Bond A:ICN91:I1(1)-A:ICN91:C1(2)>"
-      structure.bonds[1].inspect.should eq "<Bond A:ICN91:C1(2)#A:ICN91:P1(3)>"
-      structure.bonds[2].inspect.should eq "<Bond A:ICN91:P1(3)=A:ICN91:O1(4)>"
+      bond_map = structure.bonds.index_by { |bond| {bond[0].name, bond[1].name} }
+      bond_map[{"I1", "C1"}].inspect.should eq "<Bond A:ICN91:I1(1)-A:ICN91:C1(2)>"
+      bond_map[{"C1", "P1"}].inspect.should eq "<Bond A:ICN91:C1(2)#A:ICN91:P1(3)>"
+      bond_map[{"P1", "O1"}].inspect.should eq "<Bond A:ICN91:P1(3)=A:ICN91:O1(4)>"
     end
   end
 

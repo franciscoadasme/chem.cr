@@ -94,6 +94,7 @@ describe Chem::Atom do
         bond "C1", "H1"
         bond "C1", "H2"
       end
+      structure.atoms[0].bonded_atoms.each { |atom| structure.atoms[0].bonds.delete atom }
       structure.atoms[0].missing_valency.should eq 2
     end
 

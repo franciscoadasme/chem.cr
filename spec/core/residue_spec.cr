@@ -14,7 +14,7 @@ describe Chem::Residue do
   describe "#<=>" do
     context "given insertion codes" do
       it "compares based on insertion codes" do
-        residues = load_file("insertion_codes.pdb").residues
+        residues = load_file("insertion_codes.pdb", topology: :bonds).residues
         (residues[0] <=> residues[1]).<(0).should be_true
         (residues[1] <=> residues[1]).should eq 0
         (residues[2] <=> residues[1]).>(0).should be_true
@@ -69,7 +69,7 @@ describe Chem::Residue do
   end
 
   describe "#bonded?" do
-    a1, a2, b1 = fake_structure(include_bonds: true).residues
+    a1, a2, b1 = fake_structure(include_bonds: false).residues
 
     context "given a residue" do
       it "tells if two residues are bonded through any pair of atoms" do
@@ -346,12 +346,12 @@ describe Chem::Residue do
 
   describe "#omega" do
     it "returns torsion angle omega" do
-      st = fake_structure include_bonds: true
+      st = fake_structure include_bonds: false
       st.residues[1].omega.should be_close -179.87, 1e-2
     end
 
     it "fails when residue is at the start" do
-      st = fake_structure include_bonds: true
+      st = fake_structure include_bonds: false
       expect_raises Chem::Error, "A:ASP1 is terminal" do
         st.residues[0].omega
       end
@@ -369,25 +369,25 @@ describe Chem::Residue do
 
   describe "#omega?" do
     it "returns torsion angle omega" do
-      st = fake_structure include_bonds: true
+      st = fake_structure include_bonds: false
       st.residues[1].omega?.should_not be_nil
       st.residues[1].omega?.not_nil!.should be_close -179.87, 1e-2
     end
 
     it "returns nil when residue is at the start" do
-      st = fake_structure include_bonds: true
+      st = fake_structure include_bonds: false
       st.residues[0].omega?.should be_nil
     end
   end
 
   describe "#phi" do
     it "returns torsion angle phi" do
-      st = fake_structure include_bonds: true
+      st = fake_structure include_bonds: false
       st.residues[1].phi.should be_close -57.87, 1e-2
     end
 
     it "fails when residue is at the start" do
-      st = fake_structure include_bonds: true
+      st = fake_structure include_bonds: false
       expect_raises Chem::Error, "A:ASP1 is terminal" do
         st.residues[0].phi
       end
@@ -405,13 +405,13 @@ describe Chem::Residue do
 
   describe "#phi?" do
     it "returns torsion angle phi" do
-      st = fake_structure include_bonds: true
+      st = fake_structure include_bonds: false
       st.residues[1].phi?.should_not be_nil
       st.residues[1].phi?.not_nil!.should be_close -57.87, 1e-2
     end
 
     it "returns nil when residue is at the start" do
-      st = fake_structure include_bonds: true
+      st = fake_structure include_bonds: false
       st.residues[0].phi?.should be_nil
     end
   end
@@ -427,12 +427,12 @@ describe Chem::Residue do
 
   describe "#psi" do
     it "returns torsion angle psi" do
-      st = fake_structure include_bonds: true
+      st = fake_structure include_bonds: false
       st.residues[0].psi.should be_close 127.28, 1e-2
     end
 
     it "fails when residue is at the start" do
-      st = fake_structure include_bonds: true
+      st = fake_structure include_bonds: false
       expect_raises Chem::Error, "A:PHE2 is terminal" do
         st.residues[1].psi
       end
@@ -450,13 +450,13 @@ describe Chem::Residue do
 
   describe "#psi?" do
     it "returns torsion angle psi" do
-      st = fake_structure include_bonds: true
+      st = fake_structure include_bonds: false
       st.residues[0].psi?.should_not be_nil
       st.residues[0].psi?.not_nil!.should be_close 127.28, 1e-2
     end
 
     it "returns nil when residue is at the start" do
-      st = fake_structure include_bonds: true
+      st = fake_structure include_bonds: false
       st.residues[1].psi?.should be_nil
     end
   end

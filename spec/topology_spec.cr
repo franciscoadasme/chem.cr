@@ -31,68 +31,94 @@ end
 describe Chem::BondArray do
   describe "#[]" do
     st = fake_structure
-    glu_cd, glu_oe1, glu_oe2 = st.atoms[6..8]
-    glu_cd.bonds.add glu_oe1, :double
-    glu_cd.bonds.add glu_oe2
+    glu_cd = st.dig('A', 1, "CG")
+    glu_oe1 = st.dig('A', 1, "OD1")
+    glu_oe2 = st.dig('A', 1, "OD2")
 
     it "returns the bond for a given atom" do
-      glu_cd.bonds[glu_oe1].should be glu_cd.bonds[0]
+      bond = glu_cd.bonds[glu_oe1]
+      bond.other(glu_cd).should eq glu_oe1
     end
 
     it "fails when the bond does not exist" do
-      expect_raises Chem::Error, "Atom 7 is not bonded to atom 6" do
-        glu_cd.bonds[st.atoms[5]]
+      expect_raises Chem::Error, "Atom 6 is not bonded to atom 9" do
+        glu_cd.bonds[st.dig('A', 2, "N")]
       end
     end
   end
 
   describe "#[]?" do
     st = fake_structure
-    glu_cd, glu_oe1, glu_oe2 = st.atoms[6..8]
-    glu_cd.bonds.add glu_oe1, :double
-    glu_cd.bonds.add glu_oe2
+    glu_cd = st.dig('A', 1, "CG")
+    glu_oe1 = st.dig('A', 1, "OD1")
+    glu_oe2 = st.dig('A', 1, "OD2")
 
     it "returns the bond for a given atom" do
-      glu_cd.bonds[glu_oe1]?.should be glu_cd.bonds[0]
+      bond = glu_cd.bonds[glu_oe1]
+      bond.other(glu_cd).should eq glu_oe1
     end
 
     it "returns nil when the bond does not exist" do
-      glu_cd.bonds[st.atoms[5]]?.should be_nil
+      glu_cd.bonds[st.dig('A', 2, "N")]?.should be_nil
     end
   end
 
   describe "#add" do
     it "adds a new bond" do
-      st = fake_structure
-      glu_cd, glu_oe1, glu_oe2 = st.atoms[6..8]
+      st = fake_structure include_bonds: false
+      glu_cd = st.dig('A', 1, "CG")
+      glu_oe1 = st.dig('A', 1, "OD1")
+      glu_oe2 = st.dig('A', 1, "OD2")
 
+      st.each_atom do |atom|
+        atom.bonded_atoms.each do |other|
+          atom.bonds.delete other
+        end
+      end
       glu_cd.bonds.add glu_oe1, :double
+
       glu_cd.bonds.size.should eq 1
       glu_cd.bonds[0].should be glu_oe1.bonds[0]
     end
 
     it "doesn't add an existing bond" do
-      st = fake_structure
-      glu_cd, glu_oe1, glu_oe2 = st.atoms[6..8]
+      st = fake_structure include_bonds: false
+      glu_cd = st.dig('A', 1, "CG")
+      glu_oe1 = st.dig('A', 1, "OD1")
+      glu_oe2 = st.dig('A', 1, "OD2")
 
+      st.each_atom do |atom|
+        atom.bonded_atoms.each do |other|
+          atom.bonds.delete other
+        end
+      end
       glu_cd.bonds.add glu_oe1, :double
       glu_cd.bonds.add glu_oe1, :double
+
       glu_cd.bonds.size.should eq 1
       glu_cd.bonds[0].should be glu_oe1.bonds[0]
     end
 
     it "doesn't add an existing bond (inversed)" do
-      st = fake_structure
-      glu_cd, glu_oe1, glu_oe2 = st.atoms[6..8]
+      st = fake_structure include_bonds: false
+      glu_cd = st.dig('A', 1, "CG")
+      glu_oe1 = st.dig('A', 1, "OD1")
+      glu_oe2 = st.dig('A', 1, "OD2")
 
+      st.each_atom do |atom|
+        atom.bonded_atoms.each do |other|
+          atom.bonds.delete other
+        end
+      end
       glu_cd.bonds.add glu_oe1, :double
       glu_oe1.bonds.add glu_cd
+
       glu_cd.bonds.size.should eq 1
       glu_cd.bonds[0].should be glu_oe1.bonds[0]
     end
 
     it "fails when adding a bond that doesn't have the primary atom" do
-      st = fake_structure
+      st = fake_structure include_bonds: false
       glu_cd, glu_oe1, glu_oe2 = st.atoms[6..8]
 
       expect_raises Chem::Error, "Bond doesn't include atom 7" do
@@ -155,9 +181,16 @@ describe Chem::BondArray do
 
   describe "#delete" do
     it "deletes an existing bond" do
-      st = fake_structure
-      glu_cd, glu_oe1, glu_oe2 = st.atoms[6..8]
+      st = fake_structure include_bonds: false
+      glu_cd = st.dig('A', 1, "CG")
+      glu_oe1 = st.dig('A', 1, "OD1")
+      glu_oe2 = st.dig('A', 1, "OD2")
 
+      st.each_atom do |atom|
+        atom.bonded_atoms.each do |other|
+          atom.bonds.delete other
+        end
+      end
       glu_cd.bonds.add glu_oe1, :double
       glu_cd.bonds.add glu_oe2, :single
 
@@ -167,13 +200,20 @@ describe Chem::BondArray do
     end
 
     it "doesn't delete a non-existing bond" do
-      st = fake_structure
-      glu_cd, glu_oe1, glu_oe2 = st.atoms[6..8]
+      st = fake_structure include_bonds: false
+      glu_cd = st.dig('A', 1, "CG")
+      glu_oe1 = st.dig('A', 1, "OD1")
+      glu_oe2 = st.dig('A', 1, "OD2")
 
+      st.each_atom do |atom|
+        atom.bonded_atoms.each do |other|
+          atom.bonds.delete other
+        end
+      end
       glu_cd.bonds.add glu_oe1, :double
-
       glu_cd.bonds.delete glu_oe2
       glu_cd.bonds.delete Chem::Bond.new(glu_cd, glu_oe2)
+
       glu_cd.bonds.size.should eq 1
       glu_cd.bonds[0].should be glu_oe1.bonds[0]
     end
@@ -181,7 +221,7 @@ describe Chem::BondArray do
 end
 
 describe Chem::ChainCollection do
-  st = fake_structure
+  st = fake_structure include_bonds: false
 
   describe "#chains" do
     it "returns a chain view" do

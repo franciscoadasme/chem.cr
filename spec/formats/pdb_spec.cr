@@ -427,7 +427,7 @@ describe Chem::PDB::Writer do
 
   it "writes ter records at the end of polymer chains" do
     content = File.read "spec/data/pdb/5e5v.pdb"
-    structure = Chem::Structure.from_pdb IO::Memory.new(content), guess_topology: false
+    structure = Chem::Structure.from_pdb IO::Memory.new(content)
     structure.to_pdb.should eq content
   end
 
@@ -450,9 +450,9 @@ describe Chem::PDB::Writer do
   it "writes CONECT records" do
     structure = Chem::Structure.build(guess_topology: false) do
       residue "ICN" do
-        atom :i, V[-1, 0, 0]
-        atom :c, V[0, 0, 0]
-        atom :n, V[1, 0, 0]
+        atom :i, V[3.149, 0, 0]
+        atom :c, V[1.148, 0, 0]
+        atom :n, V[0, 0, 0]
 
         bond "I1", "C1"
         bond "C1", "N1", order: 3
@@ -462,9 +462,9 @@ describe Chem::PDB::Writer do
     structure.to_pdb(bonds: true).should eq <<-EOS
       REMARK   4                                                                      
       REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
-      HETATM    1  I1  ICN A   1      -1.000   0.000   0.000  1.00  0.00           I  
-      HETATM    2  C1  ICN A   1       0.000   0.000   0.000  1.00  0.00           C  
-      HETATM    3  N1  ICN A   1       1.000   0.000   0.000  1.00  0.00           N  
+      HETATM    1  I1  ICN A   1       3.149   0.000   0.000  1.00  0.00           I  
+      HETATM    2  C1  ICN A   1       1.148   0.000   0.000  1.00  0.00           C  
+      HETATM    3  N1  ICN A   1       0.000   0.000   0.000  1.00  0.00           N  
       CONECT    1    2
       CONECT    2    1    3    3    3
       CONECT    3    2    2    2
@@ -475,18 +475,18 @@ describe Chem::PDB::Writer do
   it "writes CONECT records for renumbered atoms" do
     structure = Chem::Structure.build(guess_topology: false) do
       residue "ICN" do
-        atom :i, V[-1, 0, 0]
-        atom :c, V[0, 0, 0]
-        atom :n, V[1, 0, 0]
+        atom :i, V[3.149, 0, 0]
+        atom :c, V[1.148, 0, 0]
+        atom :n, V[0, 0, 0]
 
         bond "I1", "C1"
         bond "C1", "N1", order: 3
       end
 
       residue "ICN" do
-        atom :i, V[-4, 0, 0]
-        atom :c, V[-3, 0, 0]
-        atom :n, V[-2, 0, 0]
+        atom :i, V[13.149, 0, 0]
+        atom :c, V[11.148, 0, 0]
+        atom :n, V[10, 0, 0]
 
         bond "I1", "C1"
         bond "C1", "N1", order: 3
@@ -496,9 +496,9 @@ describe Chem::PDB::Writer do
     structure.residues[1].to_pdb(bonds: true).should eq <<-EOS
       REMARK   4                                                                      
       REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
-      HETATM    1  I1  ICN A   2      -4.000   0.000   0.000  1.00  0.00           I  
-      HETATM    2  C1  ICN A   2      -3.000   0.000   0.000  1.00  0.00           C  
-      HETATM    3  N1  ICN A   2      -2.000   0.000   0.000  1.00  0.00           N  
+      HETATM    1  I1  ICN A   2      13.149   0.000   0.000  1.00  0.00           I  
+      HETATM    2  C1  ICN A   2      11.148   0.000   0.000  1.00  0.00           C  
+      HETATM    3  N1  ICN A   2      10.000   0.000   0.000  1.00  0.00           N  
       CONECT    1    2
       CONECT    2    1    3    3    3
       CONECT    3    2    2    2
@@ -508,15 +508,12 @@ describe Chem::PDB::Writer do
 
   it "writes CONECT records for specified bonds" do
     structure = Chem::Structure.build(guess_topology: false) do
-      residue "CH3" do
+      residue "CH4" do
         atom :c, V[0, 0, 0]
-        atom :h, V[0, -1, 0]
-        atom :h, V[1, 0, 0]
-        atom :h, V[0, 1, 0]
-
-        bond "C1", "H1"
-        bond "C1", "H2"
-        bond "C1", "H3"
+        atom :h, V[0.65, 0.65, -0.65]
+        atom :h, V[0.65, -0.65, 0.65]
+        atom :h, V[-0.65, 0.65, 0.65]
+        atom :h, V[-0.65, -0.65, -0.65]
       end
     end
 
@@ -524,10 +521,11 @@ describe Chem::PDB::Writer do
     structure.to_pdb(bonds: bonds).should eq <<-EOS
       REMARK   4                                                                      
       REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
-      HETATM    1  C1  CH3 A   1       0.000   0.000   0.000  1.00  0.00           C  
-      HETATM    2  H1  CH3 A   1       0.000  -1.000   0.000  1.00  0.00           H  
-      HETATM    3  H2  CH3 A   1       1.000   0.000   0.000  1.00  0.00           H  
-      HETATM    4  H3  CH3 A   1       0.000   1.000   0.000  1.00  0.00           H  
+      HETATM    1  C1  CH4 A   1       0.000   0.000   0.000  1.00  0.00           C  
+      HETATM    2  H1  CH4 A   1       0.650   0.650  -0.650  1.00  0.00           H  
+      HETATM    3  H2  CH4 A   1       0.650  -0.650   0.650  1.00  0.00           H  
+      HETATM    4  H3  CH4 A   1      -0.650   0.650   0.650  1.00  0.00           H  
+      HETATM    5  H4  CH4 A   1      -0.650  -0.650  -0.650  1.00  0.00           H  
       CONECT    1    3
       CONECT    3    1
       END                                                                             \n
@@ -537,9 +535,9 @@ describe Chem::PDB::Writer do
   it "writes big numbers" do
     structure = Chem::Structure.build(guess_topology: false) do
       residue "ICN" do
-        atom :i, V[-1, 0, 0]
-        atom :c, V[0, 0, 0]
-        atom :n, V[1, 0, 0]
+        atom :i, V[3.149, 0, 0]
+        atom :c, V[1.148, 0, 0]
+        atom :n, V[0, 0, 0]
 
         bond "I1", "C1"
         bond "C1", "N1", order: 3
@@ -553,9 +551,9 @@ describe Chem::PDB::Writer do
     structure.to_pdb(bonds: true, renumber: false).should eq <<-EOS
       REMARK   4                                                                      
       REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
-      HETATM99999  I1  ICN AA06F      -1.000   0.000   0.000  1.00  0.00           I  
-      HETATMA0000  C1  ICN AA06F       0.000   0.000   0.000  1.00  0.00           C  
-      HETATMA2W9F  N1  ICN AA06F       1.000   0.000   0.000  1.00  0.00           N  
+      HETATM99999  I1  ICN AA06F       3.149   0.000   0.000  1.00  0.00           I  
+      HETATMA0000  C1  ICN AA06F       1.148   0.000   0.000  1.00  0.00           C  
+      HETATMA2W9F  N1  ICN AA06F       0.000   0.000   0.000  1.00  0.00           N  
       CONECT99999A0000
       CONECTA000099999A2W9FA2W9FA2W9F
       CONECTA2W9FA0000A0000A0000
