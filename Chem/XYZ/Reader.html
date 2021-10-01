@@ -874,7 +874,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/a5836fb13564f2fe0855f4dd5bfb2a97d6ccc159/src/chem/formats/xyz.cr#L3" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/d9727770c41bd8992c18f462b53d13ed4779b50b/src/chem/formats/xyz.cr#L3" target="_blank">
         chem/formats/xyz.cr
       </a>
     
@@ -896,12 +896,12 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new(io:IO,guess_topology:Bool=true,sync_close:Bool=false)-class-method" class="signature"><strong>.new</strong>(io : IO, guess_topology : Bool = <span class="n">true</span>, sync_close : Bool = <span class="n">false</span>)</a>
+        <a href="#new(io:IO,guess_topology:Bool=false,sync_close:Bool=false)-class-method" class="signature"><strong>.new</strong>(io : IO, guess_topology : Bool = <span class="n">false</span>, sync_close : Bool = <span class="n">false</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new(path:Path%7CString,guess_topology:Bool=true):self-class-method" class="signature"><strong>.new</strong>(path : Path | String, guess_topology : Bool = <span class="n">true</span>) : <span class="k">self</span></a>
+        <a href="#new(path:Path%7CString,guess_topology:Bool=false):self-class-method" class="signature"><strong>.new</strong>(path : Path | String, guess_topology : Bool = <span class="n">false</span>) : <span class="k">self</span></a>
         
           <div class="summary"><p>Creates a new object from the given <em>path</em>.</p></div>
         
@@ -922,14 +922,14 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#open(io:IO,guess_topology:Bool=true,sync_close:Bool=false,&:self-%3E)-class-method" class="signature"><strong>.open</strong>(io : IO, guess_topology : Bool = <span class="n">true</span>, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )</a>
+        <a href="#open(io:IO,guess_topology:Bool=false,sync_close:Bool=false,&:self-%3E)-class-method" class="signature"><strong>.open</strong>(io : IO, guess_topology : Bool = <span class="n">false</span>, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )</a>
         
           <div class="summary"><p>Creates a new object from the given <em>io</em>, yields it to the given block, and closes it at the end.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#open(path:Path%7CString,guess_topology:Bool=true,&:self-%3E)-class-method" class="signature"><strong>.open</strong>(path : Path | String, guess_topology : Bool = <span class="n">true</span>, & : <span class="k">self</span> -> )</a>
+        <a href="#open(path:Path%7CString,guess_topology:Bool=false,&:self-%3E)-class-method" class="signature"><strong>.open</strong>(path : Path | String, guess_topology : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )</a>
         
           <div class="summary"><p>Creates a new object from the given <em>path</em> yields it to the given block, and closes it at the end.</p></div>
         
@@ -1088,28 +1088,28 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(io:IO,guess_topology:Bool=true,sync_close:Bool=false)-class-method">
+    <div class="entry-detail" id="new(io:IO,guess_topology:Bool=false,sync_close:Bool=false)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(io : IO, guess_topology : Bool = <span class="n">true</span>, sync_close : Bool = <span class="n">false</span>)
+        def self.<strong>new</strong>(io : IO, guess_topology : Bool = <span class="n">false</span>, sync_close : Bool = <span class="n">false</span>)
 
-        <a class="method-permalink" href="#new(io:IO,guess_topology:Bool=true,sync_close:Bool=false)-class-method">#</a>
+        <a class="method-permalink" href="#new(io:IO,guess_topology:Bool=false,sync_close:Bool=false)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/a5836fb13564f2fe0855f4dd5bfb2a97d6ccc159/src/chem/formats/xyz.cr#L7" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/d9727770c41bd8992c18f462b53d13ed4779b50b/src/chem/formats/xyz.cr#L7" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="new(path:Path|String,guess_topology:Bool=true):self-class-method">
+    <div class="entry-detail" id="new(path:Path|String,guess_topology:Bool=false):self-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(path : Path | String, guess_topology : Bool = <span class="n">true</span>) : <span class="k">self</span>
+        def self.<strong>new</strong>(path : Path | String, guess_topology : Bool = <span class="n">false</span>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#new(path:Path%7CString,guess_topology:Bool=true):self-class-method">#</a>
+        <a class="method-permalink" href="#new(path:Path%7CString,guess_topology:Bool=false):self-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1141,12 +1141,12 @@ constant.</p>
     Class Method Detail
   </h2>
   
-    <div class="entry-detail" id="open(io:IO,guess_topology:Bool=true,sync_close:Bool=false,&amp;:self-&gt;)-class-method">
+    <div class="entry-detail" id="open(io:IO,guess_topology:Bool=false,sync_close:Bool=false,&amp;:self-&gt;)-class-method">
       <div class="signature">
         
-        def self.<strong>open</strong>(io : IO, guess_topology : Bool = <span class="n">true</span>, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )
+        def self.<strong>open</strong>(io : IO, guess_topology : Bool = <span class="n">false</span>, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )
 
-        <a class="method-permalink" href="#open(io:IO,guess_topology:Bool=true,sync_close:Bool=false,&:self-%3E)-class-method">#</a>
+        <a class="method-permalink" href="#open(io:IO,guess_topology:Bool=false,sync_close:Bool=false,&:self-%3E)-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1162,12 +1162,12 @@ are forwarded to the constructor.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="open(path:Path|String,guess_topology:Bool=true,&amp;:self-&gt;)-class-method">
+    <div class="entry-detail" id="open(path:Path|String,guess_topology:Bool=false,&amp;:self-&gt;)-class-method">
       <div class="signature">
         
-        def self.<strong>open</strong>(path : Path | String, guess_topology : Bool = <span class="n">true</span>, & : <span class="k">self</span> -> )
+        def self.<strong>open</strong>(path : Path | String, guess_topology : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )
 
-        <a class="method-permalink" href="#open(path:Path%7CString,guess_topology:Bool=true,&:self-%3E)-class-method">#</a>
+        <a class="method-permalink" href="#open(path:Path%7CString,guess_topology:Bool=false,&:self-%3E)-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1220,7 +1220,7 @@ constant.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/a5836fb13564f2fe0855f4dd5bfb2a97d6ccc159/src/chem/formats/xyz.cr#L31" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/d9727770c41bd8992c18f462b53d13ed4779b50b/src/chem/formats/xyz.cr#L31" target="_blank">View source</a>]
         
       </div>
     </div>

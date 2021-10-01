@@ -858,14 +858,14 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/a5836fb13564f2fe0855f4dd5bfb2a97d6ccc159/src/chem/core/structure/experiment.cr#L1" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/d9727770c41bd8992c18f462b53d13ed4779b50b/src/chem/core/structure/experiment.cr#L1" target="_blank">
         chem/core/structure/experiment.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/a5836fb13564f2fe0855f4dd5bfb2a97d6ccc159/src/chem/register_format.cr#L270" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/d9727770c41bd8992c18f462b53d13ed4779b50b/src/chem/register_format.cr#L270" target="_blank">
         chem/register_format.cr
       </a>
     
@@ -887,7 +887,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#from_pdb(input:IO%7CPath%7CString,alt_loc:Char?=nil,chains:Enumerable(Char)%7CString%7CNil=nil,guess_topology:Bool=true,het:Bool=true):self-class-method" class="signature"><strong>.from_pdb</strong>(input : IO | Path | String, alt_loc : Char? = <span class="n">nil</span>, chains : Enumerable(Char) | String | Nil = <span class="n">nil</span>, guess_topology : Bool = <span class="n">true</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span></a>
+        <a href="#from_pdb(input:IO%7CPath%7CString,alt_loc:Char?=nil,chains:Enumerable(Char)%7CString%7CNil=nil,het:Bool=true):self-class-method" class="signature"><strong>.from_pdb</strong>(input : IO | Path | String, alt_loc : Char? = <span class="n">nil</span>, chains : Enumerable(Char) | String | Nil = <span class="n">nil</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the header encoded in <em>input</em> using the <code><a href="../../Chem/PDB.html">Chem::PDB</a></code> file format.</p></div>
         
@@ -1008,29 +1008,29 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="from_pdb(input:IO|Path|String,alt_loc:Char?=nil,chains:Enumerable(Char)|String|Nil=nil,guess_topology:Bool=true,het:Bool=true):self-class-method">
+    <div class="entry-detail" id="from_pdb(input:IO|Path|String,alt_loc:Char?=nil,chains:Enumerable(Char)|String|Nil=nil,het:Bool=true):self-class-method">
       <div class="signature">
         
-        def self.<strong>from_pdb</strong>(input : IO | Path | String, alt_loc : <a href="../../Char.html">Char</a>? = <span class="n">nil</span>, chains : Enumerable(<a href="../../Char.html">Char</a>) | String | Nil = <span class="n">nil</span>, guess_topology : Bool = <span class="n">true</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span>
+        def self.<strong>from_pdb</strong>(input : IO | Path | String, alt_loc : <a href="../../Char.html">Char</a>? = <span class="n">nil</span>, chains : Enumerable(<a href="../../Char.html">Char</a>) | String | Nil = <span class="n">nil</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#from_pdb(input:IO%7CPath%7CString,alt_loc:Char?=nil,chains:Enumerable(Char)%7CString%7CNil=nil,guess_topology:Bool=true,het:Bool=true):self-class-method">#</a>
+        <a class="method-permalink" href="#from_pdb(input:IO%7CPath%7CString,alt_loc:Char?=nil,chains:Enumerable(Char)%7CString%7CNil=nil,het:Bool=true):self-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns the header encoded in <em>input</em> using the
 <code><a href="../../Chem/PDB.html">Chem::PDB</a></code> file format. Arguments are forwarded to
-<code><a href="../../Chem/PDB/Reader.html#open(io:IO,alt_loc:Char?=nil,chains:Enumerable(Char)%7CString%7CNil=nil,guess_topology:Bool=true,het:Bool=true,sync_close:Bool=false,&:self-%3E)-class-method">Chem::PDB::Reader.open</a></code>.</p>
+<code><a href="../../Chem/PDB/Reader.html#open(io:IO,alt_loc:Char?=nil,chains:Enumerable(Char)%7CString%7CNil=nil,het:Bool=true,sync_close:Bool=false,&:self-%3E)-class-method">Chem::PDB::Reader.open</a></code>.</p>
 
 <p>If <em>input</em> contains multiple entries, this method returns
-the first one only. Use <code><a href="../../Array.html#from_pdb(input:IO%7CPath%7CString,alt_loc:Char?=nil,chains:Enumerable(Char)%7CString%7CNil=nil,guess_topology:Bool=true,het:Bool=true):self-class-method">Array#from_pdb</a></code> or
+the first one only. Use <code><a href="../../Array.html#from_pdb(input:IO%7CPath%7CString,alt_loc:Char?=nil,chains:Enumerable(Char)%7CString%7CNil=nil,het:Bool=true):self-class-method">Array#from_pdb</a></code> or
 <code>Chem::PDB::Reader#each</code> to get multiple entries instead.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/a5836fb13564f2fe0855f4dd5bfb2a97d6ccc159/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/d9727770c41bd8992c18f462b53d13ed4779b50b/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1046,7 +1046,7 @@ the first one only. Use <code><a href="../../Array.html#from_pdb(input:IO%7CPath
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/a5836fb13564f2fe0855f4dd5bfb2a97d6ccc159/src/chem/core/structure/experiment.cr#L20" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/d9727770c41bd8992c18f462b53d13ed4779b50b/src/chem/core/structure/experiment.cr#L20" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1073,7 +1073,7 @@ the corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/a5836fb13564f2fe0855f4dd5bfb2a97d6ccc159/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/d9727770c41bd8992c18f462b53d13ed4779b50b/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1104,7 +1104,7 @@ decoded in the corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/a5836fb13564f2fe0855f4dd5bfb2a97d6ccc159/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/d9727770c41bd8992c18f462b53d13ed4779b50b/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1134,7 +1134,7 @@ decoded in the corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/a5836fb13564f2fe0855f4dd5bfb2a97d6ccc159/src/chem/core/structure/experiment.cr#L13" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/d9727770c41bd8992c18f462b53d13ed4779b50b/src/chem/core/structure/experiment.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1150,7 +1150,7 @@ decoded in the corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/a5836fb13564f2fe0855f4dd5bfb2a97d6ccc159/src/chem/core/structure/experiment.cr#L14" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/d9727770c41bd8992c18f462b53d13ed4779b50b/src/chem/core/structure/experiment.cr#L14" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1166,7 +1166,7 @@ decoded in the corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/a5836fb13564f2fe0855f4dd5bfb2a97d6ccc159/src/chem/core/structure/experiment.cr#L15" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/d9727770c41bd8992c18f462b53d13ed4779b50b/src/chem/core/structure/experiment.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1182,7 +1182,7 @@ decoded in the corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/a5836fb13564f2fe0855f4dd5bfb2a97d6ccc159/src/chem/core/structure/experiment.cr#L16" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/d9727770c41bd8992c18f462b53d13ed4779b50b/src/chem/core/structure/experiment.cr#L16" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1198,7 +1198,7 @@ decoded in the corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/a5836fb13564f2fe0855f4dd5bfb2a97d6ccc159/src/chem/core/structure/experiment.cr#L17" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/d9727770c41bd8992c18f462b53d13ed4779b50b/src/chem/core/structure/experiment.cr#L17" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1214,7 +1214,7 @@ decoded in the corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/a5836fb13564f2fe0855f4dd5bfb2a97d6ccc159/src/chem/core/structure/experiment.cr#L18" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/d9727770c41bd8992c18f462b53d13ed4779b50b/src/chem/core/structure/experiment.cr#L18" target="_blank">View source</a>]
         
       </div>
     </div>
