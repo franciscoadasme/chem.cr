@@ -1,35 +1,18 @@
 module Chem::Protein
   class Stride < SecondaryStructureCalculator
-    def initialize(structure : Structure)
-      super
+    def initialize(@structure : Structure)
       @output = uninitialized String
     end
 
     def assign : Nil
       run_stride
-      each_record do |chain, resnum, inscode, ss|
-        @structure[chain][resnum, inscode].sec = ss
-      end
-    end
-
-    def calculate : Hash(Residue, SecondaryStructure)
-      run_stride
-      ss_table = {} of Residue => SecondaryStructure
-      each_record do |chain, resnum, inscode, ss|
-        ss_table[@structure[chain][resnum, inscode]] = ss
-      end
-      ss_table
-    end
-
-    private def each_record(&block : Char, Int32, Char?, SecondaryStructure ->) : Nil
       @output.each_line do |line|
         next unless line.starts_with? "ASG"
         chain = (chr = line[9]) != '-' ? chr : '-'
         inscode = line[14]
         inscode = nil unless inscode.letter?
         resnum = line[inscode.nil? ? 10..14 : 10..13].to_i
-        ss = SecondaryStructure[line[24]]
-        yield chain, resnum, inscode, ss
+        @structure.dig(chain, resnum, inscode).sec = SecondaryStructure[line[24]]
       end
     end
 
@@ -45,16 +28,12 @@ module Chem::Protein
     end
 
     private def run_stride : Nil
-      pdbfile = write_input
+      pdbfile = File.tempfile(".pdb") do |io|
+        @structure.to_pdb io
+      end
       @output = exec_stride pdbfile.path
     ensure
       pdbfile.delete if pdbfile
-    end
-
-    private def write_input : File
-      File.tempfile(".pdb") do |io|
-        @structure.to_pdb io
-      end
     end
   end
 end
