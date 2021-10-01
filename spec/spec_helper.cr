@@ -97,9 +97,8 @@ module Spec
   end
 end
 
-# TODO add StructureBuilder?
-def fake_structure(*, include_bonds = false)
-  Chem::Structure.build(guess_topology: include_bonds) do
+def fake_structure(*, include_bonds : Bool = true) : Chem::Structure
+  structure = Chem::Structure.build do
     title "Asp-Phe Ser"
 
     chain do
@@ -140,6 +139,14 @@ def fake_structure(*, include_bonds = false)
       end
     end
   end
+  unless include_bonds
+    structure.each_atom do |atom|
+      atom.bonded_atoms.each do |other|
+        atom.bonds.delete other
+      end
+    end
+  end
+  structure
 end
 
 def load_file(path : String, topology level : TopologyLevel? = nil) : Structure

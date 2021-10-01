@@ -70,11 +70,6 @@ describe Chem::BondArray do
       glu_oe1 = st.dig('A', 1, "OD1")
       glu_oe2 = st.dig('A', 1, "OD2")
 
-      st.each_atom do |atom|
-        atom.bonded_atoms.each do |other|
-          atom.bonds.delete other
-        end
-      end
       glu_cd.bonds.add glu_oe1, :double
 
       glu_cd.bonds.size.should eq 1
@@ -87,11 +82,6 @@ describe Chem::BondArray do
       glu_oe1 = st.dig('A', 1, "OD1")
       glu_oe2 = st.dig('A', 1, "OD2")
 
-      st.each_atom do |atom|
-        atom.bonded_atoms.each do |other|
-          atom.bonds.delete other
-        end
-      end
       glu_cd.bonds.add glu_oe1, :double
       glu_cd.bonds.add glu_oe1, :double
 
@@ -105,11 +95,6 @@ describe Chem::BondArray do
       glu_oe1 = st.dig('A', 1, "OD1")
       glu_oe2 = st.dig('A', 1, "OD2")
 
-      st.each_atom do |atom|
-        atom.bonded_atoms.each do |other|
-          atom.bonds.delete other
-        end
-      end
       glu_cd.bonds.add glu_oe1, :double
       glu_oe1.bonds.add glu_cd
 
@@ -186,11 +171,6 @@ describe Chem::BondArray do
       glu_oe1 = st.dig('A', 1, "OD1")
       glu_oe2 = st.dig('A', 1, "OD2")
 
-      st.each_atom do |atom|
-        atom.bonded_atoms.each do |other|
-          atom.bonds.delete other
-        end
-      end
       glu_cd.bonds.add glu_oe1, :double
       glu_cd.bonds.add glu_oe2, :single
 
@@ -205,11 +185,6 @@ describe Chem::BondArray do
       glu_oe1 = st.dig('A', 1, "OD1")
       glu_oe2 = st.dig('A', 1, "OD2")
 
-      st.each_atom do |atom|
-        atom.bonded_atoms.each do |other|
-          atom.bonds.delete other
-        end
-      end
       glu_cd.bonds.add glu_oe1, :double
       glu_cd.bonds.delete glu_oe2
       glu_cd.bonds.delete Chem::Bond.new(glu_cd, glu_oe2)
@@ -221,7 +196,7 @@ describe Chem::BondArray do
 end
 
 describe Chem::ChainCollection do
-  st = fake_structure include_bonds: false
+  st = fake_structure
 
   describe "#chains" do
     it "returns a chain view" do
