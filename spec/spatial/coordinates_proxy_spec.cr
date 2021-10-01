@@ -311,23 +311,23 @@ describe Chem::Spatial::CoordinatesProxy do
 
   describe "#wrap" do
     it "wraps atoms into the primary unit cell" do
-      coords = load_file("AlaIle--unwrapped.poscar", topology: :none).coords
+      coords = load_file("AlaIle--unwrapped.poscar").coords
       coords.wrap
-      expected = load_file("AlaIle--wrapped.poscar", topology: :none).coords
+      expected = load_file("AlaIle--wrapped.poscar").coords
       coords.should be_close expected, 1e-15
     end
 
     it "wraps atoms into the primary unit cell in a non-rectangular lattice" do
-      coords = load_file("5e61--unwrapped.poscar", topology: :none).coords
+      coords = load_file("5e61--unwrapped.poscar").coords
       coords.wrap
-      expected = load_file("5e61--wrapped.poscar", topology: :none).coords
+      expected = load_file("5e61--wrapped.poscar").coords
       coords.should be_close expected, 1e-3
     end
 
     it "wraps atoms into the primary unit cell centered at the origin" do
-      coords = load_file("5e61--unwrapped.poscar", topology: :none).coords
+      coords = load_file("5e61--unwrapped.poscar").coords
       coords.wrap around: V.origin
-      expected = load_file("5e61--wrapped--origin.poscar", topology: :none).coords
+      expected = load_file("5e61--wrapped--origin.poscar").coords
       coords.should be_close expected, 1e-3
     end
   end

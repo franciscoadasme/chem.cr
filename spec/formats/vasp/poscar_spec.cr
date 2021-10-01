@@ -3,7 +3,7 @@ require "../../spec_helper.cr"
 describe Chem::VASP::Poscar do
   describe ".parse" do
     it "parses a basic file" do
-      st = load_file "basic.poscar", topology: :guess
+      st = load_file "basic.poscar", guess_topology: true
       st.source_file.should eq Path["spec/data/poscar/basic.poscar"].expand
       st.n_atoms.should eq 49
 

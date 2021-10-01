@@ -149,23 +149,15 @@ def fake_structure(*, include_bonds : Bool = true) : Chem::Structure
   structure
 end
 
-def load_file(path : String, topology level : TopologyLevel? = nil) : Structure
+def load_file(path : String, guess_topology : Bool = false) : Structure
   path = File.join File.extname(path)[1..], path unless File.extname(path).blank?
   path = File.join "spec", "data", path
-  structure = case Chem::Format.from_filename(path)
-              when .xyz?    then Chem::Structure.from_xyz path, guess_topology: level.nil?
-              when .poscar? then Chem::Structure.from_poscar path, guess_topology: level.nil?
-              when .gen?    then Chem::Structure.from_gen path, guess_topology: level.nil?
-              else               Chem::Structure.read path
-              end
-  if level
-    perception = Topology::Perception.new structure
-    perception.guess_topology if level >= TopologyLevel::Templates
-    # perception.guess_bonds if level > TopologyLevel::Templates
-    perception.guess_residues if level > TopologyLevel::Bonds
-    # structure.renumber_by_connectivity if level > TopologyLevel::Guess
+  case Chem::Format.from_filename(path)
+  when .xyz?    then Chem::Structure.from_xyz(path, guess_topology: guess_topology)
+  when .poscar? then Chem::Structure.from_poscar(path, guess_topology: guess_topology)
+  when .gen?    then Chem::Structure.from_gen(path, guess_topology: guess_topology)
+  else               Chem::Structure.read(path)
   end
-  structure
 end
 
 def load_hlxparams_data

@@ -14,7 +14,7 @@ describe Chem::Residue do
   describe "#<=>" do
     context "given insertion codes" do
       it "compares based on insertion codes" do
-        residues = load_file("insertion_codes.pdb", topology: :bonds).residues
+        residues = load_file("insertion_codes.pdb").residues
         (residues[0] <=> residues[1]).<(0).should be_true
         (residues[1] <=> residues[1]).should eq 0
         (residues[2] <=> residues[1]).>(0).should be_true
@@ -266,7 +266,7 @@ describe Chem::Residue do
 
     context "given a periodic peptide chain" do
       it "returns two residues for every residue" do
-        load_file("hlx_gly.poscar", topology: :guess).each_residue do |residue|
+        load_file("hlx_gly.poscar", guess_topology: true).each_residue do |residue|
           residue.bonded_residues.map(&.name).should eq %w(GLY GLY)
         end
       end
@@ -283,15 +283,15 @@ describe Chem::Residue do
 
   describe "#cis?" do
     it "returns true when residue is in the cis conformation" do
-      load_file("cis-trans.pdb", topology: :templates).residues[2].cis?.should be_true
+      load_file("cis-trans.pdb").residues[2].cis?.should be_true
     end
 
     it "returns true when residue is not in the cis conformation" do
-      load_file("cis-trans.pdb", topology: :templates).residues[1].cis?.should be_false
+      load_file("cis-trans.pdb").residues[1].cis?.should be_false
     end
 
     it "returns false when residue is at the start" do
-      load_file("cis-trans.pdb", topology: :templates).residues[0].cis?.should be_false
+      load_file("cis-trans.pdb").residues[0].cis?.should be_false
     end
   end
 
@@ -338,7 +338,7 @@ describe Chem::Residue do
   describe "#succ" do
     context "given a periodic peptide" do
       it "returns a residue for the last residue" do
-        residues = load_file("hlx_gly.poscar", topology: :guess).residues.map &.succ
+        residues = load_file("hlx_gly.poscar", guess_topology: true).residues.map &.succ
         residues.map(&.try(&.number)).should eq (2..13).to_a + [1]
       end
     end
@@ -359,7 +359,7 @@ describe Chem::Residue do
 
     context "given a periodic peptide" do
       it "returns omega using minimum-image convention" do
-        structure = load_file "hlx_gly.poscar", topology: :guess
+        structure = load_file "hlx_gly.poscar", guess_topology: true
         structure.each_residue do |residue|
           residue.omega.should be_close -171.64, 1e-2
         end
@@ -395,7 +395,7 @@ describe Chem::Residue do
 
     context "given a periodic peptide" do
       it "returns phi using minimum-image convention" do
-        structure = load_file "hlx_gly.poscar", topology: :guess
+        structure = load_file "hlx_gly.poscar", guess_topology: true
         structure.each_residue do |residue|
           residue.phi.should be_close -80.33, 1e-2
         end
@@ -419,7 +419,7 @@ describe Chem::Residue do
   describe "#pred" do
     context "given a periodic peptide" do
       it "returns the last residue for the first one" do
-        residues = load_file("hlx_gly.poscar", topology: :guess).residues.map &.pred
+        residues = load_file("hlx_gly.poscar", guess_topology: true).residues.map &.pred
         residues.map(&.try(&.number)).should eq [13] + (1..12).to_a
       end
     end
@@ -440,7 +440,7 @@ describe Chem::Residue do
 
     context "given a periodic peptide" do
       it "returns psi using minimum-image convention" do
-        structure = load_file "hlx_gly.poscar", topology: :guess
+        structure = load_file "hlx_gly.poscar", guess_topology: true
         structure.each_residue do |residue|
           residue.psi.should be_close 58.2, 1e-2
         end
@@ -463,15 +463,15 @@ describe Chem::Residue do
 
   describe "#trans?" do
     it "returns true when residue is in the trans conformation" do
-      load_file("cis-trans.pdb", topology: :templates).residues[1].trans?.should be_true
+      load_file("cis-trans.pdb").residues[1].trans?.should be_true
     end
 
     it "returns true when residue is not in the trans conformation" do
-      load_file("cis-trans.pdb", topology: :templates).residues[2].trans?.should be_false
+      load_file("cis-trans.pdb").residues[2].trans?.should be_false
     end
 
     it "returns false when residue is at the start" do
-      load_file("cis-trans.pdb", topology: :templates).residues[0].trans?.should be_false
+      load_file("cis-trans.pdb").residues[0].trans?.should be_false
     end
   end
 

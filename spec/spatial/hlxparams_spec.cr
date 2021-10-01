@@ -36,7 +36,7 @@ describe Chem::Spatial do
 
     context "given a periodic peptide" do
       it "returns helical parameters" do
-        structure = load_file "hlx_gly.poscar", topology: :guess
+        structure = load_file "hlx_gly.poscar", guess_topology: true
         structure.each_residue.map(&.hlxparams).each do |params|
           params = params.should_not be_nil
           params.theta.should be_close 166.15, 1e-2

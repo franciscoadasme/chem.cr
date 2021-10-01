@@ -120,7 +120,7 @@ describe Chem::Structure do
 
   describe "#renumber_by_connectivity" do
     it "renumbers residues in ascending order based on the link bond" do
-      structure = load_file "5e5v--unwrapped.poscar", topology: :guess
+      structure = load_file "5e5v--unwrapped.poscar", guess_topology: true
       structure.renumber_by_connectivity split_chains: false
 
       chains = structure.chains
@@ -140,7 +140,7 @@ describe Chem::Structure do
     end
 
     it "renumbers residues of a periodic peptide" do
-      structure = load_file "hlx_gly.poscar", topology: :renumber
+      structure = load_file "hlx_gly.poscar"
 
       structure.each_residue.cons(2, reuse: true).each do |(a, b)|
         a["C"].bonded?(b["N"]).should be_true
@@ -154,7 +154,7 @@ describe Chem::Structure do
         "polyala-trp--theta-80.000--c-19.91.poscar",
         "polyala-trp--theta-180.000--c-10.00.poscar",
       ].each do |filename|
-        structure = load_file(filename, topology: :guess)
+        structure = load_file(filename, guess_topology: true)
         structure.renumber_by_connectivity
         residues = structure.residues.to_a.sort_by(&.number)
         residues.map(&.number).should eq (1..residues.size).to_a

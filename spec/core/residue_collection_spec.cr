@@ -28,7 +28,7 @@ describe Chem::ResidueCollection do
     end
 
     it "iterates over secondary structure elements non-strictly" do
-      s = load_file "hlx_gly.poscar", topology: :guess
+      s = load_file "hlx_gly.poscar", guess_topology: true
       builder = Chem::Structure::Builder.new s
       builder.secondary_structure({'A', 2, nil}, {'A', 4, nil}, :right_handed_helix_alpha)
       builder.secondary_structure({'A', 5, nil}, {'A', 8, nil}, :right_handed_helix3_10)
@@ -55,7 +55,7 @@ describe Chem::ResidueCollection do
     end
 
     it "returns an iterator over secondary structure elements non-strictly" do
-      s = load_file "hlx_gly.poscar", topology: :guess
+      s = load_file "hlx_gly.poscar", guess_topology: true
       builder = Chem::Structure::Builder.new s
       builder.secondary_structure({'A', 1, nil}, {'A', 5, nil}, :right_handed_helix_alpha)
       builder.secondary_structure({'A', 6, nil}, {'A', 10, nil}, :right_handed_helix3_10)
@@ -97,7 +97,7 @@ describe Chem::ResidueCollection do
 
   describe "#residue_fragments" do
     it "returns fragments of residues" do
-      structure = load_file("cylindrin--size-09.pdb", topology: :bonds)
+      structure = load_file("cylindrin--size-09.pdb")
       fragments = structure.residue_fragments
       fragments.size.should eq 6
       fragments.map(&.size).should eq [9] * 6

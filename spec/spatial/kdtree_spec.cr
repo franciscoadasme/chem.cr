@@ -28,7 +28,7 @@ describe Chem::Spatial::KDTree do
   end
 
   context "real example" do
-    st = load_file "1h1s.pdb", topology: :none
+    st = load_file "1h1s.pdb"
     kdtree = KDTree.new st, periodic: false
 
     describe "#each_neighbor" do
@@ -85,14 +85,14 @@ describe Chem::Spatial::KDTree do
   context "periodic" do
     describe "#neighbors" do
       it "returns the atoms within the given radius of a point sorted by proximity" do
-        structure = load_file "AlaIle--wrapped.poscar", topology: :none
+        structure = load_file "AlaIle--wrapped.poscar"
         kdtree = KDTree.new structure, radius: 2.5
         atoms = kdtree.neighbors of: structure.atoms[4], within: 2.5
         atoms.map(&.serial).sort!.should eq [4, 17, 25, 28, 29, 30, 32]
       end
 
       it "returns the atoms within the given radius of a point sorted by proximity" do
-        structure = load_file "5e61--wrapped.poscar", topology: :none
+        structure = load_file "5e61--wrapped.poscar"
         kdtree = KDTree.new structure, radius: 2
         atoms = kdtree.neighbors of: structure.atoms[16], within: 2
         atoms.map(&.serial).should eq [86, 87, 88, 16]

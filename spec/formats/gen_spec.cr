@@ -2,7 +2,7 @@ require "../spec_helper"
 
 describe Chem::Gen::Reader do
   it "parses a non-periodic Gen file" do
-    structure = load_file "non_periodic.gen", topology: :none
+    structure = load_file "non_periodic.gen"
     structure.source_file.should eq Path["spec/data/gen/non_periodic.gen"].expand
     structure.lattice.should be_nil
 
@@ -18,7 +18,7 @@ describe Chem::Gen::Reader do
   end
 
   it "parses a periodic Gen file" do
-    structure = load_file "periodic.gen", topology: :none
+    structure = load_file "periodic.gen"
     structure.source_file.should eq Path["spec/data/gen/periodic.gen"].expand
     structure.lattice.should_not be_nil
     structure.lattice.not_nil!.i.should eq V[40, 0, 0]
@@ -36,7 +36,7 @@ describe Chem::Gen::Reader do
   end
 
   it "parses a Gen file having fractional coordinates" do
-    structure = load_file "fractional.gen", topology: :none
+    structure = load_file "fractional.gen"
     structure.source_file.should eq Path["spec/data/gen/fractional.gen"].expand
     structure.lattice.should_not be_nil
     structure.lattice.not_nil!.i.should eq V[2.713546, 2.713546, 0]

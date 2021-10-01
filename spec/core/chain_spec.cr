@@ -30,7 +30,7 @@ describe Chem::Chain do
 
   describe "#renumber_by_connectivity" do
     it "renumbers residues by connectivity" do
-      chain = load_file("cylindrin--size-09.pdb", topology: :bonds).dig 'B'
+      chain = load_file("cylindrin--size-09.pdb").dig 'B'
       chain.renumber_by_connectivity
       chain.n_residues.should eq 18
       chain.residues.map(&.number).should eq (1..18).to_a

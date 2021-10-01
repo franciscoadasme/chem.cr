@@ -404,13 +404,13 @@ end
 
 describe Chem::PDB::Writer do
   it "writes a structure" do
-    structure = load_file "1crn.pdb", topology: :templates
+    structure = load_file "1crn.pdb"
     expected = File.read "spec/data/pdb/1crn--stripped.pdb"
     structure.to_pdb.should eq expected
   end
 
   it "writes an atom collection" do
-    structure = load_file "1crn.pdb", topology: :none
+    structure = load_file "1crn.pdb"
     structure.residues[4].to_pdb.should eq <<-EOS
       REMARK   4                                                                      
       REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         

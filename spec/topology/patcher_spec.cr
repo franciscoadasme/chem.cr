@@ -54,7 +54,7 @@ describe Topology::Patcher do
     end
 
     it "does not connect consecutive residues when there are far away" do
-      st = load_file "protein_gap.pdb", topology: :none
+      st = load_file "protein_gap.pdb"
       Topology::Patcher.new(st).match_and_patch
       r1, r2, r3, r4 = st.residues
       r1["C"].bonds[r2["N"]]?.should_not be_nil

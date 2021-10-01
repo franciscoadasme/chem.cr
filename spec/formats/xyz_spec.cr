@@ -8,7 +8,7 @@ describe Chem::XYZ::Reader do
                "H", "H", "H", "H", "H", "H", "N", "C", "C", "O", "C", "H", "H", "H",
                "H", "H", "O", "H", "H"]
 
-    structure = load_file "acama.xyz", topology: :none
+    structure = load_file "acama.xyz"
     structure.source_file.should eq Path["spec/data/xyz/acama.xyz"].expand
     structure.title.should eq "Ala-Cys-Ala-Met-Ala"
     structure.n_atoms.should eq 61
