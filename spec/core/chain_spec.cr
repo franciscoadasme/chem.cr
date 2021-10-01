@@ -11,7 +11,7 @@ describe Chem::Chain do
 
   describe "#<=>" do
     it "compares based on identifier" do
-      chains = Structure.build(guess_topology: false) do
+      chains = Structure.build do
         chain 'A'
         chain 'B'
         chain 'C'

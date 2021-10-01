@@ -4,7 +4,7 @@ alias KDTree = Chem::Spatial::KDTree
 
 describe Chem::Spatial::KDTree do
   context "toy example" do
-    st = Chem::Structure.build(guess_topology: false) do
+    st = Chem::Structure.build do
       atom V[4, 3, 0]   # d^2 = 25
       atom V[3, 0, 0]   # d^2 = 9
       atom V[-1, 2, 0]  # d^2 = 5

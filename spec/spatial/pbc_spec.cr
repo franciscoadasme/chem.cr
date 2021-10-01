@@ -3,7 +3,7 @@ require "../spec_helper"
 describe Chem::Spatial::PBC do
   describe "#each_adjacent_image" do
     it "yields each atom in the adjacent periodic images" do
-      structure = Chem::Structure.build(guess_topology: false) do
+      structure = Chem::Structure.build do
         lattice 10, 10, 10
 
         atom :C, V[2.5, 2.5, 2.5]
@@ -28,7 +28,7 @@ describe Chem::Spatial::PBC do
     it "yields each atom in the adjacent periodic images for non-centered structure" do
       offset = V[-20, 10, 30]
 
-      structure = Chem::Structure.build(guess_topology: false) do
+      structure = Chem::Structure.build do
         lattice 10, 10, 10
 
         atom :C, V[2.5, 2.5, 2.5]
@@ -52,7 +52,7 @@ describe Chem::Spatial::PBC do
     end
 
     it "yields each atom in the adjacent periodic images within the given radius" do
-      structure = Chem::Structure.build(guess_topology: false) do
+      structure = Chem::Structure.build do
         lattice 10, 10, 10
 
         atom :C, V[1, 8.5, 3.5]

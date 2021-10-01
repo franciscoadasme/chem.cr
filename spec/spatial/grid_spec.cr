@@ -33,7 +33,7 @@ describe Chem::Spatial::Grid do
     end
 
     it "returns a grid having distances to nearest atom" do
-      st = Chem::Structure.build(guess_topology: false) do
+      st = Chem::Structure.build do
         lattice 2, 2, 2
         atom :C, V[1, 1, 1]
         atom :C, V[1.5, 0.5, 0.5]

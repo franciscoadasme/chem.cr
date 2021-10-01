@@ -448,7 +448,7 @@ describe Chem::PDB::Writer do
   end
 
   it "writes CONECT records" do
-    structure = Chem::Structure.build(guess_topology: false) do
+    structure = Chem::Structure.build do
       residue "ICN" do
         atom :i, V[3.149, 0, 0]
         atom :c, V[1.148, 0, 0]
@@ -473,7 +473,7 @@ describe Chem::PDB::Writer do
   end
 
   it "writes CONECT records for renumbered atoms" do
-    structure = Chem::Structure.build(guess_topology: false) do
+    structure = Chem::Structure.build do
       residue "ICN" do
         atom :i, V[3.149, 0, 0]
         atom :c, V[1.148, 0, 0]
@@ -507,7 +507,7 @@ describe Chem::PDB::Writer do
   end
 
   it "writes CONECT records for specified bonds" do
-    structure = Chem::Structure.build(guess_topology: false) do
+    structure = Chem::Structure.build do
       residue "CH4" do
         atom :c, V[0, 0, 0]
         atom :h, V[0.65, 0.65, -0.65]
@@ -533,7 +533,7 @@ describe Chem::PDB::Writer do
   end
 
   it "writes big numbers" do
-    structure = Chem::Structure.build(guess_topology: false) do
+    structure = Chem::Structure.build do
       residue "ICN" do
         atom :i, V[3.149, 0, 0]
         atom :c, V[1.148, 0, 0]
@@ -562,7 +562,7 @@ describe Chem::PDB::Writer do
   end
 
   it "writes four-letter residue names (#45)" do
-    structure = Chem::Structure.build(guess_topology: false) do
+    structure = Chem::Structure.build do
       residue "DMPG" do
         atom "C13", V[9.194, 10.488, 13.865]
         atom "H13A", V[8.843, 9.508, 14.253]

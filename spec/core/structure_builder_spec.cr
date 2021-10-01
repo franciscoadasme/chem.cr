@@ -2,7 +2,7 @@ require "../spec_helper"
 
 describe Chem::Structure::Builder do
   it "builds a structure" do
-    st = Chem::Structure.build(guess_topology: false) do
+    st = Chem::Structure.build do
       title "Ser-Thr-Gly Val"
       chain 'F' do
         residue "SER", 1 do
@@ -62,7 +62,7 @@ describe Chem::Structure::Builder do
   end
 
   it "builds a structure (no DSL)" do
-    builder = Chem::Structure::Builder.new guess_topology: false
+    builder = Chem::Structure::Builder.new
     builder.title "Ser-Thr-Gly Val"
     builder.chain 'T'
     builder.residue "SER"
@@ -119,7 +119,7 @@ describe Chem::Structure::Builder do
   end
 
   it "names chains automatically" do
-    st = Chem::Structure.build(guess_topology: false) do
+    st = Chem::Structure.build do
       62.times do
         chain { }
       end
@@ -130,7 +130,7 @@ describe Chem::Structure::Builder do
   end
 
   it "names chains automatically after manually setting one" do
-    st = Chem::Structure.build(guess_topology: false) do
+    st = Chem::Structure.build do
       chain 'F'
       chain { }
       chain { }
@@ -150,7 +150,7 @@ describe Chem::Structure::Builder do
   end
 
   it "numbers residues automatically" do
-    st = Chem::Structure.build(guess_topology: false) do
+    st = Chem::Structure.build do
       chain do
         2.times { residue "ALA" }
       end
@@ -166,7 +166,7 @@ describe Chem::Structure::Builder do
   end
 
   it "numbers residues automatically after manually setting one" do
-    st = Chem::Structure.build(guess_topology: false) do
+    st = Chem::Structure.build do
       chain
       residue "SER", 5
       3.times { residue "ALA" }
@@ -176,7 +176,7 @@ describe Chem::Structure::Builder do
   end
 
   it "names atoms automatically when called with element" do
-    st = Chem::Structure.build(guess_topology: false) do
+    st = Chem::Structure.build do
       atom :C, Vector.origin
       atom :C, Vector.origin
       atom :O, Vector.origin
@@ -189,7 +189,7 @@ describe Chem::Structure::Builder do
   end
 
   it "creates a chain automatically" do
-    st = Chem::Structure.build(guess_topology: false) do
+    st = Chem::Structure.build do
       residue "SER"
     end
 
@@ -207,7 +207,7 @@ describe Chem::Structure::Builder do
   end
 
   it "adds dummy atoms" do
-    st = Chem::Structure.build(guess_topology: false) do
+    st = Chem::Structure.build do
       %w(N CA C O CB).each { |name| atom name, Vector.origin }
     end
 
@@ -226,7 +226,7 @@ describe Chem::Structure::Builder do
   end
 
   it "adds atom with named arguments" do
-    st = Chem::Structure.build(guess_topology: false) do
+    st = Chem::Structure.build do
       atom "OD1", Vector.origin, formal_charge: -1, temperature_factor: 43.24
     end
 
@@ -236,7 +236,7 @@ describe Chem::Structure::Builder do
   end
 
   it "adds bonds by atom index" do
-    structure = Chem::Structure.build(guess_topology: false) do
+    structure = Chem::Structure.build do
       atom :O, V[0, 0, 0]
       atom :H, V[-1, 0, 0]
       atom :H, V[1, 0, 0]
@@ -250,7 +250,7 @@ describe Chem::Structure::Builder do
   end
 
   it "sets secondary structure" do
-    structure = Chem::Structure.build(guess_topology: false) do
+    structure = Chem::Structure.build do
       chain { %w(PHE ARG ALA).each { |name| residue name } }
       chain { %w(ILE VAL).each { |name| residue name } }
       secondary_structure({'A', 1, nil}, {'A', 2, nil}, :right_handed_helix_alpha)

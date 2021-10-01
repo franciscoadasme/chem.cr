@@ -3,7 +3,7 @@ require "../spec_helper"
 describe Chem::Structure do
   describe ".build" do
     it "builds a structure" do
-      st = Chem::Structure.build(guess_topology: false) do
+      st = Chem::Structure.build do
         title "Alanine"
         residue "ALA" do
           %w(N CA C O CB).each { |name| atom name, Vector.origin }
@@ -43,7 +43,7 @@ describe Chem::Structure do
 
   describe "#delete" do
     it "deletes a chain" do
-      structure = Structure.build(guess_topology: false) do
+      structure = Structure.build do
         3.times { chain { } }
       end
       structure.n_chains.should eq 3
@@ -191,7 +191,7 @@ describe Chem::Structure do
   end
 
   describe "#write" do
-    structure = Structure.build(guess_topology: false) do
+    structure = Structure.build do
       title "ICN"
       lattice 5, 10, 10
       atom :I, V[-2, 0, 0]

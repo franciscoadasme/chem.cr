@@ -35,7 +35,7 @@ describe Chem::Bond do
 
   describe "#inspect" do
     it "returns a delimited string representation" do
-      structure = Structure.build(guess_topology: false) do
+      structure = Structure.build do
         residue "ICN", 91
         atom :I, V[-1, 0, 0]
         atom :C, V[0, 0, 0]

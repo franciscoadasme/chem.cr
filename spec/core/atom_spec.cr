@@ -11,7 +11,7 @@ describe Chem::Atom do
   end
 
   describe "#===" do
-    atom = Structure.build(guess_topology: false) { atom "NG1", V[0, 0, 0] }.atoms[0]
+    atom = Structure.build { atom "NG1", V[0, 0, 0] }.atoms[0]
 
     it "tells if atom matches atom type" do
       (atom === Topology::AtomType.new("NG1")).should be_true
@@ -71,7 +71,7 @@ describe Chem::Atom do
 
   describe "#match?" do
     it "tells if atom matches atom type" do
-      atom = Structure.build(guess_topology: false) { atom "CD2", V[0, 0, 0] }.atoms[0]
+      atom = Structure.build { atom "CD2", V[0, 0, 0] }.atoms[0]
       atom.match?(Topology::AtomType.new("CD2", element: "C")).should be_true
       atom.match?(Topology::AtomType.new("CD2", element: "N")).should be_false
       atom.match?(Topology::AtomType.new("ND2")).should be_false
@@ -80,14 +80,14 @@ describe Chem::Atom do
 
   describe "#missing_valency" do
     it "returns number of bonds to reach closest nominal valency (no bonds)" do
-      structure = Structure.build(guess_topology: false) do
+      structure = Structure.build do
         atom :C, V[0, 0, 0]
       end
       structure.atoms[0].missing_valency.should eq 4
     end
 
     it "returns number of bonds to reach closest nominal valency (bonds)" do
-      structure = Structure.build(guess_topology: false) do
+      structure = Structure.build do
         atom :C, V[0, 0, 0]
         atom :H, V[1, 0, 0]
         atom :H, V[-1, 0, 0]
@@ -99,7 +99,7 @@ describe Chem::Atom do
     end
 
     it "returns number of bonds to reach closest nominal valency (full bonds)" do
-      structure = Structure.build(guess_topology: false) do
+      structure = Structure.build do
         atom :C, V[0, 0, 0]
         atom :O, V[0, 1, 0]
         atom :C, V[-1, 0, 0]
@@ -112,7 +112,7 @@ describe Chem::Atom do
     end
 
     it "returns number of bonds to reach closest nominal valency (over bonds)" do
-      structure = Structure.build(guess_topology: false) do
+      structure = Structure.build do
         atom :N, V[0, 0, 0]
         atom :C, V[-1, 0, 0]
         atom :H, V[1, 0, 0]
@@ -129,14 +129,14 @@ describe Chem::Atom do
 
   describe "#nominal_valency" do
     it "returns nominal valency (no bonds)" do
-      structure = Structure.build(guess_topology: false) do
+      structure = Structure.build do
         atom :C, V[0, 0, 0]
       end
       structure.atoms[0].nominal_valency.should eq 4
     end
 
     it "returns nominal valency (bonds)" do
-      structure = Structure.build(guess_topology: false) do
+      structure = Structure.build do
         atom :I, V[-1, 0, 0]
         atom :C, V[0, 0, 0]
         atom :N, V[1, 0, 0]
@@ -147,7 +147,7 @@ describe Chem::Atom do
     end
 
     it "returns nominal valency (bonds exceed maximum valency)" do
-      structure = Structure.build(guess_topology: false) do
+      structure = Structure.build do
         atom :N, V[1, 0, 0]
         atom :H, V[-1, 0, 0]
         atom :H, V[1, 0, 0]
@@ -162,7 +162,7 @@ describe Chem::Atom do
     end
 
     it "returns nominal valency (multiple valencies, 1)" do
-      structure = Structure.build(guess_topology: false) do
+      structure = Structure.build do
         atom :C, V[-1, 0, 0]
         atom :S, V[0, 0, 0]
         atom :H, V[1, 0, 0]
@@ -173,7 +173,7 @@ describe Chem::Atom do
     end
 
     it "returns nominal valency (multiple valencies, 2)" do
-      structure = Structure.build(guess_topology: false) do
+      structure = Structure.build do
         atom :O, V[-1, 0, 0]
         atom :S, V[0, 0, 0]
         atom :O, V[1, 0, 0]
@@ -188,7 +188,7 @@ describe Chem::Atom do
     end
 
     it "returns nominal valency (multiple valencies, 3)" do
-      structure = Structure.build(guess_topology: false) do
+      structure = Structure.build do
         atom :O, V[-1, 0, 0]
         atom :S, V[0, 0, 0]
         atom :O, V[1, 0, 0]
@@ -205,7 +205,7 @@ describe Chem::Atom do
     end
 
     it "returns maximum valency for ionic elements" do
-      structure = Structure.build(guess_topology: false) do
+      structure = Structure.build do
         atom :Na, V[0, 0, 0]
       end
       structure.atoms[0].nominal_valency.should eq 1

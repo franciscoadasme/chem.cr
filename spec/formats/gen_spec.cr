@@ -50,7 +50,7 @@ describe Chem::Gen::Reader do
 end
 
 describe Chem::Gen::Writer do
-  structure = Chem::Structure.build(guess_topology: false) do
+  structure = Chem::Structure.build do
     title "NaCl-O-NaCl"
     atom PeriodicTable::Cl, V[30, 15, 10]
     atom PeriodicTable::Na, V[10, 5, 5]
