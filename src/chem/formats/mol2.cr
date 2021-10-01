@@ -28,8 +28,7 @@ module Chem::Mol2
       @pull.next_line
 
       Structure.build(
-        guess_topology: false,
-        source_file: (file = @io).is_a?(File) ? file.path : nil,
+        source_file: (file = @io).is_a?(File) ? file.path : nil
       ) do |builder|
         builder.title title
         @pull.each_line do

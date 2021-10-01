@@ -6,10 +6,11 @@ module Chem
     @atom_serial : Int32 = 0
     @atoms : Indexable(Atom)?
     @chain : Chain?
+    @guess_topology = false
     @residue : Residue?
     @structure : Structure
 
-    def initialize(*args, @guess_topology : Bool = true, **options)
+    def initialize(*args, @guess_topology : Bool = false, **options)
       @structure = Structure.new **options
     end
 
@@ -18,7 +19,6 @@ module Chem
       structure.each_chain { |chain| @chain = chain }
       @chain.try &.each_residue { |residue| @residue = residue }
       @atom_serial = structure.each_atom.max_of?(&.serial) || 0
-      @guess_topology = true
     end
 
     def atom(coords : Spatial::Vector, **options) : Atom

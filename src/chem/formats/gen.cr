@@ -3,7 +3,7 @@ module Chem::Gen
   class Reader
     include FormatReader(Structure)
 
-    def initialize(@io : IO, @guess_topology : Bool = true, @sync_close : Bool = false)
+    def initialize(@io : IO, @guess_topology : Bool = false, @sync_close : Bool = false)
       @pull = PullParser.new(@io)
     end
 

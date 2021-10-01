@@ -4,7 +4,7 @@ module Chem::XYZ
     include FormatReader(Structure)
     include FormatReader::MultiEntry(Structure)
 
-    def initialize(@io : IO, @guess_topology : Bool = true, @sync_close : Bool = false)
+    def initialize(@io : IO, @guess_topology : Bool = false, @sync_close : Bool = false)
       @pull = PullParser.new(@io)
     end
 

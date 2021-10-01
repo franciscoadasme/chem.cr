@@ -226,7 +226,6 @@ module Chem::PDB
       @pull.next_line if @pull.at(0, 6).str == "MODEL "
 
       @builder = Structure::Builder.new(
-        guess_topology: false,
         source_file: (file = @io).is_a?(File) ? file.path : nil,
       )
       @builder.title @pdb_title
