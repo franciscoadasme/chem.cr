@@ -103,8 +103,8 @@ describe Topology::Perception do
     it "doesn't guess bond orders if hydrogens are missing" do
       structure = load_file "residue_kind_unknown_covalent_ligand.pdb", topology: :bonds
       structure.bonds.size.should eq 59
-      structure.bonds.all?(&.single?).should be_true
-      structure.formal_charges.all?(&.==(0)).should be_true
+      structure.atoms.any?(&.missing_valency.>(0)).should be_true
+      structure.dig('A', 148).bonds.all?(&.single?).should be_true
     end
   end
 
@@ -148,7 +148,7 @@ describe Topology::Perception do
     end
 
     it "guesses the topology of a broken peptide with waters" do
-      chains = load_file("5e5v--unwrapped.poscar").chains
+      chains = load_file("5e5v--unwrapped.poscar", topology: :guess).chains
       chains.map(&.id).should eq ['A', 'B', 'C', 'D']
       chains[0].residues.map(&.name).sort!.should eq %w(ALA ASN GLY ILE LEU PHE SER)
       chains[0].residues.map(&.number).should eq (1..7).to_a
@@ -184,7 +184,7 @@ describe Topology::Perception do
     end
 
     it "detects multiple residues for unmatched atoms (#16)" do
-      structure = load_file "peptide_unknown_residues.xyz"
+      structure = load_file "peptide_unknown_residues.xyz", topology: :guess
       structure.n_residues.should eq 9
       structure.residues.map(&.name).should eq %w(ALA LEU UNK VAL THR LEU SER UNK ALA)
       structure.residues[2].n_atoms.should eq 14
@@ -194,9 +194,10 @@ describe Topology::Perception do
 
     it "renames unmatched atoms" do
       structure = load_file("peptide_unknown_residues.xyz", topology: :guess)
-      residues = structure.residues.to_a.select!(&.other?)
-      residues[0].atoms.map(&.name).should eq %w(N1 C1 C2 O1 C3 O2 H1 H2 H3 H4 C4 H5 H6 H7)
-      residues[1].atoms.map(&.name).should eq %w(N1 C1 C2 O1 S1 H1 H2 H3)
+      structure.dig('A', 3).name.should eq "UNK"
+      structure.dig('A', 3).atoms.map(&.name).should eq %w(N1 C1 C2 O1 C3 O2 H1 H2 H3 H4 C4 H5 H6 H7)
+      structure.dig('A', 8).name.should eq "UNK"
+      structure.dig('A', 8).atoms.map(&.name).should eq %w(N1 C1 C2 O1 S1 H1 H2 H3)
     end
 
     it "guesses the topology of non-standard atoms (#21)" do

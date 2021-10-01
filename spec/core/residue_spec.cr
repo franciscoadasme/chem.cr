@@ -266,7 +266,7 @@ describe Chem::Residue do
 
     context "given a periodic peptide chain" do
       it "returns two residues for every residue" do
-        load_file("hlx_gly.poscar").each_residue do |residue|
+        load_file("hlx_gly.poscar", topology: :guess).each_residue do |residue|
           residue.bonded_residues.map(&.name).should eq %w(GLY GLY)
         end
       end
@@ -338,7 +338,7 @@ describe Chem::Residue do
   describe "#succ" do
     context "given a periodic peptide" do
       it "returns a residue for the last residue" do
-        residues = load_file("hlx_gly.poscar").residues.map &.succ
+        residues = load_file("hlx_gly.poscar", topology: :guess).residues.map &.succ
         residues.map(&.try(&.number)).should eq (2..13).to_a + [1]
       end
     end
@@ -359,7 +359,7 @@ describe Chem::Residue do
 
     context "given a periodic peptide" do
       it "returns omega using minimum-image convention" do
-        structure = load_file "hlx_gly.poscar"
+        structure = load_file "hlx_gly.poscar", topology: :guess
         structure.each_residue do |residue|
           residue.omega.should be_close -171.64, 1e-2
         end
@@ -395,7 +395,7 @@ describe Chem::Residue do
 
     context "given a periodic peptide" do
       it "returns phi using minimum-image convention" do
-        structure = load_file "hlx_gly.poscar"
+        structure = load_file "hlx_gly.poscar", topology: :guess
         structure.each_residue do |residue|
           residue.phi.should be_close -80.33, 1e-2
         end
@@ -418,8 +418,8 @@ describe Chem::Residue do
 
   describe "#pred" do
     context "given a periodic peptide" do
-      it "returns a residue for 13] + the first residue" do
-        residues = load_file("hlx_gly.poscar").residues.map &.pred
+      it "returns the last residue for the first one" do
+        residues = load_file("hlx_gly.poscar", topology: :guess).residues.map &.pred
         residues.map(&.try(&.number)).should eq [13] + (1..12).to_a
       end
     end
@@ -440,7 +440,7 @@ describe Chem::Residue do
 
     context "given a periodic peptide" do
       it "returns psi using minimum-image convention" do
-        structure = load_file "hlx_gly.poscar"
+        structure = load_file "hlx_gly.poscar", topology: :guess
         structure.each_residue do |residue|
           residue.psi.should be_close 58.2, 1e-2
         end

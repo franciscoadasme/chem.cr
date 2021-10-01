@@ -137,7 +137,7 @@ describe Chem::Mol2::Writer do
   end
 
   it "writes lattice" do
-    structure = load_file("waters.xyz")
+    structure = load_file("waters.xyz", topology: :guess)
     structure.lattice = Chem::Lattice.new S[40.961, 18.65, 22.52], 90, 90.77, 120
     structure.to_mol2.should eq File.read("spec/data/mol2/water_in_box.mol2")
   end

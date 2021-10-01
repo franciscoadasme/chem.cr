@@ -6,10 +6,6 @@ class Chem::Topology::Perception
   def initialize(@structure : Structure)
   end
 
-  def guess_bonds : Nil
-    guess_bonds @structure
-  end
-
   # Guesses residues from existing bonds.
   #
   # Atoms are split in fragments, where each fragment is mapped to a list of residues.
@@ -34,6 +30,8 @@ class Chem::Topology::Perception
         end
       end
     end
+    @structure.renumber_by_connectivity split_chains: false
+    assign_residue_types
   end
 
   def guess_topology : Nil
@@ -49,9 +47,11 @@ class Chem::Topology::Perception
         assign_formal_charges AtomView.new(unmatched_atoms.to_a.concat(bonded_atoms).uniq)
       end
     else
-      guess_bonds
-      guess_residues
-      @structure.renumber_by_connectivity split_chains: false
+      build_connectivity @structure
+      if has_hydrogens?
+        assign_bond_orders @structure
+        assign_formal_charges @structure
+      end
     end
     assign_residue_types
   end
@@ -141,14 +141,6 @@ class Chem::Topology::Perception
     polymers, other = fragments.partition &.size.>(1)
     other = other.flatten.sort_by!(&.reskind).group_by(&.reskind).values
     polymers.size + other.size <= MAX_CHAINS ? polymers + other : [fragments.flatten]
-  end
-
-  private def guess_bonds(atoms : AtomCollection) : Nil
-    build_connectivity atoms
-    if has_hydrogens?
-      assign_bond_orders atoms
-      assign_formal_charges atoms
-    end
   end
 
   private def has_topology? : Bool
