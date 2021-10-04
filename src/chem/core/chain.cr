@@ -168,8 +168,8 @@ module Chem
     end
 
     def reset_cache : Nil
+      @residues.sort!
       @residue_table.clear
-      @residues.sort_by! { |residue| {residue.number, (residue.insertion_code || ' ')} }
       @residues.each do |residue|
         @residue_table[{residue.number, residue.insertion_code}] = residue
       end
