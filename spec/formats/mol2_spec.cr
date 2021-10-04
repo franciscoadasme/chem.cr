@@ -87,6 +87,13 @@ describe Chem::Mol2::Reader do
     cell.beta.should be_close 90.77, 1e-2
     cell.gamma.should be_close 120, 1e-2
   end
+
+  it "sets formal charges" do
+    structure = load_file "charged.mol2"
+    structure.formal_charge.should eq 0
+    structure.dig('A', 1, "N5").formal_charge.should eq 1
+    structure.dig('A', 1, "O23").formal_charge.should eq -1
+  end
 end
 
 describe Chem::Mol2::Writer do
