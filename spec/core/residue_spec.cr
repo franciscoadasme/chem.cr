@@ -295,6 +295,20 @@ describe Chem::Residue do
     end
   end
 
+  describe "#code" do
+    it "returns the residue's code" do
+      structure = load_file("3sgr.pdb")
+      seqres = structure.dig('A').residues.select(&.protein?).join(&.code)
+      seqres.should eq "GKLKVLGDVIEVGGKLKVLGDVIEV"
+    end
+
+    it "returns default if residue's code is unknown" do
+      residues = load_file("3sgr.pdb").dig('A').residues
+      residues.join(&.code).should eq "GKLKVLGDVIEVGGKLKVLGDVIEVXXX"
+      residues.join(&.code('?')).should eq "GKLKVLGDVIEVGGKLKVLGDVIEV???"
+    end
+  end
+
   describe "#dextro?" do
     it "tells if it's dextrorotatory" do
       load_file("l-d-peptide.pdb").residues.map(&.dextro?).should eq [

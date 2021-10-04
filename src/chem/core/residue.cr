@@ -365,6 +365,13 @@ module Chem
       self
     end
 
+    # Returns a single-letter code associated with the residue's type.
+    # If the residue has no associated type or it doesn't have a code,
+    # the method returns *default*.
+    def code(default : Char = 'X') : Char
+      type.try(&.code) || default
+    end
+
     def delete(atom : Atom) : Atom?
       atom = @atoms.delete atom
       @atom_table.delete(atom.name) if atom && @atom_table[atom.name]?.same?(atom)
