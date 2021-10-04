@@ -317,6 +317,19 @@ describe Chem::Residue do
     end
   end
 
+  describe "#insertion_code" do
+    it "updates residue position" do
+      structure = load_file("insertion_codes.pdb")
+      seqres = structure.dig('A').residues.select(&.protein?).join(&.code)
+      seqres.should eq "WGSNKPV"
+      residue = structure.dig('A', 75, 'C')
+      structure.dig('A', 75).insertion_code = 'C'
+      residue.insertion_code = nil
+      seqres = structure.dig('A').residues.select(&.protein?).join(&.code)
+      seqres.should eq "NGSWKPV"
+    end
+  end
+
   describe "#inspect" do
     it "returns a delimited string representation" do
       structure = Chem::Structure.new
@@ -346,6 +359,17 @@ describe Chem::Residue do
       residue.kind.solvent?.should be_true
       residue.name = "ULK"
       residue.kind.other?.should be_true
+    end
+  end
+
+  describe "#number" do
+    it "updates residue position" do
+      structure = load_file("3sgr.pdb")
+      seqres = structure.dig('B').residues.select(&.protein?).join(&.code)
+      seqres.should eq "GKLKVLGDVIEVGGKLKVLGDVIEV"
+      structure.dig('B', 10).number = 40
+      seqres = structure.dig('B').residues.select(&.protein?).join(&.code)
+      seqres.should eq "GKLKVLGDVIVGGKLKVLGDVIEVE"
     end
   end
 

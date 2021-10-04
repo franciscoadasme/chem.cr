@@ -420,6 +420,12 @@ module Chem
       Spatial.hlxparams self, structure.lattice
     end
 
+    def insertion_code=(insertion_code : Char?) : Char?
+      @insertion_code = insertion_code
+      @chain.reset_cache
+      @insertion_code
+    end
+
     def inspect(io : IO) : Nil
       io << "<Residue "
       to_s io
@@ -450,6 +456,12 @@ module Chem
       @name = str
       assign_kind_from_templates
       str
+    end
+
+    def number=(number : Int32) : Int32
+      @number = number
+      @chain.reset_cache
+      @number
     end
 
     # Returns the following residue if exists, otherwise `nil`.
