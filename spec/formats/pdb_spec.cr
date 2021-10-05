@@ -165,12 +165,13 @@ describe Chem::PDB do
     it "parses a PDB file with deuterium" do
       st = load_file "isotopes.pdb"
       st.n_atoms.should eq 12
-      st.atoms[5].element.symbol.should eq "D"
+      st.atoms[5].element.should eq PeriodicTable::H
     end
 
-    it "parses a PDB file with element X (ASX case)" do
-      st = load_file "3e2o.pdb"
-      st.residues[serial: 235]["XD1"].element.should be PeriodicTable::X
+    it "raises on unknown element X (ASX case)" do
+      expect_raises Chem::ParseException, "Unknown element" do
+        load_file "3e2o.pdb"
+      end
     end
 
     it "parses a PDB file with SIG* records" do

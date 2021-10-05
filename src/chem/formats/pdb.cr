@@ -180,10 +180,14 @@ module Chem::PDB
       when "first" then return if chid != (@builder.current_chain.try(&.id) || chid)
       end
 
+      atom_name = @pull.at(12, 4).str.strip
       ele = case symbol = @pull.at?(76, 2).str?.presence.try(&.strip)
-            when "D"    then PeriodicTable::D
-            when "X"    then PeriodicTable::X
-            when String then PeriodicTable[symbol]
+            when "D"
+              PeriodicTable::H # deuterium
+            when String
+              PeriodicTable[symbol]? || @pull.error("Unknown element")
+            else
+              PeriodicTable[atom_name: atom_name]? || @pull.error("Could not guess element")
             end
 
       @builder.chain chid if chid.alphanumeric?
@@ -199,7 +203,7 @@ module Chem::PDB
         str.reverse.to_i? || @pull.error("Invalid formal charge")
       end
       atom = @builder.atom \
-        @pull.at(12, 4).str.strip,
+        atom_name,
         seqnum_at(6, 5),
         Spatial::Vector.new(x, y, z),
         element: ele,

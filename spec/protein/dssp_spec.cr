@@ -26,18 +26,6 @@ describe Chem::Protein::DSSP do
     actual.should eq "0TT00STTSTT0"
   end
 
-  it "assigns secondary structure (3e2o)" do
-    st = load_file "3e2o.pdb"
-    Chem::Protein::DSSP.assign st
-    expected = "00EE0000TT00HHHHHHHHHHHHHHHHH0TTHHHHT0SHHHHHHHHHHHHTT0BTTTTBSSSTT0GGGSH\
-                HHHT0GGGTTTHHHHHHHHHHHHH0TTS0HHHHHHHHHHHHHHHTT00000B00000000GGG000S00S0\
-                0SS00HHHHHHHHHTTT00HHHHHHHHGGGGSSEE0HHHHS00EESSS0TTS0SSHHHHHHHHS0EEEEE0\
-                TTS0EEEEETTS0EE0HHHHHHHHSHHHHHHHHHHHT0HHHHHHHHHHHHHHHHHTTEE00TTS000B000\
-                0HHHHT0"
-    actual = st.each_residue.select(&.has_backbone?).map(&.sec.code).join
-    actual.should eq expected
-  end
-
   it "assigns secondary structure (4ayo)" do
     st = load_file "4ayo.pdb"
     Chem::Protein::DSSP.assign st
