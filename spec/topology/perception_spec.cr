@@ -215,6 +215,13 @@ describe Topology::Perception do
       structure.dig('B', 7, "OXT").bonds.map(&.order).sort!.should eq [1]
       structure.dig('B', 7, "OXT").formal_charge.should eq -1
     end
+
+    it "guesses the topology of a entire protein" do
+      expected = load_file "1h1s_a--prepared.pdb"
+      structure = Chem::Structure.from_xyz IO::Memory.new(expected.to_xyz)
+      Chem::Topology::Perception.new(structure).guess_residues
+      structure.residues.join(&.code).should eq expected.residues.join(&.code)
+    end
   end
 
   describe "#guess_topology" do
