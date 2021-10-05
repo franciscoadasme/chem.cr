@@ -11,7 +11,7 @@ module Chem::Topology::Templates
     name "ARG"
     code 'R'
     sidechain do
-      main "CB-CG-CD-NE-CZ=NH1"
+      main "CB-CG-CD-NE-CZ=NH1+"
       branch "CZ-NH2"
     end
   end

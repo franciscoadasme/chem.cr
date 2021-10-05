@@ -7,7 +7,7 @@ describe Chem::PDB do
       st = load_file "1h1s.pdb"
       st.source_file.should eq Path["spec/data/pdb/1h1s.pdb"].expand
       st.n_atoms.should eq 9701
-      st.formal_charge.should eq -44
+      st.formal_charge.should eq 0
 
       st.chains.map(&.id).should eq ['A', 'B', 'C', 'D']
       st.chains['A'].n_residues.should eq 569
