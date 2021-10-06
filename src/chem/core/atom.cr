@@ -112,6 +112,11 @@ module Chem
       bonds.map &.other(self)
     end
 
+    # Returns the number of bonds.
+    def degree : Int32
+      bonds.size
+    end
+
     def each_bonded_atom : Iterator(Atom)
       bonds.each.map(&.other(self))
     end
