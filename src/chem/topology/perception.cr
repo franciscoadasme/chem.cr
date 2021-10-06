@@ -87,11 +87,11 @@ class Chem::Topology::Perception
 
   private def assign_formal_charges(atoms : AtomCollection) : Nil
     atoms.each_atom do |atom|
-      atom.formal_charge = if atom.element.ionic?
-                             atom.max_valency
-                           else
-                             atom.bonds.sum(&.order) - atom.nominal_valency
-                           end
+      if atom.element.ionic?
+        atom.formal_charge = atom.max_valency
+      elsif atom.formal_charge == 0 # don't reset charge if set
+        atom.formal_charge = atom.bonds.sum(&.order) - atom.nominal_valency
+      end
     end
   end
 
