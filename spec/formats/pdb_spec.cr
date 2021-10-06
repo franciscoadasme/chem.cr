@@ -7,7 +7,7 @@ describe Chem::PDB do
       st = load_file "1h1s.pdb"
       st.source_file.should eq Path["spec/data/pdb/1h1s.pdb"].expand
       st.n_atoms.should eq 9701
-      st.formal_charge.should eq 0
+      st.formal_charge.should eq -62
 
       st.chains.map(&.id).should eq ['A', 'B', 'C', 'D']
       st.chains['A'].n_residues.should eq 569
@@ -44,7 +44,7 @@ describe Chem::PDB do
       st.n_residues.should eq 3
       st.atoms.map(&.element.symbol).should eq ["C", "O", "O", "N", "C", "C", "O",
                                                 "C", "C", "C", "O", "O", "N"]
-      st.atoms.map(&.formal_charge).should eq [0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, -1, 1]
+      st.atoms.map(&.formal_charge).should eq [0, 0, -1, -1, 0, 0, 0, 0, 0, 0, 0, -1, 1]
 
       atom = st.atoms[11]
       atom.serial.should eq 12
@@ -574,10 +574,10 @@ describe Chem::PDB::Writer do
     structure.to_pdb.should eq <<-EOS
       REMARK   4                                                                      
       REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
-      HETATM    1  C13 DMPGA   1       9.194  10.488  13.865  1.00  0.00           C  
+      HETATM    1  C13 DMPGA   1       9.194  10.488  13.865  1.00  0.00           C1-
       HETATM    2 H13A DMPGA   1       8.843   9.508  14.253  1.00  0.00           H  
       HETATM    3 H13B DMPGA   1      10.299  10.527  13.756  1.00  0.00           H  
-      HETATM    4  OC3 DMPGA   1       8.600  10.828  12.580  1.00  0.00           O  
+      HETATM    4  OC3 DMPGA   1       8.600  10.828  12.580  1.00  0.00           O1-
       END                                                                             \n
       EOS
   end

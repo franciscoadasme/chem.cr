@@ -45,12 +45,12 @@ describe Topology::Perception do
       structure.atoms[149].bonded_atoms.map(&.serial).should eq [145] # H near two Os
 
       # aromatic ring
-      structure.atoms[427].bonds[structure.atoms[428]].order.should eq 2
-      structure.atoms[428].bonds[structure.atoms[430]].order.should eq 1
-      structure.atoms[430].bonds[structure.atoms[432]].order.should eq 2
-      structure.atoms[432].bonds[structure.atoms[431]].order.should eq 1
-      structure.atoms[431].bonds[structure.atoms[429]].order.should eq 2
-      structure.atoms[429].bonds[structure.atoms[427]].order.should eq 1
+      structure.atoms[427].bonds[structure.atoms[428]].order.should eq 1
+      structure.atoms[428].bonds[structure.atoms[430]].order.should eq 2
+      structure.atoms[430].bonds[structure.atoms[432]].order.should eq 1
+      structure.atoms[432].bonds[structure.atoms[431]].order.should eq 2
+      structure.atoms[431].bonds[structure.atoms[429]].order.should eq 1
+      structure.atoms[429].bonds[structure.atoms[427]].order.should eq 2
     end
 
     it "guesses bonds from geometry having a sulfate ion" do
@@ -100,11 +100,12 @@ describe Topology::Perception do
       structure.atoms[37].bonds[structure.atoms[38]].single?.should be_true
     end
 
-    it "doesn't guess bond orders if hydrogens are missing" do
+    pending "guess bond orders if hydrogens are missing" do
       structure = load_file "residue_kind_unknown_covalent_ligand.pdb"
-      structure.bonds.size.should eq 59
-      structure.atoms.any?(&.missing_valency.>(0)).should be_true
-      structure.dig('A', 148).bonds.all?(&.single?).should be_true
+    end
+
+    pending "guess bond orders if hydrogens are missing" do
+      structure = load_file "1crn.xyz"
     end
   end
 
@@ -267,6 +268,21 @@ describe Topology::Perception do
         st = load_file "residue_unknown_non_standard_names.pdb"
         st.residues.all?(&.protein?).should be_true
       end
+    end
+
+    it "assigns bond orders for a structure without hydrogens" do
+      structure = Chem::Structure.build do
+        residue "ICN" do
+          atom :i, V[3.149, 0, 0]
+          atom :c, V[1.148, 0, 0]
+          atom :n, V[0, 0, 0]
+          # bond "I1", "C1"
+          # bond "C1", "N1", order: 3
+        end
+      end
+      structure.bonds.size.should eq 2
+      structure.dig('A', 1, "I1").bonds[structure.dig('A', 1, "C1")].order.should eq 1
+      structure.dig('A', 1, "C1").bonds[structure.dig('A', 1, "N1")].order.should eq 3
     end
   end
 end

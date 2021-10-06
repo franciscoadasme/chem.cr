@@ -83,6 +83,7 @@ describe Chem::Atom do
       structure = Structure.build do
         atom :C, V[0, 0, 0]
       end
+      structure.atoms[0].formal_charge = 0
       structure.atoms[0].missing_valency.should eq 4
     end
 
