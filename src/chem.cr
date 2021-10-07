@@ -1,6 +1,5 @@
 require "./chem/core_ext/**"
 
-require "./chem/linalg"
 require "./chem/spatial"
 
 require "./chem/core/bias"

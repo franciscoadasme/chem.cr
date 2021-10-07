@@ -257,12 +257,6 @@ describe Chem::Spatial::Vector do
     end
   end
 
-  describe "#to_m" do
-    it "returns a column matrix" do
-      V[3, 1, 5].to_m.should eq Chem::Linalg::Matrix[[3], [1], [5]]
-    end
-  end
-
   describe "#to_s" do
     it "returns a string representation of a vector" do
       V[2.5, 1, 8.4].to_s.should eq "[2.5 1.0 8.4]"

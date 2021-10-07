@@ -183,10 +183,6 @@ module Chem::Spatial
       [x, y, z]
     end
 
-    def to_m : Linalg::Matrix
-      Linalg::Matrix.column @x, @y, @z
-    end
-
     def to_cartesian(basis : Basis) : self
       @x * basis.i + @y * basis.j + @z * basis.k
     end
