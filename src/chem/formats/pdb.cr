@@ -131,7 +131,7 @@ module Chem::PDB
         when "REMARK"
           case @pull.at(7, 3).str.presence
           when "  2"
-            resolution = @pull.at(23, 7).float?
+            resolution = @pull.at?(23, 7).float?
           when nil
             pdbid = @pull.at(11, 4).str.presence
             date = Time::UNIX_EPOCH if pdbid

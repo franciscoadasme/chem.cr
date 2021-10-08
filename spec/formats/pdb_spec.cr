@@ -400,6 +400,11 @@ describe Chem::PDB do
                             RESOLUTION. PENTAGON RINGS OF WATER MOLECULES IN CRYSTALS \
                             OF CRAMBIN"
     end
+
+    it "discards empty remark 2 record" do
+      expt = Chem::Structure::Experiment.from_pdb "spec/data/pdb/1a02_1.pdb"
+      expt.resolution.should eq 2.7
+    end
   end
 end
 
