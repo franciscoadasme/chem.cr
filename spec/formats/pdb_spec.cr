@@ -401,6 +401,16 @@ describe Chem::PDB do
                             OF CRAMBIN"
     end
 
+    it "reads jumping resids" do
+      structure = load_file "1a02_1.pdb"
+      structure.dig('B').residues.map(&.number).should eq(
+        (5001..5020).to_a +
+        [6004, 6012, 6014, 6031, 6032, 6033, 6037, 6038, 6039, 6041, 6042, 6047,
+         6051, 6054, 6061, 6066, 6080, 6088])
+      structure.dig('F').residues.map(&.number).should eq(
+        (140..192).to_a + [6010, 6044, 6064])
+    end
+
     it "discards empty remark 2 record" do
       expt = Chem::Structure::Experiment.from_pdb "spec/data/pdb/1a02_1.pdb"
       expt.resolution.should eq 2.7
