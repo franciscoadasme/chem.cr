@@ -240,7 +240,7 @@ module Chem::PDB
       @pdb_bonds.clear
       @serial = 0
       @pull.each_line do
-        case @pull.at(0, 6).str
+        case @pull.at?(0, 6).str?
         when "ATOM  "
           read_atom
         when "HETATM"
