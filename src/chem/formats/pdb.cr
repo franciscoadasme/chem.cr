@@ -250,7 +250,7 @@ module Chem::PDB
         when "ENDMDL"
           @pull.next_line
           break
-        when "END   ", "MODEL ", "MASTER"
+        when "END", "END   ", "MODEL ", "MASTER"
           break
         end
       end
