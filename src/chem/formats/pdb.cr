@@ -97,7 +97,7 @@ module Chem::PDB
       title = ""
 
       @pull.each_line do
-        case @pull.at(0, 6).str
+        case @pull.at?(0, 6).str?
         when "CRYST1"
           x = @pull.at(6, 9).float
           y = @pull.at(15, 9).float
