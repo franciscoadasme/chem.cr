@@ -100,11 +100,17 @@ module Chem::PDB
         case @pull.at?(0, 6).str?
         when "CRYST1"
           x = @pull.at(6, 9).float
+          @pull.error "Invalid size" unless x > 0
           y = @pull.at(15, 9).float
+          @pull.error "Invalid size" unless y > 0
           z = @pull.at(24, 9).float
+          @pull.error "Invalid size" unless z > 0
           alpha = @pull.at(33, 7).float
+          @pull.error "Invalid angle" unless 0 < alpha <= 180
           beta = @pull.at(40, 7).float
+          @pull.error "Invalid angle" unless 0 < beta <= 180
           gamma = @pull.at(47, 7).float
+          @pull.error "Invalid angle" unless 0 < gamma <= 180
           @pdb_lattice = Lattice.new Spatial::Size.new(x, y, z), alpha, beta, gamma
         when "EXPDTA"
           str = @pull.at(10, 70).str.split(';')[0].delete "- "

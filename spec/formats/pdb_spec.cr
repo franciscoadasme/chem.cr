@@ -415,6 +415,22 @@ describe Chem::PDB do
       expt = Chem::Structure::Experiment.from_pdb "spec/data/pdb/1a02_1.pdb"
       expt.resolution.should eq 2.7
     end
+
+    it "raises if unit cell is invalid" do
+      io = IO::Memory.new <<-PDB
+        CRYST1   40.960   18.650   22.520  90.00  90.77 -90.00 P 1 21 1
+        PDB
+      ex = expect_raises Chem::ParseException, "Invalid angle" do
+        Chem::Structure::Experiment.from_pdb io
+      end
+      ex.inspect_with_location.should eq <<-EOS
+        Found a parsing issue:
+
+         1 | CRYST1   40.960   18.650   22.520  90.00  90.77 -90.00 P 1 21 1
+                                                            ^^^^^^^
+        Error: Invalid angle
+        EOS
+    end
   end
 end
 
