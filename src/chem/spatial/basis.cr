@@ -11,6 +11,7 @@ module Chem::Spatial
                  alpha : Number = 90.0,
                  beta : Number = 90.0,
                  gamma : Number = 90.0) : self
+      raise ArgumentError.new("Negative angle") if alpha < 0 || beta < 0 || gamma < 0
       if alpha == 90 && beta == 90 && gamma == 90
         i = Vector[size.x, 0, 0]
         j = Vector[0, size.y, 0]
