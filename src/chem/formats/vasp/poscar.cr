@@ -118,7 +118,7 @@ module Chem::VASP::Poscar
     protected def encode_entry(structure : Structure) : Nil
       raise Spatial::NotPeriodicError.new unless lattice = structure.lattice
 
-      atoms = structure.atoms.to_a.sort_by! &.serial
+      atoms = structure.atoms
       coordinate_system = @fractional ? "Direct" : "Cartesian"
       ele_tally = count_elements atoms
       has_constraints = atoms.any? &.constraint

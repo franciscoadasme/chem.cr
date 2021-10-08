@@ -239,29 +239,4 @@ describe Chem::VASP::Poscar::Writer do
          20.0000000000000000   10.0000000000000000   10.0000000000000000\n
       EOS
   end
-
-  it "preserves element order after topology change (#49)" do
-    other = structure.clone
-    atoms = other.atoms.to_a
-    residue = Chem::Residue.new "UNK", 2, other['A']
-    atoms[3..4].each { |atom| atom.residue = residue }
-    residue = Chem::Residue.new "UNK", 3, other['A']
-    atoms[0..1].each { |atom| atom.residue = residue }
-
-    other.to_poscar.should eq <<-EOS
-      NaCl-O-NaCl
-         1.00000000000000
-          40.0000000000000000    0.0000000000000000    0.0000000000000000
-           0.0000000000000000   20.0000000000000000    0.0000000000000000
-           0.0000000000000000    0.0000000000000000   10.0000000000000000
-         Cl   Na   O 
-           2     2     1
-      Cartesian
-         30.0000000000000000   15.0000000000000000   10.0000000000000000
-         20.0000000000000000   10.0000000000000000   10.0000000000000000
-         10.0000000000000000    5.0000000000000000    5.0000000000000000
-         10.0000000000000000   10.0000000000000000   12.5000000000000000
-         30.0000000000000000   15.0000000000000000    9.0000000000000000\n
-      EOS
-  end
 end
