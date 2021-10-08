@@ -844,8 +844,8 @@ structure of surrounding residues.</p>
 <ul><li><code>mkdssp</code> does not handle well alternate conformations in PDB files, sometimes
   discarding entire aminoacids.</li><li><code>mkdssp</code> detects chain breaks by checking non-consecutive numbers of neighboring
   residues. This may fail when residues <em>i</em> and <em>i + 1</em> are not actually bonded, or
-  when residue numbers are not consecutive. This implementation instead checks that
-  the C(<em>i</em>)–N(<em>i</em>+1) bond length is within covalent distance.</li></ul>
+  when residue numbers are not consecutive. This implementation instead uses atom
+  connectivity to check whether C(<em>i</em>)–N(<em>i</em>+1) are bonded.</li></ul>
 
 <p><span class="flag yellow">FIXME</span>  it does not work correctly for periodic structures that have
 bonds between atoms at opposite ends.</p>
@@ -879,7 +879,7 @@ keep this in mind when assigning the secondary structure of many structures.</p>
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/4c95aace9b74eee98d90e36921806addbdd8813e/src/chem/protein/dssp.cr#L34" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/97eb63a4392260d7cca1d849df70abc7a77b011e/src/chem/protein/dssp.cr#L34" target="_blank">
         chem/protein/dssp.cr
       </a>
     
@@ -915,18 +915,9 @@ keep this in mind when assigning the secondary structure of many structures.</p>
       </dt>
       
     
-      <dt class="entry-const" id="MAX_CN_BOND_SQUARED_DIST">
-        <strong>MAX_CN_BOND_SQUARED_DIST</strong> = <code>((<span class="n">0.76</span> <span class="o">+</span> <span class="n">0.71</span>) <span class="o">+</span> <span class="n">0.3</span>) <span class="o">**</span> <span class="n">2</span></code>
-      </dt>
-      
-    
       <dt class="entry-const" id="MIN_CA_SQUARED_DIST">
         <strong>MIN_CA_SQUARED_DIST</strong> = <code><span class="n">81</span></code>
       </dt>
-      
-      <dd class="entry-const-doc">
-        <p>DSSP paper suggest 2.5 A</p>
-      </dd>
       
     
   </dl>
@@ -1057,7 +1048,7 @@ keep this in mind when assigning the secondary structure of many structures.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4c95aace9b74eee98d90e36921806addbdd8813e/src/chem/protein/dssp.cr#L46" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/97eb63a4392260d7cca1d849df70abc7a77b011e/src/chem/protein/dssp.cr#L45" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1087,7 +1078,7 @@ keep this in mind when assigning the secondary structure of many structures.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4c95aace9b74eee98d90e36921806addbdd8813e/src/chem/protein/dssp.cr#L51" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/97eb63a4392260d7cca1d849df70abc7a77b011e/src/chem/protein/dssp.cr#L50" target="_blank">View source</a>]
         
       </div>
     </div>
