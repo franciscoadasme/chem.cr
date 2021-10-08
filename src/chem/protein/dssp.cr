@@ -20,8 +20,8 @@ module Chem::Protein
   #   discarding entire aminoacids.
   # - `mkdssp` detects chain breaks by checking non-consecutive numbers of neighboring
   #   residues. This may fail when residues *i* and *i + 1* are not actually bonded, or
-  #   when residue numbers are not consecutive. This implementation instead checks that
-  #   the C(*i*)–N(*i*+1) bond length is within covalent distance.
+  #   when residue numbers are not consecutive. This implementation instead uses atom
+  #   connectivity to check whether C(*i*)–N(*i*+1) are bonded.
   #
   # FIXME: it does not work correctly for periodic structures that have
   # bonds between atoms at opposite ends.
@@ -32,11 +32,10 @@ module Chem::Protein
   # [1]: http://dx.doi.org/10.1002/bip.360221211
   # [2]: http://github.com/cmbi/xssp
   class DSSP < SecondaryStructureCalculator
-    MAX_CN_BOND_SQUARED_DIST = (0.76 + 0.71 + 0.3)**2 # DSSP paper suggest 2.5 A
-    MIN_CA_SQUARED_DIST      =      81
-    HBOND_COUPLING_FACTOR    = -27.888
-    HBOND_ENERGY_CUTOFF      =    -0.5
-    HBOND_MIN_ENERGY         =    -9.9
+    MIN_CA_SQUARED_DIST   =      81
+    HBOND_COUPLING_FACTOR = -27.888
+    HBOND_ENERGY_CUTOFF   =    -0.5
+    HBOND_MIN_ENERGY      =    -9.9
 
     @bridges = [] of Bridge
     @coords : Array(Coords)
@@ -287,7 +286,9 @@ module Chem::Protein
 
     private def gap?(i : Int, j : Int) : Bool
       i.upto(j - 1).any? do |i|
-        Spatial.squared_distance(coords(i).c, coords(i + 1).n) > MAX_CN_BOND_SQUARED_DIST
+        pred_c = @residues.unsafe_fetch(i).dig("C")
+        succ_n = @residues.unsafe_fetch(i + 1).dig("N")
+        !pred_c.bonded?(succ_n)
       end
     end
 
