@@ -132,7 +132,7 @@ class Chem::Protein::Stride < Chem::Protein::SecondaryStructureCalculator
     private def summary(structure : Structure)
       title "Secondary structure summary"
       structure.each_chain do |chain|
-        record "CHN", "%s %c", structure.source_file, chain.id
+        record "CHN", "%s %c", structure.source_file.try(&.basename), chain.id
         seq chain.residues
       end
       2.times { spacer }
