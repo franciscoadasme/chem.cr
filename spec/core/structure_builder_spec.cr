@@ -91,9 +91,9 @@ describe Chem::Structure::Builder do
     end
 
     lat = st.lattice.not_nil!
-    lat.i.should eq Vector[25, 32, 12]
-    lat.j.should eq Vector[12, 34, 23]
-    lat.k.should eq Vector[12, 68, 21]
+    lat.i.should eq Vec3[25, 32, 12]
+    lat.j.should eq Vec3[12, 34, 23]
+    lat.k.should eq Vec3[12, 68, 21]
   end
 
   it "builds a structure with lattice using numbers" do
@@ -102,9 +102,9 @@ describe Chem::Structure::Builder do
     end
 
     lat = st.lattice.not_nil!
-    lat.i.should eq Vector[25, 0, 0]
-    lat.j.should eq Vector[0, 34, 0]
-    lat.k.should eq Vector[0, 0, 21]
+    lat.i.should eq Vec3[25, 0, 0]
+    lat.j.should eq Vec3[0, 34, 0]
+    lat.k.should eq Vec3[0, 0, 21]
   end
 
   it "builds a structure with lattice using numbers (one-line)" do
@@ -113,9 +113,9 @@ describe Chem::Structure::Builder do
     end
 
     lat = st.lattice.not_nil!
-    lat.i.should eq Vector[25, 0, 0]
-    lat.j.should eq Vector[0, 34, 0]
-    lat.k.should eq Vector[0, 0, 21]
+    lat.i.should eq Vec3[25, 0, 0]
+    lat.j.should eq Vec3[0, 34, 0]
+    lat.k.should eq Vec3[0, 0, 21]
   end
 
   it "names chains automatically" do
@@ -177,12 +177,12 @@ describe Chem::Structure::Builder do
 
   it "names atoms automatically when called with element" do
     st = Chem::Structure.build do
-      atom :C, Vector.origin
-      atom :C, Vector.origin
-      atom :O, Vector.origin
-      atom :N, Vector.origin
-      atom :C, Vector.origin
-      atom :N, Vector.origin
+      atom :C, Vec3.origin
+      atom :C, Vec3.origin
+      atom :O, Vec3.origin
+      atom :N, Vec3.origin
+      atom :C, Vec3.origin
+      atom :N, Vec3.origin
     end
 
     st.atoms.map(&.name).should eq ["C1", "C2", "O1", "N1", "C3", "N2"]
@@ -198,7 +198,7 @@ describe Chem::Structure::Builder do
 
   it "creates a residue automatically" do
     st = Chem::Structure.build do
-      atom "CA", Vector.origin
+      atom "CA", Vec3.origin
     end
 
     st.chains.map(&.id).should eq ['A']
@@ -208,7 +208,7 @@ describe Chem::Structure::Builder do
 
   it "adds dummy atoms" do
     st = Chem::Structure.build do
-      %w(N CA C O CB).each { |name| atom name, Vector.origin }
+      %w(N CA C O CB).each { |name| atom name, Vec3.origin }
     end
 
     st.atoms.map(&.name).should eq ["N", "CA", "C", "O", "CB"]
@@ -227,7 +227,7 @@ describe Chem::Structure::Builder do
 
   it "adds atom with named arguments" do
     st = Chem::Structure.build do
-      atom "OD1", Vector.origin, formal_charge: -1, temperature_factor: 43.24
+      atom "OD1", Vec3.origin, formal_charge: -1, temperature_factor: 43.24
     end
 
     atom = st.atoms[-1]

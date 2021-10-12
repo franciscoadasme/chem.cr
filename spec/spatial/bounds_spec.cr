@@ -66,7 +66,7 @@ describe Chem::Spatial::Bounds do
     it "yields bounds' vertices" do
       bounds = Bounds.new S[8.77, 9.5, 24.74], 88.22, 80, 70.34
       bounds = bounds.translate -bounds.center
-      vertices = [] of Vector
+      vertices = [] of Vec3
       bounds.each_vertex { |vec| vertices << vec }
       vertices.size.should eq 8
       vertices.should be_close [

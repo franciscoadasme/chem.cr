@@ -1,7 +1,7 @@
 require "./bench_helper"
 
 alias KDTree = Chem::Spatial::KDTree
-alias V = Chem::Spatial::Vector
+alias V = Chem::Spatial::Vec3
 
 random = Random.new
 

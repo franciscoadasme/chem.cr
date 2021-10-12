@@ -373,11 +373,11 @@ module Chem::Protein
     end
 
     private struct Coords
-      getter c : Spatial::Vector
-      getter ca : Spatial::Vector
-      getter h : Spatial::Vector
-      getter n : Spatial::Vector
-      getter o : Spatial::Vector
+      getter c : Spatial::Vec3
+      getter ca : Spatial::Vec3
+      getter h : Spatial::Vec3
+      getter n : Spatial::Vec3
+      getter o : Spatial::Vec3
 
       def initialize(residue : Residue)
         @n = residue["N"]?.as(Atom).coords
@@ -387,7 +387,7 @@ module Chem::Protein
         @ca = residue["CA"]?.as(Atom).coords
       end
 
-      def self.guess_hydrogen(residue : Residue) : Spatial::Vector
+      def self.guess_hydrogen(residue : Residue) : Spatial::Vec3
         r_n = residue["N"]?.as(Atom).coords
         return r_n if residue.name == "PRO"
         return r_n unless prev_res = residue.pred

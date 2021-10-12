@@ -19,8 +19,8 @@ alias S = Chem::Spatial::Size
 alias Structure = Chem::Structure
 alias Topology = Chem::Topology
 alias Tf = Chem::Spatial::AffineTransform
-alias V = Chem::Spatial::Vector
-alias Vector = Chem::Spatial::Vector
+alias V = Chem::Spatial::Vec3
+alias Vec3 = Chem::Spatial::Vec3
 
 enum TopologyLevel
   None
@@ -32,7 +32,7 @@ end
 
 module Spec
   struct CloseExpectation
-    def match(actual_value : Enumerable(Vector)) : Bool
+    def match(actual_value : Enumerable(Vec3)) : Bool
       return false unless @expected_value.size == actual_value.size
       actual_value.zip(@expected_value).all? do |a, b|
         {(a.x - b.x).abs, (a.y - b.y).abs, (a.z - b.z).abs}.all? do |value|
@@ -48,7 +48,7 @@ module Spec
       actual_value.zip(@expected_value).all? { |a, b| (a - b).abs <= @delta }
     end
 
-    def match(actual_value : Array(Chem::Spatial::Vector))
+    def match(actual_value : Array(Chem::Spatial::Vec3))
       return false unless @expected_value.size == actual_value.size
       actual_value.zip(@expected_value).all? do |a, b|
         dvec = (a - b).abs
@@ -56,7 +56,7 @@ module Spec
       end
     end
 
-    def match(actual_value : Chem::Spatial::Vector)
+    def match(actual_value : Chem::Spatial::Vec3)
       [(actual_value.x - @expected_value.x).abs,
        (actual_value.y - @expected_value.y).abs,
        (actual_value.z - @expected_value.z).abs].all? do |value|

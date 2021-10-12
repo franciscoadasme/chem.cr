@@ -35,7 +35,7 @@ module Chem::Gen
           @pull.next_s? # skip atom number
           ele = ele_map[@pull.next_i - 1]?
           @pull.error "Invalid element index (expected 1 to #{ele_map.size})" unless ele
-          vec = Spatial::Vector.new @pull.next_f, @pull.next_f, @pull.next_f
+          vec = Spatial::Vec3.new @pull.next_f, @pull.next_f, @pull.next_f
           @pull.next_line
           builder.atom ele, vec
         end
@@ -43,11 +43,11 @@ module Chem::Gen
 
       if periodic
         @pull.next_line # skip first lattice line
-        vi = Spatial::Vector.new @pull.next_f, @pull.next_f, @pull.next_f
+        vi = Spatial::Vec3.new @pull.next_f, @pull.next_f, @pull.next_f
         @pull.next_line
-        vj = Spatial::Vector.new @pull.next_f, @pull.next_f, @pull.next_f
+        vj = Spatial::Vec3.new @pull.next_f, @pull.next_f, @pull.next_f
         @pull.next_line
-        vk = Spatial::Vector.new @pull.next_f, @pull.next_f, @pull.next_f
+        vk = Spatial::Vec3.new @pull.next_f, @pull.next_f, @pull.next_f
         @pull.next_line
         structure.lattice = Lattice.new vi, vj, vk
         structure.coords.to_cartesian! if fractional
@@ -87,7 +87,7 @@ module Chem::Gen
     end
 
     private def write(lattice : Lattice) : Nil
-      {Spatial::Vector.zero, lattice.i, lattice.j, lattice.k}.each do |vec|
+      {Spatial::Vec3.zero, lattice.i, lattice.j, lattice.k}.each do |vec|
         @io.printf "%20.10E%20.10E%20.10E\n", vec.x, vec.y, vec.z
       end
     end

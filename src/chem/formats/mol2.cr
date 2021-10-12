@@ -38,7 +38,7 @@ module Chem::Mol2
               @pull.next_line
               serial = @pull.next_i
               name = @pull.next_s
-              coords = Spatial::Vector[@pull.next_f, @pull.next_f, @pull.next_f]
+              coords = Spatial::Vec3[@pull.next_f, @pull.next_f, @pull.next_f]
               atom_type = @pull.next_s
               symbol = atom_type[...atom_type.index('.')] # ignore sybyl type
               element = PeriodicTable[symbol]? || @pull.error("Unknown element")

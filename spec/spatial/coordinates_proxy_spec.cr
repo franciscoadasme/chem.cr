@@ -88,7 +88,7 @@ describe Chem::Spatial::CoordinatesProxy do
   describe "#each_with_atom" do
     it "yields coordinates and the corresponding atom" do
       elements = [] of String
-      vecs = [] of Vector
+      vecs = [] of Vec3
       structure.coords.each_with_atom do |coords, atom|
         vecs << coords
         elements << atom.element.symbol

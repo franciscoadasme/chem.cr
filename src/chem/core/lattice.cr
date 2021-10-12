@@ -26,7 +26,7 @@ module Chem
     end
 
     def bounds : Spatial::Bounds
-      Spatial::Bounds.new Spatial::Vector.origin, @basis
+      Spatial::Bounds.new Spatial::Vec3.origin, @basis
     end
 
     def c=(value : Float64) : Float64
@@ -46,7 +46,7 @@ module Chem
       a == b && alpha == 90 && beta == 90 && gamma == 120
     end
 
-    def i=(vec : Spatial::Vector) : Spatial::Vector
+    def i=(vec : Spatial::Vec3) : Spatial::Vec3
       @basis = Spatial::Basis.new vec, j, k
       vec
     end
@@ -61,12 +61,12 @@ module Chem
       io << '>'
     end
 
-    def j=(vec : Spatial::Vector) : Spatial::Vector
+    def j=(vec : Spatial::Vec3) : Spatial::Vec3
       @basis = Spatial::Basis.new i, vec, k
       vec
     end
 
-    def k=(vec : Spatial::Vector) : Spatial::Vector
+    def k=(vec : Spatial::Vec3) : Spatial::Vec3
       @basis = Spatial::Basis.new i, j, vec
       vec
     end

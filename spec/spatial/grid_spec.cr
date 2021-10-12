@@ -352,7 +352,7 @@ describe Chem::Spatial::Grid do
 
   describe "#each_coords" do
     it "yields each coordinates" do
-      ary = [] of Vector
+      ary = [] of Vec3
       Grid.new({2, 2, 2}, Bounds.new(V[1, 2, 3], S[3, 3, 3])).each_coords do |vec|
         ary << vec
       end
@@ -439,7 +439,7 @@ describe Chem::Spatial::Grid do
 
   describe "#each_with_coords" do
     it "yields each element with its coordinates" do
-      hash = {} of Vector => Float64
+      hash = {} of Vec3 => Float64
       grid = make_grid(3, 2, 1, Bounds.new(V[1, 2, 3], S[2, 1, 1])) do |i, j, k|
         i * 100 + j * 10 + k
       end

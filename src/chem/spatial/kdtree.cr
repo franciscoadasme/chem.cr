@@ -3,14 +3,14 @@ module Chem::Spatial
     private class Node
       getter axis : Int32
       getter atom : Atom
-      getter coords : Vector
+      getter coords : Vec3
       getter left : Node?
       getter right : Node?
 
       def initialize(@axis, @atom, @coords, @left = nil, @right = nil)
       end
 
-      def distance(coords : Vector) : Float64
+      def distance(coords : Vec3) : Float64
         (coords[@axis] - @coords[@axis]) ** 2
       end
 
@@ -18,7 +18,7 @@ module Chem::Spatial
         @left.nil? && @right.nil?
       end
 
-      def next(coords : Vector) : Tuple(Node?, Node?)
+      def next(coords : Vec3) : Tuple(Node?, Node?)
         if leaf?
           {nil, nil}
         elsif @right.nil? || coords[@axis] <= @coords[@axis]
@@ -33,7 +33,7 @@ module Chem::Spatial
 
     @root : Node
 
-    private def initialize(atoms : Array(Tuple(Vector, Atom)))
+    private def initialize(atoms : Array(Tuple(Vec3, Atom)))
       if root = build_tree atoms, 0...atoms.size
         @root = root
       else
@@ -55,7 +55,7 @@ module Chem::Spatial
     end
 
     def self.new(atoms : AtomCollection, lattice : Lattice? = nil, **options)
-      ary = Array(Tuple(Vector, Atom)).new atoms.n_atoms
+      ary = Array(Tuple(Vec3, Atom)).new atoms.n_atoms
       atoms.each_atom { |atom| ary << {atom.coords, atom} }
       if lattice
         PBC.each_adjacent_image(atoms, lattice, **options) do |atom, coords|
@@ -74,7 +74,7 @@ module Chem::Spatial
       end
     end
 
-    def each_neighbor(of coords : Vector,
+    def each_neighbor(of coords : Vec3,
                       *,
                       within radius : Float64,
                       &block : Atom, Float64 ->) : Nil
@@ -85,11 +85,11 @@ module Chem::Spatial
       neighbors(atom.coords, count: 2)[1]
     end
 
-    def nearest(to coords : Vector) : Atom
+    def nearest(to coords : Vec3) : Atom
       neighbors(coords, count: 1).first
     end
 
-    def nearest_with_distance(atom : Atom | Vector) : Tuple(Atom, Float64)
+    def nearest_with_distance(atom : Atom | Vec3) : Tuple(Atom, Float64)
       neighbors_with_distance(atom, n: 1).first
     end
 
@@ -97,7 +97,7 @@ module Chem::Spatial
       neighbors(atom.coords, count: count + 1).reject! &.==(atom)
     end
 
-    def neighbors(of coords : Vector, *, count : Int) : Array(Atom)
+    def neighbors(of coords : Vec3, *, count : Int) : Array(Atom)
       neighbors = Array(Tuple(Atom, Float64)).new count
       search @root, coords, count, neighbors
       neighbors.map &.[0]
@@ -107,7 +107,7 @@ module Chem::Spatial
       neighbors(atom.coords, within: radius).reject! &.==(atom)
     end
 
-    def neighbors(of coords : Vector, *, within radius : Number) : Array(Atom)
+    def neighbors(of coords : Vec3, *, within radius : Number) : Array(Atom)
       neighbors = [] of Tuple(Atom, Float64)
       search @root, coords, radius ** 2 do |atom, distance|
         neighbors << {atom, distance}
@@ -119,13 +119,13 @@ module Chem::Spatial
       neighbors_with_distance(atom.coords, n: n + 1).reject! &.[0].==(atom)
     end
 
-    def neighbors_with_distance(vec : Vector, *, n : Int) : Array(Tuple(Atom, Float64))
+    def neighbors_with_distance(vec : Vec3, *, n : Int) : Array(Tuple(Atom, Float64))
       neighbors = Array(Tuple(Atom, Float64)).new n
       search @root, vec, n, neighbors
       neighbors
     end
 
-    private def build_tree(atoms : Array(Tuple(Vector, Atom)),
+    private def build_tree(atoms : Array(Tuple(Vec3, Atom)),
                            range : Range(Int, Int),
                            depth : Int32 = 0) : Node?
       start, stop = range.begin, range.end
@@ -146,7 +146,7 @@ module Chem::Spatial
     end
 
     private def search(node : Node,
-                       coords : Vector,
+                       coords : Vec3,
                        count : Int32,
                        neighbors : Array(Tuple(Atom, Float64))) : Nil
       a, b = node.next coords
@@ -159,7 +159,7 @@ module Chem::Spatial
     end
 
     private def search(node : Node,
-                       coords : Vector,
+                       coords : Vec3,
                        radius : Number,
                        &block : Atom, Float64 -> Nil) : Nil
       distance = Spatial.squared_distance node.coords, coords
@@ -171,7 +171,7 @@ module Chem::Spatial
     end
 
     private def update_neighbors(node : Node,
-                                 point : Vector,
+                                 point : Vec3,
                                  count : Int32,
                                  neighbors : Array(Tuple(Atom, Float64))) : Nil
       distance = Spatial.squared_distance node.coords, point

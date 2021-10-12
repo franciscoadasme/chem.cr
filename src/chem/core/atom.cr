@@ -5,7 +5,7 @@ module Chem
   class Atom
     getter bonds : BondArray { BondArray.new self }
     property constraint : Constraint?
-    property coords : Spatial::Vector
+    property coords : Spatial::Vec3
     property element : Element
     property formal_charge : Int32 = 0
     property name : String
@@ -23,7 +23,7 @@ module Chem
 
     def initialize(@name : String,
                    @serial : Int32,
-                   @coords : Spatial::Vector,
+                   @coords : Spatial::Vec3,
                    @residue : Residue,
                    element : Element? = nil,
                    @formal_charge : Int32 = 0,

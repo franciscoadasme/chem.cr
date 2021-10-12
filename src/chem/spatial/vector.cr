@@ -1,5 +1,5 @@
 module Chem::Spatial
-  struct Vector
+  struct Vec3
     private alias NumberType = Number::Primitive
 
     getter x : Float64
@@ -15,15 +15,15 @@ module Chem::Spatial
     end
 
     def self.x : self
-      Vector.new 1, 0, 0
+      Vec3.new 1, 0, 0
     end
 
     def self.y : self
-      Vector.new 0, 1, 0
+      Vec3.new 0, 1, 0
     end
 
     def self.z : self
-      Vector.new 0, 0, 1
+      Vec3.new 0, 0, 1
     end
 
     def self.zero : self
@@ -51,11 +51,11 @@ module Chem::Spatial
 
     {% for op in ['+', '-', '*', '/'] %}
       def {{op.id}}(other : Number) : self
-        Vector.new @x {{op.id}} other, @y {{op.id}} other, @z {{op.id}} other
+        Vec3.new @x {{op.id}} other, @y {{op.id}} other, @z {{op.id}} other
       end
 
-      def {{op.id}}(other : Vector) : self
-        Vector.new @x {{op.id}} other.x, @y {{op.id}} other.y, @z {{op.id}} other.z
+      def {{op.id}}(other : Vec3) : self
+        Vec3.new @x {{op.id}} other.x, @y {{op.id}} other.y, @z {{op.id}} other.z
       end
 
       def {{op.id}}(other : Tuple(NumberType, NumberType, NumberType)) : self
@@ -65,7 +65,7 @@ module Chem::Spatial
 
     {% for op in %w(+ -) %}
       def {{op.id}}(rhs : Size) : self
-        Vector.new @x {{op.id}} rhs.x, @y {{op.id}} rhs.y, @z {{op.id}} rhs.z
+        Vec3.new @x {{op.id}} rhs.x, @y {{op.id}} rhs.y, @z {{op.id}} rhs.z
       end
     {% end %}
 
@@ -89,13 +89,13 @@ module Chem::Spatial
       map &.clamp(range)
     end
 
-    def cross(other : Vector) : self
-      Vector.new @y * other.z - @z * other.y,
+    def cross(other : Vec3) : self
+      Vec3.new @y * other.z - @z * other.y,
         @z * other.x - @x * other.z,
         @x * other.y - @y * other.x
     end
 
-    def dot(other : Vector) : Float64
+    def dot(other : Vec3) : Float64
       @x * other.x + @y * other.y + @z * other.z
     end
 
@@ -106,48 +106,48 @@ module Chem::Spatial
     # Returns vector's PBC image in fractional coordinates
     #
     # ```
-    # vec = Vector[0.456, 0.1, 0.8]
-    # vec.image 1, 0, 0   # => Vector[1.456, 0.1, 0.8]
-    # vec.image -1, 0, 0  # => Vector[-0.544, 0.1, 0.8]
-    # vec.image -1, 1, -5 # => Vector[-0.544, 1.1, -4.2]
+    # vec = Vec3[0.456, 0.1, 0.8]
+    # vec.image 1, 0, 0   # => Vec3[1.456, 0.1, 0.8]
+    # vec.image -1, 0, 0  # => Vec3[-0.544, 0.1, 0.8]
+    # vec.image -1, 1, -5 # => Vec3[-0.544, 1.1, -4.2]
     # ```
     def image(i : Int, j : Int, k : Int) : self
-      self + Vector[i, j, k]
+      self + Vec3[i, j, k]
     end
 
     # Returns vector's PBC image with respect to `lattice`
     #
     # ```
     # lat = Lattice.new S[2, 2, 3], 90, 90, 120
-    # lat.i # => Vector[2.0, 0.0, 0.0]
-    # lat.j # => Vector[-1, 1.732, 0.0]
-    # lat.k # => Vector[0.0, 0.0, 3.0]
+    # lat.i # => Vec3[2.0, 0.0, 0.0]
+    # lat.j # => Vec3[-1, 1.732, 0.0]
+    # lat.k # => Vec3[0.0, 0.0, 3.0]
     #
-    # vec = Vector[1, 1, 1.5]
-    # vec.image(lat, 1, 0, 0) # => Vector[3.0, 1.0, 1.5]
-    # vec.image(lat, 0, 1, 0) # => Vector[0.0, 2.732, 1.5]
-    # vec.image(lat, 0, 0, 1) # => Vector[1.0, 1.0, 4.5]
-    # vec.image(lat, 1, 0, 1) # => Vector[3.0, 1.0, 4.5]
-    # vec.image(lat, 1, 1, 1) # => Vector[2.0, 2.732, 4.5]
+    # vec = Vec3[1, 1, 1.5]
+    # vec.image(lat, 1, 0, 0) # => Vec3[3.0, 1.0, 1.5]
+    # vec.image(lat, 0, 1, 0) # => Vec3[0.0, 2.732, 1.5]
+    # vec.image(lat, 0, 0, 1) # => Vec3[1.0, 1.0, 4.5]
+    # vec.image(lat, 1, 0, 1) # => Vec3[3.0, 1.0, 4.5]
+    # vec.image(lat, 1, 1, 1) # => Vec3[2.0, 2.732, 4.5]
     # ```
     def image(lattice : Lattice, i : Int, j : Int, k : Int) : self
       self + lattice.i * i + lattice.j * j + lattice.k * k
     end
 
     def inv : self
-      Vector.new -@x, -@y, -@z
+      Vec3.new -@x, -@y, -@z
     end
 
     def inspect(io : IO)
-      io << "Vector[" << @x << ", " << @y << ", " << @z << ']'
+      io << "Vec3[" << @x << ", " << @y << ", " << @z << ']'
     end
 
     def map(&block : Float64 -> Number::Primitive) : self
-      Vector.new (yield @x).to_f, (yield @y).to_f, (yield @z).to_f
+      Vec3.new (yield @x).to_f, (yield @y).to_f, (yield @z).to_f
     end
 
     def map_with_index(&block : Float64, Int32 -> Number::Primitive) : self
-      Vector.new (yield @x, 0).to_f, (yield @y, 1).to_f, (yield @z, 2).to_f
+      Vec3.new (yield @x, 0).to_f, (yield @y, 1).to_f, (yield @z, 2).to_f
     end
 
     def normalize : self
@@ -167,7 +167,7 @@ module Chem::Spatial
       self * (new_size / size)
     end
 
-    def rotate(about rotaxis : Vector, by theta : Float64) : self
+    def rotate(about rotaxis : Vec3, by theta : Float64) : self
       Quaternion.rotation(rotaxis, theta).rotate self
     end
 
@@ -212,7 +212,7 @@ module Chem::Spatial
     end
 
     def wrap(around center : self) : self
-      offset = self - (center - Vector[0.5, 0.5, 0.5])
+      offset = self - (center - Vec3[0.5, 0.5, 0.5])
       self - offset.map_with_index { |ele, i| ele == 1 ? 0 : ele.floor }
     end
 

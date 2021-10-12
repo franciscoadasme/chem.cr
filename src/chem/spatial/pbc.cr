@@ -4,22 +4,22 @@ module Chem::Spatial::PBC
   ADJACENT_IMAGE_IDXS = [{1, 0, 0}, {0, 1, 0}, {0, 0, 1}, {1, 1, 0}, {1, 0, 1},
                          {0, 1, 1}, {1, 1, 1}]
 
-  def adjacent_images(*args, **options) : Array(Tuple(Atom, Vector))
-    ary = [] of Tuple(Atom, Vector)
+  def adjacent_images(*args, **options) : Array(Tuple(Atom, Vec3))
+    ary = [] of Tuple(Atom, Vec3)
     each_adjacent_image(*args, **options) do |atom, coords|
       ary << {atom, coords}
     end
     ary
   end
 
-  def each_adjacent_image(structure : Structure, &block : Atom, Vector ->)
+  def each_adjacent_image(structure : Structure, &block : Atom, Vec3 ->)
     raise NotPeriodicError.new unless lattice = structure.lattice
     each_adjacent_image structure, lattice, &block
   end
 
   def each_adjacent_image(atoms : AtomCollection,
                           lattice : Lattice,
-                          &block : Atom, Vector ->)
+                          &block : Atom, Vec3 ->)
     offset = (lattice.bounds.center - atoms.coords.center).to_fractional lattice
     atoms.each_atom do |atom|
       fcoords = atom.coords.to_fractional lattice                     # convert to fractional coords
@@ -34,7 +34,7 @@ module Chem::Spatial::PBC
 
   def each_adjacent_image(structure : Structure,
                           radius : Number,
-                          &block : Atom, Vector ->)
+                          &block : Atom, Vec3 ->)
     raise NotPeriodicError.new unless lattice = structure.lattice
     each_adjacent_image structure, lattice, radius, &block
   end
@@ -42,7 +42,7 @@ module Chem::Spatial::PBC
   def each_adjacent_image(atoms : AtomCollection,
                           lattice : Lattice,
                           radius : Number,
-                          &block : Atom, Vector ->)
+                          &block : Atom, Vec3 ->)
     raise Error.new "Radius cannot be negative" if radius < 0
 
     offset = offset_to_primary_unit_cell atoms, lattice
@@ -95,10 +95,10 @@ module Chem::Spatial::PBC
   # Returns offset vector to bring atoms to the primary unit cell unless
   # atoms are wrapped, otherwise returns a zero vector.
   private def offset_to_primary_unit_cell(atoms : AtomCollection,
-                                          lattice : Lattice) : Vector
+                                          lattice : Lattice) : Vec3
     bounds = atoms.coords.bounds
     wrapped = lattice.bounds.includes?(bounds)
-    offset = wrapped ? Vector.zero : (lattice.bounds.center - bounds.center)
+    offset = wrapped ? Vec3.zero : (lattice.bounds.center - bounds.center)
     offset.to_fractional(lattice)
   end
 
@@ -106,7 +106,7 @@ module Chem::Spatial::PBC
   # primary unit cell, the extents are shifted so that *vec* is at the
   # edges.
   private def padded_cell_extents(
-    vec : Vector,
+    vec : Vec3,
     paddings : StaticArray(Float64, 3)
   ) : StaticArray(Range(Float64, Float64), 3)
     StaticArray(Range(Float64, Float64), 3).new do |i|

@@ -1,10 +1,10 @@
 module Chem::Spatial
   struct Basis
-    getter i : Vector
-    getter j : Vector
-    getter k : Vector
+    getter i : Vec3
+    getter j : Vec3
+    getter k : Vec3
 
-    def initialize(@i : Vector, @j : Vector, @k : Vector)
+    def initialize(@i : Vec3, @j : Vec3, @k : Vec3)
     end
 
     def self.new(size : Size,
@@ -13,9 +13,9 @@ module Chem::Spatial
                  gamma : Number = 90.0) : self
       raise ArgumentError.new("Negative angle") if alpha < 0 || beta < 0 || gamma < 0
       if alpha == 90 && beta == 90 && gamma == 90
-        i = Vector[size.x, 0, 0]
-        j = Vector[0, size.y, 0]
-        k = Vector[0, 0, size.z]
+        i = Vec3[size.x, 0, 0]
+        j = Vec3[0, size.y, 0]
+        k = Vec3[0, 0, size.z]
       else
         cos_alpha = Math.cos alpha.radians
         cos_beta = Math.cos beta.radians
@@ -26,9 +26,9 @@ module Chem::Spatial
         ky = size.z * (cos_alpha - cos_beta * cos_gamma) / sin_gamma
         kz = Math.sqrt size.z**2 - kx**2 - ky**2
 
-        i = Vector[size.x, 0, 0]
-        j = Vector[size.y * cos_gamma, size.y * sin_gamma, 0]
-        k = Vector[kx, ky, kz]
+        i = Vec3[size.x, 0, 0]
+        j = Vec3[size.y * cos_gamma, size.y * sin_gamma, 0]
+        k = Vec3[kx, ky, kz]
       end
       new i, j, k
     end

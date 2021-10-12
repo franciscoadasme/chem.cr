@@ -1,5 +1,5 @@
 module Chem::Spatial
-  def angle(a : Vector, b : Vector) : Float64
+  def angle(a : Vec3, b : Vec3) : Float64
     Math.atan2(a.cross(b).size, a.dot(b)).degrees
   end
 
@@ -7,7 +7,7 @@ module Chem::Spatial
     angle a.coords, b.coords, c.coords, lattice
   end
 
-  def angle(a : Vector, b : Vector, c : Vector, lattice : Lattice? = nil) : Float64
+  def angle(a : Vec3, b : Vec3, c : Vec3, lattice : Lattice? = nil) : Float64
     if lattice
       a = a.wrap lattice, around: b
       c = c.wrap lattice, around: b
@@ -15,7 +15,7 @@ module Chem::Spatial
     angle a - b, c - b
   end
 
-  def dihedral(a : Vector, b : Vector, c : Vector) : Float64
+  def dihedral(a : Vec3, b : Vec3, c : Vec3) : Float64
     ab = a.cross b
     angle = angle ab, b.cross(c)
     ab.dot(c) < 0 ? -angle : angle
@@ -25,10 +25,10 @@ module Chem::Spatial
     dihedral a.coords, b.coords, c.coords, d.coords, *args, **options
   end
 
-  def dihedral(a : Vector,
-               b : Vector,
-               c : Vector,
-               d : Vector,
+  def dihedral(a : Vec3,
+               b : Vec3,
+               c : Vec3,
+               d : Vec3,
                lattice : Lattice? = nil) : Float64
     if lattice
       a = a.wrap lattice, around: b
@@ -51,10 +51,10 @@ module Chem::Spatial
     improper a.coords, b.coords, c.coords, d.coords, *args, **options
   end
 
-  def improper(a : Vector,
-               b : Vector,
-               c : Vector,
-               d : Vector,
+  def improper(a : Vec3,
+               b : Vec3,
+               c : Vec3,
+               d : Vec3,
                lattice : Lattice? = nil) : Float64
     dihedral b, a, c, d, lattice
   end
@@ -64,7 +64,7 @@ module Chem::Spatial
   end
 
   @[AlwaysInline]
-  def squared_distance(a : Vector, b : Vector, lattice : Lattice? = nil) : Float64
+  def squared_distance(a : Vec3, b : Vec3, lattice : Lattice? = nil) : Float64
     b = b.wrap lattice, around: a if lattice
     (a.x - b.x)**2 + (a.y - b.y)**2 + (a.z - b.z)**2
   end

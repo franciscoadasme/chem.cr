@@ -219,7 +219,7 @@ module Chem::Protein
       end
     end
 
-    private def guess_hydrogen(residue : Residue) : Spatial::Vector
+    private def guess_hydrogen(residue : Residue) : Spatial::Vec3
       n = residue.dig("N").coords
       if (pred = residue.pred) && (c = pred.dig?("C")) && (o = pred.dig?("O"))
         n + (c.coords - o.coords).normalize

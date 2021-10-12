@@ -16,11 +16,11 @@ module Chem::VASP::Poscar
       @pull.next_line
 
       # read lattice
-      vi = Spatial::Vector.new @pull.next_f, @pull.next_f, @pull.next_f
+      vi = Spatial::Vec3.new @pull.next_f, @pull.next_f, @pull.next_f
       @pull.next_line
-      vj = Spatial::Vector.new @pull.next_f, @pull.next_f, @pull.next_f
+      vj = Spatial::Vec3.new @pull.next_f, @pull.next_f, @pull.next_f
       @pull.next_line
-      vk = Spatial::Vector.new @pull.next_f, @pull.next_f, @pull.next_f
+      vk = Spatial::Vec3.new @pull.next_f, @pull.next_f, @pull.next_f
       @pull.next_line
       lattice = Lattice.new(vi, vj, vk) * scale_factor
 
@@ -72,7 +72,7 @@ module Chem::VASP::Poscar
         builder.title title
         builder.lattice lattice
         elements.each do |element|
-          vec = Spatial::Vector.new @pull.next_f, @pull.next_f, @pull.next_f
+          vec = Spatial::Vec3.new @pull.next_f, @pull.next_f, @pull.next_f
           vec = fractional ? vec.to_cartesian(lattice) : vec * scale_factor
           atom = builder.atom element, vec
           if constrained

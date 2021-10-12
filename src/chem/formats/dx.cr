@@ -33,11 +33,11 @@ module Chem::DX
       ni, nj, nk = @pull.next_i, @pull.next_i, @pull.next_i
       @pull.next_line
       @pull.next_token # skip origin word
-      origin = Spatial::Vector[@pull.next_f, @pull.next_f, @pull.next_f]
+      origin = Spatial::Vec3[@pull.next_f, @pull.next_f, @pull.next_f]
       @pull.next_line
       vi, vj, vk = {ni, nj, nk}.map do |n|
         @pull.next_token # skip delta word
-        delta = Spatial::Vector[@pull.next_f, @pull.next_f, @pull.next_f]
+        delta = Spatial::Vec3[@pull.next_f, @pull.next_f, @pull.next_f]
         @pull.next_line
         delta * (n - 1)
       end

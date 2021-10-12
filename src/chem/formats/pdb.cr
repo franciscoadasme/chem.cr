@@ -203,7 +203,7 @@ module Chem::PDB
       atom = @builder.atom \
         atom_name,
         seqnum_at(6, 5),
-        Spatial::Vector.new(x, y, z),
+        Spatial::Vec3.new(x, y, z),
         element: ele,
         formal_charge: formal_charge || 0,
         occupancy: occupancy,

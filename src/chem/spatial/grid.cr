@@ -223,7 +223,7 @@ module Chem::Spatial
 
     # TODO: add interpolation (check ARBInterp)
     @[AlwaysInline]
-    def []?(vec : Vector) : Float64?
+    def []?(vec : Vec3) : Float64?
       if i = index(vec)
         unsafe_fetch i
       end
@@ -247,21 +247,21 @@ module Chem::Spatial
       @buffer[i] = value
     end
 
-    def coords_at(*args, **options) : Vector
+    def coords_at(*args, **options) : Vec3
       coords_at?(*args, **options) || raise IndexError.new
     end
 
-    def coords_at?(i : Int) : Vector?
+    def coords_at?(i : Int) : Vec3?
       if loc = loc_at?(i)
         coords_at? loc
       end
     end
 
-    def coords_at?(i : Int, j : Int, k : Int) : Vector?
+    def coords_at?(i : Int, j : Int, k : Int) : Vec3?
       coords_at?(Location.new(i, j, k))
     end
 
-    def coords_at?(loc : Location) : Vector?
+    def coords_at?(loc : Location) : Vec3?
       return unless index(loc)
       unsafe_coords_at(loc)
     end
@@ -323,7 +323,7 @@ module Chem::Spatial
       end
     end
 
-    def each_coords(& : Vector ->) : Nil
+    def each_coords(& : Vec3 ->) : Nil
       each_loc do |loc|
         yield unsafe_coords_at(loc)
       end
@@ -339,7 +339,7 @@ module Chem::Spatial
       end
     end
 
-    def each_loc(vec : Vector, cutoff : Number, & : Location, Float64 ->) : Nil
+    def each_loc(vec : Vec3, cutoff : Number, & : Location, Float64 ->) : Nil
       return unless loc = loc_at?(vec)
       di, dj, dk = resolution.map { |ele| (cutoff / ele).to_i }
       cutoff *= cutoff
@@ -354,7 +354,7 @@ module Chem::Spatial
       end
     end
 
-    def each_with_coords(& : Float64, Vector ->) : Nil
+    def each_with_coords(& : Float64, Vec3 ->) : Nil
       each_index do |i|
         yield unsafe_fetch(i), unsafe_coords_at(unsafe_loc_at(i))
       end
@@ -374,7 +374,7 @@ module Chem::Spatial
       unsafe_index loc
     end
 
-    def index(vec : Vector) : Int32?
+    def index(vec : Vec3) : Int32?
       if loc = loc_at?(vec)
         unsafe_index loc
       end
@@ -393,7 +393,7 @@ module Chem::Spatial
       unsafe_loc_at(i) if 0 <= i < size
     end
 
-    def loc_at?(vec : Vector) : Location?
+    def loc_at?(vec : Vec3) : Location?
       return unless vec.in?(bounds)
       vec = (vec - origin).to_fractional bounds.basis
       (vec * @dim.map &.-(1)).round.to_t.map &.to_i
@@ -410,13 +410,13 @@ module Chem::Spatial
       self
     end
 
-    def map_with_coords(& : Float64, Vector -> Number) : self
+    def map_with_coords(& : Float64, Vec3 -> Number) : self
       dup.map_with_coords! do |ele, vec|
         yield ele, vec
       end
     end
 
-    def map_with_coords!(& : Float64, Vector -> Number) : self
+    def map_with_coords!(& : Float64, Vec3 -> Number) : self
       each_with_index do |ele, i|
         @buffer[i] = (yield ele, unsafe_coords_at(unsafe_loc_at(i))).to_f
       end
@@ -560,7 +560,7 @@ module Chem::Spatial
     # grid.mask_by_coords(&.x.==(0)).to_a # => [1, 1, 1, 1, 0, 0, 0, 0]
     # grid.to_a                           # => [0, 1, 2, 3, 4, 5, 6, 7]
     # ```
-    def mask_by_coords(& : Vector -> Bool) : self
+    def mask_by_coords(& : Vec3 -> Bool) : self
       map_with_coords { |_, vec| (yield vec) ? 1.0 : 0.0 }
     end
 
@@ -577,7 +577,7 @@ module Chem::Spatial
     # grid.mask_by_coords! { |vec| vec.y == 5 }
     # grid.to_a # => [0, 0, 2, 3, 0, 0, 6, 7]
     # ```
-    def mask_by_coords!(& : Vector -> Bool) : self
+    def mask_by_coords!(& : Vec3 -> Bool) : self
       map_with_coords! { |ele, vec| (yield vec) ? ele : 0.0 }
     end
 
@@ -775,10 +775,10 @@ module Chem::Spatial
     end
 
     @[AlwaysInline]
-    private def unsafe_coords_at(loc : Location) : Vector
-      vi = ni == 1 ? Vector.zero : bounds.i / (ni - 1)
-      vj = nj == 1 ? Vector.zero : bounds.j / (nj - 1)
-      vk = nk == 1 ? Vector.zero : bounds.k / (nk - 1)
+    private def unsafe_coords_at(loc : Location) : Vec3
+      vi = ni == 1 ? Vec3.zero : bounds.i / (ni - 1)
+      vj = nj == 1 ? Vec3.zero : bounds.j / (nj - 1)
+      vk = nk == 1 ? Vec3.zero : bounds.k / (nk - 1)
       origin + loc[0] * vi + loc[1] * vj + loc[2] * vk
     end
 

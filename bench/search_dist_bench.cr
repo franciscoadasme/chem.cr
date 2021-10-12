@@ -2,7 +2,7 @@ require "./bench_helper"
 require "./search_dist_helper"
 
 alias KDTree = Chem::Spatial::KDTree
-alias Vector = Chem::Spatial::Vector
+alias Vec3 = Chem::Spatial::Vec3
 
 structure = Chem::Structure.read "spec/data/pdb/1h1s.pdb"
 atoms = structure.atoms
@@ -14,8 +14,8 @@ cr_tree = Crystalline::KDTree(Float64).new cr_data
 
 puts "Nearest neighbors"
 Benchmark.ips do |x|
-  point = Vector.origin
-  # point = Vector[19, 32, 44]
+  point = Vec3.origin
+  # point = Vec3[19, 32, 44]
   point_a = point.to_a
 
   x.report("crystalline") do
@@ -38,7 +38,7 @@ end
 puts
 puts "Range (distance) search"
 Benchmark.ips do |x|
-  point = Vector[19, 32, 44]
+  point = Vec3[19, 32, 44]
   point_a = point.to_a
 
   x.report("crystalline") do

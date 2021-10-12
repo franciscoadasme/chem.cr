@@ -10,7 +10,7 @@ module Chem::Spatial
       end
     end
 
-    def initialize(a : Vector, b : Vector, c : Vector, d : Vector = Vector.zero)
+    def initialize(a : Vec3, b : Vec3, c : Vec3, d : Vec3 = Vec3.zero)
       @buffer = Pointer(Float64).malloc 16
       {a, b, c, d}.each_with_index do |vec, j|
         3.times do |i|
@@ -38,7 +38,7 @@ module Chem::Spatial
       end
     end
 
-    def self.translation(by offset : Vector) : self
+    def self.translation(by offset : Vec3) : self
       AffineTransform.build do |buffer|
         3.times { |i| buffer[i * 4 + 3] = offset[i] }
       end
@@ -56,14 +56,14 @@ module Chem::Spatial
       end
     end
 
-    def *(rhs : Vector) : Vector
+    def *(rhs : Vec3) : Vec3
       x = unsafe_fetch(0) * rhs.x + unsafe_fetch(1) * rhs.y +
           unsafe_fetch(2) * rhs.z + unsafe_fetch(3)
       y = unsafe_fetch(4) * rhs.x + unsafe_fetch(5) * rhs.y +
           unsafe_fetch(6) * rhs.z + unsafe_fetch(7)
       z = unsafe_fetch(8) * rhs.x + unsafe_fetch(9) * rhs.y +
           unsafe_fetch(10) * rhs.z + unsafe_fetch(11)
-      Vector.new x, y, z
+      Vec3.new x, y, z
     end
 
     def ==(rhs : self) : Bool
@@ -171,7 +171,7 @@ module Chem::Spatial
       end
     end
 
-    def translate(by offset : Vector) : self
+    def translate(by offset : Vec3) : self
       AffineTransform.build do |buffer|
         buffer.copy_from @buffer, 16
         3.times do |i|

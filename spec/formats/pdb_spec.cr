@@ -27,7 +27,7 @@ describe Chem::PDB do
       atom.residue.name.should eq "HOH"
       atom.chain.id.should eq 'D'
       atom.residue.number.should eq 2112
-      atom.coords.should eq Vector[66.315, 27.887, 48.252]
+      atom.coords.should eq Vec3[66.315, 27.887, 48.252]
       atom.occupancy.should eq 1
       atom.temperature_factor.should eq 53.58
       atom.element.oxygen?.should be_true
@@ -53,7 +53,7 @@ describe Chem::PDB do
       atom.chain.id.should eq 'A'
       atom.residue.number.should eq 2
       # atom.insertion_code.should be_nil
-      atom.coords.should eq Vector[-1.204, 4.061, 0.195]
+      atom.coords.should eq Vec3[-1.204, 4.061, 0.195]
       atom.occupancy.should eq 1
       atom.temperature_factor.should eq 0
       atom.element.oxygen?.should be_true

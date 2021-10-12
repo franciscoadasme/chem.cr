@@ -1,22 +1,22 @@
 require "../spec_helper"
 
 describe Chem::Spatial do
-  v1 = Vector[3.0, 4.0, 0.0]
-  v2 = Vector[1.0, 2.0, 3.0]
+  v1 = Vec3[3.0, 4.0, 0.0]
+  v2 = Vec3[1.0, 2.0, 3.0]
 
   describe ".angle" do
     it "returns the angle between two vectors" do
-      Chem::Spatial.angle(Vector[1, 0, 0], Vector[-1, -1, 0]).should eq 135
-      Chem::Spatial.angle(Vector[3, 4, 0], Vector[4, 4, 2]).should eq 21.039469781317237
-      Chem::Spatial.angle(Vector[1, 0, 3], Vector[5, 5, 0]).should eq 77.07903361841643
+      Chem::Spatial.angle(Vec3[1, 0, 0], Vec3[-1, -1, 0]).should eq 135
+      Chem::Spatial.angle(Vec3[3, 4, 0], Vec3[4, 4, 2]).should eq 21.039469781317237
+      Chem::Spatial.angle(Vec3[1, 0, 3], Vec3[5, 5, 0]).should eq 77.07903361841643
     end
 
     it "returns zero when vectors are parallel" do
-      Chem::Spatial.angle(Vector[1, 0, 0], Vector[2, 0, 0]).should eq 0
+      Chem::Spatial.angle(Vec3[1, 0, 0], Vec3[2, 0, 0]).should eq 0
     end
 
     it "returns 90 degrees when vectors are perpendicular to each other" do
-      Chem::Spatial.angle(Vector[1, 0, 0], Vector[0, 1, 0]).should eq 90
+      Chem::Spatial.angle(Vec3[1, 0, 0], Vec3[0, 1, 0]).should eq 90
     end
 
     it "returns the angle between three vectors" do
@@ -74,13 +74,13 @@ describe Chem::Spatial do
   end
 
   describe ".dihedral" do
-    p1 = Vector[8.396, 5.030, 1.599]
-    p2 = Vector[6.979, 5.051, 1.255]
-    p3 = Vector[6.107, 5.604, 2.405]
-    p4 = Vector[5.156, 4.761, 2.902]
-    p5 = Vector[4.273, 5.157, 3.991]
-    p6 = Vector[3.426, 6.387, 3.631]
-    p7 = Vector[2.613581, 6.909747, 4.371246]
+    p1 = Vec3[8.396, 5.030, 1.599]
+    p2 = Vec3[6.979, 5.051, 1.255]
+    p3 = Vec3[6.107, 5.604, 2.405]
+    p4 = Vec3[5.156, 4.761, 2.902]
+    p5 = Vec3[4.273, 5.157, 3.991]
+    p6 = Vec3[3.426, 6.387, 3.631]
+    p7 = Vec3[2.613581, 6.909747, 4.371246]
 
     it "returns the dihedral angle between three vectors" do
       Chem::Spatial.dihedral(p1, p2, p3, p4).should be_close -119.99403249, 1e-8

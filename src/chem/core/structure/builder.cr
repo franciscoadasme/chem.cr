@@ -21,21 +21,21 @@ module Chem
       @atom_serial = structure.each_atom.max_of?(&.serial) || 0
     end
 
-    def atom(coords : Spatial::Vector, **options) : Atom
+    def atom(coords : Spatial::Vec3, **options) : Atom
       atom :C, coords, **options
     end
 
-    def atom(element : Element | Symbol, coords : Spatial::Vector, **options) : Atom
+    def atom(element : Element | Symbol, coords : Spatial::Vec3, **options) : Atom
       element = PeriodicTable[element.to_s.capitalize] if element.is_a?(Symbol)
       id = residue.each_atom.count(&.element.==(element)) + 1
       atom "#{element.symbol}#{id}", coords, **options.merge(element: element)
     end
 
-    def atom(name : String, coords : Spatial::Vector, **options) : Atom
+    def atom(name : String, coords : Spatial::Vec3, **options) : Atom
       Atom.new name, (@atom_serial += 1), coords, residue, **options
     end
 
-    def atom(name : String, serial : Int32, coords : Spatial::Vector, **options) : Atom
+    def atom(name : String, serial : Int32, coords : Spatial::Vec3, **options) : Atom
       @atom_serial = serial
       Atom.new name, @atom_serial, coords, residue, **options
     end
@@ -114,7 +114,7 @@ module Chem
       @structure.lattice = lattice
     end
 
-    def lattice(a : Spatial::Vector, b : Spatial::Vector, c : Spatial::Vector) : Lattice
+    def lattice(a : Spatial::Vec3, b : Spatial::Vec3, c : Spatial::Vec3) : Lattice
       @structure.lattice = Lattice.new a, b, c
     end
 

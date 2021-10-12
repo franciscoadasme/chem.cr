@@ -1,6 +1,6 @@
 module Chem::Spatial
   record HlxParams,
-    rotaxis : Vector,
+    rotaxis : Vec3,
     twist : Float64,
     pitch : Float64,
     radius : Float64 do
@@ -70,7 +70,7 @@ module Chem::Spatial
     r1.size / (2 * Math.sin(0.5 * theta))
   end
 
-  private def rotation(coord) : Tuple(Vector, Float64, Float64)
+  private def rotation(coord) : Tuple(Vec3, Float64, Float64)
     v1 = coord[0][:c] - coord[0][:ca]
     v2 = coord[1][:n] - coord[0][:c]
     v3 = v1.cross(v2).normalize
@@ -91,7 +91,7 @@ module Chem::Spatial
     {rotaxis, rotation_angle(rotaxis, v1, w1), translation}
   end
 
-  private def rotation_angle(rotaxis : Vector, v1 : Vector, w1 : Vector) : Float64
+  private def rotation_angle(rotaxis : Vec3, v1 : Vec3, w1 : Vec3) : Float64
     v1p = (v1 - rotaxis * rotaxis.dot(v1)).normalize
     w1p = (w1 - rotaxis * rotaxis.dot(w1)).normalize
     twist = Math.acos v1p.dot(w1p)

@@ -68,8 +68,8 @@ module Chem::Cube
       Spatial::Grid::Info.new bounds, {nx, ny, nz}
     end
 
-    private def read_vector : Spatial::Vector
-      Spatial::Vector[@pull.next_f, @pull.next_f, @pull.next_f]
+    private def read_vector : Spatial::Vec3
+      Spatial::Vec3[@pull.next_f, @pull.next_f, @pull.next_f]
     end
   end
 

@@ -2,7 +2,7 @@ abstract struct Number
   RADIAN_TO_DEGREE = 180 / Math::PI
   DEGREE_TO_RADIAN = Math::PI / 180
 
-  def *(other : Chem::Spatial::Vector) : Chem::Spatial::Vector
+  def *(other : Chem::Spatial::Vec3) : Chem::Spatial::Vec3
     other * self
   end
 
