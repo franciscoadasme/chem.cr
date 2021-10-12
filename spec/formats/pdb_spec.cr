@@ -149,13 +149,6 @@ describe Chem::PDB do
       expt.method.x_ray_diffraction?.should be_true
     end
 
-    it "parses a PDB file with sequence" do
-      st = load_file "1crn.pdb"
-      st.sequence.should_not be_nil
-      seq = st.sequence.not_nil!
-      seq.to_s.should eq "TTCCPSIVARSNFNVCRLPGTPEAICATYTGCIIIPGATCPGDYAN"
-    end
-
     it "parses a PDB file with anisou/ter records" do
       st = load_file "anisou.pdb"
       st.n_atoms.should eq 133
@@ -307,7 +300,6 @@ describe Chem::PDB do
       structure.n_residues.should eq 38
       structure.n_atoms.should eq 310
       structure.chains.map(&.id).should eq ['B']
-      structure.sequence.to_s.should eq "GIEPLGPVDEDQGEHYLFAGG"
       structure['B'][18].sec.code.should eq 'E'
     end
 

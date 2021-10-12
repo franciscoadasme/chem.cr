@@ -10,7 +10,6 @@ module Chem
     getter biases = [] of Chem::Bias
     property experiment : Structure::Experiment?
     property lattice : Lattice?
-    property sequence : Protein::Sequence?
     getter source_file : Path?
     property title : String = ""
 
@@ -59,7 +58,6 @@ module Chem
       structure.biases.concat @biases
       structure.experiment = @experiment
       structure.lattice = @lattice
-      structure.sequence = @sequence
       structure.title = @title
       each_chain &.copy_to(structure)
       bonds.each do |bond|

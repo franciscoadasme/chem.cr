@@ -36,7 +36,6 @@ describe Chem::Structure do
 
       other.lattice.should eq structure.lattice
       other.experiment.should eq structure.experiment
-      other.sequence.should eq structure.sequence
       other.title.should eq structure.title
     end
   end

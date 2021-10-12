@@ -159,10 +159,6 @@ module Chem
       end
     end
 
-    def seq(seq : Protein::Sequence?)
-      @structure.sequence = seq
-    end
-
     def title(title : String)
       @structure.title = title
     end

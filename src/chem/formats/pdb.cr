@@ -16,7 +16,6 @@ module Chem::PDB
 
     @pdb_bonds = Hash(Tuple(Int32, Int32), Int32).new 0
     @pdb_lattice : Lattice?
-    @pdb_seq : Protein::Sequence?
     @pdb_title = ""
     @header_decoded = false
 
@@ -91,7 +90,6 @@ module Chem::PDB
     end
 
     private def decode_header : Structure::Experiment
-      aminoacids = [] of Protein::AminoAcid
       date = doi = pdbid = resolution = nil
       method = Structure::Experiment::Method::XRayDiffraction
       title = ""
@@ -142,12 +140,6 @@ module Chem::PDB
             pdbid = @pull.at(11, 4).str.presence
             date = Time::UNIX_EPOCH if pdbid
           end
-        when "SEQRES"
-          if @chains.nil? || @chains.try(&.includes?(@pull.at(11).char))
-            @pull.at(19, 60).str.split.each do |resname|
-              aminoacids << Protein::AminoAcid[resname]
-            end
-          end
         when "SHEET "
           ch1 = @pull.at(21).char.presence || @pull.error("Blank chain id")
           ch2 = @pull.at(32).char.presence || @pull.error("Blank chain id")
@@ -170,7 +162,6 @@ module Chem::PDB
       else
         @pdb_title = title
       end
-      @pdb_seq = Protein::Sequence.new aminoacids unless aminoacids.empty?
 
       @header_decoded = true
       @header || Structure::Experiment.new "", method, nil, "", Time::UNIX_EPOCH, nil
@@ -242,7 +233,6 @@ module Chem::PDB
       @builder.title @pdb_title
       @builder.lattice @pdb_lattice
       @builder.expt @header
-      @builder.seq @pdb_seq
 
       @pdb_bonds.clear
       @serial = 0
