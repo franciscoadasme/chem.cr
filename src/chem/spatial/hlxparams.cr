@@ -1,15 +1,11 @@
 module Chem::Spatial
-  struct HlxParams
-    getter radius : Float64
-    getter rotaxis : Vector
-    getter theta : Float64
-    getter zeta : Float64
-    getter q : Quaternion { Quaternion.rotation about: @rotaxis, by: @theta }
-
-    def initialize(@rotaxis : Vector,
-                   @theta : Float64,
-                   @zeta : Float64,
-                   @radius : Float64)
+  record HlxParams,
+    rotaxis : Vector,
+    twist : Float64,
+    pitch : Float64,
+    radius : Float64 do
+    def to_q : Quaternion
+      Quaternion.rotation about: @rotaxis, by: @twist
     end
   end
 
@@ -38,10 +34,10 @@ module Chem::Spatial
         }
       end
 
-    tz, theta, zeta = rotation coord
+    rotaxis, twist, pitch = rotation coord
     chirality = chirality coord
-    zeta, tz, theta = -zeta, -tz, 2 * Math::PI - theta if chirality < 0
-    HlxParams.new tz, theta.degrees, zeta, radius(coord, theta)
+    pitch, rotaxis, twist = -pitch, -rotaxis, 2 * Math::PI - twist if chirality < 0
+    HlxParams.new rotaxis, twist.degrees, pitch, radius(coord, twist)
   rescue KeyError
     nil
   end
@@ -85,25 +81,25 @@ module Chem::Spatial
     w3 = w1.cross(w2).normalize
     w1 = w1.normalize
 
-    tz = (w1 - v1).cross(w3 - v3).normalize
-    tz *= tz.dot(v1).sign # ensures that rotation axis points forwards
+    rotaxis = (w1 - v1).cross(w3 - v3).normalize
+    rotaxis *= rotaxis.dot(v1).sign # ensures that rotation axis points forwards
 
     c1 = (coord[0][:ca] + coord[0][:c] + coord[1][:n] + coord[1][:ca]) / 4
     c2 = (coord[1][:ca] + coord[1][:c] + coord[2][:n] + coord[2][:ca]) / 4
-    zeta = tz.dot(c2 - c1)
+    translation = rotaxis.dot(c2 - c1)
 
-    {tz, rotation_angle(tz, v1, w1), zeta}
+    {rotaxis, rotation_angle(rotaxis, v1, w1), translation}
   end
 
   private def rotation_angle(rotaxis : Vector, v1 : Vector, w1 : Vector) : Float64
     v1p = (v1 - rotaxis * rotaxis.dot(v1)).normalize
     w1p = (w1 - rotaxis * rotaxis.dot(w1)).normalize
-    theta = Math.acos v1p.dot(w1p)
+    twist = Math.acos v1p.dot(w1p)
 
     tzp = v1p.cross(w1p).normalize
     handedness = rotaxis.dot tzp
     handedness = 1.0 if handedness.abs < 1e-9
     handedness /= handedness.abs
-    theta * handedness + Math::PI * (1 - handedness)
+    twist * handedness + Math::PI * (1 - handedness)
   end
 end

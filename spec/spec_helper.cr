@@ -153,12 +153,12 @@ def load_file(path : String, guess_topology : Bool = false) : Structure
 end
 
 def load_hlxparams_data
-  {radius: [] of Float64, theta: [] of Float64, zeta: [] of Float64}.tap do |datasets|
+  {radius: [] of Float64, twist: [] of Float64, pitch: [] of Float64}.tap do |datasets|
     File.each_line("spec/data/spatial/hlxparams.txt") do |line|
       next if line.blank?
       values = line.split.map &.to_f
-      datasets[:zeta] << values[0]
-      datasets[:theta] << values[1]
+      datasets[:pitch] << values[0]
+      datasets[:twist] << values[1]
       datasets[:radius] << values[2]
     end
   end

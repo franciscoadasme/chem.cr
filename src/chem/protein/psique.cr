@@ -165,31 +165,31 @@ module Chem::Protein
         h1 = hlxparams[i - 1] if i > 0 && res.bonded?(@residues[i - 1])
         h3 = hlxparams[i + 1] if i < @residues.size - 1 && res.bonded?(@residues[i + 1])
         if h1 && h3
-          dprev = Spatial.distance h1.q, h2.q
-          dnext = Spatial.distance h2.q, h3.q
+          dprev = Spatial.distance h1.to_q, h2.to_q
+          dnext = Spatial.distance h2.to_q, h3.to_q
           curvature[i] = ((dprev + dnext) / 2).degrees
         end
 
-        raw_rise = h2.zeta.scale(0, 4)
-        raw_twist = h2.theta.scale(0, 360)
-        pes = PSIQUE.pes[raw_rise >= 0 ? 1 : -1]
-        rise, twist = pes.walk raw_rise, raw_twist
+        raw_pitch = h2.pitch.scale(0, 4)
+        raw_twist = h2.twist.scale(0, 360)
+        pes = PSIQUE.pes[raw_pitch >= 0 ? 1 : -1]
+        pitch, twist = pes.walk raw_pitch, raw_twist
         basin_ok = false
-        if basin = pes.basin(rise, twist)
+        if basin = pes.basin(pitch, twist)
           case basin.sec
           when .beta_strand?
             # ensure that the residue forms or is between h-bond bridges
             next unless in_bridge?(res)
           when .polyproline?, .helix_gamma?
             # check for beta_strand if the residue forms or is between h-bond bridges
-            if in_bridge?(res) && pes.basin(:beta_strand).includes?(raw_rise, raw_twist)
+            if in_bridge?(res) && pes.basin(:beta_strand).includes?(raw_pitch, raw_twist)
               basin = pes.basin :beta_strand
               basin_ok = true
             end
           end
 
           @raw_sec[i] = basin.sec
-          if (basin_ok || basin.includes?(rise, twist)) &&
+          if (basin_ok || basin.includes?(pitch, twist)) &&
              curvature[i] <= CURVATURE_CUTOFF
             res.sec = basin.sec
           end
