@@ -516,8 +516,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Vector" data-name="chem::spatial::vector">
-      <a href="../../Chem/Spatial/Vector.html">Vector</a>
+  <li class=" " data-id="chem.cr/Chem/Spatial/Vec3" data-name="chem::spatial::vec3">
+      <a href="../../Chem/Spatial/Vec3.html">Vec3</a>
       
     </li>
   
@@ -823,7 +823,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/quaternion.cr#L2" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/quaternion.cr#L2" target="_blank">
         chem/spatial/quaternion.cr
       </a>
     
@@ -850,7 +850,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#aligning(v1:Vector,tov2:Vector):self-class-method" class="signature"><strong>.aligning</strong>(v1 : Vector, to v2 : Vector) : <span class="k">self</span></a>
+        <a href="#aligning(v1:Vec3,tov2:Vec3):self-class-method" class="signature"><strong>.aligning</strong>(v1 : Vec3, to v2 : Vec3) : <span class="k">self</span></a>
         
       </li>
     
@@ -860,12 +860,12 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#new(w:Float64,v:Vector)-class-method" class="signature"><strong>.new</strong>(w : Float64, v : Vector)</a>
+        <a href="#new(w:Float64,v:Vec3)-class-method" class="signature"><strong>.new</strong>(w : Float64, v : Vec3)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#rotation(aboutrotaxis:Vector,bytheta:Float64):self-class-method" class="signature"><strong>.rotation</strong>(about rotaxis : Vector, by theta : Float64) : <span class="k">self</span></a>
+        <a href="#rotation(aboutrotaxis:Vec3,bytheta:Float64):self-class-method" class="signature"><strong>.rotation</strong>(about rotaxis : Vec3, by theta : Float64) : <span class="k">self</span></a>
         
       </li>
     
@@ -896,7 +896,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#*(other:Vector):self-instance-method" class="signature"><strong>#*</strong>(other : Vector) : <span class="k">self</span></a>
+        <a href="#*(other:Vec3):self-instance-method" class="signature"><strong>#*</strong>(other : Vec3) : <span class="k">self</span></a>
         
       </li>
     
@@ -956,7 +956,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#rotate(vec:Vector):Vector-instance-method" class="signature"><strong>#rotate</strong>(vec : Vector) : Vector</a>
+        <a href="#rotate(vec:Vec3):Vec3-instance-method" class="signature"><strong>#rotate</strong>(vec : Vec3) : Vec3</a>
         
       </li>
     
@@ -966,7 +966,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#v:Vector-instance-method" class="signature"><strong>#v</strong> : Vector</a>
+        <a href="#v:Vec3-instance-method" class="signature"><strong>#v</strong> : Vec3</a>
         
       </li>
     
@@ -1041,23 +1041,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/quaternion.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/quaternion.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="aligning(v1:Vector,tov2:Vector):self-class-method">
+    <div class="entry-detail" id="aligning(v1:Vec3,tov2:Vec3):self-class-method">
       <div class="signature">
         
-        def self.<strong>aligning</strong>(v1 : <a href="../../Chem/Spatial/Vector.html">Vector</a>, to v2 : <a href="../../Chem/Spatial/Vector.html">Vector</a>) : <span class="k">self</span>
+        def self.<strong>aligning</strong>(v1 : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, to v2 : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#aligning(v1:Vector,tov2:Vector):self-class-method">#</a>
+        <a class="method-permalink" href="#aligning(v1:Vec3,tov2:Vec3):self-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/quaternion.cr#L13" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/quaternion.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1073,39 +1073,39 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/quaternion.cr#L17" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/quaternion.cr#L17" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="new(w:Float64,v:Vector)-class-method">
+    <div class="entry-detail" id="new(w:Float64,v:Vec3)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(w : Float64, v : <a href="../../Chem/Spatial/Vector.html">Vector</a>)
+        def self.<strong>new</strong>(w : Float64, v : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>)
 
-        <a class="method-permalink" href="#new(w:Float64,v:Vector)-class-method">#</a>
+        <a class="method-permalink" href="#new(w:Float64,v:Vec3)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/quaternion.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/quaternion.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="rotation(aboutrotaxis:Vector,bytheta:Float64):self-class-method">
+    <div class="entry-detail" id="rotation(aboutrotaxis:Vec3,bytheta:Float64):self-class-method">
       <div class="signature">
         
-        def self.<strong>rotation</strong>(about rotaxis : <a href="../../Chem/Spatial/Vector.html">Vector</a>, by theta : Float64) : <span class="k">self</span>
+        def self.<strong>rotation</strong>(about rotaxis : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, by theta : Float64) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#rotation(aboutrotaxis:Vector,bytheta:Float64):self-class-method">#</a>
+        <a class="method-permalink" href="#rotation(aboutrotaxis:Vec3,bytheta:Float64):self-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/quaternion.cr#L21" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/quaternion.cr#L21" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1121,7 +1121,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/quaternion.cr#L26" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/quaternion.cr#L26" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1151,23 +1151,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/quaternion.cr#L42" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/quaternion.cr#L42" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="*(other:Vector):self-instance-method">
+    <div class="entry-detail" id="*(other:Vec3):self-instance-method">
       <div class="signature">
         
-        def <strong>*</strong>(other : <a href="../../Chem/Spatial/Vector.html">Vector</a>) : <span class="k">self</span>
+        def <strong>*</strong>(other : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#*(other:Vector):self-instance-method">#</a>
+        <a class="method-permalink" href="#*(other:Vec3):self-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/quaternion.cr#L48" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/quaternion.cr#L48" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1183,7 +1183,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/quaternion.cr#L54" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/quaternion.cr#L54" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1199,7 +1199,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/quaternion.cr#L30" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/quaternion.cr#L30" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1215,7 +1215,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/quaternion.cr#L38" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/quaternion.cr#L38" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1231,7 +1231,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/quaternion.cr#L34" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/quaternion.cr#L34" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1247,7 +1247,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/quaternion.cr#L58" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/quaternion.cr#L58" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1263,7 +1263,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/quaternion.cr#L62" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/quaternion.cr#L62" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1279,7 +1279,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/quaternion.cr#L73" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/quaternion.cr#L73" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1295,7 +1295,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/quaternion.cr#L77" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/quaternion.cr#L77" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1311,7 +1311,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/quaternion.cr#L81" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/quaternion.cr#L81" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1327,7 +1327,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/quaternion.cr#L85" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/quaternion.cr#L85" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1343,23 +1343,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/quaternion.cr#L89" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/quaternion.cr#L89" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="rotate(vec:Vector):Vector-instance-method">
+    <div class="entry-detail" id="rotate(vec:Vec3):Vec3-instance-method">
       <div class="signature">
         
-        def <strong>rotate</strong>(vec : <a href="../../Chem/Spatial/Vector.html">Vector</a>) : <a href="../../Chem/Spatial/Vector.html">Vector</a>
+        def <strong>rotate</strong>(vec : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>
 
-        <a class="method-permalink" href="#rotate(vec:Vector):Vector-instance-method">#</a>
+        <a class="method-permalink" href="#rotate(vec:Vec3):Vec3-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/quaternion.cr#L94" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/quaternion.cr#L94" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1375,23 +1375,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/quaternion.cr#L100" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/quaternion.cr#L100" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="v:Vector-instance-method">
+    <div class="entry-detail" id="v:Vec3-instance-method">
       <div class="signature">
         
-        def <strong>v</strong> : <a href="../../Chem/Spatial/Vector.html">Vector</a>
+        def <strong>v</strong> : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>
 
-        <a class="method-permalink" href="#v:Vector-instance-method">#</a>
+        <a class="method-permalink" href="#v:Vec3-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/quaternion.cr#L3" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/quaternion.cr#L3" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1407,7 +1407,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/quaternion.cr#L4" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/quaternion.cr#L4" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1423,7 +1423,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/quaternion.cr#L104" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/quaternion.cr#L104" target="_blank">View source</a>]
         
       </div>
     </div>

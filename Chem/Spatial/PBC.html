@@ -516,8 +516,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Vector" data-name="chem::spatial::vector">
-      <a href="../../Chem/Spatial/Vector.html">Vector</a>
+  <li class=" " data-id="chem.cr/Chem/Spatial/Vec3" data-name="chem::spatial::vec3">
+      <a href="../../Chem/Spatial/Vec3.html">Vec3</a>
       
     </li>
   
@@ -835,7 +835,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/pbc.cr#L1" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/pbc.cr#L1" target="_blank">
         chem/spatial/pbc.cr
       </a>
     
@@ -880,27 +880,27 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#adjacent_images(*args,**options):Array(Tuple(Atom,Vector))-instance-method" class="signature"><strong>#adjacent_images</strong>(*args, **options) : Array(Tuple(Atom, Vector))</a>
+        <a href="#adjacent_images(*args,**options):Array(Tuple(Atom,Vec3))-instance-method" class="signature"><strong>#adjacent_images</strong>(*args, **options) : Array(Tuple(Atom, Vec3))</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#each_adjacent_image(atoms:AtomCollection,lattice:Lattice,radius:Number,&block:Atom,Vector-%3E)-instance-method" class="signature"><strong>#each_adjacent_image</strong>(atoms : AtomCollection, lattice : Lattice, radius : Number, &block : Atom, Vector -> )</a>
+        <a href="#each_adjacent_image(atoms:AtomCollection,lattice:Lattice,radius:Number,&block:Atom,Vec3-%3E)-instance-method" class="signature"><strong>#each_adjacent_image</strong>(atoms : AtomCollection, lattice : Lattice, radius : Number, &block : Atom, Vec3 -> )</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#each_adjacent_image(atoms:AtomCollection,lattice:Lattice,&block:Atom,Vector-%3E)-instance-method" class="signature"><strong>#each_adjacent_image</strong>(atoms : AtomCollection, lattice : Lattice, &block : Atom, Vector -> )</a>
+        <a href="#each_adjacent_image(atoms:AtomCollection,lattice:Lattice,&block:Atom,Vec3-%3E)-instance-method" class="signature"><strong>#each_adjacent_image</strong>(atoms : AtomCollection, lattice : Lattice, &block : Atom, Vec3 -> )</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#each_adjacent_image(structure:Structure,radius:Number,&block:Atom,Vector-%3E)-instance-method" class="signature"><strong>#each_adjacent_image</strong>(structure : Structure, radius : Number, &block : Atom, Vector -> )</a>
+        <a href="#each_adjacent_image(structure:Structure,radius:Number,&block:Atom,Vec3-%3E)-instance-method" class="signature"><strong>#each_adjacent_image</strong>(structure : Structure, radius : Number, &block : Atom, Vec3 -> )</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#each_adjacent_image(structure:Structure,&block:Atom,Vector-%3E)-instance-method" class="signature"><strong>#each_adjacent_image</strong>(structure : Structure, &block : Atom, Vector -> )</a>
+        <a href="#each_adjacent_image(structure:Structure,&block:Atom,Vec3-%3E)-instance-method" class="signature"><strong>#each_adjacent_image</strong>(structure : Structure, &block : Atom, Vec3 -> )</a>
         
       </li>
     
@@ -933,82 +933,82 @@
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="adjacent_images(*args,**options):Array(Tuple(Atom,Vector))-instance-method">
+    <div class="entry-detail" id="adjacent_images(*args,**options):Array(Tuple(Atom,Vec3))-instance-method">
       <div class="signature">
         
-        def <strong>adjacent_images</strong>(*args, **options) : <a href="../../Array.html">Array</a>(Tuple(<a href="../../Chem/Atom.html">Atom</a>, <a href="../../Chem/Spatial/Vector.html">Vector</a>))
+        def <strong>adjacent_images</strong>(*args, **options) : <a href="../../Array.html">Array</a>(Tuple(<a href="../../Chem/Atom.html">Atom</a>, <a href="../../Chem/Spatial/Vec3.html">Vec3</a>))
 
-        <a class="method-permalink" href="#adjacent_images(*args,**options):Array(Tuple(Atom,Vector))-instance-method">#</a>
+        <a class="method-permalink" href="#adjacent_images(*args,**options):Array(Tuple(Atom,Vec3))-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/pbc.cr#L7" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/pbc.cr#L7" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="each_adjacent_image(atoms:AtomCollection,lattice:Lattice,radius:Number,&amp;block:Atom,Vector-&gt;)-instance-method">
+    <div class="entry-detail" id="each_adjacent_image(atoms:AtomCollection,lattice:Lattice,radius:Number,&amp;block:Atom,Vec3-&gt;)-instance-method">
       <div class="signature">
         
-        def <strong>each_adjacent_image</strong>(atoms : <a href="../../Chem/AtomCollection.html">AtomCollection</a>, lattice : <a href="../../Chem/Lattice.html">Lattice</a>, radius : <a href="../../Number.html">Number</a>, &block : <a href="../../Chem/Atom.html">Atom</a>, <a href="../../Chem/Spatial/Vector.html">Vector</a> -> )
+        def <strong>each_adjacent_image</strong>(atoms : <a href="../../Chem/AtomCollection.html">AtomCollection</a>, lattice : <a href="../../Chem/Lattice.html">Lattice</a>, radius : <a href="../../Number.html">Number</a>, &block : <a href="../../Chem/Atom.html">Atom</a>, <a href="../../Chem/Spatial/Vec3.html">Vec3</a> -> )
 
-        <a class="method-permalink" href="#each_adjacent_image(atoms:AtomCollection,lattice:Lattice,radius:Number,&block:Atom,Vector-%3E)-instance-method">#</a>
+        <a class="method-permalink" href="#each_adjacent_image(atoms:AtomCollection,lattice:Lattice,radius:Number,&block:Atom,Vec3-%3E)-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/pbc.cr#L42" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/pbc.cr#L42" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="each_adjacent_image(atoms:AtomCollection,lattice:Lattice,&amp;block:Atom,Vector-&gt;)-instance-method">
+    <div class="entry-detail" id="each_adjacent_image(atoms:AtomCollection,lattice:Lattice,&amp;block:Atom,Vec3-&gt;)-instance-method">
       <div class="signature">
         
-        def <strong>each_adjacent_image</strong>(atoms : <a href="../../Chem/AtomCollection.html">AtomCollection</a>, lattice : <a href="../../Chem/Lattice.html">Lattice</a>, &block : <a href="../../Chem/Atom.html">Atom</a>, <a href="../../Chem/Spatial/Vector.html">Vector</a> -> )
+        def <strong>each_adjacent_image</strong>(atoms : <a href="../../Chem/AtomCollection.html">AtomCollection</a>, lattice : <a href="../../Chem/Lattice.html">Lattice</a>, &block : <a href="../../Chem/Atom.html">Atom</a>, <a href="../../Chem/Spatial/Vec3.html">Vec3</a> -> )
 
-        <a class="method-permalink" href="#each_adjacent_image(atoms:AtomCollection,lattice:Lattice,&block:Atom,Vector-%3E)-instance-method">#</a>
+        <a class="method-permalink" href="#each_adjacent_image(atoms:AtomCollection,lattice:Lattice,&block:Atom,Vec3-%3E)-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/pbc.cr#L20" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/pbc.cr#L20" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="each_adjacent_image(structure:Structure,radius:Number,&amp;block:Atom,Vector-&gt;)-instance-method">
+    <div class="entry-detail" id="each_adjacent_image(structure:Structure,radius:Number,&amp;block:Atom,Vec3-&gt;)-instance-method">
       <div class="signature">
         
-        def <strong>each_adjacent_image</strong>(structure : <a href="../../Chem/Structure.html">Structure</a>, radius : <a href="../../Number.html">Number</a>, &block : <a href="../../Chem/Atom.html">Atom</a>, <a href="../../Chem/Spatial/Vector.html">Vector</a> -> )
+        def <strong>each_adjacent_image</strong>(structure : <a href="../../Chem/Structure.html">Structure</a>, radius : <a href="../../Number.html">Number</a>, &block : <a href="../../Chem/Atom.html">Atom</a>, <a href="../../Chem/Spatial/Vec3.html">Vec3</a> -> )
 
-        <a class="method-permalink" href="#each_adjacent_image(structure:Structure,radius:Number,&block:Atom,Vector-%3E)-instance-method">#</a>
+        <a class="method-permalink" href="#each_adjacent_image(structure:Structure,radius:Number,&block:Atom,Vec3-%3E)-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/pbc.cr#L35" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/pbc.cr#L35" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="each_adjacent_image(structure:Structure,&amp;block:Atom,Vector-&gt;)-instance-method">
+    <div class="entry-detail" id="each_adjacent_image(structure:Structure,&amp;block:Atom,Vec3-&gt;)-instance-method">
       <div class="signature">
         
-        def <strong>each_adjacent_image</strong>(structure : <a href="../../Chem/Structure.html">Structure</a>, &block : <a href="../../Chem/Atom.html">Atom</a>, <a href="../../Chem/Spatial/Vector.html">Vector</a> -> )
+        def <strong>each_adjacent_image</strong>(structure : <a href="../../Chem/Structure.html">Structure</a>, &block : <a href="../../Chem/Atom.html">Atom</a>, <a href="../../Chem/Spatial/Vec3.html">Vec3</a> -> )
 
-        <a class="method-permalink" href="#each_adjacent_image(structure:Structure,&block:Atom,Vector-%3E)-instance-method">#</a>
+        <a class="method-permalink" href="#each_adjacent_image(structure:Structure,&block:Atom,Vec3-%3E)-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/pbc.cr#L15" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/pbc.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1024,7 +1024,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/pbc.cr#L65" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/pbc.cr#L65" target="_blank">View source</a>]
         
       </div>
     </div>

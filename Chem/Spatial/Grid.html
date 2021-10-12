@@ -516,8 +516,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Vector" data-name="chem::spatial::vector">
-      <a href="../../Chem/Spatial/Vector.html">Vector</a>
+  <li class=" " data-id="chem.cr/Chem/Spatial/Vec3" data-name="chem::spatial::vec3">
+      <a href="../../Chem/Spatial/Vec3.html">Vec3</a>
       
     </li>
   
@@ -853,14 +853,14 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/register_format.cr#L270" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/register_format.cr#L270" target="_blank">
         chem/register_format.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L6" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L6" target="_blank">
         chem/spatial/grid.cr
       </a>
     
@@ -1089,7 +1089,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#[]?(vec:Vector):Float64?-instance-method" class="signature"><strong>#[]?</strong>(vec : Vector) : Float64?</a>
+        <a href="#[]?(vec:Vec3):Float64?-instance-method" class="signature"><strong>#[]?</strong>(vec : Vec3) : Float64?</a>
         
           <div class="summary"><p><span class="flag orange">TODO</span>  add interpolation (check ARBInterp)</p></div>
         
@@ -1101,22 +1101,22 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#coords_at(*args,**options):Vector-instance-method" class="signature"><strong>#coords_at</strong>(*args, **options) : Vector</a>
+        <a href="#coords_at(*args,**options):Vec3-instance-method" class="signature"><strong>#coords_at</strong>(*args, **options) : Vec3</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#coords_at?(i:Int,j:Int,k:Int):Vector?-instance-method" class="signature"><strong>#coords_at?</strong>(i : Int, j : Int, k : Int) : Vector?</a>
+        <a href="#coords_at?(i:Int,j:Int,k:Int):Vec3?-instance-method" class="signature"><strong>#coords_at?</strong>(i : Int, j : Int, k : Int) : Vec3?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#coords_at?(i:Int):Vector?-instance-method" class="signature"><strong>#coords_at?</strong>(i : Int) : Vector?</a>
+        <a href="#coords_at?(i:Int):Vec3?-instance-method" class="signature"><strong>#coords_at?</strong>(i : Int) : Vec3?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#coords_at?(loc:Location):Vector?-instance-method" class="signature"><strong>#coords_at?</strong>(loc : Location) : Vector?</a>
+        <a href="#coords_at?(loc:Location):Vec3?-instance-method" class="signature"><strong>#coords_at?</strong>(loc : Location) : Vec3?</a>
         
       </li>
     
@@ -1140,12 +1140,12 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#each_coords(&:Vector-%3E):Nil-instance-method" class="signature"><strong>#each_coords</strong>(& : Vector -> ) : Nil</a>
+        <a href="#each_coords(&:Vec3-%3E):Nil-instance-method" class="signature"><strong>#each_coords</strong>(& : Vec3 -> ) : Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#each_loc(vec:Vector,cutoff:Number,&:Location,Float64-%3E):Nil-instance-method" class="signature"><strong>#each_loc</strong>(vec : Vector, cutoff : Number, & : Location, Float64 -> ) : Nil</a>
+        <a href="#each_loc(vec:Vec3,cutoff:Number,&:Location,Float64-%3E):Nil-instance-method" class="signature"><strong>#each_loc</strong>(vec : Vec3, cutoff : Number, & : Location, Float64 -> ) : Nil</a>
         
       </li>
     
@@ -1155,7 +1155,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#each_with_coords(&:Float64,Vector-%3E):Nil-instance-method" class="signature"><strong>#each_with_coords</strong>(& : Float64, Vector -> ) : Nil</a>
+        <a href="#each_with_coords(&:Float64,Vec3-%3E):Nil-instance-method" class="signature"><strong>#each_with_coords</strong>(& : Float64, Vec3 -> ) : Nil</a>
         
       </li>
     
@@ -1180,7 +1180,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#index(vec:Vector):Int32?-instance-method" class="signature"><strong>#index</strong>(vec : Vector) : Int32?</a>
+        <a href="#index(vec:Vec3):Int32?-instance-method" class="signature"><strong>#index</strong>(vec : Vec3) : Int32?</a>
         
       </li>
     
@@ -1200,7 +1200,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#loc_at?(vec:Vector):Location?-instance-method" class="signature"><strong>#loc_at?</strong>(vec : Vector) : Location?</a>
+        <a href="#loc_at?(vec:Vec3):Location?-instance-method" class="signature"><strong>#loc_at?</strong>(vec : Vec3) : Location?</a>
         
       </li>
     
@@ -1217,12 +1217,12 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#map_with_coords(&:Float64,Vector-%3ENumber):self-instance-method" class="signature"><strong>#map_with_coords</strong>(& : Float64, Vector -> Number) : <span class="k">self</span></a>
+        <a href="#map_with_coords(&:Float64,Vec3-%3ENumber):self-instance-method" class="signature"><strong>#map_with_coords</strong>(& : Float64, Vec3 -> Number) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#map_with_coords!(&:Float64,Vector-%3ENumber):self-instance-method" class="signature"><strong>#map_with_coords!</strong>(& : Float64, Vector -> Number) : <span class="k">self</span></a>
+        <a href="#map_with_coords!(&:Float64,Vec3-%3ENumber):self-instance-method" class="signature"><strong>#map_with_coords!</strong>(& : Float64, Vec3 -> Number) : <span class="k">self</span></a>
         
       </li>
     
@@ -1291,14 +1291,14 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#mask_by_coords(&:Vector-%3EBool):self-instance-method" class="signature"><strong>#mask_by_coords</strong>(& : Vector -> Bool) : <span class="k">self</span></a>
+        <a href="#mask_by_coords(&:Vec3-%3EBool):self-instance-method" class="signature"><strong>#mask_by_coords</strong>(& : Vec3 -> Bool) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns a grid mask.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#mask_by_coords!(&:Vector-%3EBool):self-instance-method" class="signature"><strong>#mask_by_coords!</strong>(& : Vector -> Bool) : <span class="k">self</span></a>
+        <a href="#mask_by_coords!(&:Vec3-%3EBool):self-instance-method" class="signature"><strong>#mask_by_coords!</strong>(& : Vec3 -> Bool) : <span class="k">self</span></a>
         
           <div class="summary"><p>Masks a grid by coordinates.</p></div>
         
@@ -1604,7 +1604,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L39" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L39" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1620,7 +1620,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L43" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L43" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1647,7 +1647,7 @@ grid <span class="o">=</span> <span class="t">Grid</span>.atom_distance structur
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L62" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L62" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1677,7 +1677,7 @@ linear fashion, e.g., reading values from a file.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L78" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L78" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1693,7 +1693,7 @@ linear fashion, e.g., reading values from a file.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L86" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L86" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1720,7 +1720,7 @@ other.to_a.minmax           <span class="c"># =&gt; {0.0, 0.0}</span></code></pr
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L104" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L104" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1747,7 +1747,7 @@ other.to_a.minmax           <span class="c"># =&gt; {2345.123, 2345.123}</span><
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L117" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L117" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1770,7 +1770,7 @@ other.to_a.minmax           <span class="c"># =&gt; {2345.123, 2345.123}</span><
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1793,7 +1793,7 @@ other.to_a.minmax           <span class="c"># =&gt; {2345.123, 2345.123}</span><
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1816,7 +1816,7 @@ other.to_a.minmax           <span class="c"># =&gt; {2345.123, 2345.123}</span><
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1839,7 +1839,7 @@ other.to_a.minmax           <span class="c"># =&gt; {2345.123, 2345.123}</span><
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1855,7 +1855,7 @@ other.to_a.minmax           <span class="c"># =&gt; {2345.123, 2345.123}</span><
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L21" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L21" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1871,7 +1871,7 @@ other.to_a.minmax           <span class="c"># =&gt; {2345.123, 2345.123}</span><
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L30" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L30" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1887,7 +1887,7 @@ other.to_a.minmax           <span class="c"># =&gt; {2345.123, 2345.123}</span><
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L121" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L121" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1914,7 +1914,7 @@ the corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1945,7 +1945,7 @@ decoded in the corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1968,7 +1968,7 @@ decoded in the corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L132" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L132" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1995,7 +1995,7 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L174" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L174" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2025,7 +2025,7 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L188" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L188" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2041,7 +2041,7 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L188" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L188" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2057,7 +2057,7 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L188" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L188" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2073,7 +2073,7 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L188" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L188" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2089,7 +2089,7 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L188" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L188" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2105,7 +2105,7 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L188" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L188" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2121,7 +2121,7 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L188" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L188" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2137,7 +2137,7 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L188" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L188" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2162,7 +2162,7 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L180" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L180" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2178,7 +2178,7 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L208" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L208" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2194,7 +2194,7 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L240" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L240" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2210,7 +2210,7 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L233" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L233" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2226,7 +2226,7 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L245" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L245" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2242,7 +2242,7 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L213" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L213" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2258,17 +2258,17 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L218" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L218" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="[]?(vec:Vector):Float64?-instance-method">
+    <div class="entry-detail" id="[]?(vec:Vec3):Float64?-instance-method">
       <div class="signature">
         
-        def <strong>[]?</strong>(vec : <a href="../../Chem/Spatial/Vector.html">Vector</a>) : Float64?
+        def <strong>[]?</strong>(vec : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : Float64?
 
-        <a class="method-permalink" href="#[]?(vec:Vector):Float64?-instance-method">#</a>
+        <a class="method-permalink" href="#[]?(vec:Vec3):Float64?-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2279,7 +2279,7 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L226" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L226" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2295,71 +2295,71 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L13" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="coords_at(*args,**options):Vector-instance-method">
+    <div class="entry-detail" id="coords_at(*args,**options):Vec3-instance-method">
       <div class="signature">
         
-        def <strong>coords_at</strong>(*args, **options) : <a href="../../Chem/Spatial/Vector.html">Vector</a>
+        def <strong>coords_at</strong>(*args, **options) : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>
 
-        <a class="method-permalink" href="#coords_at(*args,**options):Vector-instance-method">#</a>
+        <a class="method-permalink" href="#coords_at(*args,**options):Vec3-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L250" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L250" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="coords_at?(i:Int,j:Int,k:Int):Vector?-instance-method">
+    <div class="entry-detail" id="coords_at?(i:Int,j:Int,k:Int):Vec3?-instance-method">
       <div class="signature">
         
-        def <strong>coords_at?</strong>(i : Int, j : Int, k : Int) : <a href="../../Chem/Spatial/Vector.html">Vector</a>?
+        def <strong>coords_at?</strong>(i : Int, j : Int, k : Int) : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>?
 
-        <a class="method-permalink" href="#coords_at?(i:Int,j:Int,k:Int):Vector?-instance-method">#</a>
+        <a class="method-permalink" href="#coords_at?(i:Int,j:Int,k:Int):Vec3?-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L260" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L260" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="coords_at?(i:Int):Vector?-instance-method">
+    <div class="entry-detail" id="coords_at?(i:Int):Vec3?-instance-method">
       <div class="signature">
         
-        def <strong>coords_at?</strong>(i : Int) : <a href="../../Chem/Spatial/Vector.html">Vector</a>?
+        def <strong>coords_at?</strong>(i : Int) : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>?
 
-        <a class="method-permalink" href="#coords_at?(i:Int):Vector?-instance-method">#</a>
+        <a class="method-permalink" href="#coords_at?(i:Int):Vec3?-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L254" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L254" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="coords_at?(loc:Location):Vector?-instance-method">
+    <div class="entry-detail" id="coords_at?(loc:Location):Vec3?-instance-method">
       <div class="signature">
         
-        def <strong>coords_at?</strong>(loc : <a href="../../Chem/Spatial/Grid/Location.html">Location</a>) : <a href="../../Chem/Spatial/Vector.html">Vector</a>?
+        def <strong>coords_at?</strong>(loc : <a href="../../Chem/Spatial/Grid/Location.html">Location</a>) : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>?
 
-        <a class="method-permalink" href="#coords_at?(loc:Location):Vector?-instance-method">#</a>
+        <a class="method-permalink" href="#coords_at?(loc:Location):Vec3?-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L264" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L264" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2375,7 +2375,7 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L14" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L14" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2403,7 +2403,7 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L269" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L269" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2439,39 +2439,39 @@ prevent many memory allocations:</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L295" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L295" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="each_coords(&amp;:Vector-&gt;):Nil-instance-method">
+    <div class="entry-detail" id="each_coords(&amp;:Vec3-&gt;):Nil-instance-method">
       <div class="signature">
         
-        def <strong>each_coords</strong>(& : <a href="../../Chem/Spatial/Vector.html">Vector</a> -> ) : Nil
+        def <strong>each_coords</strong>(& : <a href="../../Chem/Spatial/Vec3.html">Vec3</a> -> ) : Nil
 
-        <a class="method-permalink" href="#each_coords(&:Vector-%3E):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#each_coords(&:Vec3-%3E):Nil-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L326" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L326" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="each_loc(vec:Vector,cutoff:Number,&amp;:Location,Float64-&gt;):Nil-instance-method">
+    <div class="entry-detail" id="each_loc(vec:Vec3,cutoff:Number,&amp;:Location,Float64-&gt;):Nil-instance-method">
       <div class="signature">
         
-        def <strong>each_loc</strong>(vec : <a href="../../Chem/Spatial/Vector.html">Vector</a>, cutoff : <a href="../../Number.html">Number</a>, & : <a href="../../Chem/Spatial/Grid/Location.html">Location</a>, Float64 -> ) : Nil
+        def <strong>each_loc</strong>(vec : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, cutoff : <a href="../../Number.html">Number</a>, & : <a href="../../Chem/Spatial/Grid/Location.html">Location</a>, Float64 -> ) : Nil
 
-        <a class="method-permalink" href="#each_loc(vec:Vector,cutoff:Number,&:Location,Float64-%3E):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#each_loc(vec:Vec3,cutoff:Number,&:Location,Float64-%3E):Nil-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L342" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L342" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2487,23 +2487,23 @@ prevent many memory allocations:</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L332" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L332" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="each_with_coords(&amp;:Float64,Vector-&gt;):Nil-instance-method">
+    <div class="entry-detail" id="each_with_coords(&amp;:Float64,Vec3-&gt;):Nil-instance-method">
       <div class="signature">
         
-        def <strong>each_with_coords</strong>(& : Float64, <a href="../../Chem/Spatial/Vector.html">Vector</a> -> ) : Nil
+        def <strong>each_with_coords</strong>(& : Float64, <a href="../../Chem/Spatial/Vec3.html">Vec3</a> -> ) : Nil
 
-        <a class="method-permalink" href="#each_with_coords(&:Float64,Vector-%3E):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#each_with_coords(&:Float64,Vec3-%3E):Nil-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L357" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L357" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2519,7 +2519,7 @@ prevent many memory allocations:</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L363" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L363" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2535,7 +2535,7 @@ prevent many memory allocations:</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L19" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L19" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2551,7 +2551,7 @@ prevent many memory allocations:</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L19" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L19" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2567,23 +2567,23 @@ prevent many memory allocations:</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L369" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L369" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="index(vec:Vector):Int32?-instance-method">
+    <div class="entry-detail" id="index(vec:Vec3):Int32?-instance-method">
       <div class="signature">
         
-        def <strong>index</strong>(vec : <a href="../../Chem/Spatial/Vector.html">Vector</a>) : Int32?
+        def <strong>index</strong>(vec : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : Int32?
 
-        <a class="method-permalink" href="#index(vec:Vector):Int32?-instance-method">#</a>
+        <a class="method-permalink" href="#index(vec:Vec3):Int32?-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L377" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L377" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2599,7 +2599,7 @@ prevent many memory allocations:</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L383" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L383" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2615,7 +2615,7 @@ prevent many memory allocations:</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L387" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L387" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2631,23 +2631,23 @@ prevent many memory allocations:</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L391" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L391" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="loc_at?(vec:Vector):Location?-instance-method">
+    <div class="entry-detail" id="loc_at?(vec:Vec3):Location?-instance-method">
       <div class="signature">
         
-        def <strong>loc_at?</strong>(vec : <a href="../../Chem/Spatial/Vector.html">Vector</a>) : <a href="../../Chem/Spatial/Grid/Location.html">Location</a>?
+        def <strong>loc_at?</strong>(vec : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <a href="../../Chem/Spatial/Grid/Location.html">Location</a>?
 
-        <a class="method-permalink" href="#loc_at?(vec:Vector):Location?-instance-method">#</a>
+        <a class="method-permalink" href="#loc_at?(vec:Vec3):Location?-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L396" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L396" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2674,7 +2674,7 @@ prevent many memory allocations:</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L402" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L402" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2690,39 +2690,39 @@ prevent many memory allocations:</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L408" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L408" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="map_with_coords(&amp;:Float64,Vector-&gt;Number):self-instance-method">
+    <div class="entry-detail" id="map_with_coords(&amp;:Float64,Vec3-&gt;Number):self-instance-method">
       <div class="signature">
         
-        def <strong>map_with_coords</strong>(& : Float64, <a href="../../Chem/Spatial/Vector.html">Vector</a> -> <a href="../../Number.html">Number</a>) : <span class="k">self</span>
+        def <strong>map_with_coords</strong>(& : Float64, <a href="../../Chem/Spatial/Vec3.html">Vec3</a> -> <a href="../../Number.html">Number</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#map_with_coords(&:Float64,Vector-%3ENumber):self-instance-method">#</a>
+        <a class="method-permalink" href="#map_with_coords(&:Float64,Vec3-%3ENumber):self-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L413" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L413" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="map_with_coords!(&amp;:Float64,Vector-&gt;Number):self-instance-method">
+    <div class="entry-detail" id="map_with_coords!(&amp;:Float64,Vec3-&gt;Number):self-instance-method">
       <div class="signature">
         
-        def <strong>map_with_coords!</strong>(& : Float64, <a href="../../Chem/Spatial/Vector.html">Vector</a> -> <a href="../../Number.html">Number</a>) : <span class="k">self</span>
+        def <strong>map_with_coords!</strong>(& : Float64, <a href="../../Chem/Spatial/Vec3.html">Vec3</a> -> <a href="../../Number.html">Number</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#map_with_coords!(&:Float64,Vector-%3ENumber):self-instance-method">#</a>
+        <a class="method-permalink" href="#map_with_coords!(&:Float64,Vec3-%3ENumber):self-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L419" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L419" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2753,7 +2753,7 @@ from there.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L426" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L426" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2769,7 +2769,7 @@ from there.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L432" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L432" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2785,7 +2785,7 @@ from there.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L439" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L439" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2801,7 +2801,7 @@ from there.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L445" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L445" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2831,7 +2831,7 @@ grid.to_a              <span class="c"># =&gt; [0, 1, 1, 2, 1, 2, 2, 3]</span></
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L464" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L464" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2861,7 +2861,7 @@ grid.to_a              <span class="c"># =&gt; [0.2, 0.4, 0.6, 0.4, 0.8, 1.2, 0.
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L496" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L496" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2891,7 +2891,7 @@ grid.to_a              <span class="c"># =&gt; [1, 2, 3, 2, 4, 6, 2, 4, 6, 4, 8,
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L480" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L480" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2922,7 +2922,7 @@ grid.to_a <span class="c"># =&gt; [0, 0, 0, 2, 0, 2, 2, 3]</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L513" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L513" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2953,7 +2953,7 @@ grid.to_a <span class="c"># =&gt; [0.0, 0.0, 0.4, 0.0, 0.4, 0.6, 0.0, 0.4, 0.6, 
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L547" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L547" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2984,17 +2984,17 @@ grid.to_a <span class="c"># =&gt; [0, 2, 3, 2, 4, 0, 2, 4, 0, 4, 0, 0]</span></c
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L530" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L530" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="mask_by_coords(&amp;:Vector-&gt;Bool):self-instance-method">
+    <div class="entry-detail" id="mask_by_coords(&amp;:Vec3-&gt;Bool):self-instance-method">
       <div class="signature">
         
-        def <strong>mask_by_coords</strong>(& : <a href="../../Chem/Spatial/Vector.html">Vector</a> -> Bool) : <span class="k">self</span>
+        def <strong>mask_by_coords</strong>(& : <a href="../../Chem/Spatial/Vec3.html">Vec3</a> -> Bool) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#mask_by_coords(&:Vector-%3EBool):self-instance-method">#</a>
+        <a class="method-permalink" href="#mask_by_coords(&:Vec3-%3EBool):self-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -3014,17 +3014,17 @@ grid.to_a                           <span class="c"># =&gt; [0, 1, 2, 3, 4, 5, 6
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L563" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L563" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="mask_by_coords!(&amp;:Vector-&gt;Bool):self-instance-method">
+    <div class="entry-detail" id="mask_by_coords!(&amp;:Vec3-&gt;Bool):self-instance-method">
       <div class="signature">
         
-        def <strong>mask_by_coords!</strong>(& : <a href="../../Chem/Spatial/Vector.html">Vector</a> -> Bool) : <span class="k">self</span>
+        def <strong>mask_by_coords!</strong>(& : <a href="../../Chem/Spatial/Vec3.html">Vec3</a> -> Bool) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#mask_by_coords!(&:Vector-%3EBool):self-instance-method">#</a>
+        <a class="method-permalink" href="#mask_by_coords!(&:Vec3-%3EBool):self-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -3045,7 +3045,7 @@ grid.to_a <span class="c"># =&gt; [0, 0, 2, 3, 0, 0, 6, 7]</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L580" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L580" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3075,7 +3075,7 @@ grid.to_a                       <span class="c"># =&gt; [0, 1, 2, 3, 4, 5, 6, 7]
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L596" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L596" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3106,7 +3106,7 @@ grid.to_a <span class="c"># =&gt; [0, 1, 2, 0, 0, 0, 0, 0]</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L613" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L613" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3136,7 +3136,7 @@ grid.to_a                                  <span class="c"># =&gt; [0, 1, 2, 3, 
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L629" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L629" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3167,7 +3167,7 @@ grid.to_a <span class="c"># =&gt; [0, 0, 0, 0, 4, 5, 6, 7]</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L646" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L646" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3198,7 +3198,7 @@ grid.mean(axis: <span class="n">3</span>) <span class="c"># raises IndexError</s
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L673" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L673" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3222,7 +3222,7 @@ grid.mean <span class="c"># =&gt; 11.5</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L656" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L656" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3250,7 +3250,7 @@ grid.mean(axis: <span class="n">1</span>) <span class="c"># =&gt; [{9.5, 0.0}, {
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L691" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L691" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3266,7 +3266,7 @@ grid.mean(axis: <span class="n">1</span>) <span class="c"># =&gt; [{9.5, 0.0}, {
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L702" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L702" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3282,7 +3282,7 @@ grid.mean(axis: <span class="n">1</span>) <span class="c"># =&gt; [{9.5, 0.0}, {
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L706" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L706" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3298,7 +3298,7 @@ grid.mean(axis: <span class="n">1</span>) <span class="c"># =&gt; [{9.5, 0.0}, {
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L710" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L710" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3314,7 +3314,7 @@ grid.mean(axis: <span class="n">1</span>) <span class="c"># =&gt; [{9.5, 0.0}, {
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L19" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L19" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3330,7 +3330,7 @@ grid.mean(axis: <span class="n">1</span>) <span class="c"># =&gt; [{9.5, 0.0}, {
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L19" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L19" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3346,7 +3346,7 @@ grid.mean(axis: <span class="n">1</span>) <span class="c"># =&gt; [{9.5, 0.0}, {
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L714" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L714" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3371,7 +3371,7 @@ grid.mean(axis: <span class="n">1</span>) <span class="c"># =&gt; [{9.5, 0.0}, {
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L720" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L720" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3387,7 +3387,7 @@ grid.mean(axis: <span class="n">1</span>) <span class="c"># =&gt; [{9.5, 0.0}, {
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L15" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3403,7 +3403,7 @@ grid.mean(axis: <span class="n">1</span>) <span class="c"># =&gt; [{9.5, 0.0}, {
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L728" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L728" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3419,7 +3419,7 @@ grid.mean(axis: <span class="n">1</span>) <span class="c"># =&gt; [{9.5, 0.0}, {
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L724" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L724" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3446,7 +3446,7 @@ grid.mean(axis: <span class="n">1</span>) <span class="c"># =&gt; [{9.5, 0.0}, {
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L741" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L741" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3468,7 +3468,7 @@ file format. Arguments are fowarded to <code><a href="../../Chem/VASP/Chgcar/Wri
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3491,7 +3491,7 @@ the <code><a href="../../Chem/VASP/Chgcar.html">Chem::VASP::Chgcar</a></code> fi
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3513,7 +3513,7 @@ file format. Arguments are fowarded to <code><a href="../../Chem/Cube/Writer.htm
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3536,7 +3536,7 @@ the <code><a href="../../Chem/Cube.html">Chem::Cube</a></code> file format. Argu
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3558,7 +3558,7 @@ file format. Arguments are fowarded to <code><a href="../../Chem/DX/Writer.html#
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3581,7 +3581,7 @@ the <code><a href="../../Chem/DX.html">Chem::DX</a></code> file format. Argument
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3603,7 +3603,7 @@ file format. Arguments are fowarded to <code><a href="../../Chem/VASP/Locpot/Wri
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3626,7 +3626,7 @@ the <code><a href="../../Chem/VASP/Locpot.html">Chem::VASP::Locpot</a></code> fi
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3642,7 +3642,7 @@ the <code><a href="../../Chem/VASP/Locpot.html">Chem::VASP::Locpot</a></code> fi
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L748" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L748" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3677,7 +3677,7 @@ of performance.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L753" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L753" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3693,7 +3693,7 @@ of performance.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L758" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L758" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3709,7 +3709,7 @@ of performance.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L19" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L19" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3725,7 +3725,7 @@ of performance.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/grid.cr#L19" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/grid.cr#L19" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3752,7 +3752,7 @@ corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3783,7 +3783,7 @@ in the corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>

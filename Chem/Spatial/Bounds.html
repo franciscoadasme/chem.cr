@@ -516,8 +516,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Vector" data-name="chem::spatial::vector">
-      <a href="../../Chem/Spatial/Vector.html">Vector</a>
+  <li class=" " data-id="chem.cr/Chem/Spatial/Vec3" data-name="chem::spatial::vec3">
+      <a href="../../Chem/Spatial/Vec3.html">Vec3</a>
       
     </li>
   
@@ -823,7 +823,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L2" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L2" target="_blank">
         chem/spatial/bounds.cr
       </a>
     
@@ -850,17 +850,17 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#new(origin:Vector,basis:Basis)-class-method" class="signature"><strong>.new</strong>(origin : Vector, basis : Basis)</a>
+        <a href="#new(origin:Vec3,basis:Basis)-class-method" class="signature"><strong>.new</strong>(origin : Vec3, basis : Basis)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new(vmin:Vector,vmax:Vector):self-class-method" class="signature"><strong>.new</strong>(vmin : Vector, vmax : Vector) : <span class="k">self</span></a>
+        <a href="#new(vmin:Vec3,vmax:Vec3):self-class-method" class="signature"><strong>.new</strong>(vmin : Vec3, vmax : Vec3) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new(origin:Vector,*args,**options):self-class-method" class="signature"><strong>.new</strong>(origin : Vector, *args, **options) : <span class="k">self</span></a>
+        <a href="#new(origin:Vec3,*args,**options):self-class-method" class="signature"><strong>.new</strong>(origin : Vec3, *args, **options) : <span class="k">self</span></a>
         
       </li>
     
@@ -891,12 +891,12 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#+(rhs:Vector):self-instance-method" class="signature"><strong>#+</strong>(rhs : Vector) : <span class="k">self</span></a>
+        <a href="#+(rhs:Vec3):self-instance-method" class="signature"><strong>#+</strong>(rhs : Vec3) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#-(rhs:Vector):self-instance-method" class="signature"><strong>#-</strong>(rhs : Vector) : <span class="k">self</span></a>
+        <a href="#-(rhs:Vec3):self-instance-method" class="signature"><strong>#-</strong>(rhs : Vec3) : <span class="k">self</span></a>
         
       </li>
     
@@ -966,12 +966,12 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#center:Vector-instance-method" class="signature"><strong>#center</strong> : Vector</a>
+        <a href="#center:Vec3-instance-method" class="signature"><strong>#center</strong> : Vec3</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#each_vertex(&:Vector-%3E):Nil-instance-method" class="signature"><strong>#each_vertex</strong>(& : Vector -> ) : Nil</a>
+        <a href="#each_vertex(&:Vec3-%3E):Nil-instance-method" class="signature"><strong>#each_vertex</strong>(& : Vec3 -> ) : Nil</a>
         
           <div class="summary"><p>Yields bounds' vertices.</p></div>
         
@@ -1005,7 +1005,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#includes?(vec:Vector):Bool-instance-method" class="signature"><strong>#includes?</strong>(vec : Vector) : Bool</a>
+        <a href="#includes?(vec:Vec3):Bool-instance-method" class="signature"><strong>#includes?</strong>(vec : Vec3) : Bool</a>
         
       </li>
     
@@ -1030,21 +1030,21 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#max:Vector-instance-method" class="signature"><strong>#max</strong> : Vector</a>
+        <a href="#max:Vec3-instance-method" class="signature"><strong>#max</strong> : Vec3</a>
         
           <div class="summary"><p>Returns maximum edge.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#min:Vector-instance-method" class="signature"><strong>#min</strong> : Vector</a>
+        <a href="#min:Vec3-instance-method" class="signature"><strong>#min</strong> : Vec3</a>
         
           <div class="summary"><p>Returns minimum edge.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#origin:Vector-instance-method" class="signature"><strong>#origin</strong> : Vector</a>
+        <a href="#origin:Vec3-instance-method" class="signature"><strong>#origin</strong> : Vec3</a>
         
       </li>
     
@@ -1066,14 +1066,14 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#translate(offset:Vector):self-instance-method" class="signature"><strong>#translate</strong>(offset : Vector) : <span class="k">self</span></a>
+        <a href="#translate(offset:Vec3):self-instance-method" class="signature"><strong>#translate</strong>(offset : Vec3) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns a bounds translated by <em>offset</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#vertices:Array(Vector)-instance-method" class="signature"><strong>#vertices</strong> : Array(Vector)</a>
+        <a href="#vertices:Array(Vec3)-instance-method" class="signature"><strong>#vertices</strong> : Array(Vec3)</a>
         
           <div class="summary"><p>Returns bounds' vertices.</p></div>
         
@@ -1145,55 +1145,55 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L26" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L26" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="new(origin:Vector,basis:Basis)-class-method">
+    <div class="entry-detail" id="new(origin:Vec3,basis:Basis)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(origin : <a href="../../Chem/Spatial/Vector.html">Vector</a>, basis : <a href="../../Chem/Spatial/Basis.html">Basis</a>)
+        def self.<strong>new</strong>(origin : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, basis : <a href="../../Chem/Spatial/Basis.html">Basis</a>)
 
-        <a class="method-permalink" href="#new(origin:Vector,basis:Basis)-class-method">#</a>
+        <a class="method-permalink" href="#new(origin:Vec3,basis:Basis)-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L8" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="new(vmin:Vector,vmax:Vector):self-class-method">
+    <div class="entry-detail" id="new(vmin:Vec3,vmax:Vec3):self-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(vmin : <a href="../../Chem/Spatial/Vector.html">Vector</a>, vmax : <a href="../../Chem/Spatial/Vector.html">Vector</a>) : <span class="k">self</span>
+        def self.<strong>new</strong>(vmin : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, vmax : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#new(vmin:Vector,vmax:Vector):self-class-method">#</a>
+        <a class="method-permalink" href="#new(vmin:Vec3,vmax:Vec3):self-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L19" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L19" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="new(origin:Vector,*args,**options):self-class-method">
+    <div class="entry-detail" id="new(origin:Vec3,*args,**options):self-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(origin : <a href="../../Chem/Spatial/Vector.html">Vector</a>, *args, **options) : <span class="k">self</span>
+        def self.<strong>new</strong>(origin : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, *args, **options) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#new(origin:Vector,*args,**options):self-class-method">#</a>
+        <a class="method-permalink" href="#new(origin:Vec3,*args,**options):self-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L11" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L11" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1209,7 +1209,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L15" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1225,7 +1225,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L30" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L30" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1244,34 +1244,34 @@
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="+(rhs:Vector):self-instance-method">
+    <div class="entry-detail" id="+(rhs:Vec3):self-instance-method">
       <div class="signature">
         
-        def <strong>+</strong>(rhs : <a href="../../Chem/Spatial/Vector.html">Vector</a>) : <span class="k">self</span>
+        def <strong>+</strong>(rhs : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#+(rhs:Vector):self-instance-method">#</a>
+        <a class="method-permalink" href="#+(rhs:Vec3):self-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L34" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L34" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="-(rhs:Vector):self-instance-method">
+    <div class="entry-detail" id="-(rhs:Vec3):self-instance-method">
       <div class="signature">
         
-        def <strong>-</strong>(rhs : <a href="../../Chem/Spatial/Vector.html">Vector</a>) : <span class="k">self</span>
+        def <strong>-</strong>(rhs : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#-(rhs:Vector):self-instance-method">#</a>
+        <a class="method-permalink" href="#-(rhs:Vec3):self-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L34" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L34" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1287,7 +1287,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1303,7 +1303,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1319,7 +1319,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1335,7 +1335,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1351,7 +1351,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1367,7 +1367,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1383,7 +1383,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1399,7 +1399,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1415,7 +1415,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L3" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L3" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1431,7 +1431,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1447,7 +1447,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1463,7 +1463,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1479,33 +1479,33 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="center:Vector-instance-method">
+    <div class="entry-detail" id="center:Vec3-instance-method">
       <div class="signature">
         
-        def <strong>center</strong> : <a href="../../Chem/Spatial/Vector.html">Vector</a>
+        def <strong>center</strong> : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>
 
-        <a class="method-permalink" href="#center:Vector-instance-method">#</a>
+        <a class="method-permalink" href="#center:Vec3-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L46" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L46" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="each_vertex(&amp;:Vector-&gt;):Nil-instance-method">
+    <div class="entry-detail" id="each_vertex(&amp;:Vec3-&gt;):Nil-instance-method">
       <div class="signature">
         
-        def <strong>each_vertex</strong>(& : <a href="../../Chem/Spatial/Vector.html">Vector</a> -> ) : Nil
+        def <strong>each_vertex</strong>(& : <a href="../../Chem/Spatial/Vec3.html">Vec3</a> -> ) : Nil
 
-        <a class="method-permalink" href="#each_vertex(&:Vector-%3E):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#each_vertex(&:Vec3-%3E):Nil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1516,20 +1516,20 @@
 
 <p>Prints:</p>
 
-<pre><code class="language-text">Vector[0.0, 0.0, 0.0]
-Vector[0.0, 0.0, 20.0]
-Vector[0.0, 10.0, 0.0]
-Vector[0.0, 10.0, 20.0]
-Vector[5.0, 0.0, 0.0]
-Vector[5.0, 0.0, 20.0]
-Vector[5.0, 10.0, 0.0]
-Vector[5.0, 10.0, 20.0]</code></pre>
+<pre><code class="language-text">Vec3[0.0, 0.0, 0.0]
+Vec3[0.0, 0.0, 20.0]
+Vec3[0.0, 10.0, 0.0]
+Vec3[0.0, 10.0, 20.0]
+Vec3[5.0, 0.0, 0.0]
+Vec3[5.0, 0.0, 20.0]
+Vec3[5.0, 10.0, 0.0]
+Vec3[5.0, 10.0, 20.0]</code></pre>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L68" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L68" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1545,7 +1545,7 @@ Vector[5.0, 10.0, 20.0]</code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1561,7 +1561,7 @@ Vector[5.0, 10.0, 20.0]</code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1577,7 +1577,7 @@ Vector[5.0, 10.0, 20.0]</code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1593,7 +1593,7 @@ Vector[5.0, 10.0, 20.0]</code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1616,29 +1616,29 @@ the current instance.</p>
 
 <pre><code class="language-crystal">bounds <span class="o">=</span> <span class="t">Bounds</span>.<span class="k">new</span> <span class="t">S</span>[<span class="n">10</span>, <span class="n">10</span>, <span class="n">10</span>], <span class="n">90</span>, <span class="n">90</span>, <span class="n">120</span>
 bounds.includes? <span class="t">Bounds</span>.<span class="k">new</span>(<span class="t">Size</span>[<span class="n">5</span>, <span class="n">4</span>, <span class="n">6</span>])                     <span class="c"># =&gt; true</span>
-bounds.includes? <span class="t">Bounds</span>.<span class="k">new</span>(<span class="t">Vector</span>[<span class="n">-1</span>, <span class="n">2</span>, <span class="n">-4</span>], <span class="t">Size</span>[<span class="n">5</span>, <span class="n">4</span>, <span class="n">6</span>])) <span class="c"># =&gt; false</span></code></pre>
+bounds.includes? <span class="t">Bounds</span>.<span class="k">new</span>(<span class="t">Vec3</span>[<span class="n">-1</span>, <span class="n">2</span>, <span class="n">-4</span>], <span class="t">Size</span>[<span class="n">5</span>, <span class="n">4</span>, <span class="n">6</span>])) <span class="c"># =&gt; false</span></code></pre>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L89" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L89" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="includes?(vec:Vector):Bool-instance-method">
+    <div class="entry-detail" id="includes?(vec:Vec3):Bool-instance-method">
       <div class="signature">
         
-        def <strong>includes?</strong>(vec : <a href="../../Chem/Spatial/Vector.html">Vector</a>) : Bool
+        def <strong>includes?</strong>(vec : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : Bool
 
-        <a class="method-permalink" href="#includes?(vec:Vector):Bool-instance-method">#</a>
+        <a class="method-permalink" href="#includes?(vec:Vec3):Bool-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L93" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L93" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1654,7 +1654,7 @@ bounds.includes? <span class="t">Bounds</span>.<span class="k">new</span>(<span 
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1670,7 +1670,7 @@ bounds.includes? <span class="t">Bounds</span>.<span class="k">new</span>(<span 
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1686,7 +1686,7 @@ bounds.includes? <span class="t">Bounds</span>.<span class="k">new</span>(<span 
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1702,17 +1702,17 @@ bounds.includes? <span class="t">Bounds</span>.<span class="k">new</span>(<span 
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="max:Vector-instance-method">
+    <div class="entry-detail" id="max:Vec3-instance-method">
       <div class="signature">
         
-        def <strong>max</strong> : <a href="../../Chem/Spatial/Vector.html">Vector</a>
+        def <strong>max</strong> : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>
 
-        <a class="method-permalink" href="#max:Vector-instance-method">#</a>
+        <a class="method-permalink" href="#max:Vec3-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1720,23 +1720,23 @@ bounds.includes? <span class="t">Bounds</span>.<span class="k">new</span>(<span 
           <p>Returns maximum edge.</p>
 
 <pre><code class="language-crystal">bounds <span class="o">=</span> <span class="t">Bounds</span>.<span class="k">new</span> <span class="t">V</span>[<span class="n">1.5</span>, <span class="n">3</span>, <span class="n">-0.4</span>], <span class="t">S</span>[<span class="n">10</span>, <span class="n">10</span>, <span class="n">12</span>], <span class="n">90</span>, <span class="n">90</span>, <span class="n">120</span>
-bounds.max <span class="c"># =&gt; Vector[6.5, 11.66, 11.6]</span></code></pre>
+bounds.max <span class="c"># =&gt; Vec3[6.5, 11.66, 11.6]</span></code></pre>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L109" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L109" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="min:Vector-instance-method">
+    <div class="entry-detail" id="min:Vec3-instance-method">
       <div class="signature">
         
-        def <strong>min</strong> : <a href="../../Chem/Spatial/Vector.html">Vector</a>
+        def <strong>min</strong> : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>
 
-        <a class="method-permalink" href="#min:Vector-instance-method">#</a>
+        <a class="method-permalink" href="#min:Vec3-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1744,29 +1744,29 @@ bounds.max <span class="c"># =&gt; Vector[6.5, 11.66, 11.6]</span></code></pre>
           <p>Returns minimum edge. This is equivalent to the origin.</p>
 
 <pre><code class="language-crystal">bounds <span class="o">=</span> <span class="t">Bounds</span>.<span class="k">new</span> <span class="t">V</span>[<span class="n">1.5</span>, <span class="n">3</span>, <span class="n">-0.4</span>], <span class="t">S</span>[<span class="n">10</span>, <span class="n">10</span>, <span class="n">12</span>], <span class="n">90</span>, <span class="n">90</span>, <span class="n">120</span>
-bounds.min <span class="c"># =&gt; Vector[1.5, 3, -0.4]</span></code></pre>
+bounds.min <span class="c"># =&gt; Vec3[1.5, 3, -0.4]</span></code></pre>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L119" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L119" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="origin:Vector-instance-method">
+    <div class="entry-detail" id="origin:Vec3-instance-method">
       <div class="signature">
         
-        def <strong>origin</strong> : <a href="../../Chem/Spatial/Vector.html">Vector</a>
+        def <strong>origin</strong> : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>
 
-        <a class="method-permalink" href="#origin:Vector-instance-method">#</a>
+        <a class="method-permalink" href="#origin:Vec3-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L4" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L4" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1785,17 +1785,17 @@ bounds.min <span class="c"># =&gt; Vector[1.5, 3, -0.4]</span></code></pre>
 direction. Note that its size is actually increased by <code>padding *
 2</code>.</p>
 
-<pre><code class="language-crystal">bounds <span class="o">=</span> <span class="t">Bounds</span>.<span class="k">new</span> <span class="t">Vector</span>[<span class="n">1</span>, <span class="n">5</span>, <span class="n">3</span>], <span class="t">S</span>[<span class="n">10</span>, <span class="n">5</span>, <span class="n">12</span>]
-bounds.center <span class="c"># =&gt; Vector[6.0, 7.5, 9.0]</span>
+<pre><code class="language-crystal">bounds <span class="o">=</span> <span class="t">Bounds</span>.<span class="k">new</span> <span class="t">Vec3</span>[<span class="n">1</span>, <span class="n">5</span>, <span class="n">3</span>], <span class="t">S</span>[<span class="n">10</span>, <span class="n">5</span>, <span class="n">12</span>]
+bounds.center <span class="c"># =&gt; Vec3[6.0, 7.5, 9.0]</span>
 bounds <span class="o">=</span> bounds.pad(<span class="n">2.5</span>)
 bounds.size   <span class="c"># =&gt; Size[15, 10, 17]</span>
-bounds.center <span class="c"># =&gt; Vector[6.0, 7.5, 9.0]</span></code></pre>
+bounds.center <span class="c"># =&gt; Vec3[6.0, 7.5, 9.0]</span></code></pre>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L134" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L134" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1811,7 +1811,7 @@ bounds.center <span class="c"># =&gt; Vector[6.0, 7.5, 9.0]</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1827,17 +1827,17 @@ bounds.center <span class="c"># =&gt; Vector[6.0, 7.5, 9.0]</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="translate(offset:Vector):self-instance-method">
+    <div class="entry-detail" id="translate(offset:Vec3):self-instance-method">
       <div class="signature">
         
-        def <strong>translate</strong>(offset : <a href="../../Chem/Spatial/Vector.html">Vector</a>) : <span class="k">self</span>
+        def <strong>translate</strong>(offset : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#translate(offset:Vector):self-instance-method">#</a>
+        <a class="method-permalink" href="#translate(offset:Vec3):self-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1845,23 +1845,23 @@ bounds.center <span class="c"># =&gt; Vector[6.0, 7.5, 9.0]</span></code></pre>
           <p>Returns a bounds translated by <em>offset</em>.</p>
 
 <pre><code class="language-crystal">bounds <span class="o">=</span> <span class="t">Bounds</span>.<span class="k">new</span> <span class="t">V</span>[<span class="n">-5</span>, <span class="n">1</span>, <span class="n">20</span>], <span class="t">S</span>[<span class="n">10</span>, <span class="n">10</span>, <span class="n">10</span>], <span class="n">90</span>, <span class="n">90</span>, <span class="n">120</span>
-bounds.translate(<span class="t">V</span>[<span class="n">1</span>, <span class="n">2</span>, <span class="n">10</span>]).min <span class="c"># =&gt; Vector[-4.0, 3.0, 30.0]</span></code></pre>
+bounds.translate(<span class="t">V</span>[<span class="n">1</span>, <span class="n">2</span>, <span class="n">10</span>]).min <span class="c"># =&gt; Vec3[-4.0, 3.0, 30.0]</span></code></pre>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L146" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L146" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="vertices:Array(Vector)-instance-method">
+    <div class="entry-detail" id="vertices:Array(Vec3)-instance-method">
       <div class="signature">
         
-        def <strong>vertices</strong> : <a href="../../Array.html">Array</a>(<a href="../../Chem/Spatial/Vector.html">Vector</a>)
+        def <strong>vertices</strong> : <a href="../../Array.html">Array</a>(<a href="../../Chem/Spatial/Vec3.html">Vec3</a>)
 
-        <a class="method-permalink" href="#vertices:Array(Vector)-instance-method">#</a>
+        <a class="method-permalink" href="#vertices:Array(Vec3)-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1869,13 +1869,13 @@ bounds.translate(<span class="t">V</span>[<span class="n">1</span>, <span class=
           <p>Returns bounds' vertices.</p>
 
 <pre><code class="language-crystal">bounds <span class="o">=</span> <span class="t">Bounds</span>[<span class="n">5</span>, <span class="n">10</span>, <span class="n">20</span>]
-bounds.vertices <span class="c"># =&gt; [Vector[0.0, 0.0, 0.0], Vector[0.0, 0.0, 20.0], ...]</span></code></pre>
+bounds.vertices <span class="c"># =&gt; [Vec3[0.0, 0.0, 0.0], Vec3[0.0, 0.0, 20.0], ...]</span></code></pre>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L156" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L156" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1891,7 +1891,7 @@ bounds.vertices <span class="c"># =&gt; [Vector[0.0, 0.0, 0.0], Vector[0.0, 0.0,
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5a72cf4f93c18c00d5ea5b45164a83db837e3149/src/chem/spatial/bounds.cr#L162" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/spatial/bounds.cr#L162" target="_blank">View source</a>]
         
       </div>
     </div>
