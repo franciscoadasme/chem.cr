@@ -3,12 +3,20 @@ require "../spec_helper"
 describe Chem::Spatial do
   describe ".hlxparam" do
     it "returns helical parameters" do
-      datasets = load_hlxparams_data
+      data = {radius: [] of Float64, twist: [] of Float64, pitch: [] of Float64}.tap do |data|
+        File.each_line("spec/data/spatial/hlxparams.txt") do |line|
+          next if line.blank?
+          values = line.split.map &.to_f
+          data[:pitch] << values[0]
+          data[:twist] << values[1]
+          data[:radius] << values[2]
+        end
+      end
       st = load_file "4wfe.pdb"
       st.each_residue.compact_map(&.hlxparams).with_index do |params, i|
-        params.pitch.should be_close datasets[:pitch][i], 1e-1
-        params.twist.should be_close datasets[:twist][i], 2e-1
-        # params.radius.should be_close datasets[:radius][i], 5e-1
+        params.pitch.should be_close data[:pitch][i], 1e-1
+        params.twist.should be_close data[:twist][i], 2e-1
+        # params.radius.should be_close data[:radius][i], 5e-1
       end
     end
 
