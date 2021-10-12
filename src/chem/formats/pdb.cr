@@ -178,7 +178,8 @@ module Chem::PDB
 
     private def read_atom : Nil
       alt_loc = @pull.at(16).char.presence
-      return if @alt_loc && alt_loc && alt_loc != @alt_loc
+      occupancy = @pull.at(54, 6).float(if_blank: 0)
+      return if @alt_loc && alt_loc && alt_loc != @alt_loc && occupancy < 1
 
       chid = @pull.at(21).char
       case chains = @chains
@@ -214,7 +215,7 @@ module Chem::PDB
         Spatial::Vector.new(x, y, z),
         element: ele,
         formal_charge: formal_charge || 0,
-        occupancy: @pull.at(54, 6).float(if_blank: 0),
+        occupancy: occupancy,
         temperature_factor: @pull.at(60, 6).float(if_blank: 0)
 
       alt_loc(atom.residue, alt_loc, resname) << atom if !@alt_loc && alt_loc

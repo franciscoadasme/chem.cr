@@ -431,6 +431,12 @@ describe Chem::PDB do
         Error: Invalid angle
         EOS
     end
+
+    it "ignores alternate conformation if occupancy is one" do
+      structure = Chem::Structure.from_pdb "spec/data/pdb/3h31.pdb", alt_loc: 'A'
+      # N is in alternate conformation B only but it has occupancy = 1
+      structure.dig('A', 33, "N").serial.should eq 285
+    end
   end
 end
 
