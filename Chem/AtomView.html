@@ -843,7 +843,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/core/atom_view.cr#L2" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/atom_view.cr#L2" target="_blank">
         chem/core/atom_view.cr
       </a>
     
@@ -1133,14 +1133,99 @@
   <h3>Instance methods inherited from module <code><a href="../Chem/ArrayView.html">Chem::ArrayView</a>(<a href="../Chem/Atom.html">Chem::Atom</a>)</code></h3>
   
   
+    <a href="../Chem/ArrayView.html#&(rhs:Array(T)%7Cself):self-instance-method" class="tooltip">
+      <span>&(rhs : Array(T) | <span class="k">self</span>) : <span class="k">self</span></span>
+    &</a>, 
+    
+  
+    <a href="../Chem/ArrayView.html#+(rhs:Array(T)%7Cself):self-instance-method" class="tooltip">
+      <span>+(rhs : Array(T) | <span class="k">self</span>) : <span class="k">self</span></span>
+    +</a>, 
+    
+  
+    <a href="../Chem/ArrayView.html#-(rhs:Array(T)%7Cself):self-instance-method" class="tooltip">
+      <span>-(rhs : Array(T) | <span class="k">self</span>) : <span class="k">self</span></span>
+    -</a>, 
+    
+  
     <a href="../Chem/ArrayView.html#[](start:Int,count:Int):self-instance-method" class="tooltip">
       <span>[](start : Int, count : Int) : <span class="k">self</span><br/>[](range : Range(Int, Int)) : <span class="k">self</span></span>
     []</a>, 
     
   
-    <a href="../Chem/ArrayView.html#find(*args,**options)-instance-method" class="tooltip">
-      <span>find(*args, **options)<br/>find(*args, **options, &)</span>
-    find</a>, 
+    <a href="../Chem/ArrayView.html#[]?(start:Int,count:Int):self?-instance-method" class="tooltip">
+      <span>[]?(start : Int, count : Int) : <span class="k">self</span>?<br/>[]?(range : Range(Int, Int)) : <span class="k">self</span>?</span>
+    []?</a>, 
+    
+  
+    <a href="../Chem/ArrayView.html#chunks(&:T-%3EU):Array(Tuple(U,self))forallU-instance-method" class="tooltip">
+      <span>chunks(& : T -> U) : Array(Tuple(U, <span class="k">self</span>)) forall U</span>
+    chunks</a>, 
+    
+  
+    <a href="../Chem/ArrayView.html#first(count:Int):self-instance-method" class="tooltip">
+      <span>first(count : Int) : <span class="k">self</span></span>
+    first</a>, 
+    
+  
+    <a href="../Chem/ArrayView.html#group_by(&:T-%3EU):Hash(U,self)forallU-instance-method" class="tooltip">
+      <span>group_by(& : T -> U) : Hash(U, <span class="k">self</span>) forall U</span>
+    group_by</a>, 
+    
+  
+    <a href="../Chem/ArrayView.html#last(count:Int):self-instance-method" class="tooltip">
+      <span>last(count : Int) : <span class="k">self</span></span>
+    last</a>, 
+    
+  
+    <a href="../Chem/ArrayView.html#partition(&:T-%3E_):Tuple(self,self)-instance-method" class="tooltip">
+      <span>partition(& : T -> _) : Tuple(<span class="k">self</span>, <span class="k">self</span>)</span>
+    partition</a>, 
+    
+  
+    <a href="../Chem/ArrayView.html#reject(&:T-%3E_):self-instance-method" class="tooltip">
+      <span>reject(& : T -> _) : <span class="k">self</span><br/>reject(value) : <span class="k">self</span></span>
+    reject</a>, 
+    
+  
+    <a href="../Chem/ArrayView.html#reverse:self-instance-method" class="tooltip">
+      <span>reverse : <span class="k">self</span></span>
+    reverse</a>, 
+    
+  
+    <a href="../Chem/ArrayView.html#reverse!:self-instance-method" class="tooltip">
+      <span>reverse! : <span class="k">self</span></span>
+    reverse!</a>, 
+    
+  
+    <a href="../Chem/ArrayView.html#rotate(n:Int=1):self-instance-method" class="tooltip">
+      <span>rotate(n : Int = <span class="n">1</span>) : <span class="k">self</span></span>
+    rotate</a>, 
+    
+  
+    <a href="../Chem/ArrayView.html#rotate!(n:Int=1):self-instance-method" class="tooltip">
+      <span>rotate!(n : Int = <span class="n">1</span>) : <span class="k">self</span></span>
+    rotate!</a>, 
+    
+  
+    <a href="../Chem/ArrayView.html#sample(n:Int,random=Random::DEFAULT):self-instance-method" class="tooltip">
+      <span>sample(n : Int, random = <span class="t">Random</span><span class="t">::</span><span class="t">DEFAULT</span>) : <span class="k">self</span></span>
+    sample</a>, 
+    
+  
+    <a href="../Chem/ArrayView.html#select(&:T-%3E_):self-instance-method" class="tooltip">
+      <span>select(& : T -> _) : <span class="k">self</span><br/>select(value) : <span class="k">self</span></span>
+    select</a>, 
+    
+  
+    <a href="../Chem/ArrayView.html#shuffle(random=Random::DEFAULT):self-instance-method" class="tooltip">
+      <span>shuffle(random = <span class="t">Random</span><span class="t">::</span><span class="t">DEFAULT</span>) : <span class="k">self</span></span>
+    shuffle</a>, 
+    
+  
+    <a href="../Chem/ArrayView.html#shuffle!(random=Random::DEFAULT):self-instance-method" class="tooltip">
+      <span>shuffle!(random = <span class="t">Random</span><span class="t">::</span><span class="t">DEFAULT</span>) : <span class="k">self</span></span>
+    shuffle!</a>, 
     
   
     <a href="../Chem/ArrayView.html#size(*args,**options)-instance-method" class="tooltip">
@@ -1148,9 +1233,39 @@
     size</a>, 
     
   
-    <a href="../Chem/ArrayView.html#sort_by(&block:T-%3E_):self-instance-method" class="tooltip">
-      <span>sort_by(&block : T -> _) : <span class="k">self</span></span>
+    <a href="../Chem/ArrayView.html#skip(count:Int):self-instance-method" class="tooltip">
+      <span>skip(count : Int) : <span class="k">self</span></span>
+    skip</a>, 
+    
+  
+    <a href="../Chem/ArrayView.html#skip_while(&:T-%3E_):self-instance-method" class="tooltip">
+      <span>skip_while(& : T -> _) : <span class="k">self</span></span>
+    skip_while</a>, 
+    
+  
+    <a href="../Chem/ArrayView.html#sort:self-instance-method" class="tooltip">
+      <span>sort : <span class="k">self</span><br/>sort(& : T, T -> Int) : <span class="k">self</span></span>
+    sort</a>, 
+    
+  
+    <a href="../Chem/ArrayView.html#sort!:self-instance-method" class="tooltip">
+      <span>sort! : <span class="k">self</span><br/>sort!(& : T, T -> Int) : <span class="k">self</span></span>
+    sort!</a>, 
+    
+  
+    <a href="../Chem/ArrayView.html#sort_by(&:T-%3E_):self-instance-method" class="tooltip">
+      <span>sort_by(& : T -> _) : <span class="k">self</span></span>
     sort_by</a>, 
+    
+  
+    <a href="../Chem/ArrayView.html#sort_by!(&:T-%3E_):self-instance-method" class="tooltip">
+      <span>sort_by!(& : T -> _) : <span class="k">self</span></span>
+    sort_by!</a>, 
+    
+  
+    <a href="../Chem/ArrayView.html#take_while(&:T-%3E_):self-instance-method" class="tooltip">
+      <span>take_while(& : T -> _) : <span class="k">self</span></span>
+    take_while</a>, 
     
   
     <a href="../Chem/ArrayView.html#to_a:Array(T)-instance-method" class="tooltip">
@@ -1160,7 +1275,12 @@
   
     <a href="../Chem/ArrayView.html#unsafe_fetch(*args,**options)-instance-method" class="tooltip">
       <span>unsafe_fetch(*args, **options)<br/>unsafe_fetch(*args, **options, &)</span>
-    unsafe_fetch</a>
+    unsafe_fetch</a>, 
+    
+  
+    <a href="../Chem/ArrayView.html#%7C(rhs:Array(T)%7Cself):self-instance-method" class="tooltip">
+      <span>|(rhs : Array(T) | <span class="k">self</span>) : <span class="k">self</span></span>
+    |</a>
     
   
 
@@ -1170,8 +1290,8 @@
   <h3>Constructor methods inherited from module <code><a href="../Chem/ArrayView.html">Chem::ArrayView</a>(<a href="../Chem/Atom.html">Chem::Atom</a>)</code></h3>
   
   
-    <a href="../Chem/ArrayView.html#new(items)-class-method" class="tooltip">
-      <span>new(items)</span>
+    <a href="../Chem/ArrayView.html#new(items:Enumerable(T))-class-method" class="tooltip">
+      <span>new(items : Enumerable(T))</span>
     new</a>
     
   
@@ -1282,7 +1402,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/core/atom_view.cr#L12" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/atom_view.cr#L12" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1298,7 +1418,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/core/atom_view.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/atom_view.cr#L8" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1314,7 +1434,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/core/atom_view.cr#L20" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/atom_view.cr#L20" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1330,7 +1450,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/core/atom_view.cr#L16" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/atom_view.cr#L16" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1346,7 +1466,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/core/atom_view.cr#L24" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/atom_view.cr#L24" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1362,7 +1482,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/core/atom_view.cr#L28" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/atom_view.cr#L28" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1378,7 +1498,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/core/atom_view.cr#L32" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/atom_view.cr#L32" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1394,7 +1514,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/core/atom_view.cr#L38" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/atom_view.cr#L38" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1410,7 +1530,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/core/atom_view.cr#L42" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/atom_view.cr#L42" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1426,7 +1546,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/core/atom_view.cr#L50" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/atom_view.cr#L50" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1442,7 +1562,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/core/atom_view.cr#L54" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/atom_view.cr#L54" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1458,7 +1578,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/core/atom_view.cr#L62" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/atom_view.cr#L62" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1474,7 +1594,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/core/atom_view.cr#L66" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/atom_view.cr#L66" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1490,7 +1610,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a5878e2567f4692881d6b3fb4935dfe51a50a3d/src/chem/core/atom_view.cr#L70" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/atom_view.cr#L70" target="_blank">View source</a>]
         
       </div>
     </div>
