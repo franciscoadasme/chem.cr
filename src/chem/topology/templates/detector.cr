@@ -64,8 +64,8 @@ module Chem::Topology::Templates
       matches
     end
 
-    def unmatched_atoms : Array(Atom)
-      @atoms.to_a
+    def unmatched_atoms : AtomView
+      AtomView.new @atoms
     end
 
     private def compute_atom_descriptions(atoms : Enumerable(Atom))

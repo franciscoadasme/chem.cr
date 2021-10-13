@@ -16,7 +16,7 @@ class Chem::Topology::Perception
   # long as there are less residue groups than the chain limit (62), otherwise all
   # residues are assigned to the same chain.
   def guess_residues : Nil
-    matches_per_fragment = detect_residues @structure
+    matches_per_fragment = detect_residues @structure.atoms
     builder = Structure::Builder.new @structure.clear
     matches_per_fragment.each do |matches|
       builder.chain do
@@ -39,15 +39,14 @@ class Chem::Topology::Perception
     if has_topology?
       patcher = Patcher.new @structure
       patcher.match_and_patch
-      unmatched_atoms = AtomView.new patcher.unmatched_atoms
-      build_connectivity unmatched_atoms
-      assign_bond_orders unmatched_atoms
-      bonded_atoms = unmatched_atoms.flat_map &.each_bonded_atom
-      assign_formal_charges AtomView.new(unmatched_atoms.to_a.concat(bonded_atoms).uniq)
+      build_connectivity patcher.unmatched_atoms
+      assign_bond_orders patcher.unmatched_atoms
+      bonded_atoms = patcher.unmatched_atoms.flat_map &.each_bonded_atom
+      assign_formal_charges patcher.unmatched_atoms | bonded_atoms
     else
-      build_connectivity @structure
-      assign_bond_orders @structure
-      assign_formal_charges @structure
+      build_connectivity @structure.atoms
+      assign_bond_orders @structure.atoms
+      assign_formal_charges @structure.atoms
     end
     assign_residue_types
   end
@@ -78,10 +77,9 @@ class Chem::Topology::Perception
   #
   # This algorithm is loosely based on OpenBabel's `PerceiveBondOrders`
   # function.
-  private def assign_bond_orders(atoms : AtomCollection) : Nil
-    atoms = atoms.atoms.to_a.select! { |atom| atom.degree > 0 }
-    hybrid_map = guess_hybridization atoms
-    atoms.select! { |atom| hybrid_map[atom]? }
+  private def assign_bond_orders(atoms : AtomView) : Nil
+    hybrid_map = guess_hybridization atoms.select { |atom| atom.degree > 0 }
+    atoms.select { |atom| hybrid_map[atom]? }
       .sort_by! { |atom| {atom.missing_valency, atom.serial} }
       .each do |atom|
         missing_valency = atom.missing_valency
@@ -107,8 +105,8 @@ class Chem::Topology::Perception
       end
   end
 
-  private def assign_formal_charges(atoms : AtomCollection) : Nil
-    atoms.each_atom do |atom|
+  private def assign_formal_charges(atoms : Enumerable(Atom)) : Nil
+    atoms.each do |atom|
       if atom.element.ionic?
         atom.formal_charge = atom.max_valency
       elsif atom.formal_charge == 0 # don't reset charge if set
@@ -130,8 +128,8 @@ class Chem::Topology::Perception
     end
   end
 
-  private def build_connectivity(atoms : AtomCollection) : Nil
-    atoms.each_atom do |atom|
+  private def build_connectivity(atoms : Enumerable(Atom)) : Nil
+    atoms.each do |atom|
       next if atom.element.ionic?
       cutoff = Math.sqrt PeriodicTable.covalent_cutoff(atom, largest_atom)
       kdtree.each_neighbor(atom, within: cutoff) do |other, d|
@@ -148,13 +146,13 @@ class Chem::Topology::Perception
     end
   end
 
-  private def detect_residues(atoms : AtomCollection) : Array(Array(MatchData))
+  private def detect_residues(atoms : AtomView) : Array(Array(MatchData))
     fragments = [] of Array(MatchData)
     atoms.each_fragment do |frag|
       detector = Templates::Detector.new frag
       matches = [] of MatchData
       matches.concat detector.matches
-      AtomView.new(detector.unmatched_atoms).each_fragment do |frag|
+      detector.unmatched_atoms.each_fragment do |frag|
         matches << make_match(frag)
       end
       fragments << matches
@@ -171,7 +169,7 @@ class Chem::Topology::Perception
   # based on the missing valency.
   #
   # The rules are taken from the OpenBabel's `PerceiveBondOrders` function.
-  private def guess_hybridization(atoms : Array(Atom)) : Hash(Atom, Int32)
+  private def guess_hybridization(atoms : AtomView) : Hash(Atom, Int32)
     Hash(Atom, Int32).new(initial_capacity: atoms.size).tap do |hash|
       # atoms with multiple connectivity first, terminal (single-bonded) atoms last
       atoms.sort_by!(&.degree.-).each do |atom|

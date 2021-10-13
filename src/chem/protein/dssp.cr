@@ -41,9 +41,10 @@ module Chem::Protein
     @coords : Array(Coords)
     @hbonds = {} of Tuple(Int32, Int32) => Float64
     @helices = Hash(Tuple(Int32, Int32), Helix::Type).new { Helix::Type::None }
+    @residues : ResidueView
 
     def initialize(@structure : Structure)
-      @residues = ResidueView.new structure.residues.to_a.select!(&.has_backbone?)
+      @residues = structure.residues.select(&.has_backbone?)
       @coords = @residues.map { |res| Coords.new res }
     end
 

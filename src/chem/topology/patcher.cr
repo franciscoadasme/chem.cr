@@ -1,6 +1,6 @@
 module Chem::Topology
   class Patcher
-    getter unmatched_atoms = [] of Atom
+    @unmatched_atoms = [] of Atom
 
     def initialize(@residues : ResidueCollection)
     end
@@ -40,6 +40,10 @@ module Chem::Topology
       end
 
       res_t.bonds.each { |bond_t| patch residue, residue, bond_t }
+    end
+
+    def unmatched_atoms : AtomView
+      AtomView.new @unmatched_atoms
     end
   end
 end

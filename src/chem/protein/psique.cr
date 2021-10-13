@@ -8,9 +8,11 @@ module Chem::Protein
 
     getter? blend_elements : Bool
 
+    @residues : ResidueView
+
     def initialize(structure : Structure, @blend_elements : Bool = true)
       super structure
-      @residues = ResidueView.new structure.residues.to_a.select(&.protein?)
+      @residues = structure.residues.select(&.protein?)
       @raw_sec = Array(SecondaryStructure).new @residues.size, SecondaryStructure::None
       @bridged_residues = Set(Residue).new @residues.size
     end
@@ -256,7 +258,7 @@ module Chem::Protein
     end
 
     private def update_bridged_residues
-      kdtree = Spatial::KDTree.new @residues
+      kdtree = Spatial::KDTree.new @residues.atoms
       @bridged_residues.clear
       @residues.each do |residue|
         next if residue.name == "PRO" && residue.in?(@bridged_residues)

@@ -33,7 +33,7 @@ module Chem
             atoms.delete b
           end
         end
-        yield AtomView.new(fragment.sort_by!(&.serial))
+        yield AtomView.new(fragment).sort_by!(&.serial)
       end
     end
 
