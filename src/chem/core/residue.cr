@@ -8,6 +8,7 @@ module Chem
       DNA
       Ion
       Solvent
+      Membrane
       Other
     end
 
