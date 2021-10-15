@@ -168,7 +168,7 @@ module Chem::Spatial
     end
 
     def rotate(about rotaxis : Vec3, by theta : Float64) : self
-      Quaternion.rotation(rotaxis, theta) * self
+      Quat.rotation(rotaxis, theta) * self
     end
 
     def round : self
@@ -215,7 +215,7 @@ module Chem::Spatial
       transformation * self
     end
 
-    def transform(q : Quaternion) : self
+    def transform(q : Quat) : self
       q * self
     end
 

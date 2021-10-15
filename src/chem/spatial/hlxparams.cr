@@ -4,8 +4,8 @@ module Chem::Spatial
     twist : Float64,
     pitch : Float64,
     radius : Float64 do
-    def to_q : Quaternion
-      Quaternion.rotation about: @rotaxis, by: @twist
+    def to_q : Quat
+      Quat.rotation about: @rotaxis, by: @twist
     end
   end
 

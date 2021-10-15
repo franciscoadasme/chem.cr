@@ -42,7 +42,7 @@ module Chem::Spatial
     Math.sqrt squared_distance(*args, **options)
   end
 
-  def distance(q1 : Quaternion, q2 : Quaternion) : Float64
+  def distance(q1 : Quat, q2 : Quat) : Float64
     # 2 * Math.acos q1.dot(q2)
     Math.acos 2 * q1.dot(q2)**2 - 1
   end

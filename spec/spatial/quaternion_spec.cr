@@ -1,6 +1,6 @@
 require "../spec_helper"
 
-describe Chem::Spatial::Quaternion do
+describe Chem::Spatial::Quat do
   describe ".[]" do
     it "returns a quaternion with each of the given components" do
       Q[1, 2, 3, 4].should eq Q.new(1, 2, 3, 4)

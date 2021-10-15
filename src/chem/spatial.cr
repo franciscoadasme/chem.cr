@@ -5,7 +5,7 @@ require "./spatial/vector"
 require "./spatial/basis"
 require "./spatial/bounds"
 require "./spatial/grid"
-require "./spatial/quaternion"
+require "./spatial/quat"
 
 require "./spatial/coordinates_proxy"
 require "./spatial/hlxparams"

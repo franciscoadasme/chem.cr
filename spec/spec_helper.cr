@@ -14,7 +14,7 @@ alias PBC = Chem::Spatial::PBC
 alias PDB = Chem::PDB
 alias ParseException = Chem::ParseException
 alias PeriodicTable = Chem::PeriodicTable
-alias Q = Chem::Spatial::Quaternion
+alias Q = Chem::Spatial::Quat
 alias S = Chem::Spatial::Size
 alias Structure = Chem::Structure
 alias Topology = Chem::Topology
@@ -64,7 +64,7 @@ module Spec
       end
     end
 
-    def match(actual_value : Chem::Spatial::Quaternion) : Bool
+    def match(actual_value : Chem::Spatial::Quat) : Bool
       (actual_value.w - @expected_value.w).abs <= @delta &&
         (actual_value.x - @expected_value.x).abs <= @delta &&
         (actual_value.y - @expected_value.y).abs <= @delta &&

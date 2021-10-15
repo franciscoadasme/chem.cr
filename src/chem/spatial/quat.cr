@@ -1,7 +1,7 @@
 module Chem::Spatial
   # The quaternion is a mathematical construct that extends the complex
   # numbers and it is useful to encode three-dimensional rotations.
-  # Quaternions are represented by four numbers (w, x, y, z), where w is
+  # Quats are represented by four numbers (w, x, y, z), where w is
   # considered as the real (scalar) part and x, y, z the imaginary
   # (vector) part. Rotations can be encoded as a unit quaternion using
   # the axis-angle representation, where x, y, z correspond to the
@@ -12,7 +12,7 @@ module Chem::Spatial
   # ```
   #
   # where *v* is a unit vector and *t* is the rotation angle.
-  # Quaternions have several useful mathematical properties, e.g.,
+  # Quats have several useful mathematical properties, e.g.,
   # quaternion multiplication can be used to represent a sequence of
   # rotations producing a single quaternion. Indeed, the rotation
   # encoded in the quaternion *q* can be applied to a ordinary vector
@@ -23,12 +23,12 @@ module Chem::Spatial
   # ```
   #
   # where *q*-1 is the inverse of *q* and *p** is the rotated vector
-  # (see `Quaternion#*` for details).
+  # (see `Quat#*` for details).
   #
   # ## Examples
   #
   # ```
-  # q = Quaternion[1, 2, 3, 4]
+  # q = Quat[1, 2, 3, 4]
   # q                 # => [1.0 2.0 3.0 4.0]
   # q.real            # => 1.0
   # q.imag            # => [2.0 3.0 4.0]
@@ -49,7 +49,7 @@ module Chem::Spatial
   # q * 2  # => [2.0 4.0 6.0 8.0]
   # q / 10 # => [0.2 0.4 0.6 0.8]
   #
-  # p = Quaternion[4, 3, 2, 1]
+  # p = Quat[4, 3, 2, 1]
   # p + q # => [5.0 5.0 5.0 5.0]
   # p * q # => [-12.0 16.0 4.0 22.0]
   # q * p # => [-12.0 6.0 24.0 12.0]
@@ -59,22 +59,22 @@ module Chem::Spatial
   #
   # ```
   # v = Vec3[1, 2, 3]
-  # q = Quaternion.aligning v, to: Vec3[1, 0, 0]
+  # q = Quat.aligning v, to: Vec3[1, 0, 0]
   # q * v # => [3.742 0.0 0.0]
   # # or
   # v.transform(q)    # => [3.742 0.0 0.0]
   # (q * v).normalize # => [1.0 0.0 0.0]
   #
-  # q = Quaternion.rotation Vec3[0, 1, 0], by: 90
+  # q = Quat.rotation Vec3[0, 1, 0], by: 90
   # q * v # => [3.0 2.0 -1.0]
   # v * q # => [-3.0 2.0 1.0]
   # ```
   #
-  # NOTE: Quaternion multiplication is not commutative: `q * v != v *
+  # NOTE: Quat multiplication is not commutative: `q * v != v *
   # p`, the former will apply the rotation encoded in *q* to *v* but the
   # latter will produce the inverse rotation. Use `Vec3#transform` to
   # avoid the ambiguity.
-  struct Quaternion
+  struct Quat
     # Real (scalar) part of the quaternion.
     getter w : Float64
     # X component of the imaginary (vector) part of the quaternion.
@@ -93,13 +93,13 @@ module Chem::Spatial
     # *y*, and *z* as the vector (imaginary) part.
     @[AlwaysInline]
     def self.[](w : Float64, x : Float64, y : Float64, z : Float64) : self
-      Quaternion.new w, x, y, z
+      Quat.new w, x, y, z
     end
 
     # Returns a quaternion encoding the rotation operation to align *v1*
     # to *v2*.
     def self.aligning(v1 : Vec3, to v2 : Vec3) : self
-      Quaternion.rotation v1.cross(v2), Spatial.angle(v1, v2)
+      Quat.rotation v1.cross(v2), Spatial.angle(v1, v2)
     end
 
     # Returns a quaternion encoding the rotation about the axis vector
@@ -107,29 +107,29 @@ module Chem::Spatial
     def self.rotation(about rotaxis : Vec3, by theta : Float64) : self
       theta = theta.radians / 2
       vec = Math.sin(theta) * rotaxis.normalize
-      Quaternion[Math.cos(theta), vec.x, vec.y, vec.z]
+      Quat[Math.cos(theta), vec.x, vec.y, vec.z]
     end
 
     # Returns the element-wise addition of the quaternion by *rhs*.
     def +(rhs : self) : self
-      Quaternion[@w + rhs.w, @x + rhs.x, @y + rhs.y, @z + rhs.z]
+      Quat[@w + rhs.w, @x + rhs.x, @y + rhs.y, @z + rhs.z]
     end
 
     # Returns the negation of the quaternion.
     def - : self
-      Quaternion[-@w, -@x, -@y, -@z]
+      Quat[-@w, -@x, -@y, -@z]
     end
 
     # Returns the element-wise addition of the quaternion by *rhs*.
     def -(rhs : self) : self
-      Quaternion[@w - rhs.w, @x - rhs.x, @y - rhs.y, @z - rhs.z]
+      Quat[@w - rhs.w, @x - rhs.x, @y - rhs.y, @z - rhs.z]
     end
 
     # Returns the Hamilton product of the quaternion and *rhs*.
     def *(rhs : self) : self
       w = @w * rhs.w - imag.dot(rhs.imag)
       v = @w * rhs.imag + rhs.w * imag + imag.cross(rhs.imag)
-      Quaternion[w, v.x, v.y, v.z]
+      Quat[w, v.x, v.y, v.z]
     end
 
     # Returns the conjugate of *rhs* by the quaternion.
@@ -151,12 +151,12 @@ module Chem::Spatial
 
     # Returns the element-wise multiplication of the quaternion by *rhs*.
     def *(rhs : Number) : self
-      Quaternion[@w * rhs, @x * rhs, @y * rhs, @z * rhs]
+      Quat[@w * rhs, @x * rhs, @y * rhs, @z * rhs]
     end
 
     # Returns the element-wise division of the quaternion by *rhs*.
     def /(rhs : Number) : self
-      Quaternion[@w / rhs, @x / rhs, @y / rhs, @z / rhs]
+      Quat[@w / rhs, @x / rhs, @y / rhs, @z / rhs]
     end
 
     # Returns the absolute value (norm) using the Pythagorean theorem.
@@ -171,7 +171,7 @@ module Chem::Spatial
 
     # Returns the conjugate of the quaternion.
     def conj : self
-      Quaternion[@w, -@x, -@y, -@z]
+      Quat[@w, -@x, -@y, -@z]
     end
 
     # Returns the dot product of the quaternion and *rhs*.
@@ -185,7 +185,7 @@ module Chem::Spatial
     end
 
     def inspect(io : IO) : Nil
-      io << "Quaternion[" << @w << ", " << @x << ", " << @y << ", " << @z << ']'
+      io << "Quat[" << @w << ", " << @x << ", " << @y << ", " << @z << ']'
     end
 
     # Returns the inverse of the quaternion.
@@ -231,15 +231,15 @@ module Chem::Spatial
 
   struct Vec3
     # Returns the conjugate of the quaternion by the inverse of *rhs*.
-    # See `Quaternion#*` for details.
-    def *(rhs : Quaternion) : self
+    # See `Quat#*` for details.
+    def *(rhs : Quat) : self
       rhs.inv * self
     end
 
     # Returns the quaternion representation of the vector, i.e.,
-    # Quaternion[0, x, y, z].
-    def to_q : Quaternion
-      Quaternion[0, @x, @y, @z]
+    # Quat[0, x, y, z].
+    def to_q : Quat
+      Quat[0, @x, @y, @z]
     end
   end
 end
