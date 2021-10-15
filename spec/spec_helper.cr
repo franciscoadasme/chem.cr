@@ -65,7 +65,10 @@ module Spec
     end
 
     def match(actual_value : Chem::Spatial::Quaternion) : Bool
-      (0..3).all? { |i| (actual_value[i] - @expected_value[i]).abs <= @delta }
+      (actual_value.w - @expected_value.w).abs <= @delta &&
+        (actual_value.x - @expected_value.x).abs <= @delta &&
+        (actual_value.y - @expected_value.y).abs <= @delta &&
+        (actual_value.z - @expected_value.z).abs <= @delta
     end
 
     def match(actual_value : Chem::Spatial::AffineTransform) : Bool

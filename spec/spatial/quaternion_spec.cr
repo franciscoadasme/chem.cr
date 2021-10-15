@@ -3,19 +3,13 @@ require "../spec_helper"
 describe Chem::Spatial::Quaternion do
   describe ".[]" do
     it "returns a quaternion with each of the given components" do
-      Q[1, 2, 3, 4].should eq Q.new(1, V.new(2, 3, 4))
+      Q[1, 2, 3, 4].should eq Q.new(1, 2, 3, 4)
     end
   end
 
   describe ".aligning" do
     it "returns a quaternion encoding the rotation to align v1 to v2" do
       Q.aligning(V[1, 0, 0], V[0, 1, 0]).should be_close Q[0.71, 0.0, 0.0, 0.71], 1e-2
-    end
-  end
-
-  describe ".identity" do
-    it "returns quaternion identity" do
-      Q.identity.should eq Q[1, 0, 0, 0]
     end
   end
 
@@ -28,12 +22,6 @@ describe Chem::Spatial::Quaternion do
       Q.rotation(V[0.67, 0.68, 0.3], -180).should be_close Q[0, -0.67, -0.68, -0.3], 1e-2
       Q.rotation(V[0.31, 0.91, -0.28], 46).should be_close Q[0.92, 0.12, 0.36, -0.11], 1e-2
       Q.rotation(V[1, 1, 1], 120).should be_close Q[0.5, 0.5, 0.5, 0.5], 1e-15
-    end
-  end
-
-  describe ".zero" do
-    it "returns a zero quaternion" do
-      Q.zero.should eq Q[0, 0, 0, 0]
     end
   end
 
@@ -59,34 +47,30 @@ describe Chem::Spatial::Quaternion do
       (Q[1, 2, 3, 4] * Q[1, 4, 5, 6]).should eq Q[-46, 4, 12, 8]
     end
 
-    it "multiplies a quaternion with a vector" do
-      (Q[1, 2, 3, 4] * V[3, 2, 1]).should eq Q[-16, -2, 12, -4]
-    end
-
     it "multiplies a quaternion with a number" do
       (Q[1, 2, 3, 4] * 2).should eq Q[2, 4, 6, 8]
     end
-  end
 
-  describe "#/" do
-    it "divides a quaternion by a number" do
-      (Q[2, 4, 6, 8] / 2).should eq Q[1, 2, 3, 4]
+    it "multiplies a quaternion with a vector" do
+      q = Q.aligning Vec3[1, 0, 0], to: Vec3[1, 2, 3]
+      (q * Vec3[1, 0, 0]).should be_close Vec3[1, 2, 3].normalize, 1e-15
+      (Q.rotation(V[0, 0, 1], 90) * V[1, 0, 0]).should be_close V[0, 1, 0], 1e-15
+      (Q.rotation(V[0, 0, 1], 180) * V[1, 1, 0]).should be_close V[-1, -1, 0], 1e-15
+      (Q.rotation(V[0, 0, -1], 60) * V[1, 2, 0]).should be_close V[2.23, 0.13, 0], 1e-2
+      (Q.rotation(V[0, 1, 0], 90) * V[0, 0, 4]).should be_close V[4, 0, 0], 1e-15
+      (Q.rotation(V[1, 1, 1], 120) * V[0, 1, 0]).should be_close V[0, 0, 1], 1e-15
     end
   end
 
-  describe "#[]" do
-    it "returns a quaternion element by index" do
-      q = Q[1, 2, 3, 4]
-      q[0].should eq 1
-      q[1].should eq 2
-      q[2].should eq 3
-      q[3].should eq 4
+  describe "#abs" do
+    it "returns the quaternion's norm" do
+      Q[1, 2, 3, 4].abs.should eq Math.sqrt(30)
     end
+  end
 
-    it "fails when index is invalid" do
-      expect_raises IndexError do
-        Q[1, 2, 3, 4][4]
-      end
+  describe "#abs2" do
+    it "returns the square quaternion's norm" do
+      Q[1, 2, 3, 4].abs2.should eq Math.sqrt(900)
     end
   end
 
@@ -103,6 +87,13 @@ describe Chem::Spatial::Quaternion do
     end
   end
 
+  describe "#imag" do
+    it "returns the imaginary (vector) part of the quaternion" do
+      Q[1, 0, 0, 0].imag.should eq Vec3[0, 0, 0]
+      Q[1, 2, 3, 4].imag.should eq Vec3[2, 3, 4]
+    end
+  end
+
   describe "#inv" do
     it "returns the inverse of a quaternion" do
       Q[1, 0, 0, 0].inv.should eq Q[1, 0, 0, 0]
@@ -110,13 +101,7 @@ describe Chem::Spatial::Quaternion do
       Q[0.3, 0.15, -2.5, 0.153].inv.should be_close Q[0.05, -0.02, 0.39, -0.02], 1e-2
 
       q = Q[5.2, 1.2, 6.4, 5.24]
-      (q * q.inv).should be_close Q.identity, 1e-15
-    end
-  end
-
-  describe "#norm" do
-    it "returns the quaternion's norm" do
-      Q[1, 2, 3, 4].norm.should eq Math.sqrt(30)
+      (q * q.inv).should be_close Q[1, 0, 0, 0], 1e-15
     end
   end
 
@@ -124,17 +109,14 @@ describe Chem::Spatial::Quaternion do
     it "returns a normalized quaternion" do
       Q[1, 0, 0, 0].normalize.should eq Q[1, 0, 0, 0]
       Q[0, 0.71, 0.71, 0].normalize.should be_close Q[0, 0.71, 0.71, 0], 1e-2
-      Q[1, 2, 3, 4].normalize.norm.should be_close 1, 1e-15
+      Q[1, 2, 3, 4].normalize.abs.should be_close 1, 1e-15
     end
   end
 
-  describe "#rotate" do
-    it "rotates a vector" do
-      Q.rotation(V[0, 0, 1], 90).rotate(V[1, 0, 0]).should be_close V[0, 1, 0], 1e-15
-      Q.rotation(V[0, 0, 1], 180).rotate(V[1, 1, 0]).should be_close V[-1, -1, 0], 1e-15
-      Q.rotation(V[0, 0, -1], 60).rotate(V[1, 2, 0]).should be_close V[2.23, 0.13, 0], 1e-2
-      Q.rotation(V[0, 1, 0], 90).rotate(V[0, 0, 4]).should be_close V[4, 0, 0], 1e-15
-      Q.rotation(V[1, 1, 1], 120).rotate(V[0, 1, 0]).should be_close V[0, 0, 1], 1e-15
+  describe "#real" do
+    it "returns the real (scalar) part of the quaternion" do
+      Q[1, 0, 0, 0].real.should eq 1
+      Q[4, 3, 2, 1].real.should eq 4
     end
   end
 

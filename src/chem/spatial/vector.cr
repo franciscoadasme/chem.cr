@@ -168,7 +168,7 @@ module Chem::Spatial
     end
 
     def rotate(about rotaxis : Vec3, by theta : Float64) : self
-      Quaternion.rotation(rotaxis, theta).rotate self
+      Quaternion.rotation(rotaxis, theta) * self
     end
 
     def round : self
@@ -176,7 +176,11 @@ module Chem::Spatial
     end
 
     def size : Float64
-      Math.sqrt @x**2 + @y**2 + @z**2
+      Math.sqrt squared_size
+    end
+
+    def squared_size : Float64
+      @x**2 + @y**2 + @z**2
     end
 
     def to_a : Array(Float64)
@@ -205,6 +209,14 @@ module Chem::Spatial
 
     def to_t : Tuple(Float64, Float64, Float64)
       {x, y, z}
+    end
+
+    def transform(transformation : AffineTransform) : self
+      transformation * self
+    end
+
+    def transform(q : Quaternion) : self
+      q * self
     end
 
     def wrap : self
