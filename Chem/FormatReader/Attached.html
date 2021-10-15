@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.0.0">
+<meta name="generator" content="Crystal Docs 1.1.1">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -506,8 +506,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Quaternion" data-name="chem::spatial::quaternion">
-      <a href="../../Chem/Spatial/Quaternion.html">Quaternion</a>
+  <li class=" " data-id="chem.cr/Chem/Spatial/Quat" data-name="chem::spatial::quat">
+      <a href="../../Chem/Spatial/Quat.html">Quat</a>
       
     </li>
   
@@ -812,7 +812,6 @@ in a file format. This is useful for cases when a file format also
 encodes an additional object but it is not part of the main content
 (e.g., some volumetric data file formats used in computational
 chemistry also include information of the molecule structure).</p>
-
 <p>Including types must implement the <code>#decode_attached : T</code> protected
 method, where the type variable <code>T</code> indicates the attached object
 type. Upon parsing issues, including types are expected to raise a
@@ -859,7 +858,7 @@ type. Upon parsing issues, including types are expected to raise a
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format_reader.cr#L117" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format_reader.cr#L117" target="_blank">
         chem/format_reader.cr
       </a>
     
@@ -885,7 +884,7 @@ type. Upon parsing issues, including types are expected to raise a
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#read_attached:T-instance-method" class="signature"><strong>#read_attached</strong> : T</a>
+        <a href="#read_attached%3AT-instance-method" class="signature"><strong>#read_attached</strong> : T</a>
         
           <div class="summary"><p>Reads the attached object from the IO.</p></div>
         
@@ -920,7 +919,7 @@ type. Upon parsing issues, including types are expected to raise a
         
         def <strong>read_attached</strong> : T
 
-        <a class="method-permalink" href="#read_attached:T-instance-method">#</a>
+        <a class="method-permalink" href="#read_attached%3AT-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -933,7 +932,7 @@ decoded.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format_reader.cr#L130" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format_reader.cr#L130" target="_blank">View source</a>]
         
       </div>
     </div>

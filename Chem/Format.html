@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.0.0">
+<meta name="generator" content="Crystal Docs 1.1.1">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -506,8 +506,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Quaternion" data-name="chem::spatial::quaternion">
-      <a href="../Chem/Spatial/Quaternion.html">Quaternion</a>
+  <li class=" " data-id="chem.cr/Chem/Spatial/Quat" data-name="chem::spatial::quat">
+      <a href="../Chem/Spatial/Quat.html">Quat</a>
       
     </li>
   
@@ -808,11 +808,9 @@
   </h2>
 
   <p>List of the registered file formats.</p>
-
 <p>This enum is populated based on the <code><a href="../Chem/RegisterFormat.html">RegisterFormat</a></code> annotation.
 Methods that deals with extensions and file patterns uses the
 information declared in the annotations.</p>
-
 <pre><code class="language-crystal">@[<span class="t">Chem</span><span class="t">::</span><span class="t">RegisterFormat</span>(ext: <span class="s">%w(.jpg .jpeg .jpe)</span>), names: <span class="s">%w(IMG*)</span>]
 <span class="k">module</span> <span class="t">JPEG</span>; <span class="k">end</span>
 
@@ -853,7 +851,7 @@ information declared in the annotations.</p>
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format.cr#L2" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format.cr#L2" target="_blank">
         chem/format.cr
       </a>
     
@@ -997,42 +995,42 @@ information declared in the annotations.</p>
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#from_ext(extname:String):self-class-method" class="signature"><strong>.from_ext</strong>(extname : String) : <span class="k">self</span></a>
+        <a href="#from_ext%28extname%3AString%29%3Aself-class-method" class="signature"><strong>.from_ext</strong>(extname : String) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the file format registered to the file extension, or raises <code>ArgumentError</code> otherwise.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#from_ext?(extname:String):self?-class-method" class="signature"><strong>.from_ext?</strong>(extname : String) : <span class="k">self</span>?</a>
+        <a href="#from_ext%3F%28extname%3AString%29%3Aself%3F-class-method" class="signature"><strong>.from_ext?</strong>(extname : String) : <span class="k">self</span>?</a>
         
           <div class="summary"><p>Returns the file format registered to the file extension, or <code>nil</code> otherwise.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#from_filename(filename:Path%7CString):self-class-method" class="signature"><strong>.from_filename</strong>(filename : Path | String) : <span class="k">self</span></a>
+        <a href="#from_filename%28filename%3APath%7CString%29%3Aself-class-method" class="signature"><strong>.from_filename</strong>(filename : Path | String) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the file format associated with <em>filename</em>, or raises <code>ArgumentError</code> otherwise.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#from_filename?(filename:Path%7CString):self?-class-method" class="signature"><strong>.from_filename?</strong>(filename : Path | String) : <span class="k">self</span>?</a>
+        <a href="#from_filename%3F%28filename%3APath%7CString%29%3Aself%3F-class-method" class="signature"><strong>.from_filename?</strong>(filename : Path | String) : <span class="k">self</span>?</a>
         
           <div class="summary"><p>Returns the file format associated with <em>filename</em>, or <code>nil</code> otherwise.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#from_stem(stem:Path%7CString):self-class-method" class="signature"><strong>.from_stem</strong>(stem : Path | String) : <span class="k">self</span></a>
+        <a href="#from_stem%28stem%3APath%7CString%29%3Aself-class-method" class="signature"><strong>.from_stem</strong>(stem : Path | String) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the file format that matches the file stem, or raises <code>ArgumentError</code> otherwise.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#from_stem?(stem:String):self?-class-method" class="signature"><strong>.from_stem?</strong>(stem : String) : <span class="k">self</span>?</a>
+        <a href="#from_stem%3F%28stem%3AString%29%3Aself%3F-class-method" class="signature"><strong>.from_stem?</strong>(stem : String) : <span class="k">self</span>?</a>
         
           <div class="summary"><p>Returns the file format that matches the file stem, or <code>nil</code> otherwise.</p></div>
         
@@ -1055,166 +1053,166 @@ information declared in the annotations.</p>
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#chgcar?:Bool-instance-method" class="signature"><strong>#chgcar?</strong> : Bool</a>
+        <a href="#chgcar%3F%3ABool-instance-method" class="signature"><strong>#chgcar?</strong> : Bool</a>
         
           <div class="summary"><p>Returns <code>true</code> if the member is the <code><a href="../Chem/Format.html#Chgcar">Chgcar</a></code> format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#cube?:Bool-instance-method" class="signature"><strong>#cube?</strong> : Bool</a>
+        <a href="#cube%3F%3ABool-instance-method" class="signature"><strong>#cube?</strong> : Bool</a>
         
           <div class="summary"><p>Returns <code>true</code> if the member is the <code><a href="../Chem/Format.html#Cube">Cube</a></code> format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#dx?:Bool-instance-method" class="signature"><strong>#dx?</strong> : Bool</a>
+        <a href="#dx%3F%3ABool-instance-method" class="signature"><strong>#dx?</strong> : Bool</a>
         
           <div class="summary"><p>Returns <code>true</code> if the member is the <code><a href="../Chem/Format.html#DX">DX</a></code> format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#encodes?(type:Array(T).class):BoolforallT-instance-method" class="signature"><strong>#encodes?</strong>(type : <span class="t">Array</span>(<span class="t">T</span>).<span class="k">class</span>) : Bool forall T</a>
+        <a href="#encodes%3F%28type%3AArray%28T%29.class%29%3ABoolforallT-instance-method" class="signature"><strong>#encodes?</strong>(type : <span class="t">Array</span>(<span class="t">T</span>).<span class="k">class</span>) : Bool forall T</a>
         
           <div class="summary"><p>Returns <code>true</code> if the format can write an instance of <em>type</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#encodes?(type:T.class):BoolforallT-instance-method" class="signature"><strong>#encodes?</strong>(type : <span class="t">T</span>.<span class="k">class</span>) : Bool forall T</a>
+        <a href="#encodes%3F%28type%3AT.class%29%3ABoolforallT-instance-method" class="signature"><strong>#encodes?</strong>(type : <span class="t">T</span>.<span class="k">class</span>) : Bool forall T</a>
         
           <div class="summary"><p>Returns <code>true</code> if the format can write an instance of <em>type</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#extnames:Array(String)-instance-method" class="signature"><strong>#extnames</strong> : Array(String)</a>
+        <a href="#extnames%3AArray%28String%29-instance-method" class="signature"><strong>#extnames</strong> : Array(String)</a>
         
           <div class="summary"><p>Returns the file extensions associated with the file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#file_patterns:Array(String)-instance-method" class="signature"><strong>#file_patterns</strong> : Array(String)</a>
+        <a href="#file_patterns%3AArray%28String%29-instance-method" class="signature"><strong>#file_patterns</strong> : Array(String)</a>
         
           <div class="summary"><p>Returns the file patterns associated with the file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#gen?:Bool-instance-method" class="signature"><strong>#gen?</strong> : Bool</a>
+        <a href="#gen%3F%3ABool-instance-method" class="signature"><strong>#gen?</strong> : Bool</a>
         
           <div class="summary"><p>Returns <code>true</code> if the member is the <code><a href="../Chem/Format.html#Gen">Gen</a></code> format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#locpot?:Bool-instance-method" class="signature"><strong>#locpot?</strong> : Bool</a>
+        <a href="#locpot%3F%3ABool-instance-method" class="signature"><strong>#locpot?</strong> : Bool</a>
         
           <div class="summary"><p>Returns <code>true</code> if the member is the <code><a href="../Chem/Format.html#Locpot">Locpot</a></code> format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#mol2?:Bool-instance-method" class="signature"><strong>#mol2?</strong> : Bool</a>
+        <a href="#mol2%3F%3ABool-instance-method" class="signature"><strong>#mol2?</strong> : Bool</a>
         
           <div class="summary"><p>Returns <code>true</code> if the member is the <code><a href="../Chem/Format.html#Mol2">Mol2</a></code> format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#pdb?:Bool-instance-method" class="signature"><strong>#pdb?</strong> : Bool</a>
+        <a href="#pdb%3F%3ABool-instance-method" class="signature"><strong>#pdb?</strong> : Bool</a>
         
           <div class="summary"><p>Returns <code>true</code> if the member is the <code><a href="../Chem/Format.html#PDB">PDB</a></code> format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#poscar?:Bool-instance-method" class="signature"><strong>#poscar?</strong> : Bool</a>
+        <a href="#poscar%3F%3ABool-instance-method" class="signature"><strong>#poscar?</strong> : Bool</a>
         
           <div class="summary"><p>Returns <code>true</code> if the member is the <code><a href="../Chem/Format.html#Poscar">Poscar</a></code> format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#py_mol?-instance-method" class="signature"><strong>#py_mol?</strong></a>
+        <a href="#py_mol%3F-instance-method" class="signature"><strong>#py_mol?</strong></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#pymol?:Bool-instance-method" class="signature"><strong>#pymol?</strong> : Bool</a>
+        <a href="#pymol%3F%3ABool-instance-method" class="signature"><strong>#pymol?</strong> : Bool</a>
         
           <div class="summary"><p>Returns <code>true</code> if the member is the <code><a href="../Chem/Format.html#PyMOL">PyMOL</a></code> format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#reader(type:Chem::Spatial::Grid.class)-instance-method" class="signature"><strong>#reader</strong>(type : <span class="t">Chem</span><span class="t">::</span><span class="t">Spatial</span><span class="t">::</span><span class="t">Grid</span>.<span class="k">class</span>)</a>
+        <a href="#reader%28type%3AChem%3A%3ASpatial%3A%3AGrid.class%29-instance-method" class="signature"><strong>#reader</strong>(type : <span class="t">Chem</span><span class="t">::</span><span class="t">Spatial</span><span class="t">::</span><span class="t">Grid</span>.<span class="k">class</span>)</a>
         
           <div class="summary"><p>Returns the reader associated with the format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#reader(type:Chem::Structure.class)-instance-method" class="signature"><strong>#reader</strong>(type : <span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>.<span class="k">class</span>)</a>
+        <a href="#reader%28type%3AChem%3A%3AStructure.class%29-instance-method" class="signature"><strong>#reader</strong>(type : <span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>.<span class="k">class</span>)</a>
         
           <div class="summary"><p>Returns the reader associated with the format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#reader(type:Array(Chem::Structure).class)-instance-method" class="signature"><strong>#reader</strong>(type : <span class="t">Array</span>(<span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>).<span class="k">class</span>)</a>
+        <a href="#reader%28type%3AArray%28Chem%3A%3AStructure%29.class%29-instance-method" class="signature"><strong>#reader</strong>(type : <span class="t">Array</span>(<span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>).<span class="k">class</span>)</a>
         
           <div class="summary"><p>Returns the reader associated with the format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#stride?:Bool-instance-method" class="signature"><strong>#stride?</strong> : Bool</a>
+        <a href="#stride%3F%3ABool-instance-method" class="signature"><strong>#stride?</strong> : Bool</a>
         
           <div class="summary"><p>Returns <code>true</code> if the member is the <code><a href="../Chem/Format.html#Stride">Stride</a></code> format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#vmd?:Bool-instance-method" class="signature"><strong>#vmd?</strong> : Bool</a>
+        <a href="#vmd%3F%3ABool-instance-method" class="signature"><strong>#vmd?</strong> : Bool</a>
         
           <div class="summary"><p>Returns <code>true</code> if the member is the <code><a href="../Chem/Format.html#VMD">VMD</a></code> format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#writer(type:Chem::Spatial::Grid.class)-instance-method" class="signature"><strong>#writer</strong>(type : <span class="t">Chem</span><span class="t">::</span><span class="t">Spatial</span><span class="t">::</span><span class="t">Grid</span>.<span class="k">class</span>)</a>
+        <a href="#writer%28type%3AChem%3A%3ASpatial%3A%3AGrid.class%29-instance-method" class="signature"><strong>#writer</strong>(type : <span class="t">Chem</span><span class="t">::</span><span class="t">Spatial</span><span class="t">::</span><span class="t">Grid</span>.<span class="k">class</span>)</a>
         
           <div class="summary"><p>Returns the writer associated with the format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#writer(type:Chem::Structure.class)-instance-method" class="signature"><strong>#writer</strong>(type : <span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>.<span class="k">class</span>)</a>
+        <a href="#writer%28type%3AChem%3A%3AStructure.class%29-instance-method" class="signature"><strong>#writer</strong>(type : <span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>.<span class="k">class</span>)</a>
         
           <div class="summary"><p>Returns the writer associated with the format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#writer(type:Chem::AtomCollection.class)-instance-method" class="signature"><strong>#writer</strong>(type : <span class="t">Chem</span><span class="t">::</span><span class="t">AtomCollection</span>.<span class="k">class</span>)</a>
+        <a href="#writer%28type%3AChem%3A%3AAtomCollection.class%29-instance-method" class="signature"><strong>#writer</strong>(type : <span class="t">Chem</span><span class="t">::</span><span class="t">AtomCollection</span>.<span class="k">class</span>)</a>
         
           <div class="summary"><p>Returns the writer associated with the format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#writer(type:Array(Chem::AtomCollection).class)-instance-method" class="signature"><strong>#writer</strong>(type : <span class="t">Array</span>(<span class="t">Chem</span><span class="t">::</span><span class="t">AtomCollection</span>).<span class="k">class</span>)</a>
+        <a href="#writer%28type%3AArray%28Chem%3A%3AAtomCollection%29.class%29-instance-method" class="signature"><strong>#writer</strong>(type : <span class="t">Array</span>(<span class="t">Chem</span><span class="t">::</span><span class="t">AtomCollection</span>).<span class="k">class</span>)</a>
         
           <div class="summary"><p>Returns the writer associated with the format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#xyz?:Bool-instance-method" class="signature"><strong>#xyz?</strong> : Bool</a>
+        <a href="#xyz%3F%3ABool-instance-method" class="signature"><strong>#xyz?</strong> : Bool</a>
         
           <div class="summary"><p>Returns <code>true</code> if the member is the <code><a href="../Chem/Format.html#XYZ">XYZ</a></code> format.</p></div>
         
@@ -1285,14 +1283,13 @@ information declared in the annotations.</p>
         
         def self.<strong>from_ext</strong>(extname : String) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#from_ext(extname:String):self-class-method">#</a>
+        <a class="method-permalink" href="#from_ext%28extname%3AString%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns the file format registered to the file extension, or
 raises <code>ArgumentError</code> otherwise.</p>
-
 <pre><code class="language-crystal">@[<span class="t">Chem</span><span class="t">::</span><span class="t">RegisterFormat</span>(ext: <span class="s">%w(.jpg .jpeg .jpe)</span>)]
 <span class="k">module</span> <span class="t">JPEG</span>; <span class="k">end</span>
 
@@ -1301,7 +1298,6 @@ raises <code>ArgumentError</code> otherwise.</p>
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_ext(<span class="s">&quot;.jpeg&quot;</span>) <span class="c"># =&gt; JPEG</span>
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_ext(<span class="s">&quot;.jpe&quot;</span>)  <span class="c"># =&gt; JPEG</span>
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_ext(<span class="s">&quot;.txt&quot;</span>)  <span class="c"># raises ArgumentError</span></code></pre>
-
 <p><span class="flag purple">NOTE</span>  It performs a case-insensitive search so .jpg and .JPG
 return the same.</p>
         </div>
@@ -1309,7 +1305,7 @@ return the same.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1319,14 +1315,13 @@ return the same.</p>
         
         def self.<strong>from_ext?</strong>(extname : String) : <span class="k">self</span>?
 
-        <a class="method-permalink" href="#from_ext?(extname:String):self?-class-method">#</a>
+        <a class="method-permalink" href="#from_ext%3F%28extname%3AString%29%3Aself%3F-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns the file format registered to the file extension, or
 <code>nil</code> otherwise.</p>
-
 <pre><code class="language-crystal">@[<span class="t">Chem</span><span class="t">::</span><span class="t">RegisterFormat</span>(ext: <span class="s">%w(.jpg .jpeg .jpe)</span>)]
 <span class="k">module</span> <span class="t">JPEG</span>; <span class="k">end</span>
 
@@ -1335,7 +1330,6 @@ return the same.</p>
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_ext?(<span class="s">&quot;.jpeg&quot;</span>) <span class="c"># =&gt; JPEG</span>
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_ext?(<span class="s">&quot;.jpe&quot;</span>)  <span class="c"># =&gt; JPEG</span>
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_ext?(<span class="s">&quot;.txt&quot;</span>)  <span class="c"># =&gt; nil</span></code></pre>
-
 <p><span class="flag purple">NOTE</span>  It performs a case-insensitive search so .jpg and .JPG
 return the same.</p>
         </div>
@@ -1343,7 +1337,7 @@ return the same.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1353,19 +1347,17 @@ return the same.</p>
         
         def self.<strong>from_filename</strong>(filename : Path | String) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#from_filename(filename:Path%7CString):self-class-method">#</a>
+        <a class="method-permalink" href="#from_filename%28filename%3APath%7CString%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns the file format associated with <em>filename</em>, or raises
 <code>ArgumentError</code> otherwise.</p>
-
 <p>It first looks up the file format associated with the extension
-of <em>filename</em> via the <code><a href="../Chem/Format.html#from_ext?(extname:String):self?-class-method">.from_ext?</a></code> method. If the latter returns
+of <em>filename</em> via the <code><a href="../Chem/Format.html#from_ext%3F%28extname%3AString%29%3Aself%3F-class-method">.from_ext?</a></code> method. If the latter returns
 <code>nil</code>, then it executes a case-insensitive search with the stem
-of <em>filename</em> via <code><a href="../Chem/Format.html#from_stem?(stem:String):self?-class-method">.from_stem?</a></code>.</p>
-
+of <em>filename</em> via <code><a href="../Chem/Format.html#from_stem%3F%28stem%3AString%29%3Aself%3F-class-method">.from_stem?</a></code>.</p>
 <pre><code class="language-crystal">@[<span class="t">Chem</span><span class="t">::</span><span class="t">RegisterFormat</span>(ext: <span class="s">%w(.jpg .jpeg .jpe)</span>, names: <span class="s">%w(IMG*)</span>)]
 <span class="k">module</span> <span class="t">JPEG</span>; <span class="k">end</span>
 
@@ -1382,7 +1374,7 @@ of <em>filename</em> via <code><a href="../Chem/Format.html#from_stem?(stem:Stri
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1392,19 +1384,17 @@ of <em>filename</em> via <code><a href="../Chem/Format.html#from_stem?(stem:Stri
         
         def self.<strong>from_filename?</strong>(filename : Path | String) : <span class="k">self</span>?
 
-        <a class="method-permalink" href="#from_filename?(filename:Path%7CString):self?-class-method">#</a>
+        <a class="method-permalink" href="#from_filename%3F%28filename%3APath%7CString%29%3Aself%3F-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns the file format associated with <em>filename</em>, or <code>nil</code>
 otherwise.</p>
-
 <p>It first looks up the file format associated with the extension
-of <em>filename</em> via the <code><a href="../Chem/Format.html#from_ext?(extname:String):self?-class-method">.from_ext?</a></code> method. If the latter returns
+of <em>filename</em> via the <code><a href="../Chem/Format.html#from_ext%3F%28extname%3AString%29%3Aself%3F-class-method">.from_ext?</a></code> method. If the latter returns
 <code>nil</code>, then it executes a case-insensitive search with the stem
-of <em>filename</em> via <code><a href="../Chem/Format.html#from_stem?(stem:String):self?-class-method">.from_stem?</a></code>.</p>
-
+of <em>filename</em> via <code><a href="../Chem/Format.html#from_stem%3F%28stem%3AString%29%3Aself%3F-class-method">.from_stem?</a></code>.</p>
 <pre><code class="language-crystal">@[<span class="t">Chem</span><span class="t">::</span><span class="t">RegisterFormat</span>(ext: <span class="s">%w(.jpg .jpeg .jpe)</span>, names: <span class="s">%w(IMG*)</span>)]
 <span class="k">module</span> <span class="t">JPEG</span>; <span class="k">end</span>
 
@@ -1421,7 +1411,7 @@ of <em>filename</em> via <code><a href="../Chem/Format.html#from_stem?(stem:Stri
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1431,22 +1421,23 @@ of <em>filename</em> via <code><a href="../Chem/Format.html#from_stem?(stem:Stri
         
         def self.<strong>from_stem</strong>(stem : Path | String) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#from_stem(stem:Path%7CString):self-class-method">#</a>
+        <a class="method-permalink" href="#from_stem%28stem%3APath%7CString%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns the file format that matches the file stem, or raises
 <code>ArgumentError</code> otherwise.</p>
-
 <p>The file stem is matched against the file patterns registered by
 the file formats until one match is found. File patterns can
 contain valid filename characters and the <code>*</code> wildcard, which
 matches an unlimited number of arbitrary characters:</p>
-
-<ul><li><code>"c*"</code> matches file stems beginning with <code>c</code>.</li><li><code>"*c"</code> matches file stems ending with <code>c</code>.</li><li><code>"*c*"</code> matches file stems that have <code>c</code> in them (including at
-  the beginning or end).</li></ul>
-
+<ul>
+<li><code>"c*"</code> matches file stems beginning with <code>c</code>.</li>
+<li><code>"*c"</code> matches file stems ending with <code>c</code>.</li>
+<li><code>"*c*"</code> matches file stems that have <code>c</code> in them (including at
+the beginning or end).</li>
+</ul>
 <pre><code class="language-crystal">@[<span class="t">Chem</span><span class="t">::</span><span class="t">RegisterFormat</span>(names: <span class="s">%w(IMG*)</span>)]
 <span class="k">module</span> <span class="t">JPEG</span>; <span class="k">end</span>
 
@@ -1455,7 +1446,6 @@ matches an unlimited number of arbitrary characters:</p>
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_stem(<span class="s">&quot;img2314&quot;</span>)  <span class="c"># =&gt; JPEG</span>
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_stem(<span class="s">&quot;himg&quot;</span>)     <span class="c"># raises ArgumentError</span>
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_stem(<span class="s">&quot;foo&quot;</span>)      <span class="c"># raises ArgumentError</span></code></pre>
-
 <p><span class="flag purple">NOTE</span>  The comparison is made using <code>String#camelcase</code> and
 <code>String#downcase</code>, so the file pattern <code>FooBar</code> will match
 <code>FOOBAR</code>, <code>FooBar</code>, <code>foobar</code>, <code>FOO_BAR</code> and <code>foo_bar</code>.</p>
@@ -1464,7 +1454,7 @@ matches an unlimited number of arbitrary characters:</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1474,22 +1464,23 @@ matches an unlimited number of arbitrary characters:</p>
         
         def self.<strong>from_stem?</strong>(stem : String) : <span class="k">self</span>?
 
-        <a class="method-permalink" href="#from_stem?(stem:String):self?-class-method">#</a>
+        <a class="method-permalink" href="#from_stem%3F%28stem%3AString%29%3Aself%3F-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns the file format that matches the file stem, or <code>nil</code>
 otherwise.</p>
-
 <p>The file stem is matched against the file patterns registered by
 the file formats until one match is found. File patterns can
 contain valid filename characters and the <code>*</code> wildcard, which
 matches an unlimited number of arbitrary characters:</p>
-
-<ul><li><code>"c*"</code> matches file stems beginning with <code>c</code>.</li><li><code>"*c"</code> matches file stems ending with <code>c</code>.</li><li><code>"*c*"</code> matches file stems that have <code>c</code> in them (including at
-  the beginning or end).</li></ul>
-
+<ul>
+<li><code>"c*"</code> matches file stems beginning with <code>c</code>.</li>
+<li><code>"*c"</code> matches file stems ending with <code>c</code>.</li>
+<li><code>"*c*"</code> matches file stems that have <code>c</code> in them (including at
+the beginning or end).</li>
+</ul>
 <pre><code class="language-crystal">@[<span class="t">Chem</span><span class="t">::</span><span class="t">RegisterFormat</span>(names: <span class="s">%w(IMG*)</span>)]
 <span class="k">module</span> <span class="t">JPEG</span>; <span class="k">end</span>
 
@@ -1498,7 +1489,6 @@ matches an unlimited number of arbitrary characters:</p>
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_stem?(<span class="s">&quot;img2314&quot;</span>)  <span class="c"># =&gt; JPEG</span>
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_stem?(<span class="s">&quot;himg&quot;</span>)     <span class="c"># =&gt; nil</span>
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_stem?(<span class="s">&quot;foo&quot;</span>)      <span class="c"># =&gt; nil</span></code></pre>
-
 <p><span class="flag purple">NOTE</span>  The comparison is made using <code>String#camelcase</code> and
 <code>String#downcase</code>, so the file pattern <code>FooBar</code> will match
 <code>FOOBAR</code>, <code>FooBar</code>, <code>foobar</code>, <code>FOO_BAR</code> and <code>foo_bar</code>.</p>
@@ -1507,7 +1497,7 @@ matches an unlimited number of arbitrary characters:</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1531,7 +1521,7 @@ matches an unlimited number of arbitrary characters:</p>
         
         def <strong>chgcar?</strong> : Bool
 
-        <a class="method-permalink" href="#chgcar?:Bool-instance-method">#</a>
+        <a class="method-permalink" href="#chgcar%3F%3ABool-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1542,7 +1532,7 @@ matches an unlimited number of arbitrary characters:</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1552,7 +1542,7 @@ matches an unlimited number of arbitrary characters:</p>
         
         def <strong>cube?</strong> : Bool
 
-        <a class="method-permalink" href="#cube?:Bool-instance-method">#</a>
+        <a class="method-permalink" href="#cube%3F%3ABool-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1563,7 +1553,7 @@ matches an unlimited number of arbitrary characters:</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1573,7 +1563,7 @@ matches an unlimited number of arbitrary characters:</p>
         
         def <strong>dx?</strong> : Bool
 
-        <a class="method-permalink" href="#dx?:Bool-instance-method">#</a>
+        <a class="method-permalink" href="#dx%3F%3ABool-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1584,7 +1574,7 @@ matches an unlimited number of arbitrary characters:</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1594,13 +1584,12 @@ matches an unlimited number of arbitrary characters:</p>
         
         def <strong>encodes?</strong>(type : <span class="t">Array</span>(<span class="t">T</span>).<span class="k">class</span>) : Bool forall T
 
-        <a class="method-permalink" href="#encodes?(type:Array(T).class):BoolforallT-instance-method">#</a>
+        <a class="method-permalink" href="#encodes%3F%28type%3AArray%28T%29.class%29%3ABoolforallT-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns <code>true</code> if the format can write an instance of <em>type</em>.</p>
-
 <pre><code class="language-crystal"><span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">XYZ</span>.encodes?(<span class="t">Chem</span><span class="t">::</span><span class="t">AtomCollection</span>)      <span class="c"># =&gt; true</span>
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">XYZ</span>.encodes?(<span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>)           <span class="c"># =&gt; true</span>
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">XYZ</span>.encodes?(<span class="t">Array</span>(<span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>))    <span class="c"># =&gt; true</span>
@@ -1614,7 +1603,7 @@ matches an unlimited number of arbitrary characters:</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1624,13 +1613,12 @@ matches an unlimited number of arbitrary characters:</p>
         
         def <strong>encodes?</strong>(type : <span class="t">T</span>.<span class="k">class</span>) : Bool forall T
 
-        <a class="method-permalink" href="#encodes?(type:T.class):BoolforallT-instance-method">#</a>
+        <a class="method-permalink" href="#encodes%3F%28type%3AT.class%29%3ABoolforallT-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns <code>true</code> if the format can write an instance of <em>type</em>.</p>
-
 <pre><code class="language-crystal"><span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">XYZ</span>.encodes?(<span class="t">Chem</span><span class="t">::</span><span class="t">AtomCollection</span>)      <span class="c"># =&gt; true</span>
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">XYZ</span>.encodes?(<span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>)           <span class="c"># =&gt; true</span>
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">XYZ</span>.encodes?(<span class="t">Array</span>(<span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>))    <span class="c"># =&gt; true</span>
@@ -1644,7 +1632,7 @@ matches an unlimited number of arbitrary characters:</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1654,13 +1642,12 @@ matches an unlimited number of arbitrary characters:</p>
         
         def <strong>extnames</strong> : <a href="../Array.html">Array</a>(String)
 
-        <a class="method-permalink" href="#extnames:Array(String)-instance-method">#</a>
+        <a class="method-permalink" href="#extnames%3AArray%28String%29-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns the file extensions associated with the file format.</p>
-
 <pre><code class="language-crystal">@[<span class="t">Chem</span><span class="t">::</span><span class="t">RegisterFormat</span>(ext: <span class="s">%w(.jpg .jpeg .jpe)</span>)]
 <span class="k">module</span> <span class="t">JPEG</span>; <span class="k">end</span>
 
@@ -1670,7 +1657,7 @@ matches an unlimited number of arbitrary characters:</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1680,13 +1667,12 @@ matches an unlimited number of arbitrary characters:</p>
         
         def <strong>file_patterns</strong> : <a href="../Array.html">Array</a>(String)
 
-        <a class="method-permalink" href="#file_patterns:Array(String)-instance-method">#</a>
+        <a class="method-permalink" href="#file_patterns%3AArray%28String%29-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns the file patterns associated with the file format.</p>
-
 <pre><code class="language-crystal">@[<span class="t">Chem</span><span class="t">::</span><span class="t">RegisterFormat</span>(names: <span class="s">%w(IMG*)</span>)]
 <span class="k">module</span> <span class="t">JPEG</span>; <span class="k">end</span>
 
@@ -1696,7 +1682,7 @@ matches an unlimited number of arbitrary characters:</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1706,7 +1692,7 @@ matches an unlimited number of arbitrary characters:</p>
         
         def <strong>gen?</strong> : Bool
 
-        <a class="method-permalink" href="#gen?:Bool-instance-method">#</a>
+        <a class="method-permalink" href="#gen%3F%3ABool-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1717,7 +1703,7 @@ matches an unlimited number of arbitrary characters:</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1727,7 +1713,7 @@ matches an unlimited number of arbitrary characters:</p>
         
         def <strong>locpot?</strong> : Bool
 
-        <a class="method-permalink" href="#locpot?:Bool-instance-method">#</a>
+        <a class="method-permalink" href="#locpot%3F%3ABool-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1738,7 +1724,7 @@ matches an unlimited number of arbitrary characters:</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1748,7 +1734,7 @@ matches an unlimited number of arbitrary characters:</p>
         
         def <strong>mol2?</strong> : Bool
 
-        <a class="method-permalink" href="#mol2?:Bool-instance-method">#</a>
+        <a class="method-permalink" href="#mol2%3F%3ABool-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1759,7 +1745,7 @@ matches an unlimited number of arbitrary characters:</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1769,7 +1755,7 @@ matches an unlimited number of arbitrary characters:</p>
         
         def <strong>pdb?</strong> : Bool
 
-        <a class="method-permalink" href="#pdb?:Bool-instance-method">#</a>
+        <a class="method-permalink" href="#pdb%3F%3ABool-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1780,7 +1766,7 @@ matches an unlimited number of arbitrary characters:</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1790,7 +1776,7 @@ matches an unlimited number of arbitrary characters:</p>
         
         def <strong>poscar?</strong> : Bool
 
-        <a class="method-permalink" href="#poscar?:Bool-instance-method">#</a>
+        <a class="method-permalink" href="#poscar%3F%3ABool-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1801,7 +1787,7 @@ matches an unlimited number of arbitrary characters:</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1811,13 +1797,13 @@ matches an unlimited number of arbitrary characters:</p>
         
         def <strong>py_mol?</strong>
 
-        <a class="method-permalink" href="#py_mol?-instance-method">#</a>
+        <a class="method-permalink" href="#py_mol%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1827,7 +1813,7 @@ matches an unlimited number of arbitrary characters:</p>
         
         def <strong>pymol?</strong> : Bool
 
-        <a class="method-permalink" href="#pymol?:Bool-instance-method">#</a>
+        <a class="method-permalink" href="#pymol%3F%3ABool-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1838,7 +1824,7 @@ matches an unlimited number of arbitrary characters:</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1848,7 +1834,7 @@ matches an unlimited number of arbitrary characters:</p>
         
         def <strong>reader</strong>(type : <span class="t">Chem</span><span class="t">::</span><span class="t">Spatial</span><span class="t">::</span><span class="t">Grid</span>.<span class="k">class</span>)
 
-        <a class="method-permalink" href="#reader(type:Chem::Spatial::Grid.class)-instance-method">#</a>
+        <a class="method-permalink" href="#reader%28type%3AChem%3A%3ASpatial%3A%3AGrid.class%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1856,7 +1842,6 @@ matches an unlimited number of arbitrary characters:</p>
           <p>Returns the reader associated with the format. Raises
 <code>ArgumentError</code> if the format does not decode <em>type</em> or it is
 write only.</p>
-
 <pre><code class="language-crystal"><span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">XYZ</span>.reader(<span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>)           <span class="c"># =&gt; Chem::XYZ::Reader</span>
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">DX</span>.reader(<span class="t">Chem</span><span class="t">::</span><span class="t">Spatial</span><span class="t">::</span><span class="t">Grid</span>)        <span class="c"># =&gt; Chem::DX::Reader</span>
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">XYZ</span>.reader(<span class="t">Array</span>(<span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>))    <span class="c"># =&gt; Chem::XYZ::Reader</span>
@@ -1868,7 +1853,7 @@ write only.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1878,7 +1863,7 @@ write only.</p>
         
         def <strong>reader</strong>(type : <span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>.<span class="k">class</span>)
 
-        <a class="method-permalink" href="#reader(type:Chem::Structure.class)-instance-method">#</a>
+        <a class="method-permalink" href="#reader%28type%3AChem%3A%3AStructure.class%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1886,7 +1871,6 @@ write only.</p>
           <p>Returns the reader associated with the format. Raises
 <code>ArgumentError</code> if the format does not decode <em>type</em> or it is
 write only.</p>
-
 <pre><code class="language-crystal"><span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">XYZ</span>.reader(<span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>)           <span class="c"># =&gt; Chem::XYZ::Reader</span>
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">DX</span>.reader(<span class="t">Chem</span><span class="t">::</span><span class="t">Spatial</span><span class="t">::</span><span class="t">Grid</span>)        <span class="c"># =&gt; Chem::DX::Reader</span>
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">XYZ</span>.reader(<span class="t">Array</span>(<span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>))    <span class="c"># =&gt; Chem::XYZ::Reader</span>
@@ -1898,7 +1882,7 @@ write only.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1908,7 +1892,7 @@ write only.</p>
         
         def <strong>reader</strong>(type : <span class="t">Array</span>(<span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>).<span class="k">class</span>)
 
-        <a class="method-permalink" href="#reader(type:Array(Chem::Structure).class)-instance-method">#</a>
+        <a class="method-permalink" href="#reader%28type%3AArray%28Chem%3A%3AStructure%29.class%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1916,7 +1900,6 @@ write only.</p>
           <p>Returns the reader associated with the format. Raises
 <code>ArgumentError</code> if the format does not decode <em>type</em> or it is
 write only.</p>
-
 <pre><code class="language-crystal"><span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">XYZ</span>.reader(<span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>)           <span class="c"># =&gt; Chem::XYZ::Reader</span>
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">DX</span>.reader(<span class="t">Chem</span><span class="t">::</span><span class="t">Spatial</span><span class="t">::</span><span class="t">Grid</span>)        <span class="c"># =&gt; Chem::DX::Reader</span>
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">XYZ</span>.reader(<span class="t">Array</span>(<span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>))    <span class="c"># =&gt; Chem::XYZ::Reader</span>
@@ -1928,7 +1911,7 @@ write only.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1938,7 +1921,7 @@ write only.</p>
         
         def <strong>stride?</strong> : Bool
 
-        <a class="method-permalink" href="#stride?:Bool-instance-method">#</a>
+        <a class="method-permalink" href="#stride%3F%3ABool-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1949,7 +1932,7 @@ write only.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1959,7 +1942,7 @@ write only.</p>
         
         def <strong>vmd?</strong> : Bool
 
-        <a class="method-permalink" href="#vmd?:Bool-instance-method">#</a>
+        <a class="method-permalink" href="#vmd%3F%3ABool-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1970,7 +1953,7 @@ write only.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1980,7 +1963,7 @@ write only.</p>
         
         def <strong>writer</strong>(type : <span class="t">Chem</span><span class="t">::</span><span class="t">Spatial</span><span class="t">::</span><span class="t">Grid</span>.<span class="k">class</span>)
 
-        <a class="method-permalink" href="#writer(type:Chem::Spatial::Grid.class)-instance-method">#</a>
+        <a class="method-permalink" href="#writer%28type%3AChem%3A%3ASpatial%3A%3AGrid.class%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1988,7 +1971,6 @@ write only.</p>
           <p>Returns the writer associated with the format. Raises
 <code>ArgumentError</code> if the format does not encode <em>type</em> or it is
 read only.</p>
-
 <pre><code class="language-crystal"><span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">XYZ</span>.writer(<span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>)           <span class="c"># =&gt; Chem::XYZ::Writer</span>
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">DX</span>.writer(<span class="t">Chem</span><span class="t">::</span><span class="t">Spatial</span><span class="t">::</span><span class="t">Grid</span>)        <span class="c"># =&gt; Chem::DX::Writer</span>
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">XYZ</span>.writer(<span class="t">Array</span>(<span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>))    <span class="c"># =&gt; Chem::XYZ::Writer</span>
@@ -1999,7 +1981,7 @@ read only.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2009,7 +1991,7 @@ read only.</p>
         
         def <strong>writer</strong>(type : <span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>.<span class="k">class</span>)
 
-        <a class="method-permalink" href="#writer(type:Chem::Structure.class)-instance-method">#</a>
+        <a class="method-permalink" href="#writer%28type%3AChem%3A%3AStructure.class%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2017,7 +1999,6 @@ read only.</p>
           <p>Returns the writer associated with the format. Raises
 <code>ArgumentError</code> if the format does not encode <em>type</em> or it is
 read only.</p>
-
 <pre><code class="language-crystal"><span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">XYZ</span>.writer(<span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>)           <span class="c"># =&gt; Chem::XYZ::Writer</span>
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">DX</span>.writer(<span class="t">Chem</span><span class="t">::</span><span class="t">Spatial</span><span class="t">::</span><span class="t">Grid</span>)        <span class="c"># =&gt; Chem::DX::Writer</span>
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">XYZ</span>.writer(<span class="t">Array</span>(<span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>))    <span class="c"># =&gt; Chem::XYZ::Writer</span>
@@ -2028,7 +2009,7 @@ read only.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2038,7 +2019,7 @@ read only.</p>
         
         def <strong>writer</strong>(type : <span class="t">Chem</span><span class="t">::</span><span class="t">AtomCollection</span>.<span class="k">class</span>)
 
-        <a class="method-permalink" href="#writer(type:Chem::AtomCollection.class)-instance-method">#</a>
+        <a class="method-permalink" href="#writer%28type%3AChem%3A%3AAtomCollection.class%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2046,7 +2027,6 @@ read only.</p>
           <p>Returns the writer associated with the format. Raises
 <code>ArgumentError</code> if the format does not encode <em>type</em> or it is
 read only.</p>
-
 <pre><code class="language-crystal"><span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">XYZ</span>.writer(<span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>)           <span class="c"># =&gt; Chem::XYZ::Writer</span>
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">DX</span>.writer(<span class="t">Chem</span><span class="t">::</span><span class="t">Spatial</span><span class="t">::</span><span class="t">Grid</span>)        <span class="c"># =&gt; Chem::DX::Writer</span>
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">XYZ</span>.writer(<span class="t">Array</span>(<span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>))    <span class="c"># =&gt; Chem::XYZ::Writer</span>
@@ -2057,7 +2037,7 @@ read only.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2067,7 +2047,7 @@ read only.</p>
         
         def <strong>writer</strong>(type : <span class="t">Array</span>(<span class="t">Chem</span><span class="t">::</span><span class="t">AtomCollection</span>).<span class="k">class</span>)
 
-        <a class="method-permalink" href="#writer(type:Array(Chem::AtomCollection).class)-instance-method">#</a>
+        <a class="method-permalink" href="#writer%28type%3AArray%28Chem%3A%3AAtomCollection%29.class%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2075,7 +2055,6 @@ read only.</p>
           <p>Returns the writer associated with the format. Raises
 <code>ArgumentError</code> if the format does not encode <em>type</em> or it is
 read only.</p>
-
 <pre><code class="language-crystal"><span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">XYZ</span>.writer(<span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>)           <span class="c"># =&gt; Chem::XYZ::Writer</span>
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">DX</span>.writer(<span class="t">Chem</span><span class="t">::</span><span class="t">Spatial</span><span class="t">::</span><span class="t">Grid</span>)        <span class="c"># =&gt; Chem::DX::Writer</span>
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">XYZ</span>.writer(<span class="t">Array</span>(<span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>))    <span class="c"># =&gt; Chem::XYZ::Writer</span>
@@ -2086,7 +2065,7 @@ read only.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2096,7 +2075,7 @@ read only.</p>
         
         def <strong>xyz?</strong> : Bool
 
-        <a class="method-permalink" href="#xyz?:Bool-instance-method">#</a>
+        <a class="method-permalink" href="#xyz%3F%3ABool-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2107,7 +2086,7 @@ read only.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>

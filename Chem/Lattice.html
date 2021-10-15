@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.0.0">
+<meta name="generator" content="Crystal Docs 1.1.1">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -506,8 +506,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Quaternion" data-name="chem::spatial::quaternion">
-      <a href="../Chem/Spatial/Quaternion.html">Quaternion</a>
+  <li class=" " data-id="chem.cr/Chem/Spatial/Quat" data-name="chem::spatial::quat">
+      <a href="../Chem/Spatial/Quat.html">Quat</a>
       
     </li>
   
@@ -823,7 +823,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L2" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L2" target="_blank">
         chem/core/lattice.cr
       </a>
     
@@ -845,12 +845,12 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new(basis:Spatial::Basis)-class-method" class="signature"><strong>.new</strong>(basis : Spatial::Basis)</a>
+        <a href="#new%28basis%3ASpatial%3A%3ABasis%29-class-method" class="signature"><strong>.new</strong>(basis : Spatial::Basis)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new(*args,**options):self-class-method" class="signature"><strong>.new</strong>(*args, **options) : <span class="k">self</span></a>
+        <a href="#new%28%2Aargs%2C%2A%2Aoptions%29%3Aself-class-method" class="signature"><strong>.new</strong>(*args, **options) : <span class="k">self</span></a>
         
       </li>
     
@@ -871,189 +871,189 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#*(value:Number):self-instance-method" class="signature"><strong>#*</strong>(value : Number) : <span class="k">self</span></a>
+        <a href="#%2A%28value%3ANumber%29%3Aself-instance-method" class="signature"><strong>#*</strong>(value : Number) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#a(*args,**options)-instance-method" class="signature"><strong>#a</strong>(*args, **options)</a>
+        <a href="#a%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#a</strong>(*args, **options)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#a(*args,**options,&)-instance-method" class="signature"><strong>#a</strong>(*args, **options, &)</a>
+        <a href="#a%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#a</strong>(*args, **options, &)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#a=(value:Float64):Float64-instance-method" class="signature"><strong>#a=</strong>(value : Float64) : Float64</a>
+        <a href="#a%3D%28value%3AFloat64%29%3AFloat64-instance-method" class="signature"><strong>#a=</strong>(value : Float64) : Float64</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#alpha(*args,**options)-instance-method" class="signature"><strong>#alpha</strong>(*args, **options)</a>
+        <a href="#alpha%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#alpha</strong>(*args, **options)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#alpha(*args,**options,&)-instance-method" class="signature"><strong>#alpha</strong>(*args, **options, &)</a>
+        <a href="#alpha%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#alpha</strong>(*args, **options, &)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#b(*args,**options)-instance-method" class="signature"><strong>#b</strong>(*args, **options)</a>
+        <a href="#b%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#b</strong>(*args, **options)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#b(*args,**options,&)-instance-method" class="signature"><strong>#b</strong>(*args, **options, &)</a>
+        <a href="#b%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#b</strong>(*args, **options, &)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#b=(value:Float64):Float64-instance-method" class="signature"><strong>#b=</strong>(value : Float64) : Float64</a>
+        <a href="#b%3D%28value%3AFloat64%29%3AFloat64-instance-method" class="signature"><strong>#b=</strong>(value : Float64) : Float64</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#basis:Spatial::Basis-instance-method" class="signature"><strong>#basis</strong> : Spatial::Basis</a>
+        <a href="#basis%3ASpatial%3A%3ABasis-instance-method" class="signature"><strong>#basis</strong> : Spatial::Basis</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#beta(*args,**options)-instance-method" class="signature"><strong>#beta</strong>(*args, **options)</a>
+        <a href="#beta%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#beta</strong>(*args, **options)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#beta(*args,**options,&)-instance-method" class="signature"><strong>#beta</strong>(*args, **options, &)</a>
+        <a href="#beta%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#beta</strong>(*args, **options, &)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#bounds:Spatial::Bounds-instance-method" class="signature"><strong>#bounds</strong> : Spatial::Bounds</a>
+        <a href="#bounds%3ASpatial%3A%3ABounds-instance-method" class="signature"><strong>#bounds</strong> : Spatial::Bounds</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#c(*args,**options)-instance-method" class="signature"><strong>#c</strong>(*args, **options)</a>
+        <a href="#c%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#c</strong>(*args, **options)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#c(*args,**options,&)-instance-method" class="signature"><strong>#c</strong>(*args, **options, &)</a>
+        <a href="#c%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#c</strong>(*args, **options, &)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#c=(value:Float64):Float64-instance-method" class="signature"><strong>#c=</strong>(value : Float64) : Float64</a>
+        <a href="#c%3D%28value%3AFloat64%29%3AFloat64-instance-method" class="signature"><strong>#c=</strong>(value : Float64) : Float64</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#cubic?:Bool-instance-method" class="signature"><strong>#cubic?</strong> : Bool</a>
+        <a href="#cubic%3F%3ABool-instance-method" class="signature"><strong>#cubic?</strong> : Bool</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#cuboid?:Bool-instance-method" class="signature"><strong>#cuboid?</strong> : Bool</a>
+        <a href="#cuboid%3F%3ABool-instance-method" class="signature"><strong>#cuboid?</strong> : Bool</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#gamma(*args,**options)-instance-method" class="signature"><strong>#gamma</strong>(*args, **options)</a>
+        <a href="#gamma%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#gamma</strong>(*args, **options)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#gamma(*args,**options,&)-instance-method" class="signature"><strong>#gamma</strong>(*args, **options, &)</a>
+        <a href="#gamma%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#gamma</strong>(*args, **options, &)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#hexagonal?:Bool-instance-method" class="signature"><strong>#hexagonal?</strong> : Bool</a>
+        <a href="#hexagonal%3F%3ABool-instance-method" class="signature"><strong>#hexagonal?</strong> : Bool</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#i(*args,**options)-instance-method" class="signature"><strong>#i</strong>(*args, **options)</a>
+        <a href="#i%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#i</strong>(*args, **options)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#i(*args,**options,&)-instance-method" class="signature"><strong>#i</strong>(*args, **options, &)</a>
+        <a href="#i%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#i</strong>(*args, **options, &)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#i=(vec:Spatial::Vec3):Spatial::Vec3-instance-method" class="signature"><strong>#i=</strong>(vec : Spatial::Vec3) : Spatial::Vec3</a>
+        <a href="#i%3D%28vec%3ASpatial%3A%3AVec3%29%3ASpatial%3A%3AVec3-instance-method" class="signature"><strong>#i=</strong>(vec : Spatial::Vec3) : Spatial::Vec3</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#inspect(io:IO):Nil-instance-method" class="signature"><strong>#inspect</strong>(io : IO) : Nil</a>
+        <a href="#inspect%28io%3AIO%29%3ANil-instance-method" class="signature"><strong>#inspect</strong>(io : IO) : Nil</a>
         
           <div class="summary"><p>Appends a String representation of this object which includes its class name, its object address and the values of all instance variables.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#j(*args,**options)-instance-method" class="signature"><strong>#j</strong>(*args, **options)</a>
+        <a href="#j%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#j</strong>(*args, **options)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#j(*args,**options,&)-instance-method" class="signature"><strong>#j</strong>(*args, **options, &)</a>
+        <a href="#j%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#j</strong>(*args, **options, &)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#j=(vec:Spatial::Vec3):Spatial::Vec3-instance-method" class="signature"><strong>#j=</strong>(vec : Spatial::Vec3) : Spatial::Vec3</a>
+        <a href="#j%3D%28vec%3ASpatial%3A%3AVec3%29%3ASpatial%3A%3AVec3-instance-method" class="signature"><strong>#j=</strong>(vec : Spatial::Vec3) : Spatial::Vec3</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#k(*args,**options)-instance-method" class="signature"><strong>#k</strong>(*args, **options)</a>
+        <a href="#k%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#k</strong>(*args, **options)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#k(*args,**options,&)-instance-method" class="signature"><strong>#k</strong>(*args, **options, &)</a>
+        <a href="#k%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#k</strong>(*args, **options, &)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#k=(vec:Spatial::Vec3):Spatial::Vec3-instance-method" class="signature"><strong>#k=</strong>(vec : Spatial::Vec3) : Spatial::Vec3</a>
+        <a href="#k%3D%28vec%3ASpatial%3A%3AVec3%29%3ASpatial%3A%3AVec3-instance-method" class="signature"><strong>#k=</strong>(vec : Spatial::Vec3) : Spatial::Vec3</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#monoclinic?:Bool-instance-method" class="signature"><strong>#monoclinic?</strong> : Bool</a>
+        <a href="#monoclinic%3F%3ABool-instance-method" class="signature"><strong>#monoclinic?</strong> : Bool</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#orthorhombic?:Bool-instance-method" class="signature"><strong>#orthorhombic?</strong> : Bool</a>
+        <a href="#orthorhombic%3F%3ABool-instance-method" class="signature"><strong>#orthorhombic?</strong> : Bool</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#size(*args,**options)-instance-method" class="signature"><strong>#size</strong>(*args, **options)</a>
+        <a href="#size%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#size</strong>(*args, **options)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#size(*args,**options,&)-instance-method" class="signature"><strong>#size</strong>(*args, **options, &)</a>
+        <a href="#size%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#size</strong>(*args, **options, &)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#tetragonal?:Bool-instance-method" class="signature"><strong>#tetragonal?</strong> : Bool</a>
+        <a href="#tetragonal%3F%3ABool-instance-method" class="signature"><strong>#tetragonal?</strong> : Bool</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#triclinic?:Bool-instance-method" class="signature"><strong>#triclinic?</strong> : Bool</a>
+        <a href="#triclinic%3F%3ABool-instance-method" class="signature"><strong>#triclinic?</strong> : Bool</a>
         
       </li>
     
@@ -1102,13 +1102,13 @@
         
         def self.<strong>new</strong>(basis : <a href="../Chem/Spatial/Basis.html">Spatial::Basis</a>)
 
-        <a class="method-permalink" href="#new(basis:Spatial::Basis)-class-method">#</a>
+        <a class="method-permalink" href="#new%28basis%3ASpatial%3A%3ABasis%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L7" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L7" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1118,13 +1118,13 @@
         
         def self.<strong>new</strong>(*args, **options) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#new(*args,**options):self-class-method">#</a>
+        <a class="method-permalink" href="#new%28%2Aargs%2C%2A%2Aoptions%29%3Aself-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1148,13 +1148,13 @@
         
         def <strong>*</strong>(value : <a href="../Number.html">Number</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#*(value:Number):self-instance-method">#</a>
+        <a class="method-permalink" href="#%2A%28value%3ANumber%29%3Aself-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L14" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L14" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1164,13 +1164,13 @@
         
         def <strong>a</strong>(*args, **options)
 
-        <a class="method-permalink" href="#a(*args,**options)-instance-method">#</a>
+        <a class="method-permalink" href="#a%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1180,13 +1180,13 @@
         
         def <strong>a</strong>(*args, **options, &)
 
-        <a class="method-permalink" href="#a(*args,**options,&)-instance-method">#</a>
+        <a class="method-permalink" href="#a%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1196,13 +1196,13 @@
         
         def <strong>a=</strong>(value : Float64) : Float64
 
-        <a class="method-permalink" href="#a=(value:Float64):Float64-instance-method">#</a>
+        <a class="method-permalink" href="#a%3D%28value%3AFloat64%29%3AFloat64-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L18" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L18" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1212,13 +1212,13 @@
         
         def <strong>alpha</strong>(*args, **options)
 
-        <a class="method-permalink" href="#alpha(*args,**options)-instance-method">#</a>
+        <a class="method-permalink" href="#alpha%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1228,13 +1228,13 @@
         
         def <strong>alpha</strong>(*args, **options, &)
 
-        <a class="method-permalink" href="#alpha(*args,**options,&)-instance-method">#</a>
+        <a class="method-permalink" href="#alpha%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1244,13 +1244,13 @@
         
         def <strong>b</strong>(*args, **options)
 
-        <a class="method-permalink" href="#b(*args,**options)-instance-method">#</a>
+        <a class="method-permalink" href="#b%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1260,13 +1260,13 @@
         
         def <strong>b</strong>(*args, **options, &)
 
-        <a class="method-permalink" href="#b(*args,**options,&)-instance-method">#</a>
+        <a class="method-permalink" href="#b%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1276,13 +1276,13 @@
         
         def <strong>b=</strong>(value : Float64) : Float64
 
-        <a class="method-permalink" href="#b=(value:Float64):Float64-instance-method">#</a>
+        <a class="method-permalink" href="#b%3D%28value%3AFloat64%29%3AFloat64-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L23" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L23" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1292,13 +1292,13 @@
         
         def <strong>basis</strong> : <a href="../Chem/Spatial/Basis.html">Spatial::Basis</a>
 
-        <a class="method-permalink" href="#basis:Spatial::Basis-instance-method">#</a>
+        <a class="method-permalink" href="#basis%3ASpatial%3A%3ABasis-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L3" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L3" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1308,13 +1308,13 @@
         
         def <strong>beta</strong>(*args, **options)
 
-        <a class="method-permalink" href="#beta(*args,**options)-instance-method">#</a>
+        <a class="method-permalink" href="#beta%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1324,13 +1324,13 @@
         
         def <strong>beta</strong>(*args, **options, &)
 
-        <a class="method-permalink" href="#beta(*args,**options,&)-instance-method">#</a>
+        <a class="method-permalink" href="#beta%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1340,13 +1340,13 @@
         
         def <strong>bounds</strong> : <a href="../Chem/Spatial/Bounds.html">Spatial::Bounds</a>
 
-        <a class="method-permalink" href="#bounds:Spatial::Bounds-instance-method">#</a>
+        <a class="method-permalink" href="#bounds%3ASpatial%3A%3ABounds-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L28" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L28" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1356,13 +1356,13 @@
         
         def <strong>c</strong>(*args, **options)
 
-        <a class="method-permalink" href="#c(*args,**options)-instance-method">#</a>
+        <a class="method-permalink" href="#c%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1372,13 +1372,13 @@
         
         def <strong>c</strong>(*args, **options, &)
 
-        <a class="method-permalink" href="#c(*args,**options,&)-instance-method">#</a>
+        <a class="method-permalink" href="#c%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1388,13 +1388,13 @@
         
         def <strong>c=</strong>(value : Float64) : Float64
 
-        <a class="method-permalink" href="#c=(value:Float64):Float64-instance-method">#</a>
+        <a class="method-permalink" href="#c%3D%28value%3AFloat64%29%3AFloat64-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L32" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L32" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1404,13 +1404,13 @@
         
         def <strong>cubic?</strong> : Bool
 
-        <a class="method-permalink" href="#cubic?:Bool-instance-method">#</a>
+        <a class="method-permalink" href="#cubic%3F%3ABool-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L37" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L37" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1420,13 +1420,13 @@
         
         def <strong>cuboid?</strong> : Bool
 
-        <a class="method-permalink" href="#cuboid?:Bool-instance-method">#</a>
+        <a class="method-permalink" href="#cuboid%3F%3ABool-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L41" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L41" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1436,13 +1436,13 @@
         
         def <strong>gamma</strong>(*args, **options)
 
-        <a class="method-permalink" href="#gamma(*args,**options)-instance-method">#</a>
+        <a class="method-permalink" href="#gamma%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1452,13 +1452,13 @@
         
         def <strong>gamma</strong>(*args, **options, &)
 
-        <a class="method-permalink" href="#gamma(*args,**options,&)-instance-method">#</a>
+        <a class="method-permalink" href="#gamma%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1468,13 +1468,13 @@
         
         def <strong>hexagonal?</strong> : Bool
 
-        <a class="method-permalink" href="#hexagonal?:Bool-instance-method">#</a>
+        <a class="method-permalink" href="#hexagonal%3F%3ABool-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L45" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L45" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1484,13 +1484,13 @@
         
         def <strong>i</strong>(*args, **options)
 
-        <a class="method-permalink" href="#i(*args,**options)-instance-method">#</a>
+        <a class="method-permalink" href="#i%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1500,13 +1500,13 @@
         
         def <strong>i</strong>(*args, **options, &)
 
-        <a class="method-permalink" href="#i(*args,**options,&)-instance-method">#</a>
+        <a class="method-permalink" href="#i%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1516,13 +1516,13 @@
         
         def <strong>i=</strong>(vec : <a href="../Chem/Spatial/Vec3.html">Spatial::Vec3</a>) : <a href="../Chem/Spatial/Vec3.html">Spatial::Vec3</a>
 
-        <a class="method-permalink" href="#i=(vec:Spatial::Vec3):Spatial::Vec3-instance-method">#</a>
+        <a class="method-permalink" href="#i%3D%28vec%3ASpatial%3A%3AVec3%29%3ASpatial%3A%3AVec3-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L49" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L49" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1532,7 +1532,7 @@
         
         def <strong>inspect</strong>(io : IO) : Nil
 
-        <a class="method-permalink" href="#inspect(io:IO):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#inspect%28io%3AIO%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1544,7 +1544,6 @@
           <p>Appends a String representation of this object
 which includes its class name, its object address
 and the values of all instance variables.</p>
-
 <pre><code class="language-crystal"><span class="k">class</span> <span class="t">Person</span>
   <span class="k">def</span> <span class="m">initialize</span>(@name : <span class="t">String</span>, @age : <span class="t">Int32</span>)
   <span class="k">end</span>
@@ -1556,7 +1555,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L54" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L54" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1566,13 +1565,13 @@ and the values of all instance variables.</p>
         
         def <strong>j</strong>(*args, **options)
 
-        <a class="method-permalink" href="#j(*args,**options)-instance-method">#</a>
+        <a class="method-permalink" href="#j%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1582,13 +1581,13 @@ and the values of all instance variables.</p>
         
         def <strong>j</strong>(*args, **options, &)
 
-        <a class="method-permalink" href="#j(*args,**options,&)-instance-method">#</a>
+        <a class="method-permalink" href="#j%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1598,13 +1597,13 @@ and the values of all instance variables.</p>
         
         def <strong>j=</strong>(vec : <a href="../Chem/Spatial/Vec3.html">Spatial::Vec3</a>) : <a href="../Chem/Spatial/Vec3.html">Spatial::Vec3</a>
 
-        <a class="method-permalink" href="#j=(vec:Spatial::Vec3):Spatial::Vec3-instance-method">#</a>
+        <a class="method-permalink" href="#j%3D%28vec%3ASpatial%3A%3AVec3%29%3ASpatial%3A%3AVec3-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L64" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L64" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1614,13 +1613,13 @@ and the values of all instance variables.</p>
         
         def <strong>k</strong>(*args, **options)
 
-        <a class="method-permalink" href="#k(*args,**options)-instance-method">#</a>
+        <a class="method-permalink" href="#k%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1630,13 +1629,13 @@ and the values of all instance variables.</p>
         
         def <strong>k</strong>(*args, **options, &)
 
-        <a class="method-permalink" href="#k(*args,**options,&)-instance-method">#</a>
+        <a class="method-permalink" href="#k%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1646,13 +1645,13 @@ and the values of all instance variables.</p>
         
         def <strong>k=</strong>(vec : <a href="../Chem/Spatial/Vec3.html">Spatial::Vec3</a>) : <a href="../Chem/Spatial/Vec3.html">Spatial::Vec3</a>
 
-        <a class="method-permalink" href="#k=(vec:Spatial::Vec3):Spatial::Vec3-instance-method">#</a>
+        <a class="method-permalink" href="#k%3D%28vec%3ASpatial%3A%3AVec3%29%3ASpatial%3A%3AVec3-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L69" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L69" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1662,13 +1661,13 @@ and the values of all instance variables.</p>
         
         def <strong>monoclinic?</strong> : Bool
 
-        <a class="method-permalink" href="#monoclinic?:Bool-instance-method">#</a>
+        <a class="method-permalink" href="#monoclinic%3F%3ABool-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L74" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L74" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1678,13 +1677,13 @@ and the values of all instance variables.</p>
         
         def <strong>orthorhombic?</strong> : Bool
 
-        <a class="method-permalink" href="#orthorhombic?:Bool-instance-method">#</a>
+        <a class="method-permalink" href="#orthorhombic%3F%3ABool-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L78" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L78" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1694,13 +1693,13 @@ and the values of all instance variables.</p>
         
         def <strong>size</strong>(*args, **options)
 
-        <a class="method-permalink" href="#size(*args,**options)-instance-method">#</a>
+        <a class="method-permalink" href="#size%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1710,13 +1709,13 @@ and the values of all instance variables.</p>
         
         def <strong>size</strong>(*args, **options, &)
 
-        <a class="method-permalink" href="#size(*args,**options,&)-instance-method">#</a>
+        <a class="method-permalink" href="#size%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1726,13 +1725,13 @@ and the values of all instance variables.</p>
         
         def <strong>tetragonal?</strong> : Bool
 
-        <a class="method-permalink" href="#tetragonal?:Bool-instance-method">#</a>
+        <a class="method-permalink" href="#tetragonal%3F%3ABool-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L82" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L82" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1742,13 +1741,13 @@ and the values of all instance variables.</p>
         
         def <strong>triclinic?</strong> : Bool
 
-        <a class="method-permalink" href="#triclinic?:Bool-instance-method">#</a>
+        <a class="method-permalink" href="#triclinic%3F%3ABool-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/lattice.cr#L86" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/lattice.cr#L86" target="_blank">View source</a>]
         
       </div>
     </div>

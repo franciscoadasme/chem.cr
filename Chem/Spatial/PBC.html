@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.0.0">
+<meta name="generator" content="Crystal Docs 1.1.1">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -506,8 +506,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Quaternion" data-name="chem::spatial::quaternion">
-      <a href="../../Chem/Spatial/Quaternion.html">Quaternion</a>
+  <li class=" " data-id="chem.cr/Chem/Spatial/Quat" data-name="chem::spatial::quat">
+      <a href="../../Chem/Spatial/Quat.html">Quat</a>
       
     </li>
   
@@ -835,7 +835,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/pbc.cr#L1" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/pbc.cr#L1" target="_blank">
         chem/spatial/pbc.cr
       </a>
     
@@ -880,32 +880,32 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#adjacent_images(*args,**options):Array(Tuple(Atom,Vec3))-instance-method" class="signature"><strong>#adjacent_images</strong>(*args, **options) : Array(Tuple(Atom, Vec3))</a>
+        <a href="#adjacent_images%28%2Aargs%2C%2A%2Aoptions%29%3AArray%28Tuple%28Atom%2CVec3%29%29-instance-method" class="signature"><strong>#adjacent_images</strong>(*args, **options) : Array(Tuple(Atom, Vec3))</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#each_adjacent_image(atoms:AtomCollection,lattice:Lattice,radius:Number,&block:Atom,Vec3-%3E)-instance-method" class="signature"><strong>#each_adjacent_image</strong>(atoms : AtomCollection, lattice : Lattice, radius : Number, &block : Atom, Vec3 -> )</a>
+        <a href="#each_adjacent_image%28atoms%3AAtomCollection%2Clattice%3ALattice%2Cradius%3ANumber%2C%26block%3AAtom%2CVec3-%3E%29-instance-method" class="signature"><strong>#each_adjacent_image</strong>(atoms : AtomCollection, lattice : Lattice, radius : Number, &block : Atom, Vec3 -> )</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#each_adjacent_image(atoms:AtomCollection,lattice:Lattice,&block:Atom,Vec3-%3E)-instance-method" class="signature"><strong>#each_adjacent_image</strong>(atoms : AtomCollection, lattice : Lattice, &block : Atom, Vec3 -> )</a>
+        <a href="#each_adjacent_image%28atoms%3AAtomCollection%2Clattice%3ALattice%2C%26block%3AAtom%2CVec3-%3E%29-instance-method" class="signature"><strong>#each_adjacent_image</strong>(atoms : AtomCollection, lattice : Lattice, &block : Atom, Vec3 -> )</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#each_adjacent_image(structure:Structure,radius:Number,&block:Atom,Vec3-%3E)-instance-method" class="signature"><strong>#each_adjacent_image</strong>(structure : Structure, radius : Number, &block : Atom, Vec3 -> )</a>
+        <a href="#each_adjacent_image%28structure%3AStructure%2Cradius%3ANumber%2C%26block%3AAtom%2CVec3-%3E%29-instance-method" class="signature"><strong>#each_adjacent_image</strong>(structure : Structure, radius : Number, &block : Atom, Vec3 -> )</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#each_adjacent_image(structure:Structure,&block:Atom,Vec3-%3E)-instance-method" class="signature"><strong>#each_adjacent_image</strong>(structure : Structure, &block : Atom, Vec3 -> )</a>
+        <a href="#each_adjacent_image%28structure%3AStructure%2C%26block%3AAtom%2CVec3-%3E%29-instance-method" class="signature"><strong>#each_adjacent_image</strong>(structure : Structure, &block : Atom, Vec3 -> )</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#unwrap(atoms:AtomCollection,lattice:Lattice):Nil-instance-method" class="signature"><strong>#unwrap</strong>(atoms : AtomCollection, lattice : Lattice) : Nil</a>
+        <a href="#unwrap%28atoms%3AAtomCollection%2Clattice%3ALattice%29%3ANil-instance-method" class="signature"><strong>#unwrap</strong>(atoms : AtomCollection, lattice : Lattice) : Nil</a>
         
       </li>
     
@@ -938,13 +938,13 @@
         
         def <strong>adjacent_images</strong>(*args, **options) : <a href="../../Array.html">Array</a>(Tuple(<a href="../../Chem/Atom.html">Atom</a>, <a href="../../Chem/Spatial/Vec3.html">Vec3</a>))
 
-        <a class="method-permalink" href="#adjacent_images(*args,**options):Array(Tuple(Atom,Vec3))-instance-method">#</a>
+        <a class="method-permalink" href="#adjacent_images%28%2Aargs%2C%2A%2Aoptions%29%3AArray%28Tuple%28Atom%2CVec3%29%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/pbc.cr#L7" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/pbc.cr#L7" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -954,13 +954,13 @@
         
         def <strong>each_adjacent_image</strong>(atoms : <a href="../../Chem/AtomCollection.html">AtomCollection</a>, lattice : <a href="../../Chem/Lattice.html">Lattice</a>, radius : <a href="../../Number.html">Number</a>, &block : <a href="../../Chem/Atom.html">Atom</a>, <a href="../../Chem/Spatial/Vec3.html">Vec3</a> -> )
 
-        <a class="method-permalink" href="#each_adjacent_image(atoms:AtomCollection,lattice:Lattice,radius:Number,&block:Atom,Vec3-%3E)-instance-method">#</a>
+        <a class="method-permalink" href="#each_adjacent_image%28atoms%3AAtomCollection%2Clattice%3ALattice%2Cradius%3ANumber%2C%26block%3AAtom%2CVec3-%3E%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/pbc.cr#L42" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/pbc.cr#L42" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -970,13 +970,13 @@
         
         def <strong>each_adjacent_image</strong>(atoms : <a href="../../Chem/AtomCollection.html">AtomCollection</a>, lattice : <a href="../../Chem/Lattice.html">Lattice</a>, &block : <a href="../../Chem/Atom.html">Atom</a>, <a href="../../Chem/Spatial/Vec3.html">Vec3</a> -> )
 
-        <a class="method-permalink" href="#each_adjacent_image(atoms:AtomCollection,lattice:Lattice,&block:Atom,Vec3-%3E)-instance-method">#</a>
+        <a class="method-permalink" href="#each_adjacent_image%28atoms%3AAtomCollection%2Clattice%3ALattice%2C%26block%3AAtom%2CVec3-%3E%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/pbc.cr#L20" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/pbc.cr#L20" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -986,13 +986,13 @@
         
         def <strong>each_adjacent_image</strong>(structure : <a href="../../Chem/Structure.html">Structure</a>, radius : <a href="../../Number.html">Number</a>, &block : <a href="../../Chem/Atom.html">Atom</a>, <a href="../../Chem/Spatial/Vec3.html">Vec3</a> -> )
 
-        <a class="method-permalink" href="#each_adjacent_image(structure:Structure,radius:Number,&block:Atom,Vec3-%3E)-instance-method">#</a>
+        <a class="method-permalink" href="#each_adjacent_image%28structure%3AStructure%2Cradius%3ANumber%2C%26block%3AAtom%2CVec3-%3E%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/pbc.cr#L35" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/pbc.cr#L35" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1002,13 +1002,13 @@
         
         def <strong>each_adjacent_image</strong>(structure : <a href="../../Chem/Structure.html">Structure</a>, &block : <a href="../../Chem/Atom.html">Atom</a>, <a href="../../Chem/Spatial/Vec3.html">Vec3</a> -> )
 
-        <a class="method-permalink" href="#each_adjacent_image(structure:Structure,&block:Atom,Vec3-%3E)-instance-method">#</a>
+        <a class="method-permalink" href="#each_adjacent_image%28structure%3AStructure%2C%26block%3AAtom%2CVec3-%3E%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/pbc.cr#L15" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/pbc.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1018,13 +1018,13 @@
         
         def <strong>unwrap</strong>(atoms : <a href="../../Chem/AtomCollection.html">AtomCollection</a>, lattice : <a href="../../Chem/Lattice.html">Lattice</a>) : Nil
 
-        <a class="method-permalink" href="#unwrap(atoms:AtomCollection,lattice:Lattice):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#unwrap%28atoms%3AAtomCollection%2Clattice%3ALattice%29%3ANil-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/pbc.cr#L65" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/pbc.cr#L65" target="_blank">View source</a>]
         
       </div>
     </div>

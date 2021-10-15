@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.0.0">
+<meta name="generator" content="Crystal Docs 1.1.1">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -506,8 +506,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Quaternion" data-name="chem::spatial::quaternion">
-      <a href="../../Chem/Spatial/Quaternion.html">Quaternion</a>
+  <li class=" " data-id="chem.cr/Chem/Spatial/Quat" data-name="chem::spatial::quat">
+      <a href="../../Chem/Spatial/Quat.html">Quat</a>
       
     </li>
   
@@ -821,7 +821,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/residue.cr#L6" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/residue.cr#L6" target="_blank">
         chem/core/residue.cr
       </a>
     
@@ -862,8 +862,13 @@
       </dt>
       
     
+      <dt class="entry-const" id="Membrane">
+        <strong>Membrane</strong> = <code><span class="n">4</span></code>
+      </dt>
+      
+    
       <dt class="entry-const" id="Other">
-        <strong>Other</strong> = <code><span class="n">4</span></code>
+        <strong>Other</strong> = <code><span class="n">5</span></code>
       </dt>
       
     
@@ -886,27 +891,32 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#dna?-instance-method" class="signature"><strong>#dna?</strong></a>
+        <a href="#dna%3F-instance-method" class="signature"><strong>#dna?</strong></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#ion?-instance-method" class="signature"><strong>#ion?</strong></a>
+        <a href="#ion%3F-instance-method" class="signature"><strong>#ion?</strong></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#other?-instance-method" class="signature"><strong>#other?</strong></a>
+        <a href="#membrane%3F-instance-method" class="signature"><strong>#membrane?</strong></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#protein?-instance-method" class="signature"><strong>#protein?</strong></a>
+        <a href="#other%3F-instance-method" class="signature"><strong>#other?</strong></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#solvent?-instance-method" class="signature"><strong>#solvent?</strong></a>
+        <a href="#protein%3F-instance-method" class="signature"><strong>#protein?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#solvent%3F-instance-method" class="signature"><strong>#solvent?</strong></a>
         
       </li>
     
@@ -979,13 +989,13 @@
         
         def <strong>dna?</strong>
 
-        <a class="method-permalink" href="#dna?-instance-method">#</a>
+        <a class="method-permalink" href="#dna%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/residue.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/residue.cr#L8" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -995,13 +1005,29 @@
         
         def <strong>ion?</strong>
 
-        <a class="method-permalink" href="#ion?-instance-method">#</a>
+        <a class="method-permalink" href="#ion%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/residue.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/residue.cr#L9" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="membrane?-instance-method">
+      <div class="signature">
+        
+        def <strong>membrane?</strong>
+
+        <a class="method-permalink" href="#membrane%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/residue.cr#L11" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1011,13 +1037,13 @@
         
         def <strong>other?</strong>
 
-        <a class="method-permalink" href="#other?-instance-method">#</a>
+        <a class="method-permalink" href="#other%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/residue.cr#L11" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/residue.cr#L12" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1027,13 +1053,13 @@
         
         def <strong>protein?</strong>
 
-        <a class="method-permalink" href="#protein?-instance-method">#</a>
+        <a class="method-permalink" href="#protein%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/residue.cr#L7" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/residue.cr#L7" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1043,13 +1069,13 @@
         
         def <strong>solvent?</strong>
 
-        <a class="method-permalink" href="#solvent?-instance-method">#</a>
+        <a class="method-permalink" href="#solvent%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/residue.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/residue.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>

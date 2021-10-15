@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.0.0">
+<meta name="generator" content="Crystal Docs 1.1.1">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -506,8 +506,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Quaternion" data-name="chem::spatial::quaternion">
-      <a href="Chem/Spatial/Quaternion.html">Quaternion</a>
+  <li class=" " data-id="chem.cr/Chem/Spatial/Quat" data-name="chem::spatial::quat">
+      <a href="Chem/Spatial/Quat.html">Quat</a>
       
     </li>
   
@@ -811,73 +811,53 @@
 on terminals supporting ANSI escape codes. It adds the <code>colorize</code> method to <code>Object</code> and thus all classes
 as its main interface, which calls <code>to_s</code> and surrounds it with the necessary escape codes
 when it comes to obtaining a string representation of the object.</p>
-
 <p>Its first argument changes the foreground color:</p>
-
 <pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;colorize&quot;</span>
 
 <span class="s">&quot;foo&quot;</span>.colorize(<span class="n">:green</span>)
 <span class="n">100</span>.colorize(<span class="n">:red</span>)
 [<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>].colorize(<span class="n">:blue</span>)</code></pre>
-
 <p>There are alternative ways to change the foreground color:</p>
-
 <pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;colorize&quot;</span>
 
 <span class="s">&quot;foo&quot;</span>.colorize.fore(<span class="n">:green</span>)
 <span class="s">&quot;foo&quot;</span>.colorize.green</code></pre>
-
 <p>To change the background color, the following methods are available:</p>
-
 <pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;colorize&quot;</span>
 
 <span class="s">&quot;foo&quot;</span>.colorize.back(<span class="n">:green</span>)
 <span class="s">&quot;foo&quot;</span>.colorize.on(<span class="n">:green</span>)
 <span class="s">&quot;foo&quot;</span>.colorize.on_green</code></pre>
-
 <p>You can also pass an RGB color to <code>colorize</code>:</p>
-
 <pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;colorize&quot;</span>
 
 <span class="s">&quot;foo&quot;</span>.colorize(<span class="t">Colorize</span><span class="t">::</span><span class="t">ColorRGB</span>.<span class="k">new</span>(<span class="n">0</span>, <span class="n">255</span>, <span class="n">255</span>)) <span class="c"># =&gt; &quot;foo&quot; in aqua</span></code></pre>
-
 <p>Or an 8-bit color:</p>
-
 <pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;colorize&quot;</span>
 
 <span class="s">&quot;foo&quot;</span>.colorize(<span class="t">Colorize</span><span class="t">::</span><span class="t">Color256</span>.<span class="k">new</span>(<span class="n">208</span>)) <span class="c"># =&gt; &quot;foo&quot; in orange</span></code></pre>
-
 <p>It's also possible to change the text decoration:</p>
-
 <pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;colorize&quot;</span>
 
 <span class="s">&quot;foo&quot;</span>.colorize.mode(<span class="n">:underline</span>)
 <span class="s">&quot;foo&quot;</span>.colorize.underline</code></pre>
-
 <p>The <code>colorize</code> method returns a <code>Colorize::Object</code> instance,
 which allows chaining methods together:</p>
-
 <pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;colorize&quot;</span>
 
 <span class="s">&quot;foo&quot;</span>.colorize.fore(<span class="n">:yellow</span>).back(<span class="n">:blue</span>).mode(<span class="n">:underline</span>)</code></pre>
-
 <p>With the <code>toggle</code> method you can temporarily disable adding the escape codes.
 Settings of the instance are preserved however and can be turned back on later:</p>
-
 <pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;colorize&quot;</span>
 
 <span class="s">&quot;foo&quot;</span>.colorize(<span class="n">:red</span>).toggle(<span class="n">false</span>)              <span class="c"># =&gt; &quot;foo&quot; without color</span>
 <span class="s">&quot;foo&quot;</span>.colorize(<span class="n">:red</span>).toggle(<span class="n">false</span>).toggle(<span class="n">true</span>) <span class="c"># =&gt; &quot;foo&quot; in red</span></code></pre>
-
 <p>The color <code>:default</code> will just leave the object as it is (but it's an <code>Colorize::Object(String)</code> then).
 That's handy in for example conditions:</p>
-
 <pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;colorize&quot;</span>
 
 <span class="s">&quot;foo&quot;</span>.colorize(some_bool ? <span class="n">:green</span> : <span class="n">:default</span>)</code></pre>
-
 <p>Available colors are:</p>
-
 <pre><code class="language-crystal"><span class="n">:default</span>
 <span class="n">:black</span>
 <span class="n">:red</span>
@@ -895,9 +875,7 @@ That's handy in for example conditions:</p>
 <span class="n">:light_magenta</span>
 <span class="n">:light_cyan</span>
 <span class="n">:white</span></code></pre>
-
 <p>Available text decorations are:</p>
-
 <pre><code class="language-crystal"><span class="n">:bold</span>
 <span class="n">:bright</span>
 <span class="n">:dim</span>
@@ -929,7 +907,7 @@ That's handy in for example conditions:</p>
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core_ext/colorize.cr#L3" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core_ext/colorize.cr#L3" target="_blank">
         chem/core_ext/colorize.cr
       </a>
     

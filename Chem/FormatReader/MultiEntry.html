@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.0.0">
+<meta name="generator" content="Crystal Docs 1.1.1">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -506,8 +506,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Quaternion" data-name="chem::spatial::quaternion">
-      <a href="../../Chem/Spatial/Quaternion.html">Quaternion</a>
+  <li class=" " data-id="chem.cr/Chem/Spatial/Quat" data-name="chem::spatial::quat">
+      <a href="../../Chem/Spatial/Quat.html">Quat</a>
       
     </li>
   
@@ -809,8 +809,7 @@
 
   <p>Declares a common interface for reading a variable number of objects
 encoded in a file format.</p>
-
-<p>Including types must implement the <code><a href="../../Chem/FormatReader/MultiEntry.html#skip_entry:Nil-instance-method">#skip_entry</a></code> method to discard
+<p>Including types must implement the <code><a href="../../Chem/FormatReader/MultiEntry.html#skip_entry%3ANil-instance-method">#skip_entry</a></code> method to discard
 the next entry in the IO.</p>
 
 
@@ -854,7 +853,7 @@ the next entry in the IO.</p>
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format_reader.cr#L143" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format_reader.cr#L143" target="_blank">
         chem/format_reader.cr
       </a>
     
@@ -880,35 +879,35 @@ the next entry in the IO.</p>
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#each(indexes:Enumerable(Int),&:T-%3E)-instance-method" class="signature"><strong>#each</strong>(indexes : Enumerable(Int), & : T -> )</a>
+        <a href="#each%28indexes%3AEnumerable%28Int%29%2C%26%3AT-%3E%29-instance-method" class="signature"><strong>#each</strong>(indexes : Enumerable(Int), & : T -> )</a>
         
           <div class="summary"><p>Yields entries at the specified <em>indexes</em> in the IO to the given block.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#each(&:T-%3E):Nil-instance-method" class="signature"><strong>#each</strong>(& : T -> ) : Nil</a>
+        <a href="#each%28%26%3AT-%3E%29%3ANil-instance-method" class="signature"><strong>#each</strong>(& : T -> ) : Nil</a>
         
           <div class="summary"><p>Yields each entry in the IO to the given block.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#next_entry:T?-instance-method" class="signature"><strong>#next_entry</strong> : T?</a>
+        <a href="#next_entry%3AT%3F-instance-method" class="signature"><strong>#next_entry</strong> : T?</a>
         
           <div class="summary"><p>Returns the next entry in the IO, or <code>nil</code> if there are no more entries.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#read_entry:T-instance-method" class="signature"><strong>#read_entry</strong> : T</a>
+        <a href="#read_entry%3AT-instance-method" class="signature"><strong>#read_entry</strong> : T</a>
         
           <div class="summary"><p>Returns the next entry in the IO.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#skip_entry:Nil-instance-method" class="signature"><strong>#skip_entry</strong> : Nil</a>
+        <a href="#skip_entry%3ANil-instance-method" class="signature"><strong>#skip_entry</strong> : Nil</a>
         
           <div class="summary"><p>Discards the next entry in the IO without fully parsing it.</p></div>
         
@@ -943,7 +942,7 @@ the next entry in the IO.</p>
         
         def <strong>each</strong>(indexes : Enumerable(Int), & : T -> )
 
-        <a class="method-permalink" href="#each(indexes:Enumerable(Int),&:T-%3E)-instance-method">#</a>
+        <a class="method-permalink" href="#each%28indexes%3AEnumerable%28Int%29%2C%26%3AT-%3E%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -955,7 +954,7 @@ block. Raises <code>IndexError</code> when an index is out of bounds.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format_reader.cr#L156" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format_reader.cr#L156" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -965,7 +964,7 @@ block. Raises <code>IndexError</code> when an index is out of bounds.</p>
         
         def <strong>each</strong>(& : T -> ) : Nil
 
-        <a class="method-permalink" href="#each(&:T-%3E):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#each%28%26%3AT-%3E%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -976,7 +975,7 @@ block. Raises <code>IndexError</code> when an index is out of bounds.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format_reader.cr#L148" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format_reader.cr#L148" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -986,7 +985,7 @@ block. Raises <code>IndexError</code> when an index is out of bounds.</p>
         
         def <strong>next_entry</strong> : T?
 
-        <a class="method-permalink" href="#next_entry:T?-instance-method">#</a>
+        <a class="method-permalink" href="#next_entry%3AT%3F-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -998,7 +997,7 @@ entries.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format_reader.cr#L169" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format_reader.cr#L169" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1008,7 +1007,7 @@ entries.</p>
         
         def <strong>read_entry</strong> : T
 
-        <a class="method-permalink" href="#read_entry:T-instance-method">#</a>
+        <a class="method-permalink" href="#read_entry%3AT-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1020,7 +1019,7 @@ are no more entries.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format_reader.cr#L180" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format_reader.cr#L180" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1030,7 +1029,7 @@ are no more entries.</p>
         abstract 
         def <strong>skip_entry</strong> : Nil
 
-        <a class="method-permalink" href="#skip_entry:Nil-instance-method">#</a>
+        <a class="method-permalink" href="#skip_entry%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1041,7 +1040,7 @@ are no more entries.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format_reader.cr#L145" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format_reader.cr#L145" target="_blank">View source</a>]
         
       </div>
     </div>

@@ -1,0 +1,1793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 1.1.1">
+<meta name="crystal_docs.project_version" content="master">
+<meta name="crystal_docs.project_name" content="chem.cr">
+
+
+
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../js/doc.js"></script>
+
+  <meta name="repository-name" content="chem.cr">
+  <title>Chem::Spatial::Quat - chem.cr master</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../../";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../../index.html">
+          chem.cr
+        </a>
+      </h1>
+
+      <span class="project-version">
+        master
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class=" " data-id="chem.cr/toplevel" data-name="top level namespace">
+      <a href="../../toplevel.html">Top Level Namespace</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Array" data-name="array(t)">
+      <a href="../../Array.html">Array</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Char" data-name="char">
+      <a href="../../Char.html">Char</a>
+      
+    </li>
+  
+  <li class="parent open current" data-id="chem.cr/Chem" data-name="chem">
+      <a href="../../Chem.html">Chem</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/ArrayView" data-name="chem::arrayview(t)">
+      <a href="../../Chem/ArrayView.html">ArrayView</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Atom" data-name="chem::atom">
+      <a href="../../Chem/Atom.html">Atom</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/AtomCollection" data-name="chem::atomcollection">
+      <a href="../../Chem/AtomCollection.html">AtomCollection</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/AtomView" data-name="chem::atomview">
+      <a href="../../Chem/AtomView.html">AtomView</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Bias" data-name="chem::bias">
+      <a href="../../Chem/Bias.html">Bias</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Bond" data-name="chem::bond">
+      <a href="../../Chem/Bond.html">Bond</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Bond/Kind" data-name="chem::bond::kind">
+      <a href="../../Chem/Bond/Kind.html">Kind</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/BondArray" data-name="chem::bondarray">
+      <a href="../../Chem/BondArray.html">BondArray</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Chain" data-name="chem::chain">
+      <a href="../../Chem/Chain.html">Chain</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ChainCollection" data-name="chem::chaincollection">
+      <a href="../../Chem/ChainCollection.html">ChainCollection</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ChainView" data-name="chem::chainview">
+      <a href="../../Chem/ChainView.html">ChainView</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Constraint" data-name="chem::constraint">
+      <a href="../../Chem/Constraint.html">Constraint</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Cube" data-name="chem::cube">
+      <a href="../../Chem/Cube.html">Cube</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Cube/Reader" data-name="chem::cube::reader">
+      <a href="../../Chem/Cube/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Cube/Writer" data-name="chem::cube::writer">
+      <a href="../../Chem/Cube/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/DX" data-name="chem::dx">
+      <a href="../../Chem/DX.html">DX</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/DX/Reader" data-name="chem::dx::reader">
+      <a href="../../Chem/DX/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/DX/Writer" data-name="chem::dx::writer">
+      <a href="../../Chem/DX/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Element" data-name="chem::element">
+      <a href="../../Chem/Element.html">Element</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Error" data-name="chem::error">
+      <a href="../../Chem/Error.html">Error</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Format" data-name="chem::format">
+      <a href="../../Chem/Format.html">Format</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/FormatReader" data-name="chem::formatreader(t)">
+      <a href="../../Chem/FormatReader.html">FormatReader</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/FormatReader/Attached" data-name="chem::formatreader::attached(t)">
+      <a href="../../Chem/FormatReader/Attached.html">Attached</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/FormatReader/Headed" data-name="chem::formatreader::headed(t)">
+      <a href="../../Chem/FormatReader/Headed.html">Headed</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/FormatReader/MultiEntry" data-name="chem::formatreader::multientry(t)">
+      <a href="../../Chem/FormatReader/MultiEntry.html">MultiEntry</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/FormatWriter" data-name="chem::formatwriter(t)">
+      <a href="../../Chem/FormatWriter.html">FormatWriter</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/FormatWriter/MultiEntry" data-name="chem::formatwriter::multientry(t)">
+      <a href="../../Chem/FormatWriter/MultiEntry.html">MultiEntry</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Gen" data-name="chem::gen">
+      <a href="../../Chem/Gen.html">Gen</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Gen/Reader" data-name="chem::gen::reader">
+      <a href="../../Chem/Gen/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Gen/Writer" data-name="chem::gen::writer">
+      <a href="../../Chem/Gen/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Lattice" data-name="chem::lattice">
+      <a href="../../Chem/Lattice.html">Lattice</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Mol2" data-name="chem::mol2">
+      <a href="../../Chem/Mol2.html">Mol2</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Mol2/Reader" data-name="chem::mol2::reader">
+      <a href="../../Chem/Mol2/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Mol2/Writer" data-name="chem::mol2::writer">
+      <a href="../../Chem/Mol2/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ParseException" data-name="chem::parseexception">
+      <a href="../../Chem/ParseException.html">ParseException</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/PDB" data-name="chem::pdb">
+      <a href="../../Chem/PDB.html">PDB</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/PDB/Hybrid36" data-name="chem::pdb::hybrid36">
+      <a href="../../Chem/PDB/Hybrid36.html">Hybrid36</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/PDB/Reader" data-name="chem::pdb::reader">
+      <a href="../../Chem/PDB/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/PDB/Writer" data-name="chem::pdb::writer">
+      <a href="../../Chem/PDB/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/PeriodicTable" data-name="chem::periodictable">
+      <a href="../../Chem/PeriodicTable.html">PeriodicTable</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Protein" data-name="chem::protein">
+      <a href="../../Chem/Protein.html">Protein</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/DSSP" data-name="chem::protein::dssp">
+      <a href="../../Chem/Protein/DSSP.html">DSSP</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Protein/PSIQUE" data-name="chem::protein::psique">
+      <a href="../../Chem/Protein/PSIQUE.html">PSIQUE</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/PSIQUE/SecondaryStructureBlender" data-name="chem::protein::psique::secondarystructureblender">
+      <a href="../../Chem/Protein/PSIQUE/SecondaryStructureBlender.html">SecondaryStructureBlender</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/SecondaryStructure" data-name="chem::protein::secondarystructure">
+      <a href="../../Chem/Protein/SecondaryStructure.html">SecondaryStructure</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/SecondaryStructureCalculator" data-name="chem::protein::secondarystructurecalculator">
+      <a href="../../Chem/Protein/SecondaryStructureCalculator.html">SecondaryStructureCalculator</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/SecondaryStructureType" data-name="chem::protein::secondarystructuretype">
+      <a href="../../Chem/Protein/SecondaryStructureType.html">SecondaryStructureType</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Protein/Stride" data-name="chem::protein::stride">
+      <a href="../../Chem/Protein/Stride.html">Stride</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Protein/Stride/Writer" data-name="chem::protein::stride::writer">
+      <a href="../../Chem/Protein/Stride/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/PullParser" data-name="chem::pullparser">
+      <a href="../../Chem/PullParser.html">PullParser</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/PyMOL" data-name="chem::pymol">
+      <a href="../../Chem/PyMOL.html">PyMOL</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/PyMOL/Writer" data-name="chem::pymol::writer">
+      <a href="../../Chem/PyMOL/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/RegisterFormat" data-name="chem::registerformat">
+      <a href="../../Chem/RegisterFormat.html">RegisterFormat</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Residue" data-name="chem::residue">
+      <a href="../../Chem/Residue.html">Residue</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Residue/Kind" data-name="chem::residue::kind">
+      <a href="../../Chem/Residue/Kind.html">Kind</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueCollection" data-name="chem::residuecollection">
+      <a href="../../Chem/ResidueCollection.html">ResidueCollection</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueView" data-name="chem::residueview">
+      <a href="../../Chem/ResidueView.html">ResidueView</a>
+      
+    </li>
+  
+  <li class="parent open current" data-id="chem.cr/Chem/Spatial" data-name="chem::spatial">
+      <a href="../../Chem/Spatial.html">Spatial</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="chem.cr/Chem/Spatial/AffineTransform" data-name="chem::spatial::affinetransform">
+      <a href="../../Chem/Spatial/AffineTransform.html">AffineTransform</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/AffineTransform/ScalingFactors" data-name="chem::spatial::affinetransform::scalingfactors">
+      <a href="../../Chem/Spatial/AffineTransform/ScalingFactors.html">ScalingFactors</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Basis" data-name="chem::spatial::basis">
+      <a href="../../Chem/Spatial/Basis.html">Basis</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Bounds" data-name="chem::spatial::bounds">
+      <a href="../../Chem/Spatial/Bounds.html">Bounds</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/CoordinatesProxy" data-name="chem::spatial::coordinatesproxy">
+      <a href="../../Chem/Spatial/CoordinatesProxy.html">CoordinatesProxy</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Error" data-name="chem::spatial::error">
+      <a href="../../Chem/Spatial/Error.html">Error</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Spatial/Grid" data-name="chem::spatial::grid">
+      <a href="../../Chem/Spatial/Grid.html">Grid</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Grid/Dimensions" data-name="chem::spatial::grid::dimensions">
+      <a href="../../Chem/Spatial/Grid/Dimensions.html">Dimensions</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Grid/Info" data-name="chem::spatial::grid::info">
+      <a href="../../Chem/Spatial/Grid/Info.html">Info</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Grid/Location" data-name="chem::spatial::grid::location">
+      <a href="../../Chem/Spatial/Grid/Location.html">Location</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/HlxParams" data-name="chem::spatial::hlxparams">
+      <a href="../../Chem/Spatial/HlxParams.html">HlxParams</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/KDTree" data-name="chem::spatial::kdtree">
+      <a href="../../Chem/Spatial/KDTree.html">KDTree</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/NotPeriodicError" data-name="chem::spatial::notperiodicerror">
+      <a href="../../Chem/Spatial/NotPeriodicError.html">NotPeriodicError</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/PBC" data-name="chem::spatial::pbc">
+      <a href="../../Chem/Spatial/PBC.html">PBC</a>
+      
+    </li>
+  
+  <li class=" current" data-id="chem.cr/Chem/Spatial/Quat" data-name="chem::spatial::quat">
+      <a href="../../Chem/Spatial/Quat.html">Quat</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Size" data-name="chem::spatial::size">
+      <a href="../../Chem/Spatial/Size.html">Size</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Vec3" data-name="chem::spatial::vec3">
+      <a href="../../Chem/Spatial/Vec3.html">Vec3</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Structure" data-name="chem::structure">
+      <a href="../../Chem/Structure.html">Structure</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Structure/Builder" data-name="chem::structure::builder">
+      <a href="../../Chem/Structure/Builder.html">Builder</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Structure/Experiment" data-name="chem::structure::experiment">
+      <a href="../../Chem/Structure/Experiment.html">Experiment</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Structure/Experiment/Method" data-name="chem::structure::experiment::method">
+      <a href="../../Chem/Structure/Experiment/Method.html">Method</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Topology" data-name="chem::topology">
+      <a href="../../Chem/Topology.html">Topology</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/AtomType" data-name="chem::topology::atomtype">
+      <a href="../../Chem/Topology/AtomType.html">AtomType</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/BondType" data-name="chem::topology::bondtype">
+      <a href="../../Chem/Topology/BondType.html">BondType</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/MatchData" data-name="chem::topology::matchdata">
+      <a href="../../Chem/Topology/MatchData.html">MatchData</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Patcher" data-name="chem::topology::patcher">
+      <a href="../../Chem/Topology/Patcher.html">Patcher</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Perception" data-name="chem::topology::perception">
+      <a href="../../Chem/Topology/Perception.html">Perception</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/ResidueType" data-name="chem::topology::residuetype">
+      <a href="../../Chem/Topology/ResidueType.html">ResidueType</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/Topology/Templates" data-name="chem::topology::templates">
+      <a href="../../Chem/Topology/Templates.html">Templates</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="chem.cr/Chem/Topology/Templates/Builder" data-name="chem::topology::templates::builder">
+      <a href="../../Chem/Topology/Templates/Builder.html">Builder</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Templates/Builder/ParseException" data-name="chem::topology::templates::builder::parseexception">
+      <a href="../../Chem/Topology/Templates/Builder/ParseException.html">ParseException</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Templates/Detector" data-name="chem::topology::templates::detector">
+      <a href="../../Chem/Topology/Templates/Detector.html">Detector</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Topology/Templates/Error" data-name="chem::topology::templates::error">
+      <a href="../../Chem/Topology/Templates/Error.html">Error</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/VASP" data-name="chem::vasp">
+      <a href="../../Chem/VASP.html">VASP</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="chem.cr/Chem/VASP/Chgcar" data-name="chem::vasp::chgcar">
+      <a href="../../Chem/VASP/Chgcar.html">Chgcar</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Chgcar/Reader" data-name="chem::vasp::chgcar::reader">
+      <a href="../../Chem/VASP/Chgcar/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Chgcar/Writer" data-name="chem::vasp::chgcar::writer">
+      <a href="../../Chem/VASP/Chgcar/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/GridReader" data-name="chem::vasp::gridreader">
+      <a href="../../Chem/VASP/GridReader.html">GridReader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/GridWriter" data-name="chem::vasp::gridwriter">
+      <a href="../../Chem/VASP/GridWriter.html">GridWriter</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/VASP/Locpot" data-name="chem::vasp::locpot">
+      <a href="../../Chem/VASP/Locpot.html">Locpot</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Locpot/Reader" data-name="chem::vasp::locpot::reader">
+      <a href="../../Chem/VASP/Locpot/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Locpot/Writer" data-name="chem::vasp::locpot::writer">
+      <a href="../../Chem/VASP/Locpot/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/VASP/Poscar" data-name="chem::vasp::poscar">
+      <a href="../../Chem/VASP/Poscar.html">Poscar</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Poscar/Reader" data-name="chem::vasp::poscar::reader">
+      <a href="../../Chem/VASP/Poscar/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/VASP/Poscar/Writer" data-name="chem::vasp::poscar::writer">
+      <a href="../../Chem/VASP/Poscar/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/VMD" data-name="chem::vmd">
+      <a href="../../Chem/VMD.html">VMD</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/VMD/Writer" data-name="chem::vmd::writer">
+      <a href="../../Chem/VMD/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/XYZ" data-name="chem::xyz">
+      <a href="../../Chem/XYZ.html">XYZ</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/XYZ/Reader" data-name="chem::xyz::reader">
+      <a href="../../Chem/XYZ/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/XYZ/Writer" data-name="chem::xyz::writer">
+      <a href="../../Chem/XYZ/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Colorize" data-name="colorize">
+      <a href="../../Colorize.html">Colorize</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Colorize/ColorRGB" data-name="colorize::colorrgb">
+      <a href="../../Colorize/ColorRGB.html">ColorRGB</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Indexable" data-name="indexable(t)">
+      <a href="../../Indexable.html">Indexable</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Number" data-name="number">
+      <a href="../../Number.html">Number</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Range" data-name="range(b, e)">
+      <a href="../../Range.html">Range</a>
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">struct</span> Chem::Spatial::Quat
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Chem/Spatial/Quat.html">Chem::Spatial::Quat</a></li><li class="superclass">Struct</li><li class="superclass">Value</li><li class="superclass">Object</li></ul>
+
+
+
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>The quaternion is a mathematical construct that extends the complex
+numbers and it is useful to encode three-dimensional rotations.
+Quats are represented by four numbers (w, x, y, z), where w is
+considered as the real (scalar) part and x, y, z the imaginary
+(vector) part. Rotations can be encoded as a unit quaternion using
+the axis-angle representation, where x, y, z correspond to the
+rotation axis and w to the rotation angle by the following formula:</p>
+<pre><code class="language-text">q(v, t) = q(w, x, y, z) = q(cos(t/2), sin(t/2)vx, sin(t/2)vy, sin(t/2)vz)</code></pre>
+<p>where <em>v</em> is a unit vector and <em>t</em> is the rotation angle.
+Quats have several useful mathematical properties, e.g.,
+quaternion multiplication can be used to represent a sequence of
+rotations producing a single quaternion. Indeed, the rotation
+encoded in the quaternion <em>q</em> can be applied to a ordinary vector
+<em>p</em> simply by</p>
+<pre><code class="language-text">p* = q * p * q-1</code></pre>
+<p>where <em>q</em>-1 is the inverse of <em>q</em> and <em>p</em>* is the rotated vector
+(see <code><a href="../../Chem/Spatial/Quat.html#%2A%28rhs%3Aself%29%3Aself-instance-method">Quat#*</a></code> for details).</p>
+<h2><a id="examples" class="anchor" href="#examples">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Examples</h2>
+<pre><code class="language-crystal">q <span class="o">=</span> <span class="t">Quat</span>[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>, <span class="n">4</span>]
+q                 <span class="c"># =&gt; [1.0 2.0 3.0 4.0]</span>
+q.real            <span class="c"># =&gt; 1.0</span>
+q.imag            <span class="c"># =&gt; [2.0 3.0 4.0]</span>
+q.w               <span class="c"># =&gt; 1.0</span>
+q.x               <span class="c"># =&gt; 2.0</span>
+q.y               <span class="c"># =&gt; 3.0</span>
+q.z               <span class="c"># =&gt; 4.0</span>
+<span class="o">-</span>q                <span class="c"># =&gt; [-1.0 -2.0 -3.0 -4.0]</span>
+q.abs             <span class="c"># =&gt; 5.477225575051661</span>
+q.abs2            <span class="c"># =&gt; 30.0</span>
+q.conj            <span class="c"># =&gt; [1.0 -2.0 -3.0 -4.0]</span>
+q.inv             <span class="c"># =&gt; [0.033 -0.067 -0.1 -0.133]</span>
+q.normalize       <span class="c"># =&gt; [0.183 0.365 0.548 0.730]</span>
+q.unit?           <span class="c"># =&gt; false</span>
+q.normalize.unit? <span class="c"># =&gt; true</span>
+q.zero?           <span class="c"># =&gt; false</span>
+
+q <span class="o">*</span> <span class="n">2</span>  <span class="c"># =&gt; [2.0 4.0 6.0 8.0]</span>
+q <span class="o">/</span> <span class="n">10</span> <span class="c"># =&gt; [0.2 0.4 0.6 0.8]</span>
+
+p <span class="o">=</span> <span class="t">Quat</span>[<span class="n">4</span>, <span class="n">3</span>, <span class="n">2</span>, <span class="n">1</span>]
+p <span class="o">+</span> q <span class="c"># =&gt; [5.0 5.0 5.0 5.0]</span>
+p <span class="o">*</span> q <span class="c"># =&gt; [-12.0 16.0 4.0 22.0]</span>
+q <span class="o">*</span> p <span class="c"># =&gt; [-12.0 6.0 24.0 12.0]</span></code></pre>
+<p>Use the convenience methods to encode rotations.</p>
+<pre><code class="language-crystal">v <span class="o">=</span> <span class="t">Vec3</span>[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>]
+q <span class="o">=</span> <span class="t">Quat</span>.aligning v, to: <span class="t">Vec3</span>[<span class="n">1</span>, <span class="n">0</span>, <span class="n">0</span>]
+q <span class="o">*</span> v <span class="c"># =&gt; [3.742 0.0 0.0]</span>
+<span class="c"># or</span>
+v.transform(q)    <span class="c"># =&gt; [3.742 0.0 0.0]</span>
+(q <span class="o">*</span> v).normalize <span class="c"># =&gt; [1.0 0.0 0.0]</span>
+
+q <span class="o">=</span> <span class="t">Quat</span>.rotation <span class="t">Vec3</span>[<span class="n">0</span>, <span class="n">1</span>, <span class="n">0</span>], by: <span class="n">90</span>
+q <span class="o">*</span> v <span class="c"># =&gt; [3.0 2.0 -1.0]</span>
+v <span class="o">*</span> q <span class="c"># =&gt; [-3.0 2.0 1.0]</span></code></pre>
+<p><span class="flag purple">NOTE</span>  Quat multiplication is not commutative: <code>q * v != v * p</code>, the former will apply the rotation encoded in <em>q</em> to <em>v</em> but the
+latter will produce the inverse rotation. Use <code><a href="../../Chem/Spatial/Vec3.html#transform%28transformation%3AAffineTransform%29%3Aself-instance-method">Vec3#transform</a></code> to
+avoid the ambiguity.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/quat.cr#L77" target="_blank">
+        chem/spatial/quat.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+
+
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#%5B%5D%28w%3AFloat64%2Cx%3AFloat64%2Cy%3AFloat64%2Cz%3AFloat64%29%3Aself-class-method" class="signature"><strong>.[]</strong>(w : Float64, x : Float64, y : Float64, z : Float64) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a quaternion with <em>w</em> as the real (scalar) part and <em>x</em>, <em>y</em>, and <em>z</em> as the vector (imaginary) part.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#aligning%28v1%3AVec3%2Ctov2%3AVec3%29%3Aself-class-method" class="signature"><strong>.aligning</strong>(v1 : Vec3, to v2 : Vec3) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a quaternion encoding the rotation operation to align <em>v1</em> to <em>v2</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new%28w%3AFloat64%2Cx%3AFloat64%2Cy%3AFloat64%2Cz%3AFloat64%29-class-method" class="signature"><strong>.new</strong>(w : Float64, x : Float64, y : Float64, z : Float64)</a>
+        
+          <div class="summary"><p>Creates a new quaternion with <em>w</em> as the real (scalar) part and <em>x</em>, <em>y</em>, and <em>z</em> as the vector (imaginary) part.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rotation%28aboutrotaxis%3AVec3%2Cbytheta%3AFloat64%29%3Aself-class-method" class="signature"><strong>.rotation</strong>(about rotaxis : Vec3, by theta : Float64) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a quaternion encoding the rotation about the axis vector <em>rotaxis</em> by <em>theta</em> degrees.</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#%2A%28rhs%3Aself%29%3Aself-instance-method" class="signature"><strong>#*</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the Hamilton product of the quaternion and <em>rhs</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%2A%28rhs%3AVec3%29%3AVec3-instance-method" class="signature"><strong>#*</strong>(rhs : Vec3) : Vec3</a>
+        
+          <div class="summary"><p>Returns the conjugate of <em>rhs</em> by the quaternion.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%2A%28rhs%3ANumber%29%3Aself-instance-method" class="signature"><strong>#*</strong>(rhs : Number) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the element-wise multiplication of the quaternion by <em>rhs</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%2B%28rhs%3Aself%29%3Aself-instance-method" class="signature"><strong>#+</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the element-wise addition of the quaternion by <em>rhs</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#-%28rhs%3Aself%29%3Aself-instance-method" class="signature"><strong>#-</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the element-wise addition of the quaternion by <em>rhs</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#-%3Aself-instance-method" class="signature"><strong>#-</strong> : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the negation of the quaternion.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#/%28rhs%3ANumber%29%3Aself-instance-method" class="signature"><strong>#/</strong>(rhs : Number) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the element-wise division of the quaternion by <em>rhs</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#abs%3AFloat64-instance-method" class="signature"><strong>#abs</strong> : Float64</a>
+        
+          <div class="summary"><p>Returns the absolute value (norm) using the Pythagorean theorem.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#abs2%3AFloat64-instance-method" class="signature"><strong>#abs2</strong> : Float64</a>
+        
+          <div class="summary"><p>Returns the square of the absolute value (norm).</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#conj%3Aself-instance-method" class="signature"><strong>#conj</strong> : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the conjugate of the quaternion.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dot%28rhs%3Aself%29%3AFloat64-instance-method" class="signature"><strong>#dot</strong>(rhs : <span class="k">self</span>) : Float64</a>
+        
+          <div class="summary"><p>Returns the dot product of the quaternion and <em>rhs</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#imag%3AVec3-instance-method" class="signature"><strong>#imag</strong> : Vec3</a>
+        
+          <div class="summary"><p>Returns the imaginary part of the quaternion.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#inspect%28io%3AIO%29%3ANil-instance-method" class="signature"><strong>#inspect</strong>(io : IO) : Nil</a>
+        
+          <div class="summary"><p>Appends this struct's name and instance variables names and values to the given IO.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#inv%3Aself-instance-method" class="signature"><strong>#inv</strong> : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the inverse of the quaternion.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#normalize%3Aself-instance-method" class="signature"><strong>#normalize</strong> : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the normalized quaternion of the quaternion.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#real%3AFloat64-instance-method" class="signature"><strong>#real</strong> : Float64</a>
+        
+          <div class="summary"><p>Returns the real part of the quaternion.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_s%28io%3AIO%29%3ANil-instance-method" class="signature"><strong>#to_s</strong>(io : IO) : Nil</a>
+        
+          <div class="summary"><p>Same as <code><a href="../../Chem/Spatial/Quat.html#inspect%28io%3AIO%29%3ANil-instance-method">#inspect(io)</a></code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#unit%3F%3ABool-instance-method" class="signature"><strong>#unit?</strong> : Bool</a>
+        
+          <div class="summary"><p>Returns <code>true</code> if the quaternion is a unit quaternion, else <code>false</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#w%3AFloat64-instance-method" class="signature"><strong>#w</strong> : Float64</a>
+        
+          <div class="summary"><p>Real (scalar) part of the quaternion.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#x%3AFloat64-instance-method" class="signature"><strong>#x</strong> : Float64</a>
+        
+          <div class="summary"><p>X component of the imaginary (vector) part of the quaternion.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#y%3AFloat64-instance-method" class="signature"><strong>#y</strong> : Float64</a>
+        
+          <div class="summary"><p>Y component of the imaginary (vector) part of the quaternion.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#z%3AFloat64-instance-method" class="signature"><strong>#z</strong> : Float64</a>
+        
+          <div class="summary"><p>Z component of the imaginary (vector) part of the quaternion.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#zero%3F%3ABool-instance-method" class="signature"><strong>#zero?</strong> : Bool</a>
+        
+          <div class="summary"><p>Returns <code>true</code> if the quaternion is a zero quaternion, else <code>false</code>.</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+<div class="methods-inherited">
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="[](w:Float64,x:Float64,y:Float64,z:Float64):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>[]</strong>(w : Float64, x : Float64, y : Float64, z : Float64) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#%5B%5D%28w%3AFloat64%2Cx%3AFloat64%2Cy%3AFloat64%2Cz%3AFloat64%29%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a quaternion with <em>w</em> as the real (scalar) part and <em>x</em>,
+<em>y</em>, and <em>z</em> as the vector (imaginary) part.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/quat.cr#L95" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="aligning(v1:Vec3,tov2:Vec3):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>aligning</strong>(v1 : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, to v2 : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#aligning%28v1%3AVec3%2Ctov2%3AVec3%29%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a quaternion encoding the rotation operation to align <em>v1</em>
+to <em>v2</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/quat.cr#L101" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(w:Float64,x:Float64,y:Float64,z:Float64)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(w : Float64, x : Float64, y : Float64, z : Float64)
+
+        <a class="method-permalink" href="#new%28w%3AFloat64%2Cx%3AFloat64%2Cy%3AFloat64%2Cz%3AFloat64%29-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Creates a new quaternion with <em>w</em> as the real (scalar) part and
+<em>x</em>, <em>y</em>, and <em>z</em> as the vector (imaginary) part.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/quat.cr#L89" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rotation(aboutrotaxis:Vec3,bytheta:Float64):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>rotation</strong>(about rotaxis : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, by theta : Float64) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#rotation%28aboutrotaxis%3AVec3%2Cbytheta%3AFloat64%29%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a quaternion encoding the rotation about the axis vector
+<em>rotaxis</em> by <em>theta</em> degrees.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/quat.cr#L107" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="*(rhs:self):self-instance-method">
+      <div class="signature">
+        
+        def <strong>*</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#%2A%28rhs%3Aself%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the Hamilton product of the quaternion and <em>rhs</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/quat.cr#L129" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="*(rhs:Vec3):Vec3-instance-method">
+      <div class="signature">
+        
+        def <strong>*</strong>(rhs : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>
+
+        <a class="method-permalink" href="#%2A%28rhs%3AVec3%29%3AVec3-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the conjugate of <em>rhs</em> by the quaternion.</p>
+<p>The conjugate of <em>rhs</em> is calculated as <code>p* = q * p * q^-1</code>, where
+<code>p</code> is a quaternion whose vector part is <em>rhs</em> and real part
+equals zero. Thus, the resulting quaternion is computed using the
+Hamilton product and its vector part corresponds to <code>p*</code>. Such
+operation can be written as <code>(self * rhs.to_q * inv)<a href="../../Chem/Spatial/Quat.html#imag%3AVec3-instance-method">.imag</a></code>, but
+this method implements an optimized version by using some vector
+and quaternion identities.</p>
+<p>If the quaternion encodes a rotation about an axis, this
+effectively applies such rotation to <em>rhs</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/quat.cr#L147" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="*(rhs:Number):self-instance-method">
+      <div class="signature">
+        
+        def <strong>*</strong>(rhs : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#%2A%28rhs%3ANumber%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the element-wise multiplication of the quaternion by <em>rhs</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/quat.cr#L153" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="+(rhs:self):self-instance-method">
+      <div class="signature">
+        
+        def <strong>+</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#%2B%28rhs%3Aself%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the element-wise addition of the quaternion by <em>rhs</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/quat.cr#L114" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="-(rhs:self):self-instance-method">
+      <div class="signature">
+        
+        def <strong>-</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#-%28rhs%3Aself%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the element-wise addition of the quaternion by <em>rhs</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/quat.cr#L124" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="-:self-instance-method">
+      <div class="signature">
+        
+        def <strong>-</strong> : <span class="k">self</span>
+
+        <a class="method-permalink" href="#-%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the negation of the quaternion.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/quat.cr#L119" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="/(rhs:Number):self-instance-method">
+      <div class="signature">
+        
+        def <strong>/</strong>(rhs : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#/%28rhs%3ANumber%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the element-wise division of the quaternion by <em>rhs</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/quat.cr#L158" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="abs:Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>abs</strong> : Float64
+
+        <a class="method-permalink" href="#abs%3AFloat64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the absolute value (norm) using the Pythagorean theorem.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/quat.cr#L163" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="abs2:Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>abs2</strong> : Float64
+
+        <a class="method-permalink" href="#abs2%3AFloat64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the square of the absolute value (norm).</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/quat.cr#L168" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="conj:self-instance-method">
+      <div class="signature">
+        
+        def <strong>conj</strong> : <span class="k">self</span>
+
+        <a class="method-permalink" href="#conj%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the conjugate of the quaternion.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/quat.cr#L173" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dot(rhs:self):Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>dot</strong>(rhs : <span class="k">self</span>) : Float64
+
+        <a class="method-permalink" href="#dot%28rhs%3Aself%29%3AFloat64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the dot product of the quaternion and <em>rhs</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/quat.cr#L178" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="imag:Vec3-instance-method">
+      <div class="signature">
+        
+        def <strong>imag</strong> : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>
+
+        <a class="method-permalink" href="#imag%3AVec3-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the imaginary part of the quaternion.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/quat.cr#L183" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="inspect(io:IO):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>inspect</strong>(io : IO) : Nil
+
+        <a class="method-permalink" href="#inspect%28io%3AIO%29%3ANil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from struct Struct
+            </div>
+          
+          <p>Appends this struct's name and instance variables names and values
+to the given IO.</p>
+<pre><code class="language-crystal"><span class="k">struct</span> <span class="t">Point</span>
+  <span class="k">def</span> <span class="m">initialize</span>(@x : <span class="t">Int32</span>, @y : <span class="t">Int32</span>)
+  <span class="k">end</span>
+<span class="k">end</span>
+
+p1 <span class="o">=</span> <span class="t">Point</span>.<span class="k">new</span> <span class="n">1</span>, <span class="n">2</span>
+p1.to_s    <span class="c"># &quot;Point(@x=1, @y=2)&quot;</span>
+p1.inspect <span class="c"># &quot;Point(@x=1, @y=2)&quot;</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/quat.cr#L187" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="inv:self-instance-method">
+      <div class="signature">
+        
+        def <strong>inv</strong> : <span class="k">self</span>
+
+        <a class="method-permalink" href="#inv%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the inverse of the quaternion.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/quat.cr#L192" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="normalize:self-instance-method">
+      <div class="signature">
+        
+        def <strong>normalize</strong> : <span class="k">self</span>
+
+        <a class="method-permalink" href="#normalize%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the normalized quaternion of the quaternion.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/quat.cr#L197" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="real:Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>real</strong> : Float64
+
+        <a class="method-permalink" href="#real%3AFloat64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the real part of the quaternion.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/quat.cr#L203" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_s(io:IO):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>to_s</strong>(io : IO) : Nil
+
+        <a class="method-permalink" href="#to_s%28io%3AIO%29%3ANil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from struct Struct
+            </div>
+          
+          <p>Same as <code><a href="../../Chem/Spatial/Quat.html#inspect%28io%3AIO%29%3ANil-instance-method">#inspect(io)</a></code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/quat.cr#L207" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="unit?:Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>unit?</strong> : Bool
+
+        <a class="method-permalink" href="#unit%3F%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if the quaternion is a unit quaternion, else
+<code>false</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/quat.cr#L221" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="w:Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>w</strong> : Float64
+
+        <a class="method-permalink" href="#w%3AFloat64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Real (scalar) part of the quaternion.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/quat.cr#L79" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="x:Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>x</strong> : Float64
+
+        <a class="method-permalink" href="#x%3AFloat64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>X component of the imaginary (vector) part of the quaternion.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/quat.cr#L81" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="y:Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>y</strong> : Float64
+
+        <a class="method-permalink" href="#y%3AFloat64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Y component of the imaginary (vector) part of the quaternion.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/quat.cr#L83" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="z:Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>z</strong> : Float64
+
+        <a class="method-permalink" href="#z%3AFloat64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Z component of the imaginary (vector) part of the quaternion.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/quat.cr#L85" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="zero?:Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>zero?</strong> : Bool
+
+        <a class="method-permalink" href="#zero%3F%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if the quaternion is a zero quaternion, else
+<code>false</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/quat.cr#L227" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+</div>
+
+</body>
+</html>

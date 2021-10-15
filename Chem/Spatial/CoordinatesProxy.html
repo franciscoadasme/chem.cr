@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.0.0">
+<meta name="generator" content="Crystal Docs 1.1.1">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -506,8 +506,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Quaternion" data-name="chem::spatial::quaternion">
-      <a href="../../Chem/Spatial/Quaternion.html">Quaternion</a>
+  <li class=" " data-id="chem.cr/Chem/Spatial/Quat" data-name="chem::spatial::quat">
+      <a href="../../Chem/Spatial/Quat.html">Quat</a>
       
     </li>
   
@@ -839,7 +839,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/coordinates_proxy.cr#L2" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/coordinates_proxy.cr#L2" target="_blank">
         chem/spatial/coordinates_proxy.cr
       </a>
     
@@ -861,7 +861,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new(atoms:AtomCollection,lattice:Lattice?=nil)-class-method" class="signature"><strong>.new</strong>(atoms : AtomCollection, lattice : Lattice? = <span class="n">nil</span>)</a>
+        <a href="#new%28atoms%3AAtomCollection%2Clattice%3ALattice%3F%3Dnil%29-class-method" class="signature"><strong>.new</strong>(atoms : AtomCollection, lattice : Lattice? = <span class="n">nil</span>)</a>
         
       </li>
     
@@ -882,140 +882,140 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#==(rhs:Enumerable(Vec3)):Bool-instance-method" class="signature"><strong>#==</strong>(rhs : Enumerable(Vec3)) : Bool</a>
+        <a href="#%3D%3D%28rhs%3AEnumerable%28Vec3%29%29%3ABool-instance-method" class="signature"><strong>#==</strong>(rhs : Enumerable(Vec3)) : Bool</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#bounds:Bounds-instance-method" class="signature"><strong>#bounds</strong> : Bounds</a>
+        <a href="#bounds%3ABounds-instance-method" class="signature"><strong>#bounds</strong> : Bounds</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#center:Vec3-instance-method" class="signature"><strong>#center</strong> : Vec3</a>
+        <a href="#center%3AVec3-instance-method" class="signature"><strong>#center</strong> : Vec3</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#center_along(vec:Vec3):self-instance-method" class="signature"><strong>#center_along</strong>(vec : Vec3) : <span class="k">self</span></a>
+        <a href="#center_along%28vec%3AVec3%29%3Aself-instance-method" class="signature"><strong>#center_along</strong>(vec : Vec3) : <span class="k">self</span></a>
         
           <div class="summary"><p>Translates coordinates so that the center is at the middle of <em>vec</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#center_at(vec:Vec3):self-instance-method" class="signature"><strong>#center_at</strong>(vec : Vec3) : <span class="k">self</span></a>
+        <a href="#center_at%28vec%3AVec3%29%3Aself-instance-method" class="signature"><strong>#center_at</strong>(vec : Vec3) : <span class="k">self</span></a>
         
           <div class="summary"><p>Translates coordinates so that the center is at <em>vec</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#center_at_cell:self-instance-method" class="signature"><strong>#center_at_cell</strong> : <span class="k">self</span></a>
+        <a href="#center_at_cell%3Aself-instance-method" class="signature"><strong>#center_at_cell</strong> : <span class="k">self</span></a>
         
           <div class="summary"><p>Translates coordinates so that they are centered at the primary unit cell.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#center_at_origin:self-instance-method" class="signature"><strong>#center_at_origin</strong> : <span class="k">self</span></a>
+        <a href="#center_at_origin%3Aself-instance-method" class="signature"><strong>#center_at_origin</strong> : <span class="k">self</span></a>
         
           <div class="summary"><p>Translates coordinates so that the center is at the origin.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#com:Vec3-instance-method" class="signature"><strong>#com</strong> : Vec3</a>
+        <a href="#com%3AVec3-instance-method" class="signature"><strong>#com</strong> : Vec3</a>
         
           <div class="summary"><p>Returns the center of mass.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#each(fractional:Bool=false):Iterator(Vec3)-instance-method" class="signature"><strong>#each</strong>(fractional : Bool = <span class="n">false</span>) : Iterator(Vec3)</a>
+        <a href="#each%28fractional%3ABool%3Dfalse%29%3AIterator%28Vec3%29-instance-method" class="signature"><strong>#each</strong>(fractional : Bool = <span class="n">false</span>) : Iterator(Vec3)</a>
         
           <div class="summary"><p>Must return an <code>Iterator</code> over the elements in this collection.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#each(fractional:Bool=false,&block:Vec3-%3E)-instance-method" class="signature"><strong>#each</strong>(fractional : Bool = <span class="n">false</span>, &block : Vec3 -> )</a>
+        <a href="#each%28fractional%3ABool%3Dfalse%2C%26block%3AVec3-%3E%29-instance-method" class="signature"><strong>#each</strong>(fractional : Bool = <span class="n">false</span>, &block : Vec3 -> )</a>
         
           <div class="summary"><p>Must yield this collection's elements to the block.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#each_with_atom(fractional:Bool=false,&block:Vec3,Atom-%3E)-instance-method" class="signature"><strong>#each_with_atom</strong>(fractional : Bool = <span class="n">false</span>, &block : Vec3, Atom -> )</a>
+        <a href="#each_with_atom%28fractional%3ABool%3Dfalse%2C%26block%3AVec3%2CAtom-%3E%29-instance-method" class="signature"><strong>#each_with_atom</strong>(fractional : Bool = <span class="n">false</span>, &block : Vec3, Atom -> )</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#map(fractional:Bool=false,&block:Vec3-%3EVec3):Array(Vec3)-instance-method" class="signature"><strong>#map</strong>(fractional : Bool = <span class="n">false</span>, &block : Vec3 -> Vec3) : Array(Vec3)</a>
+        <a href="#map%28fractional%3ABool%3Dfalse%2C%26block%3AVec3-%3EVec3%29%3AArray%28Vec3%29-instance-method" class="signature"><strong>#map</strong>(fractional : Bool = <span class="n">false</span>, &block : Vec3 -> Vec3) : Array(Vec3)</a>
         
           <div class="summary"><p>Returns an <code><a href="../../Array.html">Array</a></code> with the results of running the block against each element of the collection.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#map!(fractional:Bool=false,&block:Vec3-%3EVec3):self-instance-method" class="signature"><strong>#map!</strong>(fractional : Bool = <span class="n">false</span>, &block : Vec3 -> Vec3) : <span class="k">self</span></a>
+        <a href="#map%21%28fractional%3ABool%3Dfalse%2C%26block%3AVec3-%3EVec3%29%3Aself-instance-method" class="signature"><strong>#map!</strong>(fractional : Bool = <span class="n">false</span>, &block : Vec3 -> Vec3) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#map_with_atom(fractional:Bool=false,&block:Vec3,Atom-%3EVec3):Array(Vec3)-instance-method" class="signature"><strong>#map_with_atom</strong>(fractional : Bool = <span class="n">false</span>, &block : Vec3, Atom -> Vec3) : Array(Vec3)</a>
+        <a href="#map_with_atom%28fractional%3ABool%3Dfalse%2C%26block%3AVec3%2CAtom-%3EVec3%29%3AArray%28Vec3%29-instance-method" class="signature"><strong>#map_with_atom</strong>(fractional : Bool = <span class="n">false</span>, &block : Vec3, Atom -> Vec3) : Array(Vec3)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#map_with_atom!(fractional:Bool=false,&block:Vec3,Atom-%3EVec3):self-instance-method" class="signature"><strong>#map_with_atom!</strong>(fractional : Bool = <span class="n">false</span>, &block : Vec3, Atom -> Vec3) : <span class="k">self</span></a>
+        <a href="#map_with_atom%21%28fractional%3ABool%3Dfalse%2C%26block%3AVec3%2CAtom-%3EVec3%29%3Aself-instance-method" class="signature"><strong>#map_with_atom!</strong>(fractional : Bool = <span class="n">false</span>, &block : Vec3, Atom -> Vec3) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_a(fractional:Bool=false):Array(Vec3)-instance-method" class="signature"><strong>#to_a</strong>(fractional : Bool = <span class="n">false</span>) : Array(Vec3)</a>
+        <a href="#to_a%28fractional%3ABool%3Dfalse%29%3AArray%28Vec3%29-instance-method" class="signature"><strong>#to_a</strong>(fractional : Bool = <span class="n">false</span>) : Array(Vec3)</a>
         
           <div class="summary"><p>Returns an <code><a href="../../Array.html">Array</a></code> with all the elements in the collection.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_cartesian!:self-instance-method" class="signature"><strong>#to_cartesian!</strong> : <span class="k">self</span></a>
+        <a href="#to_cartesian%21%3Aself-instance-method" class="signature"><strong>#to_cartesian!</strong> : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_fractional!:self-instance-method" class="signature"><strong>#to_fractional!</strong> : <span class="k">self</span></a>
+        <a href="#to_fractional%21%3Aself-instance-method" class="signature"><strong>#to_fractional!</strong> : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#transform(transform:AffineTransform):Array(Vec3)-instance-method" class="signature"><strong>#transform</strong>(transform : AffineTransform) : Array(Vec3)</a>
+        <a href="#transform%28transform%3AAffineTransform%29%3AArray%28Vec3%29-instance-method" class="signature"><strong>#transform</strong>(transform : AffineTransform) : Array(Vec3)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#transform!(transform:AffineTransform):self-instance-method" class="signature"><strong>#transform!</strong>(transform : AffineTransform) : <span class="k">self</span></a>
+        <a href="#transform%21%28transform%3AAffineTransform%29%3Aself-instance-method" class="signature"><strong>#transform!</strong>(transform : AffineTransform) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#translate(byoffset:Vec3):Array(Vec3)-instance-method" class="signature"><strong>#translate</strong>(by offset : Vec3) : Array(Vec3)</a>
+        <a href="#translate%28byoffset%3AVec3%29%3AArray%28Vec3%29-instance-method" class="signature"><strong>#translate</strong>(by offset : Vec3) : Array(Vec3)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#translate!(byoffset:Vec3):self-instance-method" class="signature"><strong>#translate!</strong>(by offset : Vec3) : <span class="k">self</span></a>
+        <a href="#translate%21%28byoffset%3AVec3%29%3Aself-instance-method" class="signature"><strong>#translate!</strong>(by offset : Vec3) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#wrap(aroundcenter:Vec3?=nil):self-instance-method" class="signature"><strong>#wrap</strong>(around center : Vec3? = <span class="n">nil</span>) : <span class="k">self</span></a>
+        <a href="#wrap%28aroundcenter%3AVec3%3F%3Dnil%29%3Aself-instance-method" class="signature"><strong>#wrap</strong>(around center : Vec3? = <span class="n">nil</span>) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#wrap(lattice:Lattice,aroundcenter:Vec3?=nil):self-instance-method" class="signature"><strong>#wrap</strong>(lattice : Lattice, around center : Vec3? = <span class="n">nil</span>) : <span class="k">self</span></a>
+        <a href="#wrap%28lattice%3ALattice%2Caroundcenter%3AVec3%3F%3Dnil%29%3Aself-instance-method" class="signature"><strong>#wrap</strong>(lattice : Lattice, around center : Vec3? = <span class="n">nil</span>) : <span class="k">self</span></a>
         
       </li>
     
@@ -1094,13 +1094,13 @@
         
         def self.<strong>new</strong>(atoms : <a href="../../Chem/AtomCollection.html">AtomCollection</a>, lattice : <a href="../../Chem/Lattice.html">Lattice</a>? = <span class="n">nil</span>)
 
-        <a class="method-permalink" href="#new(atoms:AtomCollection,lattice:Lattice?=nil)-class-method">#</a>
+        <a class="method-permalink" href="#new%28atoms%3AAtomCollection%2Clattice%3ALattice%3F%3Dnil%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/coordinates_proxy.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/coordinates_proxy.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1124,13 +1124,13 @@
         
         def <strong>==</strong>(rhs : Enumerable(<a href="../../Chem/Spatial/Vec3.html">Vec3</a>)) : Bool
 
-        <a class="method-permalink" href="#==(rhs:Enumerable(Vec3)):Bool-instance-method">#</a>
+        <a class="method-permalink" href="#%3D%3D%28rhs%3AEnumerable%28Vec3%29%29%3ABool-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/coordinates_proxy.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/coordinates_proxy.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1140,13 +1140,13 @@
         
         def <strong>bounds</strong> : <a href="../../Chem/Spatial/Bounds.html">Bounds</a>
 
-        <a class="method-permalink" href="#bounds:Bounds-instance-method">#</a>
+        <a class="method-permalink" href="#bounds%3ABounds-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/coordinates_proxy.cr#L14" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/coordinates_proxy.cr#L14" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1156,13 +1156,13 @@
         
         def <strong>center</strong> : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>
 
-        <a class="method-permalink" href="#center:Vec3-instance-method">#</a>
+        <a class="method-permalink" href="#center%3AVec3-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/coordinates_proxy.cr#L28" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/coordinates_proxy.cr#L28" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1172,13 +1172,12 @@
         
         def <strong>center_along</strong>(vec : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#center_along(vec:Vec3):self-instance-method">#</a>
+        <a class="method-permalink" href="#center_along%28vec%3AVec3%29%3Aself-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Translates coordinates so that the center is at the middle of <em>vec</em>.</p>
-
 <pre><code class="language-crystal">structure <span class="o">=</span> <span class="t">Structure</span>.read <span class="s">&quot;path/to/file&quot;</span>
 structure.coords.center <span class="c"># =&gt; [1.5 2.0 3.2]</span>
 structure.coords.center_along <span class="t">Vec3</span>[<span class="n">0</span>, <span class="n">10</span>, <span class="n">0</span>]
@@ -1188,7 +1187,7 @@ structure.coords.center <span class="c"># =&gt; [1.5 5.0 3.2]</span></code></pre
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/coordinates_proxy.cr#L40" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/coordinates_proxy.cr#L40" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1198,13 +1197,12 @@ structure.coords.center <span class="c"># =&gt; [1.5 5.0 3.2]</span></code></pre
         
         def <strong>center_at</strong>(vec : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#center_at(vec:Vec3):self-instance-method">#</a>
+        <a class="method-permalink" href="#center_at%28vec%3AVec3%29%3Aself-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Translates coordinates so that the center is at <em>vec</em>.</p>
-
 <pre><code class="language-crystal">structure <span class="o">=</span> <span class="t">Structure</span>.read <span class="s">&quot;path/to/file&quot;</span>
 structure.coords.center <span class="c"># =&gt; [1.0 2.0 3.0]</span>
 structure.coords.center_at <span class="t">Vec3</span>[<span class="n">10</span>, <span class="n">20</span>, <span class="n">30</span>]
@@ -1214,7 +1212,7 @@ structure.coords.center <span class="c"># =&gt; [10 20 30]</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/coordinates_proxy.cr#L53" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/coordinates_proxy.cr#L53" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1224,15 +1222,13 @@ structure.coords.center <span class="c"># =&gt; [10 20 30]</span></code></pre>
         
         def <strong>center_at_cell</strong> : <span class="k">self</span>
 
-        <a class="method-permalink" href="#center_at_cell:self-instance-method">#</a>
+        <a class="method-permalink" href="#center_at_cell%3Aself-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Translates coordinates so that they are centered at the primary unit cell.</p>
-
 <p>Raises NotPeriodicError if coordinates are not periodic.</p>
-
 <pre><code class="language-crystal">structure <span class="o">=</span> <span class="t">Structure</span>.read <span class="s">&quot;path/to/file&quot;</span>
 structure.lattice       <span class="c"># =&gt; [[1.0 0.0 0.0] [0.0 25.0 0.0] [0.0 0.0 213]]</span>
 structure.coords.center <span class="c"># =&gt; [1.0 2.0 3.0]</span>
@@ -1246,7 +1242,7 @@ structure.coords.center_at_cell <span class="c"># raises NotPeriodicError</span>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/coordinates_proxy.cr#L71" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/coordinates_proxy.cr#L71" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1256,13 +1252,12 @@ structure.coords.center_at_cell <span class="c"># raises NotPeriodicError</span>
         
         def <strong>center_at_origin</strong> : <span class="k">self</span>
 
-        <a class="method-permalink" href="#center_at_origin:self-instance-method">#</a>
+        <a class="method-permalink" href="#center_at_origin%3Aself-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Translates coordinates so that the center is at the origin.</p>
-
 <pre><code class="language-crystal">structure <span class="o">=</span> <span class="t">Structure</span>.read <span class="s">&quot;path/to/file&quot;</span>
 structure.coords.center <span class="c"># =&gt; [1.0 2.0 3.0]</span>
 structure.coords.center_at_origin
@@ -1272,7 +1267,7 @@ structure.coords.center <span class="c"># =&gt; [0.0 0.0 0.0]</span></code></pre
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/coordinates_proxy.cr#L84" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/coordinates_proxy.cr#L84" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1282,13 +1277,12 @@ structure.coords.center <span class="c"># =&gt; [0.0 0.0 0.0]</span></code></pre
         
         def <strong>com</strong> : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>
 
-        <a class="method-permalink" href="#com:Vec3-instance-method">#</a>
+        <a class="method-permalink" href="#com%3AVec3-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns the center of mass.</p>
-
 <pre><code class="language-crystal">structure <span class="o">=</span> <span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>.build <span class="k">do</span>
   atom <span class="n">:O</span>, <span class="t">Vec3</span>[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>]
   atom <span class="n">:H</span>, <span class="t">Vec3</span>[<span class="n">4</span>, <span class="n">5</span>, <span class="n">6</span>]
@@ -1301,7 +1295,7 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/coordinates_proxy.cr#L99" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/coordinates_proxy.cr#L99" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1311,7 +1305,7 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
         
         def <strong>each</strong>(fractional : Bool = <span class="n">false</span>) : Iterator(<a href="../../Chem/Spatial/Vec3.html">Vec3</a>)
 
-        <a class="method-permalink" href="#each(fractional:Bool=false):Iterator(Vec3)-instance-method">#</a>
+        <a class="method-permalink" href="#each%28fractional%3ABool%3Dfalse%29%3AIterator%28Vec3%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1326,7 +1320,7 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/coordinates_proxy.cr#L109" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/coordinates_proxy.cr#L109" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1336,7 +1330,7 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
         
         def <strong>each</strong>(fractional : Bool = <span class="n">false</span>, &block : <a href="../../Chem/Spatial/Vec3.html">Vec3</a> -> )
 
-        <a class="method-permalink" href="#each(fractional:Bool=false,&block:Vec3-%3E)-instance-method">#</a>
+        <a class="method-permalink" href="#each%28fractional%3ABool%3Dfalse%2C%26block%3AVec3-%3E%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1351,7 +1345,7 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/coordinates_proxy.cr#L118" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/coordinates_proxy.cr#L118" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1361,13 +1355,13 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
         
         def <strong>each_with_atom</strong>(fractional : Bool = <span class="n">false</span>, &block : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, <a href="../../Chem/Atom.html">Atom</a> -> )
 
-        <a class="method-permalink" href="#each_with_atom(fractional:Bool=false,&block:Vec3,Atom-%3E)-instance-method">#</a>
+        <a class="method-permalink" href="#each_with_atom%28fractional%3ABool%3Dfalse%2C%26block%3AVec3%2CAtom-%3E%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/coordinates_proxy.cr#L127" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/coordinates_proxy.cr#L127" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1377,7 +1371,7 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
         
         def <strong>map</strong>(fractional : Bool = <span class="n">false</span>, &block : <a href="../../Chem/Spatial/Vec3.html">Vec3</a> -> <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <a href="../../Array.html">Array</a>(<a href="../../Chem/Spatial/Vec3.html">Vec3</a>)
 
-        <a class="method-permalink" href="#map(fractional:Bool=false,&block:Vec3-%3EVec3):Array(Vec3)-instance-method">#</a>
+        <a class="method-permalink" href="#map%28fractional%3ABool%3Dfalse%2C%26block%3AVec3-%3EVec3%29%3AArray%28Vec3%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1387,14 +1381,13 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
             </div>
           
           <p>Returns an <code><a href="../../Array.html">Array</a></code> with the results of running the block against each element of the collection.</p>
-
 <pre><code class="language-crystal">[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>].map { <span class="o">|</span>i<span class="o">|</span> i <span class="o">*</span> <span class="n">10</span> } <span class="c"># =&gt; [10, 20, 30]</span></code></pre>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/coordinates_proxy.cr#L135" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/coordinates_proxy.cr#L135" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1404,13 +1397,13 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
         
         def <strong>map!</strong>(fractional : Bool = <span class="n">false</span>, &block : <a href="../../Chem/Spatial/Vec3.html">Vec3</a> -> <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#map!(fractional:Bool=false,&block:Vec3-%3EVec3):self-instance-method">#</a>
+        <a class="method-permalink" href="#map%21%28fractional%3ABool%3Dfalse%2C%26block%3AVec3-%3EVec3%29%3Aself-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/coordinates_proxy.cr#L141" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/coordinates_proxy.cr#L141" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1420,13 +1413,13 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
         
         def <strong>map_with_atom</strong>(fractional : Bool = <span class="n">false</span>, &block : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, <a href="../../Chem/Atom.html">Atom</a> -> <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <a href="../../Array.html">Array</a>(<a href="../../Chem/Spatial/Vec3.html">Vec3</a>)
 
-        <a class="method-permalink" href="#map_with_atom(fractional:Bool=false,&block:Vec3,Atom-%3EVec3):Array(Vec3)-instance-method">#</a>
+        <a class="method-permalink" href="#map_with_atom%28fractional%3ABool%3Dfalse%2C%26block%3AVec3%2CAtom-%3EVec3%29%3AArray%28Vec3%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/coordinates_proxy.cr#L153" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/coordinates_proxy.cr#L153" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1436,13 +1429,13 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
         
         def <strong>map_with_atom!</strong>(fractional : Bool = <span class="n">false</span>, &block : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, <a href="../../Chem/Atom.html">Atom</a> -> <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#map_with_atom!(fractional:Bool=false,&block:Vec3,Atom-%3EVec3):self-instance-method">#</a>
+        <a class="method-permalink" href="#map_with_atom%21%28fractional%3ABool%3Dfalse%2C%26block%3AVec3%2CAtom-%3EVec3%29%3Aself-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/coordinates_proxy.cr#L162" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/coordinates_proxy.cr#L162" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1452,7 +1445,7 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
         
         def <strong>to_a</strong>(fractional : Bool = <span class="n">false</span>) : <a href="../../Array.html">Array</a>(<a href="../../Chem/Spatial/Vec3.html">Vec3</a>)
 
-        <a class="method-permalink" href="#to_a(fractional:Bool=false):Array(Vec3)-instance-method">#</a>
+        <a class="method-permalink" href="#to_a%28fractional%3ABool%3Dfalse%29%3AArray%28Vec3%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1462,14 +1455,13 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
             </div>
           
           <p>Returns an <code><a href="../../Array.html">Array</a></code> with all the elements in the collection.</p>
-
 <pre><code class="language-crystal">(<span class="n">1</span>..<span class="n">5</span>).to_a <span class="c"># =&gt; [1, 2, 3, 4, 5]</span></code></pre>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/coordinates_proxy.cr#L187" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/coordinates_proxy.cr#L187" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1479,13 +1471,13 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
         
         def <strong>to_cartesian!</strong> : <span class="k">self</span>
 
-        <a class="method-permalink" href="#to_cartesian!:self-instance-method">#</a>
+        <a class="method-permalink" href="#to_cartesian%21%3Aself-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/coordinates_proxy.cr#L193" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/coordinates_proxy.cr#L193" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1495,13 +1487,13 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
         
         def <strong>to_fractional!</strong> : <span class="k">self</span>
 
-        <a class="method-permalink" href="#to_fractional!:self-instance-method">#</a>
+        <a class="method-permalink" href="#to_fractional%21%3Aself-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/coordinates_proxy.cr#L198" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/coordinates_proxy.cr#L198" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1511,13 +1503,13 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
         
         def <strong>transform</strong>(transform : <a href="../../Chem/Spatial/AffineTransform.html">AffineTransform</a>) : <a href="../../Array.html">Array</a>(<a href="../../Chem/Spatial/Vec3.html">Vec3</a>)
 
-        <a class="method-permalink" href="#transform(transform:AffineTransform):Array(Vec3)-instance-method">#</a>
+        <a class="method-permalink" href="#transform%28transform%3AAffineTransform%29%3AArray%28Vec3%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/coordinates_proxy.cr#L171" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/coordinates_proxy.cr#L171" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1527,13 +1519,13 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
         
         def <strong>transform!</strong>(transform : <a href="../../Chem/Spatial/AffineTransform.html">AffineTransform</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#transform!(transform:AffineTransform):self-instance-method">#</a>
+        <a class="method-permalink" href="#transform%21%28transform%3AAffineTransform%29%3Aself-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/coordinates_proxy.cr#L175" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/coordinates_proxy.cr#L175" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1543,13 +1535,13 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
         
         def <strong>translate</strong>(by offset : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <a href="../../Array.html">Array</a>(<a href="../../Chem/Spatial/Vec3.html">Vec3</a>)
 
-        <a class="method-permalink" href="#translate(byoffset:Vec3):Array(Vec3)-instance-method">#</a>
+        <a class="method-permalink" href="#translate%28byoffset%3AVec3%29%3AArray%28Vec3%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/coordinates_proxy.cr#L179" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/coordinates_proxy.cr#L179" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1559,13 +1551,13 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
         
         def <strong>translate!</strong>(by offset : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#translate!(byoffset:Vec3):self-instance-method">#</a>
+        <a class="method-permalink" href="#translate%21%28byoffset%3AVec3%29%3Aself-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/coordinates_proxy.cr#L183" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/coordinates_proxy.cr#L183" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1575,13 +1567,13 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
         
         def <strong>wrap</strong>(around center : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>? = <span class="n">nil</span>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#wrap(aroundcenter:Vec3?=nil):self-instance-method">#</a>
+        <a class="method-permalink" href="#wrap%28aroundcenter%3AVec3%3F%3Dnil%29%3Aself-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/coordinates_proxy.cr#L203" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/coordinates_proxy.cr#L203" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1591,13 +1583,13 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
         
         def <strong>wrap</strong>(lattice : <a href="../../Chem/Lattice.html">Lattice</a>, around center : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>? = <span class="n">nil</span>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#wrap(lattice:Lattice,aroundcenter:Vec3?=nil):self-instance-method">#</a>
+        <a class="method-permalink" href="#wrap%28lattice%3ALattice%2Caroundcenter%3AVec3%3F%3Dnil%29%3Aself-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/coordinates_proxy.cr#L208" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/coordinates_proxy.cr#L208" target="_blank">View source</a>]
         
       </div>
     </div>

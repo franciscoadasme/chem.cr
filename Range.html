@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.0.0">
+<meta name="generator" content="Crystal Docs 1.1.1">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -506,8 +506,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Quaternion" data-name="chem::spatial::quaternion">
-      <a href="Chem/Spatial/Quaternion.html">Quaternion</a>
+  <li class=" " data-id="chem.cr/Chem/Spatial/Quat" data-name="chem::spatial::quat">
+      <a href="Chem/Spatial/Quat.html">Quat</a>
       
     </li>
   
@@ -810,24 +810,18 @@
   </h2>
 
   <p>A <code><a href="Range.html">Range</a></code> represents an interval: a set of values with a beginning and an end.</p>
-
 <p>Ranges may be constructed using the usual <code>new</code> method or with literals:</p>
-
 <pre><code class="language-crystal">x..y  <span class="c"># an inclusive range, in mathematics: [x, y]</span>
 x...y <span class="c"># an exclusive range, in mathematics: [x, y)</span>
 (x..) <span class="c"># an endless range, in mathematics: &gt;= x</span>
 ..y   <span class="c"># a beginless inclusive range, in mathematics: &lt;= y</span>
 ...y  <span class="c"># a beginless exclusive range, in mathematics: &lt; y</span></code></pre>
-
 <p>See <a href="https://crystal-lang.org/reference/syntax_and_semantics/literals/range.html"><code>Range</code> literals</a> in the language reference.</p>
-
 <p>An easy way to remember which one is inclusive and which one is exclusive it
 to think of the extra dot as if it pushes <em>y</em> further away, thus leaving it outside of the range.</p>
-
 <p>Ranges typically involve integers, but can be created using arbitrary objects
 as long as they define <code>succ</code> (or <code>pred</code> for <code>reverse_each</code>), to get the
 next element in the range, and <code><</code> and <code>==</code>, to know when the range reached the end:</p>
-
 <pre><code class="language-crystal"><span class="c"># Represents a string of &#39;x&#39;s.</span>
 <span class="k">struct</span> <span class="t">Xs</span>
   <span class="k">include</span> <span class="t">Comparable</span>(<span class="t">Xs</span>)
@@ -854,9 +848,7 @@ next element in the range, and <code><</code> and <code>==</code>, to know when 
     inspect(io)
   <span class="k">end</span>
 <span class="k">end</span></code></pre>
-
 <p>An example of using <code>Xs</code> to construct a range:</p>
-
 <pre><code class="language-crystal">r <span class="o">=</span> <span class="t">Xs</span>.<span class="k">new</span>(<span class="n">3</span>)..<span class="t">Xs</span>.<span class="k">new</span>(<span class="n">6</span>)
 r.to_s                 <span class="c"># =&gt; &quot;xxx..xxxxxx&quot;</span>
 r.to_a                 <span class="c"># =&gt; [Xs.new(3), Xs.new(4), Xs.new(5), Xs.new(6)]</span>
@@ -901,7 +893,7 @@ r.includes?(<span class="t">Xs</span>.<span class="k">new</span>(<span class="n"
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core_ext/range.cr#L1" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core_ext/range.cr#L1" target="_blank">
         chem/core_ext/range.cr
       </a>
     
@@ -927,12 +919,12 @@ r.includes?(<span class="t">Xs</span>.<span class="k">new</span>(<span class="n"
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#clamp(min,max):Range-instance-method" class="signature"><strong>#clamp</strong>(min, max) : Range</a>
+        <a href="#clamp%28min%2Cmax%29%3ARange-instance-method" class="signature"><strong>#clamp</strong>(min, max) : Range</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#clamp(range:Range):Range-instance-method" class="signature"><strong>#clamp</strong>(range : Range) : Range</a>
+        <a href="#clamp%28range%3ARange%29%3ARange-instance-method" class="signature"><strong>#clamp</strong>(range : Range) : Range</a>
         
       </li>
     
@@ -1015,13 +1007,13 @@ r.includes?(<span class="t">Xs</span>.<span class="k">new</span>(<span class="n"
         
         def <strong>clamp</strong>(min, max) : <a href="Range.html">Range</a>
 
-        <a class="method-permalink" href="#clamp(min,max):Range-instance-method">#</a>
+        <a class="method-permalink" href="#clamp%28min%2Cmax%29%3ARange-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core_ext/range.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core_ext/range.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1031,13 +1023,13 @@ r.includes?(<span class="t">Xs</span>.<span class="k">new</span>(<span class="n"
         
         def <strong>clamp</strong>(range : <a href="Range.html">Range</a>) : <a href="Range.html">Range</a>
 
-        <a class="method-permalink" href="#clamp(range:Range):Range-instance-method">#</a>
+        <a class="method-permalink" href="#clamp%28range%3ARange%29%3ARange-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core_ext/range.cr#L15" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core_ext/range.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>

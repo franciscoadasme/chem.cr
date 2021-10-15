@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.0.0">
+<meta name="generator" content="Crystal Docs 1.1.1">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -506,8 +506,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Quaternion" data-name="chem::spatial::quaternion">
-      <a href="../../Chem/Spatial/Quaternion.html">Quaternion</a>
+  <li class=" " data-id="chem.cr/Chem/Spatial/Quat" data-name="chem::spatial::quat">
+      <a href="../../Chem/Spatial/Quat.html">Quat</a>
       
     </li>
   
@@ -823,7 +823,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/patcher.cr#L2" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/patcher.cr#L2" target="_blank">
         chem/topology/patcher.cr
       </a>
     
@@ -845,7 +845,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new(residues:ResidueCollection)-class-method" class="signature"><strong>.new</strong>(residues : ResidueCollection)</a>
+        <a href="#new%28residues%3AResidueCollection%29-class-method" class="signature"><strong>.new</strong>(residues : ResidueCollection)</a>
         
       </li>
     
@@ -866,27 +866,27 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#match_and_patch:Nil-instance-method" class="signature"><strong>#match_and_patch</strong> : Nil</a>
+        <a href="#match_and_patch%3ANil-instance-method" class="signature"><strong>#match_and_patch</strong> : Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#patch(lhs:Residue,rhs:Residue,bond_t:BondType):Nil-instance-method" class="signature"><strong>#patch</strong>(lhs : Residue, rhs : Residue, bond_t : BondType) : Nil</a>
+        <a href="#patch%28lhs%3AResidue%2Crhs%3AResidue%2Cbond_t%3ABondType%29%3ANil-instance-method" class="signature"><strong>#patch</strong>(lhs : Residue, rhs : Residue, bond_t : BondType) : Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#patch(atom:Atom,atom_t:AtomType):Nil-instance-method" class="signature"><strong>#patch</strong>(atom : Atom, atom_t : AtomType) : Nil</a>
+        <a href="#patch%28atom%3AAtom%2Catom_t%3AAtomType%29%3ANil-instance-method" class="signature"><strong>#patch</strong>(atom : Atom, atom_t : AtomType) : Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#patch(residue:Residue,res_t:ResidueType):Nil-instance-method" class="signature"><strong>#patch</strong>(residue : Residue, res_t : ResidueType) : Nil</a>
+        <a href="#patch%28residue%3AResidue%2Cres_t%3AResidueType%29%3ANil-instance-method" class="signature"><strong>#patch</strong>(residue : Residue, res_t : ResidueType) : Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#unmatched_atoms:AtomView-instance-method" class="signature"><strong>#unmatched_atoms</strong> : AtomView</a>
+        <a href="#unmatched_atoms%3AAtomView-instance-method" class="signature"><strong>#unmatched_atoms</strong> : AtomView</a>
         
       </li>
     
@@ -935,13 +935,13 @@
         
         def self.<strong>new</strong>(residues : <a href="../../Chem/ResidueCollection.html">ResidueCollection</a>)
 
-        <a class="method-permalink" href="#new(residues:ResidueCollection)-class-method">#</a>
+        <a class="method-permalink" href="#new%28residues%3AResidueCollection%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/patcher.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/patcher.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -965,13 +965,13 @@
         
         def <strong>match_and_patch</strong> : Nil
 
-        <a class="method-permalink" href="#match_and_patch:Nil-instance-method">#</a>
+        <a class="method-permalink" href="#match_and_patch%3ANil-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/patcher.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/patcher.cr#L8" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -981,13 +981,13 @@
         
         def <strong>patch</strong>(lhs : <a href="../../Chem/Residue.html">Residue</a>, rhs : <a href="../../Chem/Residue.html">Residue</a>, bond_t : <a href="../../Chem/Topology/BondType.html">BondType</a>) : Nil
 
-        <a class="method-permalink" href="#patch(lhs:Residue,rhs:Residue,bond_t:BondType):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#patch%28lhs%3AResidue%2Crhs%3AResidue%2Cbond_t%3ABondType%29%3ANil-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/patcher.cr#L27" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/patcher.cr#L27" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -997,13 +997,13 @@
         
         def <strong>patch</strong>(atom : <a href="../../Chem/Atom.html">Atom</a>, atom_t : <a href="../../Chem/Topology/AtomType.html">AtomType</a>) : Nil
 
-        <a class="method-permalink" href="#patch(atom:Atom,atom_t:AtomType):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#patch%28atom%3AAtom%2Catom_t%3AAtomType%29%3ANil-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/patcher.cr#L23" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/patcher.cr#L23" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1013,13 +1013,13 @@
         
         def <strong>patch</strong>(residue : <a href="../../Chem/Residue.html">Residue</a>, res_t : <a href="../../Chem/Topology/ResidueType.html">ResidueType</a>) : Nil
 
-        <a class="method-permalink" href="#patch(residue:Residue,res_t:ResidueType):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#patch%28residue%3AResidue%2Cres_t%3AResidueType%29%3ANil-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/patcher.cr#L33" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/patcher.cr#L33" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1029,13 +1029,13 @@
         
         def <strong>unmatched_atoms</strong> : <a href="../../Chem/AtomView.html">AtomView</a>
 
-        <a class="method-permalink" href="#unmatched_atoms:AtomView-instance-method">#</a>
+        <a class="method-permalink" href="#unmatched_atoms%3AAtomView-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/patcher.cr#L45" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/patcher.cr#L45" target="_blank">View source</a>]
         
       </div>
     </div>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.0.0">
+<meta name="generator" content="Crystal Docs 1.1.1">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -506,8 +506,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Quaternion" data-name="chem::spatial::quaternion">
-      <a href="../../Chem/Spatial/Quaternion.html">Quaternion</a>
+  <li class=" " data-id="chem.cr/Chem/Spatial/Quat" data-name="chem::spatial::quat">
+      <a href="../../Chem/Spatial/Quat.html">Quat</a>
       
     </li>
   
@@ -810,7 +810,6 @@
   <p>Declares a common interface for reading the header information
 encoded in a file format. This is useful for cases when a file
 format includes valuable information (by itself) in the header.</p>
-
 <p>Including types must implement the <code>#decode_header : T</code> protected
 method, where the type variable <code>T</code> indicates the header type. Upon
 parsing issues, including types are expected to raise a
@@ -861,7 +860,7 @@ parsing issues, including types are expected to raise a
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format_reader.cr#L86" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format_reader.cr#L86" target="_blank">
         chem/format_reader.cr
       </a>
     
@@ -887,7 +886,7 @@ parsing issues, including types are expected to raise a
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#read_header:T-instance-method" class="signature"><strong>#read_header</strong> : T</a>
+        <a href="#read_header%3AT-instance-method" class="signature"><strong>#read_header</strong> : T</a>
         
           <div class="summary"><p>Reads the header object from the IO.</p></div>
         
@@ -922,7 +921,7 @@ parsing issues, including types are expected to raise a
         
         def <strong>read_header</strong> : T
 
-        <a class="method-permalink" href="#read_header:T-instance-method">#</a>
+        <a class="method-permalink" href="#read_header%3AT-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -935,7 +934,7 @@ decoded.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format_reader.cr#L99" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format_reader.cr#L99" target="_blank">View source</a>]
         
       </div>
     </div>

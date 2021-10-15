@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.0.0">
+<meta name="generator" content="Crystal Docs 1.1.1">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -506,8 +506,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Quaternion" data-name="chem::spatial::quaternion">
-      <a href="../../Chem/Spatial/Quaternion.html">Quaternion</a>
+  <li class=" " data-id="chem.cr/Chem/Spatial/Quat" data-name="chem::spatial::quat">
+      <a href="../../Chem/Spatial/Quat.html">Quat</a>
       
     </li>
   
@@ -823,7 +823,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L104" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L104" target="_blank">
         chem/topology/types.cr
       </a>
     
@@ -845,12 +845,12 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#build(kind:Residue::Kind=:other,&):self-class-method" class="signature"><strong>.build</strong>(kind : Residue::Kind = <span class="n">:other</span>, &) : <span class="k">self</span></a>
+        <a href="#build%28kind%3AResidue%3A%3AKind%3D%3Aother%2C%26%29%3Aself-class-method" class="signature"><strong>.build</strong>(kind : Residue::Kind = <span class="n">:other</span>, &) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new(description:String,name:String,code:Char?,kind:Residue::Kind,atom_types:Array(AtomType),bonds:Array(BondType),link_bond:BondType?=nil,root:AtomType?=nil)-class-method" class="signature"><strong>.new</strong>(description : String, name : String, code : Char?, kind : Residue::Kind, atom_types : Array(AtomType), bonds : Array(BondType), link_bond : BondType? = <span class="n">nil</span>, root : AtomType? = <span class="n">nil</span>)</a>
+        <a href="#new%28description%3AString%2Cname%3AString%2Ccode%3AChar%3F%2Ckind%3AResidue%3A%3AKind%2Catom_types%3AArray%28AtomType%29%2Cbonds%3AArray%28BondType%29%2Clink_bond%3ABondType%3F%3Dnil%2Croot%3AAtomType%3F%3Dnil%29-class-method" class="signature"><strong>.new</strong>(description : String, name : String, code : Char?, kind : Residue::Kind, atom_types : Array(AtomType), bonds : Array(BondType), link_bond : BondType? = <span class="n">nil</span>, root : AtomType? = <span class="n">nil</span>)</a>
         
       </li>
     
@@ -871,94 +871,94 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#[](atom_name:String):AtomType-instance-method" class="signature"><strong>#[]</strong>(atom_name : String) : AtomType</a>
+        <a href="#%5B%5D%28atom_name%3AString%29%3AAtomType-instance-method" class="signature"><strong>#[]</strong>(atom_name : String) : AtomType</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#[]?(atom_name:String):AtomType?-instance-method" class="signature"><strong>#[]?</strong>(atom_name : String) : AtomType?</a>
+        <a href="#%5B%5D%3F%28atom_name%3AString%29%3AAtomType%3F-instance-method" class="signature"><strong>#[]?</strong>(atom_name : String) : AtomType?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#atom_count(*,include_hydrogens:Bool=true)-instance-method" class="signature"><strong>#atom_count</strong>(*, include_hydrogens : Bool = <span class="n">true</span>)</a>
+        <a href="#atom_count%28%2A%2Cinclude_hydrogens%3ABool%3Dtrue%29-instance-method" class="signature"><strong>#atom_count</strong>(*, include_hydrogens : Bool = <span class="n">true</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#atom_names:Array(String)-instance-method" class="signature"><strong>#atom_names</strong> : Array(String)</a>
+        <a href="#atom_names%3AArray%28String%29-instance-method" class="signature"><strong>#atom_names</strong> : Array(String)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#atom_types:Array(AtomType)-instance-method" class="signature"><strong>#atom_types</strong> : Array(AtomType)</a>
+        <a href="#atom_types%3AArray%28AtomType%29-instance-method" class="signature"><strong>#atom_types</strong> : Array(AtomType)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#bonded_atoms(atom_t:AtomType):Array(AtomType)-instance-method" class="signature"><strong>#bonded_atoms</strong>(atom_t : AtomType) : Array(AtomType)</a>
+        <a href="#bonded_atoms%28atom_t%3AAtomType%29%3AArray%28AtomType%29-instance-method" class="signature"><strong>#bonded_atoms</strong>(atom_t : AtomType) : Array(AtomType)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#bonds:Array(BondType)-instance-method" class="signature"><strong>#bonds</strong> : Array(BondType)</a>
+        <a href="#bonds%3AArray%28BondType%29-instance-method" class="signature"><strong>#bonds</strong> : Array(BondType)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#code:Char?-instance-method" class="signature"><strong>#code</strong> : Char?</a>
+        <a href="#code%3AChar%3F-instance-method" class="signature"><strong>#code</strong> : Char?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#description:String-instance-method" class="signature"><strong>#description</strong> : String</a>
+        <a href="#description%3AString-instance-method" class="signature"><strong>#description</strong> : String</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#each_atom_type(&block:AtomType-%3E)-instance-method" class="signature"><strong>#each_atom_type</strong>(&block : AtomType -> )</a>
+        <a href="#each_atom_type%28%26block%3AAtomType-%3E%29-instance-method" class="signature"><strong>#each_atom_type</strong>(&block : AtomType -> )</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#formal_charge:Int32-instance-method" class="signature"><strong>#formal_charge</strong> : Int32</a>
+        <a href="#formal_charge%3AInt32-instance-method" class="signature"><strong>#formal_charge</strong> : Int32</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#inspect(io:IO):Nil-instance-method" class="signature"><strong>#inspect</strong>(io : IO) : Nil</a>
+        <a href="#inspect%28io%3AIO%29%3ANil-instance-method" class="signature"><strong>#inspect</strong>(io : IO) : Nil</a>
         
           <div class="summary"><p>Appends a String representation of this object which includes its class name, its object address and the values of all instance variables.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#kind:Residue::Kind-instance-method" class="signature"><strong>#kind</strong> : Residue::Kind</a>
+        <a href="#kind%3AResidue%3A%3AKind-instance-method" class="signature"><strong>#kind</strong> : Residue::Kind</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#link_bond:BondType?-instance-method" class="signature"><strong>#link_bond</strong> : BondType?</a>
+        <a href="#link_bond%3ABondType%3F-instance-method" class="signature"><strong>#link_bond</strong> : BondType?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#monomer?:Bool-instance-method" class="signature"><strong>#monomer?</strong> : Bool</a>
+        <a href="#monomer%3F%3ABool-instance-method" class="signature"><strong>#monomer?</strong> : Bool</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#n_atoms:Int32-instance-method" class="signature"><strong>#n_atoms</strong> : Int32</a>
+        <a href="#n_atoms%3AInt32-instance-method" class="signature"><strong>#n_atoms</strong> : Int32</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#name:String-instance-method" class="signature"><strong>#name</strong> : String</a>
+        <a href="#name%3AString-instance-method" class="signature"><strong>#name</strong> : String</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#root:AtomType?-instance-method" class="signature"><strong>#root</strong> : AtomType?</a>
+        <a href="#root%3AAtomType%3F-instance-method" class="signature"><strong>#root</strong> : AtomType?</a>
         
       </li>
     
@@ -1007,13 +1007,13 @@
         
         def self.<strong>build</strong>(kind : <a href="../../Chem/Residue/Kind.html">Residue::Kind</a> = <span class="n">:other</span>, &) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#build(kind:Residue::Kind=:other,&):self-class-method">#</a>
+        <a class="method-permalink" href="#build%28kind%3AResidue%3A%3AKind%3D%3Aother%2C%26%29%3Aself-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L127" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L127" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1023,13 +1023,13 @@
         
         def self.<strong>new</strong>(description : String, name : String, code : <a href="../../Char.html">Char</a>?, kind : <a href="../../Chem/Residue/Kind.html">Residue::Kind</a>, atom_types : <a href="../../Array.html">Array</a>(<a href="../../Chem/Topology/AtomType.html">AtomType</a>), bonds : <a href="../../Array.html">Array</a>(<a href="../../Chem/Topology/BondType.html">BondType</a>), link_bond : <a href="../../Chem/Topology/BondType.html">BondType</a>? = <span class="n">nil</span>, root : <a href="../../Chem/Topology/AtomType.html">AtomType</a>? = <span class="n">nil</span>)
 
-        <a class="method-permalink" href="#new(description:String,name:String,code:Char?,kind:Residue::Kind,atom_types:Array(AtomType),bonds:Array(BondType),link_bond:BondType?=nil,root:AtomType?=nil)-class-method">#</a>
+        <a class="method-permalink" href="#new%28description%3AString%2Cname%3AString%2Ccode%3AChar%3F%2Ckind%3AResidue%3A%3AKind%2Catom_types%3AArray%28AtomType%29%2Cbonds%3AArray%28BondType%29%2Clink_bond%3ABondType%3F%3Dnil%2Croot%3AAtomType%3F%3Dnil%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L115" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L115" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1053,13 +1053,13 @@
         
         def <strong>[]</strong>(atom_name : String) : <a href="../../Chem/Topology/AtomType.html">AtomType</a>
 
-        <a class="method-permalink" href="#[](atom_name:String):AtomType-instance-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%28atom_name%3AString%29%3AAtomType-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L133" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L133" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1069,13 +1069,13 @@
         
         def <strong>[]?</strong>(atom_name : String) : <a href="../../Chem/Topology/AtomType.html">AtomType</a>?
 
-        <a class="method-permalink" href="#[]?(atom_name:String):AtomType?-instance-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%3F%28atom_name%3AString%29%3AAtomType%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L137" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L137" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1085,13 +1085,13 @@
         
         def <strong>atom_count</strong>(*, include_hydrogens : Bool = <span class="n">true</span>)
 
-        <a class="method-permalink" href="#atom_count(*,include_hydrogens:Bool=true)-instance-method">#</a>
+        <a class="method-permalink" href="#atom_count%28%2A%2Cinclude_hydrogens%3ABool%3Dtrue%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L141" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L141" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1101,13 +1101,13 @@
         
         def <strong>atom_names</strong> : <a href="../../Array.html">Array</a>(String)
 
-        <a class="method-permalink" href="#atom_names:Array(String)-instance-method">#</a>
+        <a class="method-permalink" href="#atom_names%3AArray%28String%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L147" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L147" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1117,13 +1117,13 @@
         
         def <strong>atom_types</strong> : <a href="../../Array.html">Array</a>(<a href="../../Chem/Topology/AtomType.html">AtomType</a>)
 
-        <a class="method-permalink" href="#atom_types:Array(AtomType)-instance-method">#</a>
+        <a class="method-permalink" href="#atom_types%3AArray%28AtomType%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L151" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L151" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1133,13 +1133,13 @@
         
         def <strong>bonded_atoms</strong>(atom_t : <a href="../../Chem/Topology/AtomType.html">AtomType</a>) : <a href="../../Array.html">Array</a>(<a href="../../Chem/Topology/AtomType.html">AtomType</a>)
 
-        <a class="method-permalink" href="#bonded_atoms(atom_t:AtomType):Array(AtomType)-instance-method">#</a>
+        <a class="method-permalink" href="#bonded_atoms%28atom_t%3AAtomType%29%3AArray%28AtomType%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L159" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L159" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1149,13 +1149,13 @@
         
         def <strong>bonds</strong> : <a href="../../Array.html">Array</a>(<a href="../../Chem/Topology/BondType.html">BondType</a>)
 
-        <a class="method-permalink" href="#bonds:Array(BondType)-instance-method">#</a>
+        <a class="method-permalink" href="#bonds%3AArray%28BondType%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L163" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L163" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1165,13 +1165,13 @@
         
         def <strong>code</strong> : <a href="../../Char.html">Char</a>?
 
-        <a class="method-permalink" href="#code:Char?-instance-method">#</a>
+        <a class="method-permalink" href="#code%3AChar%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L113" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L113" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1181,13 +1181,13 @@
         
         def <strong>description</strong> : String
 
-        <a class="method-permalink" href="#description:String-instance-method">#</a>
+        <a class="method-permalink" href="#description%3AString-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L111" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L111" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1197,13 +1197,13 @@
         
         def <strong>each_atom_type</strong>(&block : <a href="../../Chem/Topology/AtomType.html">AtomType</a> -> )
 
-        <a class="method-permalink" href="#each_atom_type(&block:AtomType-%3E)-instance-method">#</a>
+        <a class="method-permalink" href="#each_atom_type%28%26block%3AAtomType-%3E%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L155" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L155" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1213,13 +1213,13 @@
         
         def <strong>formal_charge</strong> : Int32
 
-        <a class="method-permalink" href="#formal_charge:Int32-instance-method">#</a>
+        <a class="method-permalink" href="#formal_charge%3AInt32-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L167" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L167" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1229,7 +1229,7 @@
         
         def <strong>inspect</strong>(io : IO) : Nil
 
-        <a class="method-permalink" href="#inspect(io:IO):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#inspect%28io%3AIO%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1241,7 +1241,6 @@
           <p>Appends a String representation of this object
 which includes its class name, its object address
 and the values of all instance variables.</p>
-
 <pre><code class="language-crystal"><span class="k">class</span> <span class="t">Person</span>
   <span class="k">def</span> <span class="m">initialize</span>(@name : <span class="t">String</span>, @age : <span class="t">Int32</span>)
   <span class="k">end</span>
@@ -1253,7 +1252,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L171" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L171" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1263,13 +1262,13 @@ and the values of all instance variables.</p>
         
         def <strong>kind</strong> : <a href="../../Chem/Residue/Kind.html">Residue::Kind</a>
 
-        <a class="method-permalink" href="#kind:Residue::Kind-instance-method">#</a>
+        <a class="method-permalink" href="#kind%3AResidue%3A%3AKind-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L109" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L109" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1279,13 +1278,13 @@ and the values of all instance variables.</p>
         
         def <strong>link_bond</strong> : <a href="../../Chem/Topology/BondType.html">BondType</a>?
 
-        <a class="method-permalink" href="#link_bond:BondType?-instance-method">#</a>
+        <a class="method-permalink" href="#link_bond%3ABondType%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L110" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L110" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1295,13 +1294,13 @@ and the values of all instance variables.</p>
         
         def <strong>monomer?</strong> : Bool
 
-        <a class="method-permalink" href="#monomer?:Bool-instance-method">#</a>
+        <a class="method-permalink" href="#monomer%3F%3ABool-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L178" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L178" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1311,13 +1310,13 @@ and the values of all instance variables.</p>
         
         def <strong>n_atoms</strong> : Int32
 
-        <a class="method-permalink" href="#n_atoms:Int32-instance-method">#</a>
+        <a class="method-permalink" href="#n_atoms%3AInt32-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L182" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L182" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1327,13 +1326,13 @@ and the values of all instance variables.</p>
         
         def <strong>name</strong> : String
 
-        <a class="method-permalink" href="#name:String-instance-method">#</a>
+        <a class="method-permalink" href="#name%3AString-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L108" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L108" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1343,13 +1342,13 @@ and the values of all instance variables.</p>
         
         def <strong>root</strong> : <a href="../../Chem/Topology/AtomType.html">AtomType</a>?
 
-        <a class="method-permalink" href="#root:AtomType?-instance-method">#</a>
+        <a class="method-permalink" href="#root%3AAtomType%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L112" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L112" target="_blank">View source</a>]
         
       </div>
     </div>

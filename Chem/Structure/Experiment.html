@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.0.0">
+<meta name="generator" content="Crystal Docs 1.1.1">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -506,8 +506,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Quaternion" data-name="chem::spatial::quaternion">
-      <a href="../../Chem/Spatial/Quaternion.html">Quaternion</a>
+  <li class=" " data-id="chem.cr/Chem/Spatial/Quat" data-name="chem::spatial::quat">
+      <a href="../../Chem/Spatial/Quat.html">Quat</a>
       
     </li>
   
@@ -823,14 +823,14 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure/experiment.cr#L1" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure/experiment.cr#L1" target="_blank">
         chem/core/structure/experiment.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">
         chem/register_format.cr
       </a>
     
@@ -852,26 +852,26 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#from_pdb(input:IO%7CPath%7CString,alt_loc:Char?=nil,chains:Enumerable(Char)%7CString%7CNil=nil,het:Bool=true):self-class-method" class="signature"><strong>.from_pdb</strong>(input : IO | Path | String, alt_loc : Char? = <span class="n">nil</span>, chains : Enumerable(Char) | String | Nil = <span class="n">nil</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span></a>
+        <a href="#from_pdb%28input%3AIO%7CPath%7CString%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Chet%3ABool%3Dtrue%29%3Aself-class-method" class="signature"><strong>.from_pdb</strong>(input : IO | Path | String, alt_loc : Char? = <span class="n">nil</span>, chains : Enumerable(Char) | String | Nil = <span class="n">nil</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the header encoded in <em>input</em> using the <code><a href="../../Chem/PDB.html">Chem::PDB</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new(title:String,method:Method,resolution:Float64?,pdb_accession:String,deposition_date:Time,doi:String?)-class-method" class="signature"><strong>.new</strong>(title : String, method : Method, resolution : Float64?, pdb_accession : String, deposition_date : Time, doi : String?)</a>
+        <a href="#new%28title%3AString%2Cmethod%3AMethod%2Cresolution%3AFloat64%3F%2Cpdb_accession%3AString%2Cdeposition_date%3ATime%2Cdoi%3AString%3F%29-class-method" class="signature"><strong>.new</strong>(title : String, method : Method, resolution : Float64?, pdb_accession : String, deposition_date : Time, doi : String?)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#read(input:IO%7CPath%7CString,format:Chem::Format%7CString):self-class-method" class="signature"><strong>.read</strong>(input : IO | Path | String, format : Chem::Format | String) : <span class="k">self</span></a>
+        <a href="#read%28input%3AIO%7CPath%7CString%2Cformat%3AChem%3A%3AFormat%7CString%29%3Aself-class-method" class="signature"><strong>.read</strong>(input : IO | Path | String, format : Chem::Format | String) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the header encoded in the specified file using <em>format</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#read(path:Path%7CString):self-class-method" class="signature"><strong>.read</strong>(path : Path | String) : <span class="k">self</span></a>
+        <a href="#read%28path%3APath%7CString%29%3Aself-class-method" class="signature"><strong>.read</strong>(path : Path | String) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the header encoded in the specified file.</p></div>
         
@@ -894,32 +894,32 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#deposition_date:Time-instance-method" class="signature"><strong>#deposition_date</strong> : Time</a>
+        <a href="#deposition_date%3ATime-instance-method" class="signature"><strong>#deposition_date</strong> : Time</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#doi:String?-instance-method" class="signature"><strong>#doi</strong> : String?</a>
+        <a href="#doi%3AString%3F-instance-method" class="signature"><strong>#doi</strong> : String?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#method:Method-instance-method" class="signature"><strong>#method</strong> : Method</a>
+        <a href="#method%3AMethod-instance-method" class="signature"><strong>#method</strong> : Method</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#pdb_accession:String-instance-method" class="signature"><strong>#pdb_accession</strong> : String</a>
+        <a href="#pdb_accession%3AString-instance-method" class="signature"><strong>#pdb_accession</strong> : String</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#resolution:Float64?-instance-method" class="signature"><strong>#resolution</strong> : Float64?</a>
+        <a href="#resolution%3AFloat64%3F-instance-method" class="signature"><strong>#resolution</strong> : Float64?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#title:String-instance-method" class="signature"><strong>#title</strong> : String</a>
+        <a href="#title%3AString-instance-method" class="signature"><strong>#title</strong> : String</a>
         
       </li>
     
@@ -978,24 +978,23 @@
         
         def self.<strong>from_pdb</strong>(input : IO | Path | String, alt_loc : <a href="../../Char.html">Char</a>? = <span class="n">nil</span>, chains : Enumerable(<a href="../../Char.html">Char</a>) | String | Nil = <span class="n">nil</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#from_pdb(input:IO%7CPath%7CString,alt_loc:Char?=nil,chains:Enumerable(Char)%7CString%7CNil=nil,het:Bool=true):self-class-method">#</a>
+        <a class="method-permalink" href="#from_pdb%28input%3AIO%7CPath%7CString%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Chet%3ABool%3Dtrue%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns the header encoded in <em>input</em> using the
 <code><a href="../../Chem/PDB.html">Chem::PDB</a></code> file format. Arguments are forwarded to
-<code><a href="../../Chem/PDB/Reader.html#open(io:IO,alt_loc:Char?=nil,chains:Enumerable(Char)%7CString%7CNil=nil,het:Bool=true,sync_close:Bool=false,&:self-%3E)-class-method">Chem::PDB::Reader.open</a></code>.</p>
-
+<code><a href="../../Chem/PDB/Reader.html#open%28io%3AIO%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Chet%3ABool%3Dtrue%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::PDB::Reader.open</a></code>.</p>
 <p>If <em>input</em> contains multiple entries, this method returns
-the first one only. Use <code><a href="../../Array.html#from_pdb(input:IO%7CPath%7CString,alt_loc:Char?=nil,chains:Enumerable(Char)%7CString%7CNil=nil,het:Bool=true):self-class-method">Array#from_pdb</a></code> or
+the first one only. Use <code><a href="../../Array.html#from_pdb%28input%3AIO%7CPath%7CString%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Chet%3ABool%3Dtrue%29%3Aself-class-method">Array#from_pdb</a></code> or
 <code>Chem::PDB::Reader#each</code> to get multiple entries instead.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1005,13 +1004,13 @@ the first one only. Use <code><a href="../../Array.html#from_pdb(input:IO%7CPath
         
         def self.<strong>new</strong>(title : String, method : <a href="../../Chem/Structure/Experiment/Method.html">Method</a>, resolution : Float64?, pdb_accession : String, deposition_date : Time, doi : String?)
 
-        <a class="method-permalink" href="#new(title:String,method:Method,resolution:Float64?,pdb_accession:String,deposition_date:Time,doi:String?)-class-method">#</a>
+        <a class="method-permalink" href="#new%28title%3AString%2Cmethod%3AMethod%2Cresolution%3AFloat64%3F%2Cpdb_accession%3AString%2Cdeposition_date%3ATime%2Cdoi%3AString%3F%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure/experiment.cr#L20" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure/experiment.cr#L20" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1021,7 +1020,7 @@ the first one only. Use <code><a href="../../Array.html#from_pdb(input:IO%7CPath
         
         def self.<strong>read</strong>(input : IO | Path | String, format : <a href="../../Chem/Format.html">Chem::Format</a> | String) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#read(input:IO%7CPath%7CString,format:Chem::Format%7CString):self-class-method">#</a>
+        <a class="method-permalink" href="#read%28input%3AIO%7CPath%7CString%2Cformat%3AChem%3A%3AFormat%7CString%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1029,7 +1028,6 @@ the first one only. Use <code><a href="../../Array.html#from_pdb(input:IO%7CPath
           <p>Returns the header encoded in the specified file
 using <em>format</em>. Raises <code>ArgumentError</code> if <em>format</em> has
 required arguments or cannot read <code><a href="../../Chem/Structure/Experiment.html">Chem::Structure::Experiment</a></code>.</p>
-
 <p>The supported file formats are <code><a href="../../Chem/PDB.html">Chem::PDB</a></code>. Use the
 <code>.from_*</code> methods to customize how the object is decoded in
 the corresponding file format if possible.</p>
@@ -1038,7 +1036,7 @@ the corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1048,20 +1046,19 @@ the corresponding file format if possible.</p>
         
         def self.<strong>read</strong>(path : Path | String) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#read(path:Path%7CString):self-class-method">#</a>
+        <a class="method-permalink" href="#read%28path%3APath%7CString%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns the header encoded in the specified file.
 The file format is chosen based on the filename (see
-<code><a href="../../Chem/Format.html#from_filename(filename:Path%7CString):self-class-method">Chem::Format#from_filename</a></code>). Raises <code>ArgumentError</code> if the
+<code><a href="../../Chem/Format.html#from_filename%28filename%3APath%7CString%29%3Aself-class-method">Chem::Format#from_filename</a></code>). Raises <code>ArgumentError</code> if the
 file format cannot be determined.</p>
-
 <p>The supported file formats are the following:</p>
-
-<ul><li><code><a href="../../Chem/PDB.html">Chem::PDB</a></code> (.ent, .pdb)</li></ul>
-
+<ul>
+<li><code><a href="../../Chem/PDB.html">Chem::PDB</a></code> (.ent, .pdb)</li>
+</ul>
 <p>Use the <code>.from_*</code> methods to customize how the object is
 decoded in the corresponding file format if possible.</p>
         </div>
@@ -1069,7 +1066,7 @@ decoded in the corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1093,13 +1090,13 @@ decoded in the corresponding file format if possible.</p>
         
         def <strong>deposition_date</strong> : Time
 
-        <a class="method-permalink" href="#deposition_date:Time-instance-method">#</a>
+        <a class="method-permalink" href="#deposition_date%3ATime-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure/experiment.cr#L13" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure/experiment.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1109,13 +1106,13 @@ decoded in the corresponding file format if possible.</p>
         
         def <strong>doi</strong> : String?
 
-        <a class="method-permalink" href="#doi:String?-instance-method">#</a>
+        <a class="method-permalink" href="#doi%3AString%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure/experiment.cr#L14" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure/experiment.cr#L14" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1125,13 +1122,13 @@ decoded in the corresponding file format if possible.</p>
         
         def <strong>method</strong> : <a href="../../Chem/Structure/Experiment/Method.html">Method</a>
 
-        <a class="method-permalink" href="#method:Method-instance-method">#</a>
+        <a class="method-permalink" href="#method%3AMethod-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure/experiment.cr#L15" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure/experiment.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1141,13 +1138,13 @@ decoded in the corresponding file format if possible.</p>
         
         def <strong>pdb_accession</strong> : String
 
-        <a class="method-permalink" href="#pdb_accession:String-instance-method">#</a>
+        <a class="method-permalink" href="#pdb_accession%3AString-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure/experiment.cr#L16" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure/experiment.cr#L16" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1157,13 +1154,13 @@ decoded in the corresponding file format if possible.</p>
         
         def <strong>resolution</strong> : Float64?
 
-        <a class="method-permalink" href="#resolution:Float64?-instance-method">#</a>
+        <a class="method-permalink" href="#resolution%3AFloat64%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure/experiment.cr#L17" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure/experiment.cr#L17" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1173,13 +1170,13 @@ decoded in the corresponding file format if possible.</p>
         
         def <strong>title</strong> : String
 
-        <a class="method-permalink" href="#title:String-instance-method">#</a>
+        <a class="method-permalink" href="#title%3AString-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure/experiment.cr#L18" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure/experiment.cr#L18" target="_blank">View source</a>]
         
       </div>
     </div>

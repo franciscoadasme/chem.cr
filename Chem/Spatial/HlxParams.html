@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.0.0">
+<meta name="generator" content="Crystal Docs 1.1.1">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -506,8 +506,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Quaternion" data-name="chem::spatial::quaternion">
-      <a href="../../Chem/Spatial/Quaternion.html">Quaternion</a>
+  <li class=" " data-id="chem.cr/Chem/Spatial/Quat" data-name="chem::spatial::quat">
+      <a href="../../Chem/Spatial/Quat.html">Quat</a>
       
     </li>
   
@@ -823,7 +823,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/hlxparams.cr#L2" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/hlxparams.cr#L2" target="_blank">
         chem/spatial/hlxparams.cr
       </a>
     
@@ -845,7 +845,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new(rotaxis:Vec3,twist:Float64,pitch:Float64,radius:Float64)-class-method" class="signature"><strong>.new</strong>(rotaxis : Vec3, twist : Float64, pitch : Float64, radius : Float64)</a>
+        <a href="#new%28rotaxis%3AVec3%2Ctwist%3AFloat64%2Cpitch%3AFloat64%2Cradius%3AFloat64%29-class-method" class="signature"><strong>.new</strong>(rotaxis : Vec3, twist : Float64, pitch : Float64, radius : Float64)</a>
         
       </li>
     
@@ -871,32 +871,32 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#copy_with(rotaxis_rotaxis=@rotaxis,twist_twist=@twist,pitch_pitch=@pitch,radius_radius=@radius)-instance-method" class="signature"><strong>#copy_with</strong>(rotaxis _rotaxis = @rotaxis, twist _twist = @twist, pitch _pitch = @pitch, radius _radius = @radius)</a>
+        <a href="#copy_with%28rotaxis_rotaxis%3D%40rotaxis%2Ctwist_twist%3D%40twist%2Cpitch_pitch%3D%40pitch%2Cradius_radius%3D%40radius%29-instance-method" class="signature"><strong>#copy_with</strong>(rotaxis _rotaxis = @rotaxis, twist _twist = @twist, pitch _pitch = @pitch, radius _radius = @radius)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#pitch:Float64-instance-method" class="signature"><strong>#pitch</strong> : Float64</a>
+        <a href="#pitch%3AFloat64-instance-method" class="signature"><strong>#pitch</strong> : Float64</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#radius:Float64-instance-method" class="signature"><strong>#radius</strong> : Float64</a>
+        <a href="#radius%3AFloat64-instance-method" class="signature"><strong>#radius</strong> : Float64</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#rotaxis:Vec3-instance-method" class="signature"><strong>#rotaxis</strong> : Vec3</a>
+        <a href="#rotaxis%3AVec3-instance-method" class="signature"><strong>#rotaxis</strong> : Vec3</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_q:Quaternion-instance-method" class="signature"><strong>#to_q</strong> : Quaternion</a>
+        <a href="#to_q%3AQuat-instance-method" class="signature"><strong>#to_q</strong> : Quat</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#twist:Float64-instance-method" class="signature"><strong>#twist</strong> : Float64</a>
+        <a href="#twist%3AFloat64-instance-method" class="signature"><strong>#twist</strong> : Float64</a>
         
       </li>
     
@@ -955,13 +955,13 @@
         
         def self.<strong>new</strong>(rotaxis : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, twist : Float64, pitch : Float64, radius : Float64)
 
-        <a class="method-permalink" href="#new(rotaxis:Vec3,twist:Float64,pitch:Float64,radius:Float64)-class-method">#</a>
+        <a class="method-permalink" href="#new%28rotaxis%3AVec3%2Ctwist%3AFloat64%2Cpitch%3AFloat64%2Cradius%3AFloat64%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/hlxparams.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/hlxparams.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -991,7 +991,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/hlxparams.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/hlxparams.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1001,13 +1001,13 @@
         
         def <strong>copy_with</strong>(rotaxis _rotaxis = @rotaxis, twist _twist = @twist, pitch _pitch = @pitch, radius _radius = @radius)
 
-        <a class="method-permalink" href="#copy_with(rotaxis_rotaxis=@rotaxis,twist_twist=@twist,pitch_pitch=@pitch,radius_radius=@radius)-instance-method">#</a>
+        <a class="method-permalink" href="#copy_with%28rotaxis_rotaxis%3D%40rotaxis%2Ctwist_twist%3D%40twist%2Cpitch_pitch%3D%40pitch%2Cradius_radius%3D%40radius%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/hlxparams.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/hlxparams.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1017,7 +1017,7 @@
         
         def <strong>pitch</strong> : Float64
 
-        <a class="method-permalink" href="#pitch:Float64-instance-method">#</a>
+        <a class="method-permalink" href="#pitch%3AFloat64-instance-method">#</a>
       </div>
       
       <br/>
@@ -1031,7 +1031,7 @@
         
         def <strong>radius</strong> : Float64
 
-        <a class="method-permalink" href="#radius:Float64-instance-method">#</a>
+        <a class="method-permalink" href="#radius%3AFloat64-instance-method">#</a>
       </div>
       
       <br/>
@@ -1045,7 +1045,7 @@
         
         def <strong>rotaxis</strong> : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>
 
-        <a class="method-permalink" href="#rotaxis:Vec3-instance-method">#</a>
+        <a class="method-permalink" href="#rotaxis%3AVec3-instance-method">#</a>
       </div>
       
       <br/>
@@ -1054,18 +1054,18 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="to_q:Quaternion-instance-method">
+    <div class="entry-detail" id="to_q:Quat-instance-method">
       <div class="signature">
         
-        def <strong>to_q</strong> : <a href="../../Chem/Spatial/Quaternion.html">Quaternion</a>
+        def <strong>to_q</strong> : <a href="../../Chem/Spatial/Quat.html">Quat</a>
 
-        <a class="method-permalink" href="#to_q:Quaternion-instance-method">#</a>
+        <a class="method-permalink" href="#to_q%3AQuat-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/hlxparams.cr#L7" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/hlxparams.cr#L7" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1075,7 +1075,7 @@
         
         def <strong>twist</strong> : Float64
 
-        <a class="method-permalink" href="#twist:Float64-instance-method">#</a>
+        <a class="method-permalink" href="#twist%3AFloat64-instance-method">#</a>
       </div>
       
       <br/>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.0.0">
+<meta name="generator" content="Crystal Docs 1.1.1">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -506,8 +506,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Quaternion" data-name="chem::spatial::quaternion">
-      <a href="../../Chem/Spatial/Quaternion.html">Quaternion</a>
+  <li class=" " data-id="chem.cr/Chem/Spatial/Quat" data-name="chem::spatial::quat">
+      <a href="../../Chem/Spatial/Quat.html">Quat</a>
       
     </li>
   
@@ -837,7 +837,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L38" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L38" target="_blank">
         chem/topology/types.cr
       </a>
     
@@ -859,12 +859,12 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new(lhs:AtomType,rhs:AtomType,order:Int=1)-class-method" class="signature"><strong>.new</strong>(lhs : AtomType, rhs : AtomType, order : Int = <span class="n">1</span>)</a>
+        <a href="#new%28lhs%3AAtomType%2Crhs%3AAtomType%2Corder%3AInt%3D1%29-class-method" class="signature"><strong>.new</strong>(lhs : AtomType, rhs : AtomType, order : Int = <span class="n">1</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new(lhs:String,rhs:String,order:Int=1):self-class-method" class="signature"><strong>.new</strong>(lhs : String, rhs : String, order : Int = <span class="n">1</span>) : <span class="k">self</span></a>
+        <a href="#new%28lhs%3AString%2Crhs%3AString%2Corder%3AInt%3D1%29%3Aself-class-method" class="signature"><strong>.new</strong>(lhs : String, rhs : String, order : Int = <span class="n">1</span>) : <span class="k">self</span></a>
         
       </li>
     
@@ -885,66 +885,66 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#==(rhs:self):Bool-instance-method" class="signature"><strong>#==</strong>(rhs : <span class="k">self</span>) : Bool</a>
+        <a href="#%3D%3D%28rhs%3Aself%29%3ABool-instance-method" class="signature"><strong>#==</strong>(rhs : <span class="k">self</span>) : Bool</a>
         
           <div class="summary"><p>Returns <code>true</code> if this reference is the same as <em>other</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#includes?(name:String):Bool-instance-method" class="signature"><strong>#includes?</strong>(name : String) : Bool</a>
+        <a href="#includes%3F%28name%3AString%29%3ABool-instance-method" class="signature"><strong>#includes?</strong>(name : String) : Bool</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#inspect(io:IO):Nil-instance-method" class="signature"><strong>#inspect</strong>(io : IO) : Nil</a>
+        <a href="#inspect%28io%3AIO%29%3ANil-instance-method" class="signature"><strong>#inspect</strong>(io : IO) : Nil</a>
         
           <div class="summary"><p>Appends a String representation of this object which includes its class name, its object address and the values of all instance variables.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#inverse:self-instance-method" class="signature"><strong>#inverse</strong> : <span class="k">self</span></a>
+        <a href="#inverse%3Aself-instance-method" class="signature"><strong>#inverse</strong> : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#order:Int32-instance-method" class="signature"><strong>#order</strong> : Int32</a>
+        <a href="#order%3AInt32-instance-method" class="signature"><strong>#order</strong> : Int32</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#other(atom_t:AtomType):AtomType-instance-method" class="signature"><strong>#other</strong>(atom_t : AtomType) : AtomType</a>
+        <a href="#other%28atom_t%3AAtomType%29%3AAtomType-instance-method" class="signature"><strong>#other</strong>(atom_t : AtomType) : AtomType</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#other(name:String):AtomType-instance-method" class="signature"><strong>#other</strong>(name : String) : AtomType</a>
+        <a href="#other%28name%3AString%29%3AAtomType-instance-method" class="signature"><strong>#other</strong>(name : String) : AtomType</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#size(*args,**options)-instance-method" class="signature"><strong>#size</strong>(*args, **options)</a>
+        <a href="#size%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#size</strong>(*args, **options)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#size(*args,**options,&)-instance-method" class="signature"><strong>#size</strong>(*args, **options, &)</a>
+        <a href="#size%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#size</strong>(*args, **options, &)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_char:Char-instance-method" class="signature"><strong>#to_char</strong> : Char</a>
+        <a href="#to_char%3AChar-instance-method" class="signature"><strong>#to_char</strong> : Char</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#unsafe_fetch(*args,**options)-instance-method" class="signature"><strong>#unsafe_fetch</strong>(*args, **options)</a>
+        <a href="#unsafe_fetch%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#unsafe_fetch</strong>(*args, **options)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#unsafe_fetch(*args,**options,&)-instance-method" class="signature"><strong>#unsafe_fetch</strong>(*args, **options, &)</a>
+        <a href="#unsafe_fetch%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#unsafe_fetch</strong>(*args, **options, &)</a>
         
       </li>
     
@@ -961,12 +961,12 @@
   <h3>Instance methods inherited from module <code><a href="../../Indexable.html">Indexable</a>(<a href="../../Chem/Topology/AtomType.html">Chem::Topology::AtomType</a>)</code></h3>
   
   
-    <a href="../../Indexable.html#index!(ofobject,offset:Int=0):Int-instance-method" class="tooltip">
+    <a href="../../Indexable.html#index%21%28ofobject%2Coffset%3AInt%3D0%29%3AInt-instance-method" class="tooltip">
       <span>index!(of object, offset : Int = <span class="n">0</span>) : Int<br/>index!(offset : Int = <span class="n">0</span>, &block : T -> Bool) : Int</span>
     index!</a>, 
     
   
-    <a href="../../Indexable.html#mean:Float64-instance-method" class="tooltip">
+    <a href="../../Indexable.html#mean%3AFloat64-instance-method" class="tooltip">
       <span>mean : Float64<br/>mean(& : T -> Number) : Float64</span>
     mean</a>
     
@@ -1037,13 +1037,13 @@
         
         def self.<strong>new</strong>(lhs : <a href="../../Chem/Topology/AtomType.html">AtomType</a>, rhs : <a href="../../Chem/Topology/AtomType.html">AtomType</a>, order : Int = <span class="n">1</span>)
 
-        <a class="method-permalink" href="#new(lhs:AtomType,rhs:AtomType,order:Int=1)-class-method">#</a>
+        <a class="method-permalink" href="#new%28lhs%3AAtomType%2Crhs%3AAtomType%2Corder%3AInt%3D1%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L46" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L46" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1053,13 +1053,13 @@
         
         def self.<strong>new</strong>(lhs : String, rhs : String, order : Int = <span class="n">1</span>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#new(lhs:String,rhs:String,order:Int=1):self-class-method">#</a>
+        <a class="method-permalink" href="#new%28lhs%3AString%2Crhs%3AString%2Corder%3AInt%3D1%29%3Aself-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L50" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L50" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1083,7 +1083,7 @@
         
         def <strong>==</strong>(rhs : <span class="k">self</span>) : Bool
 
-        <a class="method-permalink" href="#==(rhs:self):Bool-instance-method">#</a>
+        <a class="method-permalink" href="#%3D%3D%28rhs%3Aself%29%3ABool-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1098,7 +1098,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L54" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L54" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1108,13 +1108,13 @@
         
         def <strong>includes?</strong>(name : String) : Bool
 
-        <a class="method-permalink" href="#includes?(name:String):Bool-instance-method">#</a>
+        <a class="method-permalink" href="#includes%3F%28name%3AString%29%3ABool-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L60" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L60" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1124,7 +1124,7 @@
         
         def <strong>inspect</strong>(io : IO) : Nil
 
-        <a class="method-permalink" href="#inspect(io:IO):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#inspect%28io%3AIO%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1136,7 +1136,6 @@
           <p>Appends a String representation of this object
 which includes its class name, its object address
 and the values of all instance variables.</p>
-
 <pre><code class="language-crystal"><span class="k">class</span> <span class="t">Person</span>
   <span class="k">def</span> <span class="m">initialize</span>(@name : <span class="t">String</span>, @age : <span class="t">Int32</span>)
   <span class="k">end</span>
@@ -1148,7 +1147,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L64" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L64" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1158,13 +1157,13 @@ and the values of all instance variables.</p>
         
         def <strong>inverse</strong> : <span class="k">self</span>
 
-        <a class="method-permalink" href="#inverse:self-instance-method">#</a>
+        <a class="method-permalink" href="#inverse%3Aself-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L68" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L68" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1174,13 +1173,13 @@ and the values of all instance variables.</p>
         
         def <strong>order</strong> : Int32
 
-        <a class="method-permalink" href="#order:Int32-instance-method">#</a>
+        <a class="method-permalink" href="#order%3AInt32-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L41" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L41" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1190,13 +1189,13 @@ and the values of all instance variables.</p>
         
         def <strong>other</strong>(atom_t : <a href="../../Chem/Topology/AtomType.html">AtomType</a>) : <a href="../../Chem/Topology/AtomType.html">AtomType</a>
 
-        <a class="method-permalink" href="#other(atom_t:AtomType):AtomType-instance-method">#</a>
+        <a class="method-permalink" href="#other%28atom_t%3AAtomType%29%3AAtomType-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L72" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L72" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1206,13 +1205,13 @@ and the values of all instance variables.</p>
         
         def <strong>other</strong>(name : String) : <a href="../../Chem/Topology/AtomType.html">AtomType</a>
 
-        <a class="method-permalink" href="#other(name:String):AtomType-instance-method">#</a>
+        <a class="method-permalink" href="#other%28name%3AString%29%3AAtomType-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L83" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L83" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1222,13 +1221,13 @@ and the values of all instance variables.</p>
         
         def <strong>size</strong>(*args, **options)
 
-        <a class="method-permalink" href="#size(*args,**options)-instance-method">#</a>
+        <a class="method-permalink" href="#size%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L42" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L42" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1238,13 +1237,13 @@ and the values of all instance variables.</p>
         
         def <strong>size</strong>(*args, **options, &)
 
-        <a class="method-permalink" href="#size(*args,**options,&)-instance-method">#</a>
+        <a class="method-permalink" href="#size%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L42" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L42" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1254,13 +1253,13 @@ and the values of all instance variables.</p>
         
         def <strong>to_char</strong> : <a href="../../Char.html">Char</a>
 
-        <a class="method-permalink" href="#to_char:Char-instance-method">#</a>
+        <a class="method-permalink" href="#to_char%3AChar-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L94" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L94" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1270,13 +1269,13 @@ and the values of all instance variables.</p>
         
         def <strong>unsafe_fetch</strong>(*args, **options)
 
-        <a class="method-permalink" href="#unsafe_fetch(*args,**options)-instance-method">#</a>
+        <a class="method-permalink" href="#unsafe_fetch%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L42" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L42" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1286,13 +1285,13 @@ and the values of all instance variables.</p>
         
         def <strong>unsafe_fetch</strong>(*args, **options, &)
 
-        <a class="method-permalink" href="#unsafe_fetch(*args,**options,&)-instance-method">#</a>
+        <a class="method-permalink" href="#unsafe_fetch%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L42" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L42" target="_blank">View source</a>]
         
       </div>
     </div>

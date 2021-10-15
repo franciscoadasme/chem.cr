@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.0.0">
+<meta name="generator" content="Crystal Docs 1.1.1">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -506,8 +506,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Quaternion" data-name="chem::spatial::quaternion">
-      <a href="../Chem/Spatial/Quaternion.html">Quaternion</a>
+  <li class=" " data-id="chem.cr/Chem/Spatial/Quat" data-name="chem::spatial::quat">
+      <a href="../Chem/Spatial/Quat.html">Quat</a>
       
     </li>
   
@@ -837,7 +837,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/bond_array.cr#L2" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/bond_array.cr#L2" target="_blank">
         chem/core/bond_array.cr
       </a>
     
@@ -859,7 +859,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new(atom:Atom)-class-method" class="signature"><strong>.new</strong>(atom : Atom)</a>
+        <a href="#new%28atom%3AAtom%29-class-method" class="signature"><strong>.new</strong>(atom : Atom)</a>
         
       </li>
     
@@ -880,67 +880,67 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#%3C%3C(bond:Bond)-instance-method" class="signature"><strong>#<<</strong>(bond : Bond)</a>
+        <a href="#%3C%3C%28bond%3ABond%29-instance-method" class="signature"><strong>#<<</strong>(bond : Bond)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#[](atom:Atom):Bond-instance-method" class="signature"><strong>#[]</strong>(atom : Atom) : Bond</a>
+        <a href="#%5B%5D%28atom%3AAtom%29%3ABond-instance-method" class="signature"><strong>#[]</strong>(atom : Atom) : Bond</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#[]?(atom:Atom):Bond?-instance-method" class="signature"><strong>#[]?</strong>(atom : Atom) : Bond?</a>
+        <a href="#%5B%5D%3F%28atom%3AAtom%29%3ABond%3F-instance-method" class="signature"><strong>#[]?</strong>(atom : Atom) : Bond?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#add(other:Atom,order:Int32):Bond-instance-method" class="signature"><strong>#add</strong>(other : Atom, order : Int32) : Bond</a>
+        <a href="#add%28other%3AAtom%2Corder%3AInt32%29%3ABond-instance-method" class="signature"><strong>#add</strong>(other : Atom, order : Int32) : Bond</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#add(bond:Bond):Bond-instance-method" class="signature"><strong>#add</strong>(bond : Bond) : Bond</a>
+        <a href="#add%28bond%3ABond%29%3ABond-instance-method" class="signature"><strong>#add</strong>(bond : Bond) : Bond</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#add(other:Atom,kind:Bond::Kind=:single):Bond-instance-method" class="signature"><strong>#add</strong>(other : Atom, kind : Bond::Kind = <span class="n">:single</span>) : Bond</a>
+        <a href="#add%28other%3AAtom%2Ckind%3ABond%3A%3AKind%3D%3Asingle%29%3ABond-instance-method" class="signature"><strong>#add</strong>(other : Atom, kind : Bond::Kind = <span class="n">:single</span>) : Bond</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#delete(bond:Bond)-instance-method" class="signature"><strong>#delete</strong>(bond : Bond)</a>
+        <a href="#delete%28bond%3ABond%29-instance-method" class="signature"><strong>#delete</strong>(bond : Bond)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#delete(other:Atom)-instance-method" class="signature"><strong>#delete</strong>(other : Atom)</a>
+        <a href="#delete%28other%3AAtom%29-instance-method" class="signature"><strong>#delete</strong>(other : Atom)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#full?:Bool-instance-method" class="signature"><strong>#full?</strong> : Bool</a>
+        <a href="#full%3F%3ABool-instance-method" class="signature"><strong>#full?</strong> : Bool</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#size(*args,**options)-instance-method" class="signature"><strong>#size</strong>(*args, **options)</a>
+        <a href="#size%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#size</strong>(*args, **options)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#size(*args,**options,&)-instance-method" class="signature"><strong>#size</strong>(*args, **options, &)</a>
+        <a href="#size%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#size</strong>(*args, **options, &)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#unsafe_fetch(*args,**options)-instance-method" class="signature"><strong>#unsafe_fetch</strong>(*args, **options)</a>
+        <a href="#unsafe_fetch%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#unsafe_fetch</strong>(*args, **options)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#unsafe_fetch(*args,**options,&)-instance-method" class="signature"><strong>#unsafe_fetch</strong>(*args, **options, &)</a>
+        <a href="#unsafe_fetch%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#unsafe_fetch</strong>(*args, **options, &)</a>
         
       </li>
     
@@ -957,12 +957,12 @@
   <h3>Instance methods inherited from module <code><a href="../Indexable.html">Indexable</a>(<a href="../Chem/Bond.html">Chem::Bond</a>)</code></h3>
   
   
-    <a href="../Indexable.html#index!(ofobject,offset:Int=0):Int-instance-method" class="tooltip">
+    <a href="../Indexable.html#index%21%28ofobject%2Coffset%3AInt%3D0%29%3AInt-instance-method" class="tooltip">
       <span>index!(of object, offset : Int = <span class="n">0</span>) : Int<br/>index!(offset : Int = <span class="n">0</span>, &block : T -> Bool) : Int</span>
     index!</a>, 
     
   
-    <a href="../Indexable.html#mean:Float64-instance-method" class="tooltip">
+    <a href="../Indexable.html#mean%3AFloat64-instance-method" class="tooltip">
       <span>mean : Float64<br/>mean(& : T -> Number) : Float64</span>
     mean</a>
     
@@ -1033,13 +1033,13 @@
         
         def self.<strong>new</strong>(atom : <a href="../Chem/Atom.html">Atom</a>)
 
-        <a class="method-permalink" href="#new(atom:Atom)-class-method">#</a>
+        <a class="method-permalink" href="#new%28atom%3AAtom%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/bond_array.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/bond_array.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1063,13 +1063,13 @@
         
         def <strong><<</strong>(bond : <a href="../Chem/Bond.html">Bond</a>)
 
-        <a class="method-permalink" href="#%3C%3C(bond:Bond)-instance-method">#</a>
+        <a class="method-permalink" href="#%3C%3C%28bond%3ABond%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/bond_array.cr#L23" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/bond_array.cr#L23" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1079,13 +1079,13 @@
         
         def <strong>[]</strong>(atom : <a href="../Chem/Atom.html">Atom</a>) : <a href="../Chem/Bond.html">Bond</a>
 
-        <a class="method-permalink" href="#[](atom:Atom):Bond-instance-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%28atom%3AAtom%29%3ABond-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/bond_array.cr#L14" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/bond_array.cr#L14" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1095,13 +1095,13 @@
         
         def <strong>[]?</strong>(atom : <a href="../Chem/Atom.html">Atom</a>) : <a href="../Chem/Bond.html">Bond</a>?
 
-        <a class="method-permalink" href="#[]?(atom:Atom):Bond?-instance-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%3F%28atom%3AAtom%29%3ABond%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/bond_array.cr#L19" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/bond_array.cr#L19" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1111,13 +1111,13 @@
         
         def <strong>add</strong>(other : <a href="../Chem/Atom.html">Atom</a>, order : Int32) : <a href="../Chem/Bond.html">Bond</a>
 
-        <a class="method-permalink" href="#add(other:Atom,order:Int32):Bond-instance-method">#</a>
+        <a class="method-permalink" href="#add%28other%3AAtom%2Corder%3AInt32%29%3ABond-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/bond_array.cr#L46" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/bond_array.cr#L46" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1127,13 +1127,13 @@
         
         def <strong>add</strong>(bond : <a href="../Chem/Bond.html">Bond</a>) : <a href="../Chem/Bond.html">Bond</a>
 
-        <a class="method-permalink" href="#add(bond:Bond):Bond-instance-method">#</a>
+        <a class="method-permalink" href="#add%28bond%3ABond%29%3ABond-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/bond_array.cr#L27" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/bond_array.cr#L27" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1143,13 +1143,13 @@
         
         def <strong>add</strong>(other : <a href="../Chem/Atom.html">Atom</a>, kind : <a href="../Chem/Bond/Kind.html">Bond::Kind</a> = <span class="n">:single</span>) : <a href="../Chem/Bond.html">Bond</a>
 
-        <a class="method-permalink" href="#add(other:Atom,kind:Bond::Kind=:single):Bond-instance-method">#</a>
+        <a class="method-permalink" href="#add%28other%3AAtom%2Ckind%3ABond%3A%3AKind%3D%3Asingle%29%3ABond-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/bond_array.cr#L38" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/bond_array.cr#L38" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1159,13 +1159,13 @@
         
         def <strong>delete</strong>(bond : <a href="../Chem/Bond.html">Bond</a>)
 
-        <a class="method-permalink" href="#delete(bond:Bond)-instance-method">#</a>
+        <a class="method-permalink" href="#delete%28bond%3ABond%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/bond_array.cr#L56" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/bond_array.cr#L56" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1175,13 +1175,13 @@
         
         def <strong>delete</strong>(other : <a href="../Chem/Atom.html">Atom</a>)
 
-        <a class="method-permalink" href="#delete(other:Atom)-instance-method">#</a>
+        <a class="method-permalink" href="#delete%28other%3AAtom%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/bond_array.cr#L50" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/bond_array.cr#L50" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1191,13 +1191,13 @@
         
         def <strong>full?</strong> : Bool
 
-        <a class="method-permalink" href="#full?:Bool-instance-method">#</a>
+        <a class="method-permalink" href="#full%3F%3ABool-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/bond_array.cr#L62" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/bond_array.cr#L62" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1207,13 +1207,13 @@
         
         def <strong>size</strong>(*args, **options)
 
-        <a class="method-permalink" href="#size(*args,**options)-instance-method">#</a>
+        <a class="method-permalink" href="#size%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/bond_array.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/bond_array.cr#L8" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1223,13 +1223,13 @@
         
         def <strong>size</strong>(*args, **options, &)
 
-        <a class="method-permalink" href="#size(*args,**options,&)-instance-method">#</a>
+        <a class="method-permalink" href="#size%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/bond_array.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/bond_array.cr#L8" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1239,13 +1239,13 @@
         
         def <strong>unsafe_fetch</strong>(*args, **options)
 
-        <a class="method-permalink" href="#unsafe_fetch(*args,**options)-instance-method">#</a>
+        <a class="method-permalink" href="#unsafe_fetch%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/bond_array.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/bond_array.cr#L8" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1255,13 +1255,13 @@
         
         def <strong>unsafe_fetch</strong>(*args, **options, &)
 
-        <a class="method-permalink" href="#unsafe_fetch(*args,**options,&)-instance-method">#</a>
+        <a class="method-permalink" href="#unsafe_fetch%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/bond_array.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/bond_array.cr#L8" target="_blank">View source</a>]
         
       </div>
     </div>

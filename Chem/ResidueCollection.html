@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.0.0">
+<meta name="generator" content="Crystal Docs 1.1.1">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -506,8 +506,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Quaternion" data-name="chem::spatial::quaternion">
-      <a href="../Chem/Spatial/Quaternion.html">Quaternion</a>
+  <li class=" " data-id="chem.cr/Chem/Spatial/Quat" data-name="chem::spatial::quat">
+      <a href="../Chem/Spatial/Quat.html">Quat</a>
       
     </li>
   
@@ -843,7 +843,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/residue_collection.cr#L2" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/residue_collection.cr#L2" target="_blank">
         chem/core/residue_collection.cr
       </a>
     
@@ -869,77 +869,77 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#each_residue:Iterator(Residue)-instance-method" class="signature"><strong>#each_residue</strong> : Iterator(Residue)</a>
+        <a href="#each_residue%3AIterator%28Residue%29-instance-method" class="signature"><strong>#each_residue</strong> : Iterator(Residue)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#each_residue(&block:Residue-%3E)-instance-method" class="signature"><strong>#each_residue</strong>(&block : Residue -> )</a>
+        <a href="#each_residue%28%26block%3AResidue-%3E%29-instance-method" class="signature"><strong>#each_residue</strong>(&block : Residue -> )</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#each_residue_fragment(&:ResidueView-%3E):Nil-instance-method" class="signature"><strong>#each_residue_fragment</strong>(& : ResidueView -> ) : Nil</a>
+        <a href="#each_residue_fragment%28%26%3AResidueView-%3E%29%3ANil-instance-method" class="signature"><strong>#each_residue_fragment</strong>(& : ResidueView -> ) : Nil</a>
         
           <div class="summary"><p>Iterates over residue-wise fragments.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#each_secondary_structure(reuse:Bool%7CArray(Residue)=false,strict:Bool=true,handedness:Bool=true):Iterator(ResidueView)-instance-method" class="signature"><strong>#each_secondary_structure</strong>(reuse : Bool | Array(Residue) = <span class="n">false</span>, strict : Bool = <span class="n">true</span>, handedness : Bool = <span class="n">true</span>) : Iterator(ResidueView)</a>
+        <a href="#each_secondary_structure%28reuse%3ABool%7CArray%28Residue%29%3Dfalse%2Cstrict%3ABool%3Dtrue%2Chandedness%3ABool%3Dtrue%29%3AIterator%28ResidueView%29-instance-method" class="signature"><strong>#each_secondary_structure</strong>(reuse : Bool | Array(Residue) = <span class="n">false</span>, strict : Bool = <span class="n">true</span>, handedness : Bool = <span class="n">true</span>) : Iterator(ResidueView)</a>
         
           <div class="summary"><p>Returns an iterator over secondary structure elements (SSEs).</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#each_secondary_structure(reuse:Bool%7CArray(Residue)=false,strict:Bool=true,handedness:Bool=true,&:ResidueView,Protein::SecondaryStructure-%3E):Nil-instance-method" class="signature"><strong>#each_secondary_structure</strong>(reuse : Bool | Array(Residue) = <span class="n">false</span>, strict : Bool = <span class="n">true</span>, handedness : Bool = <span class="n">true</span>, & : ResidueView, Protein::SecondaryStructure -> ) : Nil</a>
+        <a href="#each_secondary_structure%28reuse%3ABool%7CArray%28Residue%29%3Dfalse%2Cstrict%3ABool%3Dtrue%2Chandedness%3ABool%3Dtrue%2C%26%3AResidueView%2CProtein%3A%3ASecondaryStructure-%3E%29%3ANil-instance-method" class="signature"><strong>#each_secondary_structure</strong>(reuse : Bool | Array(Residue) = <span class="n">false</span>, strict : Bool = <span class="n">true</span>, handedness : Bool = <span class="n">true</span>, & : ResidueView, Protein::SecondaryStructure -> ) : Nil</a>
         
           <div class="summary"><p>Iterates over secondary structure elements (SSEs), yielding both the residues and secondary structure.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#link_bond:Topology::BondType?-instance-method" class="signature"><strong>#link_bond</strong> : Topology::BondType?</a>
+        <a href="#link_bond%3ATopology%3A%3ABondType%3F-instance-method" class="signature"><strong>#link_bond</strong> : Topology::BondType?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#n_residues:Int32-instance-method" class="signature"><strong>#n_residues</strong> : Int32</a>
+        <a href="#n_residues%3AInt32-instance-method" class="signature"><strong>#n_residues</strong> : Int32</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#reset_secondary_structure:self-instance-method" class="signature"><strong>#reset_secondary_structure</strong> : <span class="k">self</span></a>
+        <a href="#reset_secondary_structure%3Aself-instance-method" class="signature"><strong>#reset_secondary_structure</strong> : <span class="k">self</span></a>
         
           <div class="summary"><p>Sets secondary structure of every residue to none.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#residue_fragments:Array(ResidueView)-instance-method" class="signature"><strong>#residue_fragments</strong> : Array(ResidueView)</a>
+        <a href="#residue_fragments%3AArray%28ResidueView%29-instance-method" class="signature"><strong>#residue_fragments</strong> : Array(ResidueView)</a>
         
           <div class="summary"><p>Returns residue-wise fragments.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#residues:ResidueView-instance-method" class="signature"><strong>#residues</strong> : ResidueView</a>
+        <a href="#residues%3AResidueView-instance-method" class="signature"><strong>#residues</strong> : ResidueView</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#sec=(seclist:Array(Protein::SecondaryStructure)):Array(Protein::SecondaryStructure)-instance-method" class="signature"><strong>#sec=</strong>(seclist : Array(Protein::SecondaryStructure)) : Array(Protein::SecondaryStructure)</a>
+        <a href="#sec%3D%28seclist%3AArray%28Protein%3A%3ASecondaryStructure%29%29%3AArray%28Protein%3A%3ASecondaryStructure%29-instance-method" class="signature"><strong>#sec=</strong>(seclist : Array(Protein::SecondaryStructure)) : Array(Protein::SecondaryStructure)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#sec=(sec:Protein::SecondaryStructure):Protein::SecondaryStructure-instance-method" class="signature"><strong>#sec=</strong>(sec : Protein::SecondaryStructure) : Protein::SecondaryStructure</a>
+        <a href="#sec%3D%28sec%3AProtein%3A%3ASecondaryStructure%29%3AProtein%3A%3ASecondaryStructure-instance-method" class="signature"><strong>#sec=</strong>(sec : Protein::SecondaryStructure) : Protein::SecondaryStructure</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#secondary_structures(strict:Bool=true,handedness:Bool=true):Array(ResidueView)-instance-method" class="signature"><strong>#secondary_structures</strong>(strict : Bool = <span class="n">true</span>, handedness : Bool = <span class="n">true</span>) : Array(ResidueView)</a>
+        <a href="#secondary_structures%28strict%3ABool%3Dtrue%2Chandedness%3ABool%3Dtrue%29%3AArray%28ResidueView%29-instance-method" class="signature"><strong>#secondary_structures</strong>(strict : Bool = <span class="n">true</span>, handedness : Bool = <span class="n">true</span>) : Array(ResidueView)</a>
         
       </li>
     
@@ -972,13 +972,13 @@
         abstract 
         def <strong>each_residue</strong> : Iterator(<a href="../Chem/Residue.html">Residue</a>)
 
-        <a class="method-permalink" href="#each_residue:Iterator(Residue)-instance-method">#</a>
+        <a class="method-permalink" href="#each_residue%3AIterator%28Residue%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/residue_collection.cr#L3" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/residue_collection.cr#L3" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -988,13 +988,13 @@
         abstract 
         def <strong>each_residue</strong>(&block : <a href="../Chem/Residue.html">Residue</a> -> )
 
-        <a class="method-permalink" href="#each_residue(&block:Residue-%3E)-instance-method">#</a>
+        <a class="method-permalink" href="#each_residue%28%26block%3AResidue-%3E%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/residue_collection.cr#L4" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/residue_collection.cr#L4" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1004,17 +1004,15 @@
         
         def <strong>each_residue_fragment</strong>(& : <a href="../Chem/ResidueView.html">ResidueView</a> -> ) : Nil
 
-        <a class="method-permalink" href="#each_residue_fragment(&:ResidueView-%3E):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#each_residue_fragment%28%26%3AResidueView-%3E%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Iterates over residue-wise fragments.</p>
-
 <p>A fragment is an array of inter-connected residues. Fragments are
-dinamically computed by iterating over <code><a href="../Chem/Residue.html#bonded_residues:Array(Residue)-instance-method">Residue#bonded_residues</a></code>
+dinamically computed by iterating over <code><a href="../Chem/Residue.html#bonded_residues%3AArray%28Residue%29-instance-method">Residue#bonded_residues</a></code>
 of the selected residues.</p>
-
 <p><span class="flag purple">NOTE</span>  fragments are scoped to the current list of residues such
 that bonded residues not contained in the list are omitted, e.g.,
 given the list of residues [1, 2, 3, 4, 7, 8] belonging to the
@@ -1025,7 +1023,7 @@ sequence 1-2-3-4-5-6 7-8-9, this method will return [[1, 2, 3, 4],
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/residue_collection.cr#L18" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/residue_collection.cr#L18" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1035,22 +1033,19 @@ sequence 1-2-3-4-5-6 7-8-9, this method will return [[1, 2, 3, 4],
         
         def <strong>each_secondary_structure</strong>(reuse : Bool | <a href="../Array.html">Array</a>(<a href="../Chem/Residue.html">Residue</a>) = <span class="n">false</span>, strict : Bool = <span class="n">true</span>, handedness : Bool = <span class="n">true</span>) : Iterator(<a href="../Chem/ResidueView.html">ResidueView</a>)
 
-        <a class="method-permalink" href="#each_secondary_structure(reuse:Bool%7CArray(Residue)=false,strict:Bool=true,handedness:Bool=true):Iterator(ResidueView)-instance-method">#</a>
+        <a class="method-permalink" href="#each_secondary_structure%28reuse%3ABool%7CArray%28Residue%29%3Dfalse%2Cstrict%3ABool%3Dtrue%2Chandedness%3ABool%3Dtrue%29%3AIterator%28ResidueView%29-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns an iterator over secondary structure elements (SSEs).</p>
-
 <p>SSEs are defined as segments of consecutive, bonded residues that
 have the same secondary structure. If <code>strict</code> is <code>false</code>,
 residues are grouped by their secondary structure type. If
 <code>handedness</code> is <code>false</code>, handedness is not taken into account when
-<code>strict</code> is <code>false</code>. See <code><a href="../Chem/Protein/SecondaryStructure.html#equals?(rhs:self,strict:Bool=true,handedness:Bool=true):Bool-instance-method">Protein::SecondaryStructure#equals?</a></code>.</p>
-
+<code>strict</code> is <code>false</code>. See <code><a href="../Chem/Protein/SecondaryStructure.html#equals%3F%28rhs%3Aself%2Cstrict%3ABool%3Dtrue%2Chandedness%3ABool%3Dtrue%29%3ABool-instance-method">Protein::SecondaryStructure#equals?</a></code>.</p>
 <p>Let's say a <code>structure</code> has 25 residues with two beta strands
 spanning residues 3-12 and 18-23, then:</p>
-
 <pre><code class="language-crystal">iter <span class="o">=</span> structure.each_secondary_structure
 iter.<span class="k">next</span>.map <span class="o">&amp;</span>.number <span class="c"># =&gt; [1, 2]</span>
 iter.<span class="k">next</span>.map <span class="o">&amp;</span>.number <span class="c"># =&gt; [3, 4, 5, 6, 7, 8, 9, 10, 11, 12]</span>
@@ -1058,14 +1053,14 @@ iter.<span class="k">next</span>.map <span class="o">&amp;</span>.number <span c
 iter.<span class="k">next</span>.map <span class="o">&amp;</span>.number <span class="c"># =&gt; [18, 19, 20, 21, 22, 23]</span>
 iter.<span class="k">next</span>.map <span class="o">&amp;</span>.number <span class="c"># =&gt; [24, 25]</span>
 iter.<span class="k">next</span>              <span class="c"># =&gt; Iterator::Stop::INSTANCE</span></code></pre>
-
 <p>Note that non-protein residues are skipped over.</p>
-
 <p>By default, a new array is created and yielded for each slice when
 invoking <code>next</code>.</p>
-
-<ul><li>If <em>reuse</em> is <code>false</code>, a new array is created for each chunk.</li><li>If <em>reuse</em> is <code>true</code>, an array is created once and reused.</li><li>If <em>reuse</em> is an <code><a href="../Array.html">Array</a></code>, it will be reused instead.</li></ul>
-
+<ul>
+<li>If <em>reuse</em> is <code>false</code>, a new array is created for each chunk.</li>
+<li>If <em>reuse</em> is <code>true</code>, an array is created once and reused.</li>
+<li>If <em>reuse</em> is an <code><a href="../Array.html">Array</a></code>, it will be reused instead.</li>
+</ul>
 <p>The latter can be used to prevent many memory allocations when
 each slice of interest is to be used in a read-only fashion.</p>
         </div>
@@ -1073,7 +1068,7 @@ each slice of interest is to be used in a read-only fashion.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/residue_collection.cr#L66" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/residue_collection.cr#L66" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1083,42 +1078,37 @@ each slice of interest is to be used in a read-only fashion.</p>
         
         def <strong>each_secondary_structure</strong>(reuse : Bool | <a href="../Array.html">Array</a>(<a href="../Chem/Residue.html">Residue</a>) = <span class="n">false</span>, strict : Bool = <span class="n">true</span>, handedness : Bool = <span class="n">true</span>, & : <a href="../Chem/ResidueView.html">ResidueView</a>, <a href="../Chem/Protein/SecondaryStructure.html">Protein::SecondaryStructure</a> -> ) : Nil
 
-        <a class="method-permalink" href="#each_secondary_structure(reuse:Bool%7CArray(Residue)=false,strict:Bool=true,handedness:Bool=true,&:ResidueView,Protein::SecondaryStructure-%3E):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#each_secondary_structure%28reuse%3ABool%7CArray%28Residue%29%3Dfalse%2Cstrict%3ABool%3Dtrue%2Chandedness%3ABool%3Dtrue%2C%26%3AResidueView%2CProtein%3A%3ASecondaryStructure-%3E%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Iterates over secondary structure elements (SSEs), yielding both
 the residues and secondary structure.</p>
-
 <p>SSEs are defined as segments of consecutive, bonded residues that
 have the same secondary structure. If <code>strict</code> is <code>false</code>,
 residues are grouped by their secondary structure type. If
 <code>handedness</code> is <code>false</code>, handedness is not taken into account when
-<code>strict</code> is <code>false</code>. See <code><a href="../Chem/Protein/SecondaryStructure.html#equals?(rhs:self,strict:Bool=true,handedness:Bool=true):Bool-instance-method">Protein::SecondaryStructure#equals?</a></code>.</p>
-
+<code>strict</code> is <code>false</code>. See <code><a href="../Chem/Protein/SecondaryStructure.html#equals%3F%28rhs%3Aself%2Cstrict%3ABool%3Dtrue%2Chandedness%3ABool%3Dtrue%29%3ABool-instance-method">Protein::SecondaryStructure#equals?</a></code>.</p>
 <p>Let's say a <code>structure</code> has 25 residues with two beta strands
 spanning residues 3-12 and 18-23, then:</p>
-
 <pre><code class="language-crystal">structure.each_secondary_structure <span class="k">do</span> <span class="o">|</span>sec, ary<span class="o">|</span>
   puts <span class="s">&quot;</span><span class="i">#{</span>sec.to_s<span class="i">}</span><span class="s"> at </span><span class="i">#{</span>ary[<span class="n">0</span>].number<span class="i">}</span><span class="s">..</span><span class="i">#{</span>ary[<span class="n">-1</span>].number<span class="i">}</span><span class="s">&quot;</span>
 <span class="k">end</span></code></pre>
-
 <p>Prints:</p>
-
 <pre><code class="language-text">None at 1..2
 BetaStrand at 3..12
 None at 13..17
 BetaStrand at 18..23
 None at 24..25</code></pre>
-
 <p>Note that non-protein residues are skipped over.</p>
-
 <p>By default, a new array is created and yielded for each slice when
 invoking <code>next</code>.</p>
-
-<ul><li>If <em>reuse</em> is <code>false</code>, a new array is created for each chunk.</li><li>If <em>reuse</em> is <code>true</code>, an array is created once and reused.</li><li>If <em>reuse</em> is an <code><a href="../Array.html">Array</a></code>, it will be reused instead.</li></ul>
-
+<ul>
+<li>If <em>reuse</em> is <code>false</code>, a new array is created for each chunk.</li>
+<li>If <em>reuse</em> is <code>true</code>, an array is created once and reused.</li>
+<li>If <em>reuse</em> is an <code><a href="../Array.html">Array</a></code>, it will be reused instead.</li>
+</ul>
 <p>The latter can be used to prevent many memory allocations when
 each slice of interest is to be used in a read-only fashion.</p>
         </div>
@@ -1126,7 +1116,7 @@ each slice of interest is to be used in a read-only fashion.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/residue_collection.cr#L117" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/residue_collection.cr#L117" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1136,13 +1126,13 @@ each slice of interest is to be used in a read-only fashion.</p>
         
         def <strong>link_bond</strong> : <a href="../Chem/Topology/BondType.html">Topology::BondType</a>?
 
-        <a class="method-permalink" href="#link_bond:Topology::BondType?-instance-method">#</a>
+        <a class="method-permalink" href="#link_bond%3ATopology%3A%3ABondType%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/residue_collection.cr#L136" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/residue_collection.cr#L136" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1152,13 +1142,13 @@ each slice of interest is to be used in a read-only fashion.</p>
         abstract 
         def <strong>n_residues</strong> : Int32
 
-        <a class="method-permalink" href="#n_residues:Int32-instance-method">#</a>
+        <a class="method-permalink" href="#n_residues%3AInt32-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/residue_collection.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/residue_collection.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1168,7 +1158,7 @@ each slice of interest is to be used in a read-only fashion.</p>
         
         def <strong>reset_secondary_structure</strong> : <span class="k">self</span>
 
-        <a class="method-permalink" href="#reset_secondary_structure:self-instance-method">#</a>
+        <a class="method-permalink" href="#reset_secondary_structure%3Aself-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1179,7 +1169,7 @@ each slice of interest is to be used in a read-only fashion.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/residue_collection.cr#L141" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/residue_collection.cr#L141" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1189,7 +1179,7 @@ each slice of interest is to be used in a read-only fashion.</p>
         
         def <strong>residue_fragments</strong> : <a href="../Array.html">Array</a>(<a href="../Chem/ResidueView.html">ResidueView</a>)
 
-        <a class="method-permalink" href="#residue_fragments:Array(ResidueView)-instance-method">#</a>
+        <a class="method-permalink" href="#residue_fragments%3AArray%28ResidueView%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1200,7 +1190,7 @@ each slice of interest is to be used in a read-only fashion.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/residue_collection.cr#L147" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/residue_collection.cr#L147" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1210,13 +1200,13 @@ each slice of interest is to be used in a read-only fashion.</p>
         
         def <strong>residues</strong> : <a href="../Chem/ResidueView.html">ResidueView</a>
 
-        <a class="method-permalink" href="#residues:ResidueView-instance-method">#</a>
+        <a class="method-permalink" href="#residues%3AResidueView-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/residue_collection.cr#L153" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/residue_collection.cr#L153" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1226,13 +1216,13 @@ each slice of interest is to be used in a read-only fashion.</p>
         
         def <strong>sec=</strong>(seclist : <a href="../Array.html">Array</a>(<a href="../Chem/Protein/SecondaryStructure.html">Protein::SecondaryStructure</a>)) : <a href="../Array.html">Array</a>(<a href="../Chem/Protein/SecondaryStructure.html">Protein::SecondaryStructure</a>)
 
-        <a class="method-permalink" href="#sec=(seclist:Array(Protein::SecondaryStructure)):Array(Protein::SecondaryStructure)-instance-method">#</a>
+        <a class="method-permalink" href="#sec%3D%28seclist%3AArray%28Protein%3A%3ASecondaryStructure%29%29%3AArray%28Protein%3A%3ASecondaryStructure%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/residue_collection.cr#L164" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/residue_collection.cr#L164" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1242,13 +1232,13 @@ each slice of interest is to be used in a read-only fashion.</p>
         
         def <strong>sec=</strong>(sec : <a href="../Chem/Protein/SecondaryStructure.html">Protein::SecondaryStructure</a>) : <a href="../Chem/Protein/SecondaryStructure.html">Protein::SecondaryStructure</a>
 
-        <a class="method-permalink" href="#sec=(sec:Protein::SecondaryStructure):Protein::SecondaryStructure-instance-method">#</a>
+        <a class="method-permalink" href="#sec%3D%28sec%3AProtein%3A%3ASecondaryStructure%29%3AProtein%3A%3ASecondaryStructure-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/residue_collection.cr#L159" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/residue_collection.cr#L159" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1258,13 +1248,13 @@ each slice of interest is to be used in a read-only fashion.</p>
         
         def <strong>secondary_structures</strong>(strict : Bool = <span class="n">true</span>, handedness : Bool = <span class="n">true</span>) : <a href="../Array.html">Array</a>(<a href="../Chem/ResidueView.html">ResidueView</a>)
 
-        <a class="method-permalink" href="#secondary_structures(strict:Bool=true,handedness:Bool=true):Array(ResidueView)-instance-method">#</a>
+        <a class="method-permalink" href="#secondary_structures%28strict%3ABool%3Dtrue%2Chandedness%3ABool%3Dtrue%29%3AArray%28ResidueView%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/residue_collection.cr#L170" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/residue_collection.cr#L170" target="_blank">View source</a>]
         
       </div>
     </div>

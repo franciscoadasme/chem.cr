@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.0.0">
+<meta name="generator" content="Crystal Docs 1.1.1">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -506,8 +506,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Quaternion" data-name="chem::spatial::quaternion">
-      <a href="../Chem/Spatial/Quaternion.html">Quaternion</a>
+  <li class=" " data-id="chem.cr/Chem/Spatial/Quat" data-name="chem::spatial::quat">
+      <a href="../Chem/Spatial/Quat.html">Quat</a>
       
     </li>
   
@@ -808,7 +808,6 @@
   </h2>
 
   <p>Registers a file format.</p>
-
 <p>The annotated type provides the implementation of a <em>file format</em>
 that encodes an <em>encoded type</em>. The <em>file format</em> is determined from
 the annotated type's name, where the last component of the fully
@@ -817,12 +816,15 @@ of the same name will be added to the <code><a href="../Chem/Format.html">Format
 declared extensions and file patterns will be associated with the
 corresponding file format. This annotation accepts the following
 named arguments:</p>
-
-<ul><li><strong>ext</strong>: an array of extensions (including leading dot).</li><li><strong>names</strong>: an array of file patterns. File patterns can include
-  wildcards (<code>"*"</code>) to denote either prefix (e.g., <code>"Foo*"</code>), suffix
-  (e.g., <code>"*Bar"</code>), or both (e.g., <code>"*Baz*"</code>). Refer to
-  <code><a href="../Chem/Format.html#from_stem(stem:Path%7CString):self-class-method">Format#from_stem</a></code> for details.</li><li><strong>reader</strong>: reader class name. Defaults to "Reader".</li><li><strong>writer</strong>: writer class name. Defaults to "Writer".</li></ul>
-
+<ul>
+<li><strong>ext</strong>: an array of extensions (including leading dot).</li>
+<li><strong>names</strong>: an array of file patterns. File patterns can include
+wildcards (<code>"*"</code>) to denote either prefix (e.g., <code>"Foo*"</code>), suffix
+(e.g., <code>"*Bar"</code>), or both (e.g., <code>"*Baz*"</code>). Refer to
+<code><a href="../Chem/Format.html#from_stem%28stem%3APath%7CString%29%3Aself-class-method">Format#from_stem</a></code> for details.</li>
+<li><strong>reader</strong>: reader class name. Defaults to &quot;Reader&quot;.</li>
+<li><strong>writer</strong>: writer class name. Defaults to &quot;Writer&quot;.</li>
+</ul>
 <p>The ability to read or write is determined by the declaration of
 reader and writer classes, respectively, which must include the
 <code><a href="../Chem/FormatReader.html">FormatReader</a></code>, <code><a href="../Chem/FormatWriter.html">FormatWriter</a></code> and other related mixins when
@@ -830,7 +832,6 @@ appropiate. The <em>encoded type</em> is dictated by the type variable of
 the included mixins. The <code><a href="../Chem/FormatReader/Headed.html">FormatReader::Headed</a></code> and
 <code><a href="../Chem/FormatReader/Attached.html">FormatReader::Attached</a></code> provides interfaces to read additional
 information into custom objects.</p>
-
 <p>Convenience read (<code>.from_*</code> and <code>.read</code>) and write (<code>#to_*</code> and
 <code>#write</code>) methods will be generated on the <em>encoded types</em> during
 compilation time using the type information of the included mixins
@@ -840,13 +841,11 @@ considered <em>encoded types</em>. Additionally, convenience read and write
 methods will be generated on <code><a href="../Array.html">Array</a></code> for file formats that can hold
 multiple entries, which are declared via the
 <code><a href="../Chem/FormatReader/MultiEntry.html">FormatReader::MultiEntry</a></code> and <code><a href="../Chem/FormatWriter/MultiEntry.html">FormatWriter::MultiEntry</a></code> mixins.</p>
-
 <h3><a id="example" class="anchor" href="#example">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>Example</h3>
-
 <p>The following code registers the <code>Foo</code> format associated with the
 <code>Chem::Foo</code> module, which provides read and write capabilities of
 <code>A</code> via the <code>Reader</code> and <code>Writer</code> classes, respectively. Both
@@ -854,7 +853,6 @@ declare that the <code>Foo</code> format can hold multiple entries via the
 corresponding <code>MultiEntry</code> mixins. The reader class also provides
 support for reading the header information into a <code>B</code> instance and
 reading secondary information into a <code>C</code> instance.</p>
-
 <pre><code class="language-crystal">record <span class="t">A</span>
 record <span class="t">B</span>
 record <span class="t">C</span>
@@ -887,22 +885,18 @@ record <span class="t">C</span>
     <span class="k">def</span> <span class="m">encode_entry</span>(frame : <span class="t">A</span>) : <span class="t">Nil</span>; <span class="k">end</span>
   <span class="k">end</span>
 <span class="k">end</span></code></pre>
-
 <p>A member named <code>Foo</code> is added to the <code><a href="../Chem/Format.html">Format</a></code> enum, which can be
 used to query the format during runtime using the <code>.from_*</code> methods.</p>
-
 <pre><code class="language-crystal"><span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">Foo</span>                      <span class="c"># =&gt; Foo</span>
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">Foo</span>.extnames             <span class="c"># =&gt; [&quot;.foo&quot;]</span>
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">Foo</span>.file_patterns        <span class="c"># =&gt; [&quot;foo_*&quot;]</span>
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_filename(<span class="s">&quot;file.foo&quot;</span>) <span class="c"># =&gt; Foo</span>
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_filename(<span class="s">&quot;foo_1&quot;</span>)    <span class="c"># =&gt; Foo</span></code></pre>
-
 <p>The convenience <code>A.from_foo</code> and <code>A.read</code> methods are generated
 during compilation time to create an <code>A</code> instance from an IO or file
 using the <code>Foo</code> file format. The latter can be specified via the
 corresponding member of the <code><a href="../Chem/Format.html">Format</a></code> enum or as a string.
 Additionally, the file format can be guessed from the filename.</p>
-
 <pre><code class="language-crystal"><span class="c"># static read methods (can forward arguments to Foo::Reader)</span>
 <span class="t">A</span>.from_foo(<span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.<span class="k">new</span>) <span class="c"># =&gt; A()</span>
 <span class="t">A</span>.from_foo(<span class="s">&quot;a.foo&quot;</span>)        <span class="c"># =&gt; A()</span>
@@ -913,16 +907,13 @@ Additionally, the file format can be guessed from the filename.</p>
 <span class="t">A</span>.read(<span class="s">&quot;a.foo&quot;</span>, <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">Foo</span>)        <span class="c"># =&gt; A()</span>
 <span class="t">A</span>.read(<span class="s">&quot;a.foo&quot;</span>, <span class="s">&quot;foo&quot;</span>)                    <span class="c"># =&gt; A()</span>
 <span class="t">A</span>.read(<span class="s">&quot;a.foo&quot;</span>)                           <span class="c"># =&gt; A()</span></code></pre>
-
 <p>The above methods are also created on the types representing the
 header (<code>B</code>) and attached (<code>C</code>) types. This is convenient since one
 does not to worry about if <code>X</code> is either the encoded type, header or
 attached type to be read from a <code>Foo</code> file.</p>
-
 <p>Similar to the read methods, <code>A.to_foo</code> and <code>A.write</code> are generated
 to write an <code>A</code> instance to an IO or file using the <code>Foo</code> file
 format.</p>
-
 <pre><code class="language-crystal"><span class="c"># static read methods (can forward arguments to Foo::Writer)</span>
 <span class="t">A</span>.<span class="k">new</span>.to_foo                 <span class="c"># returns a string representation</span>
 <span class="t">A</span>.<span class="k">new</span>.to_foo(<span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.<span class="k">new</span>) <span class="c"># writes to an IO</span>
@@ -934,18 +925,15 @@ format.</p>
 <span class="t">A</span>.<span class="k">new</span>.write(<span class="s">&quot;a.foo&quot;</span>, <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">A</span>)
 <span class="t">A</span>.<span class="k">new</span>.write(<span class="s">&quot;a.foo&quot;</span>, <span class="s">&quot;foo&quot;</span>)
 <span class="t">A</span>.<span class="k">new</span>.write(<span class="s">&quot;a.foo&quot;</span>)</code></pre>
-
 <p>These methods are not generated for header (<code>B</code>) and attached (<code>C</code>)
 types however, because these cannot produce a valid <code>Foo</code> file by
 themselves. If a header/attached object is required to write a valid
 file, it should be declared as a required argument in the writer
 (see <code><a href="../Chem/Cube/Writer.html">Cube::Writer</a></code> or <code><a href="../Chem/VASP/Chgcar/Writer.html">VASP::Chgcar::Writer</a></code>).</p>
-
 <p>Since <code>Foo::Reader</code> and <code>Foo::Writer</code> reads and writes multiple
 entries (indicated by the corresponding <code>MultiEntry</code> mixins), the
 <code>.from_foo</code>, <code>.read</code>, <code>#to_foo</code>, and <code>#write</code> methods are also
 generated in <code><a href="../Array.html">Array</a></code> during compilation time.</p>
-
 <pre><code class="language-crystal"><span class="t">Array</span>(<span class="t">A</span>).from_foo(<span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.<span class="k">new</span>)   <span class="c"># =&gt; [Foo(), ...]</span>
 <span class="t">Array</span>(<span class="t">A</span>).from_foo(<span class="s">&quot;a.foo&quot;</span>)          <span class="c"># =&gt; [Foo(), ...]</span>
 <span class="t">Array</span>(<span class="t">A</span>).read(<span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.<span class="k">new</span>, <span class="n">:foo</span>) <span class="c"># =&gt; [Foo(), ...]</span>
@@ -956,10 +944,8 @@ generated in <code><a href="../Array.html">Array</a></code> during compilation t
 <span class="t">Array</span>(<span class="t">A</span>).<span class="k">new</span>.to_foo(<span class="s">&quot;a.foo&quot;</span>)            <span class="c"># writes to a file</span>
 <span class="t">Array</span>(<span class="t">A</span>).<span class="k">new</span>.write <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.<span class="k">new</span>, <span class="n">:foo</span> <span class="c"># writes to an IO</span>
 <span class="c"># and other overloads</span></code></pre>
-
 <p>Calling any of these methods on an array of unsupported types will
 produce a missing method error during compilation.</p>
-
 <p>Refer to the implementations of the supported file formats (e.g.,
 <code><a href="../Chem/PDB.html">PDB</a></code> and <code><a href="../Chem/XYZ.html">XYZ</a></code>) for real examples.</p>
 
@@ -986,7 +972,7 @@ produce a missing method error during compilation.</p>
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L166" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L166" target="_blank">
         chem/register_format.cr
       </a>
     

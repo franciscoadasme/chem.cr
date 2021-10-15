@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.0.0">
+<meta name="generator" content="Crystal Docs 1.1.1">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -506,8 +506,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Quaternion" data-name="chem::spatial::quaternion">
-      <a href="../../Chem/Spatial/Quaternion.html">Quaternion</a>
+  <li class=" " data-id="chem.cr/Chem/Spatial/Quat" data-name="chem::spatial::quat">
+      <a href="../../Chem/Spatial/Quat.html">Quat</a>
       
     </li>
   
@@ -811,35 +811,29 @@
 
   <p>Pure Crystal implementation of the Dictionary of Protein Secondary Structure (DSSP)
 algorithm (Kabsch, W.; Sander, C. <em>Biopolymers</em> <strong>1983</strong>, <em>22</em> (12), 2577–2637.
-[doi:10.1002/bip.360221211][1]).</p>
-
+[doi:10.1002/bip.360221211]<a href="http://dx.doi.org/10.1002/bip.360221211">1</a>).</p>
 <p>This implementation is based on the <code>mkdssp</code> program, version 3.0.5, written by
 Maarten L. Hekkelman, currently maintained by Coos Baakman, Jon Black, and Wouter
 Touw, and distributed under the Boost Software license at the
-[github.com/cmbi/xssp][2] repository.</p>
-
+[github.com/cmbi/xssp]<a href="http://github.com/cmbi/xssp">2</a> repository.</p>
 <p>Consider that, according to the algorithm, residues that do not contain backbone
-atoms, namely, "N", "CA", "C", and "O", are ignored. Therefore, non-standard amino
+atoms, namely, &quot;N&quot;, &quot;CA&quot;, &quot;C&quot;, and &quot;O&quot;, are ignored. Therefore, non-standard amino
 acids are considered during the assignment as long as they contain such atoms.
 Otherwise, they will be considered as protein gaps, which may alter the secondary
 structure of surrounding residues.</p>
-
 <p>Note that some differences may be expected with the output of <code>mkdssp</code> due to:</p>
-
-<ul><li><code>mkdssp</code> does not handle well alternate conformations in PDB files, sometimes
-  discarding entire aminoacids.</li><li><code>mkdssp</code> detects chain breaks by checking non-consecutive numbers of neighboring
-  residues. This may fail when residues <em>i</em> and <em>i + 1</em> are not actually bonded, or
-  when residue numbers are not consecutive. This implementation instead uses atom
-  connectivity to check whether C(<em>i</em>)–N(<em>i</em>+1) are bonded.</li></ul>
-
+<ul>
+<li><code>mkdssp</code> does not handle well alternate conformations in PDB files, sometimes
+discarding entire aminoacids.</li>
+<li><code>mkdssp</code> detects chain breaks by checking non-consecutive numbers of neighboring
+residues. This may fail when residues <em>i</em> and <em>i + 1</em> are not actually bonded, or
+when residue numbers are not consecutive. This implementation instead uses atom
+connectivity to check whether C(<em>i</em>)–N(<em>i</em>+1) are bonded.</li>
+</ul>
 <p><span class="flag yellow">FIXME</span>  it does not work correctly for periodic structures that have
 bonds between atoms at opposite ends.</p>
-
 <p><span class="flag purple">NOTE</span>  This implementation of DSSP is currently 50% slower than pure C++ solutions, so
 keep this in mind when assigning the secondary structure of many structures.</p>
-
-<p>[1]: http://dx.doi.org/10.1002/bip.360221211
-[2]: http://github.com/cmbi/xssp</p>
 
 
 
@@ -864,7 +858,7 @@ keep this in mind when assigning the secondary structure of many structures.</p>
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/protein/dssp.cr#L34" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/protein/dssp.cr#L34" target="_blank">
         chem/protein/dssp.cr
       </a>
     
@@ -920,7 +914,7 @@ keep this in mind when assigning the secondary structure of many structures.</p>
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new(structure:Structure)-class-method" class="signature"><strong>.new</strong>(structure : Structure)</a>
+        <a href="#new%28structure%3AStructure%29-class-method" class="signature"><strong>.new</strong>(structure : Structure)</a>
         
       </li>
     
@@ -941,7 +935,7 @@ keep this in mind when assigning the secondary structure of many structures.</p>
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#assign:Nil-instance-method" class="signature"><strong>#assign</strong> : Nil</a>
+        <a href="#assign%3ANil-instance-method" class="signature"><strong>#assign</strong> : Nil</a>
         
       </li>
     
@@ -958,7 +952,7 @@ keep this in mind when assigning the secondary structure of many structures.</p>
   <h3>Instance methods inherited from class <code><a href="../../Chem/Protein/SecondaryStructureCalculator.html">Chem::Protein::SecondaryStructureCalculator</a></code></h3>
   
   
-    <a href="../../Chem/Protein/SecondaryStructureCalculator.html#assign:Nil-instance-method" class="tooltip">
+    <a href="../../Chem/Protein/SecondaryStructureCalculator.html#assign%3ANil-instance-method" class="tooltip">
       <span>assign : Nil</span>
     assign</a>
     
@@ -970,7 +964,7 @@ keep this in mind when assigning the secondary structure of many structures.</p>
   <h3>Constructor methods inherited from class <code><a href="../../Chem/Protein/SecondaryStructureCalculator.html">Chem::Protein::SecondaryStructureCalculator</a></code></h3>
   
   
-    <a href="../../Chem/Protein/SecondaryStructureCalculator.html#new(structure:Structure)-class-method" class="tooltip">
+    <a href="../../Chem/Protein/SecondaryStructureCalculator.html#new%28structure%3AStructure%29-class-method" class="tooltip">
       <span>new(structure : Structure)</span>
     new</a>
     
@@ -982,7 +976,7 @@ keep this in mind when assigning the secondary structure of many structures.</p>
   <h3>Class methods inherited from class <code><a href="../../Chem/Protein/SecondaryStructureCalculator.html">Chem::Protein::SecondaryStructureCalculator</a></code></h3>
   
   
-    <a href="../../Chem/Protein/SecondaryStructureCalculator.html#assign(structure:Structure,**options):Nil-class-method" class="tooltip">
+    <a href="../../Chem/Protein/SecondaryStructureCalculator.html#assign%28structure%3AStructure%2C%2A%2Aoptions%29%3ANil-class-method" class="tooltip">
       <span>assign(structure : Structure, **options) : Nil</span>
     assign</a>
     
@@ -1027,13 +1021,13 @@ keep this in mind when assigning the secondary structure of many structures.</p>
         
         def self.<strong>new</strong>(structure : <a href="../../Chem/Structure.html">Structure</a>)
 
-        <a class="method-permalink" href="#new(structure:Structure)-class-method">#</a>
+        <a class="method-permalink" href="#new%28structure%3AStructure%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/protein/dssp.cr#L46" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/protein/dssp.cr#L46" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1057,13 +1051,13 @@ keep this in mind when assigning the secondary structure of many structures.</p>
         
         def <strong>assign</strong> : Nil
 
-        <a class="method-permalink" href="#assign:Nil-instance-method">#</a>
+        <a class="method-permalink" href="#assign%3ANil-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/protein/dssp.cr#L51" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/protein/dssp.cr#L51" target="_blank">View source</a>]
         
       </div>
     </div>

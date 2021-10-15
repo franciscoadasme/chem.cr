@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.0.0">
+<meta name="generator" content="Crystal Docs 1.1.1">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -506,8 +506,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Quaternion" data-name="chem::spatial::quaternion">
-      <a href="../Chem/Spatial/Quaternion.html">Quaternion</a>
+  <li class=" " data-id="chem.cr/Chem/Spatial/Quat" data-name="chem::spatial::quat">
+      <a href="../Chem/Spatial/Quat.html">Quat</a>
       
     </li>
   
@@ -809,16 +809,13 @@
 
   <p>Declares a common interface for writing an object encoded in a file
 format.</p>
-
 <p>Including types must implement the <code>#encode_entry(T)</code> protected
 method, where the type variable <code>T</code> indicates the encoded type.</p>
-
 <p>Including types will behave like an IO wrapper via the <code><a href="../IO/Wrapper.html">IO::Wrapper</a></code>
 mixin, which provides convenience constructors. Initialization
 arguments are gathered from the designated <code>#initialize</code> method
 looked up on concrete types at compilation time. The underlying IO
 can be accessed through the <code>@io</code> instance variable.</p>
-
 <pre><code class="language-crystal"><span class="k">struct</span> <span class="t">Foo</span>
   getter num : <span class="t">Int32</span>
   getter str : <span class="t">String</span>
@@ -918,7 +915,7 @@ writer <span class="o">&lt;&lt;</span> <span class="t">Foo</span>.<span class="k
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format_writer.cr#L41" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format_writer.cr#L41" target="_blank">
         chem/format_writer.cr
       </a>
     
@@ -967,28 +964,28 @@ writer <span class="o">&lt;&lt;</span> <span class="t">Foo</span>.<span class="k
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#%3C%3C(obj:T):Nil-instance-method" class="signature"><strong>#<<</strong>(obj : T) : Nil</a>
+        <a href="#%3C%3C%28obj%3AT%29%3ANil-instance-method" class="signature"><strong>#<<</strong>(obj : T) : Nil</a>
         
           <div class="summary"><p>Writes the given object into the <code>IO</code>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#format(str:String,*args,**options):Nil-instance-method" class="signature"><strong>#format</strong>(str : String, *args, **options) : Nil</a>
+        <a href="#format%28str%3AString%2C%2Aargs%2C%2A%2Aoptions%29%3ANil-instance-method" class="signature"><strong>#format</strong>(str : String, *args, **options) : Nil</a>
         
           <div class="summary"><p>Writes a formatted string to the enclosed <code>IO</code>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#formatl(str:String,*args,**options):Nil-instance-method" class="signature"><strong>#formatl</strong>(str : String, *args, **options) : Nil</a>
+        <a href="#formatl%28str%3AString%2C%2Aargs%2C%2A%2Aoptions%29%3ANil-instance-method" class="signature"><strong>#formatl</strong>(str : String, *args, **options) : Nil</a>
         
           <div class="summary"><p>Writes a formatted string followed by a newline to the enclosed <code>IO</code>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#written?:Bool-instance-method" class="signature"><strong>#written?</strong> : Bool</a>
+        <a href="#written%3F%3ABool-instance-method" class="signature"><strong>#written?</strong> : Bool</a>
         
           <div class="summary"><p>Returns <code>true</code> if an object was already written.</p></div>
         
@@ -1012,17 +1009,17 @@ writer <span class="o">&lt;&lt;</span> <span class="t">Foo</span>.<span class="k
     close</a>, 
     
   
-    <a href="../IO/Wrapper.html#closed?:Bool-instance-method" class="tooltip">
+    <a href="../IO/Wrapper.html#closed%3F%3ABool-instance-method" class="tooltip">
       <span>closed? : Bool</span>
     closed?</a>, 
     
   
-    <a href="../IO/Wrapper.html#sync_close:Bool-instance-method" class="tooltip">
+    <a href="../IO/Wrapper.html#sync_close%3ABool-instance-method" class="tooltip">
       <span>sync_close : Bool</span>
     sync_close</a>, 
     
   
-    <a href="../IO/Wrapper.html#sync_close=(sync_close:Bool)-instance-method" class="tooltip">
+    <a href="../IO/Wrapper.html#sync_close%3D%28sync_close%3ABool%29-instance-method" class="tooltip">
       <span>sync_close=(sync_close : Bool)</span>
     sync_close=</a>
     
@@ -1057,7 +1054,7 @@ writer <span class="o">&lt;&lt;</span> <span class="t">Foo</span>.<span class="k
         
         def <strong><<</strong>(obj : T) : Nil
 
-        <a class="method-permalink" href="#%3C%3C(obj:T):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#%3C%3C%28obj%3AT%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1069,7 +1066,7 @@ writer <span class="o">&lt;&lt;</span> <span class="t">Foo</span>.<span class="k
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format_writer.cr#L57" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format_writer.cr#L57" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1079,7 +1076,7 @@ writer <span class="o">&lt;&lt;</span> <span class="t">Foo</span>.<span class="k
         
         def <strong>format</strong>(str : String, *args, **options) : Nil
 
-        <a class="method-permalink" href="#format(str:String,*args,**options):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#format%28str%3AString%2C%2Aargs%2C%2A%2Aoptions%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1091,7 +1088,7 @@ format string, see top-level <code>sprintf</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format_writer.cr#L66" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format_writer.cr#L66" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1101,7 +1098,7 @@ format string, see top-level <code>sprintf</code>.</p>
         
         def <strong>formatl</strong>(str : String, *args, **options) : Nil
 
-        <a class="method-permalink" href="#formatl(str:String,*args,**options):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#formatl%28str%3AString%2C%2Aargs%2C%2A%2Aoptions%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1113,7 +1110,7 @@ format string, see top-level <code>sprintf</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format_writer.cr#L72" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format_writer.cr#L72" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1123,7 +1120,7 @@ format string, see top-level <code>sprintf</code>.</p>
         
         def <strong>written?</strong> : Bool
 
-        <a class="method-permalink" href="#written?:Bool-instance-method">#</a>
+        <a class="method-permalink" href="#written%3F%3ABool-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1134,7 +1131,7 @@ format string, see top-level <code>sprintf</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format_writer.cr#L45" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format_writer.cr#L45" target="_blank">View source</a>]
         
       </div>
     </div>

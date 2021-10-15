@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.0.0">
+<meta name="generator" content="Crystal Docs 1.1.1">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -506,8 +506,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Quaternion" data-name="chem::spatial::quaternion">
-      <a href="../Chem/Spatial/Quaternion.html">Quaternion</a>
+  <li class=" " data-id="chem.cr/Chem/Spatial/Quat" data-name="chem::spatial::quat">
+      <a href="../Chem/Spatial/Quat.html">Quat</a>
       
     </li>
   
@@ -809,18 +809,15 @@
 
   <p>Declares a common interface for reading an object encoded in a file
 format.</p>
-
 <p>Including types must implement the <code>#decode_entry : T</code> protected
 method, where the type variable <code>T</code> indicates the encoded type. Upon
 parsing issues, including types are expected to raise a
 <code><a href="../Chem/ParseException.html">ParseException</a></code> exception.</p>
-
 <p>Including types will behave like an IO wrapper via the <code><a href="../IO/Wrapper.html">IO::Wrapper</a></code>
 mixin, which provides convenience constructors. Initialization
 arguments are gathered from the designated <code>#initialize</code> method
 looked up on concrete types at compilation time. The underlying IO
 can be accessed through the <code>@io</code> instance variable.</p>
-
 <pre><code class="language-crystal"><span class="k">struct</span> <span class="t">Foo</span>
   getter num : <span class="t">Int32</span>
   getter str : <span class="t">String</span>
@@ -914,7 +911,7 @@ reader.read_entry <span class="c"># raises IO::Error (closed IO)</span></code></
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format_reader.cr#L43" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format_reader.cr#L43" target="_blank">
         chem/format_reader.cr
       </a>
     
@@ -940,14 +937,14 @@ reader.read_entry <span class="c"># raises IO::Error (closed IO)</span></code></
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#read?:Bool-instance-method" class="signature"><strong>#read?</strong> : Bool</a>
+        <a href="#read%3F%3ABool-instance-method" class="signature"><strong>#read?</strong> : Bool</a>
         
           <div class="summary"><p>Returns <code>true</code> if this encoded object was already read.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#read_entry:T-instance-method" class="signature"><strong>#read_entry</strong> : T</a>
+        <a href="#read_entry%3AT-instance-method" class="signature"><strong>#read_entry</strong> : T</a>
         
           <div class="summary"><p>Reads the encoded object of type <code>T</code> from the IO.</p></div>
         
@@ -971,17 +968,17 @@ reader.read_entry <span class="c"># raises IO::Error (closed IO)</span></code></
     close</a>, 
     
   
-    <a href="../IO/Wrapper.html#closed?:Bool-instance-method" class="tooltip">
+    <a href="../IO/Wrapper.html#closed%3F%3ABool-instance-method" class="tooltip">
       <span>closed? : Bool</span>
     closed?</a>, 
     
   
-    <a href="../IO/Wrapper.html#sync_close:Bool-instance-method" class="tooltip">
+    <a href="../IO/Wrapper.html#sync_close%3ABool-instance-method" class="tooltip">
       <span>sync_close : Bool</span>
     sync_close</a>, 
     
   
-    <a href="../IO/Wrapper.html#sync_close=(sync_close:Bool)-instance-method" class="tooltip">
+    <a href="../IO/Wrapper.html#sync_close%3D%28sync_close%3ABool%29-instance-method" class="tooltip">
       <span>sync_close=(sync_close : Bool)</span>
     sync_close=</a>
     
@@ -1016,7 +1013,7 @@ reader.read_entry <span class="c"># raises IO::Error (closed IO)</span></code></
         
         def <strong>read?</strong> : Bool
 
-        <a class="method-permalink" href="#read?:Bool-instance-method">#</a>
+        <a class="method-permalink" href="#read%3F%3ABool-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1027,7 +1024,7 @@ reader.read_entry <span class="c"># raises IO::Error (closed IO)</span></code></
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format_reader.cr#L47" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format_reader.cr#L47" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1037,7 +1034,7 @@ reader.read_entry <span class="c"># raises IO::Error (closed IO)</span></code></
         
         def <strong>read_entry</strong> : T
 
-        <a class="method-permalink" href="#read_entry:T-instance-method">#</a>
+        <a class="method-permalink" href="#read_entry%3AT-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1050,7 +1047,7 @@ already read, or <code><a href="../Chem/ParseException.html">ParseException</a><
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/format_reader.cr#L59" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/format_reader.cr#L59" target="_blank">View source</a>]
         
       </div>
     </div>

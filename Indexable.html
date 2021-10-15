@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.0.0">
+<meta name="generator" content="Crystal Docs 1.1.1">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -506,8 +506,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Quaternion" data-name="chem::spatial::quaternion">
-      <a href="Chem/Spatial/Quaternion.html">Quaternion</a>
+  <li class=" " data-id="chem.cr/Chem/Spatial/Quat" data-name="chem::spatial::quat">
+      <a href="Chem/Spatial/Quat.html">Quat</a>
       
     </li>
   
@@ -808,11 +808,9 @@
   </h2>
 
   <p>A container that allows accessing elements via a numeric index.</p>
-
 <p>Indexing starts at <code>0</code>. A negative index is assumed to be
 relative to the end of the container: <code>-1</code> indicates the last element,
 <code>-2</code> is the next to last element, and so on.</p>
-
 <p>Types including this module are typically <code><a href="Array.html">Array</a></code>-like types.</p>
 
 
@@ -851,8 +849,6 @@ relative to the end of the container: <code>-1</code> indicates the last element
   </h2>
   <ul class="other-types-list">
     
-      <li class="other-type"><a href="Array.html">Array(T)</a></li>
-    
       <li class="other-type"><a href="Chem/ArrayView.html">Chem::ArrayView(T)</a></li>
     
       <li class="other-type"><a href="Chem/BondArray.html">Chem::BondArray</a></li>
@@ -876,7 +872,7 @@ relative to the end of the container: <code>-1</code> indicates the last element
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core_ext/indexable.cr#L1" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core_ext/indexable.cr#L1" target="_blank">
         chem/core_ext/indexable.cr
       </a>
     
@@ -902,22 +898,22 @@ relative to the end of the container: <code>-1</code> indicates the last element
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#index!(ofobject,offset:Int=0):Int-instance-method" class="signature"><strong>#index!</strong>(of object, offset : Int = <span class="n">0</span>) : Int</a>
+        <a href="#index%21%28ofobject%2Coffset%3AInt%3D0%29%3AInt-instance-method" class="signature"><strong>#index!</strong>(of object, offset : Int = <span class="n">0</span>) : Int</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#index!(offset:Int=0,&block:T-%3EBool):Int-instance-method" class="signature"><strong>#index!</strong>(offset : Int = <span class="n">0</span>, &block : T -> Bool) : Int</a>
+        <a href="#index%21%28offset%3AInt%3D0%2C%26block%3AT-%3EBool%29%3AInt-instance-method" class="signature"><strong>#index!</strong>(offset : Int = <span class="n">0</span>, &block : T -> Bool) : Int</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#mean:Float64-instance-method" class="signature"><strong>#mean</strong> : Float64</a>
+        <a href="#mean%3AFloat64-instance-method" class="signature"><strong>#mean</strong> : Float64</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#mean(&:T-%3ENumber):Float64-instance-method" class="signature"><strong>#mean</strong>(& : T -> Number) : Float64</a>
+        <a href="#mean%28%26%3AT-%3ENumber%29%3AFloat64-instance-method" class="signature"><strong>#mean</strong>(& : T -> Number) : Float64</a>
         
       </li>
     
@@ -970,13 +966,13 @@ relative to the end of the container: <code>-1</code> indicates the last element
         
         def <strong>index!</strong>(of object, offset : Int = <span class="n">0</span>) : Int
 
-        <a class="method-permalink" href="#index!(ofobject,offset:Int=0):Int-instance-method">#</a>
+        <a class="method-permalink" href="#index%21%28ofobject%2Coffset%3AInt%3D0%29%3AInt-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core_ext/indexable.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core_ext/indexable.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -986,13 +982,13 @@ relative to the end of the container: <code>-1</code> indicates the last element
         
         def <strong>index!</strong>(offset : Int = <span class="n">0</span>, &block : T -> Bool) : Int
 
-        <a class="method-permalink" href="#index!(offset:Int=0,&block:T-%3EBool):Int-instance-method">#</a>
+        <a class="method-permalink" href="#index%21%28offset%3AInt%3D0%2C%26block%3AT-%3EBool%29%3AInt-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core_ext/indexable.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core_ext/indexable.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1002,13 +998,13 @@ relative to the end of the container: <code>-1</code> indicates the last element
         
         def <strong>mean</strong> : Float64
 
-        <a class="method-permalink" href="#mean:Float64-instance-method">#</a>
+        <a class="method-permalink" href="#mean%3AFloat64-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core_ext/indexable.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core_ext/indexable.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1018,13 +1014,13 @@ relative to the end of the container: <code>-1</code> indicates the last element
         
         def <strong>mean</strong>(& : T -> <a href="Number.html">Number</a>) : Float64
 
-        <a class="method-permalink" href="#mean(&:T-%3ENumber):Float64-instance-method">#</a>
+        <a class="method-permalink" href="#mean%28%26%3AT-%3ENumber%29%3AFloat64-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core_ext/indexable.cr#L15" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core_ext/indexable.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>

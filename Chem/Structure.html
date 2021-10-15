@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.0.0">
+<meta name="generator" content="Crystal Docs 1.1.1">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -506,8 +506,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Quaternion" data-name="chem::spatial::quaternion">
-      <a href="../Chem/Spatial/Quaternion.html">Quaternion</a>
+  <li class=" " data-id="chem.cr/Chem/Spatial/Quat" data-name="chem::spatial::quat">
+      <a href="../Chem/Spatial/Quat.html">Quat</a>
       
     </li>
   
@@ -841,14 +841,14 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure.cr#L2" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure.cr#L2" target="_blank">
         chem/core/structure.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">
         chem/register_format.cr
       </a>
     
@@ -870,80 +870,80 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#build(*args,**options,&):self-class-method" class="signature"><strong>.build</strong>(*args, **options, &) : <span class="k">self</span></a>
+        <a href="#build%28%2Aargs%2C%2A%2Aoptions%2C%26%29%3Aself-class-method" class="signature"><strong>.build</strong>(*args, **options, &) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#from_chgcar(input:IO%7CPath%7CString):self-class-method" class="signature"><strong>.from_chgcar</strong>(input : IO | Path | String) : <span class="k">self</span></a>
+        <a href="#from_chgcar%28input%3AIO%7CPath%7CString%29%3Aself-class-method" class="signature"><strong>.from_chgcar</strong>(input : IO | Path | String) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the structure encoded in <em>input</em> using the <code><a href="../Chem/VASP/Chgcar.html">Chem::VASP::Chgcar</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#from_cube(input:IO%7CPath%7CString):self-class-method" class="signature"><strong>.from_cube</strong>(input : IO | Path | String) : <span class="k">self</span></a>
+        <a href="#from_cube%28input%3AIO%7CPath%7CString%29%3Aself-class-method" class="signature"><strong>.from_cube</strong>(input : IO | Path | String) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the structure encoded in <em>input</em> using the <code><a href="../Chem/Cube.html">Chem::Cube</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#from_gen(input:IO%7CPath%7CString,guess_topology:Bool=false):self-class-method" class="signature"><strong>.from_gen</strong>(input : IO | Path | String, guess_topology : Bool = <span class="n">false</span>) : <span class="k">self</span></a>
+        <a href="#from_gen%28input%3AIO%7CPath%7CString%2Cguess_topology%3ABool%3Dfalse%29%3Aself-class-method" class="signature"><strong>.from_gen</strong>(input : IO | Path | String, guess_topology : Bool = <span class="n">false</span>) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the structure encoded in <em>input</em> using the <code><a href="../Chem/Gen.html">Chem::Gen</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#from_locpot(input:IO%7CPath%7CString):self-class-method" class="signature"><strong>.from_locpot</strong>(input : IO | Path | String) : <span class="k">self</span></a>
+        <a href="#from_locpot%28input%3AIO%7CPath%7CString%29%3Aself-class-method" class="signature"><strong>.from_locpot</strong>(input : IO | Path | String) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the structure encoded in <em>input</em> using the <code><a href="../Chem/VASP/Locpot.html">Chem::VASP::Locpot</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#from_mol2(input:IO%7CPath%7CString):self-class-method" class="signature"><strong>.from_mol2</strong>(input : IO | Path | String) : <span class="k">self</span></a>
+        <a href="#from_mol2%28input%3AIO%7CPath%7CString%29%3Aself-class-method" class="signature"><strong>.from_mol2</strong>(input : IO | Path | String) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the structure encoded in <em>input</em> using the <code><a href="../Chem/Mol2.html">Chem::Mol2</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#from_pdb(input:IO%7CPath%7CString,alt_loc:Char?=nil,chains:Enumerable(Char)%7CString%7CNil=nil,het:Bool=true):self-class-method" class="signature"><strong>.from_pdb</strong>(input : IO | Path | String, alt_loc : Char? = <span class="n">nil</span>, chains : Enumerable(Char) | String | Nil = <span class="n">nil</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span></a>
+        <a href="#from_pdb%28input%3AIO%7CPath%7CString%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Chet%3ABool%3Dtrue%29%3Aself-class-method" class="signature"><strong>.from_pdb</strong>(input : IO | Path | String, alt_loc : Char? = <span class="n">nil</span>, chains : Enumerable(Char) | String | Nil = <span class="n">nil</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the structure encoded in <em>input</em> using the <code><a href="../Chem/PDB.html">Chem::PDB</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#from_poscar(input:IO%7CPath%7CString,guess_topology:Bool=false):self-class-method" class="signature"><strong>.from_poscar</strong>(input : IO | Path | String, guess_topology : Bool = <span class="n">false</span>) : <span class="k">self</span></a>
+        <a href="#from_poscar%28input%3AIO%7CPath%7CString%2Cguess_topology%3ABool%3Dfalse%29%3Aself-class-method" class="signature"><strong>.from_poscar</strong>(input : IO | Path | String, guess_topology : Bool = <span class="n">false</span>) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the structure encoded in <em>input</em> using the <code><a href="../Chem/VASP/Poscar.html">Chem::VASP::Poscar</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#from_xyz(input:IO%7CPath%7CString,guess_topology:Bool=false):self-class-method" class="signature"><strong>.from_xyz</strong>(input : IO | Path | String, guess_topology : Bool = <span class="n">false</span>) : <span class="k">self</span></a>
+        <a href="#from_xyz%28input%3AIO%7CPath%7CString%2Cguess_topology%3ABool%3Dfalse%29%3Aself-class-method" class="signature"><strong>.from_xyz</strong>(input : IO | Path | String, guess_topology : Bool = <span class="n">false</span>) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the structure encoded in <em>input</em> using the <code><a href="../Chem/XYZ.html">Chem::XYZ</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new(source_file:Path%7CString%7CNil=nil)-class-method" class="signature"><strong>.new</strong>(source_file : Path | String | Nil = <span class="n">nil</span>)</a>
+        <a href="#new%28source_file%3APath%7CString%7CNil%3Dnil%29-class-method" class="signature"><strong>.new</strong>(source_file : Path | String | Nil = <span class="n">nil</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#read(input:IO%7CPath%7CString,format:Chem::Format%7CString):self-class-method" class="signature"><strong>.read</strong>(input : IO | Path | String, format : Chem::Format | String) : <span class="k">self</span></a>
+        <a href="#read%28input%3AIO%7CPath%7CString%2Cformat%3AChem%3A%3AFormat%7CString%29%3Aself-class-method" class="signature"><strong>.read</strong>(input : IO | Path | String, format : Chem::Format | String) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the structure encoded in the specified file using <em>format</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#read(path:Path%7CString):self-class-method" class="signature"><strong>.read</strong>(path : Path | String) : <span class="k">self</span></a>
+        <a href="#read%28path%3APath%7CString%29%3Aself-class-method" class="signature"><strong>.read</strong>(path : Path | String) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the structure encoded in the specified file.</p></div>
         
@@ -966,309 +966,309 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#[](*args,**options)-instance-method" class="signature"><strong>#[]</strong>(*args, **options)</a>
+        <a href="#%5B%5D%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#[]</strong>(*args, **options)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#[](*args,**options,&)-instance-method" class="signature"><strong>#[]</strong>(*args, **options, &)</a>
+        <a href="#%5B%5D%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#[]</strong>(*args, **options, &)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#[]?(*args,**options)-instance-method" class="signature"><strong>#[]?</strong>(*args, **options)</a>
+        <a href="#%5B%5D%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#[]?</strong>(*args, **options)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#[]?(*args,**options,&)-instance-method" class="signature"><strong>#[]?</strong>(*args, **options, &)</a>
+        <a href="#%5B%5D%3F%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#[]?</strong>(*args, **options, &)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#biases:Array(Chem::Bias)-instance-method" class="signature"><strong>#biases</strong> : Array(Chem::Bias)</a>
+        <a href="#biases%3AArray%28Chem%3A%3ABias%29-instance-method" class="signature"><strong>#biases</strong> : Array(Chem::Bias)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#clear:self-instance-method" class="signature"><strong>#clear</strong> : <span class="k">self</span></a>
+        <a href="#clear%3Aself-instance-method" class="signature"><strong>#clear</strong> : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#clone:self-instance-method" class="signature"><strong>#clone</strong> : <span class="k">self</span></a>
+        <a href="#clone%3Aself-instance-method" class="signature"><strong>#clone</strong> : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns a deep copy of <code>self</code>, that is, every chain/residue/atom is copied.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#coords:Spatial::CoordinatesProxy-instance-method" class="signature"><strong>#coords</strong> : Spatial::CoordinatesProxy</a>
+        <a href="#coords%3ASpatial%3A%3ACoordinatesProxy-instance-method" class="signature"><strong>#coords</strong> : Spatial::CoordinatesProxy</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#delete(ch:Chain):Chain?-instance-method" class="signature"><strong>#delete</strong>(ch : Chain) : Chain?</a>
+        <a href="#delete%28ch%3AChain%29%3AChain%3F-instance-method" class="signature"><strong>#delete</strong>(ch : Chain) : Chain?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#dig(id:Char):Chain-instance-method" class="signature"><strong>#dig</strong>(id : Char) : Chain</a>
+        <a href="#dig%28id%3AChar%29%3AChain-instance-method" class="signature"><strong>#dig</strong>(id : Char) : Chain</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#dig(id:Char,*subindexes)-instance-method" class="signature"><strong>#dig</strong>(id : Char, *subindexes)</a>
+        <a href="#dig%28id%3AChar%2C%2Asubindexes%29-instance-method" class="signature"><strong>#dig</strong>(id : Char, *subindexes)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#dig?(id:Char):Chain?-instance-method" class="signature"><strong>#dig?</strong>(id : Char) : Chain?</a>
+        <a href="#dig%3F%28id%3AChar%29%3AChain%3F-instance-method" class="signature"><strong>#dig?</strong>(id : Char) : Chain?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#dig?(id:Char,*subindexes)-instance-method" class="signature"><strong>#dig?</strong>(id : Char, *subindexes)</a>
+        <a href="#dig%3F%28id%3AChar%2C%2Asubindexes%29-instance-method" class="signature"><strong>#dig?</strong>(id : Char, *subindexes)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#each_atom:Iterator(Atom)-instance-method" class="signature"><strong>#each_atom</strong> : Iterator(Atom)</a>
+        <a href="#each_atom%3AIterator%28Atom%29-instance-method" class="signature"><strong>#each_atom</strong> : Iterator(Atom)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#each_atom(&block:Atom-%3E)-instance-method" class="signature"><strong>#each_atom</strong>(&block : Atom -> )</a>
+        <a href="#each_atom%28%26block%3AAtom-%3E%29-instance-method" class="signature"><strong>#each_atom</strong>(&block : Atom -> )</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#each_chain:Iterator(Chain)-instance-method" class="signature"><strong>#each_chain</strong> : Iterator(Chain)</a>
+        <a href="#each_chain%3AIterator%28Chain%29-instance-method" class="signature"><strong>#each_chain</strong> : Iterator(Chain)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#each_chain(&block:Chain-%3E)-instance-method" class="signature"><strong>#each_chain</strong>(&block : Chain -> )</a>
+        <a href="#each_chain%28%26block%3AChain-%3E%29-instance-method" class="signature"><strong>#each_chain</strong>(&block : Chain -> )</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#each_residue:Iterator(Residue)-instance-method" class="signature"><strong>#each_residue</strong> : Iterator(Residue)</a>
+        <a href="#each_residue%3AIterator%28Residue%29-instance-method" class="signature"><strong>#each_residue</strong> : Iterator(Residue)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#each_residue(&block:Residue-%3E)-instance-method" class="signature"><strong>#each_residue</strong>(&block : Residue -> )</a>
+        <a href="#each_residue%28%26block%3AResidue-%3E%29-instance-method" class="signature"><strong>#each_residue</strong>(&block : Residue -> )</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#empty?-instance-method" class="signature"><strong>#empty?</strong></a>
+        <a href="#empty%3F-instance-method" class="signature"><strong>#empty?</strong></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#experiment:Structure::Experiment?-instance-method" class="signature"><strong>#experiment</strong> : Structure::Experiment?</a>
+        <a href="#experiment%3AStructure%3A%3AExperiment%3F-instance-method" class="signature"><strong>#experiment</strong> : Structure::Experiment?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#experiment=(experiment:Structure::Experiment?)-instance-method" class="signature"><strong>#experiment=</strong>(experiment : Structure::Experiment?)</a>
+        <a href="#experiment%3D%28experiment%3AStructure%3A%3AExperiment%3F%29-instance-method" class="signature"><strong>#experiment=</strong>(experiment : Structure::Experiment?)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#inspect(io:IO)-instance-method" class="signature"><strong>#inspect</strong>(io : IO)</a>
+        <a href="#inspect%28io%3AIO%29-instance-method" class="signature"><strong>#inspect</strong>(io : IO)</a>
         
           <div class="summary"><p>Appends a String representation of this object which includes its class name, its object address and the values of all instance variables.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#lattice:Lattice?-instance-method" class="signature"><strong>#lattice</strong> : Lattice?</a>
+        <a href="#lattice%3ALattice%3F-instance-method" class="signature"><strong>#lattice</strong> : Lattice?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#lattice=(lattice:Lattice?)-instance-method" class="signature"><strong>#lattice=</strong>(lattice : Lattice?)</a>
+        <a href="#lattice%3D%28lattice%3ALattice%3F%29-instance-method" class="signature"><strong>#lattice=</strong>(lattice : Lattice?)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#n_atoms:Int32-instance-method" class="signature"><strong>#n_atoms</strong> : Int32</a>
+        <a href="#n_atoms%3AInt32-instance-method" class="signature"><strong>#n_atoms</strong> : Int32</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#n_chains:Int32-instance-method" class="signature"><strong>#n_chains</strong> : Int32</a>
+        <a href="#n_chains%3AInt32-instance-method" class="signature"><strong>#n_chains</strong> : Int32</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#n_residues:Int32-instance-method" class="signature"><strong>#n_residues</strong> : Int32</a>
+        <a href="#n_residues%3AInt32-instance-method" class="signature"><strong>#n_residues</strong> : Int32</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#periodic?:Bool-instance-method" class="signature"><strong>#periodic?</strong> : Bool</a>
+        <a href="#periodic%3F%3ABool-instance-method" class="signature"><strong>#periodic?</strong> : Bool</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#renumber_by_connectivity(split_chains:Bool=true):Nil-instance-method" class="signature"><strong>#renumber_by_connectivity</strong>(split_chains : Bool = <span class="n">true</span>) : Nil</a>
+        <a href="#renumber_by_connectivity%28split_chains%3ABool%3Dtrue%29%3ANil-instance-method" class="signature"><strong>#renumber_by_connectivity</strong>(split_chains : Bool = <span class="n">true</span>) : Nil</a>
         
           <div class="summary"><p>Renumber chain and residues based on bond information.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#source_file:Path?-instance-method" class="signature"><strong>#source_file</strong> : Path?</a>
+        <a href="#source_file%3APath%3F-instance-method" class="signature"><strong>#source_file</strong> : Path?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#title:String-instance-method" class="signature"><strong>#title</strong> : String</a>
+        <a href="#title%3AString-instance-method" class="signature"><strong>#title</strong> : String</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#title=(title:String)-instance-method" class="signature"><strong>#title=</strong>(title : String)</a>
+        <a href="#title%3D%28title%3AString%29-instance-method" class="signature"><strong>#title=</strong>(title : String)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_gen(fractional:Bool=false):String-instance-method" class="signature"><strong>#to_gen</strong>(fractional : Bool = <span class="n">false</span>) : String</a>
+        <a href="#to_gen%28fractional%3ABool%3Dfalse%29%3AString-instance-method" class="signature"><strong>#to_gen</strong>(fractional : Bool = <span class="n">false</span>) : String</a>
         
           <div class="summary"><p>Returns a string representation of the structure using the <code><a href="../Chem/Gen.html">Chem::Gen</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_gen(output:IO%7CPath%7CString,fractional:Bool=false):Nil-instance-method" class="signature"><strong>#to_gen</strong>(output : IO | Path | String, fractional : Bool = <span class="n">false</span>) : Nil</a>
+        <a href="#to_gen%28output%3AIO%7CPath%7CString%2Cfractional%3ABool%3Dfalse%29%3ANil-instance-method" class="signature"><strong>#to_gen</strong>(output : IO | Path | String, fractional : Bool = <span class="n">false</span>) : Nil</a>
         
           <div class="summary"><p>Writes the structure to <em>output</em> using the <code><a href="../Chem/Gen.html">Chem::Gen</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_mol2(output:IO%7CPath%7CString):Nil-instance-method" class="signature"><strong>#to_mol2</strong>(output : IO | Path | String) : Nil</a>
+        <a href="#to_mol2%28output%3AIO%7CPath%7CString%29%3ANil-instance-method" class="signature"><strong>#to_mol2</strong>(output : IO | Path | String) : Nil</a>
         
           <div class="summary"><p>Writes the structure to <em>output</em> using the <code><a href="../Chem/Mol2.html">Chem::Mol2</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_mol2:String-instance-method" class="signature"><strong>#to_mol2</strong> : String</a>
+        <a href="#to_mol2%3AString-instance-method" class="signature"><strong>#to_mol2</strong> : String</a>
         
           <div class="summary"><p>Returns a string representation of the structure using the <code><a href="../Chem/Mol2.html">Chem::Mol2</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_pdb(bonds:Bool%7CArray(Bond)=false,renumber:Bool=true):String-instance-method" class="signature"><strong>#to_pdb</strong>(bonds : Bool | Array(Bond) = <span class="n">false</span>, renumber : Bool = <span class="n">true</span>) : String</a>
+        <a href="#to_pdb%28bonds%3ABool%7CArray%28Bond%29%3Dfalse%2Crenumber%3ABool%3Dtrue%29%3AString-instance-method" class="signature"><strong>#to_pdb</strong>(bonds : Bool | Array(Bond) = <span class="n">false</span>, renumber : Bool = <span class="n">true</span>) : String</a>
         
           <div class="summary"><p>Returns a string representation of the structure using the <code><a href="../Chem/PDB.html">Chem::PDB</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_pdb(output:IO%7CPath%7CString,bonds:Bool%7CArray(Bond)=false,renumber:Bool=true):Nil-instance-method" class="signature"><strong>#to_pdb</strong>(output : IO | Path | String, bonds : Bool | Array(Bond) = <span class="n">false</span>, renumber : Bool = <span class="n">true</span>) : Nil</a>
+        <a href="#to_pdb%28output%3AIO%7CPath%7CString%2Cbonds%3ABool%7CArray%28Bond%29%3Dfalse%2Crenumber%3ABool%3Dtrue%29%3ANil-instance-method" class="signature"><strong>#to_pdb</strong>(output : IO | Path | String, bonds : Bool | Array(Bond) = <span class="n">false</span>, renumber : Bool = <span class="n">true</span>) : Nil</a>
         
           <div class="summary"><p>Writes the structure to <em>output</em> using the <code><a href="../Chem/PDB.html">Chem::PDB</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_poscar(order:Array(Element)%7CArray(String)%7CNil=nil,fractional:Bool=false,wrap:Bool=false):String-instance-method" class="signature"><strong>#to_poscar</strong>(order : Array(Element) | Array(String) | Nil = <span class="n">nil</span>, fractional : Bool = <span class="n">false</span>, wrap : Bool = <span class="n">false</span>) : String</a>
+        <a href="#to_poscar%28order%3AArray%28Element%29%7CArray%28String%29%7CNil%3Dnil%2Cfractional%3ABool%3Dfalse%2Cwrap%3ABool%3Dfalse%29%3AString-instance-method" class="signature"><strong>#to_poscar</strong>(order : Array(Element) | Array(String) | Nil = <span class="n">nil</span>, fractional : Bool = <span class="n">false</span>, wrap : Bool = <span class="n">false</span>) : String</a>
         
           <div class="summary"><p>Returns a string representation of the structure using the <code><a href="../Chem/VASP/Poscar.html">Chem::VASP::Poscar</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_poscar(output:IO%7CPath%7CString,order:Array(Element)%7CArray(String)%7CNil=nil,fractional:Bool=false,wrap:Bool=false):Nil-instance-method" class="signature"><strong>#to_poscar</strong>(output : IO | Path | String, order : Array(Element) | Array(String) | Nil = <span class="n">nil</span>, fractional : Bool = <span class="n">false</span>, wrap : Bool = <span class="n">false</span>) : Nil</a>
+        <a href="#to_poscar%28output%3AIO%7CPath%7CString%2Corder%3AArray%28Element%29%7CArray%28String%29%7CNil%3Dnil%2Cfractional%3ABool%3Dfalse%2Cwrap%3ABool%3Dfalse%29%3ANil-instance-method" class="signature"><strong>#to_poscar</strong>(output : IO | Path | String, order : Array(Element) | Array(String) | Nil = <span class="n">nil</span>, fractional : Bool = <span class="n">false</span>, wrap : Bool = <span class="n">false</span>) : Nil</a>
         
           <div class="summary"><p>Writes the structure to <em>output</em> using the <code><a href="../Chem/VASP/Poscar.html">Chem::VASP::Poscar</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_pymol(output:IO%7CPath%7CString):Nil-instance-method" class="signature"><strong>#to_pymol</strong>(output : IO | Path | String) : Nil</a>
+        <a href="#to_pymol%28output%3AIO%7CPath%7CString%29%3ANil-instance-method" class="signature"><strong>#to_pymol</strong>(output : IO | Path | String) : Nil</a>
         
           <div class="summary"><p>Writes the structure to <em>output</em> using the <code><a href="../Chem/PyMOL.html">Chem::PyMOL</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_pymol:String-instance-method" class="signature"><strong>#to_pymol</strong> : String</a>
+        <a href="#to_pymol%3AString-instance-method" class="signature"><strong>#to_pymol</strong> : String</a>
         
           <div class="summary"><p>Returns a string representation of the structure using the <code><a href="../Chem/PyMOL.html">Chem::PyMOL</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_s(io:IO)-instance-method" class="signature"><strong>#to_s</strong>(io : IO)</a>
+        <a href="#to_s%28io%3AIO%29-instance-method" class="signature"><strong>#to_s</strong>(io : IO)</a>
         
           <div class="summary"><p>Appends a short String representation of this object which includes its class name and its object address.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_stride(output:IO%7CPath%7CString):Nil-instance-method" class="signature"><strong>#to_stride</strong>(output : IO | Path | String) : Nil</a>
+        <a href="#to_stride%28output%3AIO%7CPath%7CString%29%3ANil-instance-method" class="signature"><strong>#to_stride</strong>(output : IO | Path | String) : Nil</a>
         
           <div class="summary"><p>Writes the structure to <em>output</em> using the <code><a href="../Chem/Protein/Stride.html">Chem::Protein::Stride</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_stride:String-instance-method" class="signature"><strong>#to_stride</strong> : String</a>
+        <a href="#to_stride%3AString-instance-method" class="signature"><strong>#to_stride</strong> : String</a>
         
           <div class="summary"><p>Returns a string representation of the structure using the <code><a href="../Chem/Protein/Stride.html">Chem::Protein::Stride</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_vmd(output:IO%7CPath%7CString):Nil-instance-method" class="signature"><strong>#to_vmd</strong>(output : IO | Path | String) : Nil</a>
+        <a href="#to_vmd%28output%3AIO%7CPath%7CString%29%3ANil-instance-method" class="signature"><strong>#to_vmd</strong>(output : IO | Path | String) : Nil</a>
         
           <div class="summary"><p>Writes the structure to <em>output</em> using the <code><a href="../Chem/VMD.html">Chem::VMD</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_vmd:String-instance-method" class="signature"><strong>#to_vmd</strong> : String</a>
+        <a href="#to_vmd%3AString-instance-method" class="signature"><strong>#to_vmd</strong> : String</a>
         
           <div class="summary"><p>Returns a string representation of the structure using the <code><a href="../Chem/VMD.html">Chem::VMD</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_xyz(output:IO%7CPath%7CString):Nil-instance-method" class="signature"><strong>#to_xyz</strong>(output : IO | Path | String) : Nil</a>
+        <a href="#to_xyz%28output%3AIO%7CPath%7CString%29%3ANil-instance-method" class="signature"><strong>#to_xyz</strong>(output : IO | Path | String) : Nil</a>
         
           <div class="summary"><p>Writes the structure to <em>output</em> using the <code><a href="../Chem/XYZ.html">Chem::XYZ</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_xyz:String-instance-method" class="signature"><strong>#to_xyz</strong> : String</a>
+        <a href="#to_xyz%3AString-instance-method" class="signature"><strong>#to_xyz</strong> : String</a>
         
           <div class="summary"><p>Returns a string representation of the structure using the <code><a href="../Chem/XYZ.html">Chem::XYZ</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#unwrap:self-instance-method" class="signature"><strong>#unwrap</strong> : <span class="k">self</span></a>
+        <a href="#unwrap%3Aself-instance-method" class="signature"><strong>#unwrap</strong> : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#write(output:IO%7CPath%7CString,format:Chem::Format%7CString):Nil-instance-method" class="signature"><strong>#write</strong>(output : IO | Path | String, format : Chem::Format | String) : Nil</a>
+        <a href="#write%28output%3AIO%7CPath%7CString%2Cformat%3AChem%3A%3AFormat%7CString%29%3ANil-instance-method" class="signature"><strong>#write</strong>(output : IO | Path | String, format : Chem::Format | String) : Nil</a>
         
           <div class="summary"><p>Writes the structure to <em>output</em> using <em>format</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#write(path:Path%7CString):Nil-instance-method" class="signature"><strong>#write</strong>(path : Path | String) : Nil</a>
+        <a href="#write%28path%3APath%7CString%29%3ANil-instance-method" class="signature"><strong>#write</strong>(path : Path | String) : Nil</a>
         
           <div class="summary"><p>Writes the structure to the specified file.</p></div>
         
@@ -1287,52 +1287,52 @@
   <h3>Instance methods inherited from module <code><a href="../Chem/ResidueCollection.html">Chem::ResidueCollection</a></code></h3>
   
   
-    <a href="../Chem/ResidueCollection.html#each_residue:Iterator(Residue)-instance-method" class="tooltip">
+    <a href="../Chem/ResidueCollection.html#each_residue%3AIterator%28Residue%29-instance-method" class="tooltip">
       <span>each_residue : Iterator(Residue)<br/>each_residue(&block : Residue -> )</span>
     each_residue</a>, 
     
   
-    <a href="../Chem/ResidueCollection.html#each_residue_fragment(&:ResidueView-%3E):Nil-instance-method" class="tooltip">
+    <a href="../Chem/ResidueCollection.html#each_residue_fragment%28%26%3AResidueView-%3E%29%3ANil-instance-method" class="tooltip">
       <span>each_residue_fragment(& : ResidueView -> ) : Nil</span>
     each_residue_fragment</a>, 
     
   
-    <a href="../Chem/ResidueCollection.html#each_secondary_structure(reuse:Bool%7CArray(Residue)=false,strict:Bool=true,handedness:Bool=true):Iterator(ResidueView)-instance-method" class="tooltip">
+    <a href="../Chem/ResidueCollection.html#each_secondary_structure%28reuse%3ABool%7CArray%28Residue%29%3Dfalse%2Cstrict%3ABool%3Dtrue%2Chandedness%3ABool%3Dtrue%29%3AIterator%28ResidueView%29-instance-method" class="tooltip">
       <span>each_secondary_structure(reuse : Bool | Array(Residue) = <span class="n">false</span>, strict : Bool = <span class="n">true</span>, handedness : Bool = <span class="n">true</span>) : Iterator(ResidueView)<br/>each_secondary_structure(reuse : Bool | Array(Residue) = <span class="n">false</span>, strict : Bool = <span class="n">true</span>, handedness : Bool = <span class="n">true</span>, & : ResidueView, Protein::SecondaryStructure -> ) : Nil</span>
     each_secondary_structure</a>, 
     
   
-    <a href="../Chem/ResidueCollection.html#link_bond:Topology::BondType?-instance-method" class="tooltip">
+    <a href="../Chem/ResidueCollection.html#link_bond%3ATopology%3A%3ABondType%3F-instance-method" class="tooltip">
       <span>link_bond : Topology::BondType?</span>
     link_bond</a>, 
     
   
-    <a href="../Chem/ResidueCollection.html#n_residues:Int32-instance-method" class="tooltip">
+    <a href="../Chem/ResidueCollection.html#n_residues%3AInt32-instance-method" class="tooltip">
       <span>n_residues : Int32</span>
     n_residues</a>, 
     
   
-    <a href="../Chem/ResidueCollection.html#reset_secondary_structure:self-instance-method" class="tooltip">
+    <a href="../Chem/ResidueCollection.html#reset_secondary_structure%3Aself-instance-method" class="tooltip">
       <span>reset_secondary_structure : <span class="k">self</span></span>
     reset_secondary_structure</a>, 
     
   
-    <a href="../Chem/ResidueCollection.html#residue_fragments:Array(ResidueView)-instance-method" class="tooltip">
+    <a href="../Chem/ResidueCollection.html#residue_fragments%3AArray%28ResidueView%29-instance-method" class="tooltip">
       <span>residue_fragments : Array(ResidueView)</span>
     residue_fragments</a>, 
     
   
-    <a href="../Chem/ResidueCollection.html#residues:ResidueView-instance-method" class="tooltip">
+    <a href="../Chem/ResidueCollection.html#residues%3AResidueView-instance-method" class="tooltip">
       <span>residues : ResidueView</span>
     residues</a>, 
     
   
-    <a href="../Chem/ResidueCollection.html#sec=(seclist:Array(Protein::SecondaryStructure)):Array(Protein::SecondaryStructure)-instance-method" class="tooltip">
+    <a href="../Chem/ResidueCollection.html#sec%3D%28seclist%3AArray%28Protein%3A%3ASecondaryStructure%29%29%3AArray%28Protein%3A%3ASecondaryStructure%29-instance-method" class="tooltip">
       <span>sec=(seclist : Array(Protein::SecondaryStructure)) : Array(Protein::SecondaryStructure)<br/>sec=(sec : Protein::SecondaryStructure) : Protein::SecondaryStructure</span>
     sec=</a>, 
     
   
-    <a href="../Chem/ResidueCollection.html#secondary_structures(strict:Bool=true,handedness:Bool=true):Array(ResidueView)-instance-method" class="tooltip">
+    <a href="../Chem/ResidueCollection.html#secondary_structures%28strict%3ABool%3Dtrue%2Chandedness%3ABool%3Dtrue%29%3AArray%28ResidueView%29-instance-method" class="tooltip">
       <span>secondary_structures(strict : Bool = <span class="n">true</span>, handedness : Bool = <span class="n">true</span>) : Array(ResidueView)</span>
     secondary_structures</a>
     
@@ -1351,17 +1351,17 @@
   <h3>Instance methods inherited from module <code><a href="../Chem/ChainCollection.html">Chem::ChainCollection</a></code></h3>
   
   
-    <a href="../Chem/ChainCollection.html#chains:ChainView-instance-method" class="tooltip">
+    <a href="../Chem/ChainCollection.html#chains%3AChainView-instance-method" class="tooltip">
       <span>chains : ChainView</span>
     chains</a>, 
     
   
-    <a href="../Chem/ChainCollection.html#each_chain:Iterator(Chain)-instance-method" class="tooltip">
+    <a href="../Chem/ChainCollection.html#each_chain%3AIterator%28Chain%29-instance-method" class="tooltip">
       <span>each_chain : Iterator(Chain)<br/>each_chain(&block : Chain -> )</span>
     each_chain</a>, 
     
   
-    <a href="../Chem/ChainCollection.html#n_chains:Int32-instance-method" class="tooltip">
+    <a href="../Chem/ChainCollection.html#n_chains%3AInt32-instance-method" class="tooltip">
       <span>n_chains : Int32</span>
     n_chains</a>
     
@@ -1380,77 +1380,77 @@
   <h3>Instance methods inherited from module <code><a href="../Chem/AtomCollection.html">Chem::AtomCollection</a></code></h3>
   
   
-    <a href="../Chem/AtomCollection.html#atoms:AtomView-instance-method" class="tooltip">
+    <a href="../Chem/AtomCollection.html#atoms%3AAtomView-instance-method" class="tooltip">
       <span>atoms : AtomView</span>
     atoms</a>, 
     
   
-    <a href="../Chem/AtomCollection.html#bonds:Array(Bond)-instance-method" class="tooltip">
+    <a href="../Chem/AtomCollection.html#bonds%3AArray%28Bond%29-instance-method" class="tooltip">
       <span>bonds : Array(Bond)</span>
     bonds</a>, 
     
   
-    <a href="../Chem/AtomCollection.html#coords:Spatial::CoordinatesProxy-instance-method" class="tooltip">
+    <a href="../Chem/AtomCollection.html#coords%3ASpatial%3A%3ACoordinatesProxy-instance-method" class="tooltip">
       <span>coords : Spatial::CoordinatesProxy</span>
     coords</a>, 
     
   
-    <a href="../Chem/AtomCollection.html#each_atom:Iterator(Atom)-instance-method" class="tooltip">
+    <a href="../Chem/AtomCollection.html#each_atom%3AIterator%28Atom%29-instance-method" class="tooltip">
       <span>each_atom : Iterator(Atom)<br/>each_atom(&block : Atom -> )</span>
     each_atom</a>, 
     
   
-    <a href="../Chem/AtomCollection.html#each_fragment(&:AtomView-%3E):Nil-instance-method" class="tooltip">
+    <a href="../Chem/AtomCollection.html#each_fragment%28%26%3AAtomView-%3E%29%3ANil-instance-method" class="tooltip">
       <span>each_fragment(& : AtomView -> ) : Nil</span>
     each_fragment</a>, 
     
   
-    <a href="../Chem/AtomCollection.html#formal_charge:Int32-instance-method" class="tooltip">
+    <a href="../Chem/AtomCollection.html#formal_charge%3AInt32-instance-method" class="tooltip">
       <span>formal_charge : Int32</span>
     formal_charge</a>, 
     
   
-    <a href="../Chem/AtomCollection.html#formal_charges:Array(Int32)-instance-method" class="tooltip">
+    <a href="../Chem/AtomCollection.html#formal_charges%3AArray%28Int32%29-instance-method" class="tooltip">
       <span>formal_charges : Array(Int32)</span>
     formal_charges</a>, 
     
   
-    <a href="../Chem/AtomCollection.html#fragments:Array(AtomView)-instance-method" class="tooltip">
+    <a href="../Chem/AtomCollection.html#fragments%3AArray%28AtomView%29-instance-method" class="tooltip">
       <span>fragments : Array(AtomView)</span>
     fragments</a>, 
     
   
-    <a href="../Chem/AtomCollection.html#has_hydrogens?:Bool-instance-method" class="tooltip">
+    <a href="../Chem/AtomCollection.html#has_hydrogens%3F%3ABool-instance-method" class="tooltip">
       <span>has_hydrogens? : Bool</span>
     has_hydrogens?</a>, 
     
   
-    <a href="../Chem/AtomCollection.html#n_atoms:Int32-instance-method" class="tooltip">
+    <a href="../Chem/AtomCollection.html#n_atoms%3AInt32-instance-method" class="tooltip">
       <span>n_atoms : Int32</span>
     n_atoms</a>, 
     
   
-    <a href="../Chem/AtomCollection.html#to_gen(fractional:Bool=false):String-instance-method" class="tooltip">
+    <a href="../Chem/AtomCollection.html#to_gen%28fractional%3ABool%3Dfalse%29%3AString-instance-method" class="tooltip">
       <span>to_gen(fractional : Bool = <span class="n">false</span>) : String<br/>to_gen(output : IO | Path | String, fractional : Bool = <span class="n">false</span>) : Nil</span>
     to_gen</a>, 
     
   
-    <a href="../Chem/AtomCollection.html#to_mol2(output:IO%7CPath%7CString):Nil-instance-method" class="tooltip">
+    <a href="../Chem/AtomCollection.html#to_mol2%28output%3AIO%7CPath%7CString%29%3ANil-instance-method" class="tooltip">
       <span>to_mol2(output : IO | Path | String) : Nil<br/>to_mol2 : String</span>
     to_mol2</a>, 
     
   
-    <a href="../Chem/AtomCollection.html#to_pdb(bonds:Bool%7CArray(Bond)=false,renumber:Bool=true):String-instance-method" class="tooltip">
+    <a href="../Chem/AtomCollection.html#to_pdb%28bonds%3ABool%7CArray%28Bond%29%3Dfalse%2Crenumber%3ABool%3Dtrue%29%3AString-instance-method" class="tooltip">
       <span>to_pdb(bonds : Bool | Array(Bond) = <span class="n">false</span>, renumber : Bool = <span class="n">true</span>) : String<br/>to_pdb(output : IO | Path | String, bonds : Bool | Array(Bond) = <span class="n">false</span>, renumber : Bool = <span class="n">true</span>) : Nil</span>
     to_pdb</a>, 
     
   
-    <a href="../Chem/AtomCollection.html#to_xyz(output:IO%7CPath%7CString):Nil-instance-method" class="tooltip">
+    <a href="../Chem/AtomCollection.html#to_xyz%28output%3AIO%7CPath%7CString%29%3ANil-instance-method" class="tooltip">
       <span>to_xyz(output : IO | Path | String) : Nil<br/>to_xyz : String</span>
     to_xyz</a>, 
     
   
-    <a href="../Chem/AtomCollection.html#write(output:IO%7CPath%7CString,format:Chem::Format%7CString):Nil-instance-method" class="tooltip">
+    <a href="../Chem/AtomCollection.html#write%28output%3AIO%7CPath%7CString%2Cformat%3AChem%3A%3AFormat%7CString%29%3ANil-instance-method" class="tooltip">
       <span>write(output : IO | Path | String, format : Chem::Format | String) : Nil<br/>write(path : Path | String) : Nil</span>
     write</a>
     
@@ -1501,13 +1501,13 @@
         
         def self.<strong>build</strong>(*args, **options, &) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#build(*args,**options,&):self-class-method">#</a>
+        <a class="method-permalink" href="#build%28%2Aargs%2C%2A%2Aoptions%2C%26%29%3Aself-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure.cr#L23" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure.cr#L23" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1517,20 +1517,20 @@
         
         def self.<strong>from_chgcar</strong>(input : IO | Path | String) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#from_chgcar(input:IO%7CPath%7CString):self-class-method">#</a>
+        <a class="method-permalink" href="#from_chgcar%28input%3AIO%7CPath%7CString%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns the structure encoded in <em>input</em> using the
 <code><a href="../Chem/VASP/Chgcar.html">Chem::VASP::Chgcar</a></code> file format. Arguments are forwarded to
-<code><a href="../Chem/VASP/Chgcar/Reader.html#open(io:IO,sync_close:Bool=false,&:self-%3E)-class-method">Chem::VASP::Chgcar::Reader.open</a></code>.</p>
+<code><a href="../Chem/VASP/Chgcar/Reader.html#open%28io%3AIO%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::VASP::Chgcar::Reader.open</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1540,20 +1540,20 @@
         
         def self.<strong>from_cube</strong>(input : IO | Path | String) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#from_cube(input:IO%7CPath%7CString):self-class-method">#</a>
+        <a class="method-permalink" href="#from_cube%28input%3AIO%7CPath%7CString%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns the structure encoded in <em>input</em> using the
 <code><a href="../Chem/Cube.html">Chem::Cube</a></code> file format. Arguments are forwarded to
-<code><a href="../Chem/Cube/Reader.html#open(io:IO,sync_close:Bool=false,&:self-%3E)-class-method">Chem::Cube::Reader.open</a></code>.</p>
+<code><a href="../Chem/Cube/Reader.html#open%28io%3AIO%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::Cube::Reader.open</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1563,20 +1563,20 @@
         
         def self.<strong>from_gen</strong>(input : IO | Path | String, guess_topology : Bool = <span class="n">false</span>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#from_gen(input:IO%7CPath%7CString,guess_topology:Bool=false):self-class-method">#</a>
+        <a class="method-permalink" href="#from_gen%28input%3AIO%7CPath%7CString%2Cguess_topology%3ABool%3Dfalse%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns the structure encoded in <em>input</em> using the
 <code><a href="../Chem/Gen.html">Chem::Gen</a></code> file format. Arguments are forwarded to
-<code><a href="../Chem/Gen/Reader.html#open(io:IO,guess_topology:Bool=false,sync_close:Bool=false,&:self-%3E)-class-method">Chem::Gen::Reader.open</a></code>.</p>
+<code><a href="../Chem/Gen/Reader.html#open%28io%3AIO%2Cguess_topology%3ABool%3Dfalse%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::Gen::Reader.open</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1586,20 +1586,20 @@
         
         def self.<strong>from_locpot</strong>(input : IO | Path | String) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#from_locpot(input:IO%7CPath%7CString):self-class-method">#</a>
+        <a class="method-permalink" href="#from_locpot%28input%3AIO%7CPath%7CString%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns the structure encoded in <em>input</em> using the
 <code><a href="../Chem/VASP/Locpot.html">Chem::VASP::Locpot</a></code> file format. Arguments are forwarded to
-<code><a href="../Chem/VASP/Locpot/Reader.html#open(io:IO,sync_close:Bool=false,&:self-%3E)-class-method">Chem::VASP::Locpot::Reader.open</a></code>.</p>
+<code><a href="../Chem/VASP/Locpot/Reader.html#open%28io%3AIO%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::VASP::Locpot::Reader.open</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1609,24 +1609,23 @@
         
         def self.<strong>from_mol2</strong>(input : IO | Path | String) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#from_mol2(input:IO%7CPath%7CString):self-class-method">#</a>
+        <a class="method-permalink" href="#from_mol2%28input%3AIO%7CPath%7CString%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns the structure encoded in <em>input</em> using the
 <code><a href="../Chem/Mol2.html">Chem::Mol2</a></code> file format. Arguments are forwarded to
-<code><a href="../Chem/Mol2/Reader.html#open(io:IO,sync_close:Bool=false,&:self-%3E)-class-method">Chem::Mol2::Reader.open</a></code>.</p>
-
+<code><a href="../Chem/Mol2/Reader.html#open%28io%3AIO%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::Mol2::Reader.open</a></code>.</p>
 <p>If <em>input</em> contains multiple entries, this method returns
-the first one only. Use <code><a href="../Array.html#from_mol2(input:IO%7CPath%7CString,indexes:Array(Int)):self-class-method">Array#from_mol2</a></code> or
+the first one only. Use <code><a href="../Array.html#from_mol2%28input%3AIO%7CPath%7CString%2Cindexes%3AArray%28Int%29%29%3Aself-class-method">Array#from_mol2</a></code> or
 <code>Chem::Mol2::Reader#each</code> to get multiple entries instead.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1636,24 +1635,23 @@ the first one only. Use <code><a href="../Array.html#from_mol2(input:IO%7CPath%7
         
         def self.<strong>from_pdb</strong>(input : IO | Path | String, alt_loc : <a href="../Char.html">Char</a>? = <span class="n">nil</span>, chains : Enumerable(<a href="../Char.html">Char</a>) | String | Nil = <span class="n">nil</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#from_pdb(input:IO%7CPath%7CString,alt_loc:Char?=nil,chains:Enumerable(Char)%7CString%7CNil=nil,het:Bool=true):self-class-method">#</a>
+        <a class="method-permalink" href="#from_pdb%28input%3AIO%7CPath%7CString%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Chet%3ABool%3Dtrue%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns the structure encoded in <em>input</em> using the
 <code><a href="../Chem/PDB.html">Chem::PDB</a></code> file format. Arguments are forwarded to
-<code><a href="../Chem/PDB/Reader.html#open(io:IO,alt_loc:Char?=nil,chains:Enumerable(Char)%7CString%7CNil=nil,het:Bool=true,sync_close:Bool=false,&:self-%3E)-class-method">Chem::PDB::Reader.open</a></code>.</p>
-
+<code><a href="../Chem/PDB/Reader.html#open%28io%3AIO%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Chet%3ABool%3Dtrue%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::PDB::Reader.open</a></code>.</p>
 <p>If <em>input</em> contains multiple entries, this method returns
-the first one only. Use <code><a href="../Array.html#from_pdb(input:IO%7CPath%7CString,alt_loc:Char?=nil,chains:Enumerable(Char)%7CString%7CNil=nil,het:Bool=true):self-class-method">Array#from_pdb</a></code> or
+the first one only. Use <code><a href="../Array.html#from_pdb%28input%3AIO%7CPath%7CString%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Chet%3ABool%3Dtrue%29%3Aself-class-method">Array#from_pdb</a></code> or
 <code>Chem::PDB::Reader#each</code> to get multiple entries instead.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1663,20 +1661,20 @@ the first one only. Use <code><a href="../Array.html#from_pdb(input:IO%7CPath%7C
         
         def self.<strong>from_poscar</strong>(input : IO | Path | String, guess_topology : Bool = <span class="n">false</span>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#from_poscar(input:IO%7CPath%7CString,guess_topology:Bool=false):self-class-method">#</a>
+        <a class="method-permalink" href="#from_poscar%28input%3AIO%7CPath%7CString%2Cguess_topology%3ABool%3Dfalse%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns the structure encoded in <em>input</em> using the
 <code><a href="../Chem/VASP/Poscar.html">Chem::VASP::Poscar</a></code> file format. Arguments are forwarded to
-<code><a href="../Chem/VASP/Poscar/Reader.html#open(io:IO,guess_topology:Bool=false,sync_close:Bool=false,&:self-%3E)-class-method">Chem::VASP::Poscar::Reader.open</a></code>.</p>
+<code><a href="../Chem/VASP/Poscar/Reader.html#open%28io%3AIO%2Cguess_topology%3ABool%3Dfalse%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::VASP::Poscar::Reader.open</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1686,24 +1684,23 @@ the first one only. Use <code><a href="../Array.html#from_pdb(input:IO%7CPath%7C
         
         def self.<strong>from_xyz</strong>(input : IO | Path | String, guess_topology : Bool = <span class="n">false</span>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#from_xyz(input:IO%7CPath%7CString,guess_topology:Bool=false):self-class-method">#</a>
+        <a class="method-permalink" href="#from_xyz%28input%3AIO%7CPath%7CString%2Cguess_topology%3ABool%3Dfalse%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns the structure encoded in <em>input</em> using the
 <code><a href="../Chem/XYZ.html">Chem::XYZ</a></code> file format. Arguments are forwarded to
-<code><a href="../Chem/XYZ/Reader.html#open(io:IO,guess_topology:Bool=false,sync_close:Bool=false,&:self-%3E)-class-method">Chem::XYZ::Reader.open</a></code>.</p>
-
+<code><a href="../Chem/XYZ/Reader.html#open%28io%3AIO%2Cguess_topology%3ABool%3Dfalse%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::XYZ::Reader.open</a></code>.</p>
 <p>If <em>input</em> contains multiple entries, this method returns
-the first one only. Use <code><a href="../Array.html#from_xyz(input:IO%7CPath%7CString,guess_topology:Bool=false):self-class-method">Array#from_xyz</a></code> or
+the first one only. Use <code><a href="../Array.html#from_xyz%28input%3AIO%7CPath%7CString%2Cguess_topology%3ABool%3Dfalse%29%3Aself-class-method">Array#from_xyz</a></code> or
 <code>Chem::XYZ::Reader#each</code> to get multiple entries instead.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1713,13 +1710,13 @@ the first one only. Use <code><a href="../Array.html#from_xyz(input:IO%7CPath%7C
         
         def self.<strong>new</strong>(source_file : Path | String | Nil = <span class="n">nil</span>)
 
-        <a class="method-permalink" href="#new(source_file:Path%7CString%7CNil=nil)-class-method">#</a>
+        <a class="method-permalink" href="#new%28source_file%3APath%7CString%7CNil%3Dnil%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure.cr#L18" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure.cr#L18" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1729,7 +1726,7 @@ the first one only. Use <code><a href="../Array.html#from_xyz(input:IO%7CPath%7C
         
         def self.<strong>read</strong>(input : IO | Path | String, format : <a href="../Chem/Format.html">Chem::Format</a> | String) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#read(input:IO%7CPath%7CString,format:Chem::Format%7CString):self-class-method">#</a>
+        <a class="method-permalink" href="#read%28input%3AIO%7CPath%7CString%2Cformat%3AChem%3A%3AFormat%7CString%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1737,13 +1734,11 @@ the first one only. Use <code><a href="../Array.html#from_xyz(input:IO%7CPath%7C
           <p>Returns the structure encoded in the specified file
 using <em>format</em>. Raises <code>ArgumentError</code> if <em>format</em> has
 required arguments or cannot read <code><a href="../Chem/Structure.html">Chem::Structure</a></code>.</p>
-
 <p>If <em>input</em> contains multiple entries, this method returns
-the first one only. Use <code><a href="../Array.html#read(input:IO%7CPath%7CString,format:String):self-class-method">Array.read</a></code> or
-<code><a href="../Chem/FormatReader/MultiEntry.html#each(&:T-%3E):Nil-instance-method">Chem::FormatReader::MultiEntry#each</a></code> (reader can be
-obtained via <code><a href="../Chem/Format.html#reader(type:Chem::Spatial::Grid.class)-instance-method">Chem::Format.reader</a></code>) to get multiple entries
+the first one only. Use <code><a href="../Array.html#read%28input%3AIO%7CPath%7CString%2Cformat%3AString%29%3Aself-class-method">Array.read</a></code> or
+<code><a href="../Chem/FormatReader/MultiEntry.html#each%28%26%3AT-%3E%29%3ANil-instance-method">Chem::FormatReader::MultiEntry#each</a></code> (reader can be
+obtained via <code><a href="../Chem/Format.html#reader%28type%3AChem%3A%3ASpatial%3A%3AGrid.class%29-instance-method">Chem::Format.reader</a></code>) to get multiple entries
 instead.</p>
-
 <p>The supported file formats are <code><a href="../Chem/Cube.html">Chem::Cube</a></code>, <code><a href="../Chem/Gen.html">Chem::Gen</a></code>, <code><a href="../Chem/Mol2.html">Chem::Mol2</a></code>, <code><a href="../Chem/PDB.html">Chem::PDB</a></code>, <code><a href="../Chem/VASP/Chgcar.html">Chem::VASP::Chgcar</a></code>, <code><a href="../Chem/VASP/Locpot.html">Chem::VASP::Locpot</a></code>, <code><a href="../Chem/VASP/Poscar.html">Chem::VASP::Poscar</a></code>, <code><a href="../Chem/XYZ.html">Chem::XYZ</a></code>. Use the
 <code>.from_*</code> methods to customize how the object is decoded in
 the corresponding file format if possible.</p>
@@ -1752,7 +1747,7 @@ the corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1762,24 +1757,29 @@ the corresponding file format if possible.</p>
         
         def self.<strong>read</strong>(path : Path | String) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#read(path:Path%7CString):self-class-method">#</a>
+        <a class="method-permalink" href="#read%28path%3APath%7CString%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns the structure encoded in the specified file.
 The file format is chosen based on the filename (see
-<code><a href="../Chem/Format.html#from_filename(filename:Path%7CString):self-class-method">Chem::Format#from_filename</a></code>). Raises <code>ArgumentError</code> if the
+<code><a href="../Chem/Format.html#from_filename%28filename%3APath%7CString%29%3Aself-class-method">Chem::Format#from_filename</a></code>). Raises <code>ArgumentError</code> if the
 file format cannot be determined.</p>
-
 <p>If the file contains multiple entries, this method returns
-the first one only. Use <code><a href="../Array.html#read(input:IO%7CPath%7CString,format:String):self-class-method">Array.read</a></code> to get multiple entries
+the first one only. Use <code><a href="../Array.html#read%28input%3AIO%7CPath%7CString%2Cformat%3AString%29%3Aself-class-method">Array.read</a></code> to get multiple entries
 instead.</p>
-
 <p>The supported file formats are the following:</p>
-
-<ul><li><code><a href="../Chem/Gen.html">Chem::Gen</a></code> (.gen)</li><li><code><a href="../Chem/Mol2.html">Chem::Mol2</a></code> (.mol2)</li><li><code><a href="../Chem/PDB.html">Chem::PDB</a></code> (.ent, .pdb)</li><li><code><a href="../Chem/XYZ.html">Chem::XYZ</a></code> (.xyz)</li><li><code><a href="../Chem/VASP/Poscar.html">Chem::VASP::Poscar</a></code> (.poscar, POSCAR, CONTCAR)</li><li><code><a href="../Chem/Cube.html">Chem::Cube</a></code> (.cube)</li><li><code><a href="../Chem/VASP/Chgcar.html">Chem::VASP::Chgcar</a></code> (CHGCAR)</li><li><code><a href="../Chem/VASP/Locpot.html">Chem::VASP::Locpot</a></code> (LOCPOT)</li></ul>
-
+<ul>
+<li><code><a href="../Chem/Gen.html">Chem::Gen</a></code> (.gen)</li>
+<li><code><a href="../Chem/Mol2.html">Chem::Mol2</a></code> (.mol2)</li>
+<li><code><a href="../Chem/PDB.html">Chem::PDB</a></code> (.ent, .pdb)</li>
+<li><code><a href="../Chem/XYZ.html">Chem::XYZ</a></code> (.xyz)</li>
+<li><code><a href="../Chem/VASP/Poscar.html">Chem::VASP::Poscar</a></code> (.poscar, POSCAR, CONTCAR)</li>
+<li><code><a href="../Chem/Cube.html">Chem::Cube</a></code> (.cube)</li>
+<li><code><a href="../Chem/VASP/Chgcar.html">Chem::VASP::Chgcar</a></code> (CHGCAR)</li>
+<li><code><a href="../Chem/VASP/Locpot.html">Chem::VASP::Locpot</a></code> (LOCPOT)</li>
+</ul>
 <p>Use the <code>.from_*</code> methods to customize how the object is
 decoded in the corresponding file format if possible.</p>
         </div>
@@ -1787,7 +1787,7 @@ decoded in the corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1811,13 +1811,13 @@ decoded in the corresponding file format if possible.</p>
         
         def <strong>[]</strong>(*args, **options)
 
-        <a class="method-permalink" href="#[](*args,**options)-instance-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure.cr#L16" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure.cr#L16" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1827,13 +1827,13 @@ decoded in the corresponding file format if possible.</p>
         
         def <strong>[]</strong>(*args, **options, &)
 
-        <a class="method-permalink" href="#[](*args,**options,&)-instance-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure.cr#L16" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure.cr#L16" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1843,13 +1843,13 @@ decoded in the corresponding file format if possible.</p>
         
         def <strong>[]?</strong>(*args, **options)
 
-        <a class="method-permalink" href="#[]?(*args,**options)-instance-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure.cr#L16" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure.cr#L16" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1859,13 +1859,13 @@ decoded in the corresponding file format if possible.</p>
         
         def <strong>[]?</strong>(*args, **options, &)
 
-        <a class="method-permalink" href="#[]?(*args,**options,&)-instance-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%3F%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure.cr#L16" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure.cr#L16" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1875,13 +1875,13 @@ decoded in the corresponding file format if possible.</p>
         
         def <strong>biases</strong> : <a href="../Array.html">Array</a>(<a href="../Chem/Bias.html">Chem::Bias</a>)
 
-        <a class="method-permalink" href="#biases:Array(Chem::Bias)-instance-method">#</a>
+        <a class="method-permalink" href="#biases%3AArray%28Chem%3A%3ABias%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1891,13 +1891,13 @@ decoded in the corresponding file format if possible.</p>
         
         def <strong>clear</strong> : <span class="k">self</span>
 
-        <a class="method-permalink" href="#clear:self-instance-method">#</a>
+        <a class="method-permalink" href="#clear%3Aself-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure.cr#L35" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure.cr#L35" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1907,15 +1907,13 @@ decoded in the corresponding file format if possible.</p>
         
         def <strong>clone</strong> : <span class="k">self</span>
 
-        <a class="method-permalink" href="#clone:self-instance-method">#</a>
+        <a class="method-permalink" href="#clone%3Aself-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns a deep copy of <code>self</code>, that is, every chain/residue/atom is copied.</p>
-
 <p>Unlike array-like classes in the language, <code>#dup</code> (shallow copy) is not possible.</p>
-
 <pre><code class="language-crystal">structure <span class="o">=</span> <span class="t">Structure</span>.<span class="k">new</span> <span class="s">&quot;/path/to/file.pdb&quot;</span>
 other <span class="o">=</span> structure.clone
 other <span class="o">==</span> structure     <span class="c"># =&gt; true</span>
@@ -1930,7 +1928,7 @@ other.dig(<span class="s">&#39;A&#39;</span>, <span class="n">23</span>, <span c
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure.cr#L56" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure.cr#L56" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1940,13 +1938,13 @@ other.dig(<span class="s">&#39;A&#39;</span>, <span class="n">23</span>, <span c
         
         def <strong>coords</strong> : <a href="../Chem/Spatial/CoordinatesProxy.html">Spatial::CoordinatesProxy</a>
 
-        <a class="method-permalink" href="#coords:Spatial::CoordinatesProxy-instance-method">#</a>
+        <a class="method-permalink" href="#coords%3ASpatial%3A%3ACoordinatesProxy-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure.cr#L72" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure.cr#L72" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1956,13 +1954,13 @@ other.dig(<span class="s">&#39;A&#39;</span>, <span class="n">23</span>, <span c
         
         def <strong>delete</strong>(ch : <a href="../Chem/Chain.html">Chain</a>) : <a href="../Chem/Chain.html">Chain</a>?
 
-        <a class="method-permalink" href="#delete(ch:Chain):Chain?-instance-method">#</a>
+        <a class="method-permalink" href="#delete%28ch%3AChain%29%3AChain%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure.cr#L76" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure.cr#L76" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1972,13 +1970,13 @@ other.dig(<span class="s">&#39;A&#39;</span>, <span class="n">23</span>, <span c
         
         def <strong>dig</strong>(id : <a href="../Char.html">Char</a>) : <a href="../Chem/Chain.html">Chain</a>
 
-        <a class="method-permalink" href="#dig(id:Char):Chain-instance-method">#</a>
+        <a class="method-permalink" href="#dig%28id%3AChar%29%3AChain-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure.cr#L82" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure.cr#L82" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1988,13 +1986,13 @@ other.dig(<span class="s">&#39;A&#39;</span>, <span class="n">23</span>, <span c
         
         def <strong>dig</strong>(id : <a href="../Char.html">Char</a>, *subindexes)
 
-        <a class="method-permalink" href="#dig(id:Char,*subindexes)-instance-method">#</a>
+        <a class="method-permalink" href="#dig%28id%3AChar%2C%2Asubindexes%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure.cr#L86" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure.cr#L86" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2004,13 +2002,13 @@ other.dig(<span class="s">&#39;A&#39;</span>, <span class="n">23</span>, <span c
         
         def <strong>dig?</strong>(id : <a href="../Char.html">Char</a>) : <a href="../Chem/Chain.html">Chain</a>?
 
-        <a class="method-permalink" href="#dig?(id:Char):Chain?-instance-method">#</a>
+        <a class="method-permalink" href="#dig%3F%28id%3AChar%29%3AChain%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure.cr#L90" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure.cr#L90" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2020,13 +2018,13 @@ other.dig(<span class="s">&#39;A&#39;</span>, <span class="n">23</span>, <span c
         
         def <strong>dig?</strong>(id : <a href="../Char.html">Char</a>, *subindexes)
 
-        <a class="method-permalink" href="#dig?(id:Char,*subindexes)-instance-method">#</a>
+        <a class="method-permalink" href="#dig%3F%28id%3AChar%2C%2Asubindexes%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure.cr#L94" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure.cr#L94" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2036,13 +2034,13 @@ other.dig(<span class="s">&#39;A&#39;</span>, <span class="n">23</span>, <span c
         
         def <strong>each_atom</strong> : Iterator(<a href="../Chem/Atom.html">Atom</a>)
 
-        <a class="method-permalink" href="#each_atom:Iterator(Atom)-instance-method">#</a>
+        <a class="method-permalink" href="#each_atom%3AIterator%28Atom%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure.cr#L100" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure.cr#L100" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2052,13 +2050,13 @@ other.dig(<span class="s">&#39;A&#39;</span>, <span class="n">23</span>, <span c
         
         def <strong>each_atom</strong>(&block : <a href="../Chem/Atom.html">Atom</a> -> )
 
-        <a class="method-permalink" href="#each_atom(&block:Atom-%3E)-instance-method">#</a>
+        <a class="method-permalink" href="#each_atom%28%26block%3AAtom-%3E%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure.cr#L110" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure.cr#L110" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2068,13 +2066,13 @@ other.dig(<span class="s">&#39;A&#39;</span>, <span class="n">23</span>, <span c
         
         def <strong>each_chain</strong> : Iterator(<a href="../Chem/Chain.html">Chain</a>)
 
-        <a class="method-permalink" href="#each_chain:Iterator(Chain)-instance-method">#</a>
+        <a class="method-permalink" href="#each_chain%3AIterator%28Chain%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure.cr#L118" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure.cr#L118" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2084,13 +2082,13 @@ other.dig(<span class="s">&#39;A&#39;</span>, <span class="n">23</span>, <span c
         
         def <strong>each_chain</strong>(&block : <a href="../Chem/Chain.html">Chain</a> -> )
 
-        <a class="method-permalink" href="#each_chain(&block:Chain-%3E)-instance-method">#</a>
+        <a class="method-permalink" href="#each_chain%28%26block%3AChain-%3E%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure.cr#L122" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure.cr#L122" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2100,13 +2098,13 @@ other.dig(<span class="s">&#39;A&#39;</span>, <span class="n">23</span>, <span c
         
         def <strong>each_residue</strong> : Iterator(<a href="../Chem/Residue.html">Residue</a>)
 
-        <a class="method-permalink" href="#each_residue:Iterator(Residue)-instance-method">#</a>
+        <a class="method-permalink" href="#each_residue%3AIterator%28Residue%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure.cr#L128" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure.cr#L128" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2116,13 +2114,13 @@ other.dig(<span class="s">&#39;A&#39;</span>, <span class="n">23</span>, <span c
         
         def <strong>each_residue</strong>(&block : <a href="../Chem/Residue.html">Residue</a> -> )
 
-        <a class="method-permalink" href="#each_residue(&block:Residue-%3E)-instance-method">#</a>
+        <a class="method-permalink" href="#each_residue%28%26block%3AResidue-%3E%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure.cr#L132" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure.cr#L132" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2132,13 +2130,13 @@ other.dig(<span class="s">&#39;A&#39;</span>, <span class="n">23</span>, <span c
         
         def <strong>empty?</strong>
 
-        <a class="method-permalink" href="#empty?-instance-method">#</a>
+        <a class="method-permalink" href="#empty%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure.cr#L140" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure.cr#L140" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2148,13 +2146,13 @@ other.dig(<span class="s">&#39;A&#39;</span>, <span class="n">23</span>, <span c
         
         def <strong>experiment</strong> : <a href="../Chem/Structure/Experiment.html">Structure::Experiment</a>?
 
-        <a class="method-permalink" href="#experiment:Structure::Experiment?-instance-method">#</a>
+        <a class="method-permalink" href="#experiment%3AStructure%3A%3AExperiment%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure.cr#L11" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure.cr#L11" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2164,13 +2162,13 @@ other.dig(<span class="s">&#39;A&#39;</span>, <span class="n">23</span>, <span c
         
         def <strong>experiment=</strong>(experiment : <a href="../Chem/Structure/Experiment.html">Structure::Experiment</a>?)
 
-        <a class="method-permalink" href="#experiment=(experiment:Structure::Experiment?)-instance-method">#</a>
+        <a class="method-permalink" href="#experiment%3D%28experiment%3AStructure%3A%3AExperiment%3F%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure.cr#L11" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure.cr#L11" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2180,7 +2178,7 @@ other.dig(<span class="s">&#39;A&#39;</span>, <span class="n">23</span>, <span c
         
         def <strong>inspect</strong>(io : IO)
 
-        <a class="method-permalink" href="#inspect(io:IO)-instance-method">#</a>
+        <a class="method-permalink" href="#inspect%28io%3AIO%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2192,7 +2190,6 @@ other.dig(<span class="s">&#39;A&#39;</span>, <span class="n">23</span>, <span c
           <p>Appends a String representation of this object
 which includes its class name, its object address
 and the values of all instance variables.</p>
-
 <pre><code class="language-crystal"><span class="k">class</span> <span class="t">Person</span>
   <span class="k">def</span> <span class="m">initialize</span>(@name : <span class="t">String</span>, @age : <span class="t">Int32</span>)
   <span class="k">end</span>
@@ -2204,7 +2201,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure.cr#L144" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure.cr#L144" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2214,13 +2211,13 @@ and the values of all instance variables.</p>
         
         def <strong>lattice</strong> : <a href="../Chem/Lattice.html">Lattice</a>?
 
-        <a class="method-permalink" href="#lattice:Lattice?-instance-method">#</a>
+        <a class="method-permalink" href="#lattice%3ALattice%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure.cr#L12" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure.cr#L12" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2230,13 +2227,13 @@ and the values of all instance variables.</p>
         
         def <strong>lattice=</strong>(lattice : <a href="../Chem/Lattice.html">Lattice</a>?)
 
-        <a class="method-permalink" href="#lattice=(lattice:Lattice?)-instance-method">#</a>
+        <a class="method-permalink" href="#lattice%3D%28lattice%3ALattice%3F%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure.cr#L12" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure.cr#L12" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2246,13 +2243,13 @@ and the values of all instance variables.</p>
         
         def <strong>n_atoms</strong> : Int32
 
-        <a class="method-permalink" href="#n_atoms:Int32-instance-method">#</a>
+        <a class="method-permalink" href="#n_atoms%3AInt32-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure.cr#L148" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure.cr#L148" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2262,13 +2259,13 @@ and the values of all instance variables.</p>
         
         def <strong>n_chains</strong> : Int32
 
-        <a class="method-permalink" href="#n_chains:Int32-instance-method">#</a>
+        <a class="method-permalink" href="#n_chains%3AInt32-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure.cr#L152" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure.cr#L152" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2278,13 +2275,13 @@ and the values of all instance variables.</p>
         
         def <strong>n_residues</strong> : Int32
 
-        <a class="method-permalink" href="#n_residues:Int32-instance-method">#</a>
+        <a class="method-permalink" href="#n_residues%3AInt32-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure.cr#L156" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure.cr#L156" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2294,13 +2291,13 @@ and the values of all instance variables.</p>
         
         def <strong>periodic?</strong> : Bool
 
-        <a class="method-permalink" href="#periodic?:Bool-instance-method">#</a>
+        <a class="method-permalink" href="#periodic%3F%3ABool-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure.cr#L160" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure.cr#L160" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2310,17 +2307,15 @@ and the values of all instance variables.</p>
         
         def <strong>renumber_by_connectivity</strong>(split_chains : Bool = <span class="n">true</span>) : Nil
 
-        <a class="method-permalink" href="#renumber_by_connectivity(split_chains:Bool=true):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#renumber_by_connectivity%28split_chains%3ABool%3Dtrue%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Renumber chain and residues based on bond information.</p>
-
 <p>Residue fragments are assigned to unique chains unless
 <em>split_chains</em> is <code>false</code>, which keeps existing chains intact.
 Residue ordering is computed based on the link bond if available.</p>
-
 <p><span class="flag purple">NOTE</span>  existing chains are reused to re-arrang the residues among
 them, so avoid caching them before calling this.</p>
         </div>
@@ -2328,7 +2323,7 @@ them, so avoid caching them before calling this.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure.cr#L172" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure.cr#L172" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2338,13 +2333,13 @@ them, so avoid caching them before calling this.</p>
         
         def <strong>source_file</strong> : Path?
 
-        <a class="method-permalink" href="#source_file:Path?-instance-method">#</a>
+        <a class="method-permalink" href="#source_file%3APath%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure.cr#L13" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2354,13 +2349,13 @@ them, so avoid caching them before calling this.</p>
         
         def <strong>title</strong> : String
 
-        <a class="method-permalink" href="#title:String-instance-method">#</a>
+        <a class="method-permalink" href="#title%3AString-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure.cr#L14" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure.cr#L14" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2370,13 +2365,13 @@ them, so avoid caching them before calling this.</p>
         
         def <strong>title=</strong>(title : String)
 
-        <a class="method-permalink" href="#title=(title:String)-instance-method">#</a>
+        <a class="method-permalink" href="#title%3D%28title%3AString%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure.cr#L14" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure.cr#L14" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2386,20 +2381,20 @@ them, so avoid caching them before calling this.</p>
         
         def <strong>to_gen</strong>(fractional : Bool = <span class="n">false</span>) : String
 
-        <a class="method-permalink" href="#to_gen(fractional:Bool=false):String-instance-method">#</a>
+        <a class="method-permalink" href="#to_gen%28fractional%3ABool%3Dfalse%29%3AString-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns a string representation of the structure using
 the <code><a href="../Chem/Gen.html">Chem::Gen</a></code> file format. Arguments are fowarded to
-<code><a href="../Chem/Gen/Writer.html#open(io:IO,fractional:Bool=false,sync_close:Bool=false,&:self-%3E)-class-method">Chem::Gen::Writer.open</a></code>.</p>
+<code><a href="../Chem/Gen/Writer.html#open%28io%3AIO%2Cfractional%3ABool%3Dfalse%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::Gen::Writer.open</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2409,19 +2404,19 @@ the <code><a href="../Chem/Gen.html">Chem::Gen</a></code> file format. Arguments
         
         def <strong>to_gen</strong>(output : IO | Path | String, fractional : Bool = <span class="n">false</span>) : Nil
 
-        <a class="method-permalink" href="#to_gen(output:IO%7CPath%7CString,fractional:Bool=false):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#to_gen%28output%3AIO%7CPath%7CString%2Cfractional%3ABool%3Dfalse%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Writes the structure to <em>output</em> using the <code><a href="../Chem/Gen.html">Chem::Gen</a></code>
-file format. Arguments are fowarded to <code><a href="../Chem/Gen/Writer.html#open(io:IO,fractional:Bool=false,sync_close:Bool=false,&:self-%3E)-class-method">Chem::Gen::Writer.open</a></code>.</p>
+file format. Arguments are fowarded to <code><a href="../Chem/Gen/Writer.html#open%28io%3AIO%2Cfractional%3ABool%3Dfalse%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::Gen::Writer.open</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2431,19 +2426,19 @@ file format. Arguments are fowarded to <code><a href="../Chem/Gen/Writer.html#op
         
         def <strong>to_mol2</strong>(output : IO | Path | String) : Nil
 
-        <a class="method-permalink" href="#to_mol2(output:IO%7CPath%7CString):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#to_mol2%28output%3AIO%7CPath%7CString%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Writes the structure to <em>output</em> using the <code><a href="../Chem/Mol2.html">Chem::Mol2</a></code>
-file format. Arguments are fowarded to <code><a href="../Chem/Mol2/Writer.html#open(io:IO,total_entries:Int32?=nil,sync_close:Bool=false,&:self-%3E)-class-method">Chem::Mol2::Writer.open</a></code>.</p>
+file format. Arguments are fowarded to <code><a href="../Chem/Mol2/Writer.html#open%28io%3AIO%2Ctotal_entries%3AInt32%3F%3Dnil%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::Mol2::Writer.open</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2453,20 +2448,20 @@ file format. Arguments are fowarded to <code><a href="../Chem/Mol2/Writer.html#o
         
         def <strong>to_mol2</strong> : String
 
-        <a class="method-permalink" href="#to_mol2:String-instance-method">#</a>
+        <a class="method-permalink" href="#to_mol2%3AString-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns a string representation of the structure using
 the <code><a href="../Chem/Mol2.html">Chem::Mol2</a></code> file format. Arguments are fowarded to
-<code><a href="../Chem/Mol2/Writer.html#open(io:IO,total_entries:Int32?=nil,sync_close:Bool=false,&:self-%3E)-class-method">Chem::Mol2::Writer.open</a></code>.</p>
+<code><a href="../Chem/Mol2/Writer.html#open%28io%3AIO%2Ctotal_entries%3AInt32%3F%3Dnil%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::Mol2::Writer.open</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2476,20 +2471,20 @@ the <code><a href="../Chem/Mol2.html">Chem::Mol2</a></code> file format. Argumen
         
         def <strong>to_pdb</strong>(bonds : Bool | <a href="../Array.html">Array</a>(<a href="../Chem/Bond.html">Bond</a>) = <span class="n">false</span>, renumber : Bool = <span class="n">true</span>) : String
 
-        <a class="method-permalink" href="#to_pdb(bonds:Bool%7CArray(Bond)=false,renumber:Bool=true):String-instance-method">#</a>
+        <a class="method-permalink" href="#to_pdb%28bonds%3ABool%7CArray%28Bond%29%3Dfalse%2Crenumber%3ABool%3Dtrue%29%3AString-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns a string representation of the structure using
 the <code><a href="../Chem/PDB.html">Chem::PDB</a></code> file format. Arguments are fowarded to
-<code><a href="../Chem/PDB/Writer.html#open(io:IO,bonds:Bool%7CArray(Bond)=false,renumber:Bool=true,total_entries:Int32?=nil,sync_close:Bool=false,&:self-%3E)-class-method">Chem::PDB::Writer.open</a></code>.</p>
+<code><a href="../Chem/PDB/Writer.html#open%28io%3AIO%2Cbonds%3ABool%7CArray%28Bond%29%3Dfalse%2Crenumber%3ABool%3Dtrue%2Ctotal_entries%3AInt32%3F%3Dnil%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::PDB::Writer.open</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2499,19 +2494,19 @@ the <code><a href="../Chem/PDB.html">Chem::PDB</a></code> file format. Arguments
         
         def <strong>to_pdb</strong>(output : IO | Path | String, bonds : Bool | <a href="../Array.html">Array</a>(<a href="../Chem/Bond.html">Bond</a>) = <span class="n">false</span>, renumber : Bool = <span class="n">true</span>) : Nil
 
-        <a class="method-permalink" href="#to_pdb(output:IO%7CPath%7CString,bonds:Bool%7CArray(Bond)=false,renumber:Bool=true):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#to_pdb%28output%3AIO%7CPath%7CString%2Cbonds%3ABool%7CArray%28Bond%29%3Dfalse%2Crenumber%3ABool%3Dtrue%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Writes the structure to <em>output</em> using the <code><a href="../Chem/PDB.html">Chem::PDB</a></code>
-file format. Arguments are fowarded to <code><a href="../Chem/PDB/Writer.html#open(io:IO,bonds:Bool%7CArray(Bond)=false,renumber:Bool=true,total_entries:Int32?=nil,sync_close:Bool=false,&:self-%3E)-class-method">Chem::PDB::Writer.open</a></code>.</p>
+file format. Arguments are fowarded to <code><a href="../Chem/PDB/Writer.html#open%28io%3AIO%2Cbonds%3ABool%7CArray%28Bond%29%3Dfalse%2Crenumber%3ABool%3Dtrue%2Ctotal_entries%3AInt32%3F%3Dnil%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::PDB::Writer.open</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2521,20 +2516,20 @@ file format. Arguments are fowarded to <code><a href="../Chem/PDB/Writer.html#op
         
         def <strong>to_poscar</strong>(order : <a href="../Array.html">Array</a>(<a href="../Chem/Element.html">Element</a>) | <a href="../Array.html">Array</a>(String) | Nil = <span class="n">nil</span>, fractional : Bool = <span class="n">false</span>, wrap : Bool = <span class="n">false</span>) : String
 
-        <a class="method-permalink" href="#to_poscar(order:Array(Element)%7CArray(String)%7CNil=nil,fractional:Bool=false,wrap:Bool=false):String-instance-method">#</a>
+        <a class="method-permalink" href="#to_poscar%28order%3AArray%28Element%29%7CArray%28String%29%7CNil%3Dnil%2Cfractional%3ABool%3Dfalse%2Cwrap%3ABool%3Dfalse%29%3AString-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns a string representation of the structure using
 the <code><a href="../Chem/VASP/Poscar.html">Chem::VASP::Poscar</a></code> file format. Arguments are fowarded to
-<code><a href="../Chem/VASP/Poscar/Writer.html#open(io:IO,order:Array(Element)%7CArray(String)%7CNil=nil,fractional:Bool=false,wrap:Bool=false,sync_close:Bool=false,&:self-%3E)-class-method">Chem::VASP::Poscar::Writer.open</a></code>.</p>
+<code><a href="../Chem/VASP/Poscar/Writer.html#open%28io%3AIO%2Corder%3AArray%28Element%29%7CArray%28String%29%7CNil%3Dnil%2Cfractional%3ABool%3Dfalse%2Cwrap%3ABool%3Dfalse%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::VASP::Poscar::Writer.open</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2544,19 +2539,19 @@ the <code><a href="../Chem/VASP/Poscar.html">Chem::VASP::Poscar</a></code> file 
         
         def <strong>to_poscar</strong>(output : IO | Path | String, order : <a href="../Array.html">Array</a>(<a href="../Chem/Element.html">Element</a>) | <a href="../Array.html">Array</a>(String) | Nil = <span class="n">nil</span>, fractional : Bool = <span class="n">false</span>, wrap : Bool = <span class="n">false</span>) : Nil
 
-        <a class="method-permalink" href="#to_poscar(output:IO%7CPath%7CString,order:Array(Element)%7CArray(String)%7CNil=nil,fractional:Bool=false,wrap:Bool=false):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#to_poscar%28output%3AIO%7CPath%7CString%2Corder%3AArray%28Element%29%7CArray%28String%29%7CNil%3Dnil%2Cfractional%3ABool%3Dfalse%2Cwrap%3ABool%3Dfalse%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Writes the structure to <em>output</em> using the <code><a href="../Chem/VASP/Poscar.html">Chem::VASP::Poscar</a></code>
-file format. Arguments are fowarded to <code><a href="../Chem/VASP/Poscar/Writer.html#open(io:IO,order:Array(Element)%7CArray(String)%7CNil=nil,fractional:Bool=false,wrap:Bool=false,sync_close:Bool=false,&:self-%3E)-class-method">Chem::VASP::Poscar::Writer.open</a></code>.</p>
+file format. Arguments are fowarded to <code><a href="../Chem/VASP/Poscar/Writer.html#open%28io%3AIO%2Corder%3AArray%28Element%29%7CArray%28String%29%7CNil%3Dnil%2Cfractional%3ABool%3Dfalse%2Cwrap%3ABool%3Dfalse%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::VASP::Poscar::Writer.open</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2566,19 +2561,19 @@ file format. Arguments are fowarded to <code><a href="../Chem/VASP/Poscar/Writer
         
         def <strong>to_pymol</strong>(output : IO | Path | String) : Nil
 
-        <a class="method-permalink" href="#to_pymol(output:IO%7CPath%7CString):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#to_pymol%28output%3AIO%7CPath%7CString%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Writes the structure to <em>output</em> using the <code><a href="../Chem/PyMOL.html">Chem::PyMOL</a></code>
-file format. Arguments are fowarded to <code><a href="../Chem/PyMOL/Writer.html#open(io:IO,sync_close:Bool=false,&:self-%3E)-class-method">Chem::PyMOL::Writer.open</a></code>.</p>
+file format. Arguments are fowarded to <code><a href="../Chem/PyMOL/Writer.html#open%28io%3AIO%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::PyMOL::Writer.open</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2588,20 +2583,20 @@ file format. Arguments are fowarded to <code><a href="../Chem/PyMOL/Writer.html#
         
         def <strong>to_pymol</strong> : String
 
-        <a class="method-permalink" href="#to_pymol:String-instance-method">#</a>
+        <a class="method-permalink" href="#to_pymol%3AString-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns a string representation of the structure using
 the <code><a href="../Chem/PyMOL.html">Chem::PyMOL</a></code> file format. Arguments are fowarded to
-<code><a href="../Chem/PyMOL/Writer.html#open(io:IO,sync_close:Bool=false,&:self-%3E)-class-method">Chem::PyMOL::Writer.open</a></code>.</p>
+<code><a href="../Chem/PyMOL/Writer.html#open%28io%3AIO%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::PyMOL::Writer.open</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2611,7 +2606,7 @@ the <code><a href="../Chem/PyMOL.html">Chem::PyMOL</a></code> file format. Argum
         
         def <strong>to_s</strong>(io : IO)
 
-        <a class="method-permalink" href="#to_s(io:IO)-instance-method">#</a>
+        <a class="method-permalink" href="#to_s%28io%3AIO%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2622,7 +2617,6 @@ the <code><a href="../Chem/PyMOL.html">Chem::PyMOL</a></code> file format. Argum
           
           <p>Appends a short String representation of this object
 which includes its class name and its object address.</p>
-
 <pre><code class="language-crystal"><span class="k">class</span> <span class="t">Person</span>
   <span class="k">def</span> <span class="m">initialize</span>(@name : <span class="t">String</span>, @age : <span class="t">Int32</span>)
   <span class="k">end</span>
@@ -2634,7 +2628,7 @@ which includes its class name and its object address.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure.cr#L186" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure.cr#L186" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2644,19 +2638,19 @@ which includes its class name and its object address.</p>
         
         def <strong>to_stride</strong>(output : IO | Path | String) : Nil
 
-        <a class="method-permalink" href="#to_stride(output:IO%7CPath%7CString):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#to_stride%28output%3AIO%7CPath%7CString%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Writes the structure to <em>output</em> using the <code><a href="../Chem/Protein/Stride.html">Chem::Protein::Stride</a></code>
-file format. Arguments are fowarded to <code><a href="../Chem/Protein/Stride/Writer.html#open(io:IO,sync_close:Bool=false,&:self-%3E)-class-method">Chem::Protein::Stride::Writer.open</a></code>.</p>
+file format. Arguments are fowarded to <code><a href="../Chem/Protein/Stride/Writer.html#open%28io%3AIO%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::Protein::Stride::Writer.open</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2666,20 +2660,20 @@ file format. Arguments are fowarded to <code><a href="../Chem/Protein/Stride/Wri
         
         def <strong>to_stride</strong> : String
 
-        <a class="method-permalink" href="#to_stride:String-instance-method">#</a>
+        <a class="method-permalink" href="#to_stride%3AString-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns a string representation of the structure using
 the <code><a href="../Chem/Protein/Stride.html">Chem::Protein::Stride</a></code> file format. Arguments are fowarded to
-<code><a href="../Chem/Protein/Stride/Writer.html#open(io:IO,sync_close:Bool=false,&:self-%3E)-class-method">Chem::Protein::Stride::Writer.open</a></code>.</p>
+<code><a href="../Chem/Protein/Stride/Writer.html#open%28io%3AIO%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::Protein::Stride::Writer.open</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2689,19 +2683,19 @@ the <code><a href="../Chem/Protein/Stride.html">Chem::Protein::Stride</a></code>
         
         def <strong>to_vmd</strong>(output : IO | Path | String) : Nil
 
-        <a class="method-permalink" href="#to_vmd(output:IO%7CPath%7CString):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#to_vmd%28output%3AIO%7CPath%7CString%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Writes the structure to <em>output</em> using the <code><a href="../Chem/VMD.html">Chem::VMD</a></code>
-file format. Arguments are fowarded to <code><a href="../Chem/VMD/Writer.html#open(io:IO,sync_close:Bool=false,&:self-%3E)-class-method">Chem::VMD::Writer.open</a></code>.</p>
+file format. Arguments are fowarded to <code><a href="../Chem/VMD/Writer.html#open%28io%3AIO%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::VMD::Writer.open</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2711,20 +2705,20 @@ file format. Arguments are fowarded to <code><a href="../Chem/VMD/Writer.html#op
         
         def <strong>to_vmd</strong> : String
 
-        <a class="method-permalink" href="#to_vmd:String-instance-method">#</a>
+        <a class="method-permalink" href="#to_vmd%3AString-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns a string representation of the structure using
 the <code><a href="../Chem/VMD.html">Chem::VMD</a></code> file format. Arguments are fowarded to
-<code><a href="../Chem/VMD/Writer.html#open(io:IO,sync_close:Bool=false,&:self-%3E)-class-method">Chem::VMD::Writer.open</a></code>.</p>
+<code><a href="../Chem/VMD/Writer.html#open%28io%3AIO%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::VMD::Writer.open</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2734,19 +2728,19 @@ the <code><a href="../Chem/VMD.html">Chem::VMD</a></code> file format. Arguments
         
         def <strong>to_xyz</strong>(output : IO | Path | String) : Nil
 
-        <a class="method-permalink" href="#to_xyz(output:IO%7CPath%7CString):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#to_xyz%28output%3AIO%7CPath%7CString%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Writes the structure to <em>output</em> using the <code><a href="../Chem/XYZ.html">Chem::XYZ</a></code>
-file format. Arguments are fowarded to <code><a href="../Chem/XYZ/Writer.html#open(io:IO,total_entries:Int32?=nil,sync_close:Bool=false,&:self-%3E)-class-method">Chem::XYZ::Writer.open</a></code>.</p>
+file format. Arguments are fowarded to <code><a href="../Chem/XYZ/Writer.html#open%28io%3AIO%2Ctotal_entries%3AInt32%3F%3Dnil%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::XYZ::Writer.open</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2756,20 +2750,20 @@ file format. Arguments are fowarded to <code><a href="../Chem/XYZ/Writer.html#op
         
         def <strong>to_xyz</strong> : String
 
-        <a class="method-permalink" href="#to_xyz:String-instance-method">#</a>
+        <a class="method-permalink" href="#to_xyz%3AString-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns a string representation of the structure using
 the <code><a href="../Chem/XYZ.html">Chem::XYZ</a></code> file format. Arguments are fowarded to
-<code><a href="../Chem/XYZ/Writer.html#open(io:IO,total_entries:Int32?=nil,sync_close:Bool=false,&:self-%3E)-class-method">Chem::XYZ::Writer.open</a></code>.</p>
+<code><a href="../Chem/XYZ/Writer.html#open%28io%3AIO%2Ctotal_entries%3AInt32%3F%3Dnil%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::XYZ::Writer.open</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2779,13 +2773,13 @@ the <code><a href="../Chem/XYZ.html">Chem::XYZ</a></code> file format. Arguments
         
         def <strong>unwrap</strong> : <span class="k">self</span>
 
-        <a class="method-permalink" href="#unwrap:self-instance-method">#</a>
+        <a class="method-permalink" href="#unwrap%3Aself-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/structure.cr#L197" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/structure.cr#L197" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2795,7 +2789,7 @@ the <code><a href="../Chem/XYZ.html">Chem::XYZ</a></code> file format. Arguments
         
         def <strong>write</strong>(output : IO | Path | String, format : <a href="../Chem/Format.html">Chem::Format</a> | String) : Nil
 
-        <a class="method-permalink" href="#write(output:IO%7CPath%7CString,format:Chem::Format%7CString):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#write%28output%3AIO%7CPath%7CString%2Cformat%3AChem%3A%3AFormat%7CString%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2803,7 +2797,6 @@ the <code><a href="../Chem/XYZ.html">Chem::XYZ</a></code> file format. Arguments
           <p>Writes the structure to <em>output</em> using <em>format</em>. Raises
 <code>ArgumentError</code> if <em>format</em> has required arguments or cannot
 write <code><a href="../Chem/Structure.html">Chem::Structure</a></code>.</p>
-
 <p>The supported file formats are <code><a href="../Chem/Gen.html">Chem::Gen</a></code>, <code><a href="../Chem/Mol2.html">Chem::Mol2</a></code>, <code><a href="../Chem/PDB.html">Chem::PDB</a></code>, <code><a href="../Chem/Protein/Stride.html">Chem::Protein::Stride</a></code>, <code><a href="../Chem/PyMOL.html">Chem::PyMOL</a></code>, <code><a href="../Chem/VASP/Poscar.html">Chem::VASP::Poscar</a></code>, <code><a href="../Chem/VMD.html">Chem::VMD</a></code>, <code><a href="../Chem/XYZ.html">Chem::XYZ</a></code>. Use the
 <code>#to_*</code> methods to customize how the object is written in the
 corresponding file format if possible.</p>
@@ -2812,7 +2805,7 @@ corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2822,20 +2815,26 @@ corresponding file format if possible.</p>
         
         def <strong>write</strong>(path : Path | String) : Nil
 
-        <a class="method-permalink" href="#write(path:Path%7CString):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#write%28path%3APath%7CString%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Writes the structure to the specified file. The file
 format is chosen based on the filename (see
-<code><a href="../Chem/Format.html#from_filename(filename:Path%7CString):self-class-method">Chem::Format#from_filename</a></code>). Raises <code>ArgumentError</code> if the
+<code><a href="../Chem/Format.html#from_filename%28filename%3APath%7CString%29%3Aself-class-method">Chem::Format#from_filename</a></code>). Raises <code>ArgumentError</code> if the
 file format cannot be determined.</p>
-
 <p>The supported file formats are the following:</p>
-
-<ul><li><code><a href="../Chem/Gen.html">Chem::Gen</a></code> (.gen)</li><li><code><a href="../Chem/Mol2.html">Chem::Mol2</a></code> (.mol2)</li><li><code><a href="../Chem/PDB.html">Chem::PDB</a></code> (.ent, .pdb)</li><li><code><a href="../Chem/PyMOL.html">Chem::PyMOL</a></code> (.pml)</li><li><code><a href="../Chem/VMD.html">Chem::VMD</a></code> (.vmd)</li><li><code><a href="../Chem/XYZ.html">Chem::XYZ</a></code> (.xyz)</li><li><code><a href="../Chem/Protein/Stride.html">Chem::Protein::Stride</a></code> (.stride)</li><li><code><a href="../Chem/VASP/Poscar.html">Chem::VASP::Poscar</a></code> (.poscar, POSCAR, CONTCAR)</li></ul>
-
+<ul>
+<li><code><a href="../Chem/Gen.html">Chem::Gen</a></code> (.gen)</li>
+<li><code><a href="../Chem/Mol2.html">Chem::Mol2</a></code> (.mol2)</li>
+<li><code><a href="../Chem/PDB.html">Chem::PDB</a></code> (.ent, .pdb)</li>
+<li><code><a href="../Chem/PyMOL.html">Chem::PyMOL</a></code> (.pml)</li>
+<li><code><a href="../Chem/VMD.html">Chem::VMD</a></code> (.vmd)</li>
+<li><code><a href="../Chem/XYZ.html">Chem::XYZ</a></code> (.xyz)</li>
+<li><code><a href="../Chem/Protein/Stride.html">Chem::Protein::Stride</a></code> (.stride)</li>
+<li><code><a href="../Chem/VASP/Poscar.html">Chem::VASP::Poscar</a></code> (.poscar, POSCAR, CONTCAR)</li>
+</ul>
 <p>Use the <code>#to_*</code> methods to customize how the object is written
 in the corresponding file format if possible.</p>
         </div>
@@ -2843,7 +2842,7 @@ in the corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>

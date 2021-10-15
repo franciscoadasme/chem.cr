@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.0.0">
+<meta name="generator" content="Crystal Docs 1.1.1">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -506,8 +506,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Quaternion" data-name="chem::spatial::quaternion">
-      <a href="../../Chem/Spatial/Quaternion.html">Quaternion</a>
+  <li class=" " data-id="chem.cr/Chem/Spatial/Quat" data-name="chem::spatial::quat">
+      <a href="../../Chem/Spatial/Quat.html">Quat</a>
       
     </li>
   
@@ -823,7 +823,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L2" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L2" target="_blank">
         chem/topology/types.cr
       </a>
     
@@ -845,7 +845,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new(name:String,formal_charge:Int32=0,element:String?=nil,valency:Int32?=nil)-class-method" class="signature"><strong>.new</strong>(name : String, formal_charge : Int32 = <span class="n">0</span>, element : String? = <span class="n">nil</span>, valency : Int32? = <span class="n">nil</span>)</a>
+        <a href="#new%28name%3AString%2Cformal_charge%3AInt32%3D0%2Celement%3AString%3F%3Dnil%2Cvalency%3AInt32%3F%3Dnil%29-class-method" class="signature"><strong>.new</strong>(name : String, formal_charge : Int32 = <span class="n">0</span>, element : String? = <span class="n">nil</span>, valency : Int32? = <span class="n">nil</span>)</a>
         
       </li>
     
@@ -866,41 +866,41 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#element:Element-instance-method" class="signature"><strong>#element</strong> : Element</a>
+        <a href="#element%3AElement-instance-method" class="signature"><strong>#element</strong> : Element</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#formal_charge:Int32-instance-method" class="signature"><strong>#formal_charge</strong> : Int32</a>
+        <a href="#formal_charge%3AInt32-instance-method" class="signature"><strong>#formal_charge</strong> : Int32</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#inspect(io:IO):Nil-instance-method" class="signature"><strong>#inspect</strong>(io : IO) : Nil</a>
+        <a href="#inspect%28io%3AIO%29%3ANil-instance-method" class="signature"><strong>#inspect</strong>(io : IO) : Nil</a>
         
           <div class="summary"><p>Appends a String representation of this object which includes its class name, its object address and the values of all instance variables.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#name:String-instance-method" class="signature"><strong>#name</strong> : String</a>
+        <a href="#name%3AString-instance-method" class="signature"><strong>#name</strong> : String</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#suffix:String-instance-method" class="signature"><strong>#suffix</strong> : String</a>
+        <a href="#suffix%3AString-instance-method" class="signature"><strong>#suffix</strong> : String</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_s(io:IO)-instance-method" class="signature"><strong>#to_s</strong>(io : IO)</a>
+        <a href="#to_s%28io%3AIO%29-instance-method" class="signature"><strong>#to_s</strong>(io : IO)</a>
         
           <div class="summary"><p>Appends a short String representation of this object which includes its class name and its object address.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#valency:Int32-instance-method" class="signature"><strong>#valency</strong> : Int32</a>
+        <a href="#valency%3AInt32-instance-method" class="signature"><strong>#valency</strong> : Int32</a>
         
       </li>
     
@@ -949,13 +949,13 @@
         
         def self.<strong>new</strong>(name : String, formal_charge : Int32 = <span class="n">0</span>, element : String? = <span class="n">nil</span>, valency : Int32? = <span class="n">nil</span>)
 
-        <a class="method-permalink" href="#new(name:String,formal_charge:Int32=0,element:String?=nil,valency:Int32?=nil)-class-method">#</a>
+        <a class="method-permalink" href="#new%28name%3AString%2Cformal_charge%3AInt32%3D0%2Celement%3AString%3F%3Dnil%2Cvalency%3AInt32%3F%3Dnil%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L8" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -979,13 +979,13 @@
         
         def <strong>element</strong> : <a href="../../Chem/Element.html">Element</a>
 
-        <a class="method-permalink" href="#element:Element-instance-method">#</a>
+        <a class="method-permalink" href="#element%3AElement-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L3" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L3" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -995,13 +995,13 @@
         
         def <strong>formal_charge</strong> : Int32
 
-        <a class="method-permalink" href="#formal_charge:Int32-instance-method">#</a>
+        <a class="method-permalink" href="#formal_charge%3AInt32-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L4" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L4" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1011,7 +1011,7 @@
         
         def <strong>inspect</strong>(io : IO) : Nil
 
-        <a class="method-permalink" href="#inspect(io:IO):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#inspect%28io%3AIO%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1023,7 +1023,6 @@
           <p>Appends a String representation of this object
 which includes its class name, its object address
 and the values of all instance variables.</p>
-
 <pre><code class="language-crystal"><span class="k">class</span> <span class="t">Person</span>
   <span class="k">def</span> <span class="m">initialize</span>(@name : <span class="t">String</span>, @age : <span class="t">Int32</span>)
   <span class="k">end</span>
@@ -1035,7 +1034,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L16" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L16" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1045,13 +1044,13 @@ and the values of all instance variables.</p>
         
         def <strong>name</strong> : String
 
-        <a class="method-permalink" href="#name:String-instance-method">#</a>
+        <a class="method-permalink" href="#name%3AString-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1061,13 +1060,13 @@ and the values of all instance variables.</p>
         
         def <strong>suffix</strong> : String
 
-        <a class="method-permalink" href="#suffix:String-instance-method">#</a>
+        <a class="method-permalink" href="#suffix%3AString-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L22" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L22" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1077,7 +1076,7 @@ and the values of all instance variables.</p>
         
         def <strong>to_s</strong>(io : IO)
 
-        <a class="method-permalink" href="#to_s(io:IO)-instance-method">#</a>
+        <a class="method-permalink" href="#to_s%28io%3AIO%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1088,7 +1087,6 @@ and the values of all instance variables.</p>
           
           <p>Appends a short String representation of this object
 which includes its class name and its object address.</p>
-
 <pre><code class="language-crystal"><span class="k">class</span> <span class="t">Person</span>
   <span class="k">def</span> <span class="m">initialize</span>(@name : <span class="t">String</span>, @age : <span class="t">Int32</span>)
   <span class="k">end</span>
@@ -1100,7 +1098,7 @@ which includes its class name and its object address.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L26" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L26" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1110,13 +1108,13 @@ which includes its class name and its object address.</p>
         
         def <strong>valency</strong> : Int32
 
-        <a class="method-permalink" href="#valency:Int32-instance-method">#</a>
+        <a class="method-permalink" href="#valency%3AInt32-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/topology/types.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/topology/types.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.0.0">
+<meta name="generator" content="Crystal Docs 1.1.1">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -506,8 +506,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Quaternion" data-name="chem::spatial::quaternion">
-      <a href="../Chem/Spatial/Quaternion.html">Quaternion</a>
+  <li class=" " data-id="chem.cr/Chem/Spatial/Quat" data-name="chem::spatial::quat">
+      <a href="../Chem/Spatial/Quat.html">Quat</a>
       
     </li>
   
@@ -810,11 +810,9 @@
   <p><span class="flag purple">NOTE</span>  Standard atom weights (in Da) are taken from Meija, J., et al., Pure Appl.
 Chem., 2016, 88 (3), pp 265-291,
 doi:<a href="https://dx.doi.org/10.1515/pac-2015-0305">10.1515/pac-2015-0305</a></p>
-
 <p><span class="flag purple">NOTE</span>  Covalent radii (in Å) are taken from Cordero, B., et al., Dalton Trans., 2008,
 21, pp 2832-2838, doi:<a href="https://dx.doi.org/10.1039/b801115j">10.1039/b801115j</a>. Missing
 values are set to 1.5 Å</p>
-
 <p><span class="flag purple">NOTE</span>  vdW radii (in Å) are taken from Alvarez, S., Dalton Trans., 2013, 42, pp
 8617-8636, doi:<a href="https://dx.doi.org/10.1039/c3dt50599e">10.1039/c3dt50599e</a>. Missing
 values are set to covalent radius + 0.9 Å</p>
@@ -856,21 +854,21 @@ values are set to covalent radius + 0.9 Å</p>
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/periodic_table.cr#L4" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/periodic_table.cr#L4" target="_blank">
         chem/core/periodic_table.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/periodic_table/elements.cr#L12" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/periodic_table/elements.cr#L12" target="_blank">
         chem/core/periodic_table/elements.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/periodic_table/macros.cr#L1" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/periodic_table/macros.cr#L1" target="_blank">
         chem/core/periodic_table/macros.cr
       </a>
     
@@ -1500,46 +1498,46 @@ values are set to covalent radius + 0.9 Å</p>
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#[](*args,**options):Element-instance-method" class="signature"><strong>#[]</strong>(*args, **options) : Element</a>
+        <a href="#%5B%5D%28%2Aargs%2C%2A%2Aoptions%29%3AElement-instance-method" class="signature"><strong>#[]</strong>(*args, **options) : Element</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#[]?(number:Int32):Element?-instance-method" class="signature"><strong>#[]?</strong>(number : Int32) : Element?</a>
+        <a href="#%5B%5D%3F%28number%3AInt32%29%3AElement%3F-instance-method" class="signature"><strong>#[]?</strong>(number : Int32) : Element?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#[]?(symbol:String%7CChar):Element?-instance-method" class="signature"><strong>#[]?</strong>(symbol : String | Char) : Element?</a>
+        <a href="#%5B%5D%3F%28symbol%3AString%7CChar%29%3AElement%3F-instance-method" class="signature"><strong>#[]?</strong>(symbol : String | Char) : Element?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#[]?(*,name:String):Element?-instance-method" class="signature"><strong>#[]?</strong>(*, name : String) : Element?</a>
+        <a href="#%5B%5D%3F%28%2A%2Cname%3AString%29%3AElement%3F-instance-method" class="signature"><strong>#[]?</strong>(*, name : String) : Element?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#[]?(*,atom_name:String):Element?-instance-method" class="signature"><strong>#[]?</strong>(*, atom_name : String) : Element?</a>
+        <a href="#%5B%5D%3F%28%2A%2Catom_name%3AString%29%3AElement%3F-instance-method" class="signature"><strong>#[]?</strong>(*, atom_name : String) : Element?</a>
         
           <div class="summary"><p><span class="flag orange">TODO</span>  rename to guess_element? TODO test different atom names</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#covalent_cutoff(ele:Element,other:Element):Float64-instance-method" class="signature"><strong>#covalent_cutoff</strong>(ele : Element, other : Element) : Float64</a>
+        <a href="#covalent_cutoff%28ele%3AElement%2Cother%3AElement%29%3AFloat64-instance-method" class="signature"><strong>#covalent_cutoff</strong>(ele : Element, other : Element) : Float64</a>
         
           <div class="summary"><p><span class="flag purple">NOTE</span>  The additional term (0.3 Å) is taken from the covalent radii reference, which states that about 96% of the surveyed bonds are within three standard deviations of the sum of the radii, where the found average standard deviation is about 0.1 Å.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#covalent_cutoff(atom:Atom,other:Atom):Float64-instance-method" class="signature"><strong>#covalent_cutoff</strong>(atom : Atom, other : Atom) : Float64</a>
+        <a href="#covalent_cutoff%28atom%3AAtom%2Cother%3AAtom%29%3AFloat64-instance-method" class="signature"><strong>#covalent_cutoff</strong>(atom : Atom, other : Atom) : Float64</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#elements:Tuple-instance-method" class="signature"><strong>#elements</strong> : Tuple</a>
+        <a href="#elements%3ATuple-instance-method" class="signature"><strong>#elements</strong> : Tuple</a>
         
       </li>
     
@@ -1558,7 +1556,7 @@ values are set to covalent radius + 0.9 Å</p>
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#element(symbol,name,**options)-macro" class="signature"><strong>element</strong>(symbol, name, **options)</a>
+        <a href="#element%28symbol%2Cname%2C%2A%2Aoptions%29-macro" class="signature"><strong>element</strong>(symbol, name, **options)</a>
         
       </li>
     
@@ -1589,13 +1587,13 @@ values are set to covalent radius + 0.9 Å</p>
         
         def <strong>[]</strong>(*args, **options) : <a href="../Chem/Element.html">Element</a>
 
-        <a class="method-permalink" href="#[](*args,**options):Element-instance-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%28%2Aargs%2C%2A%2Aoptions%29%3AElement-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/periodic_table.cr#L7" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/periodic_table.cr#L7" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1605,13 +1603,13 @@ values are set to covalent radius + 0.9 Å</p>
         
         def <strong>[]?</strong>(number : Int32) : <a href="../Chem/Element.html">Element</a>?
 
-        <a class="method-permalink" href="#[]?(number:Int32):Element?-instance-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%3F%28number%3AInt32%29%3AElement%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/periodic_table.cr#L11" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/periodic_table.cr#L11" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1621,13 +1619,13 @@ values are set to covalent radius + 0.9 Å</p>
         
         def <strong>[]?</strong>(symbol : String | <a href="../Char.html">Char</a>) : <a href="../Chem/Element.html">Element</a>?
 
-        <a class="method-permalink" href="#[]?(symbol:String%7CChar):Element?-instance-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%3F%28symbol%3AString%7CChar%29%3AElement%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/periodic_table.cr#L24" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/periodic_table.cr#L24" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1637,13 +1635,13 @@ values are set to covalent radius + 0.9 Å</p>
         
         def <strong>[]?</strong>(*, name : String) : <a href="../Chem/Element.html">Element</a>?
 
-        <a class="method-permalink" href="#[]?(*,name:String):Element?-instance-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%3F%28%2A%2Cname%3AString%29%3AElement%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/periodic_table.cr#L37" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/periodic_table.cr#L37" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1653,20 +1651,19 @@ values are set to covalent radius + 0.9 Å</p>
         
         def <strong>[]?</strong>(*, atom_name : String) : <a href="../Chem/Element.html">Element</a>?
 
-        <a class="method-permalink" href="#[]?(*,atom_name:String):Element?-instance-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%3F%28%2A%2Catom_name%3AString%29%3AElement%3F-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p><span class="flag orange">TODO</span>  rename to guess_element?</p>
-
 <p><span class="flag orange">TODO</span>  test different atom names</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/periodic_table.cr#L52" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/periodic_table.cr#L52" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1676,7 +1673,7 @@ values are set to covalent radius + 0.9 Å</p>
         
         def <strong>covalent_cutoff</strong>(ele : <a href="../Chem/Element.html">Element</a>, other : <a href="../Chem/Element.html">Element</a>) : Float64
 
-        <a class="method-permalink" href="#covalent_cutoff(ele:Element,other:Element):Float64-instance-method">#</a>
+        <a class="method-permalink" href="#covalent_cutoff%28ele%3AElement%2Cother%3AElement%29%3AFloat64-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1690,7 +1687,7 @@ about 0.1 Å.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/periodic_table.cr#L65" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/periodic_table.cr#L65" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1700,13 +1697,13 @@ about 0.1 Å.</p>
         
         def <strong>covalent_cutoff</strong>(atom : <a href="../Chem/Atom.html">Atom</a>, other : <a href="../Chem/Atom.html">Atom</a>) : Float64
 
-        <a class="method-permalink" href="#covalent_cutoff(atom:Atom,other:Atom):Float64-instance-method">#</a>
+        <a class="method-permalink" href="#covalent_cutoff%28atom%3AAtom%2Cother%3AAtom%29%3AFloat64-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/periodic_table.cr#L57" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/periodic_table.cr#L57" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1716,13 +1713,13 @@ about 0.1 Å.</p>
         
         def <strong>elements</strong> : Tuple
 
-        <a class="method-permalink" href="#elements:Tuple-instance-method">#</a>
+        <a class="method-permalink" href="#elements%3ATuple-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/periodic_table.cr#L70" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/periodic_table.cr#L70" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1744,13 +1741,13 @@ about 0.1 Å.</p>
         
         macro <strong>element</strong>(symbol, name, **options)
 
-        <a class="method-permalink" href="#element(symbol,name,**options)-macro">#</a>
+        <a class="method-permalink" href="#element%28symbol%2Cname%2C%2A%2Aoptions%29-macro">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/core/periodic_table/macros.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/core/periodic_table/macros.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.0.0">
+<meta name="generator" content="Crystal Docs 1.1.1">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -506,8 +506,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Quaternion" data-name="chem::spatial::quaternion">
-      <a href="../../Chem/Spatial/Quaternion.html">Quaternion</a>
+  <li class=" " data-id="chem.cr/Chem/Spatial/Quat" data-name="chem::spatial::quat">
+      <a href="../../Chem/Spatial/Quat.html">Quat</a>
       
     </li>
   
@@ -823,7 +823,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/affine.cr#L2" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/affine.cr#L2" target="_blank">
         chem/spatial/affine.cr
       </a>
     
@@ -845,12 +845,12 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#build(&block:Pointer(Float64)-%3E):self-class-method" class="signature"><strong>.build</strong>(&block : Pointer(Float64) -> ) : <span class="k">self</span></a>
+        <a href="#build%28%26block%3APointer%28Float64%29-%3E%29%3Aself-class-method" class="signature"><strong>.build</strong>(&block : Pointer(Float64) -> ) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new(a:Vec3,b:Vec3,c:Vec3,d:Vec3=Vec3.zero)-class-method" class="signature"><strong>.new</strong>(a : Vec3, b : Vec3, c : Vec3, d : Vec3 = <span class="t">Vec3</span>.zero)</a>
+        <a href="#new%28a%3AVec3%2Cb%3AVec3%2Cc%3AVec3%2Cd%3AVec3%3DVec3.zero%29-class-method" class="signature"><strong>.new</strong>(a : Vec3, b : Vec3, c : Vec3, d : Vec3 = <span class="t">Vec3</span>.zero)</a>
         
       </li>
     
@@ -860,17 +860,17 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#scaling(byfactor:Number):self-class-method" class="signature"><strong>.scaling</strong>(by factor : Number) : <span class="k">self</span></a>
+        <a href="#scaling%28byfactor%3ANumber%29%3Aself-class-method" class="signature"><strong>.scaling</strong>(by factor : Number) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#scaling(byfactors:ScalingFactors):self-class-method" class="signature"><strong>.scaling</strong>(by factors : ScalingFactors) : <span class="k">self</span></a>
+        <a href="#scaling%28byfactors%3AScalingFactors%29%3Aself-class-method" class="signature"><strong>.scaling</strong>(by factors : ScalingFactors) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#translation(byoffset:Vec3):self-class-method" class="signature"><strong>.translation</strong>(by offset : Vec3) : <span class="k">self</span></a>
+        <a href="#translation%28byoffset%3AVec3%29%3Aself-class-method" class="signature"><strong>.translation</strong>(by offset : Vec3) : <span class="k">self</span></a>
         
       </li>
     
@@ -891,68 +891,68 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#*(rhs:self):self-instance-method" class="signature"><strong>#*</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span></a>
+        <a href="#%2A%28rhs%3Aself%29%3Aself-instance-method" class="signature"><strong>#*</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#*(rhs:Vec3):Vec3-instance-method" class="signature"><strong>#*</strong>(rhs : Vec3) : Vec3</a>
+        <a href="#%2A%28rhs%3AVec3%29%3AVec3-instance-method" class="signature"><strong>#*</strong>(rhs : Vec3) : Vec3</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#==(rhs:self):Bool-instance-method" class="signature"><strong>#==</strong>(rhs : <span class="k">self</span>) : Bool</a>
+        <a href="#%3D%3D%28rhs%3Aself%29%3ABool-instance-method" class="signature"><strong>#==</strong>(rhs : <span class="k">self</span>) : Bool</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#inner_det:Float64-instance-method" class="signature"><strong>#inner_det</strong> : Float64</a>
+        <a href="#inner_det%3AFloat64-instance-method" class="signature"><strong>#inner_det</strong> : Float64</a>
         
           <div class="summary"><p>Returns the determinant of the inner 3x3 rotation matrix</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#inspect(io:IO)-instance-method" class="signature"><strong>#inspect</strong>(io : IO)</a>
+        <a href="#inspect%28io%3AIO%29-instance-method" class="signature"><strong>#inspect</strong>(io : IO)</a>
         
           <div class="summary"><p>Appends this struct's name and instance variables names and values to the given IO.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#inv:self-instance-method" class="signature"><strong>#inv</strong> : <span class="k">self</span></a>
+        <a href="#inv%3Aself-instance-method" class="signature"><strong>#inv</strong> : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the inverse transformation</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#scale(byfactor:Number):self-instance-method" class="signature"><strong>#scale</strong>(by factor : Number) : <span class="k">self</span></a>
+        <a href="#scale%28byfactor%3ANumber%29%3Aself-instance-method" class="signature"><strong>#scale</strong>(by factor : Number) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#scale(byfactors:ScalingFactors):self-instance-method" class="signature"><strong>#scale</strong>(by factors : ScalingFactors) : <span class="k">self</span></a>
+        <a href="#scale%28byfactors%3AScalingFactors%29%3Aself-instance-method" class="signature"><strong>#scale</strong>(by factors : ScalingFactors) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_a:Array(Float64)-instance-method" class="signature"><strong>#to_a</strong> : Array(Float64)</a>
+        <a href="#to_a%3AArray%28Float64%29-instance-method" class="signature"><strong>#to_a</strong> : Array(Float64)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_unsafe:Pointer(Float64)-instance-method" class="signature"><strong>#to_unsafe</strong> : Pointer(Float64)</a>
+        <a href="#to_unsafe%3APointer%28Float64%29-instance-method" class="signature"><strong>#to_unsafe</strong> : Pointer(Float64)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#translate(byoffset:Vec3):self-instance-method" class="signature"><strong>#translate</strong>(by offset : Vec3) : <span class="k">self</span></a>
+        <a href="#translate%28byoffset%3AVec3%29%3Aself-instance-method" class="signature"><strong>#translate</strong>(by offset : Vec3) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#unsafe_fetch(index:Int):Float64-instance-method" class="signature"><strong>#unsafe_fetch</strong>(index : Int) : Float64</a>
+        <a href="#unsafe_fetch%28index%3AInt%29%3AFloat64-instance-method" class="signature"><strong>#unsafe_fetch</strong>(index : Int) : Float64</a>
         
       </li>
     
@@ -1011,13 +1011,13 @@
         
         def self.<strong>build</strong>(&block : Pointer(Float64) -> ) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#build(&block:Pointer(Float64)-%3E):self-class-method">#</a>
+        <a class="method-permalink" href="#build%28%26block%3APointer%28Float64%29-%3E%29%3Aself-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/affine.cr#L23" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/affine.cr#L23" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1027,13 +1027,13 @@
         
         def self.<strong>new</strong>(a : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, b : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, c : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, d : <a href="../../Chem/Spatial/Vec3.html">Vec3</a> = <span class="t">Vec3</span>.zero)
 
-        <a class="method-permalink" href="#new(a:Vec3,b:Vec3,c:Vec3,d:Vec3=Vec3.zero)-class-method">#</a>
+        <a class="method-permalink" href="#new%28a%3AVec3%2Cb%3AVec3%2Cc%3AVec3%2Cd%3AVec3%3DVec3.zero%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/affine.cr#L13" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/affine.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1049,7 +1049,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/affine.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/affine.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1059,13 +1059,13 @@
         
         def self.<strong>scaling</strong>(by factor : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#scaling(byfactor:Number):self-class-method">#</a>
+        <a class="method-permalink" href="#scaling%28byfactor%3ANumber%29%3Aself-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/affine.cr#L29" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/affine.cr#L29" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1075,13 +1075,13 @@
         
         def self.<strong>scaling</strong>(by factors : <a href="../../Chem/Spatial/AffineTransform/ScalingFactors.html">ScalingFactors</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#scaling(byfactors:ScalingFactors):self-class-method">#</a>
+        <a class="method-permalink" href="#scaling%28byfactors%3AScalingFactors%29%3Aself-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/affine.cr#L35" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/affine.cr#L35" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1091,13 +1091,13 @@
         
         def self.<strong>translation</strong>(by offset : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#translation(byoffset:Vec3):self-class-method">#</a>
+        <a class="method-permalink" href="#translation%28byoffset%3AVec3%29%3Aself-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/affine.cr#L41" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/affine.cr#L41" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1121,13 +1121,13 @@
         
         def <strong>*</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#*(rhs:self):self-instance-method">#</a>
+        <a class="method-permalink" href="#%2A%28rhs%3Aself%29%3Aself-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/affine.cr#L47" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/affine.cr#L47" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1137,13 +1137,13 @@
         
         def <strong>*</strong>(rhs : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>
 
-        <a class="method-permalink" href="#*(rhs:Vec3):Vec3-instance-method">#</a>
+        <a class="method-permalink" href="#%2A%28rhs%3AVec3%29%3AVec3-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/affine.cr#L59" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/affine.cr#L59" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1153,13 +1153,13 @@
         
         def <strong>==</strong>(rhs : <span class="k">self</span>) : Bool
 
-        <a class="method-permalink" href="#==(rhs:self):Bool-instance-method">#</a>
+        <a class="method-permalink" href="#%3D%3D%28rhs%3Aself%29%3ABool-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/affine.cr#L69" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/affine.cr#L69" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1169,7 +1169,7 @@
         
         def <strong>inner_det</strong> : Float64
 
-        <a class="method-permalink" href="#inner_det:Float64-instance-method">#</a>
+        <a class="method-permalink" href="#inner_det%3AFloat64-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1180,7 +1180,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/affine.cr#L74" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/affine.cr#L74" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1190,7 +1190,7 @@
         
         def <strong>inspect</strong>(io : IO)
 
-        <a class="method-permalink" href="#inspect(io:IO)-instance-method">#</a>
+        <a class="method-permalink" href="#inspect%28io%3AIO%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1201,7 +1201,6 @@
           
           <p>Appends this struct's name and instance variables names and values
 to the given IO.</p>
-
 <pre><code class="language-crystal"><span class="k">struct</span> <span class="t">Point</span>
   <span class="k">def</span> <span class="m">initialize</span>(@x : <span class="t">Int32</span>, @y : <span class="t">Int32</span>)
   <span class="k">end</span>
@@ -1215,7 +1214,7 @@ p1.inspect <span class="c"># &quot;Point(@x=1, @y=2)&quot;</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/affine.cr#L106" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/affine.cr#L106" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1225,27 +1224,21 @@ p1.inspect <span class="c"># &quot;Point(@x=1, @y=2)&quot;</span></code></pre>
         
         def <strong>inv</strong> : <span class="k">self</span>
 
-        <a class="method-permalink" href="#inv:self-instance-method">#</a>
+        <a class="method-permalink" href="#inv%3Aself-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns the inverse transformation</p>
-
 <p>The algorithm exploits the fact that when a matrix looks like this</p>
-
 <pre><code class="language-text">A = [ M   b  ]
     [ 0   1  ]</code></pre>
-
 <p>where A is 4x4 (augmented matrix), M is 3x3 (rotation matrix), b is 3x1
 (translation vector), and the bottom row is (0, 0, 0, 1), then</p>
-
 <pre><code class="language-text">inv(A) = [ inv(M)   -inv(M) * b ]
          [   0            1     ]</code></pre>
-
 <p><code>inv(M)</code> is computed following the standard procedure (see Wikipedia, Inversion of
 3x3 matrices).</p>
-
 <p>Refer to https://stackoverflow.com/a/2625420 or Wikipedia, Affine transformation
 article (Properties section) for a detailed explanation.</p>
         </div>
@@ -1253,7 +1246,7 @@ article (Properties section) for a detailed explanation.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/affine.cr#L139" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/affine.cr#L139" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1263,13 +1256,13 @@ article (Properties section) for a detailed explanation.</p>
         
         def <strong>scale</strong>(by factor : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#scale(byfactor:Number):self-instance-method">#</a>
+        <a class="method-permalink" href="#scale%28byfactor%3ANumber%29%3Aself-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/affine.cr#L150" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/affine.cr#L150" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1279,13 +1272,13 @@ article (Properties section) for a detailed explanation.</p>
         
         def <strong>scale</strong>(by factors : <a href="../../Chem/Spatial/AffineTransform/ScalingFactors.html">ScalingFactors</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#scale(byfactors:ScalingFactors):self-instance-method">#</a>
+        <a class="method-permalink" href="#scale%28byfactors%3AScalingFactors%29%3Aself-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/affine.cr#L154" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/affine.cr#L154" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1295,13 +1288,13 @@ article (Properties section) for a detailed explanation.</p>
         
         def <strong>to_a</strong> : <a href="../../Array.html">Array</a>(Float64)
 
-        <a class="method-permalink" href="#to_a:Array(Float64)-instance-method">#</a>
+        <a class="method-permalink" href="#to_a%3AArray%28Float64%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/affine.cr#L167" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/affine.cr#L167" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1311,13 +1304,13 @@ article (Properties section) for a detailed explanation.</p>
         
         def <strong>to_unsafe</strong> : Pointer(Float64)
 
-        <a class="method-permalink" href="#to_unsafe:Pointer(Float64)-instance-method">#</a>
+        <a class="method-permalink" href="#to_unsafe%3APointer%28Float64%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/affine.cr#L163" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/affine.cr#L163" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1327,13 +1320,13 @@ article (Properties section) for a detailed explanation.</p>
         
         def <strong>translate</strong>(by offset : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#translate(byoffset:Vec3):self-instance-method">#</a>
+        <a class="method-permalink" href="#translate%28byoffset%3AVec3%29%3Aself-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/affine.cr#L174" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/affine.cr#L174" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1343,13 +1336,13 @@ article (Properties section) for a detailed explanation.</p>
         
         def <strong>unsafe_fetch</strong>(index : Int) : Float64
 
-        <a class="method-permalink" href="#unsafe_fetch(index:Int):Float64-instance-method">#</a>
+        <a class="method-permalink" href="#unsafe_fetch%28index%3AInt%29%3AFloat64-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/affine.cr#L183" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/affine.cr#L183" target="_blank">View source</a>]
         
       </div>
     </div>

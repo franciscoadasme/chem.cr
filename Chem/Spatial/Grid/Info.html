@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.0.0">
+<meta name="generator" content="Crystal Docs 1.1.1">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -506,8 +506,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Quaternion" data-name="chem::spatial::quaternion">
-      <a href="../../../Chem/Spatial/Quaternion.html">Quaternion</a>
+  <li class=" " data-id="chem.cr/Chem/Spatial/Quat" data-name="chem::spatial::quat">
+      <a href="../../../Chem/Spatial/Quat.html">Quat</a>
       
     </li>
   
@@ -823,14 +823,14 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">
         chem/register_format.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L11" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L11" target="_blank">
         chem/spatial/grid.cr
       </a>
     
@@ -852,47 +852,47 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#from_chgcar(input:IO%7CPath%7CString):self-class-method" class="signature"><strong>.from_chgcar</strong>(input : IO | Path | String) : <span class="k">self</span></a>
+        <a href="#from_chgcar%28input%3AIO%7CPath%7CString%29%3Aself-class-method" class="signature"><strong>.from_chgcar</strong>(input : IO | Path | String) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the header encoded in <em>input</em> using the <code><a href="../../../Chem/VASP/Chgcar.html">Chem::VASP::Chgcar</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#from_cube(input:IO%7CPath%7CString):self-class-method" class="signature"><strong>.from_cube</strong>(input : IO | Path | String) : <span class="k">self</span></a>
+        <a href="#from_cube%28input%3AIO%7CPath%7CString%29%3Aself-class-method" class="signature"><strong>.from_cube</strong>(input : IO | Path | String) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the header encoded in <em>input</em> using the <code><a href="../../../Chem/Cube.html">Chem::Cube</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#from_dx(input:IO%7CPath%7CString):self-class-method" class="signature"><strong>.from_dx</strong>(input : IO | Path | String) : <span class="k">self</span></a>
+        <a href="#from_dx%28input%3AIO%7CPath%7CString%29%3Aself-class-method" class="signature"><strong>.from_dx</strong>(input : IO | Path | String) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the header encoded in <em>input</em> using the <code><a href="../../../Chem/DX.html">Chem::DX</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#from_locpot(input:IO%7CPath%7CString):self-class-method" class="signature"><strong>.from_locpot</strong>(input : IO | Path | String) : <span class="k">self</span></a>
+        <a href="#from_locpot%28input%3AIO%7CPath%7CString%29%3Aself-class-method" class="signature"><strong>.from_locpot</strong>(input : IO | Path | String) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the header encoded in <em>input</em> using the <code><a href="../../../Chem/VASP/Locpot.html">Chem::VASP::Locpot</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new(bounds:Bounds,dim:Dimensions)-class-method" class="signature"><strong>.new</strong>(bounds : Bounds, dim : Dimensions)</a>
+        <a href="#new%28bounds%3ABounds%2Cdim%3ADimensions%29-class-method" class="signature"><strong>.new</strong>(bounds : Bounds, dim : Dimensions)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#read(input:IO%7CPath%7CString,format:Chem::Format%7CString):self-class-method" class="signature"><strong>.read</strong>(input : IO | Path | String, format : Chem::Format | String) : <span class="k">self</span></a>
+        <a href="#read%28input%3AIO%7CPath%7CString%2Cformat%3AChem%3A%3AFormat%7CString%29%3Aself-class-method" class="signature"><strong>.read</strong>(input : IO | Path | String, format : Chem::Format | String) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the header encoded in the specified file using <em>format</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#read(path:Path%7CString):self-class-method" class="signature"><strong>.read</strong>(path : Path | String) : <span class="k">self</span></a>
+        <a href="#read%28path%3APath%7CString%29%3Aself-class-method" class="signature"><strong>.read</strong>(path : Path | String) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the header encoded in the specified file.</p></div>
         
@@ -915,7 +915,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#bounds:Bounds-instance-method" class="signature"><strong>#bounds</strong> : Bounds</a>
+        <a href="#bounds%3ABounds-instance-method" class="signature"><strong>#bounds</strong> : Bounds</a>
         
       </li>
     
@@ -925,12 +925,12 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#copy_with(bounds_bounds=@bounds,dim_dim=@dim)-instance-method" class="signature"><strong>#copy_with</strong>(bounds _bounds = @bounds, dim _dim = @dim)</a>
+        <a href="#copy_with%28bounds_bounds%3D%40bounds%2Cdim_dim%3D%40dim%29-instance-method" class="signature"><strong>#copy_with</strong>(bounds _bounds = @bounds, dim _dim = @dim)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#dim:Dimensions-instance-method" class="signature"><strong>#dim</strong> : Dimensions</a>
+        <a href="#dim%3ADimensions-instance-method" class="signature"><strong>#dim</strong> : Dimensions</a>
         
       </li>
     
@@ -989,20 +989,20 @@
         
         def self.<strong>from_chgcar</strong>(input : IO | Path | String) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#from_chgcar(input:IO%7CPath%7CString):self-class-method">#</a>
+        <a class="method-permalink" href="#from_chgcar%28input%3AIO%7CPath%7CString%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns the header encoded in <em>input</em> using the
 <code><a href="../../../Chem/VASP/Chgcar.html">Chem::VASP::Chgcar</a></code> file format. Arguments are forwarded to
-<code><a href="../../../Chem/VASP/Chgcar/Reader.html#open(io:IO,sync_close:Bool=false,&:self-%3E)-class-method">Chem::VASP::Chgcar::Reader.open</a></code>.</p>
+<code><a href="../../../Chem/VASP/Chgcar/Reader.html#open%28io%3AIO%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::VASP::Chgcar::Reader.open</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1012,20 +1012,20 @@
         
         def self.<strong>from_cube</strong>(input : IO | Path | String) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#from_cube(input:IO%7CPath%7CString):self-class-method">#</a>
+        <a class="method-permalink" href="#from_cube%28input%3AIO%7CPath%7CString%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns the header encoded in <em>input</em> using the
 <code><a href="../../../Chem/Cube.html">Chem::Cube</a></code> file format. Arguments are forwarded to
-<code><a href="../../../Chem/Cube/Reader.html#open(io:IO,sync_close:Bool=false,&:self-%3E)-class-method">Chem::Cube::Reader.open</a></code>.</p>
+<code><a href="../../../Chem/Cube/Reader.html#open%28io%3AIO%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::Cube::Reader.open</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1035,20 +1035,20 @@
         
         def self.<strong>from_dx</strong>(input : IO | Path | String) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#from_dx(input:IO%7CPath%7CString):self-class-method">#</a>
+        <a class="method-permalink" href="#from_dx%28input%3AIO%7CPath%7CString%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns the header encoded in <em>input</em> using the
 <code><a href="../../../Chem/DX.html">Chem::DX</a></code> file format. Arguments are forwarded to
-<code><a href="../../../Chem/DX/Reader.html#open(io:IO,sync_close:Bool=false,&:self-%3E)-class-method">Chem::DX::Reader.open</a></code>.</p>
+<code><a href="../../../Chem/DX/Reader.html#open%28io%3AIO%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::DX::Reader.open</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1058,20 +1058,20 @@
         
         def self.<strong>from_locpot</strong>(input : IO | Path | String) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#from_locpot(input:IO%7CPath%7CString):self-class-method">#</a>
+        <a class="method-permalink" href="#from_locpot%28input%3AIO%7CPath%7CString%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns the header encoded in <em>input</em> using the
 <code><a href="../../../Chem/VASP/Locpot.html">Chem::VASP::Locpot</a></code> file format. Arguments are forwarded to
-<code><a href="../../../Chem/VASP/Locpot/Reader.html#open(io:IO,sync_close:Bool=false,&:self-%3E)-class-method">Chem::VASP::Locpot::Reader.open</a></code>.</p>
+<code><a href="../../../Chem/VASP/Locpot/Reader.html#open%28io%3AIO%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::VASP::Locpot::Reader.open</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1081,13 +1081,13 @@
         
         def self.<strong>new</strong>(bounds : <a href="../../../Chem/Spatial/Bounds.html">Bounds</a>, dim : <a href="../../../Chem/Spatial/Grid/Dimensions.html">Dimensions</a>)
 
-        <a class="method-permalink" href="#new(bounds:Bounds,dim:Dimensions)-class-method">#</a>
+        <a class="method-permalink" href="#new%28bounds%3ABounds%2Cdim%3ADimensions%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L11" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L11" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1097,7 +1097,7 @@
         
         def self.<strong>read</strong>(input : IO | Path | String, format : <a href="../../../Chem/Format.html">Chem::Format</a> | String) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#read(input:IO%7CPath%7CString,format:Chem::Format%7CString):self-class-method">#</a>
+        <a class="method-permalink" href="#read%28input%3AIO%7CPath%7CString%2Cformat%3AChem%3A%3AFormat%7CString%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1105,7 +1105,6 @@
           <p>Returns the header encoded in the specified file
 using <em>format</em>. Raises <code>ArgumentError</code> if <em>format</em> has
 required arguments or cannot read <code><a href="../../../Chem/Spatial/Grid/Info.html">Chem::Spatial::Grid::Info</a></code>.</p>
-
 <p>The supported file formats are <code><a href="../../../Chem/Cube.html">Chem::Cube</a></code>, <code><a href="../../../Chem/DX.html">Chem::DX</a></code>, <code><a href="../../../Chem/VASP/Chgcar.html">Chem::VASP::Chgcar</a></code>, <code><a href="../../../Chem/VASP/Locpot.html">Chem::VASP::Locpot</a></code>. Use the
 <code>.from_*</code> methods to customize how the object is decoded in
 the corresponding file format if possible.</p>
@@ -1114,7 +1113,7 @@ the corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1124,20 +1123,22 @@ the corresponding file format if possible.</p>
         
         def self.<strong>read</strong>(path : Path | String) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#read(path:Path%7CString):self-class-method">#</a>
+        <a class="method-permalink" href="#read%28path%3APath%7CString%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns the header encoded in the specified file.
 The file format is chosen based on the filename (see
-<code><a href="../../../Chem/Format.html#from_filename(filename:Path%7CString):self-class-method">Chem::Format#from_filename</a></code>). Raises <code>ArgumentError</code> if the
+<code><a href="../../../Chem/Format.html#from_filename%28filename%3APath%7CString%29%3Aself-class-method">Chem::Format#from_filename</a></code>). Raises <code>ArgumentError</code> if the
 file format cannot be determined.</p>
-
 <p>The supported file formats are the following:</p>
-
-<ul><li><code><a href="../../../Chem/Cube.html">Chem::Cube</a></code> (.cube)</li><li><code><a href="../../../Chem/DX.html">Chem::DX</a></code> (.dx)</li><li><code><a href="../../../Chem/VASP/Chgcar.html">Chem::VASP::Chgcar</a></code> (CHGCAR)</li><li><code><a href="../../../Chem/VASP/Locpot.html">Chem::VASP::Locpot</a></code> (LOCPOT)</li></ul>
-
+<ul>
+<li><code><a href="../../../Chem/Cube.html">Chem::Cube</a></code> (.cube)</li>
+<li><code><a href="../../../Chem/DX.html">Chem::DX</a></code> (.dx)</li>
+<li><code><a href="../../../Chem/VASP/Chgcar.html">Chem::VASP::Chgcar</a></code> (CHGCAR)</li>
+<li><code><a href="../../../Chem/VASP/Locpot.html">Chem::VASP::Locpot</a></code> (LOCPOT)</li>
+</ul>
 <p>Use the <code>.from_*</code> methods to customize how the object is
 decoded in the corresponding file format if possible.</p>
         </div>
@@ -1145,7 +1146,7 @@ decoded in the corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1169,7 +1170,7 @@ decoded in the corresponding file format if possible.</p>
         
         def <strong>bounds</strong> : <a href="../../../Chem/Spatial/Bounds.html">Bounds</a>
 
-        <a class="method-permalink" href="#bounds:Bounds-instance-method">#</a>
+        <a class="method-permalink" href="#bounds%3ABounds-instance-method">#</a>
       </div>
       
       <br/>
@@ -1189,7 +1190,7 @@ decoded in the corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L11" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L11" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1199,13 +1200,13 @@ decoded in the corresponding file format if possible.</p>
         
         def <strong>copy_with</strong>(bounds _bounds = @bounds, dim _dim = @dim)
 
-        <a class="method-permalink" href="#copy_with(bounds_bounds=@bounds,dim_dim=@dim)-instance-method">#</a>
+        <a class="method-permalink" href="#copy_with%28bounds_bounds%3D%40bounds%2Cdim_dim%3D%40dim%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L11" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L11" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1215,7 +1216,7 @@ decoded in the corresponding file format if possible.</p>
         
         def <strong>dim</strong> : <a href="../../../Chem/Spatial/Grid/Dimensions.html">Dimensions</a>
 
-        <a class="method-permalink" href="#dim:Dimensions-instance-method">#</a>
+        <a class="method-permalink" href="#dim%3ADimensions-instance-method">#</a>
       </div>
       
       <br/>

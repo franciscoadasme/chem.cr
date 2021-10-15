@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.0.0">
+<meta name="generator" content="Crystal Docs 1.1.1">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -506,8 +506,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Quaternion" data-name="chem::spatial::quaternion">
-      <a href="../Chem/Spatial/Quaternion.html">Quaternion</a>
+  <li class=" " data-id="chem.cr/Chem/Spatial/Quat" data-name="chem::spatial::quat">
+      <a href="../Chem/Spatial/Quat.html">Quat</a>
       
     </li>
   
@@ -810,11 +810,9 @@
   </h2>
 
   <p>Exception thrown upon parsing issues. Primarly used by <code><a href="../Chem/PullParser.html">PullParser</a></code>.</p>
-
 <p>It can hold the location of the issue found in a text document. Call
-<code><a href="../Chem/ParseException.html#inspect_with_location:String-instance-method">#inspect_with_location</a></code> to print a human-friendly error showing
+<code><a href="../Chem/ParseException.html#inspect_with_location%3AString-instance-method">#inspect_with_location</a></code> to print a human-friendly error showing
 such information.</p>
-
 <pre><code class="language-crystal">ex <span class="o">=</span> <span class="t">ParseException</span>.<span class="k">new</span>(
   message: <span class="s">&quot;Invalid letters&quot;</span>,
   path: <span class="s">&quot;path/to/file&quot;</span>,
@@ -822,9 +820,7 @@ such information.</p>
   location: {<span class="n">247</span>, <span class="n">8</span>, <span class="n">6</span>}
 )
 puts ex.inspect_with_location</code></pre>
-
 <p>Prints out:</p>
-
 <pre><code class="language-text">Found a parsing issue in path/to/file:
 
  247 | abc def 123456 ABC DEF
@@ -854,7 +850,7 @@ Error: Invalid letters</code></pre>
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem.cr#L63" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem.cr#L63" target="_blank">
         chem.cr
       </a>
     
@@ -876,14 +872,14 @@ Error: Invalid letters</code></pre>
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new(message:String,source_file:String?,line:String,location:Tuple(Int32,Int32,Int32))-class-method" class="signature"><strong>.new</strong>(message : String, source_file : String?, line : String, location : Tuple(Int32, Int32, Int32))</a>
+        <a href="#new%28message%3AString%2Csource_file%3AString%3F%2Cline%3AString%2Clocation%3ATuple%28Int32%2CInt32%2CInt32%29%29-class-method" class="signature"><strong>.new</strong>(message : String, source_file : String?, line : String, location : Tuple(Int32, Int32, Int32))</a>
         
           <div class="summary"><p>Creates a new exception with location, which is a triplet containing line number, column number (starting at zero), and cursor size.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new(message:String)-class-method" class="signature"><strong>.new</strong>(message : String)</a>
+        <a href="#new%28message%3AString%29-class-method" class="signature"><strong>.new</strong>(message : String)</a>
         
           <div class="summary"><p>Creates a new exception without location.</p></div>
         
@@ -906,35 +902,35 @@ Error: Invalid letters</code></pre>
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#inspect_with_location(io:IO):Nil-instance-method" class="signature"><strong>#inspect_with_location</strong>(io : IO) : Nil</a>
+        <a href="#inspect_with_location%28io%3AIO%29%3ANil-instance-method" class="signature"><strong>#inspect_with_location</strong>(io : IO) : Nil</a>
         
           <div class="summary"><p>Writes a string representation of the error including the location to <em>io</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#inspect_with_location:String-instance-method" class="signature"><strong>#inspect_with_location</strong> : String</a>
+        <a href="#inspect_with_location%3AString-instance-method" class="signature"><strong>#inspect_with_location</strong> : String</a>
         
           <div class="summary"><p>Returns a string representation of the error including the location.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#line:String?-instance-method" class="signature"><strong>#line</strong> : String?</a>
+        <a href="#line%3AString%3F-instance-method" class="signature"><strong>#line</strong> : String?</a>
         
           <div class="summary"><p>Line (if any) where the issue was found.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#location:Tuple(Int32,Int32,Int32)?-instance-method" class="signature"><strong>#location</strong> : Tuple(Int32, Int32, Int32)?</a>
+        <a href="#location%3ATuple%28Int32%2CInt32%2CInt32%29%3F-instance-method" class="signature"><strong>#location</strong> : Tuple(Int32, Int32, Int32)?</a>
         
           <div class="summary"><p>Error location (if any).</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#source_file:String?-instance-method" class="signature"><strong>#source_file</strong> : String?</a>
+        <a href="#source_file%3AString%3F-instance-method" class="signature"><strong>#source_file</strong> : String?</a>
         
           <div class="summary"><p>Path to file (if any) that produced the error.</p></div>
         
@@ -1005,7 +1001,7 @@ Error: Invalid letters</code></pre>
         
         def self.<strong>new</strong>(message : String, source_file : String?, line : String, location : Tuple(Int32, Int32, Int32))
 
-        <a class="method-permalink" href="#new(message:String,source_file:String?,line:String,location:Tuple(Int32,Int32,Int32))-class-method">#</a>
+        <a class="method-permalink" href="#new%28message%3AString%2Csource_file%3AString%3F%2Cline%3AString%2Clocation%3ATuple%28Int32%2CInt32%2CInt32%29%29-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1019,7 +1015,7 @@ cursor size. The latter may be zero to represent the beginning
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem.cr#L79" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem.cr#L79" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1029,7 +1025,7 @@ cursor size. The latter may be zero to represent the beginning
         
         def self.<strong>new</strong>(message : String)
 
-        <a class="method-permalink" href="#new(message:String)-class-method">#</a>
+        <a class="method-permalink" href="#new%28message%3AString%29-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1040,7 +1036,7 @@ cursor size. The latter may be zero to represent the beginning
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem.cr#L73" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem.cr#L73" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1064,7 +1060,7 @@ cursor size. The latter may be zero to represent the beginning
         
         def <strong>inspect_with_location</strong>(io : IO) : Nil
 
-        <a class="method-permalink" href="#inspect_with_location(io:IO):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#inspect_with_location%28io%3AIO%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1076,7 +1072,7 @@ to <em>io</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem.cr#L95" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem.cr#L95" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1086,7 +1082,7 @@ to <em>io</em>.</p>
         
         def <strong>inspect_with_location</strong> : String
 
-        <a class="method-permalink" href="#inspect_with_location:String-instance-method">#</a>
+        <a class="method-permalink" href="#inspect_with_location%3AString-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1098,7 +1094,7 @@ location.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem.cr#L87" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem.cr#L87" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1108,7 +1104,7 @@ location.</p>
         
         def <strong>line</strong> : String?
 
-        <a class="method-permalink" href="#line:String?-instance-method">#</a>
+        <a class="method-permalink" href="#line%3AString%3F-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1119,7 +1115,7 @@ location.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem.cr#L65" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem.cr#L65" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1129,7 +1125,7 @@ location.</p>
         
         def <strong>location</strong> : Tuple(Int32, Int32, Int32)?
 
-        <a class="method-permalink" href="#location:Tuple(Int32,Int32,Int32)?-instance-method">#</a>
+        <a class="method-permalink" href="#location%3ATuple%28Int32%2CInt32%2CInt32%29%3F-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1141,7 +1137,7 @@ column number, and cursor size where the issue is located.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem.cr#L68" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem.cr#L68" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1151,7 +1147,7 @@ column number, and cursor size where the issue is located.</p>
         
         def <strong>source_file</strong> : String?
 
-        <a class="method-permalink" href="#source_file:String?-instance-method">#</a>
+        <a class="method-permalink" href="#source_file%3AString%3F-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1162,7 +1158,7 @@ column number, and cursor size where the issue is located.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem.cr#L70" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem.cr#L70" target="_blank">View source</a>]
         
       </div>
     </div>

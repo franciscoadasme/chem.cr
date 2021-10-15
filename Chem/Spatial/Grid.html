@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.0.0">
+<meta name="generator" content="Crystal Docs 1.1.1">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -506,8 +506,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Quaternion" data-name="chem::spatial::quaternion">
-      <a href="../../Chem/Spatial/Quaternion.html">Quaternion</a>
+  <li class=" " data-id="chem.cr/Chem/Spatial/Quat" data-name="chem::spatial::quat">
+      <a href="../../Chem/Spatial/Quat.html">Quat</a>
       
     </li>
   
@@ -809,11 +809,9 @@
     Overview
   </h2>
 
-  <p><span class="flag orange">TODO</span>  add support for non-cubic grids (use lattice instead of bounds?)</p>
-
-<pre><code class="language-crystal">  <span class="o">-</span> i to coords: origin.x <span class="o">+</span> (i <span class="o">/</span> nx) <span class="o">*</span> lattice.a
-  <span class="o">-</span> coords to i: ?</code></pre>
-
+  <p><span class="flag orange">TODO</span>  add support for non-cubic grids (use lattice instead of bounds?)
+- i to coords: origin.x + (i / nx) * lattice.a
+- coords to i: ?</p>
 <p><span class="flag orange">TODO</span>  implement functionality from vmd's volmap</p>
 
 
@@ -853,14 +851,14 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">
         chem/register_format.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L6" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L6" target="_blank">
         chem/spatial/grid.cr
       </a>
     
@@ -882,114 +880,114 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#[](ni:Int,nj:Int,nk:Int):self-class-method" class="signature"><strong>.[]</strong>(ni : Int, nj : Int, nk : Int) : <span class="k">self</span></a>
+        <a href="#%5B%5D%28ni%3AInt%2Cnj%3AInt%2Cnk%3AInt%29%3Aself-class-method" class="signature"><strong>.[]</strong>(ni : Int, nj : Int, nk : Int) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#atom_distance(structure:Structure,dim:Dimensions,bounds:Bounds?=nil):self-class-method" class="signature"><strong>.atom_distance</strong>(structure : Structure, dim : Dimensions, bounds : Bounds? = <span class="n">nil</span>) : <span class="k">self</span></a>
+        <a href="#atom_distance%28structure%3AStructure%2Cdim%3ADimensions%2Cbounds%3ABounds%3F%3Dnil%29%3Aself-class-method" class="signature"><strong>.atom_distance</strong>(structure : Structure, dim : Dimensions, bounds : Bounds? = <span class="n">nil</span>) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#atom_distance_like(other:self%7CInfo,structure:Structure):self-class-method" class="signature"><strong>.atom_distance_like</strong>(other : <span class="k">self</span> | Info, structure : Structure) : <span class="k">self</span></a>
+        <a href="#atom_distance_like%28other%3Aself%7CInfo%2Cstructure%3AStructure%29%3Aself-class-method" class="signature"><strong>.atom_distance_like</strong>(other : <span class="k">self</span> | Info, structure : Structure) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns a grid filled with the distances to the nearest atom.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#build(info:Info,source_file:String%7CPath%7CNil=nil,&:Pointer(Float64),Int32-%3E):self-class-method" class="signature"><strong>.build</strong>(info : Info, source_file : String | Path | Nil = <span class="n">nil</span>, & : Pointer(Float64), Int32 -> ) : <span class="k">self</span></a>
+        <a href="#build%28info%3AInfo%2Csource_file%3AString%7CPath%7CNil%3Dnil%2C%26%3APointer%28Float64%29%2CInt32-%3E%29%3Aself-class-method" class="signature"><strong>.build</strong>(info : Info, source_file : String | Path | Nil = <span class="n">nil</span>, & : Pointer(Float64), Int32 -> ) : <span class="k">self</span></a>
         
           <div class="summary"><p>Creates a new <code><a href="../../Chem/Spatial/Grid.html">Grid</a></code> with <em>info</em> and yields a buffer to be filled.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#build(dim:Dimensions,bounds:Bounds,source_file:String%7CPath%7CNil=nil,&:Pointer(Float64),Int32-%3E):self-class-method" class="signature"><strong>.build</strong>(dim : Dimensions, bounds : Bounds, source_file : String | Path | Nil = <span class="n">nil</span>, & : Pointer(Float64), Int32 -> ) : <span class="k">self</span></a>
+        <a href="#build%28dim%3ADimensions%2Cbounds%3ABounds%2Csource_file%3AString%7CPath%7CNil%3Dnil%2C%26%3APointer%28Float64%29%2CInt32-%3E%29%3Aself-class-method" class="signature"><strong>.build</strong>(dim : Dimensions, bounds : Bounds, source_file : String | Path | Nil = <span class="n">nil</span>, & : Pointer(Float64), Int32 -> ) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#empty_like(other:self%7CInfo):self-class-method" class="signature"><strong>.empty_like</strong>(other : <span class="k">self</span> | Info) : <span class="k">self</span></a>
+        <a href="#empty_like%28other%3Aself%7CInfo%29%3Aself-class-method" class="signature"><strong>.empty_like</strong>(other : <span class="k">self</span> | Info) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns a zero-filled grid with the same bounds and points as <em>other</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#fill_like(other:self%7CInfo,value:Number):self-class-method" class="signature"><strong>.fill_like</strong>(other : <span class="k">self</span> | Info, value : Number) : <span class="k">self</span></a>
+        <a href="#fill_like%28other%3Aself%7CInfo%2Cvalue%3ANumber%29%3Aself-class-method" class="signature"><strong>.fill_like</strong>(other : <span class="k">self</span> | Info, value : Number) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns a grid with the same bounds and points as <em>other</em> filled with <em>value</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#from_chgcar(input:IO%7CPath%7CString):self-class-method" class="signature"><strong>.from_chgcar</strong>(input : IO | Path | String) : <span class="k">self</span></a>
+        <a href="#from_chgcar%28input%3AIO%7CPath%7CString%29%3Aself-class-method" class="signature"><strong>.from_chgcar</strong>(input : IO | Path | String) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the grid encoded in <em>input</em> using the <code><a href="../../Chem/VASP/Chgcar.html">Chem::VASP::Chgcar</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#from_cube(input:IO%7CPath%7CString):self-class-method" class="signature"><strong>.from_cube</strong>(input : IO | Path | String) : <span class="k">self</span></a>
+        <a href="#from_cube%28input%3AIO%7CPath%7CString%29%3Aself-class-method" class="signature"><strong>.from_cube</strong>(input : IO | Path | String) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the grid encoded in <em>input</em> using the <code><a href="../../Chem/Cube.html">Chem::Cube</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#from_dx(input:IO%7CPath%7CString):self-class-method" class="signature"><strong>.from_dx</strong>(input : IO | Path | String) : <span class="k">self</span></a>
+        <a href="#from_dx%28input%3AIO%7CPath%7CString%29%3Aself-class-method" class="signature"><strong>.from_dx</strong>(input : IO | Path | String) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the grid encoded in <em>input</em> using the <code><a href="../../Chem/DX.html">Chem::DX</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#from_locpot(input:IO%7CPath%7CString):self-class-method" class="signature"><strong>.from_locpot</strong>(input : IO | Path | String) : <span class="k">self</span></a>
+        <a href="#from_locpot%28input%3AIO%7CPath%7CString%29%3Aself-class-method" class="signature"><strong>.from_locpot</strong>(input : IO | Path | String) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the grid encoded in <em>input</em> using the <code><a href="../../Chem/VASP/Locpot.html">Chem::VASP::Locpot</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new(dim:Dimensions,bounds:Bounds,source_file:String%7CPath%7CNil=nil)-class-method" class="signature"><strong>.new</strong>(dim : Dimensions, bounds : Bounds, source_file : String | Path | Nil = <span class="n">nil</span>)</a>
+        <a href="#new%28dim%3ADimensions%2Cbounds%3ABounds%2Csource_file%3AString%7CPath%7CNil%3Dnil%29-class-method" class="signature"><strong>.new</strong>(dim : Dimensions, bounds : Bounds, source_file : String | Path | Nil = <span class="n">nil</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new(dim:Dimensions,bounds:Bounds,initial_value:Float64,source_file:String%7CPath%7CNil=nil)-class-method" class="signature"><strong>.new</strong>(dim : Dimensions, bounds : Bounds, initial_value : Float64, source_file : String | Path | Nil = <span class="n">nil</span>)</a>
+        <a href="#new%28dim%3ADimensions%2Cbounds%3ABounds%2Cinitial_value%3AFloat64%2Csource_file%3AString%7CPath%7CNil%3Dnil%29-class-method" class="signature"><strong>.new</strong>(dim : Dimensions, bounds : Bounds, initial_value : Float64, source_file : String | Path | Nil = <span class="n">nil</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new(dim:Dimensions,bounds:Bounds,source_file:String%7CPath%7CNil=nil,&block:Location-%3ENumber)-class-method" class="signature"><strong>.new</strong>(dim : Dimensions, bounds : Bounds, source_file : String | Path | Nil = <span class="n">nil</span>, &block : Location -> Number)</a>
+        <a href="#new%28dim%3ADimensions%2Cbounds%3ABounds%2Csource_file%3AString%7CPath%7CNil%3Dnil%2C%26block%3ALocation-%3ENumber%29-class-method" class="signature"><strong>.new</strong>(dim : Dimensions, bounds : Bounds, source_file : String | Path | Nil = <span class="n">nil</span>, &block : Location -> Number)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#read(input:IO%7CPath%7CString,format:Chem::Format%7CString):self-class-method" class="signature"><strong>.read</strong>(input : IO | Path | String, format : Chem::Format | String) : <span class="k">self</span></a>
+        <a href="#read%28input%3AIO%7CPath%7CString%2Cformat%3AChem%3A%3AFormat%7CString%29%3Aself-class-method" class="signature"><strong>.read</strong>(input : IO | Path | String, format : Chem::Format | String) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the grid encoded in the specified file using <em>format</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#read(path:Path%7CString):self-class-method" class="signature"><strong>.read</strong>(path : Path | String) : <span class="k">self</span></a>
+        <a href="#read%28path%3APath%7CString%29%3Aself-class-method" class="signature"><strong>.read</strong>(path : Path | String) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the grid encoded in the specified file.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#vdw_mask(structure:Structure,dim:Dimensions,bounds:Bounds?=nil,delta:Float64=0.02):self-class-method" class="signature"><strong>.vdw_mask</strong>(structure : Structure, dim : Dimensions, bounds : Bounds? = <span class="n">nil</span>, delta : Float64 = <span class="n">0.02</span>) : <span class="k">self</span></a>
+        <a href="#vdw_mask%28structure%3AStructure%2Cdim%3ADimensions%2Cbounds%3ABounds%3F%3Dnil%2Cdelta%3AFloat64%3D0.02%29%3Aself-class-method" class="signature"><strong>.vdw_mask</strong>(structure : Structure, dim : Dimensions, bounds : Bounds? = <span class="n">nil</span>, delta : Float64 = <span class="n">0.02</span>) : <span class="k">self</span></a>
         
           <div class="summary"><p><span class="flag orange">TODO</span>  add more tests FIXME: check delta calculation (grid.resolution.min / 2 shouldn't be enough?)</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#vdw_mask_like(other:self%7CInfo,structure:Structure,delta:Float64=0.02):self-class-method" class="signature"><strong>.vdw_mask_like</strong>(other : <span class="k">self</span> | Info, structure : Structure, delta : Float64 = <span class="n">0.02</span>) : <span class="k">self</span></a>
+        <a href="#vdw_mask_like%28other%3Aself%7CInfo%2Cstructure%3AStructure%2Cdelta%3AFloat64%3D0.02%29%3Aself-class-method" class="signature"><strong>.vdw_mask_like</strong>(other : <span class="k">self</span> | Info, structure : Structure, delta : Float64 = <span class="n">0.02</span>) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns a grid mask with the points at the vdW spheres set to 1.</p></div>
         
@@ -1012,498 +1010,498 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#*(rhs:Number):self-instance-method" class="signature"><strong>#*</strong>(rhs : Number) : <span class="k">self</span></a>
+        <a href="#%2A%28rhs%3ANumber%29%3Aself-instance-method" class="signature"><strong>#*</strong>(rhs : Number) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#*(rhs:self):self-instance-method" class="signature"><strong>#*</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span></a>
+        <a href="#%2A%28rhs%3Aself%29%3Aself-instance-method" class="signature"><strong>#*</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#+(rhs:Number):self-instance-method" class="signature"><strong>#+</strong>(rhs : Number) : <span class="k">self</span></a>
+        <a href="#%2B%28rhs%3ANumber%29%3Aself-instance-method" class="signature"><strong>#+</strong>(rhs : Number) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#+(rhs:self):self-instance-method" class="signature"><strong>#+</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span></a>
+        <a href="#%2B%28rhs%3Aself%29%3Aself-instance-method" class="signature"><strong>#+</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#-(rhs:Number):self-instance-method" class="signature"><strong>#-</strong>(rhs : Number) : <span class="k">self</span></a>
+        <a href="#-%28rhs%3ANumber%29%3Aself-instance-method" class="signature"><strong>#-</strong>(rhs : Number) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#-(rhs:self):self-instance-method" class="signature"><strong>#-</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span></a>
+        <a href="#-%28rhs%3Aself%29%3Aself-instance-method" class="signature"><strong>#-</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#/(rhs:Number):self-instance-method" class="signature"><strong>#/</strong>(rhs : Number) : <span class="k">self</span></a>
+        <a href="#/%28rhs%3ANumber%29%3Aself-instance-method" class="signature"><strong>#/</strong>(rhs : Number) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#/(rhs:self):self-instance-method" class="signature"><strong>#/</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span></a>
+        <a href="#/%28rhs%3Aself%29%3Aself-instance-method" class="signature"><strong>#/</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#==(rhs:self):Bool-instance-method" class="signature"><strong>#==</strong>(rhs : <span class="k">self</span>) : Bool</a>
+        <a href="#%3D%3D%28rhs%3Aself%29%3ABool-instance-method" class="signature"><strong>#==</strong>(rhs : <span class="k">self</span>) : Bool</a>
         
           <div class="summary"><p>Returns <code>true</code> if this reference is the same as <em>other</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#[](*args,**options):Float64-instance-method" class="signature"><strong>#[]</strong>(*args, **options) : Float64</a>
+        <a href="#%5B%5D%28%2Aargs%2C%2A%2Aoptions%29%3AFloat64-instance-method" class="signature"><strong>#[]</strong>(*args, **options) : Float64</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#[]=(i:Int,j:Int,k:Int,value:Float64):Float64-instance-method" class="signature"><strong>#[]=</strong>(i : Int, j : Int, k : Int, value : Float64) : Float64</a>
+        <a href="#%5B%5D%3D%28i%3AInt%2Cj%3AInt%2Ck%3AInt%2Cvalue%3AFloat64%29%3AFloat64-instance-method" class="signature"><strong>#[]=</strong>(i : Int, j : Int, k : Int, value : Float64) : Float64</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#[]=(i:Int,value:Float64):Float64-instance-method" class="signature"><strong>#[]=</strong>(i : Int, value : Float64) : Float64</a>
+        <a href="#%5B%5D%3D%28i%3AInt%2Cvalue%3AFloat64%29%3AFloat64-instance-method" class="signature"><strong>#[]=</strong>(i : Int, value : Float64) : Float64</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#[]=(loc:Location,value:Float64):Float64-instance-method" class="signature"><strong>#[]=</strong>(loc : Location, value : Float64) : Float64</a>
+        <a href="#%5B%5D%3D%28loc%3ALocation%2Cvalue%3AFloat64%29%3AFloat64-instance-method" class="signature"><strong>#[]=</strong>(loc : Location, value : Float64) : Float64</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#[]?(i:Int,j:Int,k:Int):Float64?-instance-method" class="signature"><strong>#[]?</strong>(i : Int, j : Int, k : Int) : Float64?</a>
+        <a href="#%5B%5D%3F%28i%3AInt%2Cj%3AInt%2Ck%3AInt%29%3AFloat64%3F-instance-method" class="signature"><strong>#[]?</strong>(i : Int, j : Int, k : Int) : Float64?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#[]?(loc:Location):Float64?-instance-method" class="signature"><strong>#[]?</strong>(loc : Location) : Float64?</a>
+        <a href="#%5B%5D%3F%28loc%3ALocation%29%3AFloat64%3F-instance-method" class="signature"><strong>#[]?</strong>(loc : Location) : Float64?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#[]?(vec:Vec3):Float64?-instance-method" class="signature"><strong>#[]?</strong>(vec : Vec3) : Float64?</a>
+        <a href="#%5B%5D%3F%28vec%3AVec3%29%3AFloat64%3F-instance-method" class="signature"><strong>#[]?</strong>(vec : Vec3) : Float64?</a>
         
           <div class="summary"><p><span class="flag orange">TODO</span>  add interpolation (check ARBInterp)</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#bounds:Bounds-instance-method" class="signature"><strong>#bounds</strong> : Bounds</a>
+        <a href="#bounds%3ABounds-instance-method" class="signature"><strong>#bounds</strong> : Bounds</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#coords_at(*args,**options):Vec3-instance-method" class="signature"><strong>#coords_at</strong>(*args, **options) : Vec3</a>
+        <a href="#coords_at%28%2Aargs%2C%2A%2Aoptions%29%3AVec3-instance-method" class="signature"><strong>#coords_at</strong>(*args, **options) : Vec3</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#coords_at?(i:Int,j:Int,k:Int):Vec3?-instance-method" class="signature"><strong>#coords_at?</strong>(i : Int, j : Int, k : Int) : Vec3?</a>
+        <a href="#coords_at%3F%28i%3AInt%2Cj%3AInt%2Ck%3AInt%29%3AVec3%3F-instance-method" class="signature"><strong>#coords_at?</strong>(i : Int, j : Int, k : Int) : Vec3?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#coords_at?(i:Int):Vec3?-instance-method" class="signature"><strong>#coords_at?</strong>(i : Int) : Vec3?</a>
+        <a href="#coords_at%3F%28i%3AInt%29%3AVec3%3F-instance-method" class="signature"><strong>#coords_at?</strong>(i : Int) : Vec3?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#coords_at?(loc:Location):Vec3?-instance-method" class="signature"><strong>#coords_at?</strong>(loc : Location) : Vec3?</a>
+        <a href="#coords_at%3F%28loc%3ALocation%29%3AVec3%3F-instance-method" class="signature"><strong>#coords_at?</strong>(loc : Location) : Vec3?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#dim:Dimensions-instance-method" class="signature"><strong>#dim</strong> : Dimensions</a>
+        <a href="#dim%3ADimensions-instance-method" class="signature"><strong>#dim</strong> : Dimensions</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#dup:self-instance-method" class="signature"><strong>#dup</strong> : <span class="k">self</span></a>
+        <a href="#dup%3Aself-instance-method" class="signature"><strong>#dup</strong> : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns a shallow copy of this object.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#each_axial_slice(axis:Int,reuse:Bool%7CArray(Float64)=false,&:Array(Float64)-%3E):Nil-instance-method" class="signature"><strong>#each_axial_slice</strong>(axis : Int, reuse : Bool | Array(Float64) = <span class="n">false</span>, & : Array(Float64) -> ) : Nil</a>
+        <a href="#each_axial_slice%28axis%3AInt%2Creuse%3ABool%7CArray%28Float64%29%3Dfalse%2C%26%3AArray%28Float64%29-%3E%29%3ANil-instance-method" class="signature"><strong>#each_axial_slice</strong>(axis : Int, reuse : Bool | Array(Float64) = <span class="n">false</span>, & : Array(Float64) -> ) : Nil</a>
         
           <div class="summary"><p>Iterates over slices along <em>axis</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#each_coords(&:Vec3-%3E):Nil-instance-method" class="signature"><strong>#each_coords</strong>(& : Vec3 -> ) : Nil</a>
+        <a href="#each_coords%28%26%3AVec3-%3E%29%3ANil-instance-method" class="signature"><strong>#each_coords</strong>(& : Vec3 -> ) : Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#each_loc(vec:Vec3,cutoff:Number,&:Location,Float64-%3E):Nil-instance-method" class="signature"><strong>#each_loc</strong>(vec : Vec3, cutoff : Number, & : Location, Float64 -> ) : Nil</a>
+        <a href="#each_loc%28vec%3AVec3%2Ccutoff%3ANumber%2C%26%3ALocation%2CFloat64-%3E%29%3ANil-instance-method" class="signature"><strong>#each_loc</strong>(vec : Vec3, cutoff : Number, & : Location, Float64 -> ) : Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#each_loc(&:Location-%3E):Nil-instance-method" class="signature"><strong>#each_loc</strong>(& : Location -> ) : Nil</a>
+        <a href="#each_loc%28%26%3ALocation-%3E%29%3ANil-instance-method" class="signature"><strong>#each_loc</strong>(& : Location -> ) : Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#each_with_coords(&:Float64,Vec3-%3E):Nil-instance-method" class="signature"><strong>#each_with_coords</strong>(& : Float64, Vec3 -> ) : Nil</a>
+        <a href="#each_with_coords%28%26%3AFloat64%2CVec3-%3E%29%3ANil-instance-method" class="signature"><strong>#each_with_coords</strong>(& : Float64, Vec3 -> ) : Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#each_with_loc(&:Float64,Location-%3E):Nil-instance-method" class="signature"><strong>#each_with_loc</strong>(& : Float64, Location -> ) : Nil</a>
+        <a href="#each_with_loc%28%26%3AFloat64%2CLocation-%3E%29%3ANil-instance-method" class="signature"><strong>#each_with_loc</strong>(& : Float64, Location -> ) : Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#includes?(*args,**options)-instance-method" class="signature"><strong>#includes?</strong>(*args, **options)</a>
+        <a href="#includes%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#includes?</strong>(*args, **options)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#includes?(*args,**options,&)-instance-method" class="signature"><strong>#includes?</strong>(*args, **options, &)</a>
+        <a href="#includes%3F%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#includes?</strong>(*args, **options, &)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#index(loc:Location):Int32?-instance-method" class="signature"><strong>#index</strong>(loc : Location) : Int32?</a>
+        <a href="#index%28loc%3ALocation%29%3AInt32%3F-instance-method" class="signature"><strong>#index</strong>(loc : Location) : Int32?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#index(vec:Vec3):Int32?-instance-method" class="signature"><strong>#index</strong>(vec : Vec3) : Int32?</a>
+        <a href="#index%28vec%3AVec3%29%3AInt32%3F-instance-method" class="signature"><strong>#index</strong>(vec : Vec3) : Int32?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#index!(*args,**options):Int32-instance-method" class="signature"><strong>#index!</strong>(*args, **options) : Int32</a>
+        <a href="#index%21%28%2Aargs%2C%2A%2Aoptions%29%3AInt32-instance-method" class="signature"><strong>#index!</strong>(*args, **options) : Int32</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#loc_at(*args,**options):Location-instance-method" class="signature"><strong>#loc_at</strong>(*args, **options) : Location</a>
+        <a href="#loc_at%28%2Aargs%2C%2A%2Aoptions%29%3ALocation-instance-method" class="signature"><strong>#loc_at</strong>(*args, **options) : Location</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#loc_at?(i:Int):Location?-instance-method" class="signature"><strong>#loc_at?</strong>(i : Int) : Location?</a>
+        <a href="#loc_at%3F%28i%3AInt%29%3ALocation%3F-instance-method" class="signature"><strong>#loc_at?</strong>(i : Int) : Location?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#loc_at?(vec:Vec3):Location?-instance-method" class="signature"><strong>#loc_at?</strong>(vec : Vec3) : Location?</a>
+        <a href="#loc_at%3F%28vec%3AVec3%29%3ALocation%3F-instance-method" class="signature"><strong>#loc_at?</strong>(vec : Vec3) : Location?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#map(&:Float64-%3EFloat64):self-instance-method" class="signature"><strong>#map</strong>(& : Float64 -> Float64) : <span class="k">self</span></a>
+        <a href="#map%28%26%3AFloat64-%3EFloat64%29%3Aself-instance-method" class="signature"><strong>#map</strong>(& : Float64 -> Float64) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns an <code><a href="../../Array.html">Array</a></code> with the results of running the block against each element of the collection.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#map!(&:Float64-%3EFloat64):self-instance-method" class="signature"><strong>#map!</strong>(& : Float64 -> Float64) : <span class="k">self</span></a>
+        <a href="#map%21%28%26%3AFloat64-%3EFloat64%29%3Aself-instance-method" class="signature"><strong>#map!</strong>(& : Float64 -> Float64) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#map_with_coords(&:Float64,Vec3-%3ENumber):self-instance-method" class="signature"><strong>#map_with_coords</strong>(& : Float64, Vec3 -> Number) : <span class="k">self</span></a>
+        <a href="#map_with_coords%28%26%3AFloat64%2CVec3-%3ENumber%29%3Aself-instance-method" class="signature"><strong>#map_with_coords</strong>(& : Float64, Vec3 -> Number) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#map_with_coords!(&:Float64,Vec3-%3ENumber):self-instance-method" class="signature"><strong>#map_with_coords!</strong>(& : Float64, Vec3 -> Number) : <span class="k">self</span></a>
+        <a href="#map_with_coords%21%28%26%3AFloat64%2CVec3-%3ENumber%29%3Aself-instance-method" class="signature"><strong>#map_with_coords!</strong>(& : Float64, Vec3 -> Number) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#map_with_index(&:Float64,Int32-%3ENumber):self-instance-method" class="signature"><strong>#map_with_index</strong>(& : Float64, Int32 -> Number) : <span class="k">self</span></a>
+        <a href="#map_with_index%28%26%3AFloat64%2CInt32-%3ENumber%29%3Aself-instance-method" class="signature"><strong>#map_with_index</strong>(& : Float64, Int32 -> Number) : <span class="k">self</span></a>
         
-          <div class="summary"><p>Like <code><a href="../../Chem/Spatial/Grid.html#map(&:Float64-%3EFloat64):self-instance-method">#map</a></code>, but the block gets passed both the element and its index.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#map_with_index!(&:Float64,Int32-%3ENumber):self-instance-method" class="signature"><strong>#map_with_index!</strong>(& : Float64, Int32 -> Number) : <span class="k">self</span></a>
+          <div class="summary"><p>Like <code><a href="../../Chem/Spatial/Grid.html#map%28%26%3AFloat64-%3EFloat64%29%3Aself-instance-method">#map</a></code>, but the block gets passed both the element and its index.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#map_with_loc(&:Float64,Location-%3ENumber):self-instance-method" class="signature"><strong>#map_with_loc</strong>(& : Float64, Location -> Number) : <span class="k">self</span></a>
+        <a href="#map_with_index%21%28%26%3AFloat64%2CInt32-%3ENumber%29%3Aself-instance-method" class="signature"><strong>#map_with_index!</strong>(& : Float64, Int32 -> Number) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#map_with_loc!(&:Float64,Location-%3ENumber):self-instance-method" class="signature"><strong>#map_with_loc!</strong>(& : Float64, Location -> Number) : <span class="k">self</span></a>
+        <a href="#map_with_loc%28%26%3AFloat64%2CLocation-%3ENumber%29%3Aself-instance-method" class="signature"><strong>#map_with_loc</strong>(& : Float64, Location -> Number) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#mask(&:Float64-%3EBool):self-instance-method" class="signature"><strong>#mask</strong>(& : Float64 -> Bool) : <span class="k">self</span></a>
+        <a href="#map_with_loc%21%28%26%3AFloat64%2CLocation-%3ENumber%29%3Aself-instance-method" class="signature"><strong>#map_with_loc!</strong>(& : Float64, Location -> Number) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#mask%28%26%3AFloat64-%3EBool%29%3Aself-instance-method" class="signature"><strong>#mask</strong>(& : Float64 -> Bool) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns a grid mask.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#mask(value:Number,delta:Number):self-instance-method" class="signature"><strong>#mask</strong>(value : Number, delta : Number) : <span class="k">self</span></a>
+        <a href="#mask%28value%3ANumber%2Cdelta%3ANumber%29%3Aself-instance-method" class="signature"><strong>#mask</strong>(value : Number, delta : Number) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns a grid mask.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#mask(pattern):self-instance-method" class="signature"><strong>#mask</strong>(pattern) : <span class="k">self</span></a>
+        <a href="#mask%28pattern%29%3Aself-instance-method" class="signature"><strong>#mask</strong>(pattern) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns a grid mask.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#mask!(&:Float64-%3EBool):self-instance-method" class="signature"><strong>#mask!</strong>(& : Float64 -> Bool) : <span class="k">self</span></a>
+        <a href="#mask%21%28%26%3AFloat64-%3EBool%29%3Aself-instance-method" class="signature"><strong>#mask!</strong>(& : Float64 -> Bool) : <span class="k">self</span></a>
         
           <div class="summary"><p>Masks a grid by the passed block.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#mask!(value:Number,delta:Number):self-instance-method" class="signature"><strong>#mask!</strong>(value : Number, delta : Number) : <span class="k">self</span></a>
+        <a href="#mask%21%28value%3ANumber%2Cdelta%3ANumber%29%3Aself-instance-method" class="signature"><strong>#mask!</strong>(value : Number, delta : Number) : <span class="k">self</span></a>
         
           <div class="summary"><p>Masks a grid by <em>value</em>+/-<em>delta</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#mask!(pattern):self-instance-method" class="signature"><strong>#mask!</strong>(pattern) : <span class="k">self</span></a>
+        <a href="#mask%21%28pattern%29%3Aself-instance-method" class="signature"><strong>#mask!</strong>(pattern) : <span class="k">self</span></a>
         
           <div class="summary"><p>Masks a grid by <em>pattern</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#mask_by_coords(&:Vec3-%3EBool):self-instance-method" class="signature"><strong>#mask_by_coords</strong>(& : Vec3 -> Bool) : <span class="k">self</span></a>
+        <a href="#mask_by_coords%28%26%3AVec3-%3EBool%29%3Aself-instance-method" class="signature"><strong>#mask_by_coords</strong>(& : Vec3 -> Bool) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns a grid mask.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#mask_by_coords!(&:Vec3-%3EBool):self-instance-method" class="signature"><strong>#mask_by_coords!</strong>(& : Vec3 -> Bool) : <span class="k">self</span></a>
+        <a href="#mask_by_coords%21%28%26%3AVec3-%3EBool%29%3Aself-instance-method" class="signature"><strong>#mask_by_coords!</strong>(& : Vec3 -> Bool) : <span class="k">self</span></a>
         
           <div class="summary"><p>Masks a grid by coordinates.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#mask_by_index(&:Int32-%3EBool):self-instance-method" class="signature"><strong>#mask_by_index</strong>(& : Int32 -> Bool) : <span class="k">self</span></a>
+        <a href="#mask_by_index%28%26%3AInt32-%3EBool%29%3Aself-instance-method" class="signature"><strong>#mask_by_index</strong>(& : Int32 -> Bool) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns a grid mask.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#mask_by_index!(&:Int32-%3EBool):self-instance-method" class="signature"><strong>#mask_by_index!</strong>(& : Int32 -> Bool) : <span class="k">self</span></a>
+        <a href="#mask_by_index%21%28%26%3AInt32-%3EBool%29%3Aself-instance-method" class="signature"><strong>#mask_by_index!</strong>(& : Int32 -> Bool) : <span class="k">self</span></a>
         
           <div class="summary"><p>Masks a grid by index.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#mask_by_loc(&:Location-%3EBool):self-instance-method" class="signature"><strong>#mask_by_loc</strong>(& : Location -> Bool) : <span class="k">self</span></a>
+        <a href="#mask_by_loc%28%26%3ALocation-%3EBool%29%3Aself-instance-method" class="signature"><strong>#mask_by_loc</strong>(& : Location -> Bool) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns a grid mask.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#mask_by_loc!(&:Location-%3EBool):self-instance-method" class="signature"><strong>#mask_by_loc!</strong>(& : Location -> Bool) : <span class="k">self</span></a>
+        <a href="#mask_by_loc%21%28%26%3ALocation-%3EBool%29%3Aself-instance-method" class="signature"><strong>#mask_by_loc!</strong>(& : Location -> Bool) : <span class="k">self</span></a>
         
           <div class="summary"><p>Masks a grid by location.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#mean(axis:Int):Array(Float64)-instance-method" class="signature"><strong>#mean</strong>(axis : Int) : Array(Float64)</a>
+        <a href="#mean%28axis%3AInt%29%3AArray%28Float64%29-instance-method" class="signature"><strong>#mean</strong>(axis : Int) : Array(Float64)</a>
         
           <div class="summary"><p>Returns the arithmetic mean along <em>axis</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#mean:Float64-instance-method" class="signature"><strong>#mean</strong> : Float64</a>
+        <a href="#mean%3AFloat64-instance-method" class="signature"><strong>#mean</strong> : Float64</a>
         
           <div class="summary"><p>Returns the arithmetic mean of the grid elements.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#mean_with_coords(axis:Int):Array(Tuple(Float64,Float64))-instance-method" class="signature"><strong>#mean_with_coords</strong>(axis : Int) : Array(Tuple(Float64, Float64))</a>
+        <a href="#mean_with_coords%28axis%3AInt%29%3AArray%28Tuple%28Float64%2CFloat64%29%29-instance-method" class="signature"><strong>#mean_with_coords</strong>(axis : Int) : Array(Tuple(Float64, Float64))</a>
         
           <div class="summary"><p>Returns the arithmetic mean along <em>axis</em> with its coordinates.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#ni:Int32-instance-method" class="signature"><strong>#ni</strong> : Int32</a>
+        <a href="#ni%3AInt32-instance-method" class="signature"><strong>#ni</strong> : Int32</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#nj:Int32-instance-method" class="signature"><strong>#nj</strong> : Int32</a>
+        <a href="#nj%3AInt32-instance-method" class="signature"><strong>#nj</strong> : Int32</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#nk:Int32-instance-method" class="signature"><strong>#nk</strong> : Int32</a>
+        <a href="#nk%3AInt32-instance-method" class="signature"><strong>#nk</strong> : Int32</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#origin(*args,**options)-instance-method" class="signature"><strong>#origin</strong>(*args, **options)</a>
+        <a href="#origin%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#origin</strong>(*args, **options)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#origin(*args,**options,&)-instance-method" class="signature"><strong>#origin</strong>(*args, **options, &)</a>
+        <a href="#origin%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#origin</strong>(*args, **options, &)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#resolution:Tuple(Float64,Float64,Float64)-instance-method" class="signature"><strong>#resolution</strong> : Tuple(Float64, Float64, Float64)</a>
+        <a href="#resolution%3ATuple%28Float64%2CFloat64%2CFloat64%29-instance-method" class="signature"><strong>#resolution</strong> : Tuple(Float64, Float64, Float64)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#size:Int32-instance-method" class="signature"><strong>#size</strong> : Int32</a>
+        <a href="#size%3AInt32-instance-method" class="signature"><strong>#size</strong> : Int32</a>
         
           <div class="summary"><p>Returns the number of elements in this container.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#source_file:Path?-instance-method" class="signature"><strong>#source_file</strong> : Path?</a>
+        <a href="#source_file%3APath%3F-instance-method" class="signature"><strong>#source_file</strong> : Path?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#step(di:Int,dj:Int,dk:Int):self-instance-method" class="signature"><strong>#step</strong>(di : Int, dj : Int, dk : Int) : <span class="k">self</span></a>
+        <a href="#step%28di%3AInt%2Cdj%3AInt%2Cdk%3AInt%29%3Aself-instance-method" class="signature"><strong>#step</strong>(di : Int, dj : Int, dk : Int) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#step(n:Int):self-instance-method" class="signature"><strong>#step</strong>(n : Int) : <span class="k">self</span></a>
+        <a href="#step%28n%3AInt%29%3Aself-instance-method" class="signature"><strong>#step</strong>(n : Int) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_a:Array(Float64)-instance-method" class="signature"><strong>#to_a</strong> : Array(Float64)</a>
+        <a href="#to_a%3AArray%28Float64%29-instance-method" class="signature"><strong>#to_a</strong> : Array(Float64)</a>
         
           <div class="summary"><p>Returns an <code><a href="../../Array.html">Array</a></code> with all the elements in the collection.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_chgcar(output:IO%7CPath%7CString,structure:Structure):Nil-instance-method" class="signature"><strong>#to_chgcar</strong>(output : IO | Path | String, structure : Structure) : Nil</a>
+        <a href="#to_chgcar%28output%3AIO%7CPath%7CString%2Cstructure%3AStructure%29%3ANil-instance-method" class="signature"><strong>#to_chgcar</strong>(output : IO | Path | String, structure : Structure) : Nil</a>
         
           <div class="summary"><p>Writes the grid to <em>output</em> using the <code><a href="../../Chem/VASP/Chgcar.html">Chem::VASP::Chgcar</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_chgcar(structure:Structure):String-instance-method" class="signature"><strong>#to_chgcar</strong>(structure : Structure) : String</a>
+        <a href="#to_chgcar%28structure%3AStructure%29%3AString-instance-method" class="signature"><strong>#to_chgcar</strong>(structure : Structure) : String</a>
         
           <div class="summary"><p>Returns a string representation of the grid using the <code><a href="../../Chem/VASP/Chgcar.html">Chem::VASP::Chgcar</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_cube(output:IO%7CPath%7CString,atoms:AtomCollection):Nil-instance-method" class="signature"><strong>#to_cube</strong>(output : IO | Path | String, atoms : AtomCollection) : Nil</a>
+        <a href="#to_cube%28output%3AIO%7CPath%7CString%2Catoms%3AAtomCollection%29%3ANil-instance-method" class="signature"><strong>#to_cube</strong>(output : IO | Path | String, atoms : AtomCollection) : Nil</a>
         
           <div class="summary"><p>Writes the grid to <em>output</em> using the <code><a href="../../Chem/Cube.html">Chem::Cube</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_cube(atoms:AtomCollection):String-instance-method" class="signature"><strong>#to_cube</strong>(atoms : AtomCollection) : String</a>
+        <a href="#to_cube%28atoms%3AAtomCollection%29%3AString-instance-method" class="signature"><strong>#to_cube</strong>(atoms : AtomCollection) : String</a>
         
           <div class="summary"><p>Returns a string representation of the grid using the <code><a href="../../Chem/Cube.html">Chem::Cube</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_dx(output:IO%7CPath%7CString):Nil-instance-method" class="signature"><strong>#to_dx</strong>(output : IO | Path | String) : Nil</a>
+        <a href="#to_dx%28output%3AIO%7CPath%7CString%29%3ANil-instance-method" class="signature"><strong>#to_dx</strong>(output : IO | Path | String) : Nil</a>
         
           <div class="summary"><p>Writes the grid to <em>output</em> using the <code><a href="../../Chem/DX.html">Chem::DX</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_dx:String-instance-method" class="signature"><strong>#to_dx</strong> : String</a>
+        <a href="#to_dx%3AString-instance-method" class="signature"><strong>#to_dx</strong> : String</a>
         
           <div class="summary"><p>Returns a string representation of the grid using the <code><a href="../../Chem/DX.html">Chem::DX</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_locpot(output:IO%7CPath%7CString,structure:Structure):Nil-instance-method" class="signature"><strong>#to_locpot</strong>(output : IO | Path | String, structure : Structure) : Nil</a>
+        <a href="#to_locpot%28output%3AIO%7CPath%7CString%2Cstructure%3AStructure%29%3ANil-instance-method" class="signature"><strong>#to_locpot</strong>(output : IO | Path | String, structure : Structure) : Nil</a>
         
           <div class="summary"><p>Writes the grid to <em>output</em> using the <code><a href="../../Chem/VASP/Locpot.html">Chem::VASP::Locpot</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_locpot(structure:Structure):String-instance-method" class="signature"><strong>#to_locpot</strong>(structure : Structure) : String</a>
+        <a href="#to_locpot%28structure%3AStructure%29%3AString-instance-method" class="signature"><strong>#to_locpot</strong>(structure : Structure) : String</a>
         
           <div class="summary"><p>Returns a string representation of the grid using the <code><a href="../../Chem/VASP/Locpot.html">Chem::VASP::Locpot</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_unsafe:Pointer(Float64)-instance-method" class="signature"><strong>#to_unsafe</strong> : Pointer(Float64)</a>
+        <a href="#to_unsafe%3APointer%28Float64%29-instance-method" class="signature"><strong>#to_unsafe</strong> : Pointer(Float64)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#unsafe_fetch(i:Int):Float64-instance-method" class="signature"><strong>#unsafe_fetch</strong>(i : Int) : Float64</a>
+        <a href="#unsafe_fetch%28i%3AInt%29%3AFloat64-instance-method" class="signature"><strong>#unsafe_fetch</strong>(i : Int) : Float64</a>
         
           <div class="summary"><p>Returns the element at the given <em>index</em>, without doing any bounds check.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#unsafe_fetch(loc:Location):Float64-instance-method" class="signature"><strong>#unsafe_fetch</strong>(loc : Location) : Float64</a>
+        <a href="#unsafe_fetch%28loc%3ALocation%29%3AFloat64-instance-method" class="signature"><strong>#unsafe_fetch</strong>(loc : Location) : Float64</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#volume(*args,**options)-instance-method" class="signature"><strong>#volume</strong>(*args, **options)</a>
+        <a href="#volume%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#volume</strong>(*args, **options)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#volume(*args,**options,&)-instance-method" class="signature"><strong>#volume</strong>(*args, **options, &)</a>
+        <a href="#volume%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#volume</strong>(*args, **options, &)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#write(output:IO%7CPath%7CString,format:Chem::Format%7CString):Nil-instance-method" class="signature"><strong>#write</strong>(output : IO | Path | String, format : Chem::Format | String) : Nil</a>
+        <a href="#write%28output%3AIO%7CPath%7CString%2Cformat%3AChem%3A%3AFormat%7CString%29%3ANil-instance-method" class="signature"><strong>#write</strong>(output : IO | Path | String, format : Chem::Format | String) : Nil</a>
         
           <div class="summary"><p>Writes the grid to <em>output</em> using <em>format</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#write(path:Path%7CString):Nil-instance-method" class="signature"><strong>#write</strong>(path : Path | String) : Nil</a>
+        <a href="#write%28path%3APath%7CString%29%3ANil-instance-method" class="signature"><strong>#write</strong>(path : Path | String) : Nil</a>
         
           <div class="summary"><p>Writes the grid to the specified file.</p></div>
         
@@ -1522,12 +1520,12 @@
   <h3>Instance methods inherited from module <code><a href="../../Indexable.html">Indexable(Float64)</a></code></h3>
   
   
-    <a href="../../Indexable.html#index!(ofobject,offset:Int=0):Int-instance-method" class="tooltip">
+    <a href="../../Indexable.html#index%21%28ofobject%2Coffset%3AInt%3D0%29%3AInt-instance-method" class="tooltip">
       <span>index!(of object, offset : Int = <span class="n">0</span>) : Int<br/>index!(offset : Int = <span class="n">0</span>, &block : T -> Bool) : Int</span>
     index!</a>, 
     
   
-    <a href="../../Indexable.html#mean:Float64-instance-method" class="tooltip">
+    <a href="../../Indexable.html#mean%3AFloat64-instance-method" class="tooltip">
       <span>mean : Float64<br/>mean(& : T -> Number) : Float64</span>
     mean</a>
     
@@ -1598,13 +1596,13 @@
         
         def self.<strong>[]</strong>(ni : Int, nj : Int, nk : Int) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#[](ni:Int,nj:Int,nk:Int):self-class-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%28ni%3AInt%2Cnj%3AInt%2Cnk%3AInt%29%3Aself-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L39" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L39" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1614,13 +1612,13 @@
         
         def self.<strong>atom_distance</strong>(structure : <a href="../../Chem/Structure.html">Structure</a>, dim : <a href="../../Chem/Spatial/Grid/Dimensions.html">Dimensions</a>, bounds : <a href="../../Chem/Spatial/Bounds.html">Bounds</a>? = <span class="n">nil</span>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#atom_distance(structure:Structure,dim:Dimensions,bounds:Bounds?=nil):self-class-method">#</a>
+        <a class="method-permalink" href="#atom_distance%28structure%3AStructure%2Cdim%3ADimensions%2Cbounds%3ABounds%3F%3Dnil%29%3Aself-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L43" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L43" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1630,14 +1628,13 @@
         
         def self.<strong>atom_distance_like</strong>(other : <span class="k">self</span> | <a href="../../Chem/Spatial/Grid/Info.html">Info</a>, structure : <a href="../../Chem/Structure.html">Structure</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#atom_distance_like(other:self%7CInfo,structure:Structure):self-class-method">#</a>
+        <a class="method-permalink" href="#atom_distance_like%28other%3Aself%7CInfo%2Cstructure%3AStructure%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns a grid filled with the distances to the nearest atom. It will have the
 same bounds and points as <em>other</em>.</p>
-
 <pre><code class="language-crystal">structure <span class="o">=</span> <span class="t">Structure</span>.read <span class="s">&quot;path/to/file&quot;</span>
 info <span class="o">=</span> <span class="t">Grid</span><span class="t">::</span><span class="t">Info</span>.<span class="k">new</span> <span class="t">Bounds</span>[<span class="n">1.5</span>, <span class="n">2.135</span>, <span class="n">6.12</span>], {<span class="n">10</span>, <span class="n">10</span>, <span class="n">10</span>}
 grid <span class="o">=</span> <span class="t">Grid</span>.atom_distance structure, info.dim, info.bounds
@@ -1647,7 +1644,7 @@ grid <span class="o">=</span> <span class="t">Grid</span>.atom_distance structur
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L62" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L62" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1657,16 +1654,14 @@ grid <span class="o">=</span> <span class="t">Grid</span>.atom_distance structur
         
         def self.<strong>build</strong>(info : <a href="../../Chem/Spatial/Grid/Info.html">Info</a>, source_file : String | Path | Nil = <span class="n">nil</span>, & : Pointer(Float64), Int32 -> ) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#build(info:Info,source_file:String%7CPath%7CNil=nil,&:Pointer(Float64),Int32-%3E):self-class-method">#</a>
+        <a class="method-permalink" href="#build%28info%3AInfo%2Csource_file%3AString%7CPath%7CNil%3Dnil%2C%26%3APointer%28Float64%29%2CInt32-%3E%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Creates a new <code><a href="../../Chem/Spatial/Grid.html">Grid</a></code> with <em>info</em> and yields a buffer to be filled.</p>
-
 <p>This method is <strong>unsafe</strong>, but it is usually used to initialize the buffer in a
 linear fashion, e.g., reading values from a file.</p>
-
 <pre><code class="language-crystal"><span class="t">Grid</span>.build(<span class="t">Grid</span>.info(<span class="s">&quot;/path/to/file&quot;</span>)) <span class="k">do</span> <span class="o">|</span>buffer, size<span class="o">|</span>
   size.times <span class="k">do</span> <span class="o">|</span>i<span class="o">|</span>
     buffer[i] <span class="o">=</span> read_value
@@ -1677,7 +1672,7 @@ linear fashion, e.g., reading values from a file.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L78" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L78" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1687,13 +1682,13 @@ linear fashion, e.g., reading values from a file.</p>
         
         def self.<strong>build</strong>(dim : <a href="../../Chem/Spatial/Grid/Dimensions.html">Dimensions</a>, bounds : <a href="../../Chem/Spatial/Bounds.html">Bounds</a>, source_file : String | Path | Nil = <span class="n">nil</span>, & : Pointer(Float64), Int32 -> ) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#build(dim:Dimensions,bounds:Bounds,source_file:String%7CPath%7CNil=nil,&:Pointer(Float64),Int32-%3E):self-class-method">#</a>
+        <a class="method-permalink" href="#build%28dim%3ADimensions%2Cbounds%3ABounds%2Csource_file%3AString%7CPath%7CNil%3Dnil%2C%26%3APointer%28Float64%29%2CInt32-%3E%29%3Aself-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L86" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L86" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1703,13 +1698,12 @@ linear fashion, e.g., reading values from a file.</p>
         
         def self.<strong>empty_like</strong>(other : <span class="k">self</span> | <a href="../../Chem/Spatial/Grid/Info.html">Info</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#empty_like(other:self%7CInfo):self-class-method">#</a>
+        <a class="method-permalink" href="#empty_like%28other%3Aself%7CInfo%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns a zero-filled grid with the same bounds and points as <em>other</em>.</p>
-
 <pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.from_dx <span class="s">&quot;/path/to/grid&quot;</span>
 other <span class="o">=</span> <span class="t">Grid</span>.empty_like grid
 other.bounds <span class="o">==</span> grid.bounds <span class="c"># =&gt; true</span>
@@ -1720,7 +1714,7 @@ other.to_a.minmax           <span class="c"># =&gt; {0.0, 0.0}</span></code></pr
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L104" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L104" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1730,13 +1724,12 @@ other.to_a.minmax           <span class="c"># =&gt; {0.0, 0.0}</span></code></pr
         
         def self.<strong>fill_like</strong>(other : <span class="k">self</span> | <a href="../../Chem/Spatial/Grid/Info.html">Info</a>, value : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#fill_like(other:self%7CInfo,value:Number):self-class-method">#</a>
+        <a class="method-permalink" href="#fill_like%28other%3Aself%7CInfo%2Cvalue%3ANumber%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns a grid with the same bounds and points as <em>other</em> filled with <em>value</em>.</p>
-
 <pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.from_dx <span class="s">&quot;/path/to/grid&quot;</span>
 other <span class="o">=</span> <span class="t">Grid</span>.fill_like grid, <span class="n">2345.123</span>
 other.bounds <span class="o">==</span> grid.bounds <span class="c"># =&gt; true</span>
@@ -1747,7 +1740,7 @@ other.to_a.minmax           <span class="c"># =&gt; {2345.123, 2345.123}</span><
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L117" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L117" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1757,20 +1750,20 @@ other.to_a.minmax           <span class="c"># =&gt; {2345.123, 2345.123}</span><
         
         def self.<strong>from_chgcar</strong>(input : IO | Path | String) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#from_chgcar(input:IO%7CPath%7CString):self-class-method">#</a>
+        <a class="method-permalink" href="#from_chgcar%28input%3AIO%7CPath%7CString%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns the grid encoded in <em>input</em> using the
 <code><a href="../../Chem/VASP/Chgcar.html">Chem::VASP::Chgcar</a></code> file format. Arguments are forwarded to
-<code><a href="../../Chem/VASP/Chgcar/Reader.html#open(io:IO,sync_close:Bool=false,&:self-%3E)-class-method">Chem::VASP::Chgcar::Reader.open</a></code>.</p>
+<code><a href="../../Chem/VASP/Chgcar/Reader.html#open%28io%3AIO%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::VASP::Chgcar::Reader.open</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1780,20 +1773,20 @@ other.to_a.minmax           <span class="c"># =&gt; {2345.123, 2345.123}</span><
         
         def self.<strong>from_cube</strong>(input : IO | Path | String) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#from_cube(input:IO%7CPath%7CString):self-class-method">#</a>
+        <a class="method-permalink" href="#from_cube%28input%3AIO%7CPath%7CString%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns the grid encoded in <em>input</em> using the
 <code><a href="../../Chem/Cube.html">Chem::Cube</a></code> file format. Arguments are forwarded to
-<code><a href="../../Chem/Cube/Reader.html#open(io:IO,sync_close:Bool=false,&:self-%3E)-class-method">Chem::Cube::Reader.open</a></code>.</p>
+<code><a href="../../Chem/Cube/Reader.html#open%28io%3AIO%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::Cube::Reader.open</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1803,20 +1796,20 @@ other.to_a.minmax           <span class="c"># =&gt; {2345.123, 2345.123}</span><
         
         def self.<strong>from_dx</strong>(input : IO | Path | String) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#from_dx(input:IO%7CPath%7CString):self-class-method">#</a>
+        <a class="method-permalink" href="#from_dx%28input%3AIO%7CPath%7CString%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns the grid encoded in <em>input</em> using the
 <code><a href="../../Chem/DX.html">Chem::DX</a></code> file format. Arguments are forwarded to
-<code><a href="../../Chem/DX/Reader.html#open(io:IO,sync_close:Bool=false,&:self-%3E)-class-method">Chem::DX::Reader.open</a></code>.</p>
+<code><a href="../../Chem/DX/Reader.html#open%28io%3AIO%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::DX::Reader.open</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1826,20 +1819,20 @@ other.to_a.minmax           <span class="c"># =&gt; {2345.123, 2345.123}</span><
         
         def self.<strong>from_locpot</strong>(input : IO | Path | String) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#from_locpot(input:IO%7CPath%7CString):self-class-method">#</a>
+        <a class="method-permalink" href="#from_locpot%28input%3AIO%7CPath%7CString%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns the grid encoded in <em>input</em> using the
 <code><a href="../../Chem/VASP/Locpot.html">Chem::VASP::Locpot</a></code> file format. Arguments are forwarded to
-<code><a href="../../Chem/VASP/Locpot/Reader.html#open(io:IO,sync_close:Bool=false,&:self-%3E)-class-method">Chem::VASP::Locpot::Reader.open</a></code>.</p>
+<code><a href="../../Chem/VASP/Locpot/Reader.html#open%28io%3AIO%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::VASP::Locpot::Reader.open</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1849,13 +1842,13 @@ other.to_a.minmax           <span class="c"># =&gt; {2345.123, 2345.123}</span><
         
         def self.<strong>new</strong>(dim : <a href="../../Chem/Spatial/Grid/Dimensions.html">Dimensions</a>, bounds : <a href="../../Chem/Spatial/Bounds.html">Bounds</a>, source_file : String | Path | Nil = <span class="n">nil</span>)
 
-        <a class="method-permalink" href="#new(dim:Dimensions,bounds:Bounds,source_file:String%7CPath%7CNil=nil)-class-method">#</a>
+        <a class="method-permalink" href="#new%28dim%3ADimensions%2Cbounds%3ABounds%2Csource_file%3AString%7CPath%7CNil%3Dnil%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L21" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L21" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1865,13 +1858,13 @@ other.to_a.minmax           <span class="c"># =&gt; {2345.123, 2345.123}</span><
         
         def self.<strong>new</strong>(dim : <a href="../../Chem/Spatial/Grid/Dimensions.html">Dimensions</a>, bounds : <a href="../../Chem/Spatial/Bounds.html">Bounds</a>, initial_value : Float64, source_file : String | Path | Nil = <span class="n">nil</span>)
 
-        <a class="method-permalink" href="#new(dim:Dimensions,bounds:Bounds,initial_value:Float64,source_file:String%7CPath%7CNil=nil)-class-method">#</a>
+        <a class="method-permalink" href="#new%28dim%3ADimensions%2Cbounds%3ABounds%2Cinitial_value%3AFloat64%2Csource_file%3AString%7CPath%7CNil%3Dnil%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L30" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L30" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1881,13 +1874,13 @@ other.to_a.minmax           <span class="c"># =&gt; {2345.123, 2345.123}</span><
         
         def self.<strong>new</strong>(dim : <a href="../../Chem/Spatial/Grid/Dimensions.html">Dimensions</a>, bounds : <a href="../../Chem/Spatial/Bounds.html">Bounds</a>, source_file : String | Path | Nil = <span class="n">nil</span>, &block : <a href="../../Chem/Spatial/Grid/Location.html">Location</a> -> <a href="../../Number.html">Number</a>)
 
-        <a class="method-permalink" href="#new(dim:Dimensions,bounds:Bounds,source_file:String%7CPath%7CNil=nil,&block:Location-%3ENumber)-class-method">#</a>
+        <a class="method-permalink" href="#new%28dim%3ADimensions%2Cbounds%3ABounds%2Csource_file%3AString%7CPath%7CNil%3Dnil%2C%26block%3ALocation-%3ENumber%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L121" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L121" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1897,7 +1890,7 @@ other.to_a.minmax           <span class="c"># =&gt; {2345.123, 2345.123}</span><
         
         def self.<strong>read</strong>(input : IO | Path | String, format : <a href="../../Chem/Format.html">Chem::Format</a> | String) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#read(input:IO%7CPath%7CString,format:Chem::Format%7CString):self-class-method">#</a>
+        <a class="method-permalink" href="#read%28input%3AIO%7CPath%7CString%2Cformat%3AChem%3A%3AFormat%7CString%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1905,7 +1898,6 @@ other.to_a.minmax           <span class="c"># =&gt; {2345.123, 2345.123}</span><
           <p>Returns the grid encoded in the specified file
 using <em>format</em>. Raises <code>ArgumentError</code> if <em>format</em> has
 required arguments or cannot read <code><a href="../../Chem/Spatial/Grid.html">Chem::Spatial::Grid</a></code>.</p>
-
 <p>The supported file formats are <code><a href="../../Chem/Cube.html">Chem::Cube</a></code>, <code><a href="../../Chem/DX.html">Chem::DX</a></code>, <code><a href="../../Chem/VASP/Chgcar.html">Chem::VASP::Chgcar</a></code>, <code><a href="../../Chem/VASP/Locpot.html">Chem::VASP::Locpot</a></code>. Use the
 <code>.from_*</code> methods to customize how the object is decoded in
 the corresponding file format if possible.</p>
@@ -1914,7 +1906,7 @@ the corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1924,20 +1916,22 @@ the corresponding file format if possible.</p>
         
         def self.<strong>read</strong>(path : Path | String) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#read(path:Path%7CString):self-class-method">#</a>
+        <a class="method-permalink" href="#read%28path%3APath%7CString%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns the grid encoded in the specified file.
 The file format is chosen based on the filename (see
-<code><a href="../../Chem/Format.html#from_filename(filename:Path%7CString):self-class-method">Chem::Format#from_filename</a></code>). Raises <code>ArgumentError</code> if the
+<code><a href="../../Chem/Format.html#from_filename%28filename%3APath%7CString%29%3Aself-class-method">Chem::Format#from_filename</a></code>). Raises <code>ArgumentError</code> if the
 file format cannot be determined.</p>
-
 <p>The supported file formats are the following:</p>
-
-<ul><li><code><a href="../../Chem/Cube.html">Chem::Cube</a></code> (.cube)</li><li><code><a href="../../Chem/DX.html">Chem::DX</a></code> (.dx)</li><li><code><a href="../../Chem/VASP/Chgcar.html">Chem::VASP::Chgcar</a></code> (CHGCAR)</li><li><code><a href="../../Chem/VASP/Locpot.html">Chem::VASP::Locpot</a></code> (LOCPOT)</li></ul>
-
+<ul>
+<li><code><a href="../../Chem/Cube.html">Chem::Cube</a></code> (.cube)</li>
+<li><code><a href="../../Chem/DX.html">Chem::DX</a></code> (.dx)</li>
+<li><code><a href="../../Chem/VASP/Chgcar.html">Chem::VASP::Chgcar</a></code> (CHGCAR)</li>
+<li><code><a href="../../Chem/VASP/Locpot.html">Chem::VASP::Locpot</a></code> (LOCPOT)</li>
+</ul>
 <p>Use the <code>.from_*</code> methods to customize how the object is
 decoded in the corresponding file format if possible.</p>
         </div>
@@ -1945,7 +1939,7 @@ decoded in the corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1955,20 +1949,19 @@ decoded in the corresponding file format if possible.</p>
         
         def self.<strong>vdw_mask</strong>(structure : <a href="../../Chem/Structure.html">Structure</a>, dim : <a href="../../Chem/Spatial/Grid/Dimensions.html">Dimensions</a>, bounds : <a href="../../Chem/Spatial/Bounds.html">Bounds</a>? = <span class="n">nil</span>, delta : Float64 = <span class="n">0.02</span>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#vdw_mask(structure:Structure,dim:Dimensions,bounds:Bounds?=nil,delta:Float64=0.02):self-class-method">#</a>
+        <a class="method-permalink" href="#vdw_mask%28structure%3AStructure%2Cdim%3ADimensions%2Cbounds%3ABounds%3F%3Dnil%2Cdelta%3AFloat64%3D0.02%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p><span class="flag orange">TODO</span>  add more tests</p>
-
 <p><span class="flag yellow">FIXME</span>  check delta calculation (grid.resolution.min / 2 shouldn't be enough?)</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L132" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L132" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1978,14 +1971,13 @@ decoded in the corresponding file format if possible.</p>
         
         def self.<strong>vdw_mask_like</strong>(other : <span class="k">self</span> | <a href="../../Chem/Spatial/Grid/Info.html">Info</a>, structure : <a href="../../Chem/Structure.html">Structure</a>, delta : Float64 = <span class="n">0.02</span>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#vdw_mask_like(other:self%7CInfo,structure:Structure,delta:Float64=0.02):self-class-method">#</a>
+        <a class="method-permalink" href="#vdw_mask_like%28other%3Aself%7CInfo%2Cstructure%3AStructure%2Cdelta%3AFloat64%3D0.02%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns a grid mask with the points at the vdW spheres set to 1. It will have the
 same bounds and points as <em>other</em>.</p>
-
 <pre><code class="language-crystal">structure <span class="o">=</span> <span class="t">Structure</span>.read <span class="s">&quot;path/to/file&quot;</span>
 info <span class="o">=</span> <span class="t">Grid</span><span class="t">::</span><span class="t">Info</span>.<span class="k">new</span> <span class="t">Bounds</span>[<span class="n">5.213</span>, <span class="n">6.823</span>, <span class="n">10.352</span>], {<span class="n">20</span>, <span class="n">25</span>, <span class="n">40</span>}
 grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, info.dim, info.bounds
@@ -1995,7 +1987,7 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L174" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L174" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2019,13 +2011,13 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
         
         def <strong>*</strong>(rhs : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#*(rhs:Number):self-instance-method">#</a>
+        <a class="method-permalink" href="#%2A%28rhs%3ANumber%29%3Aself-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L188" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L188" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2035,13 +2027,13 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
         
         def <strong>*</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#*(rhs:self):self-instance-method">#</a>
+        <a class="method-permalink" href="#%2A%28rhs%3Aself%29%3Aself-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L188" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L188" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2051,13 +2043,13 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
         
         def <strong>+</strong>(rhs : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#+(rhs:Number):self-instance-method">#</a>
+        <a class="method-permalink" href="#%2B%28rhs%3ANumber%29%3Aself-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L188" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L188" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2067,13 +2059,13 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
         
         def <strong>+</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#+(rhs:self):self-instance-method">#</a>
+        <a class="method-permalink" href="#%2B%28rhs%3Aself%29%3Aself-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L188" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L188" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2083,13 +2075,13 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
         
         def <strong>-</strong>(rhs : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#-(rhs:Number):self-instance-method">#</a>
+        <a class="method-permalink" href="#-%28rhs%3ANumber%29%3Aself-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L188" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L188" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2099,13 +2091,13 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
         
         def <strong>-</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#-(rhs:self):self-instance-method">#</a>
+        <a class="method-permalink" href="#-%28rhs%3Aself%29%3Aself-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L188" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L188" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2115,13 +2107,13 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
         
         def <strong>/</strong>(rhs : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#/(rhs:Number):self-instance-method">#</a>
+        <a class="method-permalink" href="#/%28rhs%3ANumber%29%3Aself-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L188" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L188" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2131,13 +2123,13 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
         
         def <strong>/</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#/(rhs:self):self-instance-method">#</a>
+        <a class="method-permalink" href="#/%28rhs%3Aself%29%3Aself-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L188" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L188" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2147,7 +2139,7 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
         
         def <strong>==</strong>(rhs : <span class="k">self</span>) : Bool
 
-        <a class="method-permalink" href="#==(rhs:self):Bool-instance-method">#</a>
+        <a class="method-permalink" href="#%3D%3D%28rhs%3Aself%29%3ABool-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2162,7 +2154,7 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L180" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L180" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2172,13 +2164,13 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
         
         def <strong>[]</strong>(*args, **options) : Float64
 
-        <a class="method-permalink" href="#[](*args,**options):Float64-instance-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%28%2Aargs%2C%2A%2Aoptions%29%3AFloat64-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L208" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L208" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2188,13 +2180,13 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
         
         def <strong>[]=</strong>(i : Int, j : Int, k : Int, value : Float64) : Float64
 
-        <a class="method-permalink" href="#[]=(i:Int,j:Int,k:Int,value:Float64):Float64-instance-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%3D%28i%3AInt%2Cj%3AInt%2Ck%3AInt%2Cvalue%3AFloat64%29%3AFloat64-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L240" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L240" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2204,13 +2196,13 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
         
         def <strong>[]=</strong>(i : Int, value : Float64) : Float64
 
-        <a class="method-permalink" href="#[]=(i:Int,value:Float64):Float64-instance-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%3D%28i%3AInt%2Cvalue%3AFloat64%29%3AFloat64-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L233" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L233" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2220,13 +2212,13 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
         
         def <strong>[]=</strong>(loc : <a href="../../Chem/Spatial/Grid/Location.html">Location</a>, value : Float64) : Float64
 
-        <a class="method-permalink" href="#[]=(loc:Location,value:Float64):Float64-instance-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%3D%28loc%3ALocation%2Cvalue%3AFloat64%29%3AFloat64-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L245" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L245" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2236,13 +2228,13 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
         
         def <strong>[]?</strong>(i : Int, j : Int, k : Int) : Float64?
 
-        <a class="method-permalink" href="#[]?(i:Int,j:Int,k:Int):Float64?-instance-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%3F%28i%3AInt%2Cj%3AInt%2Ck%3AInt%29%3AFloat64%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L213" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L213" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2252,13 +2244,13 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
         
         def <strong>[]?</strong>(loc : <a href="../../Chem/Spatial/Grid/Location.html">Location</a>) : Float64?
 
-        <a class="method-permalink" href="#[]?(loc:Location):Float64?-instance-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%3F%28loc%3ALocation%29%3AFloat64%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L218" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L218" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2268,7 +2260,7 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
         
         def <strong>[]?</strong>(vec : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : Float64?
 
-        <a class="method-permalink" href="#[]?(vec:Vec3):Float64?-instance-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%3F%28vec%3AVec3%29%3AFloat64%3F-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2279,7 +2271,7 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L226" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L226" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2289,13 +2281,13 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
         
         def <strong>bounds</strong> : <a href="../../Chem/Spatial/Bounds.html">Bounds</a>
 
-        <a class="method-permalink" href="#bounds:Bounds-instance-method">#</a>
+        <a class="method-permalink" href="#bounds%3ABounds-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L13" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2305,13 +2297,13 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
         
         def <strong>coords_at</strong>(*args, **options) : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>
 
-        <a class="method-permalink" href="#coords_at(*args,**options):Vec3-instance-method">#</a>
+        <a class="method-permalink" href="#coords_at%28%2Aargs%2C%2A%2Aoptions%29%3AVec3-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L250" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L250" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2321,13 +2313,13 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
         
         def <strong>coords_at?</strong>(i : Int, j : Int, k : Int) : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>?
 
-        <a class="method-permalink" href="#coords_at?(i:Int,j:Int,k:Int):Vec3?-instance-method">#</a>
+        <a class="method-permalink" href="#coords_at%3F%28i%3AInt%2Cj%3AInt%2Ck%3AInt%29%3AVec3%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L260" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L260" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2337,13 +2329,13 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
         
         def <strong>coords_at?</strong>(i : Int) : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>?
 
-        <a class="method-permalink" href="#coords_at?(i:Int):Vec3?-instance-method">#</a>
+        <a class="method-permalink" href="#coords_at%3F%28i%3AInt%29%3AVec3%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L254" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L254" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2353,13 +2345,13 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
         
         def <strong>coords_at?</strong>(loc : <a href="../../Chem/Spatial/Grid/Location.html">Location</a>) : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>?
 
-        <a class="method-permalink" href="#coords_at?(loc:Location):Vec3?-instance-method">#</a>
+        <a class="method-permalink" href="#coords_at%3F%28loc%3ALocation%29%3AVec3%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L264" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L264" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2369,13 +2361,13 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
         
         def <strong>dim</strong> : <a href="../../Chem/Spatial/Grid/Dimensions.html">Dimensions</a>
 
-        <a class="method-permalink" href="#dim:Dimensions-instance-method">#</a>
+        <a class="method-permalink" href="#dim%3ADimensions-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L14" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L14" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2385,7 +2377,7 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
         
         def <strong>dup</strong> : <span class="k">self</span>
 
-        <a class="method-permalink" href="#dup:self-instance-method">#</a>
+        <a class="method-permalink" href="#dup%3Aself-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2395,7 +2387,6 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
             </div>
           
           <p>Returns a shallow copy of this object.</p>
-
 <p>This allocates a new object and copies the contents of
 <code>self</code> into it.</p>
         </div>
@@ -2403,7 +2394,7 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L269" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L269" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2413,7 +2404,7 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
         
         def <strong>each_axial_slice</strong>(axis : Int, reuse : Bool | <a href="../../Array.html">Array</a>(Float64) = <span class="n">false</span>, & : <a href="../../Array.html">Array</a>(Float64) -> ) : Nil
 
-        <a class="method-permalink" href="#each_axial_slice(axis:Int,reuse:Bool%7CArray(Float64)=false,&:Array(Float64)-%3E):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#each_axial_slice%28axis%3AInt%2Creuse%3ABool%7CArray%28Float64%29%3Dfalse%2C%26%3AArray%28Float64%29-%3E%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2421,25 +2412,26 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
           <p>Iterates over slices along <em>axis</em>. Axis is specified as an
 integer: 0-2 refer to the direction of the first, second or third
 basis vector, respectively.</p>
-
 <pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">3</span>, <span class="n">2</span>}, <span class="t">Bounds</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">6</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">2</span> <span class="o">+</span> k }
 grid.to_a <span class="c"># =&gt; [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]</span>
 slices <span class="o">=</span> <span class="o">[]</span> <span class="k">of</span> <span class="t">Array</span>(<span class="t">Float64</span>)
 grid.each_axial_slice(axis: <span class="n">1</span>) { <span class="o">|</span>slice<span class="o">|</span> slices <span class="o">&lt;&lt;</span> slice }
 slices <span class="c"># =&gt; [[0, 1, 6, 7], [2, 3, 8, 9], [4, 5, 10, 11]]</span></code></pre>
-
 <p>When using read-only slices, one can specify the <em>reuse</em> option to
 prevent many memory allocations:</p>
-
-<ul><li>If <em>reuse</em> is an <code><a href="../../Array.html">Array</a></code>, this array will be reused.</li><li>If <em>reuse</em> is true, the method will create a new array and reuse
-  it.</li><li>If <em>reuse</em> is false (default), a new array is created and
-  yielded on each iteration.</li></ul>
+<ul>
+<li>If <em>reuse</em> is an <code><a href="../../Array.html">Array</a></code>, this array will be reused.</li>
+<li>If <em>reuse</em> is true, the method will create a new array and reuse
+it.</li>
+<li>If <em>reuse</em> is false (default), a new array is created and
+yielded on each iteration.</li>
+</ul>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L295" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L295" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2449,13 +2441,13 @@ prevent many memory allocations:</p>
         
         def <strong>each_coords</strong>(& : <a href="../../Chem/Spatial/Vec3.html">Vec3</a> -> ) : Nil
 
-        <a class="method-permalink" href="#each_coords(&:Vec3-%3E):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#each_coords%28%26%3AVec3-%3E%29%3ANil-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L326" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L326" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2465,13 +2457,13 @@ prevent many memory allocations:</p>
         
         def <strong>each_loc</strong>(vec : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, cutoff : <a href="../../Number.html">Number</a>, & : <a href="../../Chem/Spatial/Grid/Location.html">Location</a>, Float64 -> ) : Nil
 
-        <a class="method-permalink" href="#each_loc(vec:Vec3,cutoff:Number,&:Location,Float64-%3E):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#each_loc%28vec%3AVec3%2Ccutoff%3ANumber%2C%26%3ALocation%2CFloat64-%3E%29%3ANil-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L342" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L342" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2481,13 +2473,13 @@ prevent many memory allocations:</p>
         
         def <strong>each_loc</strong>(& : <a href="../../Chem/Spatial/Grid/Location.html">Location</a> -> ) : Nil
 
-        <a class="method-permalink" href="#each_loc(&:Location-%3E):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#each_loc%28%26%3ALocation-%3E%29%3ANil-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L332" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L332" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2497,13 +2489,13 @@ prevent many memory allocations:</p>
         
         def <strong>each_with_coords</strong>(& : Float64, <a href="../../Chem/Spatial/Vec3.html">Vec3</a> -> ) : Nil
 
-        <a class="method-permalink" href="#each_with_coords(&:Float64,Vec3-%3E):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#each_with_coords%28%26%3AFloat64%2CVec3-%3E%29%3ANil-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L357" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L357" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2513,13 +2505,13 @@ prevent many memory allocations:</p>
         
         def <strong>each_with_loc</strong>(& : Float64, <a href="../../Chem/Spatial/Grid/Location.html">Location</a> -> ) : Nil
 
-        <a class="method-permalink" href="#each_with_loc(&:Float64,Location-%3E):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#each_with_loc%28%26%3AFloat64%2CLocation-%3E%29%3ANil-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L363" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L363" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2529,13 +2521,13 @@ prevent many memory allocations:</p>
         
         def <strong>includes?</strong>(*args, **options)
 
-        <a class="method-permalink" href="#includes?(*args,**options)-instance-method">#</a>
+        <a class="method-permalink" href="#includes%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L19" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L19" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2545,13 +2537,13 @@ prevent many memory allocations:</p>
         
         def <strong>includes?</strong>(*args, **options, &)
 
-        <a class="method-permalink" href="#includes?(*args,**options,&)-instance-method">#</a>
+        <a class="method-permalink" href="#includes%3F%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L19" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L19" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2561,13 +2553,13 @@ prevent many memory allocations:</p>
         
         def <strong>index</strong>(loc : <a href="../../Chem/Spatial/Grid/Location.html">Location</a>) : Int32?
 
-        <a class="method-permalink" href="#index(loc:Location):Int32?-instance-method">#</a>
+        <a class="method-permalink" href="#index%28loc%3ALocation%29%3AInt32%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L369" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L369" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2577,13 +2569,13 @@ prevent many memory allocations:</p>
         
         def <strong>index</strong>(vec : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : Int32?
 
-        <a class="method-permalink" href="#index(vec:Vec3):Int32?-instance-method">#</a>
+        <a class="method-permalink" href="#index%28vec%3AVec3%29%3AInt32%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L377" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L377" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2593,13 +2585,13 @@ prevent many memory allocations:</p>
         
         def <strong>index!</strong>(*args, **options) : Int32
 
-        <a class="method-permalink" href="#index!(*args,**options):Int32-instance-method">#</a>
+        <a class="method-permalink" href="#index%21%28%2Aargs%2C%2A%2Aoptions%29%3AInt32-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L383" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L383" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2609,13 +2601,13 @@ prevent many memory allocations:</p>
         
         def <strong>loc_at</strong>(*args, **options) : <a href="../../Chem/Spatial/Grid/Location.html">Location</a>
 
-        <a class="method-permalink" href="#loc_at(*args,**options):Location-instance-method">#</a>
+        <a class="method-permalink" href="#loc_at%28%2Aargs%2C%2A%2Aoptions%29%3ALocation-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L387" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L387" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2625,13 +2617,13 @@ prevent many memory allocations:</p>
         
         def <strong>loc_at?</strong>(i : Int) : <a href="../../Chem/Spatial/Grid/Location.html">Location</a>?
 
-        <a class="method-permalink" href="#loc_at?(i:Int):Location?-instance-method">#</a>
+        <a class="method-permalink" href="#loc_at%3F%28i%3AInt%29%3ALocation%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L391" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L391" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2641,13 +2633,13 @@ prevent many memory allocations:</p>
         
         def <strong>loc_at?</strong>(vec : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <a href="../../Chem/Spatial/Grid/Location.html">Location</a>?
 
-        <a class="method-permalink" href="#loc_at?(vec:Vec3):Location?-instance-method">#</a>
+        <a class="method-permalink" href="#loc_at%3F%28vec%3AVec3%29%3ALocation%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L396" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L396" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2657,7 +2649,7 @@ prevent many memory allocations:</p>
         
         def <strong>map</strong>(& : Float64 -> Float64) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#map(&:Float64-%3EFloat64):self-instance-method">#</a>
+        <a class="method-permalink" href="#map%28%26%3AFloat64-%3EFloat64%29%3Aself-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2667,14 +2659,13 @@ prevent many memory allocations:</p>
             </div>
           
           <p>Returns an <code><a href="../../Array.html">Array</a></code> with the results of running the block against each element of the collection.</p>
-
 <pre><code class="language-crystal">[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>].map { <span class="o">|</span>i<span class="o">|</span> i <span class="o">*</span> <span class="n">10</span> } <span class="c"># =&gt; [10, 20, 30]</span></code></pre>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L402" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L402" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2684,13 +2675,13 @@ prevent many memory allocations:</p>
         
         def <strong>map!</strong>(& : Float64 -> Float64) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#map!(&:Float64-%3EFloat64):self-instance-method">#</a>
+        <a class="method-permalink" href="#map%21%28%26%3AFloat64-%3EFloat64%29%3Aself-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L408" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L408" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2700,13 +2691,13 @@ prevent many memory allocations:</p>
         
         def <strong>map_with_coords</strong>(& : Float64, <a href="../../Chem/Spatial/Vec3.html">Vec3</a> -> <a href="../../Number.html">Number</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#map_with_coords(&:Float64,Vec3-%3ENumber):self-instance-method">#</a>
+        <a class="method-permalink" href="#map_with_coords%28%26%3AFloat64%2CVec3-%3ENumber%29%3Aself-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L413" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L413" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2716,13 +2707,13 @@ prevent many memory allocations:</p>
         
         def <strong>map_with_coords!</strong>(& : Float64, <a href="../../Chem/Spatial/Vec3.html">Vec3</a> -> <a href="../../Number.html">Number</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#map_with_coords!(&:Float64,Vec3-%3ENumber):self-instance-method">#</a>
+        <a class="method-permalink" href="#map_with_coords%21%28%26%3AFloat64%2CVec3-%3ENumber%29%3Aself-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L419" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L419" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2732,7 +2723,7 @@ prevent many memory allocations:</p>
         
         def <strong>map_with_index</strong>(& : Float64, Int32 -> <a href="../../Number.html">Number</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#map_with_index(&:Float64,Int32-%3ENumber):self-instance-method">#</a>
+        <a class="method-permalink" href="#map_with_index%28%26%3AFloat64%2CInt32-%3ENumber%29%3Aself-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2741,11 +2732,9 @@ prevent many memory allocations:</p>
               Description copied from module Enumerable(Float64)
             </div>
           
-          <p>Like <code><a href="../../Chem/Spatial/Grid.html#map(&:Float64-%3EFloat64):self-instance-method">#map</a></code>, but the block gets passed both the element and its index.</p>
-
+          <p>Like <code><a href="../../Chem/Spatial/Grid.html#map%28%26%3AFloat64-%3EFloat64%29%3Aself-instance-method">#map</a></code>, but the block gets passed both the element and its index.</p>
 <pre><code class="language-crystal">[<span class="s">&quot;Alice&quot;</span>, <span class="s">&quot;Bob&quot;</span>].map_with_index { <span class="o">|</span>name, i<span class="o">|</span> <span class="s">&quot;User #</span><span class="i">#{</span>i<span class="i">}</span><span class="s">: </span><span class="i">#{</span>name<span class="i">}</span><span class="s">&quot;</span> }
 <span class="c"># =&gt; [&quot;User #0: Alice&quot;, &quot;User #1: Bob&quot;]</span></code></pre>
-
 <p>Accepts an optional <em>offset</em> parameter, which tells it to start counting
 from there.</p>
         </div>
@@ -2753,7 +2742,7 @@ from there.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L426" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L426" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2763,13 +2752,13 @@ from there.</p>
         
         def <strong>map_with_index!</strong>(& : Float64, Int32 -> <a href="../../Number.html">Number</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#map_with_index!(&:Float64,Int32-%3ENumber):self-instance-method">#</a>
+        <a class="method-permalink" href="#map_with_index%21%28%26%3AFloat64%2CInt32-%3ENumber%29%3Aself-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L432" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L432" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2779,13 +2768,13 @@ from there.</p>
         
         def <strong>map_with_loc</strong>(& : Float64, <a href="../../Chem/Spatial/Grid/Location.html">Location</a> -> <a href="../../Number.html">Number</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#map_with_loc(&:Float64,Location-%3ENumber):self-instance-method">#</a>
+        <a class="method-permalink" href="#map_with_loc%28%26%3AFloat64%2CLocation-%3ENumber%29%3Aself-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L439" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L439" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2795,13 +2784,13 @@ from there.</p>
         
         def <strong>map_with_loc!</strong>(& : Float64, <a href="../../Chem/Spatial/Grid/Location.html">Location</a> -> <a href="../../Number.html">Number</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#map_with_loc!(&:Float64,Location-%3ENumber):self-instance-method">#</a>
+        <a class="method-permalink" href="#map_with_loc%21%28%26%3AFloat64%2CLocation-%3ENumber%29%3Aself-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L445" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L445" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2811,17 +2800,15 @@ from there.</p>
         
         def <strong>mask</strong>(& : Float64 -> Bool) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#mask(&:Float64-%3EBool):self-instance-method">#</a>
+        <a class="method-permalink" href="#mask%28%26%3AFloat64-%3EBool%29%3Aself-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns a grid mask. Elements for which the passed block returns <code>true</code> are set to
 1, otherwise 0.</p>
-
 <p>Grid masks are very useful to deal with multiple grids, and when points are to be
 selected based on one grid only.</p>
-
 <pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">2</span>, <span class="n">2</span>}, <span class="t">Bounds</span>[<span class="n">10</span>, <span class="n">10</span>, <span class="n">10</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">+</span> j <span class="o">+</span> k }
 grid.to_a              <span class="c"># =&gt; [0, 1, 1, 2, 1, 2, 2, 3]</span>
 grid.mask(<span class="o">&amp;</span>.<span class="o">&gt;</span>(<span class="n">1</span>)).to_a <span class="c"># =&gt; [0, 0, 0, 1, 0, 1, 1, 1]</span>
@@ -2831,7 +2818,7 @@ grid.to_a              <span class="c"># =&gt; [0, 1, 1, 2, 1, 2, 2, 3]</span></
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L464" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L464" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2841,17 +2828,15 @@ grid.to_a              <span class="c"># =&gt; [0, 1, 1, 2, 1, 2, 2, 3]</span></
         
         def <strong>mask</strong>(value : <a href="../../Number.html">Number</a>, delta : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#mask(value:Number,delta:Number):self-instance-method">#</a>
+        <a class="method-permalink" href="#mask%28value%3ANumber%2Cdelta%3ANumber%29%3Aself-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns a grid mask. Elements for which <code>(value - ele).abs <= delta</code> returns
 <code>true</code> are set to 1, otherwise 0.</p>
-
 <p>Grid masks are very useful to deal with multiple grids, and when points are to be
 selected based on one grid only.</p>
-
 <pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">2</span>, <span class="n">3</span>}, <span class="t">Bounds</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> (i <span class="o">+</span> <span class="n">1</span>) <span class="o">*</span> (j <span class="o">+</span> <span class="n">1</span>) <span class="o">*</span> (k <span class="o">+</span> <span class="n">1</span>) <span class="o">/</span> <span class="n">5</span> }
 grid.to_a              <span class="c"># =&gt; [0.2, 0.4, 0.6, 0.4, 0.8, 1.2, 0.4, 0.8, 1.2, 0.8, 1.6, 2.4]</span>
 grid.mask(<span class="n">1</span>, <span class="n">0.5</span>).to_a <span class="c"># =&gt; [0, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 0]</span>
@@ -2861,7 +2846,7 @@ grid.to_a              <span class="c"># =&gt; [0.2, 0.4, 0.6, 0.4, 0.8, 1.2, 0.
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L496" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L496" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2871,17 +2856,15 @@ grid.to_a              <span class="c"># =&gt; [0.2, 0.4, 0.6, 0.4, 0.8, 1.2, 0.
         
         def <strong>mask</strong>(pattern) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#mask(pattern):self-instance-method">#</a>
+        <a class="method-permalink" href="#mask%28pattern%29%3Aself-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns a grid mask. Elements for which <code>pattern === element</code> returns <code>true</code> are
 set to 1, otherwise 0.</p>
-
 <p>Grid masks are very useful to deal with multiple grids, and when points are to be
 selected based on one grid only.</p>
-
 <pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">2</span>, <span class="n">3</span>}, <span class="t">Bounds</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> (i <span class="o">+</span> <span class="n">1</span>) <span class="o">*</span> (j <span class="o">+</span> <span class="n">1</span>) <span class="o">*</span> (k <span class="o">+</span> <span class="n">1</span>) }
 grid.to_a              <span class="c"># =&gt; [1, 2, 3, 2, 4, 6, 2, 4, 6, 4, 8, 12]</span>
 grid.mask(<span class="n">2</span>..<span class="n">4.5</span>).to_a <span class="c"># =&gt; [0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0]</span>
@@ -2891,7 +2874,7 @@ grid.to_a              <span class="c"># =&gt; [1, 2, 3, 2, 4, 6, 2, 4, 6, 4, 8,
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L480" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L480" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2901,18 +2884,15 @@ grid.to_a              <span class="c"># =&gt; [1, 2, 3, 2, 4, 6, 2, 4, 6, 4, 8,
         
         def <strong>mask!</strong>(& : Float64 -> Bool) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#mask!(&:Float64-%3EBool):self-instance-method">#</a>
+        <a class="method-permalink" href="#mask%21%28%26%3AFloat64-%3EBool%29%3Aself-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Masks a grid by the passed block. Elements for which the passed block returns
 <code>false</code> are set to 0.</p>
-
 <p>Optimized version of creating a mask and applying it to the same grid, but avoids
-creating intermediate grids. This is equivalent to <code>grid = grid * grid.mask
-{ ... }</code>.</p>
-
+creating intermediate grids. This is equivalent to <code>grid = grid * grid.mask { ... }</code>.</p>
 <pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">2</span>, <span class="n">2</span>}, <span class="t">Bounds</span>[<span class="n">10</span>, <span class="n">10</span>, <span class="n">10</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">+</span> j <span class="o">+</span> k }
 grid.to_a <span class="c"># =&gt; [0, 1, 1, 2, 1, 2, 2, 3]</span>
 grid.mask! <span class="o">&amp;</span>.<span class="o">&gt;</span>(<span class="n">1</span>)
@@ -2922,7 +2902,7 @@ grid.to_a <span class="c"># =&gt; [0, 0, 0, 2, 0, 2, 2, 3]</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L513" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L513" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2932,18 +2912,15 @@ grid.to_a <span class="c"># =&gt; [0, 0, 0, 2, 0, 2, 2, 3]</span></code></pre>
         
         def <strong>mask!</strong>(value : <a href="../../Number.html">Number</a>, delta : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#mask!(value:Number,delta:Number):self-instance-method">#</a>
+        <a class="method-permalink" href="#mask%21%28value%3ANumber%2Cdelta%3ANumber%29%3Aself-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Masks a grid by <em>value</em>+/-<em>delta</em>. Elements for which <code>(value - ele).abs > delta</code>
 returns <code>true</code> are set to 0.</p>
-
 <p>Optimized version of creating a mask and applying it to the same grid, but avoids
-creating intermediate grids. This is equivalent to <code>grid = grid * grid.mask(value,
-delta)</code></p>
-
+creating intermediate grids. This is equivalent to <code>grid = grid * grid.mask(value, delta)</code></p>
 <pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">2</span>, <span class="n">3</span>}, <span class="t">Bounds</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> (i <span class="o">+</span> j <span class="o">+</span> k) <span class="o">/</span> <span class="n">5</span> }
 grid.to_a <span class="c"># =&gt; [0.0, 0.2, 0.4, 0.2, 0.4, 0.6, 0.2, 0.4, 0.6, 0.4, 0.6, 0.8]</span>
 grid.mask! <span class="n">0.5</span>, <span class="n">0.1</span>
@@ -2953,7 +2930,7 @@ grid.to_a <span class="c"># =&gt; [0.0, 0.0, 0.4, 0.0, 0.4, 0.6, 0.0, 0.4, 0.6, 
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L547" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L547" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2963,18 +2940,15 @@ grid.to_a <span class="c"># =&gt; [0.0, 0.0, 0.4, 0.0, 0.4, 0.6, 0.0, 0.4, 0.6, 
         
         def <strong>mask!</strong>(pattern) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#mask!(pattern):self-instance-method">#</a>
+        <a class="method-permalink" href="#mask%21%28pattern%29%3Aself-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Masks a grid by <em>pattern</em>. Elements for which <code>pattern === element</code> returns
 <code>false</code> are set to 0.</p>
-
 <p>Optimized version of creating a mask and applying it to the same grid, but avoids
-creating intermediate grids. This is equivalent to <code>grid = grid *
-grid.mask(pattern)</code></p>
-
+creating intermediate grids. This is equivalent to <code>grid = grid * grid.mask(pattern)</code></p>
 <pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">2</span>, <span class="n">3</span>}, <span class="t">Bounds</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> (i <span class="o">+</span> <span class="n">1</span>) <span class="o">*</span> (j <span class="o">+</span> <span class="n">1</span>) <span class="o">*</span> (k <span class="o">+</span> <span class="n">1</span>) }
 grid.to_a <span class="c"># =&gt; [1, 2, 3, 2, 4, 6, 2, 4, 6, 4, 8, 12]</span>
 grid.mask! <span class="n">2</span>..<span class="n">4.5</span>
@@ -2984,7 +2958,7 @@ grid.to_a <span class="c"># =&gt; [0, 2, 3, 2, 4, 0, 2, 4, 0, 4, 0, 0]</span></c
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L530" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L530" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2994,17 +2968,15 @@ grid.to_a <span class="c"># =&gt; [0, 2, 3, 2, 4, 0, 2, 4, 0, 4, 0, 0]</span></c
         
         def <strong>mask_by_coords</strong>(& : <a href="../../Chem/Spatial/Vec3.html">Vec3</a> -> Bool) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#mask_by_coords(&:Vec3-%3EBool):self-instance-method">#</a>
+        <a class="method-permalink" href="#mask_by_coords%28%26%3AVec3-%3EBool%29%3Aself-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns a grid mask. Coordinates for which the passed block returns <code>true</code> are set
 to 1, otherwise 0.</p>
-
 <p>Grid masks are very useful to deal with multiple grids, and when points are to be
 selected based on one grid only.</p>
-
 <pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">2</span>, <span class="n">2</span>}, <span class="t">Bounds</span>[<span class="n">10</span>, <span class="n">10</span>, <span class="n">10</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">4</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">2</span> <span class="o">+</span> k }
 grid.to_a                           <span class="c"># =&gt; [0, 1, 2, 3, 4, 5, 6, 7]</span>
 grid.mask_by_coords(<span class="o">&amp;</span>.x.<span class="o">==</span>(<span class="n">0</span>)).to_a <span class="c"># =&gt; [1, 1, 1, 1, 0, 0, 0, 0]</span>
@@ -3014,7 +2986,7 @@ grid.to_a                           <span class="c"># =&gt; [0, 1, 2, 3, 4, 5, 6
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L563" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L563" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3024,18 +2996,15 @@ grid.to_a                           <span class="c"># =&gt; [0, 1, 2, 3, 4, 5, 6
         
         def <strong>mask_by_coords!</strong>(& : <a href="../../Chem/Spatial/Vec3.html">Vec3</a> -> Bool) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#mask_by_coords!(&:Vec3-%3EBool):self-instance-method">#</a>
+        <a class="method-permalink" href="#mask_by_coords%21%28%26%3AVec3-%3EBool%29%3Aself-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Masks a grid by coordinates. Coordinates for which the passed block returns
 <code>false</code> are set to 0.</p>
-
 <p>Optimized version of creating a mask and applying it to the same grid, but avoids
-creating intermediate grids. This is equivalent to <code>grid = grid *
-grid.mask_by_coords { ... }</code></p>
-
+creating intermediate grids. This is equivalent to <code>grid = grid * grid.mask_by_coords { ... }</code></p>
 <pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">2</span>, <span class="n">2</span>}, <span class="t">Bounds</span>[<span class="n">5</span>, <span class="n">5</span>, <span class="n">5</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">4</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">2</span> <span class="o">+</span> k }
 grid.to_a <span class="c"># =&gt; [0, 1, 2, 3, 4, 5, 6, 7]</span>
 grid.mask_by_coords! { <span class="o">|</span>vec<span class="o">|</span> vec.y <span class="o">==</span> <span class="n">5</span> }
@@ -3045,7 +3014,7 @@ grid.to_a <span class="c"># =&gt; [0, 0, 2, 3, 0, 0, 6, 7]</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L580" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L580" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3055,17 +3024,15 @@ grid.to_a <span class="c"># =&gt; [0, 0, 2, 3, 0, 0, 6, 7]</span></code></pre>
         
         def <strong>mask_by_index</strong>(& : Int32 -> Bool) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#mask_by_index(&:Int32-%3EBool):self-instance-method">#</a>
+        <a class="method-permalink" href="#mask_by_index%28%26%3AInt32-%3EBool%29%3Aself-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns a grid mask. Indexes for which the passed block returns <code>true</code> are set to
 1, otherwise 0.</p>
-
 <p>Grid masks are very useful to deal with multiple grids, and when points are to be
 selected based on one grid only.</p>
-
 <pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">2</span>, <span class="n">2</span>}, <span class="t">Bounds</span>[<span class="n">10</span>, <span class="n">10</span>, <span class="n">10</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">4</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">2</span> <span class="o">+</span> k }
 grid.to_a                       <span class="c"># =&gt; [0, 1, 2, 3, 4, 5, 6, 7]</span>
 grid.mask_by_index(<span class="o">&amp;</span>.<span class="o">&gt;</span>(<span class="n">4</span>)).to_a <span class="c"># =&gt; [0, 0, 0, 0, 0, 1, 1, 1]</span>
@@ -3075,7 +3042,7 @@ grid.to_a                       <span class="c"># =&gt; [0, 1, 2, 3, 4, 5, 6, 7]
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L596" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L596" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3085,18 +3052,15 @@ grid.to_a                       <span class="c"># =&gt; [0, 1, 2, 3, 4, 5, 6, 7]
         
         def <strong>mask_by_index!</strong>(& : Int32 -> Bool) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#mask_by_index!(&:Int32-%3EBool):self-instance-method">#</a>
+        <a class="method-permalink" href="#mask_by_index%21%28%26%3AInt32-%3EBool%29%3Aself-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Masks a grid by index. Indexes for which the passed block returns <code>false</code> are set
 to 0.</p>
-
 <p>Optimized version of creating a mask and applying it to the same grid, but avoids
-creating intermediate grids. This is equivalent to <code>grid = grid *
-grid.mask_by_index { ... }</code></p>
-
+creating intermediate grids. This is equivalent to <code>grid = grid * grid.mask_by_index { ... }</code></p>
 <pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">2</span>, <span class="n">2</span>}, <span class="t">Bounds</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">4</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">2</span> <span class="o">+</span> k }
 grid.to_a <span class="c"># =&gt; [0, 1, 2, 3, 4, 5, 6, 7]</span>
 grid.mask_by_index! <span class="o">&amp;</span>.<span class="o">&lt;</span>(<span class="n">3</span>)
@@ -3106,7 +3070,7 @@ grid.to_a <span class="c"># =&gt; [0, 1, 2, 0, 0, 0, 0, 0]</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L613" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L613" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3116,17 +3080,15 @@ grid.to_a <span class="c"># =&gt; [0, 1, 2, 0, 0, 0, 0, 0]</span></code></pre>
         
         def <strong>mask_by_loc</strong>(& : <a href="../../Chem/Spatial/Grid/Location.html">Location</a> -> Bool) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#mask_by_loc(&:Location-%3EBool):self-instance-method">#</a>
+        <a class="method-permalink" href="#mask_by_loc%28%26%3ALocation-%3EBool%29%3Aself-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns a grid mask. Locations for which the passed block returns <code>true</code> are set
 to 1, otherwise 0.</p>
-
 <p>Grid masks are very useful to deal with multiple grids, and when points are to be
 selected based on one grid only.</p>
-
 <pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">2</span>, <span class="n">2</span>}, <span class="t">Bounds</span>[<span class="n">10</span>, <span class="n">10</span>, <span class="n">10</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">4</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">2</span> <span class="o">+</span> k }
 grid.to_a                                  <span class="c"># =&gt; [0, 1, 2, 3, 4, 5, 6, 7]</span>
 grid.mask_by_loc { <span class="o">|</span>i, j, k<span class="o">|</span> k <span class="o">==</span> <span class="n">1</span> }.to_a <span class="c"># =&gt; [0, 1, 0, 1, 0, 1, 0, 1]</span>
@@ -3136,7 +3098,7 @@ grid.to_a                                  <span class="c"># =&gt; [0, 1, 2, 3, 
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L629" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L629" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3146,18 +3108,15 @@ grid.to_a                                  <span class="c"># =&gt; [0, 1, 2, 3, 
         
         def <strong>mask_by_loc!</strong>(& : <a href="../../Chem/Spatial/Grid/Location.html">Location</a> -> Bool) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#mask_by_loc!(&:Location-%3EBool):self-instance-method">#</a>
+        <a class="method-permalink" href="#mask_by_loc%21%28%26%3ALocation-%3EBool%29%3Aself-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Masks a grid by location. Locations for which the passed block returns <code>false</code> are
 set to 0.</p>
-
 <p>Optimized version of creating a mask and applying it to the same grid, but avoids
-creating intermediate grids. This is equivalent to <code>grid = grid * grid.mask_by_loc
-{ ... }</code></p>
-
+creating intermediate grids. This is equivalent to <code>grid = grid * grid.mask_by_loc { ... }</code></p>
 <pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">2</span>, <span class="n">2</span>}, <span class="t">Bounds</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">4</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">2</span> <span class="o">+</span> k }
 grid.to_a <span class="c"># =&gt; [0, 1, 2, 3, 4, 5, 6, 7]</span>
 grid.mask_by_loc! { <span class="o">|</span>(i, j, k)<span class="o">|</span> i <span class="o">==</span> <span class="n">1</span> }
@@ -3167,7 +3126,7 @@ grid.to_a <span class="c"># =&gt; [0, 0, 0, 0, 4, 5, 6, 7]</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L646" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L646" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3177,7 +3136,7 @@ grid.to_a <span class="c"># =&gt; [0, 0, 0, 0, 4, 5, 6, 7]</span></code></pre>
         
         def <strong>mean</strong>(axis : Int) : <a href="../../Array.html">Array</a>(Float64)
 
-        <a class="method-permalink" href="#mean(axis:Int):Array(Float64)-instance-method">#</a>
+        <a class="method-permalink" href="#mean%28axis%3AInt%29%3AArray%28Float64%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -3185,9 +3144,7 @@ grid.to_a <span class="c"># =&gt; [0, 0, 0, 0, 4, 5, 6, 7]</span></code></pre>
           <p>Returns the arithmetic mean along <em>axis</em>. Axis is specified as an
 integer: 0-2 refer to the direction of the first, second or third
 basis vector, respectively.</p>
-
 <p>Raises IndexError is <em>axis</em> is out of bounds.</p>
-
 <pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">3</span>, <span class="n">4</span>}, <span class="t">Bounds</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">12</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">4</span> <span class="o">+</span> k }
 grid.mean(axis: <span class="n">0</span>) <span class="c"># =&gt; [5.5, 17.5]</span>
 grid.mean(axis: <span class="n">1</span>) <span class="c"># =&gt; [7.5, 11.5, 15.5]</span>
@@ -3198,7 +3155,7 @@ grid.mean(axis: <span class="n">3</span>) <span class="c"># raises IndexError</s
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L673" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L673" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3208,13 +3165,12 @@ grid.mean(axis: <span class="n">3</span>) <span class="c"># raises IndexError</s
         
         def <strong>mean</strong> : Float64
 
-        <a class="method-permalink" href="#mean:Float64-instance-method">#</a>
+        <a class="method-permalink" href="#mean%3AFloat64-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns the arithmetic mean of the grid elements.</p>
-
 <pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">3</span>, <span class="n">4</span>}, <span class="t">Bounds</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">12</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">4</span> <span class="o">+</span> k }
 grid.mean <span class="c"># =&gt; 11.5</span></code></pre>
         </div>
@@ -3222,7 +3178,7 @@ grid.mean <span class="c"># =&gt; 11.5</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L656" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L656" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3232,7 +3188,7 @@ grid.mean <span class="c"># =&gt; 11.5</span></code></pre>
         
         def <strong>mean_with_coords</strong>(axis : Int) : <a href="../../Array.html">Array</a>(Tuple(Float64, Float64))
 
-        <a class="method-permalink" href="#mean_with_coords(axis:Int):Array(Tuple(Float64,Float64))-instance-method">#</a>
+        <a class="method-permalink" href="#mean_with_coords%28axis%3AInt%29%3AArray%28Tuple%28Float64%2CFloat64%29%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -3240,9 +3196,7 @@ grid.mean <span class="c"># =&gt; 11.5</span></code></pre>
           <p>Returns the arithmetic mean along <em>axis</em> with its coordinates.
 Axis is specified as an integer: 0-2 refer to the direction of the
 first, second or third basis vector, respectively.</p>
-
 <p>Raises IndexError is <em>axis</em> is out of bounds.</p>
-
 <pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">3</span>, <span class="n">5</span>}, <span class="t">Bounds</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">12</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">4</span> <span class="o">+</span> k }
 grid.mean(axis: <span class="n">1</span>) <span class="c"># =&gt; [{9.5, 0.0}, {14.5, 0.5}, {19.5, 1.0}]</span></code></pre>
         </div>
@@ -3250,7 +3204,7 @@ grid.mean(axis: <span class="n">1</span>) <span class="c"># =&gt; [{9.5, 0.0}, {
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L691" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L691" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3260,13 +3214,13 @@ grid.mean(axis: <span class="n">1</span>) <span class="c"># =&gt; [{9.5, 0.0}, {
         
         def <strong>ni</strong> : Int32
 
-        <a class="method-permalink" href="#ni:Int32-instance-method">#</a>
+        <a class="method-permalink" href="#ni%3AInt32-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L702" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L702" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3276,13 +3230,13 @@ grid.mean(axis: <span class="n">1</span>) <span class="c"># =&gt; [{9.5, 0.0}, {
         
         def <strong>nj</strong> : Int32
 
-        <a class="method-permalink" href="#nj:Int32-instance-method">#</a>
+        <a class="method-permalink" href="#nj%3AInt32-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L706" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L706" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3292,13 +3246,13 @@ grid.mean(axis: <span class="n">1</span>) <span class="c"># =&gt; [{9.5, 0.0}, {
         
         def <strong>nk</strong> : Int32
 
-        <a class="method-permalink" href="#nk:Int32-instance-method">#</a>
+        <a class="method-permalink" href="#nk%3AInt32-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L710" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L710" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3308,13 +3262,13 @@ grid.mean(axis: <span class="n">1</span>) <span class="c"># =&gt; [{9.5, 0.0}, {
         
         def <strong>origin</strong>(*args, **options)
 
-        <a class="method-permalink" href="#origin(*args,**options)-instance-method">#</a>
+        <a class="method-permalink" href="#origin%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L19" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L19" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3324,13 +3278,13 @@ grid.mean(axis: <span class="n">1</span>) <span class="c"># =&gt; [{9.5, 0.0}, {
         
         def <strong>origin</strong>(*args, **options, &)
 
-        <a class="method-permalink" href="#origin(*args,**options,&)-instance-method">#</a>
+        <a class="method-permalink" href="#origin%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L19" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L19" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3340,13 +3294,13 @@ grid.mean(axis: <span class="n">1</span>) <span class="c"># =&gt; [{9.5, 0.0}, {
         
         def <strong>resolution</strong> : Tuple(Float64, Float64, Float64)
 
-        <a class="method-permalink" href="#resolution:Tuple(Float64,Float64,Float64)-instance-method">#</a>
+        <a class="method-permalink" href="#resolution%3ATuple%28Float64%2CFloat64%2CFloat64%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L714" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L714" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3356,7 +3310,7 @@ grid.mean(axis: <span class="n">1</span>) <span class="c"># =&gt; [{9.5, 0.0}, {
         
         def <strong>size</strong> : Int32
 
-        <a class="method-permalink" href="#size:Int32-instance-method">#</a>
+        <a class="method-permalink" href="#size%3AInt32-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -3371,7 +3325,7 @@ grid.mean(axis: <span class="n">1</span>) <span class="c"># =&gt; [{9.5, 0.0}, {
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L720" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L720" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3381,13 +3335,13 @@ grid.mean(axis: <span class="n">1</span>) <span class="c"># =&gt; [{9.5, 0.0}, {
         
         def <strong>source_file</strong> : Path?
 
-        <a class="method-permalink" href="#source_file:Path?-instance-method">#</a>
+        <a class="method-permalink" href="#source_file%3APath%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L15" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3397,13 +3351,13 @@ grid.mean(axis: <span class="n">1</span>) <span class="c"># =&gt; [{9.5, 0.0}, {
         
         def <strong>step</strong>(di : Int, dj : Int, dk : Int) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#step(di:Int,dj:Int,dk:Int):self-instance-method">#</a>
+        <a class="method-permalink" href="#step%28di%3AInt%2Cdj%3AInt%2Cdk%3AInt%29%3Aself-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L728" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L728" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3413,13 +3367,13 @@ grid.mean(axis: <span class="n">1</span>) <span class="c"># =&gt; [{9.5, 0.0}, {
         
         def <strong>step</strong>(n : Int) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#step(n:Int):self-instance-method">#</a>
+        <a class="method-permalink" href="#step%28n%3AInt%29%3Aself-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L724" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L724" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3429,7 +3383,7 @@ grid.mean(axis: <span class="n">1</span>) <span class="c"># =&gt; [{9.5, 0.0}, {
         
         def <strong>to_a</strong> : <a href="../../Array.html">Array</a>(Float64)
 
-        <a class="method-permalink" href="#to_a:Array(Float64)-instance-method">#</a>
+        <a class="method-permalink" href="#to_a%3AArray%28Float64%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -3439,14 +3393,13 @@ grid.mean(axis: <span class="n">1</span>) <span class="c"># =&gt; [{9.5, 0.0}, {
             </div>
           
           <p>Returns an <code><a href="../../Array.html">Array</a></code> with all the elements in the collection.</p>
-
 <pre><code class="language-crystal">{<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>}.to_a <span class="c"># =&gt; [1, 2, 3]</span></code></pre>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L741" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L741" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3456,19 +3409,19 @@ grid.mean(axis: <span class="n">1</span>) <span class="c"># =&gt; [{9.5, 0.0}, {
         
         def <strong>to_chgcar</strong>(output : IO | Path | String, structure : <a href="../../Chem/Structure.html">Structure</a>) : Nil
 
-        <a class="method-permalink" href="#to_chgcar(output:IO%7CPath%7CString,structure:Structure):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#to_chgcar%28output%3AIO%7CPath%7CString%2Cstructure%3AStructure%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Writes the grid to <em>output</em> using the <code><a href="../../Chem/VASP/Chgcar.html">Chem::VASP::Chgcar</a></code>
-file format. Arguments are fowarded to <code><a href="../../Chem/VASP/Chgcar/Writer.html#open(io:IO,structure:Structure,sync_close:Bool=false,&:self-%3E)-class-method">Chem::VASP::Chgcar::Writer.open</a></code>.</p>
+file format. Arguments are fowarded to <code><a href="../../Chem/VASP/Chgcar/Writer.html#open%28io%3AIO%2Cstructure%3AStructure%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::VASP::Chgcar::Writer.open</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3478,20 +3431,20 @@ file format. Arguments are fowarded to <code><a href="../../Chem/VASP/Chgcar/Wri
         
         def <strong>to_chgcar</strong>(structure : <a href="../../Chem/Structure.html">Structure</a>) : String
 
-        <a class="method-permalink" href="#to_chgcar(structure:Structure):String-instance-method">#</a>
+        <a class="method-permalink" href="#to_chgcar%28structure%3AStructure%29%3AString-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns a string representation of the grid using
 the <code><a href="../../Chem/VASP/Chgcar.html">Chem::VASP::Chgcar</a></code> file format. Arguments are fowarded to
-<code><a href="../../Chem/VASP/Chgcar/Writer.html#open(io:IO,structure:Structure,sync_close:Bool=false,&:self-%3E)-class-method">Chem::VASP::Chgcar::Writer.open</a></code>.</p>
+<code><a href="../../Chem/VASP/Chgcar/Writer.html#open%28io%3AIO%2Cstructure%3AStructure%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::VASP::Chgcar::Writer.open</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3501,19 +3454,19 @@ the <code><a href="../../Chem/VASP/Chgcar.html">Chem::VASP::Chgcar</a></code> fi
         
         def <strong>to_cube</strong>(output : IO | Path | String, atoms : <a href="../../Chem/AtomCollection.html">AtomCollection</a>) : Nil
 
-        <a class="method-permalink" href="#to_cube(output:IO%7CPath%7CString,atoms:AtomCollection):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#to_cube%28output%3AIO%7CPath%7CString%2Catoms%3AAtomCollection%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Writes the grid to <em>output</em> using the <code><a href="../../Chem/Cube.html">Chem::Cube</a></code>
-file format. Arguments are fowarded to <code><a href="../../Chem/Cube/Writer.html#open(io:IO,atoms:AtomCollection,sync_close:Bool=false,&:self-%3E)-class-method">Chem::Cube::Writer.open</a></code>.</p>
+file format. Arguments are fowarded to <code><a href="../../Chem/Cube/Writer.html#open%28io%3AIO%2Catoms%3AAtomCollection%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::Cube::Writer.open</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3523,20 +3476,20 @@ file format. Arguments are fowarded to <code><a href="../../Chem/Cube/Writer.htm
         
         def <strong>to_cube</strong>(atoms : <a href="../../Chem/AtomCollection.html">AtomCollection</a>) : String
 
-        <a class="method-permalink" href="#to_cube(atoms:AtomCollection):String-instance-method">#</a>
+        <a class="method-permalink" href="#to_cube%28atoms%3AAtomCollection%29%3AString-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns a string representation of the grid using
 the <code><a href="../../Chem/Cube.html">Chem::Cube</a></code> file format. Arguments are fowarded to
-<code><a href="../../Chem/Cube/Writer.html#open(io:IO,atoms:AtomCollection,sync_close:Bool=false,&:self-%3E)-class-method">Chem::Cube::Writer.open</a></code>.</p>
+<code><a href="../../Chem/Cube/Writer.html#open%28io%3AIO%2Catoms%3AAtomCollection%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::Cube::Writer.open</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3546,19 +3499,19 @@ the <code><a href="../../Chem/Cube.html">Chem::Cube</a></code> file format. Argu
         
         def <strong>to_dx</strong>(output : IO | Path | String) : Nil
 
-        <a class="method-permalink" href="#to_dx(output:IO%7CPath%7CString):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#to_dx%28output%3AIO%7CPath%7CString%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Writes the grid to <em>output</em> using the <code><a href="../../Chem/DX.html">Chem::DX</a></code>
-file format. Arguments are fowarded to <code><a href="../../Chem/DX/Writer.html#open(io:IO,sync_close:Bool=false,&:self-%3E)-class-method">Chem::DX::Writer.open</a></code>.</p>
+file format. Arguments are fowarded to <code><a href="../../Chem/DX/Writer.html#open%28io%3AIO%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::DX::Writer.open</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3568,20 +3521,20 @@ file format. Arguments are fowarded to <code><a href="../../Chem/DX/Writer.html#
         
         def <strong>to_dx</strong> : String
 
-        <a class="method-permalink" href="#to_dx:String-instance-method">#</a>
+        <a class="method-permalink" href="#to_dx%3AString-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns a string representation of the grid using
 the <code><a href="../../Chem/DX.html">Chem::DX</a></code> file format. Arguments are fowarded to
-<code><a href="../../Chem/DX/Writer.html#open(io:IO,sync_close:Bool=false,&:self-%3E)-class-method">Chem::DX::Writer.open</a></code>.</p>
+<code><a href="../../Chem/DX/Writer.html#open%28io%3AIO%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::DX::Writer.open</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3591,19 +3544,19 @@ the <code><a href="../../Chem/DX.html">Chem::DX</a></code> file format. Argument
         
         def <strong>to_locpot</strong>(output : IO | Path | String, structure : <a href="../../Chem/Structure.html">Structure</a>) : Nil
 
-        <a class="method-permalink" href="#to_locpot(output:IO%7CPath%7CString,structure:Structure):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#to_locpot%28output%3AIO%7CPath%7CString%2Cstructure%3AStructure%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Writes the grid to <em>output</em> using the <code><a href="../../Chem/VASP/Locpot.html">Chem::VASP::Locpot</a></code>
-file format. Arguments are fowarded to <code><a href="../../Chem/VASP/Locpot/Writer.html#open(io:IO,structure:Structure,sync_close:Bool=false,&:self-%3E)-class-method">Chem::VASP::Locpot::Writer.open</a></code>.</p>
+file format. Arguments are fowarded to <code><a href="../../Chem/VASP/Locpot/Writer.html#open%28io%3AIO%2Cstructure%3AStructure%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::VASP::Locpot::Writer.open</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3613,20 +3566,20 @@ file format. Arguments are fowarded to <code><a href="../../Chem/VASP/Locpot/Wri
         
         def <strong>to_locpot</strong>(structure : <a href="../../Chem/Structure.html">Structure</a>) : String
 
-        <a class="method-permalink" href="#to_locpot(structure:Structure):String-instance-method">#</a>
+        <a class="method-permalink" href="#to_locpot%28structure%3AStructure%29%3AString-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns a string representation of the grid using
 the <code><a href="../../Chem/VASP/Locpot.html">Chem::VASP::Locpot</a></code> file format. Arguments are fowarded to
-<code><a href="../../Chem/VASP/Locpot/Writer.html#open(io:IO,structure:Structure,sync_close:Bool=false,&:self-%3E)-class-method">Chem::VASP::Locpot::Writer.open</a></code>.</p>
+<code><a href="../../Chem/VASP/Locpot/Writer.html#open%28io%3AIO%2Cstructure%3AStructure%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::VASP::Locpot::Writer.open</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3636,13 +3589,13 @@ the <code><a href="../../Chem/VASP/Locpot.html">Chem::VASP::Locpot</a></code> fi
         
         def <strong>to_unsafe</strong> : Pointer(Float64)
 
-        <a class="method-permalink" href="#to_unsafe:Pointer(Float64)-instance-method">#</a>
+        <a class="method-permalink" href="#to_unsafe%3APointer%28Float64%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L748" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L748" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3652,7 +3605,7 @@ the <code><a href="../../Chem/VASP/Locpot.html">Chem::VASP::Locpot</a></code> fi
         
         def <strong>unsafe_fetch</strong>(i : Int) : Float64
 
-        <a class="method-permalink" href="#unsafe_fetch(i:Int):Float64-instance-method">#</a>
+        <a class="method-permalink" href="#unsafe_fetch%28i%3AInt%29%3AFloat64-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -3662,13 +3615,10 @@ the <code><a href="../../Chem/VASP/Locpot.html">Chem::VASP::Locpot</a></code> fi
             </div>
           
           <p>Returns the element at the given <em>index</em>, without doing any bounds check.</p>
-
-<p><code><a href="../../Indexable.html">Indexable</a></code> makes sure to invoke this method with <em>index</em> in <code>0..<a href="../../Chem/Spatial/Grid.html#size:Int32-instance-method">.size</a></code>,
+<p><code><a href="../../Indexable.html">Indexable</a></code> makes sure to invoke this method with <em>index</em> in <code>0..<a href="../../Chem/Spatial/Grid.html#size%3AInt32-instance-method">.size</a></code>,
 so converting negative indices to positive ones is not needed here.</p>
-
 <p>Clients never invoke this method directly. Instead, they access
-elements with <code><a href="../../Chem/Spatial/Grid.html#[](*args,**options):Float64-instance-method">#[](index)</a></code> and <code><a href="../../Chem/Spatial/Grid.html#[]?(loc:Location):Float64?-instance-method">#[]?(index)</a></code>.</p>
-
+elements with <code><a href="../../Chem/Spatial/Grid.html#%5B%5D%28%2Aargs%2C%2A%2Aoptions%29%3AFloat64-instance-method">#[](index)</a></code> and <code><a href="../../Chem/Spatial/Grid.html#%5B%5D%3F%28loc%3ALocation%29%3AFloat64%3F-instance-method">#[]?(index)</a></code>.</p>
 <p>This method should only be directly invoked if you are absolutely
 sure the index is in bounds, to avoid a bounds check for a small boost
 of performance.</p>
@@ -3677,7 +3627,7 @@ of performance.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L753" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L753" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3687,13 +3637,13 @@ of performance.</p>
         
         def <strong>unsafe_fetch</strong>(loc : <a href="../../Chem/Spatial/Grid/Location.html">Location</a>) : Float64
 
-        <a class="method-permalink" href="#unsafe_fetch(loc:Location):Float64-instance-method">#</a>
+        <a class="method-permalink" href="#unsafe_fetch%28loc%3ALocation%29%3AFloat64-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L758" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L758" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3703,13 +3653,13 @@ of performance.</p>
         
         def <strong>volume</strong>(*args, **options)
 
-        <a class="method-permalink" href="#volume(*args,**options)-instance-method">#</a>
+        <a class="method-permalink" href="#volume%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L19" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L19" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3719,13 +3669,13 @@ of performance.</p>
         
         def <strong>volume</strong>(*args, **options, &)
 
-        <a class="method-permalink" href="#volume(*args,**options,&)-instance-method">#</a>
+        <a class="method-permalink" href="#volume%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/spatial/grid.cr#L19" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/spatial/grid.cr#L19" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3735,7 +3685,7 @@ of performance.</p>
         
         def <strong>write</strong>(output : IO | Path | String, format : <a href="../../Chem/Format.html">Chem::Format</a> | String) : Nil
 
-        <a class="method-permalink" href="#write(output:IO%7CPath%7CString,format:Chem::Format%7CString):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#write%28output%3AIO%7CPath%7CString%2Cformat%3AChem%3A%3AFormat%7CString%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -3743,7 +3693,6 @@ of performance.</p>
           <p>Writes the grid to <em>output</em> using <em>format</em>. Raises
 <code>ArgumentError</code> if <em>format</em> has required arguments or cannot
 write <code><a href="../../Chem/Spatial/Grid.html">Chem::Spatial::Grid</a></code>.</p>
-
 <p>The supported file formats are <code><a href="../../Chem/DX.html">Chem::DX</a></code>. Use the
 <code>#to_*</code> methods to customize how the object is written in the
 corresponding file format if possible.</p>
@@ -3752,7 +3701,7 @@ corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3762,20 +3711,19 @@ corresponding file format if possible.</p>
         
         def <strong>write</strong>(path : Path | String) : Nil
 
-        <a class="method-permalink" href="#write(path:Path%7CString):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#write%28path%3APath%7CString%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Writes the grid to the specified file. The file
 format is chosen based on the filename (see
-<code><a href="../../Chem/Format.html#from_filename(filename:Path%7CString):self-class-method">Chem::Format#from_filename</a></code>). Raises <code>ArgumentError</code> if the
+<code><a href="../../Chem/Format.html#from_filename%28filename%3APath%7CString%29%3Aself-class-method">Chem::Format#from_filename</a></code>). Raises <code>ArgumentError</code> if the
 file format cannot be determined.</p>
-
 <p>The supported file formats are the following:</p>
-
-<ul><li><code><a href="../../Chem/DX.html">Chem::DX</a></code> (.dx)</li></ul>
-
+<ul>
+<li><code><a href="../../Chem/DX.html">Chem::DX</a></code> (.dx)</li>
+</ul>
 <p>Use the <code>#to_*</code> methods to customize how the object is written
 in the corresponding file format if possible.</p>
         </div>
@@ -3783,7 +3731,7 @@ in the corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>

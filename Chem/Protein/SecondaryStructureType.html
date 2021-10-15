@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.0.0">
+<meta name="generator" content="Crystal Docs 1.1.1">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -506,8 +506,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Quaternion" data-name="chem::spatial::quaternion">
-      <a href="../../Chem/Spatial/Quaternion.html">Quaternion</a>
+  <li class=" " data-id="chem.cr/Chem/Spatial/Quat" data-name="chem::spatial::quat">
+      <a href="../../Chem/Spatial/Quat.html">Quat</a>
       
     </li>
   
@@ -809,8 +809,11 @@
 
   <p>Members are similar to simplified or reduced secondary structure
 classification:</p>
-
-<ul><li>Helical (α-helix, π-helix, etc.)</li><li>Extended (β-strand, polyproline, 2.2_7-helix, etc.)</li><li>Coil (Bend, turn, etc.)</li></ul>
+<ul>
+<li>Helical (α-helix, π-helix, etc.)</li>
+<li>Extended (β-strand, polyproline, 2.2_7-helix, etc.)</li>
+<li>Coil (Bend, turn, etc.)</li>
+</ul>
 
 
 
@@ -835,7 +838,7 @@ classification:</p>
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/protein/secondary_structure.cr#L226" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/protein/secondary_structure.cr#L226" target="_blank">
         chem/protein/secondary_structure.cr
       </a>
     
@@ -890,36 +893,36 @@ classification:</p>
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#code:Char-instance-method" class="signature"><strong>#code</strong> : Char</a>
+        <a href="#code%3AChar-instance-method" class="signature"><strong>#code</strong> : Char</a>
         
           <div class="summary"><p>Returns one-letter secondary structure type code.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#coil?-instance-method" class="signature"><strong>#coil?</strong></a>
+        <a href="#coil%3F-instance-method" class="signature"><strong>#coil?</strong></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#extended?-instance-method" class="signature"><strong>#extended?</strong></a>
+        <a href="#extended%3F-instance-method" class="signature"><strong>#extended?</strong></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#helical?-instance-method" class="signature"><strong>#helical?</strong></a>
+        <a href="#helical%3F-instance-method" class="signature"><strong>#helical?</strong></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#min_size:Int32-instance-method" class="signature"><strong>#min_size</strong> : Int32</a>
+        <a href="#min_size%3AInt32-instance-method" class="signature"><strong>#min_size</strong> : Int32</a>
         
           <div class="summary"><p>Returns nominal secondary structure type's minimum size.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#regular?:Bool-instance-method" class="signature"><strong>#regular?</strong> : Bool</a>
+        <a href="#regular%3F%3ABool-instance-method" class="signature"><strong>#regular?</strong> : Bool</a>
         
           <div class="summary"><p>Returns <code>true</code> if it's a regular secondary structure type, otherwise <code>false</code>.</p></div>
         
@@ -994,22 +997,24 @@ classification:</p>
         
         def <strong>code</strong> : <a href="../../Char.html">Char</a>
 
-        <a class="method-permalink" href="#code:Char-instance-method">#</a>
+        <a class="method-permalink" href="#code%3AChar-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns one-letter secondary structure type code.</p>
-
 <p>Assignment codes are similar to those of simplified DSSP:</p>
-
-<ul><li><code>'H'</code> : Helical</li><li><code>'E'</code> : Extended</li><li><code>'C'</code> : Coil</li></ul>
+<ul>
+<li><code>'H'</code> : Helical</li>
+<li><code>'E'</code> : Extended</li>
+<li><code>'C'</code> : Coil</li>
+</ul>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/protein/secondary_structure.cr#L238" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/protein/secondary_structure.cr#L238" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1019,13 +1024,13 @@ classification:</p>
         
         def <strong>coil?</strong>
 
-        <a class="method-permalink" href="#coil?-instance-method">#</a>
+        <a class="method-permalink" href="#coil%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/protein/secondary_structure.cr#L227" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/protein/secondary_structure.cr#L227" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1035,13 +1040,13 @@ classification:</p>
         
         def <strong>extended?</strong>
 
-        <a class="method-permalink" href="#extended?-instance-method">#</a>
+        <a class="method-permalink" href="#extended%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/protein/secondary_structure.cr#L228" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/protein/secondary_structure.cr#L228" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1051,13 +1056,13 @@ classification:</p>
         
         def <strong>helical?</strong>
 
-        <a class="method-permalink" href="#helical?-instance-method">#</a>
+        <a class="method-permalink" href="#helical%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/protein/secondary_structure.cr#L229" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/protein/secondary_structure.cr#L229" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1067,7 +1072,7 @@ classification:</p>
         
         def <strong>min_size</strong> : Int32
 
-        <a class="method-permalink" href="#min_size:Int32-instance-method">#</a>
+        <a class="method-permalink" href="#min_size%3AInt32-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1078,7 +1083,7 @@ classification:</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/protein/secondary_structure.cr#L247" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/protein/secondary_structure.cr#L247" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1088,14 +1093,13 @@ classification:</p>
         
         def <strong>regular?</strong> : Bool
 
-        <a class="method-permalink" href="#regular?:Bool-instance-method">#</a>
+        <a class="method-permalink" href="#regular%3F%3ABool-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns <code>true</code> if it's a regular secondary structure type,
 otherwise <code>false</code>.</p>
-
 <pre><code class="language-crystal"><span class="t">SecondaryStructureType</span><span class="t">::</span><span class="t">Helical</span>.regular?  <span class="c"># =&gt; true</span>
 <span class="t">SecondaryStructureType</span><span class="t">::</span><span class="t">Extended</span>.regular? <span class="c"># =&gt; true</span>
 <span class="t">SecondaryStructureType</span><span class="t">::</span><span class="t">Coil</span>.regular?     <span class="c"># =&gt; false</span></code></pre>
@@ -1104,7 +1108,7 @@ otherwise <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/acb1d2142682d8cceffc1bf4e5acdbe064684ebe/src/chem/protein/secondary_structure.cr#L263" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86b922f304dcb660d7290778572ded2af560c2bb/src/chem/protein/secondary_structure.cr#L263" target="_blank">View source</a>]
         
       </div>
     </div>
