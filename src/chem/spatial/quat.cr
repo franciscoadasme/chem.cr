@@ -96,10 +96,11 @@ module Chem::Spatial
       Quat.new w, x, y, z
     end
 
-    # Returns a quaternion encoding the rotation operation to align *v1*
-    # to *v2*.
-    def self.aligning(v1 : Vec3, to v2 : Vec3) : self
-      Quat.rotation v1.cross(v2), Spatial.angle(v1, v2)
+    # Returns a quaternion encoding the rotation operation to align *u*
+    # to *v*.
+    def self.aligning(u : Vec3, to v : Vec3) : self
+      w = u.cross(v)
+      Quat[Math.sqrt(u.squared_size * v.squared_size) + u.dot(v), w.x, w.y, w.z].normalize
     end
 
     # Returns a quaternion encoding the rotation about the axis vector
