@@ -124,6 +124,18 @@ describe Chem::Spatial::Vec3 do
     end
   end
 
+  describe "#close_to?" do
+    it "returns true if vectors are within delta" do
+      Vec3[1, 2, 3].close_to?(Vec3[1, 2, 3]).should be_true
+      Vec3[1, 2, 3].close_to?(Vec3[1.001, 1.999, 3.00004], 1e-3).should be_true
+    end
+
+    it "returns false if vectors aren't within delta" do
+      Vec3[1, 2, 3].close_to?(Vec3[3, 2, 1]).should be_false
+      Vec3[1, 2, 3].close_to?(Vec3[1.001, 1.999, 3.00004], 1e-8).should be_false
+    end
+  end
+
   describe "#dot" do
     it "returns the dot product between two vectors" do
       Vec3[3, 4, 0].dot(Vec3[4, 4, 2]).should eq 28

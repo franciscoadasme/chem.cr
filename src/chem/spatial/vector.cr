@@ -89,6 +89,21 @@ module Chem::Spatial
       map &.clamp(range)
     end
 
+    # Returns `true` if the elements of the vectors are within *delta*
+    # from each other, else `false`.
+    #
+    # ```
+    # Vec3[1, 2, 3].close_to?(Vec3[1, 2, 3])                     # => true
+    # Vec3[1, 2, 3].close_to?(Vec3[1.001, 1.999, 3.00004], 1e-3) # => true
+    # Vec3[1, 2, 3].close_to?(Vec3[3, 2, 1])                     # => false
+    # Vec3[1, 2, 3].close_to?(Vec3[1.001, 1.999, 3.00004], 1e-8) # => false
+    # ```
+    def close_to?(rhs : self, delta : Number = Float64::EPSILON) : Bool
+      @x.close_to?(rhs.x, delta) &&
+        @y.close_to?(rhs.y, delta) &&
+        @z.close_to?(rhs.z, delta)
+    end
+
     def cross(other : Vec3) : self
       Vec3.new @y * other.z - @z * other.y,
         @z * other.x - @x * other.z,
