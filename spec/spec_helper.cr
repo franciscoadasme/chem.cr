@@ -9,9 +9,7 @@ module Spec
     def match(actual_value : Enumerable(Vec3)) : Bool
       return false unless @expected_value.size == actual_value.size
       actual_value.zip(@expected_value).all? do |a, b|
-        {(a.x - b.x).abs, (a.y - b.y).abs, (a.z - b.z).abs}.all? do |value|
-          value <= @delta
-        end
+        a.close_to? b, @delta
       end
     end
 
@@ -22,20 +20,15 @@ module Spec
       actual_value.zip(@expected_value).all? { |a, b| (a - b).abs <= @delta }
     end
 
-    def match(actual_value : Array(Chem::Spatial::Vec3))
+    def match(actual_value : Array(Vec3))
       return false unless @expected_value.size == actual_value.size
       actual_value.zip(@expected_value).all? do |a, b|
-        dvec = (a - b).abs
-        dvec.x <= @delta && dvec.y <= @delta && dvec.z <= @delta
+        a.close_to? b, @delta
       end
     end
 
     def match(actual_value : Chem::Spatial::Vec3)
-      [(actual_value.x - @expected_value.x).abs,
-       (actual_value.y - @expected_value.y).abs,
-       (actual_value.z - @expected_value.z).abs].all? do |value|
-        value <= @delta
-      end
+      actual_value.close_to? @expected_value, @delta
     end
 
     def match(actual_value : Chem::Spatial::Quat) : Bool
@@ -129,27 +122,6 @@ def load_file(path : String, guess_topology : Bool = false) : Structure
   end
 end
 
-def make_grid(nx : Int,
-              ny : Int,
-              nz : Int,
-              bounds : Bounds = Bounds.zero) : Grid
-  Grid.build({nx, ny, nz}, bounds) do |buffer|
-    (nx * ny * nz).times do |i|
-      buffer[i] = i.to_f
-    end
-  end
-end
-
-def make_grid(nx : Int,
-              ny : Int,
-              nz : Int,
-              bounds : Bounds = Bounds.zero,
-              &block : Int32, Int32, Int32 -> Number) : Grid
-  Grid.new({nx, ny, nz}, bounds).map_with_loc! do |_, (i, j, k)|
-    (yield i, j, k).to_f
-  end
-end
-
 macro enum_cast(decl)
   def {{decl.var}}(name : {{decl.type}}) : {{decl.type}}
     name
@@ -195,4 +167,25 @@ private def compile_code(code : String) : {Bool, String}
 ensure
   buffer.try &.close
   tempfile.try &.delete
+end
+
+def make_grid(nx : Int,
+              ny : Int,
+              nz : Int,
+              bounds : Bounds = Bounds.zero) : Grid
+  Grid.build({nx, ny, nz}, bounds) do |buffer|
+    (nx * ny * nz).times do |i|
+      buffer[i] = i.to_f
+    end
+  end
+end
+
+def make_grid(nx : Int,
+              ny : Int,
+              nz : Int,
+              bounds : Bounds = Bounds.zero,
+              &block : Int32, Int32, Int32 -> Number) : Grid
+  Grid.new({nx, ny, nz}, bounds).map_with_loc! do |_, (i, j, k)|
+    (yield i, j, k).to_f
+  end
 end
