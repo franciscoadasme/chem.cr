@@ -343,4 +343,82 @@ describe Chem::Spatial::Vec3 do
       end
     end
   end
+
+  describe "#x?" do
+    it "tells if the vector lies along the X axis" do
+      Vec3[0, 0, 0].x?.should be_false
+      Vec3[0, 0, 1].x?.should be_false
+      Vec3[0, 1, 0].x?.should be_false
+      Vec3[0, 1, 1].x?.should be_false
+      Vec3[1, 0, 0].x?.should be_true
+      Vec3[1, 0, 1].x?.should be_false
+      Vec3[1, 1, 0].x?.should be_false
+      Vec3[1, 1, 1].x?.should be_false
+    end
+  end
+
+  describe "#xy?" do
+    it "tells if the vector lies in the XY plane" do
+      Vec3[0, 0, 0].xy?.should be_false
+      Vec3[0, 0, 1].xy?.should be_false
+      Vec3[0, 1, 0].xy?.should be_true
+      Vec3[0, 1, 1].xy?.should be_false
+      Vec3[1, 0, 0].xy?.should be_true
+      Vec3[1, 0, 1].xy?.should be_false
+      Vec3[1, 1, 0].xy?.should be_true
+      Vec3[1, 1, 1].xy?.should be_false
+    end
+  end
+
+  describe "#xz?" do
+    it "tells if the vector lies in the XZ plane" do
+      Vec3[0, 0, 0].xz?.should be_false
+      Vec3[0, 0, 1].xz?.should be_true
+      Vec3[0, 1, 0].xz?.should be_false
+      Vec3[0, 1, 1].xz?.should be_false
+      Vec3[1, 0, 0].xz?.should be_true
+      Vec3[1, 0, 1].xz?.should be_true
+      Vec3[1, 1, 0].xz?.should be_false
+      Vec3[1, 1, 1].xz?.should be_false
+    end
+  end
+
+  describe "#y?" do
+    it "tells if the vector lies along the Y axis" do
+      Vec3[0, 0, 0].y?.should be_false
+      Vec3[0, 0, 1].y?.should be_false
+      Vec3[0, 1, 0].y?.should be_true
+      Vec3[0, 1, 1].y?.should be_false
+      Vec3[1, 0, 0].y?.should be_false
+      Vec3[1, 0, 1].y?.should be_false
+      Vec3[1, 1, 0].y?.should be_false
+      Vec3[1, 1, 1].y?.should be_false
+    end
+  end
+
+  describe "#yz?" do
+    it "tells if the vector lies in the YZ plane" do
+      Vec3[0, 0, 0].yz?.should be_false
+      Vec3[0, 0, 1].yz?.should be_true
+      Vec3[0, 1, 0].yz?.should be_true
+      Vec3[0, 1, 1].yz?.should be_true
+      Vec3[1, 0, 0].yz?.should be_false
+      Vec3[1, 0, 1].yz?.should be_false
+      Vec3[1, 1, 0].yz?.should be_false
+      Vec3[1, 1, 1].yz?.should be_false
+    end
+  end
+
+  describe "#z?" do
+    it "tells if the vector lies along the Z axis" do
+      Vec3[0, 0, 0].z?.should be_false
+      Vec3[0, 0, 1].z?.should be_true
+      Vec3[0, 1, 0].z?.should be_false
+      Vec3[0, 1, 1].z?.should be_false
+      Vec3[1, 0, 0].z?.should be_false
+      Vec3[1, 0, 1].z?.should be_false
+      Vec3[1, 1, 0].z?.should be_false
+      Vec3[1, 1, 1].z?.should be_false
+    end
+  end
 end
