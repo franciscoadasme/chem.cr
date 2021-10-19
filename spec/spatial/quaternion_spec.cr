@@ -11,6 +11,20 @@ describe Chem::Spatial::Quat do
     it "returns a quaternion encoding the rotation to align v1 to v2" do
       Q.aligning(V[1, 0, 0], V[0, 1, 0]).should be_close Q[0.71, 0.0, 0.0, 0.71], 1e-2
     end
+
+    it "returns a quaternion to align two pairs of vectors" do
+      q = Q.rotation(Vec3[1, 2, 3], 65)
+      i = Vec3[1, 0, 0]
+      j = Vec3[0, 1, 0.5]
+      k = Vec3[0.1, 0.2, 1]
+      ii = q * i
+      jj = q * j
+      kk = q * k
+      q = Q.aligning({ii, jj}, to: {i, j})
+      (q * ii).should be_close i, 1e-15
+      (q * jj).should be_close j, 1e-15
+      (q * kk).should be_close k, 1e-15
+    end
   end
 
   describe ".rotation" do

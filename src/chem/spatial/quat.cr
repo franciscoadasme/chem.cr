@@ -103,6 +103,18 @@ module Chem::Spatial
       Quat[Math.sqrt(u.squared_size * v.squared_size) + u.dot(v), w.x, w.y, w.z].normalize
     end
 
+    # Returns a quaternion encoding the rotation to align *u[0]* to
+    # *v[0]* and *u[1]* to *v[1]*.
+    #
+    # First compute the alignment of *u[0]* to *v[0]*, then the
+    # alignment of the transformed *u[1]* to *v[1]* on the plane
+    # perpendicular to *v[0]* by taking their projections.
+    def self.aligning(u : Tuple(Vec3, Vec3), to v : Tuple(Vec3, Vec3)) : self
+      q = Spatial::Quat.aligning(u[0], to: v[0])
+      qq = Spatial::Quat.aligning (q * u[1]).proj_plane(v[0]), to: v[1].proj_plane(v[0])
+      qq * q
+    end
+
     # Returns a quaternion encoding the rotation about the axis vector
     # *rotaxis* by *theta* degrees.
     def self.rotation(about rotaxis : Vec3, by theta : Float64) : self
