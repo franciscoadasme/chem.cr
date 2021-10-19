@@ -1,6 +1,6 @@
 require "./spatial/affine"
 require "./spatial/size"
-require "./spatial/vector"
+require "./spatial/vec3"
 
 require "./spatial/basis"
 require "./spatial/bounds"
