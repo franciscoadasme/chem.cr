@@ -103,7 +103,7 @@ module Chem::Spatial
     # Returns maximum edge.
     #
     # ```
-    # bounds = Bounds.new V[1.5, 3, -0.4], S[10, 10, 12], 90, 90, 120
+    # bounds = Bounds.new Vec3[1.5, 3, -0.4], S[10, 10, 12], 90, 90, 120
     # bounds.max # => Vec3[6.5, 11.66, 11.6]
     # ```
     def max : Vec3
@@ -113,7 +113,7 @@ module Chem::Spatial
     # Returns minimum edge. This is equivalent to the origin.
     #
     # ```
-    # bounds = Bounds.new V[1.5, 3, -0.4], S[10, 10, 12], 90, 90, 120
+    # bounds = Bounds.new Vec3[1.5, 3, -0.4], S[10, 10, 12], 90, 90, 120
     # bounds.min # => Vec3[1.5, 3, -0.4]
     # ```
     def min : Vec3
@@ -140,8 +140,8 @@ module Chem::Spatial
     # Returns a bounds translated by *offset*.
     #
     # ```
-    # bounds = Bounds.new V[-5, 1, 20], S[10, 10, 10], 90, 90, 120
-    # bounds.translate(V[1, 2, 10]).min # => Vec3[-4.0, 3.0, 30.0]
+    # bounds = Bounds.new Vec3[-5, 1, 20], S[10, 10, 10], 90, 90, 120
+    # bounds.translate(Vec3[1, 2, 10]).min # => Vec3[-4.0, 3.0, 30.0]
     # ```
     def translate(offset : Vec3) : self
       Bounds.new @origin + offset, basis

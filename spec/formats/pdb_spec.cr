@@ -240,7 +240,7 @@ describe Chem::PDB do
       structure.n_atoms.should eq 14
       structure.each_atom.map(&.occupancy).uniq.to_a.should eq [0.56]
       structure['A'][1].name.should eq "TRP"
-      structure['A'][1]["N"].coords.should eq V[3.298, 2.388, 22.684]
+      structure['A'][1]["N"].coords.should eq Vec3[3.298, 2.388, 22.684]
     end
 
     it "parses selected alternate conformation" do
@@ -249,7 +249,7 @@ describe Chem::PDB do
       structure.n_atoms.should eq 11
       structure.each_atom.map(&.occupancy).uniq.to_a.should eq [0.22]
       structure['A'][1].name.should eq "ARG"
-      structure['A'][1]["CB"].coords.should eq V[4.437, 2.680, 20.555]
+      structure['A'][1]["CB"].coords.should eq Vec3[4.437, 2.680, 20.555]
     end
 
     it "parses insertion codes" do
@@ -288,9 +288,9 @@ describe Chem::PDB do
     it "skip models" do
       PDB::Reader.open("spec/data/pdb/models.pdb") do |reader|
         reader.skip_entry
-        reader.read_entry.atoms[0].coords.should eq V[7.212, 15.334, 0.966]
+        reader.read_entry.atoms[0].coords.should eq Vec3[7.212, 15.334, 0.966]
         reader.skip_entry
-        reader.read_entry.atoms[0].coords.should eq V[22.055, 14.701, 7.032]
+        reader.read_entry.atoms[0].coords.should eq Vec3[22.055, 14.701, 7.032]
       end
     end
 
@@ -334,7 +334,7 @@ describe Chem::PDB do
       residue = structure['A'][23]
       residue.n_atoms.should eq 15
       residue.each_atom.map(&.occupancy).uniq.to_a.should eq [1, 0.8]
-      residue["CG"].coords.should eq V[10.387, 12.021, 0.058]
+      residue["CG"].coords.should eq Vec3[10.387, 12.021, 0.058]
     end
 
     it "parses 1dpo (insertions)" do
@@ -488,9 +488,9 @@ describe Chem::PDB::Writer do
   it "writes CONECT records" do
     structure = Chem::Structure.build do
       residue "ICN" do
-        atom :i, V[3.149, 0, 0]
-        atom :c, V[1.148, 0, 0]
-        atom :n, V[0, 0, 0]
+        atom :i, Vec3[3.149, 0, 0]
+        atom :c, Vec3[1.148, 0, 0]
+        atom :n, Vec3[0, 0, 0]
 
         bond "I1", "C1"
         bond "C1", "N1", order: 3
@@ -513,18 +513,18 @@ describe Chem::PDB::Writer do
   it "writes CONECT records for renumbered atoms" do
     structure = Chem::Structure.build do
       residue "ICN" do
-        atom :i, V[3.149, 0, 0]
-        atom :c, V[1.148, 0, 0]
-        atom :n, V[0, 0, 0]
+        atom :i, Vec3[3.149, 0, 0]
+        atom :c, Vec3[1.148, 0, 0]
+        atom :n, Vec3[0, 0, 0]
 
         bond "I1", "C1"
         bond "C1", "N1", order: 3
       end
 
       residue "ICN" do
-        atom :i, V[13.149, 0, 0]
-        atom :c, V[11.148, 0, 0]
-        atom :n, V[10, 0, 0]
+        atom :i, Vec3[13.149, 0, 0]
+        atom :c, Vec3[11.148, 0, 0]
+        atom :n, Vec3[10, 0, 0]
 
         bond "I1", "C1"
         bond "C1", "N1", order: 3
@@ -547,11 +547,11 @@ describe Chem::PDB::Writer do
   it "writes CONECT records for specified bonds" do
     structure = Chem::Structure.build do
       residue "CH4" do
-        atom :c, V[0, 0, 0]
-        atom :h, V[0.65, 0.65, -0.65]
-        atom :h, V[0.65, -0.65, 0.65]
-        atom :h, V[-0.65, 0.65, 0.65]
-        atom :h, V[-0.65, -0.65, -0.65]
+        atom :c, Vec3[0, 0, 0]
+        atom :h, Vec3[0.65, 0.65, -0.65]
+        atom :h, Vec3[0.65, -0.65, 0.65]
+        atom :h, Vec3[-0.65, 0.65, 0.65]
+        atom :h, Vec3[-0.65, -0.65, -0.65]
       end
     end
 
@@ -573,9 +573,9 @@ describe Chem::PDB::Writer do
   it "writes big numbers" do
     structure = Chem::Structure.build do
       residue "ICN" do
-        atom :i, V[3.149, 0, 0]
-        atom :c, V[1.148, 0, 0]
-        atom :n, V[0, 0, 0]
+        atom :i, Vec3[3.149, 0, 0]
+        atom :c, Vec3[1.148, 0, 0]
+        atom :n, Vec3[0, 0, 0]
 
         bond "I1", "C1"
         bond "C1", "N1", order: 3
@@ -602,10 +602,10 @@ describe Chem::PDB::Writer do
   it "writes four-letter residue names (#45)" do
     structure = Chem::Structure.build do
       residue "DMPG" do
-        atom "C13", V[9.194, 10.488, 13.865]
-        atom "H13A", V[8.843, 9.508, 14.253]
-        atom "H13B", V[10.299, 10.527, 13.756]
-        atom "OC3", V[8.600, 10.828, 12.580]
+        atom "C13", Vec3[9.194, 10.488, 13.865]
+        atom "H13A", Vec3[8.843, 9.508, 14.253]
+        atom "H13B", Vec3[10.299, 10.527, 13.756]
+        atom "OC3", Vec3[8.600, 10.828, 12.580]
       end
     end
     structure.to_pdb.should eq <<-EOS

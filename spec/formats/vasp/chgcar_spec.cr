@@ -25,7 +25,7 @@ describe Chem::VASP::Chgcar do
     structure.source_file.should eq Path["spec/data/vasp/CHGCAR"].expand
     structure.n_atoms.should eq 1
     structure.atoms.map(&.element.symbol).should eq %w(O)
-    structure.atoms[0].coords.should eq V.zero
+    structure.atoms[0].coords.should eq Vec3.zero
 
     structure.should be reader.read_attached
   end
@@ -34,11 +34,11 @@ describe Chem::VASP::Chgcar do
     structure = Chem::Structure.build do
       title "NaCl-O-NaCl"
       lattice 5, 10, 20
-      atom :Cl, V[30, 15, 10]
-      atom :Na, V[10, 5, 5]
-      atom :O, V[30, 15, 9]
-      atom :Na, V[10, 10, 12.5]
-      atom :Cl, V[20, 10, 10]
+      atom :Cl, Vec3[30, 15, 10]
+      atom :Na, Vec3[10, 5, 5]
+      atom :O, Vec3[30, 15, 9]
+      atom :Na, Vec3[10, 10, 12.5]
+      atom :Cl, Vec3[20, 10, 10]
     end
 
     grid = make_grid(3, 3, 3, Bounds[5, 10, 20]) { |i, j, k| i * 100 + j * 10 + k }
@@ -93,7 +93,7 @@ describe Chem::VASP::Chgcar do
     structure = Chem::Structure.build do
       title "Zn"
       lattice 10, 10, 10
-      atom "Zn", V[0, 0, 0]
+      atom "Zn", Vec3[0, 0, 0]
     end
     grid.to_chgcar(structure).should eq <<-EOF
       Zn

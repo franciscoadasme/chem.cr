@@ -9,7 +9,7 @@ structure = Chem::Structure.read "spec/data/pdb/1h1s.pdb"
 kdtree = uninitialized KDTree
 pkdtree = uninitialized KDTree
 points = (0...1000).map do
-  V[random.rand(-10.0..70.0), random.rand(100.0), random.rand(100.0)]
+  Vec3[random.rand(-10.0..70.0), random.rand(100.0), random.rand(100.0)]
 end
 
 Benchmark.bm do |bm|

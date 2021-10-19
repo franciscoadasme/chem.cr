@@ -3,24 +3,24 @@ require "../spec_helper"
 describe Chem::Spatial::Basis do
   describe ".new" do
     it "creates a basis with vectors" do
-      basis = Basis.new V[1, 0, 0], V[0, 1, 0], V[0, 0, 1]
-      basis.i.should eq V[1, 0, 0]
-      basis.j.should eq V[0, 1, 0]
-      basis.k.should eq V[0, 0, 1]
+      basis = Basis.new Vec3[1, 0, 0], Vec3[0, 1, 0], Vec3[0, 0, 1]
+      basis.i.should eq Vec3[1, 0, 0]
+      basis.j.should eq Vec3[0, 1, 0]
+      basis.k.should eq Vec3[0, 0, 1]
     end
 
     it "creates a basis with size" do
       basis = Basis.new S[74.23, 135.35, 148.46]
-      basis.i.should be_close V[74.23, 0, 0], 1e-6
-      basis.j.should be_close V[0, 135.35, 0], 1e-6
-      basis.k.should be_close V[0, 0, 148.46], 1e-6
+      basis.i.should be_close Vec3[74.23, 0, 0], 1e-6
+      basis.j.should be_close Vec3[0, 135.35, 0], 1e-6
+      basis.k.should be_close Vec3[0, 0, 148.46], 1e-6
     end
 
     it "creates a basis with size and angles" do
       basis = Basis.new S[8.661, 11.594, 21.552], 86.389999, 82.209999, 76.349998
-      basis.i.should be_close V[8.661, 0.0, 0.0], 1e-6
-      basis.j.should be_close V[2.736071, 11.266532, 0.0], 1e-6
-      basis.k.should be_close V[2.921216, 0.687043, 21.342052], 1e-6
+      basis.i.should be_close Vec3[8.661, 0.0, 0.0], 1e-6
+      basis.j.should be_close Vec3[2.736071, 11.266532, 0.0], 1e-6
+      basis.k.should be_close Vec3[2.921216, 0.687043, 21.342052], 1e-6
     end
   end
 
@@ -43,7 +43,7 @@ describe Chem::Spatial::Basis do
 
   describe "#alpha" do
     it "returns alpha" do
-      Basis.new(V[1, 0, 0], V[0, 1, 0], V[0, 1, 1]).alpha.should eq 45
+      Basis.new(Vec3[1, 0, 0], Vec3[0, 1, 0], Vec3[0, 1, 1]).alpha.should eq 45
     end
   end
 
@@ -56,7 +56,7 @@ describe Chem::Spatial::Basis do
 
   describe "#beta" do
     it "returns beta" do
-      Basis.new(V[1, 0, 0], V[0, 1, 0], V[0, 1, 1]).beta.should eq 90
+      Basis.new(Vec3[1, 0, 0], Vec3[0, 1, 0], Vec3[0, 1, 1]).beta.should eq 90
     end
   end
 
@@ -69,14 +69,14 @@ describe Chem::Spatial::Basis do
 
   describe "#gamma" do
     it "returns gamma" do
-      Basis.new(V[1, 0, 0], V[0, 1, 0], V[0, 1, 1]).gamma.should eq 90
+      Basis.new(Vec3[1, 0, 0], Vec3[0, 1, 0], Vec3[0, 1, 1]).gamma.should eq 90
     end
   end
 
   describe "#size" do
     it "returns basis' size" do
       Basis.new(S[5, 5, 4], 90, 90, 120).size.should be_close S[5, 5, 4], 1e-15
-      basis = Basis.new V[1, 0, 0], V[2, 2, 0], V[0, 1, 1]
+      basis = Basis.new Vec3[1, 0, 0], Vec3[2, 2, 0], Vec3[0, 1, 1]
       basis.size.should be_close S[1, Math.sqrt(8), Math.sqrt(2)], 1e-15
     end
   end

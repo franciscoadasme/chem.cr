@@ -273,9 +273,9 @@ describe Topology::Perception do
     it "assigns bond orders for a structure without hydrogens" do
       structure = Chem::Structure.build do
         residue "ICN" do
-          atom :i, V[3.149, 0, 0]
-          atom :c, V[1.148, 0, 0]
-          atom :n, V[0, 0, 0]
+          atom :i, Vec3[3.149, 0, 0]
+          atom :c, Vec3[1.148, 0, 0]
+          atom :n, Vec3[0, 0, 0]
           # bond "I1", "C1"
           # bond "C1", "N1", order: 3
         end

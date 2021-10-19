@@ -14,12 +14,10 @@ alias PBC = Chem::Spatial::PBC
 alias PDB = Chem::PDB
 alias ParseException = Chem::ParseException
 alias PeriodicTable = Chem::PeriodicTable
-alias Q = Chem::Spatial::Quat
 alias S = Chem::Spatial::Size
 alias Structure = Chem::Structure
 alias Topology = Chem::Topology
 alias Tf = Chem::Spatial::AffineTransform
-alias V = Chem::Spatial::Vec3
 alias Vec3 = Chem::Spatial::Vec3
 
 enum TopologyLevel
@@ -98,39 +96,39 @@ def fake_structure(*, include_bonds : Bool = true) : Chem::Structure
 
     chain do
       residue "ASP" do
-        atom "N", V[-2.186, 22.128, 79.139]
-        atom "CA", V[-0.955, 21.441, 78.711]
-        atom "C", V[-0.595, 21.849, 77.252]
-        atom "O", V[-1.461, 21.781, 76.374]
-        atom "CB", V[-1.316, 19.953, 79.003]
-        atom "CG", V[-0.895, 18.952, 77.936]
-        atom "OD1", V[-1.281, 17.738, 78.086]
-        atom "OD2", V[-0.209, 19.223, 76.945], formal_charge: -1
+        atom "N", Vec3[-2.186, 22.128, 79.139]
+        atom "CA", Vec3[-0.955, 21.441, 78.711]
+        atom "C", Vec3[-0.595, 21.849, 77.252]
+        atom "O", Vec3[-1.461, 21.781, 76.374]
+        atom "CB", Vec3[-1.316, 19.953, 79.003]
+        atom "CG", Vec3[-0.895, 18.952, 77.936]
+        atom "OD1", Vec3[-1.281, 17.738, 78.086]
+        atom "OD2", Vec3[-0.209, 19.223, 76.945], formal_charge: -1
       end
 
       residue "PHE" do
-        atom "N", V[0.647, 22.313, 76.991]
-        atom "CA", V[1.092, 22.731, 75.639]
-        atom "C", V[1.006, 21.699, 74.529]
-        atom "O", V[0.990, 22.038, 73.319]
-        atom "CB", V[2.618, 23.255, 75.696]
-        atom "CG", V[2.643, 24.713, 75.877]
-        atom "CD1", V[1.790, 25.237, 76.833]
-        atom "CD2", V[3.242, 25.569, 74.992]
-        atom "CE1", V[1.639, 26.577, 76.996]
-        atom "CE2", V[3.100, 26.930, 75.157]
-        atom "CZ", V[2.331, 27.435, 76.167]
+        atom "N", Vec3[0.647, 22.313, 76.991]
+        atom "CA", Vec3[1.092, 22.731, 75.639]
+        atom "C", Vec3[1.006, 21.699, 74.529]
+        atom "O", Vec3[0.990, 22.038, 73.319]
+        atom "CB", Vec3[2.618, 23.255, 75.696]
+        atom "CG", Vec3[2.643, 24.713, 75.877]
+        atom "CD1", Vec3[1.790, 25.237, 76.833]
+        atom "CD2", Vec3[3.242, 25.569, 74.992]
+        atom "CE1", Vec3[1.639, 26.577, 76.996]
+        atom "CE2", Vec3[3.100, 26.930, 75.157]
+        atom "CZ", Vec3[2.331, 27.435, 76.167]
       end
     end
 
     chain do
       residue "SER" do
-        atom "N", V[7.186, 2.582, 8.445]
-        atom "CA", V[6.500, 1.584, 7.565]
-        atom "C", V[5.382, 2.313, 6.773]
-        atom "O", V[5.213, 2.016, 5.557]
-        atom "CB", V[5.908, 0.462, 8.400]
-        atom "OG", V[6.990, -0.272, 9.012]
+        atom "N", Vec3[7.186, 2.582, 8.445]
+        atom "CA", Vec3[6.500, 1.584, 7.565]
+        atom "C", Vec3[5.382, 2.313, 6.773]
+        atom "O", Vec3[5.213, 2.016, 5.557]
+        atom "CB", Vec3[5.908, 0.462, 8.400]
+        atom "OG", Vec3[6.990, -0.272, 9.012]
       end
     end
   end

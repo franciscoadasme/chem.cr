@@ -5,7 +5,7 @@ describe Chem::Cube::Reader do
     grid = Grid.from_cube "spec/data/cube/20.cube"
     grid.source_file.should eq Path["spec/data/cube/20.cube"].expand
     grid.dim.should eq({20, 20, 20})
-    grid.origin.should be_close V[-3.826155, -4.114553, -6.64407], 1e-6
+    grid.origin.should be_close Vec3[-3.826155, -4.114553, -6.64407], 1e-6
     grid.bounds.size.should be_close S[12.184834, 12.859271, 13.117308], 1e-6
     grid[0, 0, 0].should eq 2.19227e-19
     grid[-1, -1, -1].should eq 7.36329e-22
@@ -15,7 +15,7 @@ describe Chem::Cube::Reader do
   it "parses a cube file header" do
     info = Grid::Info.from_cube "spec/data/cube/20.cube"
     info.dim.should eq({20, 20, 20})
-    info.bounds.origin.should be_close V[-3.826155, -4.114553, -6.64407], 1e-6
+    info.bounds.origin.should be_close Vec3[-3.826155, -4.114553, -6.64407], 1e-6
     info.bounds.size.should be_close S[12.184834, 12.859271, 13.117308], 1e-6
   end
 
@@ -35,10 +35,10 @@ describe Chem::Cube::Reader do
     info = Grid::Info.from_cube io
     info.dim.should eq({14, 20, 22})
     info.bounds.should be_close Bounds.new(
-      V[-3.826155, -4.114553, -6.64407],
-      V[8.497002, 0.0, 0.0],
-      V[2.702550, 11.23965, 0.0],
-      V[5.816758, 2.222264, 41.171796],
+      Vec3[-3.826155, -4.114553, -6.64407],
+      Vec3[8.497002, 0.0, 0.0],
+      Vec3[2.702550, 11.23965, 0.0],
+      Vec3[5.816758, 2.222264, 41.171796],
     ), 1e-6
   end
 
@@ -49,9 +49,9 @@ describe Chem::Cube::Reader do
     structure.source_file.should eq Path["spec/data/cube/20.cube"].expand
     structure.n_atoms.should eq 16
     structure.atoms.map(&.element.symbol).should eq %w(Cu O H H O H H O H H O O H H H H)
-    structure.atoms[0].coords.should eq V[2.317035, 3.509540, -0.795570]
+    structure.atoms[0].coords.should eq Vec3[2.317035, 3.509540, -0.795570]
     structure.atoms[0].partial_charge.should eq 29
-    structure.atoms[-1].coords.should eq V[0.794769, 5.548665, 3.668909]
+    structure.atoms[-1].coords.should eq Vec3[0.794769, 5.548665, 3.668909]
 
     structure.should be reader.read_attached
   end
@@ -78,22 +78,22 @@ end
 describe Chem::Cube::Writer do
   it "writes a grid" do
     structure = Chem::Structure.build do
-      atom :Cu, V[1.22612212, 1.85716859, -0.42099751], partial_charge: 29.0
-      atom :O, V[1.86127447, 3.64210184, -0.94969635], partial_charge: 8.0
-      atom :H, V[1.93603293, 4.39750972, -0.35338825], partial_charge: 1.0
-      atom :H, V[1.88271197, 3.96221913, -1.86020448], partial_charge: 1.0
-      atom :O, V[0.27668242, 0.2097034, 0.08192298], partial_charge: 8.0
-      atom :H, V[-0.06536291, 0.02505019, 0.96550446], partial_charge: 1.0
-      atom :H, V[-0.12191449, -0.4103129, -0.54127526], partial_charge: 1.0
-      atom :O, V[3.2071875, 0.9949664, -0.25923333], partial_charge: 8.0
-      atom :H, V[3.42538419, 0.09031997, -0.0054119], partial_charge: 1.0
-      atom :H, V[4.04519359, 1.44601271, -0.41659317], partial_charge: 1.0
-      atom :O, V[1.13252919, 2.46482172, 1.48982488], partial_charge: 8.0
-      atom :O, V[1.00808894, 1.38875203, -2.36108711], partial_charge: 8.0
-      atom :H, V[0.24910171, 1.53732647, -2.93982918], partial_charge: 1.0
-      atom :H, V[1.68656238, 0.91277301, -2.85717964], partial_charge: 1.0
-      atom :H, V[1.85823276, 2.33113092, 2.11313213], partial_charge: 1.0
-      atom :H, V[0.42057364, 2.93622707, 1.94150303], partial_charge: 1.0
+      atom :Cu, Vec3[1.22612212, 1.85716859, -0.42099751], partial_charge: 29.0
+      atom :O, Vec3[1.86127447, 3.64210184, -0.94969635], partial_charge: 8.0
+      atom :H, Vec3[1.93603293, 4.39750972, -0.35338825], partial_charge: 1.0
+      atom :H, Vec3[1.88271197, 3.96221913, -1.86020448], partial_charge: 1.0
+      atom :O, Vec3[0.27668242, 0.2097034, 0.08192298], partial_charge: 8.0
+      atom :H, Vec3[-0.06536291, 0.02505019, 0.96550446], partial_charge: 1.0
+      atom :H, Vec3[-0.12191449, -0.4103129, -0.54127526], partial_charge: 1.0
+      atom :O, Vec3[3.2071875, 0.9949664, -0.25923333], partial_charge: 8.0
+      atom :H, Vec3[3.42538419, 0.09031997, -0.0054119], partial_charge: 1.0
+      atom :H, Vec3[4.04519359, 1.44601271, -0.41659317], partial_charge: 1.0
+      atom :O, Vec3[1.13252919, 2.46482172, 1.48982488], partial_charge: 8.0
+      atom :O, Vec3[1.00808894, 1.38875203, -2.36108711], partial_charge: 8.0
+      atom :H, Vec3[0.24910171, 1.53732647, -2.93982918], partial_charge: 1.0
+      atom :H, Vec3[1.68656238, 0.91277301, -2.85717964], partial_charge: 1.0
+      atom :H, Vec3[1.85823276, 2.33113092, 2.11313213], partial_charge: 1.0
+      atom :H, Vec3[0.42057364, 2.93622707, 1.94150303], partial_charge: 1.0
     end
 
     content = File.read "spec/data/cube/20.cube"

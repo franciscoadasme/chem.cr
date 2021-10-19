@@ -13,8 +13,8 @@ describe Chem::XYZ::Reader do
     structure.title.should eq "Ala-Cys-Ala-Met-Ala"
     structure.n_atoms.should eq 61
     structure.atoms.map(&.element.symbol).should eq symbols
-    structure.atoms[11].coords.should eq V[4.76610, 0.49650, 5.29840]
-    structure.atoms[-1].coords.should eq V[0.72200, 0.70700, 7.66970]
+    structure.atoms[11].coords.should eq Vec3[4.76610, 0.49650, 5.29840]
+    structure.atoms[-1].coords.should eq Vec3[0.72200, 0.70700, 7.66970]
   end
 
   it "parses a XYZ file with multiple structures" do
@@ -69,9 +69,9 @@ describe Chem::XYZ::Writer do
   it "writes a structure" do
     structure = Chem::Structure.build do
       title "COO-"
-      atom :c, V[0, 0, 0]
-      atom :o, V[0, 0, 1.159076]
-      atom :o, V[0, 0, -1.159076]
+      atom :c, Vec3[0, 0, 0]
+      atom :o, Vec3[0, 0, 1.159076]
+      atom :o, Vec3[0, 0, -1.159076]
     end
 
     structure.chains[0].to_xyz.should eq <<-EOS
@@ -86,9 +86,9 @@ describe Chem::XYZ::Writer do
   it "writes multiple structures" do
     structure = Chem::Structure.build do
       title "COO-"
-      atom :c, V[1, 0, 0]
-      atom :o, V[2, 0, 0]
-      atom :o, V[3, 0, 0]
+      atom :c, Vec3[1, 0, 0]
+      atom :o, Vec3[2, 0, 0]
+      atom :o, Vec3[3, 0, 0]
     end
 
     io = IO::Memory.new

@@ -5,7 +5,7 @@ describe Chem::DX::Reader do
     grid = Grid.from_dx "spec/data/dx/simple.dx"
     grid.source_file.should eq Path["spec/data/dx/simple.dx"].expand
     grid.dim.should eq({2, 3, 3})
-    grid.bounds.should eq Bounds.new(V[0.5, 0.3, 1], S[10, 40, 20])
+    grid.bounds.should eq Bounds.new(Vec3[0.5, 0.3, 1], S[10, 40, 20])
     grid.to_a.should eq [
       0, 1, 2, 10, 11, 12, 20, 21, 22, 100, 101, 102, 110, 111, 112, 120, 121, 122,
     ]
@@ -14,10 +14,10 @@ describe Chem::DX::Reader do
   it "parses a DX header" do
     info = Grid::Info.from_dx "spec/data/dx/header.dx"
     info.bounds.should eq Bounds.new(
-      V[0.5, 0.3, 1],
-      V[10, 0, 0],
-      V[10, 40, 0],
-      V[16, 10, 20]
+      Vec3[0.5, 0.3, 1],
+      Vec3[10, 0, 0],
+      Vec3[10, 40, 0],
+      Vec3[16, 10, 20]
     )
     info.dim.should eq({2, 3, 3})
   end
@@ -25,7 +25,7 @@ end
 
 describe Chem::DX::Writer do
   it "writes a grid" do
-    grid = make_grid(3, 2, 2, Bounds.new(V[0.5, 0.3, 1], S[20, 20, 10])) do |i, j, k|
+    grid = make_grid(3, 2, 2, Bounds.new(Vec3[0.5, 0.3, 1], S[20, 20, 10])) do |i, j, k|
       i * 100 + j * 10 + k
     end
     grid.to_dx.should eq <<-EOS

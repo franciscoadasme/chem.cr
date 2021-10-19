@@ -6,10 +6,10 @@ describe Chem::VASP::Locpot do
     grid.source_file.should eq Path["spec/data/vasp/LOCPOT"].expand
     grid.dim.should eq({32, 32, 32})
     grid.bounds.should be_close Bounds.new(
-      V.origin,
-      V[2.969072, -0.000523, -0.000907],
-      V[-0.987305, 2.800110, 0.000907],
-      V[-0.987305, -1.402326, 2.423654],
+      Vec3.origin,
+      Vec3[2.969072, -0.000523, -0.000907],
+      Vec3[-0.987305, 2.800110, 0.000907],
+      Vec3[-0.987305, -1.402326, 2.423654],
     ), 1e-6
     grid[0, 0, 0].should eq -46.16312251
     grid[0, 5, 11].should eq -8.1037443195
@@ -21,10 +21,10 @@ describe Chem::VASP::Locpot do
   it "parses a LOCPOT header" do
     info = Grid::Info.from_locpot "spec/data/vasp/LOCPOT"
     info.bounds.should be_close Bounds.new(
-      V.origin,
-      V[2.969072, -0.000523, -0.000907],
-      V[-0.987305, 2.800110, 0.000907],
-      V[-0.987305, -1.402326, 2.423654],
+      Vec3.origin,
+      Vec3[2.969072, -0.000523, -0.000907],
+      Vec3[-0.987305, 2.800110, 0.000907],
+      Vec3[-0.987305, -1.402326, 2.423654],
     ), 1e-6
     info.dim.should eq({32, 32, 32})
   end
@@ -36,8 +36,8 @@ describe Chem::VASP::Locpot do
     structure.source_file.should eq Path["spec/data/vasp/LOCPOT"].expand
     structure.n_atoms.should eq 2
     structure.atoms.map(&.element.symbol).should eq %w(Li C)
-    structure.atoms[0].coords.should eq V.zero
-    structure.atoms[1].coords.should be_close V[0.497, 0.699, 1.212], 1e-3
+    structure.atoms[0].coords.should eq Vec3.zero
+    structure.atoms[1].coords.should be_close Vec3[0.497, 0.699, 1.212], 1e-3
 
     structure.should be reader.read_attached
   end
@@ -46,11 +46,11 @@ describe Chem::VASP::Locpot do
     structure = Chem::Structure.build do
       title "NaCl-O-NaCl"
       lattice 5, 10, 20
-      atom :Cl, V[30, 15, 10]
-      atom :Na, V[10, 5, 5]
-      atom :O, V[30, 15, 9]
-      atom :Na, V[10, 10, 12.5]
-      atom :Cl, V[20, 10, 10]
+      atom :Cl, Vec3[30, 15, 10]
+      atom :Na, Vec3[10, 5, 5]
+      atom :O, Vec3[30, 15, 9]
+      atom :Na, Vec3[10, 10, 12.5]
+      atom :Cl, Vec3[20, 10, 10]
     end
 
     grid = make_grid(3, 3, 3, Bounds[5, 10, 20]) { |i, j, k| i * 100 + j * 10 + k }

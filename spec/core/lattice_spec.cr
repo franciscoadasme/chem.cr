@@ -35,14 +35,14 @@ describe Chem::Lattice do
   describe "#i=" do
     it "sets the size of the first basis vector" do
       lattice = Lattice.new(S[10, 20, 30])
-      lattice.i = V[1, 2, 3]
-      lattice.basis.should eq Basis.new(V[1, 2, 3], V[0, 20, 0], V[0, 0, 30])
+      lattice.i = Vec3[1, 2, 3]
+      lattice.basis.should eq Basis.new(Vec3[1, 2, 3], Vec3[0, 20, 0], Vec3[0, 0, 30])
     end
   end
 
   describe "#inspect" do
     it "returns a delimited string representation" do
-      lattice = Chem::Lattice.new V[1, 2, 3], V[4, 5, 6], V[7, 8, 9]
+      lattice = Chem::Lattice.new Vec3[1, 2, 3], Vec3[4, 5, 6], Vec3[7, 8, 9]
       lattice.inspect.should eq "<Lattice [1.0 2.0 3.0], [4.0 5.0 6.0], [7.0 8.0 9.0]>"
     end
   end
@@ -50,16 +50,16 @@ describe Chem::Lattice do
   describe "#j=" do
     it "sets the size of the second basis vector" do
       lattice = Lattice.new(S[10, 20, 30])
-      lattice.j = V[1, 2, 3]
-      lattice.basis.should eq Basis.new(V[10, 0, 0], V[1, 2, 3], V[0, 0, 30])
+      lattice.j = Vec3[1, 2, 3]
+      lattice.basis.should eq Basis.new(Vec3[10, 0, 0], Vec3[1, 2, 3], Vec3[0, 0, 30])
     end
   end
 
   describe "#k=" do
     it "sets the size of the third basis vector" do
       lattice = Lattice.new(S[10, 20, 30])
-      lattice.k = V[1, 2, 3]
-      lattice.basis.should eq Basis.new(V[10, 0, 0], V[0, 20, 0], V[1, 2, 3])
+      lattice.k = Vec3[1, 2, 3]
+      lattice.basis.should eq Basis.new(Vec3[10, 0, 0], Vec3[0, 20, 0], Vec3[1, 2, 3])
     end
   end
 end

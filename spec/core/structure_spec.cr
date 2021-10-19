@@ -32,7 +32,7 @@ describe Chem::Structure do
       other.chains.map(&.id).should eq ['A']
       other.dig('A', 32).name.should eq "CYS"
       other.dig('A', 32).sec.beta_strand?.should be_true
-      other.dig('A', 32, "CA").coords.should eq V[8.140, 11.694, 9.635]
+      other.dig('A', 32, "CA").coords.should eq Vec3[8.140, 11.694, 9.635]
 
       other.lattice.should eq structure.lattice
       other.experiment.should eq structure.experiment
@@ -193,9 +193,9 @@ describe Chem::Structure do
     structure = Structure.build do
       title "ICN"
       lattice 5, 10, 10
-      atom :I, V[-2, 0, 0]
-      atom :C, V[0, 0, 0]
-      atom :N, V[1.5, 0, 0]
+      atom :I, Vec3[-2, 0, 0]
+      atom :C, Vec3[0, 0, 0]
+      atom :N, Vec3[1.5, 0, 0]
     end
 
     it "writes a structure into a file" do

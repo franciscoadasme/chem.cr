@@ -5,23 +5,23 @@ alias KDTree = Chem::Spatial::KDTree
 describe Chem::Spatial::KDTree do
   context "toy example" do
     st = Chem::Structure.build do
-      atom V[4, 3, 0]   # d^2 = 25
-      atom V[3, 0, 0]   # d^2 = 9
-      atom V[-1, 2, 0]  # d^2 = 5
-      atom V[6, 4, 0]   # d^2 = 52
-      atom V[3, -5, 0]  # d^2 = 34
-      atom V[-2, -5, 0] # d^2 = 29
+      atom Vec3[4, 3, 0]   # d^2 = 25
+      atom Vec3[3, 0, 0]   # d^2 = 9
+      atom Vec3[-1, 2, 0]  # d^2 = 5
+      atom Vec3[6, 4, 0]   # d^2 = 52
+      atom Vec3[3, -5, 0]  # d^2 = 34
+      atom Vec3[-2, -5, 0] # d^2 = 29
     end
     kdtree = KDTree.new st
 
     describe "#neighbors" do
       it "returns the N closest atoms sorted by proximity" do
-        atoms = kdtree.neighbors of: V.origin, count: 2
+        atoms = kdtree.neighbors of: Vec3.origin, count: 2
         atoms.map(&.serial).should eq [3, 2]
       end
 
       it "returns the atoms within the given radius sorted by proximity" do
-        atoms = kdtree.neighbors of: V.origin, within: 5.5
+        atoms = kdtree.neighbors of: Vec3.origin, within: 5.5
         atoms.map(&.serial).should eq [3, 2, 1, 6]
       end
     end
@@ -34,7 +34,7 @@ describe Chem::Spatial::KDTree do
     describe "#each_neighbor" do
       it "yields each atom within the given radius of a point" do
         atoms = [] of Atom
-        kdtree.each_neighbor(of: V[19, 32, 44], within: 3.5) do |atom, _|
+        kdtree.each_neighbor(of: Vec3[19, 32, 44], within: 3.5) do |atom, _|
           atoms << atom
         end
         atoms.map(&.serial).sort!.should eq [1117, 1119, 9125, 9126]
@@ -51,7 +51,7 @@ describe Chem::Spatial::KDTree do
 
     describe "#nearest" do
       it "returns the nearest atom to a point" do
-        kdtree.nearest(to: V[22.5, 57.3, 37.63]).serial.should eq 9651
+        kdtree.nearest(to: Vec3[22.5, 57.3, 37.63]).serial.should eq 9651
       end
 
       it "returns the nearest atom to an atom" do
@@ -61,7 +61,7 @@ describe Chem::Spatial::KDTree do
 
     describe "#neighbors" do
       it "returns the N closest atoms to a point sorted by proximity" do
-        atoms = kdtree.neighbors of: V[19, 32, 44], count: 3
+        atoms = kdtree.neighbors of: Vec3[19, 32, 44], count: 3
         atoms.map(&.serial).should eq [9126, 1119, 1117]
       end
 
@@ -71,7 +71,7 @@ describe Chem::Spatial::KDTree do
       end
 
       it "returns the atoms within the given radius of a point sorted by proximity" do
-        atoms = kdtree.neighbors of: V[19, 32, 44], within: 3.5
+        atoms = kdtree.neighbors of: Vec3[19, 32, 44], within: 3.5
         atoms.map(&.serial).should eq [9126, 1119, 1117, 9125]
       end
 
@@ -104,22 +104,22 @@ describe Chem::Spatial::KDTree do
     it "returns closest neighbor + distance to a point" do
       structure = Structure.build do
         lattice 2, 2, 2
-        atom :C, V[1, 1, 1]
-        atom :H, V[1.5, 0.5, 0.5]
+        atom :C, Vec3[1, 1, 1]
+        atom :H, Vec3[1.5, 0.5, 0.5]
       end
       c, h = structure.atoms
 
       kdtree = KDTree.new structure
-      kdtree.nearest_with_distance(V[0, 0, 0]).should eq({h, 0.75})
-      kdtree.nearest_with_distance(V[1, 1, 1]).should eq({c, 0})
-      kdtree.nearest_with_distance(V[2, 0, 0]).should eq({h, 0.75})
+      kdtree.nearest_with_distance(Vec3[0, 0, 0]).should eq({h, 0.75})
+      kdtree.nearest_with_distance(Vec3[1, 1, 1]).should eq({c, 0})
+      kdtree.nearest_with_distance(Vec3[2, 0, 0]).should eq({h, 0.75})
     end
 
     it "returns closest neighbor + distance to an atom" do
       structure = Structure.build do
         lattice 2, 2, 2
-        atom :C, V[1, 1, 1]
-        atom :H, V[1.5, 0.5, 0.5]
+        atom :C, Vec3[1, 1, 1]
+        atom :H, Vec3[1.5, 0.5, 0.5]
       end
       c, h = structure.atoms
 
@@ -133,16 +133,16 @@ describe Chem::Spatial::KDTree do
     it "returns N closest neighbors + distances to a point" do
       structure = Structure.build do
         lattice 2, 2, 2
-        atom :C, V[1, 1, 1]
-        atom :H, V[1.5, 0.5, 0.5]
+        atom :C, Vec3[1, 1, 1]
+        atom :H, Vec3[1.5, 0.5, 0.5]
       end
       c, h = structure.atoms
 
       kdtree = KDTree.new structure
-      kdtree.neighbors_with_distance(V[0, 0, 0], n: 2).should eq [{h, 0.75}, {h, 2.75}]
-      kdtree.neighbors_with_distance(V[1, 1, 1], n: 2).should eq [{c, 0}, {h, 0.75}]
-      kdtree.neighbors_with_distance(V[2, 0, 0], n: 2).should eq [{h, 0.75}, {c, 3.0}]
-      neighbors = kdtree.neighbors_with_distance(V[0.141, 1.503, 1.801], n: 2)
+      kdtree.neighbors_with_distance(Vec3[0, 0, 0], n: 2).should eq [{h, 0.75}, {h, 2.75}]
+      kdtree.neighbors_with_distance(Vec3[1, 1, 1], n: 2).should eq [{c, 0}, {h, 0.75}]
+      kdtree.neighbors_with_distance(Vec3[2, 0, 0], n: 2).should eq [{h, 0.75}, {c, 3.0}]
+      neighbors = kdtree.neighbors_with_distance(Vec3[0.141, 1.503, 1.801], n: 2)
       neighbors.map(&.[0]).should eq [c, h]
       neighbors.map(&.[1]).should be_close [1.633, 1.893], 1e-3
     end
@@ -150,8 +150,8 @@ describe Chem::Spatial::KDTree do
     it "returns N closest neighbors + distances to an atom" do
       structure = Structure.build do
         lattice 2, 2, 2
-        atom :C, V[1, 1, 1]
-        atom :H, V[1.5, 0.5, 0.5]
+        atom :C, Vec3[1, 1, 1]
+        atom :H, Vec3[1.5, 0.5, 0.5]
       end
       c, h = structure.atoms
 

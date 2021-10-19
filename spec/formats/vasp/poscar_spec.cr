@@ -109,11 +109,11 @@ describe Chem::VASP::Poscar::Writer do
   structure = Chem::Structure.build do
     title "NaCl-O-NaCl"
     lattice 40, 20, 10
-    atom :Cl, V[30, 15, 10]
-    atom :Na, V[10, 5, 5]
-    atom :O, V[30, 15, 9]
-    atom :Na, V[10, 10, 12.5]
-    atom :Cl, V[20, 10, 10]
+    atom :Cl, Vec3[30, 15, 10]
+    atom :Na, Vec3[10, 5, 5]
+    atom :O, Vec3[30, 15, 9]
+    atom :Na, Vec3[10, 10, 12.5]
+    atom :Cl, Vec3[20, 10, 10]
   end
 
   it "writes a structure in Cartesian coordinates" do

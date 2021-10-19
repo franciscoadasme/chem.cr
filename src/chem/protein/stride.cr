@@ -17,7 +17,7 @@ module Chem::Protein
     end
 
     private def exec_stride(pdbfile : String) : String
-      exec = ENV["STRIDE_BIN"]? || Process.find_executable("stride")
+      exec = ENVec3["STRIDE_BIN"]? || Process.find_executable("stride")
       if exec && File.executable?(exec)
         output = `"#{exec}" #{pdbfile}`
         raise "stride executable failed" unless "ASG".in?(output)
