@@ -162,6 +162,18 @@ module Chem::Spatial
       resize size + padding
     end
 
+    # Returns the projection of the vector on *rhs*.
+    def proj(rhs : self) : self
+      rhs = rhs.normalize
+      dot(rhs) * rhs
+    end
+
+    # Returns the projection of the vector on the plane perpendicular
+    # to *rhs*.
+    def proj_plane(rhs : self) : self
+      self - proj(rhs)
+    end
+
     def resize(new_size : Number) : self
       return dup if zero?
       self * (new_size / size)

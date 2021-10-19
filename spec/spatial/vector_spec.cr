@@ -201,6 +201,18 @@ describe Chem::Spatial::Vec3 do
     end
   end
 
+  describe "#proj" do
+    it "returns the projection on the vector" do
+      Vec3[1, 2, 3].proj(Vec3[1, 0, 1]).should be_close Vec3[2, 0, 2], 1e-15
+    end
+  end
+
+  describe "#proj_plane" do
+    it "returns the projection on the plane" do
+      Vec3[1, 2, 3].proj_plane(Vec3[1, 0, 1]).should be_close Vec3[-1, 2, 1], 1e-15
+    end
+  end
+
   describe "#resize" do
     it "resizes a vector to an arbitrary size" do
       V[1, 0, 0].resize(5).should eq V[5, 0, 0]
