@@ -31,7 +31,11 @@ require "./chem/format_reader"
 require "./chem/format_writer"
 require "./chem/formats/**"
 
+require "log"
+
 module Chem
+  Log = ::Log.for("chem")
+
   # Base class for Chem errors.
   class Error < Exception; end
 
