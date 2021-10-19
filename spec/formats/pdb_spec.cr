@@ -629,4 +629,11 @@ describe Chem::PDB::Writer do
     end
     io.to_s.should eq File.read(path).gsub(/(NUMMDL|CONECT).+\n/, "")
   end
+
+  it "aligns the unit cell to the xy-plane" do
+    structure = load_file "5e5v--unwrapped.poscar"
+    structure = Chem::Structure.from_pdb IO::Memory.new(structure.to_pdb)
+    structure.atoms[0].coords.should be_close Vec3[8.128, 2.297, 11.112], 1e-3
+    structure.atoms[167].coords.should be_close Vec3[11.0, 6.405, 12.834], 1e-3
+  end
 end

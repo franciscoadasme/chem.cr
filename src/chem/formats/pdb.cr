@@ -348,10 +348,19 @@ module Chem::PDB
 
       formatl "MODEL     %4d%66s", @entry_index + 1, ' ' if multi?
       if obj.is_a?(Structure)
+        if (cell = obj.lattice) && (!cell.i.normalize.x? || !cell.j.normalize.xy?)
+          # compute the cell aligned to the xy-plane
+          ref = Lattice.new cell.size, cell.alpha, cell.beta, cell.gamma
+          transform = Spatial::Quat.aligning({cell.i, cell.j}, to: {ref.i, ref.j})
+          Log.warn do
+            "Aligning unit cell to the XY plane for writing PDB. \
+             This will change the atom coordinates."
+          end
+        end
         obj.each_chain do |chain|
           p_res = nil
           chain.each_residue do |residue|
-            residue.each_atom { |atom| write atom }
+            residue.each_atom { |atom| write atom, transform }
             p_res = residue
           end
           write_ter p_res if p_res && p_res.polymer?
@@ -372,7 +381,9 @@ module Chem::PDB
       @record_index += 1
     end
 
-    private def write(atom : Atom) : Nil
+    private def write(atom : Atom, transform : Spatial::Quat? = nil) : Nil
+      vec = atom.coords
+      vec = transform * vec if transform
       @io.printf "%-6s%5s %4s %-4s%s%4s%1s   %8.3f%8.3f%8.3f%6.2f%6.2f          %2s%2s\n",
         (atom.residue.protein? ? "ATOM" : "HETATM"),
         PDB::Hybrid36.encode(@renumber ? index(atom) : atom.serial, width: 5),
@@ -381,9 +392,9 @@ module Chem::PDB
         atom.chain.id,
         PDB::Hybrid36.encode(atom.residue.number, width: 4),
         atom.residue.insertion_code,
-        atom.x,
-        atom.y,
-        atom.z,
+        vec.x,
+        vec.y,
+        vec.z,
         atom.occupancy,
         atom.temperature_factor,
         atom.element.symbol,
