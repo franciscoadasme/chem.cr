@@ -429,6 +429,14 @@ describe Chem::PDB do
       # N is in alternate conformation B only but it has occupancy = 1
       structure.dig('A', 33, "N").serial.should eq 285
     end
+
+    it "sets cell to nil if default values (#161)" do
+      io = IO::Memory.new <<-PDB
+        CRYST1    1.000    1.000    1.000  90.00  90.00  90.00 P 1 21 1
+        ATOM      1  N   THR A   1      17.047  14.099   3.625  1.00 13.79           N
+        PDB
+      Chem::Structure.from_pdb(io).lattice.should be_nil
+    end
   end
 end
 
