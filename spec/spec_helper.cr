@@ -1,24 +1,8 @@
 require "spec"
 require "../src/chem"
 
-alias Atom = Chem::Atom
-alias AtomView = Chem::AtomView
-alias Basis = Chem::Spatial::Basis
-alias Bounds = Chem::Spatial::Bounds
-alias Chain = Chem::Chain
-alias Constraint = Chem::Constraint
-alias Element = Chem::Element
-alias Grid = Chem::Spatial::Grid
-alias Lattice = Chem::Lattice
-alias PBC = Chem::Spatial::PBC
-alias PDB = Chem::PDB
-alias ParseException = Chem::ParseException
-alias PeriodicTable = Chem::PeriodicTable
-alias S = Chem::Spatial::Size
-alias Structure = Chem::Structure
-alias Topology = Chem::Topology
-alias Tf = Chem::Spatial::AffineTransform
-alias Vec3 = Chem::Spatial::Vec3
+include Chem
+include Chem::Spatial
 
 enum TopologyLevel
   None

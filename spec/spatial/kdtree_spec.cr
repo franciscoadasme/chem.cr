@@ -1,7 +1,5 @@
 require "../spec_helper"
 
-alias KDTree = Chem::Spatial::KDTree
-
 describe Chem::Spatial::KDTree do
   context "toy example" do
     st = Chem::Structure.build do

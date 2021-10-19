@@ -1,7 +1,5 @@
 require "../spec_helper"
 
-private alias Quat = Chem::Spatial::Quat
-
 describe Chem::Spatial::Quat do
   describe ".[]" do
     it "returns a quaternion with each of the given components" do

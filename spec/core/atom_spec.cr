@@ -14,9 +14,9 @@ describe Chem::Atom do
     atom = Structure.build { atom "NG1", Vec3[0, 0, 0] }.atoms[0]
 
     it "tells if atom matches atom type" do
-      (atom === Topology::AtomType.new("NG1")).should be_true
-      (atom === Topology::AtomType.new("NG1", element: "O")).should be_false
-      (atom === Topology::AtomType.new("CA")).should be_false
+      (atom === Chem::Topology::AtomType.new("NG1")).should be_true
+      (atom === Chem::Topology::AtomType.new("NG1", element: "O")).should be_false
+      (atom === Chem::Topology::AtomType.new("CA")).should be_false
     end
 
     it "tells if atom matches element" do

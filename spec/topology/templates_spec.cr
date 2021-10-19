@@ -1,8 +1,5 @@
 require "../spec_helper"
 
-alias Templates = Chem::Topology::Templates
-alias TemplateError = Chem::Topology::Templates::Error
-
 describe Chem::Topology::Templates::Builder do
   describe ".build" do
     bb_names = ["N", "H", "CA", "HA", "C", "O"]
@@ -278,7 +275,7 @@ describe Chem::Topology::Templates::Builder do
       # #cycle connects the first and last atoms with a single bond unless there is a
       # bond char (-, =, # or @) at the end. In this case, both CE2=CD2 and CD2-CE2 are
       # added
-      expect_raises TemplateError, "Bond CD2=CE2 already exists" do
+      expect_raises Topology::Templates::Error, "Bond CD2=CE2 already exists" do
         Topology::ResidueType.build(:protein) do
           description "Tryptophan"
           name "TRP"
@@ -293,7 +290,7 @@ describe Chem::Topology::Templates::Builder do
 
     it "fails on incorrect valency" do
       msg = "Atom type CG has incorrect valency (5), expected 4"
-      expect_raises TemplateError, msg do
+      expect_raises Topology::Templates::Error, msg do
         Topology::ResidueType.build(:protein) do
           description "Tryptophan"
           name "TRP"
@@ -308,7 +305,7 @@ describe Chem::Topology::Templates::Builder do
 
     it "fails when adding a branch without existing root" do
       msg = "Branch must start with an existing atom type, got CB"
-      expect_raises TemplateError, msg do
+      expect_raises Topology::Templates::Error, msg do
         Topology::ResidueType.build(:protein) { branch "CB-CG2" }
       end
     end
@@ -316,7 +313,7 @@ describe Chem::Topology::Templates::Builder do
 end
 
 describe Chem::Topology::Templates do
-  Templates.residue do
+  Topology::Templates.residue do
     description "Anything"
     name "LFG"
     main "N1+-C2-C3-O4-C5-C6"
@@ -325,42 +322,42 @@ describe Chem::Topology::Templates do
 
   describe "#[]" do
     it "returns a residue template by name" do
-      residue_t = Templates["LFG"]
+      residue_t = Topology::Templates["LFG"]
       residue_t.should be_a Topology::ResidueType
       residue_t.description.should eq "Anything"
       residue_t.name.should eq "LFG"
     end
 
     it "fails when no matching residue template exists" do
-      expect_raises TemplateError, "Unknown residue template" do
-        Templates["ASD"]
+      expect_raises Topology::Templates::Error, "Unknown residue template" do
+        Topology::Templates["ASD"]
       end
     end
   end
 
   describe "#[]?" do
     it "returns a residue template by name" do
-      Templates["LFG"].should be_a Topology::ResidueType
+      Topology::Templates["LFG"].should be_a Topology::ResidueType
     end
 
     it "returns nil when no matching residue template exists" do
-      Templates["ASD"]?.should be_nil
+      Topology::Templates["ASD"]?.should be_nil
     end
   end
 
   describe "#residue" do
     it "creates a residue template with multiple names" do
-      Templates.residue do
+      Topology::Templates.residue do
         description "Anything"
         names "LXE", "EGR"
         main "C1"
       end
-      Templates["LXE"].should be Templates["EGR"]
+      Topology::Templates["LXE"].should be Topology::Templates["EGR"]
     end
 
     it "fails when the residue name already exists" do
-      expect_raises TemplateError, "Duplicate residue template" do
-        Templates.residue do
+      expect_raises Topology::Templates::Error, "Duplicate residue template" do
+        Topology::Templates.residue do
           description "Anything"
           name "LXE"
           main "C1"
