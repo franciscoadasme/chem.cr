@@ -4,14 +4,6 @@ require "../src/chem"
 include Chem
 include Chem::Spatial
 
-enum TopologyLevel
-  None
-  Templates
-  Bonds
-  Guess
-  Renumber
-end
-
 module Spec
   struct CloseExpectation
     def match(actual_value : Enumerable(Vec3)) : Bool
