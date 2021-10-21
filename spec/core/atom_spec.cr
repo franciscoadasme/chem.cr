@@ -237,4 +237,13 @@ describe Chem::Atom do
       res["CA"].within_covalent_distance?(res["OD1"]).should be_false
     end
   end
+
+  describe "#water?" do
+    it "tells if it belongs to a water residue" do
+      structure = load_file "1h1s.pdb"
+      structure.dig('A', 56, "C").water?.should be_false     # protein
+      structure.dig('A', 1298, "C10").water?.should be_false # ligand
+      structure.dig('A', 2181, "O").water?.should be_true    # water
+    end
+  end
 end
