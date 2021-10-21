@@ -417,6 +417,12 @@ module Chem
       !self["N"]?.nil? && !self["CA"]?.nil? && !self["C"]?.nil? && !self["O"]?.nil?
     end
 
+    # Returns `true` if the residue is a non-standard (HET) residue,
+    # else `false`.
+    def het? : Bool
+      !protein?
+    end
+
     def hlxparams : Spatial::HlxParams?
       Spatial.hlxparams self, structure.lattice
     end

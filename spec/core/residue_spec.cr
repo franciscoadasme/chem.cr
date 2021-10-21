@@ -317,6 +317,15 @@ describe Chem::Residue do
     end
   end
 
+  describe "#het?" do
+    it "tells if it is a HET residue" do
+      structure = load_file "1h1s.pdb"
+      structure.dig('A', 56).het?.should be_false  # protein
+      structure.dig('A', 1298).het?.should be_true # ligand
+      structure.dig('A', 2181).het?.should be_true # water
+    end
+  end
+
   describe "#insertion_code" do
     it "updates residue position" do
       structure = load_file("insertion_codes.pdb")
