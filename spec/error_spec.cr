@@ -5,7 +5,7 @@ describe Chem::ParseException do
     it "shows the location" do
       ex = Chem::ParseException.new(
         message: "Invalid experimental method",
-        source_file: "spec/data/pdb/1crn.pdb",
+        source_file: spec_file("1crn.pdb"),
         line: "EXPDTA    X-RAY DIFFRACTION",
         location: {552, 10, 5}
       )

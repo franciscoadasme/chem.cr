@@ -4,7 +4,7 @@ describe Chem::Spatial do
   describe ".hlxparam" do
     it "returns helical parameters" do
       data = {radius: [] of Float64, twist: [] of Float64, pitch: [] of Float64}.tap do |data|
-        File.each_line("spec/data/spatial/hlxparams.txt") do |line|
+        File.each_line(spec_file("spatial/hlxparams.txt")) do |line|
           next if line.blank?
           values = line.split.map &.to_f
           data[:pitch] << values[0]

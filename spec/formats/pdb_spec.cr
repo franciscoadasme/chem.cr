@@ -5,7 +5,7 @@ describe Chem::PDB do
   describe ".parse" do
     it "parses a (real) PDB file" do
       st = load_file "1h1s.pdb"
-      st.source_file.should eq Path["spec/data/pdb/1h1s.pdb"].expand
+      st.source_file.should eq Path[spec_file("1h1s.pdb")].expand
       st.n_atoms.should eq 9701
       st.formal_charge.should eq -62
 
@@ -36,7 +36,7 @@ describe Chem::PDB do
 
     it "parses a PDB file" do
       st = load_file "simple.pdb"
-      st.source_file.should eq Path["spec/data/pdb/simple.pdb"].expand
+      st.source_file.should eq Path[spec_file("simple.pdb")].expand
       st.experiment.should be_nil
       st.title.should eq "Glutamate"
       st.n_atoms.should eq 13
@@ -205,7 +205,7 @@ describe Chem::PDB do
     end
 
     it "parses bonds when multiple models" do
-      models = Array(Chem::Structure).from_pdb "spec/data/pdb/models.pdb"
+      models = Array(Chem::Structure).from_pdb spec_file("models.pdb")
       models.size.should eq 4
       models.each do |st|
         st.atoms[0].bonds[st.atoms[1]].order.should eq 1
@@ -244,7 +244,7 @@ describe Chem::PDB do
     end
 
     it "parses selected alternate conformation" do
-      structure = Chem::Structure.from_pdb "spec/data/pdb/alternate_conf_mut.pdb", alt_loc: 'B'
+      structure = Chem::Structure.from_pdb spec_file("alternate_conf_mut.pdb"), alt_loc: 'B'
       structure.n_residues.should eq 1
       structure.n_atoms.should eq 11
       structure.each_atom.map(&.occupancy).uniq.to_a.should eq [0.22]
@@ -260,11 +260,11 @@ describe Chem::PDB do
     end
 
     it "parses multiple models" do
-      st_list = Array(Chem::Structure).from_pdb "spec/data/pdb/models.pdb"
+      st_list = Array(Chem::Structure).from_pdb spec_file("models.pdb")
       st_list.size.should eq 4
       xs = {5.606, 7.212, 5.408, 22.055}
       st_list.zip(xs) do |st, x|
-        st.source_file.should eq Path["spec/data/pdb/models.pdb"].expand
+        st.source_file.should eq Path[spec_file("models.pdb")].expand
         st.n_atoms.should eq 5
         st.atoms.map(&.serial).should eq (1..5).to_a
         st.atoms.map(&.name).should eq ["N", "CA", "C", "O", "CB"]
@@ -273,7 +273,7 @@ describe Chem::PDB do
     end
 
     it "parses selected models" do
-      path = "spec/data/pdb/models.pdb"
+      path = spec_file("models.pdb")
       st_list = Array(Chem::Structure).from_pdb path, indexes: [1, 3]
       st_list.size.should eq 2
       xs = {7.212, 22.055}
@@ -286,7 +286,7 @@ describe Chem::PDB do
     end
 
     it "skip models" do
-      PDB::Reader.open("spec/data/pdb/models.pdb") do |reader|
+      PDB::Reader.open(spec_file("models.pdb")) do |reader|
         reader.skip_entry
         reader.read_entry.atoms[0].coords.should eq Vec3[7.212, 15.334, 0.966]
         reader.skip_entry
@@ -295,7 +295,7 @@ describe Chem::PDB do
     end
 
     it "parses selected chains" do
-      structure = Chem::Structure.from_pdb "spec/data/pdb/5jqf.pdb", chains: ['B']
+      structure = Chem::Structure.from_pdb spec_file("5jqf.pdb"), chains: ['B']
       structure.n_chains.should eq 1
       structure.n_residues.should eq 38
       structure.n_atoms.should eq 310
@@ -304,7 +304,7 @@ describe Chem::PDB do
     end
 
     it "parses only protein" do
-      structure = Chem::Structure.from_pdb "spec/data/pdb/5jqf.pdb", het: false
+      structure = Chem::Structure.from_pdb spec_file("5jqf.pdb"), het: false
       structure.n_chains.should eq 2
       structure.n_residues.should eq 42
       structure.n_atoms.should eq 586
@@ -358,11 +358,11 @@ describe Chem::PDB do
       # it triggered IndexError for skipped atoms, but cannot test
       # whether bonds are assigned from PDB or not since missing bonds
       # are automatically guessed
-      Structure.from_pdb "spec/data/pdb/1crn.pdb", chains: ['C']
+      Structure.from_pdb spec_file("1crn.pdb"), chains: ['C']
     end
 
     it "parses first chain" do
-      structure = Structure.from_pdb "spec/data/pdb/multiple_chains.pdb", chains: "first"
+      structure = Structure.from_pdb spec_file("multiple_chains.pdb"), chains: "first"
       structure.n_chains.should eq 1
       structure.n_residues.should eq 2
       structure.n_atoms.should eq 14
@@ -382,7 +382,7 @@ describe Chem::PDB do
     end
 
     it "parses a PDB header" do
-      expt = Chem::Structure::Experiment.from_pdb "spec/data/pdb/1crn.pdb"
+      expt = Chem::Structure::Experiment.from_pdb spec_file("1crn.pdb")
       expt.deposition_date.should eq Time.utc(1981, 4, 30)
       expt.doi.should eq "10.1073/PNAS.81.19.6014"
       expt.method.x_ray_diffraction?.should be_true
@@ -404,7 +404,7 @@ describe Chem::PDB do
     end
 
     it "discards empty remark 2 record" do
-      expt = Chem::Structure::Experiment.from_pdb "spec/data/pdb/1a02_1.pdb"
+      expt = Chem::Structure::Experiment.from_pdb spec_file("1a02_1.pdb")
       expt.resolution.should eq 2.7
     end
 
@@ -425,7 +425,7 @@ describe Chem::PDB do
     end
 
     it "ignores alternate conformation if occupancy is one" do
-      structure = Chem::Structure.from_pdb "spec/data/pdb/3h31.pdb", alt_loc: 'A'
+      structure = Chem::Structure.from_pdb spec_file("3h31.pdb"), alt_loc: 'A'
       # N is in alternate conformation B only but it has occupancy = 1
       structure.dig('A', 33, "N").serial.should eq 285
     end
@@ -443,8 +443,8 @@ end
 describe Chem::PDB::Writer do
   it "writes a structure" do
     structure = load_file "1crn.pdb"
-    expected = File.read "spec/data/pdb/1crn--stripped.pdb"
     structure.to_pdb.should eq expected
+    expected = File.read spec_file("1crn--stripped.pdb")
   end
 
   it "writes an atom collection" do
@@ -464,7 +464,7 @@ describe Chem::PDB::Writer do
   end
 
   it "writes ter records at the end of polymer chains" do
-    content = File.read "spec/data/pdb/5e5v.pdb"
+    content = File.read spec_file("5e5v.pdb")
     structure = Chem::Structure.from_pdb IO::Memory.new(content)
     structure.to_pdb.should eq content
   end
@@ -620,13 +620,13 @@ describe Chem::PDB::Writer do
   end
 
   it "writes multiple entries" do
-    path = "spec/data/pdb/models.pdb"
+    path = spec_file("models.pdb")
     entries = Array(Structure).from_pdb path
     entries.to_pdb.should eq File.read(path).gsub(/CONECT.+\n/, "")
   end
 
   it "writes an indeterminate number of entries" do
-    path = "spec/data/pdb/models.pdb"
+    path = spec_file("models.pdb")
     entries = Array(Structure).from_pdb path
 
     io = IO::Memory.new

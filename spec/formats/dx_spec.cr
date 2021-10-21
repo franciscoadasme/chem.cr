@@ -2,8 +2,8 @@ require "../spec_helper"
 
 describe Chem::DX::Reader do
   it "parses a DX file" do
-    grid = Grid.from_dx "spec/data/dx/simple.dx"
-    grid.source_file.should eq Path["spec/data/dx/simple.dx"].expand
+    grid = Grid.from_dx spec_file("simple.dx")
+    grid.source_file.should eq Path[spec_file("simple.dx")].expand
     grid.dim.should eq({2, 3, 3})
     grid.bounds.should eq Bounds.new(Vec3[0.5, 0.3, 1], Size[10, 40, 20])
     grid.to_a.should eq [
@@ -12,7 +12,7 @@ describe Chem::DX::Reader do
   end
 
   it "parses a DX header" do
-    info = Grid::Info.from_dx "spec/data/dx/header.dx"
+    info = Grid::Info.from_dx spec_file("header.dx")
     info.bounds.should eq Bounds.new(
       Vec3[0.5, 0.3, 1],
       Vec3[10, 0, 0],

@@ -4,7 +4,7 @@ describe Chem::ResidueCollection do
   describe "#each_secondary_structure" do
     it "iterates over secondary structure elements" do
       ary = [] of Tuple(Chem::Protein::SecondaryStructure, Range(Int32, Int32))
-      s = Chem::Structure.from_pdb "spec/data/pdb/3sgr.pdb", chains: "BEF".chars
+      s = Chem::Structure.from_pdb spec_file("3sgr.pdb"), chains: "BEF".chars
       s.each_secondary_structure do |ele, sec|
         ary << {sec, ele[0].number..ele[-1].number}
       end
@@ -43,7 +43,7 @@ describe Chem::ResidueCollection do
     end
 
     it "returns an iterator over secondary structure elements" do
-      s = Chem::Structure.from_pdb "spec/data/pdb/3sgr.pdb", chains: "BEF".chars
+      s = Chem::Structure.from_pdb spec_file("3sgr.pdb"), chains: "BEF".chars
       s.each_secondary_structure
         .to_a
         .map { |ele| ele[0].number..ele[-1].number }

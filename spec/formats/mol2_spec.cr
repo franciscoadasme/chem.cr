@@ -3,7 +3,7 @@ require "../spec_helper"
 describe Chem::Mol2::Reader do
   it "parses a Mol2 file" do
     structure = load_file "benzene.mol2"
-    structure.source_file.should eq Path["spec/data/mol2/benzene.mol2"].expand
+    structure.source_file.should eq Path[spec_file("benzene.mol2")].expand
     structure.title.should eq "benzene"
     structure.residues[0].name.should eq "BEN"
 
@@ -35,7 +35,7 @@ describe Chem::Mol2::Reader do
     symbols = atom_names.map { |name| PeriodicTable[name[0]].symbol }
 
     structure = load_file "minimal.mol2"
-    structure.source_file.should eq Path["spec/data/mol2/minimal.mol2"].expand
+    structure.source_file.should eq Path[spec_file("minimal.mol2")].expand
     structure.title.should eq "Histidine"
 
     atoms = structure.atoms
@@ -52,11 +52,11 @@ describe Chem::Mol2::Reader do
   end
 
   it "parses multiple structures" do
-    ary = Array(Chem::Structure).from_mol2 "spec/data/mol2/molecules.mol2"
+    ary = Array(Chem::Structure).from_mol2 spec_file("molecules.mol2")
     ary.size.should eq 12
 
     structure = ary.first
-    structure.source_file.should eq Path["spec/data/mol2/molecules.mol2"].expand
+    structure.source_file.should eq Path[spec_file("molecules.mol2")].expand
     atoms = structure.atoms
     atoms[0].name.should eq "N1"
     atoms[0].element.nitrogen?.should be_true
@@ -146,7 +146,7 @@ describe Chem::Mol2::Writer do
   it "writes lattice" do
     structure = load_file("waters.xyz", guess_topology: true)
     structure.lattice = Chem::Lattice.new Size[40.961, 18.65, 22.52], 90, 90.77, 120
-    structure.to_mol2.should eq File.read("spec/data/mol2/water_in_box.mol2")
+    structure.to_mol2.should eq File.read(spec_file("water_in_box.mol2"))
   end
 
   it "raises if structure has no bonds" do

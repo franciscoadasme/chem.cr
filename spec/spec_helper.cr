@@ -111,10 +111,23 @@ def fake_structure(*, include_bonds : Bool = true) : Chem::Structure
   structure
 end
 
-def load_file(path : String, guess_topology : Bool = false) : Structure
-  path = File.join File.extname(path)[1..], path unless File.extname(path).blank?
+# Returns the path for a spec file
+def spec_file(filename : String) : String
+  path = filename
+  ext = File.extname(filename)
+  path = File.join ext[1..], path unless ext.blank?
   path = File.join "spec", "data", path
-  case Chem::Format.from_filename(path)
+  return path if File.exists?(path)
+  path = File.join "spec", "data", filename.downcase, filename
+  return path if File.exists?(path)
+  File.join "spec", "data", filename
+end
+
+# Returns the structure associated with *filename*. The latter is
+# expected to be a filename, not a path.
+def load_file(filename : String, guess_topology : Bool = false) : Structure
+  path = spec_file filename
+  case Chem::Format.from_filename(filename)
   when .xyz?    then Chem::Structure.from_xyz(path, guess_topology: guess_topology)
   when .poscar? then Chem::Structure.from_poscar(path, guess_topology: guess_topology)
   when .gen?    then Chem::Structure.from_gen(path, guess_topology: guess_topology)

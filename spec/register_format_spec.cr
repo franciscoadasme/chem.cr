@@ -241,7 +241,7 @@ end
 describe Array do
   describe ".read" do
     it "returns the entries in a file" do
-      x = Array(Chem::Structure).read "spec/data/pdb/models.pdb"
+      x = Array(Chem::Structure).read spec_file("models.pdb")
       x.size.should eq 4
     end
 
@@ -270,7 +270,7 @@ describe Array do
 
   describe "#write" do
     it "writes in a multiple-entry format" do
-      x = Array(Chem::Structure).from_pdb "spec/data/pdb/models.pdb"
+      x = Array(Chem::Structure).from_pdb spec_file("models.pdb")
       String.build { |io| x.write(io, :xyz) }.should eq <<-XYZ
         5
 

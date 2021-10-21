@@ -2,8 +2,8 @@ require "../spec_helper"
 
 describe Chem::Cube::Reader do
   it "parses a cube file" do
-    grid = Grid.from_cube "spec/data/cube/20.cube"
-    grid.source_file.should eq Path["spec/data/cube/20.cube"].expand
+    grid = Grid.from_cube spec_file("20.cube")
+    grid.source_file.should eq Path[spec_file("20.cube")].expand
     grid.dim.should eq({20, 20, 20})
     grid.origin.should be_close Vec3[-3.826155, -4.114553, -6.64407], 1e-6
     grid.bounds.size.should be_close Size[12.184834, 12.859271, 13.117308], 1e-6
@@ -13,7 +13,7 @@ describe Chem::Cube::Reader do
   end
 
   it "parses a cube file header" do
-    info = Grid::Info.from_cube "spec/data/cube/20.cube"
+    info = Grid::Info.from_cube spec_file("20.cube")
     info.dim.should eq({20, 20, 20})
     info.bounds.origin.should be_close Vec3[-3.826155, -4.114553, -6.64407], 1e-6
     info.bounds.size.should be_close Size[12.184834, 12.859271, 13.117308], 1e-6
@@ -43,10 +43,10 @@ describe Chem::Cube::Reader do
   end
 
   it "parses the structure" do
-    reader = Chem::Cube::Reader.new "spec/data/cube/20.cube"
+    reader = Chem::Cube::Reader.new spec_file("20.cube")
     structure = reader.read_attached
     structure.should be_a Chem::Structure
-    structure.source_file.should eq Path["spec/data/cube/20.cube"].expand
+    structure.source_file.should eq Path[spec_file("20.cube")].expand
     structure.n_atoms.should eq 16
     structure.atoms.map(&.element.symbol).should eq %w(Cu O H H O H H O H H O O H H H H)
     structure.atoms[0].coords.should eq Vec3[2.317035, 3.509540, -0.795570]
@@ -96,7 +96,7 @@ describe Chem::Cube::Writer do
       atom :H, Vec3[0.42057364, 2.93622707, 1.94150303], partial_charge: 1.0
     end
 
-    content = File.read "spec/data/cube/20.cube"
+    content = File.read spec_file("20.cube")
     io = IO::Memory.new content
     Grid.from_cube(io).to_cube(structure).should eq content
   end

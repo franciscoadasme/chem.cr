@@ -2,8 +2,8 @@ require "../../spec_helper"
 
 describe Chem::VASP::Chgcar do
   it "parses a CHGCAR" do
-    grid = Grid.from_chgcar "spec/data/vasp/CHGCAR"
-    grid.source_file.should eq Path["spec/data/vasp/CHGCAR"].expand
+    grid = Grid.from_chgcar spec_file("vasp/CHGCAR")
+    grid.source_file.should eq Path[spec_file("vasp/CHGCAR")].expand
     grid.dim.should eq({2, 2, 2})
     grid.bounds.should eq Bounds[10, 10, 10]
     grid.volume.should eq 1_000
@@ -13,16 +13,16 @@ describe Chem::VASP::Chgcar do
   end
 
   it "parses a CHGCAR header" do
-    info = Grid::Info.from_chgcar "spec/data/vasp/CHGCAR"
+    info = Grid::Info.from_chgcar spec_file("vasp/CHGCAR")
     info.bounds.should eq Bounds[10, 10, 10]
     info.dim.should eq({2, 2, 2})
   end
 
   it "parses structure" do
-    reader = Chem::VASP::Chgcar::Reader.new "spec/data/vasp/CHGCAR"
+    reader = Chem::VASP::Chgcar::Reader.new spec_file("vasp/CHGCAR")
     structure = reader.read_attached
     structure.should be_a Chem::Structure
-    structure.source_file.should eq Path["spec/data/vasp/CHGCAR"].expand
+    structure.source_file.should eq Path[spec_file("vasp/CHGCAR")].expand
     structure.n_atoms.should eq 1
     structure.atoms.map(&.element.symbol).should eq %w(O)
     structure.atoms[0].coords.should eq Vec3.zero

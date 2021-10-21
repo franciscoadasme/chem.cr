@@ -9,7 +9,7 @@ describe Chem::XYZ::Reader do
                "H", "H", "O", "H", "H"]
 
     structure = load_file "acama.xyz"
-    structure.source_file.should eq Path["spec/data/xyz/acama.xyz"].expand
+    structure.source_file.should eq Path[spec_file("acama.xyz")].expand
     structure.title.should eq "Ala-Cys-Ala-Met-Ala"
     structure.n_atoms.should eq 61
     structure.atoms.map(&.element.symbol).should eq symbols
@@ -18,20 +18,20 @@ describe Chem::XYZ::Reader do
   end
 
   it "parses a XYZ file with multiple structures" do
-    structures = Array(Chem::Structure).from_xyz "spec/data/xyz/coo.trj.xyz"
+    structures = Array(Chem::Structure).from_xyz spec_file("coo.trj.xyz")
 
     structures.size.should eq 4
     structures.map(&.title).should eq ["0", "1", "2", "3"]
     structures.map(&.n_atoms).should eq [3, 3, 3, 3]
     structures.map(&.atoms[1].z).should eq [1.159076, 1.2, 1.3, 1.4]
     structures.each do |structure|
-      structure.source_file.should eq Path["spec/data/xyz/coo.trj.xyz"].expand
+      structure.source_file.should eq Path[spec_file("coo.trj.xyz")].expand
       structure.atoms.map(&.element.symbol).should eq ["C", "O", "O"]
     end
   end
 
   it "parses selected structures of a XYZ file with multiple structures" do
-    path = "spec/data/xyz/coo.trj.xyz"
+    path = spec_file("coo.trj.xyz")
     structures = Array(Chem::Structure).from_xyz path, indexes: [1, 3]
 
     structures.size.should eq 2
@@ -60,7 +60,7 @@ describe Chem::XYZ::Reader do
 
   it "fails when structure index is invalid" do
     expect_raises IndexError do
-      Array(Chem::Structure).from_xyz "spec/data/xyz/coo.trj.xyz", indexes: [5]
+      Array(Chem::Structure).from_xyz spec_file("coo.trj.xyz"), indexes: [5]
     end
   end
 end
