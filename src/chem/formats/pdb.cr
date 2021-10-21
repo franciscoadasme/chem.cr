@@ -445,7 +445,7 @@ module Chem::PDB
           @io << "CONECT"
           Hybrid36.encode @io, i, width: 5
           slice.each { |pair| Hybrid36.encode @io, pair[1], width: 5 }
-          @io.puts
+          @io.puts " " * (LINE_WIDTH - 6 - 5 - slice.size * 5)
         end
       end
     end

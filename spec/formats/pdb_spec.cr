@@ -503,9 +503,9 @@ describe Chem::PDB::Writer do
       HETATM    1  I1  ICN A   1       3.149   0.000   0.000  1.00  0.00           I  
       HETATM    2  C1  ICN A   1       1.148   0.000   0.000  1.00  0.00           C  
       HETATM    3  N1  ICN A   1       0.000   0.000   0.000  1.00  0.00           N  
-      CONECT    1    2
-      CONECT    2    1    3    3    3
-      CONECT    3    2    2    2
+      CONECT    1    2                                                                
+      CONECT    2    1    3    3    3                                                 
+      CONECT    3    2    2    2                                                      
       END                                                                             \n
       EOS
   end
@@ -537,9 +537,6 @@ describe Chem::PDB::Writer do
       HETATM    1  I1  ICN A   2      13.149   0.000   0.000  1.00  0.00           I  
       HETATM    2  C1  ICN A   2      11.148   0.000   0.000  1.00  0.00           C  
       HETATM    3  N1  ICN A   2      10.000   0.000   0.000  1.00  0.00           N  
-      CONECT    1    2
-      CONECT    2    1    3    3    3
-      CONECT    3    2    2    2
       END                                                                             \n
       EOS
   end
@@ -566,6 +563,9 @@ describe Chem::PDB::Writer do
       HETATM    5  H4  CH4 A   1      -0.650  -0.650  -0.650  1.00  0.00           H  
       CONECT    1    3
       CONECT    3    1
+      CONECT    1    2                                                                
+      CONECT    2    1    3    3    3                                                 
+      CONECT    3    2    2    2                                                      
       END                                                                             \n
       EOS
   end
@@ -592,9 +592,9 @@ describe Chem::PDB::Writer do
       HETATM99999  I1  ICN AA06F       3.149   0.000   0.000  1.00  0.00           I  
       HETATMA0000  C1  ICN AA06F       1.148   0.000   0.000  1.00  0.00           C  
       HETATMA2W9F  N1  ICN AA06F       0.000   0.000   0.000  1.00  0.00           N  
-      CONECT99999A0000
-      CONECTA000099999A2W9FA2W9FA2W9F
-      CONECTA2W9FA0000A0000A0000
+      CONECT99999A0000                                                                
+      CONECTA000099999A2W9FA2W9FA2W9F                                                 
+      CONECTA2W9FA0000A0000A0000                                                      
       END                                                                             \n
       EOS
   end
