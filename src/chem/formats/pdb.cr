@@ -323,11 +323,23 @@ module Chem::PDB
     PDB_VERSION_DATE = Time.local 2011, 7, 13
     WHITESPACE       = ' '
 
+    # Controls which bonds are written to a PDB.
+    @[Flags]
+    enum BondOptions
+      # Write CONECT records for standard residues (including water)
+      Standard
+      # Write CONECT records for disulfide bridges
+      Disulfide
+      # Write CONECT records for non-standard (HET) groups excluding
+      # water (both intra- and inter-residue bonds)
+      Het
+    end
+
     @atom_index_table = {} of Int32 => Int32
     @record_index = 0
 
     def initialize(@io : IO,
-                   @bonds : Bool | Array(Bond) = false,
+                   @bonds : PDB::Writer::BondOptions = PDB::Writer::BondOptions.flags(Het, Disulfide),
                    @renumber : Bool = true,
                    @total_entries : Int32? = nil,
                    @sync_close : Bool = false)
@@ -341,7 +353,6 @@ module Chem::PDB
 
     protected def encode_entry(obj : AtomCollection) : Nil
       @record_index = 0
-      @bonds = obj.bonds if @bonds == true
 
       if @entry_index == 0
         obj.is_a?(Structure) ? write_header(obj) : write_pdb_version
@@ -370,6 +381,22 @@ module Chem::PDB
       else
         obj.each_atom { |atom| write atom }
       end
+
+      unless @bonds.none?
+        bonds = obj.bonds
+        if @bonds != BondOptions::All
+          bonds.select! do |bond|
+            a, b = bond[0], bond[1]
+            ok = false
+            ok ||= (a.protein? || a.water?) && (b.protein? || b.water?) if @bonds.standard?
+            ok ||= (a.het? && !a.water?) || (b.het? && !b.water?) if @bonds.het?
+            ok ||= a.sulfur? && b.sulfur? && a.residue != b.residue if @bonds.disulfide?
+            ok
+          end
+        end
+        write_bonds bonds
+      end
+
       formatl "%-#{LINE_WIDTH}s", "ENDMDL" if multi?
     end
 
@@ -427,9 +454,7 @@ module Chem::PDB
         1      # default Z value
     end
 
-    private def write_bonds : Nil
-      return unless (bonds = @bonds).is_a?(Array(Bond))
-
+    private def write_bonds(bonds : Array(Bond)) : Nil
       idx_pairs = Array(Tuple(Int32, Int32)).new bonds.size
       bonds.each do |bond|
         i = bond.first.serial

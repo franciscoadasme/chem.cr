@@ -443,8 +443,8 @@ end
 describe Chem::PDB::Writer do
   it "writes a structure" do
     structure = load_file "1crn.pdb"
-    structure.to_pdb.should eq expected
     expected = File.read spec_file("1crn--stripped.pdb")
+    structure.to_pdb(bonds: :none).should eq expected
   end
 
   it "writes an atom collection" do
@@ -497,7 +497,7 @@ describe Chem::PDB::Writer do
       end
     end
 
-    structure.to_pdb(bonds: true).should eq <<-EOS
+    structure.to_pdb(bonds: :all).should eq <<-EOS
       REMARK   4                                                                      
       REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
       HETATM    1  I1  ICN A   1       3.149   0.000   0.000  1.00  0.00           I  
@@ -531,38 +531,12 @@ describe Chem::PDB::Writer do
       end
     end
 
-    structure.residues[1].to_pdb(bonds: true).should eq <<-EOS
+    structure.residues[1].to_pdb(bonds: :all).should eq <<-EOS
       REMARK   4                                                                      
       REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
       HETATM    1  I1  ICN A   2      13.149   0.000   0.000  1.00  0.00           I  
       HETATM    2  C1  ICN A   2      11.148   0.000   0.000  1.00  0.00           C  
       HETATM    3  N1  ICN A   2      10.000   0.000   0.000  1.00  0.00           N  
-      END                                                                             \n
-      EOS
-  end
-
-  it "writes CONECT records for specified bonds" do
-    structure = Chem::Structure.build do
-      residue "CH4" do
-        atom :c, Vec3[0, 0, 0]
-        atom :h, Vec3[0.65, 0.65, -0.65]
-        atom :h, Vec3[0.65, -0.65, 0.65]
-        atom :h, Vec3[-0.65, 0.65, 0.65]
-        atom :h, Vec3[-0.65, -0.65, -0.65]
-      end
-    end
-
-    bonds = [structure.atoms[0].bonds[structure.atoms[2]]]
-    structure.to_pdb(bonds: bonds).should eq <<-EOS
-      REMARK   4                                                                      
-      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
-      HETATM    1  C1  CH4 A   1       0.000   0.000   0.000  1.00  0.00           C  
-      HETATM    2  H1  CH4 A   1       0.650   0.650  -0.650  1.00  0.00           H  
-      HETATM    3  H2  CH4 A   1       0.650  -0.650   0.650  1.00  0.00           H  
-      HETATM    4  H3  CH4 A   1      -0.650   0.650   0.650  1.00  0.00           H  
-      HETATM    5  H4  CH4 A   1      -0.650  -0.650  -0.650  1.00  0.00           H  
-      CONECT    1    3
-      CONECT    3    1
       CONECT    1    2                                                                
       CONECT    2    1    3    3    3                                                 
       CONECT    3    2    2    2                                                      
@@ -586,7 +560,7 @@ describe Chem::PDB::Writer do
     structure.atoms[2].serial = 235_123
     structure.residues[0].number = 10_231
 
-    structure.to_pdb(bonds: true, renumber: false).should eq <<-EOS
+    structure.to_pdb(bonds: :all, renumber: false).should eq <<-EOS
       REMARK   4                                                                      
       REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
       HETATM99999  I1  ICN AA06F       3.149   0.000   0.000  1.00  0.00           I  
@@ -608,7 +582,7 @@ describe Chem::PDB::Writer do
         atom "OC3", Vec3[8.600, 10.828, 12.580]
       end
     end
-    structure.to_pdb.should eq <<-EOS
+    structure.to_pdb(bonds: :none).should eq <<-EOS
       REMARK   4                                                                      
       REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
       HETATM    1  C13 DMPGA   1       9.194  10.488  13.865  1.00  0.00           C1-
@@ -643,5 +617,96 @@ describe Chem::PDB::Writer do
     structure = Chem::Structure.from_pdb IO::Memory.new(structure.to_pdb)
     structure.atoms[0].coords.should be_close Vec3[8.128, 2.297, 11.112], 1e-3
     structure.atoms[167].coords.should be_close Vec3[11.0, 6.405, 12.834], 1e-3
+  end
+
+  it "writes CONECT records for disulfide bridges and HET groups by default" do
+    pdb_content = load_file("1cbn.pdb").to_pdb(renumber: false)
+    pdb_content.lines.select(/^CONECT/).join('\n').should eq <<-PDB
+      CONECT   44  685                                                                
+      CONECT   54  566                                                                
+      CONECT  269  477                                                                
+      CONECT  477  269                                                                
+      CONECT  566   54                                                                
+      CONECT  685   44                                                                
+      CONECT  774  775  777                                                           
+      CONECT  775  774                                                                
+      CONECT  777  774                                                                
+      PDB
+  end
+
+  it "writes CONECT records for standard residues only" do
+    structure = load_file("AlaIle--unwrapped.poscar", guess_topology: true)
+    pdb_content = structure.to_pdb(bonds: :standard)
+    pdb_content.lines.select(/^CONECT/).join('\n').should eq <<-PDB
+      CONECT    1    2   10   11                                                      
+      CONECT    2    1    3    4    6                                                 
+      CONECT    3    2                                                                
+      CONECT    4    2    5    5   12                                                 
+      CONECT    5    4    4                                                           
+      CONECT    6    2    7    8    9                                                 
+      CONECT    7    6                                                                
+      CONECT    8    6                                                                
+      CONECT    9    6                                                                
+      CONECT   10    1                                                                
+      CONECT   11    1                                                                
+      CONECT   12    4   13   14                                                      
+      CONECT   13   12                                                                
+      CONECT   14   12   15   16   18                                                 
+      CONECT   15   14                                                                
+      CONECT   16   14   17   17   31                                                 
+      CONECT   17   16   16                                                           
+      CONECT   18   14   19   20   27                                                 
+      CONECT   19   18                                                                
+      CONECT   20   18   21   22   23                                                 
+      CONECT   21   20                                                                
+      CONECT   22   20                                                                
+      CONECT   23   20   24   25   26                                                 
+      CONECT   24   23                                                                
+      CONECT   25   23                                                                
+      CONECT   26   23                                                                
+      CONECT   27   18   28   29   30                                                 
+      CONECT   28   27                                                                
+      CONECT   29   27                                                                
+      CONECT   30   27                                                                
+      CONECT   31   16   32                                                           
+      CONECT   32   31                                                                
+      PDB
+  end
+
+  it "writes CONECT records for disulfide bridges only" do
+    expected = File.read(spec_file("1crn.pdb")).lines.select(/^CONECT/).join('\n')
+    pdb_content = load_file("1crn.pdb").to_pdb(bonds: :disulfide)
+    pdb_content.lines.select(/^CONECT/).join('\n').should eq expected
+  end
+
+  it "writes CONECT records for HET groups only" do
+    pdb_content = load_file("1cbn.pdb").to_pdb(bonds: :het, renumber: false)
+    pdb_content.lines.select(/^CONECT/).join('\n').should eq <<-PDB
+      CONECT  774  775  777                                                           
+      CONECT  775  774                                                                
+      CONECT  777  774                                                                
+      PDB
+  end
+
+  it "does not write CONECT records for water residues if bonds is HET" do
+    structure = load_file("waters.xyz", guess_topology: true)
+    pdb_content = structure.to_pdb(bonds: :het)
+    pdb_content.lines.select(/^CONECT/).join('\n').should eq ""
+  end
+
+  it "writes CONECT records for water residues if bonds is standard" do
+    structure = load_file("waters.xyz", guess_topology: true)
+    pdb_content = structure.to_pdb(bonds: :standard)
+    pdb_content.lines.select(/^CONECT/).join('\n').should eq <<-PDB
+      CONECT    1    2    3                                                           
+      CONECT    2    1                                                                
+      CONECT    3    1                                                                
+      CONECT    4    5    6                                                           
+      CONECT    5    4                                                                
+      CONECT    6    4                                                                
+      CONECT    7    8    9                                                           
+      CONECT    8    7                                                                
+      CONECT    9    7                                                                
+      PDB
   end
 end
