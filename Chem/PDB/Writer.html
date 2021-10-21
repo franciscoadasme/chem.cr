@@ -296,8 +296,18 @@
       
     </li>
   
-  <li class=" current" data-id="chem.cr/Chem/PDB/Writer" data-name="chem::pdb::writer">
+  <li class="parent open current" data-id="chem.cr/Chem/PDB/Writer" data-name="chem::pdb::writer">
       <a href="../../Chem/PDB/Writer.html">Writer</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/PDB/Writer/BondOptions" data-name="chem::pdb::writer::bondoptions">
+      <a href="../../Chem/PDB/Writer/BondOptions.html">BondOptions</a>
+      
+    </li>
+  
+</ul>
+
       
     </li>
   
@@ -844,7 +854,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/d8fda750aa4e8c809a999d61431a381496e2f1c1/src/chem/formats/pdb.cr#L317" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/fc45f8780b1d407236c7a85ac6aa3540ecac1de2/src/chem/formats/pdb.cr#L317" target="_blank">
         chem/formats/pdb.cr
       </a>
     
@@ -864,6 +874,11 @@
     </h2>
   
   <dl>
+    
+      <dt class="entry-const" id="LINE_WIDTH">
+        <strong>LINE_WIDTH</strong> = <code><span class="n">80</span></code>
+      </dt>
+      
     
       <dt class="entry-const" id="PDB_VERSION">
         <strong>PDB_VERSION</strong> = <code><span class="s">&quot;3.30&quot;</span></code>
@@ -895,12 +910,12 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28io%3AIO%2Cbonds%3ABool%7CArray%28Bond%29%3Dfalse%2Crenumber%3ABool%3Dtrue%2Ctotal_entries%3AInt32%3F%3Dnil%2Csync_close%3ABool%3Dfalse%29-class-method" class="signature"><strong>.new</strong>(io : IO, bonds : Bool | Array(Bond) = <span class="n">false</span>, renumber : Bool = <span class="n">true</span>, total_entries : Int32? = <span class="n">nil</span>, sync_close : Bool = <span class="n">false</span>)</a>
+        <a href="#new%28io%3AIO%2Cbonds%3APDB%3A%3AWriter%3A%3ABondOptions%3DPDB%3A%3AWriter%3A%3ABondOptions.flags%28Het%2CDisulfide%29%2Crenumber%3ABool%3Dtrue%2Ctotal_entries%3AInt32%3F%3Dnil%2Csync_close%3ABool%3Dfalse%29-class-method" class="signature"><strong>.new</strong>(io : IO, bonds : PDB::Writer::BondOptions = <span class="t">PDB</span><span class="t">::</span><span class="t">Writer</span><span class="t">::</span><span class="t">BondOptions</span>.flags(<span class="t">Het</span>, <span class="t">Disulfide</span>), renumber : Bool = <span class="n">true</span>, total_entries : Int32? = <span class="n">nil</span>, sync_close : Bool = <span class="n">false</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new%28path%3APath%7CString%2Cbonds%3ABool%7CArray%28Bond%29%3Dfalse%2Crenumber%3ABool%3Dtrue%2Ctotal_entries%3AInt32%3F%3Dnil%29%3Aself-class-method" class="signature"><strong>.new</strong>(path : Path | String, bonds : Bool | Array(Bond) = <span class="n">false</span>, renumber : Bool = <span class="n">true</span>, total_entries : Int32? = <span class="n">nil</span>) : <span class="k">self</span></a>
+        <a href="#new%28path%3APath%7CString%2Cbonds%3APDB%3A%3AWriter%3A%3ABondOptions%3DPDB%3A%3AWriter%3A%3ABondOptions.flags%28Het%2CDisulfide%29%2Crenumber%3ABool%3Dtrue%2Ctotal_entries%3AInt32%3F%3Dnil%29%3Aself-class-method" class="signature"><strong>.new</strong>(path : Path | String, bonds : PDB::Writer::BondOptions = <span class="t">PDB</span><span class="t">::</span><span class="t">Writer</span><span class="t">::</span><span class="t">BondOptions</span>.flags(<span class="t">Het</span>, <span class="t">Disulfide</span>), renumber : Bool = <span class="n">true</span>, total_entries : Int32? = <span class="n">nil</span>) : <span class="k">self</span></a>
         
           <div class="summary"><p>Creates a new object from the given <em>path</em>.</p></div>
         
@@ -921,14 +936,14 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#open%28io%3AIO%2Cbonds%3ABool%7CArray%28Bond%29%3Dfalse%2Crenumber%3ABool%3Dtrue%2Ctotal_entries%3AInt32%3F%3Dnil%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method" class="signature"><strong>.open</strong>(io : IO, bonds : Bool | Array(Bond) = <span class="n">false</span>, renumber : Bool = <span class="n">true</span>, total_entries : Int32? = <span class="n">nil</span>, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )</a>
+        <a href="#open%28io%3AIO%2Cbonds%3APDB%3A%3AWriter%3A%3ABondOptions%3DPDB%3A%3AWriter%3A%3ABondOptions.flags%28Het%2CDisulfide%29%2Crenumber%3ABool%3Dtrue%2Ctotal_entries%3AInt32%3F%3Dnil%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method" class="signature"><strong>.open</strong>(io : IO, bonds : PDB::Writer::BondOptions = <span class="t">PDB</span><span class="t">::</span><span class="t">Writer</span><span class="t">::</span><span class="t">BondOptions</span>.flags(<span class="t">Het</span>, <span class="t">Disulfide</span>), renumber : Bool = <span class="n">true</span>, total_entries : Int32? = <span class="n">nil</span>, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )</a>
         
           <div class="summary"><p>Creates a new object from the given <em>io</em>, yields it to the given block, and closes it at the end.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#open%28path%3APath%7CString%2Cbonds%3ABool%7CArray%28Bond%29%3Dfalse%2Crenumber%3ABool%3Dtrue%2Ctotal_entries%3AInt32%3F%3Dnil%2C%26%3Aself-%3E%29-class-method" class="signature"><strong>.open</strong>(path : Path | String, bonds : Bool | Array(Bond) = <span class="n">false</span>, renumber : Bool = <span class="n">true</span>, total_entries : Int32? = <span class="n">nil</span>, & : <span class="k">self</span> -> )</a>
+        <a href="#open%28path%3APath%7CString%2Cbonds%3APDB%3A%3AWriter%3A%3ABondOptions%3DPDB%3A%3AWriter%3A%3ABondOptions.flags%28Het%2CDisulfide%29%2Crenumber%3ABool%3Dtrue%2Ctotal_entries%3AInt32%3F%3Dnil%2C%26%3Aself-%3E%29-class-method" class="signature"><strong>.open</strong>(path : Path | String, bonds : PDB::Writer::BondOptions = <span class="t">PDB</span><span class="t">::</span><span class="t">Writer</span><span class="t">::</span><span class="t">BondOptions</span>.flags(<span class="t">Het</span>, <span class="t">Disulfide</span>), renumber : Bool = <span class="n">true</span>, total_entries : Int32? = <span class="n">nil</span>, & : <span class="k">self</span> -> )</a>
         
           <div class="summary"><p>Creates a new object from the given <em>path</em> yields it to the given block, and closes it at the end.</p></div>
         
@@ -1096,28 +1111,28 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(io:IO,bonds:Bool|Array(Bond)=false,renumber:Bool=true,total_entries:Int32?=nil,sync_close:Bool=false)-class-method">
+    <div class="entry-detail" id="new(io:IO,bonds:PDB::Writer::BondOptions=PDB::Writer::BondOptions.flags(Het,Disulfide),renumber:Bool=true,total_entries:Int32?=nil,sync_close:Bool=false)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(io : IO, bonds : Bool | <a href="../../Array.html">Array</a>(<a href="../../Chem/Bond.html">Bond</a>) = <span class="n">false</span>, renumber : Bool = <span class="n">true</span>, total_entries : Int32? = <span class="n">nil</span>, sync_close : Bool = <span class="n">false</span>)
+        def self.<strong>new</strong>(io : IO, bonds : <a href="../../Chem/PDB/Writer/BondOptions.html">PDB::Writer::BondOptions</a> = <span class="t">PDB</span><span class="t">::</span><span class="t">Writer</span><span class="t">::</span><span class="t">BondOptions</span>.flags(<span class="t">Het</span>, <span class="t">Disulfide</span>), renumber : Bool = <span class="n">true</span>, total_entries : Int32? = <span class="n">nil</span>, sync_close : Bool = <span class="n">false</span>)
 
-        <a class="method-permalink" href="#new%28io%3AIO%2Cbonds%3ABool%7CArray%28Bond%29%3Dfalse%2Crenumber%3ABool%3Dtrue%2Ctotal_entries%3AInt32%3F%3Dnil%2Csync_close%3ABool%3Dfalse%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28io%3AIO%2Cbonds%3APDB%3A%3AWriter%3A%3ABondOptions%3DPDB%3A%3AWriter%3A%3ABondOptions.flags%28Het%2CDisulfide%29%2Crenumber%3ABool%3Dtrue%2Ctotal_entries%3AInt32%3F%3Dnil%2Csync_close%3ABool%3Dfalse%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/d8fda750aa4e8c809a999d61431a381496e2f1c1/src/chem/formats/pdb.cr#L328" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc45f8780b1d407236c7a85ac6aa3540ecac1de2/src/chem/formats/pdb.cr#L341" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="new(path:Path|String,bonds:Bool|Array(Bond)=false,renumber:Bool=true,total_entries:Int32?=nil):self-class-method">
+    <div class="entry-detail" id="new(path:Path|String,bonds:PDB::Writer::BondOptions=PDB::Writer::BondOptions.flags(Het,Disulfide),renumber:Bool=true,total_entries:Int32?=nil):self-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(path : Path | String, bonds : Bool | <a href="../../Array.html">Array</a>(<a href="../../Chem/Bond.html">Bond</a>) = <span class="n">false</span>, renumber : Bool = <span class="n">true</span>, total_entries : Int32? = <span class="n">nil</span>) : <span class="k">self</span>
+        def self.<strong>new</strong>(path : Path | String, bonds : <a href="../../Chem/PDB/Writer/BondOptions.html">PDB::Writer::BondOptions</a> = <span class="t">PDB</span><span class="t">::</span><span class="t">Writer</span><span class="t">::</span><span class="t">BondOptions</span>.flags(<span class="t">Het</span>, <span class="t">Disulfide</span>), renumber : Bool = <span class="n">true</span>, total_entries : Int32? = <span class="n">nil</span>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#new%28path%3APath%7CString%2Cbonds%3ABool%7CArray%28Bond%29%3Dfalse%2Crenumber%3ABool%3Dtrue%2Ctotal_entries%3AInt32%3F%3Dnil%29%3Aself-class-method">#</a>
+        <a class="method-permalink" href="#new%28path%3APath%7CString%2Cbonds%3APDB%3A%3AWriter%3A%3ABondOptions%3DPDB%3A%3AWriter%3A%3ABondOptions.flags%28Het%2CDisulfide%29%2Crenumber%3ABool%3Dtrue%2Ctotal_entries%3AInt32%3F%3Dnil%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1147,12 +1162,12 @@ constant.</p>
     Class Method Detail
   </h2>
   
-    <div class="entry-detail" id="open(io:IO,bonds:Bool|Array(Bond)=false,renumber:Bool=true,total_entries:Int32?=nil,sync_close:Bool=false,&amp;:self-&gt;)-class-method">
+    <div class="entry-detail" id="open(io:IO,bonds:PDB::Writer::BondOptions=PDB::Writer::BondOptions.flags(Het,Disulfide),renumber:Bool=true,total_entries:Int32?=nil,sync_close:Bool=false,&amp;:self-&gt;)-class-method">
       <div class="signature">
         
-        def self.<strong>open</strong>(io : IO, bonds : Bool | <a href="../../Array.html">Array</a>(<a href="../../Chem/Bond.html">Bond</a>) = <span class="n">false</span>, renumber : Bool = <span class="n">true</span>, total_entries : Int32? = <span class="n">nil</span>, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )
+        def self.<strong>open</strong>(io : IO, bonds : <a href="../../Chem/PDB/Writer/BondOptions.html">PDB::Writer::BondOptions</a> = <span class="t">PDB</span><span class="t">::</span><span class="t">Writer</span><span class="t">::</span><span class="t">BondOptions</span>.flags(<span class="t">Het</span>, <span class="t">Disulfide</span>), renumber : Bool = <span class="n">true</span>, total_entries : Int32? = <span class="n">nil</span>, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )
 
-        <a class="method-permalink" href="#open%28io%3AIO%2Cbonds%3ABool%7CArray%28Bond%29%3Dfalse%2Crenumber%3ABool%3Dtrue%2Ctotal_entries%3AInt32%3F%3Dnil%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">#</a>
+        <a class="method-permalink" href="#open%28io%3AIO%2Cbonds%3APDB%3A%3AWriter%3A%3ABondOptions%3DPDB%3A%3AWriter%3A%3ABondOptions.flags%28Het%2CDisulfide%29%2Crenumber%3ABool%3Dtrue%2Ctotal_entries%3AInt32%3F%3Dnil%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1168,12 +1183,12 @@ are forwarded to the constructor.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="open(path:Path|String,bonds:Bool|Array(Bond)=false,renumber:Bool=true,total_entries:Int32?=nil,&amp;:self-&gt;)-class-method">
+    <div class="entry-detail" id="open(path:Path|String,bonds:PDB::Writer::BondOptions=PDB::Writer::BondOptions.flags(Het,Disulfide),renumber:Bool=true,total_entries:Int32?=nil,&amp;:self-&gt;)-class-method">
       <div class="signature">
         
-        def self.<strong>open</strong>(path : Path | String, bonds : Bool | <a href="../../Array.html">Array</a>(<a href="../../Chem/Bond.html">Bond</a>) = <span class="n">false</span>, renumber : Bool = <span class="n">true</span>, total_entries : Int32? = <span class="n">nil</span>, & : <span class="k">self</span> -> )
+        def self.<strong>open</strong>(path : Path | String, bonds : <a href="../../Chem/PDB/Writer/BondOptions.html">PDB::Writer::BondOptions</a> = <span class="t">PDB</span><span class="t">::</span><span class="t">Writer</span><span class="t">::</span><span class="t">BondOptions</span>.flags(<span class="t">Het</span>, <span class="t">Disulfide</span>), renumber : Bool = <span class="n">true</span>, total_entries : Int32? = <span class="n">nil</span>, & : <span class="k">self</span> -> )
 
-        <a class="method-permalink" href="#open%28path%3APath%7CString%2Cbonds%3ABool%7CArray%28Bond%29%3Dfalse%2Crenumber%3ABool%3Dtrue%2Ctotal_entries%3AInt32%3F%3Dnil%2C%26%3Aself-%3E%29-class-method">#</a>
+        <a class="method-permalink" href="#open%28path%3APath%7CString%2Cbonds%3APDB%3A%3AWriter%3A%3ABondOptions%3DPDB%3A%3AWriter%3A%3ABondOptions.flags%28Het%2CDisulfide%29%2Crenumber%3ABool%3Dtrue%2Ctotal_entries%3AInt32%3F%3Dnil%2C%26%3Aself-%3E%29-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1225,7 +1240,7 @@ enclosed <code>IO</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/d8fda750aa4e8c809a999d61431a381496e2f1c1/src/chem/formats/pdb.cr#L336" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc45f8780b1d407236c7a85ac6aa3540ecac1de2/src/chem/formats/pdb.cr#L349" target="_blank">View source</a>]
         
       </div>
     </div>

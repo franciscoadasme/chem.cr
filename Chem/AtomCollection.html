@@ -296,8 +296,18 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/PDB/Writer" data-name="chem::pdb::writer">
+  <li class="parent " data-id="chem.cr/Chem/PDB/Writer" data-name="chem::pdb::writer">
       <a href="../Chem/PDB/Writer.html">Writer</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/PDB/Writer/BondOptions" data-name="chem::pdb::writer::bondoptions">
+      <a href="../Chem/PDB/Writer/BondOptions.html">BondOptions</a>
+      
+    </li>
+  
+</ul>
+
       
     </li>
   
@@ -850,14 +860,14 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/d8fda750aa4e8c809a999d61431a381496e2f1c1/src/chem/core/atom_collection.cr#L2" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/fc45f8780b1d407236c7a85ac6aa3540ecac1de2/src/chem/core/atom_collection.cr#L2" target="_blank">
         chem/core/atom_collection.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/d8fda750aa4e8c809a999d61431a381496e2f1c1/src/chem/register_format.cr#L270" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/fc45f8780b1d407236c7a85ac6aa3540ecac1de2/src/chem/register_format.cr#L270" target="_blank">
         chem/register_format.cr
       </a>
     
@@ -966,14 +976,14 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#to_pdb%28bonds%3ABool%7CArray%28Bond%29%3Dfalse%2Crenumber%3ABool%3Dtrue%29%3AString-instance-method" class="signature"><strong>#to_pdb</strong>(bonds : Bool | Array(Bond) = <span class="n">false</span>, renumber : Bool = <span class="n">true</span>) : String</a>
+        <a href="#to_pdb%28bonds%3APDB%3A%3AWriter%3A%3ABondOptions%3DPDB%3A%3AWriter%3A%3ABondOptions.flags%28Het%2CDisulfide%29%2Crenumber%3ABool%3Dtrue%29%3AString-instance-method" class="signature"><strong>#to_pdb</strong>(bonds : PDB::Writer::BondOptions = <span class="t">PDB</span><span class="t">::</span><span class="t">Writer</span><span class="t">::</span><span class="t">BondOptions</span>.flags(<span class="t">Het</span>, <span class="t">Disulfide</span>), renumber : Bool = <span class="n">true</span>) : String</a>
         
           <div class="summary"><p>Returns a string representation of the atom collection using the <code><a href="../Chem/PDB.html">Chem::PDB</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_pdb%28output%3AIO%7CPath%7CString%2Cbonds%3ABool%7CArray%28Bond%29%3Dfalse%2Crenumber%3ABool%3Dtrue%29%3ANil-instance-method" class="signature"><strong>#to_pdb</strong>(output : IO | Path | String, bonds : Bool | Array(Bond) = <span class="n">false</span>, renumber : Bool = <span class="n">true</span>) : Nil</a>
+        <a href="#to_pdb%28output%3AIO%7CPath%7CString%2Cbonds%3APDB%3A%3AWriter%3A%3ABondOptions%3DPDB%3A%3AWriter%3A%3ABondOptions.flags%28Het%2CDisulfide%29%2Crenumber%3ABool%3Dtrue%29%3ANil-instance-method" class="signature"><strong>#to_pdb</strong>(output : IO | Path | String, bonds : PDB::Writer::BondOptions = <span class="t">PDB</span><span class="t">::</span><span class="t">Writer</span><span class="t">::</span><span class="t">BondOptions</span>.flags(<span class="t">Het</span>, <span class="t">Disulfide</span>), renumber : Bool = <span class="n">true</span>) : Nil</a>
         
           <div class="summary"><p>Writes the atom collection to <em>output</em> using the <code><a href="../Chem/PDB.html">Chem::PDB</a></code> file format.</p></div>
         
@@ -1042,7 +1052,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/d8fda750aa4e8c809a999d61431a381496e2f1c1/src/chem/core/atom_collection.cr#L7" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc45f8780b1d407236c7a85ac6aa3540ecac1de2/src/chem/core/atom_collection.cr#L7" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1058,7 +1068,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/d8fda750aa4e8c809a999d61431a381496e2f1c1/src/chem/core/atom_collection.cr#L13" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc45f8780b1d407236c7a85ac6aa3540ecac1de2/src/chem/core/atom_collection.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1074,7 +1084,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/d8fda750aa4e8c809a999d61431a381496e2f1c1/src/chem/core/atom_collection.cr#L19" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc45f8780b1d407236c7a85ac6aa3540ecac1de2/src/chem/core/atom_collection.cr#L19" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1090,7 +1100,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/d8fda750aa4e8c809a999d61431a381496e2f1c1/src/chem/core/atom_collection.cr#L3" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc45f8780b1d407236c7a85ac6aa3540ecac1de2/src/chem/core/atom_collection.cr#L3" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1106,7 +1116,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/d8fda750aa4e8c809a999d61431a381496e2f1c1/src/chem/core/atom_collection.cr#L4" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc45f8780b1d407236c7a85ac6aa3540ecac1de2/src/chem/core/atom_collection.cr#L4" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1122,7 +1132,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/d8fda750aa4e8c809a999d61431a381496e2f1c1/src/chem/core/atom_collection.cr#L23" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc45f8780b1d407236c7a85ac6aa3540ecac1de2/src/chem/core/atom_collection.cr#L23" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1138,7 +1148,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/d8fda750aa4e8c809a999d61431a381496e2f1c1/src/chem/core/atom_collection.cr#L40" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc45f8780b1d407236c7a85ac6aa3540ecac1de2/src/chem/core/atom_collection.cr#L40" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1154,7 +1164,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/d8fda750aa4e8c809a999d61431a381496e2f1c1/src/chem/core/atom_collection.cr#L44" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc45f8780b1d407236c7a85ac6aa3540ecac1de2/src/chem/core/atom_collection.cr#L44" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1170,7 +1180,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/d8fda750aa4e8c809a999d61431a381496e2f1c1/src/chem/core/atom_collection.cr#L48" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc45f8780b1d407236c7a85ac6aa3540ecac1de2/src/chem/core/atom_collection.cr#L48" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1186,7 +1196,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/d8fda750aa4e8c809a999d61431a381496e2f1c1/src/chem/core/atom_collection.cr#L54" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc45f8780b1d407236c7a85ac6aa3540ecac1de2/src/chem/core/atom_collection.cr#L54" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1202,7 +1212,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/d8fda750aa4e8c809a999d61431a381496e2f1c1/src/chem/core/atom_collection.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc45f8780b1d407236c7a85ac6aa3540ecac1de2/src/chem/core/atom_collection.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1225,7 +1235,7 @@ the <code><a href="../Chem/Gen.html">Chem::Gen</a></code> file format. Arguments
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/d8fda750aa4e8c809a999d61431a381496e2f1c1/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc45f8780b1d407236c7a85ac6aa3540ecac1de2/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1247,7 +1257,7 @@ file format. Arguments are fowarded to <code><a href="../Chem/Gen/Writer.html#op
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/d8fda750aa4e8c809a999d61431a381496e2f1c1/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc45f8780b1d407236c7a85ac6aa3540ecac1de2/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1269,7 +1279,7 @@ file format. Arguments are fowarded to <code><a href="../Chem/Mol2/Writer.html#o
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/d8fda750aa4e8c809a999d61431a381496e2f1c1/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc45f8780b1d407236c7a85ac6aa3540ecac1de2/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1292,52 +1302,52 @@ the <code><a href="../Chem/Mol2.html">Chem::Mol2</a></code> file format. Argumen
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/d8fda750aa4e8c809a999d61431a381496e2f1c1/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc45f8780b1d407236c7a85ac6aa3540ecac1de2/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="to_pdb(bonds:Bool|Array(Bond)=false,renumber:Bool=true):String-instance-method">
+    <div class="entry-detail" id="to_pdb(bonds:PDB::Writer::BondOptions=PDB::Writer::BondOptions.flags(Het,Disulfide),renumber:Bool=true):String-instance-method">
       <div class="signature">
         
-        def <strong>to_pdb</strong>(bonds : Bool | <a href="../Array.html">Array</a>(<a href="../Chem/Bond.html">Bond</a>) = <span class="n">false</span>, renumber : Bool = <span class="n">true</span>) : String
+        def <strong>to_pdb</strong>(bonds : <a href="../Chem/PDB/Writer/BondOptions.html">PDB::Writer::BondOptions</a> = <span class="t">PDB</span><span class="t">::</span><span class="t">Writer</span><span class="t">::</span><span class="t">BondOptions</span>.flags(<span class="t">Het</span>, <span class="t">Disulfide</span>), renumber : Bool = <span class="n">true</span>) : String
 
-        <a class="method-permalink" href="#to_pdb%28bonds%3ABool%7CArray%28Bond%29%3Dfalse%2Crenumber%3ABool%3Dtrue%29%3AString-instance-method">#</a>
+        <a class="method-permalink" href="#to_pdb%28bonds%3APDB%3A%3AWriter%3A%3ABondOptions%3DPDB%3A%3AWriter%3A%3ABondOptions.flags%28Het%2CDisulfide%29%2Crenumber%3ABool%3Dtrue%29%3AString-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns a string representation of the atom collection using
 the <code><a href="../Chem/PDB.html">Chem::PDB</a></code> file format. Arguments are fowarded to
-<code><a href="../Chem/PDB/Writer.html#open%28io%3AIO%2Cbonds%3ABool%7CArray%28Bond%29%3Dfalse%2Crenumber%3ABool%3Dtrue%2Ctotal_entries%3AInt32%3F%3Dnil%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::PDB::Writer.open</a></code>.</p>
+<code><a href="../Chem/PDB/Writer.html#open%28io%3AIO%2Cbonds%3APDB%3A%3AWriter%3A%3ABondOptions%3DPDB%3A%3AWriter%3A%3ABondOptions.flags%28Het%2CDisulfide%29%2Crenumber%3ABool%3Dtrue%2Ctotal_entries%3AInt32%3F%3Dnil%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::PDB::Writer.open</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/d8fda750aa4e8c809a999d61431a381496e2f1c1/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc45f8780b1d407236c7a85ac6aa3540ecac1de2/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="to_pdb(output:IO|Path|String,bonds:Bool|Array(Bond)=false,renumber:Bool=true):Nil-instance-method">
+    <div class="entry-detail" id="to_pdb(output:IO|Path|String,bonds:PDB::Writer::BondOptions=PDB::Writer::BondOptions.flags(Het,Disulfide),renumber:Bool=true):Nil-instance-method">
       <div class="signature">
         
-        def <strong>to_pdb</strong>(output : IO | Path | String, bonds : Bool | <a href="../Array.html">Array</a>(<a href="../Chem/Bond.html">Bond</a>) = <span class="n">false</span>, renumber : Bool = <span class="n">true</span>) : Nil
+        def <strong>to_pdb</strong>(output : IO | Path | String, bonds : <a href="../Chem/PDB/Writer/BondOptions.html">PDB::Writer::BondOptions</a> = <span class="t">PDB</span><span class="t">::</span><span class="t">Writer</span><span class="t">::</span><span class="t">BondOptions</span>.flags(<span class="t">Het</span>, <span class="t">Disulfide</span>), renumber : Bool = <span class="n">true</span>) : Nil
 
-        <a class="method-permalink" href="#to_pdb%28output%3AIO%7CPath%7CString%2Cbonds%3ABool%7CArray%28Bond%29%3Dfalse%2Crenumber%3ABool%3Dtrue%29%3ANil-instance-method">#</a>
+        <a class="method-permalink" href="#to_pdb%28output%3AIO%7CPath%7CString%2Cbonds%3APDB%3A%3AWriter%3A%3ABondOptions%3DPDB%3A%3AWriter%3A%3ABondOptions.flags%28Het%2CDisulfide%29%2Crenumber%3ABool%3Dtrue%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Writes the atom collection to <em>output</em> using the <code><a href="../Chem/PDB.html">Chem::PDB</a></code>
-file format. Arguments are fowarded to <code><a href="../Chem/PDB/Writer.html#open%28io%3AIO%2Cbonds%3ABool%7CArray%28Bond%29%3Dfalse%2Crenumber%3ABool%3Dtrue%2Ctotal_entries%3AInt32%3F%3Dnil%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::PDB::Writer.open</a></code>.</p>
+file format. Arguments are fowarded to <code><a href="../Chem/PDB/Writer.html#open%28io%3AIO%2Cbonds%3APDB%3A%3AWriter%3A%3ABondOptions%3DPDB%3A%3AWriter%3A%3ABondOptions.flags%28Het%2CDisulfide%29%2Crenumber%3ABool%3Dtrue%2Ctotal_entries%3AInt32%3F%3Dnil%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::PDB::Writer.open</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/d8fda750aa4e8c809a999d61431a381496e2f1c1/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc45f8780b1d407236c7a85ac6aa3540ecac1de2/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1359,7 +1369,7 @@ file format. Arguments are fowarded to <code><a href="../Chem/XYZ/Writer.html#op
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/d8fda750aa4e8c809a999d61431a381496e2f1c1/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc45f8780b1d407236c7a85ac6aa3540ecac1de2/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1382,7 +1392,7 @@ the <code><a href="../Chem/XYZ.html">Chem::XYZ</a></code> file format. Arguments
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/d8fda750aa4e8c809a999d61431a381496e2f1c1/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc45f8780b1d407236c7a85ac6aa3540ecac1de2/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1408,7 +1418,7 @@ corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/d8fda750aa4e8c809a999d61431a381496e2f1c1/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc45f8780b1d407236c7a85ac6aa3540ecac1de2/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1441,7 +1451,7 @@ in the corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/d8fda750aa4e8c809a999d61431a381496e2f1c1/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc45f8780b1d407236c7a85ac6aa3540ecac1de2/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
