@@ -115,6 +115,26 @@ module Chem::Spatial
       qq * q
     end
 
+    # Returns a quaternion encoding the rotation by the Euler angles.
+    #
+    # The rotation rotates *x* degrees around the X axis, *y* degrees
+    # around the Y axis, and *z* degrees around the y axis; applied in
+    # that order (XYZ).
+    def self.euler(x : Number, y : Number, z : Number) : self
+      cx = Math.cos(x.radians * 0.5)
+      sx = Math.sin(x.radians * 0.5)
+      cy = Math.cos(y.radians * 0.5)
+      sy = Math.sin(y.radians * 0.5)
+      cz = Math.cos(z.radians * 0.5)
+      sz = Math.sin(z.radians * 0.5)
+      Quat[
+        cx * cy * cz - sx * sy * sz,
+        sx * cy * cz + cx * sy * sz,
+        cx * sy * cz - sx * cy * sz,
+        cx * cy * sz + sx * sy * cz,
+      ]
+    end
+
     # Returns a quaternion encoding the rotation about the axis vector
     # *rotaxis* by *theta* degrees.
     def self.rotation(about rotaxis : Vec3, by theta : Float64) : self

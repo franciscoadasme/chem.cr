@@ -32,10 +32,8 @@ module Spec
     end
 
     def match(actual_value : Chem::Spatial::Quat) : Bool
-      (actual_value.w - @expected_value.w).abs <= @delta &&
-        (actual_value.x - @expected_value.x).abs <= @delta &&
-        (actual_value.y - @expected_value.y).abs <= @delta &&
-        (actual_value.z - @expected_value.z).abs <= @delta
+      return false unless @expected_value.is_a?(Chem::Spatial::Quat)
+      actual_value.close_to? @expected_value, @delta
     end
 
     def match(actual_value : Chem::Spatial::AffineTransform) : Bool

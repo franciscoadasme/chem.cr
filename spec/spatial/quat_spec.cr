@@ -27,6 +27,15 @@ describe Chem::Spatial::Quat do
     end
   end
 
+  describe ".euler" do
+    it "returns a quaternion encoding the rotation by the Euler angles" do
+      Quat.euler(65, 0, 0).should be_close Quat[0.843, 0.537, 0, 0], 1e-3
+      Quat.euler(0, 76, 0).should be_close Quat[0.788, 0, 0.616, 0], 1e-3
+      Quat.euler(0, 0, 81).should be_close Quat[0.760, 0, 0, 0.649], 1e-3
+      Quat.euler(-157, 17, -83).should be_close Quat[0.052, -0.745, -0.62, -0.239], 1e-3
+    end
+  end
+
   describe ".rotation" do
     it "returns a quaternion encoding the given rotation" do
       Quat.rotation(Vec3[1, 0, 0], 90).should be_close Quat[0.71, 0.71, 0, 0], 1e-2
