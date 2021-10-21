@@ -5,11 +5,19 @@ module Chem::PeriodicTable
     {% options[:name] = name.stringify %}
     {% options[:symbol] = symbol.stringify %}
 
-    {{@type}}::{{symbol.id}} = Element.new {{options.double_splat}}
+    {{@type}}::{{symbol.id}} = ::Chem::Element.new {{options.double_splat}}
 
     class ::Chem::Element
+      # Returns `true` if the element is {{name}}, else `false`.
       def {{name.id.underscore.id}}?
         same? {{@type}}::{{symbol.id}}
+      end
+    end
+
+    class ::Chem::Atom
+      # Returns `true` if the atom's element is {{name}}, else `false`.
+      def {{name.id.underscore.id}}?
+        @element.{{name.id.underscore.id}}?
       end
     end
   end
