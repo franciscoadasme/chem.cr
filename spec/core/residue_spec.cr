@@ -531,4 +531,13 @@ describe Chem::Residue do
       residues[-1].to_s.should eq "A:VAL76"
     end
   end
+
+  describe "#water?" do
+    it "tells if it is a water residue" do
+      structure = load_file "1h1s.pdb"
+      structure.dig('A', 56).water?.should be_false   # protein
+      structure.dig('A', 1298).water?.should be_false # ligand
+      structure.dig('A', 2181).water?.should be_true  # water
+    end
+  end
 end

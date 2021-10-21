@@ -587,6 +587,13 @@ module Chem
       Topology::Templates[@name]?
     end
 
+    # Returns `true` if the residue is a water residue, else `false`.
+    # This is done by checking if the associated residue type (if any)
+    # correspond to the water template.
+    def water? : Bool
+      type.try(&.description.downcase) == "water"
+    end
+
     {% for member in Kind.constants %}
       def {{member.underscore.id}}? : Bool
         @kind == Kind::{{member}}
