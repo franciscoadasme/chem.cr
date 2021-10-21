@@ -88,6 +88,18 @@ describe Chem::Spatial::Quat do
     end
   end
 
+  describe "#close_to?" do
+    it "returns true if quaternions are within delta" do
+      Quat[1, 2, 3, 4].close_to?(Quat[1, 2, 3, 4]).should be_true
+      Quat[1, 2, 3, 4].close_to?(Quat[1.001, 1.999, 3.00004, 4], 1e-3).should be_true
+    end
+
+    it "returns false if quaternions aren't within delta" do
+      Quat[1, 2, 3, 4].close_to?(Quat[4, 3, 2, 1]).should be_false
+      Quat[1, 2, 3, 4].close_to?(Quat[1.001, 1.999, 3.00004, 4], 1e-8).should be_false
+    end
+  end
+
   describe "#conj" do
     it "returns the conjugate of a quaternion" do
       Quat[1, 2, 3, 4].conj.should eq Quat[1, -2, -3, -4]

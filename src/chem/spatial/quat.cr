@@ -183,6 +183,22 @@ module Chem::Spatial
       @w**2 + @x**2 + @y**2 + @z**2
     end
 
+    # Returns `true` if the elements of the quaternions are within
+    # *delta* from each other, else `false`.
+    #
+    # ```
+    # Quat[1, 2, 3, 4].close_to?(Quat[1, 2, 3, 4])                     # => true
+    # Quat[1, 2, 3, 4].close_to?(Quat[1.001, 1.999, 3.00004, 4], 1e-3) # => true
+    # Quat[1, 2, 3, 4].close_to?(Quat[4, 3, 2, 1])                     # => false
+    # Quat[1, 2, 3, 4].close_to?(Quat[1.001, 1.999, 3.00004, 4], 1e-8) # => false
+    # ```
+    def close_to?(rhs : self, delta : Number = Float64::EPSILON) : Bool
+      @w.close_to?(rhs.w, delta) &&
+        @x.close_to?(rhs.x, delta) &&
+        @y.close_to?(rhs.y, delta) &&
+        @z.close_to?(rhs.z, delta)
+    end
+
     # Returns the conjugate of the quaternion.
     def conj : self
       Quat[@w, -@x, -@y, -@z]
