@@ -127,6 +127,12 @@ module Chem
       end
     end
 
+    # Returns `true` if the atom belongs to a non-standard (HET)
+    # residue, else `false`.
+    def het? : Bool
+      @residue.het?
+    end
+
     def inspect(io : IO)
       io << "<Atom "
       to_s io

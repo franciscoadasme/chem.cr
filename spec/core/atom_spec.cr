@@ -69,6 +69,15 @@ describe Chem::Atom do
     end
   end
 
+  describe "#het?" do
+    it "tells if it belongs to a HET residue" do
+      structure = load_file "1h1s.pdb"
+      structure.dig('A', 56, "C").het?.should be_false    # protein
+      structure.dig('A', 1298, "C10").het?.should be_true # ligand
+      structure.dig('A', 2181, "O").het?.should be_true   # water
+    end
+  end
+
   describe "#match?" do
     it "tells if atom matches atom type" do
       atom = Structure.build { atom "CD2", Vec3[0, 0, 0] }.atoms[0]
