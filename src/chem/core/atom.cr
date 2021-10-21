@@ -190,6 +190,14 @@ module Chem
       Spatial.squared_distance(self, rhs) <= PeriodicTable.covalent_cutoff(self, rhs)
     end
 
+    {% for member in Residue::Kind.constants %}
+      # Returns `true` if the atom belongs to a {{member.downcase}}
+      # residue, else `false`.
+      def {{member.underscore.id}}? : Bool
+        @residue.{{member.underscore.id}}?
+      end
+    {% end %}
+
     # Copies `self` into *residue*
     #
     # NOTE: bonds are not copied and must be set manually for the copy.
