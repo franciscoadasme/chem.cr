@@ -153,7 +153,8 @@ module Chem::Spatial
     # Hamilton product and its vector part corresponds to `p*`. Such
     # operation can be written as `(self * rhs.to_q * inv).imag`, but
     # this method implements an optimized version by using some vector
-    # and quaternion identities.
+    # and quaternion identities. The faster method is taken from this
+    # [post](https://bit.ly/3G9FENX) of the molecular matters blog.
     #
     # If the quaternion encodes a rotation about an axis, this
     # effectively applies such rotation to *rhs*.

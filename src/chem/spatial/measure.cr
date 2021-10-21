@@ -42,6 +42,12 @@ module Chem::Spatial
     Math.sqrt squared_distance(*args, **options)
   end
 
+  # Returns the distance between two quaternions.
+  #
+  # It uses the formula `acos(2 * p·q^2 - 1)`, which returns the angular
+  # distance (0 to π) between the orientations represented by the
+  # two quaternions. Taken from
+  # [https://math.stackexchange.com/a/90098](https://math.stackexchange.com/a/90098).
   def distance(q1 : Quat, q2 : Quat) : Float64
     # 2 * Math.acos q1.dot(q2)
     Math.acos 2 * q1.dot(q2)**2 - 1
