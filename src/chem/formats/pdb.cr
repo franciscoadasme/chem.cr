@@ -318,6 +318,7 @@ module Chem::PDB
     include FormatWriter(AtomCollection)
     include FormatWriter::MultiEntry(AtomCollection)
 
+    LINE_WIDTH       = 80
     PDB_VERSION      = "3.30"
     PDB_VERSION_DATE = Time.local 2011, 7, 13
     WHITESPACE       = ' '
@@ -334,8 +335,7 @@ module Chem::PDB
     end
 
     def close : Nil
-      write_bonds
-      @io.printf "%-80s\n", "END"
+      @io.printf "%-#{LINE_WIDTH}s\n", "END"
       super
     end
 
@@ -370,7 +370,7 @@ module Chem::PDB
       else
         obj.each_atom { |atom| write atom }
       end
-      formatl "%-80s", "ENDMDL" if multi?
+      formatl "%-#{LINE_WIDTH}s", "ENDMDL" if multi?
     end
 
     private def index(atom : Atom) : Int32
