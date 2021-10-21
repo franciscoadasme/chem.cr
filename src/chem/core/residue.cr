@@ -595,6 +595,9 @@ module Chem
     end
 
     {% for member in Kind.constants %}
+      {% typename = member == "DNA" ? member : member.downcase %}
+      {% desc = member != "Other" ? "a #{typename}" : "an unknown" %}
+      # Returns `true` if the residue is {{desc.id}} residue, else `false`.
       def {{member.underscore.id}}? : Bool
         @kind == Kind::{{member}}
       end
