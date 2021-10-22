@@ -754,4 +754,35 @@ describe Chem::PDB::Writer do
 
       PDB
   end
+
+  it "writes correct numbers in CONECT with TER" do
+    structure = load_file("waters.xyz", guess_topology: true)
+    structure.to_pdb(bonds: :all, ter_on_fragment: true).should eq <<-PDB.delete('|')
+      TITLE     Three waters                                                          |
+      REMARK   4                                                                      |
+      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         |
+      HETATM    1  O   HOH A   1       2.336   3.448   7.781  1.00  0.00           O  |
+      HETATM    2  H1  HOH A   1       1.446   3.485   7.315  1.00  0.00           H  |
+      HETATM    3  H2  HOH A   1       2.977   2.940   7.234  1.00  0.00           H  |
+      TER       4      HOH A   1                                                      |
+      HETATM    5  O   HOH A   2      11.776  11.590   8.510  1.00  0.00           O  |
+      HETATM    6  H1  HOH A   2      12.756  11.588   8.379  1.00  0.00           H  |
+      HETATM    7  H2  HOH A   2      11.395  11.031   7.787  1.00  0.00           H  |
+      TER       8      HOH A   2                                                      |
+      HETATM    9  O   HOH A   3       6.015  11.234   7.771  1.00  0.00           O  |
+      HETATM   10  H1  HOH A   3       6.440  12.040   7.394  1.00  0.00           H  |
+      HETATM   11  H2  HOH A   3       6.738  10.850   8.321  1.00  0.00           H  |
+      TER      12      HOH A   3                                                      |
+      CONECT    1    2    3                                                           |
+      CONECT    2    1                                                                |
+      CONECT    3    1                                                                |
+      CONECT    5    6    7                                                           |
+      CONECT    6    5                                                                |
+      CONECT    7    5                                                                |
+      CONECT    9   10   11                                                           |
+      CONECT   10    9                                                                |
+      CONECT   11    9                                                                |
+      END                                                                             |\n
+      PDB
+  end
 end
