@@ -134,7 +134,7 @@ describe Chem::PDB do
     end
 
     it "parses experiment with multiple methods" do
-      structure = Chem::Structure.from_pdb IO::Memory.new <<-EOS
+      structure = Chem::Structure.from_pdb IO::Memory.new <<-PDB
         HEADER    CHAPERONE                               14-FEB-13   4J7Z
         TITLE     THERMUS THERMOPHILUS DNAJ J- AND G/F-DOMAINS
         EXPDTA    X-RAY DIFFRACTION; EPR
@@ -143,7 +143,7 @@ describe Chem::PDB do
         ATOM      3  C   ALA A   1       6.441   5.527   9.850  1.00  4.13           C
         ATOM      4  O   ALA A   1       6.052   5.933   8.744  1.00  4.36           O
         ATOM      5  CB  ALA A   1       6.022   6.977  11.891  1.00  4.80           C
-        EOS
+        PDB
       structure.experiment.should_not be_nil
       expt = structure.experiment.not_nil!
       expt.method.x_ray_diffraction?.should be_true
@@ -370,13 +370,13 @@ describe Chem::PDB do
     end
 
     it "parses left-justified element (#84)" do
-      io = IO::Memory.new <<-EOS
+      io = IO::Memory.new <<-PDB
         ATOM      1  N   GLY     1     -20.286 -37.665  -6.811  1.00  0.00          N
         ATOM      2  H1  GLY     1     -20.247 -38.062  -5.872  1.00  0.00          H
         ATOM      3  H2  GLY     1     -20.074 -36.616  -6.704  1.00  0.00          H
         ATOM      4  H3  GLY     1     -21.301 -37.774  -7.185  1.00  0.00          H
         ATOM      5  CA  GLY     1     -19.299 -38.321  -7.682  1.00  0.00          C
-        EOS
+        PDB
       s = Chem::Structure.from_pdb io
       s.atoms.map(&.element.symbol).should eq %w(N H H H C)
     end
@@ -415,13 +415,13 @@ describe Chem::PDB do
       ex = expect_raises Chem::ParseException, "Invalid angle" do
         Chem::Structure::Experiment.from_pdb io
       end
-      ex.inspect_with_location.should eq <<-EOS
+      ex.inspect_with_location.should eq <<-PDB
         Found a parsing issue:
 
          1 | CRYST1   40.960   18.650   22.520  90.00  90.77 -90.00 P 1 21 1
                                                             ^^^^^^^
         Error: Invalid angle
-        EOS
+        PDB
     end
 
     it "ignores alternate conformation if occupancy is one" do
@@ -449,18 +449,18 @@ describe Chem::PDB::Writer do
 
   it "writes an atom collection" do
     structure = load_file "1crn.pdb"
-    structure.residues[4].to_pdb.should eq <<-EOS
-      REMARK   4                                                                      
-      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
-      ATOM      1  N   PRO A   5       9.561   9.108  13.563  1.00  3.96           N  
-      ATOM      2  CA  PRO A   5       9.448   9.034  15.012  1.00  4.25           C  
-      ATOM      3  C   PRO A   5       9.288   7.670  15.606  1.00  4.96           C  
-      ATOM      4  O   PRO A   5       9.490   7.519  16.819  1.00  7.44           O  
-      ATOM      5  CB  PRO A   5       8.230   9.957  15.345  1.00  5.11           C  
-      ATOM      6  CG  PRO A   5       7.338   9.786  14.114  1.00  5.24           C  
-      ATOM      7  CD  PRO A   5       8.366   9.804  12.958  1.00  5.20           C  
-      END                                                                             \n
-      EOS
+    structure.residues[4].to_pdb.should eq <<-PDB.delete('|')
+      REMARK   4                                                                      |
+      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         |
+      ATOM      1  N   PRO A   5       9.561   9.108  13.563  1.00  3.96           N  |
+      ATOM      2  CA  PRO A   5       9.448   9.034  15.012  1.00  4.25           C  |
+      ATOM      3  C   PRO A   5       9.288   7.670  15.606  1.00  4.96           C  |
+      ATOM      4  O   PRO A   5       9.490   7.519  16.819  1.00  7.44           O  |
+      ATOM      5  CB  PRO A   5       8.230   9.957  15.345  1.00  5.11           C  |
+      ATOM      6  CG  PRO A   5       7.338   9.786  14.114  1.00  5.24           C  |
+      ATOM      7  CD  PRO A   5       8.366   9.804  12.958  1.00  5.20           C  |
+      END                                                                             |\n
+      PDB
   end
 
   it "writes ter records at the end of polymer chains" do
@@ -471,18 +471,18 @@ describe Chem::PDB::Writer do
 
   it "keeps original atom numbering" do
     structure = load_file "1crn.pdb"
-    structure.residues[4].to_pdb(renumber: false).should eq <<-EOS
-      REMARK   4                                                                      
-      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
-      ATOM     27  N   PRO A   5       9.561   9.108  13.563  1.00  3.96           N  
-      ATOM     28  CA  PRO A   5       9.448   9.034  15.012  1.00  4.25           C  
-      ATOM     29  C   PRO A   5       9.288   7.670  15.606  1.00  4.96           C  
-      ATOM     30  O   PRO A   5       9.490   7.519  16.819  1.00  7.44           O  
-      ATOM     31  CB  PRO A   5       8.230   9.957  15.345  1.00  5.11           C  
-      ATOM     32  CG  PRO A   5       7.338   9.786  14.114  1.00  5.24           C  
-      ATOM     33  CD  PRO A   5       8.366   9.804  12.958  1.00  5.20           C  
-      END                                                                             \n
-      EOS
+    structure.residues[4].to_pdb(renumber: false).should eq <<-PDB.delete('|')
+      REMARK   4                                                                      |
+      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         |
+      ATOM     27  N   PRO A   5       9.561   9.108  13.563  1.00  3.96           N  |
+      ATOM     28  CA  PRO A   5       9.448   9.034  15.012  1.00  4.25           C  |
+      ATOM     29  C   PRO A   5       9.288   7.670  15.606  1.00  4.96           C  |
+      ATOM     30  O   PRO A   5       9.490   7.519  16.819  1.00  7.44           O  |
+      ATOM     31  CB  PRO A   5       8.230   9.957  15.345  1.00  5.11           C  |
+      ATOM     32  CG  PRO A   5       7.338   9.786  14.114  1.00  5.24           C  |
+      ATOM     33  CD  PRO A   5       8.366   9.804  12.958  1.00  5.20           C  |
+      END                                                                             |\n
+      PDB
   end
 
   it "writes CONECT records" do
@@ -497,17 +497,17 @@ describe Chem::PDB::Writer do
       end
     end
 
-    structure.to_pdb(bonds: :all).should eq <<-EOS
-      REMARK   4                                                                      
-      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
-      HETATM    1  I1  ICN A   1       3.149   0.000   0.000  1.00  0.00           I  
-      HETATM    2  C1  ICN A   1       1.148   0.000   0.000  1.00  0.00           C  
-      HETATM    3  N1  ICN A   1       0.000   0.000   0.000  1.00  0.00           N  
-      CONECT    1    2                                                                
-      CONECT    2    1    3    3    3                                                 
-      CONECT    3    2    2    2                                                      
-      END                                                                             \n
-      EOS
+    structure.to_pdb(bonds: :all).should eq <<-PDB.delete('|')
+      REMARK   4                                                                      |
+      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         |
+      HETATM    1  I1  ICN A   1       3.149   0.000   0.000  1.00  0.00           I  |
+      HETATM    2  C1  ICN A   1       1.148   0.000   0.000  1.00  0.00           C  |
+      HETATM    3  N1  ICN A   1       0.000   0.000   0.000  1.00  0.00           N  |
+      CONECT    1    2                                                                |
+      CONECT    2    1    3    3    3                                                 |
+      CONECT    3    2    2    2                                                      |
+      END                                                                             |\n
+      PDB
   end
 
   it "writes CONECT records for renumbered atoms" do
@@ -531,17 +531,17 @@ describe Chem::PDB::Writer do
       end
     end
 
-    structure.residues[1].to_pdb(bonds: :all).should eq <<-EOS
-      REMARK   4                                                                      
-      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
-      HETATM    1  I1  ICN A   2      13.149   0.000   0.000  1.00  0.00           I  
-      HETATM    2  C1  ICN A   2      11.148   0.000   0.000  1.00  0.00           C  
-      HETATM    3  N1  ICN A   2      10.000   0.000   0.000  1.00  0.00           N  
-      CONECT    1    2                                                                
-      CONECT    2    1    3    3    3                                                 
-      CONECT    3    2    2    2                                                      
-      END                                                                             \n
-      EOS
+    structure.residues[1].to_pdb(bonds: :all).should eq <<-PDB.delete('|')
+      REMARK   4                                                                      |
+      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         |
+      HETATM    1  I1  ICN A   2      13.149   0.000   0.000  1.00  0.00           I  |
+      HETATM    2  C1  ICN A   2      11.148   0.000   0.000  1.00  0.00           C  |
+      HETATM    3  N1  ICN A   2      10.000   0.000   0.000  1.00  0.00           N  |
+      CONECT    1    2                                                                |
+      CONECT    2    1    3    3    3                                                 |
+      CONECT    3    2    2    2                                                      |
+      END                                                                             |\n
+      PDB
   end
 
   it "writes big numbers" do
@@ -560,17 +560,17 @@ describe Chem::PDB::Writer do
     structure.atoms[2].serial = 235_123
     structure.residues[0].number = 10_231
 
-    structure.to_pdb(bonds: :all, renumber: false).should eq <<-EOS
-      REMARK   4                                                                      
-      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
-      HETATM99999  I1  ICN AA06F       3.149   0.000   0.000  1.00  0.00           I  
-      HETATMA0000  C1  ICN AA06F       1.148   0.000   0.000  1.00  0.00           C  
-      HETATMA2W9F  N1  ICN AA06F       0.000   0.000   0.000  1.00  0.00           N  
-      CONECT99999A0000                                                                
-      CONECTA000099999A2W9FA2W9FA2W9F                                                 
-      CONECTA2W9FA0000A0000A0000                                                      
-      END                                                                             \n
-      EOS
+    structure.to_pdb(bonds: :all, renumber: false).should eq <<-PDB.delete('|')
+      REMARK   4                                                                      |
+      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         |
+      HETATM99999  I1  ICN AA06F       3.149   0.000   0.000  1.00  0.00           I  |
+      HETATMA0000  C1  ICN AA06F       1.148   0.000   0.000  1.00  0.00           C  |
+      HETATMA2W9F  N1  ICN AA06F       0.000   0.000   0.000  1.00  0.00           N  |
+      CONECT99999A0000                                                                |
+      CONECTA000099999A2W9FA2W9FA2W9F                                                 |
+      CONECTA2W9FA0000A0000A0000                                                      |
+      END                                                                             |\n
+      PDB
   end
 
   it "writes four-letter residue names (#45)" do
@@ -582,15 +582,15 @@ describe Chem::PDB::Writer do
         atom "OC3", Vec3[8.600, 10.828, 12.580]
       end
     end
-    structure.to_pdb(bonds: :none).should eq <<-EOS
-      REMARK   4                                                                      
-      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
-      HETATM    1  C13 DMPGA   1       9.194  10.488  13.865  1.00  0.00           C1-
-      HETATM    2 H13A DMPGA   1       8.843   9.508  14.253  1.00  0.00           H  
-      HETATM    3 H13B DMPGA   1      10.299  10.527  13.756  1.00  0.00           H  
-      HETATM    4  OC3 DMPGA   1       8.600  10.828  12.580  1.00  0.00           O1-
-      END                                                                             \n
-      EOS
+    structure.to_pdb(bonds: :none).should eq <<-PDB.delete('|')
+      REMARK   4                                                                      |
+      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         |
+      HETATM    1  C13 DMPGA   1       9.194  10.488  13.865  1.00  0.00           C1-|
+      HETATM    2 H13A DMPGA   1       8.843   9.508  14.253  1.00  0.00           H  |
+      HETATM    3 H13B DMPGA   1      10.299  10.527  13.756  1.00  0.00           H  |
+      HETATM    4  OC3 DMPGA   1       8.600  10.828  12.580  1.00  0.00           O1-|
+      END                                                                             |\n
+      PDB
   end
 
   it "writes multiple entries" do
@@ -621,55 +621,55 @@ describe Chem::PDB::Writer do
 
   it "writes CONECT records for disulfide bridges and HET groups by default" do
     pdb_content = load_file("1cbn.pdb").to_pdb(renumber: false)
-    pdb_content.lines.select(/^CONECT/).join('\n').should eq <<-PDB
-      CONECT   44  685                                                                
-      CONECT   54  566                                                                
-      CONECT  269  477                                                                
-      CONECT  477  269                                                                
-      CONECT  566   54                                                                
-      CONECT  685   44                                                                
-      CONECT  774  775  777                                                           
-      CONECT  775  774                                                                
-      CONECT  777  774                                                                
+    pdb_content.lines.select(/^CONECT/).join('\n').should eq <<-PDB.delete('|')
+      CONECT   44  685                                                                |
+      CONECT   54  566                                                                |
+      CONECT  269  477                                                                |
+      CONECT  477  269                                                                |
+      CONECT  566   54                                                                |
+      CONECT  685   44                                                                |
+      CONECT  774  775  777                                                           |
+      CONECT  775  774                                                                |
+      CONECT  777  774                                                                |
       PDB
   end
 
   it "writes CONECT records for standard residues only" do
     structure = load_file("AlaIle--unwrapped.poscar", guess_topology: true)
     pdb_content = structure.to_pdb(bonds: :standard)
-    pdb_content.lines.select(/^CONECT/).join('\n').should eq <<-PDB
-      CONECT    1    2   10   11                                                      
-      CONECT    2    1    3    4    6                                                 
-      CONECT    3    2                                                                
-      CONECT    4    2    5    5   12                                                 
-      CONECT    5    4    4                                                           
-      CONECT    6    2    7    8    9                                                 
-      CONECT    7    6                                                                
-      CONECT    8    6                                                                
-      CONECT    9    6                                                                
-      CONECT   10    1                                                                
-      CONECT   11    1                                                                
-      CONECT   12    4   13   14                                                      
-      CONECT   13   12                                                                
-      CONECT   14   12   15   16   18                                                 
-      CONECT   15   14                                                                
-      CONECT   16   14   17   17   31                                                 
-      CONECT   17   16   16                                                           
-      CONECT   18   14   19   20   27                                                 
-      CONECT   19   18                                                                
-      CONECT   20   18   21   22   23                                                 
-      CONECT   21   20                                                                
-      CONECT   22   20                                                                
-      CONECT   23   20   24   25   26                                                 
-      CONECT   24   23                                                                
-      CONECT   25   23                                                                
-      CONECT   26   23                                                                
-      CONECT   27   18   28   29   30                                                 
-      CONECT   28   27                                                                
-      CONECT   29   27                                                                
-      CONECT   30   27                                                                
-      CONECT   31   16   32                                                           
-      CONECT   32   31                                                                
+    pdb_content.lines.select(/^CONECT/).join('\n').should eq <<-PDB.delete('|')
+      CONECT    1    2   10   11                                                      |
+      CONECT    2    1    3    4    6                                                 |
+      CONECT    3    2                                                                |
+      CONECT    4    2    5    5   12                                                 |
+      CONECT    5    4    4                                                           |
+      CONECT    6    2    7    8    9                                                 |
+      CONECT    7    6                                                                |
+      CONECT    8    6                                                                |
+      CONECT    9    6                                                                |
+      CONECT   10    1                                                                |
+      CONECT   11    1                                                                |
+      CONECT   12    4   13   14                                                      |
+      CONECT   13   12                                                                |
+      CONECT   14   12   15   16   18                                                 |
+      CONECT   15   14                                                                |
+      CONECT   16   14   17   17   31                                                 |
+      CONECT   17   16   16                                                           |
+      CONECT   18   14   19   20   27                                                 |
+      CONECT   19   18                                                                |
+      CONECT   20   18   21   22   23                                                 |
+      CONECT   21   20                                                                |
+      CONECT   22   20                                                                |
+      CONECT   23   20   24   25   26                                                 |
+      CONECT   24   23                                                                |
+      CONECT   25   23                                                                |
+      CONECT   26   23                                                                |
+      CONECT   27   18   28   29   30                                                 |
+      CONECT   28   27                                                                |
+      CONECT   29   27                                                                |
+      CONECT   30   27                                                                |
+      CONECT   31   16   32                                                           |
+      CONECT   32   31                                                                |
       PDB
   end
 
@@ -681,10 +681,10 @@ describe Chem::PDB::Writer do
 
   it "writes CONECT records for HET groups only" do
     pdb_content = load_file("1cbn.pdb").to_pdb(bonds: :het, renumber: false)
-    pdb_content.lines.select(/^CONECT/).join('\n').should eq <<-PDB
-      CONECT  774  775  777                                                           
-      CONECT  775  774                                                                
-      CONECT  777  774                                                                
+    pdb_content.lines.select(/^CONECT/).join('\n').should eq <<-PDB.delete('|')
+      CONECT  774  775  777                                                           |
+      CONECT  775  774                                                                |
+      CONECT  777  774                                                                |
       PDB
   end
 
@@ -697,16 +697,16 @@ describe Chem::PDB::Writer do
   it "writes CONECT records for water residues if bonds is standard" do
     structure = load_file("waters.xyz", guess_topology: true)
     pdb_content = structure.to_pdb(bonds: :standard)
-    pdb_content.lines.select(/^CONECT/).join('\n').should eq <<-PDB
-      CONECT    1    2    3                                                           
-      CONECT    2    1                                                                
-      CONECT    3    1                                                                
-      CONECT    4    5    6                                                           
-      CONECT    5    4                                                                
-      CONECT    6    4                                                                
-      CONECT    7    8    9                                                           
-      CONECT    8    7                                                                
-      CONECT    9    7                                                                
+    pdb_content.lines.select(/^CONECT/).join('\n').should eq <<-PDB.delete('|')
+      CONECT    1    2    3                                                           |
+      CONECT    2    1                                                                |
+      CONECT    3    1                                                                |
+      CONECT    4    5    6                                                           |
+      CONECT    5    4                                                                |
+      CONECT    6    4                                                                |
+      CONECT    7    8    9                                                           |
+      CONECT    8    7                                                                |
+      CONECT    9    7                                                                |
       PDB
   end
 
