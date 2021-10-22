@@ -28,6 +28,15 @@ describe Chem::Chain do
     end
   end
 
+  describe "#renumber_residues_by" do
+    it "renumbers residues by the given order" do
+      chain = load_file("3sgr.pdb").dig('A')
+      expected = chain.residues.sort_by!(&.name)
+      chain.renumber_residues_by(&.name)
+      chain.residues.should eq expected
+    end
+  end
+
   describe "#renumber_residues_by_connectivity" do
     it "renumbers residues by connectivity" do
       chain = load_file("cylindrin--size-09.pdb").dig 'B'

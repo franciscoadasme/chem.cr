@@ -161,6 +161,18 @@ module Chem
       !!@lattice
     end
 
+    # Renumber residues per chain based on the order by the output value
+    # of the block.
+    #
+    # NOTE: This won't change the order of the existing chains.
+    def renumber_residues_by(& : Residue -> _) : Nil
+      each_chain do |chain|
+        chain.renumber_residues_by do |residue|
+          yield residue
+        end
+      end
+    end
+
     # Renumber chain and residues based on bond information.
     #
     # Residue fragments are assigned to unique chains unless

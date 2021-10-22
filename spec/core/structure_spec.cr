@@ -117,6 +117,15 @@ describe Chem::Structure do
     end
   end
 
+  describe "#renumber_residues_by" do
+    it "renumbers residues by the given order" do
+      structure = load_file("3sgr.pdb")
+      expected = structure.chains.map { |chain| chain.residues.sort_by!(&.code) }
+      structure.renumber_residues_by(&.code)
+      structure.chains.map(&.residues).should eq expected
+    end
+  end
+
   describe "#renumber_residues_by_connectivity" do
     it "renumbers residues in ascending order based on the link bond" do
       structure = load_file "5e5v--unwrapped.poscar", guess_topology: true

@@ -134,6 +134,19 @@ module Chem
       @residues.size
     end
 
+    # Renumber residues based on the order by the output value of the
+    # block.
+    def renumber_residues_by(& : Residue -> _) : Nil
+      # FIXME: `residue.number` call reset_cache internally, which
+      # re-orders the residues each iteration. Maybe add a boolean to
+      # avoid resetting the cache while editing.
+      @residues.sort_by { |residue| yield residue }
+        .each_with_index do |residue, i|
+          residue.number = i + 1
+        end
+      reset_cache
+    end
+
     # Renumber residues based on bond information. Residue ordering is
     # computed based on the link bond if available.
     def renumber_residues_by_connectivity : Nil
