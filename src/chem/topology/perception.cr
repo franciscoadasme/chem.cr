@@ -30,7 +30,7 @@ class Chem::Topology::Perception
         end
       end
     end
-    @structure.renumber_by_connectivity split_chains: false
+    @structure.renumber_residues_by_connectivity split_chains: false
     assign_residue_types
   end
 

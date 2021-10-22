@@ -136,7 +136,7 @@ module Chem
 
     # Renumber residues based on bond information. Residue ordering is
     # computed based on the link bond if available.
-    def renumber_by_connectivity : Nil
+    def renumber_residues_by_connectivity : Nil
       num = 0
       residues = @residues.to_set
       while residue = residues.find(&.pred(strict: false, use_numbering: false).nil?) ||

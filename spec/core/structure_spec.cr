@@ -117,10 +117,10 @@ describe Chem::Structure do
     end
   end
 
-  describe "#renumber_by_connectivity" do
+  describe "#renumber_residues_by_connectivity" do
     it "renumbers residues in ascending order based on the link bond" do
       structure = load_file "5e5v--unwrapped.poscar", guess_topology: true
-      structure.renumber_by_connectivity split_chains: false
+      structure.renumber_residues_by_connectivity split_chains: false
 
       chains = structure.chains
       chains[0].residues.map(&.number).should eq (1..7).to_a
@@ -154,7 +154,7 @@ describe Chem::Structure do
         "polyala-trp--theta-180.000--c-10.00.poscar",
       ].each do |filename|
         structure = load_file(filename, guess_topology: true)
-        structure.renumber_by_connectivity
+        structure.renumber_residues_by_connectivity
         residues = structure.residues.to_a.sort_by(&.number)
         residues.map(&.number).should eq (1..residues.size).to_a
         residues.each_with_index do |residue, i|
@@ -168,7 +168,7 @@ describe Chem::Structure do
 
     it "does not split chains (#85)" do
       structure = load_file "cylindrin--size-09.pdb"
-      structure.renumber_by_connectivity split_chains: false
+      structure.renumber_residues_by_connectivity split_chains: false
       structure.chains.map(&.id).should eq "ABC".chars
       structure.chains.map(&.n_residues).should eq [18] * 3
       structure.chains.map(&.residues.map(&.number)).should eq [(1..18).to_a] * 3
@@ -179,7 +179,7 @@ describe Chem::Structure do
 
     it "splits chains (#85)" do
       structure = load_file "cylindrin--size-09.pdb"
-      structure.renumber_by_connectivity split_chains: true
+      structure.renumber_residues_by_connectivity split_chains: true
       structure.chains.map(&.id).should eq "ABCDEF".chars
       structure.chains.map(&.n_residues).should eq [9] * 6
       structure.chains.map(&.residues.map(&.number)).should eq [(1..9).to_a] * 6
@@ -220,7 +220,7 @@ describe Chem::Structure do
              5.0000000000000000    0.0000000000000000    0.0000000000000000
              0.0000000000000000   10.0000000000000000    0.0000000000000000
              0.0000000000000000    0.0000000000000000   10.0000000000000000
-           I    C    N 
+           I    C    N
              1     1     1
         Cartesian
            -2.0000000000000000    0.0000000000000000    0.0000000000000000

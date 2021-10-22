@@ -169,17 +169,17 @@ module Chem
     #
     # NOTE: existing chains are reused to re-arrang the residues among
     # them, so avoid caching them before calling this.
-    def renumber_by_connectivity(split_chains : Bool = true) : Nil
+    def renumber_residues_by_connectivity(split_chains : Bool = true) : Nil
       if split_chains
         id = 'A'.pred
         residues.residue_fragments.each do |residues|
           chain = dig?(id = id.succ) || Chain.new id, self
           chain.clear
           residues.each &.chain=(chain)
-          chain.renumber_by_connectivity
+          chain.renumber_residues_by_connectivity
         end
       else
-        each_chain &.renumber_by_connectivity
+        each_chain &.renumber_residues_by_connectivity
       end
     end
 

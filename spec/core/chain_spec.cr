@@ -28,10 +28,10 @@ describe Chem::Chain do
     end
   end
 
-  describe "#renumber_by_connectivity" do
+  describe "#renumber_residues_by_connectivity" do
     it "renumbers residues by connectivity" do
       chain = load_file("cylindrin--size-09.pdb").dig 'B'
-      chain.renumber_by_connectivity
+      chain.renumber_residues_by_connectivity
       chain.n_residues.should eq 18
       chain.residues.map(&.number).should eq (1..18).to_a
       chain.residues.map(&.name).should eq %w(
