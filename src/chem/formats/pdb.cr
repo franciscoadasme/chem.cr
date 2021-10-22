@@ -341,6 +341,7 @@ module Chem::PDB
     def initialize(@io : IO,
                    @bonds : PDB::Writer::BondOptions = PDB::Writer::BondOptions.flags(Het, Disulfide),
                    @renumber : Bool = true,
+                   @ter_on_fragment : Bool = false,
                    @total_entries : Int32? = nil,
                    @sync_close : Bool = false)
       check_total_entries
@@ -373,10 +374,22 @@ module Chem::PDB
         obj.each_chain do |chain|
           p_res = nil
           chain.each_residue do |residue|
+            # assume residues are ordered by connectivity, so a chain
+            # break (new fragment) can be detected if residue i and i+1
+            # are not bonded
+            write_ter p_res if @ter_on_fragment && p_res && !p_res.bonded?(residue)
             residue.each_atom { |atom| write atom, transform }
             p_res = residue
           end
-          write_ter p_res if p_res && p_res.polymer?
+          # assume that a chain is one or multiple (chain breaks) fragments
+          write_ter p_res if p_res && (p_res.polymer? || @ter_on_fragment)
+        end
+      elsif @ter_on_fragment
+        obj.each_fragment do |atoms|
+          atoms.each_atom do |atom|
+            write atom
+          end
+          write_ter atoms[-1].residue
         end
       else
         obj.each_atom { |atom| write atom }
