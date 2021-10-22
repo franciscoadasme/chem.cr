@@ -42,10 +42,11 @@ module Spec
       end
     end
 
-    def match(actual_value : Chem::Spatial::Size) : Bool
-      (actual_value.x - @expected_value.x).abs <= @delta &&
-        (actual_value.y - @expected_value.y).abs <= @delta &&
-        (actual_value.z - @expected_value.z).abs <= @delta
+    def match(actual_value : Chem::Spatial::Size3) : Bool
+      return false unless @expected_value.is_a?(Chem::Spatial::Size3)
+      (actual_value[0] - @expected_value[0]).abs <= @delta &&
+        (actual_value[1] - @expected_value[1]).abs <= @delta &&
+        (actual_value[2] - @expected_value[2]).abs <= @delta
     end
 
     def match(actual_value : Chem::Spatial::Bounds) : Bool

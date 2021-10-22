@@ -5,7 +5,7 @@ describe Chem::DX::Reader do
     grid = Grid.from_dx spec_file("simple.dx")
     grid.source_file.should eq Path[spec_file("simple.dx")].expand
     grid.dim.should eq({2, 3, 3})
-    grid.bounds.should eq Bounds.new(Vec3[0.5, 0.3, 1], Size[10, 40, 20])
+    grid.bounds.should eq Bounds.new(Vec3[0.5, 0.3, 1], Size3[10, 40, 20])
     grid.to_a.should eq [
       0, 1, 2, 10, 11, 12, 20, 21, 22, 100, 101, 102, 110, 111, 112, 120, 121, 122,
     ]
@@ -25,7 +25,7 @@ end
 
 describe Chem::DX::Writer do
   it "writes a grid" do
-    grid = make_grid(3, 2, 2, Bounds.new(Vec3[0.5, 0.3, 1], Size[20, 20, 10])) do |i, j, k|
+    grid = make_grid(3, 2, 2, Bounds.new(Vec3[0.5, 0.3, 1], Size3[20, 20, 10])) do |i, j, k|
       i * 100 + j * 10 + k
     end
     grid.to_dx.should eq <<-EOS

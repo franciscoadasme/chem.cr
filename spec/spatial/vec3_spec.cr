@@ -47,7 +47,7 @@ describe Chem::Spatial::Vec3 do
     end
 
     it "sums a vector and a size" do
-      (Vec3[1, 2, 3] + Size[3, 2, 1]).should eq Vec3[4, 4, 4]
+      (Vec3[1, 2, 3] + Size3[3, 2, 1]).should eq Vec3[4, 4, 4]
     end
   end
 
@@ -65,7 +65,7 @@ describe Chem::Spatial::Vec3 do
     end
 
     it "subtracts a size from a vector" do
-      (Vec3[1, 2, 3] - Size[3, 2, 1]).should eq Vec3[-2, 0, 2]
+      (Vec3[1, 2, 3] - Size3[3, 2, 1]).should eq Vec3[-2, 0, 2]
     end
   end
 
@@ -134,7 +134,7 @@ describe Chem::Spatial::Vec3 do
 
   describe "#image" do
     it "returns vector's pbc image" do
-      lat = Lattice.new Size[8.77, 9.5, 24.74], 88.22, 80, 70.34
+      lat = Lattice.new Size3[8.77, 9.5, 24.74], 88.22, 80, 70.34
       vec = Vec3[8.745528, 6.330571, 1.334073]
       vec.image(lat, 1, 0, 0).should be_close Vec3[17.515528, 6.330571, 1.334073], 1e-6
       vec.image(lat, -1, 0, 0).should be_close Vec3[-0.024472, 6.330571, 1.334073], 1e-6
@@ -214,11 +214,11 @@ describe Chem::Spatial::Vec3 do
 
   describe "#to_cartesian" do
     it "converts fractional to Cartesian coordinates" do
-      basis = Basis.new Size[20, 20, 16]
+      basis = Basis.new Size3[20, 20, 16]
       Vec3[0.5, 0.65, 1].to_cartesian(basis).should be_close Vec3[10, 13, 16], 1e-15
       Vec3[1.5, 0.23, 0.9].to_cartesian(basis).should be_close Vec3[30, 4.6, 14.4], 1e-15
 
-      basis = Basis.new Size[20, 10, 16]
+      basis = Basis.new Size3[20, 10, 16]
       Vec3[0.5, 0.65, 1].to_cartesian(basis).should be_close Vec3[10, 6.5, 16], 1e-15
 
       basis = Basis.new(
@@ -231,12 +231,12 @@ describe Chem::Spatial::Vec3 do
 
   describe "#to_fractional" do
     it "converts Cartesian to fractional coordinates" do
-      basis = Basis.new Size[10, 20, 30]
+      basis = Basis.new Size3[10, 20, 30]
       Vec3.zero.to_fractional(basis).should eq Vec3.zero
       Vec3[1, 2, 3].to_fractional(basis).should be_close Vec3[0.1, 0.1, 0.1], 1e-15
       Vec3[2, 3, 15].to_fractional(basis).should be_close Vec3[0.2, 0.15, 0.5], 1e-15
 
-      basis = Basis.new Size[20, 20, 30]
+      basis = Basis.new Size3[20, 20, 30]
       Vec3[1, 2, 3].to_fractional(basis).should be_close Vec3[0.05, 0.1, 0.1], 1e-15
     end
   end
@@ -275,7 +275,7 @@ describe Chem::Spatial::Vec3 do
     end
 
     it "wraps a Cartesian vector" do
-      lattice = Chem::Lattice.new Size[15, 20, 9]
+      lattice = Chem::Lattice.new Size3[15, 20, 9]
 
       Vec3[0, 0, 0].wrap(lattice).should eq Vec3[0, 0, 0]
       Vec3[15, 20, 9].wrap(lattice).should be_close Vec3[15, 20, 9], 1e-12
@@ -284,7 +284,7 @@ describe Chem::Spatial::Vec3 do
     end
 
     it "wraps a Cartesian vector around a center" do
-      lattice = Chem::Lattice.new Size[32, 20, 19]
+      lattice = Chem::Lattice.new Size3[32, 20, 19]
       center = Vec3[32, 20, 19]
 
       [

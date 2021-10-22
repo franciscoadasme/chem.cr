@@ -110,7 +110,7 @@ module Chem::PDB
           gamma = @pull.at(47, 7).float
           @pull.error "Invalid angle" unless 0 < gamma <= 180
           unless x == 1 && y == 1 && z == 1 && alpha == 90 && beta == 90 && gamma == 90
-            @pdb_lattice = Lattice.new Spatial::Size.new(x, y, z), alpha, beta, gamma
+            @pdb_lattice = Lattice.new Spatial::Size3.new(x, y, z), alpha, beta, gamma
           end
         when "EXPDTA"
           str = @pull.at(10, 70).str.split(';')[0].delete "- "

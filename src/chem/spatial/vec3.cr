@@ -57,8 +57,8 @@ module Chem::Spatial
       {% for op in %w(+ -) %}
         # Returns the element-wise {{op_map[op].id}} of the vector by
         # *rhs*.
-        def {{op.id}}(rhs : Size) : self
-          Vec3[@x {{op.id}} rhs.x, @y {{op.id}} rhs.y, @z {{op.id}} rhs.z]
+        def {{op.id}}(rhs : Size3) : self
+          Vec3[@x {{op.id}} rhs[0], @y {{op.id}} rhs[1], @z {{op.id}} rhs[2]]
         end
       {% end %}
     {% end %}

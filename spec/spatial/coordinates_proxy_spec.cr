@@ -13,7 +13,7 @@ describe Chem::Spatial::CoordinatesProxy do
     it "returns the bounds" do
       bounds = structure.coords.bounds
       bounds.origin.should eq Vec3[1, 2, 3]
-      bounds.size.should eq Size[6, 6, 6]
+      bounds.size.should eq Size3[6, 6, 6]
     end
   end
 

@@ -6,7 +6,7 @@ describe Chem::Cube::Reader do
     grid.source_file.should eq Path[spec_file("20.cube")].expand
     grid.dim.should eq({20, 20, 20})
     grid.origin.should be_close Vec3[-3.826155, -4.114553, -6.64407], 1e-6
-    grid.bounds.size.should be_close Size[12.184834, 12.859271, 13.117308], 1e-6
+    grid.bounds.size.should be_close Size3[12.184834, 12.859271, 13.117308], 1e-6
     grid[0, 0, 0].should eq 2.19227e-19
     grid[-1, -1, -1].should eq 7.36329e-22
     grid[1, 1, 5].should eq 1.61884e-14
@@ -16,7 +16,7 @@ describe Chem::Cube::Reader do
     info = Grid::Info.from_cube spec_file("20.cube")
     info.dim.should eq({20, 20, 20})
     info.bounds.origin.should be_close Vec3[-3.826155, -4.114553, -6.64407], 1e-6
-    info.bounds.size.should be_close Size[12.184834, 12.859271, 13.117308], 1e-6
+    info.bounds.size.should be_close Size3[12.184834, 12.859271, 13.117308], 1e-6
   end
 
   it "parses a cube file header (non-orthogonal)" do

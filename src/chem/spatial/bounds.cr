@@ -24,11 +24,11 @@ module Chem::Spatial
     end
 
     def self.[](a : Float64, b : Float64, c : Float64) : self
-      new Vec3.zero, Size[a, b, c]
+      new Vec3.zero, Size3[a, b, c]
     end
 
     def self.zero : self
-      new Vec3.zero, Size[0, 0, 0]
+      new Vec3.zero, Size3[0, 0, 0]
     end
 
     {% for op in %w(+ -) %}
@@ -83,8 +83,8 @@ module Chem::Spatial
     #
     # ```
     # bounds = Bounds.new S[10, 10, 10], 90, 90, 120
-    # bounds.includes? Bounds.new(Size[5, 4, 6])                     # => true
-    # bounds.includes? Bounds.new(Vec3[-1, 2, -4], Size[5, 4, 6])) # => false
+    # bounds.includes? Bounds.new(Size3[5, 4, 6])                     # => true
+    # bounds.includes? Bounds.new(Vec3[-1, 2, -4], Size3[5, 4, 6])) # => false
     # ```
     def includes?(bounds : Bounds) : Bool
       bounds.vertices.all? { |vec| includes?(vec) }
@@ -128,7 +128,7 @@ module Chem::Spatial
     # bounds = Bounds.new Vec3[1, 5, 3], S[10, 5, 12]
     # bounds.center # => Vec3[6.0, 7.5, 9.0]
     # bounds = bounds.pad(2.5)
-    # bounds.size   # => Size[15, 10, 17]
+    # bounds.size   # => Size3[15, 10, 17]
     # bounds.center # => Vec3[6.0, 7.5, 9.0]
     # ```
     def pad(padding : Number) : self

@@ -112,7 +112,7 @@ describe Chem::PDB do
       st = load_file "1crn.pdb"
       st.lattice.should_not be_nil
       lattice = st.lattice.not_nil!
-      lattice.size.should eq Size[40.960, 18.650, 22.520]
+      lattice.size.should eq Size3[40.960, 18.650, 22.520]
       lattice.alpha.should eq 90
       lattice.beta.should eq 90.77
       lattice.gamma.should eq 90

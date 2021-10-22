@@ -1,5 +1,5 @@
 require "./spatial/affine"
-require "./spatial/size"
+require "./spatial/size3"
 require "./spatial/vec3"
 
 require "./spatial/basis"

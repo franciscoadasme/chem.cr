@@ -119,7 +119,7 @@ module Chem
     end
 
     def lattice(a : Float64, b : Float64, c : Float64) : Lattice
-      @structure.lattice = Lattice.new Spatial::Size[a, b, c]
+      @structure.lattice = Lattice.new Spatial::Size3[a, b, c]
     end
 
     def residue : Residue

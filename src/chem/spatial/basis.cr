@@ -7,27 +7,27 @@ module Chem::Spatial
     def initialize(@i : Vec3, @j : Vec3, @k : Vec3)
     end
 
-    def self.new(size : Size,
+    def self.new(size : Size3,
                  alpha : Number = 90.0,
                  beta : Number = 90.0,
                  gamma : Number = 90.0) : self
       raise ArgumentError.new("Negative angle") if alpha < 0 || beta < 0 || gamma < 0
       if alpha == 90 && beta == 90 && gamma == 90
-        i = Vec3[size.x, 0, 0]
-        j = Vec3[0, size.y, 0]
-        k = Vec3[0, 0, size.z]
+        i = Vec3[size[0], 0, 0]
+        j = Vec3[0, size[1], 0]
+        k = Vec3[0, 0, size[2]]
       else
         cos_alpha = Math.cos alpha.radians
         cos_beta = Math.cos beta.radians
         cos_gamma = Math.cos gamma.radians
         sin_gamma = Math.sin gamma.radians
 
-        kx = size.z * cos_beta
-        ky = size.z * (cos_alpha - cos_beta * cos_gamma) / sin_gamma
-        kz = Math.sqrt size.z**2 - kx**2 - ky**2
+        kx = size[2] * cos_beta
+        ky = size[2] * (cos_alpha - cos_beta * cos_gamma) / sin_gamma
+        kz = Math.sqrt size[2]**2 - kx**2 - ky**2
 
-        i = Vec3[size.x, 0, 0]
-        j = Vec3[size.y * cos_gamma, size.y * sin_gamma, 0]
+        i = Vec3[size[0], 0, 0]
+        j = Vec3[size[1] * cos_gamma, size[1] * sin_gamma, 0]
         k = Vec3[kx, ky, kz]
       end
       new i, j, k
@@ -65,8 +65,8 @@ module Chem::Spatial
       Spatial.angle @i, @j
     end
 
-    def size : Size
-      Size.new @i.abs, @j.abs, @k.abs
+    def size : Size3
+      Size3.new @i.abs, @j.abs, @k.abs
     end
 
     # Returns the transformation that converts Cartesian coordinates to fractional

@@ -121,7 +121,7 @@ describe Chem::Spatial::PBC do
 
     it "fails when radius is negative" do
       structure = Chem::Structure.new
-      structure.lattice = Lattice.new Size[10, 10, 10]
+      structure.lattice = Lattice.new Size3[10, 10, 10]
       expect_raises Chem::Spatial::Error, "Radius cannot be negative" do
         Chem::Spatial::PBC.each_adjacent_image(structure, radius: -2) { }
       end
