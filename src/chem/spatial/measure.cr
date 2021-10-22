@@ -1,6 +1,6 @@
 module Chem::Spatial
   def angle(a : Vec3, b : Vec3) : Float64
-    Math.atan2(a.cross(b).size, a.dot(b)).degrees
+    Math.atan2(a.cross(b).abs, a.dot(b)).degrees
   end
 
   def angle(a : Atom, b : Atom, c : Atom, lattice : Lattice? = nil) : Float64

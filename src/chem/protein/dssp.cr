@@ -149,7 +149,7 @@ module Chem::Protein
       return false unless i > 1 && i < @residues.size - 2
       return false if gap? i - 2, i + 2
       u, v = coords(i - 2).ca - coords(i).ca, coords(i).ca - coords(i + 2).ca
-      ckap = u.dot(v) / (u.size * v.size)
+      ckap = u.dot(v) / (u.abs * v.abs)
       kappa = Math.atan2(Math.sqrt(1 - ckap * ckap), ckap)
       kappa.degrees > 70
     end

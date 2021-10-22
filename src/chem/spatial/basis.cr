@@ -38,7 +38,7 @@ module Chem::Spatial
     end
 
     def a : Float64
-      @i.size
+      @i.abs
     end
 
     def alpha : Float64
@@ -50,7 +50,7 @@ module Chem::Spatial
     end
 
     def b : Float64
-      @j.size
+      @j.abs
     end
 
     def beta : Float64
@@ -58,7 +58,7 @@ module Chem::Spatial
     end
 
     def c : Float64
-      @k.size
+      @k.abs
     end
 
     def gamma : Float64
@@ -66,7 +66,7 @@ module Chem::Spatial
     end
 
     def size : Size
-      Size.new @i.size, @j.size, @k.size
+      Size.new @i.abs, @j.abs, @k.abs
     end
 
     # Returns the transformation that converts Cartesian coordinates to fractional

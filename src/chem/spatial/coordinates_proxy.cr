@@ -82,7 +82,7 @@ module Chem::Spatial
     # structure.coords.center # => [0.0 0.0 0.0]
     # ```
     def center_at_origin : self
-      center_at Vec3.origin
+      center_at Vec3.zero
     end
 
     # Returns the center of mass.
@@ -169,11 +169,11 @@ module Chem::Spatial
     end
 
     def transform(transform : AffineTransform) : Array(Vec3)
-      map &.*(transform)
+      map &.transform(transform)
     end
 
     def transform!(transform : AffineTransform) : self
-      map! &.*(transform)
+      map! &.transform(transform)
     end
 
     def translate(by offset : Vec3) : Array(Vec3)
@@ -214,14 +214,14 @@ module Chem::Spatial
         map! do |vec|
           d = vec - center
           3.times do |i|
-            fd = d.dot(normed_vecs[i]) / vecs[i].size
+            fd = d.dot(normed_vecs[i]) / vecs[i].abs
             vec -= fd.round * vecs[i] if fd.abs > 0.5
           end
           vec
         end
       else
         offset = center.to_fractional(lattice) - Vec3[0.5, 0.5, 0.5]
-        map!(fractional: true) { |vec| vec - (vec - offset).floor }
+        map!(fractional: true) { |vec| vec - (vec - offset).map(&.floor) }
       end
 
       self

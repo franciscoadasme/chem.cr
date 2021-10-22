@@ -26,7 +26,7 @@ module Chem
     end
 
     def bounds : Spatial::Bounds
-      Spatial::Bounds.new Spatial::Vec3.origin, @basis
+      Spatial::Bounds.new Spatial::Vec3.zero, @basis
     end
 
     def c=(value : Float64) : Float64

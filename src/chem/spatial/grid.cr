@@ -396,7 +396,8 @@ module Chem::Spatial
     def loc_at?(vec : Vec3) : Location?
       return unless vec.in?(bounds)
       vec = (vec - origin).to_fractional bounds.basis
-      (vec * @dim.map &.-(1)).round.to_t.map &.to_i
+      vec = vec * (Vec3[*@dim] - 1)
+      {vec.x, vec.y, vec.z}.map(&.round.to_i)
     end
 
     def map(& : Float64 -> Float64) : self
@@ -712,9 +713,9 @@ module Chem::Spatial
     end
 
     def resolution : Tuple(Float64, Float64, Float64)
-      {ni == 1 ? 0.0 : bounds.i.size / (ni - 1),
-       nj == 1 ? 0.0 : bounds.j.size / (nj - 1),
-       nk == 1 ? 0.0 : bounds.k.size / (nk - 1)}
+      {ni == 1 ? 0.0 : bounds.i.abs / (ni - 1),
+       nj == 1 ? 0.0 : bounds.j.abs / (nj - 1),
+       nk == 1 ? 0.0 : bounds.k.abs / (nk - 1)}
     end
 
     def size : Int32

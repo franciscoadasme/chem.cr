@@ -100,7 +100,7 @@ module Chem::Spatial
     # to *v*.
     def self.aligning(u : Vec3, to v : Vec3) : self
       w = u.cross(v)
-      Quat[Math.sqrt(u.squared_size * v.squared_size) + u.dot(v), w.x, w.y, w.z].normalize
+      Quat[Math.sqrt(u.abs2 * v.abs2) + u.dot(v), w.x, w.y, w.z].normalize
     end
 
     # Returns a quaternion encoding the rotation to align *u[0]* to
@@ -137,7 +137,7 @@ module Chem::Spatial
 
     # Returns a quaternion encoding the rotation about the axis vector
     # *rotaxis* by *theta* degrees.
-    def self.rotation(about rotaxis : Vec3, by theta : Float64) : self
+    def self.rotation(about rotaxis : Vec3, by theta : Number) : self
       theta = theta.radians / 2
       vec = Math.sin(theta) * rotaxis.normalize
       Quat[Math.cos(theta), vec.x, vec.y, vec.z]
@@ -153,7 +153,7 @@ module Chem::Spatial
       Quat[-@w, -@x, -@y, -@z]
     end
 
-    # Returns the element-wise addition of the quaternion by *rhs*.
+    # Returns the element-wise subtraction of the quaternion by *rhs*.
     def -(rhs : self) : self
       Quat[@w - rhs.w, @x - rhs.x, @y - rhs.y, @z - rhs.z]
     end
@@ -280,14 +280,14 @@ module Chem::Spatial
   end
 
   struct Vec3
-    # Returns the conjugate of the quaternion by the inverse of *rhs*.
-    # See `Quat#*` for details.
+    # Returns the conjugate of the vector by the inverse of *rhs*. See
+    # `Quat#*` for details.
     def *(rhs : Quat) : self
       rhs.inv * self
     end
 
     # Returns the quaternion representation of the vector, i.e.,
-    # Quat[0, x, y, z].
+    # `Quat[0, x, y, z]`.
     def to_q : Quat
       Quat[0, @x, @y, @z]
     end

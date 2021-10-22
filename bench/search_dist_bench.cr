@@ -14,7 +14,7 @@ cr_tree = Crystalline::KDTree(Float64).new cr_data
 
 puts "Nearest neighbors"
 Benchmark.ips do |x|
-  point = Vec3.origin
+  point = Vec3.zero
   # point = Vec3[19, 32, 44]
   point_a = point.to_a
 

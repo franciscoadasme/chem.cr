@@ -67,7 +67,7 @@ module Chem::Spatial
 
   private def radius(coord, theta : Float64) : Float64
     r1 = (coord[1][:ca] - coord[0][:ca])
-    r1.size / (2 * Math.sin(0.5 * theta))
+    r1.abs / (2 * Math.sin(0.5 * theta))
   end
 
   private def rotation(coord) : Tuple(Vec3, Float64, Float64)

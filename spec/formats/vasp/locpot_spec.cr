@@ -6,7 +6,7 @@ describe Chem::VASP::Locpot do
     grid.source_file.should eq Path[spec_file("vasp/LOCPOT")].expand
     grid.dim.should eq({32, 32, 32})
     grid.bounds.should be_close Bounds.new(
-      Vec3.origin,
+      Vec3.zero,
       Vec3[2.969072, -0.000523, -0.000907],
       Vec3[-0.987305, 2.800110, 0.000907],
       Vec3[-0.987305, -1.402326, 2.423654],
@@ -21,7 +21,7 @@ describe Chem::VASP::Locpot do
   it "parses a LOCPOT header" do
     info = Grid::Info.from_locpot spec_file("vasp/LOCPOT")
     info.bounds.should be_close Bounds.new(
-      Vec3.origin,
+      Vec3.zero,
       Vec3[2.969072, -0.000523, -0.000907],
       Vec3[-0.987305, 2.800110, 0.000907],
       Vec3[-0.987305, -1.402326, 2.423654],

@@ -23,11 +23,11 @@ module Chem::Spatial::PBC
     offset = (lattice.bounds.center - atoms.coords.center).to_fractional lattice
     atoms.each_atom do |atom|
       fcoords = atom.coords.to_fractional lattice                     # convert to fractional coords
-      w_fcoords = fcoords - fcoords.floor                             # wrap to primary unit cell
+      w_fcoords = fcoords - fcoords.map(&.floor)                      # wrap to primary unit cell
       ax_offset = (fcoords + offset).map { |ele| ele < 0.5 ? 1 : -1 } # compute offset per axis
 
       ADJACENT_IMAGE_IDXS.each do |img_idx|
-        yield atom, (fcoords + ax_offset * img_idx).to_cartesian(lattice)
+        yield atom, (fcoords + ax_offset * Vec3[*img_idx]).to_cartesian(lattice)
       end
     end
   end
@@ -54,7 +54,7 @@ module Chem::Spatial::PBC
       img_sense = vec.map { |ele| ele < 0.5 ? 1 : -1 }
 
       ADJACENT_IMAGE_IDXS.each do |img_idx|
-        img_vec = vec + img_sense * img_idx
+        img_vec = vec + Vec3[*img_idx] * img_sense
         if (0..2).all? { |i| img_vec[i].in? extents[i] }
           yield atom, (img_vec - offset).to_cartesian(lattice)
         end
@@ -67,7 +67,7 @@ module Chem::Spatial::PBC
     moved_atoms = Set(Atom).new
     atoms.each_fragment do |fragment|
       assemble_fragment fragment[0], fragment[0].coords, moved_atoms
-      fragment.coords.translate! by: -fragment.coords.center.floor
+      fragment.coords.translate! by: -fragment.coords.center.map(&.floor)
       moved_atoms.clear
     end
     atoms.coords.to_cartesian!
@@ -76,7 +76,7 @@ module Chem::Spatial::PBC
   private def assemble_fragment(atom, center, moved_atoms) : Nil
     return if atom.in?(moved_atoms)
 
-    atom.coords -= (atom.coords - center).round
+    atom.coords -= (atom.coords - center).map(&.round)
     moved_atoms << atom
 
     atom.each_bonded_atom do |other|

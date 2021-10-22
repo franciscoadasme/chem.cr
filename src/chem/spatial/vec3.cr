@@ -1,92 +1,81 @@
 module Chem::Spatial
   struct Vec3
-    private alias NumberType = Number::Primitive
-
+    # X component of the vector.
     getter x : Float64
+    # Y component of the vector.
     getter y : Float64
+    # Z component of the vector.
     getter z : Float64
 
-    def self.[](x : NumberType, y : NumberType, z : NumberType) : self
-      new x, y, z
-    end
-
-    def self.origin : self
-      zero
-    end
-
-    def self.x : self
-      Vec3.new 1, 0, 0
-    end
-
-    def self.y : self
-      Vec3.new 0, 1, 0
-    end
-
-    def self.z : self
-      Vec3.new 0, 0, 1
-    end
-
-    def self.zero : self
-      new 0, 0, 0
-    end
-
+    # Creates a new vector representing the position (*x*, *y*, *z*).
     def initialize(@x : Float64, @y : Float64, @z : Float64)
     end
 
-    def initialize(x : NumberType, y : NumberType, z : NumberType)
-      @x = x.to_f
-      @y = y.to_f
-      @z = z.to_f
+    # Returns a new vector representing the position (*x*, *y*, *z*).
+    @[AlwaysInline]
+    def self.[](x : Number, y : Number, z : Number) : self
+      new x.to_f, y.to_f, z.to_f
     end
 
+    # Returns the zero vector.
+    @[AlwaysInline]
+    def self.zero : self
+      Vec3[0, 0, 0]
+    end
+
+    # Returns the *i*th component of the vector in the XYZ order. Raises
+    # `IndexError` if *index* is invalid.
     def [](index : Int32) : Float64
       case index
       when 0 then @x
       when 1 then @y
       when 2 then @z
-      else
-        raise IndexError.new
+      else        raise IndexError.new
       end
     end
 
-    {% for op in ['+', '-', '*', '/'] %}
-      def {{op.id}}(other : Number) : self
-        Vec3.new @x {{op.id}} other, @y {{op.id}} other, @z {{op.id}} other
-      end
+    {% begin %}
+      {% op_map = {
+           "+" => "addition",
+           "-" => "subtraction",
+           "*" => "multiplication",
+           "/" => "division",
+         } %}
+      {% for op in %w(+ - * /) %}
+        # Returns the element-wise {{op_map[op].id}} of the vector by
+        # *rhs*.
+        def {{op.id}}(rhs : Number) : self
+          Vec3[@x {{op.id}} rhs, @y {{op.id}} rhs, @z {{op.id}} rhs]
+        end
 
-      def {{op.id}}(other : Vec3) : self
-        Vec3.new @x {{op.id}} other.x, @y {{op.id}} other.y, @z {{op.id}} other.z
-      end
+        # :ditto:
+        def {{op.id}}(rhs : Vec3) : self
+          Vec3[@x {{op.id}} rhs.x, @y {{op.id}} rhs.y, @z {{op.id}} rhs.z]
+        end
+      {% end %}
 
-      def {{op.id}}(other : Tuple(NumberType, NumberType, NumberType)) : self
-        map_with_index { |value, i| value {{op.id}} other[i] }
-      end
+      {% for op in %w(+ -) %}
+        # Returns the element-wise {{op_map[op].id}} of the vector by
+        # *rhs*.
+        def {{op.id}}(rhs : Size) : self
+          Vec3[@x {{op.id}} rhs.x, @y {{op.id}} rhs.y, @z {{op.id}} rhs.z]
+        end
+      {% end %}
     {% end %}
 
-    {% for op in %w(+ -) %}
-      def {{op.id}}(rhs : Size) : self
-        Vec3.new @x {{op.id}} rhs.x, @y {{op.id}} rhs.y, @z {{op.id}} rhs.z
-      end
-    {% end %}
-
+    # Returns the negation of the vector.
     def - : self
-      inv
+      Vec3[-@x, -@y, -@z]
     end
 
-    def *(rhs : AffineTransform) : self
-      rhs * self
+    # Returns the absolute value (norm or length) of the vector.
+    def abs : Float64
+      Math.sqrt abs2
     end
 
-    def abs : self
-      map &.abs
-    end
-
-    def clamp(min : Number, max : Number) : self
-      map &.clamp(min, max)
-    end
-
-    def clamp(range : Range) : self
-      map &.clamp(range)
+    # Returns the square of the absolute value of the vector.
+    def abs2 : Float64
+      @x**2 + @y**2 + @z**2
     end
 
     # Returns `true` if the elements of the vectors are within *delta*
@@ -104,18 +93,18 @@ module Chem::Spatial
         @z.close_to?(rhs.z, delta)
     end
 
-    def cross(other : Vec3) : self
-      Vec3.new @y * other.z - @z * other.y,
-        @z * other.x - @x * other.z,
-        @x * other.y - @y * other.x
+    # Returns the cross product of the vector and *rhs*.
+    def cross(rhs : Vec3) : self
+      Vec3[
+        @y * rhs.z - @z * rhs.y,
+        @z * rhs.x - @x * rhs.z,
+        @x * rhs.y - @y * rhs.x,
+      ]
     end
 
-    def dot(other : Vec3) : Float64
-      @x * other.x + @y * other.y + @z * other.z
-    end
-
-    def floor : self
-      map &.floor
+    # Returns the dot product of the vector and *rhs*.
+    def dot(rhs : Vec3) : Float64
+      @x * rhs.x + @y * rhs.y + @z * rhs.z
     end
 
     # Returns vector's PBC image in fractional coordinates
@@ -149,83 +138,126 @@ module Chem::Spatial
       self + lattice.i * i + lattice.j * j + lattice.k * k
     end
 
+    # Returns the inverse of the vector. It is equivalent to the unary
+    # negation operator.
     def inv : self
-      Vec3.new -@x, -@y, -@z
+      -self
     end
 
     def inspect(io : IO)
       io << "Vec3[" << @x << ", " << @y << ", " << @z << ']'
     end
 
-    def map(&block : Float64 -> Number::Primitive) : self
-      Vec3.new (yield @x).to_f, (yield @y).to_f, (yield @z).to_f
+    # Returns a vector with the results of the component-wise mapping by
+    # the given block. This is useful to perform non-standard
+    # transformations.
+    #
+    # ```
+    # Vec3[1, 2, 3].map(&.**(2)) # => Vec3[1.0, 4.0, 9.0]
+    # ```
+    def map(& : Float64 -> Number) : self
+      Vec3[(yield @x), (yield @y), (yield @z)]
     end
 
-    def map_with_index(&block : Float64, Int32 -> Number::Primitive) : self
-      Vec3.new (yield @x, 0).to_f, (yield @y, 1).to_f, (yield @z, 2).to_f
+    # Returns a vector with the results of the component-wise mapping by
+    # the given block yielding both the value and index. This is useful
+    # to perform non-standard transformations.
+    #
+    # ```
+    # Vec3[1, 2, 3].map { |ele, i| ele * i } # => Vec3[0.0, 2.0, 6.0]
+    # ```
+    def map_with_index(& : Float64, Int32 -> Number) : self
+      Vec3[(yield @x, 0), (yield @y, 1), (yield @z, 2)]
     end
 
+    # Returns the unit vector pointing in the same direction of the
+    # vector.
+    #
+    # ```
+    # v = Vec3[2.5, 0, 0].normalize # => Vec[1.0, 0.0, 0.0]
+    # v.abs                         # => 1.0
+    # v = Vec3[1, 1, 1].normalize   # => Vec[0.577, 0.577, 0.577]
+    # v.abs                         # => 1.0
+    # ```
     def normalize : self
       resize 1
     end
 
-    def origin? : Bool
-      zero?
-    end
-
+    # Returns a vector by increasing the length by *padding*.
+    #
+    # ```
+    # Vec3[1, 0, 0].pad(2) # => Vec3[3, 0, 0]
+    # a = Vec3[1, 2, 3]
+    # a.abs                             # => 3.7416573867739413
+    # b = a.pad(2)                      # => Vec3[1.535, 3.069, 4.604]
+    # b.abs                             # => 5.741657386773941
+    # a.normalize.close_to? b.normalize # => true
+    # ```
     def pad(padding : Number) : self
-      resize size + padding
+      resize abs + padding
     end
 
-    # Returns the projection of the vector on *rhs*.
-    def proj(rhs : self) : self
-      rhs = rhs.normalize
-      dot(rhs) * rhs
+    # Returns the projection of the vector on *vec*.
+    def proj(vec : self) : self
+      vec = vec.normalize
+      dot(vec) * vec
     end
 
     # Returns the projection of the vector on the plane perpendicular
-    # to *rhs*.
-    def proj_plane(rhs : self) : self
-      self - proj(rhs)
+    # to *normal*.
+    def proj_plane(normal : self) : self
+      self - proj(normal)
     end
 
-    def resize(new_size : Number) : self
+    # Returns a vector pointing in the same direction with the given
+    # length.
+    #
+    # ```
+    # a = Vec3[1, 2, 3]
+    # a.abs                              # => 3.7416573867739413
+    # b = a.resize 0.5                   # => Vec3[0.134, 0.267, 0.401]
+    # b.abs                              # => 0.5
+    # b.normalize.close_to?(a.normalize) # => true
+    # ```
+    def resize(length : Number) : self
       return dup if zero?
-      self * (new_size / size)
+      self * (length / abs)
     end
 
-    def rotate(about rotaxis : Vec3, by theta : Float64) : self
+    # Rotates the vector about *rotaxis* by *theta* degrees.
+    def rotate(about rotaxis : Vec3, by theta : Number) : self
       Quat.rotation(rotaxis, theta) * self
     end
 
-    def round : self
-      map &.round
-    end
-
-    def size : Float64
-      Math.sqrt squared_size
-    end
-
-    def squared_size : Float64
-      @x**2 + @y**2 + @z**2
-    end
-
+    # Returns an array with the components of the vector.
+    #
+    # ```
+    # Vec3[1, 2, 3].to_a # => [1.0, 2.0, 3.0]
+    # ```
     def to_a : Array(Float64)
-      [x, y, z]
+      [@x, @y, @z]
     end
 
+    # Returns a vector in Cartesian coordinates relative to *basis*. The
+    # vector is assumed to be expressed in fractional coordinates.
     def to_cartesian(basis : Basis) : self
       @x * basis.i + @y * basis.j + @z * basis.k
     end
 
+    # Returns a vector in Cartesian coordinates relative to *lattice*.
+    # The vector is assumed to be expressed in fractional coordinates.
     def to_cartesian(lattice : Lattice) : self
       to_cartesian lattice.basis
     end
 
+    # Returns a vector in fractional coordinates relative to *basis*.
+    # The vector is assumed to be expressed in Cartesian coordinates.
     def to_fractional(basis : Basis) : self
       basis.transform * self
     end
 
+    # Returns a vector in fractional coordinates relative to *lattice*.
+    # The vector is assumed to be expressed in Cartesian coordinates.
     def to_fractional(lattice : Lattice) : self
       to_fractional lattice.basis
     end
@@ -234,31 +266,39 @@ module Chem::Spatial
       io << '[' << @x << ' ' << @y << ' ' << @z << ']'
     end
 
-    def to_t : Tuple(Float64, Float64, Float64)
-      {x, y, z}
-    end
-
+    # Returns the vector resulting of applying the given transformation.
     def transform(transformation : AffineTransform) : self
       transformation * self
     end
 
+    # :ditto:
     def transform(q : Quat) : self
       q * self
     end
 
+    # Returns the vector by wrapping into the primary unit cell. The
+    # vector is assumed to be expressed in fractional coordinates.
     def wrap : self
       self - map_with_index { |ele, i| ele == 1 ? 0 : ele.floor }
     end
 
+    # Returns the vector by wrapping into the unit cell centered at
+    # *center*. The vector is assumed to be expressed in fractional
+    # coordinates.
     def wrap(around center : self) : self
       offset = self - (center - Vec3[0.5, 0.5, 0.5])
       self - offset.map_with_index { |ele, i| ele == 1 ? 0 : ele.floor }
     end
 
+    # Returns the vector by wrapping into *lattice*. The vector is
+    # assumed to be expressed in Cartesian coordinates.
     def wrap(lattice : Lattice) : self
       to_fractional(lattice).wrap.to_cartesian lattice
     end
 
+    # Returns the vector by wrapping into *lattice* centered at
+    # *center*. The vector is assumed to be expressed in Cartesian
+    # coordinates.
     def wrap(lattice : Lattice, around center : self) : self
       to_fractional(lattice).wrap(center.to_fractional(lattice)).to_cartesian lattice
     end

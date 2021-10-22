@@ -49,10 +49,11 @@ module Spec
     end
 
     def match(actual_value : Chem::Spatial::Bounds) : Bool
-      (actual_value.origin - @expected_value.origin).abs.size <= @delta &&
-        (actual_value.i - @expected_value.i).abs.size <= @delta &&
-        (actual_value.j - @expected_value.j).abs.size <= @delta &&
-        (actual_value.k - @expected_value.k).abs.size <= @delta
+      return false unless @expected_value.is_a?(Chem::Spatial::Bounds)
+      actual_value.origin.close_to?(@expected_value.origin, @delta) &&
+        actual_value.i.close_to?(@expected_value.i, @delta) &&
+        actual_value.j.close_to?(@expected_value.j, @delta) &&
+        actual_value.k.close_to?(@expected_value.k, @delta)
     end
   end
 end

@@ -4,7 +4,7 @@ describe Chem::Spatial::Bounds do
   describe ".[]" do
     it "returns a bounds with the given size placed at origin" do
       bounds = Bounds[1, 2, 3]
-      bounds.origin.should eq Vec3.origin
+      bounds.origin.should eq Vec3.zero
       bounds.size.should eq Size[1, 2, 3]
       bounds.angles.should eq({90, 90, 90})
     end
@@ -13,7 +13,7 @@ describe Chem::Spatial::Bounds do
   describe ".zero" do
     it "returns a zero-sized bounds placed at origin" do
       bounds = Bounds.zero
-      bounds.origin.should eq Vec3.origin
+      bounds.origin.should eq Vec3.zero
       bounds.size.should eq Size[0, 0, 0]
       bounds.angles.should eq({0, 0, 0})
     end

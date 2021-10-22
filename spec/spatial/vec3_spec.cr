@@ -46,10 +46,6 @@ describe Chem::Spatial::Vec3 do
       (v1 + v2).should eq Vec3[4, 6, 3]
     end
 
-    it "returns the arithmetic addition with a 3-sized tuple" do
-      (v1 + {1, 2, 3}).should eq Vec3[4, 6, 3]
-    end
-
     it "sums a vector and a size" do
       (Vec3[1, 2, 3] + Size[3, 2, 1]).should eq Vec3[4, 4, 4]
     end
@@ -68,10 +64,6 @@ describe Chem::Spatial::Vec3 do
       (v1 - v2).should eq Vec3[2, 2, -3]
     end
 
-    it "returns the subtraction with a 3-sized tuple" do
-      (v1 - {1, 2, 3}).should eq Vec3[2, 2, -3]
-    end
-
     it "subtracts a size from a vector" do
       (Vec3[1, 2, 3] - Size[3, 2, 1]).should eq Vec3[-2, 0, 2]
     end
@@ -85,10 +77,6 @@ describe Chem::Spatial::Vec3 do
     it "returns the element-wise multiplication between vectors" do
       (Vec3[3, 9, 123] * Vec3[1, 2, 3]).should eq Vec3[3, 18, 369]
     end
-
-    it "returns the element-wise multiplication with a 3-sized tuple" do
-      (Vec3[3, 9, 123] * {3, 2, 1}).should eq Vec3[9, 18, 123]
-    end
   end
 
   describe "#/" do
@@ -99,21 +87,14 @@ describe Chem::Spatial::Vec3 do
     it "returns the element-wise division between vectors" do
       (Vec3[3, 9, 128] / Vec3[1, 2, 32]).should eq Vec3[3, 4.5, 4]
     end
-
-    it "returns the element-wise division with a 3-sized tuple" do
-      (Vec3[7, 3.2, 6] / {3.5, 1.6, 3}).should eq Vec3[2, 2, 2]
-    end
   end
 
   describe "#abs" do
-    it "returns the element-wise absolute value of the vector" do
-      Vec3[-1, 5, 4].abs.should eq Vec3[1, 5, 4]
-    end
-  end
-
-  describe "#clamp" do
-    it "clamps each element of a vector" do
-      Vec3[10, 5, -1].clamp(0..9).should eq Vec3[9, 5, 0]
+    it "returns the length of the vector" do
+      Vec3.zero.abs.should eq 0
+      v1.abs.should eq 5
+      v1.inv.abs.should eq 5
+      Vec3[0.6, 0.8, 0].abs.should eq 1
     end
   end
 
@@ -139,12 +120,6 @@ describe Chem::Spatial::Vec3 do
   describe "#dot" do
     it "returns the dot product between two vectors" do
       Vec3[3, 4, 0].dot(Vec3[4, 4, 2]).should eq 28
-    end
-  end
-
-  describe "#floor" do
-    it "returns the element-wise floor value of the vector" do
-      Vec3[-1.5234, 2.31, 4.001].floor.should eq Vec3[-2, 2, 4]
     end
   end
 
@@ -191,15 +166,6 @@ describe Chem::Spatial::Vec3 do
     end
   end
 
-  describe "#size" do
-    it "returns the size of the vector" do
-      Vec3.origin.size.should eq 0
-      v1.size.should eq 5
-      v1.inv.size.should eq 5
-      Vec3[0.6, 0.8, 0].size.should eq 1
-    end
-  end
-
   describe "#normalize" do
     it "returns the unit vector" do
       v1.normalize.should be_close Vec3[0.6, 0.8, 0], 1e-15
@@ -209,7 +175,7 @@ describe Chem::Spatial::Vec3 do
   describe "#pad" do
     it "pads a vector by the given amount" do
       Vec3[1, 0, 0].pad(2).should eq Vec3[3, 0, 0]
-      Vec3[0.34, 0.16, 0.1].pad(2.5).size.should eq 2.888844441904472
+      Vec3[0.34, 0.16, 0.1].pad(2.5).abs.should eq 2.888844441904472
     end
   end
 
@@ -237,12 +203,6 @@ describe Chem::Spatial::Vec3 do
       Vec3[1, 0, 0].rotate(about: Vec3[0, 0, 1], by: 90).should be_close Vec3[0, 1, 0], 1e-15
       Vec3[1, 2, 0].rotate(about: Vec3[0, 0, -1], by: 60).should be_close Vec3[2.23, 0.13, 0], 1e-2
       Vec3[0, 1, 0].rotate(about: Vec3[1, 1, 1], by: 120).should be_close Vec3[0, 0, 1], 1e-15
-    end
-  end
-
-  describe "#round" do
-    it "rounds a vector" do
-      Vec3[-1.4, 2.50001, 9.2].round.should eq Vec3[-1, 3, 9]
     end
   end
 
@@ -287,12 +247,6 @@ describe Chem::Spatial::Vec3 do
     end
   end
 
-  describe "#to_t" do
-    it "returns a 3-sized tuple" do
-      v1.to_t.should eq({3, 4, 0})
-    end
-  end
-
   describe "#zero?" do
     it "returns whether the vector is zero" do
       Vec3.zero.zero?.should be_true
@@ -311,7 +265,7 @@ describe Chem::Spatial::Vec3 do
     end
 
     it "wraps a fractional vector around a center" do
-      center = Vec3.origin
+      center = Vec3.zero
 
       Vec3[0, 0, 0].wrap(center).should eq Vec3[0, 0, 0]
       Vec3[1, 1, 1].wrap(center).should eq Vec3[0, 0, 0]

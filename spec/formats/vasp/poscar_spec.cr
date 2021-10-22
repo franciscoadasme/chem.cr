@@ -32,14 +32,14 @@ describe Chem::VASP::Poscar do
     it "parses a file with direct coordinates" do
       st = load_file "direct.poscar"
       st.source_file.should eq Path[spec_file("direct.poscar")].expand
-      st.atoms[0].coords.should eq Vec3.origin
+      st.atoms[0].coords.should eq Vec3.zero
       st.atoms[1].coords.should be_close Vec3[1.0710, 1.6065, 1.2495], 1e-15
     end
 
     it "parses a file with scaled Cartesian coordinates" do
       st = load_file "cartesian.poscar"
       st.source_file.should eq Path[spec_file("cartesian.poscar")].expand
-      st.atoms[0].coords.should eq Vec3.origin
+      st.atoms[0].coords.should eq Vec3.zero
       st.atoms[1].coords.should be_close Vec3[0.8925, 0.8925, 0.8925], 1e-16
     end
 

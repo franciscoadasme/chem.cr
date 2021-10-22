@@ -14,12 +14,12 @@ describe Chem::Spatial::KDTree do
 
     describe "#neighbors" do
       it "returns the N closest atoms sorted by proximity" do
-        atoms = kdtree.neighbors of: Vec3.origin, count: 2
+        atoms = kdtree.neighbors of: Vec3.zero, count: 2
         atoms.map(&.serial).should eq [3, 2]
       end
 
       it "returns the atoms within the given radius sorted by proximity" do
-        atoms = kdtree.neighbors of: Vec3.origin, within: 5.5
+        atoms = kdtree.neighbors of: Vec3.zero, within: 5.5
         atoms.map(&.serial).should eq [3, 2, 1, 6]
       end
     end

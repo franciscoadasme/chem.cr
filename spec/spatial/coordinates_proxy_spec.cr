@@ -43,7 +43,7 @@ describe Chem::Spatial::CoordinatesProxy do
 
   describe "#center_at_origin" do
     it "centers at the origin" do
-      structure.clone.coords.center_at_origin.center.should eq Vec3.origin
+      structure.clone.coords.center_at_origin.center.should eq Vec3.zero
     end
   end
 
@@ -326,7 +326,7 @@ describe Chem::Spatial::CoordinatesProxy do
 
     it "wraps atoms into the primary unit cell centered at the origin" do
       coords = load_file("5e61--unwrapped.poscar").coords
-      coords.wrap around: Vec3.origin
+      coords.wrap around: Vec3.zero
       expected = load_file("5e61--wrapped--origin.poscar").coords
       coords.should be_close expected, 1e-3
     end

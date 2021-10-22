@@ -13,7 +13,7 @@ module Chem::Spatial
     end
 
     def self.new(*args, **options) : self
-      new Vec3.origin, Basis.new(*args, **options)
+      new Vec3.zero, Basis.new(*args, **options)
     end
 
     def self.new(vmin : Vec3, vmax : Vec3) : self
@@ -24,11 +24,11 @@ module Chem::Spatial
     end
 
     def self.[](a : Float64, b : Float64, c : Float64) : self
-      new Vec3.origin, Size[a, b, c]
+      new Vec3.zero, Size[a, b, c]
     end
 
     def self.zero : self
-      new Vec3.origin, Size[0, 0, 0]
+      new Vec3.zero, Size[0, 0, 0]
     end
 
     {% for op in %w(+ -) %}
