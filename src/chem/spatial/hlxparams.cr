@@ -9,7 +9,7 @@ module Chem::Spatial
     end
   end
 
-  def hlxparams(res : Residue, lattice : Lattice? = nil) : HlxParams?
+  def self.hlxparams(res : Residue, lattice : Lattice? = nil) : HlxParams?
     return unless res.protein? && (prev_res = res.pred) && (next_res = res.succ)
 
     coord =
@@ -56,9 +56,9 @@ module Chem::Spatial
       v4 = (d4.dot(v1) * v1 + d4.dot(v2) * v2).normalize
       v5 = v1.cross(v4)
 
-      chirality = -1 if d1.dot(v5) > 0 && angle(v1, v4) <= angle(v1, v3)
+      chirality = -1 if d1.dot(v5) > 0 && Spatial.angle(v1, v4) <= Spatial.angle(v1, v3)
     else
-      phi = dihedral coord[0][:c], coord[1][:n], coord[1][:ca], coord[1][:c]
+      phi = Spatial.dihedral coord[0][:c], coord[1][:n], coord[1][:ca], coord[1][:c]
       chirality = -1 if phi > 0
       # chirality = -1 if res.name != "GLY" && 0 < phi <= 125
     end

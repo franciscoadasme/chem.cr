@@ -14,7 +14,6 @@ require "./spatial/measure"
 require "./spatial/pbc"
 
 module Chem::Spatial
-  extend self
 
   class Error < Exception; end
 
