@@ -712,7 +712,7 @@ module Chem::Spatial
       dim[2]
     end
 
-    def resolution : Tuple(Float64, Float64, Float64)
+    def resolution : FloatTriple
       {ni == 1 ? 0.0 : bounds.i.abs / (ni - 1),
        nj == 1 ? 0.0 : bounds.j.abs / (nj - 1),
        nk == 1 ? 0.0 : bounds.k.abs / (nk - 1)}

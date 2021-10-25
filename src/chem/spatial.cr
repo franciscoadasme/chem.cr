@@ -14,6 +14,8 @@ require "./spatial/measure"
 require "./spatial/pbc"
 
 module Chem::Spatial
+  alias FloatTriple = Tuple(Float64, Float64, Float64)
+  alias NumberTriple = Tuple(Number::Primitive, Number::Primitive, Number::Primitive)
 
   class Error < Exception; end
 

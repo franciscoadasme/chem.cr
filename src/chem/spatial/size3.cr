@@ -2,7 +2,7 @@ module Chem::Spatial
   # A `Size3` represents the size of an object in three-dimensional
   # space.
   struct Size3
-    @buffer : Tuple(Float64, Float64, Float64)
+    @buffer : FloatTriple
 
     # Creates a size with values *x*, *y* and *z*. Raises
     # `ArgumentError` if *x*, *y* or *z* is negative.

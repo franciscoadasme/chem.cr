@@ -45,7 +45,7 @@ module Chem::Spatial
       Spatial.angle @j, @k
     end
 
-    def angles : Tuple(Float64, Float64, Float64)
+    def angles : FloatTriple
       {alpha, beta, gamma}
     end
 
