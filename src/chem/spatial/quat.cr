@@ -254,6 +254,15 @@ module Chem::Spatial
       @w
     end
 
+    # Returns the rotation matrix equivalent to the quaternion.
+    def to_mat3 : Mat3
+      Mat3[
+        {@w**2 + @x**2 - @y**2 - @z**2, 2*@x*@y - 2*@w*@z, 2*@x*@z + 2*@w*@y},
+        {2*@x*@y + 2*@w*@z, @w**2 - @x**2 + @y**2 - @z**2, 2*@y*@z - 2*@w*@x},
+        {2*@x*@z - 2*@w*@y, 2*@y*@z + 2*@w*@x, @w**2 - @x**2 - @y**2 + @z**2},
+      ]
+    end
+
     def to_s(io : IO) : Nil
       io << "["
       {% for var in %w(w x y z) %}

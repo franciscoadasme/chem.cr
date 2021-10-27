@@ -155,6 +155,14 @@ describe Chem::Spatial::Quat do
     end
   end
 
+  describe "#to_mat3" do
+    it "returns the 3x3 matrix" do
+      q = Quat.euler(-157, 17, -83)
+      vec = Vec3[1, 2, 3]
+      (q.to_mat3 * vec).should be_close (q * vec), 1e-15
+    end
+  end
+
   describe "#unit?" do
     it "returns true for a unit quaternion" do
       Quat[0, 1, 1, 0].normalize.unit?.should be_true
