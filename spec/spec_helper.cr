@@ -42,9 +42,8 @@ module Spec
     end
 
     def match(actual_value : Chem::Spatial::AffineTransform) : Bool
-      actual_value.@mat.each_with_index.all? do |value, i, j|
-        (value - @expected_value.@mat.unsafe_fetch(i, j)).abs <= @delta
-      end
+      return false unless @expected_value.is_a?(Chem::Spatial::AffineTransform)
+      actual_value.close_to? @expected_value, @delta
     end
 
     def match(actual_value : Chem::Spatial::Size3) : Bool

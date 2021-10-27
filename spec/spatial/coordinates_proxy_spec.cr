@@ -225,7 +225,7 @@ describe Chem::Spatial::CoordinatesProxy do
 
   describe "#transform" do
     it "returns the transformed atom coordinates" do
-      transform = AffineTransform.translation by: Vec3[3, 2, 1]
+      transform = AffineTransform.translation Vec3[3, 2, 1]
       expected = [Vec3[4, 4, 4], Vec3[7, 7, 7], Vec3[10, 10, 10]]
       structure.coords.transform(transform).should eq expected
     end
@@ -239,7 +239,7 @@ describe Chem::Spatial::CoordinatesProxy do
         atom PeriodicTable::H, Vec3[7, 8, 9]
       end
 
-      transform = AffineTransform.translation by: Vec3[-1, 0, 1]
+      transform = AffineTransform.translation Vec3[-1, 0, 1]
       other.coords.transform!(transform).should eq [Vec3[0, 2, 4], Vec3[3, 5, 7], Vec3[6, 8, 10]]
     end
   end

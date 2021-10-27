@@ -140,7 +140,7 @@ describe Chem::Spatial::PBC do
       structure = load_file "5e5v--wrapped.poscar"
       structure.unwrap
       expected = load_file "5e5v--unwrapped.poscar"
-      structure.atoms.map(&.coords).should be_close expected.atoms.map(&.coords), 1e-3
+      structure.atoms.map(&.coords).should be_close expected.atoms.map(&.coords), 1e-2
     end
   end
 end
