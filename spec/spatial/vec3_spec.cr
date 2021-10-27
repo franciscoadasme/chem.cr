@@ -10,6 +10,13 @@ describe Chem::Spatial::Vec3 do
     end
   end
 
+  describe ".rand" do
+    it "returns a random vector" do
+      vec = Vec3.rand
+      (0..2).all? { |i| 0 <= vec[i] <= 1 }.should be_true
+    end
+  end
+
   describe ".zero" do
     it "returns a vector zero" do
       Vec3.zero.should eq Vec3[0, 0, 0]

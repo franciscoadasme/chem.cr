@@ -17,6 +17,11 @@ module Chem::Spatial
       new x.to_f, y.to_f, z.to_f
     end
 
+    # Returns a random vector with the elements within 0 and 1.
+    def self.rand(random = Random::DEFAULT) : self
+      Vec3[random.rand, random.rand, random.rand]
+    end
+
     # Returns the zero vector.
     @[AlwaysInline]
     def self.zero : self
