@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../../js/doc.js"></script>
 
   <meta name="repository-name" content="chem.cr">
-  <title>Chem::PDB::Reader - chem.cr master</title>
+  <title>Chem::Spatial::Mat3 - chem.cr master</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -281,7 +281,7 @@
       
     </li>
   
-  <li class="parent open current" data-id="chem.cr/Chem/PDB" data-name="chem::pdb">
+  <li class="parent " data-id="chem.cr/Chem/PDB" data-name="chem::pdb">
       <a href="../../Chem/PDB.html">PDB</a>
       
         <ul>
@@ -291,7 +291,7 @@
       
     </li>
   
-  <li class=" current" data-id="chem.cr/Chem/PDB/Reader" data-name="chem::pdb::reader">
+  <li class=" " data-id="chem.cr/Chem/PDB/Reader" data-name="chem::pdb::reader">
       <a href="../../Chem/PDB/Reader.html">Reader</a>
       
     </li>
@@ -431,7 +431,7 @@
       
     </li>
   
-  <li class="parent " data-id="chem.cr/Chem/Spatial" data-name="chem::spatial">
+  <li class="parent open current" data-id="chem.cr/Chem/Spatial" data-name="chem::spatial">
       <a href="../../Chem/Spatial.html">Spatial</a>
       
         <ul>
@@ -501,7 +501,7 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Mat3" data-name="chem::spatial::mat3">
+  <li class=" current" data-id="chem.cr/Chem/Spatial/Mat3" data-name="chem::spatial::mat3">
       <a href="../../Chem/Spatial/Mat3.html">Mat3</a>
       
     </li>
@@ -810,37 +810,31 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">class</span> Chem::PDB::Reader
+  <span class="kind">struct</span> Chem::Spatial::Mat3
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Chem/PDB/Reader.html">Chem::PDB::Reader</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
-
-
-
-
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Chem/Spatial/Mat3.html">Chem::Spatial::Mat3</a></li><li class="superclass">Struct</li><li class="superclass">Value</li><li class="superclass">Object</li></ul>
 
 
 
 
   <h2>
-    <a id="included-modules" class="anchor" href="#included-modules">
+    <a id="overview" class="anchor" href="#overview">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>
-    Included Modules
+    Overview
   </h2>
-  <ul class="other-types-list">
-    
-      <li class="other-type"><a href="../../Chem/FormatReader.html">Chem::FormatReader</a>(<a href="../../Chem/Structure.html">Chem::Structure</a>)</li>
-    
-      <li class="other-type"><a href="../../Chem/FormatReader/Headed.html">Chem::FormatReader::Headed</a>(<a href="../../Chem/Structure/Experiment.html">Chem::Structure::Experiment</a>)</li>
-    
-      <li class="other-type"><a href="../../Chem/FormatReader/MultiEntry.html">Chem::FormatReader::MultiEntry</a>(<a href="../../Chem/Structure.html">Chem::Structure</a>)</li>
-    
-  </ul>
+
+  <p>A 3x3 matrix in row-major order. This is useful for encoding linear
+maps such as scaling and rotation (see <code><a href="../../Chem/Spatial/AffineTransform.html">AffineTransform</a></code>).</p>
+
+
+
+
 
 
 
@@ -861,33 +855,14 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/formats/pdb.cr#L3" target="_blank">
-        chem/formats/pdb.cr
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L4" target="_blank">
+        chem/spatial/mat3.cr
       </a>
     
     <br/>
   
 
 
-
-  
-    <h2>
-      <a id="constant-summary" class="anchor" href="#constant-summary">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-      Constant Summary
-    </h2>
-  
-  <dl>
-    
-      <dt class="entry-const" id="HELIX_TYPES">
-        <strong>HELIX_TYPES</strong> = <code>{<span class="n">1</span> => <span class="t">Sec</span><span class="t">::</span><span class="t">RightHandedHelixAlpha</span>, <span class="n">3</span> => <span class="t">Sec</span><span class="t">::</span><span class="t">RightHandedHelixPi</span>, <span class="n">5</span> => <span class="t">Sec</span><span class="t">::</span><span class="t">RightHandedHelix3_10</span>}</code>
-      </dt>
-      
-    
-  </dl>
 
 
 
@@ -902,46 +877,64 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28io%3AIO%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Chet%3ABool%3Dtrue%2Csync_close%3ABool%3Dfalse%29-class-method" class="signature"><strong>.new</strong>(io : IO, alt_loc : Char? = <span class="n">nil</span>, chains : Enumerable(Char) | String | Nil = <span class="n">nil</span>, het : Bool = <span class="n">true</span>, sync_close : Bool = <span class="n">false</span>)</a>
+        <a href="#%5B%5D%28r1%3ANumberTriple%2Cr2%3ANumberTriple%2Cr3%3ANumberTriple%29%3Aself-class-method" class="signature"><strong>.[]</strong>(r1 : NumberTriple, r2 : NumberTriple, r3 : NumberTriple) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a new matrix with the given rows.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new%28path%3APath%7CString%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Chet%3ABool%3Dtrue%29%3Aself-class-method" class="signature"><strong>.new</strong>(path : Path | String, alt_loc : Char? = <span class="n">nil</span>, chains : Enumerable(Char) | String | Nil = <span class="n">nil</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span></a>
+        <a href="#additive_identity%3Aself-class-method" class="signature"><strong>.additive_identity</strong> : <span class="k">self</span></a>
         
-          <div class="summary"><p>Creates a new object from the given <em>path</em>.</p></div>
+          <div class="summary"><p>Returns the additive identity of the matrix (zero matrix).</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#diagonal%28d1%3ANumber%2Cd2%3ANumber%2Cd3%3ANumber%29%3Aself-class-method" class="signature"><strong>.diagonal</strong>(d1 : Number, d2 : Number, d3 : Number) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a new matrix with the elements at the diagonal set to the given values.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#diagonal%28value%3ANumber%29%3Aself-class-method" class="signature"><strong>.diagonal</strong>(value : Number) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a new matrix with the diagonal set to <em>value</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#identity%3Aself-class-method" class="signature"><strong>.identity</strong> : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the identity matrix.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#multiplicative_identity%3Aself-class-method" class="signature"><strong>.multiplicative_identity</strong> : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the multiplicative identity of the matrix (identity matrix).</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new%28r1%3AFloatTriple%2Cr2%3AFloatTriple%2Cr3%3AFloatTriple%29-class-method" class="signature"><strong>.new</strong>(r1 : FloatTriple, r2 : FloatTriple, r3 : FloatTriple)</a>
+        
+          <div class="summary"><p>Creates a new matrix with the given rows.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#zero%3Aself-class-method" class="signature"><strong>.zero</strong> : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the zero matrix.</p></div>
         
       </li>
     
   </ul>
 
 
-
-  <h2>
-    <a id="class-method-summary" class="anchor" href="#class-method-summary">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Class Method Summary
-  </h2>
-  <ul class="list-summary">
-    
-      <li class="entry-summary">
-        <a href="#open%28io%3AIO%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Chet%3ABool%3Dtrue%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method" class="signature"><strong>.open</strong>(io : IO, alt_loc : Char? = <span class="n">nil</span>, chains : Enumerable(Char) | String | Nil = <span class="n">nil</span>, het : Bool = <span class="n">true</span>, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )</a>
-        
-          <div class="summary"><p>Creates a new object from the given <em>io</em>, yields it to the given block, and closes it at the end.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#open%28path%3APath%7CString%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Chet%3ABool%3Dtrue%2C%26%3Aself-%3E%29-class-method" class="signature"><strong>.open</strong>(path : Path | String, alt_loc : Char? = <span class="n">nil</span>, chains : Enumerable(Char) | String | Nil = <span class="n">nil</span>, het : Bool = <span class="n">true</span>, & : <span class="k">self</span> -> )</a>
-        
-          <div class="summary"><p>Creates a new object from the given <em>path</em> yields it to the given block, and closes it at the end.</p></div>
-        
-      </li>
-    
-  </ul>
 
 
 
@@ -956,23 +949,100 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#next_entry%3AStructure%3F-instance-method" class="signature"><strong>#next_entry</strong> : Structure?</a>
+        <a href="#%2A%28rhs%3ANumber%29%3Aself-instance-method" class="signature"><strong>#*</strong>(rhs : Number) : <span class="k">self</span></a>
         
-          <div class="summary"><p>Returns the next entry in the IO, or <code>nil</code> if there are no more entries.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#read_header%3AStructure%3A%3AExperiment-instance-method" class="signature"><strong>#read_header</strong> : Structure::Experiment</a>
-        
-          <div class="summary"><p>Reads the header object from the IO.</p></div>
+          <div class="summary"><p>Returns the element-wise multiplication of the matrix by <em>rhs</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#skip_entry%3ANil-instance-method" class="signature"><strong>#skip_entry</strong> : Nil</a>
+        <a href="#%2A%28rhs%3AVec3%29%3AVec3-instance-method" class="signature"><strong>#*</strong>(rhs : Vec3) : Vec3</a>
         
-          <div class="summary"><p>Discards the next entry in the IO without fully parsing it.</p></div>
+          <div class="summary"><p>Returns the multiplication of the matrix by <em>rhs</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%2A%28rhs%3ANumberTriple%29%3Aself-instance-method" class="signature"><strong>#*</strong>(rhs : NumberTriple) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the row-wise multiplication of the matrix by <em>rhs</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%2A%28rhs%3Aself%29%3Aself-instance-method" class="signature"><strong>#*</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the multiplication of the matrix by <em>rhs</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%2B%28rhs%3Aself%29%3Aself-instance-method" class="signature"><strong>#+</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the element-wise addition of the matrix by <em>rhs</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#-%28rhs%3Aself%29%3Aself-instance-method" class="signature"><strong>#-</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the element-wise subtraction of the matrix by <em>rhs</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#-%3Aself-instance-method" class="signature"><strong>#-</strong> : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the negation of the matrix.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#/%28rhs%3ANumber%29%3Aself-instance-method" class="signature"><strong>#/</strong>(rhs : Number) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the element-wise division of the matrix by <em>rhs</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%5B%5D%28i%3AInt%2Cj%3AInt%29%3AFloat64-instance-method" class="signature"><strong>#[]</strong>(i : Int, j : Int) : Float64</a>
+        
+          <div class="summary"><p>Returns the element at row <em>i</em> and column <em>j</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%5B%5D%28index%3AInt%29%3AFloatTriple-instance-method" class="signature"><strong>#[]</strong>(index : Int) : FloatTriple</a>
+        
+          <div class="summary"><p>Returns the row at <em>index</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#close_to%3F%28rhs%3Aself%2Cdelta%3AFloat64%3DFloat64%3A%3AEPSILON%29%3ABool-instance-method" class="signature"><strong>#close_to?</strong>(rhs : <span class="k">self</span>, delta : Float64 = <span class="t">Float64</span><span class="t">::</span><span class="t">EPSILON</span>) : Bool</a>
+        
+          <div class="summary"><p>Returns <code>true</code> if the elements of the matrices are within <em>delta</em> from each other, else <code>false</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#det%3AFloat64-instance-method" class="signature"><strong>#det</strong> : Float64</a>
+        
+          <div class="summary"><p>Returns the determinant of the matrix.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#inv%3Aself-instance-method" class="signature"><strong>#inv</strong> : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the inverse matrix.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_s%28io%3AIO%29%3ANil-instance-method" class="signature"><strong>#to_s</strong>(io : IO) : Nil</a>
+        
+          <div class="summary"><p>Same as <code>#inspect(io)</code>.</p></div>
         
       </li>
     
@@ -985,107 +1055,6 @@
 <div class="methods-inherited">
   
     
-
-  <h3>Instance methods inherited from module <code><a href="../../Chem/FormatReader/Headed.html">Chem::FormatReader::Headed</a>(<a href="../../Chem/Structure/Experiment.html">Chem::Structure::Experiment</a>)</code></h3>
-  
-  
-    <a href="../../Chem/FormatReader/Headed.html#read_header%3AT-instance-method" class="tooltip">
-      <span>read_header : T</span>
-    read_header</a>
-    
-  
-
-
-    
-
-
-    
-
-
-  
-    
-
-  <h3>Instance methods inherited from module <code><a href="../../Chem/FormatReader/MultiEntry.html">Chem::FormatReader::MultiEntry</a>(<a href="../../Chem/Structure.html">Chem::Structure</a>)</code></h3>
-  
-  
-    <a href="../../Chem/FormatReader/MultiEntry.html#each%28indexes%3AEnumerable%28Int%29%2C%26%3AT-%3E%29-instance-method" class="tooltip">
-      <span>each(indexes : Enumerable(Int), & : T -> )<br/>each(& : T -> ) : Nil</span>
-    each</a>, 
-    
-  
-    <a href="../../Chem/FormatReader/MultiEntry.html#next_entry%3AT%3F-instance-method" class="tooltip">
-      <span>next_entry : T?</span>
-    next_entry</a>, 
-    
-  
-    <a href="../../Chem/FormatReader/MultiEntry.html#read_entry%3AT-instance-method" class="tooltip">
-      <span>read_entry : T</span>
-    read_entry</a>, 
-    
-  
-    <a href="../../Chem/FormatReader/MultiEntry.html#skip_entry%3ANil-instance-method" class="tooltip">
-      <span>skip_entry : Nil</span>
-    skip_entry</a>
-    
-  
-
-
-    
-
-
-    
-
-
-  
-    
-
-  <h3>Instance methods inherited from module <code><a href="../../Chem/FormatReader.html">Chem::FormatReader</a>(<a href="../../Chem/Structure.html">Chem::Structure</a>)</code></h3>
-  
-  
-    <a href="../../Chem/FormatReader.html#read%3F%3ABool-instance-method" class="tooltip">
-      <span>read? : Bool</span>
-    read?</a>, 
-    
-  
-    <a href="../../Chem/FormatReader.html#read_entry%3AT-instance-method" class="tooltip">
-      <span>read_entry : T</span>
-    read_entry</a>
-    
-  
-
-
-    
-
-
-    
-
-
-  
-    
-
-  <h3>Instance methods inherited from module <code><a href="../../IO/Wrapper.html">IO::Wrapper</a></code></h3>
-  
-  
-    <a href="../../IO/Wrapper.html#close-instance-method" class="tooltip">
-      <span>close</span>
-    close</a>, 
-    
-  
-    <a href="../../IO/Wrapper.html#closed%3F%3ABool-instance-method" class="tooltip">
-      <span>closed? : Bool</span>
-    closed?</a>, 
-    
-  
-    <a href="../../IO/Wrapper.html#sync_close%3ABool-instance-method" class="tooltip">
-      <span>sync_close : Bool</span>
-    sync_close</a>, 
-    
-  
-    <a href="../../IO/Wrapper.html#sync_close%3D%28sync_close%3ABool%29-instance-method" class="tooltip">
-      <span>sync_close=(sync_close : Bool)</span>
-    sync_close=</a>
-    
-  
 
 
     
@@ -1127,102 +1096,178 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(io:IO,alt_loc:Char?=nil,chains:Enumerable(Char)|String|Nil=nil,het:Bool=true,sync_close:Bool=false)-class-method">
+    <div class="entry-detail" id="[](r1:NumberTriple,r2:NumberTriple,r3:NumberTriple):self-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(io : IO, alt_loc : <a href="../../Char.html">Char</a>? = <span class="n">nil</span>, chains : Enumerable(<a href="../../Char.html">Char</a>) | String | Nil = <span class="n">nil</span>, het : Bool = <span class="n">true</span>, sync_close : Bool = <span class="n">false</span>)
+        def self.<strong>[]</strong>(r1 : <a href="../../Chem/Spatial/NumberTriple.html">NumberTriple</a>, r2 : <a href="../../Chem/Spatial/NumberTriple.html">NumberTriple</a>, r3 : <a href="../../Chem/Spatial/NumberTriple.html">NumberTriple</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#new%28io%3AIO%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Chet%3ABool%3Dtrue%2Csync_close%3ABool%3Dfalse%29-class-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/formats/pdb.cr#L28" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="new(path:Path|String,alt_loc:Char?=nil,chains:Enumerable(Char)|String|Nil=nil,het:Bool=true):self-class-method">
-      <div class="signature">
-        
-        def self.<strong>new</strong>(path : Path | String, alt_loc : <a href="../../Char.html">Char</a>? = <span class="n">nil</span>, chains : Enumerable(<a href="../../Char.html">Char</a>) | String | Nil = <span class="n">nil</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span>
-
-        <a class="method-permalink" href="#new%28path%3APath%7CString%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Chet%3ABool%3Dtrue%29%3Aself-class-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%28r1%3ANumberTriple%2Cr2%3ANumberTriple%2Cr3%3ANumberTriple%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Creates a new object from the given <em>path</em>. Positional and named
-arguments are forwarded to the designated constructor.</p>
-<p>An <code>IO</code> object will be created and open from the given <em>path</em>,
-which will be closed when closing this object (<code>sync_close = true</code>). The file open mode is specified by the <code><a href="../../IO/Wrapper.html#FILE_MODE">FILE_MODE</a></code>
-constant.</p>
+          <p>Returns a new matrix with the given rows.</p>
         </div>
       
       <br/>
       <div>
         
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L14" target="_blank">View source</a>]
+        
       </div>
     </div>
   
-
-
-
-  <h2>
-    <a id="class-method-detail" class="anchor" href="#class-method-detail">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Class Method Detail
-  </h2>
-  
-    <div class="entry-detail" id="open(io:IO,alt_loc:Char?=nil,chains:Enumerable(Char)|String|Nil=nil,het:Bool=true,sync_close:Bool=false,&amp;:self-&gt;)-class-method">
+    <div class="entry-detail" id="additive_identity:self-class-method">
       <div class="signature">
         
-        def self.<strong>open</strong>(io : IO, alt_loc : <a href="../../Char.html">Char</a>? = <span class="n">nil</span>, chains : Enumerable(<a href="../../Char.html">Char</a>) | String | Nil = <span class="n">nil</span>, het : Bool = <span class="n">true</span>, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )
+        def self.<strong>additive_identity</strong> : <span class="k">self</span>
 
-        <a class="method-permalink" href="#open%28io%3AIO%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Chet%3ABool%3Dtrue%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">#</a>
+        <a class="method-permalink" href="#additive_identity%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Creates a new object from the given <em>io</em>, yields it to the given
-block, and closes it at the end. Positional and named arguments
-are forwarded to the constructor.</p>
+          <p>Returns the additive identity of the matrix (zero matrix).</p>
         </div>
       
       <br/>
       <div>
         
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L19" target="_blank">View source</a>]
+        
       </div>
     </div>
   
-    <div class="entry-detail" id="open(path:Path|String,alt_loc:Char?=nil,chains:Enumerable(Char)|String|Nil=nil,het:Bool=true,&amp;:self-&gt;)-class-method">
+    <div class="entry-detail" id="diagonal(d1:Number,d2:Number,d3:Number):self-class-method">
       <div class="signature">
         
-        def self.<strong>open</strong>(path : Path | String, alt_loc : <a href="../../Char.html">Char</a>? = <span class="n">nil</span>, chains : Enumerable(<a href="../../Char.html">Char</a>) | String | Nil = <span class="n">nil</span>, het : Bool = <span class="n">true</span>, & : <span class="k">self</span> -> )
+        def self.<strong>diagonal</strong>(d1 : <a href="../../Number.html">Number</a>, d2 : <a href="../../Number.html">Number</a>, d3 : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#open%28path%3APath%7CString%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Chet%3ABool%3Dtrue%2C%26%3Aself-%3E%29-class-method">#</a>
+        <a class="method-permalink" href="#diagonal%28d1%3ANumber%2Cd2%3ANumber%2Cd3%3ANumber%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Creates a new object from the given <em>path</em> yields it to the
-given block, and closes it at the end. Positional and named
-arguments are forwarded to the constructor.</p>
-<p>An <code>IO</code> object will be created and open from the given <em>path</em>,
-which will be closed when closing this object (<code>sync_close = true</code>). The file open mode is specified by the <code><a href="../../IO/Wrapper.html#FILE_MODE">FILE_MODE</a></code>
-constant.</p>
+          <p>Returns a new matrix with the elements at the diagonal set to the
+given values.</p>
         </div>
       
       <br/>
       <div>
         
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L30" target="_blank">View source</a>]
+        
       </div>
     </div>
   
+    <div class="entry-detail" id="diagonal(value:Number):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>diagonal</strong>(value : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#diagonal%28value%3ANumber%29%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a new matrix with the diagonal set to <em>value</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L24" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="identity:self-class-method">
+      <div class="signature">
+        
+        def self.<strong>identity</strong> : <span class="k">self</span>
+
+        <a class="method-permalink" href="#identity%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the identity matrix.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L39" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="multiplicative_identity:self-class-method">
+      <div class="signature">
+        
+        def self.<strong>multiplicative_identity</strong> : <span class="k">self</span>
+
+        <a class="method-permalink" href="#multiplicative_identity%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the multiplicative identity of the matrix (identity
+matrix).</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L49" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(r1:FloatTriple,r2:FloatTriple,r3:FloatTriple)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(r1 : <a href="../../Chem/Spatial/FloatTriple.html">FloatTriple</a>, r2 : <a href="../../Chem/Spatial/FloatTriple.html">FloatTriple</a>, r3 : <a href="../../Chem/Spatial/FloatTriple.html">FloatTriple</a>)
+
+        <a class="method-permalink" href="#new%28r1%3AFloatTriple%2Cr2%3AFloatTriple%2Cr3%3AFloatTriple%29-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Creates a new matrix with the given rows.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L8" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="zero:self-class-method">
+      <div class="signature">
+        
+        def self.<strong>zero</strong> : <span class="k">self</span>
+
+        <a class="method-permalink" href="#zero%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the zero matrix.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L54" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
 
 
 
@@ -1235,80 +1280,306 @@ constant.</p>
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="next_entry:Structure?-instance-method">
+    <div class="entry-detail" id="*(rhs:Number):self-instance-method">
       <div class="signature">
         
-        def <strong>next_entry</strong> : <a href="../../Chem/Structure.html">Structure</a>?
+        def <strong>*</strong>(rhs : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#next_entry%3AStructure%3F-instance-method">#</a>
+        <a class="method-permalink" href="#%2A%28rhs%3ANumber%29%3Aself-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-            <div class="doc-inherited">
-              Description copied from module <a href="../../Chem/FormatReader/MultiEntry.html">Chem::FormatReader::MultiEntry</a>(<a href="../../Chem/Structure.html">Chem::Structure</a>)
-            </div>
-          
-          <p>Returns the next entry in the IO, or <code>nil</code> if there are no more
-entries.</p>
+          <p>Returns the element-wise multiplication of the matrix by <em>rhs</em>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/formats/pdb.cr#L37" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L99" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="read_header:Structure::Experiment-instance-method">
+    <div class="entry-detail" id="*(rhs:Vec3):Vec3-instance-method">
       <div class="signature">
         
-        def <strong>read_header</strong> : <a href="../../Chem/Structure/Experiment.html">Structure::Experiment</a>
+        def <strong>*</strong>(rhs : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>
 
-        <a class="method-permalink" href="#read_header%3AStructure%3A%3AExperiment-instance-method">#</a>
+        <a class="method-permalink" href="#%2A%28rhs%3AVec3%29%3AVec3-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-            <div class="doc-inherited">
-              Description copied from module <a href="../../Chem/FormatReader/Headed.html">Chem::FormatReader::Headed</a>(<a href="../../Chem/Structure/Experiment.html">Chem::Structure::Experiment</a>)
-            </div>
-          
-          <p>Reads the header object from the IO. Raises <code>IO::Error</code> if the
-reader is closed or <code><a href="../../Chem/ParseException.html">ParseException</a></code> if the header cannot be
-decoded.</p>
+          <p>Returns the multiplication of the matrix by <em>rhs</em>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/formats/pdb.cr#L65" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L109" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="skip_entry:Nil-instance-method">
+    <div class="entry-detail" id="*(rhs:NumberTriple):self-instance-method">
       <div class="signature">
         
-        def <strong>skip_entry</strong> : Nil
+        def <strong>*</strong>(rhs : <a href="../../Chem/Spatial/NumberTriple.html">NumberTriple</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#skip_entry%3ANil-instance-method">#</a>
+        <a class="method-permalink" href="#%2A%28rhs%3ANumberTriple%29%3Aself-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-            <div class="doc-inherited">
-              Description copied from module <a href="../../Chem/FormatReader/MultiEntry.html">Chem::FormatReader::MultiEntry</a>(<a href="../../Chem/Structure.html">Chem::Structure</a>)
-            </div>
-          
-          <p>Discards the next entry in the IO without fully parsing it.</p>
+          <p>Returns the row-wise multiplication of the matrix by <em>rhs</em>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/formats/pdb.cr#L51" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L104" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="*(rhs:self):self-instance-method">
+      <div class="signature">
+        
+        def <strong>*</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#%2A%28rhs%3Aself%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the multiplication of the matrix by <em>rhs</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L122" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="+(rhs:self):self-instance-method">
+      <div class="signature">
+        
+        def <strong>+</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#%2B%28rhs%3Aself%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the element-wise addition of the matrix by <em>rhs</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L79" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="-(rhs:self):self-instance-method">
+      <div class="signature">
+        
+        def <strong>-</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#-%28rhs%3Aself%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the element-wise subtraction of the matrix by <em>rhs</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L79" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="-:self-instance-method">
+      <div class="signature">
+        
+        def <strong>-</strong> : <span class="k">self</span>
+
+        <a class="method-permalink" href="#-%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the negation of the matrix.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L75" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="/(rhs:Number):self-instance-method">
+      <div class="signature">
+        
+        def <strong>/</strong>(rhs : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#/%28rhs%3ANumber%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the element-wise division of the matrix by <em>rhs</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L139" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[](i:Int,j:Int):Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>[]</strong>(i : Int, j : Int) : Float64
+
+        <a class="method-permalink" href="#%5B%5D%28i%3AInt%2Cj%3AInt%29%3AFloat64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the element at row <em>i</em> and column <em>j</em>. Raises <code>IndexError</code>
+if indices are out of bounds.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L70" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[](index:Int):FloatTriple-instance-method">
+      <div class="signature">
+        
+        def <strong>[]</strong>(index : Int) : <a href="../../Chem/Spatial/FloatTriple.html">FloatTriple</a>
+
+        <a class="method-permalink" href="#%5B%5D%28index%3AInt%29%3AFloatTriple-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the row at <em>index</em>. Raises <code>IndexError</code> if <em>index</em> is out
+of bounds.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L64" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="close_to?(rhs:self,delta:Float64=Float64::EPSILON):Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>close_to?</strong>(rhs : <span class="k">self</span>, delta : Float64 = <span class="t">Float64</span><span class="t">::</span><span class="t">EPSILON</span>) : Bool
+
+        <a class="method-permalink" href="#close_to%3F%28rhs%3Aself%2Cdelta%3AFloat64%3DFloat64%3A%3AEPSILON%29%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if the elements of the matrices are within <em>delta</em>
+from each other, else <code>false</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L145" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="det:Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>det</strong> : Float64
+
+        <a class="method-permalink" href="#det%3AFloat64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the determinant of the matrix.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L154" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="inv:self-instance-method">
+      <div class="signature">
+        
+        def <strong>inv</strong> : <span class="k">self</span>
+
+        <a class="method-permalink" href="#inv%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the inverse matrix. Raises <code>ArgumentError</code> if the matrix
+is not invertible.</p>
+<p>The inverse matrix is computed using the Cramer's rule, which
+states that <code>inv(A) = 1 / det(A) * adj(A)</code> provided that <code>det(A) != 0</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L166" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_s(io:IO):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>to_s</strong>(io : IO) : Nil
+
+        <a class="method-permalink" href="#to_s%28io%3AIO%29%3ANil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from struct Struct
+            </div>
+          
+          <p>Same as <code>#inspect(io)</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L189" target="_blank">View source</a>]
         
       </div>
     </div>

@@ -436,18 +436,8 @@
       
         <ul>
   
-  <li class="parent " data-id="chem.cr/Chem/Spatial/AffineTransform" data-name="chem::spatial::affinetransform">
+  <li class=" " data-id="chem.cr/Chem/Spatial/AffineTransform" data-name="chem::spatial::affinetransform">
       <a href="../../Chem/Spatial/AffineTransform.html">AffineTransform</a>
-      
-        <ul>
-  
-  <li class=" " data-id="chem.cr/Chem/Spatial/AffineTransform/ScalingFactors" data-name="chem::spatial::affinetransform::scalingfactors">
-      <a href="../../Chem/Spatial/AffineTransform/ScalingFactors.html">ScalingFactors</a>
-      
-    </li>
-  
-</ul>
-
       
     </li>
   
@@ -468,6 +458,11 @@
   
   <li class=" " data-id="chem.cr/Chem/Spatial/Error" data-name="chem::spatial::error">
       <a href="../../Chem/Spatial/Error.html">Error</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/FloatTriple" data-name="chem::spatial::floattriple">
+      <a href="../../Chem/Spatial/FloatTriple.html">FloatTriple</a>
       
     </li>
   
@@ -506,8 +501,18 @@
       
     </li>
   
+  <li class=" " data-id="chem.cr/Chem/Spatial/Mat3" data-name="chem::spatial::mat3">
+      <a href="../../Chem/Spatial/Mat3.html">Mat3</a>
+      
+    </li>
+  
   <li class=" " data-id="chem.cr/Chem/Spatial/NotPeriodicError" data-name="chem::spatial::notperiodicerror">
       <a href="../../Chem/Spatial/NotPeriodicError.html">NotPeriodicError</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/NumberTriple" data-name="chem::spatial::numbertriple">
+      <a href="../../Chem/Spatial/NumberTriple.html">NumberTriple</a>
       
     </li>
   
@@ -521,8 +526,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Size" data-name="chem::spatial::size">
-      <a href="../../Chem/Spatial/Size.html">Size</a>
+  <li class=" " data-id="chem.cr/Chem/Spatial/Size3" data-name="chem::spatial::size3">
+      <a href="../../Chem/Spatial/Size3.html">Size3</a>
       
     </li>
   
@@ -838,14 +843,21 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/quat.cr#L282" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/affine.cr#L205" target="_blank">
+        chem/spatial/affine.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/quat.cr#L286" target="_blank">
         chem/spatial/quat.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L2" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L2" target="_blank">
         chem/spatial/vec3.cr
       </a>
     
@@ -867,42 +879,30 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#%5B%5D%28x%3ANumberType%2Cy%3ANumberType%2Cz%3ANumberType%29%3Aself-class-method" class="signature"><strong>.[]</strong>(x : NumberType, y : NumberType, z : NumberType) : <span class="k">self</span></a>
+        <a href="#%5B%5D%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-class-method" class="signature"><strong>.[]</strong>(x : Number, y : Number, z : Number) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a new vector representing the position (<em>x</em>, <em>y</em>, <em>z</em>).</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#new%28x%3AFloat64%2Cy%3AFloat64%2Cz%3AFloat64%29-class-method" class="signature"><strong>.new</strong>(x : Float64, y : Float64, z : Float64)</a>
         
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#new%28x%3ANumberType%2Cy%3ANumberType%2Cz%3ANumberType%29-class-method" class="signature"><strong>.new</strong>(x : NumberType, y : NumberType, z : NumberType)</a>
+          <div class="summary"><p>Creates a new vector representing the position (<em>x</em>, <em>y</em>, <em>z</em>).</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#origin%3Aself-class-method" class="signature"><strong>.origin</strong> : <span class="k">self</span></a>
+        <a href="#rand%28random%3DRandom%3A%3ADEFAULT%29%3Aself-class-method" class="signature"><strong>.rand</strong>(random = <span class="t">Random</span><span class="t">::</span><span class="t">DEFAULT</span>) : <span class="k">self</span></a>
         
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#x%3Aself-class-method" class="signature"><strong>.x</strong> : <span class="k">self</span></a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#y%3Aself-class-method" class="signature"><strong>.y</strong> : <span class="k">self</span></a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#z%3Aself-class-method" class="signature"><strong>.z</strong> : <span class="k">self</span></a>
+          <div class="summary"><p>Returns a random vector with the elements within 0 and 1.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#zero%3Aself-class-method" class="signature"><strong>.zero</strong> : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the zero vector.</p></div>
         
       </li>
     
@@ -923,109 +923,114 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#%2A%28other%3ANumber%29%3Aself-instance-method" class="signature"><strong>#*</strong>(other : Number) : <span class="k">self</span></a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#%2A%28other%3AVec3%29%3Aself-instance-method" class="signature"><strong>#*</strong>(other : Vec3) : <span class="k">self</span></a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#%2A%28other%3ATuple%28NumberType%2CNumberType%2CNumberType%29%29%3Aself-instance-method" class="signature"><strong>#*</strong>(other : Tuple(NumberType, NumberType, NumberType)) : <span class="k">self</span></a>
-        
-      </li>
-    
-      <li class="entry-summary">
         <a href="#%2A%28rhs%3AAffineTransform%29%3Aself-instance-method" class="signature"><strong>#*</strong>(rhs : AffineTransform) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the multiplication of the vector by <em>rhs</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%2A%28rhs%3ANumber%29%3Aself-instance-method" class="signature"><strong>#*</strong>(rhs : Number) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the element-wise multiplication of the vector by <em>rhs</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%2A%28rhs%3AVec3%29%3Aself-instance-method" class="signature"><strong>#*</strong>(rhs : Vec3) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the element-wise multiplication of the vector by <em>rhs</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#%2A%28rhs%3AQuat%29%3Aself-instance-method" class="signature"><strong>#*</strong>(rhs : Quat) : <span class="k">self</span></a>
         
-          <div class="summary"><p>Returns the conjugate of the quaternion by the inverse of <em>rhs</em>.</p></div>
+          <div class="summary"><p>Returns the conjugate of the vector by the inverse of <em>rhs</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#%2B%28other%3ANumber%29%3Aself-instance-method" class="signature"><strong>#+</strong>(other : Number) : <span class="k">self</span></a>
+        <a href="#%2B%28rhs%3ANumber%29%3Aself-instance-method" class="signature"><strong>#+</strong>(rhs : Number) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the element-wise addition of the vector by <em>rhs</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#%2B%28other%3AVec3%29%3Aself-instance-method" class="signature"><strong>#+</strong>(other : Vec3) : <span class="k">self</span></a>
+        <a href="#%2B%28rhs%3AVec3%29%3Aself-instance-method" class="signature"><strong>#+</strong>(rhs : Vec3) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the element-wise addition of the vector by <em>rhs</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#%2B%28other%3ATuple%28NumberType%2CNumberType%2CNumberType%29%29%3Aself-instance-method" class="signature"><strong>#+</strong>(other : Tuple(NumberType, NumberType, NumberType)) : <span class="k">self</span></a>
+        <a href="#%2B%28rhs%3ASize3%29%3Aself-instance-method" class="signature"><strong>#+</strong>(rhs : Size3) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the element-wise addition of the vector by <em>rhs</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#%2B%28rhs%3ASize%29%3Aself-instance-method" class="signature"><strong>#+</strong>(rhs : Size) : <span class="k">self</span></a>
+        <a href="#-%28rhs%3ANumber%29%3Aself-instance-method" class="signature"><strong>#-</strong>(rhs : Number) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the element-wise subtraction of the vector by <em>rhs</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#-%28other%3ANumber%29%3Aself-instance-method" class="signature"><strong>#-</strong>(other : Number) : <span class="k">self</span></a>
+        <a href="#-%28rhs%3AVec3%29%3Aself-instance-method" class="signature"><strong>#-</strong>(rhs : Vec3) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the element-wise subtraction of the vector by <em>rhs</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#-%28other%3AVec3%29%3Aself-instance-method" class="signature"><strong>#-</strong>(other : Vec3) : <span class="k">self</span></a>
+        <a href="#-%28rhs%3ASize3%29%3Aself-instance-method" class="signature"><strong>#-</strong>(rhs : Size3) : <span class="k">self</span></a>
         
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#-%28other%3ATuple%28NumberType%2CNumberType%2CNumberType%29%29%3Aself-instance-method" class="signature"><strong>#-</strong>(other : Tuple(NumberType, NumberType, NumberType)) : <span class="k">self</span></a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#-%28rhs%3ASize%29%3Aself-instance-method" class="signature"><strong>#-</strong>(rhs : Size) : <span class="k">self</span></a>
+          <div class="summary"><p>Returns the element-wise subtraction of the vector by <em>rhs</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#-%3Aself-instance-method" class="signature"><strong>#-</strong> : <span class="k">self</span></a>
         
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#/%28other%3ANumber%29%3Aself-instance-method" class="signature"><strong>#/</strong>(other : Number) : <span class="k">self</span></a>
+          <div class="summary"><p>Returns the negation of the vector.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#/%28other%3AVec3%29%3Aself-instance-method" class="signature"><strong>#/</strong>(other : Vec3) : <span class="k">self</span></a>
+        <a href="#/%28rhs%3ANumber%29%3Aself-instance-method" class="signature"><strong>#/</strong>(rhs : Number) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the element-wise division of the vector by <em>rhs</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#/%28other%3ATuple%28NumberType%2CNumberType%2CNumberType%29%29%3Aself-instance-method" class="signature"><strong>#/</strong>(other : Tuple(NumberType, NumberType, NumberType)) : <span class="k">self</span></a>
+        <a href="#/%28rhs%3AVec3%29%3Aself-instance-method" class="signature"><strong>#/</strong>(rhs : Vec3) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the element-wise division of the vector by <em>rhs</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#%5B%5D%28index%3AInt32%29%3AFloat64-instance-method" class="signature"><strong>#[]</strong>(index : Int32) : Float64</a>
         
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#abs%3Aself-instance-method" class="signature"><strong>#abs</strong> : <span class="k">self</span></a>
+          <div class="summary"><p>Returns the <em>i</em>th component of the vector in the XYZ order.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#clamp%28min%3ANumber%2Cmax%3ANumber%29%3Aself-instance-method" class="signature"><strong>#clamp</strong>(min : Number, max : Number) : <span class="k">self</span></a>
+        <a href="#abs%3AFloat64-instance-method" class="signature"><strong>#abs</strong> : Float64</a>
+        
+          <div class="summary"><p>Returns the absolute value (norm or length) of the vector.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#clamp%28range%3ARange%29%3Aself-instance-method" class="signature"><strong>#clamp</strong>(range : Range) : <span class="k">self</span></a>
+        <a href="#abs2%3AFloat64-instance-method" class="signature"><strong>#abs2</strong> : Float64</a>
+        
+          <div class="summary"><p>Returns the square of the absolute value of the vector.</p></div>
         
       </li>
     
@@ -1037,17 +1042,16 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#cross%28other%3AVec3%29%3Aself-instance-method" class="signature"><strong>#cross</strong>(other : Vec3) : <span class="k">self</span></a>
+        <a href="#cross%28rhs%3AVec3%29%3Aself-instance-method" class="signature"><strong>#cross</strong>(rhs : Vec3) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the cross product of the vector and <em>rhs</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#dot%28other%3AVec3%29%3AFloat64-instance-method" class="signature"><strong>#dot</strong>(other : Vec3) : Float64</a>
+        <a href="#dot%28rhs%3AVec3%29%3AFloat64-instance-method" class="signature"><strong>#dot</strong>(rhs : Vec3) : Float64</a>
         
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#floor%3Aself-instance-method" class="signature"><strong>#floor</strong> : <span class="k">self</span></a>
+          <div class="summary"><p>Returns the dot product of the vector and <em>rhs</em>.</p></div>
         
       </li>
     
@@ -1066,157 +1070,163 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#inspect%28io%3AIO%29-instance-method" class="signature"><strong>#inspect</strong>(io : IO)</a>
-        
-          <div class="summary"><p>Appends this struct's name and instance variables names and values to the given IO.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
         <a href="#inv%3Aself-instance-method" class="signature"><strong>#inv</strong> : <span class="k">self</span></a>
         
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#map%28%26block%3AFloat64-%3ENumber%3A%3APrimitive%29%3Aself-instance-method" class="signature"><strong>#map</strong>(&block : Float64 -> Number::Primitive) : <span class="k">self</span></a>
+          <div class="summary"><p>Returns the inverse of the vector.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#map_with_index%28%26block%3AFloat64%2CInt32-%3ENumber%3A%3APrimitive%29%3Aself-instance-method" class="signature"><strong>#map_with_index</strong>(&block : Float64, Int32 -> Number::Primitive) : <span class="k">self</span></a>
+        <a href="#map%28%26%3AFloat64-%3ENumber%29%3Aself-instance-method" class="signature"><strong>#map</strong>(& : Float64 -> Number) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a vector with the results of the component-wise mapping by the given block.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#map_with_index%28%26%3AFloat64%2CInt32-%3ENumber%29%3Aself-instance-method" class="signature"><strong>#map_with_index</strong>(& : Float64, Int32 -> Number) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a vector with the results of the component-wise mapping by the given block yielding both the value and index.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#normalize%3Aself-instance-method" class="signature"><strong>#normalize</strong> : <span class="k">self</span></a>
         
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#origin%3F%3ABool-instance-method" class="signature"><strong>#origin?</strong> : Bool</a>
+          <div class="summary"><p>Returns the unit vector pointing in the same direction of the vector.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#pad%28padding%3ANumber%29%3Aself-instance-method" class="signature"><strong>#pad</strong>(padding : Number) : <span class="k">self</span></a>
         
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#proj%28rhs%3Aself%29%3Aself-instance-method" class="signature"><strong>#proj</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span></a>
-        
-          <div class="summary"><p>Returns the projection of the vector on <em>rhs</em>.</p></div>
+          <div class="summary"><p>Returns a vector by increasing the length by <em>padding</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#proj_plane%28rhs%3Aself%29%3Aself-instance-method" class="signature"><strong>#proj_plane</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span></a>
+        <a href="#proj%28vec%3Aself%29%3Aself-instance-method" class="signature"><strong>#proj</strong>(vec : <span class="k">self</span>) : <span class="k">self</span></a>
         
-          <div class="summary"><p>Returns the projection of the vector on the plane perpendicular to <em>rhs</em>.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#resize%28new_size%3ANumber%29%3Aself-instance-method" class="signature"><strong>#resize</strong>(new_size : Number) : <span class="k">self</span></a>
+          <div class="summary"><p>Returns the projection of the vector on <em>vec</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#rotate%28aboutrotaxis%3AVec3%2Cbytheta%3AFloat64%29%3Aself-instance-method" class="signature"><strong>#rotate</strong>(about rotaxis : Vec3, by theta : Float64) : <span class="k">self</span></a>
+        <a href="#proj_plane%28normal%3Aself%29%3Aself-instance-method" class="signature"><strong>#proj_plane</strong>(normal : <span class="k">self</span>) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the projection of the vector on the plane perpendicular to <em>normal</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#round%3Aself-instance-method" class="signature"><strong>#round</strong> : <span class="k">self</span></a>
+        <a href="#resize%28length%3ANumber%29%3Aself-instance-method" class="signature"><strong>#resize</strong>(length : Number) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a vector pointing in the same direction with the given length.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#size%3AFloat64-instance-method" class="signature"><strong>#size</strong> : Float64</a>
+        <a href="#rotate%28aboutrotaxis%3AVec3%2Cbytheta%3ANumber%29%3Aself-instance-method" class="signature"><strong>#rotate</strong>(about rotaxis : Vec3, by theta : Number) : <span class="k">self</span></a>
         
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#squared_size%3AFloat64-instance-method" class="signature"><strong>#squared_size</strong> : Float64</a>
+          <div class="summary"><p>Rotates the vector about <em>rotaxis</em> by <em>theta</em> degrees.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#to_a%3AArray%28Float64%29-instance-method" class="signature"><strong>#to_a</strong> : Array(Float64)</a>
         
+          <div class="summary"><p>Returns an array with the components of the vector.</p></div>
+        
       </li>
     
       <li class="entry-summary">
         <a href="#to_cartesian%28basis%3ABasis%29%3Aself-instance-method" class="signature"><strong>#to_cartesian</strong>(basis : Basis) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a vector in Cartesian coordinates relative to <em>basis</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#to_cartesian%28lattice%3ALattice%29%3Aself-instance-method" class="signature"><strong>#to_cartesian</strong>(lattice : Lattice) : <span class="k">self</span></a>
         
+          <div class="summary"><p>Returns a vector in Cartesian coordinates relative to <em>lattice</em>.</p></div>
+        
       </li>
     
       <li class="entry-summary">
         <a href="#to_fractional%28basis%3ABasis%29%3Aself-instance-method" class="signature"><strong>#to_fractional</strong>(basis : Basis) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a vector in fractional coordinates relative to <em>basis</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#to_fractional%28lattice%3ALattice%29%3Aself-instance-method" class="signature"><strong>#to_fractional</strong>(lattice : Lattice) : <span class="k">self</span></a>
         
+          <div class="summary"><p>Returns a vector in fractional coordinates relative to <em>lattice</em>.</p></div>
+        
       </li>
     
       <li class="entry-summary">
         <a href="#to_q%3AQuat-instance-method" class="signature"><strong>#to_q</strong> : Quat</a>
         
-          <div class="summary"><p>Returns the quaternion representation of the vector, i.e., Quat[0, x, y, z].</p></div>
+          <div class="summary"><p>Returns the quaternion representation of the vector, i.e., <code><a href="../../Chem/Spatial/Quat.html">Quat</a>[0, x, y, z]</code>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_s%28io%3AIO%29-instance-method" class="signature"><strong>#to_s</strong>(io : IO)</a>
+        <a href="#to_s%28io%3AIO%29%3ANil-instance-method" class="signature"><strong>#to_s</strong>(io : IO) : Nil</a>
         
-          <div class="summary"><p>Same as <code><a href="../../Chem/Spatial/Vec3.html#inspect%28io%3AIO%29-instance-method">#inspect(io)</a></code>.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#to_t%3ATuple%28Float64%2CFloat64%2CFloat64%29-instance-method" class="signature"><strong>#to_t</strong> : Tuple(Float64, Float64, Float64)</a>
+          <div class="summary"><p>Same as <code>#inspect(io)</code>.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#transform%28transformation%3AAffineTransform%29%3Aself-instance-method" class="signature"><strong>#transform</strong>(transformation : AffineTransform) : <span class="k">self</span></a>
         
+          <div class="summary"><p>Returns the vector resulting of applying the given transformation.</p></div>
+        
       </li>
     
       <li class="entry-summary">
         <a href="#transform%28q%3AQuat%29%3Aself-instance-method" class="signature"><strong>#transform</strong>(q : Quat) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the vector resulting of applying the given transformation.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#wrap%28lattice%3ALattice%2Caroundcenter%3Aself%29%3Aself-instance-method" class="signature"><strong>#wrap</strong>(lattice : Lattice, around center : <span class="k">self</span>) : <span class="k">self</span></a>
         
+          <div class="summary"><p>Returns the vector by wrapping into <em>lattice</em> centered at <em>center</em>.</p></div>
+        
       </li>
     
       <li class="entry-summary">
         <a href="#wrap%28aroundcenter%3Aself%29%3Aself-instance-method" class="signature"><strong>#wrap</strong>(around center : <span class="k">self</span>) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the vector by wrapping into the unit cell centered at <em>center</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#wrap%28lattice%3ALattice%29%3Aself-instance-method" class="signature"><strong>#wrap</strong>(lattice : Lattice) : <span class="k">self</span></a>
         
+          <div class="summary"><p>Returns the vector by wrapping into <em>lattice</em>.</p></div>
+        
       </li>
     
       <li class="entry-summary">
         <a href="#wrap%3Aself-instance-method" class="signature"><strong>#wrap</strong> : <span class="k">self</span></a>
         
+          <div class="summary"><p>Returns the vector by wrapping into the primary unit cell.</p></div>
+        
       </li>
     
       <li class="entry-summary">
         <a href="#x%3AFloat64-instance-method" class="signature"><strong>#x</strong> : Float64</a>
+        
+          <div class="summary"><p>X component of the vector.</p></div>
         
       </li>
     
@@ -1244,6 +1254,8 @@
       <li class="entry-summary">
         <a href="#y%3AFloat64-instance-method" class="signature"><strong>#y</strong> : Float64</a>
         
+          <div class="summary"><p>Y component of the vector.</p></div>
+        
       </li>
     
       <li class="entry-summary">
@@ -1262,6 +1274,8 @@
     
       <li class="entry-summary">
         <a href="#z%3AFloat64-instance-method" class="signature"><strong>#z</strong> : Float64</a>
+        
+          <div class="summary"><p>Z component of the vector.</p></div>
         
       </li>
     
@@ -1329,18 +1343,23 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="[](x:NumberType,y:NumberType,z:NumberType):self-class-method">
+    <div class="entry-detail" id="[](x:Number,y:Number,z:Number):self-class-method">
       <div class="signature">
         
-        def self.<strong>[]</strong>(x : NumberType, y : NumberType, z : NumberType) : <span class="k">self</span>
+        def self.<strong>[]</strong>(x : <a href="../../Number.html">Number</a>, y : <a href="../../Number.html">Number</a>, z : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#%5B%5D%28x%3ANumberType%2Cy%3ANumberType%2Cz%3ANumberType%29%3Aself-class-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-class-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns a new vector representing the position (<em>x</em>, <em>y</em>, <em>z</em>).</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L16" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1353,90 +1372,36 @@
         <a class="method-permalink" href="#new%28x%3AFloat64%2Cy%3AFloat64%2Cz%3AFloat64%29-class-method">#</a>
       </div>
       
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L33" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="new(x:NumberType,y:NumberType,z:NumberType)-class-method">
-      <div class="signature">
-        
-        def self.<strong>new</strong>(x : NumberType, y : NumberType, z : NumberType)
-
-        <a class="method-permalink" href="#new%28x%3ANumberType%2Cy%3ANumberType%2Cz%3ANumberType%29-class-method">#</a>
-      </div>
+        <div class="doc">
+          
+          <p>Creates a new vector representing the position (<em>x</em>, <em>y</em>, <em>z</em>).</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L36" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L11" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="origin:self-class-method">
+    <div class="entry-detail" id="rand(random=Random::DEFAULT):self-class-method">
       <div class="signature">
         
-        def self.<strong>origin</strong> : <span class="k">self</span>
+        def self.<strong>rand</strong>(random = <span class="t">Random</span><span class="t">::</span><span class="t">DEFAULT</span>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#origin%3Aself-class-method">#</a>
+        <a class="method-permalink" href="#rand%28random%3DRandom%3A%3ADEFAULT%29%3Aself-class-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns a random vector with the elements within 0 and 1.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L13" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="x:self-class-method">
-      <div class="signature">
-        
-        def self.<strong>x</strong> : <span class="k">self</span>
-
-        <a class="method-permalink" href="#x%3Aself-class-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L17" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="y:self-class-method">
-      <div class="signature">
-        
-        def self.<strong>y</strong> : <span class="k">self</span>
-
-        <a class="method-permalink" href="#y%3Aself-class-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L21" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="z:self-class-method">
-      <div class="signature">
-        
-        def self.<strong>z</strong> : <span class="k">self</span>
-
-        <a class="method-permalink" href="#z%3Aself-class-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L25" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L21" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1449,10 +1414,15 @@
         <a class="method-permalink" href="#zero%3Aself-class-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns the zero vector.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L29" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L27" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1471,54 +1441,6 @@
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="*(other:Number):self-instance-method">
-      <div class="signature">
-        
-        def <strong>*</strong>(other : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
-
-        <a class="method-permalink" href="#%2A%28other%3ANumber%29%3Aself-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L52" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="*(other:Vec3):self-instance-method">
-      <div class="signature">
-        
-        def <strong>*</strong>(other : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <span class="k">self</span>
-
-        <a class="method-permalink" href="#%2A%28other%3AVec3%29%3Aself-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L52" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="*(other:Tuple(NumberType,NumberType,NumberType)):self-instance-method">
-      <div class="signature">
-        
-        def <strong>*</strong>(other : Tuple(NumberType, NumberType, NumberType)) : <span class="k">self</span>
-
-        <a class="method-permalink" href="#%2A%28other%3ATuple%28NumberType%2CNumberType%2CNumberType%29%29%3Aself-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L52" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
     <div class="entry-detail" id="*(rhs:AffineTransform):self-instance-method">
       <div class="signature">
         
@@ -1527,10 +1449,60 @@
         <a class="method-permalink" href="#%2A%28rhs%3AAffineTransform%29%3Aself-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns the multiplication of the vector by <em>rhs</em>. It effectively
+applies the inverse transformation to the vector.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L76" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/affine.cr#L208" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="*(rhs:Number):self-instance-method">
+      <div class="signature">
+        
+        def <strong>*</strong>(rhs : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#%2A%28rhs%3ANumber%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the element-wise multiplication of the vector by
+<em>rhs</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L42" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="*(rhs:Vec3):self-instance-method">
+      <div class="signature">
+        
+        def <strong>*</strong>(rhs : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#%2A%28rhs%3AVec3%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the element-wise multiplication of the vector by
+<em>rhs</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L42" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1545,142 +1517,146 @@
       
         <div class="doc">
           
-          <p>Returns the conjugate of the quaternion by the inverse of <em>rhs</em>.
-See <code><a href="../../Chem/Spatial/Quat.html#%2A%28rhs%3Aself%29%3Aself-instance-method">Quat#*</a></code> for details.</p>
+          <p>Returns the conjugate of the vector by the inverse of <em>rhs</em>. See
+<code><a href="../../Chem/Spatial/Quat.html#%2A%28rhs%3Aself%29%3Aself-instance-method">Quat#*</a></code> for details.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/quat.cr#L285" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/quat.cr#L289" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="+(other:Number):self-instance-method">
+    <div class="entry-detail" id="+(rhs:Number):self-instance-method">
       <div class="signature">
         
-        def <strong>+</strong>(other : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
+        def <strong>+</strong>(rhs : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#%2B%28other%3ANumber%29%3Aself-instance-method">#</a>
+        <a class="method-permalink" href="#%2B%28rhs%3ANumber%29%3Aself-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns the element-wise addition of the vector by
+<em>rhs</em>.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L52" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L42" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="+(other:Vec3):self-instance-method">
+    <div class="entry-detail" id="+(rhs:Vec3):self-instance-method">
       <div class="signature">
         
-        def <strong>+</strong>(other : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <span class="k">self</span>
+        def <strong>+</strong>(rhs : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#%2B%28other%3AVec3%29%3Aself-instance-method">#</a>
+        <a class="method-permalink" href="#%2B%28rhs%3AVec3%29%3Aself-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns the element-wise addition of the vector by
+<em>rhs</em>.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L52" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L42" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="+(other:Tuple(NumberType,NumberType,NumberType)):self-instance-method">
+    <div class="entry-detail" id="+(rhs:Size3):self-instance-method">
       <div class="signature">
         
-        def <strong>+</strong>(other : Tuple(NumberType, NumberType, NumberType)) : <span class="k">self</span>
+        def <strong>+</strong>(rhs : <a href="../../Chem/Spatial/Size3.html">Size3</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#%2B%28other%3ATuple%28NumberType%2CNumberType%2CNumberType%29%29%3Aself-instance-method">#</a>
+        <a class="method-permalink" href="#%2B%28rhs%3ASize3%29%3Aself-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns the element-wise addition of the vector by
+<em>rhs</em>.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L52" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L42" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="+(rhs:Size):self-instance-method">
+    <div class="entry-detail" id="-(rhs:Number):self-instance-method">
       <div class="signature">
         
-        def <strong>+</strong>(rhs : <a href="../../Chem/Spatial/Size.html">Size</a>) : <span class="k">self</span>
+        def <strong>-</strong>(rhs : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#%2B%28rhs%3ASize%29%3Aself-instance-method">#</a>
+        <a class="method-permalink" href="#-%28rhs%3ANumber%29%3Aself-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns the element-wise subtraction of the vector by
+<em>rhs</em>.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L66" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L42" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="-(other:Number):self-instance-method">
+    <div class="entry-detail" id="-(rhs:Vec3):self-instance-method">
       <div class="signature">
         
-        def <strong>-</strong>(other : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
+        def <strong>-</strong>(rhs : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#-%28other%3ANumber%29%3Aself-instance-method">#</a>
+        <a class="method-permalink" href="#-%28rhs%3AVec3%29%3Aself-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns the element-wise subtraction of the vector by
+<em>rhs</em>.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L52" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L42" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="-(other:Vec3):self-instance-method">
+    <div class="entry-detail" id="-(rhs:Size3):self-instance-method">
       <div class="signature">
         
-        def <strong>-</strong>(other : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <span class="k">self</span>
+        def <strong>-</strong>(rhs : <a href="../../Chem/Spatial/Size3.html">Size3</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#-%28other%3AVec3%29%3Aself-instance-method">#</a>
+        <a class="method-permalink" href="#-%28rhs%3ASize3%29%3Aself-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns the element-wise subtraction of the vector by
+<em>rhs</em>.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L52" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="-(other:Tuple(NumberType,NumberType,NumberType)):self-instance-method">
-      <div class="signature">
-        
-        def <strong>-</strong>(other : Tuple(NumberType, NumberType, NumberType)) : <span class="k">self</span>
-
-        <a class="method-permalink" href="#-%28other%3ATuple%28NumberType%2CNumberType%2CNumberType%29%29%3Aself-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L52" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="-(rhs:Size):self-instance-method">
-      <div class="signature">
-        
-        def <strong>-</strong>(rhs : <a href="../../Chem/Spatial/Size.html">Size</a>) : <span class="k">self</span>
-
-        <a class="method-permalink" href="#-%28rhs%3ASize%29%3Aself-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L66" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L42" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1693,58 +1669,59 @@ See <code><a href="../../Chem/Spatial/Quat.html#%2A%28rhs%3Aself%29%3Aself-insta
         <a class="method-permalink" href="#-%3Aself-instance-method">#</a>
       </div>
       
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L72" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="/(other:Number):self-instance-method">
-      <div class="signature">
-        
-        def <strong>/</strong>(other : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
-
-        <a class="method-permalink" href="#/%28other%3ANumber%29%3Aself-instance-method">#</a>
-      </div>
+        <div class="doc">
+          
+          <p>Returns the negation of the vector.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L52" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L72" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="/(other:Vec3):self-instance-method">
+    <div class="entry-detail" id="/(rhs:Number):self-instance-method">
       <div class="signature">
         
-        def <strong>/</strong>(other : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <span class="k">self</span>
+        def <strong>/</strong>(rhs : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#/%28other%3AVec3%29%3Aself-instance-method">#</a>
+        <a class="method-permalink" href="#/%28rhs%3ANumber%29%3Aself-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns the element-wise division of the vector by
+<em>rhs</em>.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L52" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L42" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="/(other:Tuple(NumberType,NumberType,NumberType)):self-instance-method">
+    <div class="entry-detail" id="/(rhs:Vec3):self-instance-method">
       <div class="signature">
         
-        def <strong>/</strong>(other : Tuple(NumberType, NumberType, NumberType)) : <span class="k">self</span>
+        def <strong>/</strong>(rhs : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#/%28other%3ATuple%28NumberType%2CNumberType%2CNumberType%29%29%3Aself-instance-method">#</a>
+        <a class="method-permalink" href="#/%28rhs%3AVec3%29%3Aself-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns the element-wise division of the vector by
+<em>rhs</em>.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L52" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L42" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1757,58 +1734,58 @@ See <code><a href="../../Chem/Spatial/Quat.html#%2A%28rhs%3Aself%29%3Aself-insta
         <a class="method-permalink" href="#%5B%5D%28index%3AInt32%29%3AFloat64-instance-method">#</a>
       </div>
       
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L42" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="abs:self-instance-method">
-      <div class="signature">
-        
-        def <strong>abs</strong> : <span class="k">self</span>
-
-        <a class="method-permalink" href="#abs%3Aself-instance-method">#</a>
-      </div>
+        <div class="doc">
+          
+          <p>Returns the <em>i</em>th component of the vector in the XYZ order. Raises
+<code>IndexError</code> if <em>index</em> is invalid.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L80" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L33" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="clamp(min:Number,max:Number):self-instance-method">
+    <div class="entry-detail" id="abs:Float64-instance-method">
       <div class="signature">
         
-        def <strong>clamp</strong>(min : <a href="../../Number.html">Number</a>, max : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
+        def <strong>abs</strong> : Float64
 
-        <a class="method-permalink" href="#clamp%28min%3ANumber%2Cmax%3ANumber%29%3Aself-instance-method">#</a>
+        <a class="method-permalink" href="#abs%3AFloat64-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns the absolute value (norm or length) of the vector.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L84" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L77" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="clamp(range:Range):self-instance-method">
+    <div class="entry-detail" id="abs2:Float64-instance-method">
       <div class="signature">
         
-        def <strong>clamp</strong>(range : <a href="../../Range.html">Range</a>) : <span class="k">self</span>
+        def <strong>abs2</strong> : Float64
 
-        <a class="method-permalink" href="#clamp%28range%3ARange%29%3Aself-instance-method">#</a>
+        <a class="method-permalink" href="#abs2%3AFloat64-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns the square of the absolute value of the vector.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L88" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L82" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1834,55 +1811,49 @@ from each other, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L101" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L95" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="cross(other:Vec3):self-instance-method">
+    <div class="entry-detail" id="cross(rhs:Vec3):self-instance-method">
       <div class="signature">
         
-        def <strong>cross</strong>(other : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <span class="k">self</span>
+        def <strong>cross</strong>(rhs : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#cross%28other%3AVec3%29%3Aself-instance-method">#</a>
+        <a class="method-permalink" href="#cross%28rhs%3AVec3%29%3Aself-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns the cross product of the vector and <em>rhs</em>.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L107" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L102" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="dot(other:Vec3):Float64-instance-method">
+    <div class="entry-detail" id="dot(rhs:Vec3):Float64-instance-method">
       <div class="signature">
         
-        def <strong>dot</strong>(other : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : Float64
+        def <strong>dot</strong>(rhs : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : Float64
 
-        <a class="method-permalink" href="#dot%28other%3AVec3%29%3AFloat64-instance-method">#</a>
+        <a class="method-permalink" href="#dot%28rhs%3AVec3%29%3AFloat64-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns the dot product of the vector and <em>rhs</em>.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L113" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="floor:self-instance-method">
-      <div class="signature">
-        
-        def <strong>floor</strong> : <span class="k">self</span>
-
-        <a class="method-permalink" href="#floor%3Aself-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L117" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L111" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1914,7 +1885,7 @@ vec.image(lat, <span class="n">1</span>, <span class="n">1</span>, <span class="
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L148" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L142" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1939,41 +1910,7 @@ vec.image <span class="n">-1</span>, <span class="n">1</span>, <span class="n">-
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L129" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="inspect(io:IO)-instance-method">
-      <div class="signature">
-        
-        def <strong>inspect</strong>(io : IO)
-
-        <a class="method-permalink" href="#inspect%28io%3AIO%29-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-            <div class="doc-inherited">
-              Description copied from struct Struct
-            </div>
-          
-          <p>Appends this struct's name and instance variables names and values
-to the given IO.</p>
-<pre><code class="language-crystal"><span class="k">struct</span> <span class="t">Point</span>
-  <span class="k">def</span> <span class="m">initialize</span>(@x : <span class="t">Int32</span>, @y : <span class="t">Int32</span>)
-  <span class="k">end</span>
-<span class="k">end</span>
-
-p1 <span class="o">=</span> <span class="t">Point</span>.<span class="k">new</span> <span class="n">1</span>, <span class="n">2</span>
-p1.to_s    <span class="c"># &quot;Point(@x=1, @y=2)&quot;</span>
-p1.inspect <span class="c"># &quot;Point(@x=1, @y=2)&quot;</span></code></pre>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L156" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L123" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1986,42 +1923,64 @@ p1.inspect <span class="c"># &quot;Point(@x=1, @y=2)&quot;</span></code></pre>
         <a class="method-permalink" href="#inv%3Aself-instance-method">#</a>
       </div>
       
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L152" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="map(&amp;block:Float64-&gt;Number::Primitive):self-instance-method">
-      <div class="signature">
-        
-        def <strong>map</strong>(&block : Float64 -> Number::Primitive) : <span class="k">self</span>
-
-        <a class="method-permalink" href="#map%28%26block%3AFloat64-%3ENumber%3A%3APrimitive%29%3Aself-instance-method">#</a>
-      </div>
+        <div class="doc">
+          
+          <p>Returns the inverse of the vector. It is equivalent to the unary
+negation operator.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L160" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L148" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="map_with_index(&amp;block:Float64,Int32-&gt;Number::Primitive):self-instance-method">
+    <div class="entry-detail" id="map(&amp;:Float64-&gt;Number):self-instance-method">
       <div class="signature">
         
-        def <strong>map_with_index</strong>(&block : Float64, Int32 -> Number::Primitive) : <span class="k">self</span>
+        def <strong>map</strong>(& : Float64 -> <a href="../../Number.html">Number</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#map_with_index%28%26block%3AFloat64%2CInt32-%3ENumber%3A%3APrimitive%29%3Aself-instance-method">#</a>
+        <a class="method-permalink" href="#map%28%26%3AFloat64-%3ENumber%29%3Aself-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns a vector with the results of the component-wise mapping by
+the given block. This is useful to perform non-standard
+transformations.</p>
+<pre><code class="language-crystal"><span class="t">Vec3</span>[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>].map(<span class="o">&amp;</span>.<span class="o">**</span>(<span class="n">2</span>)) <span class="c"># =&gt; Vec3[1.0, 4.0, 9.0]</span></code></pre>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L164" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L159" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="map_with_index(&amp;:Float64,Int32-&gt;Number):self-instance-method">
+      <div class="signature">
+        
+        def <strong>map_with_index</strong>(& : Float64, Int32 -> <a href="../../Number.html">Number</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#map_with_index%28%26%3AFloat64%2CInt32-%3ENumber%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a vector with the results of the component-wise mapping by
+the given block yielding both the value and index. This is useful
+to perform non-standard transformations.</p>
+<pre><code class="language-crystal"><span class="t">Vec3</span>[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>].map { <span class="o">|</span>ele, i<span class="o">|</span> ele <span class="o">*</span> i } <span class="c"># =&gt; Vec3[0.0, 2.0, 6.0]</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L170" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2034,26 +1993,20 @@ p1.inspect <span class="c"># &quot;Point(@x=1, @y=2)&quot;</span></code></pre>
         <a class="method-permalink" href="#normalize%3Aself-instance-method">#</a>
       </div>
       
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L168" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="origin?:Bool-instance-method">
-      <div class="signature">
-        
-        def <strong>origin?</strong> : Bool
-
-        <a class="method-permalink" href="#origin%3F%3ABool-instance-method">#</a>
-      </div>
+        <div class="doc">
+          
+          <p>Returns the unit vector pointing in the same direction of the
+vector.</p>
+<pre><code class="language-crystal">v <span class="o">=</span> <span class="t">Vec3</span>[<span class="n">2.5</span>, <span class="n">0</span>, <span class="n">0</span>].normalize <span class="c"># =&gt; Vec[1.0, 0.0, 0.0]</span>
+v.abs                         <span class="c"># =&gt; 1.0</span>
+v <span class="o">=</span> <span class="t">Vec3</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>].normalize   <span class="c"># =&gt; Vec[0.577, 0.577, 0.577]</span>
+v.abs                         <span class="c"># =&gt; 1.0</span></code></pre>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L172" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L183" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2066,133 +2019,112 @@ p1.inspect <span class="c"># &quot;Point(@x=1, @y=2)&quot;</span></code></pre>
         <a class="method-permalink" href="#pad%28padding%3ANumber%29%3Aself-instance-method">#</a>
       </div>
       
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L176" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="proj(rhs:self):self-instance-method">
-      <div class="signature">
-        
-        def <strong>proj</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span>
-
-        <a class="method-permalink" href="#proj%28rhs%3Aself%29%3Aself-instance-method">#</a>
-      </div>
-      
         <div class="doc">
           
-          <p>Returns the projection of the vector on <em>rhs</em>.</p>
+          <p>Returns a vector by increasing the length by <em>padding</em>.</p>
+<pre><code class="language-crystal"><span class="t">Vec3</span>[<span class="n">1</span>, <span class="n">0</span>, <span class="n">0</span>].pad(<span class="n">2</span>) <span class="c"># =&gt; Vec3[3, 0, 0]</span>
+a <span class="o">=</span> <span class="t">Vec3</span>[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>]
+a.abs                             <span class="c"># =&gt; 3.7416573867739413</span>
+b <span class="o">=</span> a.pad(<span class="n">2</span>)                      <span class="c"># =&gt; Vec3[1.535, 3.069, 4.604]</span>
+b.abs                             <span class="c"># =&gt; 5.741657386773941</span>
+a.normalize.close_to? b.normalize <span class="c"># =&gt; true</span></code></pre>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L181" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L197" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="proj_plane(rhs:self):self-instance-method">
+    <div class="entry-detail" id="proj(vec:self):self-instance-method">
       <div class="signature">
         
-        def <strong>proj_plane</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span>
+        def <strong>proj</strong>(vec : <span class="k">self</span>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#proj_plane%28rhs%3Aself%29%3Aself-instance-method">#</a>
+        <a class="method-permalink" href="#proj%28vec%3Aself%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the projection of the vector on <em>vec</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L202" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="proj_plane(normal:self):self-instance-method">
+      <div class="signature">
+        
+        def <strong>proj_plane</strong>(normal : <span class="k">self</span>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#proj_plane%28normal%3Aself%29%3Aself-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns the projection of the vector on the plane perpendicular
-to <em>rhs</em>.</p>
+to <em>normal</em>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L188" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L209" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="resize(new_size:Number):self-instance-method">
+    <div class="entry-detail" id="resize(length:Number):self-instance-method">
       <div class="signature">
         
-        def <strong>resize</strong>(new_size : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
+        def <strong>resize</strong>(length : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#resize%28new_size%3ANumber%29%3Aself-instance-method">#</a>
+        <a class="method-permalink" href="#resize%28length%3ANumber%29%3Aself-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns a vector pointing in the same direction with the given
+length.</p>
+<pre><code class="language-crystal">a <span class="o">=</span> <span class="t">Vec3</span>[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>]
+a.abs                              <span class="c"># =&gt; 3.7416573867739413</span>
+b <span class="o">=</span> a.resize <span class="n">0.5</span>                   <span class="c"># =&gt; Vec3[0.134, 0.267, 0.401]</span>
+b.abs                              <span class="c"># =&gt; 0.5</span>
+b.normalize.close_to?(a.normalize) <span class="c"># =&gt; true</span></code></pre>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L192" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L223" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="rotate(aboutrotaxis:Vec3,bytheta:Float64):self-instance-method">
+    <div class="entry-detail" id="rotate(aboutrotaxis:Vec3,bytheta:Number):self-instance-method">
       <div class="signature">
         
-        def <strong>rotate</strong>(about rotaxis : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, by theta : Float64) : <span class="k">self</span>
+        def <strong>rotate</strong>(about rotaxis : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, by theta : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#rotate%28aboutrotaxis%3AVec3%2Cbytheta%3AFloat64%29%3Aself-instance-method">#</a>
+        <a class="method-permalink" href="#rotate%28aboutrotaxis%3AVec3%2Cbytheta%3ANumber%29%3Aself-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Rotates the vector about <em>rotaxis</em> by <em>theta</em> degrees.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L197" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="round:self-instance-method">
-      <div class="signature">
-        
-        def <strong>round</strong> : <span class="k">self</span>
-
-        <a class="method-permalink" href="#round%3Aself-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L201" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="size:Float64-instance-method">
-      <div class="signature">
-        
-        def <strong>size</strong> : Float64
-
-        <a class="method-permalink" href="#size%3AFloat64-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L205" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="squared_size:Float64-instance-method">
-      <div class="signature">
-        
-        def <strong>squared_size</strong> : Float64
-
-        <a class="method-permalink" href="#squared_size%3AFloat64-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L209" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L229" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2205,10 +2137,16 @@ to <em>rhs</em>.</p>
         <a class="method-permalink" href="#to_a%3AArray%28Float64%29-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns an array with the components of the vector.</p>
+<pre><code class="language-crystal"><span class="t">Vec3</span>[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>].to_a <span class="c"># =&gt; [1.0, 2.0, 3.0]</span></code></pre>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L213" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L238" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2221,10 +2159,16 @@ to <em>rhs</em>.</p>
         <a class="method-permalink" href="#to_cartesian%28basis%3ABasis%29%3Aself-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns a vector in Cartesian coordinates relative to <em>basis</em>. The
+vector is assumed to be expressed in fractional coordinates.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L217" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L244" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2237,10 +2181,16 @@ to <em>rhs</em>.</p>
         <a class="method-permalink" href="#to_cartesian%28lattice%3ALattice%29%3Aself-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns a vector in Cartesian coordinates relative to <em>lattice</em>.
+The vector is assumed to be expressed in fractional coordinates.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L221" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L250" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2253,10 +2203,16 @@ to <em>rhs</em>.</p>
         <a class="method-permalink" href="#to_fractional%28basis%3ABasis%29%3Aself-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns a vector in fractional coordinates relative to <em>basis</em>.
+The vector is assumed to be expressed in Cartesian coordinates.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L225" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L256" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2269,10 +2225,16 @@ to <em>rhs</em>.</p>
         <a class="method-permalink" href="#to_fractional%28lattice%3ALattice%29%3Aself-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns a vector in fractional coordinates relative to <em>lattice</em>.
+The vector is assumed to be expressed in Cartesian coordinates.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L229" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L262" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2288,23 +2250,23 @@ to <em>rhs</em>.</p>
         <div class="doc">
           
           <p>Returns the quaternion representation of the vector, i.e.,
-Quat[0, x, y, z].</p>
+<code><a href="../../Chem/Spatial/Quat.html">Quat</a>[0, x, y, z]</code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/quat.cr#L291" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/quat.cr#L295" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="to_s(io:IO)-instance-method">
+    <div class="entry-detail" id="to_s(io:IO):Nil-instance-method">
       <div class="signature">
         
-        def <strong>to_s</strong>(io : IO)
+        def <strong>to_s</strong>(io : IO) : Nil
 
-        <a class="method-permalink" href="#to_s%28io%3AIO%29-instance-method">#</a>
+        <a class="method-permalink" href="#to_s%28io%3AIO%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2313,29 +2275,13 @@ Quat[0, x, y, z].</p>
               Description copied from struct Struct
             </div>
           
-          <p>Same as <code><a href="../../Chem/Spatial/Vec3.html#inspect%28io%3AIO%29-instance-method">#inspect(io)</a></code>.</p>
+          <p>Same as <code>#inspect(io)</code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L233" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="to_t:Tuple(Float64,Float64,Float64)-instance-method">
-      <div class="signature">
-        
-        def <strong>to_t</strong> : Tuple(Float64, Float64, Float64)
-
-        <a class="method-permalink" href="#to_t%3ATuple%28Float64%2CFloat64%2CFloat64%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L237" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L266" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2348,10 +2294,15 @@ Quat[0, x, y, z].</p>
         <a class="method-permalink" href="#transform%28transformation%3AAffineTransform%29%3Aself-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns the vector resulting of applying the given transformation.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L241" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L278" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2364,10 +2315,15 @@ Quat[0, x, y, z].</p>
         <a class="method-permalink" href="#transform%28q%3AQuat%29%3Aself-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns the vector resulting of applying the given transformation.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L245" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L283" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2380,10 +2336,17 @@ Quat[0, x, y, z].</p>
         <a class="method-permalink" href="#wrap%28lattice%3ALattice%2Caroundcenter%3Aself%29%3Aself-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns the vector by wrapping into <em>lattice</em> centered at
+<em>center</em>. The vector is assumed to be expressed in Cartesian
+coordinates.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L262" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L310" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2396,10 +2359,17 @@ Quat[0, x, y, z].</p>
         <a class="method-permalink" href="#wrap%28aroundcenter%3Aself%29%3Aself-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns the vector by wrapping into the unit cell centered at
+<em>center</em>. The vector is assumed to be expressed in fractional
+coordinates.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L253" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L296" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2412,10 +2382,16 @@ Quat[0, x, y, z].</p>
         <a class="method-permalink" href="#wrap%28lattice%3ALattice%29%3Aself-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns the vector by wrapping into <em>lattice</em>. The vector is
+assumed to be expressed in Cartesian coordinates.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L258" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L303" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2428,10 +2404,16 @@ Quat[0, x, y, z].</p>
         <a class="method-permalink" href="#wrap%3Aself-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns the vector by wrapping into the primary unit cell. The
+vector is assumed to be expressed in fractional coordinates.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L249" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L289" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2444,10 +2426,15 @@ Quat[0, x, y, z].</p>
         <a class="method-permalink" href="#x%3AFloat64-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>X component of the vector.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L4" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2468,7 +2455,7 @@ Quat[0, x, y, z].</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L267" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L315" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2489,7 +2476,7 @@ Quat[0, x, y, z].</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L272" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L320" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2510,7 +2497,7 @@ Quat[0, x, y, z].</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L277" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L325" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2523,10 +2510,15 @@ Quat[0, x, y, z].</p>
         <a class="method-permalink" href="#y%3AFloat64-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Y component of the vector.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2547,7 +2539,7 @@ Quat[0, x, y, z].</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L282" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L330" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2568,7 +2560,7 @@ Quat[0, x, y, z].</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L287" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L335" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2581,10 +2573,15 @@ Quat[0, x, y, z].</p>
         <a class="method-permalink" href="#z%3AFloat64-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Z component of the vector.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L7" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L8" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2605,7 +2602,7 @@ Quat[0, x, y, z].</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L292" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L340" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2626,7 +2623,7 @@ Quat[0, x, y, z].</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/vec3.cr#L297" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L345" target="_blank">View source</a>]
         
       </div>
     </div>

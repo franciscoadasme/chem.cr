@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../../js/doc.js"></script>
 
   <meta name="repository-name" content="chem.cr">
-  <title>Chem::Spatial::Size - chem.cr master</title>
+  <title>Chem::Spatial::NumberTriple - chem.cr master</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -436,18 +436,8 @@
       
         <ul>
   
-  <li class="parent " data-id="chem.cr/Chem/Spatial/AffineTransform" data-name="chem::spatial::affinetransform">
+  <li class=" " data-id="chem.cr/Chem/Spatial/AffineTransform" data-name="chem::spatial::affinetransform">
       <a href="../../Chem/Spatial/AffineTransform.html">AffineTransform</a>
-      
-        <ul>
-  
-  <li class=" " data-id="chem.cr/Chem/Spatial/AffineTransform/ScalingFactors" data-name="chem::spatial::affinetransform::scalingfactors">
-      <a href="../../Chem/Spatial/AffineTransform/ScalingFactors.html">ScalingFactors</a>
-      
-    </li>
-  
-</ul>
-
       
     </li>
   
@@ -468,6 +458,11 @@
   
   <li class=" " data-id="chem.cr/Chem/Spatial/Error" data-name="chem::spatial::error">
       <a href="../../Chem/Spatial/Error.html">Error</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/FloatTriple" data-name="chem::spatial::floattriple">
+      <a href="../../Chem/Spatial/FloatTriple.html">FloatTriple</a>
       
     </li>
   
@@ -506,8 +501,18 @@
       
     </li>
   
+  <li class=" " data-id="chem.cr/Chem/Spatial/Mat3" data-name="chem::spatial::mat3">
+      <a href="../../Chem/Spatial/Mat3.html">Mat3</a>
+      
+    </li>
+  
   <li class=" " data-id="chem.cr/Chem/Spatial/NotPeriodicError" data-name="chem::spatial::notperiodicerror">
       <a href="../../Chem/Spatial/NotPeriodicError.html">NotPeriodicError</a>
+      
+    </li>
+  
+  <li class=" current" data-id="chem.cr/Chem/Spatial/NumberTriple" data-name="chem::spatial::numbertriple">
+      <a href="../../Chem/Spatial/NumberTriple.html">NumberTriple</a>
       
     </li>
   
@@ -521,8 +526,8 @@
       
     </li>
   
-  <li class=" current" data-id="chem.cr/Chem/Spatial/Size" data-name="chem::spatial::size">
-      <a href="../../Chem/Spatial/Size.html">Size</a>
+  <li class=" " data-id="chem.cr/Chem/Spatial/Size3" data-name="chem::spatial::size3">
+      <a href="../../Chem/Spatial/Size3.html">Size3</a>
       
     </li>
   
@@ -805,17 +810,25 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">struct</span> Chem::Spatial::Size
+  <span class="kind">alias</span> Chem::Spatial::NumberTriple
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Chem/Spatial/Size.html">Chem::Spatial::Size</a></li><li class="superclass">Struct</li><li class="superclass">Value</li><li class="superclass">Object</li></ul>
 
 
 
 
 
+  <h2>
+    <a id="alias-definition" class="anchor" href="#alias-definition">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Alias Definition
+  </h2>
+  <code>{Float32 | Float64 | Int128 | Int16 | Int32 | Int64 | Int8 | UInt128 | UInt16 | UInt32 | UInt64 | UInt8, Float32 | Float64 | Int128 | Int16 | Int32 | Int64 | Int8 | UInt128 | UInt16 | UInt32 | UInt64 | UInt8, Float32 | Float64 | Int128 | Int16 | Int32 | Int64 | Int8 | UInt128 | UInt16 | UInt32 | UInt64 | UInt8}</code>
 
 
 
@@ -838,8 +851,8 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/size.cr#L2" target="_blank">
-        chem/spatial/size.cr
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial.cr#L19" target="_blank">
+        chem/spatial.cr
       </a>
     
     <br/>
@@ -849,92 +862,9 @@
 
 
 
-  <h2>
-    <a id="constructors" class="anchor" href="#constructors">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Constructors
-  </h2>
-  <ul class="list-summary">
-    
-      <li class="entry-summary">
-        <a href="#%5B%5D%28x%3AFloat64%2Cy%3AFloat64%2Cz%3AFloat64%29%3Aself-class-method" class="signature"><strong>.[]</strong>(x : Float64, y : Float64, z : Float64) : <span class="k">self</span></a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#new%28x%3AFloat64%2Cy%3AFloat64%2Cz%3AFloat64%29-class-method" class="signature"><strong>.new</strong>(x : Float64, y : Float64, z : Float64)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#zero%3Aself-class-method" class="signature"><strong>.zero</strong> : <span class="k">self</span></a>
-        
-      </li>
-    
-  </ul>
 
 
 
-
-
-  <h2>
-    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Instance Method Summary
-  </h2>
-  <ul class="list-summary">
-    
-      <li class="entry-summary">
-        <a href="#%2A%28rhs%3ANumber%29%3Aself-instance-method" class="signature"><strong>#*</strong>(rhs : Number) : <span class="k">self</span></a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#/%28rhs%3ANumber%29%3Aself-instance-method" class="signature"><strong>#/</strong>(rhs : Number) : <span class="k">self</span></a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#%5B%5D%28index%3AInt%29%3AFloat64-instance-method" class="signature"><strong>#[]</strong>(index : Int) : Float64</a>
-        
-          <div class="summary"><p>Returns the element at <em>index</em>.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#%5B%5D%3F%28index%3AInt%29%3AFloat64%3F-instance-method" class="signature"><strong>#[]?</strong>(index : Int) : Float64?</a>
-        
-          <div class="summary"><p>Returns the element at <em>index</em>.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#volume%3AFloat64-instance-method" class="signature"><strong>#volume</strong> : Float64</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#x%3AFloat64-instance-method" class="signature"><strong>#x</strong> : Float64</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#y%3AFloat64-instance-method" class="signature"><strong>#y</strong> : Float64</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#z%3AFloat64-instance-method" class="signature"><strong>#z</strong> : Float64</a>
-        
-      </li>
-    
-  </ul>
 
 
 
@@ -942,262 +872,12 @@
 
 <div class="methods-inherited">
   
-    
-
-
-    
-
-
-    
-
-
-  
-    
-
-
-    
-
-
-    
-
-
-  
-    
-
-
-    
-
-
-    
-
-
-  
 </div>
 
 
-  <h2>
-    <a id="constructor-detail" class="anchor" href="#constructor-detail">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Constructor Detail
-  </h2>
-  
-    <div class="entry-detail" id="[](x:Float64,y:Float64,z:Float64):self-class-method">
-      <div class="signature">
-        
-        def self.<strong>[]</strong>(x : Float64, y : Float64, z : Float64) : <span class="k">self</span>
-
-        <a class="method-permalink" href="#%5B%5D%28x%3AFloat64%2Cy%3AFloat64%2Cz%3AFloat64%29%3Aself-class-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/size.cr#L11" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="new(x:Float64,y:Float64,z:Float64)-class-method">
-      <div class="signature">
-        
-        def self.<strong>new</strong>(x : Float64, y : Float64, z : Float64)
-
-        <a class="method-permalink" href="#new%28x%3AFloat64%2Cy%3AFloat64%2Cz%3AFloat64%29-class-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/size.cr#L7" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="zero:self-class-method">
-      <div class="signature">
-        
-        def self.<strong>zero</strong> : <span class="k">self</span>
-
-        <a class="method-permalink" href="#zero%3Aself-class-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/size.cr#L15" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
 
 
 
-
-
-  <h2>
-    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Instance Method Detail
-  </h2>
-  
-    <div class="entry-detail" id="*(rhs:Number):self-instance-method">
-      <div class="signature">
-        
-        def <strong>*</strong>(rhs : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
-
-        <a class="method-permalink" href="#%2A%28rhs%3ANumber%29%3Aself-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/size.cr#L19" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="/(rhs:Number):self-instance-method">
-      <div class="signature">
-        
-        def <strong>/</strong>(rhs : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
-
-        <a class="method-permalink" href="#/%28rhs%3ANumber%29%3Aself-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/size.cr#L19" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="[](index:Int):Float64-instance-method">
-      <div class="signature">
-        
-        def <strong>[]</strong>(index : Int) : Float64
-
-        <a class="method-permalink" href="#%5B%5D%28index%3AInt%29%3AFloat64-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Returns the element at <em>index</em>. Raises <code>IndexError</code> if <em>index</em> is
-out of bounds.</p>
-<pre><code class="language-crystal">ary <span class="o">=</span> <span class="t">Size</span>[<span class="n">10</span>, <span class="n">15</span>, <span class="n">20</span>]
-ary[<span class="n">0</span>]  <span class="c"># =&gt; 10</span>
-ary[<span class="n">1</span>]  <span class="c"># =&gt; 15</span>
-ary[<span class="n">2</span>]  <span class="c"># =&gt; 20</span>
-ary[<span class="n">3</span>]  <span class="c"># raises IndexError</span>
-ary[<span class="n">-1</span>] <span class="c"># raises IndexError</span></code></pre>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/size.cr#L36" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="[]?(index:Int):Float64?-instance-method">
-      <div class="signature">
-        
-        def <strong>[]?</strong>(index : Int) : Float64?
-
-        <a class="method-permalink" href="#%5B%5D%3F%28index%3AInt%29%3AFloat64%3F-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Returns the element at <em>index</em>. Returns <code>nil</code> if <em>index</em> is out of
-bounds.</p>
-<pre><code class="language-crystal">ary <span class="o">=</span> <span class="t">Size</span>[<span class="n">10</span>, <span class="n">15</span>, <span class="n">20</span>]
-ary[<span class="n">0</span>]?  <span class="c"># =&gt; 10</span>
-ary[<span class="n">1</span>]?  <span class="c"># =&gt; 15</span>
-ary[<span class="n">2</span>]?  <span class="c"># =&gt; 20</span>
-ary[<span class="n">3</span>]?  <span class="c"># =&gt; nil</span>
-ary[<span class="n">-1</span>]? <span class="c"># =&gt; nil</span></code></pre>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/size.cr#L51" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="volume:Float64-instance-method">
-      <div class="signature">
-        
-        def <strong>volume</strong> : Float64
-
-        <a class="method-permalink" href="#volume%3AFloat64-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/size.cr#L59" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="x:Float64-instance-method">
-      <div class="signature">
-        
-        def <strong>x</strong> : Float64
-
-        <a class="method-permalink" href="#x%3AFloat64-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/size.cr#L3" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="y:Float64-instance-method">
-      <div class="signature">
-        
-        def <strong>y</strong> : Float64
-
-        <a class="method-permalink" href="#y%3AFloat64-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/size.cr#L4" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="z:Float64-instance-method">
-      <div class="signature">
-        
-        def <strong>z</strong> : Float64
-
-        <a class="method-permalink" href="#z%3AFloat64-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ef6c4b5985418d773533862b544b980cbd2017e/src/chem/spatial/size.cr#L5" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
 
 
 
