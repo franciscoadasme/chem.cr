@@ -149,10 +149,6 @@ module Chem::Spatial
       -self
     end
 
-    def inspect(io : IO)
-      io << "Vec3[" << @x << ", " << @y << ", " << @z << ']'
-    end
-
     # Returns a vector with the results of the component-wise mapping by
     # the given block. This is useful to perform non-standard
     # transformations.
@@ -267,8 +263,15 @@ module Chem::Spatial
       to_fractional lattice.basis
     end
 
-    def to_s(io : IO)
-      io << '[' << @x << ' ' << @y << ' ' << @z << ']'
+    def to_s(io : IO) : Nil
+      io << "Vec3[ "
+      {% for name, i in %w(x y z) %}
+        {% if i > 0 %}
+          io << (@{{name.id}} >= 0 ? "  " : ' ')
+        {% end %}
+        io.printf "%.{{PRINT_PRECISION}}g", @{{name.id}}
+      {% end %}
+      io << " ]"
     end
 
     # Returns the vector resulting of applying the given transformation.

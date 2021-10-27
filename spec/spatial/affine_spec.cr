@@ -103,18 +103,6 @@ describe Chem::Spatial::AffineTransform do
     end
   end
 
-  describe "#inspect" do
-    it "returns a string representation" do
-      expected = "AffineTransform[\
-        [2.0, 0.0, 0.0, 2.0], \
-        [0.0, 2.0, 0.0, 4.0], \
-        [0.0, 0.0, 2.0, 6.0], \
-        [0.0, 0.0, 0.0, 1.0]]"
-      transform = AffineTransform.translation(Vec3[1, 2, 3]).scale(2)
-      transform.inspect.should eq expected
-    end
-  end
-
   describe "#inv" do
     it "returns the inverse of the transformation" do
       transform = AffineTransform.scaling(2.41)
@@ -149,6 +137,18 @@ describe Chem::Spatial::AffineTransform do
       transform = transform.scale(*factors)
       transform.linear_map.should eq Mat3.diagonal(*factors)
       transform.offset.should eq offset * Vec3[*factors]
+    end
+  end
+
+  describe "#to_s" do
+    it "returns a string representation" do
+      expected = "[\
+        [ 5.551115e-16 -1.931852  0.5176381 -2.310789 ], \
+        [ 1.414214 -0.3660254 -1.366025 -3.415913 ], \
+        [ 1.414214  0.3660254  1.366025  6.244341 ], \
+        [0  0  0  1]]"
+      transform = AffineTransform.translation(Vec3[1, 2, 3]).scale(2).rotate(45, 15, 90)
+      transform.to_s.should eq expected
     end
   end
 

@@ -122,20 +122,6 @@ module Chem::Spatial
         @offset.close_to?(rhs.offset, delta)
     end
 
-    def inspect(io : IO)
-      io << "AffineTransform["
-      0.upto(2) do |i|
-        io << '['
-        0.upto(2) do |j|
-          @linear_map[i, j].format io, decimal_places: PRINT_PRECISION, only_significant: true
-          io << ',' << ' '
-        end
-        @offset[i].format io, decimal_places: PRINT_PRECISION, only_significant: true
-        io << "], "
-      end
-      io << "[0.0, 0.0, 0.0, 1.0]]"
-    end
-
     # Returns the inverse transformation.
     #
     # The algorithm exploits the fact that when a matrix looks like this
@@ -191,6 +177,23 @@ module Chem::Spatial
       linear_map = @linear_map * {sx, sy, sz}
       offset = @offset * Vec3[sx, sy, sz]
       AffineTransform.new linear_map, offset
+    end
+
+    def to_s(io : IO) : Nil
+      format_spec = "%.#{PRINT_PRECISION}g"
+      io << "["
+      0.upto(2) do |i|
+        io << "[ "
+        0.upto(2) do |j|
+          io << (@linear_map[i, j] >= 0 ? "  " : ' ') if j > 0
+          io.printf format_spec, @linear_map[i, j]
+        end
+        io << (@offset[i] >= 0 ? "  " : ' ')
+        io.printf format_spec, @offset[i]
+        io << " ]"
+        io << ", " if i < 2
+      end
+      io << ", [0  0  0  1]]"
     end
 
     # Returns the transformation translated by *offset*.

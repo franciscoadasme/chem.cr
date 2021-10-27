@@ -18,6 +18,9 @@ module Chem::Spatial
   alias FloatTriple = Tuple(Float64, Float64, Float64)
   alias NumberTriple = Tuple(Number::Primitive, Number::Primitive, Number::Primitive)
 
+  # :nodoc:
+  PRINT_PRECISION = 7
+
   class Error < Exception; end
 
   class NotPeriodicError < Error

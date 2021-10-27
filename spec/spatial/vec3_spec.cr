@@ -155,12 +155,6 @@ describe Chem::Spatial::Vec3 do
     end
   end
 
-  describe "#inspect" do
-    it "returns a delimited string representation of a vector" do
-      Vec3[2.5, 1, 8.4].inspect.should eq "Vec3[2.5, 1.0, 8.4]"
-    end
-  end
-
   describe "#map" do
     it "returns the element-wise map operation of the vector" do
       Vec3[-5, 1, 0].map(&.**(2)).should eq Vec3[25, 1, 0]
@@ -249,8 +243,9 @@ describe Chem::Spatial::Vec3 do
   end
 
   describe "#to_s" do
-    it "returns a string representation of a vector" do
-      Vec3[2.5, 1, 8.4].to_s.should eq "[2.5 1.0 8.4]"
+    it "returns a string representation" do
+      expected = "Vec3[ 1.253224 -23125  2.13e-05 ]"
+      Vec3[1.25322376, -23125, 0.00002130000].to_s.should eq expected
     end
   end
 

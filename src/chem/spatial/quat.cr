@@ -234,10 +234,6 @@ module Chem::Spatial
       Vec3[@x, @y, @z]
     end
 
-    def inspect(io : IO) : Nil
-      io << "Quat[" << @w << ", " << @x << ", " << @y << ", " << @z << ']'
-    end
-
     # Returns the inverse of the quaternion.
     def inv : self
       conj / abs2
@@ -264,15 +260,14 @@ module Chem::Spatial
     end
 
     def to_s(io : IO) : Nil
-      io << "["
-      {% for var in %w(w x y z) %}
-        io << ' ' if @{{var.id}}.positive?
-        io << @{{var.id}}
-        {% if var != "z" %}
-          io << ' '
+      io << "Quat[ "
+      {% for name, i in %w(w x y z) %}
+        {% if i > 0 %}
+          io << (@{{name.id}} >= 0 ? "  " : ' ')
         {% end %}
+        io.printf "%.{{PRINT_PRECISION}}g", @{{name.id}}
       {% end %}
-      io << ']'
+      io << " ]"
     end
 
     # Returns `true` if the quaternion is a unit quaternion, else

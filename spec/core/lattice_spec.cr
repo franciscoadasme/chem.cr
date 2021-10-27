@@ -43,7 +43,7 @@ describe Chem::Lattice do
   describe "#inspect" do
     it "returns a delimited string representation" do
       lattice = Chem::Lattice.new Vec3[1, 2, 3], Vec3[4, 5, 6], Vec3[7, 8, 9]
-      lattice.inspect.should eq "<Lattice [1.0 2.0 3.0], [4.0 5.0 6.0], [7.0 8.0 9.0]>"
+      lattice.inspect.should eq "<Lattice Vec3[ 1  2  3 ], Vec3[ 4  5  6 ], Vec3[ 7  8  9 ]>"
     end
   end
 

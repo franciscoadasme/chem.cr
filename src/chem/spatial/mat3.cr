@@ -157,20 +157,6 @@ module Chem::Spatial
         self[0, 2] * self[1, 0] * self[2, 1] - self[0, 2] * self[1, 1] * self[2, 0]
     end
 
-    def inspect(io : IO)
-      io << "Mat3["
-      0.upto(2) do |i|
-        io << '['
-        0.upto(2) do |j|
-          self[i, j].format io, decimal_places: 3, only_significant: true
-          io << ", " if j < 2
-        end
-        io << ']'
-        io << ", " if i < 2
-      end
-      io << ']'
-    end
-
     # Returns the inverse matrix. Raises `ArgumentError` if the matrix
     # is not invertible.
     #
@@ -198,6 +184,21 @@ module Chem::Spatial
           (self[0, 0] * self[1, 1] - self[1, 0] * self[0, 1]) * inv_det,
         },
       ]
+    end
+
+    def to_s(io : IO) : Nil
+      format_spec = "%.#{PRINT_PRECISION}g"
+      io << "["
+      0.upto(2) do |i|
+        io << "[ "
+        0.upto(2) do |j|
+          io << (self[i, j] >= 0 ? "  " : ' ') if j > 0
+          io.printf format_spec, self[i, j]
+        end
+        io << " ]"
+        io << ", " if i < 2
+      end
+      io << ']'
     end
   end
 end

@@ -140,22 +140,22 @@ describe Mat3 do
     end
   end
 
-  describe "#inspect" do
-    it "returns a string representation" do
-      expected = "Mat3[\
-        [1.0, 2.0, 3.0], \
-        [4.0, 5.0, 6.0], \
-        [7.0, 8.0, 9.0]]"
-      transform = Mat3[{1, 2, 3}, {4, 5, 6}, {7, 8, 9}]
-      transform.inspect.should eq expected
-    end
-  end
-
   describe "#inv" do
     it "returns the inverse of the matrix" do
       mat = Mat3[{1, 1, 0}, {4, 9, 2}, {11, 4, 3}]
       (mat * mat.inv).should be_close Mat3.identity, 1e-15
       (mat.inv * mat).should be_close Mat3.identity, 1e-15
+    end
+  end
+
+  describe "#to_s" do
+    it "returns a string representation" do
+      expected = "\
+        [[ 1 -2 -3 ], \
+         [ 4.3e-05  5.23 -66326.3 ], \
+         [ 7.1 -80.23  0.09 ]]"
+      transform = Mat3[{1, -2, -3}, {4.3e-5, 5.23, -66326.3}, {7.1, -80.23, 9e-2}]
+      transform.to_s.should eq expected
     end
   end
 end

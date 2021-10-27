@@ -163,6 +163,13 @@ describe Chem::Spatial::Quat do
     end
   end
 
+  describe "#to_s" do
+    it "returns a string representation" do
+      expected = "Quat[ 1.253223 -2  1235  2.13e-06 ]"
+      Quat[1.25322346, -2, 1235, 0.000002130000].to_s.should eq expected
+    end
+  end
+
   describe "#unit?" do
     it "returns true for a unit quaternion" do
       Quat[0, 1, 1, 0].normalize.unit?.should be_true
