@@ -45,15 +45,21 @@ describe Mat3 do
   describe "#[]" do
     it "returns the given row" do
       mat = Mat3[{1, 2, 3}, {4, 5, 6}, {7, 8, 9}]
-      mat[0].should eq({1, 2, 3})
-      mat[1].should eq({4, 5, 6})
-      mat[2].should eq({7, 8, 9})
+      mat[0, ..].should eq({1, 2, 3})
+      mat[1, ..].should eq({4, 5, 6})
+      mat[2, ..].should eq({7, 8, 9})
+    end
+
+    it "returns the given column" do
+      mat = Mat3[{1, 2, 3}, {4, 5, 6}, {7, 8, 9}]
+      mat[.., 0].should eq({1, 4, 7})
+      mat[.., 1].should eq({2, 5, 8})
+      mat[.., 2].should eq({3, 6, 9})
     end
 
     it "raises if index is out of bounds" do
-      expect_raises IndexError do
-        Mat3.zero[3]
-      end
+      expect_raises(IndexError) { Mat3.zero[3, ..] }
+      expect_raises(IndexError) { Mat3.zero[.., 20] }
     end
 
     it "returns the given element" do

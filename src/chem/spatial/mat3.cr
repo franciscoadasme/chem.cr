@@ -69,16 +69,22 @@ module Chem::Spatial
       ]
     end
 
-    # Returns the row at *index*. Raises `IndexError` if *index* is out
+    # Returns the row at *row*. Raises `IndexError` if *row* is out of
+    # bounds.
+    def [](row : Int, cols : Range(Nil, Nil)) : FloatTriple
+      @buffer[row]
+    end
+
+    # Returns the column at *col*. Raises `IndexError` if *col* is out
     # of bounds.
-    def [](index : Int) : FloatTriple
-      @buffer[index]
+    def [](rows : Range(Nil, Nil), col : Int) : FloatTriple
+      {self[0, col], self[1, col], self[2, col]}
     end
 
     # Returns the element at row *i* and column *j*. Raises `IndexError`
     # if indices are out of bounds.
     def [](i : Int, j : Int) : Float64
-      self[i][j]
+      @buffer[i][j]
     end
 
     # Returns the negation of the matrix.
