@@ -6,6 +6,23 @@ abstract struct Number
     other * self
   end
 
+  # Returns `true` if numbers are within *delta* from each other, else
+  # `false`.
+  #
+  # ```
+  # 1.0.close_to?(1.0)                          # => true
+  # 1.0_f32.close_to?(1.0)                      # => true
+  # 1.0.close_to?(1.0 + Float64::EPSILON)       # => true
+  # 1.0_f32.close_to?(1.0 + Float32::EPSILON)   # => true
+  # 1.0.close_to?(1.0005, 1e-3)                 # => true
+  # 1.0.close_to?(1.0 + Float64::EPSILON*2)     # => false
+  # 1.0_f32.close_to?(1.0 + Float32::EPSILON*2) # => false
+  # 1.0.close_to?(1.01, 1e-3)                   # => false
+  # ```
+  def close_to?(rhs : Number, delta : Number = 0) : Bool
+    (self - rhs).abs <= delta
+  end
+
   def degree
     degrees
   end
