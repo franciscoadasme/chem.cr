@@ -208,7 +208,7 @@ module Chem::Spatial
     def wrap(lattice : Lattice, around center : Vec3? = nil) : self
       center ||= lattice.bounds.center
 
-      if lattice.cuboid?
+      if lattice.orthogonal?
         vecs = {lattice.i, lattice.j, lattice.k}
         normed_vecs = vecs.map &.normalize
         map! do |vec|

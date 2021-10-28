@@ -141,7 +141,7 @@ describe Chem::Spatial::Vec3 do
 
   describe "#image" do
     it "returns vector's pbc image" do
-      lat = Lattice.new Size3[8.77, 9.5, 24.74], 88.22, 80, 70.34
+      lat = Lattice.new({8.77, 9.5, 24.74}, {88.22, 80, 70.34})
       vec = Vec3[8.745528, 6.330571, 1.334073]
       vec.image(lat, 1, 0, 0).should be_close Vec3[17.515528, 6.330571, 1.334073], 1e-6
       vec.image(lat, -1, 0, 0).should be_close Vec3[-0.024472, 6.330571, 1.334073], 1e-6
@@ -277,7 +277,7 @@ describe Chem::Spatial::Vec3 do
     end
 
     it "wraps a Cartesian vector" do
-      lattice = Chem::Lattice.new Size3[15, 20, 9]
+      lattice = Chem::Lattice.new({15, 20, 9})
 
       Vec3[0, 0, 0].wrap(lattice).should eq Vec3[0, 0, 0]
       Vec3[15, 20, 9].wrap(lattice).should be_close Vec3[15, 20, 9], 1e-12
@@ -286,7 +286,7 @@ describe Chem::Spatial::Vec3 do
     end
 
     it "wraps a Cartesian vector around a center" do
-      lattice = Chem::Lattice.new Size3[32, 20, 19]
+      lattice = Chem::Lattice.new({32, 20, 19})
       center = Vec3[32, 20, 19]
 
       [

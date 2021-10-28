@@ -67,11 +67,19 @@ module Chem::Mol2
             end
           when "@<TRIPOS>CRYSIN"
             @pull.next_line
-            size = Spatial::Size3.new(@pull.next_f, @pull.next_f, @pull.next_f)
+            x = @pull.next_f
+            @pull.error "Invalid size" unless x > 0
+            y = @pull.next_f
+            @pull.error "Invalid size" unless y > 0
+            z = @pull.next_f
+            @pull.error "Invalid size" unless z > 0
             alpha = @pull.next_f
+            @pull.error "Invalid angle" unless 0 < alpha <= 180
             beta = @pull.next_f
+            @pull.error "Invalid angle" unless 0 < beta <= 180
             gamma = @pull.next_f
-            builder.lattice Lattice.new(size, alpha, beta, gamma)
+            @pull.error "Invalid angle" unless 0 < gamma <= 180
+            builder.lattice Lattice.new({x, y, z}, {alpha, beta, gamma})
           when "@<TRIPOS>MOLECULE"
             break
           end

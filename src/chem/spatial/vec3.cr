@@ -248,7 +248,7 @@ module Chem::Spatial
     # Returns a vector in Cartesian coordinates relative to *lattice*.
     # The vector is assumed to be expressed in fractional coordinates.
     def to_cartesian(lattice : Lattice) : self
-      to_cartesian lattice.basis
+      lattice.cart self
     end
 
     # Returns a vector in fractional coordinates relative to *basis*.
@@ -260,7 +260,7 @@ module Chem::Spatial
     # Returns a vector in fractional coordinates relative to *lattice*.
     # The vector is assumed to be expressed in Cartesian coordinates.
     def to_fractional(lattice : Lattice) : self
-      to_fractional lattice.basis
+      lattice.fract self
     end
 
     def to_s(io : IO) : Nil

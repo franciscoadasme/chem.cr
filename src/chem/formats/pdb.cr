@@ -110,7 +110,7 @@ module Chem::PDB
           gamma = @pull.at(47, 7).float
           @pull.error "Invalid angle" unless 0 < gamma <= 180
           unless x == 1 && y == 1 && z == 1 && alpha == 90 && beta == 90 && gamma == 90
-            @pdb_lattice = Lattice.new Spatial::Size3.new(x, y, z), alpha, beta, gamma
+            @pdb_lattice = Lattice.new({x, y, z}, {alpha, beta, gamma})
           end
         when "EXPDTA"
           str = @pull.at(10, 70).str.split(';')[0].delete "- "
@@ -364,7 +364,7 @@ module Chem::PDB
       if obj.is_a?(Structure)
         if (cell = obj.lattice) && (!cell.i.normalize.x? || !cell.j.normalize.xy?)
           # compute the cell aligned to the xy-plane
-          ref = Lattice.new cell.size, cell.alpha, cell.beta, cell.gamma
+          ref = Lattice.new cell.size, {cell.alpha, cell.beta, cell.gamma}
           transform = Spatial::Quat.aligning({cell.i, cell.j}, to: {ref.i, ref.j})
           Log.warn do
             "Aligning unit cell to the XY plane for writing PDB. \

@@ -108,7 +108,7 @@ describe Chem::Structure do
   describe "#periodic?" do
     it "returns true when a structure has a lattice" do
       structure = Structure.new
-      structure.lattice = Lattice.new Size3[10, 20, 30]
+      structure.lattice = Lattice.new({10, 20, 30})
       structure.periodic?.should be_true
     end
 

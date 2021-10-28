@@ -15,7 +15,7 @@ module Chem::VASP
 
       @pull.next_line
       nx, ny, nz = @pull.next_i, @pull.next_i, @pull.next_i
-      bounds = Spatial::Bounds.new Spatial::Vec3.zero, lattice.basis
+      bounds = Spatial::Bounds.new Spatial::Vec3.zero, Spatial::Basis.new(lattice.i, lattice.j, lattice.k)
       Spatial::Grid::Info.new bounds, {nx, ny, nz}
     end
 
