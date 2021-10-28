@@ -14,6 +14,16 @@ describe Mat3 do
     end
   end
 
+  describe ".basis" do
+    it "returns a basis matrix" do
+      Mat3.basis(Vec3[1, 2, 3], Vec3[4, 5, 6], Vec3[7, 8, 9]).should eq Mat3[
+        {1, 4, 7},
+        {2, 5, 8},
+        {3, 6, 9},
+      ]
+    end
+  end
+
   describe ".identity" do
     it "returns the identity matrix" do
       Mat3.identity.should eq Mat3[{1, 0, 0}, {0, 1, 0}, {0, 0, 1}]

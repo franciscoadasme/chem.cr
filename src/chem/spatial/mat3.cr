@@ -20,6 +20,16 @@ module Chem::Spatial
       self.zero
     end
 
+    # Returns a matrix in column-major order representing the basis
+    # defined by the basis vectors.
+    def self.basis(i : Vec3, j : Vec3, k : Vec3) : Spatial::Mat3
+      Mat3[
+        {i[0], j[0], k[0]},
+        {i[1], j[1], k[1]},
+        {i[2], j[2], k[2]},
+      ]
+    end
+
     # Returns a new matrix with the diagonal set to *value*.
     def self.diagonal(value : Number) : self
       diagonal value, value, value
