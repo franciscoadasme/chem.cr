@@ -50,7 +50,7 @@ module Chem::Gen
         vk = Spatial::Vec3.new @pull.next_f, @pull.next_f, @pull.next_f
         @pull.next_line
         structure.lattice = Lattice.new vi, vj, vk
-        structure.coords.to_cartesian! if fractional
+        structure.coords.to_cart! if fractional
       end
 
       structure
@@ -79,7 +79,7 @@ module Chem::Gen
       obj.each_atom.with_index do |atom, i|
         ele = ele_table[atom.element] + 1
         vec = atom.coords
-        vec = vec.to_fractional lattice.not_nil! if @fractional
+        vec = vec.to_fract lattice.not_nil! if @fractional
         @io.printf "%5d%2s%20.10E%20.10E%20.10E\n", i + 1, ele, vec.x, vec.y, vec.z
       end
 

@@ -20,14 +20,14 @@ module Chem::Spatial::PBC
   def each_adjacent_image(atoms : AtomCollection,
                           lattice : Lattice,
                           &block : Atom, Vec3 ->)
-    offset = (lattice.bounds.center - atoms.coords.center).to_fractional lattice
+    offset = (lattice.bounds.center - atoms.coords.center).to_fract lattice
     atoms.each_atom do |atom|
-      fcoords = atom.coords.to_fractional lattice                     # convert to fractional coords
+      fcoords = atom.coords.to_fract lattice                          # convert to fractional coords
       w_fcoords = fcoords - fcoords.map(&.floor)                      # wrap to primary unit cell
       ax_offset = (fcoords + offset).map { |ele| ele < 0.5 ? 1 : -1 } # compute offset per axis
 
       ADJACENT_IMAGE_IDXS.each do |img_idx|
-        yield atom, (fcoords + ax_offset * Vec3[*img_idx]).to_cartesian(lattice)
+        yield atom, (fcoords + ax_offset * Vec3[*img_idx]).to_cart(lattice)
       end
     end
   end
@@ -49,28 +49,28 @@ module Chem::Spatial::PBC
     paddings = cell_paddings lattice, radius
 
     atoms.each_atom do |atom|
-      vec = atom.coords.to_fractional(lattice) + offset
+      vec = atom.coords.to_fract(lattice) + offset
       extents = padded_cell_extents vec, paddings
       img_sense = vec.map { |ele| ele < 0.5 ? 1 : -1 }
 
       ADJACENT_IMAGE_IDXS.each do |img_idx|
         img_vec = vec + Vec3[*img_idx] * img_sense
         if (0..2).all? { |i| img_vec[i].in? extents[i] }
-          yield atom, (img_vec - offset).to_cartesian(lattice)
+          yield atom, (img_vec - offset).to_cart(lattice)
         end
       end
     end
   end
 
   def unwrap(atoms : AtomCollection, lattice : Lattice) : Nil
-    atoms.coords.to_fractional!
+    atoms.coords.to_fract!
     moved_atoms = Set(Atom).new
     atoms.each_fragment do |fragment|
       assemble_fragment fragment[0], fragment[0].coords, moved_atoms
       fragment.coords.translate! by: -fragment.coords.center.map(&.floor)
       moved_atoms.clear
     end
-    atoms.coords.to_cartesian!
+    atoms.coords.to_cart!
   end
 
   private def assemble_fragment(atom, center, moved_atoms) : Nil
@@ -99,7 +99,7 @@ module Chem::Spatial::PBC
     bounds = atoms.coords.bounds
     wrapped = lattice.bounds.includes?(bounds)
     offset = wrapped ? Vec3.zero : (lattice.bounds.center - bounds.center)
-    offset.to_fractional(lattice)
+    offset.to_fract(lattice)
   end
 
   # Returns padded primary unit cell extents. If *vec* is outside the

@@ -118,7 +118,7 @@ module Chem::Spatial
     def each(fractional : Bool = false, &block : Vec3 ->)
       if fractional
         raise NotPeriodicError.new unless lattice = @lattice
-        @atoms.each_atom { |atom| yield atom.coords.to_fractional lattice }
+        @atoms.each_atom { |atom| yield atom.coords.to_fract lattice }
       else
         @atoms.each_atom { |atom| yield atom.coords }
       end
@@ -142,7 +142,7 @@ module Chem::Spatial
       if fractional
         raise NotPeriodicError.new unless lattice = @lattice
         @atoms.each_atom do |atom|
-          atom.coords = (yield atom.coords.to_fractional(lattice)).to_cartesian lattice
+          atom.coords = (yield atom.coords.to_fract(lattice)).to_cart lattice
         end
       else
         @atoms.each_atom { |atom| atom.coords = yield atom.coords }
@@ -190,14 +190,14 @@ module Chem::Spatial
       ary
     end
 
-    def to_cartesian! : self
+    def to_cart! : self
       raise NotPeriodicError.new unless lattice = @lattice
-      map! &.to_cartesian(lattice)
+      map! &.to_cart(lattice)
     end
 
-    def to_fractional! : self
+    def to_fract! : self
       raise NotPeriodicError.new unless lattice = @lattice
-      map! &.to_fractional(lattice)
+      map! &.to_fract(lattice)
     end
 
     def wrap(around center : Vec3? = nil) : self
@@ -220,7 +220,7 @@ module Chem::Spatial
           vec
         end
       else
-        offset = center.to_fractional(lattice) - Vec3[0.5, 0.5, 0.5]
+        offset = center.to_fract(lattice) - Vec3[0.5, 0.5, 0.5]
         map!(fractional: true) { |vec| vec - (vec - offset).map(&.floor) }
       end
 
@@ -239,7 +239,7 @@ module Chem::Spatial
 
       def next : Vec3 | Iterator::Stop
         atom = wrapped_next
-        atom.coords.to_fractional @lattice
+        atom.coords.to_fract @lattice
       end
     end
   end

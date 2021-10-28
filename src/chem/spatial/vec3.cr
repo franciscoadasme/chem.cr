@@ -241,25 +241,25 @@ module Chem::Spatial
 
     # Returns a vector in Cartesian coordinates relative to *basis*. The
     # vector is assumed to be expressed in fractional coordinates.
-    def to_cartesian(basis : Basis) : self
+    def to_cart(basis : Basis) : self
       @x * basis.i + @y * basis.j + @z * basis.k
     end
 
     # Returns a vector in Cartesian coordinates relative to *lattice*.
     # The vector is assumed to be expressed in fractional coordinates.
-    def to_cartesian(lattice : Lattice) : self
+    def to_cart(lattice : Lattice) : self
       lattice.cart self
     end
 
     # Returns a vector in fractional coordinates relative to *basis*.
     # The vector is assumed to be expressed in Cartesian coordinates.
-    def to_fractional(basis : Basis) : self
+    def to_fract(basis : Basis) : self
       basis.transform * self
     end
 
     # Returns a vector in fractional coordinates relative to *lattice*.
     # The vector is assumed to be expressed in Cartesian coordinates.
-    def to_fractional(lattice : Lattice) : self
+    def to_fract(lattice : Lattice) : self
       lattice.fract self
     end
 
@@ -301,14 +301,14 @@ module Chem::Spatial
     # Returns the vector by wrapping into *lattice*. The vector is
     # assumed to be expressed in Cartesian coordinates.
     def wrap(lattice : Lattice) : self
-      to_fractional(lattice).wrap.to_cartesian lattice
+      to_fract(lattice).wrap.to_cart lattice
     end
 
     # Returns the vector by wrapping into *lattice* centered at
     # *center*. The vector is assumed to be expressed in Cartesian
     # coordinates.
     def wrap(lattice : Lattice, around center : self) : self
-      to_fractional(lattice).wrap(center.to_fractional(lattice)).to_cartesian lattice
+      to_fract(lattice).wrap(center.to_fract(lattice)).to_cart lattice
     end
 
     # Returns `true` if the vector lies along X axis, else `false`.

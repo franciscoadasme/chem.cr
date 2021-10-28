@@ -213,32 +213,32 @@ describe Chem::Spatial::Vec3 do
     end
   end
 
-  describe "#to_cartesian" do
+  describe "#to_cart" do
     it "converts fractional to Cartesian coordinates" do
       basis = Basis.new Size3[20, 20, 16]
-      Vec3[0.5, 0.65, 1].to_cartesian(basis).should be_close Vec3[10, 13, 16], 1e-15
-      Vec3[1.5, 0.23, 0.9].to_cartesian(basis).should be_close Vec3[30, 4.6, 14.4], 1e-15
+      Vec3[0.5, 0.65, 1].to_cart(basis).should be_close Vec3[10, 13, 16], 1e-15
+      Vec3[1.5, 0.23, 0.9].to_cart(basis).should be_close Vec3[30, 4.6, 14.4], 1e-15
 
       basis = Basis.new Size3[20, 10, 16]
-      Vec3[0.5, 0.65, 1].to_cartesian(basis).should be_close Vec3[10, 6.5, 16], 1e-15
+      Vec3[0.5, 0.65, 1].to_cart(basis).should be_close Vec3[10, 6.5, 16], 1e-15
 
       basis = Basis.new(
         Vec3[8.497, 0.007, 0.031],
         Vec3[10.148, 42.359, 0.503],
         Vec3[7.296, 2.286, 53.093])
-      Vec3[0.724, 0.04, 0.209].to_cartesian(basis).should be_close Vec3[8.083, 2.177, 11.139], 1e-3
+      Vec3[0.724, 0.04, 0.209].to_cart(basis).should be_close Vec3[8.083, 2.177, 11.139], 1e-3
     end
   end
 
-  describe "#to_fractional" do
+  describe "#to_fract" do
     it "converts Cartesian to fractional coordinates" do
       basis = Basis.new Size3[10, 20, 30]
-      Vec3.zero.to_fractional(basis).should eq Vec3.zero
-      Vec3[1, 2, 3].to_fractional(basis).should be_close Vec3[0.1, 0.1, 0.1], 1e-15
-      Vec3[2, 3, 15].to_fractional(basis).should be_close Vec3[0.2, 0.15, 0.5], 1e-15
+      Vec3.zero.to_fract(basis).should eq Vec3.zero
+      Vec3[1, 2, 3].to_fract(basis).should be_close Vec3[0.1, 0.1, 0.1], 1e-15
+      Vec3[2, 3, 15].to_fract(basis).should be_close Vec3[0.2, 0.15, 0.5], 1e-15
 
       basis = Basis.new Size3[20, 20, 30]
-      Vec3[1, 2, 3].to_fractional(basis).should be_close Vec3[0.05, 0.1, 0.1], 1e-15
+      Vec3[1, 2, 3].to_fract(basis).should be_close Vec3[0.05, 0.1, 0.1], 1e-15
     end
   end
 

@@ -281,7 +281,7 @@ describe Chem::Spatial::CoordinatesProxy do
     end
   end
 
-  describe "#to_cartesian!" do
+  describe "#to_cart!" do
     it "transforms fractional coordinates to Cartesian" do
       structure = Chem::Structure.build do
         lattice 10, 20, 30
@@ -291,11 +291,11 @@ describe Chem::Spatial::CoordinatesProxy do
       end
 
       expected = [Vec3[2, 8, 18], Vec3[1, 4, 9], Vec3[6, 18, 10.5]]
-      structure.coords.to_cartesian!.should be_close expected, 1e-15
+      structure.coords.to_cart!.should be_close expected, 1e-15
     end
   end
 
-  describe "#to_fractional!" do
+  describe "#to_fract!" do
     it "transforms Cartesian coordinates to fractional" do
       structure = Chem::Structure.build do
         lattice 10, 20, 30
@@ -305,7 +305,7 @@ describe Chem::Spatial::CoordinatesProxy do
       end
 
       expected = [Vec3[0.1, 0.1, 0.1], Vec3[0.4, 0.25, 0.2], Vec3[0.7, 0.4, 0.3]]
-      structure.coords.to_fractional!.should be_close expected, 1e-15
+      structure.coords.to_fract!.should be_close expected, 1e-15
     end
   end
 

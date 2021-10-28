@@ -73,7 +73,7 @@ module Chem::VASP::Poscar
         builder.lattice lattice
         elements.each do |element|
           vec = Spatial::Vec3.new @pull.next_f, @pull.next_f, @pull.next_f
-          vec = fractional ? vec.to_cartesian(lattice) : vec * scale_factor
+          vec = fractional ? vec.to_cart(lattice) : vec * scale_factor
           atom = builder.atom element, vec
           if constrained
             case {read_flag, read_flag, read_flag}
@@ -133,7 +133,7 @@ module Chem::VASP::Poscar
         atoms.each.select(&.element.==(ele)).each do |atom|
           vec = atom.coords
           if @fractional
-            vec = vec.to_fractional lattice
+            vec = vec.to_fract lattice
             vec = vec.wrap if @wrap
           elsif @wrap
             vec = vec.wrap lattice

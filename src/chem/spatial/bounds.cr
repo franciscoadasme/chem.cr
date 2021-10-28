@@ -95,7 +95,7 @@ module Chem::Spatial
       if alpha == 90 && beta == 90 && gamma == 90 && i.y == 0 && i.z == 0
         0 <= vec.x <= a && 0 <= vec.y <= b && 0 <= vec.z <= c
       else
-        vec = vec.to_fractional(@basis).map &.round(Float64::DIGITS)
+        vec = vec.to_fract(@basis).map &.round(Float64::DIGITS)
         0 <= vec.x <= 1 && 0 <= vec.y <= 1 && 0 <= vec.z <= 1
       end
     end
