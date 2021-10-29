@@ -160,7 +160,7 @@ module Chem
     # Returns `true` if the lattice is a cube (cell lengths are equal
     # and cell angles are close to 90 degrees), else `false`.
     def cubic? : Bool
-      a.close_to?(b) && b.close_to?(c) && orthogonal?
+      a.close_to?(b, 1e-15) && b.close_to?(c, 1e-15) && orthogonal?
     end
 
     # Returns the vector in fractional coordinates equivalent to the
@@ -178,7 +178,10 @@ module Chem
     # Returns `true` if the lattice is hexagonal (*a* is equal to *b*
     # and cell angles are close to 90, 90, 120 degrees), else `false`.
     def hexagonal? : Bool
-      a.close_to?(b) && alpha.close_to?(90) && beta.close_to?(90) && gamma.close_to?(120)
+      a.close_to?(b, 1e-15) &&
+        alpha.close_to?(90, 1e-8) &&
+        beta.close_to?(90, 1e-8) &&
+        gamma.close_to?(120, 1e-8)
     end
 
     # The first basis vector.
@@ -222,19 +225,27 @@ module Chem
     # *c*, *alpha* and *gamma* are close to 90 degrees and *beta* is
     # different from 90 degrees), else `false`.
     def monoclinic? : Bool
-      !a.close_to?(c) && alpha.close_to?(90) && !beta.close_to?(90) && gamma.close_to?(90)
+      !a.close_to?(c, 1e-15) &&
+        alpha.close_to?(90, 1e-8) &&
+        !beta.close_to?(90, 1e-8) &&
+        gamma.close_to?(90, 1e-8)
     end
 
     # Returns `true` if the lattice is orthogonal (cell angles are close
     # to 90 degrees), else `false`.
     def orthogonal? : Bool
-      alpha.close_to?(90) && beta.close_to?(90) && gamma.close_to?(90)
+      alpha.close_to?(90, 1e-8) &&
+        beta.close_to?(90, 1e-8) &&
+        gamma.close_to?(90, 1e-8)
     end
 
     # Returns `true` if the lattice is orthorhombic (cell lengths are
     # not equal and cell angles are close to 90 degrees), else `false`.
     def orthorhombic? : Bool
-      !a.close_to?(b) && !a.close_to?(c) && !b.close_to?(c) && orthogonal?
+      !a.close_to?(b, 1e-15) &&
+        !a.close_to?(c, 1e-15) &&
+        !b.close_to?(c, 1e-15) &&
+        orthogonal?
     end
 
     # Returns the lengths of the basis vectors.
@@ -246,14 +257,14 @@ module Chem
     # but different than *c*, and cell angles are close to 90 degrees),
     # else `false`.
     def tetragonal? : Bool
-      a.close_to?(b) && !b.close_to?(c) && orthogonal?
+      a.close_to?(b, 1e-15) && !a.close_to?(c, 1e-15) && orthogonal?
     end
 
     # Returns `true` if the lattice is triclinic (cell lengths are
     # different and cell angles are different than 90 degrees), else
     # `false`.
     def triclinic? : Bool
-      !orthogonal? && !monoclinic? && !hexagonal?
+      !orthogonal? && !hexagonal? && !monoclinic? && !rhombohedral?
     end
 
     # Inverted matrix basis.
