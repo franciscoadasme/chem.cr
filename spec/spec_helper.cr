@@ -60,6 +60,14 @@ module Spec
         actual_value.j.close_to?(@expected_value.j, @delta) &&
         actual_value.k.close_to?(@expected_value.k, @delta)
     end
+
+    def match(actual_value : Indexable(Number::Primitive)) : Bool
+      return false unless @expected_value.is_a?(Indexable) &&
+                          @expected_value.size == actual_value.size
+      actual_value.zip(@expected_value).all? do |a, b|
+        a.close_to?(b, @delta)
+      end
+    end
   end
 end
 
