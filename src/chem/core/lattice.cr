@@ -55,6 +55,42 @@ module Chem
       Lattice.new(basis)
     end
 
+    # Returns a cubic lattice (*a* = *b* = *c* and *α* = *β* = *γ* =
+    # 90°).
+    def self.cubic(a : Number) : self
+      Lattice.new({a, a, a}, {90, 90, 90})
+    end
+
+    # Returns a hexagonal lattice (*a* = *b*, *α* = *β* = 90°, and *γ* =
+    # 120°).
+    def self.hexagonal(a : Number, c : Number) : self
+      Lattice.new({a, a, c}, {90, 90, 120})
+    end
+
+    # Returns a monoclinic lattice (*a* ≠ *c*, *α* = *γ* = 90°, and *β*
+    # ≠ 90°).
+    def self.monoclinic(a : Number, c : Number, beta : Number) : self
+      Lattice.new({a, a, c}, {90, beta, 90})
+    end
+
+    # Returns an orthorhombic lattice (*a* ≠ *b* ≠ *c* and *α* = *β* =
+    # *γ* = 90°).
+    def self.orthorhombic(a : Number, b : Number, c : Number) : self
+      Lattice.new({a, b, c}, {90, 90, 90})
+    end
+
+    # Returns an rhombohedral lattice (*a* = *b* = *c* and *α* = *β* =
+    # *γ* ≠ 90°).
+    def self.rhombohedral(a : Number, alpha : Number) : self
+      Lattice.new({a, a, a}, {alpha, alpha, alpha})
+    end
+
+    # Returns an tetragonal lattice (*a* = *b* ≠ *c* and *α* = *β* = *γ*
+    # = 90°).
+    def self.tetragonal(a : Number, c : Number) : self
+      Lattice.new({a, a, c}, {90, 90, 90})
+    end
+
     # Returns a lattice with the basis vectors multiplied by *value*.
     def *(value : Number) : self
       Lattice.new i * value, j * value, k * value
