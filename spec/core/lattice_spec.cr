@@ -337,4 +337,11 @@ describe Chem::Lattice do
       Lattice.new({1, 2, 3}, {85, 92, 132}).triclinic?.should be_true
     end
   end
+
+  describe "#volume" do
+    it "returns the cell volume" do
+      lattice = Lattice.hexagonal(10, 15)
+      lattice.volume.should be_close 1299.038105676658, 1e-12
+    end
+  end
 end

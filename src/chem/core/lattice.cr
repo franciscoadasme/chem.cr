@@ -274,6 +274,11 @@ module Chem
       !orthogonal? && !hexagonal? && !monoclinic? && !rhombohedral?
     end
 
+    # Returns the volume of the unit cell.
+    def volume : Float64
+      @basis.det
+    end
+
     # Inverted matrix basis.
     private def inv_basis : Spatial::Mat3
       @inv_basis ||= @basis.inv
