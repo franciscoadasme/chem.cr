@@ -22,7 +22,7 @@ module Chem::VASP::Poscar
       @pull.next_line
       vk = Spatial::Vec3.new @pull.next_f, @pull.next_f, @pull.next_f
       @pull.next_line
-      lattice = Lattice.new(vi, vj, vk) * scale_factor
+      lattice = Lattice.new(vi * scale_factor, vj * scale_factor, vk * scale_factor)
 
       # read species
       uniq_elements = [] of Element
