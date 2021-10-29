@@ -285,3 +285,51 @@ module Chem
     end
   end
 end
+
+struct Chem::Spatial::Vec3
+  # Returns vector's PBC image with respect to `lattice`
+  #
+  # ```
+  # lat = Lattice.new S[2, 2, 3], 90, 90, 120
+  # lat.i # => Vec3[2.0, 0.0, 0.0]
+  # lat.j # => Vec3[-1, 1.732, 0.0]
+  # lat.k # => Vec3[0.0, 0.0, 3.0]
+  #
+  # vec = Vec3[1, 1, 1.5]
+  # vec.image(lat, 1, 0, 0) # => Vec3[3.0, 1.0, 1.5]
+  # vec.image(lat, 0, 1, 0) # => Vec3[0.0, 2.732, 1.5]
+  # vec.image(lat, 0, 0, 1) # => Vec3[1.0, 1.0, 4.5]
+  # vec.image(lat, 1, 0, 1) # => Vec3[3.0, 1.0, 4.5]
+  # vec.image(lat, 1, 1, 1) # => Vec3[2.0, 2.732, 4.5]
+  # ```
+  def image(lattice : Lattice, i : Int, j : Int, k : Int) : self
+    self + lattice.i * i + lattice.j * j + lattice.k * k
+  end
+
+  # Returns a vector in Cartesian coordinates relative to *lattice*
+  # (see `Lattice#cart`). The vector is assumed to be expressed in
+  # fractional coordinates.
+  def to_cart(lattice : Lattice) : self
+    lattice.cart self
+  end
+
+  # Returns a vector in fractional coordinates relative to *lattice*
+  # (see `Lattice#fract`). The vector is assumed to be expressed in
+  # Cartesian coordinates.
+  def to_fract(lattice : Lattice) : self
+    lattice.fract self
+  end
+
+  # Returns the vector by wrapping into *lattice*. The vector is
+  # assumed to be expressed in Cartesian coordinates.
+  def wrap(lattice : Lattice) : self
+    to_fract(lattice).wrap.to_cart lattice
+  end
+
+  # Returns the vector by wrapping into *lattice* centered at
+  # *center*. The vector is assumed to be expressed in Cartesian
+  # coordinates.
+  def wrap(lattice : Lattice, around center : self) : self
+    to_fract(lattice).wrap(center.to_fract(lattice)).to_cart lattice
+  end
+end

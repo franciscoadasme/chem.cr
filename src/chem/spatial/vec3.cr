@@ -124,25 +124,6 @@ module Chem::Spatial
       self + Vec3[i, j, k]
     end
 
-    # Returns vector's PBC image with respect to `lattice`
-    #
-    # ```
-    # lat = Lattice.new S[2, 2, 3], 90, 90, 120
-    # lat.i # => Vec3[2.0, 0.0, 0.0]
-    # lat.j # => Vec3[-1, 1.732, 0.0]
-    # lat.k # => Vec3[0.0, 0.0, 3.0]
-    #
-    # vec = Vec3[1, 1, 1.5]
-    # vec.image(lat, 1, 0, 0) # => Vec3[3.0, 1.0, 1.5]
-    # vec.image(lat, 0, 1, 0) # => Vec3[0.0, 2.732, 1.5]
-    # vec.image(lat, 0, 0, 1) # => Vec3[1.0, 1.0, 4.5]
-    # vec.image(lat, 1, 0, 1) # => Vec3[3.0, 1.0, 4.5]
-    # vec.image(lat, 1, 1, 1) # => Vec3[2.0, 2.732, 4.5]
-    # ```
-    def image(lattice : Lattice, i : Int, j : Int, k : Int) : self
-      self + lattice.i * i + lattice.j * j + lattice.k * k
-    end
-
     # Returns the inverse of the vector. It is equivalent to the unary
     # negation operator.
     def inv : self
@@ -245,22 +226,10 @@ module Chem::Spatial
       @x * basis.i + @y * basis.j + @z * basis.k
     end
 
-    # Returns a vector in Cartesian coordinates relative to *lattice*.
-    # The vector is assumed to be expressed in fractional coordinates.
-    def to_cart(lattice : Lattice) : self
-      lattice.cart self
-    end
-
     # Returns a vector in fractional coordinates relative to *basis*.
     # The vector is assumed to be expressed in Cartesian coordinates.
     def to_fract(basis : Basis) : self
       basis.transform * self
-    end
-
-    # Returns a vector in fractional coordinates relative to *lattice*.
-    # The vector is assumed to be expressed in Cartesian coordinates.
-    def to_fract(lattice : Lattice) : self
-      lattice.fract self
     end
 
     def to_s(io : IO) : Nil
@@ -290,25 +259,12 @@ module Chem::Spatial
       self - map_with_index { |ele, i| ele == 1 ? 0 : ele.floor }
     end
 
-    # Returns the vector by wrapping into the unit cell centered at
-    # *center*. The vector is assumed to be expressed in fractional
+    # Returns the vector by wrapping into the primary unit cell centered
+    # at *center*. The vector is assumed to be expressed in fractional
     # coordinates.
     def wrap(around center : self) : self
       offset = self - (center - Vec3[0.5, 0.5, 0.5])
       self - offset.map_with_index { |ele, i| ele == 1 ? 0 : ele.floor }
-    end
-
-    # Returns the vector by wrapping into *lattice*. The vector is
-    # assumed to be expressed in Cartesian coordinates.
-    def wrap(lattice : Lattice) : self
-      to_fract(lattice).wrap.to_cart lattice
-    end
-
-    # Returns the vector by wrapping into *lattice* centered at
-    # *center*. The vector is assumed to be expressed in Cartesian
-    # coordinates.
-    def wrap(lattice : Lattice, around center : self) : self
-      to_fract(lattice).wrap(center.to_fract(lattice)).to_cart lattice
     end
 
     # Returns `true` if the vector lies along X axis, else `false`.
