@@ -157,8 +157,8 @@ module Chem
       @basis * vec
     end
 
-    # Returns `true` if the lattice is a cube (cell lengths are equal
-    # and cell angles are close to 90 degrees), else `false`.
+    # Returns `true` if the lattice is cubic (*a* = *b* = *c* and *α* =
+    # *β* = *γ* = 90°), else `false`.
     def cubic? : Bool
       a.close_to?(b, 1e-15) && b.close_to?(c, 1e-15) && orthogonal?
     end
@@ -175,8 +175,8 @@ module Chem
       Spatial.angle i, j
     end
 
-    # Returns `true` if the lattice is hexagonal (*a* is equal to *b*
-    # and cell angles are close to 90, 90, 120 degrees), else `false`.
+    # Returns `true` if the lattice is hexagonal (*a* = *b*, *α* = *β* =
+    # 90°, and *γ* = 120°), else `false`.
     def hexagonal? : Bool
       a.close_to?(b, 1e-15) &&
         alpha.close_to?(90, 1e-8) &&
@@ -221,9 +221,8 @@ module Chem
       vec
     end
 
-    # Returns `true` if the lattice is monoclinic (*a* is not equal to
-    # *c*, *alpha* and *gamma* are close to 90 degrees and *beta* is
-    # different from 90 degrees), else `false`.
+    # Returns `true` if the lattice is monoclinic (*a* ≠ *c*, *α* = *γ*
+    # = 90°, and *β* ≠ 90°), else `false`.
     def monoclinic? : Bool
       !a.close_to?(c, 1e-15) &&
         alpha.close_to?(90, 1e-8) &&
@@ -231,16 +230,16 @@ module Chem
         gamma.close_to?(90, 1e-8)
     end
 
-    # Returns `true` if the lattice is orthogonal (cell angles are close
-    # to 90 degrees), else `false`.
+    # Returns `true` if the lattice is orthogonal (*α* = *β* = *γ* =
+    # 90°), else `false`.
     def orthogonal? : Bool
       alpha.close_to?(90, 1e-8) &&
         beta.close_to?(90, 1e-8) &&
         gamma.close_to?(90, 1e-8)
     end
 
-    # Returns `true` if the lattice is orthorhombic (cell lengths are
-    # not equal and cell angles are close to 90 degrees), else `false`.
+    # Returns `true` if the lattice is orthorhombic (*a* ≠ *b* ≠ *c* and
+    # *α* = *β* = *γ* = 90°), else `false`.
     def orthorhombic? : Bool
       !a.close_to?(b, 1e-15) &&
         !a.close_to?(c, 1e-15) &&
@@ -253,16 +252,14 @@ module Chem
       Size3[a, b, c]
     end
 
-    # Returns `true` if the lattice is tetragonal (*a* is equal to *b*
-    # but different than *c*, and cell angles are close to 90 degrees),
-    # else `false`.
+    # Returns `true` if the lattice is tetragonal (*a* = *b* ≠ *c* and
+    # *α* = *β* = *γ* = 90°), else `false`.
     def tetragonal? : Bool
       a.close_to?(b, 1e-15) && !a.close_to?(c, 1e-15) && orthogonal?
     end
 
-    # Returns `true` if the lattice is triclinic (cell lengths are
-    # different and cell angles are different than 90 degrees), else
-    # `false`.
+    # Returns `true` if the lattice is triclinic (not orthogonal,
+    # hexagonal, monoclinic, nor rhombohedral), else `false`.
     def triclinic? : Bool
       !orthogonal? && !hexagonal? && !monoclinic? && !rhombohedral?
     end
