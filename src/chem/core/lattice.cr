@@ -247,6 +247,16 @@ module Chem
         orthogonal?
     end
 
+    # Returns `true` if the lattice is rhombohedral (*a* = *b* = *c* and
+    # *α* = *β* = *γ* ≠ 90°), else `false`.
+    def rhombohedral? : Bool
+      a.close_to?(b, 1e-15) &&
+        a.close_to?(c, 1e-15) &&
+        alpha.close_to?(beta, 1e-8) &&
+        alpha.close_to?(gamma, 1e-8) &&
+        !alpha.close_to?(90, 1e-8)
+    end
+
     # Returns the lengths of the basis vectors.
     def size : Size3
       Size3[a, b, c]

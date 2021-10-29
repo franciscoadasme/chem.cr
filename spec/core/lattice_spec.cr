@@ -294,6 +294,18 @@ describe Chem::Lattice do
     end
   end
 
+  describe "#rhombohedral?" do
+    it "tells if lattice is rhombohedral" do
+      Lattice.cubic(1).rhombohedral?.should be_false
+      Lattice.hexagonal(1, 3).rhombohedral?.should be_false
+      Lattice.monoclinic(1, 3, 120).rhombohedral?.should be_false
+      Lattice.orthorhombic(1, 2, 3).rhombohedral?.should be_false
+      Lattice.rhombohedral(1, 120).rhombohedral?.should be_true
+      Lattice.tetragonal(1, 2).rhombohedral?.should be_false
+      Lattice.new({1, 2, 3}, {85, 92, 132}).rhombohedral?.should be_false
+    end
+  end
+
   describe "#size" do
     it "returns lattice' size" do
       Lattice.hexagonal(5, 4).size.should be_close Size3[5, 5, 4], 1e-15
