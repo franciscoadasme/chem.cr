@@ -441,11 +441,6 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Basis" data-name="chem::spatial::basis">
-      <a href="../../Chem/Spatial/Basis.html">Basis</a>
-      
-    </li>
-  
   <li class=" current" data-id="chem.cr/Chem/Spatial/Bounds" data-name="chem::spatial::bounds">
       <a href="../../Chem/Spatial/Bounds.html">Bounds</a>
       
@@ -843,7 +838,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L2" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/bounds.cr#L2" target="_blank">
         chem/spatial/bounds.cr
       </a>
     
@@ -870,27 +865,12 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#new%28origin%3AVec3%2Cbasis%3ABasis%29-class-method" class="signature"><strong>.new</strong>(origin : Vec3, basis : Basis)</a>
+        <a href="#new%28origin%3AVec3%2Cbasis%3AMat3%29-class-method" class="signature"><strong>.new</strong>(origin : Vec3, basis : Mat3)</a>
         
       </li>
     
       <li class="entry-summary">
         <a href="#new%28vmin%3AVec3%2Cvmax%3AVec3%29%3Aself-class-method" class="signature"><strong>.new</strong>(vmin : Vec3, vmax : Vec3) : <span class="k">self</span></a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#new%28origin%3AVec3%2C%2Aargs%2C%2A%2Aoptions%29%3Aself-class-method" class="signature"><strong>.new</strong>(origin : Vec3, *args, **options) : <span class="k">self</span></a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#new%28%2Aargs%2C%2A%2Aoptions%29%3Aself-class-method" class="signature"><strong>.new</strong>(*args, **options) : <span class="k">self</span></a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#zero%3Aself-class-method" class="signature"><strong>.zero</strong> : <span class="k">self</span></a>
         
       </li>
     
@@ -911,77 +891,12 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#%2B%28rhs%3AVec3%29%3Aself-instance-method" class="signature"><strong>#+</strong>(rhs : Vec3) : <span class="k">self</span></a>
+        <a href="#basis%3AMat3-instance-method" class="signature"><strong>#basis</strong> : Mat3</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#-%28rhs%3AVec3%29%3Aself-instance-method" class="signature"><strong>#-</strong>(rhs : Vec3) : <span class="k">self</span></a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#a%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#a</strong>(*args, **options)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#a%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#a</strong>(*args, **options, &)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#alpha%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#alpha</strong>(*args, **options)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#alpha%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#alpha</strong>(*args, **options, &)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#angles%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#angles</strong>(*args, **options)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#angles%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#angles</strong>(*args, **options, &)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#b%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#b</strong>(*args, **options)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#b%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#b</strong>(*args, **options, &)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#basis%3ABasis-instance-method" class="signature"><strong>#basis</strong> : Basis</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#beta%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#beta</strong>(*args, **options)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#beta%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#beta</strong>(*args, **options, &)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#c%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#c</strong>(*args, **options)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#c%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#c</strong>(*args, **options, &)</a>
+        <a href="#basisvec%3ATuple%28Vec3%2CVec3%2CVec3%29-instance-method" class="signature"><strong>#basisvec</strong> : Tuple(Vec3, Vec3, Vec3)</a>
         
       </li>
     
@@ -991,29 +906,14 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#close_to%3F%28rhs%3Aself%2Cdelta%3ANumber%3DFloat64%3A%3AEPSILON%29%3ABool-instance-method" class="signature"><strong>#close_to?</strong>(rhs : <span class="k">self</span>, delta : Number = <span class="t">Float64</span><span class="t">::</span><span class="t">EPSILON</span>) : Bool</a>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#each_vertex%28%26%3AVec3-%3E%29%3ANil-instance-method" class="signature"><strong>#each_vertex</strong>(& : Vec3 -> ) : Nil</a>
         
           <div class="summary"><p>Yields bounds' vertices.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#gamma%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#gamma</strong>(*args, **options)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#gamma%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#gamma</strong>(*args, **options, &)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#i%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#i</strong>(*args, **options)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#i%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#i</strong>(*args, **options, &)</a>
         
       </li>
     
@@ -1026,26 +926,6 @@
     
       <li class="entry-summary">
         <a href="#includes%3F%28vec%3AVec3%29%3ABool-instance-method" class="signature"><strong>#includes?</strong>(vec : Vec3) : Bool</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#j%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#j</strong>(*args, **options)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#j%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#j</strong>(*args, **options, &)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#k%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#k</strong>(*args, **options)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#k%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#k</strong>(*args, **options, &)</a>
         
       </li>
     
@@ -1076,12 +956,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#size%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#size</strong>(*args, **options)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#size%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#size</strong>(*args, **options, &)</a>
+        <a href="#size%3ASize3-instance-method" class="signature"><strong>#size</strong> : Size3</a>
         
       </li>
     
@@ -1165,23 +1040,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L26" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/bounds.cr#L21" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="new(origin:Vec3,basis:Basis)-class-method">
+    <div class="entry-detail" id="new(origin:Vec3,basis:Mat3)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(origin : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, basis : <a href="../../Chem/Spatial/Basis.html">Basis</a>)
+        def self.<strong>new</strong>(origin : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, basis : <a href="../../Chem/Spatial/Mat3.html">Mat3</a>)
 
-        <a class="method-permalink" href="#new%28origin%3AVec3%2Cbasis%3ABasis%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28origin%3AVec3%2Cbasis%3AMat3%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/bounds.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1197,55 +1072,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L19" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="new(origin:Vec3,*args,**options):self-class-method">
-      <div class="signature">
-        
-        def self.<strong>new</strong>(origin : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, *args, **options) : <span class="k">self</span>
-
-        <a class="method-permalink" href="#new%28origin%3AVec3%2C%2Aargs%2C%2A%2Aoptions%29%3Aself-class-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L11" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="new(*args,**options):self-class-method">
-      <div class="signature">
-        
-        def self.<strong>new</strong>(*args, **options) : <span class="k">self</span>
-
-        <a class="method-permalink" href="#new%28%2Aargs%2C%2A%2Aoptions%29%3Aself-class-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L15" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="zero:self-class-method">
-      <div class="signature">
-        
-        def self.<strong>zero</strong> : <span class="k">self</span>
-
-        <a class="method-permalink" href="#zero%3Aself-class-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L30" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/bounds.cr#L12" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1264,242 +1091,34 @@
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="+(rhs:Vec3):self-instance-method">
+    <div class="entry-detail" id="basis:Mat3-instance-method">
       <div class="signature">
         
-        def <strong>+</strong>(rhs : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <span class="k">self</span>
+        def <strong>basis</strong> : <a href="../../Chem/Spatial/Mat3.html">Mat3</a>
 
-        <a class="method-permalink" href="#%2B%28rhs%3AVec3%29%3Aself-instance-method">#</a>
+        <a class="method-permalink" href="#basis%3AMat3-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L34" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/bounds.cr#L3" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="-(rhs:Vec3):self-instance-method">
+    <div class="entry-detail" id="basisvec:Tuple(Vec3,Vec3,Vec3)-instance-method">
       <div class="signature">
         
-        def <strong>-</strong>(rhs : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <span class="k">self</span>
+        def <strong>basisvec</strong> : Tuple(<a href="../../Chem/Spatial/Vec3.html">Vec3</a>, <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, <a href="../../Chem/Spatial/Vec3.html">Vec3</a>)
 
-        <a class="method-permalink" href="#-%28rhs%3AVec3%29%3Aself-instance-method">#</a>
+        <a class="method-permalink" href="#basisvec%3ATuple%28Vec3%2CVec3%2CVec3%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L34" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="a(*args,**options)-instance-method">
-      <div class="signature">
-        
-        def <strong>a</strong>(*args, **options)
-
-        <a class="method-permalink" href="#a%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="a(*args,**options,&amp;)-instance-method">
-      <div class="signature">
-        
-        def <strong>a</strong>(*args, **options, &)
-
-        <a class="method-permalink" href="#a%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="alpha(*args,**options)-instance-method">
-      <div class="signature">
-        
-        def <strong>alpha</strong>(*args, **options)
-
-        <a class="method-permalink" href="#alpha%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="alpha(*args,**options,&amp;)-instance-method">
-      <div class="signature">
-        
-        def <strong>alpha</strong>(*args, **options, &)
-
-        <a class="method-permalink" href="#alpha%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="angles(*args,**options)-instance-method">
-      <div class="signature">
-        
-        def <strong>angles</strong>(*args, **options)
-
-        <a class="method-permalink" href="#angles%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="angles(*args,**options,&amp;)-instance-method">
-      <div class="signature">
-        
-        def <strong>angles</strong>(*args, **options, &)
-
-        <a class="method-permalink" href="#angles%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="b(*args,**options)-instance-method">
-      <div class="signature">
-        
-        def <strong>b</strong>(*args, **options)
-
-        <a class="method-permalink" href="#b%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="b(*args,**options,&amp;)-instance-method">
-      <div class="signature">
-        
-        def <strong>b</strong>(*args, **options, &)
-
-        <a class="method-permalink" href="#b%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="basis:Basis-instance-method">
-      <div class="signature">
-        
-        def <strong>basis</strong> : <a href="../../Chem/Spatial/Basis.html">Basis</a>
-
-        <a class="method-permalink" href="#basis%3ABasis-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L3" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="beta(*args,**options)-instance-method">
-      <div class="signature">
-        
-        def <strong>beta</strong>(*args, **options)
-
-        <a class="method-permalink" href="#beta%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="beta(*args,**options,&amp;)-instance-method">
-      <div class="signature">
-        
-        def <strong>beta</strong>(*args, **options, &)
-
-        <a class="method-permalink" href="#beta%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="c(*args,**options)-instance-method">
-      <div class="signature">
-        
-        def <strong>c</strong>(*args, **options)
-
-        <a class="method-permalink" href="#c%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="c(*args,**options,&amp;)-instance-method">
-      <div class="signature">
-        
-        def <strong>c</strong>(*args, **options, &)
-
-        <a class="method-permalink" href="#c%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/bounds.cr#L26" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1515,7 +1134,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L46" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/bounds.cr#L30" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="close_to?(rhs:self,delta:Number=Float64::EPSILON):Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>close_to?</strong>(rhs : <span class="k">self</span>, delta : <a href="../../Number.html">Number</a> = <span class="t">Float64</span><span class="t">::</span><span class="t">EPSILON</span>) : Bool
+
+        <a class="method-permalink" href="#close_to%3F%28rhs%3Aself%2Cdelta%3ANumber%3DFloat64%3A%3AEPSILON%29%3ABool-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/bounds.cr#L34" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1546,71 +1181,7 @@ Vec3[5.0, 10.0, 20.0]</code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L68" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="gamma(*args,**options)-instance-method">
-      <div class="signature">
-        
-        def <strong>gamma</strong>(*args, **options)
-
-        <a class="method-permalink" href="#gamma%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="gamma(*args,**options,&amp;)-instance-method">
-      <div class="signature">
-        
-        def <strong>gamma</strong>(*args, **options, &)
-
-        <a class="method-permalink" href="#gamma%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="i(*args,**options)-instance-method">
-      <div class="signature">
-        
-        def <strong>i</strong>(*args, **options)
-
-        <a class="method-permalink" href="#i%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="i(*args,**options,&amp;)-instance-method">
-      <div class="signature">
-        
-        def <strong>i</strong>(*args, **options, &)
-
-        <a class="method-permalink" href="#i%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/bounds.cr#L57" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1637,7 +1208,7 @@ bounds.includes? <span class="t">Bounds</span>.<span class="k">new</span>(<span 
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L89" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/bounds.cr#L85" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1653,71 +1224,7 @@ bounds.includes? <span class="t">Bounds</span>.<span class="k">new</span>(<span 
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L93" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="j(*args,**options)-instance-method">
-      <div class="signature">
-        
-        def <strong>j</strong>(*args, **options)
-
-        <a class="method-permalink" href="#j%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="j(*args,**options,&amp;)-instance-method">
-      <div class="signature">
-        
-        def <strong>j</strong>(*args, **options, &)
-
-        <a class="method-permalink" href="#j%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="k(*args,**options)-instance-method">
-      <div class="signature">
-        
-        def <strong>k</strong>(*args, **options)
-
-        <a class="method-permalink" href="#k%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="k(*args,**options,&amp;)-instance-method">
-      <div class="signature">
-        
-        def <strong>k</strong>(*args, **options, &)
-
-        <a class="method-permalink" href="#k%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/bounds.cr#L89" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1740,7 +1247,7 @@ bounds.max <span class="c"># =&gt; Vec3[6.5, 11.66, 11.6]</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L109" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/bounds.cr#L111" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1763,7 +1270,7 @@ bounds.min <span class="c"># =&gt; Vec3[1.5, 3, -0.4]</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L119" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/bounds.cr#L121" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1779,7 +1286,7 @@ bounds.min <span class="c"># =&gt; Vec3[1.5, 3, -0.4]</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L4" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/bounds.cr#L4" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1806,39 +1313,23 @@ bounds.center <span class="c"># =&gt; Vec3[6.0, 7.5, 9.0]</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L134" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/bounds.cr#L136" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="size(*args,**options)-instance-method">
+    <div class="entry-detail" id="size:Size3-instance-method">
       <div class="signature">
         
-        def <strong>size</strong>(*args, **options)
+        def <strong>size</strong> : <a href="../../Chem/Spatial/Size3.html">Size3</a>
 
-        <a class="method-permalink" href="#size%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+        <a class="method-permalink" href="#size%3ASize3-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="size(*args,**options,&amp;)-instance-method">
-      <div class="signature">
-        
-        def <strong>size</strong>(*args, **options, &)
-
-        <a class="method-permalink" href="#size%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/bounds.cr#L145" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1861,7 +1352,7 @@ bounds.translate(<span class="t">Vec3</span>[<span class="n">1</span>, <span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L146" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/bounds.cr#L155" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1884,7 +1375,7 @@ bounds.vertices <span class="c"># =&gt; [Vec3[0.0, 0.0, 0.0], Vec3[0.0, 0.0, 20.
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L156" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/bounds.cr#L165" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1900,7 +1391,7 @@ bounds.vertices <span class="c"># =&gt; [Vec3[0.0, 0.0, 0.0], Vec3[0.0, 0.0, 20.
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/bounds.cr#L162" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/bounds.cr#L171" target="_blank">View source</a>]
         
       </div>
     </div>

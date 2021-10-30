@@ -441,11 +441,6 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Basis" data-name="chem::spatial::basis">
-      <a href="../../Chem/Spatial/Basis.html">Basis</a>
-      
-    </li>
-  
   <li class=" " data-id="chem.cr/Chem/Spatial/Bounds" data-name="chem::spatial::bounds">
       <a href="../../Chem/Spatial/Bounds.html">Bounds</a>
       
@@ -855,7 +850,7 @@ maps such as scaling and rotation (see <code><a href="../../Chem/Spatial/AffineT
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L4" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/mat3.cr#L4" target="_blank">
         chem/spatial/mat3.cr
       </a>
     
@@ -936,6 +931,25 @@ maps such as scaling and rotation (see <code><a href="../../Chem/Spatial/AffineT
 
 
 
+  <h2>
+    <a id="class-method-summary" class="anchor" href="#class-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#basis%28i%3AVec3%2Cj%3AVec3%2Ck%3AVec3%29%3ASpatial%3A%3AMat3-class-method" class="signature"><strong>.basis</strong>(i : Vec3, j : Vec3, k : Vec3) : Spatial::Mat3</a>
+        
+          <div class="summary"><p>Returns a matrix in column-major order representing the basis defined by the basis vectors.</p></div>
+        
+      </li>
+    
+  </ul>
+
 
 
   <h2>
@@ -1005,16 +1019,23 @@ maps such as scaling and rotation (see <code><a href="../../Chem/Spatial/AffineT
       </li>
     
       <li class="entry-summary">
-        <a href="#%5B%5D%28i%3AInt%2Cj%3AInt%29%3AFloat64-instance-method" class="signature"><strong>#[]</strong>(i : Int, j : Int) : Float64</a>
+        <a href="#%5B%5D%28row%3AInt%2Ccols%3ARange%28Nil%2CNil%29%29%3AFloatTriple-instance-method" class="signature"><strong>#[]</strong>(row : Int, cols : Range(Nil, Nil)) : FloatTriple</a>
         
-          <div class="summary"><p>Returns the element at row <em>i</em> and column <em>j</em>.</p></div>
+          <div class="summary"><p>Returns the row at <em>row</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#%5B%5D%28index%3AInt%29%3AFloatTriple-instance-method" class="signature"><strong>#[]</strong>(index : Int) : FloatTriple</a>
+        <a href="#%5B%5D%28rows%3ARange%28Nil%2CNil%29%2Ccol%3AInt%29%3AFloatTriple-instance-method" class="signature"><strong>#[]</strong>(rows : Range(Nil, Nil), col : Int) : FloatTriple</a>
         
-          <div class="summary"><p>Returns the row at <em>index</em>.</p></div>
+          <div class="summary"><p>Returns the column at <em>col</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%5B%5D%28i%3AInt%2Cj%3AInt%29%3AFloat64-instance-method" class="signature"><strong>#[]</strong>(i : Int, j : Int) : Float64</a>
+        
+          <div class="summary"><p>Returns the element at row <em>i</em> and column <em>j</em>.</p></div>
         
       </li>
     
@@ -1112,7 +1133,7 @@ maps such as scaling and rotation (see <code><a href="../../Chem/Spatial/AffineT
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L14" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/mat3.cr#L14" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1133,7 +1154,7 @@ maps such as scaling and rotation (see <code><a href="../../Chem/Spatial/AffineT
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L19" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/mat3.cr#L19" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1155,7 +1176,7 @@ given values.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L30" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/mat3.cr#L40" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1176,7 +1197,7 @@ given values.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L24" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/mat3.cr#L34" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1197,7 +1218,7 @@ given values.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L39" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/mat3.cr#L49" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1219,7 +1240,7 @@ matrix).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L49" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/mat3.cr#L59" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1240,7 +1261,7 @@ matrix).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/mat3.cr#L8" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1261,13 +1282,45 @@ matrix).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L54" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/mat3.cr#L64" target="_blank">View source</a>]
         
       </div>
     </div>
   
 
 
+
+  <h2>
+    <a id="class-method-detail" class="anchor" href="#class-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="basis(i:Vec3,j:Vec3,k:Vec3):Spatial::Mat3-class-method">
+      <div class="signature">
+        
+        def self.<strong>basis</strong>(i : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, j : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, k : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <a href="../../Chem/Spatial/Mat3.html">Spatial::Mat3</a>
+
+        <a class="method-permalink" href="#basis%28i%3AVec3%2Cj%3AVec3%2Ck%3AVec3%29%3ASpatial%3A%3AMat3-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a matrix in column-major order representing the basis
+defined by the basis vectors.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/mat3.cr#L25" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
 
 
 
@@ -1296,7 +1349,7 @@ matrix).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L99" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/mat3.cr#L115" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1317,7 +1370,7 @@ matrix).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L109" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/mat3.cr#L125" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1338,7 +1391,7 @@ matrix).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L104" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/mat3.cr#L120" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1359,7 +1412,7 @@ matrix).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L122" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/mat3.cr#L138" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1380,7 +1433,7 @@ matrix).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L79" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/mat3.cr#L95" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1401,7 +1454,7 @@ matrix).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L79" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/mat3.cr#L95" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1422,7 +1475,7 @@ matrix).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L75" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/mat3.cr#L91" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1443,7 +1496,51 @@ matrix).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L139" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/mat3.cr#L155" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[](row:Int,cols:Range(Nil,Nil)):FloatTriple-instance-method">
+      <div class="signature">
+        
+        def <strong>[]</strong>(row : Int, cols : <a href="../../Range.html">Range</a>(Nil, Nil)) : <a href="../../Chem/Spatial/FloatTriple.html">FloatTriple</a>
+
+        <a class="method-permalink" href="#%5B%5D%28row%3AInt%2Ccols%3ARange%28Nil%2CNil%29%29%3AFloatTriple-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the row at <em>row</em>. Raises <code>IndexError</code> if <em>row</em> is out of
+bounds.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/mat3.cr#L74" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[](rows:Range(Nil,Nil),col:Int):FloatTriple-instance-method">
+      <div class="signature">
+        
+        def <strong>[]</strong>(rows : <a href="../../Range.html">Range</a>(Nil, Nil), col : Int) : <a href="../../Chem/Spatial/FloatTriple.html">FloatTriple</a>
+
+        <a class="method-permalink" href="#%5B%5D%28rows%3ARange%28Nil%2CNil%29%2Ccol%3AInt%29%3AFloatTriple-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the column at <em>col</em>. Raises <code>IndexError</code> if <em>col</em> is out
+of bounds.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/mat3.cr#L80" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1465,29 +1562,7 @@ if indices are out of bounds.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L70" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="[](index:Int):FloatTriple-instance-method">
-      <div class="signature">
-        
-        def <strong>[]</strong>(index : Int) : <a href="../../Chem/Spatial/FloatTriple.html">FloatTriple</a>
-
-        <a class="method-permalink" href="#%5B%5D%28index%3AInt%29%3AFloatTriple-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Returns the row at <em>index</em>. Raises <code>IndexError</code> if <em>index</em> is out
-of bounds.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L64" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/mat3.cr#L86" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1509,7 +1584,7 @@ from each other, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L145" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/mat3.cr#L161" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1530,7 +1605,7 @@ from each other, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L154" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/mat3.cr#L170" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1554,7 +1629,7 @@ states that <code>inv(A) = 1 / det(A) * adj(A)</code> provided that <code>det(A)
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L166" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/mat3.cr#L182" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1579,7 +1654,7 @@ states that <code>inv(A) = 1 / det(A) * adj(A)</code> provided that <code>det(A)
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/mat3.cr#L189" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/mat3.cr#L205" target="_blank">View source</a>]
         
       </div>
     </div>

@@ -441,11 +441,6 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Basis" data-name="chem::spatial::basis">
-      <a href="../Chem/Spatial/Basis.html">Basis</a>
-      
-    </li>
-  
   <li class=" " data-id="chem.cr/Chem/Spatial/Bounds" data-name="chem::spatial::bounds">
       <a href="../Chem/Spatial/Bounds.html">Bounds</a>
       
@@ -820,6 +815,23 @@
 
 
 
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>A parallel epipedal unit cell defined by three vectors (basis).</p>
+<p>It is internally represented by a 3x3 matrix, where each column
+correspond to a basis vector (see <code><a href="../Chem/Spatial/Mat3.html#basis%28i%3AVec3%2Cj%3AVec3%2Ck%3AVec3%29%3ASpatial%3A%3AMat3-class-method">Spatial::Mat3.basis</a></code>), which
+coordinates are expressed in Cartesian space (angstroms). In this
+way, the basis matrix can be used to transform from Cartesian to
+fractional coordinates, and viceversa, by matrix multiplication (see
+<code><a href="../Chem/Lattice.html#cart%28vec%3AVec3%29%3AVec3-instance-method">#cart</a></code> and <code><a href="../Chem/Lattice.html#fract%28vec%3AVec3%29%3AVec3-instance-method">#fract</a></code>).</p>
+
 
 
 
@@ -843,7 +855,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L2" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L10" target="_blank">
         chem/core/lattice.cr
       </a>
     
@@ -865,12 +877,65 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28basis%3ASpatial%3A%3ABasis%29-class-method" class="signature"><strong>.new</strong>(basis : Spatial::Basis)</a>
+        <a href="#cubic%28a%3ANumber%29%3Aself-class-method" class="signature"><strong>.cubic</strong>(a : Number) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a cubic lattice (<em>a</em> = <em>b</em> = <em>c</em> and <em>α</em> = <em>β</em> = <em>γ</em> = 90°).</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new%28%2Aargs%2C%2A%2Aoptions%29%3Aself-class-method" class="signature"><strong>.new</strong>(*args, **options) : <span class="k">self</span></a>
+        <a href="#hexagonal%28a%3ANumber%2Cc%3ANumber%29%3Aself-class-method" class="signature"><strong>.hexagonal</strong>(a : Number, c : Number) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a hexagonal lattice (<em>a</em> = <em>b</em>, <em>α</em> = <em>β</em> = 90°, and <em>γ</em> = 120°).</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#monoclinic%28a%3ANumber%2Cc%3ANumber%2Cbeta%3ANumber%29%3Aself-class-method" class="signature"><strong>.monoclinic</strong>(a : Number, c : Number, beta : Number) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a monoclinic lattice (<em>a</em> ≠ <em>c</em>, <em>α</em> = <em>γ</em> = 90°, and <em>β</em> ≠ 90°).</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new%28i%3AVec3%2Cj%3AVec3%2Ck%3AVec3%29%3Aself-class-method" class="signature"><strong>.new</strong>(i : Vec3, j : Vec3, k : Vec3) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a new <code><a href="../Chem/Lattice.html">Lattice</a></code> with the given basis vectors.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new%28basis%3ASpatial%3A%3AMat3%29-class-method" class="signature"><strong>.new</strong>(basis : Spatial::Mat3)</a>
+        
+          <div class="summary"><p>Creates a new <code><a href="../Chem/Lattice.html">Lattice</a></code> with the given basis.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new%28size%3ANumberTriple%7CSize3%2Cangles%3ANumberTriple%3D%7B90%2C90%2C90%7D%29%3Aself-class-method" class="signature"><strong>.new</strong>(size : NumberTriple | Size3, angles : NumberTriple = {<span class="n">90</span>, <span class="n">90</span>, <span class="n">90</span>}) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a new <code><a href="../Chem/Lattice.html">Lattice</a></code> with the given unit cell parameters (lengths in angstroms and angles in degrees).</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#orthorhombic%28a%3ANumber%2Cb%3ANumber%2Cc%3ANumber%29%3Aself-class-method" class="signature"><strong>.orthorhombic</strong>(a : Number, b : Number, c : Number) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns an orthorhombic lattice (<em>a</em> ≠ <em>b</em> ≠ <em>c</em> and <em>α</em> = <em>β</em> = <em>γ</em> = 90°).</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rhombohedral%28a%3ANumber%2Calpha%3ANumber%29%3Aself-class-method" class="signature"><strong>.rhombohedral</strong>(a : Number, alpha : Number) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns an rhombohedral lattice (<em>a</em> = <em>b</em> = <em>c</em> and <em>α</em> = <em>β</em> = <em>γ</em> ≠ 90°).</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#tetragonal%28a%3ANumber%2Cc%3ANumber%29%3Aself-class-method" class="signature"><strong>.tetragonal</strong>(a : Number, c : Number) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns an tetragonal lattice (<em>a</em> = <em>b</em> ≠ <em>c</em> and <em>α</em> = <em>β</em> = <em>γ</em> = 90°).</p></div>
         
       </li>
     
@@ -893,120 +958,133 @@
       <li class="entry-summary">
         <a href="#%2A%28value%3ANumber%29%3Aself-instance-method" class="signature"><strong>#*</strong>(value : Number) : <span class="k">self</span></a>
         
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#a%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#a</strong>(*args, **options)</a>
+          <div class="summary"><p>Returns a lattice with the basis vectors multiplied by <em>value</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#a%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#a</strong>(*args, **options, &)</a>
+        <a href="#a%3AFloat64-instance-method" class="signature"><strong>#a</strong> : Float64</a>
+        
+          <div class="summary"><p>The length (in angstorms) of the first basis vector.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#a%3D%28value%3AFloat64%29%3AFloat64-instance-method" class="signature"><strong>#a=</strong>(value : Float64) : Float64</a>
         
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#alpha%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#alpha</strong>(*args, **options)</a>
+          <div class="summary"><p>The length (in angstorms) of the first basis vector.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#alpha%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#alpha</strong>(*args, **options, &)</a>
+        <a href="#alpha%3AFloat64-instance-method" class="signature"><strong>#alpha</strong> : Float64</a>
+        
+          <div class="summary"><p>Returns the angle (in degrees) between the second and third basis vectors.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#b%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#b</strong>(*args, **options)</a>
+        <a href="#angles%3ANumberTriple-instance-method" class="signature"><strong>#angles</strong> : NumberTriple</a>
+        
+          <div class="summary"><p>Returns the unit cell angles (alpha, beta, gamma) in degrees.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#b%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#b</strong>(*args, **options, &)</a>
+        <a href="#b%3AFloat64-instance-method" class="signature"><strong>#b</strong> : Float64</a>
+        
+          <div class="summary"><p>The length (in angstorms) of the second basis vector.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#b%3D%28value%3AFloat64%29%3AFloat64-instance-method" class="signature"><strong>#b=</strong>(value : Float64) : Float64</a>
         
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#basis%3ASpatial%3A%3ABasis-instance-method" class="signature"><strong>#basis</strong> : Spatial::Basis</a>
+          <div class="summary"><p>The length (in angstorms) of the second basis vector.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#beta%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#beta</strong>(*args, **options)</a>
+        <a href="#basis%3ASpatial%3A%3AMat3-instance-method" class="signature"><strong>#basis</strong> : Spatial::Mat3</a>
+        
+          <div class="summary"><p>Matrix containing the basis vectors.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#beta%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#beta</strong>(*args, **options, &)</a>
+        <a href="#beta%3AFloat64-instance-method" class="signature"><strong>#beta</strong> : Float64</a>
+        
+          <div class="summary"><p>Returns the angle (in degrees) between the first and third basis vectors.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#bounds%3ASpatial%3A%3ABounds-instance-method" class="signature"><strong>#bounds</strong> : Spatial::Bounds</a>
         
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#c%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#c</strong>(*args, **options)</a>
+          <div class="summary"><p>Returns the bounds of the unit cell.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#c%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#c</strong>(*args, **options, &)</a>
+        <a href="#c%3AFloat64-instance-method" class="signature"><strong>#c</strong> : Float64</a>
+        
+          <div class="summary"><p>The length (in angstorms) of the third basis vector.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#c%3D%28value%3AFloat64%29%3AFloat64-instance-method" class="signature"><strong>#c=</strong>(value : Float64) : Float64</a>
         
+          <div class="summary"><p>The length (in angstorms) of the third basis vector.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#cart%28vec%3AVec3%29%3AVec3-instance-method" class="signature"><strong>#cart</strong>(vec : Vec3) : Vec3</a>
+        
+          <div class="summary"><p>Returns the vector in Cartesian coordinates equivalent to the given fractional coordinates.</p></div>
+        
       </li>
     
       <li class="entry-summary">
         <a href="#cubic%3F%3ABool-instance-method" class="signature"><strong>#cubic?</strong> : Bool</a>
         
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#cuboid%3F%3ABool-instance-method" class="signature"><strong>#cuboid?</strong> : Bool</a>
+          <div class="summary"><p>Returns <code>true</code> if the lattice is cubic (<em>a</em> = <em>b</em> = <em>c</em> and <em>α</em> = <em>β</em> = <em>γ</em> = 90°), else <code>false</code>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#gamma%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#gamma</strong>(*args, **options)</a>
+        <a href="#fract%28vec%3AVec3%29%3AVec3-instance-method" class="signature"><strong>#fract</strong>(vec : Vec3) : Vec3</a>
+        
+          <div class="summary"><p>Returns the vector in fractional coordinates equivalent to the given Cartesian coordinates.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#gamma%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#gamma</strong>(*args, **options, &)</a>
+        <a href="#gamma%3AFloat64-instance-method" class="signature"><strong>#gamma</strong> : Float64</a>
+        
+          <div class="summary"><p>Returns the angle (in degrees) between the first and second basis vectors.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#hexagonal%3F%3ABool-instance-method" class="signature"><strong>#hexagonal?</strong> : Bool</a>
         
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#i%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#i</strong>(*args, **options)</a>
+          <div class="summary"><p>Returns <code>true</code> if the lattice is hexagonal (<em>a</em> = <em>b</em>, <em>α</em> = <em>β</em> = 90°, and <em>γ</em> = 120°), else <code>false</code>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#i%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#i</strong>(*args, **options, &)</a>
+        <a href="#i%3ASpatial%3A%3AVec3-instance-method" class="signature"><strong>#i</strong> : Spatial::Vec3</a>
+        
+          <div class="summary"><p>The first basis vector.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#i%3D%28vec%3ASpatial%3A%3AVec3%29%3ASpatial%3A%3AVec3-instance-method" class="signature"><strong>#i=</strong>(vec : Spatial::Vec3) : Spatial::Vec3</a>
+        
+          <div class="summary"><p>The first basis vector.</p></div>
         
       </li>
     
@@ -1018,62 +1096,100 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#j%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#j</strong>(*args, **options)</a>
+        <a href="#j%3ASpatial%3A%3AVec3-instance-method" class="signature"><strong>#j</strong> : Spatial::Vec3</a>
         
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#j%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#j</strong>(*args, **options, &)</a>
+          <div class="summary"><p>The second basis vector.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#j%3D%28vec%3ASpatial%3A%3AVec3%29%3ASpatial%3A%3AVec3-instance-method" class="signature"><strong>#j=</strong>(vec : Spatial::Vec3) : Spatial::Vec3</a>
         
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#k%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#k</strong>(*args, **options)</a>
+          <div class="summary"><p>The second basis vector.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#k%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#k</strong>(*args, **options, &)</a>
+        <a href="#k%3ASpatial%3A%3AVec3-instance-method" class="signature"><strong>#k</strong> : Spatial::Vec3</a>
+        
+          <div class="summary"><p>The third basis vector.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#k%3D%28vec%3ASpatial%3A%3AVec3%29%3ASpatial%3A%3AVec3-instance-method" class="signature"><strong>#k=</strong>(vec : Spatial::Vec3) : Spatial::Vec3</a>
         
+          <div class="summary"><p>The third basis vector.</p></div>
+        
       </li>
     
       <li class="entry-summary">
         <a href="#monoclinic%3F%3ABool-instance-method" class="signature"><strong>#monoclinic?</strong> : Bool</a>
+        
+          <div class="summary"><p>Returns <code>true</code> if the lattice is monoclinic (<em>a</em> ≠ <em>c</em>, <em>α</em> = <em>γ</em> = 90°, and <em>β</em> ≠ 90°), else <code>false</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#orthogonal%3F%3ABool-instance-method" class="signature"><strong>#orthogonal?</strong> : Bool</a>
+        
+          <div class="summary"><p>Returns <code>true</code> if the lattice is orthogonal (<em>α</em> = <em>β</em> = <em>γ</em> = 90°), else <code>false</code>.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#orthorhombic%3F%3ABool-instance-method" class="signature"><strong>#orthorhombic?</strong> : Bool</a>
         
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#size%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#size</strong>(*args, **options)</a>
+          <div class="summary"><p>Returns <code>true</code> if the lattice is orthorhombic (<em>a</em> ≠ <em>b</em> ≠ <em>c</em> and <em>α</em> = <em>β</em> = <em>γ</em> = 90°), else <code>false</code>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#size%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#size</strong>(*args, **options, &)</a>
+        <a href="#rhombohedral%3F%3ABool-instance-method" class="signature"><strong>#rhombohedral?</strong> : Bool</a>
+        
+          <div class="summary"><p>Returns <code>true</code> if the lattice is rhombohedral (<em>a</em> = <em>b</em> = <em>c</em> and <em>α</em> = <em>β</em> = <em>γ</em> ≠ 90°), else <code>false</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#size%3ASize3-instance-method" class="signature"><strong>#size</strong> : Size3</a>
+        
+          <div class="summary"><p>Returns the lengths of the basis vectors.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#tetragonal%3F%3ABool-instance-method" class="signature"><strong>#tetragonal?</strong> : Bool</a>
         
+          <div class="summary"><p>Returns <code>true</code> if the lattice is tetragonal (<em>a</em> = <em>b</em> ≠ <em>c</em> and <em>α</em> = <em>β</em> = <em>γ</em> = 90°), else <code>false</code>.</p></div>
+        
       </li>
     
       <li class="entry-summary">
         <a href="#triclinic%3F%3ABool-instance-method" class="signature"><strong>#triclinic?</strong> : Bool</a>
+        
+          <div class="summary"><p>Returns <code>true</code> if the lattice is triclinic (not orthogonal, hexagonal, monoclinic, nor rhombohedral), else <code>false</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#volume%3AFloat64-instance-method" class="signature"><strong>#volume</strong> : Float64</a>
+        
+          <div class="summary"><p>Returns the volume of the unit cell.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#wrap%28vec%3ASpatial%3A%3AVec3%2Caroundcenter%3ASpatial%3A%3AVec3%29%3ASpatial%3A%3AVec3-instance-method" class="signature"><strong>#wrap</strong>(vec : Spatial::Vec3, around center : Spatial::Vec3) : Spatial::Vec3</a>
+        
+          <div class="summary"><p>Returns the vector by wrapping into the primary unit cell centered at <em>center</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#wrap%28vec%3ASpatial%3A%3AVec3%29%3ASpatial%3A%3AVec3-instance-method" class="signature"><strong>#wrap</strong>(vec : Spatial::Vec3) : Spatial::Vec3</a>
+        
+          <div class="summary"><p>Returns the vector by wrapping into the primary unit cell.</p></div>
         
       </li>
     
@@ -1117,34 +1233,201 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(basis:Spatial::Basis)-class-method">
+    <div class="entry-detail" id="cubic(a:Number):self-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(basis : <a href="../Chem/Spatial/Basis.html">Spatial::Basis</a>)
+        def self.<strong>cubic</strong>(a : <a href="../Number.html">Number</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#new%28basis%3ASpatial%3A%3ABasis%29-class-method">#</a>
+        <a class="method-permalink" href="#cubic%28a%3ANumber%29%3Aself-class-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns a cubic lattice (<em>a</em> = <em>b</em> = <em>c</em> and <em>α</em> = <em>β</em> = <em>γ</em> =
+90°).</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L7" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L60" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="new(*args,**options):self-class-method">
+    <div class="entry-detail" id="hexagonal(a:Number,c:Number):self-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(*args, **options) : <span class="k">self</span>
+        def self.<strong>hexagonal</strong>(a : <a href="../Number.html">Number</a>, c : <a href="../Number.html">Number</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#new%28%2Aargs%2C%2A%2Aoptions%29%3Aself-class-method">#</a>
+        <a class="method-permalink" href="#hexagonal%28a%3ANumber%2Cc%3ANumber%29%3Aself-class-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns a hexagonal lattice (<em>a</em> = <em>b</em>, <em>α</em> = <em>β</em> = 90°, and <em>γ</em> =
+120°).</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L66" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="monoclinic(a:Number,c:Number,beta:Number):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>monoclinic</strong>(a : <a href="../Number.html">Number</a>, c : <a href="../Number.html">Number</a>, beta : <a href="../Number.html">Number</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#monoclinic%28a%3ANumber%2Cc%3ANumber%2Cbeta%3ANumber%29%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a monoclinic lattice (<em>a</em> ≠ <em>c</em>, <em>α</em> = <em>γ</em> = 90°, and <em>β</em>
+≠ 90°).</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L72" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(i:Vec3,j:Vec3,k:Vec3):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(i : Vec3, j : Vec3, k : Vec3) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#new%28i%3AVec3%2Cj%3AVec3%2Ck%3AVec3%29%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a new <code><a href="../Chem/Lattice.html">Lattice</a></code> with the given basis vectors.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L22" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(basis:Spatial::Mat3)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(basis : <a href="../Chem/Spatial/Mat3.html">Spatial::Mat3</a>)
+
+        <a class="method-permalink" href="#new%28basis%3ASpatial%3A%3AMat3%29-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Creates a new <code><a href="../Chem/Lattice.html">Lattice</a></code> with the given basis.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L18" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(size:NumberTriple|Size3,angles:NumberTriple={90,90,90}):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(size : NumberTriple | Size3, angles : NumberTriple = {<span class="n">90</span>, <span class="n">90</span>, <span class="n">90</span>}) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#new%28size%3ANumberTriple%7CSize3%2Cangles%3ANumberTriple%3D%7B90%2C90%2C90%7D%29%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a new <code><a href="../Chem/Lattice.html">Lattice</a></code> with the given unit cell parameters
+(lengths in angstroms and angles in degrees). Raises
+<code>ArgumentError</code> if any of the lengths or angles is negative.</p>
+<p><span class="flag purple">NOTE</span>  The first basis vector will be aligned to the X axis and the
+second basis vector will lie in the XY plane.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L32" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="orthorhombic(a:Number,b:Number,c:Number):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>orthorhombic</strong>(a : <a href="../Number.html">Number</a>, b : <a href="../Number.html">Number</a>, c : <a href="../Number.html">Number</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#orthorhombic%28a%3ANumber%2Cb%3ANumber%2Cc%3ANumber%29%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns an orthorhombic lattice (<em>a</em> ≠ <em>b</em> ≠ <em>c</em> and <em>α</em> = <em>β</em> =
+<em>γ</em> = 90°).</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L78" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rhombohedral(a:Number,alpha:Number):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>rhombohedral</strong>(a : <a href="../Number.html">Number</a>, alpha : <a href="../Number.html">Number</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#rhombohedral%28a%3ANumber%2Calpha%3ANumber%29%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns an rhombohedral lattice (<em>a</em> = <em>b</em> = <em>c</em> and <em>α</em> = <em>β</em> =
+<em>γ</em> ≠ 90°).</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L84" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="tetragonal(a:Number,c:Number):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>tetragonal</strong>(a : <a href="../Number.html">Number</a>, c : <a href="../Number.html">Number</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#tetragonal%28a%3ANumber%2Cc%3ANumber%29%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns an tetragonal lattice (<em>a</em> = <em>b</em> ≠ <em>c</em> and <em>α</em> = <em>β</em> = <em>γ</em>
+= 90°).</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L90" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1171,42 +1454,36 @@
         <a class="method-permalink" href="#%2A%28value%3ANumber%29%3Aself-instance-method">#</a>
       </div>
       
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L14" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="a(*args,**options)-instance-method">
-      <div class="signature">
-        
-        def <strong>a</strong>(*args, **options)
-
-        <a class="method-permalink" href="#a%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
-      </div>
+        <div class="doc">
+          
+          <p>Returns a lattice with the basis vectors multiplied by <em>value</em>.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L95" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="a(*args,**options,&amp;)-instance-method">
+    <div class="entry-detail" id="a:Float64-instance-method">
       <div class="signature">
         
-        def <strong>a</strong>(*args, **options, &)
+        def <strong>a</strong> : Float64
 
-        <a class="method-permalink" href="#a%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
+        <a class="method-permalink" href="#a%3AFloat64-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>The length (in angstorms) of the first basis vector.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L100" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1219,74 +1496,79 @@
         <a class="method-permalink" href="#a%3D%28value%3AFloat64%29%3AFloat64-instance-method">#</a>
       </div>
       
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L18" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="alpha(*args,**options)-instance-method">
-      <div class="signature">
-        
-        def <strong>alpha</strong>(*args, **options)
-
-        <a class="method-permalink" href="#alpha%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
-      </div>
+        <div class="doc">
+          
+          <p>The length (in angstorms) of the first basis vector.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L105" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="alpha(*args,**options,&amp;)-instance-method">
+    <div class="entry-detail" id="alpha:Float64-instance-method">
       <div class="signature">
         
-        def <strong>alpha</strong>(*args, **options, &)
+        def <strong>alpha</strong> : Float64
 
-        <a class="method-permalink" href="#alpha%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
+        <a class="method-permalink" href="#alpha%3AFloat64-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns the angle (in degrees) between the second and third basis
+vectors.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L112" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="b(*args,**options)-instance-method">
+    <div class="entry-detail" id="angles:NumberTriple-instance-method">
       <div class="signature">
         
-        def <strong>b</strong>(*args, **options)
+        def <strong>angles</strong> : NumberTriple
 
-        <a class="method-permalink" href="#b%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+        <a class="method-permalink" href="#angles%3ANumberTriple-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns the unit cell angles (alpha, beta, gamma) in degrees.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L117" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="b(*args,**options,&amp;)-instance-method">
+    <div class="entry-detail" id="b:Float64-instance-method">
       <div class="signature">
         
-        def <strong>b</strong>(*args, **options, &)
+        def <strong>b</strong> : Float64
 
-        <a class="method-permalink" href="#b%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
+        <a class="method-permalink" href="#b%3AFloat64-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>The length (in angstorms) of the second basis vector.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L122" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1299,58 +1581,58 @@
         <a class="method-permalink" href="#b%3D%28value%3AFloat64%29%3AFloat64-instance-method">#</a>
       </div>
       
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L23" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="basis:Spatial::Basis-instance-method">
-      <div class="signature">
-        
-        def <strong>basis</strong> : <a href="../Chem/Spatial/Basis.html">Spatial::Basis</a>
-
-        <a class="method-permalink" href="#basis%3ASpatial%3A%3ABasis-instance-method">#</a>
-      </div>
+        <div class="doc">
+          
+          <p>The length (in angstorms) of the second basis vector.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L3" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L127" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="beta(*args,**options)-instance-method">
+    <div class="entry-detail" id="basis:Spatial::Mat3-instance-method">
       <div class="signature">
         
-        def <strong>beta</strong>(*args, **options)
+        def <strong>basis</strong> : <a href="../Chem/Spatial/Mat3.html">Spatial::Mat3</a>
 
-        <a class="method-permalink" href="#beta%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+        <a class="method-permalink" href="#basis%3ASpatial%3A%3AMat3-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Matrix containing the basis vectors.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L12" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="beta(*args,**options,&amp;)-instance-method">
+    <div class="entry-detail" id="beta:Float64-instance-method">
       <div class="signature">
         
-        def <strong>beta</strong>(*args, **options, &)
+        def <strong>beta</strong> : Float64
 
-        <a class="method-permalink" href="#beta%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
+        <a class="method-permalink" href="#beta%3AFloat64-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns the angle (in degrees) between the first and third basis
+vectors.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L134" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1363,42 +1645,36 @@
         <a class="method-permalink" href="#bounds%3ASpatial%3A%3ABounds-instance-method">#</a>
       </div>
       
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L28" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="c(*args,**options)-instance-method">
-      <div class="signature">
-        
-        def <strong>c</strong>(*args, **options)
-
-        <a class="method-permalink" href="#c%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
-      </div>
+        <div class="doc">
+          
+          <p>Returns the bounds of the unit cell.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L139" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="c(*args,**options,&amp;)-instance-method">
+    <div class="entry-detail" id="c:Float64-instance-method">
       <div class="signature">
         
-        def <strong>c</strong>(*args, **options, &)
+        def <strong>c</strong> : Float64
 
-        <a class="method-permalink" href="#c%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
+        <a class="method-permalink" href="#c%3AFloat64-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>The length (in angstorms) of the third basis vector.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L144" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1411,10 +1687,37 @@
         <a class="method-permalink" href="#c%3D%28value%3AFloat64%29%3AFloat64-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>The length (in angstorms) of the third basis vector.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L32" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L149" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="cart(vec:Vec3):Vec3-instance-method">
+      <div class="signature">
+        
+        def <strong>cart</strong>(vec : Vec3) : Vec3
+
+        <a class="method-permalink" href="#cart%28vec%3AVec3%29%3AVec3-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the vector in Cartesian coordinates equivalent to the
+given fractional coordinates.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L156" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1427,58 +1730,60 @@
         <a class="method-permalink" href="#cubic%3F%3ABool-instance-method">#</a>
       </div>
       
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L37" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="cuboid?:Bool-instance-method">
-      <div class="signature">
-        
-        def <strong>cuboid?</strong> : Bool
-
-        <a class="method-permalink" href="#cuboid%3F%3ABool-instance-method">#</a>
-      </div>
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if the lattice is cubic (<em>a</em> = <em>b</em> = <em>c</em> and <em>α</em> =
+<em>β</em> = <em>γ</em> = 90°), else <code>false</code>.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L41" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L162" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="gamma(*args,**options)-instance-method">
+    <div class="entry-detail" id="fract(vec:Vec3):Vec3-instance-method">
       <div class="signature">
         
-        def <strong>gamma</strong>(*args, **options)
+        def <strong>fract</strong>(vec : Vec3) : Vec3
 
-        <a class="method-permalink" href="#gamma%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+        <a class="method-permalink" href="#fract%28vec%3AVec3%29%3AVec3-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns the vector in fractional coordinates equivalent to the
+given Cartesian coordinates.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L168" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="gamma(*args,**options,&amp;)-instance-method">
+    <div class="entry-detail" id="gamma:Float64-instance-method">
       <div class="signature">
         
-        def <strong>gamma</strong>(*args, **options, &)
+        def <strong>gamma</strong> : Float64
 
-        <a class="method-permalink" href="#gamma%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
+        <a class="method-permalink" href="#gamma%3AFloat64-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns the angle (in degrees) between the first and second basis
+vectors.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L174" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1491,42 +1796,37 @@
         <a class="method-permalink" href="#hexagonal%3F%3ABool-instance-method">#</a>
       </div>
       
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L45" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="i(*args,**options)-instance-method">
-      <div class="signature">
-        
-        def <strong>i</strong>(*args, **options)
-
-        <a class="method-permalink" href="#i%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
-      </div>
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if the lattice is hexagonal (<em>a</em> = <em>b</em>, <em>α</em> = <em>β</em> =
+90°, and <em>γ</em> = 120°), else <code>false</code>.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L180" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="i(*args,**options,&amp;)-instance-method">
+    <div class="entry-detail" id="i:Spatial::Vec3-instance-method">
       <div class="signature">
         
-        def <strong>i</strong>(*args, **options, &)
+        def <strong>i</strong> : <a href="../Chem/Spatial/Vec3.html">Spatial::Vec3</a>
 
-        <a class="method-permalink" href="#i%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
+        <a class="method-permalink" href="#i%3ASpatial%3A%3AVec3-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>The first basis vector.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L188" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1539,10 +1839,15 @@
         <a class="method-permalink" href="#i%3D%28vec%3ASpatial%3A%3AVec3%29%3ASpatial%3A%3AVec3-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>The first basis vector.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L49" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L193" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1575,39 +1880,28 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L54" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L198" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="j(*args,**options)-instance-method">
+    <div class="entry-detail" id="j:Spatial::Vec3-instance-method">
       <div class="signature">
         
-        def <strong>j</strong>(*args, **options)
+        def <strong>j</strong> : <a href="../Chem/Spatial/Vec3.html">Spatial::Vec3</a>
 
-        <a class="method-permalink" href="#j%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+        <a class="method-permalink" href="#j%3ASpatial%3A%3AVec3-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>The second basis vector.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="j(*args,**options,&amp;)-instance-method">
-      <div class="signature">
-        
-        def <strong>j</strong>(*args, **options, &)
-
-        <a class="method-permalink" href="#j%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L203" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1620,42 +1914,36 @@ and the values of all instance variables.</p>
         <a class="method-permalink" href="#j%3D%28vec%3ASpatial%3A%3AVec3%29%3ASpatial%3A%3AVec3-instance-method">#</a>
       </div>
       
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L64" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="k(*args,**options)-instance-method">
-      <div class="signature">
-        
-        def <strong>k</strong>(*args, **options)
-
-        <a class="method-permalink" href="#k%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
-      </div>
+        <div class="doc">
+          
+          <p>The second basis vector.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L208" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="k(*args,**options,&amp;)-instance-method">
+    <div class="entry-detail" id="k:Spatial::Vec3-instance-method">
       <div class="signature">
         
-        def <strong>k</strong>(*args, **options, &)
+        def <strong>k</strong> : <a href="../Chem/Spatial/Vec3.html">Spatial::Vec3</a>
 
-        <a class="method-permalink" href="#k%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
+        <a class="method-permalink" href="#k%3ASpatial%3A%3AVec3-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>The third basis vector.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L214" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1668,10 +1956,15 @@ and the values of all instance variables.</p>
         <a class="method-permalink" href="#k%3D%28vec%3ASpatial%3A%3AVec3%29%3ASpatial%3A%3AVec3-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>The third basis vector.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L69" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L219" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1684,10 +1977,38 @@ and the values of all instance variables.</p>
         <a class="method-permalink" href="#monoclinic%3F%3ABool-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if the lattice is monoclinic (<em>a</em> ≠ <em>c</em>, <em>α</em> = <em>γ</em>
+= 90°, and <em>β</em> ≠ 90°), else <code>false</code>.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L74" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L226" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="orthogonal?:Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>orthogonal?</strong> : Bool
+
+        <a class="method-permalink" href="#orthogonal%3F%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if the lattice is orthogonal (<em>α</em> = <em>β</em> = <em>γ</em> =
+90°), else <code>false</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L235" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1700,42 +2021,59 @@ and the values of all instance variables.</p>
         <a class="method-permalink" href="#orthorhombic%3F%3ABool-instance-method">#</a>
       </div>
       
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L78" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="size(*args,**options)-instance-method">
-      <div class="signature">
-        
-        def <strong>size</strong>(*args, **options)
-
-        <a class="method-permalink" href="#size%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
-      </div>
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if the lattice is orthorhombic (<em>a</em> ≠ <em>b</em> ≠ <em>c</em> and
+<em>α</em> = <em>β</em> = <em>γ</em> = 90°), else <code>false</code>.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L243" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="size(*args,**options,&amp;)-instance-method">
+    <div class="entry-detail" id="rhombohedral?:Bool-instance-method">
       <div class="signature">
         
-        def <strong>size</strong>(*args, **options, &)
+        def <strong>rhombohedral?</strong> : Bool
 
-        <a class="method-permalink" href="#size%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
+        <a class="method-permalink" href="#rhombohedral%3F%3ABool-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if the lattice is rhombohedral (<em>a</em> = <em>b</em> = <em>c</em> and
+<em>α</em> = <em>β</em> = <em>γ</em> ≠ 90°), else <code>false</code>.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L252" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="size:Size3-instance-method">
+      <div class="signature">
+        
+        def <strong>size</strong> : Size3
+
+        <a class="method-permalink" href="#size%3ASize3-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the lengths of the basis vectors.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L261" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1748,10 +2086,16 @@ and the values of all instance variables.</p>
         <a class="method-permalink" href="#tetragonal%3F%3ABool-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if the lattice is tetragonal (<em>a</em> = <em>b</em> ≠ <em>c</em> and
+<em>α</em> = <em>β</em> = <em>γ</em> = 90°), else <code>false</code>.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L82" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L267" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1764,10 +2108,82 @@ and the values of all instance variables.</p>
         <a class="method-permalink" href="#triclinic%3F%3ABool-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if the lattice is triclinic (not orthogonal,
+hexagonal, monoclinic, nor rhombohedral), else <code>false</code>.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core/lattice.cr#L86" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L273" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="volume:Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>volume</strong> : Float64
+
+        <a class="method-permalink" href="#volume%3AFloat64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the volume of the unit cell.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L278" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="wrap(vec:Spatial::Vec3,aroundcenter:Spatial::Vec3):Spatial::Vec3-instance-method">
+      <div class="signature">
+        
+        def <strong>wrap</strong>(vec : <a href="../Chem/Spatial/Vec3.html">Spatial::Vec3</a>, around center : <a href="../Chem/Spatial/Vec3.html">Spatial::Vec3</a>) : <a href="../Chem/Spatial/Vec3.html">Spatial::Vec3</a>
+
+        <a class="method-permalink" href="#wrap%28vec%3ASpatial%3A%3AVec3%2Caroundcenter%3ASpatial%3A%3AVec3%29%3ASpatial%3A%3AVec3-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the vector by wrapping into the primary unit cell centered
+at <em>center</em>. The vector is assumed to be expressed in Cartesian
+coordinates.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L291" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="wrap(vec:Spatial::Vec3):Spatial::Vec3-instance-method">
+      <div class="signature">
+        
+        def <strong>wrap</strong>(vec : <a href="../Chem/Spatial/Vec3.html">Spatial::Vec3</a>) : <a href="../Chem/Spatial/Vec3.html">Spatial::Vec3</a>
+
+        <a class="method-permalink" href="#wrap%28vec%3ASpatial%3A%3AVec3%29%3ASpatial%3A%3AVec3-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the vector by wrapping into the primary unit cell. The
+vector is assumed to be expressed in Cartesian coordinates.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L284" target="_blank">View source</a>]
         
       </div>
     </div>

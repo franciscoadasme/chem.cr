@@ -441,11 +441,6 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Basis" data-name="chem::spatial::basis">
-      <a href="Chem/Spatial/Basis.html">Basis</a>
-      
-    </li>
-  
   <li class=" " data-id="chem.cr/Chem/Spatial/Bounds" data-name="chem::spatial::bounds">
       <a href="Chem/Spatial/Bounds.html">Bounds</a>
       
@@ -884,7 +879,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core_ext/number.cr#L1" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core_ext/number.cr#L1" target="_blank">
         chem/core_ext/number.cr
       </a>
     
@@ -935,6 +930,13 @@
     
       <li class="entry-summary">
         <a href="#%2A%28other%3AChem%3A%3ASpatial%3A%3AVec3%29%3AChem%3A%3ASpatial%3A%3AVec3-instance-method" class="signature"><strong>#*</strong>(other : Chem::Spatial::Vec3) : Chem::Spatial::Vec3</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#close_to%3F%28rhs%3ANumber%2Cdelta%3ANumber%3D0%29%3ABool-instance-method" class="signature"><strong>#close_to?</strong>(rhs : Number, delta : Number = <span class="n">0</span>) : Bool</a>
+        
+          <div class="summary"><p>Returns <code>true</code> if numbers are within <em>delta</em> from each other, else <code>false</code>.</p></div>
         
       </li>
     
@@ -1061,7 +1063,37 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core_ext/number.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core_ext/number.cr#L5" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="close_to?(rhs:Number,delta:Number=0):Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>close_to?</strong>(rhs : <a href="Number.html">Number</a>, delta : <a href="Number.html">Number</a> = <span class="n">0</span>) : Bool
+
+        <a class="method-permalink" href="#close_to%3F%28rhs%3ANumber%2Cdelta%3ANumber%3D0%29%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if numbers are within <em>delta</em> from each other, else
+<code>false</code>.</p>
+<pre><code class="language-crystal"><span class="n">1.0</span>.close_to?(<span class="n">1.0</span>)                          <span class="c"># =&gt; true</span>
+<span class="n">1.0_f32</span>.close_to?(<span class="n">1.0</span>)                      <span class="c"># =&gt; true</span>
+<span class="n">1.0</span>.close_to?(<span class="n">1.0</span> <span class="o">+</span> <span class="t">Float64</span><span class="t">::</span><span class="t">EPSILON</span>)       <span class="c"># =&gt; true</span>
+<span class="n">1.0_f32</span>.close_to?(<span class="n">1.0</span> <span class="o">+</span> <span class="t">Float32</span><span class="t">::</span><span class="t">EPSILON</span>)   <span class="c"># =&gt; true</span>
+<span class="n">1.0</span>.close_to?(<span class="n">1.0005</span>, <span class="n">1e-3</span>)                 <span class="c"># =&gt; true</span>
+<span class="n">1.0</span>.close_to?(<span class="n">1.0</span> <span class="o">+</span> <span class="t">Float64</span><span class="t">::</span><span class="t">EPSILON</span><span class="o">*</span><span class="n">2</span>)     <span class="c"># =&gt; false</span>
+<span class="n">1.0_f32</span>.close_to?(<span class="n">1.0</span> <span class="o">+</span> <span class="t">Float32</span><span class="t">::</span><span class="t">EPSILON</span><span class="o">*</span><span class="n">2</span>) <span class="c"># =&gt; false</span>
+<span class="n">1.0</span>.close_to?(<span class="n">1.01</span>, <span class="n">1e-3</span>)                   <span class="c"># =&gt; false</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core_ext/number.cr#L22" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1077,7 +1109,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core_ext/number.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core_ext/number.cr#L26" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1093,7 +1125,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core_ext/number.cr#L13" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core_ext/number.cr#L30" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1109,7 +1141,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core_ext/number.cr#L17" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core_ext/number.cr#L34" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1125,7 +1157,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core_ext/number.cr#L21" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core_ext/number.cr#L38" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1150,7 +1182,7 @@ zero and one.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core_ext/number.cr#L33" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core_ext/number.cr#L50" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1175,7 +1207,7 @@ zero and one.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core_ext/number.cr#L38" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core_ext/number.cr#L55" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1199,7 +1231,7 @@ zero and one.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core_ext/number.cr#L47" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core_ext/number.cr#L64" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1223,7 +1255,7 @@ zero and one.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/core_ext/number.cr#L52" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core_ext/number.cr#L69" target="_blank">View source</a>]
         
       </div>
     </div>

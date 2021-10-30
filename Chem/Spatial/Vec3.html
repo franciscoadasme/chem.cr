@@ -441,11 +441,6 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/Basis" data-name="chem::spatial::basis">
-      <a href="../../Chem/Spatial/Basis.html">Basis</a>
-      
-    </li>
-  
   <li class=" " data-id="chem.cr/Chem/Spatial/Bounds" data-name="chem::spatial::bounds">
       <a href="../../Chem/Spatial/Bounds.html">Bounds</a>
       
@@ -843,21 +838,28 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/affine.cr#L205" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L302" target="_blank">
+        chem/core/lattice.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/affine.cr#L205" target="_blank">
         chem/spatial/affine.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/quat.cr#L286" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/quat.cr#L286" target="_blank">
         chem/spatial/quat.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L2" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L2" target="_blank">
         chem/spatial/vec3.cr
       </a>
     
@@ -1140,30 +1142,16 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#to_cartesian%28basis%3ABasis%29%3Aself-instance-method" class="signature"><strong>#to_cartesian</strong>(basis : Basis) : <span class="k">self</span></a>
+        <a href="#to_cart%28lattice%3ALattice%29%3Aself-instance-method" class="signature"><strong>#to_cart</strong>(lattice : Lattice) : <span class="k">self</span></a>
         
-          <div class="summary"><p>Returns a vector in Cartesian coordinates relative to <em>basis</em>.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#to_cartesian%28lattice%3ALattice%29%3Aself-instance-method" class="signature"><strong>#to_cartesian</strong>(lattice : Lattice) : <span class="k">self</span></a>
-        
-          <div class="summary"><p>Returns a vector in Cartesian coordinates relative to <em>lattice</em>.</p></div>
+          <div class="summary"><p>Returns a vector in Cartesian coordinates relative to <em>lattice</em> (see <code><a href="../../Chem/Lattice.html#cart%28vec%3AVec3%29%3AVec3-instance-method">Lattice#cart</a></code>).</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_fractional%28basis%3ABasis%29%3Aself-instance-method" class="signature"><strong>#to_fractional</strong>(basis : Basis) : <span class="k">self</span></a>
+        <a href="#to_fract%28lattice%3ALattice%29%3Aself-instance-method" class="signature"><strong>#to_fract</strong>(lattice : Lattice) : <span class="k">self</span></a>
         
-          <div class="summary"><p>Returns a vector in fractional coordinates relative to <em>basis</em>.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#to_fractional%28lattice%3ALattice%29%3Aself-instance-method" class="signature"><strong>#to_fractional</strong>(lattice : Lattice) : <span class="k">self</span></a>
-        
-          <div class="summary"><p>Returns a vector in fractional coordinates relative to <em>lattice</em>.</p></div>
+          <div class="summary"><p>Returns a vector in fractional coordinates relative to <em>lattice</em> (see <code><a href="../../Chem/Lattice.html#fract%28vec%3AVec3%29%3AVec3-instance-method">Lattice#fract</a></code>).</p></div>
         
       </li>
     
@@ -1205,7 +1193,7 @@
       <li class="entry-summary">
         <a href="#wrap%28aroundcenter%3Aself%29%3Aself-instance-method" class="signature"><strong>#wrap</strong>(around center : <span class="k">self</span>) : <span class="k">self</span></a>
         
-          <div class="summary"><p>Returns the vector by wrapping into the unit cell centered at <em>center</em>.</p></div>
+          <div class="summary"><p>Returns the vector by wrapping into the primary unit cell centered at <em>center</em>.</p></div>
         
       </li>
     
@@ -1359,7 +1347,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L16" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L16" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1380,7 +1368,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L11" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L11" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1401,7 +1389,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L21" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L21" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1422,7 +1410,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L27" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L27" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1458,7 +1446,7 @@ applies the inverse transformation to the vector.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/affine.cr#L208" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/affine.cr#L208" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1480,7 +1468,7 @@ applies the inverse transformation to the vector.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L42" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L42" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1502,7 +1490,7 @@ applies the inverse transformation to the vector.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L42" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L42" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1524,7 +1512,7 @@ applies the inverse transformation to the vector.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/quat.cr#L289" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/quat.cr#L289" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1546,7 +1534,7 @@ applies the inverse transformation to the vector.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L42" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L42" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1568,7 +1556,7 @@ applies the inverse transformation to the vector.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L42" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L42" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1590,7 +1578,7 @@ applies the inverse transformation to the vector.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L42" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L42" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1612,7 +1600,7 @@ applies the inverse transformation to the vector.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L42" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L42" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1634,7 +1622,7 @@ applies the inverse transformation to the vector.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L42" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L42" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1656,7 +1644,7 @@ applies the inverse transformation to the vector.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L42" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L42" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1677,7 +1665,7 @@ applies the inverse transformation to the vector.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L72" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L72" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1699,7 +1687,7 @@ applies the inverse transformation to the vector.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L42" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L42" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1721,7 +1709,7 @@ applies the inverse transformation to the vector.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L42" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L42" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1743,7 +1731,7 @@ applies the inverse transformation to the vector.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L33" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L33" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1764,7 +1752,7 @@ applies the inverse transformation to the vector.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L77" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L77" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1785,7 +1773,7 @@ applies the inverse transformation to the vector.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L82" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L82" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1811,7 +1799,7 @@ from each other, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L95" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L95" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1832,7 +1820,7 @@ from each other, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L102" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L102" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1853,7 +1841,7 @@ from each other, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L111" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L111" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1885,7 +1873,7 @@ vec.image(lat, <span class="n">1</span>, <span class="n">1</span>, <span class="
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L142" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L318" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1910,7 +1898,7 @@ vec.image <span class="n">-1</span>, <span class="n">1</span>, <span class="n">-
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L123" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L123" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1932,7 +1920,7 @@ negation operator.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L148" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L129" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1956,7 +1944,7 @@ transformations.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L159" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L140" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1980,7 +1968,7 @@ to perform non-standard transformations.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L170" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L151" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2006,7 +1994,7 @@ v.abs                         <span class="c"># =&gt; 1.0</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L183" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L164" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2033,7 +2021,7 @@ a.normalize.close_to? b.normalize <span class="c"># =&gt; true</span></code></pr
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L197" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L178" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2054,7 +2042,7 @@ a.normalize.close_to? b.normalize <span class="c"># =&gt; true</span></code></pr
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L202" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L183" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2076,7 +2064,7 @@ to <em>normal</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L209" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L190" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2103,7 +2091,7 @@ b.normalize.close_to?(a.normalize) <span class="c"># =&gt; true</span></code></p
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L223" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L204" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2124,7 +2112,7 @@ b.normalize.close_to?(a.normalize) <span class="c"># =&gt; true</span></code></p
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L229" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L210" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2146,95 +2134,53 @@ b.normalize.close_to?(a.normalize) <span class="c"># =&gt; true</span></code></p
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L238" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L219" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="to_cartesian(basis:Basis):self-instance-method">
+    <div class="entry-detail" id="to_cart(lattice:Lattice):self-instance-method">
       <div class="signature">
         
-        def <strong>to_cartesian</strong>(basis : <a href="../../Chem/Spatial/Basis.html">Basis</a>) : <span class="k">self</span>
+        def <strong>to_cart</strong>(lattice : <a href="../../Chem/Lattice.html">Lattice</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#to_cartesian%28basis%3ABasis%29%3Aself-instance-method">#</a>
+        <a class="method-permalink" href="#to_cart%28lattice%3ALattice%29%3Aself-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Returns a vector in Cartesian coordinates relative to <em>basis</em>. The
-vector is assumed to be expressed in fractional coordinates.</p>
+          <p>Returns a vector in Cartesian coordinates relative to <em>lattice</em>
+(see <code><a href="../../Chem/Lattice.html#cart%28vec%3AVec3%29%3AVec3-instance-method">Lattice#cart</a></code>). The vector is assumed to be expressed in
+fractional coordinates.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L244" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L325" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="to_cartesian(lattice:Lattice):self-instance-method">
+    <div class="entry-detail" id="to_fract(lattice:Lattice):self-instance-method">
       <div class="signature">
         
-        def <strong>to_cartesian</strong>(lattice : <a href="../../Chem/Lattice.html">Lattice</a>) : <span class="k">self</span>
+        def <strong>to_fract</strong>(lattice : <a href="../../Chem/Lattice.html">Lattice</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#to_cartesian%28lattice%3ALattice%29%3Aself-instance-method">#</a>
+        <a class="method-permalink" href="#to_fract%28lattice%3ALattice%29%3Aself-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Returns a vector in Cartesian coordinates relative to <em>lattice</em>.
-The vector is assumed to be expressed in fractional coordinates.</p>
+          <p>Returns a vector in fractional coordinates relative to <em>lattice</em>
+(see <code><a href="../../Chem/Lattice.html#fract%28vec%3AVec3%29%3AVec3-instance-method">Lattice#fract</a></code>). The vector is assumed to be expressed in
+Cartesian coordinates.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L250" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="to_fractional(basis:Basis):self-instance-method">
-      <div class="signature">
-        
-        def <strong>to_fractional</strong>(basis : <a href="../../Chem/Spatial/Basis.html">Basis</a>) : <span class="k">self</span>
-
-        <a class="method-permalink" href="#to_fractional%28basis%3ABasis%29%3Aself-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Returns a vector in fractional coordinates relative to <em>basis</em>.
-The vector is assumed to be expressed in Cartesian coordinates.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L256" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="to_fractional(lattice:Lattice):self-instance-method">
-      <div class="signature">
-        
-        def <strong>to_fractional</strong>(lattice : <a href="../../Chem/Lattice.html">Lattice</a>) : <span class="k">self</span>
-
-        <a class="method-permalink" href="#to_fractional%28lattice%3ALattice%29%3Aself-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Returns a vector in fractional coordinates relative to <em>lattice</em>.
-The vector is assumed to be expressed in Cartesian coordinates.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L262" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L332" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2256,7 +2202,7 @@ The vector is assumed to be expressed in Cartesian coordinates.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/quat.cr#L295" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/quat.cr#L295" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2281,7 +2227,7 @@ The vector is assumed to be expressed in Cartesian coordinates.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L266" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L223" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2302,7 +2248,7 @@ The vector is assumed to be expressed in Cartesian coordinates.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L278" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L235" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2323,7 +2269,7 @@ The vector is assumed to be expressed in Cartesian coordinates.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L283" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L240" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2346,7 +2292,7 @@ coordinates.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L310" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L345" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2361,15 +2307,15 @@ coordinates.</p>
       
         <div class="doc">
           
-          <p>Returns the vector by wrapping into the unit cell centered at
-<em>center</em>. The vector is assumed to be expressed in fractional
+          <p>Returns the vector by wrapping into the primary unit cell centered
+at <em>center</em>. The vector is assumed to be expressed in fractional
 coordinates.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L296" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L253" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2391,7 +2337,7 @@ assumed to be expressed in Cartesian coordinates.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L303" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L338" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2413,7 +2359,7 @@ vector is assumed to be expressed in fractional coordinates.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L289" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L246" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2434,7 +2380,7 @@ vector is assumed to be expressed in fractional coordinates.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L4" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L4" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2455,7 +2401,7 @@ vector is assumed to be expressed in fractional coordinates.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L315" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L259" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2476,7 +2422,7 @@ vector is assumed to be expressed in fractional coordinates.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L320" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L264" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2497,7 +2443,7 @@ vector is assumed to be expressed in fractional coordinates.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L325" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L269" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2518,7 +2464,7 @@ vector is assumed to be expressed in fractional coordinates.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2539,7 +2485,7 @@ vector is assumed to be expressed in fractional coordinates.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L330" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L274" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2560,7 +2506,7 @@ vector is assumed to be expressed in fractional coordinates.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L335" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L279" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2581,7 +2527,7 @@ vector is assumed to be expressed in fractional coordinates.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L8" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2602,7 +2548,7 @@ vector is assumed to be expressed in fractional coordinates.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L340" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L284" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2623,7 +2569,7 @@ vector is assumed to be expressed in fractional coordinates.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/22a3104f91796292de98f1e3cccf0da00d8badcd/src/chem/spatial/vec3.cr#L345" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/spatial/vec3.cr#L289" target="_blank">View source</a>]
         
       </div>
     </div>
