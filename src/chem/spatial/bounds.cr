@@ -83,7 +83,10 @@ module Chem::Spatial
     # bounds.includes? Bounds.new(Vec3[-1, 2, -4], Size3[5, 4, 6])) # => false
     # ```
     def includes?(bounds : Bounds) : Bool
-      bounds.vertices.all? &.in?(self)
+      bounds.each_vertex do |vec|
+        return false unless vec.in?(self)
+      end
+      true
     end
 
     def includes?(vec : Vec3) : Bool
