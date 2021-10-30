@@ -223,7 +223,7 @@ describe Chem::Lattice do
 
   describe "#inspect" do
     it "returns a delimited string representation" do
-      lattice = Chem::Lattice.new Vec3[1, 2, 3], Vec3[4, 5, 6], Vec3[7, 8, 9]
+      lattice = Lattice.new Vec3[1, 2, 3], Vec3[4, 5, 6], Vec3[7, 8, 9]
       lattice.inspect.should eq "<Lattice Vec3[ 1  2  3 ], Vec3[ 4  5  6 ], Vec3[ 7  8  9 ]>"
     end
   end
@@ -342,6 +342,31 @@ describe Chem::Lattice do
     it "returns the cell volume" do
       lattice = Lattice.hexagonal(10, 15)
       lattice.volume.should be_close 1299.038105676658, 1e-12
+    end
+  end
+
+  describe "#wrap" do
+    it "wraps a vector" do
+      lattice = Lattice.new({15, 20, 9})
+
+      lattice.wrap(Vec3[0, 0, 0]).should eq Vec3[0, 0, 0]
+      lattice.wrap(Vec3[15, 20, 9]).should be_close Vec3[15, 20, 9], 1e-12
+      lattice.wrap(Vec3[10, 10, 5]).should be_close Vec3[10, 10, 5], 1e-12
+      lattice.wrap(Vec3[15.5, 21, -5]).should be_close Vec3[0.5, 1, 4], 1e-12
+    end
+
+    it "wraps a vector around a center" do
+      lattice = Lattice.new({32, 20, 19})
+      center = Vec3[32, 20, 19]
+
+      [
+        {Vec3[0, 0, 0], Vec3[32, 20, 19]},
+        {Vec3[32, 20, 19], Vec3[32, 20, 19]},
+        {Vec3[20.285, 14.688, 16.487], Vec3[20.285, 14.688, 16.487]},
+        {Vec3[23.735, 19.25, 1.716], Vec3[23.735, 19.25, 20.716]},
+      ].each do |vec, expected|
+        lattice.wrap(vec, center).should be_close expected, 1e-12
+      end
     end
   end
 end

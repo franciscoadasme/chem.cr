@@ -279,6 +279,19 @@ module Chem
       @basis.det
     end
 
+    # Returns the vector by wrapping into the primary unit cell. The
+    # vector is assumed to be expressed in Cartesian coordinates.
+    def wrap(vec : Spatial::Vec3) : Spatial::Vec3
+      cart fract(vec).wrap
+    end
+
+    # Returns the vector by wrapping into the primary unit cell centered
+    # at *center*. The vector is assumed to be expressed in Cartesian
+    # coordinates.
+    def wrap(vec : Spatial::Vec3, around center : Spatial::Vec3) : Spatial::Vec3
+      cart fract(vec).wrap(fract(center))
+    end
+
     # Inverted matrix basis.
     private def inv_basis : Spatial::Mat3
       @inv_basis ||= @basis.inv
@@ -323,13 +336,13 @@ struct Chem::Spatial::Vec3
   # Returns the vector by wrapping into *lattice*. The vector is
   # assumed to be expressed in Cartesian coordinates.
   def wrap(lattice : Lattice) : self
-    to_fract(lattice).wrap.to_cart lattice
+    lattice.wrap self
   end
 
   # Returns the vector by wrapping into *lattice* centered at
   # *center*. The vector is assumed to be expressed in Cartesian
   # coordinates.
   def wrap(lattice : Lattice, around center : self) : self
-    to_fract(lattice).wrap(center.to_fract(lattice)).to_cart lattice
+    lattice.wrap self, center
   end
 end
