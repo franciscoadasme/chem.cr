@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../js/doc.js"></script>
 
   <meta name="repository-name" content="chem.cr">
-  <title>Chem::Lattice - chem.cr master</title>
+  <title>Chem::UnitCell - chem.cr master</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
@@ -248,11 +248,6 @@
   
 </ul>
 
-      
-    </li>
-  
-  <li class=" current" data-id="chem.cr/Chem/Lattice" data-name="chem::lattice">
-      <a href="../Chem/Lattice.html">Lattice</a>
       
     </li>
   
@@ -641,6 +636,11 @@
       
     </li>
   
+  <li class=" current" data-id="chem.cr/Chem/UnitCell" data-name="chem::unitcell">
+      <a href="../Chem/UnitCell.html">UnitCell</a>
+      
+    </li>
+  
   <li class="parent " data-id="chem.cr/Chem/VASP" data-name="chem::vasp">
       <a href="../Chem/VASP.html">VASP</a>
       
@@ -805,12 +805,12 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">class</span> Chem::Lattice
+  <span class="kind">class</span> Chem::UnitCell
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Chem/Lattice.html">Chem::Lattice</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Chem/UnitCell.html">Chem::UnitCell</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
@@ -830,7 +830,7 @@ correspond to a basis vector (see <code><a href="../Chem/Spatial/Mat3.html#basis
 coordinates are expressed in Cartesian space (angstroms). In this
 way, the basis matrix can be used to transform from Cartesian to
 fractional coordinates, and viceversa, by matrix multiplication (see
-<code><a href="../Chem/Lattice.html#cart%28vec%3AVec3%29%3AVec3-instance-method">#cart</a></code> and <code><a href="../Chem/Lattice.html#fract%28vec%3AVec3%29%3AVec3-instance-method">#fract</a></code>).</p>
+<code><a href="../Chem/UnitCell.html#cart%28vec%3AVec3%29%3AVec3-instance-method">#cart</a></code> and <code><a href="../Chem/UnitCell.html#fract%28vec%3AVec3%29%3AVec3-instance-method">#fract</a></code>).</p>
 
 
 
@@ -855,8 +855,8 @@ fractional coordinates, and viceversa, by matrix multiplication (see
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L10" target="_blank">
-        chem/core/lattice.cr
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L10" target="_blank">
+        chem/core/unit_cell.cr
       </a>
     
     <br/>
@@ -879,63 +879,63 @@ fractional coordinates, and viceversa, by matrix multiplication (see
       <li class="entry-summary">
         <a href="#cubic%28a%3ANumber%29%3Aself-class-method" class="signature"><strong>.cubic</strong>(a : Number) : <span class="k">self</span></a>
         
-          <div class="summary"><p>Returns a cubic lattice (<em>a</em> = <em>b</em> = <em>c</em> and <em>α</em> = <em>β</em> = <em>γ</em> = 90°).</p></div>
+          <div class="summary"><p>Returns a cubic unit cell (<em>a</em> = <em>b</em> = <em>c</em> and <em>α</em> = <em>β</em> = <em>γ</em> = 90°).</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#hexagonal%28a%3ANumber%2Cc%3ANumber%29%3Aself-class-method" class="signature"><strong>.hexagonal</strong>(a : Number, c : Number) : <span class="k">self</span></a>
         
-          <div class="summary"><p>Returns a hexagonal lattice (<em>a</em> = <em>b</em>, <em>α</em> = <em>β</em> = 90°, and <em>γ</em> = 120°).</p></div>
+          <div class="summary"><p>Returns a hexagonal unit cell (<em>a</em> = <em>b</em>, <em>α</em> = <em>β</em> = 90°, and <em>γ</em> = 120°).</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#monoclinic%28a%3ANumber%2Cc%3ANumber%2Cbeta%3ANumber%29%3Aself-class-method" class="signature"><strong>.monoclinic</strong>(a : Number, c : Number, beta : Number) : <span class="k">self</span></a>
         
-          <div class="summary"><p>Returns a monoclinic lattice (<em>a</em> ≠ <em>c</em>, <em>α</em> = <em>γ</em> = 90°, and <em>β</em> ≠ 90°).</p></div>
+          <div class="summary"><p>Returns a monoclinic unit cell (<em>a</em> ≠ <em>c</em>, <em>α</em> = <em>γ</em> = 90°, and <em>β</em> ≠ 90°).</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#new%28i%3AVec3%2Cj%3AVec3%2Ck%3AVec3%29%3Aself-class-method" class="signature"><strong>.new</strong>(i : Vec3, j : Vec3, k : Vec3) : <span class="k">self</span></a>
         
-          <div class="summary"><p>Returns a new <code><a href="../Chem/Lattice.html">Lattice</a></code> with the given basis vectors.</p></div>
+          <div class="summary"><p>Returns a new <code><a href="../Chem/UnitCell.html">UnitCell</a></code> with the given basis vectors.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#new%28basis%3ASpatial%3A%3AMat3%29-class-method" class="signature"><strong>.new</strong>(basis : Spatial::Mat3)</a>
         
-          <div class="summary"><p>Creates a new <code><a href="../Chem/Lattice.html">Lattice</a></code> with the given basis.</p></div>
+          <div class="summary"><p>Creates a new <code><a href="../Chem/UnitCell.html">UnitCell</a></code> with the given basis.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#new%28size%3ANumberTriple%7CSize3%2Cangles%3ANumberTriple%3D%7B90%2C90%2C90%7D%29%3Aself-class-method" class="signature"><strong>.new</strong>(size : NumberTriple | Size3, angles : NumberTriple = {<span class="n">90</span>, <span class="n">90</span>, <span class="n">90</span>}) : <span class="k">self</span></a>
         
-          <div class="summary"><p>Returns a new <code><a href="../Chem/Lattice.html">Lattice</a></code> with the given unit cell parameters (lengths in angstroms and angles in degrees).</p></div>
+          <div class="summary"><p>Returns a new <code><a href="../Chem/UnitCell.html">UnitCell</a></code> with the given unit cell parameters (lengths in angstroms and angles in degrees).</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#orthorhombic%28a%3ANumber%2Cb%3ANumber%2Cc%3ANumber%29%3Aself-class-method" class="signature"><strong>.orthorhombic</strong>(a : Number, b : Number, c : Number) : <span class="k">self</span></a>
         
-          <div class="summary"><p>Returns an orthorhombic lattice (<em>a</em> ≠ <em>b</em> ≠ <em>c</em> and <em>α</em> = <em>β</em> = <em>γ</em> = 90°).</p></div>
+          <div class="summary"><p>Returns an orthorhombic unit cell (<em>a</em> ≠ <em>b</em> ≠ <em>c</em> and <em>α</em> = <em>β</em> = <em>γ</em> = 90°).</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#rhombohedral%28a%3ANumber%2Calpha%3ANumber%29%3Aself-class-method" class="signature"><strong>.rhombohedral</strong>(a : Number, alpha : Number) : <span class="k">self</span></a>
         
-          <div class="summary"><p>Returns an rhombohedral lattice (<em>a</em> = <em>b</em> = <em>c</em> and <em>α</em> = <em>β</em> = <em>γ</em> ≠ 90°).</p></div>
+          <div class="summary"><p>Returns an rhombohedral unit cell (<em>a</em> = <em>b</em> = <em>c</em> and <em>α</em> = <em>β</em> = <em>γ</em> ≠ 90°).</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#tetragonal%28a%3ANumber%2Cc%3ANumber%29%3Aself-class-method" class="signature"><strong>.tetragonal</strong>(a : Number, c : Number) : <span class="k">self</span></a>
         
-          <div class="summary"><p>Returns an tetragonal lattice (<em>a</em> = <em>b</em> ≠ <em>c</em> and <em>α</em> = <em>β</em> = <em>γ</em> = 90°).</p></div>
+          <div class="summary"><p>Returns an tetragonal unit cell (<em>a</em> = <em>b</em> ≠ <em>c</em> and <em>α</em> = <em>β</em> = <em>γ</em> = 90°).</p></div>
         
       </li>
     
@@ -958,7 +958,7 @@ fractional coordinates, and viceversa, by matrix multiplication (see
       <li class="entry-summary">
         <a href="#%2A%28value%3ANumber%29%3Aself-instance-method" class="signature"><strong>#*</strong>(value : Number) : <span class="k">self</span></a>
         
-          <div class="summary"><p>Returns a lattice with the basis vectors multiplied by <em>value</em>.</p></div>
+          <div class="summary"><p>Returns a unit cell with the basis vectors multiplied by <em>value</em>.</p></div>
         
       </li>
     
@@ -1049,7 +1049,7 @@ fractional coordinates, and viceversa, by matrix multiplication (see
       <li class="entry-summary">
         <a href="#cubic%3F%3ABool-instance-method" class="signature"><strong>#cubic?</strong> : Bool</a>
         
-          <div class="summary"><p>Returns <code>true</code> if the lattice is cubic (<em>a</em> = <em>b</em> = <em>c</em> and <em>α</em> = <em>β</em> = <em>γ</em> = 90°), else <code>false</code>.</p></div>
+          <div class="summary"><p>Returns <code>true</code> if the unit cell is cubic (<em>a</em> = <em>b</em> = <em>c</em> and <em>α</em> = <em>β</em> = <em>γ</em> = 90°), else <code>false</code>.</p></div>
         
       </li>
     
@@ -1070,7 +1070,7 @@ fractional coordinates, and viceversa, by matrix multiplication (see
       <li class="entry-summary">
         <a href="#hexagonal%3F%3ABool-instance-method" class="signature"><strong>#hexagonal?</strong> : Bool</a>
         
-          <div class="summary"><p>Returns <code>true</code> if the lattice is hexagonal (<em>a</em> = <em>b</em>, <em>α</em> = <em>β</em> = 90°, and <em>γ</em> = 120°), else <code>false</code>.</p></div>
+          <div class="summary"><p>Returns <code>true</code> if the unit cell is hexagonal (<em>a</em> = <em>b</em>, <em>α</em> = <em>β</em> = 90°, and <em>γ</em> = 120°), else <code>false</code>.</p></div>
         
       </li>
     
@@ -1126,28 +1126,28 @@ fractional coordinates, and viceversa, by matrix multiplication (see
       <li class="entry-summary">
         <a href="#monoclinic%3F%3ABool-instance-method" class="signature"><strong>#monoclinic?</strong> : Bool</a>
         
-          <div class="summary"><p>Returns <code>true</code> if the lattice is monoclinic (<em>a</em> ≠ <em>c</em>, <em>α</em> = <em>γ</em> = 90°, and <em>β</em> ≠ 90°), else <code>false</code>.</p></div>
+          <div class="summary"><p>Returns <code>true</code> if the unit cell is monoclinic (<em>a</em> ≠ <em>c</em>, <em>α</em> = <em>γ</em> = 90°, and <em>β</em> ≠ 90°), else <code>false</code>.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#orthogonal%3F%3ABool-instance-method" class="signature"><strong>#orthogonal?</strong> : Bool</a>
         
-          <div class="summary"><p>Returns <code>true</code> if the lattice is orthogonal (<em>α</em> = <em>β</em> = <em>γ</em> = 90°), else <code>false</code>.</p></div>
+          <div class="summary"><p>Returns <code>true</code> if the unit cell is orthogonal (<em>α</em> = <em>β</em> = <em>γ</em> = 90°), else <code>false</code>.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#orthorhombic%3F%3ABool-instance-method" class="signature"><strong>#orthorhombic?</strong> : Bool</a>
         
-          <div class="summary"><p>Returns <code>true</code> if the lattice is orthorhombic (<em>a</em> ≠ <em>b</em> ≠ <em>c</em> and <em>α</em> = <em>β</em> = <em>γ</em> = 90°), else <code>false</code>.</p></div>
+          <div class="summary"><p>Returns <code>true</code> if the unit cell is orthorhombic (<em>a</em> ≠ <em>b</em> ≠ <em>c</em> and <em>α</em> = <em>β</em> = <em>γ</em> = 90°), else <code>false</code>.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#rhombohedral%3F%3ABool-instance-method" class="signature"><strong>#rhombohedral?</strong> : Bool</a>
         
-          <div class="summary"><p>Returns <code>true</code> if the lattice is rhombohedral (<em>a</em> = <em>b</em> = <em>c</em> and <em>α</em> = <em>β</em> = <em>γ</em> ≠ 90°), else <code>false</code>.</p></div>
+          <div class="summary"><p>Returns <code>true</code> if the unit cell is rhombohedral (<em>a</em> = <em>b</em> = <em>c</em> and <em>α</em> = <em>β</em> = <em>γ</em> ≠ 90°), else <code>false</code>.</p></div>
         
       </li>
     
@@ -1161,14 +1161,14 @@ fractional coordinates, and viceversa, by matrix multiplication (see
       <li class="entry-summary">
         <a href="#tetragonal%3F%3ABool-instance-method" class="signature"><strong>#tetragonal?</strong> : Bool</a>
         
-          <div class="summary"><p>Returns <code>true</code> if the lattice is tetragonal (<em>a</em> = <em>b</em> ≠ <em>c</em> and <em>α</em> = <em>β</em> = <em>γ</em> = 90°), else <code>false</code>.</p></div>
+          <div class="summary"><p>Returns <code>true</code> if the unit cell is tetragonal (<em>a</em> = <em>b</em> ≠ <em>c</em> and <em>α</em> = <em>β</em> = <em>γ</em> = 90°), else <code>false</code>.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#triclinic%3F%3ABool-instance-method" class="signature"><strong>#triclinic?</strong> : Bool</a>
         
-          <div class="summary"><p>Returns <code>true</code> if the lattice is triclinic (not orthogonal, hexagonal, monoclinic, nor rhombohedral), else <code>false</code>.</p></div>
+          <div class="summary"><p>Returns <code>true</code> if the unit cell is triclinic (not orthogonal, hexagonal, monoclinic, nor rhombohedral), else <code>false</code>.</p></div>
         
       </li>
     
@@ -1243,14 +1243,14 @@ fractional coordinates, and viceversa, by matrix multiplication (see
       
         <div class="doc">
           
-          <p>Returns a cubic lattice (<em>a</em> = <em>b</em> = <em>c</em> and <em>α</em> = <em>β</em> = <em>γ</em> =
+          <p>Returns a cubic unit cell (<em>a</em> = <em>b</em> = <em>c</em> and <em>α</em> = <em>β</em> = <em>γ</em> =
 90°).</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L60" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L60" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1265,14 +1265,14 @@ fractional coordinates, and viceversa, by matrix multiplication (see
       
         <div class="doc">
           
-          <p>Returns a hexagonal lattice (<em>a</em> = <em>b</em>, <em>α</em> = <em>β</em> = 90°, and <em>γ</em> =
-120°).</p>
+          <p>Returns a hexagonal unit cell (<em>a</em> = <em>b</em>, <em>α</em> = <em>β</em> = 90°, and <em>γ</em>
+= 120°).</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L66" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L66" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1287,14 +1287,14 @@ fractional coordinates, and viceversa, by matrix multiplication (see
       
         <div class="doc">
           
-          <p>Returns a monoclinic lattice (<em>a</em> ≠ <em>c</em>, <em>α</em> = <em>γ</em> = 90°, and <em>β</em>
-≠ 90°).</p>
+          <p>Returns a monoclinic unit cell (<em>a</em> ≠ <em>c</em>, <em>α</em> = <em>γ</em> = 90°, and
+<em>β</em> ≠ 90°).</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L72" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L72" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1309,13 +1309,13 @@ fractional coordinates, and viceversa, by matrix multiplication (see
       
         <div class="doc">
           
-          <p>Returns a new <code><a href="../Chem/Lattice.html">Lattice</a></code> with the given basis vectors.</p>
+          <p>Returns a new <code><a href="../Chem/UnitCell.html">UnitCell</a></code> with the given basis vectors.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L22" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L22" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1330,13 +1330,13 @@ fractional coordinates, and viceversa, by matrix multiplication (see
       
         <div class="doc">
           
-          <p>Creates a new <code><a href="../Chem/Lattice.html">Lattice</a></code> with the given basis.</p>
+          <p>Creates a new <code><a href="../Chem/UnitCell.html">UnitCell</a></code> with the given basis.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L18" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L18" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1351,7 +1351,7 @@ fractional coordinates, and viceversa, by matrix multiplication (see
       
         <div class="doc">
           
-          <p>Returns a new <code><a href="../Chem/Lattice.html">Lattice</a></code> with the given unit cell parameters
+          <p>Returns a new <code><a href="../Chem/UnitCell.html">UnitCell</a></code> with the given unit cell parameters
 (lengths in angstroms and angles in degrees). Raises
 <code>ArgumentError</code> if any of the lengths or angles is negative.</p>
 <p><span class="flag purple">NOTE</span>  The first basis vector will be aligned to the X axis and the
@@ -1361,7 +1361,7 @@ second basis vector will lie in the XY plane.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L32" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L32" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1376,14 +1376,14 @@ second basis vector will lie in the XY plane.</p>
       
         <div class="doc">
           
-          <p>Returns an orthorhombic lattice (<em>a</em> ≠ <em>b</em> ≠ <em>c</em> and <em>α</em> = <em>β</em> =
+          <p>Returns an orthorhombic unit cell (<em>a</em> ≠ <em>b</em> ≠ <em>c</em> and <em>α</em> = <em>β</em> =
 <em>γ</em> = 90°).</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L78" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L78" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1398,14 +1398,14 @@ second basis vector will lie in the XY plane.</p>
       
         <div class="doc">
           
-          <p>Returns an rhombohedral lattice (<em>a</em> = <em>b</em> = <em>c</em> and <em>α</em> = <em>β</em> =
+          <p>Returns an rhombohedral unit cell (<em>a</em> = <em>b</em> = <em>c</em> and <em>α</em> = <em>β</em> =
 <em>γ</em> ≠ 90°).</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L84" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L84" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1420,14 +1420,14 @@ second basis vector will lie in the XY plane.</p>
       
         <div class="doc">
           
-          <p>Returns an tetragonal lattice (<em>a</em> = <em>b</em> ≠ <em>c</em> and <em>α</em> = <em>β</em> = <em>γ</em>
-= 90°).</p>
+          <p>Returns an tetragonal unit cell (<em>a</em> = <em>b</em> ≠ <em>c</em> and <em>α</em> = <em>β</em> =
+<em>γ</em> = 90°).</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L90" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L90" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1456,13 +1456,13 @@ second basis vector will lie in the XY plane.</p>
       
         <div class="doc">
           
-          <p>Returns a lattice with the basis vectors multiplied by <em>value</em>.</p>
+          <p>Returns a unit cell with the basis vectors multiplied by <em>value</em>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L95" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L95" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1483,7 +1483,7 @@ second basis vector will lie in the XY plane.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L100" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L100" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1504,7 +1504,7 @@ second basis vector will lie in the XY plane.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L105" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L105" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1526,7 +1526,7 @@ vectors.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L112" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L112" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1547,7 +1547,7 @@ vectors.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L117" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L117" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1568,7 +1568,7 @@ vectors.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L122" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L122" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1589,7 +1589,7 @@ vectors.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L127" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L127" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1610,7 +1610,7 @@ vectors.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L12" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L12" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1632,7 +1632,7 @@ vectors.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L134" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L134" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1653,7 +1653,7 @@ vectors.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L139" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L139" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1674,7 +1674,7 @@ vectors.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L144" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L144" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1695,7 +1695,7 @@ vectors.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L149" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L149" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1717,7 +1717,7 @@ given fractional coordinates.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L156" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L156" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1732,14 +1732,14 @@ given fractional coordinates.</p>
       
         <div class="doc">
           
-          <p>Returns <code>true</code> if the lattice is cubic (<em>a</em> = <em>b</em> = <em>c</em> and <em>α</em> =
-<em>β</em> = <em>γ</em> = 90°), else <code>false</code>.</p>
+          <p>Returns <code>true</code> if the unit cell is cubic (<em>a</em> = <em>b</em> = <em>c</em> and <em>α</em>
+= <em>β</em> = <em>γ</em> = 90°), else <code>false</code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L162" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L162" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1761,7 +1761,7 @@ given Cartesian coordinates.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L168" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L168" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1783,7 +1783,7 @@ vectors.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L174" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L174" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1798,14 +1798,14 @@ vectors.</p>
       
         <div class="doc">
           
-          <p>Returns <code>true</code> if the lattice is hexagonal (<em>a</em> = <em>b</em>, <em>α</em> = <em>β</em> =
-90°, and <em>γ</em> = 120°), else <code>false</code>.</p>
+          <p>Returns <code>true</code> if the unit cell is hexagonal (<em>a</em> = <em>b</em>, <em>α</em> = <em>β</em>
+= 90°, and <em>γ</em> = 120°), else <code>false</code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L180" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L180" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1826,7 +1826,7 @@ vectors.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L188" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L188" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1847,7 +1847,7 @@ vectors.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L193" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L193" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1880,7 +1880,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L198" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L198" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1901,7 +1901,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L203" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L203" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1922,7 +1922,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L208" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L208" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1943,7 +1943,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L214" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L214" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1964,7 +1964,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L219" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L219" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1979,14 +1979,14 @@ and the values of all instance variables.</p>
       
         <div class="doc">
           
-          <p>Returns <code>true</code> if the lattice is monoclinic (<em>a</em> ≠ <em>c</em>, <em>α</em> = <em>γ</em>
-= 90°, and <em>β</em> ≠ 90°), else <code>false</code>.</p>
+          <p>Returns <code>true</code> if the unit cell is monoclinic (<em>a</em> ≠ <em>c</em>, <em>α</em> =
+<em>γ</em> = 90°, and <em>β</em> ≠ 90°), else <code>false</code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L226" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L226" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2001,14 +2001,14 @@ and the values of all instance variables.</p>
       
         <div class="doc">
           
-          <p>Returns <code>true</code> if the lattice is orthogonal (<em>α</em> = <em>β</em> = <em>γ</em> =
+          <p>Returns <code>true</code> if the unit cell is orthogonal (<em>α</em> = <em>β</em> = <em>γ</em> =
 90°), else <code>false</code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L235" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L235" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2023,14 +2023,14 @@ and the values of all instance variables.</p>
       
         <div class="doc">
           
-          <p>Returns <code>true</code> if the lattice is orthorhombic (<em>a</em> ≠ <em>b</em> ≠ <em>c</em> and
-<em>α</em> = <em>β</em> = <em>γ</em> = 90°), else <code>false</code>.</p>
+          <p>Returns <code>true</code> if the unit cell is orthorhombic (<em>a</em> ≠ <em>b</em> ≠ <em>c</em>
+and <em>α</em> = <em>β</em> = <em>γ</em> = 90°), else <code>false</code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L243" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L243" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2045,14 +2045,14 @@ and the values of all instance variables.</p>
       
         <div class="doc">
           
-          <p>Returns <code>true</code> if the lattice is rhombohedral (<em>a</em> = <em>b</em> = <em>c</em> and
-<em>α</em> = <em>β</em> = <em>γ</em> ≠ 90°), else <code>false</code>.</p>
+          <p>Returns <code>true</code> if the unit cell is rhombohedral (<em>a</em> = <em>b</em> = <em>c</em>
+and <em>α</em> = <em>β</em> = <em>γ</em> ≠ 90°), else <code>false</code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L252" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L252" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2073,7 +2073,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L261" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L261" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2088,14 +2088,14 @@ and the values of all instance variables.</p>
       
         <div class="doc">
           
-          <p>Returns <code>true</code> if the lattice is tetragonal (<em>a</em> = <em>b</em> ≠ <em>c</em> and
+          <p>Returns <code>true</code> if the unit cell is tetragonal (<em>a</em> = <em>b</em> ≠ <em>c</em> and
 <em>α</em> = <em>β</em> = <em>γ</em> = 90°), else <code>false</code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L267" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L267" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2110,14 +2110,14 @@ and the values of all instance variables.</p>
       
         <div class="doc">
           
-          <p>Returns <code>true</code> if the lattice is triclinic (not orthogonal,
+          <p>Returns <code>true</code> if the unit cell is triclinic (not orthogonal,
 hexagonal, monoclinic, nor rhombohedral), else <code>false</code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L273" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L273" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2138,7 +2138,7 @@ hexagonal, monoclinic, nor rhombohedral), else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L278" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L278" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2161,7 +2161,7 @@ coordinates.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L291" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L291" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2183,7 +2183,7 @@ vector is assumed to be expressed in Cartesian coordinates.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/6a0e524cb9d3c18f096f8f2b73c20190d1d63d17/src/chem/core/lattice.cr#L284" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/core/unit_cell.cr#L284" target="_blank">View source</a>]
         
       </div>
     </div>
