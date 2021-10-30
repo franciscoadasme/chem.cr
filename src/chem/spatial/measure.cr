@@ -3,14 +3,14 @@ module Chem::Spatial
     Math.atan2(a.cross(b).abs, a.dot(b)).degrees
   end
 
-  def self.angle(a : Atom, b : Atom, c : Atom, lattice : Lattice? = nil) : Float64
-    angle a.coords, b.coords, c.coords, lattice
+  def self.angle(a : Atom, b : Atom, c : Atom, cell : UnitCell? = nil) : Float64
+    angle a.coords, b.coords, c.coords, cell
   end
 
-  def self.angle(a : Vec3, b : Vec3, c : Vec3, lattice : Lattice? = nil) : Float64
-    if lattice
-      a = a.wrap lattice, around: b
-      c = c.wrap lattice, around: b
+  def self.angle(a : Vec3, b : Vec3, c : Vec3, cell : UnitCell? = nil) : Float64
+    if cell
+      a = a.wrap cell, around: b
+      c = c.wrap cell, around: b
     end
     angle a - b, c - b
   end
@@ -29,11 +29,11 @@ module Chem::Spatial
                     b : Vec3,
                     c : Vec3,
                     d : Vec3,
-                    lattice : Lattice? = nil) : Float64
-    if lattice
-      a = a.wrap lattice, around: b
-      c = c.wrap lattice, around: b
-      d = d.wrap lattice, around: c
+                    cell : UnitCell? = nil) : Float64
+    if cell
+      a = a.wrap cell, around: b
+      c = c.wrap cell, around: b
+      d = d.wrap cell, around: c
     end
     dihedral b - a, c - b, d - c
   end
@@ -61,17 +61,17 @@ module Chem::Spatial
                     b : Vec3,
                     c : Vec3,
                     d : Vec3,
-                    lattice : Lattice? = nil) : Float64
-    dihedral b, a, c, d, lattice
+                    cell : UnitCell? = nil) : Float64
+    dihedral b, a, c, d, cell
   end
 
-  def self.squared_distance(a : Atom, b : Atom, lattice : Lattice? = nil) : Float64
-    squared_distance a.coords, b.coords, lattice
+  def self.squared_distance(a : Atom, b : Atom, cell : UnitCell? = nil) : Float64
+    squared_distance a.coords, b.coords, cell
   end
 
   @[AlwaysInline]
-  def self.squared_distance(a : Vec3, b : Vec3, lattice : Lattice? = nil) : Float64
-    b = b.wrap lattice, around: a if lattice
+  def self.squared_distance(a : Vec3, b : Vec3, cell : UnitCell? = nil) : Float64
+    b = b.wrap cell, around: a if cell
     (a.x - b.x)**2 + (a.y - b.y)**2 + (a.z - b.z)**2
   end
 end

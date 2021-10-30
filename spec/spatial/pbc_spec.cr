@@ -4,7 +4,7 @@ describe Chem::Spatial::PBC do
   describe "#each_adjacent_image" do
     it "yields each atom in the adjacent periodic images" do
       structure = Chem::Structure.build do
-        lattice 10, 10, 10
+        cell 10, 10, 10
 
         atom :C, Vec3[2.5, 2.5, 2.5]
         atom :H, Vec3[7.5, 2.5, 2.5]
@@ -29,7 +29,7 @@ describe Chem::Spatial::PBC do
       offset = Vec3[-20, 10, 30]
 
       structure = Chem::Structure.build do
-        lattice 10, 10, 10
+        cell 10, 10, 10
 
         atom :C, Vec3[2.5, 2.5, 2.5]
         atom :H, Vec3[7.5, 2.5, 2.5]
@@ -53,7 +53,7 @@ describe Chem::Spatial::PBC do
 
     it "yields each atom in the adjacent periodic images within the given radius" do
       structure = Chem::Structure.build do
-        lattice 10, 10, 10
+        cell 10, 10, 10
 
         atom :C, Vec3[1, 8.5, 3.5]
         atom :H, Vec3[7.5, 1.5, 9.5]
@@ -68,9 +68,9 @@ describe Chem::Spatial::PBC do
       vectors.should be_close expected, 1e-8
     end
 
-    it "yields periodic images within cutoff for a off-center non-orthogonal lattice" do
+    it "yields periodic images within cutoff for a off-center non-orthogonal cell" do
       structure = load_file "5e61--off-center.poscar"
-      lattice = structure.lattice.not_nil!
+      cell = structure.cell.not_nil!
       atoms = structure.atoms
 
       vectors = PBC.adjacent_images(structure, radius: 2)
@@ -81,33 +81,33 @@ describe Chem::Spatial::PBC do
         .sort_by!(&.to_a)
 
       expected = [
-        atoms[29].coords.image(lattice, 0, 0, 1),
-        atoms[29].coords.image(lattice, -1, 0, 0),
-        atoms[29].coords.image(lattice, -1, 0, 1),
-        atoms[65].coords.image(lattice, 0, -1, -1),
-        atoms[65].coords.image(lattice, 0, -1, 0),
-        atoms[65].coords.image(lattice, 0, 0, -1),
-        atoms[65].coords.image(lattice, 1, -1, -1),
-        atoms[65].coords.image(lattice, 1, -1, 0),
-        atoms[65].coords.image(lattice, 1, 0, 0),
-        atoms[65].coords.image(lattice, 1, 0, -1),
-        atoms[115].coords.image(lattice, -1, 0, 0),
-        atoms[115].coords.image(lattice, -1, 0, 1),
-        atoms[115].coords.image(lattice, -1, 1, 0),
-        atoms[115].coords.image(lattice, -1, 1, 1),
-        atoms[115].coords.image(lattice, 0, 0, 1),
-        atoms[115].coords.image(lattice, 0, 1, 0),
-        atoms[115].coords.image(lattice, 0, 1, 1),
-        atoms[126].coords.image(lattice, 1, 0, 0),
-        atoms[174].coords.image(lattice, -1, 0, 0),
-        atoms[174].coords.image(lattice, -1, 1, 0),
-        atoms[174].coords.image(lattice, 0, 1, 0),
-        atoms[187].coords.image(lattice, -1, 0, 0),
-        atoms[187].coords.image(lattice, -1, 0, 1),
-        atoms[187].coords.image(lattice, 0, 0, 1),
-        atoms[192].coords.image(lattice, 0, -1, 0),
-        atoms[192].coords.image(lattice, 1, -1, 0),
-        atoms[192].coords.image(lattice, 1, 0, 0),
+        atoms[29].coords.image(cell, 0, 0, 1),
+        atoms[29].coords.image(cell, -1, 0, 0),
+        atoms[29].coords.image(cell, -1, 0, 1),
+        atoms[65].coords.image(cell, 0, -1, -1),
+        atoms[65].coords.image(cell, 0, -1, 0),
+        atoms[65].coords.image(cell, 0, 0, -1),
+        atoms[65].coords.image(cell, 1, -1, -1),
+        atoms[65].coords.image(cell, 1, -1, 0),
+        atoms[65].coords.image(cell, 1, 0, 0),
+        atoms[65].coords.image(cell, 1, 0, -1),
+        atoms[115].coords.image(cell, -1, 0, 0),
+        atoms[115].coords.image(cell, -1, 0, 1),
+        atoms[115].coords.image(cell, -1, 1, 0),
+        atoms[115].coords.image(cell, -1, 1, 1),
+        atoms[115].coords.image(cell, 0, 0, 1),
+        atoms[115].coords.image(cell, 0, 1, 0),
+        atoms[115].coords.image(cell, 0, 1, 1),
+        atoms[126].coords.image(cell, 1, 0, 0),
+        atoms[174].coords.image(cell, -1, 0, 0),
+        atoms[174].coords.image(cell, -1, 1, 0),
+        atoms[174].coords.image(cell, 0, 1, 0),
+        atoms[187].coords.image(cell, -1, 0, 0),
+        atoms[187].coords.image(cell, -1, 0, 1),
+        atoms[187].coords.image(cell, 0, 0, 1),
+        atoms[192].coords.image(cell, 0, -1, 0),
+        atoms[192].coords.image(cell, 1, -1, 0),
+        atoms[192].coords.image(cell, 1, 0, 0),
       ].sort_by!(&.to_a)
       vectors.size.should eq expected.size
       vectors.should be_close expected, 1e-6
@@ -121,7 +121,7 @@ describe Chem::Spatial::PBC do
 
     it "fails when radius is negative" do
       structure = Chem::Structure.new
-      structure.lattice = Lattice.new({10, 10, 10})
+      structure.cell = UnitCell.new({10, 10, 10})
       expect_raises Chem::Spatial::Error, "Radius cannot be negative" do
         Chem::Spatial::PBC.each_adjacent_image(structure, radius: -2) { }
       end

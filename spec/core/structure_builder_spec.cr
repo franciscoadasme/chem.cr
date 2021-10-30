@@ -85,34 +85,34 @@ describe Chem::Structure::Builder do
     st.atoms[serial: 4].x.should eq 18.066
   end
 
-  it "builds a structure with lattice" do
+  it "builds a structure with cell" do
     st = Chem::Structure.build do
-      lattice Vec3[25, 32, 12], Vec3[12, 34, 23], Vec3[12, 68, 21]
+      cell Vec3[25, 32, 12], Vec3[12, 34, 23], Vec3[12, 68, 21]
     end
 
-    lat = st.lattice.not_nil!
+    lat = st.cell.not_nil!
     lat.i.should eq Vec3[25, 32, 12]
     lat.j.should eq Vec3[12, 34, 23]
     lat.k.should eq Vec3[12, 68, 21]
   end
 
-  it "builds a structure with lattice using numbers" do
+  it "builds a structure with cell using numbers" do
     st = Chem::Structure.build do
-      lattice 25, 34, 21
+      cell 25, 34, 21
     end
 
-    lat = st.lattice.not_nil!
+    lat = st.cell.not_nil!
     lat.i.should eq Vec3[25, 0, 0]
     lat.j.should eq Vec3[0, 34, 0]
     lat.k.should eq Vec3[0, 0, 21]
   end
 
-  it "builds a structure with lattice using numbers (one-line)" do
+  it "builds a structure with cell using numbers (one-line)" do
     st = Chem::Structure.build do
-      lattice 25, 34, 21
+      cell 25, 34, 21
     end
 
-    lat = st.lattice.not_nil!
+    lat = st.cell.not_nil!
     lat.i.should eq Vec3[25, 0, 0]
     lat.j.should eq Vec3[0, 34, 0]
     lat.k.should eq Vec3[0, 0, 21]

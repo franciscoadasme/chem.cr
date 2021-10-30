@@ -141,7 +141,7 @@ describe Chem::Spatial::Vec3 do
 
   describe "#image" do
     it "returns vector's pbc image" do
-      lat = Lattice.new({8.77, 9.5, 24.74}, {88.22, 80, 70.34})
+      lat = UnitCell.new({8.77, 9.5, 24.74}, {88.22, 80, 70.34})
       vec = Vec3[8.745528, 6.330571, 1.334073]
       vec.image(lat, 1, 0, 0).should be_close Vec3[17.515528, 6.330571, 1.334073], 1e-6
       vec.image(lat, -1, 0, 0).should be_close Vec3[-0.024472, 6.330571, 1.334073], 1e-6
@@ -215,30 +215,30 @@ describe Chem::Spatial::Vec3 do
 
   describe "#to_cart" do
     it "converts fractional to Cartesian coordinates" do
-      lattice = Lattice.new({20, 20, 16})
-      Vec3[0.5, 0.65, 1].to_cart(lattice).should be_close Vec3[10, 13, 16], 1e-15
-      Vec3[1.5, 0.23, 0.9].to_cart(lattice).should be_close Vec3[30, 4.6, 14.4], 1e-15
+      cell = UnitCell.new({20, 20, 16})
+      Vec3[0.5, 0.65, 1].to_cart(cell).should be_close Vec3[10, 13, 16], 1e-15
+      Vec3[1.5, 0.23, 0.9].to_cart(cell).should be_close Vec3[30, 4.6, 14.4], 1e-15
 
-      lattice = Lattice.new({20, 10, 16})
-      Vec3[0.5, 0.65, 1].to_cart(lattice).should be_close Vec3[10, 6.5, 16], 1e-15
+      cell = UnitCell.new({20, 10, 16})
+      Vec3[0.5, 0.65, 1].to_cart(cell).should be_close Vec3[10, 6.5, 16], 1e-15
 
-      lattice = Lattice.new(
+      cell = UnitCell.new(
         Vec3[8.497, 0.007, 0.031],
         Vec3[10.148, 42.359, 0.503],
         Vec3[7.296, 2.286, 53.093])
-      Vec3[0.724, 0.04, 0.209].to_cart(lattice).should be_close Vec3[8.083, 2.177, 11.139], 1e-3
+      Vec3[0.724, 0.04, 0.209].to_cart(cell).should be_close Vec3[8.083, 2.177, 11.139], 1e-3
     end
   end
 
   describe "#to_fract" do
     it "converts Cartesian to fractional coordinates" do
-      lattice = Lattice.new({10, 20, 30})
-      Vec3.zero.to_fract(lattice).should eq Vec3.zero
-      Vec3[1, 2, 3].to_fract(lattice).should be_close Vec3[0.1, 0.1, 0.1], 1e-15
-      Vec3[2, 3, 15].to_fract(lattice).should be_close Vec3[0.2, 0.15, 0.5], 1e-15
+      cell = UnitCell.new({10, 20, 30})
+      Vec3.zero.to_fract(cell).should eq Vec3.zero
+      Vec3[1, 2, 3].to_fract(cell).should be_close Vec3[0.1, 0.1, 0.1], 1e-15
+      Vec3[2, 3, 15].to_fract(cell).should be_close Vec3[0.2, 0.15, 0.5], 1e-15
 
-      lattice = Lattice.new({20, 20, 30})
-      Vec3[1, 2, 3].to_fract(lattice).should be_close Vec3[0.05, 0.1, 0.1], 1e-15
+      cell = UnitCell.new({20, 20, 30})
+      Vec3[1, 2, 3].to_fract(cell).should be_close Vec3[0.05, 0.1, 0.1], 1e-15
     end
   end
 
@@ -277,16 +277,16 @@ describe Chem::Spatial::Vec3 do
     end
 
     it "wraps a Cartesian vector" do
-      lattice = Chem::Lattice.new({15, 20, 9})
+      cell = Chem::UnitCell.new({15, 20, 9})
 
-      Vec3[0, 0, 0].wrap(lattice).should eq Vec3[0, 0, 0]
-      Vec3[15, 20, 9].wrap(lattice).should be_close Vec3[15, 20, 9], 1e-12
-      Vec3[10, 10, 5].wrap(lattice).should be_close Vec3[10, 10, 5], 1e-12
-      Vec3[15.5, 21, -5].wrap(lattice).should be_close Vec3[0.5, 1, 4], 1e-12
+      Vec3[0, 0, 0].wrap(cell).should eq Vec3[0, 0, 0]
+      Vec3[15, 20, 9].wrap(cell).should be_close Vec3[15, 20, 9], 1e-12
+      Vec3[10, 10, 5].wrap(cell).should be_close Vec3[10, 10, 5], 1e-12
+      Vec3[15.5, 21, -5].wrap(cell).should be_close Vec3[0.5, 1, 4], 1e-12
     end
 
     it "wraps a Cartesian vector around a center" do
-      lattice = Chem::Lattice.new({32, 20, 19})
+      cell = Chem::UnitCell.new({32, 20, 19})
       center = Vec3[32, 20, 19]
 
       [
@@ -295,7 +295,7 @@ describe Chem::Spatial::Vec3 do
         {Vec3[20.285, 14.688, 16.487], Vec3[20.285, 14.688, 16.487]},
         {Vec3[23.735, 19.25, 1.716], Vec3[23.735, 19.25, 20.716]},
       ].each do |vec, expected|
-        vec.wrap(lattice, center).should be_close expected, 1e-12
+        vec.wrap(cell, center).should be_close expected, 1e-12
       end
     end
   end

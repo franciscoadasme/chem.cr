@@ -19,7 +19,7 @@ describe Chem::Spatial::Bounds do
 
   describe "#each_vertex" do
     it "yields bounds' vertices" do
-      bounds = Lattice.new({8.77, 9.5, 24.74}, {88.22, 80, 70.34}).bounds
+      bounds = UnitCell.new({8.77, 9.5, 24.74}, {88.22, 80, 70.34}).bounds
       bounds = bounds.translate -bounds.center
       vertices = [] of Vec3
       bounds.each_vertex { |vec| vertices << vec }
@@ -46,7 +46,7 @@ describe Chem::Spatial::Bounds do
     end
 
     it "tells if a vector is within the primary unit cell (non-orthogonal)" do
-      bounds = Lattice.new({23.803, 23.828, 5.387}, {90, 90, 120}).bounds
+      bounds = UnitCell.new({23.803, 23.828, 5.387}, {90, 90, 120}).bounds
       bounds.includes?(Vec3[10, 20, 2]).should be_true
       bounds.includes?(Vec3[0, 0, 0]).should be_true
       bounds.includes?(Vec3[30, 30, 10]).should be_false
@@ -56,18 +56,18 @@ describe Chem::Spatial::Bounds do
 
     context "given a bounds" do
       it "returns true when enclosed" do
-        bounds = Lattice.hexagonal(10, 10).bounds
+        bounds = UnitCell.hexagonal(10, 10).bounds
         bounds.includes?(Bounds[5, 4, 6]).should be_true
         bounds.includes?(Bounds[5, 4, 6].translate(Vec3[1, 2, 3])).should be_true
       end
 
       it "returns false when intersected" do
-        bounds = Lattice.hexagonal(10, 10).bounds
+        bounds = UnitCell.hexagonal(10, 10).bounds
         bounds.includes?(Bounds[5, 4, 6].translate(Vec3[-1, 2, -4.3])).should be_false
       end
 
       it "returns false when out of bounds" do
-        bounds = Lattice.hexagonal(10, 10).bounds
+        bounds = UnitCell.hexagonal(10, 10).bounds
         bounds.includes?(Bounds[5, 4, 6].translate(Vec3[-1, 2, -4.3])).should be_false
       end
     end
@@ -82,7 +82,7 @@ describe Chem::Spatial::Bounds do
 
     context "given a non-orthogonal bounds" do
       it "returns the maximum edge" do
-        bounds = Lattice.hexagonal(10, 12).bounds.translate(Vec3[1.5, 3, -0.4])
+        bounds = UnitCell.hexagonal(10, 12).bounds.translate(Vec3[1.5, 3, -0.4])
         bounds.max.should be_close Vec3[6.5, 11.66, 11.6], 1e-3
       end
     end
@@ -97,7 +97,7 @@ describe Chem::Spatial::Bounds do
 
     context "given a non-orthogonal bounds" do
       it "returns the minimum edge (origin)" do
-        bounds = Lattice.hexagonal(10, 12).bounds.translate(Vec3[1.5, 3, -0.4])
+        bounds = UnitCell.hexagonal(10, 12).bounds.translate(Vec3[1.5, 3, -0.4])
         bounds.min.should eq Vec3[1.5, 3, -0.4]
       end
     end
@@ -105,12 +105,12 @@ describe Chem::Spatial::Bounds do
 
   describe "#translate" do
     it "translates the origin" do
-      lattice = Lattice.hexagonal(10, 10)
-      bounds = lattice.bounds.translate(Vec3[-5, 1, 20])
+      cell = UnitCell.hexagonal(10, 10)
+      bounds = cell.bounds.translate(Vec3[-5, 1, 20])
       bounds = bounds.translate(Vec3[1, 2, 10])
       bounds.min.should eq Vec3[-4, 3, 30]
       bounds.size.should eq Size3[10, 10, 10]
-      bounds.basis.should eq lattice.basis
+      bounds.basis.should eq cell.basis
     end
   end
 
@@ -126,7 +126,7 @@ describe Chem::Spatial::Bounds do
 
     context "given a non-orthogonal bounds" do
       it "returns a padded bounds" do
-        bounds = Lattice.new({4, 7, 8.5}, {90, 120, 90}).bounds
+        bounds = UnitCell.new({4, 7, 8.5}, {90, 120, 90}).bounds
         padded = bounds.pad(0.5)
         padded.size.should eq Size3[5, 8, 9.5]
         padded.center.should be_close bounds.center, 1e-15
@@ -142,7 +142,7 @@ describe Chem::Spatial::Bounds do
 
   describe "#vertices" do
     it "returns bounds' vertices" do
-      vertices = Lattice.new({10, 10, 10}, {90, 90, 120}).bounds.vertices
+      vertices = UnitCell.new({10, 10, 10}, {90, 90, 120}).bounds.vertices
       vertices.size.should eq 8
       vertices.should be_close [
         Vec3[0, 0, 0],
@@ -160,8 +160,8 @@ describe Chem::Spatial::Bounds do
   describe "#volume" do
     it "returns the volume enclosed by the bounds" do
       Bounds[10, 20, 30].volume.should eq 6_000
-      Lattice.hexagonal(5, 8).bounds.volume.should be_close 173.2050807569, 1e-10
-      Lattice.new({1, 2, 3}, {90, 101.2, 90}).bounds.volume.should be_close 5.8857309321, 1e-10
+      UnitCell.hexagonal(5, 8).bounds.volume.should be_close 173.2050807569, 1e-10
+      UnitCell.new({1, 2, 3}, {90, 101.2, 90}).bounds.volume.should be_close 5.8857309321, 1e-10
       Bounds[6, 3, 23].translate(Vec3[1, 2, 3]).volume.should eq 414
     end
   end

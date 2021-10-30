@@ -13,21 +13,21 @@ module Chem::Spatial::PBC
   end
 
   def each_adjacent_image(structure : Structure, &block : Atom, Vec3 ->)
-    raise NotPeriodicError.new unless lattice = structure.lattice
-    each_adjacent_image structure, lattice, &block
+    raise NotPeriodicError.new unless cell = structure.cell
+    each_adjacent_image structure, cell, &block
   end
 
   def each_adjacent_image(atoms : AtomCollection,
-                          lattice : Lattice,
+                          cell : UnitCell,
                           &block : Atom, Vec3 ->)
-    offset = (lattice.bounds.center - atoms.coords.center).to_fract lattice
+    offset = (cell.bounds.center - atoms.coords.center).to_fract cell
     atoms.each_atom do |atom|
-      fcoords = atom.coords.to_fract lattice                          # convert to fractional coords
+      fcoords = atom.coords.to_fract cell                             # convert to fractional coords
       w_fcoords = fcoords - fcoords.map(&.floor)                      # wrap to primary unit cell
       ax_offset = (fcoords + offset).map { |ele| ele < 0.5 ? 1 : -1 } # compute offset per axis
 
       ADJACENT_IMAGE_IDXS.each do |img_idx|
-        yield atom, (fcoords + ax_offset * Vec3[*img_idx]).to_cart(lattice)
+        yield atom, (fcoords + ax_offset * Vec3[*img_idx]).to_cart(cell)
       end
     end
   end
@@ -35,34 +35,34 @@ module Chem::Spatial::PBC
   def each_adjacent_image(structure : Structure,
                           radius : Number,
                           &block : Atom, Vec3 ->)
-    raise NotPeriodicError.new unless lattice = structure.lattice
-    each_adjacent_image structure, lattice, radius, &block
+    raise NotPeriodicError.new unless cell = structure.cell
+    each_adjacent_image structure, cell, radius, &block
   end
 
   def each_adjacent_image(atoms : AtomCollection,
-                          lattice : Lattice,
+                          cell : UnitCell,
                           radius : Number,
                           &block : Atom, Vec3 ->)
     raise Error.new "Radius cannot be negative" if radius < 0
 
-    offset = offset_to_primary_unit_cell atoms, lattice
-    paddings = cell_paddings lattice, radius
+    offset = offset_to_primary_unit_cell atoms, cell
+    paddings = cell_paddings cell, radius
 
     atoms.each_atom do |atom|
-      vec = atom.coords.to_fract(lattice) + offset
+      vec = atom.coords.to_fract(cell) + offset
       extents = padded_cell_extents vec, paddings
       img_sense = vec.map { |ele| ele < 0.5 ? 1 : -1 }
 
       ADJACENT_IMAGE_IDXS.each do |img_idx|
         img_vec = vec + Vec3[*img_idx] * img_sense
         if (0..2).all? { |i| img_vec[i].in? extents[i] }
-          yield atom, (img_vec - offset).to_cart(lattice)
+          yield atom, (img_vec - offset).to_cart(cell)
         end
       end
     end
   end
 
-  def unwrap(atoms : AtomCollection, lattice : Lattice) : Nil
+  def unwrap(atoms : AtomCollection, cell : UnitCell) : Nil
     atoms.coords.to_fract!
     moved_atoms = Set(Atom).new
     atoms.each_fragment do |fragment|
@@ -84,22 +84,23 @@ module Chem::Spatial::PBC
     end
   end
 
-  # Returns the padding along each cell vector as fractional numbers.
-  private def cell_paddings(lattice : Lattice,
+  # Returns the padding along each unit cell vector as fractional
+  # numbers.
+  private def cell_paddings(cell : UnitCell,
                             radius : Number) : StaticArray(Float64, 3)
     StaticArray(Float64, 3).new do |i|
-      (radius / lattice.size[i]).clamp(..0.5)
+      (radius / cell.size[i]).clamp(..0.5)
     end
   end
 
   # Returns offset vector to bring atoms to the primary unit cell unless
   # atoms are wrapped, otherwise returns a zero vector.
   private def offset_to_primary_unit_cell(atoms : AtomCollection,
-                                          lattice : Lattice) : Vec3
+                                          cell : UnitCell) : Vec3
     bounds = atoms.coords.bounds
-    wrapped = lattice.bounds.includes?(bounds)
-    offset = wrapped ? Vec3.zero : (lattice.bounds.center - bounds.center)
-    offset.to_fract(lattice)
+    wrapped = cell.bounds.includes?(bounds)
+    offset = wrapped ? Vec3.zero : (cell.bounds.center - bounds.center)
+    offset.to_fract(cell)
   end
 
   # Returns padded primary unit cell extents. If *vec* is outside the

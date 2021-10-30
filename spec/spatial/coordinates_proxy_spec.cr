@@ -2,7 +2,7 @@ require "../spec_helper"
 
 describe Chem::Spatial::CoordinatesProxy do
   structure = Chem::Structure.build do
-    lattice 10, 10, 10
+    cell 10, 10, 10
 
     atom PeriodicTable::O, Vec3[1, 2, 3]
     atom PeriodicTable::H, Vec3[4, 5, 6]
@@ -148,7 +148,7 @@ describe Chem::Spatial::CoordinatesProxy do
 
     it "modifies the fractional atom coordinates" do
       other = Chem::Structure.build do
-        lattice 5, 10, 15
+        cell 5, 10, 15
         atom PeriodicTable::O, Vec3[1, 2, 3]
         atom PeriodicTable::H, Vec3[4, 5, 6]
         atom PeriodicTable::H, Vec3[7, 8, 9]
@@ -203,7 +203,7 @@ describe Chem::Spatial::CoordinatesProxy do
 
     it "modifies the fractional atom coordinates" do
       other = Chem::Structure.build do
-        lattice 5, 10, 15
+        cell 5, 10, 15
         atom PeriodicTable::O, Vec3[1, 2, 3]
         atom PeriodicTable::H, Vec3[4, 5, 6]
         atom PeriodicTable::H, Vec3[7, 8, 9]
@@ -284,7 +284,7 @@ describe Chem::Spatial::CoordinatesProxy do
   describe "#to_cart!" do
     it "transforms fractional coordinates to Cartesian" do
       structure = Chem::Structure.build do
-        lattice 10, 20, 30
+        cell 10, 20, 30
         atom PeriodicTable::O, Vec3[0.2, 0.4, 0.6]
         atom PeriodicTable::H, Vec3[0.1, 0.2, 0.3]
         atom PeriodicTable::H, Vec3[0.6, 0.9, 0.35]
@@ -298,7 +298,7 @@ describe Chem::Spatial::CoordinatesProxy do
   describe "#to_fract!" do
     it "transforms Cartesian coordinates to fractional" do
       structure = Chem::Structure.build do
-        lattice 10, 20, 30
+        cell 10, 20, 30
         atom PeriodicTable::O, Vec3[1, 2, 3]
         atom PeriodicTable::H, Vec3[4, 5, 6]
         atom PeriodicTable::H, Vec3[7, 8, 9]
@@ -317,7 +317,7 @@ describe Chem::Spatial::CoordinatesProxy do
       coords.should be_close expected, 1e-15
     end
 
-    it "wraps atoms into the primary unit cell in a non-rectangular lattice" do
+    it "wraps atoms into the primary unit cell in a non-rectangular cell" do
       coords = load_file("5e61--unwrapped.poscar").coords
       coords.wrap
       expected = load_file("5e61--wrapped.poscar").coords

@@ -15,7 +15,7 @@ module Chem::PDB
     }
 
     @pdb_bonds = Hash(Tuple(Int32, Int32), Int32).new 0
-    @pdb_lattice : Lattice?
+    @pdb_cell : UnitCell?
     @pdb_title = ""
     @header_decoded = false
 
@@ -110,7 +110,7 @@ module Chem::PDB
           gamma = @pull.at(47, 7).float
           @pull.error "Invalid angle" unless 0 < gamma <= 180
           unless x == 1 && y == 1 && z == 1 && alpha == 90 && beta == 90 && gamma == 90
-            @pdb_lattice = Lattice.new({x, y, z}, {alpha, beta, gamma})
+            @pdb_cell = UnitCell.new({x, y, z}, {alpha, beta, gamma})
           end
         when "EXPDTA"
           str = @pull.at(10, 70).str.split(';')[0].delete "- "
@@ -233,7 +233,7 @@ module Chem::PDB
         source_file: (file = @io).is_a?(File) ? file.path : nil,
       )
       @builder.title @pdb_title
-      @builder.lattice @pdb_lattice
+      @builder.cell @pdb_cell
       @builder.expt @header
 
       @pdb_bonds.clear
@@ -362,9 +362,9 @@ module Chem::PDB
 
       formatl "MODEL     %4d%66s", @entry_index + 1, ' ' if multi?
       if obj.is_a?(Structure)
-        if (cell = obj.lattice) && (!cell.i.normalize.x? || !cell.j.normalize.xy?)
-          # compute the cell aligned to the xy-plane
-          ref = Lattice.new cell.size, {cell.alpha, cell.beta, cell.gamma}
+        if (cell = obj.cell) && (!cell.i.normalize.x? || !cell.j.normalize.xy?)
+          # compute the unit cell aligned to the xy-plane
+          ref = UnitCell.new cell.size, {cell.alpha, cell.beta, cell.gamma}
           transform = Spatial::Quat.aligning({cell.i, cell.j}, to: {ref.i, ref.j})
           Log.warn do
             "Aligning unit cell to the XY plane for writing PDB. \
@@ -455,14 +455,14 @@ module Chem::PDB
       @io.printf "JRNL        DOI    %-61s\n", expt.doi.not_nil! if expt.doi
     end
 
-    private def write(lattice : Lattice) : Nil
+    private def write(cell : UnitCell) : Nil
       @io.printf "CRYST1%9.3f%9.3f%9.3f%7.2f%7.2f%7.2f %-11s%4d          \n",
-        lattice.a,
-        lattice.b,
-        lattice.c,
-        lattice.alpha,
-        lattice.beta,
-        lattice.gamma,
+        cell.a,
+        cell.b,
+        cell.c,
+        cell.alpha,
+        cell.beta,
+        cell.gamma,
         "P 1", # default space group
         1      # default Z value
     end
@@ -496,7 +496,7 @@ module Chem::PDB
       end
       write_pdb_version structure.experiment.try(&.pdb_accession)
       write_sec structure
-      write structure.lattice.not_nil! if structure.periodic?
+      write structure.cell.not_nil! if structure.periodic?
     end
 
     private def write_pdb_version(pdb_accession : String? = nil) : Nil

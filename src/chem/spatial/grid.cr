@@ -1,6 +1,6 @@
 module Chem::Spatial
-  # TODO: add support for non-cubic grids (use lattice instead of bounds?)
-  #       - i to coords: origin.x + (i / nx) * lattice.a
+  # TODO: add support for non-cubic grids (use cell instead of bounds?)
+  #       - i to coords: origin.x + (i / nx) * cell.a
   #       - coords to i: ?
   # TODO: implement functionality from vmd's volmap
   class Grid

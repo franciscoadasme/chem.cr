@@ -9,19 +9,19 @@ module Chem::Spatial
     end
   end
 
-  def self.hlxparams(res : Residue, lattice : Lattice? = nil) : HlxParams?
+  def self.hlxparams(res : Residue, cell : UnitCell? = nil) : HlxParams?
     return unless res.protein? && (prev_res = res.pred) && (next_res = res.succ)
 
     coord =
-      if lattice
+      if cell
         ca2 = res["CA"].coords
-        n2 = res["N"].coords.wrap lattice, around: ca2
-        c2 = res["C"].coords.wrap lattice, around: ca2
-        cb2 = res["CB"]?.try &.coords.wrap(lattice, around: ca2)
-        c1 = prev_res["C"].coords.wrap lattice, around: n2
-        ca1 = prev_res["CA"].coords.wrap lattice, around: c1
-        n3 = next_res["N"].coords.wrap lattice, around: c2
-        ca3 = next_res["CA"].coords.wrap lattice, around: n2
+        n2 = res["N"].coords.wrap cell, around: ca2
+        c2 = res["C"].coords.wrap cell, around: ca2
+        cb2 = res["CB"]?.try &.coords.wrap(cell, around: ca2)
+        c1 = prev_res["C"].coords.wrap cell, around: n2
+        ca1 = prev_res["CA"].coords.wrap cell, around: c1
+        n3 = next_res["N"].coords.wrap cell, around: c2
+        ca3 = next_res["CA"].coords.wrap cell, around: n2
         { {ca: ca1, c: c1}, {n: n2, ca: ca2, c: c2, cb: cb2}, {n: n3, ca: ca3} }
       else
         {

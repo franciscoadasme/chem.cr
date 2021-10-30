@@ -79,7 +79,7 @@ module Chem::Mol2
             @pull.error "Invalid angle" unless 0 < beta <= 180
             gamma = @pull.next_f
             @pull.error "Invalid angle" unless 0 < gamma <= 180
-            builder.lattice Lattice.new({x, y, z}, {alpha, beta, gamma})
+            builder.cell UnitCell.new({x, y, z}, {alpha, beta, gamma})
           when "@<TRIPOS>MOLECULE"
             break
           end
@@ -123,7 +123,7 @@ module Chem::Mol2
             residue.name[..2]                        # sub_type
         end
       end
-      if (structure = obj.as?(Structure)) && (cell = structure.lattice)
+      if (structure = obj.as?(Structure)) && (cell = structure.cell)
         section "crysin" do
           formatl "%.3f %.3f %.3f %.2f %.2f %.2f 1 1",
             cell.a, cell.b, cell.c, cell.alpha, cell.beta, cell.gamma

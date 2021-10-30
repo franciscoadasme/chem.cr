@@ -9,7 +9,7 @@ module Chem
 
     getter biases = [] of Chem::Bias
     property experiment : Structure::Experiment?
-    property lattice : Lattice?
+    property cell : UnitCell?
     getter source_file : Path?
     property title : String = ""
 
@@ -57,7 +57,7 @@ module Chem
       structure = Structure.new @source_file
       structure.biases.concat @biases
       structure.experiment = @experiment
-      structure.lattice = @lattice
+      structure.cell = @cell
       structure.title = @title
       each_chain &.copy_to(structure)
       bonds.each do |bond|
@@ -70,7 +70,7 @@ module Chem
     end
 
     def coords : Spatial::CoordinatesProxy
-      Spatial::CoordinatesProxy.new self, @lattice
+      Spatial::CoordinatesProxy.new self, @cell
     end
 
     def delete(ch : Chain) : Chain?
@@ -158,7 +158,7 @@ module Chem
     end
 
     def periodic? : Bool
-      !!@lattice
+      !!@cell
     end
 
     # Renumber residues per chain based on the order by the output value
@@ -202,13 +202,13 @@ module Chem
       io << n_atoms << " atoms"
       io << ", " << n_residues << " residues" if n_residues > 1
       io << ", "
-      io << "non-" unless @lattice
+      io << "non-" unless @cell
       io << "periodic>"
     end
 
     def unwrap : self
-      raise Spatial::NotPeriodicError.new unless lattice = @lattice
-      Spatial::PBC.unwrap self, lattice
+      raise Spatial::NotPeriodicError.new unless cell = @cell
+      Spatial::PBC.unwrap self, cell
       self
     end
 

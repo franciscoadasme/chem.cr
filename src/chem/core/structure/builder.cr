@@ -102,24 +102,24 @@ module Chem
       @structure.experiment = expt
     end
 
-    def lattice : Lattice?
-      @structure.lattice
+    def cell : UnitCell?
+      @structure.cell
     end
 
-    def lattice! : Lattice
-      @structure.lattice || raise Spatial::NotPeriodicError.new
+    def cell! : UnitCell
+      @structure.cell || raise Spatial::NotPeriodicError.new
     end
 
-    def lattice(lattice : Lattice?)
-      @structure.lattice = lattice
+    def cell(cell : UnitCell?)
+      @structure.cell = cell
     end
 
-    def lattice(a : Spatial::Vec3, b : Spatial::Vec3, c : Spatial::Vec3) : Lattice
-      @structure.lattice = Lattice.new a, b, c
+    def cell(a : Spatial::Vec3, b : Spatial::Vec3, c : Spatial::Vec3) : UnitCell
+      @structure.cell = UnitCell.new a, b, c
     end
 
-    def lattice(a : Float64, b : Float64, c : Float64) : Lattice
-      @structure.lattice = Lattice.new({a, b, c})
+    def cell(a : Float64, b : Float64, c : Float64) : UnitCell
+      @structure.cell = UnitCell.new({a, b, c})
     end
 
     def residue : Residue

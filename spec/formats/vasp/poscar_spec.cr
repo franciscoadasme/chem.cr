@@ -108,7 +108,7 @@ end
 describe Chem::VASP::Poscar::Writer do
   structure = Chem::Structure.build do
     title "NaCl-O-NaCl"
-    lattice 40, 20, 10
+    cell 40, 20, 10
     atom :Cl, Vec3[30, 15, 10]
     atom :Na, Vec3[10, 5, 5]
     atom :O, Vec3[30, 15, 9]

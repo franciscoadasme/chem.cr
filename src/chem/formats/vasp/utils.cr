@@ -11,11 +11,11 @@ module Chem::VASP
 
     protected def decode_header : Spatial::Grid::Info
       @attached = decode_attached
-      raise "BUG: lattice cannot be nil" unless lattice = @attached.try(&.lattice)
+      raise "BUG: unit cell cannot be nil" unless cell = @attached.try(&.cell)
 
       @pull.next_line
       nx, ny, nz = @pull.next_i, @pull.next_i, @pull.next_i
-      Spatial::Grid::Info.new lattice.bounds, {nx, ny, nz}
+      Spatial::Grid::Info.new cell.bounds, {nx, ny, nz}
     end
 
     private def read_array(info : Spatial::Grid::Info,

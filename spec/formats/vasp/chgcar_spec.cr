@@ -33,7 +33,7 @@ describe Chem::VASP::Chgcar do
   it "writes a CHGCAR" do
     structure = Chem::Structure.build do
       title "NaCl-O-NaCl"
-      lattice 5, 10, 20
+      cell 5, 10, 20
       atom :Cl, Vec3[30, 15, 10]
       atom :Na, Vec3[10, 5, 5]
       atom :O, Vec3[30, 15, 9]
@@ -75,8 +75,8 @@ describe Chem::VASP::Chgcar do
     end
   end
 
-  it "fails when lattice and bounds are incompatible" do
-    structure = Chem::Structure.build { lattice 10, 20, 30 }
+  it "fails when cell and bounds are incompatible" do
+    structure = Chem::Structure.build { cell 10, 20, 30 }
     expect_raises ArgumentError, "Incompatible structure and grid" do
       make_grid(3, 3, 3, Bounds[20, 20, 20]).to_chgcar structure
     end
@@ -92,7 +92,7 @@ describe Chem::VASP::Chgcar do
     grid[5] = 0.20562611904E-03
     structure = Chem::Structure.build do
       title "Zn"
-      lattice 10, 10, 10
+      cell 10, 10, 10
       atom "Zn", Vec3[0, 0, 0]
     end
     grid.to_chgcar(structure).should eq <<-EOF

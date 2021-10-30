@@ -22,7 +22,7 @@ module Chem::VASP::Locpot
     include GridWriter
 
     protected def encode_entry(grid : Spatial::Grid) : Nil
-      incompatible_expcetion if (lat = @structure.lattice) && lat.size != grid.bounds.size
+      incompatible_expcetion if (lat = @structure.cell) && lat.size != grid.bounds.size
       write_header
       write_array(grid, &.itself)
     end

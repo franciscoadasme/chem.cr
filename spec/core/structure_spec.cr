@@ -34,7 +34,7 @@ describe Chem::Structure do
       other.dig('A', 32).sec.beta_strand?.should be_true
       other.dig('A', 32, "CA").coords.should eq Vec3[8.140, 11.694, 9.635]
 
-      other.lattice.should eq structure.lattice
+      other.cell.should eq structure.cell
       other.experiment.should eq structure.experiment
       other.title.should eq structure.title
     end
@@ -106,13 +106,13 @@ describe Chem::Structure do
   end
 
   describe "#periodic?" do
-    it "returns true when a structure has a lattice" do
+    it "returns true when a structure has a cell" do
       structure = Structure.new
-      structure.lattice = Lattice.new({10, 20, 30})
+      structure.cell = UnitCell.new({10, 20, 30})
       structure.periodic?.should be_true
     end
 
-    it "returns false when a structure does not have a lattice" do
+    it "returns false when a structure does not have a cell" do
       Chem::Structure.new.periodic?.should be_false
     end
   end
@@ -201,7 +201,7 @@ describe Chem::Structure do
   describe "#write" do
     structure = Structure.build do
       title "ICN"
-      lattice 5, 10, 10
+      cell 5, 10, 10
       atom :I, Vec3[-2, 0, 0]
       atom :C, Vec3[0, 0, 0]
       atom :N, Vec3[1.5, 0, 0]

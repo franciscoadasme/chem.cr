@@ -15,14 +15,14 @@ module Chem::VASP::Poscar
       scale_factor = @pull.next_f
       @pull.next_line
 
-      # read lattice
+      # read unit cell
       vi = Spatial::Vec3.new @pull.next_f, @pull.next_f, @pull.next_f
       @pull.next_line
       vj = Spatial::Vec3.new @pull.next_f, @pull.next_f, @pull.next_f
       @pull.next_line
       vk = Spatial::Vec3.new @pull.next_f, @pull.next_f, @pull.next_f
       @pull.next_line
-      lattice = Lattice.new(vi * scale_factor, vj * scale_factor, vk * scale_factor)
+      cell = UnitCell.new(vi * scale_factor, vj * scale_factor, vk * scale_factor)
 
       # read species
       uniq_elements = [] of Element
@@ -70,10 +70,10 @@ module Chem::VASP::Poscar
         source_file: (file = @io).is_a?(File) ? file.path : nil,
       ) do |builder|
         builder.title title
-        builder.lattice lattice
+        builder.cell cell
         elements.each do |element|
           vec = Spatial::Vec3.new @pull.next_f, @pull.next_f, @pull.next_f
-          vec = fractional ? vec.to_cart(lattice) : vec * scale_factor
+          vec = fractional ? vec.to_cart(cell) : vec * scale_factor
           atom = builder.atom element, vec
           if constrained
             case {read_flag, read_flag, read_flag}
@@ -116,7 +116,7 @@ module Chem::VASP::Poscar
     end
 
     protected def encode_entry(structure : Structure) : Nil
-      raise Spatial::NotPeriodicError.new unless lattice = structure.lattice
+      raise Spatial::NotPeriodicError.new unless cell = structure.cell
 
       atoms = structure.atoms
       coordinate_system = @fractional ? "Direct" : "Cartesian"
@@ -124,7 +124,7 @@ module Chem::VASP::Poscar
       has_constraints = atoms.any? &.constraint
 
       @io.puts structure.title.gsub(/ *\n */, ' ')
-      write lattice
+      write cell
       write_elements ele_tally
       @io.puts "Selective dynamics" if has_constraints
       @io.puts coordinate_system
@@ -133,10 +133,10 @@ module Chem::VASP::Poscar
         atoms.each.select(&.element.==(ele)).each do |atom|
           vec = atom.coords
           if @fractional
-            vec = vec.to_fract lattice
+            vec = vec.to_fract cell
             vec = vec.wrap if @wrap
           elsif @wrap
-            vec = vec.wrap lattice
+            vec = vec.wrap cell
           end
 
           @io.printf "%22.16f%22.16f%22.16f", vec.x, vec.y, vec.z
@@ -162,9 +162,9 @@ module Chem::VASP::Poscar
       end
     end
 
-    private def write(lattice : Lattice) : Nil
+    private def write(cell : UnitCell) : Nil
       @io.printf " %18.14f\n", 1.0
-      {lattice.i, lattice.j, lattice.k}.each do |vec|
+      {cell.i, cell.j, cell.k}.each do |vec|
         @io.printf " %22.16f%22.16f%22.16f\n", vec.x, vec.y, vec.z
       end
     end

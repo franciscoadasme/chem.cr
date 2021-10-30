@@ -7,23 +7,23 @@ module Chem
   # way, the basis matrix can be used to transform from Cartesian to
   # fractional coordinates, and viceversa, by matrix multiplication (see
   # `#cart` and `#fract`).
-  class Lattice
+  class UnitCell
     # Matrix containing the basis vectors.
     getter basis : Spatial::Mat3
 
     # Caches the inverse matrix for coordinate conversion.
     @inv_basis : Spatial::Mat3?
 
-    # Creates a new `Lattice` with the given basis.
+    # Creates a new `UnitCell` with the given basis.
     def initialize(@basis : Spatial::Mat3)
     end
 
-    # Returns a new `Lattice` with the given basis vectors.
+    # Returns a new `UnitCell` with the given basis vectors.
     def self.new(i : Vec3, j : Vec3, k : Vec3) : self
-      Lattice.new Spatial::Mat3.basis(i, j, k)
+      UnitCell.new Spatial::Mat3.basis(i, j, k)
     end
 
-    # Returns a new `Lattice` with the given unit cell parameters
+    # Returns a new `UnitCell` with the given unit cell parameters
     # (lengths in angstroms and angles in degrees). Raises
     # `ArgumentError` if any of the lengths or angles is negative.
     #
@@ -52,48 +52,48 @@ module Chem
           {0, 0, kz},
         ]
       end
-      Lattice.new(basis)
+      UnitCell.new(basis)
     end
 
-    # Returns a cubic lattice (*a* = *b* = *c* and *α* = *β* = *γ* =
+    # Returns a cubic unit cell (*a* = *b* = *c* and *α* = *β* = *γ* =
     # 90°).
     def self.cubic(a : Number) : self
-      Lattice.new({a, a, a}, {90, 90, 90})
+      UnitCell.new({a, a, a}, {90, 90, 90})
     end
 
-    # Returns a hexagonal lattice (*a* = *b*, *α* = *β* = 90°, and *γ* =
-    # 120°).
+    # Returns a hexagonal unit cell (*a* = *b*, *α* = *β* = 90°, and *γ*
+    # = 120°).
     def self.hexagonal(a : Number, c : Number) : self
-      Lattice.new({a, a, c}, {90, 90, 120})
+      UnitCell.new({a, a, c}, {90, 90, 120})
     end
 
-    # Returns a monoclinic lattice (*a* ≠ *c*, *α* = *γ* = 90°, and *β*
-    # ≠ 90°).
+    # Returns a monoclinic unit cell (*a* ≠ *c*, *α* = *γ* = 90°, and
+    # *β* ≠ 90°).
     def self.monoclinic(a : Number, c : Number, beta : Number) : self
-      Lattice.new({a, a, c}, {90, beta, 90})
+      UnitCell.new({a, a, c}, {90, beta, 90})
     end
 
-    # Returns an orthorhombic lattice (*a* ≠ *b* ≠ *c* and *α* = *β* =
+    # Returns an orthorhombic unit cell (*a* ≠ *b* ≠ *c* and *α* = *β* =
     # *γ* = 90°).
     def self.orthorhombic(a : Number, b : Number, c : Number) : self
-      Lattice.new({a, b, c}, {90, 90, 90})
+      UnitCell.new({a, b, c}, {90, 90, 90})
     end
 
-    # Returns an rhombohedral lattice (*a* = *b* = *c* and *α* = *β* =
+    # Returns an rhombohedral unit cell (*a* = *b* = *c* and *α* = *β* =
     # *γ* ≠ 90°).
     def self.rhombohedral(a : Number, alpha : Number) : self
-      Lattice.new({a, a, a}, {alpha, alpha, alpha})
+      UnitCell.new({a, a, a}, {alpha, alpha, alpha})
     end
 
-    # Returns an tetragonal lattice (*a* = *b* ≠ *c* and *α* = *β* = *γ*
-    # = 90°).
+    # Returns an tetragonal unit cell (*a* = *b* ≠ *c* and *α* = *β* =
+    # *γ* = 90°).
     def self.tetragonal(a : Number, c : Number) : self
-      Lattice.new({a, a, c}, {90, 90, 90})
+      UnitCell.new({a, a, c}, {90, 90, 90})
     end
 
-    # Returns a lattice with the basis vectors multiplied by *value*.
+    # Returns a unit cell with the basis vectors multiplied by *value*.
     def *(value : Number) : self
-      Lattice.new i * value, j * value, k * value
+      UnitCell.new i * value, j * value, k * value
     end
 
     # The length (in angstorms) of the first basis vector.
@@ -157,8 +157,8 @@ module Chem
       @basis * vec
     end
 
-    # Returns `true` if the lattice is cubic (*a* = *b* = *c* and *α* =
-    # *β* = *γ* = 90°), else `false`.
+    # Returns `true` if the unit cell is cubic (*a* = *b* = *c* and *α*
+    # = *β* = *γ* = 90°), else `false`.
     def cubic? : Bool
       a.close_to?(b, 1e-15) && b.close_to?(c, 1e-15) && orthogonal?
     end
@@ -175,8 +175,8 @@ module Chem
       Spatial.angle i, j
     end
 
-    # Returns `true` if the lattice is hexagonal (*a* = *b*, *α* = *β* =
-    # 90°, and *γ* = 120°), else `false`.
+    # Returns `true` if the unit cell is hexagonal (*a* = *b*, *α* = *β*
+    # = 90°, and *γ* = 120°), else `false`.
     def hexagonal? : Bool
       a.close_to?(b, 1e-15) &&
         alpha.close_to?(90, 1e-8) &&
@@ -196,7 +196,7 @@ module Chem
     end
 
     def inspect(io : IO) : Nil
-      io << "<Lattice " << i << ", " << j << ", " << k << '>'
+      io << "<UnitCell " << i << ", " << j << ", " << k << '>'
     end
 
     # The second basis vector.
@@ -221,8 +221,8 @@ module Chem
       vec
     end
 
-    # Returns `true` if the lattice is monoclinic (*a* ≠ *c*, *α* = *γ*
-    # = 90°, and *β* ≠ 90°), else `false`.
+    # Returns `true` if the unit cell is monoclinic (*a* ≠ *c*, *α* =
+    # *γ* = 90°, and *β* ≠ 90°), else `false`.
     def monoclinic? : Bool
       !a.close_to?(c, 1e-15) &&
         alpha.close_to?(90, 1e-8) &&
@@ -230,7 +230,7 @@ module Chem
         gamma.close_to?(90, 1e-8)
     end
 
-    # Returns `true` if the lattice is orthogonal (*α* = *β* = *γ* =
+    # Returns `true` if the unit cell is orthogonal (*α* = *β* = *γ* =
     # 90°), else `false`.
     def orthogonal? : Bool
       alpha.close_to?(90, 1e-8) &&
@@ -238,8 +238,8 @@ module Chem
         gamma.close_to?(90, 1e-8)
     end
 
-    # Returns `true` if the lattice is orthorhombic (*a* ≠ *b* ≠ *c* and
-    # *α* = *β* = *γ* = 90°), else `false`.
+    # Returns `true` if the unit cell is orthorhombic (*a* ≠ *b* ≠ *c*
+    # and *α* = *β* = *γ* = 90°), else `false`.
     def orthorhombic? : Bool
       !a.close_to?(b, 1e-15) &&
         !a.close_to?(c, 1e-15) &&
@@ -247,8 +247,8 @@ module Chem
         orthogonal?
     end
 
-    # Returns `true` if the lattice is rhombohedral (*a* = *b* = *c* and
-    # *α* = *β* = *γ* ≠ 90°), else `false`.
+    # Returns `true` if the unit cell is rhombohedral (*a* = *b* = *c*
+    # and *α* = *β* = *γ* ≠ 90°), else `false`.
     def rhombohedral? : Bool
       a.close_to?(b, 1e-15) &&
         a.close_to?(c, 1e-15) &&
@@ -262,13 +262,13 @@ module Chem
       Size3[a, b, c]
     end
 
-    # Returns `true` if the lattice is tetragonal (*a* = *b* ≠ *c* and
+    # Returns `true` if the unit cell is tetragonal (*a* = *b* ≠ *c* and
     # *α* = *β* = *γ* = 90°), else `false`.
     def tetragonal? : Bool
       a.close_to?(b, 1e-15) && !a.close_to?(c, 1e-15) && orthogonal?
     end
 
-    # Returns `true` if the lattice is triclinic (not orthogonal,
+    # Returns `true` if the unit cell is triclinic (not orthogonal,
     # hexagonal, monoclinic, nor rhombohedral), else `false`.
     def triclinic? : Bool
       !orthogonal? && !hexagonal? && !monoclinic? && !rhombohedral?
@@ -300,10 +300,10 @@ module Chem
 end
 
 struct Chem::Spatial::Vec3
-  # Returns vector's PBC image with respect to `lattice`
+  # Returns vector's PBC image with respect to `cell`
   #
   # ```
-  # lat = Lattice.new S[2, 2, 3], 90, 90, 120
+  # lat = UnitCell.new S[2, 2, 3], 90, 90, 120
   # lat.i # => Vec3[2.0, 0.0, 0.0]
   # lat.j # => Vec3[-1, 1.732, 0.0]
   # lat.k # => Vec3[0.0, 0.0, 3.0]
@@ -315,34 +315,33 @@ struct Chem::Spatial::Vec3
   # vec.image(lat, 1, 0, 1) # => Vec3[3.0, 1.0, 4.5]
   # vec.image(lat, 1, 1, 1) # => Vec3[2.0, 2.732, 4.5]
   # ```
-  def image(lattice : Lattice, i : Int, j : Int, k : Int) : self
-    self + lattice.i * i + lattice.j * j + lattice.k * k
+  def image(cell : UnitCell, i : Int, j : Int, k : Int) : self
+    self + cell.i * i + cell.j * j + cell.k * k
   end
 
-  # Returns a vector in Cartesian coordinates relative to *lattice*
-  # (see `Lattice#cart`). The vector is assumed to be expressed in
+  # Returns a vector in Cartesian coordinates relative to *cell* (see
+  # `UnitCell#cart`). The vector is assumed to be expressed in
   # fractional coordinates.
-  def to_cart(lattice : Lattice) : self
-    lattice.cart self
+  def to_cart(cell : UnitCell) : self
+    cell.cart self
   end
 
-  # Returns a vector in fractional coordinates relative to *lattice*
-  # (see `Lattice#fract`). The vector is assumed to be expressed in
+  # Returns a vector in fractional coordinates relative to *cell* (see
+  # `UnitCell#fract`). The vector is assumed to be expressed in
   # Cartesian coordinates.
-  def to_fract(lattice : Lattice) : self
-    lattice.fract self
+  def to_fract(cell : UnitCell) : self
+    cell.fract self
   end
 
-  # Returns the vector by wrapping into *lattice*. The vector is
-  # assumed to be expressed in Cartesian coordinates.
-  def wrap(lattice : Lattice) : self
-    lattice.wrap self
+  # Returns the vector by wrapping into *cell*. The vector is assumed to
+  # be expressed in Cartesian coordinates.
+  def wrap(cell : UnitCell) : self
+    cell.wrap self
   end
 
-  # Returns the vector by wrapping into *lattice* centered at
-  # *center*. The vector is assumed to be expressed in Cartesian
-  # coordinates.
-  def wrap(lattice : Lattice, around center : self) : self
-    lattice.wrap self, center
+  # Returns the vector by wrapping into *cell* centered at *center*. The
+  # vector is assumed to be expressed in Cartesian coordinates.
+  def wrap(cell : UnitCell, around center : self) : self
+    cell.wrap self, center
   end
 end

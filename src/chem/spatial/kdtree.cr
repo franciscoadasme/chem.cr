@@ -47,17 +47,17 @@ module Chem::Spatial
 
     def self.new(structure : Structure, periodic : Bool, **options)
       if periodic
-        raise NotPeriodicError.new unless lattice = structure.lattice
-        new structure.atoms, lattice, **options
+        raise NotPeriodicError.new unless cell = structure.cell
+        new structure.atoms, cell, **options
       else
         new structure.atoms.map { |atom| {atom.coords, atom} }
       end
     end
 
-    def self.new(atoms : Enumerable(Atom), lattice : Lattice? = nil, **options)
+    def self.new(atoms : Enumerable(Atom), cell : UnitCell? = nil, **options)
       ary = atoms.map { |atom| {atom.coords, atom} }
-      if lattice
-        PBC.each_adjacent_image(atoms, lattice, **options) do |atom, coords|
+      if cell
+        PBC.each_adjacent_image(atoms, cell, **options) do |atom, coords|
           ary << {coords, atom}
         end
       end

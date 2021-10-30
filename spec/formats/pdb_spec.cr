@@ -110,12 +110,12 @@ describe Chem::PDB do
 
     it "parses a PDB file with unit cell parameters" do
       st = load_file "1crn.pdb"
-      st.lattice.should_not be_nil
-      lattice = st.lattice.not_nil!
-      lattice.size.should eq Size3[40.960, 18.650, 22.520]
-      lattice.alpha.should eq 90
-      lattice.beta.should eq 90.77
-      lattice.gamma.should eq 90
+      st.cell.should_not be_nil
+      cell = st.cell.not_nil!
+      cell.size.should eq Size3[40.960, 18.650, 22.520]
+      cell.alpha.should eq 90
+      cell.beta.should eq 90.77
+      cell.gamma.should eq 90
     end
 
     it "parses a PDB file with experimental header" do
@@ -435,7 +435,7 @@ describe Chem::PDB do
         CRYST1    1.000    1.000    1.000  90.00  90.00  90.00 P 1 21 1
         ATOM      1  N   THR A   1      17.047  14.099   3.625  1.00 13.79           N
         PDB
-      Chem::Structure.from_pdb(io).lattice.should be_nil
+      Chem::Structure.from_pdb(io).cell.should be_nil
     end
   end
 end

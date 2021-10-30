@@ -42,14 +42,14 @@ module Chem::Gen
       end
 
       if periodic
-        @pull.next_line # skip first lattice line
+        @pull.next_line # skip first unit cell line
         vi = Spatial::Vec3.new @pull.next_f, @pull.next_f, @pull.next_f
         @pull.next_line
         vj = Spatial::Vec3.new @pull.next_f, @pull.next_f, @pull.next_f
         @pull.next_line
         vk = Spatial::Vec3.new @pull.next_f, @pull.next_f, @pull.next_f
         @pull.next_line
-        structure.lattice = Lattice.new vi, vj, vk
+        structure.cell = UnitCell.new vi, vj, vk
         structure.coords.to_cart! if fractional
       end
 
@@ -66,11 +66,11 @@ module Chem::Gen
     end
 
     protected def encode_entry(obj : AtomCollection) : Nil
-      lattice = obj.lattice if obj.is_a?(Structure)
-      raise Spatial::NotPeriodicError.new if @fractional && lattice.nil?
+      cell = obj.cell if obj.is_a?(Structure)
+      raise Spatial::NotPeriodicError.new if @fractional && cell.nil?
 
       ele_table = obj.each_atom.map(&.element).uniq.with_index.to_h
-      geometry_type = @fractional ? 'F' : (lattice ? 'S' : 'C')
+      geometry_type = @fractional ? 'F' : (cell ? 'S' : 'C')
 
       @io.printf "%5d%3s\n", obj.n_atoms, geometry_type
       ele_table.each_key { |ele| @io.printf "%3s", ele.symbol }
@@ -79,15 +79,15 @@ module Chem::Gen
       obj.each_atom.with_index do |atom, i|
         ele = ele_table[atom.element] + 1
         vec = atom.coords
-        vec = vec.to_fract lattice.not_nil! if @fractional
+        vec = vec.to_fract cell.not_nil! if @fractional
         @io.printf "%5d%2s%20.10E%20.10E%20.10E\n", i + 1, ele, vec.x, vec.y, vec.z
       end
 
-      write lattice if lattice
+      write cell if cell
     end
 
-    private def write(lattice : Lattice) : Nil
-      {Spatial::Vec3.zero, lattice.i, lattice.j, lattice.k}.each do |vec|
+    private def write(cell : UnitCell) : Nil
+      {Spatial::Vec3.zero, cell.i, cell.j, cell.k}.each do |vec|
         @io.printf "%20.10E%20.10E%20.10E\n", vec.x, vec.y, vec.z
       end
     end

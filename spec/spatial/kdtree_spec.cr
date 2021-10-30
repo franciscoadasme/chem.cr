@@ -101,7 +101,7 @@ describe Chem::Spatial::KDTree do
   describe "#nearest_with_distance" do
     it "returns closest neighbor + distance to a point" do
       structure = Structure.build do
-        lattice 2, 2, 2
+        cell 2, 2, 2
         atom :C, Vec3[1, 1, 1]
         atom :H, Vec3[1.5, 0.5, 0.5]
       end
@@ -115,7 +115,7 @@ describe Chem::Spatial::KDTree do
 
     it "returns closest neighbor + distance to an atom" do
       structure = Structure.build do
-        lattice 2, 2, 2
+        cell 2, 2, 2
         atom :C, Vec3[1, 1, 1]
         atom :H, Vec3[1.5, 0.5, 0.5]
       end
@@ -130,7 +130,7 @@ describe Chem::Spatial::KDTree do
   describe "#neighbors_with_distance" do
     it "returns N closest neighbors + distances to a point" do
       structure = Structure.build do
-        lattice 2, 2, 2
+        cell 2, 2, 2
         atom :C, Vec3[1, 1, 1]
         atom :H, Vec3[1.5, 0.5, 0.5]
       end
@@ -147,7 +147,7 @@ describe Chem::Spatial::KDTree do
 
     it "returns N closest neighbors + distances to an atom" do
       structure = Structure.build do
-        lattice 2, 2, 2
+        cell 2, 2, 2
         atom :C, Vec3[1, 1, 1]
         atom :H, Vec3[1.5, 0.5, 0.5]
       end

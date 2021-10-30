@@ -34,7 +34,7 @@ describe Chem::Spatial::Grid do
 
     it "returns a grid having distances to nearest atom" do
       st = Chem::Structure.build do
-        lattice 2, 2, 2
+        cell 2, 2, 2
         atom :C, Vec3[1, 1, 1]
         atom :C, Vec3[1.5, 0.5, 0.5]
       end
@@ -312,7 +312,7 @@ describe Chem::Spatial::Grid do
     end
 
     it "returns the coordinates at location (non-orthogonal)" do
-      bounds = Lattice.hexagonal(10, 5).bounds.translate(Vec3[1, 2, 3])
+      bounds = UnitCell.hexagonal(10, 5).bounds.translate(Vec3[1, 2, 3])
       grid = make_grid 11, 11, 11, bounds
       grid.coords_at?(0, 0, 0).should eq Vec3[1, 2, 3]
       grid.coords_at?(10, 10, 10).not_nil!.should be_close Vec3[6, 10.660, 8], 1e-3
@@ -508,7 +508,7 @@ describe Chem::Spatial::Grid do
     end
 
     it "returns the location at the coordinates (non-orthogonal)" do
-      bounds = Lattice.new({5, 5, 4}, {90, 100, 90}).bounds.translate Vec3[4, 3, 2]
+      bounds = UnitCell.new({5, 5, 4}, {90, 100, 90}).bounds.translate Vec3[4, 3, 2]
       grid = make_grid 11, 11, 11, bounds
       grid.loc_at?(Vec3[4, 3, 2]).should eq({0, 0, 0})
       grid.loc_at?(Vec3[8.305, 8, 5.939]).should eq({10, 10, 10})

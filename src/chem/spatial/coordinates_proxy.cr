@@ -3,7 +3,7 @@ module Chem::Spatial
     include Enumerable(Vec3)
     include Iterable(Vec3)
 
-    def initialize(@atoms : AtomCollection, @lattice : Lattice? = nil)
+    def initialize(@atoms : AtomCollection, @cell : UnitCell? = nil)
     end
 
     def ==(rhs : Enumerable(Vec3)) : Bool
@@ -58,7 +58,7 @@ module Chem::Spatial
     #
     # ```
     # structure = Structure.read "path/to/file"
-    # structure.lattice       # => [[1.0 0.0 0.0] [0.0 25.0 0.0] [0.0 0.0 213]]
+    # structure.cell          # => [[1.0 0.0 0.0] [0.0 25.0 0.0] [0.0 0.0 213]]
     # structure.coords.center # => [1.0 2.0 3.0]
     # structure.coords.center_at_cell
     # structure.coords.center # => [0.5 12.5 106.5]
@@ -67,8 +67,8 @@ module Chem::Spatial
     # structure.coords.center_at_cell # raises NotPeriodicError
     # ```
     def center_at_cell : self
-      raise NotPeriodicError.new unless lattice = @lattice
-      center_at lattice.bounds.center
+      raise NotPeriodicError.new unless cell = @cell
+      center_at cell.bounds.center
     end
 
     # Translates coordinates so that the center is at the origin.
@@ -106,8 +106,8 @@ module Chem::Spatial
 
     def each(fractional : Bool = false) : Iterator(Vec3)
       if fractional
-        raise NotPeriodicError.new unless lattice = @lattice
-        FractionalCoordinatesIterator.new @atoms, lattice
+        raise NotPeriodicError.new unless cell = @cell
+        FractionalCoordinatesIterator.new @atoms, cell
       else
         @atoms.each_atom.map &.coords
       end
@@ -115,8 +115,8 @@ module Chem::Spatial
 
     def each(fractional : Bool = false, &block : Vec3 ->)
       if fractional
-        raise NotPeriodicError.new unless lattice = @lattice
-        @atoms.each_atom { |atom| yield atom.coords.to_fract lattice }
+        raise NotPeriodicError.new unless cell = @cell
+        @atoms.each_atom { |atom| yield atom.coords.to_fract cell }
       else
         @atoms.each_atom { |atom| yield atom.coords }
       end
@@ -138,9 +138,9 @@ module Chem::Spatial
 
     def map!(fractional : Bool = false, &block : Vec3 -> Vec3) : self
       if fractional
-        raise NotPeriodicError.new unless lattice = @lattice
+        raise NotPeriodicError.new unless cell = @cell
         @atoms.each_atom do |atom|
-          atom.coords = (yield atom.coords.to_fract(lattice)).to_cart lattice
+          atom.coords = (yield atom.coords.to_fract(cell)).to_cart cell
         end
       else
         @atoms.each_atom { |atom| atom.coords = yield atom.coords }
@@ -189,25 +189,25 @@ module Chem::Spatial
     end
 
     def to_cart! : self
-      raise NotPeriodicError.new unless lattice = @lattice
-      map! &.to_cart(lattice)
+      raise NotPeriodicError.new unless cell = @cell
+      map! &.to_cart(cell)
     end
 
     def to_fract! : self
-      raise NotPeriodicError.new unless lattice = @lattice
-      map! &.to_fract(lattice)
+      raise NotPeriodicError.new unless cell = @cell
+      map! &.to_fract(cell)
     end
 
     def wrap(around center : Vec3? = nil) : self
-      raise NotPeriodicError.new unless lattice = @lattice
-      wrap lattice, center
+      raise NotPeriodicError.new unless cell = @cell
+      wrap cell, center
     end
 
-    def wrap(lattice : Lattice, around center : Vec3? = nil) : self
-      center ||= lattice.bounds.center
+    def wrap(cell : UnitCell, around center : Vec3? = nil) : self
+      center ||= cell.bounds.center
 
-      if lattice.orthogonal?
-        vecs = {lattice.i, lattice.j, lattice.k}
+      if cell.orthogonal?
+        vecs = {cell.i, cell.j, cell.k}
         normed_vecs = vecs.map &.normalize
         map! do |vec|
           d = vec - center
@@ -218,7 +218,7 @@ module Chem::Spatial
           vec
         end
       else
-        offset = center.to_fract(lattice) - Vec3[0.5, 0.5, 0.5]
+        offset = center.to_fract(cell) - Vec3[0.5, 0.5, 0.5]
         map!(fractional: true) { |vec| vec - (vec - offset).map(&.floor) }
       end
 
@@ -231,13 +231,13 @@ module Chem::Spatial
 
       @iterator : Iterator(Atom)
 
-      def initialize(atoms : AtomCollection, @lattice : Lattice)
+      def initialize(atoms : AtomCollection, @cell : UnitCell)
         @iterator = atoms.each_atom
       end
 
       def next : Vec3 | Iterator::Stop
         atom = wrapped_next
-        atom.coords.to_fract @lattice
+        atom.coords.to_fract @cell
       end
     end
   end
