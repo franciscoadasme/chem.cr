@@ -3,7 +3,6 @@ require "./spatial/size3"
 require "./spatial/vec3"
 require "./spatial/mat3"
 
-require "./spatial/basis"
 require "./spatial/bounds"
 require "./spatial/grid"
 require "./spatial/quat"

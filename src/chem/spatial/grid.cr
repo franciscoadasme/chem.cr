@@ -37,7 +37,7 @@ module Chem::Spatial
     end
 
     def self.[](ni : Int, nj : Int, nk : Int) : self
-      new({ni.to_i, nj.to_i, nk.to_i}, Bounds.zero)
+      new({ni.to_i, nj.to_i, nk.to_i}, Bounds[0, 0, 0])
     end
 
     def self.atom_distance(structure : Structure,
@@ -395,7 +395,7 @@ module Chem::Spatial
 
     def loc_at?(vec : Vec3) : Location?
       return unless vec.in?(bounds)
-      vec = (vec - origin).to_fract bounds.basis
+      vec = bounds.fract(vec - origin)
       vec = vec * (Vec3[*@dim] - 1)
       {vec.x, vec.y, vec.z}.map(&.round.to_i)
     end
@@ -713,9 +713,10 @@ module Chem::Spatial
     end
 
     def resolution : FloatTriple
-      {ni == 1 ? 0.0 : bounds.i.abs / (ni - 1),
-       nj == 1 ? 0.0 : bounds.j.abs / (nj - 1),
-       nk == 1 ? 0.0 : bounds.k.abs / (nk - 1)}
+      size = bounds.size
+      {ni == 1 ? 0.0 : size[0] / (ni - 1),
+       nj == 1 ? 0.0 : size[1] / (nj - 1),
+       nk == 1 ? 0.0 : size[2] / (nk - 1)}
     end
 
     def size : Int32
@@ -777,9 +778,10 @@ module Chem::Spatial
 
     @[AlwaysInline]
     private def unsafe_coords_at(loc : Location) : Vec3
-      vi = ni == 1 ? Vec3.zero : bounds.i / (ni - 1)
-      vj = nj == 1 ? Vec3.zero : bounds.j / (nj - 1)
-      vk = nk == 1 ? Vec3.zero : bounds.k / (nk - 1)
+      vi, vj, vk = bounds.basisvec
+      vi = ni == 1 ? Vec3.zero : vi / (ni - 1)
+      vj = nj == 1 ? Vec3.zero : vj / (nj - 1)
+      vk = nk == 1 ? Vec3.zero : vk / (nk - 1)
       origin + loc[0] * vi + loc[1] * vj + loc[2] * vk
     end
 

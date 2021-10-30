@@ -14,15 +14,13 @@ module Chem::Spatial
     def bounds : Bounds
       min = StaticArray[Float64::MAX, Float64::MAX, Float64::MAX]
       max = StaticArray[Float64::MIN, Float64::MIN, Float64::MIN]
-      each do |coords|
+      each do |vec|
         3.times do |i|
-          min[i] = coords[i] if coords[i] < min.unsafe_fetch(i)
-          max[i] = coords[i] if coords[i] > max.unsafe_fetch(i)
+          min[i] = vec[i] if vec[i] < min.unsafe_fetch(i)
+          max[i] = vec[i] if vec[i] > max.unsafe_fetch(i)
         end
       end
-      origin = Vec3.new min[0], min[1], min[2]
-      size = Size3.new max[0] - min[0], max[1] - min[1], max[2] - min[2]
-      Bounds.new origin, size
+      Bounds.new(Vec3[min[0], min[1], min[2]], Vec3[max[0], max[1], max[2]])
     end
 
     def center : Vec3

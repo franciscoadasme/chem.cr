@@ -55,10 +55,7 @@ module Spec
 
     def match(actual_value : Chem::Spatial::Bounds) : Bool
       return false unless @expected_value.is_a?(Chem::Spatial::Bounds)
-      actual_value.origin.close_to?(@expected_value.origin, @delta) &&
-        actual_value.i.close_to?(@expected_value.i, @delta) &&
-        actual_value.j.close_to?(@expected_value.j, @delta) &&
-        actual_value.k.close_to?(@expected_value.k, @delta)
+      actual_value.close_to?(@expected_value, @delta)
     end
 
     def match(actual_value : Indexable(Number::Primitive)) : Bool
@@ -197,7 +194,7 @@ end
 def make_grid(nx : Int,
               ny : Int,
               nz : Int,
-              bounds : Bounds = Bounds.zero) : Grid
+              bounds : Bounds = Bounds[0, 0, 0]) : Grid
   Grid.build({nx, ny, nz}, bounds) do |buffer|
     (nx * ny * nz).times do |i|
       buffer[i] = i.to_f
@@ -208,7 +205,7 @@ end
 def make_grid(nx : Int,
               ny : Int,
               nz : Int,
-              bounds : Bounds = Bounds.zero,
+              bounds : Bounds = Bounds[0, 0, 0],
               &block : Int32, Int32, Int32 -> Number) : Grid
   Grid.new({nx, ny, nz}, bounds).map_with_loc! do |_, (i, j, k)|
     (yield i, j, k).to_f

@@ -36,9 +36,11 @@ describe Chem::Cube::Reader do
     info.dim.should eq({14, 20, 22})
     info.bounds.should be_close Bounds.new(
       Vec3[-3.826155, -4.114553, -6.64407],
-      Vec3[8.497002, 0.0, 0.0],
-      Vec3[2.702550, 11.23965, 0.0],
-      Vec3[5.816758, 2.222264, 41.171796],
+      Mat3.basis(
+        Vec3[8.497002, 0.0, 0.0],
+        Vec3[2.702550, 11.23965, 0.0],
+        Vec3[5.816758, 2.222264, 41.171796],
+      ),
     ), 1e-6
   end
 

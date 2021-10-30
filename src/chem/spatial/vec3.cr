@@ -220,18 +220,6 @@ module Chem::Spatial
       [@x, @y, @z]
     end
 
-    # Returns a vector in Cartesian coordinates relative to *basis*. The
-    # vector is assumed to be expressed in fractional coordinates.
-    def to_cart(basis : Basis) : self
-      @x * basis.i + @y * basis.j + @z * basis.k
-    end
-
-    # Returns a vector in fractional coordinates relative to *basis*.
-    # The vector is assumed to be expressed in Cartesian coordinates.
-    def to_fract(basis : Basis) : self
-      basis.transform * self
-    end
-
     def to_s(io : IO) : Nil
       io << "Vec3[ "
       {% for name, i in %w(x y z) %}

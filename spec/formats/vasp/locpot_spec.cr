@@ -7,9 +7,11 @@ describe Chem::VASP::Locpot do
     grid.dim.should eq({32, 32, 32})
     grid.bounds.should be_close Bounds.new(
       Vec3.zero,
-      Vec3[2.969072, -0.000523, -0.000907],
-      Vec3[-0.987305, 2.800110, 0.000907],
-      Vec3[-0.987305, -1.402326, 2.423654],
+      Mat3.basis(
+        Vec3[2.969072, -0.000523, -0.000907],
+        Vec3[-0.987305, 2.800110, 0.000907],
+        Vec3[-0.987305, -1.402326, 2.423654]
+      ),
     ), 1e-6
     grid[0, 0, 0].should eq -46.16312251
     grid[0, 5, 11].should eq -8.1037443195
@@ -22,9 +24,11 @@ describe Chem::VASP::Locpot do
     info = Grid::Info.from_locpot spec_file("vasp/LOCPOT")
     info.bounds.should be_close Bounds.new(
       Vec3.zero,
-      Vec3[2.969072, -0.000523, -0.000907],
-      Vec3[-0.987305, 2.800110, 0.000907],
-      Vec3[-0.987305, -1.402326, 2.423654],
+      Mat3.basis(
+        Vec3[2.969072, -0.000523, -0.000907],
+        Vec3[-0.987305, 2.800110, 0.000907],
+        Vec3[-0.987305, -1.402326, 2.423654],
+      ),
     ), 1e-6
     info.dim.should eq({32, 32, 32})
   end
@@ -81,7 +85,7 @@ describe Chem::VASP::Locpot do
   end
 
   it "fails when writing a LOCPOT with a non-periodic structure" do
-    grid = make_grid 3, 3, 3, Bounds.zero
+    grid = make_grid 3, 3, 3, Bounds[1, 2, 3]
     expect_raises Chem::Spatial::NotPeriodicError do
       grid.to_locpot Chem::Structure.new
     end

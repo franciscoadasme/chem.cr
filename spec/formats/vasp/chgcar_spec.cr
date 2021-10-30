@@ -69,7 +69,7 @@ describe Chem::VASP::Chgcar do
   end
 
   it "fails when writing a CHGCAR with a non-periodic structure" do
-    grid = make_grid 3, 3, 3, Bounds.zero
+    grid = make_grid 3, 3, 3, Bounds[1, 2, 3]
     expect_raises Chem::Spatial::NotPeriodicError do
       grid.to_chgcar Chem::Structure.new
     end

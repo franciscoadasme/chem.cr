@@ -1,50 +1,39 @@
 module Chem::Spatial
   struct Bounds
-    getter basis : Basis
+    getter basis : Mat3
     getter origin : Vec3
 
-    delegate a, alpha, angles, b, beta, c, gamma, i, j, k, size, to: @basis
+    # Caches the inverse matrix for coordinate conversion.
+    @inv_basis : Spatial::Mat3?
 
-    def initialize(@origin : Vec3, @basis : Basis)
-    end
-
-    def self.new(origin : Vec3, *args, **options) : self
-      new origin, Basis.new(*args, **options)
-    end
-
-    def self.new(*args, **options) : self
-      new Vec3.zero, Basis.new(*args, **options)
+    def initialize(@origin : Vec3, @basis : Mat3)
     end
 
     def self.new(vmin : Vec3, vmax : Vec3) : self
-      new vmin,
-        Vec3[vmax.x - vmin.x, 0, 0],
-        Vec3[0, vmax.y - vmin.y, 0],
-        Vec3[0, 0, vmax.z - vmin.z]
+      basis = Mat3[
+        {vmax.x - vmin.x, 0, 0},
+        {0, vmax.y - vmin.y, 0},
+        {0, 0, vmax.z - vmin.z},
+      ]
+      Bounds.new vmin, basis
     end
 
     def self.[](a : Float64, b : Float64, c : Float64) : self
-      new Vec3.zero, Size3[a, b, c]
+      raise ArgumentError.new("Negative size") if {a, b, c}.any?(&.negative?)
+      new Vec3.zero, Mat3.diagonal(a, b, c)
     end
 
-    def self.zero : self
-      new Vec3.zero, Size3[0, 0, 0]
+    def basisvec : Tuple(Vec3, Vec3, Vec3)
+      {Vec3[*@basis[.., 0]], Vec3[*@basis[.., 1]], Vec3[*@basis[.., 2]]}
     end
-
-    {% for op in %w(+ -) %}
-      def {{op.id}}(rhs : Vec3) : self
-        Bounds.new @origin {{op.id}} rhs, @basis
-      end
-    {% end %}
-
-    # {% for op in %w(* /) %}
-    #   def {{op.id}}(rhs : Number) : self
-    #     Bounds.new @origin, @a {{op.id}} rhs, @b {{op.id}} rhs, @c {{op.id}} rhs
-    #   end
-    # {% end %}
 
     def center : Vec3
-      @origin + (@basis.i + @basis.j + @basis.k) * 0.5
+      @origin + basisvec.sum * 0.5
+    end
+
+    def close_to?(rhs : self, delta : Number = Float64::EPSILON) : Bool
+      @origin.close_to?(rhs.origin, delta) &&
+        @basis.close_to?(rhs.basis, delta)
     end
 
     # Yields bounds' vertices.
@@ -66,13 +55,20 @@ module Chem::Spatial
     # Vec3[5.0, 10.0, 20.0]
     # ```
     def each_vertex(& : Vec3 ->) : Nil
+      vi, vj, vk = basisvec
       2.times do |di|
         2.times do |dj|
           2.times do |dk|
-            yield @origin + i * di + j * dj + k * dk
+            yield @origin + vi * di + vj * dj + vk * dk
           end
         end
       end
+    end
+
+    # Returns the vector in fractional coordinates equivalent to the
+    # given Cartesian coordinates.
+    protected def fract(vec : Vec3) : Vec3
+      inv_basis * vec
     end
 
     # Returns `true` if the current instance contains *bounds*, `false`
@@ -87,17 +83,23 @@ module Chem::Spatial
     # bounds.includes? Bounds.new(Vec3[-1, 2, -4], Size3[5, 4, 6])) # => false
     # ```
     def includes?(bounds : Bounds) : Bool
-      bounds.vertices.all? { |vec| includes?(vec) }
+      bounds.vertices.all? &.in?(self)
     end
 
     def includes?(vec : Vec3) : Bool
+      vi, vj, vk = basisvec
       vec -= @origin unless @origin.zero?
-      if alpha == 90 && beta == 90 && gamma == 90 && i.y == 0 && i.z == 0
-        0 <= vec.x <= a && 0 <= vec.y <= b && 0 <= vec.z <= c
+      if vi.x? && vj.y? && vk.z?
+        0 <= vec.x <= vi.x && 0 <= vec.y <= vj.y && 0 <= vec.z <= vk.z
       else
-        vec = vec.to_fract(@basis).map &.round(Float64::DIGITS)
+        vec = fract(vec).map &.round(Float64::DIGITS) # TODO: cache inverted
         0 <= vec.x <= 1 && 0 <= vec.y <= 1 && 0 <= vec.z <= 1
       end
+    end
+
+    # Inverted matrix basis.
+    private def inv_basis : Spatial::Mat3
+      @inv_basis ||= @basis.inv
     end
 
     # Returns maximum edge.
@@ -107,7 +109,7 @@ module Chem::Spatial
     # bounds.max # => Vec3[6.5, 11.66, 11.6]
     # ```
     def max : Vec3
-      @origin + i + j + k
+      @origin + basisvec.sum
     end
 
     # Returns minimum edge. This is equivalent to the origin.
@@ -132,9 +134,16 @@ module Chem::Spatial
     # bounds.center # => Vec3[6.0, 7.5, 9.0]
     # ```
     def pad(padding : Number) : self
-      raise ArgumentError.new "Padding cannot be negative" if padding < 0
-      new_origin = @origin - i.resize(padding) - j.resize(padding) - k.resize(padding)
-      Bounds.new new_origin, i.pad(padding * 2), j.pad(padding * 2), k.pad(padding * 2)
+      raise ArgumentError.new "Negative padding" if padding < 0
+      vi, vj, vk = basisvec
+      origin = @origin - (vi.resize(padding) + vj.resize(padding) + vk.resize(padding))
+      padding *= 2
+      basis = Spatial::Mat3.basis(vi.pad(padding), vj.pad(padding), vk.pad(padding))
+      Bounds.new origin, basis
+    end
+
+    def size : Size3
+      Size3[*basisvec.map(&.abs)]
     end
 
     # Returns a bounds translated by *offset*.
@@ -160,7 +169,7 @@ module Chem::Spatial
     end
 
     def volume : Float64
-      @basis.i.dot @basis.j.cross(@basis.k)
+      @basis.det
     end
   end
 end

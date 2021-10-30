@@ -137,7 +137,7 @@ module Chem
 
     # Returns the bounds of the unit cell.
     def bounds : Spatial::Bounds
-      Spatial::Bounds.new Spatial::Vec3.zero, Spatial::Basis.new(i, j, k)
+      Spatial::Bounds.new Spatial::Vec3.zero, @basis
     end
 
     # The length (in angstorms) of the third basis vector.

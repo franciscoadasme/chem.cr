@@ -55,17 +55,18 @@ module Chem::Cube
       @pull.error "Cube with multiple densities not supported" if @n_atoms < 0
       origin = read_vector * BOHR_TO_ANGS
       @pull.next_line
-      nx, vi = @pull.next_i, read_vector * BOHR_TO_ANGS
+      ni, dvi = @pull.next_i, read_vector * BOHR_TO_ANGS
       @pull.next_line
-      ny, vj = @pull.next_i, read_vector * BOHR_TO_ANGS
+      nj, dvj = @pull.next_i, read_vector * BOHR_TO_ANGS
       @pull.next_line
-      nz, vk = @pull.next_i, read_vector * BOHR_TO_ANGS
+      nk, dvk = @pull.next_i, read_vector * BOHR_TO_ANGS
       @pull.next_line
 
       @attached = decode_attached
 
-      bounds = Spatial::Bounds.new origin, vi * nx, vj * ny, vk * nz
-      Spatial::Grid::Info.new bounds, {nx, ny, nz}
+      vi, vj, vk = dvi * ni, dvj * nj, dvk * nk
+      bounds = Spatial::Bounds.new origin, Spatial::Mat3.basis(vi, vj, vk)
+      Spatial::Grid::Info.new bounds, {ni, nj, nk}
     end
 
     private def read_vector : Spatial::Vec3
@@ -108,10 +109,12 @@ module Chem::Cube
     end
 
     private def write_header(grid : Spatial::Grid) : Nil
+      vi, vj, vk = grid.bounds.basisvec
+
       origin = grid.origin * ANGS_TO_BOHR
-      i = grid.bounds.i / grid.ni * ANGS_TO_BOHR
-      j = grid.bounds.j / grid.nj * ANGS_TO_BOHR
-      k = grid.bounds.k / grid.nk * ANGS_TO_BOHR
+      i = vi / grid.ni * ANGS_TO_BOHR
+      j = vj / grid.nj * ANGS_TO_BOHR
+      k = vk / grid.nk * ANGS_TO_BOHR
 
       @io.puts "CUBE FILE GENERATED WITH CHEM.CR"
       @io.puts "OUTER LOOP: X, MIDDLE LOOP: Y, INNER LOOP: Z"
