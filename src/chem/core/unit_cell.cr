@@ -19,7 +19,7 @@ module Chem
     end
 
     # Returns a new `UnitCell` with the given basis vectors.
-    def self.new(i : Vec3, j : Vec3, k : Vec3) : self
+    def self.new(i : Spatial::Vec3, j : Spatial::Vec3, k : Spatial::Vec3) : self
       UnitCell.new Spatial::Mat3.basis(i, j, k)
     end
 
@@ -153,7 +153,7 @@ module Chem
 
     # Returns the vector in Cartesian coordinates equivalent to the
     # given fractional coordinates.
-    def cart(vec : Vec3) : Vec3
+    def cart(vec : Spatial::Vec3) : Spatial::Vec3
       @basis * vec
     end
 
@@ -165,7 +165,7 @@ module Chem
 
     # Returns the vector in fractional coordinates equivalent to the
     # given Cartesian coordinates.
-    def fract(vec : Vec3) : Vec3
+    def fract(vec : Spatial::Vec3) : Spatial::Vec3
       inv_basis * vec
     end
 
@@ -258,8 +258,8 @@ module Chem
     end
 
     # Returns the lengths of the basis vectors.
-    def size : Size3
-      Size3[a, b, c]
+    def size : Spatial::Size3
+      Spatial::Size3[a, b, c]
     end
 
     # Returns `true` if the unit cell is tetragonal (*a* = *b* ≠ *c* and
