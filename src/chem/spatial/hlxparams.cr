@@ -42,7 +42,7 @@ module Chem::Spatial
     nil
   end
 
-  private def chirality(coord) : Int32
+  private def self.chirality(coord) : Int32
     chirality = 1
     if c_CB = coord[1][:cb]
       d1 = coord[1][:n] - coord[1][:ca]
@@ -65,12 +65,12 @@ module Chem::Spatial
     chirality
   end
 
-  private def radius(coord, theta : Float64) : Float64
+  private def self.radius(coord, theta : Float64) : Float64
     r1 = (coord[1][:ca] - coord[0][:ca])
     r1.abs / (2 * Math.sin(0.5 * theta))
   end
 
-  private def rotation(coord) : Tuple(Vec3, Float64, Float64)
+  private def self.rotation(coord) : Tuple(Vec3, Float64, Float64)
     v1 = coord[0][:c] - coord[0][:ca]
     v2 = coord[1][:n] - coord[0][:c]
     v3 = v1.cross(v2).normalize
@@ -91,7 +91,7 @@ module Chem::Spatial
     {rotaxis, rotation_angle(rotaxis, v1, w1), translation}
   end
 
-  private def rotation_angle(rotaxis : Vec3, v1 : Vec3, w1 : Vec3) : Float64
+  private def self.rotation_angle(rotaxis : Vec3, v1 : Vec3, w1 : Vec3) : Float64
     v1p = (v1 - rotaxis * rotaxis.dot(v1)).normalize
     w1p = (w1 - rotaxis * rotaxis.dot(w1)).normalize
     twist = Math.acos v1p.dot(w1p)
