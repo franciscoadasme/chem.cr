@@ -8,7 +8,7 @@ module Indexable(T)
   end
 
   def mean : Float64
-    {% raise "#mean only works with numbers, not #{@type}" unless @type < Number %}
+    {% raise "#mean only works with numbers, not #{@type}" unless @type.type_vars[0] < Number %}
     sum(0) / size
   end
 
