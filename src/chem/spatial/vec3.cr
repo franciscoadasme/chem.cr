@@ -244,7 +244,7 @@ module Chem::Spatial
     # Returns the vector by wrapping into the primary unit cell. The
     # vector is assumed to be expressed in fractional coordinates.
     def wrap : self
-      self - map_with_index { |ele, i| ele == 1 ? 0 : ele.floor }
+      self - map { |ele| ele == 1 ? 0 : ele.floor }
     end
 
     # Returns the vector by wrapping into the primary unit cell centered
@@ -252,7 +252,7 @@ module Chem::Spatial
     # coordinates.
     def wrap(around center : self) : self
       offset = self - (center - Vec3[0.5, 0.5, 0.5])
-      self - offset.map_with_index { |ele, i| ele == 1 ? 0 : ele.floor }
+      self - offset.map { |ele| ele == 1 ? 0 : ele.floor }
     end
 
     # Returns `true` if the vector lies along X axis, else `false`.
