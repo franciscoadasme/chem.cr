@@ -6,9 +6,9 @@ module Chem::Protein
     getter radius : Float64
 
     def initialize(residue : Residue)
-      raise ArgumentError.new("Residue is not protein") unless residue.protein?
-      raise ArgumentError.new("Residue is N-terminus") unless prev_res = residue.pred
-      raise ArgumentError.new("Residue is C-terminus") unless next_res = residue.succ
+      raise ArgumentError.new("#{residue} is not protein") unless residue.protein?
+      raise ArgumentError.new("#{residue} is N-terminus") unless prev_res = residue.pred
+      raise ArgumentError.new("#{residue} is C-terminus") unless next_res = residue.succ
 
       c1 = prev_res.dig("C").coords
       ca1 = prev_res.dig("CA").coords
