@@ -424,7 +424,9 @@ module Chem
     end
 
     def hlxparams : Spatial::HlxParams?
-      Spatial.hlxparams self, structure.cell
+      Spatial::HlxParams.new self
+    rescue ArgumentError | KeyError
+      nil
     end
 
     def insertion_code=(insertion_code : Char?) : Char?

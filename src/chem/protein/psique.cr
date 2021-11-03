@@ -173,7 +173,7 @@ module Chem::Protein
         end
 
         raw_pitch = h2.pitch.scale(0, 4)
-        raw_twist = h2.twist.scale(0, 360)
+        raw_twist = h2.twist.degrees.scale(0, 360)
         pes = PSIQUE.pes[raw_pitch >= 0 ? 1 : -1]
         pitch, twist = pes.walk raw_pitch, raw_twist
         basin_ok = false
