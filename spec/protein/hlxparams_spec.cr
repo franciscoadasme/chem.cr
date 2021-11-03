@@ -1,10 +1,10 @@
 require "../spec_helper"
 
-describe Chem::Spatial::HlxParams do
+describe Chem::Protein::HlxParams do
   describe ".new" do
     it "returns helical parameters" do
       data = {radius: [] of Float64, twist: [] of Float64, pitch: [] of Float64}.tap do |data|
-        File.each_line(spec_file("spatial/hlxparams.txt")) do |line|
+        File.each_line(spec_file("hlxparams_4wfe.txt")) do |line|
           next if line.blank?
           values = line.split.map &.to_f
           data[:pitch] << values[0]
@@ -15,7 +15,7 @@ describe Chem::Spatial::HlxParams do
       i = 0
       structure = load_file "4wfe.pdb"
       structure.each_residue do |residue|
-        params = Chem::Spatial::HlxParams.new(residue) rescue next
+        params = Chem::Protein::HlxParams.new(residue) rescue next
         params.pitch.should be_close data[:pitch][i], 1e-1
         params.twist.degrees.should be_close data[:twist][i], 2e-1
         i += 1
@@ -30,7 +30,7 @@ describe Chem::Spatial::HlxParams do
       ]
       structure = load_file "hlx_phe--theta-90.000--c-26.10.pdb"
       twist = structure.residues.map do |residue|
-        Chem::Spatial::HlxParams.new(residue).twist.degrees
+        Chem::Protein::HlxParams.new(residue).twist.degrees
       end
       twist.should be_close expected, 1e-1
     end
@@ -38,14 +38,14 @@ describe Chem::Spatial::HlxParams do
     it "raises if residue is N-ter" do
       structure = load_file "hlxparam.pdb"
       expect_raises(ArgumentError) do
-        Chem::Spatial::HlxParams.new structure.residues.first
+        Chem::Protein::HlxParams.new structure.residues.first
       end
     end
 
     it "raises if residue is C-ter" do
       structure = load_file "hlxparam.pdb"
       expect_raises(ArgumentError) do
-        Chem::Spatial::HlxParams.new structure.residues.last
+        Chem::Protein::HlxParams.new structure.residues.last
       end
     end
 
@@ -53,10 +53,10 @@ describe Chem::Spatial::HlxParams do
       # there is a gap between residues 2 and 3
       structure = load_file "hlxparam.pdb"
       expect_raises(ArgumentError) do
-        Chem::Spatial::HlxParams.new structure.residues[2]
+        Chem::Protein::HlxParams.new structure.residues[2]
       end
       expect_raises(ArgumentError) do
-        Chem::Spatial::HlxParams.new structure.residues[3]
+        Chem::Protein::HlxParams.new structure.residues[3]
       end
     end
 
@@ -64,7 +64,7 @@ describe Chem::Spatial::HlxParams do
       it "returns helical parameters" do
         structure = load_file "hlx_gly.poscar", guess_topology: true
         structure.each_residue do |residue|
-          params = Chem::Spatial::HlxParams.new residue
+          params = Chem::Protein::HlxParams.new residue
           params.twist.degrees.should be_close 166.15, 1e-2
           params.pitch.should be_close 2.91, 1e-3
           params.radius.should be_close 1.931, 1e-3

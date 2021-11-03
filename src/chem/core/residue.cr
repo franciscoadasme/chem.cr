@@ -423,8 +423,8 @@ module Chem
       !protein?
     end
 
-    def hlxparams : Spatial::HlxParams?
-      Spatial::HlxParams.new self
+    def hlxparams : Protein::HlxParams?
+      Protein::HlxParams.new self
     rescue ArgumentError | KeyError
       nil
     end

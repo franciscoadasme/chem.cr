@@ -1,6 +1,6 @@
-module Chem::Spatial
+module Chem::Protein
   struct HlxParams
-    getter rotaxis : Vec3
+    getter rotaxis : Spatial::Vec3
     getter twist : Float64
     getter pitch : Float64
     getter radius : Float64
