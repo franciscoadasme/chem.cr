@@ -70,6 +70,15 @@ describe Chem::Protein::HlxParams do
           params.radius.should be_close 1.931, 1e-3
         end
       end
+
+      it "computes pitch for a 2-residue peptide (#97)" do
+        structure = load_file "polyala--theta-180.000--c-10.00.pdb"
+        structure.each_residue do |residue|
+          params = Chem::Protein::HlxParams.new residue
+          params.pitch.should be_close 2.65, 1e-2
+          params.twist.degrees.should be_close 180, 1e-2
+        end
+      end
     end
   end
 end

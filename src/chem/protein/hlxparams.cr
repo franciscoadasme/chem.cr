@@ -26,7 +26,7 @@ module Chem::Protein
         c1 = c1.wrap cell, around: n2
         ca1 = ca1.wrap cell, around: c1
         n3 = n3.wrap cell, around: c2
-        ca3 = ca3.wrap cell, around: n2
+        ca3 = ca3.wrap cell, around: n3
       end
 
       # compute helix rotation axis using auxiliary vectors
@@ -51,7 +51,8 @@ module Chem::Protein
       # compute helix twist
       v1p = (v1 - @rotaxis * @rotaxis.dot(v1)).normalize
       w1p = (w1 - @rotaxis * @rotaxis.dot(w1)).normalize
-      @twist = Math.acos v1p.dot(w1p)
+      # round to avoid precision issues (e.g., -1.0000000000000002 would produce NaN)
+      @twist = Math.acos v1p.dot(w1p).round(Float64::DIGITS)
 
       tzp = v1p.cross(w1p).normalize
       handedness = @rotaxis.dot tzp

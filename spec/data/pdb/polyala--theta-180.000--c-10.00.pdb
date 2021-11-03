@@ -1,0 +1,46 @@
+TITLE     Ala theta=180.000 c=10.00 in bohrs                                    
+REMARK   4                                                                      
+REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
+CRYST1   13.007   13.007    5.292  90.00  90.00  90.00 P 1           1          
+ATOM      1  N   ALA A   1       6.950   6.746   3.471  1.00  0.00           N  
+ATOM      2  H   ALA A   1       7.205   7.497   2.804  1.00  0.00           H  
+ATOM      3  CA  ALA A   1       7.861   6.459   4.568  1.00  0.00           C  
+ATOM      4  HA  ALA A   1       7.958   5.364   4.658  1.00  0.00           H  
+ATOM      5  C   ALA A   1       7.159   6.980   0.536  1.00  0.00           C  
+ATOM      6  O   ALA A   1       7.555   7.980   1.169  1.00  0.00           O  
+ATOM      7  CB  ALA A   1       9.218   7.101   4.337  1.00  0.00           C  
+ATOM      8  HB1 ALA A   1       9.887   6.882   5.178  1.00  0.00           H  
+ATOM      9  HB2 ALA A   1       9.128   8.191   4.259  1.00  0.00           H  
+ATOM     10  HB3 ALA A   1       9.672   6.714   3.416  1.00  0.00           H  
+ATOM     11  N   ALA A   2       6.057   6.261   0.825  1.00  0.00           N  
+ATOM     12  H   ALA A   2       5.802   5.510   0.158  1.00  0.00           H  
+ATOM     13  CA  ALA A   2       5.146   6.548   1.922  1.00  0.00           C  
+ATOM     14  HA  ALA A   2       5.049   7.644   2.012  1.00  0.00           H  
+ATOM     15  C   ALA A   2       5.848   6.027   3.182  1.00  0.00           C  
+ATOM     16  O   ALA A   2       5.452   5.027   3.815  1.00  0.00           O  
+ATOM     17  CB  ALA A   2       3.789   5.906   1.691  1.00  0.00           C  
+ATOM     18  HB1 ALA A   2       3.121   6.125   2.533  1.00  0.00           H  
+ATOM     19  HB2 ALA A   2       3.335   6.293   0.770  1.00  0.00           H  
+ATOM     20  HB3 ALA A   2       3.879   4.816   1.613  1.00  0.00           H  
+TER      21      ALA A   2                                                      
+CONECT    1    2    3   15
+CONECT    2    1
+CONECT    3    1    4    5    7
+CONECT    4    3
+CONECT    5    3    6    6   11
+CONECT    6    5    5
+CONECT    7    3    8    9   10
+CONECT    8    7
+CONECT    9    7
+CONECT   10    7
+CONECT   11    5   12   13
+CONECT   12   11
+CONECT   13   11   14   15   17
+CONECT   14   13
+CONECT   15    1   13   16   16
+CONECT   16   15   15
+CONECT   17   13   18   19   20
+CONECT   18   17
+CONECT   19   17
+CONECT   20   17
+END                                                                             
