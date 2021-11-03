@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../../js/doc.js"></script>
 
   <meta name="repository-name" content="chem.cr">
-  <title>Chem::Spatial::HlxParams - chem.cr master</title>
+  <title>Chem::Protein::HlxParams - chem.cr master</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -316,13 +316,18 @@
       
     </li>
   
-  <li class="parent " data-id="chem.cr/Chem/Protein" data-name="chem::protein">
+  <li class="parent open current" data-id="chem.cr/Chem/Protein" data-name="chem::protein">
       <a href="../../Chem/Protein.html">Protein</a>
       
         <ul>
   
   <li class=" " data-id="chem.cr/Chem/Protein/DSSP" data-name="chem::protein::dssp">
       <a href="../../Chem/Protein/DSSP.html">DSSP</a>
+      
+    </li>
+  
+  <li class=" current" data-id="chem.cr/Chem/Protein/HlxParams" data-name="chem::protein::hlxparams">
+      <a href="../../Chem/Protein/HlxParams.html">HlxParams</a>
       
     </li>
   
@@ -426,7 +431,7 @@
       
     </li>
   
-  <li class="parent open current" data-id="chem.cr/Chem/Spatial" data-name="chem::spatial">
+  <li class="parent " data-id="chem.cr/Chem/Spatial" data-name="chem::spatial">
       <a href="../../Chem/Spatial.html">Spatial</a>
       
         <ul>
@@ -478,11 +483,6 @@
   
 </ul>
 
-      
-    </li>
-  
-  <li class=" current" data-id="chem.cr/Chem/Spatial/HlxParams" data-name="chem::spatial::hlxparams">
-      <a href="../../Chem/Spatial/HlxParams.html">HlxParams</a>
       
     </li>
   
@@ -805,12 +805,12 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">struct</span> Chem::Spatial::HlxParams
+  <span class="kind">struct</span> Chem::Protein::HlxParams
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Chem/Spatial/HlxParams.html">Chem::Spatial::HlxParams</a></li><li class="superclass">Struct</li><li class="superclass">Value</li><li class="superclass">Object</li></ul>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Chem/Protein/HlxParams.html">Chem::Protein::HlxParams</a></li><li class="superclass">Struct</li><li class="superclass">Value</li><li class="superclass">Object</li></ul>
 
 
 
@@ -838,8 +838,8 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/spatial/hlxparams.cr#L2" target="_blank">
-        chem/spatial/hlxparams.cr
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/46ebb32a4a8b02c5ccf8f708c7e1ae9e5e420ae4/src/chem/protein/hlxparams.cr#L2" target="_blank">
+        chem/protein/hlxparams.cr
       </a>
     
     <br/>
@@ -860,7 +860,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28rotaxis%3AVec3%2Ctwist%3AFloat64%2Cpitch%3AFloat64%2Cradius%3AFloat64%29-class-method" class="signature"><strong>.new</strong>(rotaxis : Vec3, twist : Float64, pitch : Float64, radius : Float64)</a>
+        <a href="#new%28residue%3AResidue%29-class-method" class="signature"><strong>.new</strong>(residue : Residue)</a>
         
       </li>
     
@@ -881,16 +881,6 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#clone-instance-method" class="signature"><strong>#clone</strong></a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#copy_with%28rotaxis_rotaxis%3D%40rotaxis%2Ctwist_twist%3D%40twist%2Cpitch_pitch%3D%40pitch%2Cradius_radius%3D%40radius%29-instance-method" class="signature"><strong>#copy_with</strong>(rotaxis _rotaxis = @rotaxis, twist _twist = @twist, pitch _pitch = @pitch, radius _radius = @radius)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
         <a href="#pitch%3AFloat64-instance-method" class="signature"><strong>#pitch</strong> : Float64</a>
         
       </li>
@@ -901,7 +891,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#rotaxis%3AVec3-instance-method" class="signature"><strong>#rotaxis</strong> : Vec3</a>
+        <a href="#rotaxis%3ASpatial%3A%3AVec3-instance-method" class="signature"><strong>#rotaxis</strong> : Spatial::Vec3</a>
         
       </li>
     
@@ -965,18 +955,18 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(rotaxis:Vec3,twist:Float64,pitch:Float64,radius:Float64)-class-method">
+    <div class="entry-detail" id="new(residue:Residue)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(rotaxis : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, twist : Float64, pitch : Float64, radius : Float64)
+        def self.<strong>new</strong>(residue : <a href="../../Chem/Residue.html">Residue</a>)
 
-        <a class="method-permalink" href="#new%28rotaxis%3AVec3%2Ctwist%3AFloat64%2Cpitch%3AFloat64%2Cradius%3AFloat64%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28residue%3AResidue%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/spatial/hlxparams.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/46ebb32a4a8b02c5ccf8f708c7e1ae9e5e420ae4/src/chem/protein/hlxparams.cr#L8" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -995,38 +985,6 @@
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="clone-instance-method">
-      <div class="signature">
-        
-        def <strong>clone</strong>
-
-        <a class="method-permalink" href="#clone-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/spatial/hlxparams.cr#L2" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="copy_with(rotaxis_rotaxis=@rotaxis,twist_twist=@twist,pitch_pitch=@pitch,radius_radius=@radius)-instance-method">
-      <div class="signature">
-        
-        def <strong>copy_with</strong>(rotaxis _rotaxis = @rotaxis, twist _twist = @twist, pitch _pitch = @pitch, radius _radius = @radius)
-
-        <a class="method-permalink" href="#copy_with%28rotaxis_rotaxis%3D%40rotaxis%2Ctwist_twist%3D%40twist%2Cpitch_pitch%3D%40pitch%2Cradius_radius%3D%40radius%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/spatial/hlxparams.cr#L2" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
     <div class="entry-detail" id="pitch:Float64-instance-method">
       <div class="signature">
         
@@ -1037,6 +995,8 @@
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/46ebb32a4a8b02c5ccf8f708c7e1ae9e5e420ae4/src/chem/protein/hlxparams.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1052,19 +1012,23 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/46ebb32a4a8b02c5ccf8f708c7e1ae9e5e420ae4/src/chem/protein/hlxparams.cr#L6" target="_blank">View source</a>]
+        
       </div>
     </div>
   
-    <div class="entry-detail" id="rotaxis:Vec3-instance-method">
+    <div class="entry-detail" id="rotaxis:Spatial::Vec3-instance-method">
       <div class="signature">
         
-        def <strong>rotaxis</strong> : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>
+        def <strong>rotaxis</strong> : <a href="../../Chem/Spatial/Vec3.html">Spatial::Vec3</a>
 
-        <a class="method-permalink" href="#rotaxis%3AVec3-instance-method">#</a>
+        <a class="method-permalink" href="#rotaxis%3ASpatial%3A%3AVec3-instance-method">#</a>
       </div>
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/46ebb32a4a8b02c5ccf8f708c7e1ae9e5e420ae4/src/chem/protein/hlxparams.cr#L3" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1072,7 +1036,7 @@
     <div class="entry-detail" id="to_q:Quat-instance-method">
       <div class="signature">
         
-        def <strong>to_q</strong> : <a href="../../Chem/Spatial/Quat.html">Quat</a>
+        def <strong>to_q</strong> : Quat
 
         <a class="method-permalink" href="#to_q%3AQuat-instance-method">#</a>
       </div>
@@ -1080,7 +1044,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8447613eebf2e3729bec12af8997ae0586a9329d/src/chem/spatial/hlxparams.cr#L7" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/46ebb32a4a8b02c5ccf8f708c7e1ae9e5e420ae4/src/chem/protein/hlxparams.cr#L94" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1095,6 +1059,8 @@
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/46ebb32a4a8b02c5ccf8f708c7e1ae9e5e420ae4/src/chem/protein/hlxparams.cr#L4" target="_blank">View source</a>]
         
       </div>
     </div>
