@@ -63,11 +63,11 @@ module Chem::Protein
       # compute helix radius
       @radius = (ca2 - ca1).abs / (2 * Math.sin(0.5 * @twist))
 
-      # compute chirality
-      chirality = 1
-      if c_CB = cb2
+      # check peptide-plane flipping
+      flipped = false
+      if cb2
         d1 = n2 - ca2
-        d2 = c_CB - ca2
+        d2 = cb2 - ca2
         d3 = c2 - ca2
         d4 = c1 - n2
 
@@ -77,14 +77,14 @@ module Chem::Protein
         v4 = (d4.dot(v1) * v1 + d4.dot(v2) * v2).normalize
         v5 = v1.cross(v4)
 
-        chirality = -1 if d1.dot(v5) > 0 && Spatial.angle(v1, v4) <= Spatial.angle(v1, v3)
+        flipped = d1.dot(v5) > 0 && Spatial.angle(v1, v4) <= Spatial.angle(v1, v3)
       else
         phi = Spatial.dihedral c1, n2, ca2, c2
-        chirality = -1 if phi > 0
-        # chirality = -1 if res.name != "GLY" && 0 < phi <= 125
+        flipped = phi > 0
+        # flipped = -1 if res.name != "GLY" && 0 < phi <= 125
       end
 
-      if chirality < 0
+      if flipped
         @rotaxis *= -1
         @pitch *= -1
         @twist = 2 * Math::PI - @twist
