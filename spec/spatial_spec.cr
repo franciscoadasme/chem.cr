@@ -44,7 +44,7 @@ describe Chem::Spatial do
            108.222383,
           },
         ].each do |(a, b, c, expected)|
-          Chem::Spatial.angle(a, b, c, cell).should be_close expected, 1e-6
+          Chem::Spatial.angle(cell, a, b, c).should be_close expected, 1e-6
         end
       end
     end
@@ -121,7 +121,7 @@ describe Chem::Spatial do
             176.497757,
           },
         ].each do |(a, b, c, d, expected)|
-          Chem::Spatial.dihedral(a, b, c, d, cell).should be_close expected, 1e-2
+          Chem::Spatial.dihedral(cell, a, b, c, d).should be_close expected, 1e-2
         end
       end
     end
@@ -135,25 +135,25 @@ describe Chem::Spatial do
 
     context "given a orthogonal cell" do
       it "returns minimum image convention's distance" do
-        l = UnitCell.new({10, 20, 30})
+        cell = UnitCell.new({10, 20, 30})
         [
           {Vec3[1, 1, 1], Vec3[5, 5, 5], 47.999999},
           {Vec3[1, 1, 1], Vec3[9, 18, 27], 29.0},
         ].each do |(a, b, expected)|
-          Chem::Spatial.squared_distance(a, b, l).should be_close expected, 1e-3
+          Chem::Spatial.squared_distance(cell, a, b).should be_close expected, 1e-3
         end
       end
     end
 
     context "given a non-orthogonal cell" do
       it "returns minimum image convention's distance" do
-        l = UnitCell.new({8.77, 9.5, 24.74}, {88.22, 80, 70.34})
+        cell = UnitCell.new({8.77, 9.5, 24.74}, {88.22, 80, 70.34})
         [
           {Vec3[0.82, 1.29, 20.12], Vec3[8.15, 1.41, 19.61], 2.3481},
           {Vec3[3.37, 3.04, 16.5], Vec3[5.35, 4.07, 17.456], 5.895236},
           {Vec3[0.4, 1.12, 12.79], Vec3[8.55, 1.99, 13.88], 2.3294},
         ].each do |(a, b, expected)|
-          Chem::Spatial.squared_distance(a, b, l).should be_close expected, 1e-6
+          Chem::Spatial.squared_distance(cell, a, b).should be_close expected, 1e-6
         end
       end
     end

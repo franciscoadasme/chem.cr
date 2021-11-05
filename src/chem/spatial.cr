@@ -30,16 +30,20 @@ module Chem::Spatial
     Math.atan2(a.cross(b).abs, a.dot(b)).degrees
   end
 
-  def self.angle(a : Atom, b : Atom, c : Atom, cell : UnitCell? = nil) : Float64
-    angle a.coords, b.coords, c.coords, cell
+  def self.angle(a : Atom, b : Atom, c : Atom) : Float64
+    angle a.coords, b.coords, c.coords
   end
 
-  def self.angle(a : Vec3, b : Vec3, c : Vec3, cell : UnitCell? = nil) : Float64
-    if cell
-      a = a.wrap cell, around: b
-      c = c.wrap cell, around: b
-    end
+  def self.angle(a : Vec3, b : Vec3, c : Vec3) : Float64
     angle a - b, c - b
+  end
+
+  def self.angle(cell : UnitCell, a : Atom, b : Atom, c : Atom) : Float64
+    angle cell, a.coords, b.coords, c.coords
+  end
+
+  def self.angle(cell : UnitCell, a : Vec3, b : Vec3, c : Vec3) : Float64
+    angle cell.wrap(a, around: b), b, cell.wrap(c, around: b)
   end
 
   def self.dihedral(a : Vec3, b : Vec3, c : Vec3) : Float64
@@ -48,25 +52,40 @@ module Chem::Spatial
     ab.dot(c) < 0 ? -angle : angle
   end
 
-  def self.dihedral(a : Atom, b : Atom, c : Atom, d : Atom, *args, **options) : Float64
-    dihedral a.coords, b.coords, c.coords, d.coords, *args, **options
+  def self.dihedral(a : Atom, b : Atom, c : Atom, d : Atom) : Float64
+    dihedral a.coords, b.coords, c.coords, d.coords
   end
 
-  def self.dihedral(a : Vec3,
-                    b : Vec3,
-                    c : Vec3,
-                    d : Vec3,
-                    cell : UnitCell? = nil) : Float64
-    if cell
-      a = a.wrap cell, around: b
-      c = c.wrap cell, around: b
-      d = d.wrap cell, around: c
-    end
+  def self.dihedral(a : Vec3, b : Vec3, c : Vec3, d : Vec3) : Float64
     dihedral b - a, c - b, d - c
   end
 
-  def self.distance(*args, **options) : Float64
-    Math.sqrt squared_distance(*args, **options)
+  def self.dihedral(cell : UnitCell, a : Atom, b : Atom, c : Atom, d : Atom) : Float64
+    dihedral cell, a.coords, b.coords, c.coords, d.coords
+  end
+
+  def self.dihedral(cell : UnitCell, a : Vec3, b : Vec3, c : Vec3, d : Vec3) : Float64
+    a = cell.wrap a, around: b
+    c = cell.wrap c, around: b
+    d = cell.wrap d, around: c
+    dihedral a, b, c, d
+  end
+
+  def self.distance(a : Atom, b : Atom) : Float64
+    distance a.coords, b.coords
+  end
+
+  @[AlwaysInline]
+  def self.distance(a : Vec3, b : Vec3) : Float64
+    Math.sqrt squared_distance(a, b)
+  end
+
+  def self.distance(cell : UnitCell, a : Atom, b : Atom) : Float64
+    distance cell, a.coords, b.coords
+  end
+
+  def self.distance(cell : UnitCell, a : Vec3, b : Vec3) : Float64
+    Math.sqrt squared_distance(cell, a, b)
   end
 
   # Returns the distance between two quaternions.
@@ -80,25 +99,36 @@ module Chem::Spatial
     Math.acos 2 * q1.dot(q2)**2 - 1
   end
 
-  def self.improper(a : Atom, b : Atom, c : Atom, d : Atom, *args, **options) : Float64
-    improper a.coords, b.coords, c.coords, d.coords, *args, **options
+  def self.improper(a : Atom, b : Atom, c : Atom, d : Atom) : Float64
+    improper a.coords, b.coords, c.coords, d.coords
   end
 
-  def self.improper(a : Vec3,
-                    b : Vec3,
-                    c : Vec3,
-                    d : Vec3,
-                    cell : UnitCell? = nil) : Float64
-    dihedral b, a, c, d, cell
+  def self.improper(a : Vec3, b : Vec3, c : Vec3, d : Vec3) : Float64
+    dihedral b, a, c, d
   end
 
-  def self.squared_distance(a : Atom, b : Atom, cell : UnitCell? = nil) : Float64
-    squared_distance a.coords, b.coords, cell
+  def self.improper(cell : UnitCell, a : Atom, b : Atom, c : Atom, d : Atom) : Float64
+    improper cell, a.coords, b.coords, c.coords, d.coords
+  end
+
+  def self.improper(cell : UnitCell, a : Vec3, b : Vec3, c : Vec3, d : Vec3) : Float64
+    dihedral cell, b, a, c, d
+  end
+
+  def self.squared_distance(a : Atom, b : Atom) : Float64
+    squared_distance a.coords, b.coords
   end
 
   @[AlwaysInline]
-  def self.squared_distance(a : Vec3, b : Vec3, cell : UnitCell? = nil) : Float64
-    b = b.wrap cell, around: a if cell
+  def self.squared_distance(a : Vec3, b : Vec3) : Float64
     (a.x - b.x)**2 + (a.y - b.y)**2 + (a.z - b.z)**2
+  end
+
+  def self.squared_distance(cell : UnitCell, a : Atom, b : Atom) : Float64
+    squared_distance cell, a.coords, b.coords
+  end
+
+  def self.squared_distance(cell : UnitCell, a : Vec3, b : Vec3) : Float64
+    squared_distance a, cell.wrap(b, around: a)
   end
 end

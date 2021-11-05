@@ -507,7 +507,11 @@ module Chem
          (c = pred.try(&.[]?("C"))) &&
          (n = self["N"]?) &&
          (ca2 = self["CA"]?)
-        Spatial.dihedral ca1, c, n, ca2, structure.cell
+        if cell = structure.cell
+          Spatial.dihedral cell, ca1, c, n, ca2
+        else
+          Spatial.dihedral ca1, c, n, ca2
+        end
       end
     end
 
@@ -520,7 +524,11 @@ module Chem
          (n = self["N"]?) &&
          (ca2 = self["CA"]?) &&
          (c = self["C"]?)
-        Spatial.dihedral ca1, n, ca2, c, structure.cell
+        if cell = structure.cell
+          Spatial.dihedral cell, ca1, n, ca2, c
+        else
+          Spatial.dihedral ca1, n, ca2, c
+        end
       end
     end
 
@@ -558,7 +566,11 @@ module Chem
          (ca = self["CA"]?) &&
          (c = self["C"]?) &&
          (n2 = succ.try(&.[]?("N")))
-        Spatial.dihedral n1, ca, c, n2, structure.cell
+        if cell = structure.cell
+          Spatial.dihedral cell, n1, ca, c, n2
+        else
+          Spatial.dihedral n1, ca, c, n2
+        end
       end
     end
 
