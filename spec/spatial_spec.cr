@@ -1,4 +1,4 @@
-require "../spec_helper"
+require "./spec_helper"
 
 describe Chem::Spatial do
   v1 = Vec3[3.0, 4.0, 0.0]
