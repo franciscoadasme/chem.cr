@@ -268,6 +268,14 @@ describe Topology::Perception do
         st = load_file "residue_unknown_non_standard_names.pdb"
         st.residues.all?(&.protein?).should be_true
       end
+
+      it "guesses bonds between terminal residues (periodic)" do
+        structure = load_file "polyala--theta-240.000--c-24.70.pdb"
+        structure.each_residue do |residue|
+          residue.pred.should_not be_nil
+          residue.succ.should_not be_nil
+        end
+      end
     end
 
     it "assigns bond orders for a structure without hydrogens" do

@@ -39,7 +39,11 @@ class Chem::Topology::Perception
     if has_topology?
       patcher = Patcher.new @structure
       patcher.match_and_patch
-      build_connectivity patcher.unmatched_atoms
+      # matched atoms could still have missing bonds because patches are
+      # applied in sequential order (e.g., residues at the edges won't
+      # be connected in periodic structures because they aren't
+      # consecutive)
+      build_connectivity @structure.atoms.select(&.missing_valency.>(0))
       assign_bond_orders patcher.unmatched_atoms
       bonded_atoms = patcher.unmatched_atoms.flat_map &.each_bonded_atom
       assign_formal_charges patcher.unmatched_atoms | bonded_atoms
