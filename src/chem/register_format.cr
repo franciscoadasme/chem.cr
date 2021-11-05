@@ -686,11 +686,11 @@ macro finished
                     end
                   end
                 \{% else %}
-                  raise ArgumentError.new("#{format} format cannot read #{self.class}")
+                  raise ArgumentError.new("#{format} format cannot read #{self}")
                 \{% end %}
               {% end %}
             {% else %}
-              raise ArgumentError.new("#{format} format cannot read #{self.class}")
+              raise ArgumentError.new("#{format} format cannot read #{self}")
             {% end %}
         {% end %}
         else
