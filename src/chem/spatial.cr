@@ -77,7 +77,7 @@ module Chem::Spatial
 
   @[AlwaysInline]
   def self.distance(a : Vec3, b : Vec3) : Float64
-    Math.sqrt squared_distance(a, b)
+    Math.sqrt distance2(a, b)
   end
 
   def self.distance(cell : UnitCell, a : Atom, b : Atom) : Float64
@@ -85,7 +85,7 @@ module Chem::Spatial
   end
 
   def self.distance(cell : UnitCell, a : Vec3, b : Vec3) : Float64
-    Math.sqrt squared_distance(cell, a, b)
+    Math.sqrt distance2(cell, a, b)
   end
 
   # Returns the distance between two quaternions.
@@ -97,6 +97,23 @@ module Chem::Spatial
   def self.distance(q1 : Quat, q2 : Quat) : Float64
     # 2 * Math.acos q1.dot(q2)
     Math.acos 2 * q1.dot(q2)**2 - 1
+  end
+
+  def self.distance2(a : Atom, b : Atom) : Float64
+    distance2 a.coords, b.coords
+  end
+
+  @[AlwaysInline]
+  def self.distance2(a : Vec3, b : Vec3) : Float64
+    (a.x - b.x)**2 + (a.y - b.y)**2 + (a.z - b.z)**2
+  end
+
+  def self.distance2(cell : UnitCell, a : Atom, b : Atom) : Float64
+    distance2 cell, a.coords, b.coords
+  end
+
+  def self.distance2(cell : UnitCell, a : Vec3, b : Vec3) : Float64
+    distance2 a, cell.wrap(b, around: a)
   end
 
   def self.improper(a : Atom, b : Atom, c : Atom, d : Atom) : Float64
@@ -113,22 +130,5 @@ module Chem::Spatial
 
   def self.improper(cell : UnitCell, a : Vec3, b : Vec3, c : Vec3, d : Vec3) : Float64
     dihedral cell, b, a, c, d
-  end
-
-  def self.squared_distance(a : Atom, b : Atom) : Float64
-    squared_distance a.coords, b.coords
-  end
-
-  @[AlwaysInline]
-  def self.squared_distance(a : Vec3, b : Vec3) : Float64
-    (a.x - b.x)**2 + (a.y - b.y)**2 + (a.z - b.z)**2
-  end
-
-  def self.squared_distance(cell : UnitCell, a : Atom, b : Atom) : Float64
-    squared_distance cell, a.coords, b.coords
-  end
-
-  def self.squared_distance(cell : UnitCell, a : Vec3, b : Vec3) : Float64
-    squared_distance a, cell.wrap(b, around: a)
   end
 end

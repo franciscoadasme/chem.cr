@@ -197,7 +197,7 @@ module Chem::Protein
       (0...@residues.size).each do |i|
         (i + 1).upto(@residues.size - 1) do |j|
           ci, cj = coords(i), coords(j)
-          next unless Spatial.squared_distance(ci.ca, cj.ca) < MIN_CA_SQUARED_DIST
+          next unless Spatial.distance2(ci.ca, cj.ca) < MIN_CA_SQUARED_DIST
           energy = calculate_hbond_energy donor: ci, acceptor: cj
           @hbonds[{i, j}] = energy if energy < HBOND_ENERGY_CUTOFF
           if i + 1 != j

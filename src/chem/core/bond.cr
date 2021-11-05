@@ -39,7 +39,7 @@ module Chem
     end
 
     def distance : Float64
-      Math.sqrt squared_distance
+      Math.sqrt distance2
     end
 
     def includes?(atom : Atom) : Bool
@@ -79,8 +79,8 @@ module Chem
       end
     end
 
-    def squared_distance : Float64
-      Spatial.squared_distance @first, @second
+    def distance2 : Float64
+      Spatial.distance2 @first, @second
     end
 
     def to_char : Char

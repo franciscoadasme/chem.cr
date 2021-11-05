@@ -161,7 +161,7 @@ module Chem::Spatial
                        coords : Vec3,
                        radius : Number,
                        &block : Atom, Float64 -> Nil) : Nil
-      distance = Spatial.squared_distance node.coords, coords
+      distance = Spatial.distance2 node.coords, coords
       yield node.atom, distance if distance <= radius
 
       a, b = node.next coords
@@ -173,7 +173,7 @@ module Chem::Spatial
                                  point : Vec3,
                                  count : Int32,
                                  neighbors : Array(Tuple(Atom, Float64))) : Nil
-      distance = Spatial.squared_distance node.coords, point
+      distance = Spatial.distance2 node.coords, point
       if neighbors.size < count || distance < neighbors.last[1]
         neighbors.pop if neighbors.size >= count
         if i = neighbors.bsearch_index { |a| a[1] > distance }

@@ -187,7 +187,7 @@ module Chem
     end
 
     def within_covalent_distance?(rhs : self) : Bool
-      Spatial.squared_distance(self, rhs) <= PeriodicTable.covalent_cutoff(self, rhs)
+      Spatial.distance2(self, rhs) <= PeriodicTable.covalent_cutoff(self, rhs)
     end
 
     {% for member in Residue::Kind.constants %}

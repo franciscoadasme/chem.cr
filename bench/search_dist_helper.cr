@@ -141,7 +141,7 @@ end
 def naive_search(atoms, point, count)
   neighbors = Array({Chem::Atom, Float64}).new count
   atoms.each do |atom|
-    dist = Chem::Spatial.squared_distance atom.coords, point
+    dist = Chem::Spatial.distance2 atom.coords, point
     if neighbors.size < count
       neighbors << {atom, dist}
     elsif dist < neighbors.last[1]
@@ -155,8 +155,8 @@ end
 
 def sort_search(atoms, point, count)
   atoms = atoms.sort do |a, b|
-    dist_a = Chem::Spatial.squared_distance a.coords, point
-    dist_b = Chem::Spatial.squared_distance b.coords, point
+    dist_a = Chem::Spatial.distance2 a.coords, point
+    dist_b = Chem::Spatial.distance2 b.coords, point
     dist_a <=> dist_b
   end
   atoms.first count

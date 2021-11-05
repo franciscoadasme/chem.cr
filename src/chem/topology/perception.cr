@@ -93,7 +93,7 @@ class Chem::Topology::Perception
             hybrid_map[other]? == hybrid_map[atom] && other.missing_valency > 0
           end
           .sort_by! do |other|
-            {-missing_valency, Spatial.squared_distance(atom, other)}
+            {-missing_valency, Spatial.distance2(atom, other)}
           end
           .each do |other|
             case hybrid_map[other]
@@ -142,7 +142,7 @@ class Chem::Topology::Perception
                 (other.element.hydrogen? && other.bonds.size > 0) ||
                 d > PeriodicTable.covalent_cutoff(atom, other)
         if atom.element.hydrogen? && atom.bonds.size == 1
-          next unless d < atom.bonds[0].squared_distance
+          next unless d < atom.bonds[0].distance2
           atom.bonds.delete atom.bonds[0]
         end
         atom.bonds.add other

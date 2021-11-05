@@ -347,7 +347,7 @@ module Chem::Spatial
         ((loc[1] - dj - 1)..(loc[1] + dj + 1)).clamp(0..nj - 1).each do |j|
           ((loc[2] - dk - 1)..(loc[2] + dk + 1)).clamp(0..nk - 1).each do |k|
             new_loc = Location.new i, j, k
-            d = Spatial.squared_distance vec, unsafe_coords_at(new_loc)
+            d = Spatial.distance2 vec, unsafe_coords_at(new_loc)
             yield new_loc, Math.sqrt(d) if d < cutoff
           end
         end
