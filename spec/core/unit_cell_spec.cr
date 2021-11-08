@@ -21,7 +21,7 @@ describe Chem::UnitCell do
     it "returns a monoclinic cell" do
       cell = UnitCell.monoclinic(1, 2, 45)
       cell.size.should eq Size3[1, 1, 2]
-      cell.angles.should eq({90, 45, 90})
+      cell.angles.should be_close({90, 45, 90}, 1e-12)
     end
   end
 
@@ -37,7 +37,7 @@ describe Chem::UnitCell do
     it "returns a rhombohedral cell" do
       cell = UnitCell.rhombohedral(1, 45)
       cell.size.should eq Size3[1, 1, 1]
-      cell.angles.should eq({45, 45, 45})
+      cell.angles.should be_close({45, 45, 45}, 1e-12)
     end
   end
 

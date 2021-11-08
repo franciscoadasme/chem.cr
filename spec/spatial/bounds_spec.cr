@@ -109,7 +109,7 @@ describe Chem::Spatial::Bounds do
       bounds = cell.bounds.translate(Vec3[-5, 1, 20])
       bounds = bounds.translate(Vec3[1, 2, 10])
       bounds.min.should eq Vec3[-4, 3, 30]
-      bounds.size.should eq Size3[10, 10, 10]
+      bounds.size.should be_close Size3[10, 10, 10], 1e-12
       bounds.basis.should eq cell.basis
     end
   end

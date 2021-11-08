@@ -48,9 +48,9 @@ module Spec
 
     def match(actual_value : Chem::Spatial::Size3) : Bool
       return false unless @expected_value.is_a?(Chem::Spatial::Size3)
-      (actual_value[0] - @expected_value[0]).abs <= @delta &&
-        (actual_value[1] - @expected_value[1]).abs <= @delta &&
-        (actual_value[2] - @expected_value[2]).abs <= @delta
+      (0..2).all? do |i|
+        actual_value[i].close_to?(@expected_value[i], @delta)
+      end
     end
 
     def match(actual_value : Chem::Spatial::Bounds) : Bool
