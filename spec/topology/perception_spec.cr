@@ -100,12 +100,12 @@ describe Topology::Perception do
       structure.atoms[37].bonds[structure.atoms[38]].single?.should be_true
     end
 
-    pending "guess bond orders if hydrogens are missing" do
+    it "does not guess bond orders if hydrogens are missing" do
       structure = load_file "residue_kind_unknown_covalent_ligand.pdb"
-    end
-
-    pending "guess bond orders if hydrogens are missing" do
-      structure = load_file "1crn.xyz"
+      structure.formal_charge.should eq 0
+      structure.atoms.count(&.formal_charge.zero?.!).should eq 0
+      structure.bonds.size.should eq 59
+      structure.bonds.count(&.single?.!).should eq 3 # backbone C=O
     end
   end
 

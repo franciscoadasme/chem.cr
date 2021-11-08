@@ -7,7 +7,16 @@ describe Chem::PDB do
       st = load_file "1h1s.pdb"
       st.source_file.should eq Path[spec_file("1h1s.pdb")].expand
       st.n_atoms.should eq 9701
-      st.formal_charge.should eq -62
+
+      # Charges are set from templates only due to missing hydrogens
+      st.formal_charge.should eq 0
+      st.chains.map(&.formal_charge).should eq [3, -3, 3, -3]
+      # TPO160(-2) is unknown so formal charges aren't assigned
+      st.dig('A', 160).formal_charge.should eq 0
+      st.dig('C', 160).formal_charge.should eq 0
+      # N-ter (175) is not matched by templates so N is left uncharged
+      st.dig('B', 175).formal_charge.should eq 0
+      st.dig('D', 175).formal_charge.should eq 0
 
       st.chains.map(&.id).should eq ['A', 'B', 'C', 'D']
       st.chains['A'].n_residues.should eq 569
@@ -44,7 +53,10 @@ describe Chem::PDB do
       st.n_residues.should eq 3
       st.atoms.map(&.element.symbol).should eq ["C", "O", "O", "N", "C", "C", "O",
                                                 "C", "C", "C", "O", "O", "N"]
-      st.atoms.map(&.formal_charge).should eq [0, 0, -1, -1, 0, 0, 0, 0, 0, 0, 0, -1, 1]
+      # Formal charges are only assigned from templates if hydrogens are
+      # missing (Ns and Cs have missing hydrogens but they're left
+      # uncharged)
+      st.atoms.map(&.formal_charge).should eq [0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, -1, 1]
 
       atom = st.atoms[11]
       atom.serial.should eq 12
