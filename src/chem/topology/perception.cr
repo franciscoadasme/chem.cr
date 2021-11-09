@@ -37,9 +37,7 @@ class Chem::Topology::Perception
   def guess_topology : Nil
     return unless @structure.n_atoms > 0
 
-    patcher = Patcher.new @structure
-    patcher.match_and_patch
-
+    apply_templates
     build_connectivity @structure.atoms
     # skip bond order assignment if a protein chain has missing
     # hydrogens (very common in PDB)
@@ -120,6 +118,38 @@ class Chem::Topology::Perception
         .uniq!
         .reject!(&.other?)
       residue.kind = types.size == 1 ? types[0] : Residue::Kind::Other
+    end
+  end
+
+  # Assign bonds, formal charges, and residue's kind from templates.
+  private def apply_templates : Nil
+    prev_res = nil
+    @structure.each_residue do |residue|
+      if restype = residue.type
+        residue.kind = restype.kind
+        residue.each_atom do |atom|
+          if atom_type = restype[atom.name]?
+            atom.formal_charge = atom_type.formal_charge
+          end
+        end
+
+        restype.bonds.each do |bond_t|
+          if (lhs = residue[bond_t[0]]?) &&
+             (rhs = residue[bond_t[1]]?) &&
+             lhs.within_covalent_distance?(rhs)
+            lhs.bonds.add rhs, bond_t.order
+          end
+        end
+
+        if prev_res &&
+           (bond_t = restype.link_bond) &&
+           (lhs = prev_res[bond_t[0]]?) &&
+           (rhs = residue[bond_t[1]]?) &&
+           lhs.within_covalent_distance?(rhs)
+          lhs.bonds.add rhs, bond_t.order
+        end
+      end
+      prev_res = residue
     end
   end
 
