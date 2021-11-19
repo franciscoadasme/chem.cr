@@ -12,6 +12,7 @@ require "./spatial/kdtree"
 require "./spatial/pbc"
 
 module Chem::Spatial
+  # TODO: Move aliases to Chem
   alias FloatTriple = Tuple(Float64, Float64, Float64)
   alias NumberTriple = Tuple(Number::Primitive, Number::Primitive, Number::Primitive)
 

@@ -6,48 +6,48 @@ describe Chem::Spatial::PBC do
       structure = Chem::Structure.build do
         cell 10, 10, 10
 
-        atom :C, Vec3[2.5, 2.5, 2.5]
-        atom :H, Vec3[7.5, 2.5, 2.5]
-        atom :O, Vec3[2.5, 7.5, 2.5]
-        atom :N, Vec3[2.5, 2.5, 7.5]
+        atom :C, Chem::Spatial::Vec3[2.5, 2.5, 2.5]
+        atom :H, Chem::Spatial::Vec3[7.5, 2.5, 2.5]
+        atom :O, Chem::Spatial::Vec3[2.5, 7.5, 2.5]
+        atom :N, Chem::Spatial::Vec3[2.5, 2.5, 7.5]
       end
 
       vectors = Chem::Spatial::PBC.adjacent_images(structure).map &.[1]
       expected = [
-        Vec3[12.5, 2.5, 2.5], Vec3[2.5, 12.5, 2.5], Vec3[2.5, 2.5, 12.5], Vec3[12.5, 12.5, 2.5],
-        Vec3[12.5, 2.5, 12.5], Vec3[2.5, 12.5, 12.5], Vec3[12.5, 12.5, 12.5], Vec3[-2.5, 2.5, 2.5],
-        Vec3[7.5, 12.5, 2.5], Vec3[7.5, 2.5, 12.5], Vec3[-2.5, 12.5, 2.5], Vec3[-2.5, 2.5, 12.5],
-        Vec3[7.5, 12.5, 12.5], Vec3[-2.5, 12.5, 12.5], Vec3[12.5, 7.5, 2.5], Vec3[2.5, -2.5, 2.5],
-        Vec3[2.5, 7.5, 12.5], Vec3[12.5, -2.5, 2.5], Vec3[12.5, 7.5, 12.5], Vec3[2.5, -2.5, 12.5],
-        Vec3[12.5, -2.5, 12.5], Vec3[12.5, 2.5, 7.5], Vec3[2.5, 12.5, 7.5], Vec3[2.5, 2.5, -2.5],
-        Vec3[12.5, 12.5, 7.5], Vec3[12.5, 2.5, -2.5], Vec3[2.5, 12.5, -2.5], Vec3[12.5, 12.5, -2.5],
+        [12.5, 2.5, 2.5], [2.5, 12.5, 2.5], [2.5, 2.5, 12.5], [12.5, 12.5, 2.5],
+        [12.5, 2.5, 12.5], [2.5, 12.5, 12.5], [12.5, 12.5, 12.5], [-2.5, 2.5, 2.5],
+        [7.5, 12.5, 2.5], [7.5, 2.5, 12.5], [-2.5, 12.5, 2.5], [-2.5, 2.5, 12.5],
+        [7.5, 12.5, 12.5], [-2.5, 12.5, 12.5], [12.5, 7.5, 2.5], [2.5, -2.5, 2.5],
+        [2.5, 7.5, 12.5], [12.5, -2.5, 2.5], [12.5, 7.5, 12.5], [2.5, -2.5, 12.5],
+        [12.5, -2.5, 12.5], [12.5, 2.5, 7.5], [2.5, 12.5, 7.5], [2.5, 2.5, -2.5],
+        [12.5, 12.5, 7.5], [12.5, 2.5, -2.5], [2.5, 12.5, -2.5], [12.5, 12.5, -2.5],
       ]
       vectors.should eq expected
     end
 
     it "yields each atom in the adjacent periodic images for non-centered structure" do
-      offset = Vec3[-20, 10, 30]
+      offset = Chem::Spatial::Vec3[-20, 10, 30]
 
       structure = Chem::Structure.build do
         cell 10, 10, 10
 
-        atom :C, Vec3[2.5, 2.5, 2.5]
-        atom :H, Vec3[7.5, 2.5, 2.5]
-        atom :O, Vec3[2.5, 7.5, 2.5]
-        atom :N, Vec3[2.5, 2.5, 7.5]
+        atom :C, Chem::Spatial::Vec3[2.5, 2.5, 2.5]
+        atom :H, Chem::Spatial::Vec3[7.5, 2.5, 2.5]
+        atom :O, Chem::Spatial::Vec3[2.5, 7.5, 2.5]
+        atom :N, Chem::Spatial::Vec3[2.5, 2.5, 7.5]
       end
       structure.coords.translate! by: offset
 
       vectors = Chem::Spatial::PBC.adjacent_images(structure).map &.[1]
       expected = [
-        Vec3[12.5, 2.5, 2.5], Vec3[2.5, 12.5, 2.5], Vec3[2.5, 2.5, 12.5], Vec3[12.5, 12.5, 2.5],
-        Vec3[12.5, 2.5, 12.5], Vec3[2.5, 12.5, 12.5], Vec3[12.5, 12.5, 12.5], Vec3[-2.5, 2.5, 2.5],
-        Vec3[7.5, 12.5, 2.5], Vec3[7.5, 2.5, 12.5], Vec3[-2.5, 12.5, 2.5], Vec3[-2.5, 2.5, 12.5],
-        Vec3[7.5, 12.5, 12.5], Vec3[-2.5, 12.5, 12.5], Vec3[12.5, 7.5, 2.5], Vec3[2.5, -2.5, 2.5],
-        Vec3[2.5, 7.5, 12.5], Vec3[12.5, -2.5, 2.5], Vec3[12.5, 7.5, 12.5], Vec3[2.5, -2.5, 12.5],
-        Vec3[12.5, -2.5, 12.5], Vec3[12.5, 2.5, 7.5], Vec3[2.5, 12.5, 7.5], Vec3[2.5, 2.5, -2.5],
-        Vec3[12.5, 12.5, 7.5], Vec3[12.5, 2.5, -2.5], Vec3[2.5, 12.5, -2.5], Vec3[12.5, 12.5, -2.5],
-      ].map &.+(offset)
+        [12.5, 2.5, 2.5], [2.5, 12.5, 2.5], [2.5, 2.5, 12.5], [12.5, 12.5, 2.5],
+        [12.5, 2.5, 12.5], [2.5, 12.5, 12.5], [12.5, 12.5, 12.5], [-2.5, 2.5, 2.5],
+        [7.5, 12.5, 2.5], [7.5, 2.5, 12.5], [-2.5, 12.5, 2.5], [-2.5, 2.5, 12.5],
+        [7.5, 12.5, 12.5], [-2.5, 12.5, 12.5], [12.5, 7.5, 2.5], [2.5, -2.5, 2.5],
+        [2.5, 7.5, 12.5], [12.5, -2.5, 2.5], [12.5, 7.5, 12.5], [2.5, -2.5, 12.5],
+        [12.5, -2.5, 12.5], [12.5, 2.5, 7.5], [2.5, 12.5, 7.5], [2.5, 2.5, -2.5],
+        [12.5, 12.5, 7.5], [12.5, 2.5, -2.5], [2.5, 12.5, -2.5], [12.5, 12.5, -2.5],
+      ].map { |(x, y, z)| Chem::Spatial::Vec3[x, y, z] + offset }
       vectors.should eq expected
     end
 
@@ -55,14 +55,14 @@ describe Chem::Spatial::PBC do
       structure = Chem::Structure.build do
         cell 10, 10, 10
 
-        atom :C, Vec3[1, 8.5, 3.5]
-        atom :H, Vec3[7.5, 1.5, 9.5]
+        atom :C, Chem::Spatial::Vec3[1, 8.5, 3.5]
+        atom :H, Chem::Spatial::Vec3[7.5, 1.5, 9.5]
       end
 
-      vectors = PBC.adjacent_images(structure, radius: 2).map(&.[1]).sort_by! &.to_a
+      vectors = Chem::Spatial::PBC.adjacent_images(structure, radius: 2).map(&.[1]).sort_by! &.to_a
       expected = [
-        Vec3[11, 8.5, 3.5], Vec3[1, -1.5, 3.5], Vec3[11, -1.5, 3.5],
-        Vec3[7.5, 11.5, 9.5], Vec3[7.5, 1.5, -0.5], Vec3[7.5, 11.5, -0.5],
+        [11, 8.5, 3.5], [1, -1.5, 3.5], [11, -1.5, 3.5],
+        [7.5, 11.5, 9.5], [7.5, 1.5, -0.5], [7.5, 11.5, -0.5],
       ].sort_by! &.to_a
       vectors.size.should eq expected.size
       vectors.should be_close expected, 1e-8
@@ -73,7 +73,7 @@ describe Chem::Spatial::PBC do
       cell = structure.cell.not_nil!
       atoms = structure.atoms
 
-      vectors = PBC.adjacent_images(structure, radius: 2)
+      vectors = Chem::Spatial::PBC.adjacent_images(structure, radius: 2)
         .select! { |atom, _|
           {17, 30, 66, 116, 127, 175, 188, 193}.includes?(atom.serial)
         }
@@ -121,7 +121,7 @@ describe Chem::Spatial::PBC do
 
     it "fails when radius is negative" do
       structure = Chem::Structure.new
-      structure.cell = UnitCell.new({10, 10, 10})
+      structure.cell = Chem::UnitCell.new({10, 10, 10})
       expect_raises Chem::Spatial::Error, "Radius cannot be negative" do
         Chem::Spatial::PBC.each_adjacent_image(structure, radius: -2) { }
       end

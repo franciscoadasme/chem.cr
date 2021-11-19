@@ -91,8 +91,8 @@ module Chem::Protein
       end
     end
 
-    def to_q : Quat
-      Quat.rotation about: @rotaxis, by: @twist.degrees
+    def to_q : Chem::Spatial::Quat
+      Chem::Spatial::Quat.rotation about: @rotaxis, by: @twist.degrees
     end
   end
 end

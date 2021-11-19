@@ -13,12 +13,12 @@ describe Chem::Mol2::Reader do
                                  "H4", "H5", "H6"]
     atoms[0].element.should eq Chem::PeriodicTable::C
     atoms[4].partial_charge.should eq -0.062
-    atoms[5].coords.should eq Vec3[0, 1.394, 0]
+    atoms[5].coords.should eq [0, 1.394, 0]
     atoms[6].element.should eq Chem::PeriodicTable::H
-    atoms[8].coords.should eq Vec3[3.353, -0.542, 0]
+    atoms[8].coords.should eq [3.353, -0.542, 0]
     atoms[9].partial_charge.should eq 0.062
     atoms[11].element.should eq Chem::PeriodicTable::H
-    atoms[11].coords.should eq Vec3[-0.939, 1.936, 0]
+    atoms[11].coords.should eq [-0.939, 1.936, 0]
 
     atoms[0].bonds[atoms[1]].order.should eq 2
     atoms[1].bonds[atoms[2]].order.should eq 1
@@ -32,7 +32,7 @@ describe Chem::Mol2::Reader do
   it "parses an unformatted Mol2 file with minimal information" do
     atom_names = ["N1", "C2", "C3", "C4", "O5", "C6", "N7", "C8", "C9", "N10", "H11",
                   "O12", "H13", "H14", "H15", "H16", "H17", "H18", "H19", "H20"]
-    symbols = atom_names.map { |name| PeriodicTable[name[0]].symbol }
+    symbols = atom_names.map { |name| Chem::PeriodicTable[name[0]].symbol }
 
     structure = load_file "minimal.mol2"
     structure.source_file.should eq Path[spec_file("minimal.mol2")].expand
@@ -42,8 +42,8 @@ describe Chem::Mol2::Reader do
     atoms.size.should eq 20
     atoms.map(&.name).should eq atom_names
     atoms.map(&.element.symbol).should eq symbols
-    atoms[2].coords.should eq Vec3[-0.2043, -0.1565, -0.4766]
-    atoms[14].coords.should eq Vec3[-0.7202, -1.1105, -0.3899]
+    atoms[2].coords.should eq [-0.2043, -0.1565, -0.4766]
+    atoms[14].coords.should eq [-0.7202, -1.1105, -0.3899]
 
     atoms[3].bonded_atoms.map(&.serial).should eq [2, 5, 12]
     atoms[3].bonds[atoms[4]].order.should eq 2
@@ -61,11 +61,11 @@ describe Chem::Mol2::Reader do
     atoms[0].name.should eq "N1"
     atoms[0].element.nitrogen?.should be_true
     atoms[0].partial_charge.should eq -0.896
-    atoms[0].coords.should be_close Vec3[6.8420, 9.9900, 22.7430], 1e-4
+    atoms[0].coords.should be_close [6.8420, 9.9900, 22.7430], 1e-4
     atoms[33].name.should eq "H131"
     atoms[33].element.hydrogen?.should be_true
     atoms[33].partial_charge.should eq 0.072
-    atoms[33].coords.should be_close Vec3[4.5540, 11.1000, 22.5880], 1e-4
+    atoms[33].coords.should be_close [4.5540, 11.1000, 22.5880], 1e-4
 
     structure.bonds.size.should eq 51
     atoms[7].bonded?(atoms[34]).should be_true
@@ -103,11 +103,11 @@ describe Chem::Mol2::Writer do
 
       chain 'C' do
         residue "SO4", 45 do
-          atom "S1", Vec3[-0.0002, 0.0003, 0.0001], partial_charge: 1.2618
-          atom "O2", Vec3[-1.3618, -0.5756, -0.1010], partial_charge: -0.7248
-          atom "H3", Vec3[0.7821, -0.8842, 0.6252], partial_charge: -0.5475
-          atom "H4", Vec3[0.4755, 0.1646, -1.2374], partial_charge: -0.5482
-          atom "O5", Vec3[0.1044, 1.2949, 0.7131], partial_charge: -0.7244
+          atom "S1", Chem::Spatial::Vec3[-0.0002, 0.0003, 0.0001], partial_charge: 1.2618
+          atom "O2", Chem::Spatial::Vec3[-1.3618, -0.5756, -0.1010], partial_charge: -0.7248
+          atom "H3", Chem::Spatial::Vec3[0.7821, -0.8842, 0.6252], partial_charge: -0.5475
+          atom "H4", Chem::Spatial::Vec3[0.4755, 0.1646, -1.2374], partial_charge: -0.5482
+          atom "O5", Chem::Spatial::Vec3[0.1044, 1.2949, 0.7131], partial_charge: -0.7244
 
           bond "S1", "O2", order: 2
           bond "S1", "H3"

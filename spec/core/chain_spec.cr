@@ -4,14 +4,14 @@ describe Chem::Chain do
   describe "#new" do
     it "fails with non-alphanumeric id" do
       expect_raises ArgumentError, "Non-alphanumeric chain id" do
-        Chain.new '[', Structure.new
+        Chem::Chain.new '[', Chem::Structure.new
       end
     end
   end
 
   describe "#<=>" do
     it "compares based on identifier" do
-      chains = Structure.build do
+      chains = Chem::Structure.build do
         chain 'A'
         chain 'B'
         chain 'C'
@@ -24,7 +24,7 @@ describe Chem::Chain do
 
   describe "#inspect" do
     it "returns a delimited string representation" do
-      Chain.new('K', Structure.new).inspect.should eq "<Chain K>"
+      Chem::Chain.new('K', Chem::Structure.new).inspect.should eq "<Chain K>"
     end
   end
 

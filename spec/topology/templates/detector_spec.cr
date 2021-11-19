@@ -82,19 +82,19 @@ describe Chem::Topology::Templates::Detector do
   describe "#matches" do
     it "returns found matches" do
       structure = load_file "waters.xyz"
-      matches = Topology::Templates::Detector.new(structure).matches
+      matches = Chem::Topology::Templates::Detector.new(structure).matches
       matches.should eq [
-        Topology::MatchData.new(Topology::Templates["HOH"], {
+        Chem::Topology::MatchData.new(Chem::Topology::Templates["HOH"], {
           "O"  => structure.atoms[0],
           "H1" => structure.atoms[1],
           "H2" => structure.atoms[2],
         }),
-        Topology::MatchData.new(Topology::Templates["HOH"], {
+        Chem::Topology::MatchData.new(Chem::Topology::Templates["HOH"], {
           "O"  => structure.atoms[3],
           "H1" => structure.atoms[4],
           "H2" => structure.atoms[5],
         }),
-        Topology::MatchData.new(Topology::Templates["HOH"], {
+        Chem::Topology::MatchData.new(Chem::Topology::Templates["HOH"], {
           "O"  => structure.atoms[6],
           "H1" => structure.atoms[7],
           "H2" => structure.atoms[8],
@@ -106,14 +106,14 @@ describe Chem::Topology::Templates::Detector do
   describe "#unmatched_atoms" do
     it "returns atoms not matched by any template" do
       structure = load_file "5e5v--unwrapped.poscar"
-      detector = Topology::Templates::Detector.new structure, [Topology::Templates["HOH"]]
+      detector = Chem::Topology::Templates::Detector.new structure, [Chem::Topology::Templates["HOH"]]
       detector.each_match { } # triggers search
       detector.unmatched_atoms.try(&.size).should eq 206
     end
 
     it "returns an empty array when all atoms are matched" do
       structure = load_file "waters.xyz"
-      detector = Topology::Templates::Detector.new structure
+      detector = Chem::Topology::Templates::Detector.new structure
       detector.each_match { } # triggers search
       detector.unmatched_atoms.empty?.should be_true
     end

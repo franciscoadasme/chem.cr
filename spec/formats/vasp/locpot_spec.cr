@@ -2,15 +2,15 @@ require "../../spec_helper"
 
 describe Chem::VASP::Locpot do
   it "parses a LOCPOT" do
-    grid = Grid.from_locpot spec_file("vasp/LOCPOT")
+    grid = Chem::Spatial::Grid.from_locpot spec_file("vasp/LOCPOT")
     grid.source_file.should eq Path[spec_file("vasp/LOCPOT")].expand
     grid.dim.should eq({32, 32, 32})
-    grid.bounds.should be_close Bounds.new(
-      Vec3.zero,
-      Mat3.basis(
-        Vec3[2.969072, -0.000523, -0.000907],
-        Vec3[-0.987305, 2.800110, 0.000907],
-        Vec3[-0.987305, -1.402326, 2.423654]
+    grid.bounds.should be_close Chem::Spatial::Bounds.new(
+      Chem::Spatial::Vec3.zero,
+      Chem::Spatial::Mat3.basis(
+        Chem::Spatial::Vec3[2.969072, -0.000523, -0.000907],
+        Chem::Spatial::Vec3[-0.987305, 2.800110, 0.000907],
+        Chem::Spatial::Vec3[-0.987305, -1.402326, 2.423654]
       ),
     ), 1e-6
     grid[0, 0, 0].should eq -46.16312251
@@ -21,13 +21,13 @@ describe Chem::VASP::Locpot do
   end
 
   it "parses a LOCPOT header" do
-    info = Grid::Info.from_locpot spec_file("vasp/LOCPOT")
-    info.bounds.should be_close Bounds.new(
-      Vec3.zero,
-      Mat3.basis(
-        Vec3[2.969072, -0.000523, -0.000907],
-        Vec3[-0.987305, 2.800110, 0.000907],
-        Vec3[-0.987305, -1.402326, 2.423654],
+    info = Chem::Spatial::Grid::Info.from_locpot spec_file("vasp/LOCPOT")
+    info.bounds.should be_close Chem::Spatial::Bounds.new(
+      Chem::Spatial::Vec3.zero,
+      Chem::Spatial::Mat3.basis(
+        Chem::Spatial::Vec3[2.969072, -0.000523, -0.000907],
+        Chem::Spatial::Vec3[-0.987305, 2.800110, 0.000907],
+        Chem::Spatial::Vec3[-0.987305, -1.402326, 2.423654],
       ),
     ), 1e-6
     info.dim.should eq({32, 32, 32})
@@ -40,8 +40,8 @@ describe Chem::VASP::Locpot do
     structure.source_file.should eq Path[spec_file("vasp/LOCPOT")].expand
     structure.n_atoms.should eq 2
     structure.atoms.map(&.element.symbol).should eq %w(Li C)
-    structure.atoms[0].coords.should eq Vec3.zero
-    structure.atoms[1].coords.should be_close Vec3[0.497, 0.699, 1.212], 1e-3
+    structure.atoms[0].coords.should eq [0, 0, 0]
+    structure.atoms[1].coords.should be_close [0.497, 0.699, 1.212], 1e-3
 
     structure.should be reader.read_attached
   end
@@ -50,14 +50,14 @@ describe Chem::VASP::Locpot do
     structure = Chem::Structure.build do
       title "NaCl-O-NaCl"
       cell 5, 10, 20
-      atom :Cl, Vec3[30, 15, 10]
-      atom :Na, Vec3[10, 5, 5]
-      atom :O, Vec3[30, 15, 9]
-      atom :Na, Vec3[10, 10, 12.5]
-      atom :Cl, Vec3[20, 10, 10]
+      atom :Cl, Chem::Spatial::Vec3[30, 15, 10]
+      atom :Na, Chem::Spatial::Vec3[10, 5, 5]
+      atom :O, Chem::Spatial::Vec3[30, 15, 9]
+      atom :Na, Chem::Spatial::Vec3[10, 10, 12.5]
+      atom :Cl, Chem::Spatial::Vec3[20, 10, 10]
     end
 
-    grid = make_grid(3, 3, 3, Bounds[5, 10, 20]) { |i, j, k| i * 100 + j * 10 + k }
+    grid = make_grid({3, 3, 3}, {5, 10, 20}) { |i, j, k| i * 100 + j * 10 + k }
     grid.to_locpot(structure).should eq <<-EOF
       NaCl-O-NaCl
          1.00000000000000
@@ -85,7 +85,7 @@ describe Chem::VASP::Locpot do
   end
 
   it "fails when writing a LOCPOT with a non-periodic structure" do
-    grid = make_grid 3, 3, 3, Bounds[1, 2, 3]
+    grid = make_grid({3, 3, 3}, {1, 2, 3})
     expect_raises Chem::Spatial::NotPeriodicError do
       grid.to_locpot Chem::Structure.new
     end
@@ -94,7 +94,7 @@ describe Chem::VASP::Locpot do
   it "fails when cell and bounds are incompatible" do
     structure = Chem::Structure.build { cell 10, 20, 30 }
     expect_raises ArgumentError, "Incompatible structure and grid" do
-      make_grid(3, 3, 3, Bounds[20, 20, 20]).to_locpot structure
+      make_grid({3, 3, 3}, {20, 20, 20}).to_locpot structure
     end
   end
 end

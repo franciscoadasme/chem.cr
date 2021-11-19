@@ -18,7 +18,12 @@ module Chem::Spatial
       Bounds.new vmin, basis
     end
 
-    def self.[](a : Float64, b : Float64, c : Float64) : self
+    # TODO: replace Bounds[].translate() with this
+    def self.new(origin : Vec3, size : NumberTriple | Size3) : self
+      Bounds[size[0], size[1], size[2]].translate(origin)
+    end
+
+    def self.[](a : Number, b : Number, c : Number) : self
       raise ArgumentError.new("Negative size") if {a, b, c}.any?(&.negative?)
       new Vec3.zero, Mat3.diagonal(a, b, c)
     end

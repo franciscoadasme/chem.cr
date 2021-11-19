@@ -1,6 +1,6 @@
 require "../spec_helper"
 
-describe Topology::Perception do
+describe Chem::Topology::Perception do
   describe "#guess_bonds" do
     it "guesses bonds from geometry" do
       atoms = load_file("AlaIle--unwrapped.poscar").atoms
@@ -281,9 +281,9 @@ describe Topology::Perception do
     it "assigns bond orders for a structure without hydrogens" do
       structure = Chem::Structure.build do
         residue "ICN" do
-          atom :i, Vec3[3.149, 0, 0]
-          atom :c, Vec3[1.148, 0, 0]
-          atom :n, Vec3[0, 0, 0]
+          atom :i, Chem::Spatial::Vec3[3.149, 0, 0]
+          atom :c, Chem::Spatial::Vec3[1.148, 0, 0]
+          atom :n, Chem::Spatial::Vec3[0, 0, 0]
           # bond "I1", "C1"
           # bond "C1", "N1", order: 3
         end

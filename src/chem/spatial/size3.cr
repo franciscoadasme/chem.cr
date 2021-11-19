@@ -51,5 +51,21 @@ module Chem::Spatial
         raise IndexError.new
       end
     end
+
+    # Returns `true` if the elements of the size are within *delta*
+    # from each other, else `false`.
+    #
+    # ```
+    # Size3[1, 2, 3].close_to?(Size3[1, 2, 3])                     # => true
+    # Size3[1, 2, 3].close_to?(Size3[1.001, 1.999, 3.00004], 1e-3) # => true
+    # Size3[1, 2, 3].close_to?(Size3[3, 2, 1])                     # => false
+    # Size3[1, 2, 3].close_to?(Size3[1.001, 1.999, 3.00004], 1e-8) # => false
+    # ```
+    def close_to?(rhs : self, delta : Number = Float64::EPSILON) : Bool
+      # TODO: add Indexable.close_to? and use that instead
+      (0..2).all? do |i|
+        @buffer[i].close_to?(rhs[i], delta)
+      end
+    end
   end
 end

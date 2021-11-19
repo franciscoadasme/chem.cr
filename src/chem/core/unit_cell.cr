@@ -8,6 +8,8 @@ module Chem
   # fractional coordinates, and viceversa, by matrix multiplication (see
   # `#cart` and `#fract`).
   class UnitCell
+    # TODO: use Bounds as instance variable instead of Mat3
+
     # Matrix containing the basis vectors.
     getter basis : Spatial::Mat3
 
@@ -29,12 +31,12 @@ module Chem
     #
     # NOTE: The first basis vector will be aligned to the X axis and the
     # second basis vector will lie in the XY plane.
-    def self.new(size : NumberTriple | Size3,
-                 angles : NumberTriple = {90, 90, 90}) : self
-      raise ArgumentError.new("Negative size") if !size.is_a?(Size3) && size.any?(&.negative?)
+    def self.new(size : Spatial::NumberTriple | Spatial::Size3,
+                 angles : Spatial::NumberTriple = {90, 90, 90}) : self
+      raise ArgumentError.new("Negative size") if !size.is_a?(Spatial::Size3) && size.any?(&.negative?)
       raise ArgumentError.new("Negative angle") if angles.any?(&.negative?)
       if angles.all?(&.close_to?(90))
-        basis = Mat3.diagonal size[0], size[1], size[2]
+        basis = Spatial::Mat3.diagonal size[0], size[1], size[2]
       else
         cos_alpha = Math.cos angles[0].radians
         cos_beta = Math.cos angles[1].radians
@@ -46,7 +48,7 @@ module Chem
         kz = Math.sqrt size[2]**2 - kx**2 - ky**2
 
         # column-major order
-        basis = Mat3[
+        basis = Spatial::Mat3[
           {size[0], size[1] * cos_gamma, kx},
           {0, size[1] * sin_gamma, ky},
           {0, 0, kz},
@@ -114,7 +116,7 @@ module Chem
     end
 
     # Returns the unit cell angles (alpha, beta, gamma) in degrees.
-    def angles : NumberTriple
+    def angles : Spatial::NumberTriple
       {alpha, beta, gamma}
     end
 

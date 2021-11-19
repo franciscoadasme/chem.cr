@@ -41,7 +41,7 @@ describe Chem::Protein::DSSP do
   end
 
   it "assigns secondary structure (4wfe:G), gaps" do
-    st = Structure.from_pdb spec_file("4wfe.pdb"), chains: ['G']
+    st = Chem::Structure.from_pdb spec_file("4wfe.pdb"), chains: ['G']
     Chem::Protein::DSSP.assign st
     expected = "00EEEE000EEE0TT00EEEEEEEESS0GGGS0EEEEEE0TTS0EEEEEEE0TTT00EEE0GGGTTTEEEE\
                 EETTTTEEEEEE0S00GGG0EEEEEEE0SSS00EE000EEEEE00000B00EEEEE0000EEEEEEEEEEE\

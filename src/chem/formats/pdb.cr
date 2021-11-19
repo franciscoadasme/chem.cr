@@ -338,12 +338,15 @@ module Chem::PDB
     @atom_index_table = {} of Int32 => Int32
     @record_index = 0
 
-    def initialize(@io : IO,
-                   @bonds : PDB::Writer::BondOptions = PDB::Writer::BondOptions.flags(Het, Disulfide),
-                   @renumber : Bool = true,
-                   @ter_on_fragment : Bool = false,
-                   @total_entries : Int32? = nil,
-                   @sync_close : Bool = false)
+    def initialize(
+      @io : IO,
+      # FIXME: add scope to type when creating constructors in register_format
+      @bonds : Chem::PDB::Writer::BondOptions = Chem::PDB::Writer::BondOptions.flags(Het, Disulfide),
+      @renumber : Bool = true,
+      @ter_on_fragment : Bool = false,
+      @total_entries : Int32? = nil,
+      @sync_close : Bool = false
+    )
       check_total_entries
     end
 

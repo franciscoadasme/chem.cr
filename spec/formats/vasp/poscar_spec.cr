@@ -14,7 +14,7 @@ describe Chem::VASP::Poscar do
 
       atom = st.atoms[-1]
       atom.chain.id.should eq 'A'
-      atom.coords.should eq Vec3[1.25020645, 3.42088266, 4.92610368]
+      atom.coords.should eq [1.25020645, 3.42088266, 4.92610368]
       atom.element.oxygen?.should be_true
       atom.serial.should eq 49
       atom.name.should eq "O"
@@ -32,23 +32,23 @@ describe Chem::VASP::Poscar do
     it "parses a file with direct coordinates" do
       st = load_file "direct.poscar"
       st.source_file.should eq Path[spec_file("direct.poscar")].expand
-      st.atoms[0].coords.should eq Vec3.zero
-      st.atoms[1].coords.should be_close Vec3[1.0710, 1.6065, 1.2495], 1e-15
+      st.atoms[0].coords.should eq [0, 0, 0]
+      st.atoms[1].coords.should be_close [1.0710, 1.6065, 1.2495], 1e-15
     end
 
     it "parses a file with scaled Cartesian coordinates" do
       st = load_file "cartesian.poscar"
       st.source_file.should eq Path[spec_file("cartesian.poscar")].expand
-      st.atoms[0].coords.should eq Vec3.zero
-      st.atoms[1].coords.should be_close Vec3[0.8925, 0.8925, 0.8925], 1e-16
+      st.atoms[0].coords.should eq [0, 0, 0]
+      st.atoms[1].coords.should be_close [0.8925, 0.8925, 0.8925], 1e-16
     end
 
     it "parses a file with selective dynamics" do
       st = load_file "selective_dynamics.poscar"
       st.source_file.should eq Path[spec_file("selective_dynamics.poscar")].expand
-      st.atoms[0].constraint.should eq Constraint::Z
-      st.atoms[1].constraint.should eq Constraint::XYZ
-      st.atoms[2].constraint.should eq Constraint::Z
+      st.atoms[0].constraint.should eq Chem::Constraint::Z
+      st.atoms[1].constraint.should eq Chem::Constraint::XYZ
+      st.atoms[2].constraint.should eq Chem::Constraint::Z
     end
 
     it "fails when element symbols are missing" do
@@ -109,11 +109,11 @@ describe Chem::VASP::Poscar::Writer do
   structure = Chem::Structure.build do
     title "NaCl-O-NaCl"
     cell 40, 20, 10
-    atom :Cl, Vec3[30, 15, 10]
-    atom :Na, Vec3[10, 5, 5]
-    atom :O, Vec3[30, 15, 9]
-    atom :Na, Vec3[10, 10, 12.5]
-    atom :Cl, Vec3[20, 10, 10]
+    atom :Cl, Chem::Spatial::Vec3[30, 15, 10]
+    atom :Na, Chem::Spatial::Vec3[10, 5, 5]
+    atom :O, Chem::Spatial::Vec3[30, 15, 9]
+    atom :Na, Chem::Spatial::Vec3[10, 10, 12.5]
+    atom :Cl, Chem::Spatial::Vec3[20, 10, 10]
   end
 
   it "writes a structure in Cartesian coordinates" do
@@ -190,8 +190,8 @@ describe Chem::VASP::Poscar::Writer do
 
   it "writes a structure having constraints" do
     other = structure.clone
-    other.atoms[0].constraint = Constraint::XYZ
-    other.atoms[3].constraint = Constraint::XZ
+    other.atoms[0].constraint = Chem::Constraint::XYZ
+    other.atoms[3].constraint = Chem::Constraint::XZ
     other.to_poscar.should eq <<-EOS
       NaCl-O-NaCl
          1.00000000000000
@@ -218,7 +218,7 @@ describe Chem::VASP::Poscar::Writer do
 
   it "fails when there is a missing element in the specified order" do
     expect_raises ArgumentError, "<Element Cl(17)> not found in specified order" do
-      structure.to_poscar order: [PeriodicTable::H]
+      structure.to_poscar order: [Chem::PeriodicTable::H]
     end
   end
 

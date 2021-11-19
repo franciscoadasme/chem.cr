@@ -36,7 +36,7 @@ describe Chem::PDB do
       atom.residue.name.should eq "HOH"
       atom.chain.id.should eq 'D'
       atom.residue.number.should eq 2112
-      atom.coords.should eq Vec3[66.315, 27.887, 48.252]
+      atom.coords.should eq [66.315, 27.887, 48.252]
       atom.occupancy.should eq 1
       atom.temperature_factor.should eq 53.58
       atom.element.oxygen?.should be_true
@@ -65,7 +65,7 @@ describe Chem::PDB do
       atom.chain.id.should eq 'A'
       atom.residue.number.should eq 2
       # atom.insertion_code.should be_nil
-      atom.coords.should eq Vec3[-1.204, 4.061, 0.195]
+      atom.coords.should eq [-1.204, 4.061, 0.195]
       atom.occupancy.should eq 1
       atom.temperature_factor.should eq 0
       atom.element.oxygen?.should be_true
@@ -124,7 +124,7 @@ describe Chem::PDB do
       st = load_file "1crn.pdb"
       st.cell.should_not be_nil
       cell = st.cell.not_nil!
-      cell.size.should eq Size3[40.960, 18.650, 22.520]
+      cell.size.should eq [40.960, 18.650, 22.520]
       cell.alpha.should eq 90
       cell.beta.should eq 90.77
       cell.gamma.should eq 90
@@ -170,7 +170,7 @@ describe Chem::PDB do
     it "parses a PDB file with deuterium" do
       st = load_file "isotopes.pdb"
       st.n_atoms.should eq 12
-      st.atoms[5].element.should eq PeriodicTable::H
+      st.atoms[5].element.should eq Chem::PeriodicTable::H
     end
 
     it "raises on unknown element X (ASX case)" do
@@ -252,7 +252,7 @@ describe Chem::PDB do
       structure.n_atoms.should eq 14
       structure.each_atom.map(&.occupancy).uniq.to_a.should eq [0.56]
       structure['A'][1].name.should eq "TRP"
-      structure['A'][1]["N"].coords.should eq Vec3[3.298, 2.388, 22.684]
+      structure['A'][1]["N"].coords.should eq [3.298, 2.388, 22.684]
     end
 
     it "parses selected alternate conformation" do
@@ -261,7 +261,7 @@ describe Chem::PDB do
       structure.n_atoms.should eq 11
       structure.each_atom.map(&.occupancy).uniq.to_a.should eq [0.22]
       structure['A'][1].name.should eq "ARG"
-      structure['A'][1]["CB"].coords.should eq Vec3[4.437, 2.680, 20.555]
+      structure['A'][1]["CB"].coords.should eq [4.437, 2.680, 20.555]
     end
 
     it "parses insertion codes" do
@@ -298,11 +298,11 @@ describe Chem::PDB do
     end
 
     it "skip models" do
-      PDB::Reader.open(spec_file("models.pdb")) do |reader|
+      Chem::PDB::Reader.open(spec_file("models.pdb")) do |reader|
         reader.skip_entry
-        reader.read_entry.atoms[0].coords.should eq Vec3[7.212, 15.334, 0.966]
+        reader.read_entry.atoms[0].coords.should eq [7.212, 15.334, 0.966]
         reader.skip_entry
-        reader.read_entry.atoms[0].coords.should eq Vec3[22.055, 14.701, 7.032]
+        reader.read_entry.atoms[0].coords.should eq [22.055, 14.701, 7.032]
       end
     end
 
@@ -346,7 +346,7 @@ describe Chem::PDB do
       residue = structure['A'][23]
       residue.n_atoms.should eq 15
       residue.each_atom.map(&.occupancy).uniq.to_a.should eq [1, 0.8]
-      residue["CG"].coords.should eq Vec3[10.387, 12.021, 0.058]
+      residue["CG"].coords.should eq [10.387, 12.021, 0.058]
     end
 
     it "parses 1dpo (insertions)" do
@@ -370,11 +370,11 @@ describe Chem::PDB do
       # it triggered IndexError for skipped atoms, but cannot test
       # whether bonds are assigned from PDB or not since missing bonds
       # are automatically guessed
-      Structure.from_pdb spec_file("1crn.pdb"), chains: ['C']
+      Chem::Structure.from_pdb spec_file("1crn.pdb"), chains: ['C']
     end
 
     it "parses first chain" do
-      structure = Structure.from_pdb spec_file("multiple_chains.pdb"), chains: "first"
+      structure = Chem::Structure.from_pdb spec_file("multiple_chains.pdb"), chains: "first"
       structure.n_chains.should eq 1
       structure.n_residues.should eq 2
       structure.n_atoms.should eq 14
@@ -500,9 +500,9 @@ describe Chem::PDB::Writer do
   it "writes CONECT records" do
     structure = Chem::Structure.build do
       residue "ICN" do
-        atom :i, Vec3[3.149, 0, 0]
-        atom :c, Vec3[1.148, 0, 0]
-        atom :n, Vec3[0, 0, 0]
+        atom :i, Chem::Spatial::Vec3[3.149, 0, 0]
+        atom :c, Chem::Spatial::Vec3[1.148, 0, 0]
+        atom :n, Chem::Spatial::Vec3[0, 0, 0]
 
         bond "I1", "C1"
         bond "C1", "N1", order: 3
@@ -525,18 +525,18 @@ describe Chem::PDB::Writer do
   it "writes CONECT records for renumbered atoms" do
     structure = Chem::Structure.build do
       residue "ICN" do
-        atom :i, Vec3[3.149, 0, 0]
-        atom :c, Vec3[1.148, 0, 0]
-        atom :n, Vec3[0, 0, 0]
+        atom :i, Chem::Spatial::Vec3[3.149, 0, 0]
+        atom :c, Chem::Spatial::Vec3[1.148, 0, 0]
+        atom :n, Chem::Spatial::Vec3[0, 0, 0]
 
         bond "I1", "C1"
         bond "C1", "N1", order: 3
       end
 
       residue "ICN" do
-        atom :i, Vec3[13.149, 0, 0]
-        atom :c, Vec3[11.148, 0, 0]
-        atom :n, Vec3[10, 0, 0]
+        atom :i, Chem::Spatial::Vec3[13.149, 0, 0]
+        atom :c, Chem::Spatial::Vec3[11.148, 0, 0]
+        atom :n, Chem::Spatial::Vec3[10, 0, 0]
 
         bond "I1", "C1"
         bond "C1", "N1", order: 3
@@ -559,9 +559,9 @@ describe Chem::PDB::Writer do
   it "writes big numbers" do
     structure = Chem::Structure.build do
       residue "ICN" do
-        atom :i, Vec3[3.149, 0, 0]
-        atom :c, Vec3[1.148, 0, 0]
-        atom :n, Vec3[0, 0, 0]
+        atom :i, Chem::Spatial::Vec3[3.149, 0, 0]
+        atom :c, Chem::Spatial::Vec3[1.148, 0, 0]
+        atom :n, Chem::Spatial::Vec3[0, 0, 0]
 
         bond "I1", "C1"
         bond "C1", "N1", order: 3
@@ -588,10 +588,10 @@ describe Chem::PDB::Writer do
   it "writes four-letter residue names (#45)" do
     structure = Chem::Structure.build do
       residue "DMPG" do
-        atom "C13", Vec3[9.194, 10.488, 13.865]
-        atom "H13A", Vec3[8.843, 9.508, 14.253]
-        atom "H13B", Vec3[10.299, 10.527, 13.756]
-        atom "OC3", Vec3[8.600, 10.828, 12.580]
+        atom "C13", Chem::Spatial::Vec3[9.194, 10.488, 13.865]
+        atom "H13A", Chem::Spatial::Vec3[8.843, 9.508, 14.253]
+        atom "H13B", Chem::Spatial::Vec3[10.299, 10.527, 13.756]
+        atom "OC3", Chem::Spatial::Vec3[8.600, 10.828, 12.580]
       end
     end
     structure.to_pdb(bonds: :none).should eq <<-PDB.delete('|')
@@ -607,13 +607,13 @@ describe Chem::PDB::Writer do
 
   it "writes multiple entries" do
     path = spec_file("models.pdb")
-    entries = Array(Structure).from_pdb path
+    entries = Array(Chem::Structure).from_pdb path
     entries.to_pdb.should eq File.read(path).gsub(/CONECT.+\n/, "")
   end
 
   it "writes an indeterminate number of entries" do
     path = spec_file("models.pdb")
-    entries = Array(Structure).from_pdb path
+    entries = Array(Chem::Structure).from_pdb path
 
     io = IO::Memory.new
     Chem::PDB::Writer.open(io) do |writer|
@@ -627,8 +627,8 @@ describe Chem::PDB::Writer do
   it "aligns the unit cell to the xy-plane" do
     structure = load_file "5e5v--unwrapped.poscar"
     structure = Chem::Structure.from_pdb IO::Memory.new(structure.to_pdb)
-    structure.atoms[0].coords.should be_close Vec3[8.128, 2.297, 11.112], 1e-3
-    structure.atoms[167].coords.should be_close Vec3[11.0, 6.405, 12.834], 1e-3
+    structure.atoms[0].coords.should be_close [8.128, 2.297, 11.112], 1e-3
+    structure.atoms[167].coords.should be_close [11.0, 6.405, 12.834], 1e-3
   end
 
   it "writes CONECT records for disulfide bridges and HET groups by default" do

@@ -9,11 +9,11 @@ describe Chem::Gen::Reader do
     structure.n_atoms.should eq 5
     structure.atoms.map(&.element.symbol).should eq ["Cl", "Na", "O", "Na", "Cl"]
     structure.coords.should eq [
-      Vec3[30, 15, 10],
-      Vec3[10, 5, 5],
-      Vec3[30, 15, 9],
-      Vec3[10, 10, 12.5],
-      Vec3[20, 10, 10],
+      [30, 15, 10],
+      [10, 5, 5],
+      [30, 15, 9],
+      [10, 10, 12.5],
+      [20, 10, 10],
     ]
   end
 
@@ -21,17 +21,17 @@ describe Chem::Gen::Reader do
     structure = load_file "periodic.gen"
     structure.source_file.should eq Path[spec_file("periodic.gen")].expand
     structure.cell.should_not be_nil
-    structure.cell.not_nil!.i.should eq Vec3[40, 0, 0]
-    structure.cell.not_nil!.j.should eq Vec3[0, 20, 0]
-    structure.cell.not_nil!.k.should eq Vec3[0, 0, 10]
+    structure.cell.not_nil!.i.should eq [40, 0, 0]
+    structure.cell.not_nil!.j.should eq [0, 20, 0]
+    structure.cell.not_nil!.k.should eq [0, 0, 10]
 
     structure.n_atoms.should eq 4
     structure.atoms.map(&.element.symbol).should eq ["Cl", "O", "O", "Na"]
     structure.coords.should eq [
-      Vec3[30, 15, 10],
-      Vec3[10, 5, 5],
-      Vec3[3, 1.5, 9],
-      Vec3[1, 1, 1.25],
+      [30, 15, 10],
+      [10, 5, 5],
+      [3, 1.5, 9],
+      [1, 1, 1.25],
     ]
   end
 
@@ -39,24 +39,24 @@ describe Chem::Gen::Reader do
     structure = load_file "fractional.gen"
     structure.source_file.should eq Path[spec_file("fractional.gen")].expand
     structure.cell.should_not be_nil
-    structure.cell.not_nil!.i.should eq Vec3[2.713546, 2.713546, 0]
-    structure.cell.not_nil!.j.should eq Vec3[0, 2.713546, 2.713546]
-    structure.cell.not_nil!.k.should eq Vec3[2.713546, 0, 2.713546]
+    structure.cell.not_nil!.i.should eq [2.713546, 2.713546, 0]
+    structure.cell.not_nil!.j.should eq [0, 2.713546, 2.713546]
+    structure.cell.not_nil!.k.should eq [2.713546, 0, 2.713546]
 
     structure.n_atoms.should eq 2
     structure.atoms.map(&.element.symbol).should eq ["Ga", "As"]
-    structure.coords.should eq [Vec3[0, 0, 0], Vec3[1.356773, 1.356773, 1.356773]]
+    structure.coords.should eq [[0, 0, 0], [1.356773, 1.356773, 1.356773]]
   end
 end
 
 describe Chem::Gen::Writer do
   structure = Chem::Structure.build do
     title "NaCl-O-NaCl"
-    atom PeriodicTable::Cl, Vec3[30, 15, 10]
-    atom PeriodicTable::Na, Vec3[10, 5, 5]
-    atom PeriodicTable::O, Vec3[30, 15, 9]
-    atom PeriodicTable::Na, Vec3[10, 10, 12.5]
-    atom PeriodicTable::Cl, Vec3[20, 10, 10]
+    atom Chem::PeriodicTable::Cl, Chem::Spatial::Vec3[30, 15, 10]
+    atom Chem::PeriodicTable::Na, Chem::Spatial::Vec3[10, 5, 5]
+    atom Chem::PeriodicTable::O, Chem::Spatial::Vec3[30, 15, 9]
+    atom Chem::PeriodicTable::Na, Chem::Spatial::Vec3[10, 10, 12.5]
+    atom Chem::PeriodicTable::Cl, Chem::Spatial::Vec3[20, 10, 10]
   end
 
   it "writes a structure in Cartesian coordinats without unit cell" do
@@ -72,7 +72,7 @@ describe Chem::Gen::Writer do
   end
 
   it "writes a structure in Cartesian coordinates with unit cell" do
-    structure.cell = UnitCell.new({40, 20, 10})
+    structure.cell = Chem::UnitCell.new({40, 20, 10})
     structure.to_gen.should eq <<-EOS
           5  S
        Cl Na  O
@@ -89,7 +89,7 @@ describe Chem::Gen::Writer do
   end
 
   it "writes a structure in fractional coordinates with unit cell" do
-    structure.cell = UnitCell.new({40, 20, 10})
+    structure.cell = Chem::UnitCell.new({40, 20, 10})
     structure.to_gen(fractional: true).should eq <<-EOS
           5  F
        Cl Na  O

@@ -11,7 +11,7 @@ describe Chem::Atom do
   end
 
   describe "#===" do
-    atom = Structure.build { atom "NG1", Vec3[0, 0, 0] }.atoms[0]
+    atom = Chem::Structure.build { atom "NG1", Chem::Spatial::Vec3[0, 0, 0] }.atoms[0]
 
     it "tells if atom matches atom type" do
       (atom === Chem::Topology::AtomType.new("NG1")).should be_true
@@ -20,17 +20,17 @@ describe Chem::Atom do
     end
 
     it "tells if atom matches element" do
-      (atom === PeriodicTable::N).should be_true
-      (atom === PeriodicTable::O).should be_false
+      (atom === Chem::PeriodicTable::N).should be_true
+      (atom === Chem::PeriodicTable::O).should be_false
     end
   end
 
   describe "#bonded?" do
     it "tells if two atoms are bonded" do
-      structure = Structure.build do
-        atom :O, Vec3[2.336, 3.448, 7.781]
-        atom :H, Vec3[1.446, 3.485, 7.315]
-        atom :H, Vec3[2.977, 2.940, 7.234]
+      structure = Chem::Structure.build do
+        atom :O, Chem::Spatial::Vec3[2.336, 3.448, 7.781]
+        atom :H, Chem::Spatial::Vec3[1.446, 3.485, 7.315]
+        atom :H, Chem::Spatial::Vec3[2.977, 2.940, 7.234]
       end
       structure.atoms[0].bonded?(structure.atoms[1]).should be_true
       structure.atoms[0].bonded?(structure.atoms[2]).should be_true
@@ -38,10 +38,10 @@ describe Chem::Atom do
     end
 
     it "returns false when atom is itself" do
-      structure = Structure.build do
-        atom :O, Vec3[2.336, 3.448, 7.781]
-        atom :H, Vec3[1.446, 3.485, 7.315]
-        atom :H, Vec3[2.977, 2.940, 7.234]
+      structure = Chem::Structure.build do
+        atom :O, Chem::Spatial::Vec3[2.336, 3.448, 7.781]
+        atom :H, Chem::Spatial::Vec3[1.446, 3.485, 7.315]
+        atom :H, Chem::Spatial::Vec3[2.977, 2.940, 7.234]
       end
       structure.atoms[0].bonded?(structure.atoms[0]).should be_false
       structure.atoms[1].bonded?(structure.atoms[1]).should be_false
@@ -50,16 +50,16 @@ describe Chem::Atom do
   end
 
   describe "#each_bonded_atom" do
-    structure = Structure.build do
-      atom :I, Vec3[-1, 0, 0]
-      atom :C, Vec3[0, 0, 0]
-      atom :N, Vec3[1, 0, 0]
+    structure = Chem::Structure.build do
+      atom :I, Chem::Spatial::Vec3[-1, 0, 0]
+      atom :C, Chem::Spatial::Vec3[0, 0, 0]
+      atom :N, Chem::Spatial::Vec3[1, 0, 0]
       bond "I1", "C1"
       bond "C1", "N1", order: 3
     end
 
     it "yields bonded atoms" do
-      ary = [] of Atom
+      ary = [] of Chem::Atom
       structure.atoms[1].each_bonded_atom { |atom| ary << atom }
       ary.map(&.name).should eq ["I1", "N1"]
     end
@@ -80,27 +80,27 @@ describe Chem::Atom do
 
   describe "#match?" do
     it "tells if atom matches atom type" do
-      atom = Structure.build { atom "CD2", Vec3[0, 0, 0] }.atoms[0]
-      atom.match?(Topology::AtomType.new("CD2", element: "C")).should be_true
-      atom.match?(Topology::AtomType.new("CD2", element: "N")).should be_false
-      atom.match?(Topology::AtomType.new("ND2")).should be_false
+      atom = Chem::Structure.build { atom "CD2", Chem::Spatial::Vec3[0, 0, 0] }.atoms[0]
+      atom.match?(Chem::Topology::AtomType.new("CD2", element: "C")).should be_true
+      atom.match?(Chem::Topology::AtomType.new("CD2", element: "N")).should be_false
+      atom.match?(Chem::Topology::AtomType.new("ND2")).should be_false
     end
   end
 
   describe "#missing_valency" do
     it "returns number of bonds to reach closest nominal valency (no bonds)" do
-      structure = Structure.build do
-        atom :C, Vec3[0, 0, 0]
+      structure = Chem::Structure.build do
+        atom :C, Chem::Spatial::Vec3[0, 0, 0]
       end
       structure.atoms[0].formal_charge = 0
       structure.atoms[0].missing_valency.should eq 4
     end
 
     it "returns number of bonds to reach closest nominal valency (bonds)" do
-      structure = Structure.build do
-        atom :C, Vec3[0, 0, 0]
-        atom :H, Vec3[1, 0, 0]
-        atom :H, Vec3[-1, 0, 0]
+      structure = Chem::Structure.build do
+        atom :C, Chem::Spatial::Vec3[0, 0, 0]
+        atom :H, Chem::Spatial::Vec3[1, 0, 0]
+        atom :H, Chem::Spatial::Vec3[-1, 0, 0]
         bond "C1", "H1"
         bond "C1", "H2"
       end
@@ -109,11 +109,11 @@ describe Chem::Atom do
     end
 
     it "returns number of bonds to reach closest nominal valency (full bonds)" do
-      structure = Structure.build do
-        atom :C, Vec3[0, 0, 0]
-        atom :O, Vec3[0, 1, 0]
-        atom :C, Vec3[-1, 0, 0]
-        atom :C, Vec3[1, 0, 0]
+      structure = Chem::Structure.build do
+        atom :C, Chem::Spatial::Vec3[0, 0, 0]
+        atom :O, Chem::Spatial::Vec3[0, 1, 0]
+        atom :C, Chem::Spatial::Vec3[-1, 0, 0]
+        atom :C, Chem::Spatial::Vec3[1, 0, 0]
         bond "C1", "O1", order: 2
         bond "C1", "C2"
         bond "C1", "C3"
@@ -122,12 +122,12 @@ describe Chem::Atom do
     end
 
     it "returns number of bonds to reach closest nominal valency (over bonds)" do
-      structure = Structure.build do
-        atom :N, Vec3[0, 0, 0]
-        atom :C, Vec3[-1, 0, 0]
-        atom :H, Vec3[1, 0, 0]
-        atom :H, Vec3[0, 1, 0]
-        atom :H, Vec3[0, -1, 0]
+      structure = Chem::Structure.build do
+        atom :N, Chem::Spatial::Vec3[0, 0, 0]
+        atom :C, Chem::Spatial::Vec3[-1, 0, 0]
+        atom :H, Chem::Spatial::Vec3[1, 0, 0]
+        atom :H, Chem::Spatial::Vec3[0, 1, 0]
+        atom :H, Chem::Spatial::Vec3[0, -1, 0]
         bond "C1", "N1"
         bond "N1", "H1"
         bond "N1", "H2"
@@ -139,17 +139,17 @@ describe Chem::Atom do
 
   describe "#nominal_valency" do
     it "returns nominal valency (no bonds)" do
-      structure = Structure.build do
-        atom :C, Vec3[0, 0, 0]
+      structure = Chem::Structure.build do
+        atom :C, Chem::Spatial::Vec3[0, 0, 0]
       end
       structure.atoms[0].nominal_valency.should eq 4
     end
 
     it "returns nominal valency (bonds)" do
-      structure = Structure.build do
-        atom :I, Vec3[-1, 0, 0]
-        atom :C, Vec3[0, 0, 0]
-        atom :N, Vec3[1, 0, 0]
+      structure = Chem::Structure.build do
+        atom :I, Chem::Spatial::Vec3[-1, 0, 0]
+        atom :C, Chem::Spatial::Vec3[0, 0, 0]
+        atom :N, Chem::Spatial::Vec3[1, 0, 0]
         bond "I1", "C1"
         bond "C1", "N1", order: 3
       end
@@ -157,12 +157,12 @@ describe Chem::Atom do
     end
 
     it "returns nominal valency (bonds exceed maximum valency)" do
-      structure = Structure.build do
-        atom :N, Vec3[1, 0, 0]
-        atom :H, Vec3[-1, 0, 0]
-        atom :H, Vec3[1, 0, 0]
-        atom :H, Vec3[0, 1, 0]
-        atom :H, Vec3[0, -1, 0]
+      structure = Chem::Structure.build do
+        atom :N, Chem::Spatial::Vec3[1, 0, 0]
+        atom :H, Chem::Spatial::Vec3[-1, 0, 0]
+        atom :H, Chem::Spatial::Vec3[1, 0, 0]
+        atom :H, Chem::Spatial::Vec3[0, 1, 0]
+        atom :H, Chem::Spatial::Vec3[0, -1, 0]
         bond "N1", "H1"
         bond "N1", "H2"
         bond "N1", "H3"
@@ -172,10 +172,10 @@ describe Chem::Atom do
     end
 
     it "returns nominal valency (multiple valencies, 1)" do
-      structure = Structure.build do
-        atom :C, Vec3[-1, 0, 0]
-        atom :S, Vec3[0, 0, 0]
-        atom :H, Vec3[1, 0, 0]
+      structure = Chem::Structure.build do
+        atom :C, Chem::Spatial::Vec3[-1, 0, 0]
+        atom :S, Chem::Spatial::Vec3[0, 0, 0]
+        atom :H, Chem::Spatial::Vec3[1, 0, 0]
         bond "C1", "S1"
         bond "S1", "H1"
       end
@@ -183,12 +183,12 @@ describe Chem::Atom do
     end
 
     it "returns nominal valency (multiple valencies, 2)" do
-      structure = Structure.build do
-        atom :O, Vec3[-1, 0, 0]
-        atom :S, Vec3[0, 0, 0]
-        atom :O, Vec3[1, 0, 0]
-        atom :O, Vec3[0, 1, 0]
-        atom :O, Vec3[0, -1, 0]
+      structure = Chem::Structure.build do
+        atom :O, Chem::Spatial::Vec3[-1, 0, 0]
+        atom :S, Chem::Spatial::Vec3[0, 0, 0]
+        atom :O, Chem::Spatial::Vec3[1, 0, 0]
+        atom :O, Chem::Spatial::Vec3[0, 1, 0]
+        atom :O, Chem::Spatial::Vec3[0, -1, 0]
         bond "O1", "S1"
         bond "S1", "O2"
         bond "S1", "O3", order: 2
@@ -198,13 +198,13 @@ describe Chem::Atom do
     end
 
     it "returns nominal valency (multiple valencies, 3)" do
-      structure = Structure.build do
-        atom :O, Vec3[-1, 0, 0]
-        atom :S, Vec3[0, 0, 0]
-        atom :O, Vec3[1, 0, 0]
-        atom :O, Vec3[0, 1, 0]
-        atom :O, Vec3[0, -1, 0]
-        atom :O, Vec3[1, -1, 0]
+      structure = Chem::Structure.build do
+        atom :O, Chem::Spatial::Vec3[-1, 0, 0]
+        atom :S, Chem::Spatial::Vec3[0, 0, 0]
+        atom :O, Chem::Spatial::Vec3[1, 0, 0]
+        atom :O, Chem::Spatial::Vec3[0, 1, 0]
+        atom :O, Chem::Spatial::Vec3[0, -1, 0]
+        atom :O, Chem::Spatial::Vec3[1, -1, 0]
         bond "O1", "S1"
         bond "S1", "O2"
         bond "S1", "O3", order: 2
@@ -215,8 +215,8 @@ describe Chem::Atom do
     end
 
     it "returns maximum valency for ionic elements" do
-      structure = Structure.build do
-        atom :Na, Vec3[0, 0, 0]
+      structure = Chem::Structure.build do
+        atom :Na, Chem::Spatial::Vec3[0, 0, 0]
       end
       structure.atoms[0].nominal_valency.should eq 1
     end

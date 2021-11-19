@@ -6,7 +6,7 @@ describe Chem::Structure do
       st = Chem::Structure.build do
         title "Alanine"
         residue "ALA" do
-          %w(N CA C O CB).each { |name| atom name, Vec3.zero }
+          %w(N CA C O CB).each { |name| atom name, Chem::Spatial::Vec3.zero }
         end
       end
 
@@ -32,7 +32,7 @@ describe Chem::Structure do
       other.chains.map(&.id).should eq ['A']
       other.dig('A', 32).name.should eq "CYS"
       other.dig('A', 32).sec.beta_strand?.should be_true
-      other.dig('A', 32, "CA").coords.should eq Vec3[8.140, 11.694, 9.635]
+      other.dig('A', 32, "CA").coords.should eq [8.140, 11.694, 9.635]
 
       other.cell.should eq structure.cell
       other.experiment.should eq structure.experiment
@@ -42,7 +42,7 @@ describe Chem::Structure do
 
   describe "#delete" do
     it "deletes a chain" do
-      structure = Structure.build do
+      structure = Chem::Structure.build do
         3.times { chain { } }
       end
       structure.n_chains.should eq 3
@@ -55,10 +55,10 @@ describe Chem::Structure do
     end
 
     it "does not delete another chain with the same id from the internal table (#86)" do
-      structure = Structure.new
-      Chain.new 'A', structure
-      Chain.new 'B', structure
-      Chain.new 'A', structure
+      structure = Chem::Structure.new
+      Chem::Chain.new 'A', structure
+      Chem::Chain.new 'B', structure
+      Chem::Chain.new 'A', structure
 
       structure.n_chains.should eq 3
       structure.chains.map(&.id).should eq "ABA".chars
@@ -107,8 +107,8 @@ describe Chem::Structure do
 
   describe "#periodic?" do
     it "returns true when a structure has a cell" do
-      structure = Structure.new
-      structure.cell = UnitCell.new({10, 20, 30})
+      structure = Chem::Structure.new
+      structure.cell = Chem::UnitCell.new({10, 20, 30})
       structure.periodic?.should be_true
     end
 
@@ -199,12 +199,12 @@ describe Chem::Structure do
   end
 
   describe "#write" do
-    structure = Structure.build do
+    structure = Chem::Structure.build do
       title "ICN"
       cell 5, 10, 10
-      atom :I, Vec3[-2, 0, 0]
-      atom :C, Vec3[0, 0, 0]
-      atom :N, Vec3[1.5, 0, 0]
+      atom :I, Chem::Spatial::Vec3[-2, 0, 0]
+      atom :C, Chem::Spatial::Vec3[0, 0, 0]
+      atom :N, Chem::Spatial::Vec3[1.5, 0, 0]
     end
 
     it "writes a structure into a file" do
