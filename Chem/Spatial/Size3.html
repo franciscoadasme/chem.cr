@@ -845,7 +845,7 @@ space.</p>
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/2b5a833fcff1e5b6195dcb9eaaf29a9e88288718/src/chem/spatial/size3.cr#L4" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/35dd5042d7c829dd1ce60889648763b4cc43ed15/src/chem/spatial/size3.cr#L4" target="_blank">
         chem/spatial/size3.cr
       </a>
     
@@ -924,6 +924,13 @@ space.</p>
         
       </li>
     
+      <li class="entry-summary">
+        <a href="#close_to%3F%28rhs%3Aself%2Cdelta%3ANumber%3DFloat64%3A%3AEPSILON%29%3ABool-instance-method" class="signature"><strong>#close_to?</strong>(rhs : <span class="k">self</span>, delta : Number = <span class="t">Float64</span><span class="t">::</span><span class="t">EPSILON</span>) : Bool</a>
+        
+          <div class="summary"><p>Returns <code>true</code> if the elements of the size are within <em>delta</em> from each other, else <code>false</code>.</p></div>
+        
+      </li>
+    
   </ul>
 
 
@@ -990,7 +997,7 @@ space.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2b5a833fcff1e5b6195dcb9eaaf29a9e88288718/src/chem/spatial/size3.cr#L16" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/35dd5042d7c829dd1ce60889648763b4cc43ed15/src/chem/spatial/size3.cr#L16" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1012,7 +1019,7 @@ space.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2b5a833fcff1e5b6195dcb9eaaf29a9e88288718/src/chem/spatial/size3.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/35dd5042d7c829dd1ce60889648763b4cc43ed15/src/chem/spatial/size3.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1033,7 +1040,7 @@ space.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2b5a833fcff1e5b6195dcb9eaaf29a9e88288718/src/chem/spatial/size3.cr#L21" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/35dd5042d7c829dd1ce60889648763b4cc43ed15/src/chem/spatial/size3.cr#L21" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1069,7 +1076,7 @@ space.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2b5a833fcff1e5b6195dcb9eaaf29a9e88288718/src/chem/spatial/size3.cr#L25" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/35dd5042d7c829dd1ce60889648763b4cc43ed15/src/chem/spatial/size3.cr#L25" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1091,7 +1098,7 @@ space.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2b5a833fcff1e5b6195dcb9eaaf29a9e88288718/src/chem/spatial/size3.cr#L25" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/35dd5042d7c829dd1ce60889648763b4cc43ed15/src/chem/spatial/size3.cr#L25" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1119,7 +1126,33 @@ size[<span class="n">-1</span>] <span class="c"># raises IndexError</span></code
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2b5a833fcff1e5b6195dcb9eaaf29a9e88288718/src/chem/spatial/size3.cr#L47" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/35dd5042d7c829dd1ce60889648763b4cc43ed15/src/chem/spatial/size3.cr#L47" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="close_to?(rhs:self,delta:Number=Float64::EPSILON):Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>close_to?</strong>(rhs : <span class="k">self</span>, delta : <a href="../../Number.html">Number</a> = <span class="t">Float64</span><span class="t">::</span><span class="t">EPSILON</span>) : Bool
+
+        <a class="method-permalink" href="#close_to%3F%28rhs%3Aself%2Cdelta%3ANumber%3DFloat64%3A%3AEPSILON%29%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if the elements of the size are within <em>delta</em>
+from each other, else <code>false</code>.</p>
+<pre><code class="language-crystal"><span class="t">Size3</span>[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>].close_to?(<span class="t">Size3</span>[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>])                     <span class="c"># =&gt; true</span>
+<span class="t">Size3</span>[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>].close_to?(<span class="t">Size3</span>[<span class="n">1.001</span>, <span class="n">1.999</span>, <span class="n">3.00004</span>], <span class="n">1e-3</span>) <span class="c"># =&gt; true</span>
+<span class="t">Size3</span>[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>].close_to?(<span class="t">Size3</span>[<span class="n">3</span>, <span class="n">2</span>, <span class="n">1</span>])                     <span class="c"># =&gt; false</span>
+<span class="t">Size3</span>[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>].close_to?(<span class="t">Size3</span>[<span class="n">1.001</span>, <span class="n">1.999</span>, <span class="n">3.00004</span>], <span class="n">1e-8</span>) <span class="c"># =&gt; false</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/35dd5042d7c829dd1ce60889648763b4cc43ed15/src/chem/spatial/size3.cr#L64" target="_blank">View source</a>]
         
       </div>
     </div>
