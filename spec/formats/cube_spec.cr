@@ -35,11 +35,11 @@ describe Chem::Cube::Reader do
     info = Chem::Spatial::Grid::Info.from_cube io
     info.dim.should eq({14, 20, 22})
     info.bounds.should be_close Chem::Spatial::Bounds.new(
-      Chem::Spatial::Vec3[-3.826155, -4.114553, -6.64407],
+      vec3(-3.826155, -4.114553, -6.64407),
       Chem::Spatial::Mat3.basis(
-        Chem::Spatial::Vec3[8.497002, 0.0, 0.0],
-        Chem::Spatial::Vec3[2.702550, 11.23965, 0.0],
-        Chem::Spatial::Vec3[5.816758, 2.222264, 41.171796],
+        vec3(8.497002, 0.0, 0.0),
+        vec3(2.702550, 11.23965, 0.0),
+        vec3(5.816758, 2.222264, 41.171796),
       ),
     ), 1e-6
   end
@@ -80,22 +80,22 @@ end
 describe Chem::Cube::Writer do
   it "writes a grid" do
     structure = Chem::Structure.build do
-      atom :Cu, Chem::Spatial::Vec3[1.22612212, 1.85716859, -0.42099751], partial_charge: 29.0
-      atom :O, Chem::Spatial::Vec3[1.86127447, 3.64210184, -0.94969635], partial_charge: 8.0
-      atom :H, Chem::Spatial::Vec3[1.93603293, 4.39750972, -0.35338825], partial_charge: 1.0
-      atom :H, Chem::Spatial::Vec3[1.88271197, 3.96221913, -1.86020448], partial_charge: 1.0
-      atom :O, Chem::Spatial::Vec3[0.27668242, 0.2097034, 0.08192298], partial_charge: 8.0
-      atom :H, Chem::Spatial::Vec3[-0.06536291, 0.02505019, 0.96550446], partial_charge: 1.0
-      atom :H, Chem::Spatial::Vec3[-0.12191449, -0.4103129, -0.54127526], partial_charge: 1.0
-      atom :O, Chem::Spatial::Vec3[3.2071875, 0.9949664, -0.25923333], partial_charge: 8.0
-      atom :H, Chem::Spatial::Vec3[3.42538419, 0.09031997, -0.0054119], partial_charge: 1.0
-      atom :H, Chem::Spatial::Vec3[4.04519359, 1.44601271, -0.41659317], partial_charge: 1.0
-      atom :O, Chem::Spatial::Vec3[1.13252919, 2.46482172, 1.48982488], partial_charge: 8.0
-      atom :O, Chem::Spatial::Vec3[1.00808894, 1.38875203, -2.36108711], partial_charge: 8.0
-      atom :H, Chem::Spatial::Vec3[0.24910171, 1.53732647, -2.93982918], partial_charge: 1.0
-      atom :H, Chem::Spatial::Vec3[1.68656238, 0.91277301, -2.85717964], partial_charge: 1.0
-      atom :H, Chem::Spatial::Vec3[1.85823276, 2.33113092, 2.11313213], partial_charge: 1.0
-      atom :H, Chem::Spatial::Vec3[0.42057364, 2.93622707, 1.94150303], partial_charge: 1.0
+      atom :Cu, vec3(1.22612212, 1.85716859, -0.42099751), partial_charge: 29.0
+      atom :O, vec3(1.86127447, 3.64210184, -0.94969635), partial_charge: 8.0
+      atom :H, vec3(1.93603293, 4.39750972, -0.35338825), partial_charge: 1.0
+      atom :H, vec3(1.88271197, 3.96221913, -1.86020448), partial_charge: 1.0
+      atom :O, vec3(0.27668242, 0.2097034, 0.08192298), partial_charge: 8.0
+      atom :H, vec3(-0.06536291, 0.02505019, 0.96550446), partial_charge: 1.0
+      atom :H, vec3(-0.12191449, -0.4103129, -0.54127526), partial_charge: 1.0
+      atom :O, vec3(3.2071875, 0.9949664, -0.25923333), partial_charge: 8.0
+      atom :H, vec3(3.42538419, 0.09031997, -0.0054119), partial_charge: 1.0
+      atom :H, vec3(4.04519359, 1.44601271, -0.41659317), partial_charge: 1.0
+      atom :O, vec3(1.13252919, 2.46482172, 1.48982488), partial_charge: 8.0
+      atom :O, vec3(1.00808894, 1.38875203, -2.36108711), partial_charge: 8.0
+      atom :H, vec3(0.24910171, 1.53732647, -2.93982918), partial_charge: 1.0
+      atom :H, vec3(1.68656238, 0.91277301, -2.85717964), partial_charge: 1.0
+      atom :H, vec3(1.85823276, 2.33113092, 2.11313213), partial_charge: 1.0
+      atom :H, vec3(0.42057364, 2.93622707, 1.94150303), partial_charge: 1.0
     end
 
     content = File.read spec_file("20.cube")

@@ -6,10 +6,10 @@ describe Chem::Spatial::PBC do
       structure = Chem::Structure.build do
         cell 10, 10, 10
 
-        atom :C, Chem::Spatial::Vec3[2.5, 2.5, 2.5]
-        atom :H, Chem::Spatial::Vec3[7.5, 2.5, 2.5]
-        atom :O, Chem::Spatial::Vec3[2.5, 7.5, 2.5]
-        atom :N, Chem::Spatial::Vec3[2.5, 2.5, 7.5]
+        atom :C, vec3(2.5, 2.5, 2.5)
+        atom :H, vec3(7.5, 2.5, 2.5)
+        atom :O, vec3(2.5, 7.5, 2.5)
+        atom :N, vec3(2.5, 2.5, 7.5)
       end
 
       vectors = Chem::Spatial::PBC.adjacent_images(structure).map &.[1]
@@ -26,15 +26,15 @@ describe Chem::Spatial::PBC do
     end
 
     it "yields each atom in the adjacent periodic images for non-centered structure" do
-      offset = Chem::Spatial::Vec3[-20, 10, 30]
+      offset = vec3(-20, 10, 30)
 
       structure = Chem::Structure.build do
         cell 10, 10, 10
 
-        atom :C, Chem::Spatial::Vec3[2.5, 2.5, 2.5]
-        atom :H, Chem::Spatial::Vec3[7.5, 2.5, 2.5]
-        atom :O, Chem::Spatial::Vec3[2.5, 7.5, 2.5]
-        atom :N, Chem::Spatial::Vec3[2.5, 2.5, 7.5]
+        atom :C, vec3(2.5, 2.5, 2.5)
+        atom :H, vec3(7.5, 2.5, 2.5)
+        atom :O, vec3(2.5, 7.5, 2.5)
+        atom :N, vec3(2.5, 2.5, 7.5)
       end
       structure.coords.translate! by: offset
 
@@ -47,7 +47,7 @@ describe Chem::Spatial::PBC do
         [2.5, 7.5, 12.5], [12.5, -2.5, 2.5], [12.5, 7.5, 12.5], [2.5, -2.5, 12.5],
         [12.5, -2.5, 12.5], [12.5, 2.5, 7.5], [2.5, 12.5, 7.5], [2.5, 2.5, -2.5],
         [12.5, 12.5, 7.5], [12.5, 2.5, -2.5], [2.5, 12.5, -2.5], [12.5, 12.5, -2.5],
-      ].map { |(x, y, z)| Chem::Spatial::Vec3[x, y, z] + offset }
+      ].map { |(x, y, z)| vec3(x, y, z) + offset }
       vectors.should eq expected
     end
 
@@ -55,8 +55,8 @@ describe Chem::Spatial::PBC do
       structure = Chem::Structure.build do
         cell 10, 10, 10
 
-        atom :C, Chem::Spatial::Vec3[1, 8.5, 3.5]
-        atom :H, Chem::Spatial::Vec3[7.5, 1.5, 9.5]
+        atom :C, vec3(1, 8.5, 3.5)
+        atom :H, vec3(7.5, 1.5, 9.5)
       end
 
       vectors = Chem::Spatial::PBC.adjacent_images(structure, radius: 2).map(&.[1]).sort_by! &.to_a

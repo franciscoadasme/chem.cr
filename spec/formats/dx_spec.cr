@@ -5,7 +5,7 @@ describe Chem::DX::Reader do
     grid = Chem::Spatial::Grid.from_dx spec_file("simple.dx")
     grid.source_file.should eq Path[spec_file("simple.dx")].expand
     grid.dim.should eq({2, 3, 3})
-    grid.bounds.should eq Chem::Spatial::Bounds[10, 40, 20].translate(Chem::Spatial::Vec3[0.5, 0.3, 1])
+    grid.bounds.should eq Chem::Spatial::Bounds[10, 40, 20].translate(vec3(0.5, 0.3, 1))
     grid.to_a.should eq [
       0, 1, 2, 10, 11, 12, 20, 21, 22, 100, 101, 102, 110, 111, 112, 120, 121, 122,
     ]
@@ -14,11 +14,11 @@ describe Chem::DX::Reader do
   it "parses a DX header" do
     info = Chem::Spatial::Grid::Info.from_dx spec_file("header.dx")
     info.bounds.should eq Chem::Spatial::Bounds.new(
-      Chem::Spatial::Vec3[0.5, 0.3, 1],
+      vec3(0.5, 0.3, 1),
       Chem::Spatial::Mat3.basis(
-        Chem::Spatial::Vec3[10, 0, 0],
-        Chem::Spatial::Vec3[10, 40, 0],
-        Chem::Spatial::Vec3[16, 10, 20]
+        vec3(10, 0, 0),
+        vec3(10, 40, 0),
+        vec3(16, 10, 20)
       ),
     )
     info.dim.should eq({2, 3, 3})
@@ -27,7 +27,7 @@ end
 
 describe Chem::DX::Writer do
   it "writes a grid" do
-    bounds = Chem::Spatial::Bounds[20, 20, 10].translate(Chem::Spatial::Vec3[0.5, 0.3, 1])
+    bounds = Chem::Spatial::Bounds[20, 20, 10].translate(vec3(0.5, 0.3, 1))
     grid = make_grid({3, 2, 2}, bounds) do |i, j, k|
       i * 100 + j * 10 + k
     end

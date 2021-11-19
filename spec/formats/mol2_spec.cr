@@ -103,11 +103,11 @@ describe Chem::Mol2::Writer do
 
       chain 'C' do
         residue "SO4", 45 do
-          atom "S1", Chem::Spatial::Vec3[-0.0002, 0.0003, 0.0001], partial_charge: 1.2618
-          atom "O2", Chem::Spatial::Vec3[-1.3618, -0.5756, -0.1010], partial_charge: -0.7248
-          atom "H3", Chem::Spatial::Vec3[0.7821, -0.8842, 0.6252], partial_charge: -0.5475
-          atom "H4", Chem::Spatial::Vec3[0.4755, 0.1646, -1.2374], partial_charge: -0.5482
-          atom "O5", Chem::Spatial::Vec3[0.1044, 1.2949, 0.7131], partial_charge: -0.7244
+          atom "S1", vec3(-0.0002, 0.0003, 0.0001), partial_charge: 1.2618
+          atom "O2", vec3(-1.3618, -0.5756, -0.1010), partial_charge: -0.7248
+          atom "H3", vec3(0.7821, -0.8842, 0.6252), partial_charge: -0.5475
+          atom "H4", vec3(0.4755, 0.1646, -1.2374), partial_charge: -0.5482
+          atom "O5", vec3(0.1044, 1.2949, 0.7131), partial_charge: -0.7244
 
           bond "S1", "O2", order: 2
           bond "S1", "H3"

@@ -69,9 +69,9 @@ describe Chem::XYZ::Writer do
   it "writes a structure" do
     structure = Chem::Structure.build do
       title "COO-"
-      atom :c, Chem::Spatial::Vec3[0, 0, 0]
-      atom :o, Chem::Spatial::Vec3[0, 0, 1.159076]
-      atom :o, Chem::Spatial::Vec3[0, 0, -1.159076]
+      atom :c, vec3(0, 0, 0)
+      atom :o, vec3(0, 0, 1.159076)
+      atom :o, vec3(0, 0, -1.159076)
     end
 
     structure.chains[0].to_xyz.should eq <<-EOS
@@ -86,9 +86,9 @@ describe Chem::XYZ::Writer do
   it "writes multiple structures" do
     structure = Chem::Structure.build do
       title "COO-"
-      atom :c, Chem::Spatial::Vec3[1, 0, 0]
-      atom :o, Chem::Spatial::Vec3[2, 0, 0]
-      atom :o, Chem::Spatial::Vec3[3, 0, 0]
+      atom :c, vec3(1, 0, 0)
+      atom :o, vec3(2, 0, 0)
+      atom :o, vec3(3, 0, 0)
     end
 
     io = IO::Memory.new

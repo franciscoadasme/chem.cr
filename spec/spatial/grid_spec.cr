@@ -13,8 +13,8 @@ describe Chem::Spatial::Grid do
   describe ".atom_distance" do
     it "returns a grid having distances to nearest atom" do
       st = Chem::Structure.build do
-        atom :C, Chem::Spatial::Vec3[1, 0, 0]
-        atom :C, Chem::Spatial::Vec3[0, 0, 1]
+        atom :C, vec3(1, 0, 0)
+        atom :C, vec3(0, 0, 1)
       end
 
       Chem::Spatial::Grid.atom_distance(st, {3, 3, 3}, Chem::Spatial::Bounds[2, 2, 2]).to_a.should be_close [
@@ -35,8 +35,8 @@ describe Chem::Spatial::Grid do
     it "returns a grid having distances to nearest atom" do
       st = Chem::Structure.build do
         cell 2, 2, 2
-        atom :C, Chem::Spatial::Vec3[1, 1, 1]
-        atom :C, Chem::Spatial::Vec3[1.5, 0.5, 0.5]
+        atom :C, vec3(1, 1, 1)
+        atom :C, vec3(1.5, 0.5, 0.5)
       end
 
       Chem::Spatial::Grid.atom_distance(st, {4, 4, 4}, Chem::Spatial::Bounds[2, 2, 2]).to_a.should be_close [
@@ -53,8 +53,8 @@ describe Chem::Spatial::Grid do
   describe ".atom_distance_like" do
     it "returns a grid with the same bounds and shape of another grid" do
       structure = Chem::Structure.build do
-        atom :C, Chem::Spatial::Vec3[1, 0, 0]
-        atom :C, Chem::Spatial::Vec3[0, 0, 1]
+        atom :C, vec3(1, 0, 0)
+        atom :C, vec3(0, 0, 1)
       end
 
       info = Chem::Spatial::Grid::Info.new Chem::Spatial::Bounds[1.5, 2.135, 6.12], {10, 10, 10}
@@ -131,8 +131,8 @@ describe Chem::Spatial::Grid do
   describe ".vdw_mask" do
     it "returns a vdW mask" do
       st = Chem::Structure.build do
-        atom :C, Chem::Spatial::Vec3[1, 0, 0]
-        atom :C, Chem::Spatial::Vec3[0, 0, 1]
+        atom :C, vec3(1, 0, 0)
+        atom :C, vec3(0, 0, 1)
       end
 
       actual = [] of Chem::Spatial::Vec3
@@ -140,14 +140,14 @@ describe Chem::Spatial::Grid do
         actual << vec if ele == 1
       end
       actual.should be_close [
-        Chem::Spatial::Vec3[0.4, 1.6, 0.4],
-        Chem::Spatial::Vec3[0.4, 1.6, 1.6],
-        Chem::Spatial::Vec3[0.8, 1.2, 2.0],
-        Chem::Spatial::Vec3[1.2, 0.8, 2.0],
-        Chem::Spatial::Vec3[1.6, 0.4, 1.6],
-        Chem::Spatial::Vec3[1.6, 1.6, 0.4],
-        Chem::Spatial::Vec3[2.0, 0.8, 1.2],
-        Chem::Spatial::Vec3[2.0, 1.2, 0.8],
+        vec3(0.4, 1.6, 0.4),
+        vec3(0.4, 1.6, 1.6),
+        vec3(0.8, 1.2, 2.0),
+        vec3(1.2, 0.8, 2.0),
+        vec3(1.6, 0.4, 1.6),
+        vec3(1.6, 1.6, 0.4),
+        vec3(2.0, 0.8, 1.2),
+        vec3(2.0, 1.2, 0.8),
       ], 1e-3
     end
   end
@@ -155,8 +155,8 @@ describe Chem::Spatial::Grid do
   describe ".vdw_mask_like" do
     it "returns a grid with the same bounds and shape of another grid" do
       structure = Chem::Structure.build do
-        atom :C, Chem::Spatial::Vec3[1, 0, 0]
-        atom :C, Chem::Spatial::Vec3[0, 0, 1]
+        atom :C, vec3(1, 0, 0)
+        atom :C, vec3(0, 0, 1)
       end
 
       info = Chem::Spatial::Grid::Info.new Chem::Spatial::Bounds[1.5, 2.135, 6.12], {10, 10, 10}
@@ -167,8 +167,8 @@ describe Chem::Spatial::Grid do
 
   describe "#==" do
     it "returns true when grids are equal" do
-      grid = make_grid({3, 5, 4}, Chem::Spatial::Bounds.new(Chem::Spatial::Vec3[0, 1, 3], Chem::Spatial::Vec3[30, 20, 25]))
-      other = make_grid({3, 5, 4}, Chem::Spatial::Bounds.new(Chem::Spatial::Vec3[0, 1, 3], Chem::Spatial::Vec3[30, 20, 25]))
+      grid = make_grid({3, 5, 4}, Chem::Spatial::Bounds.new(vec3(0, 1, 3), vec3(30, 20, 25)))
+      other = make_grid({3, 5, 4}, Chem::Spatial::Bounds.new(vec3(0, 1, 3), vec3(30, 20, 25)))
       grid.should eq other
     end
 
@@ -177,7 +177,7 @@ describe Chem::Spatial::Grid do
     end
 
     it "returns false when grids have different bounds" do
-      grid = make_grid({5, 5, 5}, Chem::Spatial::Bounds.new(Chem::Spatial::Vec3[0, 1, 3], Chem::Spatial::Vec3[30, 20, 25]))
+      grid = make_grid({5, 5, 5}, Chem::Spatial::Bounds.new(vec3(0, 1, 3), vec3(30, 20, 25)))
       other = make_grid({5, 5, 5}, {0, 0, 0})
       grid.should_not eq other
     end
@@ -215,7 +215,7 @@ describe Chem::Spatial::Grid do
 
     it "fails when coordinates are out of bounds" do
       grid = make_grid({10, 10, 10}, {2, 3, 4})
-      expect_raises(IndexError) { grid[Chem::Spatial::Vec3[2, 5, -0.5]] }
+      expect_raises(IndexError) { grid[vec3(2, 5, -0.5)] }
     end
   end
 
@@ -239,16 +239,16 @@ describe Chem::Spatial::Grid do
     end
 
     it "returns the value at the coordinates" do
-      grid = make_grid({6, 11, 9}, Chem::Spatial::Bounds[1, 1, 1].translate(Chem::Spatial::Vec3[2, 3, 4]))
-      grid[Chem::Spatial::Vec3[2, 3, 4]]?.should eq 0
-      grid[Chem::Spatial::Vec3[2.2, 3.6, 4.25]]?.should eq 155
-      grid[Chem::Spatial::Vec3[3, 4, 5]]?.should eq 593
+      grid = make_grid({6, 11, 9}, Chem::Spatial::Bounds[1, 1, 1].translate(vec3(2, 3, 4)))
+      grid[vec3(2, 3, 4)]?.should eq 0
+      grid[vec3(2.2, 3.6, 4.25)]?.should eq 155
+      grid[vec3(3, 4, 5)]?.should eq 593
     end
 
     it "returns the value close to the coordinates" do
-      grid = make_grid({6, 10, 8}, Chem::Spatial::Bounds[1, 1, 1].translate(Chem::Spatial::Vec3[2, 3, 4]))
-      grid[Chem::Spatial::Vec3[2.51, 3.505, 4.51]]?.should eq 284 # no interpolation
-      grid[Chem::Spatial::Vec3[2.65, 3.24, 4.97]]?.should eq 263  # no interpolation
+      grid = make_grid({6, 10, 8}, Chem::Spatial::Bounds[1, 1, 1].translate(vec3(2, 3, 4)))
+      grid[vec3(2.51, 3.505, 4.51)]?.should eq 284 # no interpolation
+      grid[vec3(2.65, 3.24, 4.97)]?.should eq 263  # no interpolation
     end
 
     it "returns nil when index is out of bounds" do
@@ -263,7 +263,7 @@ describe Chem::Spatial::Grid do
 
     it "returns nil when coordinates are out of bounds" do
       grid = make_grid({10, 10, 10}, {2, 3, 4})
-      grid[Chem::Spatial::Vec3[2, 5, -0.5]]?.should be_nil
+      grid[vec3(2, 5, -0.5)]?.should be_nil
     end
   end
 
@@ -290,33 +290,33 @@ describe Chem::Spatial::Grid do
     end
 
     it "fails when location is out of bounds" do
-      grid = make_grid({10, 10, 10}, Chem::Spatial::Bounds[10, 20, 30].translate(Chem::Spatial::Vec3[1, 2, 3]))
+      grid = make_grid({10, 10, 10}, Chem::Spatial::Bounds[10, 20, 30].translate(vec3(1, 2, 3)))
       expect_raises(IndexError) { grid.coords_at 20, 35, 1 }
     end
   end
 
   describe "#coords_at?" do
     it "returns the coordinates at index" do
-      grid = make_grid({11, 11, 11}, Chem::Spatial::Bounds[10, 10, 10].translate(Chem::Spatial::Vec3[8, 5, 4]))
-      grid.coords_at?(0).should eq Chem::Spatial::Vec3[8, 5, 4]
-      grid.coords_at?(1330).should eq Chem::Spatial::Vec3[18, 15, 14]
-      grid.coords_at?(-1).should eq Chem::Spatial::Vec3[18, 15, 14]
-      grid.coords_at?(75).should eq Chem::Spatial::Vec3[8, 11, 13]
+      grid = make_grid({11, 11, 11}, Chem::Spatial::Bounds[10, 10, 10].translate(vec3(8, 5, 4)))
+      grid.coords_at?(0).should eq vec3(8, 5, 4)
+      grid.coords_at?(1330).should eq vec3(18, 15, 14)
+      grid.coords_at?(-1).should eq vec3(18, 15, 14)
+      grid.coords_at?(75).should eq vec3(8, 11, 13)
     end
 
     it "returns the coordinates at location" do
-      grid = make_grid({11, 11, 11}, Chem::Spatial::Bounds[10, 20, 30].translate(Chem::Spatial::Vec3[1, 2, 3]))
-      grid.coords_at?(0, 0, 0).should eq Chem::Spatial::Vec3[1, 2, 3]
-      grid.coords_at?(10, 10, 10).should eq Chem::Spatial::Vec3[11, 22, 33]
-      grid.coords_at?(3, 5, 0).should eq Chem::Spatial::Vec3[4, 12, 3]
+      grid = make_grid({11, 11, 11}, Chem::Spatial::Bounds[10, 20, 30].translate(vec3(1, 2, 3)))
+      grid.coords_at?(0, 0, 0).should eq vec3(1, 2, 3)
+      grid.coords_at?(10, 10, 10).should eq vec3(11, 22, 33)
+      grid.coords_at?(3, 5, 0).should eq vec3(4, 12, 3)
     end
 
     it "returns the coordinates at location (non-orthogonal)" do
-      bounds = Chem::UnitCell.hexagonal(10, 5).bounds.translate(Chem::Spatial::Vec3[1, 2, 3])
+      bounds = Chem::UnitCell.hexagonal(10, 5).bounds.translate(vec3(1, 2, 3))
       grid = make_grid({11, 11, 11}, bounds)
-      grid.coords_at?(0, 0, 0).should eq Chem::Spatial::Vec3[1, 2, 3]
-      grid.coords_at?(10, 10, 10).not_nil!.should be_close Chem::Spatial::Vec3[6, 10.660, 8], 1e-3
-      grid.coords_at?(3, 5, 0).not_nil!.should be_close Chem::Spatial::Vec3[1.5, 6.330, 3], 1e-3
+      grid.coords_at?(0, 0, 0).should eq vec3(1, 2, 3)
+      grid.coords_at?(10, 10, 10).not_nil!.should be_close vec3(6, 10.660, 8), 1e-3
+      grid.coords_at?(3, 5, 0).not_nil!.should be_close vec3(1.5, 6.330, 3), 1e-3
     end
 
     it "returns nil when index is out of bounds" do
@@ -324,14 +324,14 @@ describe Chem::Spatial::Grid do
     end
 
     it "returns nil when location is out of bounds" do
-      grid = make_grid({10, 10, 10}, Chem::Spatial::Bounds[10, 20, 30].translate(Chem::Spatial::Vec3[1, 2, 3]))
+      grid = make_grid({10, 10, 10}, Chem::Spatial::Bounds[10, 20, 30].translate(vec3(1, 2, 3)))
       grid.coords_at?(20, 35, 1).should be_nil
     end
   end
 
   describe "#dup" do
     it "returns a copy" do
-      grid = make_grid({3, 5, 4}, Chem::Spatial::Bounds.new(Chem::Spatial::Vec3[0, 1, 3], Chem::Spatial::Vec3[30, 20, 25]))
+      grid = make_grid({3, 5, 4}, Chem::Spatial::Bounds.new(vec3(0, 1, 3), vec3(30, 20, 25)))
       other = grid.dup
       other.should_not be grid
       other.should eq grid
@@ -354,13 +354,13 @@ describe Chem::Spatial::Grid do
   describe "#each_coords" do
     it "yields each coordinates" do
       ary = [] of Chem::Spatial::Vec3
-      Chem::Spatial::Grid.new({2, 2, 2}, Chem::Spatial::Bounds[3, 3, 3].translate(Chem::Spatial::Vec3[1, 2, 3])).each_coords do |vec|
+      Chem::Spatial::Grid.new({2, 2, 2}, Chem::Spatial::Bounds[3, 3, 3].translate(vec3(1, 2, 3))).each_coords do |vec|
         ary << vec
       end
 
       ary.should eq [
-        Chem::Spatial::Vec3[1, 2, 3], Chem::Spatial::Vec3[1, 2, 6], Chem::Spatial::Vec3[1, 5, 3], Chem::Spatial::Vec3[1, 5, 6], Chem::Spatial::Vec3[4, 2, 3], Chem::Spatial::Vec3[4, 2, 6],
-        Chem::Spatial::Vec3[4, 5, 3], Chem::Spatial::Vec3[4, 5, 6],
+        vec3(1, 2, 3), vec3(1, 2, 6), vec3(1, 5, 3), vec3(1, 5, 6), vec3(4, 2, 3), vec3(4, 2, 6),
+        vec3(4, 5, 3), vec3(4, 5, 6),
       ]
     end
   end
@@ -376,8 +376,8 @@ describe Chem::Spatial::Grid do
     end
 
     it "yields each loc within a cutoff distance of a given position" do
-      grid = Chem::Spatial::Grid.new({5, 10, 20}, Chem::Spatial::Bounds[2, 2, 2].translate(Chem::Spatial::Vec3[1, 2, 3]))
-      vec, cutoff = Chem::Spatial::Vec3[2, 3, 5], 0.5
+      grid = Chem::Spatial::Grid.new({5, 10, 20}, Chem::Spatial::Bounds[2, 2, 2].translate(vec3(1, 2, 3)))
+      vec, cutoff = vec3(2, 3, 5), 0.5
 
       expected = [] of Chem::Spatial::Grid::Location
       grid.each_loc do |i, j, k|
@@ -441,17 +441,17 @@ describe Chem::Spatial::Grid do
   describe "#each_with_coords" do
     it "yields each element with its coordinates" do
       hash = {} of Chem::Spatial::Vec3 => Float64
-      grid = make_grid({3, 2, 1}, Chem::Spatial::Bounds[2, 1, 1].translate(Chem::Spatial::Vec3[1, 2, 3])) do |i, j, k|
+      grid = make_grid({3, 2, 1}, Chem::Spatial::Bounds[2, 1, 1].translate(vec3(1, 2, 3))) do |i, j, k|
         i * 100 + j * 10 + k
       end
       grid.each_with_coords { |ele, vec| hash[vec] = ele }
       hash.should eq({
-        Chem::Spatial::Vec3[1, 2, 3] => 0,
-        Chem::Spatial::Vec3[1, 3, 3] => 10,
-        Chem::Spatial::Vec3[2, 2, 3] => 100,
-        Chem::Spatial::Vec3[2, 3, 3] => 110,
-        Chem::Spatial::Vec3[3, 2, 3] => 200,
-        Chem::Spatial::Vec3[3, 3, 3] => 210,
+        vec3(1, 2, 3) => 0,
+        vec3(1, 3, 3) => 10,
+        vec3(2, 2, 3) => 100,
+        vec3(2, 3, 3) => 110,
+        vec3(3, 2, 3) => 200,
+        vec3(3, 3, 3) => 210,
       })
     end
   end
@@ -463,8 +463,8 @@ describe Chem::Spatial::Grid do
     end
 
     it "returns the index at the coordinates" do
-      grid = make_grid({11, 11, 11}, Chem::Spatial::Bounds[10, 10, 10].translate(Chem::Spatial::Vec3[8, 1, 5]))
-      grid.index(Chem::Spatial::Vec3[13, 7, 12]).should eq 678
+      grid = make_grid({11, 11, 11}, Chem::Spatial::Bounds[10, 10, 10].translate(vec3(8, 1, 5)))
+      grid.index(vec3(13, 7, 12)).should eq 678
     end
   end
 
@@ -475,7 +475,7 @@ describe Chem::Spatial::Grid do
 
     it "fails when vector is out of bounds" do
       expect_raises(IndexError) do
-        make_grid({2, 3, 2}, Chem::Spatial::Bounds[10, 10, 10]).index! Chem::Spatial::Vec3[26, 23, 0.1]
+        make_grid({2, 3, 2}, Chem::Spatial::Bounds[10, 10, 10]).index! vec3(26, 23, 0.1)
       end
     end
   end
@@ -487,7 +487,7 @@ describe Chem::Spatial::Grid do
 
     it "fails when coordinates are out of bounds" do
       grid = make_grid({8, 8, 8}, Chem::Spatial::Bounds[7, 1, 2])
-      expect_raises(IndexError) { grid.loc_at Chem::Spatial::Vec3[7.1, 0.5, 1.2] }
+      expect_raises(IndexError) { grid.loc_at vec3(7.1, 0.5, 1.2) }
     end
   end
 
@@ -500,20 +500,20 @@ describe Chem::Spatial::Grid do
     end
 
     it "returns the location at the coordinates" do
-      grid = make_grid({6, 10, 8}, Chem::Spatial::Bounds[1, 1, 1].translate(Chem::Spatial::Vec3[2, 3, 4]))
-      grid.loc_at?(Chem::Spatial::Vec3[2, 3, 4]).should eq({0, 0, 0})
-      grid.loc_at?(Chem::Spatial::Vec3[3, 4, 5]).should eq({5, 9, 7})
-      grid.loc_at?(Chem::Spatial::Vec3[2.45, 3.4, 4.4]).should eq({2, 4, 3})
-      grid.loc_at?(Chem::Spatial::Vec3[2.16, 3.75, 4.87]).should eq({1, 7, 6})
+      grid = make_grid({6, 10, 8}, Chem::Spatial::Bounds[1, 1, 1].translate(vec3(2, 3, 4)))
+      grid.loc_at?(vec3(2, 3, 4)).should eq({0, 0, 0})
+      grid.loc_at?(vec3(3, 4, 5)).should eq({5, 9, 7})
+      grid.loc_at?(vec3(2.45, 3.4, 4.4)).should eq({2, 4, 3})
+      grid.loc_at?(vec3(2.16, 3.75, 4.87)).should eq({1, 7, 6})
     end
 
     it "returns the location at the coordinates (non-orthogonal)" do
-      bounds = Chem::UnitCell.new({5, 5, 4}, {90, 100, 90}).bounds.translate Chem::Spatial::Vec3[4, 3, 2]
+      bounds = Chem::UnitCell.new({5, 5, 4}, {90, 100, 90}).bounds.translate vec3(4, 3, 2)
       grid = make_grid({11, 11, 11}, bounds)
-      grid.loc_at?(Chem::Spatial::Vec3[4, 3, 2]).should eq({0, 0, 0})
-      grid.loc_at?(Chem::Spatial::Vec3[8.305, 8, 5.939]).should eq({10, 10, 10})
-      grid.loc_at?(Chem::Spatial::Vec3[4.5, 6.21, 2.63]).should eq({1, 6, 2})
-      grid.loc_at?(Chem::Spatial::Vec3[7.4, 4.91, 5.4]).should eq({8, 4, 9})
+      grid.loc_at?(vec3(4, 3, 2)).should eq({0, 0, 0})
+      grid.loc_at?(vec3(8.305, 8, 5.939)).should eq({10, 10, 10})
+      grid.loc_at?(vec3(4.5, 6.21, 2.63)).should eq({1, 6, 2})
+      grid.loc_at?(vec3(7.4, 4.91, 5.4)).should eq({8, 4, 9})
     end
 
     it "returns nil when index is out of bounds" do
@@ -521,7 +521,7 @@ describe Chem::Spatial::Grid do
     end
 
     it "returns nil when coordinates are out of bounds" do
-      make_grid({8, 8, 8}, Chem::Spatial::Bounds[7, 1, 2]).loc_at?(Chem::Spatial::Vec3[7.1, 0.5, 1.2]).should be_nil
+      make_grid({8, 8, 8}, Chem::Spatial::Bounds[7, 1, 2]).loc_at?(vec3(7.1, 0.5, 1.2)).should be_nil
     end
   end
 
@@ -545,17 +545,17 @@ describe Chem::Spatial::Grid do
 
   describe "#map_with_coords" do
     it "modifies the grid yielding each element and its coordinates" do
-      grid = make_grid({3, 2, 1}, Chem::Spatial::Bounds[2, 1, 1].translate(Chem::Spatial::Vec3[1, 2, 3]))
+      grid = make_grid({3, 2, 1}, Chem::Spatial::Bounds[2, 1, 1].translate(vec3(1, 2, 3)))
       other = grid.map_with_coords { |ele, vec| ele + vec.x * 100 + vec.y * 10 + vec.z }
       grid.to_a.should eq [0, 1, 2, 3, 4, 5]
       other.to_a.should eq [123, 134, 225, 236, 327, 338]
-      other.bounds.should eq Chem::Spatial::Bounds[2, 1, 1].translate(Chem::Spatial::Vec3[1, 2, 3])
+      other.bounds.should eq Chem::Spatial::Bounds[2, 1, 1].translate(vec3(1, 2, 3))
     end
   end
 
   describe "#map_with_coords!" do
     it "modifies the grid yielding each element and its coordinates" do
-      grid = make_grid({3, 2, 1}, Chem::Spatial::Bounds[2, 1, 1].translate(Chem::Spatial::Vec3[1, 2, 3]))
+      grid = make_grid({3, 2, 1}, Chem::Spatial::Bounds[2, 1, 1].translate(vec3(1, 2, 3)))
       grid.map_with_coords! { |ele, vec| ele + vec.x * 100 + vec.y * 10 + vec.z }
       grid.to_a.should eq [123, 134, 225, 236, 327, 338]
     end

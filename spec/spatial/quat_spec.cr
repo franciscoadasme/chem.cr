@@ -9,14 +9,14 @@ describe Chem::Spatial::Quat do
 
   describe ".aligning" do
     it "returns a quaternion encoding the rotation to align v1 to v2" do
-      Chem::Spatial::Quat.aligning(Chem::Spatial::Vec3[1, 0, 0], Chem::Spatial::Vec3[0, 1, 0]).should be_close Chem::Spatial::Quat[0.71, 0.0, 0.0, 0.71], 1e-2
+      Chem::Spatial::Quat.aligning(vec3(1, 0, 0), vec3(0, 1, 0)).should be_close Chem::Spatial::Quat[0.71, 0.0, 0.0, 0.71], 1e-2
     end
 
     it "returns a quaternion to align two pairs of vectors" do
-      q = Chem::Spatial::Quat.rotation(Chem::Spatial::Vec3[1, 2, 3], 65)
-      i = Chem::Spatial::Vec3[1, 0, 0]
-      j = Chem::Spatial::Vec3[0, 1, 0.5]
-      k = Chem::Spatial::Vec3[0.1, 0.2, 1]
+      q = Chem::Spatial::Quat.rotation(vec3(1, 2, 3), 65)
+      i = vec3(1, 0, 0)
+      j = vec3(0, 1, 0.5)
+      k = vec3(0.1, 0.2, 1)
       ii = q * i
       jj = q * j
       kk = q * k
@@ -38,13 +38,13 @@ describe Chem::Spatial::Quat do
 
   describe ".rotation" do
     it "returns a quaternion encoding the given rotation" do
-      Chem::Spatial::Quat.rotation(Chem::Spatial::Vec3[1, 0, 0], 90).should be_close Chem::Spatial::Quat[0.71, 0.71, 0, 0], 1e-2
-      Chem::Spatial::Quat.rotation(Chem::Spatial::Vec3[0.71, 0.71, 0], 60).should be_close Chem::Spatial::Quat[0.87, 0.35, 0.35, 0], 1e-2
-      Chem::Spatial::Quat.rotation(Chem::Spatial::Vec3[0.67, 0.68, 0.3], 180).should be_close Chem::Spatial::Quat[0, 0.67, 0.68, 0.3], 1e-2
-      Chem::Spatial::Quat.rotation(Chem::Spatial::Vec3[0.67, 0.68, 0.3], 360).should be_close Chem::Spatial::Quat[-1, 0, 0, 0], 1e-2
-      Chem::Spatial::Quat.rotation(Chem::Spatial::Vec3[0.67, 0.68, 0.3], -180).should be_close Chem::Spatial::Quat[0, -0.67, -0.68, -0.3], 1e-2
-      Chem::Spatial::Quat.rotation(Chem::Spatial::Vec3[0.31, 0.91, -0.28], 46).should be_close Chem::Spatial::Quat[0.92, 0.12, 0.36, -0.11], 1e-2
-      Chem::Spatial::Quat.rotation(Chem::Spatial::Vec3[1, 1, 1], 120).should be_close Chem::Spatial::Quat[0.5, 0.5, 0.5, 0.5], 1e-15
+      Chem::Spatial::Quat.rotation(vec3(1, 0, 0), 90).should be_close Chem::Spatial::Quat[0.71, 0.71, 0, 0], 1e-2
+      Chem::Spatial::Quat.rotation(vec3(0.71, 0.71, 0), 60).should be_close Chem::Spatial::Quat[0.87, 0.35, 0.35, 0], 1e-2
+      Chem::Spatial::Quat.rotation(vec3(0.67, 0.68, 0.3), 180).should be_close Chem::Spatial::Quat[0, 0.67, 0.68, 0.3], 1e-2
+      Chem::Spatial::Quat.rotation(vec3(0.67, 0.68, 0.3), 360).should be_close Chem::Spatial::Quat[-1, 0, 0, 0], 1e-2
+      Chem::Spatial::Quat.rotation(vec3(0.67, 0.68, 0.3), -180).should be_close Chem::Spatial::Quat[0, -0.67, -0.68, -0.3], 1e-2
+      Chem::Spatial::Quat.rotation(vec3(0.31, 0.91, -0.28), 46).should be_close Chem::Spatial::Quat[0.92, 0.12, 0.36, -0.11], 1e-2
+      Chem::Spatial::Quat.rotation(vec3(1, 1, 1), 120).should be_close Chem::Spatial::Quat[0.5, 0.5, 0.5, 0.5], 1e-15
     end
   end
 
@@ -75,13 +75,13 @@ describe Chem::Spatial::Quat do
     end
 
     it "multiplies a quaternion with a vector" do
-      q = Chem::Spatial::Quat.aligning Chem::Spatial::Vec3[1, 0, 0], to: Chem::Spatial::Vec3[1, 2, 3]
-      (q * Chem::Spatial::Vec3[1, 0, 0]).should be_close Chem::Spatial::Vec3[1, 2, 3].normalize, 1e-15
-      (Chem::Spatial::Quat.rotation(Chem::Spatial::Vec3[0, 0, 1], 90) * Chem::Spatial::Vec3[1, 0, 0]).should be_close Chem::Spatial::Vec3[0, 1, 0], 1e-15
-      (Chem::Spatial::Quat.rotation(Chem::Spatial::Vec3[0, 0, 1], 180) * Chem::Spatial::Vec3[1, 1, 0]).should be_close Chem::Spatial::Vec3[-1, -1, 0], 1e-15
-      (Chem::Spatial::Quat.rotation(Chem::Spatial::Vec3[0, 0, -1], 60) * Chem::Spatial::Vec3[1, 2, 0]).should be_close Chem::Spatial::Vec3[2.23, 0.13, 0], 1e-2
-      (Chem::Spatial::Quat.rotation(Chem::Spatial::Vec3[0, 1, 0], 90) * Chem::Spatial::Vec3[0, 0, 4]).should be_close Chem::Spatial::Vec3[4, 0, 0], 1e-15
-      (Chem::Spatial::Quat.rotation(Chem::Spatial::Vec3[1, 1, 1], 120) * Chem::Spatial::Vec3[0, 1, 0]).should be_close Chem::Spatial::Vec3[0, 0, 1], 1e-15
+      q = Chem::Spatial::Quat.aligning vec3(1, 0, 0), to: vec3(1, 2, 3)
+      (q * vec3(1, 0, 0)).should be_close vec3(1, 2, 3).normalize, 1e-15
+      (Chem::Spatial::Quat.rotation(vec3(0, 0, 1), 90) * vec3(1, 0, 0)).should be_close vec3(0, 1, 0), 1e-15
+      (Chem::Spatial::Quat.rotation(vec3(0, 0, 1), 180) * vec3(1, 1, 0)).should be_close vec3(-1, -1, 0), 1e-15
+      (Chem::Spatial::Quat.rotation(vec3(0, 0, -1), 60) * vec3(1, 2, 0)).should be_close vec3(2.23, 0.13, 0), 1e-2
+      (Chem::Spatial::Quat.rotation(vec3(0, 1, 0), 90) * vec3(0, 0, 4)).should be_close vec3(4, 0, 0), 1e-15
+      (Chem::Spatial::Quat.rotation(vec3(1, 1, 1), 120) * vec3(0, 1, 0)).should be_close vec3(0, 0, 1), 1e-15
     end
   end
 
@@ -124,8 +124,8 @@ describe Chem::Spatial::Quat do
 
   describe "#imag" do
     it "returns the imaginary (vector) part of the quaternion" do
-      Chem::Spatial::Quat[1, 0, 0, 0].imag.should eq Chem::Spatial::Vec3[0, 0, 0]
-      Chem::Spatial::Quat[1, 2, 3, 4].imag.should eq Chem::Spatial::Vec3[2, 3, 4]
+      Chem::Spatial::Quat[1, 0, 0, 0].imag.should eq vec3(0, 0, 0)
+      Chem::Spatial::Quat[1, 2, 3, 4].imag.should eq vec3(2, 3, 4)
     end
   end
 
@@ -158,7 +158,7 @@ describe Chem::Spatial::Quat do
   describe "#to_mat3" do
     it "returns the 3x3 matrix" do
       q = Chem::Spatial::Quat.euler(-157, 17, -83)
-      vec = Chem::Spatial::Vec3[1, 2, 3]
+      vec = vec3(1, 2, 3)
       (q.to_mat3 * vec).should be_close (q * vec), 1e-15
     end
   end

@@ -52,11 +52,11 @@ end
 describe Chem::Gen::Writer do
   structure = Chem::Structure.build do
     title "NaCl-O-NaCl"
-    atom Chem::PeriodicTable::Cl, Chem::Spatial::Vec3[30, 15, 10]
-    atom Chem::PeriodicTable::Na, Chem::Spatial::Vec3[10, 5, 5]
-    atom Chem::PeriodicTable::O, Chem::Spatial::Vec3[30, 15, 9]
-    atom Chem::PeriodicTable::Na, Chem::Spatial::Vec3[10, 10, 12.5]
-    atom Chem::PeriodicTable::Cl, Chem::Spatial::Vec3[20, 10, 10]
+    atom Chem::PeriodicTable::Cl, vec3(30, 15, 10)
+    atom Chem::PeriodicTable::Na, vec3(10, 5, 5)
+    atom Chem::PeriodicTable::O, vec3(30, 15, 9)
+    atom Chem::PeriodicTable::Na, vec3(10, 10, 12.5)
+    atom Chem::PeriodicTable::Cl, vec3(20, 10, 10)
   end
 
   it "writes a structure in Cartesian coordinats without unit cell" do

@@ -6,7 +6,7 @@ describe Chem::Structure do
       st = Chem::Structure.build do
         title "Alanine"
         residue "ALA" do
-          %w(N CA C O CB).each { |name| atom name, Chem::Spatial::Vec3.zero }
+          %w(N CA C O CB).each { |name| atom name, vec3(0, 0, 0) }
         end
       end
 
@@ -202,9 +202,9 @@ describe Chem::Structure do
     structure = Chem::Structure.build do
       title "ICN"
       cell 5, 10, 10
-      atom :I, Chem::Spatial::Vec3[-2, 0, 0]
-      atom :C, Chem::Spatial::Vec3[0, 0, 0]
-      atom :N, Chem::Spatial::Vec3[1.5, 0, 0]
+      atom :I, vec3(-2, 0, 0)
+      atom :C, vec3(0, 0, 0)
+      atom :N, vec3(1.5, 0, 0)
     end
 
     it "writes a structure into a file" do

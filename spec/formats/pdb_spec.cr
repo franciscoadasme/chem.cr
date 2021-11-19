@@ -500,9 +500,9 @@ describe Chem::PDB::Writer do
   it "writes CONECT records" do
     structure = Chem::Structure.build do
       residue "ICN" do
-        atom :i, Chem::Spatial::Vec3[3.149, 0, 0]
-        atom :c, Chem::Spatial::Vec3[1.148, 0, 0]
-        atom :n, Chem::Spatial::Vec3[0, 0, 0]
+        atom :i, vec3(3.149, 0, 0)
+        atom :c, vec3(1.148, 0, 0)
+        atom :n, vec3(0, 0, 0)
 
         bond "I1", "C1"
         bond "C1", "N1", order: 3
@@ -525,18 +525,18 @@ describe Chem::PDB::Writer do
   it "writes CONECT records for renumbered atoms" do
     structure = Chem::Structure.build do
       residue "ICN" do
-        atom :i, Chem::Spatial::Vec3[3.149, 0, 0]
-        atom :c, Chem::Spatial::Vec3[1.148, 0, 0]
-        atom :n, Chem::Spatial::Vec3[0, 0, 0]
+        atom :i, vec3(3.149, 0, 0)
+        atom :c, vec3(1.148, 0, 0)
+        atom :n, vec3(0, 0, 0)
 
         bond "I1", "C1"
         bond "C1", "N1", order: 3
       end
 
       residue "ICN" do
-        atom :i, Chem::Spatial::Vec3[13.149, 0, 0]
-        atom :c, Chem::Spatial::Vec3[11.148, 0, 0]
-        atom :n, Chem::Spatial::Vec3[10, 0, 0]
+        atom :i, vec3(13.149, 0, 0)
+        atom :c, vec3(11.148, 0, 0)
+        atom :n, vec3(10, 0, 0)
 
         bond "I1", "C1"
         bond "C1", "N1", order: 3
@@ -559,9 +559,9 @@ describe Chem::PDB::Writer do
   it "writes big numbers" do
     structure = Chem::Structure.build do
       residue "ICN" do
-        atom :i, Chem::Spatial::Vec3[3.149, 0, 0]
-        atom :c, Chem::Spatial::Vec3[1.148, 0, 0]
-        atom :n, Chem::Spatial::Vec3[0, 0, 0]
+        atom :i, vec3(3.149, 0, 0)
+        atom :c, vec3(1.148, 0, 0)
+        atom :n, vec3(0, 0, 0)
 
         bond "I1", "C1"
         bond "C1", "N1", order: 3
@@ -588,10 +588,10 @@ describe Chem::PDB::Writer do
   it "writes four-letter residue names (#45)" do
     structure = Chem::Structure.build do
       residue "DMPG" do
-        atom "C13", Chem::Spatial::Vec3[9.194, 10.488, 13.865]
-        atom "H13A", Chem::Spatial::Vec3[8.843, 9.508, 14.253]
-        atom "H13B", Chem::Spatial::Vec3[10.299, 10.527, 13.756]
-        atom "OC3", Chem::Spatial::Vec3[8.600, 10.828, 12.580]
+        atom "C13", vec3(9.194, 10.488, 13.865)
+        atom "H13A", vec3(8.843, 9.508, 14.253)
+        atom "H13B", vec3(10.299, 10.527, 13.756)
+        atom "OC3", vec3(8.600, 10.828, 12.580)
       end
     end
     structure.to_pdb(bonds: :none).should eq <<-PDB.delete('|')

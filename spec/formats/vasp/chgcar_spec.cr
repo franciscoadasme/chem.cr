@@ -34,11 +34,11 @@ describe Chem::VASP::Chgcar do
     structure = Chem::Structure.build do
       title "NaCl-O-NaCl"
       cell 5, 10, 20
-      atom :Cl, Chem::Spatial::Vec3[30, 15, 10]
-      atom :Na, Chem::Spatial::Vec3[10, 5, 5]
-      atom :O, Chem::Spatial::Vec3[30, 15, 9]
-      atom :Na, Chem::Spatial::Vec3[10, 10, 12.5]
-      atom :Cl, Chem::Spatial::Vec3[20, 10, 10]
+      atom :Cl, vec3(30, 15, 10)
+      atom :Na, vec3(10, 5, 5)
+      atom :O, vec3(30, 15, 9)
+      atom :Na, vec3(10, 10, 12.5)
+      atom :Cl, vec3(20, 10, 10)
     end
 
     grid = make_grid({3, 3, 3}, {5, 10, 20}) do |i, j, k|
@@ -95,7 +95,7 @@ describe Chem::VASP::Chgcar do
     structure = Chem::Structure.build do
       title "Zn"
       cell 10, 10, 10
-      atom "Zn", Chem::Spatial::Vec3[0, 0, 0]
+      atom "Zn", vec3(0, 0, 0)
     end
     grid.to_chgcar(structure).should eq <<-EOF
       Zn

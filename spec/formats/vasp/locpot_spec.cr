@@ -6,11 +6,11 @@ describe Chem::VASP::Locpot do
     grid.source_file.should eq Path[spec_file("vasp/LOCPOT")].expand
     grid.dim.should eq({32, 32, 32})
     grid.bounds.should be_close Chem::Spatial::Bounds.new(
-      Chem::Spatial::Vec3.zero,
+      vec3(0, 0, 0),
       Chem::Spatial::Mat3.basis(
-        Chem::Spatial::Vec3[2.969072, -0.000523, -0.000907],
-        Chem::Spatial::Vec3[-0.987305, 2.800110, 0.000907],
-        Chem::Spatial::Vec3[-0.987305, -1.402326, 2.423654]
+        vec3(2.969072, -0.000523, -0.000907),
+        vec3(-0.987305, 2.800110, 0.000907),
+        vec3(-0.987305, -1.402326, 2.423654)
       ),
     ), 1e-6
     grid[0, 0, 0].should eq -46.16312251
@@ -23,11 +23,11 @@ describe Chem::VASP::Locpot do
   it "parses a LOCPOT header" do
     info = Chem::Spatial::Grid::Info.from_locpot spec_file("vasp/LOCPOT")
     info.bounds.should be_close Chem::Spatial::Bounds.new(
-      Chem::Spatial::Vec3.zero,
+      vec3(0, 0, 0),
       Chem::Spatial::Mat3.basis(
-        Chem::Spatial::Vec3[2.969072, -0.000523, -0.000907],
-        Chem::Spatial::Vec3[-0.987305, 2.800110, 0.000907],
-        Chem::Spatial::Vec3[-0.987305, -1.402326, 2.423654],
+        vec3(2.969072, -0.000523, -0.000907),
+        vec3(-0.987305, 2.800110, 0.000907),
+        vec3(-0.987305, -1.402326, 2.423654),
       ),
     ), 1e-6
     info.dim.should eq({32, 32, 32})
@@ -50,11 +50,11 @@ describe Chem::VASP::Locpot do
     structure = Chem::Structure.build do
       title "NaCl-O-NaCl"
       cell 5, 10, 20
-      atom :Cl, Chem::Spatial::Vec3[30, 15, 10]
-      atom :Na, Chem::Spatial::Vec3[10, 5, 5]
-      atom :O, Chem::Spatial::Vec3[30, 15, 9]
-      atom :Na, Chem::Spatial::Vec3[10, 10, 12.5]
-      atom :Cl, Chem::Spatial::Vec3[20, 10, 10]
+      atom :Cl, vec3(30, 15, 10)
+      atom :Na, vec3(10, 5, 5)
+      atom :O, vec3(30, 15, 9)
+      atom :Na, vec3(10, 10, 12.5)
+      atom :Cl, vec3(20, 10, 10)
     end
 
     grid = make_grid({3, 3, 3}, {5, 10, 20}) { |i, j, k| i * 100 + j * 10 + k }

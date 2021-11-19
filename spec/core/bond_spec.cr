@@ -37,10 +37,10 @@ describe Chem::Bond do
     it "returns a delimited string representation" do
       structure = Chem::Structure.build do
         residue "ICN", 91
-        atom :I, Chem::Spatial::Vec3[-1, 0, 0]
-        atom :C, Chem::Spatial::Vec3[0, 0, 0]
-        atom :P, Chem::Spatial::Vec3[1, 0, 0]
-        atom :O, Chem::Spatial::Vec3[2, 0, 0]
+        atom :I, vec3(-1, 0, 0)
+        atom :C, vec3(0, 0, 0)
+        atom :P, vec3(1, 0, 0)
+        atom :O, vec3(2, 0, 0)
         bond "I1", "C1"
         bond "C1", "P1", order: 3
         bond "P1", "O1", order: 2

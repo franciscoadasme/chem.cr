@@ -13,7 +13,7 @@ describe Chem::Spatial::Bounds do
   describe "#center" do
     it "returns the center of the bounds" do
       Chem::Spatial::Bounds[10, 20, 30].center.should eq [5, 10, 15]
-      Chem::Spatial::Bounds[6, 3, 23].translate(Chem::Spatial::Vec3[1, 2, 3]).center.should eq [4, 3.5, 14.5]
+      Chem::Spatial::Bounds[6, 3, 23].translate(vec3(1, 2, 3)).center.should eq [4, 3.5, 14.5]
     end
   end
 
@@ -39,36 +39,36 @@ describe Chem::Spatial::Bounds do
 
   describe "#includes?" do
     it "tells if a vector is within the primary unit cell" do
-      Chem::Spatial::Bounds[10, 20, 30].includes?(Chem::Spatial::Vec3[1, 2, 3]).should be_true
-      Chem::Spatial::Bounds[6, 3, 23].translate(Chem::Spatial::Vec3[1, 2, 3]).includes?(Chem::Spatial::Vec3[3, 2.1, 20]).should be_true
-      Chem::Spatial::Bounds[10, 20, 30].includes?(Chem::Spatial::Vec3[-1, 2, 3]).should be_false
-      Chem::Spatial::Bounds[6, 3, 23].translate(Chem::Spatial::Vec3[1, 2, 3]).includes?(Chem::Spatial::Vec3[2.4, 1.8, 23.1]).should be_false
+      Chem::Spatial::Bounds[10, 20, 30].includes?(vec3(1, 2, 3)).should be_true
+      Chem::Spatial::Bounds[6, 3, 23].translate(vec3(1, 2, 3)).includes?(vec3(3, 2.1, 20)).should be_true
+      Chem::Spatial::Bounds[10, 20, 30].includes?(vec3(-1, 2, 3)).should be_false
+      Chem::Spatial::Bounds[6, 3, 23].translate(vec3(1, 2, 3)).includes?(vec3(2.4, 1.8, 23.1)).should be_false
     end
 
     it "tells if a vector is within the primary unit cell (non-orthogonal)" do
       bounds = Chem::UnitCell.new({23.803, 23.828, 5.387}, {90, 90, 120}).bounds
-      bounds.includes?(Chem::Spatial::Vec3[10, 20, 2]).should be_true
-      bounds.includes?(Chem::Spatial::Vec3[0, 0, 0]).should be_true
-      bounds.includes?(Chem::Spatial::Vec3[30, 30, 10]).should be_false
-      bounds.includes?(Chem::Spatial::Vec3[-3, 10, 2]).should be_true
-      bounds.includes?(Chem::Spatial::Vec3[-3, 2, 2]).should be_false
+      bounds.includes?(vec3(10, 20, 2)).should be_true
+      bounds.includes?(vec3(0, 0, 0)).should be_true
+      bounds.includes?(vec3(30, 30, 10)).should be_false
+      bounds.includes?(vec3(-3, 10, 2)).should be_true
+      bounds.includes?(vec3(-3, 2, 2)).should be_false
     end
 
     context "given a bounds" do
       it "returns true when enclosed" do
         bounds = Chem::UnitCell.hexagonal(10, 10).bounds
         bounds.includes?(Chem::Spatial::Bounds[5, 4, 6]).should be_true
-        bounds.includes?(Chem::Spatial::Bounds[5, 4, 6].translate(Chem::Spatial::Vec3[1, 2, 3])).should be_true
+        bounds.includes?(Chem::Spatial::Bounds[5, 4, 6].translate(vec3(1, 2, 3))).should be_true
       end
 
       it "returns false when intersected" do
         bounds = Chem::UnitCell.hexagonal(10, 10).bounds
-        bounds.includes?(Chem::Spatial::Bounds[5, 4, 6].translate(Chem::Spatial::Vec3[-1, 2, -4.3])).should be_false
+        bounds.includes?(Chem::Spatial::Bounds[5, 4, 6].translate(vec3(-1, 2, -4.3))).should be_false
       end
 
       it "returns false when out of bounds" do
         bounds = Chem::UnitCell.hexagonal(10, 10).bounds
-        bounds.includes?(Chem::Spatial::Bounds[5, 4, 6].translate(Chem::Spatial::Vec3[-1, 2, -4.3])).should be_false
+        bounds.includes?(Chem::Spatial::Bounds[5, 4, 6].translate(vec3(-1, 2, -4.3))).should be_false
       end
     end
   end
@@ -76,14 +76,14 @@ describe Chem::Spatial::Bounds do
   describe "#max" do
     context "given an orthogonal bounds" do
       it "returns the maximum edge" do
-        Chem::Spatial::Bounds[10, 5, 8].max.should eq Chem::Spatial::Vec3[10, 5, 8]
+        Chem::Spatial::Bounds[10, 5, 8].max.should eq vec3(10, 5, 8)
       end
     end
 
     context "given a non-orthogonal bounds" do
       it "returns the maximum edge" do
-        bounds = Chem::UnitCell.hexagonal(10, 12).bounds.translate(Chem::Spatial::Vec3[1.5, 3, -0.4])
-        bounds.max.should be_close Chem::Spatial::Vec3[6.5, 11.66, 11.6], 1e-3
+        bounds = Chem::UnitCell.hexagonal(10, 12).bounds.translate(vec3(1.5, 3, -0.4))
+        bounds.max.should be_close vec3(6.5, 11.66, 11.6), 1e-3
       end
     end
   end
@@ -91,14 +91,14 @@ describe Chem::Spatial::Bounds do
   describe "#min" do
     context "given an orthogonal bounds" do
       it "returns the minimum edge (origin)" do
-        Chem::Spatial::Bounds[10, 5, 8].min.should eq Chem::Spatial::Vec3[0, 0, 0]
+        Chem::Spatial::Bounds[10, 5, 8].min.should eq vec3(0, 0, 0)
       end
     end
 
     context "given a non-orthogonal bounds" do
       it "returns the minimum edge (origin)" do
-        bounds = Chem::UnitCell.hexagonal(10, 12).bounds.translate(Chem::Spatial::Vec3[1.5, 3, -0.4])
-        bounds.min.should eq Chem::Spatial::Vec3[1.5, 3, -0.4]
+        bounds = Chem::UnitCell.hexagonal(10, 12).bounds.translate(vec3(1.5, 3, -0.4))
+        bounds.min.should eq vec3(1.5, 3, -0.4)
       end
     end
   end
@@ -106,9 +106,9 @@ describe Chem::Spatial::Bounds do
   describe "#translate" do
     it "translates the origin" do
       cell = Chem::UnitCell.hexagonal(10, 10)
-      bounds = cell.bounds.translate(Chem::Spatial::Vec3[-5, 1, 20])
-      bounds = bounds.translate(Chem::Spatial::Vec3[1, 2, 10])
-      bounds.min.should eq Chem::Spatial::Vec3[-4, 3, 30]
+      bounds = cell.bounds.translate(vec3(-5, 1, 20))
+      bounds = bounds.translate(vec3(1, 2, 10))
+      bounds.min.should eq vec3(-4, 3, 30)
       bounds.size.should be_close Chem::Spatial::Size3[10, 10, 10], 1e-12
       bounds.basis.should eq cell.basis
     end
@@ -145,14 +145,14 @@ describe Chem::Spatial::Bounds do
       vertices = Chem::UnitCell.new({10, 10, 10}, {90, 90, 120}).bounds.vertices
       vertices.size.should eq 8
       vertices.should be_close [
-        Chem::Spatial::Vec3[0, 0, 0],
-        Chem::Spatial::Vec3[0, 0, 10],
-        Chem::Spatial::Vec3[-5, 8.660, 0],
-        Chem::Spatial::Vec3[-5, 8.660, 10],
-        Chem::Spatial::Vec3[10, 0, 0],
-        Chem::Spatial::Vec3[10, 0, 10],
-        Chem::Spatial::Vec3[5, 8.660, 0],
-        Chem::Spatial::Vec3[5, 8.660, 10],
+        vec3(0, 0, 0),
+        vec3(0, 0, 10),
+        vec3(-5, 8.660, 0),
+        vec3(-5, 8.660, 10),
+        vec3(10, 0, 0),
+        vec3(10, 0, 10),
+        vec3(5, 8.660, 0),
+        vec3(5, 8.660, 10),
       ], 1e-3
     end
   end
@@ -162,7 +162,7 @@ describe Chem::Spatial::Bounds do
       Chem::Spatial::Bounds[10, 20, 30].volume.should eq 6_000
       Chem::UnitCell.hexagonal(5, 8).bounds.volume.should be_close 173.2050807569, 1e-10
       Chem::UnitCell.new({1, 2, 3}, {90, 101.2, 90}).bounds.volume.should be_close 5.8857309321, 1e-10
-      Chem::Spatial::Bounds[6, 3, 23].translate(Chem::Spatial::Vec3[1, 2, 3]).volume.should eq 414
+      Chem::Spatial::Bounds[6, 3, 23].translate(vec3(1, 2, 3)).volume.should eq 414
     end
   end
 end

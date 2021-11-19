@@ -109,11 +109,11 @@ describe Chem::VASP::Poscar::Writer do
   structure = Chem::Structure.build do
     title "NaCl-O-NaCl"
     cell 40, 20, 10
-    atom :Cl, Chem::Spatial::Vec3[30, 15, 10]
-    atom :Na, Chem::Spatial::Vec3[10, 5, 5]
-    atom :O, Chem::Spatial::Vec3[30, 15, 9]
-    atom :Na, Chem::Spatial::Vec3[10, 10, 12.5]
-    atom :Cl, Chem::Spatial::Vec3[20, 10, 10]
+    atom :Cl, vec3(30, 15, 10)
+    atom :Na, vec3(10, 5, 5)
+    atom :O, vec3(30, 15, 9)
+    atom :Na, vec3(10, 10, 12.5)
+    atom :Cl, vec3(20, 10, 10)
   end
 
   it "writes a structure in Cartesian coordinates" do

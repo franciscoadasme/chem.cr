@@ -4,9 +4,9 @@ describe Chem::Spatial::CoordinatesProxy do
   structure = Chem::Structure.build do
     cell 10, 10, 10
 
-    atom Chem::PeriodicTable::O, Chem::Spatial::Vec3[1, 2, 3]
-    atom Chem::PeriodicTable::H, Chem::Spatial::Vec3[4, 5, 6]
-    atom Chem::PeriodicTable::H, Chem::Spatial::Vec3[7, 8, 9]
+    atom Chem::PeriodicTable::O, vec3(1, 2, 3)
+    atom Chem::PeriodicTable::H, vec3(4, 5, 6)
+    atom Chem::PeriodicTable::H, vec3(7, 8, 9)
   end
 
   describe "#bounds" do
@@ -25,13 +25,13 @@ describe Chem::Spatial::CoordinatesProxy do
 
   describe "#center_along" do
     it "centers at the middle point of a vector" do
-      structure.clone.coords.center_along(Chem::Spatial::Vec3[0, 0, 10]).center.should eq [4, 5, 5]
+      structure.clone.coords.center_along(vec3(0, 0, 10)).center.should eq [4, 5, 5]
     end
   end
 
   describe "#center_at" do
     it "centers at the given vector" do
-      structure.clone.coords.center_at(Chem::Spatial::Vec3[2.5, 3, 0]).center.should eq [2.5, 3, 0]
+      structure.clone.coords.center_at(vec3(2.5, 3, 0)).center.should eq [2.5, 3, 0]
     end
   end
 
@@ -138,9 +138,9 @@ describe Chem::Spatial::CoordinatesProxy do
   describe "#map!" do
     it "modifies the atom coordinates" do
       other = Chem::Structure.build do
-        atom Chem::PeriodicTable::O, Chem::Spatial::Vec3[1, 2, 3]
-        atom Chem::PeriodicTable::H, Chem::Spatial::Vec3[4, 5, 6]
-        atom Chem::PeriodicTable::H, Chem::Spatial::Vec3[7, 8, 9]
+        atom Chem::PeriodicTable::O, vec3(1, 2, 3)
+        atom Chem::PeriodicTable::H, vec3(4, 5, 6)
+        atom Chem::PeriodicTable::H, vec3(7, 8, 9)
       end
 
       other.coords.map!(&.*(2)).should eq [[2, 4, 6], [8, 10, 12], [14, 16, 18]]
@@ -149,9 +149,9 @@ describe Chem::Spatial::CoordinatesProxy do
     it "modifies the fractional atom coordinates" do
       other = Chem::Structure.build do
         cell 5, 10, 15
-        atom Chem::PeriodicTable::O, Chem::Spatial::Vec3[1, 2, 3]
-        atom Chem::PeriodicTable::H, Chem::Spatial::Vec3[4, 5, 6]
-        atom Chem::PeriodicTable::H, Chem::Spatial::Vec3[7, 8, 9]
+        atom Chem::PeriodicTable::O, vec3(1, 2, 3)
+        atom Chem::PeriodicTable::H, vec3(4, 5, 6)
+        atom Chem::PeriodicTable::H, vec3(7, 8, 9)
       end
       expected = [[6, 12, 18], [9, 15, 21], [12, 18, 24]]
 
@@ -192,9 +192,9 @@ describe Chem::Spatial::CoordinatesProxy do
   describe "#map_with_atom!" do
     it "modifies the atom coordinates" do
       other = Chem::Structure.build do
-        atom Chem::PeriodicTable::O, Chem::Spatial::Vec3[1, 2, 3]
-        atom Chem::PeriodicTable::H, Chem::Spatial::Vec3[4, 5, 6]
-        atom Chem::PeriodicTable::H, Chem::Spatial::Vec3[7, 8, 9]
+        atom Chem::PeriodicTable::O, vec3(1, 2, 3)
+        atom Chem::PeriodicTable::H, vec3(4, 5, 6)
+        atom Chem::PeriodicTable::H, vec3(7, 8, 9)
       end
 
       other.coords.map_with_atom! { |vec, atom| vec * (atom.element.hydrogen? ? 1 : 3) }
@@ -204,9 +204,9 @@ describe Chem::Spatial::CoordinatesProxy do
     it "modifies the fractional atom coordinates" do
       other = Chem::Structure.build do
         cell 5, 10, 15
-        atom Chem::PeriodicTable::O, Chem::Spatial::Vec3[1, 2, 3]
-        atom Chem::PeriodicTable::H, Chem::Spatial::Vec3[4, 5, 6]
-        atom Chem::PeriodicTable::H, Chem::Spatial::Vec3[7, 8, 9]
+        atom Chem::PeriodicTable::O, vec3(1, 2, 3)
+        atom Chem::PeriodicTable::H, vec3(4, 5, 6)
+        atom Chem::PeriodicTable::H, vec3(7, 8, 9)
       end
       expected = [[6, 12, 18], [4, 5, 6], [7, 8, 9]]
 
@@ -225,7 +225,7 @@ describe Chem::Spatial::CoordinatesProxy do
 
   describe "#transform" do
     it "returns the transformed atom coordinates" do
-      transform = Chem::Spatial::AffineTransform.translation Chem::Spatial::Vec3[3, 2, 1]
+      transform = Chem::Spatial::AffineTransform.translation vec3(3, 2, 1)
       expected = [[4, 4, 4], [7, 7, 7], [10, 10, 10]]
       structure.coords.transform(transform).should eq expected
     end
@@ -234,12 +234,12 @@ describe Chem::Spatial::CoordinatesProxy do
   describe "#transform!" do
     it "transforms the atom coordinates" do
       other = Chem::Structure.build do
-        atom Chem::PeriodicTable::O, Chem::Spatial::Vec3[1, 2, 3]
-        atom Chem::PeriodicTable::H, Chem::Spatial::Vec3[4, 5, 6]
-        atom Chem::PeriodicTable::H, Chem::Spatial::Vec3[7, 8, 9]
+        atom Chem::PeriodicTable::O, vec3(1, 2, 3)
+        atom Chem::PeriodicTable::H, vec3(4, 5, 6)
+        atom Chem::PeriodicTable::H, vec3(7, 8, 9)
       end
 
-      transform = Chem::Spatial::AffineTransform.translation Chem::Spatial::Vec3[-1, 0, 1]
+      transform = Chem::Spatial::AffineTransform.translation vec3(-1, 0, 1)
       other.coords.transform!(transform).should eq [[0, 2, 4], [3, 5, 7], [6, 8, 10]]
     end
   end
@@ -247,20 +247,20 @@ describe Chem::Spatial::CoordinatesProxy do
   describe "#translate" do
     it "returns the translated atom coordinates" do
       expected = [[-1, 0, 1], [2, 3, 4], [5, 6, 7]]
-      structure.coords.translate(by: Chem::Spatial::Vec3[-2, -2, -2]).should eq expected
+      structure.coords.translate(by: vec3(-2, -2, -2)).should eq expected
     end
   end
 
   describe "#translate!" do
     it "translates the atom coordinates" do
       other = Chem::Structure.build do
-        atom Chem::PeriodicTable::O, Chem::Spatial::Vec3[1, 2, 3]
-        atom Chem::PeriodicTable::H, Chem::Spatial::Vec3[4, 5, 6]
-        atom Chem::PeriodicTable::H, Chem::Spatial::Vec3[7, 8, 9]
+        atom Chem::PeriodicTable::O, vec3(1, 2, 3)
+        atom Chem::PeriodicTable::H, vec3(4, 5, 6)
+        atom Chem::PeriodicTable::H, vec3(7, 8, 9)
       end
 
       expected = [[-2, 0, 2], [1, 3, 5], [4, 6, 8]]
-      other.coords.translate!(by: Chem::Spatial::Vec3[-3, -2, -1]).should eq expected
+      other.coords.translate!(by: vec3(-3, -2, -1)).should eq expected
     end
   end
 
@@ -285,9 +285,9 @@ describe Chem::Spatial::CoordinatesProxy do
     it "transforms fractional coordinates to Cartesian" do
       structure = Chem::Structure.build do
         cell 10, 20, 30
-        atom Chem::PeriodicTable::O, Chem::Spatial::Vec3[0.2, 0.4, 0.6]
-        atom Chem::PeriodicTable::H, Chem::Spatial::Vec3[0.1, 0.2, 0.3]
-        atom Chem::PeriodicTable::H, Chem::Spatial::Vec3[0.6, 0.9, 0.35]
+        atom Chem::PeriodicTable::O, vec3(0.2, 0.4, 0.6)
+        atom Chem::PeriodicTable::H, vec3(0.1, 0.2, 0.3)
+        atom Chem::PeriodicTable::H, vec3(0.6, 0.9, 0.35)
       end
 
       expected = [[2, 8, 18], [1, 4, 9], [6, 18, 10.5]]
@@ -299,9 +299,9 @@ describe Chem::Spatial::CoordinatesProxy do
     it "transforms Cartesian coordinates to fractional" do
       structure = Chem::Structure.build do
         cell 10, 20, 30
-        atom Chem::PeriodicTable::O, Chem::Spatial::Vec3[1, 2, 3]
-        atom Chem::PeriodicTable::H, Chem::Spatial::Vec3[4, 5, 6]
-        atom Chem::PeriodicTable::H, Chem::Spatial::Vec3[7, 8, 9]
+        atom Chem::PeriodicTable::O, vec3(1, 2, 3)
+        atom Chem::PeriodicTable::H, vec3(4, 5, 6)
+        atom Chem::PeriodicTable::H, vec3(7, 8, 9)
       end
 
       expected = [[0.1, 0.1, 0.1], [0.4, 0.25, 0.2], [0.7, 0.4, 0.3]]
@@ -326,7 +326,7 @@ describe Chem::Spatial::CoordinatesProxy do
 
     it "wraps atoms into the primary unit cell centered at the origin" do
       coords = load_file("5e61--unwrapped.poscar").coords
-      coords.wrap around: Chem::Spatial::Vec3.zero
+      coords.wrap around: vec3(0, 0, 0)
       expected = load_file("5e61--wrapped--origin.poscar").coords
       coords.should be_close expected, 1e-3
     end

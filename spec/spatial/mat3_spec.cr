@@ -16,7 +16,7 @@ describe Chem::Spatial::Mat3 do
 
   describe ".basis" do
     it "returns a basis matrix" do
-      Chem::Spatial::Mat3.basis(Chem::Spatial::Vec3[1, 2, 3], Chem::Spatial::Vec3[4, 5, 6], Chem::Spatial::Vec3[7, 8, 9]).should eq Chem::Spatial::Mat3[
+      Chem::Spatial::Mat3.basis(vec3(1, 2, 3), vec3(4, 5, 6), vec3(7, 8, 9)).should eq Chem::Spatial::Mat3[
         {1, 4, 7},
         {2, 5, 8},
         {3, 6, 9},
@@ -115,14 +115,14 @@ describe Chem::Spatial::Mat3 do
     end
 
     it "multiplies by a vector" do
-      vec = Chem::Spatial::Vec3[7, -9, 2]
+      vec = vec3(7, -9, 2)
       mat = Chem::Spatial::Mat3[
         {2, 4, 9},
         {1, -6, 8},
         {-3, 9, 5},
       ]
       (Chem::Spatial::Mat3.identity * vec).should eq vec
-      (mat * vec).should eq Chem::Spatial::Vec3[-4, 77, -92]
+      (mat * vec).should eq vec3(-4, 77, -92)
     end
 
     it "multiplies two matrices" do

@@ -131,45 +131,49 @@ module Spec
   end
 end
 
+def vec3(x : Number, y : Number, z : Number) : Chem::Spatial::Vec3
+  Chem::Spatial::Vec3[x, y, z]
+end
+
 def fake_structure(*, include_bonds : Bool = true) : Chem::Structure
   structure = Chem::Structure.build do
     title "Asp-Phe Ser"
 
     chain do
       residue "ASP" do
-        atom "N", Chem::Spatial::Vec3[-2.186, 22.128, 79.139]
-        atom "CA", Chem::Spatial::Vec3[-0.955, 21.441, 78.711]
-        atom "C", Chem::Spatial::Vec3[-0.595, 21.849, 77.252]
-        atom "O", Chem::Spatial::Vec3[-1.461, 21.781, 76.374]
-        atom "CB", Chem::Spatial::Vec3[-1.316, 19.953, 79.003]
-        atom "CG", Chem::Spatial::Vec3[-0.895, 18.952, 77.936]
-        atom "OD1", Chem::Spatial::Vec3[-1.281, 17.738, 78.086]
-        atom "OD2", Chem::Spatial::Vec3[-0.209, 19.223, 76.945], formal_charge: -1
+        atom "N", vec3(-2.186, 22.128, 79.139)
+        atom "CA", vec3(-0.955, 21.441, 78.711)
+        atom "C", vec3(-0.595, 21.849, 77.252)
+        atom "O", vec3(-1.461, 21.781, 76.374)
+        atom "CB", vec3(-1.316, 19.953, 79.003)
+        atom "CG", vec3(-0.895, 18.952, 77.936)
+        atom "OD1", vec3(-1.281, 17.738, 78.086)
+        atom "OD2", vec3(-0.209, 19.223, 76.945), formal_charge: -1
       end
 
       residue "PHE" do
-        atom "N", Chem::Spatial::Vec3[0.647, 22.313, 76.991]
-        atom "CA", Chem::Spatial::Vec3[1.092, 22.731, 75.639]
-        atom "C", Chem::Spatial::Vec3[1.006, 21.699, 74.529]
-        atom "O", Chem::Spatial::Vec3[0.990, 22.038, 73.319]
-        atom "CB", Chem::Spatial::Vec3[2.618, 23.255, 75.696]
-        atom "CG", Chem::Spatial::Vec3[2.643, 24.713, 75.877]
-        atom "CD1", Chem::Spatial::Vec3[1.790, 25.237, 76.833]
-        atom "CD2", Chem::Spatial::Vec3[3.242, 25.569, 74.992]
-        atom "CE1", Chem::Spatial::Vec3[1.639, 26.577, 76.996]
-        atom "CE2", Chem::Spatial::Vec3[3.100, 26.930, 75.157]
-        atom "CZ", Chem::Spatial::Vec3[2.331, 27.435, 76.167]
+        atom "N", vec3(0.647, 22.313, 76.991)
+        atom "CA", vec3(1.092, 22.731, 75.639)
+        atom "C", vec3(1.006, 21.699, 74.529)
+        atom "O", vec3(0.990, 22.038, 73.319)
+        atom "CB", vec3(2.618, 23.255, 75.696)
+        atom "CG", vec3(2.643, 24.713, 75.877)
+        atom "CD1", vec3(1.790, 25.237, 76.833)
+        atom "CD2", vec3(3.242, 25.569, 74.992)
+        atom "CE1", vec3(1.639, 26.577, 76.996)
+        atom "CE2", vec3(3.100, 26.930, 75.157)
+        atom "CZ", vec3(2.331, 27.435, 76.167)
       end
     end
 
     chain do
       residue "SER" do
-        atom "N", Chem::Spatial::Vec3[7.186, 2.582, 8.445]
-        atom "CA", Chem::Spatial::Vec3[6.500, 1.584, 7.565]
-        atom "C", Chem::Spatial::Vec3[5.382, 2.313, 6.773]
-        atom "O", Chem::Spatial::Vec3[5.213, 2.016, 5.557]
-        atom "CB", Chem::Spatial::Vec3[5.908, 0.462, 8.400]
-        atom "OG", Chem::Spatial::Vec3[6.990, -0.272, 9.012]
+        atom "N", vec3(7.186, 2.582, 8.445)
+        atom "CA", vec3(6.500, 1.584, 7.565)
+        atom "C", vec3(5.382, 2.313, 6.773)
+        atom "O", vec3(5.213, 2.016, 5.557)
+        atom "CB", vec3(5.908, 0.462, 8.400)
+        atom "OG", vec3(6.990, -0.272, 9.012)
       end
     end
   end

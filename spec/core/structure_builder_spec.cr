@@ -6,38 +6,38 @@ describe Chem::Structure::Builder do
       title "Ser-Thr-Gly Val"
       chain 'F' do
         residue "SER", 1 do
-          atom "N", Chem::Spatial::Vec3[10.761, 7.798, 14.008]
-          atom "CA", Chem::Spatial::Vec3[11.332, 7.135, 15.151]
-          atom "C", Chem::Spatial::Vec3[10.293, 6.883, 16.240]
-          atom "O", Chem::Spatial::Vec3[9.831, 7.812, 16.932]
-          atom "CB", Chem::Spatial::Vec3[12.486, 8.009, 15.664]
-          atom "OG", Chem::Spatial::Vec3[12.863, 7.872, 17.046]
+          atom "N", vec3(10.761, 7.798, 14.008)
+          atom "CA", vec3(11.332, 7.135, 15.151)
+          atom "C", vec3(10.293, 6.883, 16.240)
+          atom "O", vec3(9.831, 7.812, 16.932)
+          atom "CB", vec3(12.486, 8.009, 15.664)
+          atom "OG", vec3(12.863, 7.872, 17.046)
         end
         residue "THR", 2 do
-          atom "N", Chem::Spatial::Vec3[9.905, 5.621, 16.468]
-          atom "CA", Chem::Spatial::Vec3[8.911, 5.306, 17.473]
-          atom "C", Chem::Spatial::Vec3[9.309, 5.682, 18.870]
-          atom "O", Chem::Spatial::Vec3[8.414, 5.905, 19.663]
-          atom "CB", Chem::Spatial::Vec3[8.583, 3.831, 17.460]
-          atom "OG1", Chem::Spatial::Vec3[9.767, 3.088, 17.284]
-          atom "CG2", Chem::Spatial::Vec3[7.681, 3.521, 16.314]
+          atom "N", vec3(9.905, 5.621, 16.468)
+          atom "CA", vec3(8.911, 5.306, 17.473)
+          atom "C", vec3(9.309, 5.682, 18.870)
+          atom "O", vec3(8.414, 5.905, 19.663)
+          atom "CB", vec3(8.583, 3.831, 17.460)
+          atom "OG1", vec3(9.767, 3.088, 17.284)
+          atom "CG2", vec3(7.681, 3.521, 16.314)
         end
         residue "GLY", 3 do
-          atom "N", Chem::Spatial::Vec3[10.580, 5.793, 19.220]
-          atom "CA", Chem::Spatial::Vec3[10.958, 6.188, 20.552]
-          atom "C", Chem::Spatial::Vec3[10.749, 7.689, 20.740]
-          atom "O", Chem::Spatial::Vec3[10.201, 8.174, 21.744]
+          atom "N", vec3(10.580, 5.793, 19.220)
+          atom "CA", vec3(10.958, 6.188, 20.552)
+          atom "C", vec3(10.749, 7.689, 20.740)
+          atom "O", vec3(10.201, 8.174, 21.744)
         end
       end
       chain 'G' do
         residue "VAL", 1 do
-          atom "N", Chem::Spatial::Vec3[18.066, -7.542, 27.177]
-          atom "CA", Chem::Spatial::Vec3[17.445, -8.859, 27.179]
-          atom "C", Chem::Spatial::Vec3[16.229, -8.870, 26.253]
-          atom "O", Chem::Spatial::Vec3[16.058, -9.815, 25.479]
-          atom "CB", Chem::Spatial::Vec3[17.045, -9.235, 28.617]
-          atom "CG1", Chem::Spatial::Vec3[16.407, -10.621, 28.678]
-          atom "CG2", Chem::Spatial::Vec3[18.300, -9.262, 29.461]
+          atom "N", vec3(18.066, -7.542, 27.177)
+          atom "CA", vec3(17.445, -8.859, 27.179)
+          atom "C", vec3(16.229, -8.870, 26.253)
+          atom "O", vec3(16.058, -9.815, 25.479)
+          atom "CB", vec3(17.045, -9.235, 28.617)
+          atom "CG1", vec3(16.407, -10.621, 28.678)
+          atom "CG2", vec3(18.300, -9.262, 29.461)
         end
       end
     end
@@ -66,14 +66,14 @@ describe Chem::Structure::Builder do
     builder.title "Ser-Thr-Gly Val"
     builder.chain 'T'
     builder.residue "SER"
-    builder.atom "N", Chem::Spatial::Vec3[10.761, 7.798, 14.008]
+    builder.atom "N", vec3(10.761, 7.798, 14.008)
     builder.residue "THR"
-    builder.atom "N", Chem::Spatial::Vec3[9.905, 5.621, 16.468]
+    builder.atom "N", vec3(9.905, 5.621, 16.468)
     builder.residue "GLY"
-    builder.atom "N", Chem::Spatial::Vec3[10.580, 5.793, 19.220]
+    builder.atom "N", vec3(10.580, 5.793, 19.220)
     builder.chain 'U'
     builder.residue "VAL"
-    builder.atom "N", Chem::Spatial::Vec3[18.066, -7.542, 27.177]
+    builder.atom "N", vec3(18.066, -7.542, 27.177)
 
     st = builder.build
 
@@ -87,7 +87,7 @@ describe Chem::Structure::Builder do
 
   it "builds a structure with cell" do
     st = Chem::Structure.build do
-      cell Chem::Spatial::Vec3[25, 32, 12], Chem::Spatial::Vec3[12, 34, 23], Chem::Spatial::Vec3[12, 68, 21]
+      cell vec3(25, 32, 12), vec3(12, 34, 23), vec3(12, 68, 21)
     end
 
     lat = st.cell.not_nil!
@@ -177,12 +177,12 @@ describe Chem::Structure::Builder do
 
   it "names atoms automatically when called with element" do
     st = Chem::Structure.build do
-      atom :C, Chem::Spatial::Vec3.zero
-      atom :C, Chem::Spatial::Vec3.zero
-      atom :O, Chem::Spatial::Vec3.zero
-      atom :N, Chem::Spatial::Vec3.zero
-      atom :C, Chem::Spatial::Vec3.zero
-      atom :N, Chem::Spatial::Vec3.zero
+      atom :C, vec3(0, 0, 0)
+      atom :C, vec3(0, 0, 0)
+      atom :O, vec3(0, 0, 0)
+      atom :N, vec3(0, 0, 0)
+      atom :C, vec3(0, 0, 0)
+      atom :N, vec3(0, 0, 0)
     end
 
     st.atoms.map(&.name).should eq ["C1", "C2", "O1", "N1", "C3", "N2"]
@@ -198,7 +198,7 @@ describe Chem::Structure::Builder do
 
   it "creates a residue automatically" do
     st = Chem::Structure.build do
-      atom "CA", Chem::Spatial::Vec3.zero
+      atom "CA", vec3(0, 0, 0)
     end
 
     st.chains.map(&.id).should eq ['A']
@@ -208,7 +208,7 @@ describe Chem::Structure::Builder do
 
   it "adds dummy atoms" do
     st = Chem::Structure.build do
-      %w(N CA C O CB).each { |name| atom name, Chem::Spatial::Vec3.zero }
+      %w(N CA C O CB).each { |name| atom name, vec3(0, 0, 0) }
     end
 
     st.atoms.map(&.name).should eq ["N", "CA", "C", "O", "CB"]
@@ -217,8 +217,8 @@ describe Chem::Structure::Builder do
 
   it "adds dummy atoms with coordinates" do
     st = Chem::Structure.build do
-      atom Chem::Spatial::Vec3[1, 0, 0]
-      atom Chem::Spatial::Vec3[2, 0, 0]
+      atom vec3(1, 0, 0)
+      atom vec3(2, 0, 0)
     end
 
     st.atoms.map(&.name).should eq ["C1", "C2"]
@@ -227,7 +227,7 @@ describe Chem::Structure::Builder do
 
   it "adds atom with named arguments" do
     st = Chem::Structure.build do
-      atom "OD1", Chem::Spatial::Vec3.zero, formal_charge: -1, temperature_factor: 43.24
+      atom "OD1", vec3(0, 0, 0), formal_charge: -1, temperature_factor: 43.24
     end
 
     atom = st.atoms[-1]
@@ -237,9 +237,9 @@ describe Chem::Structure::Builder do
 
   it "adds bonds by atom index" do
     structure = Chem::Structure.build do
-      atom :O, Chem::Spatial::Vec3[0, 0, 0]
-      atom :H, Chem::Spatial::Vec3[-1, 0, 0]
-      atom :H, Chem::Spatial::Vec3[1, 0, 0]
+      atom :O, vec3(0, 0, 0)
+      atom :H, vec3(-1, 0, 0)
+      atom :H, vec3(1, 0, 0)
 
       bond 0, 1
       bond 0, 2
