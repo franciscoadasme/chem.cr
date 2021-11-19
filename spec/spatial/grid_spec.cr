@@ -298,25 +298,25 @@ describe Chem::Spatial::Grid do
   describe "#coords_at?" do
     it "returns the coordinates at index" do
       grid = make_grid({11, 11, 11}, Chem::Spatial::Bounds[10, 10, 10].translate(vec3(8, 5, 4)))
-      grid.coords_at?(0).should eq vec3(8, 5, 4)
-      grid.coords_at?(1330).should eq vec3(18, 15, 14)
-      grid.coords_at?(-1).should eq vec3(18, 15, 14)
-      grid.coords_at?(75).should eq vec3(8, 11, 13)
+      grid.coords_at?(0).should eq [8, 5, 4]
+      grid.coords_at?(1330).should eq [18, 15, 14]
+      grid.coords_at?(-1).should eq [18, 15, 14]
+      grid.coords_at?(75).should eq [8, 11, 13]
     end
 
     it "returns the coordinates at location" do
       grid = make_grid({11, 11, 11}, Chem::Spatial::Bounds[10, 20, 30].translate(vec3(1, 2, 3)))
-      grid.coords_at?(0, 0, 0).should eq vec3(1, 2, 3)
-      grid.coords_at?(10, 10, 10).should eq vec3(11, 22, 33)
-      grid.coords_at?(3, 5, 0).should eq vec3(4, 12, 3)
+      grid.coords_at?(0, 0, 0).should eq [1, 2, 3]
+      grid.coords_at?(10, 10, 10).should eq [11, 22, 33]
+      grid.coords_at?(3, 5, 0).should eq [4, 12, 3]
     end
 
     it "returns the coordinates at location (non-orthogonal)" do
       bounds = Chem::UnitCell.hexagonal(10, 5).bounds.translate(vec3(1, 2, 3))
       grid = make_grid({11, 11, 11}, bounds)
-      grid.coords_at?(0, 0, 0).should eq vec3(1, 2, 3)
-      grid.coords_at?(10, 10, 10).not_nil!.should be_close vec3(6, 10.660, 8), 1e-3
-      grid.coords_at?(3, 5, 0).not_nil!.should be_close vec3(1.5, 6.330, 3), 1e-3
+      grid.coords_at?(0, 0, 0).should eq [1, 2, 3]
+      grid.coords_at?(10, 10, 10).not_nil!.should be_close [6, 10.660, 8], 1e-3
+      grid.coords_at?(3, 5, 0).not_nil!.should be_close [1.5, 6.330, 3], 1e-3
     end
 
     it "returns nil when index is out of bounds" do

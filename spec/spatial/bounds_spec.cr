@@ -76,14 +76,14 @@ describe Chem::Spatial::Bounds do
   describe "#max" do
     context "given an orthogonal bounds" do
       it "returns the maximum edge" do
-        Chem::Spatial::Bounds[10, 5, 8].max.should eq vec3(10, 5, 8)
+        Chem::Spatial::Bounds[10, 5, 8].max.should eq [10, 5, 8]
       end
     end
 
     context "given a non-orthogonal bounds" do
       it "returns the maximum edge" do
         bounds = Chem::UnitCell.hexagonal(10, 12).bounds.translate(vec3(1.5, 3, -0.4))
-        bounds.max.should be_close vec3(6.5, 11.66, 11.6), 1e-3
+        bounds.max.should be_close [6.5, 11.66, 11.6], 1e-3
       end
     end
   end
@@ -91,14 +91,14 @@ describe Chem::Spatial::Bounds do
   describe "#min" do
     context "given an orthogonal bounds" do
       it "returns the minimum edge (origin)" do
-        Chem::Spatial::Bounds[10, 5, 8].min.should eq vec3(0, 0, 0)
+        Chem::Spatial::Bounds[10, 5, 8].min.should eq [0, 0, 0]
       end
     end
 
     context "given a non-orthogonal bounds" do
       it "returns the minimum edge (origin)" do
         bounds = Chem::UnitCell.hexagonal(10, 12).bounds.translate(vec3(1.5, 3, -0.4))
-        bounds.min.should eq vec3(1.5, 3, -0.4)
+        bounds.min.should eq [1.5, 3, -0.4]
       end
     end
   end
@@ -108,7 +108,7 @@ describe Chem::Spatial::Bounds do
       cell = Chem::UnitCell.hexagonal(10, 10)
       bounds = cell.bounds.translate(vec3(-5, 1, 20))
       bounds = bounds.translate(vec3(1, 2, 10))
-      bounds.min.should eq vec3(-4, 3, 30)
+      bounds.min.should eq [-4, 3, 30]
       bounds.size.should be_close Chem::Spatial::Size3[10, 10, 10], 1e-12
       bounds.basis.should eq cell.basis
     end

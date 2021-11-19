@@ -71,14 +71,14 @@ describe Chem::Spatial::AffineTransform do
     it "returns a translation transformation" do
       transform = Chem::Spatial::AffineTransform.translation(vec3(1, 2, 3))
       transform.linear_map.should eq Chem::Spatial::Mat3.identity
-      transform.offset.should eq vec3(1, 2, 3)
+      transform.offset.should eq [1, 2, 3]
     end
   end
 
   describe "#*" do
     it "transforms a vector" do
-      (Chem::Spatial::AffineTransform.translation(vec3(1, -2, 3)) * vec3(0, 0, 0)).should eq vec3(1, -2, 3)
-      (Chem::Spatial::AffineTransform.scaling(4.5, 1, 2.3) * vec3(1, 2, 3)).should be_close vec3(4.5, 2, 6.9), 1e-8
+      (Chem::Spatial::AffineTransform.translation(vec3(1, -2, 3)) * vec3(0, 0, 0)).should eq [1, -2, 3]
+      (Chem::Spatial::AffineTransform.scaling(4.5, 1, 2.3) * vec3(1, 2, 3)).should be_close [4.5, 2, 6.9], 1e-8
     end
 
     it "transforms a vector (inverse)" do
@@ -99,7 +99,7 @@ describe Chem::Spatial::AffineTransform do
       b = Chem::Spatial::AffineTransform.scaling(2)
       transform = a * b
       transform.linear_map.should eq Chem::Spatial::Mat3[{2, 0, 0}, {0, 2, 0}, {0, 0, 2}]
-      transform.offset.should eq vec3(1, 2, 3)
+      transform.offset.should eq [1, 2, 3]
     end
   end
 

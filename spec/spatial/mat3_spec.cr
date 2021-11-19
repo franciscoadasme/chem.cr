@@ -122,7 +122,7 @@ describe Chem::Spatial::Mat3 do
         {-3, 9, 5},
       ]
       (Chem::Spatial::Mat3.identity * vec).should eq vec
-      (mat * vec).should eq vec3(-4, 77, -92)
+      (mat * vec).should eq [-4, 77, -92]
     end
 
     it "multiplies two matrices" do

@@ -77,11 +77,11 @@ describe Chem::Spatial::Quat do
     it "multiplies a quaternion with a vector" do
       q = Chem::Spatial::Quat.aligning vec3(1, 0, 0), to: vec3(1, 2, 3)
       (q * vec3(1, 0, 0)).should be_close vec3(1, 2, 3).normalize, 1e-15
-      (Chem::Spatial::Quat.rotation(vec3(0, 0, 1), 90) * vec3(1, 0, 0)).should be_close vec3(0, 1, 0), 1e-15
-      (Chem::Spatial::Quat.rotation(vec3(0, 0, 1), 180) * vec3(1, 1, 0)).should be_close vec3(-1, -1, 0), 1e-15
-      (Chem::Spatial::Quat.rotation(vec3(0, 0, -1), 60) * vec3(1, 2, 0)).should be_close vec3(2.23, 0.13, 0), 1e-2
-      (Chem::Spatial::Quat.rotation(vec3(0, 1, 0), 90) * vec3(0, 0, 4)).should be_close vec3(4, 0, 0), 1e-15
-      (Chem::Spatial::Quat.rotation(vec3(1, 1, 1), 120) * vec3(0, 1, 0)).should be_close vec3(0, 0, 1), 1e-15
+      (Chem::Spatial::Quat.rotation(vec3(0, 0, 1), 90) * vec3(1, 0, 0)).should be_close [0, 1, 0], 1e-15
+      (Chem::Spatial::Quat.rotation(vec3(0, 0, 1), 180) * vec3(1, 1, 0)).should be_close [-1, -1, 0], 1e-15
+      (Chem::Spatial::Quat.rotation(vec3(0, 0, -1), 60) * vec3(1, 2, 0)).should be_close [2.23, 0.13, 0], 1e-2
+      (Chem::Spatial::Quat.rotation(vec3(0, 1, 0), 90) * vec3(0, 0, 4)).should be_close [4, 0, 0], 1e-15
+      (Chem::Spatial::Quat.rotation(vec3(1, 1, 1), 120) * vec3(0, 1, 0)).should be_close [0, 0, 1], 1e-15
     end
   end
 
@@ -124,8 +124,8 @@ describe Chem::Spatial::Quat do
 
   describe "#imag" do
     it "returns the imaginary (vector) part of the quaternion" do
-      Chem::Spatial::Quat[1, 0, 0, 0].imag.should eq vec3(0, 0, 0)
-      Chem::Spatial::Quat[1, 2, 3, 4].imag.should eq vec3(2, 3, 4)
+      Chem::Spatial::Quat[1, 0, 0, 0].imag.should eq [0, 0, 0]
+      Chem::Spatial::Quat[1, 2, 3, 4].imag.should eq [2, 3, 4]
     end
   end
 
