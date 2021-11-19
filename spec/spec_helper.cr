@@ -135,6 +135,10 @@ def vec3(x : Number, y : Number, z : Number) : Chem::Spatial::Vec3
   Chem::Spatial::Vec3[x, y, z]
 end
 
+def bounds(a : Number, b : Number, c : Number) : Chem::Spatial::Bounds
+  Chem::Spatial::Bounds[a, b, c]
+end
+
 def fake_structure(*, include_bonds : Bool = true) : Chem::Structure
   structure = Chem::Structure.build do
     title "Asp-Phe Ser"

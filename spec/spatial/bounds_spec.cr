@@ -3,7 +3,7 @@ require "../spec_helper"
 describe Chem::Spatial::Bounds do
   describe ".[]" do
     it "returns a bounds with the given size placed at origin" do
-      bounds = Chem::Spatial::Bounds[1, 2, 3]
+      bounds = bounds(1, 2, 3)
       bounds.origin.should eq [0, 0, 0]
       bounds.size.should eq Chem::Spatial::Size3[1, 2, 3]
       bounds.basis.should eq Chem::Spatial::Mat3.diagonal(1, 2, 3)
@@ -12,8 +12,8 @@ describe Chem::Spatial::Bounds do
 
   describe "#center" do
     it "returns the center of the bounds" do
-      Chem::Spatial::Bounds[10, 20, 30].center.should eq [5, 10, 15]
-      Chem::Spatial::Bounds[6, 3, 23].translate(vec3(1, 2, 3)).center.should eq [4, 3.5, 14.5]
+      bounds(10, 20, 30).center.should eq [5, 10, 15]
+      bounds(6, 3, 23).translate(vec3(1, 2, 3)).center.should eq [4, 3.5, 14.5]
     end
   end
 
@@ -39,10 +39,10 @@ describe Chem::Spatial::Bounds do
 
   describe "#includes?" do
     it "tells if a vector is within the primary unit cell" do
-      Chem::Spatial::Bounds[10, 20, 30].includes?(vec3(1, 2, 3)).should be_true
-      Chem::Spatial::Bounds[6, 3, 23].translate(vec3(1, 2, 3)).includes?(vec3(3, 2.1, 20)).should be_true
-      Chem::Spatial::Bounds[10, 20, 30].includes?(vec3(-1, 2, 3)).should be_false
-      Chem::Spatial::Bounds[6, 3, 23].translate(vec3(1, 2, 3)).includes?(vec3(2.4, 1.8, 23.1)).should be_false
+      bounds(10, 20, 30).includes?(vec3(1, 2, 3)).should be_true
+      bounds(6, 3, 23).translate(vec3(1, 2, 3)).includes?(vec3(3, 2.1, 20)).should be_true
+      bounds(10, 20, 30).includes?(vec3(-1, 2, 3)).should be_false
+      bounds(6, 3, 23).translate(vec3(1, 2, 3)).includes?(vec3(2.4, 1.8, 23.1)).should be_false
     end
 
     it "tells if a vector is within the primary unit cell (non-orthogonal)" do
@@ -57,18 +57,18 @@ describe Chem::Spatial::Bounds do
     context "given a bounds" do
       it "returns true when enclosed" do
         bounds = Chem::UnitCell.hexagonal(10, 10).bounds
-        bounds.includes?(Chem::Spatial::Bounds[5, 4, 6]).should be_true
-        bounds.includes?(Chem::Spatial::Bounds[5, 4, 6].translate(vec3(1, 2, 3))).should be_true
+        bounds.includes?(bounds(5, 4, 6)).should be_true
+        bounds.includes?(bounds(5, 4, 6).translate(vec3(1, 2, 3))).should be_true
       end
 
       it "returns false when intersected" do
         bounds = Chem::UnitCell.hexagonal(10, 10).bounds
-        bounds.includes?(Chem::Spatial::Bounds[5, 4, 6].translate(vec3(-1, 2, -4.3))).should be_false
+        bounds.includes?(bounds(5, 4, 6).translate(vec3(-1, 2, -4.3))).should be_false
       end
 
       it "returns false when out of bounds" do
         bounds = Chem::UnitCell.hexagonal(10, 10).bounds
-        bounds.includes?(Chem::Spatial::Bounds[5, 4, 6].translate(vec3(-1, 2, -4.3))).should be_false
+        bounds.includes?(bounds(5, 4, 6).translate(vec3(-1, 2, -4.3))).should be_false
       end
     end
   end
@@ -76,7 +76,7 @@ describe Chem::Spatial::Bounds do
   describe "#max" do
     context "given an orthogonal bounds" do
       it "returns the maximum edge" do
-        Chem::Spatial::Bounds[10, 5, 8].max.should eq [10, 5, 8]
+        bounds(10, 5, 8).max.should eq [10, 5, 8]
       end
     end
 
@@ -91,7 +91,7 @@ describe Chem::Spatial::Bounds do
   describe "#min" do
     context "given an orthogonal bounds" do
       it "returns the minimum edge (origin)" do
-        Chem::Spatial::Bounds[10, 5, 8].min.should eq [0, 0, 0]
+        bounds(10, 5, 8).min.should eq [0, 0, 0]
       end
     end
 
@@ -117,7 +117,7 @@ describe Chem::Spatial::Bounds do
   describe "#pad" do
     context "given an orthogonal bounds" do
       it "returns a padded bounds" do
-        bounds = Chem::Spatial::Bounds[10, 10, 10]
+        bounds = bounds(10, 10, 10)
         padded = bounds.pad(2)
         padded.size.should eq Chem::Spatial::Size3[14, 14, 14]
         padded.center.should eq bounds.center
@@ -135,7 +135,7 @@ describe Chem::Spatial::Bounds do
 
     it "raises on negative padding" do
       expect_raises ArgumentError, "Negative padding" do
-        Chem::Spatial::Bounds[1, 1, 1].pad -5
+        bounds(1, 1, 1).pad -5
       end
     end
   end
@@ -159,10 +159,10 @@ describe Chem::Spatial::Bounds do
 
   describe "#volume" do
     it "returns the volume enclosed by the bounds" do
-      Chem::Spatial::Bounds[10, 20, 30].volume.should eq 6_000
+      bounds(10, 20, 30).volume.should eq 6_000
       Chem::UnitCell.hexagonal(5, 8).bounds.volume.should be_close 173.2050807569, 1e-10
       Chem::UnitCell.new({1, 2, 3}, {90, 101.2, 90}).bounds.volume.should be_close 5.8857309321, 1e-10
-      Chem::Spatial::Bounds[6, 3, 23].translate(vec3(1, 2, 3)).volume.should eq 414
+      bounds(6, 3, 23).translate(vec3(1, 2, 3)).volume.should eq 414
     end
   end
 end

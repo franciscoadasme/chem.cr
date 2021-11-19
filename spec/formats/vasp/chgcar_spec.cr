@@ -5,7 +5,7 @@ describe Chem::VASP::Chgcar do
     grid = Chem::Spatial::Grid.from_chgcar spec_file("vasp/CHGCAR")
     grid.source_file.should eq Path[spec_file("vasp/CHGCAR")].expand
     grid.dim.should eq({2, 2, 2})
-    grid.bounds.should eq Chem::Spatial::Bounds[10, 10, 10]
+    grid.bounds.should eq bounds(10, 10, 10)
     grid.volume.should eq 1_000
     grid[0, 0, 0].should be_close 7.8406017013, 1e-10
     grid[-1, -1, -1].should be_close 1.0024522914, 1e-10
@@ -14,7 +14,7 @@ describe Chem::VASP::Chgcar do
 
   it "parses a CHGCAR header" do
     info = Chem::Spatial::Grid::Info.from_chgcar spec_file("vasp/CHGCAR")
-    info.bounds.should eq Chem::Spatial::Bounds[10, 10, 10]
+    info.bounds.should eq bounds(10, 10, 10)
     info.dim.should eq({2, 2, 2})
   end
 

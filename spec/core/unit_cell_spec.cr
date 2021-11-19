@@ -123,7 +123,7 @@ describe Chem::UnitCell do
 
   describe "#bounds" do
     it "returns the bounds" do
-      Chem::UnitCell.new({1, 2, 3}).bounds.should eq Chem::Spatial::Bounds[1, 2, 3]
+      Chem::UnitCell.new({1, 2, 3}).bounds.should eq bounds(1, 2, 3)
 
       cell = Chem::UnitCell.new({5, 1, 5}, {90, 120, 90})
       bounds = cell.bounds
