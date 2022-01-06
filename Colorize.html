@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.1.1">
+<meta name="generator" content="Crystal Docs 1.2.2">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -817,7 +817,7 @@
     Overview
   </h2>
 
-  <p>With Colorize you can change the fore- and background colors and text decorations when rendering text
+  <p>With <code><a href="Colorize.html">Colorize</a></code> you can change the fore- and background colors and text decorations when rendering text
 on terminals supporting ANSI escape codes. It adds the <code>colorize</code> method to <code>Object</code> and thus all classes
 as its main interface, which calls <code>to_s</code> and surrounds it with the necessary escape codes
 when it comes to obtaining a string representation of the object.</p>
@@ -841,6 +841,10 @@ when it comes to obtaining a string representation of the object.</p>
 <p>You can also pass an RGB color to <code>colorize</code>:</p>
 <pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;colorize&quot;</span>
 
+<span class="s">&quot;foo&quot;</span>.colorize(<span class="n">0</span>, <span class="n">255</span>, <span class="n">255</span>) <span class="c"># =&gt; &quot;foo&quot; in aqua</span>
+
+<span class="c"># This is the same as:</span>
+
 <span class="s">&quot;foo&quot;</span>.colorize(<span class="t">Colorize</span><span class="t">::</span><span class="t">ColorRGB</span>.<span class="k">new</span>(<span class="n">0</span>, <span class="n">255</span>, <span class="n">255</span>)) <span class="c"># =&gt; &quot;foo&quot; in aqua</span></code></pre>
 <p>Or an 8-bit color:</p>
 <pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;colorize&quot;</span>
@@ -862,11 +866,11 @@ Settings of the instance are preserved however and can be turned back on later:<
 
 <span class="s">&quot;foo&quot;</span>.colorize(<span class="n">:red</span>).toggle(<span class="n">false</span>)              <span class="c"># =&gt; &quot;foo&quot; without color</span>
 <span class="s">&quot;foo&quot;</span>.colorize(<span class="n">:red</span>).toggle(<span class="n">false</span>).toggle(<span class="n">true</span>) <span class="c"># =&gt; &quot;foo&quot; in red</span></code></pre>
-<p>The color <code>:default</code> will just leave the object as it is (but it's an <code>Colorize::Object(String)</code> then).
-That's handy in for example conditions:</p>
+<p>The color <code>:default</code> leaves the object's representation as it is but the object is a <code>Colorize::Object</code> then
+which is handy in conditions such as:</p>
 <pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;colorize&quot;</span>
 
-<span class="s">&quot;foo&quot;</span>.colorize(some_bool ? <span class="n">:green</span> : <span class="n">:default</span>)</code></pre>
+<span class="s">&quot;foo&quot;</span>.colorize(<span class="t">Random</span><span class="t">::</span><span class="t">DEFAULT</span>.next_bool ? <span class="n">:green</span> : <span class="n">:default</span>)</code></pre>
 <p>Available colors are:</p>
 <pre><code class="language-crystal"><span class="n">:default</span>
 <span class="n">:black</span>
@@ -917,7 +921,7 @@ That's handy in for example conditions:</p>
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/35dd5042d7c829dd1ce60889648763b4cc43ed15/src/chem/core_ext/colorize.cr#L3" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/fae492435594346f6643967ac4bc32d2bb383745/src/chem/core_ext/colorize.cr#L3" target="_blank">
         chem/core_ext/colorize.cr
       </a>
     
