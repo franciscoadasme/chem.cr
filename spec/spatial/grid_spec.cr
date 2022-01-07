@@ -167,8 +167,8 @@ describe Chem::Spatial::Grid do
 
   describe "#==" do
     it "returns true when grids are equal" do
-      grid = make_grid({3, 5, 4}, Chem::Spatial::Bounds.new(vec3(0, 1, 3), vec3(30, 20, 25)))
-      other = make_grid({3, 5, 4}, Chem::Spatial::Bounds.new(vec3(0, 1, 3), vec3(30, 20, 25)))
+      grid = make_grid({3, 5, 4}, Chem::Spatial::Parallelepiped.new(vec3(0, 1, 3), vec3(30, 20, 25)))
+      other = make_grid({3, 5, 4}, Chem::Spatial::Parallelepiped.new(vec3(0, 1, 3), vec3(30, 20, 25)))
       grid.should eq other
     end
 
@@ -177,7 +177,7 @@ describe Chem::Spatial::Grid do
     end
 
     it "returns false when grids have different bounds" do
-      grid = make_grid({5, 5, 5}, Chem::Spatial::Bounds.new(vec3(0, 1, 3), vec3(30, 20, 25)))
+      grid = make_grid({5, 5, 5}, Chem::Spatial::Parallelepiped.new(vec3(0, 1, 3), vec3(30, 20, 25)))
       other = make_grid({5, 5, 5}, {0, 0, 0})
       grid.should_not eq other
     end
@@ -312,7 +312,7 @@ describe Chem::Spatial::Grid do
     end
 
     it "returns the coordinates at location (non-orthogonal)" do
-      bounds = Chem::UnitCell.hexagonal(10, 5).bounds.translate(vec3(1, 2, 3))
+      bounds = Chem::Spatial::Parallelepiped.hexagonal(10, 5).translate(vec3(1, 2, 3))
       grid = make_grid({11, 11, 11}, bounds)
       grid.coords_at?(0, 0, 0).should eq [1, 2, 3]
       grid.coords_at?(10, 10, 10).not_nil!.should be_close [6, 10.660, 8], 1e-3
@@ -331,7 +331,7 @@ describe Chem::Spatial::Grid do
 
   describe "#dup" do
     it "returns a copy" do
-      grid = make_grid({3, 5, 4}, Chem::Spatial::Bounds.new(vec3(0, 1, 3), vec3(30, 20, 25)))
+      grid = make_grid({3, 5, 4}, Chem::Spatial::Parallelepiped.new(vec3(0, 1, 3), vec3(30, 20, 25)))
       other = grid.dup
       other.should_not be grid
       other.should eq grid
@@ -508,7 +508,7 @@ describe Chem::Spatial::Grid do
     end
 
     it "returns the location at the coordinates (non-orthogonal)" do
-      bounds = Chem::UnitCell.new({5, 5, 4}, {90, 100, 90}).bounds.translate vec3(4, 3, 2)
+      bounds = Chem::Spatial::Parallelepiped.new(vec3(4, 3, 2), {5, 5, 4}, {90, 100, 90})
       grid = make_grid({11, 11, 11}, bounds)
       grid.loc_at?(vec3(4, 3, 2)).should eq({0, 0, 0})
       grid.loc_at?(vec3(8.305, 8, 5.939)).should eq({10, 10, 10})

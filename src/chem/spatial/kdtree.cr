@@ -54,7 +54,7 @@ module Chem::Spatial
       end
     end
 
-    def self.new(atoms : Enumerable(Atom), cell : UnitCell? = nil, **options)
+    def self.new(atoms : Enumerable(Atom), cell : Parallelepiped? = nil, **options)
       ary = atoms.map { |atom| {atom.coords, atom} }
       if cell
         PBC.each_adjacent_image(atoms, cell, **options) do |atom, coords|

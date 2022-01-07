@@ -28,7 +28,7 @@ describe Chem::Spatial do
 
     context "given a non-orthogonal cell" do
       it "returns minimum image convention's angle" do
-        cell = Chem::UnitCell.new({8.497, 43.560, 53.640}, {85.149, 81.972, 76.480})
+        cell = Chem::Spatial::Parallelepiped.new({8.497, 43.560, 53.640}, {85.149, 81.972, 76.480})
         [
           {vec3(10.683, 3.591, 15.02),
            vec3(11.078, 4.897, 15.343),
@@ -90,7 +90,7 @@ describe Chem::Spatial do
 
     context "given an orthogonal cell" do
       it "returns the dihedral angle using minimum-image convention" do
-        cell = Chem::UnitCell.new({8.77, 9.5, 24.74}, {88.22, 80, 70.34})
+        cell = Chem::Spatial::Parallelepiped.new({8.77, 9.5, 24.74}, {88.22, 80, 70.34})
         [
           {
             vec3(12.305217, 5.828416, 13.900538),
@@ -135,7 +135,7 @@ describe Chem::Spatial do
 
     context "given a orthogonal cell" do
       it "returns minimum image convention's distance" do
-        cell = Chem::UnitCell.new({10, 20, 30})
+        cell = Chem::Spatial::Parallelepiped.new({10, 20, 30})
         [
           {vec3(1, 1, 1), vec3(5, 5, 5), 47.999999},
           {vec3(1, 1, 1), vec3(9, 18, 27), 29.0},
@@ -147,7 +147,7 @@ describe Chem::Spatial do
 
     context "given a non-orthogonal cell" do
       it "returns minimum image convention's distance" do
-        cell = Chem::UnitCell.new({8.77, 9.5, 24.74}, {88.22, 80, 70.34})
+        cell = Chem::Spatial::Parallelepiped.new({8.77, 9.5, 24.74}, {88.22, 80, 70.34})
         [
           {vec3(0.82, 1.29, 20.12), vec3(8.15, 1.41, 19.61), 2.3481},
           {vec3(3.37, 3.04, 16.5), vec3(5.35, 4.07, 17.456), 5.895236},

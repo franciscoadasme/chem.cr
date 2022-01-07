@@ -13,7 +13,7 @@ describe Chem::DX::Reader do
 
   it "parses a DX header" do
     info = Chem::Spatial::Grid::Info.from_dx spec_file("header.dx")
-    info.bounds.should eq Chem::Spatial::Bounds.new(
+    info.bounds.should eq Chem::Spatial::Parallelepiped.new(
       vec3(0.5, 0.3, 1),
       Chem::Spatial::Mat3.basis(
         vec3(10, 0, 0),

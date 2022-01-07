@@ -49,7 +49,7 @@ module Chem::Gen
         @pull.next_line
         vk = Spatial::Vec3.new @pull.next_f, @pull.next_f, @pull.next_f
         @pull.next_line
-        structure.cell = UnitCell.new vi, vj, vk
+        structure.cell = Spatial::Parallelepiped.new vi, vj, vk
         structure.coords.to_cart! if fractional
       end
 
@@ -86,7 +86,7 @@ module Chem::Gen
       write cell if cell
     end
 
-    private def write(cell : UnitCell) : Nil
+    private def write(cell : Spatial::Parallelepiped) : Nil
       {Spatial::Vec3.zero, cell.i, cell.j, cell.k}.each do |vec|
         @io.printf "%20.10E%20.10E%20.10E\n", vec.x, vec.y, vec.z
       end

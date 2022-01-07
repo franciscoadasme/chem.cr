@@ -22,7 +22,7 @@ module Chem::VASP::Poscar
       @pull.next_line
       vk = Spatial::Vec3.new @pull.next_f, @pull.next_f, @pull.next_f
       @pull.next_line
-      cell = UnitCell.new(vi * scale_factor, vj * scale_factor, vk * scale_factor)
+      cell = Spatial::Parallelepiped.new(vi * scale_factor, vj * scale_factor, vk * scale_factor)
 
       # read species
       uniq_elements = [] of Element
@@ -162,7 +162,7 @@ module Chem::VASP::Poscar
       end
     end
 
-    private def write(cell : UnitCell) : Nil
+    private def write(cell : Spatial::Parallelepiped) : Nil
       @io.printf " %18.14f\n", 1.0
       {cell.i, cell.j, cell.k}.each do |vec|
         @io.printf " %22.16f%22.16f%22.16f\n", vec.x, vec.y, vec.z

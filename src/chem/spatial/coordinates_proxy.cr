@@ -3,7 +3,7 @@ module Chem::Spatial
     include Enumerable(Vec3)
     include Iterable(Vec3)
 
-    def initialize(@atoms : AtomCollection, @cell : UnitCell? = nil)
+    def initialize(@atoms : AtomCollection, @cell : Parallelepiped? = nil)
     end
 
     def ==(rhs : Enumerable(Vec3)) : Bool
@@ -11,7 +11,7 @@ module Chem::Spatial
       true
     end
 
-    def bounds : Bounds
+    def bounds : Parallelepiped
       min = StaticArray[Float64::MAX, Float64::MAX, Float64::MAX]
       max = StaticArray[Float64::MIN, Float64::MIN, Float64::MIN]
       each do |vec|
@@ -20,7 +20,7 @@ module Chem::Spatial
           max[i] = vec[i] if vec[i] > max.unsafe_fetch(i)
         end
       end
-      Bounds.new(Vec3[min[0], min[1], min[2]], Vec3[max[0], max[1], max[2]])
+      Parallelepiped.new(Vec3[min[0], min[1], min[2]], Vec3[max[0], max[1], max[2]])
     end
 
     def center : Vec3
@@ -68,7 +68,7 @@ module Chem::Spatial
     # ```
     def center_at_cell : self
       raise NotPeriodicError.new unless cell = @cell
-      center_at cell.bounds.center
+      center_at cell.center
     end
 
     # Translates coordinates so that the center is at the origin.
@@ -203,8 +203,8 @@ module Chem::Spatial
       wrap cell, center
     end
 
-    def wrap(cell : UnitCell, around center : Vec3? = nil) : self
-      center ||= cell.bounds.center
+    def wrap(cell : Parallelepiped, around center : Vec3? = nil) : self
+      center ||= cell.center
 
       if cell.orthogonal?
         vecs = {cell.i, cell.j, cell.k}
@@ -231,7 +231,7 @@ module Chem::Spatial
 
       @iterator : Iterator(Atom)
 
-      def initialize(atoms : AtomCollection, @cell : UnitCell)
+      def initialize(atoms : AtomCollection, @cell : Parallelepiped)
         @iterator = atoms.each_atom
       end
 

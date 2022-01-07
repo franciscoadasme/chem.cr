@@ -15,7 +15,7 @@ module Chem::VASP
 
       @pull.next_line
       nx, ny, nz = @pull.next_i, @pull.next_i, @pull.next_i
-      Spatial::Grid::Info.new cell.bounds, {nx, ny, nz}
+      Spatial::Grid::Info.new cell, {nx, ny, nz}
     end
 
     private def read_array(info : Spatial::Grid::Info,

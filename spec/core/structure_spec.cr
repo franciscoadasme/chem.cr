@@ -108,7 +108,7 @@ describe Chem::Structure do
   describe "#periodic?" do
     it "returns true when a structure has a cell" do
       structure = Chem::Structure.new
-      structure.cell = Chem::UnitCell.new({10, 20, 30})
+      structure.cell = Chem::Spatial::Parallelepiped.new({10, 20, 30})
       structure.periodic?.should be_true
     end
 

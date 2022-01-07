@@ -8,9 +8,9 @@ module Chem::Spatial
 
     alias Dimensions = Tuple(Int32, Int32, Int32)
     alias Location = Tuple(Int32, Int32, Int32)
-    record Info, bounds : Bounds, dim : Dimensions
+    record Info, bounds : Parallelepiped, dim : Dimensions
 
-    getter bounds : Bounds
+    getter bounds : Parallelepiped
     getter dim : Dimensions
     getter source_file : Path?
 
@@ -19,7 +19,7 @@ module Chem::Spatial
     delegate includes?, origin, volume, to: @bounds
 
     def initialize(@dim : Dimensions,
-                   @bounds : Bounds,
+                   @bounds : Parallelepiped,
                    source_file : String | Path | Nil = nil)
       check_dim
       @buffer = Pointer(Float64).malloc size
@@ -28,7 +28,8 @@ module Chem::Spatial
     end
 
     def initialize(@dim : Dimensions,
-                   @bounds : Bounds, initial_value : Float64,
+                   @bounds : Parallelepiped,
+                   initial_value : Float64,
                    source_file : String | Path | Nil = nil)
       check_dim
       @buffer = Pointer(Float64).malloc size, initial_value
@@ -37,12 +38,12 @@ module Chem::Spatial
     end
 
     def self.[](ni : Int, nj : Int, nk : Int) : self
-      new({ni.to_i, nj.to_i, nk.to_i}, Bounds[0, 0, 0])
+      new({ni.to_i, nj.to_i, nk.to_i}, Parallelepiped.cubic(0))
     end
 
     def self.atom_distance(structure : Structure,
                            dim : Dimensions,
-                           bounds : Bounds? = nil) : self
+                           bounds : Parallelepiped? = nil) : self
       grid = new dim, (bounds || structure.coords.bounds)
       kdtree = KDTree.new structure
       grid.map_with_coords! do |_, vec|
@@ -55,7 +56,7 @@ module Chem::Spatial
     #
     # ```
     # structure = Structure.read "path/to/file"
-    # info = Grid::Info.new Bounds[1.5, 2.135, 6.12], {10, 10, 10}
+    # info = Grid::Info.new Parallelepiped[1.5, 2.135, 6.12], {10, 10, 10}
     # grid = Grid.atom_distance structure, info.dim, info.bounds
     # Grid.atom_distance_like(info, structure) == grid # => true
     # ```
@@ -84,7 +85,7 @@ module Chem::Spatial
     end
 
     def self.build(dim : Dimensions,
-                   bounds : Bounds,
+                   bounds : Parallelepiped,
                    source_file : String | Path | Nil = nil,
                    & : Pointer(Float64), Int32 ->) : self
       grid = new dim, bounds, source_file
@@ -119,7 +120,7 @@ module Chem::Spatial
     end
 
     def self.new(dim : Dimensions,
-                 bounds : Bounds,
+                 bounds : Parallelepiped,
                  source_file : String | Path | Nil = nil,
                  &block : Location -> Number)
       new(dim, bounds, source_file).map_with_loc! do |_, loc|
@@ -131,7 +132,7 @@ module Chem::Spatial
     # FIXME: check delta calculation (grid.resolution.min / 2 shouldn't be enough?)
     def self.vdw_mask(structure : Structure,
                       dim : Dimensions,
-                      bounds : Bounds? = nil,
+                      bounds : Parallelepiped? = nil,
                       delta : Float64 = 0.02) : self
       grid = new dim, (bounds || structure.coords.bounds)
       delta = Math.min delta, grid.resolution.min / 2
@@ -167,7 +168,7 @@ module Chem::Spatial
     #
     # ```
     # structure = Structure.read "path/to/file"
-    # info = Grid::Info.new Bounds[5.213, 6.823, 10.352], {20, 25, 40}
+    # info = Grid::Info.new Parallelepiped[5.213, 6.823, 10.352], {20, 25, 40}
     # grid = Grid.vdw_mask structure, info.dim, info.bounds
     # Grid.vdw_mask_like(info, structure) == grid # => true
     # ```
@@ -277,7 +278,7 @@ module Chem::Spatial
     # basis vector, respectively.
     #
     # ```
-    # grid = Grid.new({2, 3, 2}, Bounds[1, 1, 1]) { |i, j, k| i * 6 + j * 2 + k }
+    # grid = Grid.new({2, 3, 2}, Parallelepiped[1, 1, 1]) { |i, j, k| i * 6 + j * 2 + k }
     # grid.to_a # => [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
     # slices = [] of Array(Float64)
     # grid.each_axial_slice(axis: 1) { |slice| slices << slice }
@@ -457,7 +458,7 @@ module Chem::Spatial
     # selected based on one grid only.
     #
     # ```
-    # grid = Grid.new({2, 2, 2}, Bounds[10, 10, 10]) { |i, j, k| i + j + k }
+    # grid = Grid.new({2, 2, 2}, Parallelepiped[10, 10, 10]) { |i, j, k| i + j + k }
     # grid.to_a              # => [0, 1, 1, 2, 1, 2, 2, 3]
     # grid.mask(&.>(1)).to_a # => [0, 0, 0, 1, 0, 1, 1, 1]
     # grid.to_a              # => [0, 1, 1, 2, 1, 2, 2, 3]
@@ -473,7 +474,7 @@ module Chem::Spatial
     # selected based on one grid only.
     #
     # ```
-    # grid = Grid.new({2, 2, 3}, Bounds[1, 1, 1]) { |i, j, k| (i + 1) * (j + 1) * (k + 1) }
+    # grid = Grid.new({2, 2, 3}, Parallelepiped[1, 1, 1]) { |i, j, k| (i + 1) * (j + 1) * (k + 1) }
     # grid.to_a              # => [1, 2, 3, 2, 4, 6, 2, 4, 6, 4, 8, 12]
     # grid.mask(2..4.5).to_a # => [0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0]
     # grid.to_a              # => [1, 2, 3, 2, 4, 6, 2, 4, 6, 4, 8, 12]
@@ -489,7 +490,7 @@ module Chem::Spatial
     # selected based on one grid only.
     #
     # ```
-    # grid = Grid.new({2, 2, 3}, Bounds[1, 1, 1]) { |i, j, k| (i + 1) * (j + 1) * (k + 1) / 5 }
+    # grid = Grid.new({2, 2, 3}, Parallelepiped[1, 1, 1]) { |i, j, k| (i + 1) * (j + 1) * (k + 1) / 5 }
     # grid.to_a              # => [0.2, 0.4, 0.6, 0.4, 0.8, 1.2, 0.4, 0.8, 1.2, 0.8, 1.6, 2.4]
     # grid.mask(1, 0.5).to_a # => [0, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 0]
     # grid.to_a              # => [0.2, 0.4, 0.6, 0.4, 0.8, 1.2, 0.4, 0.8, 1.2, 0.8, 1.6, 2.4]
@@ -506,7 +507,7 @@ module Chem::Spatial
     # { ... }`.
     #
     # ```
-    # grid = Grid.new({2, 2, 2}, Bounds[10, 10, 10]) { |i, j, k| i + j + k }
+    # grid = Grid.new({2, 2, 2}, Parallelepiped[10, 10, 10]) { |i, j, k| i + j + k }
     # grid.to_a # => [0, 1, 1, 2, 1, 2, 2, 3]
     # grid.mask! &.>(1)
     # grid.to_a # => [0, 0, 0, 2, 0, 2, 2, 3]
@@ -523,7 +524,7 @@ module Chem::Spatial
     # grid.mask(pattern)`
     #
     # ```
-    # grid = Grid.new({2, 2, 3}, Bounds[1, 1, 1]) { |i, j, k| (i + 1) * (j + 1) * (k + 1) }
+    # grid = Grid.new({2, 2, 3}, Parallelepiped[1, 1, 1]) { |i, j, k| (i + 1) * (j + 1) * (k + 1) }
     # grid.to_a # => [1, 2, 3, 2, 4, 6, 2, 4, 6, 4, 8, 12]
     # grid.mask! 2..4.5
     # grid.to_a # => [0, 2, 3, 2, 4, 0, 2, 4, 0, 4, 0, 0]
@@ -540,7 +541,7 @@ module Chem::Spatial
     # delta)`
     #
     # ```
-    # grid = Grid.new({2, 2, 3}, Bounds[1, 1, 1]) { |i, j, k| (i + j + k) / 5 }
+    # grid = Grid.new({2, 2, 3}, Parallelepiped[1, 1, 1]) { |i, j, k| (i + j + k) / 5 }
     # grid.to_a # => [0.0, 0.2, 0.4, 0.2, 0.4, 0.6, 0.2, 0.4, 0.6, 0.4, 0.6, 0.8]
     # grid.mask! 0.5, 0.1
     # grid.to_a # => [0.0, 0.0, 0.4, 0.0, 0.4, 0.6, 0.0, 0.4, 0.6, 0.4, 0.6, 0.0]
@@ -556,7 +557,7 @@ module Chem::Spatial
     # selected based on one grid only.
     #
     # ```
-    # grid = Grid.new({2, 2, 2}, Bounds[10, 10, 10]) { |i, j, k| i * 4 + j * 2 + k }
+    # grid = Grid.new({2, 2, 2}, Parallelepiped[10, 10, 10]) { |i, j, k| i * 4 + j * 2 + k }
     # grid.to_a                           # => [0, 1, 2, 3, 4, 5, 6, 7]
     # grid.mask_by_coords(&.x.==(0)).to_a # => [1, 1, 1, 1, 0, 0, 0, 0]
     # grid.to_a                           # => [0, 1, 2, 3, 4, 5, 6, 7]
@@ -573,7 +574,7 @@ module Chem::Spatial
     # grid.mask_by_coords { ... }`
     #
     # ```
-    # grid = Grid.new({2, 2, 2}, Bounds[5, 5, 5]) { |i, j, k| i * 4 + j * 2 + k }
+    # grid = Grid.new({2, 2, 2}, Parallelepiped[5, 5, 5]) { |i, j, k| i * 4 + j * 2 + k }
     # grid.to_a # => [0, 1, 2, 3, 4, 5, 6, 7]
     # grid.mask_by_coords! { |vec| vec.y == 5 }
     # grid.to_a # => [0, 0, 2, 3, 0, 0, 6, 7]
@@ -589,7 +590,7 @@ module Chem::Spatial
     # selected based on one grid only.
     #
     # ```
-    # grid = Grid.new({2, 2, 2}, Bounds[10, 10, 10]) { |i, j, k| i * 4 + j * 2 + k }
+    # grid = Grid.new({2, 2, 2}, Parallelepiped[10, 10, 10]) { |i, j, k| i * 4 + j * 2 + k }
     # grid.to_a                       # => [0, 1, 2, 3, 4, 5, 6, 7]
     # grid.mask_by_index(&.>(4)).to_a # => [0, 0, 0, 0, 0, 1, 1, 1]
     # grid.to_a                       # => [0, 1, 2, 3, 4, 5, 6, 7]
@@ -606,7 +607,7 @@ module Chem::Spatial
     # grid.mask_by_index { ... }`
     #
     # ```
-    # grid = Grid.new({2, 2, 2}, Bounds[1, 1, 1]) { |i, j, k| i * 4 + j * 2 + k }
+    # grid = Grid.new({2, 2, 2}, Parallelepiped[1, 1, 1]) { |i, j, k| i * 4 + j * 2 + k }
     # grid.to_a # => [0, 1, 2, 3, 4, 5, 6, 7]
     # grid.mask_by_index! &.<(3)
     # grid.to_a # => [0, 1, 2, 0, 0, 0, 0, 0]
@@ -622,7 +623,7 @@ module Chem::Spatial
     # selected based on one grid only.
     #
     # ```
-    # grid = Grid.new({2, 2, 2}, Bounds[10, 10, 10]) { |i, j, k| i * 4 + j * 2 + k }
+    # grid = Grid.new({2, 2, 2}, Parallelepiped[10, 10, 10]) { |i, j, k| i * 4 + j * 2 + k }
     # grid.to_a                                  # => [0, 1, 2, 3, 4, 5, 6, 7]
     # grid.mask_by_loc { |i, j, k| k == 1 }.to_a # => [0, 1, 0, 1, 0, 1, 0, 1]
     # grid.to_a                                  # => [0, 1, 2, 3, 4, 5, 6, 7]
@@ -639,7 +640,7 @@ module Chem::Spatial
     # { ... }`
     #
     # ```
-    # grid = Grid.new({2, 2, 2}, Bounds[1, 1, 1]) { |i, j, k| i * 4 + j * 2 + k }
+    # grid = Grid.new({2, 2, 2}, Parallelepiped[1, 1, 1]) { |i, j, k| i * 4 + j * 2 + k }
     # grid.to_a # => [0, 1, 2, 3, 4, 5, 6, 7]
     # grid.mask_by_loc! { |(i, j, k)| i == 1 }
     # grid.to_a # => [0, 0, 0, 0, 4, 5, 6, 7]
@@ -651,7 +652,7 @@ module Chem::Spatial
     # Returns the arithmetic mean of the grid elements.
     #
     # ```
-    # grid = Grid.new({2, 3, 4}, Bounds[1, 1, 1]) { |i, j, k| i * 12 + j * 4 + k }
+    # grid = Grid.new({2, 3, 4}, Parallelepiped[1, 1, 1]) { |i, j, k| i * 12 + j * 4 + k }
     # grid.mean # => 11.5
     # ```
     def mean : Float64
@@ -665,7 +666,7 @@ module Chem::Spatial
     # Raises IndexError is *axis* is out of bounds.
     #
     # ```
-    # grid = Grid.new({2, 3, 4}, Bounds[1, 1, 1]) { |i, j, k| i * 12 + j * 4 + k }
+    # grid = Grid.new({2, 3, 4}, Parallelepiped[1, 1, 1]) { |i, j, k| i * 12 + j * 4 + k }
     # grid.mean(axis: 0) # => [5.5, 17.5]
     # grid.mean(axis: 1) # => [7.5, 11.5, 15.5]
     # grid.mean(axis: 2) # => [10, 11, 12, 13]
@@ -686,7 +687,7 @@ module Chem::Spatial
     # Raises IndexError is *axis* is out of bounds.
     #
     # ```
-    # grid = Grid.new({2, 3, 5}, Bounds[1, 1, 1]) { |i, j, k| i * 12 + j * 4 + k }
+    # grid = Grid.new({2, 3, 5}, Parallelepiped[1, 1, 1]) { |i, j, k| i * 12 + j * 4 + k }
     # grid.mean(axis: 1) # => [{9.5, 0.0}, {14.5, 0.5}, {19.5, 1.0}]
     # ```
     def mean_with_coords(axis : Int) : Array(Tuple(Float64, Float64))
@@ -778,10 +779,9 @@ module Chem::Spatial
 
     @[AlwaysInline]
     private def unsafe_coords_at(loc : Location) : Vec3
-      vi, vj, vk = bounds.basisvec
-      vi = ni == 1 ? Vec3.zero : vi / (ni - 1)
-      vj = nj == 1 ? Vec3.zero : vj / (nj - 1)
-      vk = nk == 1 ? Vec3.zero : vk / (nk - 1)
+      vi = ni == 1 ? Vec3.zero : bounds.i / (ni - 1)
+      vj = nj == 1 ? Vec3.zero : bounds.j / (nj - 1)
+      vk = nk == 1 ? Vec3.zero : bounds.k / (nk - 1)
       origin + loc[0] * vi + loc[1] * vj + loc[2] * vk
     end
 

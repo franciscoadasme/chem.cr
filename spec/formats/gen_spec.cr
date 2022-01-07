@@ -72,7 +72,7 @@ describe Chem::Gen::Writer do
   end
 
   it "writes a structure in Cartesian coordinates with unit cell" do
-    structure.cell = Chem::UnitCell.new({40, 20, 10})
+    structure.cell = Chem::Spatial::Parallelepiped.new({40, 20, 10})
     structure.to_gen.should eq <<-EOS
           5  S
        Cl Na  O
@@ -89,7 +89,7 @@ describe Chem::Gen::Writer do
   end
 
   it "writes a structure in fractional coordinates with unit cell" do
-    structure.cell = Chem::UnitCell.new({40, 20, 10})
+    structure.cell = Chem::Spatial::Parallelepiped.new({40, 20, 10})
     structure.to_gen(fractional: true).should eq <<-EOS
           5  F
        Cl Na  O

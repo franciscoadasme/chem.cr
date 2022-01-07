@@ -3,7 +3,6 @@ require "./spatial/size3"
 require "./spatial/vec3"
 require "./spatial/mat3"
 
-require "./spatial/bounds"
 require "./spatial/grid"
 require "./spatial/quat"
 require "./spatial/parallelepiped"
@@ -40,11 +39,11 @@ module Chem::Spatial
     angle a - b, c - b
   end
 
-  def self.angle(cell : UnitCell, a : Atom, b : Atom, c : Atom) : Float64
+  def self.angle(cell : Parallelepiped, a : Atom, b : Atom, c : Atom) : Float64
     angle cell, a.coords, b.coords, c.coords
   end
 
-  def self.angle(cell : UnitCell, a : Vec3, b : Vec3, c : Vec3) : Float64
+  def self.angle(cell : Parallelepiped, a : Vec3, b : Vec3, c : Vec3) : Float64
     angle cell.wrap(a, around: b), b, cell.wrap(c, around: b)
   end
 
@@ -62,11 +61,11 @@ module Chem::Spatial
     dihedral b - a, c - b, d - c
   end
 
-  def self.dihedral(cell : UnitCell, a : Atom, b : Atom, c : Atom, d : Atom) : Float64
+  def self.dihedral(cell : Parallelepiped, a : Atom, b : Atom, c : Atom, d : Atom) : Float64
     dihedral cell, a.coords, b.coords, c.coords, d.coords
   end
 
-  def self.dihedral(cell : UnitCell, a : Vec3, b : Vec3, c : Vec3, d : Vec3) : Float64
+  def self.dihedral(cell : Parallelepiped, a : Vec3, b : Vec3, c : Vec3, d : Vec3) : Float64
     a = cell.wrap a, around: b
     c = cell.wrap c, around: b
     d = cell.wrap d, around: c
@@ -82,11 +81,11 @@ module Chem::Spatial
     Math.sqrt distance2(a, b)
   end
 
-  def self.distance(cell : UnitCell, a : Atom, b : Atom) : Float64
+  def self.distance(cell : Parallelepiped, a : Atom, b : Atom) : Float64
     distance cell, a.coords, b.coords
   end
 
-  def self.distance(cell : UnitCell, a : Vec3, b : Vec3) : Float64
+  def self.distance(cell : Parallelepiped, a : Vec3, b : Vec3) : Float64
     Math.sqrt distance2(cell, a, b)
   end
 
@@ -110,11 +109,11 @@ module Chem::Spatial
     (a.x - b.x)**2 + (a.y - b.y)**2 + (a.z - b.z)**2
   end
 
-  def self.distance2(cell : UnitCell, a : Atom, b : Atom) : Float64
+  def self.distance2(cell : Parallelepiped, a : Atom, b : Atom) : Float64
     distance2 cell, a.coords, b.coords
   end
 
-  def self.distance2(cell : UnitCell, a : Vec3, b : Vec3) : Float64
+  def self.distance2(cell : Parallelepiped, a : Vec3, b : Vec3) : Float64
     distance2 a, cell.wrap(b, around: a)
   end
 
@@ -126,11 +125,11 @@ module Chem::Spatial
     dihedral b, a, c, d
   end
 
-  def self.improper(cell : UnitCell, a : Atom, b : Atom, c : Atom, d : Atom) : Float64
+  def self.improper(cell : Parallelepiped, a : Atom, b : Atom, c : Atom, d : Atom) : Float64
     improper cell, a.coords, b.coords, c.coords, d.coords
   end
 
-  def self.improper(cell : UnitCell, a : Vec3, b : Vec3, c : Vec3, d : Vec3) : Float64
+  def self.improper(cell : Parallelepiped, a : Vec3, b : Vec3, c : Vec3, d : Vec3) : Float64
     dihedral cell, b, a, c, d
   end
 end

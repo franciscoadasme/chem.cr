@@ -18,9 +18,9 @@ module Chem::Spatial::PBC
   end
 
   def each_adjacent_image(atoms : AtomCollection,
-                          cell : UnitCell,
+                          cell : Parallelepiped,
                           &block : Atom, Vec3 ->)
-    offset = (cell.bounds.center - atoms.coords.center).to_fract cell
+    offset = (cell.center - atoms.coords.center).to_fract cell
     atoms.each_atom do |atom|
       fcoords = atom.coords.to_fract cell                             # convert to fractional coords
       w_fcoords = fcoords - fcoords.map(&.floor)                      # wrap to primary unit cell
@@ -40,7 +40,7 @@ module Chem::Spatial::PBC
   end
 
   def each_adjacent_image(atoms : AtomCollection,
-                          cell : UnitCell,
+                          cell : Parallelepiped,
                           radius : Number,
                           &block : Atom, Vec3 ->)
     raise Error.new "Radius cannot be negative" if radius < 0
@@ -62,7 +62,7 @@ module Chem::Spatial::PBC
     end
   end
 
-  def unwrap(atoms : AtomCollection, cell : UnitCell) : Nil
+  def unwrap(atoms : AtomCollection, cell : Parallelepiped) : Nil
     atoms.coords.to_fract!
     moved_atoms = Set(Atom).new
     atoms.each_fragment do |fragment|
@@ -86,7 +86,7 @@ module Chem::Spatial::PBC
 
   # Returns the padding along each unit cell vector as fractional
   # numbers.
-  private def cell_paddings(cell : UnitCell,
+  private def cell_paddings(cell : Parallelepiped,
                             radius : Number) : StaticArray(Float64, 3)
     StaticArray(Float64, 3).new do |i|
       (radius / cell.size[i]).clamp(..0.5)
@@ -96,10 +96,10 @@ module Chem::Spatial::PBC
   # Returns offset vector to bring atoms to the primary unit cell unless
   # atoms are wrapped, otherwise returns a zero vector.
   private def offset_to_primary_unit_cell(atoms : AtomCollection,
-                                          cell : UnitCell) : Vec3
+                                          cell : Parallelepiped) : Vec3
     bounds = atoms.coords.bounds
-    wrapped = cell.bounds.includes?(bounds)
-    offset = wrapped ? Vec3.zero : (cell.bounds.center - bounds.center)
+    wrapped = cell.includes?(bounds)
+    offset = wrapped ? Vec3.zero : (cell.center - bounds.center)
     offset.to_fract(cell)
   end
 

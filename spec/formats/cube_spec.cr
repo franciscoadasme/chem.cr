@@ -34,7 +34,7 @@ describe Chem::Cube::Reader do
       EOS
     info = Chem::Spatial::Grid::Info.from_cube io
     info.dim.should eq({14, 20, 22})
-    info.bounds.should be_close Chem::Spatial::Bounds.new(
+    info.bounds.should be_close Chem::Spatial::Parallelepiped.new(
       vec3(-3.826155, -4.114553, -6.64407),
       Chem::Spatial::Mat3.basis(
         vec3(8.497002, 0.0, 0.0),

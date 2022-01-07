@@ -15,7 +15,7 @@ module Chem::PDB
     }
 
     @pdb_bonds = Hash(Tuple(Int32, Int32), Int32).new 0
-    @pdb_cell : UnitCell?
+    @pdb_cell : Spatial::Parallelepiped?
     @pdb_title = ""
     @header_decoded = false
 
@@ -110,7 +110,7 @@ module Chem::PDB
           gamma = @pull.at(47, 7).float
           @pull.error "Invalid angle" unless 0 < gamma <= 180
           unless x == 1 && y == 1 && z == 1 && alpha == 90 && beta == 90 && gamma == 90
-            @pdb_cell = UnitCell.new({x, y, z}, {alpha, beta, gamma})
+            @pdb_cell = Spatial::Parallelepiped.new({x, y, z}, {alpha, beta, gamma})
           end
         when "EXPDTA"
           str = @pull.at(10, 70).str.split(';')[0].delete "- "
@@ -367,7 +367,7 @@ module Chem::PDB
       if obj.is_a?(Structure)
         if (cell = obj.cell) && (!cell.i.normalize.x? || !cell.j.normalize.xy?)
           # compute the unit cell aligned to the xy-plane
-          ref = UnitCell.new cell.size, {cell.alpha, cell.beta, cell.gamma}
+          ref = Spatial::Parallelepiped.new cell.size, {cell.alpha, cell.beta, cell.gamma}
           transform = Spatial::Quat.aligning({cell.i, cell.j}, to: {ref.i, ref.j})
           Log.warn do
             "Aligning unit cell to the XY plane for writing PDB. \
@@ -458,7 +458,7 @@ module Chem::PDB
       @io.printf "JRNL        DOI    %-61s\n", expt.doi.not_nil! if expt.doi
     end
 
-    private def write(cell : UnitCell) : Nil
+    private def write(cell : Spatial::Parallelepiped) : Nil
       @io.printf "CRYST1%9.3f%9.3f%9.3f%7.2f%7.2f%7.2f %-11s%4d          \n",
         cell.a,
         cell.b,

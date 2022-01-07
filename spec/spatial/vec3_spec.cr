@@ -141,7 +141,7 @@ describe Chem::Spatial::Vec3 do
 
   describe "#image" do
     it "returns vector's pbc image" do
-      lat = Chem::UnitCell.new({8.77, 9.5, 24.74}, {88.22, 80, 70.34})
+      lat = Chem::Spatial::Parallelepiped.new({8.77, 9.5, 24.74}, {88.22, 80, 70.34})
       vec = vec3(8.745528, 6.330571, 1.334073)
       vec.image(lat, 1, 0, 0).should be_close [17.515528, 6.330571, 1.334073], 1e-6
       vec.image(lat, -1, 0, 0).should be_close [-0.024472, 6.330571, 1.334073], 1e-6
@@ -215,14 +215,14 @@ describe Chem::Spatial::Vec3 do
 
   describe "#to_cart" do
     it "converts fractional to Cartesian coordinates" do
-      cell = Chem::UnitCell.new({20, 20, 16})
+      cell = Chem::Spatial::Parallelepiped.new({20, 20, 16})
       vec3(0.5, 0.65, 1).to_cart(cell).should be_close [10, 13, 16], 1e-15
       vec3(1.5, 0.23, 0.9).to_cart(cell).should be_close [30, 4.6, 14.4], 1e-15
 
-      cell = Chem::UnitCell.new({20, 10, 16})
+      cell = Chem::Spatial::Parallelepiped.new({20, 10, 16})
       vec3(0.5, 0.65, 1).to_cart(cell).should be_close [10, 6.5, 16], 1e-15
 
-      cell = Chem::UnitCell.new(
+      cell = Chem::Spatial::Parallelepiped.new(
         vec3(8.497, 0.007, 0.031),
         vec3(10.148, 42.359, 0.503),
         vec3(7.296, 2.286, 53.093))
@@ -232,12 +232,12 @@ describe Chem::Spatial::Vec3 do
 
   describe "#to_fract" do
     it "converts Cartesian to fractional coordinates" do
-      cell = Chem::UnitCell.new({10, 20, 30})
+      cell = Chem::Spatial::Parallelepiped.new({10, 20, 30})
       vec3(0, 0, 0).to_fract(cell).should eq [0, 0, 0]
       vec3(1, 2, 3).to_fract(cell).should be_close [0.1, 0.1, 0.1], 1e-15
       vec3(2, 3, 15).to_fract(cell).should be_close [0.2, 0.15, 0.5], 1e-15
 
-      cell = Chem::UnitCell.new({20, 20, 30})
+      cell = Chem::Spatial::Parallelepiped.new({20, 20, 30})
       vec3(1, 2, 3).to_fract(cell).should be_close [0.05, 0.1, 0.1], 1e-15
     end
   end
@@ -277,7 +277,7 @@ describe Chem::Spatial::Vec3 do
     end
 
     it "wraps a Cartesian vector" do
-      cell = Chem::UnitCell.new({15, 20, 9})
+      cell = Chem::Spatial::Parallelepiped.new({15, 20, 9})
 
       vec3(0, 0, 0).wrap(cell).should eq [0, 0, 0]
       vec3(15, 20, 9).wrap(cell).should be_close [15, 20, 9], 1e-12
@@ -286,7 +286,7 @@ describe Chem::Spatial::Vec3 do
     end
 
     it "wraps a Cartesian vector around a center" do
-      cell = Chem::UnitCell.new({32, 20, 19})
+      cell = Chem::Spatial::Parallelepiped.new({32, 20, 19})
       center = vec3(32, 20, 19)
 
       [

@@ -102,24 +102,24 @@ module Chem
       @structure.experiment = expt
     end
 
-    def cell : UnitCell?
+    def cell : Spatial::Parallelepiped?
       @structure.cell
     end
 
-    def cell! : UnitCell
+    def cell! : Spatial::Parallelepiped
       @structure.cell || raise Spatial::NotPeriodicError.new
     end
 
-    def cell(cell : UnitCell?)
+    def cell(cell : Spatial::Parallelepiped?)
       @structure.cell = cell
     end
 
-    def cell(a : Spatial::Vec3, b : Spatial::Vec3, c : Spatial::Vec3) : UnitCell
-      @structure.cell = UnitCell.new a, b, c
+    def cell(a : Spatial::Vec3, b : Spatial::Vec3, c : Spatial::Vec3) : Spatial::Parallelepiped
+      @structure.cell = Spatial::Parallelepiped.new a, b, c
     end
 
-    def cell(a : Float64, b : Float64, c : Float64) : UnitCell
-      @structure.cell = UnitCell.new({a, b, c})
+    def cell(a : Float64, b : Float64, c : Float64) : Spatial::Parallelepiped
+      @structure.cell = Spatial::Parallelepiped.new({a, b, c})
     end
 
     def residue : Residue

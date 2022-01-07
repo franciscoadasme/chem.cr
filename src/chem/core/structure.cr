@@ -9,7 +9,7 @@ module Chem
 
     getter biases = [] of Chem::Bias
     property experiment : Structure::Experiment?
-    property cell : UnitCell?
+    property cell : Spatial::Parallelepiped?
     getter source_file : Path?
     property title : String = ""
 

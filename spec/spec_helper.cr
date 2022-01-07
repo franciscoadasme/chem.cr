@@ -77,8 +77,8 @@ module Spec
       end
     end
 
-    def match(actual_value : Chem::Spatial::Bounds) : Bool
-      return false unless @expected_value.is_a?(Chem::Spatial::Bounds)
+    def match(actual_value : Chem::Spatial::Parallelepiped) : Bool
+      return false unless @expected_value.is_a?(Chem::Spatial::Parallelepiped)
       actual_value.close_to?(@expected_value, @delta)
     end
 
@@ -135,8 +135,8 @@ def vec3(x : Number, y : Number, z : Number) : Chem::Spatial::Vec3
   Chem::Spatial::Vec3[x, y, z]
 end
 
-def bounds(a : Number, b : Number, c : Number) : Chem::Spatial::Bounds
-  Chem::Spatial::Bounds[a, b, c]
+def bounds(a : Number, b : Number, c : Number) : Chem::Spatial::Parallelepiped
+  Chem::Spatial::Parallelepiped[a, b, c]
 end
 
 def fake_structure(*, include_bonds : Bool = true) : Chem::Structure
@@ -264,13 +264,13 @@ end
 
 def make_grid(
   dim : Indexable(Int),
-  bounds : Chem::Spatial::Bounds | Indexable(Number::Primitive) = {0, 0, 0}
+  bounds : Chem::Spatial::Parallelepiped | Indexable(Number::Primitive) = {0, 0, 0}
 ) : Chem::Spatial::Grid
   dim = {dim[0], dim[1], dim[2]}
   if bounds.is_a?(Indexable)
-    bounds = Chem::Spatial::Bounds[bounds[0], bounds[1], bounds[2]]
+    bounds = Chem::Spatial::Parallelepiped[bounds[0], bounds[1], bounds[2]]
   end
-  Chem::Spatial::Grid.build(dim, bounds.as(Chem::Spatial::Bounds)) do |buffer|
+  Chem::Spatial::Grid.build(dim, bounds.as(Chem::Spatial::Parallelepiped)) do |buffer|
     dim.product.times do |i|
       buffer[i] = i.to_f
     end
@@ -279,14 +279,14 @@ end
 
 def make_grid(
   dim : Indexable(Int),
-  bounds : Chem::Spatial::Bounds | Indexable(Number::Primitive) = {0, 0, 0},
+  bounds : Chem::Spatial::Parallelepiped | Indexable(Number::Primitive) = {0, 0, 0},
   & : Int32, Int32, Int32 -> Number
 ) : Chem::Spatial::Grid
   dim = {dim[0], dim[1], dim[2]}
   if bounds.is_a?(Indexable)
-    bounds = Chem::Spatial::Bounds[bounds[0], bounds[1], bounds[2]]
+    bounds = Chem::Spatial::Parallelepiped[bounds[0], bounds[1], bounds[2]]
   end
-  Chem::Spatial::Grid.new(dim, bounds.as(Chem::Spatial::Bounds)).map_with_loc! do |_, (i, j, k)|
+  Chem::Spatial::Grid.new(dim, bounds.as(Chem::Spatial::Parallelepiped)).map_with_loc! do |_, (i, j, k)|
     (yield i, j, k).to_f
   end
 end

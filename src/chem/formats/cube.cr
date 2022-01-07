@@ -65,7 +65,7 @@ module Chem::Cube
       @attached = decode_attached
 
       vi, vj, vk = dvi * ni, dvj * nj, dvk * nk
-      bounds = Spatial::Bounds.new origin, Spatial::Mat3.basis(vi, vj, vk)
+      bounds = Spatial::Parallelepiped.new origin, Spatial::Mat3.basis(vi, vj, vk)
       Spatial::Grid::Info.new bounds, {ni, nj, nk}
     end
 
@@ -109,12 +109,10 @@ module Chem::Cube
     end
 
     private def write_header(grid : Spatial::Grid) : Nil
-      vi, vj, vk = grid.bounds.basisvec
-
       origin = grid.origin * ANGS_TO_BOHR
-      i = vi / grid.ni * ANGS_TO_BOHR
-      j = vj / grid.nj * ANGS_TO_BOHR
-      k = vk / grid.nk * ANGS_TO_BOHR
+      i = grid.bounds.i / grid.ni * ANGS_TO_BOHR
+      j = grid.bounds.j / grid.nj * ANGS_TO_BOHR
+      k = grid.bounds.k / grid.nk * ANGS_TO_BOHR
 
       @io.puts "CUBE FILE GENERATED WITH CHEM.CR"
       @io.puts "OUTER LOOP: X, MIDDLE LOOP: Y, INNER LOOP: Z"

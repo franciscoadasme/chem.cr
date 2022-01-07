@@ -79,7 +79,7 @@ module Chem::Mol2
             @pull.error "Invalid angle" unless 0 < beta <= 180
             gamma = @pull.next_f
             @pull.error "Invalid angle" unless 0 < gamma <= 180
-            builder.cell UnitCell.new({x, y, z}, {alpha, beta, gamma})
+            builder.cell Spatial::Parallelepiped.new({x, y, z}, {alpha, beta, gamma})
           when "@<TRIPOS>MOLECULE"
             break
           end
