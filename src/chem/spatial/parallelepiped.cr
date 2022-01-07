@@ -137,6 +137,10 @@ module Chem::Spatial
       new i * value, j * value, k * value
     end
 
+    def ==(rhs : self) : Bool
+      @origin == rhs.origin && @basis == rhs.basis
+    end
+
     # The length (in angstorms) of the first basis vector.
     def a : Float64
       i.abs
