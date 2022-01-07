@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../js/doc.js"></script>
 
   <meta name="repository-name" content="chem.cr">
-  <title>Chem::VASP - chem.cr master</title>
+  <title>Chem::Vec3 - chem.cr master</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
@@ -641,7 +641,7 @@
       
     </li>
   
-  <li class="parent open current" data-id="chem.cr/Chem/VASP" data-name="chem::vasp">
+  <li class="parent " data-id="chem.cr/Chem/VASP" data-name="chem::vasp">
       <a href="../Chem/VASP.html">VASP</a>
       
         <ul>
@@ -721,7 +721,7 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Vec3" data-name="chem::vec3">
+  <li class=" current" data-id="chem.cr/Chem/Vec3" data-name="chem::vec3">
       <a href="../Chem/Vec3.html">Vec3</a>
       
     </li>
@@ -810,10 +810,12 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">module</span> Chem::VASP
+  <span class="kind">struct</span> Chem::Vec3
 
 </h1>
 
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Chem/Vec3.html">Chem::Vec3</a></li><li class="superclass">Struct</li><li class="superclass">Value</li><li class="superclass">Object</li></ul>
 
 
 
@@ -841,8 +843,8 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/1b85470c154300f0054694100eab7384e7fd0edc/src/chem/formats/vasp/utils.cr#L1" target="_blank">
-        chem/formats/vasp/utils.cr
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/1b85470c154300f0054694100eab7384e7fd0edc/src/chem/spatial/parallelepiped.cr#L493" target="_blank">
+        chem/spatial/parallelepiped.cr
       </a>
     
     <br/>
@@ -852,9 +854,78 @@
 
 
 
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new-class-method" class="signature"><strong>.new</strong></a>
+        
+      </li>
+    
+  </ul>
 
 
 
+
+
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#image%28pld%3AParallelepiped%2Ci%3AInt%2Cj%3AInt%2Ck%3AInt%29%3Aself-instance-method" class="signature"><strong>#image</strong>(pld : Parallelepiped, i : Int, j : Int, k : Int) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns vector's PBC image with respect to the parallelepiped.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#initialize-instance-method" class="signature"><strong>#initialize</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_cart%28pld%3AParallelepiped%29%3Aself-instance-method" class="signature"><strong>#to_cart</strong>(pld : Parallelepiped) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a vector in Cartesian coordinates relative to <em>pld</em> (see <code>Parallelepiped#cart</code>).</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_fract%28pld%3AParallelepiped%29%3Aself-instance-method" class="signature"><strong>#to_fract</strong>(pld : Parallelepiped) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a vector in fractional coordinates relative to <em>pld</em> (see <code>Parallelepiped#fract</code>).</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#wrap%28pld%3AParallelepiped%2Caroundcenter%3Aself%29%3Aself-instance-method" class="signature"><strong>#wrap</strong>(pld : Parallelepiped, around center : <span class="k">self</span>) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the vector by wrapping into <em>pld</em> centered at <em>center</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#wrap%28pld%3AParallelepiped%29%3Aself-instance-method" class="signature"><strong>#wrap</strong>(pld : Parallelepiped) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the vector by wrapping into <em>pld</em>.</p></div>
+        
+      </li>
+    
+  </ul>
 
 
 
@@ -862,12 +933,216 @@
 
 <div class="methods-inherited">
   
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
 </div>
 
 
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="new-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>
+
+        <a class="method-permalink" href="#new-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/1b85470c154300f0054694100eab7384e7fd0edc/src/chem/spatial/parallelepiped.cr#L493" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
 
 
 
+
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="image(pld:Parallelepiped,i:Int,j:Int,k:Int):self-instance-method">
+      <div class="signature">
+        
+        def <strong>image</strong>(pld : Parallelepiped, i : Int, j : Int, k : Int) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#image%28pld%3AParallelepiped%2Ci%3AInt%2Cj%3AInt%2Ck%3AInt%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns vector's PBC image with respect to the parallelepiped.</p>
+<pre><code class="language-crystal">pld <span class="o">=</span> <span class="k">new</span> <span class="t">Parallelepiped</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">2</span>, <span class="n">3</span>}, {<span class="n">90</span>, <span class="n">90</span>, <span class="n">120</span>})
+pld.i <span class="c"># =&gt; Vec3[2.0, 0.0, 0.0]</span>
+pld.j <span class="c"># =&gt; Vec3[-1, 1.732, 0.0]</span>
+pld.k <span class="c"># =&gt; Vec3[0.0, 0.0, 3.0]</span>
+
+vec <span class="o">=</span> <span class="t">Vec3</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1.5</span>]
+vec.image(pld, <span class="n">1</span>, <span class="n">0</span>, <span class="n">0</span>) <span class="c"># =&gt; Vec3[3.0, 1.0, 1.5]</span>
+vec.image(pld, <span class="n">0</span>, <span class="n">1</span>, <span class="n">0</span>) <span class="c"># =&gt; Vec3[0.0, 2.732, 1.5]</span>
+vec.image(pld, <span class="n">0</span>, <span class="n">0</span>, <span class="n">1</span>) <span class="c"># =&gt; Vec3[1.0, 1.0, 4.5]</span>
+vec.image(pld, <span class="n">1</span>, <span class="n">0</span>, <span class="n">1</span>) <span class="c"># =&gt; Vec3[3.0, 1.0, 4.5]</span>
+vec.image(pld, <span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>) <span class="c"># =&gt; Vec3[2.0, 2.732, 4.5]</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/1b85470c154300f0054694100eab7384e7fd0edc/src/chem/spatial/parallelepiped.cr#L509" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="initialize-instance-method">
+      <div class="signature">
+        
+        def <strong>initialize</strong>
+
+        <a class="method-permalink" href="#initialize-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/1b85470c154300f0054694100eab7384e7fd0edc/src/chem/spatial/parallelepiped.cr#L493" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_cart(pld:Parallelepiped):self-instance-method">
+      <div class="signature">
+        
+        def <strong>to_cart</strong>(pld : Parallelepiped) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#to_cart%28pld%3AParallelepiped%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a vector in Cartesian coordinates relative to <em>pld</em> (see
+<code>Parallelepiped#cart</code>). The vector is assumed to be expressed in
+fractional coordinates.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/1b85470c154300f0054694100eab7384e7fd0edc/src/chem/spatial/parallelepiped.cr#L516" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_fract(pld:Parallelepiped):self-instance-method">
+      <div class="signature">
+        
+        def <strong>to_fract</strong>(pld : Parallelepiped) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#to_fract%28pld%3AParallelepiped%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a vector in fractional coordinates relative to <em>pld</em> (see
+<code>Parallelepiped#fract</code>). The vector is assumed to be expressed in
+Cartesian coordinates.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/1b85470c154300f0054694100eab7384e7fd0edc/src/chem/spatial/parallelepiped.cr#L523" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="wrap(pld:Parallelepiped,aroundcenter:self):self-instance-method">
+      <div class="signature">
+        
+        def <strong>wrap</strong>(pld : Parallelepiped, around center : <span class="k">self</span>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#wrap%28pld%3AParallelepiped%2Caroundcenter%3Aself%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the vector by wrapping into <em>pld</em> centered at <em>center</em>. The
+vector is assumed to be expressed in Cartesian coordinates.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/1b85470c154300f0054694100eab7384e7fd0edc/src/chem/spatial/parallelepiped.cr#L535" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="wrap(pld:Parallelepiped):self-instance-method">
+      <div class="signature">
+        
+        def <strong>wrap</strong>(pld : Parallelepiped) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#wrap%28pld%3AParallelepiped%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the vector by wrapping into <em>pld</em>. The vector is assumed to
+be expressed in Cartesian coordinates.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/1b85470c154300f0054694100eab7384e7fd0edc/src/chem/spatial/parallelepiped.cr#L529" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
 
 
 
