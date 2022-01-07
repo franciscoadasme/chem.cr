@@ -312,7 +312,8 @@ describe Chem::Spatial::Parallelepiped do
   describe "#inspect" do
     it "returns a delimited string representation" do
       pld = Chem::Spatial::Parallelepiped.new vec3(1, 2, 3), vec3(4, 5, 6), vec3(7, 8, 9)
-      pld.inspect.should eq "<Parallelepiped Vec3[ 1  2  3 ], Vec3[ 4  5  6 ], Vec3[ 7  8  9 ]>"
+      pld.inspect.should eq "#<Chem::Spatial::Parallelepiped:0x#{pld.object_id.to_s(16)} @origin=[ 0 0 0 ], \
+                             @basis=[[ 1  4  7 ], [ 2  5  8 ], [ 3  6  9 ]]>"
     end
   end
 

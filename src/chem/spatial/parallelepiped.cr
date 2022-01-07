@@ -323,7 +323,16 @@ module Chem::Spatial
     end
 
     def inspect(io : IO) : Nil
-      io << "<Parallelepiped " << i << ", " << j << ", " << k << '>'
+      format_spec = "%.#{PRINT_PRECISION}g"
+      io << "#<" << self.class.name << ":0x"
+      object_id.to_s(io, 16)
+      io << " @origin=[ "
+      io.printf format_spec, @origin.x
+      io << ' '
+      io.printf format_spec, @origin.y
+      io << ' '
+      io.printf format_spec, @origin.z
+      io << " ], @basis=" << @basis << '>'
     end
 
     # Inverted matrix basis.
