@@ -6,6 +6,7 @@ require "./spatial/mat3"
 require "./spatial/bounds"
 require "./spatial/grid"
 require "./spatial/quat"
+require "./spatial/parallelepiped"
 
 require "./spatial/coordinates_proxy"
 require "./spatial/kdtree"
