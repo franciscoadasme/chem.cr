@@ -779,10 +779,11 @@ module Chem::Spatial
 
     @[AlwaysInline]
     private def unsafe_coords_at(loc : Location) : Vec3
-      vi = ni == 1 ? Vec3.zero : bounds.bi / (ni - 1)
-      vj = nj == 1 ? Vec3.zero : bounds.bj / (nj - 1)
-      vk = nk == 1 ? Vec3.zero : bounds.bk / (nk - 1)
-      origin + loc[0] * vi + loc[1] * vj + loc[2] * vk
+      vec = origin
+      {% for i in 0..2 %}
+        vec += loc[{{i}}] * bounds.basisvec[{{i}}] / (@dim[{{i}}] - 1) if @dim[{{i}}] > 1
+      {% end %}
+      vec
     end
 
     @[AlwaysInline]

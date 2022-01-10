@@ -4,24 +4,30 @@ describe Chem::Spatial::Parallelepiped do
   describe ".new" do
     it "creates a parallelepiped with vectors" do
       pld = Chem::Spatial::Parallelepiped.new vec3(1, 0, 0), vec3(0, 1, 0), vec3(0, 0, 1)
-      pld.bi.should eq [1, 0, 0]
-      pld.bj.should eq [0, 1, 0]
-      pld.bk.should eq [0, 0, 1]
+      pld.basis.should eq Chem::Spatial::Mat3.basis(
+        vec3(1, 0, 0),
+        vec3(0, 1, 0),
+        vec3(0, 0, 1),
+      )
     end
 
     it "creates a parallelepiped with size" do
       pld = Chem::Spatial::Parallelepiped.new({74.23, 135.35, 148.46})
-      pld.bi.should be_close [74.23, 0, 0], 1e-6
-      pld.bj.should be_close [0, 135.35, 0], 1e-6
-      pld.bk.should be_close [0, 0, 148.46], 1e-6
+      pld.basis.should be_close Chem::Spatial::Mat3.basis(
+        vec3(74.23, 0, 0),
+        vec3(0, 135.35, 0),
+        vec3(0, 0, 148.46),
+      ), 1e-6
     end
 
     it "creates a parallelepiped with size and angles" do
       pld = Chem::Spatial::Parallelepiped.new(
         {8.661, 11.594, 21.552}, {86.389999, 82.209999, 76.349998})
-      pld.bi.should be_close [8.661, 0.0, 0.0], 1e-6
-      pld.bj.should be_close [2.736071, 11.266532, 0.0], 1e-6
-      pld.bk.should be_close [2.921216, 0.687043, 21.342052], 1e-6
+      pld.basis.should be_close Chem::Spatial::Mat3.basis(
+        vec3(8.661, 0.0, 0.0),
+        vec3(2.736071, 11.266532, 0.0),
+        vec3(2.921216, 0.687043, 21.342052),
+      ), 1e-6
     end
   end
 
@@ -231,13 +237,6 @@ describe Chem::Spatial::Parallelepiped do
     end
   end
 
-  describe "#bi" do
-    it "returns the first basis vector" do
-      pld = Chem::Spatial::Parallelepiped.new(vec3(1, 2, 3), vec3(4, 5, 6), vec3(7, 8, 9))
-      pld.bi.should eq [1, 2, 3]
-    end
-  end
-
   describe "#includes?" do
     it "tells if a vector is enclosed" do
       pld = Chem::Spatial::Parallelepiped[10, 20, 30]
@@ -282,23 +281,6 @@ describe Chem::Spatial::Parallelepiped do
       pld = Chem::Spatial::Parallelepiped.new vec3(1, 2, 3), vec3(4, 5, 6), vec3(7, 8, 9)
       pld.inspect.should eq "#<Chem::Spatial::Parallelepiped:0x#{pld.object_id.to_s(16)} @origin=[ 0 0 0 ], \
                              @basis=[[ 1  4  7 ], [ 2  5  8 ], [ 3  6  9 ]]>"
-    end
-  end
-
-  describe "#bj" do
-    it "returns the second basis vector" do
-      pld = Chem::Spatial::Parallelepiped.new(vec3(1, 2, 3), vec3(4, 5, 6), vec3(7, 8, 9))
-      pld.bj.should eq [4, 5, 6]
-    end
-  end
-
-  describe "#bk" do
-    it "returns the third basis vector" do
-      pld = Chem::Spatial::Parallelepiped.new(
-        vec3(1, 2, 3),
-        vec3(4, 5, 6),
-        vec3(7, 8, 9))
-      pld.bk.should eq [7, 8, 9]
     end
   end
 

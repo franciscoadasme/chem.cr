@@ -206,8 +206,9 @@ module Chem::Spatial
     def wrap(cell : Parallelepiped, around center : Vec3? = nil) : self
       center ||= cell.center
 
+      # TODO: move this conditional to `Parallelepiped.wrap`
       if cell.orthogonal?
-        vecs = {cell.bi, cell.bj, cell.bk}
+        vecs = cell.basisvec
         normed_vecs = vecs.map &.normalize
         map! do |vec|
           d = vec - center
@@ -219,6 +220,7 @@ module Chem::Spatial
         end
       else
         offset = center.to_fract(cell) - Vec3[0.5, 0.5, 0.5]
+        # FIXME: map!(fractional: true) does not work with external cell
         map!(fractional: true) { |vec| vec - (vec - offset).map(&.floor) }
       end
 

@@ -109,17 +109,14 @@ module Chem::Cube
     end
 
     private def write_header(grid : Spatial::Grid) : Nil
-      origin = grid.origin * ANGS_TO_BOHR
-      i = grid.bounds.bi / grid.ni * ANGS_TO_BOHR
-      j = grid.bounds.bj / grid.nj * ANGS_TO_BOHR
-      k = grid.bounds.bk / grid.nk * ANGS_TO_BOHR
-
       @io.puts "CUBE FILE GENERATED WITH CHEM.CR"
       @io.puts "OUTER LOOP: X, MIDDLE LOOP: Y, INNER LOOP: Z"
+      origin = grid.origin * ANGS_TO_BOHR
       formatl "%5d%12.6f%12.6f%12.6f", @atoms.n_atoms, origin.x, origin.y, origin.z
-      formatl "%5d%12.6f%12.6f%12.6f", grid.dim[0], i.x, i.y, i.z
-      formatl "%5d%12.6f%12.6f%12.6f", grid.dim[1], j.x, j.y, j.z
-      formatl "%5d%12.6f%12.6f%12.6f", grid.dim[2], k.x, k.y, k.z
+      grid.bounds.basisvec.each_with_index do |vec, i|
+        vec *= ANGS_TO_BOHR / grid.dim[i]
+        formatl "%5d%12.6f%12.6f%12.6f", grid.dim[i], vec.x, vec.y, vec.z
+      end
     end
   end
 end

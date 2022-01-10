@@ -21,9 +21,10 @@ describe Chem::Gen::Reader do
     structure = load_file "periodic.gen"
     structure.source_file.should eq Path[spec_file("periodic.gen")].expand
     structure.cell.should_not be_nil
-    structure.cell.not_nil!.bi.should eq [40, 0, 0]
-    structure.cell.not_nil!.bj.should eq [0, 20, 0]
-    structure.cell.not_nil!.bk.should eq [0, 0, 10]
+    structure.cell.not_nil!.basis.should eq Chem::Spatial::Mat3.basis(
+      vec3(40, 0, 0),
+      vec3(0, 20, 0),
+      vec3(0, 0, 10))
 
     structure.n_atoms.should eq 4
     structure.atoms.map(&.element.symbol).should eq ["Cl", "O", "O", "Na"]
@@ -39,9 +40,11 @@ describe Chem::Gen::Reader do
     structure = load_file "fractional.gen"
     structure.source_file.should eq Path[spec_file("fractional.gen")].expand
     structure.cell.should_not be_nil
-    structure.cell.not_nil!.bi.should eq [2.713546, 2.713546, 0]
-    structure.cell.not_nil!.bj.should eq [0, 2.713546, 2.713546]
-    structure.cell.not_nil!.bk.should eq [2.713546, 0, 2.713546]
+    structure.cell.not_nil!.basis.should eq Chem::Spatial::Mat3.basis(
+      vec3(2.713546, 2.713546, 0),
+      vec3(0, 2.713546, 2.713546),
+      vec3(2.713546, 0, 2.713546)
+    )
 
     structure.n_atoms.should eq 2
     structure.atoms.map(&.element.symbol).should eq ["Ga", "As"]

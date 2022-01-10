@@ -141,12 +141,13 @@ module Chem::Spatial
 
     # The length (in angstorms) of the first basis vector.
     def a : Float64
-      bi.abs
+      basisvec[0].abs
     end
 
     # Returns the angle (in degrees) between the second and third basis
     # vectors.
     def alpha : Float64
+      _, bj, bk = basisvec
       Spatial.angle bj, bk
     end
 
@@ -157,34 +158,24 @@ module Chem::Spatial
 
     # The length (in angstorms) of the second basis vector.
     def b : Float64
-      bj.abs
+      basisvec[1].abs
     end
 
-
-    # The first basis vector.
-    def bi : Vec3
-      Vec3[*@basis[.., 0]]
-    end
-
-    # The second basis vector.
-    def bj : Vec3
-      Vec3[*@basis[.., 1]]
-    end
-
-    # The third basis vector.
-    def bk : Vec3
-      Vec3[*@basis[.., 2]]
+    # Returns the basis vectors.
+    def basisvec : Tuple(Vec3, Vec3, Vec3)
+      {Vec3[*@basis[.., 0]], Vec3[*@basis[.., 1]], Vec3[*@basis[.., 2]]}
     end
 
     # Returns the angle (in degrees) between the first and third basis
     # vectors.
     def beta : Float64
+      bi, _, bk = basisvec
       Spatial.angle bi, bk
     end
 
     # The length (in angstorms) of the third basis vector.
     def c : Float64
-      bk.abs
+      basisvec[2].abs
     end
 
     # Returns the vector in Cartesian coordinates equivalent to the
@@ -195,7 +186,7 @@ module Chem::Spatial
 
     # Returns the center of the parallelepiped.
     def center : Vec3
-      @origin + (bi + bj + bk) * 0.5
+      @origin + basisvec.sum * 0.5
     end
 
     # Centers the parallelepiped at *vec*.
@@ -240,6 +231,7 @@ module Chem::Spatial
     # Vec3[5.0, 10.0, 20.0]
     # ```
     def each_vertex(& : Vec3 ->) : Nil
+      bi, bj, bk = basisvec
       2.times do |di|
         2.times do |dj|
           2.times do |dk|
@@ -258,6 +250,7 @@ module Chem::Spatial
     # Returns the angle (in degrees) between the first and second basis
     # vectors.
     def gamma : Float64
+      bi, bj, _ = basisvec
       Spatial.angle bi, bj
     end
 
@@ -301,6 +294,7 @@ module Chem::Spatial
     # ```
     def includes?(vec : Vec3) : Bool
       vec -= @origin unless @origin.zero?
+      bi, bj, bk = basisvec
       # TODO: replace by an internal enum (xyz and triclinic) that is
       # updated on new basis to avoid doing this each time
       if bi.x? && bj.y? && bk.z?
@@ -368,9 +362,9 @@ module Chem::Spatial
     # ```
     def pad(padding : Number) : self
       raise ArgumentError.new "Negative padding" if padding < 0
-      @origin -= (bi.resize(padding) + bj.resize(padding) + bk.resize(padding))
+      @origin -= basisvec.map(&.resize(padding)).sum
       padding *= 2
-      @basis = Spatial::Mat3.basis(bi.pad(padding), bj.pad(padding), bk.pad(padding))
+      @basis = Spatial::Mat3.basis(*basisvec.map(&.pad(padding)))
       self
     end
 
@@ -432,7 +426,7 @@ module Chem::Spatial
     # pld.vmax # => Vec3[6.5, 11.66, 11.6]
     # ```
     def vmax : Vec3
-      @origin + bi + bj + bk
+      @origin + basisvec.sum
     end
 
     # Returns the minimum vertex. This is equivalent to the
@@ -482,7 +476,13 @@ module Chem::Spatial
     # vec.image(pld, 1, 1, 1) # => Vec3[2.0, 2.732, 4.5]
     # ```
     def image(pld : Parallelepiped, i : Int, j : Int, k : Int) : self
-      self + pld.bi * i + pld.bj * j + pld.bk * k
+      # TODO: replace this method by pld.image(vec, {i, j, k})
+      {% begin %}
+        {% for var, i in %w(i j k) %}
+          pld.basisvec[{{i}}] * {{var.id}} +
+        {% end %}
+        self
+      {% end %}
     end
 
     # Returns a vector in Cartesian coordinates relative to *pld* (see

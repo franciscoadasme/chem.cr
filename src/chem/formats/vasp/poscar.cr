@@ -164,7 +164,7 @@ module Chem::VASP::Poscar
 
     private def write(cell : Spatial::Parallelepiped) : Nil
       @io.printf " %18.14f\n", 1.0
-      {cell.bi, cell.bj, cell.bk}.each do |vec|
+      cell.basisvec.each do |vec|
         @io.printf " %22.16f%22.16f%22.16f\n", vec.x, vec.y, vec.z
       end
     end
