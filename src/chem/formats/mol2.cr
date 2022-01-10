@@ -126,7 +126,8 @@ module Chem::Mol2
       if (structure = obj.as?(Structure)) && (cell = structure.cell)
         section "crysin" do
           a, b, c = cell.size
-          formatl "%.3f %.3f %.3f %.2f %.2f %.2f 1 1", a, b, c, cell.alpha, cell.beta, cell.gamma
+          alpha, beta, gamma = cell.angles
+          formatl "%.3f %.3f %.3f %.2f %.2f %.2f 1 1", a, b, c, alpha, beta, gamma
         end
       end
     end

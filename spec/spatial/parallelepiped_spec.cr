@@ -88,24 +88,10 @@ describe Chem::Spatial::Parallelepiped do
     end
   end
 
-  describe "#alpha" do
-    it "returns alpha" do
-      pld = Chem::Spatial::Parallelepiped.new(vec3(1, 0, 0), vec3(0, 1, 0), vec3(0, 1, 1))
-      pld.alpha.should eq 45
-    end
-  end
-
   describe "#angles" do
     it "returns parallelepiped's angles" do
       pld = Chem::Spatial::Parallelepiped.new({1, 2, 3}, {45, 120, 89})
       pld.angles.should be_close({45, 120, 89}, 1e-8)
-    end
-  end
-
-  describe "#beta" do
-    it "returns beta" do
-      pld = Chem::Spatial::Parallelepiped.new(vec3(1, 0, 0), vec3(0, 1, 0), vec3(0, 1, 1))
-      pld.beta.should eq 90
     end
   end
 
@@ -191,13 +177,6 @@ describe Chem::Spatial::Parallelepiped do
 
       pld = Chem::Spatial::Parallelepiped.new({20, 20, 30})
       pld.fract(vec3(1, 2, 3)).should be_close [0.05, 0.1, 0.1], 1e-15
-    end
-  end
-
-  describe "#gamma" do
-    it "returns gamma" do
-      pld = Chem::Spatial::Parallelepiped.new(vec3(1, 0, 0), vec3(0, 1, 0), vec3(0, 1, 1))
-      pld.gamma.should eq 90
     end
   end
 

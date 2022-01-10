@@ -139,28 +139,15 @@ module Chem::Spatial
       @origin == rhs.origin && @basis == rhs.basis
     end
 
-    # Returns the angle (in degrees) between the second and third basis
-    # vectors.
-    def alpha : Float64
-      _, bj, bk = basisvec
-      Spatial.angle bj, bk
-    end
-
     # Returns the parallelepiped angles (alpha, beta, gamma) in degrees.
     def angles : NumberTriple
-      {alpha, beta, gamma}
+      bi, bj, bk = basisvec
+      {Spatial.angle(bj, bk), Spatial.angle(bi, bk), Spatial.angle(bi, bj)}
     end
 
     # Returns the basis vectors.
     def basisvec : Tuple(Vec3, Vec3, Vec3)
       {Vec3[*@basis[.., 0]], Vec3[*@basis[.., 1]], Vec3[*@basis[.., 2]]}
-    end
-
-    # Returns the angle (in degrees) between the first and third basis
-    # vectors.
-    def beta : Float64
-      bi, _, bk = basisvec
-      Spatial.angle bi, bk
     end
 
     # Returns the vector in Cartesian coordinates equivalent to the
@@ -233,17 +220,11 @@ module Chem::Spatial
       inv_basis * vec
     end
 
-    # Returns the angle (in degrees) between the first and second basis
-    # vectors.
-    def gamma : Float64
-      bi, bj, _ = basisvec
-      Spatial.angle bi, bj
-    end
-
     # Returns `true` if the parallelepiped is hexagonal (*a* = *b*, *α*
     # = *β* = 90°, and *γ* = 120°), else `false`.
     def hexagonal? : Bool
       a, b, _ = size
+      alpha, beta, gamma = angles
       a.close_to?(b, 1e-15) &&
         alpha.close_to?(90, 1e-8) &&
         beta.close_to?(90, 1e-8) &&
@@ -314,6 +295,7 @@ module Chem::Spatial
     # = *γ* = 90°, and *β* ≠ 90°), else `false`.
     def monoclinic? : Bool
       a, _, c = size
+      alpha, beta, gamma = angles
       !a.close_to?(c, 1e-15) &&
         alpha.close_to?(90, 1e-8) &&
         !beta.close_to?(90, 1e-8) &&
@@ -323,9 +305,7 @@ module Chem::Spatial
     # Returns `true` if the parallelepiped is orthogonal (*α* = *β* =
     # *γ* = 90°), else `false`.
     def orthogonal? : Bool
-      alpha.close_to?(90, 1e-8) &&
-        beta.close_to?(90, 1e-8) &&
-        gamma.close_to?(90, 1e-8)
+      angles.all? &.close_to?(90, 1e-8)
     end
 
     # Returns `true` if the parallelepiped is orthorhombic (*a* ≠ *b* ≠
@@ -361,6 +341,7 @@ module Chem::Spatial
     # *c* and *α* = *β* = *γ* ≠ 90°), else `false`.
     def rhombohedral? : Bool
       a, b, c = size
+      alpha, beta, gamma = angles
       a.close_to?(b, 1e-15) &&
         a.close_to?(c, 1e-15) &&
         alpha.close_to?(beta, 1e-8) &&

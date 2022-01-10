@@ -368,7 +368,7 @@ module Chem::PDB
         if (cell = obj.cell) && (!cell.basisvec[0].x? || !cell.basisvec[1].xy?)
           # compute the unit cell aligned to the xy-plane
           # TODO: add `Spatial::Basis.basis({}, {alpha, beta, gamma})`
-          ref = Spatial::Parallelepiped.new cell.size, {cell.alpha, cell.beta, cell.gamma}
+          ref = Spatial::Parallelepiped.new cell.size, cell.angles
           transform = Spatial::Quat.aligning(cell.basisvec[..1], to: ref.basisvec[..1])
           Log.warn do
             "Aligning unit cell to the XY plane for writing PDB. \
@@ -462,13 +462,14 @@ module Chem::PDB
 
     private def write(cell : Spatial::Parallelepiped) : Nil
       a, b, c = cell.size
+      alpha, beta, gamma = cell.angles
       @io.printf "CRYST1%9.3f%9.3f%9.3f%7.2f%7.2f%7.2f %-11s%4d          \n",
         a,
         b,
         c,
-        cell.alpha,
-        cell.beta,
-        cell.gamma,
+        alpha,
+        beta,
+        gamma,
         "P 1", # default space group
         1      # default Z value
     end

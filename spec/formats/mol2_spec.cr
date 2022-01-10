@@ -81,9 +81,7 @@ describe Chem::Mol2::Reader do
     structure = load_file("water_in_box.mol2")
     cell = structure.cell.should_not be_nil
     cell.size.should be_close [40.961, 18.65, 22.52], 1e-3
-    cell.alpha.should be_close 90, 1e-2
-    cell.beta.should be_close 90.77, 1e-2
-    cell.gamma.should be_close 120, 1e-2
+    cell.angles.should be_close({90, 90.77, 120}, 1e-2)
   end
 
   it "sets formal charges" do

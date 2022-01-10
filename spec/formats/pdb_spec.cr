@@ -125,9 +125,7 @@ describe Chem::PDB do
       st.cell.should_not be_nil
       cell = st.cell.not_nil!
       cell.size.should eq [40.960, 18.650, 22.520]
-      cell.alpha.should eq 90
-      cell.beta.should eq 90.77
-      cell.gamma.should eq 90
+      cell.angles.should eq({90, 90.77, 90})
     end
 
     it "parses a PDB file with experimental header" do
