@@ -367,9 +367,10 @@ module Chem::PDB
       if obj.is_a?(Structure)
         if (cell = obj.cell) && (!cell.basisvec[0].x? || !cell.basisvec[1].xy?)
           # compute the unit cell aligned to the xy-plane
-          # TODO: add `Spatial::Basis.basis({}, {alpha, beta, gamma})`
           ref = Spatial::Parallelepiped.new cell.size, cell.angles
-          transform = Spatial::Quat.aligning(cell.basisvec[..1], to: ref.basisvec[..1])
+          transform = Spatial::AffineTransform
+            .aligning(cell.basisvec[..1], to: ref.basisvec[..1])
+            .translate(cell.origin)
           Log.warn do
             "Aligning unit cell to the XY plane for writing PDB. \
              This will change the atom coordinates."
@@ -428,7 +429,7 @@ module Chem::PDB
       @record_index += 1
     end
 
-    private def write(atom : Atom, transform : Spatial::Quat? = nil) : Nil
+    private def write(atom : Atom, transform : Spatial::AffineTransform? = nil) : Nil
       vec = atom.coords
       vec = transform * vec if transform
       @io.printf "%-6s%5s %4s %-4s%s%4s%1s   %8.3f%8.3f%8.3f%6.2f%6.2f          %2s%2s\n",
