@@ -139,11 +139,6 @@ module Chem::Spatial
       @origin == rhs.origin && @basis == rhs.basis
     end
 
-    # The length (in angstorms) of the first basis vector.
-    def a : Float64
-      basisvec[0].abs
-    end
-
     # Returns the angle (in degrees) between the second and third basis
     # vectors.
     def alpha : Float64
@@ -156,11 +151,6 @@ module Chem::Spatial
       {alpha, beta, gamma}
     end
 
-    # The length (in angstorms) of the second basis vector.
-    def b : Float64
-      basisvec[1].abs
-    end
-
     # Returns the basis vectors.
     def basisvec : Tuple(Vec3, Vec3, Vec3)
       {Vec3[*@basis[.., 0]], Vec3[*@basis[.., 1]], Vec3[*@basis[.., 2]]}
@@ -171,11 +161,6 @@ module Chem::Spatial
     def beta : Float64
       bi, _, bk = basisvec
       Spatial.angle bi, bk
-    end
-
-    # The length (in angstorms) of the third basis vector.
-    def c : Float64
-      basisvec[2].abs
     end
 
     # Returns the vector in Cartesian coordinates equivalent to the
@@ -209,6 +194,7 @@ module Chem::Spatial
     # Returns `true` if the parallelepiped is cubic (*a* = *b* = *c* and
     # *α* = *β* = *γ* = 90°), else `false`.
     def cubic? : Bool
+      a, b, c = size
       a.close_to?(b, 1e-15) && b.close_to?(c, 1e-15) && orthogonal?
     end
 
@@ -257,6 +243,7 @@ module Chem::Spatial
     # Returns `true` if the parallelepiped is hexagonal (*a* = *b*, *α*
     # = *β* = 90°, and *γ* = 120°), else `false`.
     def hexagonal? : Bool
+      a, b, _ = size
       a.close_to?(b, 1e-15) &&
         alpha.close_to?(90, 1e-8) &&
         beta.close_to?(90, 1e-8) &&
@@ -326,6 +313,7 @@ module Chem::Spatial
     # Returns `true` if the parallelepiped is monoclinic (*a* ≠ *c*, *α*
     # = *γ* = 90°, and *β* ≠ 90°), else `false`.
     def monoclinic? : Bool
+      a, _, c = size
       !a.close_to?(c, 1e-15) &&
         alpha.close_to?(90, 1e-8) &&
         !beta.close_to?(90, 1e-8) &&
@@ -343,6 +331,7 @@ module Chem::Spatial
     # Returns `true` if the parallelepiped is orthorhombic (*a* ≠ *b* ≠
     # *c* and *α* = *β* = *γ* = 90°), else `false`.
     def orthorhombic? : Bool
+      a, b, c = size
       !a.close_to?(b, 1e-15) &&
         !a.close_to?(c, 1e-15) &&
         !b.close_to?(c, 1e-15) &&
@@ -371,6 +360,7 @@ module Chem::Spatial
     # Returns `true` if the parallelepiped is rhombohedral (*a* = *b* =
     # *c* and *α* = *β* = *γ* ≠ 90°), else `false`.
     def rhombohedral? : Bool
+      a, b, c = size
       a.close_to?(b, 1e-15) &&
         a.close_to?(c, 1e-15) &&
         alpha.close_to?(beta, 1e-8) &&
@@ -380,12 +370,13 @@ module Chem::Spatial
 
     # Returns the lengths of the basis vectors.
     def size : Size3
-      Size3[a, b, c]
+      Size3[*basisvec.map(&.abs)]
     end
 
     # Returns `true` if the parallelepiped is tetragonal (*a* = *b* ≠
     # *c* and *α* = *β* = *γ* = 90°), else `false`.
     def tetragonal? : Bool
+      a, b, c = size
       a.close_to?(b, 1e-15) && !a.close_to?(c, 1e-15) && orthogonal?
     end
 

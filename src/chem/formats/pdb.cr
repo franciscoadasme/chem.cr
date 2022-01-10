@@ -461,10 +461,11 @@ module Chem::PDB
     end
 
     private def write(cell : Spatial::Parallelepiped) : Nil
+      a, b, c = cell.size
       @io.printf "CRYST1%9.3f%9.3f%9.3f%7.2f%7.2f%7.2f %-11s%4d          \n",
-        cell.a,
-        cell.b,
-        cell.c,
+        a,
+        b,
+        c,
         cell.alpha,
         cell.beta,
         cell.gamma,

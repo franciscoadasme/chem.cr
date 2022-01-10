@@ -88,14 +88,6 @@ describe Chem::Spatial::Parallelepiped do
     end
   end
 
-  describe "#a" do
-    it "return the size of the first vector" do
-      Chem::Spatial::Parallelepiped.new({8.661, 11.594, 21.552}).a.should eq 8.661
-      pld = Chem::Spatial::Parallelepiped.new({8.661, 11.594, 21.552}, {86.39, 82.201, 76.345})
-      pld.a.should eq 8.661
-    end
-  end
-
   describe "#alpha" do
     it "returns alpha" do
       pld = Chem::Spatial::Parallelepiped.new(vec3(1, 0, 0), vec3(0, 1, 0), vec3(0, 1, 1))
@@ -110,26 +102,10 @@ describe Chem::Spatial::Parallelepiped do
     end
   end
 
-  describe "#b" do
-    it "return the size of the second vector" do
-      Chem::Spatial::Parallelepiped.new({8.661, 11.594, 21.552}).b.should eq 11.594
-      pld = Chem::Spatial::Parallelepiped.new({8.661, 11.594, 21.552}, {86.39, 82.201, 76.345})
-      pld.b.should eq 11.594
-    end
-  end
-
   describe "#beta" do
     it "returns beta" do
       pld = Chem::Spatial::Parallelepiped.new(vec3(1, 0, 0), vec3(0, 1, 0), vec3(0, 1, 1))
       pld.beta.should eq 90
-    end
-  end
-
-  describe "#c" do
-    it "return the size of the third vector" do
-      Chem::Spatial::Parallelepiped.new({8.661, 11.594, 21.552}).c.should eq 21.552
-      pld = Chem::Spatial::Parallelepiped.new({8.661, 11.594, 21.552}, {86.39, 82.201, 76.345})
-      pld.c.should be_close 21.552, 1e-8
     end
   end
 
