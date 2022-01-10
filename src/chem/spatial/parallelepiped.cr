@@ -144,12 +144,6 @@ module Chem::Spatial
       bi.abs
     end
 
-    # :ditto:
-    def a=(value : Float64) : Float64
-      @basis = Mat3.basis bi.resize(value), bj, bk
-      value
-    end
-
     # Returns the angle (in degrees) between the second and third basis
     # vectors.
     def alpha : Float64
@@ -166,21 +160,10 @@ module Chem::Spatial
       bj.abs
     end
 
-    # :ditto:
-    def b=(value : Float64) : Float64
-      @basis = Mat3.basis bi, bj.resize(value), bk
-      value
-    end
 
     # The first basis vector.
     def bi : Vec3
       Vec3[*@basis[.., 0]]
-    end
-
-    # :ditto:
-    def bi=(vec : Vec3) : Vec3
-      @basis = Mat3.basis vec, bj, bk
-      vec
     end
 
     # The second basis vector.
@@ -188,21 +171,9 @@ module Chem::Spatial
       Vec3[*@basis[.., 1]]
     end
 
-    # :ditto:
-    def bj=(vec : Vec3) : Vec3
-      @basis = Mat3.basis bi, vec, bk
-      vec
-    end
-
     # The third basis vector.
     def bk : Vec3
       Vec3[*@basis[.., 2]]
-    end
-
-    # :ditto:
-    def bk=(vec : Vec3) : Vec3
-      @basis = Mat3.basis bi, bj, vec
-      vec
     end
 
     # Returns the angle (in degrees) between the first and third basis
@@ -214,12 +185,6 @@ module Chem::Spatial
     # The length (in angstorms) of the third basis vector.
     def c : Float64
       bk.abs
-    end
-
-    # :ditto:
-    def c=(value : Float64) : Float64
-      @basis = Mat3.basis bi, bj, bk.resize(value)
-      value
     end
 
     # Returns the vector in Cartesian coordinates equivalent to the

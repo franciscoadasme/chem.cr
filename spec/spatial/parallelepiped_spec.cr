@@ -90,14 +90,6 @@ describe Chem::Spatial::Parallelepiped do
     end
   end
 
-  describe "#a=" do
-    it "sets the size of the first basis vector" do
-      pld = Chem::Spatial::Parallelepiped.new({10, 20, 30})
-      pld.a = 20
-      pld.basis.should eq Chem::Spatial::Mat3.diagonal(20, 20, 30)
-    end
-  end
-
   describe "#alpha" do
     it "returns alpha" do
       pld = Chem::Spatial::Parallelepiped.new(vec3(1, 0, 0), vec3(0, 1, 0), vec3(0, 1, 1))
@@ -120,14 +112,6 @@ describe Chem::Spatial::Parallelepiped do
     end
   end
 
-  describe "#b=" do
-    it "sets the size of the second basis vector" do
-      pld = Chem::Spatial::Parallelepiped.new({10, 20, 30})
-      pld.b = 5
-      pld.basis.should eq Chem::Spatial::Mat3.diagonal(10, 5, 30)
-    end
-  end
-
   describe "#beta" do
     it "returns beta" do
       pld = Chem::Spatial::Parallelepiped.new(vec3(1, 0, 0), vec3(0, 1, 0), vec3(0, 1, 1))
@@ -140,14 +124,6 @@ describe Chem::Spatial::Parallelepiped do
       Chem::Spatial::Parallelepiped.new({8.661, 11.594, 21.552}).c.should eq 21.552
       pld = Chem::Spatial::Parallelepiped.new({8.661, 11.594, 21.552}, {86.39, 82.201, 76.345})
       pld.c.should be_close 21.552, 1e-8
-    end
-  end
-
-  describe "#c=" do
-    it "sets the size of the third basis vector" do
-      pld = Chem::Spatial::Parallelepiped.new({10, 20, 30})
-      pld.c = 4
-      pld.basis.should eq Chem::Spatial::Mat3.diagonal(10, 20, 4)
     end
   end
 
@@ -262,14 +238,6 @@ describe Chem::Spatial::Parallelepiped do
     end
   end
 
-  describe "#bi=" do
-    it "sets the size of the first basis vector" do
-      pld = Chem::Spatial::Parallelepiped.new({10, 20, 30})
-      pld.bi = vec3(1, 2, 3)
-      pld.basis.should eq Chem::Spatial::Mat3.basis(vec3(1, 2, 3), vec3(0, 20, 0), vec3(0, 0, 30))
-    end
-  end
-
   describe "#includes?" do
     it "tells if a vector is enclosed" do
       pld = Chem::Spatial::Parallelepiped[10, 20, 30]
@@ -324,17 +292,6 @@ describe Chem::Spatial::Parallelepiped do
     end
   end
 
-  describe "#bj=" do
-    it "sets the size of the second basis vector" do
-      pld = Chem::Spatial::Parallelepiped.new({10, 20, 30})
-      pld.bj = vec3(1, 2, 3)
-      pld.basis.should eq Chem::Spatial::Mat3.basis(
-        vec3(10, 0, 0),
-        vec3(1, 2, 3),
-        vec3(0, 0, 30))
-    end
-  end
-
   describe "#bk" do
     it "returns the third basis vector" do
       pld = Chem::Spatial::Parallelepiped.new(
@@ -342,17 +299,6 @@ describe Chem::Spatial::Parallelepiped do
         vec3(4, 5, 6),
         vec3(7, 8, 9))
       pld.bk.should eq [7, 8, 9]
-    end
-  end
-
-  describe "#bk=" do
-    it "sets the size of the third basis vector" do
-      pld = Chem::Spatial::Parallelepiped.new({10, 20, 30})
-      pld.bk = vec3(1, 2, 3)
-      pld.basis.should eq Chem::Spatial::Mat3.basis(
-        vec3(10, 0, 0),
-        vec3(0, 20, 0),
-        vec3(1, 2, 3))
     end
   end
 
