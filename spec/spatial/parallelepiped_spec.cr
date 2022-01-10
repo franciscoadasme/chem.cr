@@ -130,7 +130,7 @@ describe Chem::Spatial::Parallelepiped do
   describe "#center_at_origin" do
     it "centers the parallelepiped at the origin" do
       pld = Chem::Spatial::Parallelepiped.new(vec3(2, 5, 23), {10, 20, 30})
-      pld.center_at_origin
+      pld = pld.center_at_origin
       pld.center.should eq [0, 0, 0]
     end
   end
@@ -150,7 +150,7 @@ describe Chem::Spatial::Parallelepiped do
   describe "#each_vertex" do
     it "yields parallelepiped' vertices" do
       pld = Chem::Spatial::Parallelepiped.new({8.77, 9.5, 24.74}, {88.22, 80, 70.34})
-      pld.center_at_origin
+      pld = pld.center_at_origin
 
       vertices = [] of Chem::Spatial::Vec3
       pld.each_vertex { |vec| vertices << vec }
@@ -234,8 +234,8 @@ describe Chem::Spatial::Parallelepiped do
   describe "#inspect" do
     it "returns a delimited string representation" do
       pld = Chem::Spatial::Parallelepiped.new vec3(1, 2, 3), vec3(4, 5, 6), vec3(7, 8, 9)
-      pld.inspect.should eq "#<Chem::Spatial::Parallelepiped:0x#{pld.object_id.to_s(16)} @origin=[ 0 0 0 ], \
-                             @basis=[[ 1  4  7 ], [ 2  5  8 ], [ 3  6  9 ]]>"
+      pld.inspect.should eq "Chem::Spatial::Parallelepiped(@origin=[ 0 0 0 ], \
+                             @basis=[[ 1  4  7 ], [ 2  5  8 ], [ 3  6  9 ]])"
     end
   end
 
@@ -279,7 +279,7 @@ describe Chem::Spatial::Parallelepiped do
     context "given an orthogonal parallelepiped" do
       it "returns a padded parallelepiped" do
         pld = Chem::Spatial::Parallelepiped.cubic(10)
-        pld.pad(2)
+        pld = pld.pad(2)
         pld.size.should eq Chem::Spatial::Size3[14, 14, 14]
         pld.center.should eq pld.center
       end
@@ -288,7 +288,7 @@ describe Chem::Spatial::Parallelepiped do
     context "given a non-orthogonal parallelepiped" do
       it "returns a padded parallelepiped" do
         pld = Chem::Spatial::Parallelepiped.new({4, 7, 8.5}, {90, 120, 90})
-        pld.pad(0.5)
+        pld = pld.pad(0.5)
         pld.size.should eq Chem::Spatial::Size3[5, 8, 9.5]
         pld.center.should be_close pld.center, 1e-15
       end
@@ -336,7 +336,7 @@ describe Chem::Spatial::Parallelepiped do
   describe "#translate" do
     it "translates the origin" do
       pld = Chem::Spatial::Parallelepiped.hexagonal(10, 10)
-      pld.translate(vec3(-5, 1, 20)).translate(vec3(1, 2, 10))
+      pld = pld.translate(vec3(-5, 1, 20)).translate(vec3(1, 2, 10))
       pld.vmin.should eq [-4, 3, 30]
       pld.angles.should be_close({90, 90, 120}, 1e-3)
       pld.size.should be_close Chem::Spatial::Size3[10, 10, 10], 1e-12
@@ -383,7 +383,7 @@ describe Chem::Spatial::Parallelepiped do
     context "given a non-orthogonal parallelepiped" do
       it "returns the maximum vertex" do
         pld = Chem::Spatial::Parallelepiped.hexagonal(10, 12)
-        pld.translate(vec3(1.5, 3, -0.4))
+        pld = pld.translate(vec3(1.5, 3, -0.4))
         pld.vmax.should be_close [6.5, 11.66, 11.6], 1e-3
       end
     end
@@ -399,7 +399,7 @@ describe Chem::Spatial::Parallelepiped do
     context "given a non-orthogonal parallelepiped" do
       it "returns the minimum vertex (origin)" do
         pld = Chem::Spatial::Parallelepiped.hexagonal(10, 12)
-        pld.translate(vec3(1.5, 3, -0.4))
+        pld = pld.translate(vec3(1.5, 3, -0.4))
         pld.vmin.should eq [1.5, 3, -0.4]
       end
     end

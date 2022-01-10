@@ -9,7 +9,7 @@ module Chem::Spatial
   # way, the basis matrix can be used to transform from Cartesian to
   # fractional coordinates, and viceversa, by matrix multiplication (see
   # `#cart` and `#fract`).
-  class Parallelepiped
+  struct Parallelepiped
     # Matrix containing the basis vectors.
     getter basis : Mat3
     # Origin of the parallelepiped.
@@ -275,15 +275,13 @@ module Chem::Spatial
 
     def inspect(io : IO) : Nil
       format_spec = "%.#{PRINT_PRECISION}g"
-      io << "#<" << self.class.name << ":0x"
-      object_id.to_s(io, 16)
-      io << " @origin=[ "
+      io << self.class.name << "(@origin=[ "
       io.printf format_spec, @origin.x
       io << ' '
       io.printf format_spec, @origin.y
       io << ' '
       io.printf format_spec, @origin.z
-      io << " ], @basis=" << @basis << '>'
+      io << " ], @basis=" << @basis << ')'
     end
 
     # Inverted matrix basis.
@@ -318,9 +316,9 @@ module Chem::Spatial
         orthogonal?
     end
 
-    # Expands the extents of the parallelepiped by *padding* in every
-    # direction. Note that its size is actually increased by `padding *
-    # 2`.
+    # Returns a new parallelepiped by expanding the extents by *padding*
+    # in every direction. Note that its size is actually increased by
+    # `padding * 2`.
     #
     # ```
     # pld = Parallelepiped.new(Vec3[1, 5, 3], {10, 5, 12})
@@ -331,10 +329,10 @@ module Chem::Spatial
     # ```
     def pad(padding : Number) : self
       raise ArgumentError.new "Negative padding" if padding < 0
-      @origin -= basisvec.map(&.resize(padding)).sum
+      origin = @origin - basisvec.map(&.resize(padding)).sum
       padding *= 2
-      @basis = Spatial::Mat3.basis(*basisvec.map(&.pad(padding)))
-      self
+      basis = Mat3.basis(*basisvec.map(&.pad(padding)))
+      {{@type}}.new origin, basis
     end
 
     # Returns `true` if the parallelepiped is rhombohedral (*a* = *b* =
@@ -361,7 +359,7 @@ module Chem::Spatial
       a.close_to?(b, 1e-15) && !a.close_to?(c, 1e-15) && orthogonal?
     end
 
-    # Translates the parallelepiped by *offset*.
+    # Returns a new parallelepiped translated by *offset*.
     #
     # ```
     # pld = Parallelepiped.new(Vec3[-5, 1, 20], {10, 10, 10}, {90, 90, 120})
@@ -369,8 +367,7 @@ module Chem::Spatial
     # pld.origin # => Vec3[-4.0, 3.0, 30.0]
     # ```
     def translate(offset : Vec3) : self
-      @origin += offset
-      self
+      {{@type}}.new @origin + offset, @basis
     end
 
     # Returns `true` if the parallelepiped is triclinic (not orthogonal,
