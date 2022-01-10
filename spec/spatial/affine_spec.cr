@@ -1,6 +1,26 @@
 require "../spec_helper"
 
 describe Chem::Spatial::AffineTransform do
+  describe ".aligning" do
+    it "returns a transformation that aligns two vectors" do
+      u = vec3(1, 2, 4)
+      v = vec3(-1, 1, 25)
+      transform = Chem::Spatial::AffineTransform.aligning(u, v)
+      (transform * u).normalize.should eq v.normalize
+    end
+
+    it "returns a transformation that aligns two pairs of vectors" do
+      transform = Chem::Spatial::Quat.rotation(vec3(1, 2, 3), 65)
+      u = vec3(-5, 1, 3)
+      v = vec3(6, 2, 62)
+      uu = transform * u
+      vv = transform * v
+      transform = Chem::Spatial::Quat.aligning({uu, vv}, to: {u, v})
+      (transform * uu).normalize.should be_close u.normalize, 1e-15
+      (transform * vv).normalize.should be_close v.normalize, 1e-15
+    end
+  end
+
   describe ".identity" do
     it "creates an identity transformation" do
       transform = Chem::Spatial::AffineTransform.identity

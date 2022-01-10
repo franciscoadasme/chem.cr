@@ -61,6 +61,22 @@ module Chem::Spatial
     def initialize(@linear_map : Mat3, @offset : Vec3)
     end
 
+    # Returns a transformation encoding the rotation operation to align
+    # *u* to *v*.
+    def self.aligning(u : Vec3, to v : Vec3) : self
+      new Quat.aligning(u, v).to_mat3, Vec3.zero
+    end
+
+    # Returns a transformation encoding the rotation to align *u[0]* to
+    # *v[0]* and *u[1]* to *v[1]*.
+    #
+    # First compute the alignment of *u[0]* to *v[0]*, then the
+    # alignment of the transformed *u[1]* to *v[1]* on the plane
+    # perpendicular to *v[0]* by taking their projections.
+    def self.aligning(u : Tuple(Vec3, Vec3), to v : Tuple(Vec3, Vec3)) : self
+      new Quat.aligning(u, v).to_mat3, Vec3.zero
+    end
+
     # Returns the identity transformation.
     def self.identity : self
       AffineTransform.new Mat3.identity, Vec3.zero
