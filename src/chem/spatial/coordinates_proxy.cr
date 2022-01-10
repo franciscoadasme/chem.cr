@@ -207,7 +207,7 @@ module Chem::Spatial
       center ||= cell.center
 
       if cell.orthogonal?
-        vecs = {cell.i, cell.j, cell.k}
+        vecs = {cell.bi, cell.bj, cell.bk}
         normed_vecs = vecs.map &.normalize
         map! do |vec|
           d = vec - center

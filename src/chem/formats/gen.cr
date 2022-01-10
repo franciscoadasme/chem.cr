@@ -87,7 +87,7 @@ module Chem::Gen
     end
 
     private def write(cell : Spatial::Parallelepiped) : Nil
-      {Spatial::Vec3.zero, cell.i, cell.j, cell.k}.each do |vec|
+      {Spatial::Vec3.zero, cell.bi, cell.bj, cell.bk}.each do |vec|
         @io.printf "%20.10E%20.10E%20.10E\n", vec.x, vec.y, vec.z
       end
     end

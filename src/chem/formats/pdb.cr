@@ -365,10 +365,11 @@ module Chem::PDB
 
       formatl "MODEL     %4d%66s", @entry_index + 1, ' ' if multi?
       if obj.is_a?(Structure)
-        if (cell = obj.cell) && (!cell.i.normalize.x? || !cell.j.normalize.xy?)
+        if (cell = obj.cell) && (!cell.bi.x? || !cell.bj.xy?)
           # compute the unit cell aligned to the xy-plane
+          # TODO: add `Spatial::Basis.basis({}, {alpha, beta, gamma})`
           ref = Spatial::Parallelepiped.new cell.size, {cell.alpha, cell.beta, cell.gamma}
-          transform = Spatial::Quat.aligning({cell.i, cell.j}, to: {ref.i, ref.j})
+          transform = Spatial::Quat.aligning({cell.bi, cell.bj}, to: {ref.bi, ref.bj})
           Log.warn do
             "Aligning unit cell to the XY plane for writing PDB. \
              This will change the atom coordinates."

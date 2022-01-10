@@ -91,9 +91,9 @@ describe Chem::Structure::Builder do
     end
 
     lat = st.cell.not_nil!
-    lat.i.should eq [25, 32, 12]
-    lat.j.should eq [12, 34, 23]
-    lat.k.should eq [12, 68, 21]
+    lat.bi.should eq [25, 32, 12]
+    lat.bj.should eq [12, 34, 23]
+    lat.bk.should eq [12, 68, 21]
   end
 
   it "builds a structure with cell using numbers" do
@@ -102,9 +102,9 @@ describe Chem::Structure::Builder do
     end
 
     lat = st.cell.not_nil!
-    lat.i.should eq [25, 0, 0]
-    lat.j.should eq [0, 34, 0]
-    lat.k.should eq [0, 0, 21]
+    lat.bi.should eq [25, 0, 0]
+    lat.bj.should eq [0, 34, 0]
+    lat.bk.should eq [0, 0, 21]
   end
 
   it "builds a structure with cell using numbers (one-line)" do
@@ -113,9 +113,9 @@ describe Chem::Structure::Builder do
     end
 
     lat = st.cell.not_nil!
-    lat.i.should eq [25, 0, 0]
-    lat.j.should eq [0, 34, 0]
-    lat.k.should eq [0, 0, 21]
+    lat.bi.should eq [25, 0, 0]
+    lat.bj.should eq [0, 34, 0]
+    lat.bk.should eq [0, 0, 21]
   end
 
   it "names chains automatically" do
