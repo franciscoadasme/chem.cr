@@ -426,6 +426,11 @@ module Chem::Spatial
     def wrap(vec : Vec3, around center : Vec3) : Vec3
       cart(fract(vec - @origin).wrap(fract(center))) + @origin
     end
+
+    # Whether the parallelepiped is aligned to the X, Y, and Z axes.
+    def xyz? : Bool
+      orthogonal? && basisvec[0].x?
+    end
   end
 
   struct Vec3

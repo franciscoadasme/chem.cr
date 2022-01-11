@@ -439,4 +439,21 @@ describe Chem::Spatial::Parallelepiped do
       end
     end
   end
+
+  describe "#xyz?" do
+    it "returns true if aligned to XYZ" do
+      Chem::Spatial::Parallelepiped[1, 2, 3].xyz?.should be_true
+      Chem::Spatial::Parallelepiped.cubic(5).xyz?.should be_true
+    end
+
+    it "returns false if orthogonal but not aligned to XYZ" do
+      transform = Chem::Spatial::AffineTransform.euler(23, 53, 10)
+      basisvec = {vec3(1, 0, 0), vec3(0, 1, 0), vec3(0, 0, 1)}.map(&.transform(transform))
+      Chem::Spatial::Parallelepiped.new(*basisvec).xyz?.should be_false
+    end
+
+    it "returns false if non-orthogonal" do
+      Chem::Spatial::Parallelepiped.hexagonal(5, 10).xyz?.should be_false
+    end
+  end
 end
