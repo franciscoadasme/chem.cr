@@ -183,6 +183,11 @@ module Chem::Spatial
       AffineTransform.new rotmat * @linear_map, rotmat * offset
     end
 
+    # Returns the rotation component of the transformation.
+    def rotation : self
+      {{@type}}.new @linear_map, Vec3.zero
+    end
+
     # Returns the transformation scaled by *factor*.
     def scale(by factor : Number) : self
       scale factor, factor, factor
@@ -215,6 +220,11 @@ module Chem::Spatial
     # Returns the transformation translated by *offset*.
     def translate(by offset : Vec3) : self
       AffineTransform.new linear_map, @offset + offset
+    end
+
+    # Returns the translation component of the transformation.
+    def translation : self
+      {{@type}}.new Mat3.identity, @offset
     end
   end
 

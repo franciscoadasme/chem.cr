@@ -141,6 +141,16 @@ describe Chem::Spatial::AffineTransform do
     end
   end
 
+  describe "#rotation" do
+    it "returns the rotation component" do
+      transform = Chem::Spatial::AffineTransform.euler(50, 10, 5).translate(vec3(1, 2, 3))
+      rot = transform.rotation
+      rot.should be_a Chem::Spatial::AffineTransform
+      rot.linear_map.should eq transform.linear_map
+      rot.offset.should eq vec3(0, 0, 0)
+    end
+  end
+
   describe "#scale" do
     it "scales the transformation" do
       offset = vec3(0.2, 0.13, 0.35)
@@ -178,6 +188,16 @@ describe Chem::Spatial::AffineTransform do
       transform = Chem::Spatial::AffineTransform.identity.translate(offset)
       transform.linear_map.should eq Chem::Spatial::Mat3.identity
       transform.offset.should eq offset
+    end
+  end
+
+  describe "#translation" do
+    it "returns the translation component" do
+      transform = Chem::Spatial::AffineTransform.euler(50, 10, 5).translate(vec3(1, 2, 3))
+      trans = transform.translation
+      trans.should be_a Chem::Spatial::AffineTransform
+      trans.linear_map.should eq Chem::Spatial::Mat3.identity
+      trans.offset.should eq vec3(1, 2, 3)
     end
   end
 end
