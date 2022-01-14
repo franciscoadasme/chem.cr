@@ -185,6 +185,7 @@ module Chem::Spatial
       a.close_to?(b, 1e-15) && b.close_to?(c, 1e-15) && orthogonal?
     end
 
+    # Yields each parallelepiped' edge as a pair of vertices.
     def each_edge(& : Vec3, Vec3 ->) : Nil
       bi, bj, bk = basisvec
       yield @origin, @origin + bi
@@ -228,6 +229,13 @@ module Chem::Spatial
           end
         end
       end
+    end
+
+    # Returns the parallelepiped' edges as pairs of vertices.
+    def edges : Array(Tuple(Vec3, Vec3))
+      edges = Array(Tuple(Vec3, Vec3)).new(12)
+      each_edge { |u, v| edges << {u, v} }
+      edges
     end
 
     # Returns the vector in fractional coordinates equivalent to the

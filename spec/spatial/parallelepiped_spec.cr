@@ -147,6 +147,28 @@ describe Chem::Spatial::Parallelepiped do
     end
   end
 
+  describe "#edges" do
+    it "returns every edge as a vector pair" do
+      pld = Chem::Spatial::Parallelepiped.hexagonal(10, 5).translate(vec3(5, -12, 4.2))
+      pld.edges.zip([
+        {vec3(5, -12, 4.2), vec3(15, -12, 4.2)},
+        {vec3(5, -12, 4.2), vec3(0, -3.339745962155611, 4.2)},
+        {vec3(5, -12, 4.2), vec3(5, -12, 9.2)},
+        {vec3(15, -12, 4.2), vec3(10, -3.339745962155611, 4.2)},
+        {vec3(15, -12, 4.2), vec3(15, -12, 9.2)},
+        {vec3(0, -3.339745962155611, 4.2), vec3(10, -3.339745962155611, 4.2)},
+        {vec3(0, -3.339745962155611, 4.2), vec3(0, -3.3397459621556105, 9.2)},
+        {vec3(10, -3.339745962155611, 4.2), vec3(10, -3.3397459621556105, 9.2)},
+        {vec3(5, -12, 9.2), vec3(15, -12, 9.2)},
+        {vec3(5, -12, 9.2), vec3(0, -3.3397459621556105, 9.2)},
+        {vec3(15, -12, 9.2), vec3(10, -3.3397459621556105, 9.2)},
+        {vec3(0, -3.3397459621556105, 9.2), vec3(10, -3.3397459621556105, 9.2)},
+      ]) do |actual, expected|
+        actual.should be_close expected, 1e-12
+      end
+    end
+  end
+
   describe "#each_vertex" do
     it "yields parallelepiped' vertices" do
       pld = Chem::Spatial::Parallelepiped.new({8.77, 9.5, 24.74}, {88.22, 80, 70.34})
