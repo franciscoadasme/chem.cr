@@ -333,6 +333,17 @@ describe Chem::Spatial::Parallelepiped do
     end
   end
 
+  describe "#transform" do
+    it "returns a transformed parallelepiped" do
+      transform = Chem::Spatial::AffineTransform.euler(45, 45, 68)
+        .translate(Chem::Spatial::Vec3[10, 0, 0])
+      pld = Chem::Spatial::Parallelepiped.cubic(10).transform(transform)
+      pld.vertices.should eq [
+        vec3(0, 0, 0),
+      ]
+    end
+  end
+
   describe "#translate" do
     it "translates the origin" do
       pld = Chem::Spatial::Parallelepiped.hexagonal(10, 10)
@@ -447,6 +458,7 @@ describe Chem::Spatial::Parallelepiped do
     end
 
     it "returns false if orthogonal but not aligned to XYZ" do
+      # TODO: use Parallelepiped#rotate(23, 53, 10)
       transform = Chem::Spatial::AffineTransform.euler(23, 53, 10)
       basisvec = {vec3(1, 0, 0), vec3(0, 1, 0), vec3(0, 0, 1)}.map(&.transform(transform))
       Chem::Spatial::Parallelepiped.new(*basisvec).xyz?.should be_false

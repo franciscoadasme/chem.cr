@@ -185,6 +185,22 @@ module Chem::Spatial
       a.close_to?(b, 1e-15) && b.close_to?(c, 1e-15) && orthogonal?
     end
 
+    def each_edge(& : Vec3, Vec3 ->) : Nil
+      bi, bj, bk = basisvec
+      yield @origin, @origin + bi
+      yield @origin, @origin + bj
+      yield @origin, @origin + bk
+      yield @origin + bi, @origin + bi + bj
+      yield @origin + bi, @origin + bi + bk
+      yield @origin + bj, @origin + bi + bj
+      yield @origin + bj, @origin + bj + bk
+      yield @origin + bi + bj, @origin + bi + bj + bk
+      yield @origin + bk, @origin + bi + bk
+      yield @origin + bk, @origin + bj + bk
+      yield @origin + bi + bk, @origin + bi + bj + bk
+      yield @origin + bj + bk, @origin + bi + bj + bk
+    end
+
     # Yields parallelepiped' vertices.
     #
     # ```
@@ -368,6 +384,25 @@ module Chem::Spatial
     # ```
     def translate(offset : Vec3) : self
       {{@type}}.new @origin + offset, @basis
+    end
+
+    # Returns the parallelepiped resulting of applying the given
+    # transformation.
+    #
+    # NOTE: the rotation will be applied about the center of the
+    # parallelepiped. Translation will be applied afterwards.
+    def transform(transformation : AffineTransform) : self
+      new_basisvec = basisvec.map &.transform(transformation.rotation)
+      offset = new_basisvec.sum / 2 - basisvec.sum / 2
+      origin = @origin + transformation.offset - offset
+      {{@type}}.new origin, *new_basisvec
+    end
+
+    # :ditto:
+    def transform(q : Quat) : self
+      new_basisvec = basisvec.map &.transform(q)
+      offset = new_basisvec.sum / 2 - basisvec.sum / 2
+      {{@type}}.new @origin - offset, *new_basisvec
     end
 
     # Returns `true` if the parallelepiped is triclinic (not orthogonal,
