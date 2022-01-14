@@ -133,7 +133,7 @@ module Chem::VASP::Poscar
         atoms.each.select(&.element.==(ele)).each do |atom|
           vec = atom.coords
           if @fractional
-            vec = vec.to_fract cell
+            vec = cell.fract vec
             vec = vec.wrap if @wrap
           elsif @wrap
             vec = vec.wrap cell

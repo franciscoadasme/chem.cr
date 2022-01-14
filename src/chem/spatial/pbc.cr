@@ -20,9 +20,9 @@ module Chem::Spatial::PBC
   def each_adjacent_image(atoms : AtomCollection,
                           cell : Parallelepiped,
                           &block : Atom, Vec3 ->)
-    offset = (cell.center - atoms.coords.center).to_fract cell
+    offset = cell.fract(cell.center - atoms.coords.center)
     atoms.each_atom do |atom|
-      fcoords = atom.coords.to_fract cell                             # convert to fractional coords
+      fcoords = cell.fract atom.coords                                # convert to fractional coords
       w_fcoords = fcoords - fcoords.map(&.floor)                      # wrap to primary unit cell
       ax_offset = (fcoords + offset).map { |ele| ele < 0.5 ? 1 : -1 } # compute offset per axis
 
@@ -49,7 +49,7 @@ module Chem::Spatial::PBC
     paddings = cell_paddings cell, radius
 
     atoms.each_atom do |atom|
-      vec = atom.coords.to_fract(cell) + offset
+      vec = cell.fract(atom.coords) + offset
       extents = padded_cell_extents vec, paddings
       img_sense = vec.map { |ele| ele < 0.5 ? 1 : -1 }
 
@@ -100,7 +100,7 @@ module Chem::Spatial::PBC
     bounds = atoms.coords.bounds
     wrapped = cell.includes?(bounds)
     offset = wrapped ? Vec3.zero : (cell.center - bounds.center)
-    offset.to_fract(cell)
+    cell.fract offset
   end
 
   # Returns padded primary unit cell extents. If *vec* is outside the

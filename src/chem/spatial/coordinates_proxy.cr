@@ -116,7 +116,7 @@ module Chem::Spatial
     def each(fractional : Bool = false, &block : Vec3 ->)
       if fractional
         raise NotPeriodicError.new unless cell = @cell
-        @atoms.each_atom { |atom| yield atom.coords.to_fract cell }
+        @atoms.each_atom { |atom| yield cell.fract(atom.coords) }
       else
         @atoms.each_atom { |atom| yield atom.coords }
       end
@@ -140,7 +140,7 @@ module Chem::Spatial
       if fractional
         raise NotPeriodicError.new unless cell = @cell
         @atoms.each_atom do |atom|
-          atom.coords = cell.cart(yield atom.coords.to_fract(cell))
+          atom.coords = cell.cart(yield cell.fract(atom.coords))
         end
       else
         @atoms.each_atom { |atom| atom.coords = yield atom.coords }
@@ -195,7 +195,7 @@ module Chem::Spatial
 
     def to_fract! : self
       raise NotPeriodicError.new unless cell = @cell
-      map! &.to_fract(cell)
+      map! { |vec| cell.fract(vec) }
     end
 
     def wrap(around center : Vec3? = nil) : self
@@ -219,7 +219,7 @@ module Chem::Spatial
           vec
         end
       else
-        offset = center.to_fract(cell) - Vec3[0.5, 0.5, 0.5]
+        offset = cell.fract(center) - Vec3[0.5, 0.5, 0.5]
         # FIXME: map!(fractional: true) does not work with external cell
         map!(fractional: true) { |vec| vec - (vec - offset).map(&.floor) }
       end
@@ -239,7 +239,7 @@ module Chem::Spatial
 
       def next : Vec3 | Iterator::Stop
         atom = wrapped_next
-        atom.coords.to_fract @cell
+        @cell.fract atom.coords
       end
     end
   end

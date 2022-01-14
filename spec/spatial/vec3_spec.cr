@@ -203,18 +203,6 @@ describe Chem::Spatial::Vec3 do
     end
   end
 
-  describe "#to_fract" do
-    it "converts Cartesian to fractional coordinates" do
-      cell = Chem::Spatial::Parallelepiped.new({10, 20, 30})
-      vec3(0, 0, 0).to_fract(cell).should eq [0, 0, 0]
-      vec3(1, 2, 3).to_fract(cell).should be_close [0.1, 0.1, 0.1], 1e-15
-      vec3(2, 3, 15).to_fract(cell).should be_close [0.2, 0.15, 0.5], 1e-15
-
-      cell = Chem::Spatial::Parallelepiped.new({20, 20, 30})
-      vec3(1, 2, 3).to_fract(cell).should be_close [0.05, 0.1, 0.1], 1e-15
-    end
-  end
-
   describe "#to_s" do
     it "returns a string representation" do
       expected = "Vec3[ 1.253224 -23125  2.13e-05 ]"
