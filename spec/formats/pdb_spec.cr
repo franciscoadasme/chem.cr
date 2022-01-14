@@ -334,7 +334,7 @@ describe Chem::PDB do
       structure.n_atoms.should eq 644
       structure.n_chains.should eq 1
       structure.n_residues.should eq 47
-      structure.residues.map(&.number).should eq ((1..46).to_a << 66)
+      structure.residues.map(&.number).should eq((1..46).to_a << 66)
 
       residue = structure['A'][22]
       residue.name.should eq "PRO"

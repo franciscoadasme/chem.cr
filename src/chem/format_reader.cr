@@ -178,7 +178,7 @@ module Chem
     # Returns the next entry in the IO. Raises `ParseException` if there
     # are no more entries.
     def read_entry : T
-      next_entry || parse_exception (@read ? "No more entries" : "Empty content")
+      next_entry || parse_exception(@read ? "No more entries" : "Empty content")
     end
   end
 end
