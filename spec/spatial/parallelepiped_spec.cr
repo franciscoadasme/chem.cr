@@ -357,11 +357,18 @@ describe Chem::Spatial::Parallelepiped do
 
   describe "#transform" do
     it "returns a transformed parallelepiped" do
-      transform = Chem::Spatial::AffineTransform.euler(45, 45, 68)
-        .translate(Chem::Spatial::Vec3[10, 0, 0])
+      transform = Chem::Spatial::AffineTransform.euler(45, 45, 68).translate(vec3(1, 2.5, -6.8))
       pld = Chem::Spatial::Parallelepiped.cubic(10).transform(transform)
+      pld.center.should be_close vec3(5, 5, 5) + vec3(1, 2.5, -6.8), 1e-15
       pld.vertices.should eq [
-        vec3(0, 0, 0),
+        vec3(4.418121736513632, 6.778918885614988, -10.28396742013939),
+        vec3(11.489189548379107, 1.7789188856149885, -5.283967420139391),
+        vec3(-2.1380581731949375, 4.791868237596882, -2.999179522489622),
+        vec3(4.933009638670538, -0.20813176240311737, 2.000820477510377),
+        vec3(7.066990361329463, 15.208131762403116, -5.6008204775103785),
+        vec3(14.138058173194938, 10.208131762403116, -0.6008204775103794),
+        vec3(0.5108104516208938, 13.22108111438501, 1.68396742013939),
+        vec3(7.581878263486369, 8.221081114385012, 6.683967420139389),
       ]
     end
   end
