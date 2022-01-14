@@ -73,7 +73,7 @@ module Chem::VASP::Poscar
         builder.cell cell
         elements.each do |element|
           vec = Spatial::Vec3.new @pull.next_f, @pull.next_f, @pull.next_f
-          vec = fractional ? vec.to_cart(cell) : vec * scale_factor
+          vec = fractional ? cell.cart(vec) : vec * scale_factor
           atom = builder.atom element, vec
           if constrained
             case {read_flag, read_flag, read_flag}

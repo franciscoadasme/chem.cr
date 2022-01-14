@@ -203,23 +203,6 @@ describe Chem::Spatial::Vec3 do
     end
   end
 
-  describe "#to_cart" do
-    it "converts fractional to Cartesian coordinates" do
-      cell = Chem::Spatial::Parallelepiped.new({20, 20, 16})
-      vec3(0.5, 0.65, 1).to_cart(cell).should be_close [10, 13, 16], 1e-15
-      vec3(1.5, 0.23, 0.9).to_cart(cell).should be_close [30, 4.6, 14.4], 1e-15
-
-      cell = Chem::Spatial::Parallelepiped.new({20, 10, 16})
-      vec3(0.5, 0.65, 1).to_cart(cell).should be_close [10, 6.5, 16], 1e-15
-
-      cell = Chem::Spatial::Parallelepiped.new(
-        vec3(8.497, 0.007, 0.031),
-        vec3(10.148, 42.359, 0.503),
-        vec3(7.296, 2.286, 53.093))
-      vec3(0.724, 0.04, 0.209).to_cart(cell).should be_close [8.083, 2.177, 11.139], 1e-3
-    end
-  end
-
   describe "#to_fract" do
     it "converts Cartesian to fractional coordinates" do
       cell = Chem::Spatial::Parallelepiped.new({10, 20, 30})

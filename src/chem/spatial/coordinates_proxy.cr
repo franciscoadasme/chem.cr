@@ -140,7 +140,7 @@ module Chem::Spatial
       if fractional
         raise NotPeriodicError.new unless cell = @cell
         @atoms.each_atom do |atom|
-          atom.coords = (yield atom.coords.to_fract(cell)).to_cart cell
+          atom.coords = cell.cart(yield atom.coords.to_fract(cell))
         end
       else
         @atoms.each_atom { |atom| atom.coords = yield atom.coords }
@@ -190,7 +190,7 @@ module Chem::Spatial
 
     def to_cart! : self
       raise NotPeriodicError.new unless cell = @cell
-      map! &.to_cart(cell)
+      map! { |vec| cell.cart(vec) }
     end
 
     def to_fract! : self

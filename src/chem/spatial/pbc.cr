@@ -27,7 +27,7 @@ module Chem::Spatial::PBC
       ax_offset = (fcoords + offset).map { |ele| ele < 0.5 ? 1 : -1 } # compute offset per axis
 
       ADJACENT_IMAGE_IDXS.each do |img_idx|
-        yield atom, (fcoords + ax_offset * Vec3[*img_idx]).to_cart(cell)
+        yield atom, cell.cart(fcoords + ax_offset * Vec3[*img_idx])
       end
     end
   end
@@ -56,7 +56,7 @@ module Chem::Spatial::PBC
       ADJACENT_IMAGE_IDXS.each do |img_idx|
         img_vec = vec + Vec3[*img_idx] * img_sense
         if (0..2).all? { |i| img_vec[i].in? extents[i] }
-          yield atom, (img_vec - offset).to_cart(cell)
+          yield atom, cell.cart(img_vec - offset)
         end
       end
     end

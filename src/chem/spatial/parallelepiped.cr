@@ -514,13 +514,6 @@ module Chem::Spatial
   end
 
   struct Vec3
-    # Returns a vector in Cartesian coordinates relative to *pld* (see
-    # `Parallelepiped#cart`). The vector is assumed to be expressed in
-    # fractional coordinates.
-    def to_cart(pld : Parallelepiped) : self
-      pld.cart self
-    end
-
     # Returns a vector in fractional coordinates relative to *pld* (see
     # `Parallelepiped#fract`). The vector is assumed to be expressed in
     # Cartesian coordinates.
