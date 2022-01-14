@@ -795,12 +795,12 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">class</span> Chem::Spatial::Parallelepiped
+  <span class="kind">struct</span> Chem::Spatial::Parallelepiped
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Chem/Spatial/Parallelepiped.html">Chem::Spatial::Parallelepiped</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Chem/Spatial/Parallelepiped.html">Chem::Spatial::Parallelepiped</a></li><li class="superclass">Struct</li><li class="superclass">Value</li><li class="superclass">Object</li></ul>
 
 
 
@@ -823,7 +823,6 @@ coordinates are expressed in Cartesian space (angstroms). In this
 way, the basis matrix can be used to transform from Cartesian to
 fractional coordinates, and viceversa, by matrix multiplication (see
 <code><a href="../../Chem/Spatial/Parallelepiped.html#cart%28vec%3AVec3%29%3AVec3-instance-method">#cart</a></code> and <code><a href="../../Chem/Spatial/Parallelepiped.html#fract%28vec%3AVec3%29%3AVec3-instance-method">#fract</a></code>).</p>
-<p><span class="flag orange">TODO</span>  replace <code><a href="../../Chem/Spatial/Parallelepiped.html#i%3AVec3-instance-method">#i</a></code> by <code>bvi</code></p>
 
 
 
@@ -848,7 +847,7 @@ fractional coordinates, and viceversa, by matrix multiplication (see
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L14" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L12" target="_blank">
         chem/spatial/parallelepiped.cr
       </a>
     
@@ -993,49 +992,12 @@ fractional coordinates, and viceversa, by matrix multiplication (see
       <li class="entry-summary">
         <a href="#%3D%3D%28rhs%3Aself%29%3ABool-instance-method" class="signature"><strong>#==</strong>(rhs : <span class="k">self</span>) : Bool</a>
         
-          <div class="summary"><p>Returns <code>true</code> if this reference is the same as <em>other</em>.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#a%3AFloat64-instance-method" class="signature"><strong>#a</strong> : Float64</a>
-        
-          <div class="summary"><p>The length (in angstorms) of the first basis vector.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#a%3D%28value%3AFloat64%29%3AFloat64-instance-method" class="signature"><strong>#a=</strong>(value : Float64) : Float64</a>
-        
-          <div class="summary"><p>The length (in angstorms) of the first basis vector.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#alpha%3AFloat64-instance-method" class="signature"><strong>#alpha</strong> : Float64</a>
-        
-          <div class="summary"><p>Returns the angle (in degrees) between the second and third basis vectors.</p></div>
-        
       </li>
     
       <li class="entry-summary">
         <a href="#angles%3ANumberTriple-instance-method" class="signature"><strong>#angles</strong> : NumberTriple</a>
         
           <div class="summary"><p>Returns the parallelepiped angles (alpha, beta, gamma) in degrees.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#b%3AFloat64-instance-method" class="signature"><strong>#b</strong> : Float64</a>
-        
-          <div class="summary"><p>The length (in angstorms) of the second basis vector.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#b%3D%28value%3AFloat64%29%3AFloat64-instance-method" class="signature"><strong>#b=</strong>(value : Float64) : Float64</a>
-        
-          <div class="summary"><p>The length (in angstorms) of the second basis vector.</p></div>
         
       </li>
     
@@ -1047,23 +1009,9 @@ fractional coordinates, and viceversa, by matrix multiplication (see
       </li>
     
       <li class="entry-summary">
-        <a href="#beta%3AFloat64-instance-method" class="signature"><strong>#beta</strong> : Float64</a>
+        <a href="#basisvec%3ATuple%28Vec3%2CVec3%2CVec3%29-instance-method" class="signature"><strong>#basisvec</strong> : Tuple(Vec3, Vec3, Vec3)</a>
         
-          <div class="summary"><p>Returns the angle (in degrees) between the first and third basis vectors.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#c%3AFloat64-instance-method" class="signature"><strong>#c</strong> : Float64</a>
-        
-          <div class="summary"><p>The length (in angstorms) of the third basis vector.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#c%3D%28value%3AFloat64%29%3AFloat64-instance-method" class="signature"><strong>#c=</strong>(value : Float64) : Float64</a>
-        
-          <div class="summary"><p>The length (in angstorms) of the third basis vector.</p></div>
+          <div class="summary"><p>Returns the basis vectors.</p></div>
         
       </li>
     
@@ -1124,30 +1072,9 @@ fractional coordinates, and viceversa, by matrix multiplication (see
       </li>
     
       <li class="entry-summary">
-        <a href="#gamma%3AFloat64-instance-method" class="signature"><strong>#gamma</strong> : Float64</a>
-        
-          <div class="summary"><p>Returns the angle (in degrees) between the first and second basis vectors.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
         <a href="#hexagonal%3F%3ABool-instance-method" class="signature"><strong>#hexagonal?</strong> : Bool</a>
         
           <div class="summary"><p>Returns <code>true</code> if the parallelepiped is hexagonal (<em>a</em> = <em>b</em>, <em>α</em> = <em>β</em> = 90°, and <em>γ</em> = 120°), else <code>false</code>.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#i%3AVec3-instance-method" class="signature"><strong>#i</strong> : Vec3</a>
-        
-          <div class="summary"><p>The first basis vector.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#i%3D%28vec%3AVec3%29%3AVec3-instance-method" class="signature"><strong>#i=</strong>(vec : Vec3) : Vec3</a>
-        
-          <div class="summary"><p>The first basis vector.</p></div>
         
       </li>
     
@@ -1168,35 +1095,7 @@ fractional coordinates, and viceversa, by matrix multiplication (see
       <li class="entry-summary">
         <a href="#inspect%28io%3AIO%29%3ANil-instance-method" class="signature"><strong>#inspect</strong>(io : IO) : Nil</a>
         
-          <div class="summary"><p>Appends a String representation of this object which includes its class name, its object address and the values of all instance variables.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#j%3AVec3-instance-method" class="signature"><strong>#j</strong> : Vec3</a>
-        
-          <div class="summary"><p>The second basis vector.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#j%3D%28vec%3AVec3%29%3AVec3-instance-method" class="signature"><strong>#j=</strong>(vec : Vec3) : Vec3</a>
-        
-          <div class="summary"><p>The second basis vector.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#k%3AVec3-instance-method" class="signature"><strong>#k</strong> : Vec3</a>
-        
-          <div class="summary"><p>The third basis vector.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#k%3D%28vec%3AVec3%29%3AVec3-instance-method" class="signature"><strong>#k=</strong>(vec : Vec3) : Vec3</a>
-        
-          <div class="summary"><p>The third basis vector.</p></div>
+          <div class="summary"><p>Appends this struct's name and instance variables names and values to the given IO.</p></div>
         
       </li>
     
@@ -1231,7 +1130,7 @@ fractional coordinates, and viceversa, by matrix multiplication (see
       <li class="entry-summary">
         <a href="#pad%28padding%3ANumber%29%3Aself-instance-method" class="signature"><strong>#pad</strong>(padding : Number) : <span class="k">self</span></a>
         
-          <div class="summary"><p>Expands the extents of the parallelepiped by <em>padding</em> in every direction.</p></div>
+          <div class="summary"><p>Returns a new parallelepiped by expanding the extents by <em>padding</em> in every direction.</p></div>
         
       </li>
     
@@ -1259,7 +1158,7 @@ fractional coordinates, and viceversa, by matrix multiplication (see
       <li class="entry-summary">
         <a href="#translate%28offset%3AVec3%29%3Aself-instance-method" class="signature"><strong>#translate</strong>(offset : Vec3) : <span class="k">self</span></a>
         
-          <div class="summary"><p>Translates the parallelepiped by <em>offset</em>.</p></div>
+          <div class="summary"><p>Returns a new parallelepiped translated by <em>offset</em>.</p></div>
         
       </li>
     
@@ -1312,6 +1211,13 @@ fractional coordinates, and viceversa, by matrix multiplication (see
         
       </li>
     
+      <li class="entry-summary">
+        <a href="#xyz%3F%3ABool-instance-method" class="signature"><strong>#xyz?</strong> : Bool</a>
+        
+          <div class="summary"><p>Whether the parallelepiped is aligned to the X, Y, and Z axes.</p></div>
+        
+      </li>
+    
   </ul>
 
 
@@ -1319,6 +1225,16 @@ fractional coordinates, and viceversa, by matrix multiplication (see
 
 
 <div class="methods-inherited">
+  
+    
+
+
+    
+
+
+    
+
+
   
     
 
@@ -1369,7 +1285,7 @@ origin.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L94" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L92" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1391,7 +1307,7 @@ origin.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L100" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L98" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1413,7 +1329,7 @@ and <em>γ</em> = 120°).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L106" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L104" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1435,7 +1351,7 @@ and <em>β</em> ≠ 90°).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L112" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L110" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1457,7 +1373,7 @@ and <em>β</em> ≠ 90°).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L40" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L38" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1479,7 +1395,7 @@ the origin.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L34" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L32" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1500,7 +1416,7 @@ the origin.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L24" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L22" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1521,7 +1437,7 @@ the origin.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L87" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L85" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1546,7 +1462,7 @@ second basis vector will lie in the XY plane.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L61" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L59" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1567,7 +1483,7 @@ second basis vector will lie in the XY plane.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L28" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L26" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1592,7 +1508,7 @@ second basis vector will lie in the XY plane.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L50" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L48" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1614,7 +1530,7 @@ second basis vector will lie in the XY plane.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L118" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L116" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1636,7 +1552,7 @@ second basis vector will lie in the XY plane.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L124" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L122" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1658,7 +1574,7 @@ second basis vector will lie in the XY plane.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L130" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L128" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1694,7 +1610,7 @@ second basis vector will lie in the XY plane.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L136" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L134" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1707,83 +1623,10 @@ second basis vector will lie in the XY plane.</p>
         <a class="method-permalink" href="#%3D%3D%28rhs%3Aself%29%3ABool-instance-method">#</a>
       </div>
       
-        <div class="doc">
-          
-            <div class="doc-inherited">
-              Description copied from class Reference
-            </div>
-          
-          <p>Returns <code>true</code> if this reference is the same as <em>other</em>. Invokes <code>same?</code>.</p>
-        </div>
-      
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L140" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="a:Float64-instance-method">
-      <div class="signature">
-        
-        def <strong>a</strong> : Float64
-
-        <a class="method-permalink" href="#a%3AFloat64-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>The length (in angstorms) of the first basis vector.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L145" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="a=(value:Float64):Float64-instance-method">
-      <div class="signature">
-        
-        def <strong>a=</strong>(value : Float64) : Float64
-
-        <a class="method-permalink" href="#a%3D%28value%3AFloat64%29%3AFloat64-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>The length (in angstorms) of the first basis vector.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L150" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="alpha:Float64-instance-method">
-      <div class="signature">
-        
-        def <strong>alpha</strong> : Float64
-
-        <a class="method-permalink" href="#alpha%3AFloat64-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Returns the angle (in degrees) between the second and third basis
-vectors.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L157" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L138" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1804,49 +1647,7 @@ vectors.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L162" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="b:Float64-instance-method">
-      <div class="signature">
-        
-        def <strong>b</strong> : Float64
-
-        <a class="method-permalink" href="#b%3AFloat64-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>The length (in angstorms) of the second basis vector.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L167" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="b=(value:Float64):Float64-instance-method">
-      <div class="signature">
-        
-        def <strong>b=</strong>(value : Float64) : Float64
-
-        <a class="method-permalink" href="#b%3D%28value%3AFloat64%29%3AFloat64-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>The length (in angstorms) of the second basis vector.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L172" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L143" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1867,71 +1668,28 @@ vectors.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L16" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L14" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="beta:Float64-instance-method">
+    <div class="entry-detail" id="basisvec:Tuple(Vec3,Vec3,Vec3)-instance-method">
       <div class="signature">
         
-        def <strong>beta</strong> : Float64
+        def <strong>basisvec</strong> : Tuple(<a href="../../Chem/Spatial/Vec3.html">Vec3</a>, <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, <a href="../../Chem/Spatial/Vec3.html">Vec3</a>)
 
-        <a class="method-permalink" href="#beta%3AFloat64-instance-method">#</a>
+        <a class="method-permalink" href="#basisvec%3ATuple%28Vec3%2CVec3%2CVec3%29-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Returns the angle (in degrees) between the first and third basis
-vectors.</p>
+          <p>Returns the basis vectors.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L179" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="c:Float64-instance-method">
-      <div class="signature">
-        
-        def <strong>c</strong> : Float64
-
-        <a class="method-permalink" href="#c%3AFloat64-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>The length (in angstorms) of the third basis vector.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L184" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="c=(value:Float64):Float64-instance-method">
-      <div class="signature">
-        
-        def <strong>c=</strong>(value : Float64) : Float64
-
-        <a class="method-permalink" href="#c%3D%28value%3AFloat64%29%3AFloat64-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>The length (in angstorms) of the third basis vector.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L189" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L149" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1953,7 +1711,7 @@ given fractional coordinates.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L196" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L155" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1974,7 +1732,7 @@ given fractional coordinates.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L201" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L160" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1995,7 +1753,7 @@ given fractional coordinates.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L206" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L165" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2016,7 +1774,7 @@ given fractional coordinates.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L211" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L170" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2038,7 +1796,7 @@ given fractional coordinates.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L217" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L176" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2060,7 +1818,7 @@ given fractional coordinates.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L224" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L183" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2091,7 +1849,7 @@ Vec3[5.0, 10.0, 20.0]</code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L246" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L206" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2113,29 +1871,7 @@ given Cartesian coordinates.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L258" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="gamma:Float64-instance-method">
-      <div class="signature">
-        
-        def <strong>gamma</strong> : Float64
-
-        <a class="method-permalink" href="#gamma%3AFloat64-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Returns the angle (in degrees) between the first and second basis
-vectors.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L264" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L219" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2157,49 +1893,7 @@ vectors.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L270" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="i:Vec3-instance-method">
-      <div class="signature">
-        
-        def <strong>i</strong> : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>
-
-        <a class="method-permalink" href="#i%3AVec3-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>The first basis vector.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L278" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="i=(vec:Vec3):Vec3-instance-method">
-      <div class="signature">
-        
-        def <strong>i=</strong>(vec : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>
-
-        <a class="method-permalink" href="#i%3D%28vec%3AVec3%29%3AVec3-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>The first basis vector.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L283" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L225" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2226,7 +1920,7 @@ pld.includes? <span class="t">Parallelepiped</span>.<span class="k">new</span>(<
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L299" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L245" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2254,7 +1948,7 @@ pld.includes? <span class="t">Vec3</span>[<span class="n">-3</span>, <span class
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L317" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L263" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2270,108 +1964,25 @@ pld.includes? <span class="t">Vec3</span>[<span class="n">-3</span>, <span class
         <div class="doc">
           
             <div class="doc-inherited">
-              Description copied from class Reference
+              Description copied from struct Struct
             </div>
           
-          <p>Appends a String representation of this object
-which includes its class name, its object address
-and the values of all instance variables.</p>
-<pre><code class="language-crystal"><span class="k">class</span> <span class="t">Person</span>
-  <span class="k">def</span> <span class="m">initialize</span>(@name : <span class="t">String</span>, @age : <span class="t">Int32</span>)
+          <p>Appends this struct's name and instance variables names and values
+to the given IO.</p>
+<pre><code class="language-crystal"><span class="k">struct</span> <span class="t">Point</span>
+  <span class="k">def</span> <span class="m">initialize</span>(@x : <span class="t">Int32</span>, @y : <span class="t">Int32</span>)
   <span class="k">end</span>
 <span class="k">end</span>
 
-<span class="t">Person</span>.<span class="k">new</span>(<span class="s">&quot;John&quot;</span>, <span class="n">32</span>).inspect <span class="c"># =&gt; #&lt;Person:0x10fd31f20 @name=&quot;John&quot;, @age=32&gt;</span></code></pre>
+p1 <span class="o">=</span> <span class="t">Point</span>.<span class="k">new</span> <span class="n">1</span>, <span class="n">2</span>
+p1.to_s    <span class="c"># &quot;Point(@x=1, @y=2)&quot;</span>
+p1.inspect <span class="c"># &quot;Point(@x=1, @y=2)&quot;</span></code></pre>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L329" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="j:Vec3-instance-method">
-      <div class="signature">
-        
-        def <strong>j</strong> : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>
-
-        <a class="method-permalink" href="#j%3AVec3-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>The second basis vector.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L348" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="j=(vec:Vec3):Vec3-instance-method">
-      <div class="signature">
-        
-        def <strong>j=</strong>(vec : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>
-
-        <a class="method-permalink" href="#j%3D%28vec%3AVec3%29%3AVec3-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>The second basis vector.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L353" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="k:Vec3-instance-method">
-      <div class="signature">
-        
-        def <strong>k</strong> : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>
-
-        <a class="method-permalink" href="#k%3AVec3-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>The third basis vector.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L359" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="k=(vec:Vec3):Vec3-instance-method">
-      <div class="signature">
-        
-        def <strong>k=</strong>(vec : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>
-
-        <a class="method-permalink" href="#k%3D%28vec%3AVec3%29%3AVec3-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>The third basis vector.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L364" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L276" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2393,7 +2004,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L371" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L294" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2414,7 +2025,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L18" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L16" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2436,7 +2047,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L380" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L305" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2458,7 +2069,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L388" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L311" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2473,8 +2084,9 @@ and the values of all instance variables.</p>
       
         <div class="doc">
           
-          <p>Expands the extents of the parallelepiped by <em>padding</em> in every
-direction. Note that its size is actually increased by <code>padding * 2</code>.</p>
+          <p>Returns a new parallelepiped by expanding the extents by <em>padding</em>
+in every direction. Note that its size is actually increased by
+<code>padding * 2</code>.</p>
 <pre><code class="language-crystal">pld <span class="o">=</span> <span class="t">Parallelepiped</span>.<span class="k">new</span>(<span class="t">Vec3</span>[<span class="n">1</span>, <span class="n">5</span>, <span class="n">3</span>], {<span class="n">10</span>, <span class="n">5</span>, <span class="n">12</span>})
 pld.center <span class="c"># =&gt; Vec3[6.0, 7.5, 9.0]</span>
 pld.pad(<span class="n">2.5</span>)
@@ -2485,7 +2097,7 @@ pld.center <span class="c"># =&gt; Vec3[6.0, 7.5, 9.0]</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L406" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L330" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2507,7 +2119,7 @@ pld.center <span class="c"># =&gt; Vec3[6.0, 7.5, 9.0]</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L416" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L340" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2528,7 +2140,7 @@ pld.center <span class="c"># =&gt; Vec3[6.0, 7.5, 9.0]</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L425" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L351" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2550,7 +2162,7 @@ pld.center <span class="c"># =&gt; Vec3[6.0, 7.5, 9.0]</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L431" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L357" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2565,7 +2177,7 @@ pld.center <span class="c"># =&gt; Vec3[6.0, 7.5, 9.0]</span></code></pre>
       
         <div class="doc">
           
-          <p>Translates the parallelepiped by <em>offset</em>.</p>
+          <p>Returns a new parallelepiped translated by <em>offset</em>.</p>
 <pre><code class="language-crystal">pld <span class="o">=</span> <span class="t">Parallelepiped</span>.<span class="k">new</span>(<span class="t">Vec3</span>[<span class="n">-5</span>, <span class="n">1</span>, <span class="n">20</span>], {<span class="n">10</span>, <span class="n">10</span>, <span class="n">10</span>}, {<span class="n">90</span>, <span class="n">90</span>, <span class="n">120</span>})
 pld.translate <span class="t">Vec3</span>[<span class="n">1</span>, <span class="n">2</span>, <span class="n">10</span>]
 pld.origin <span class="c"># =&gt; Vec3[-4.0, 3.0, 30.0]</span></code></pre>
@@ -2574,7 +2186,7 @@ pld.origin <span class="c"># =&gt; Vec3[-4.0, 3.0, 30.0]</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L442" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L369" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2596,7 +2208,7 @@ hexagonal, monoclinic, nor rhombohedral), else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L449" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L375" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2619,7 +2231,7 @@ pld.vertices <span class="c"># =&gt; [Vec3[0.0, 0.0, 0.0], Vec3[0.0, 0.0, 20.0],
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L459" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L385" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2642,7 +2254,7 @@ pld.vmax <span class="c"># =&gt; Vec3[6.5, 11.66, 11.6]</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L471" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L397" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2666,7 +2278,7 @@ pld.vmin <span class="c"># =&gt; Vec3[1.5, 3, -0.4]</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L482" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L408" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2687,7 +2299,7 @@ pld.vmin <span class="c"># =&gt; Vec3[1.5, 3, -0.4]</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L487" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L413" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2710,7 +2322,7 @@ coordinates.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L500" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L426" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2732,7 +2344,28 @@ vector is assumed to be expressed in Cartesian coordinates.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/parallelepiped.cr#L493" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L419" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="xyz?:Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>xyz?</strong> : Bool
+
+        <a class="method-permalink" href="#xyz%3F%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Whether the parallelepiped is aligned to the X, Y, and Z axes.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/parallelepiped.cr#L431" target="_blank">View source</a>]
         
       </div>
     </div>

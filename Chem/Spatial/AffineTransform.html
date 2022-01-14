@@ -885,7 +885,7 @@ transform <span class="o">*</span> vec <span class="c"># =&gt; Vec3[3.0, 2.0, 5.
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/affine.cr#L54" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/affine.cr#L54" target="_blank">
         chem/spatial/affine.cr
       </a>
     
@@ -905,6 +905,20 @@ transform <span class="o">*</span> vec <span class="c"># =&gt; Vec3[3.0, 2.0, 5.
     Constructors
   </h2>
   <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#aligning%28u%3ATuple%28Vec3%2CVec3%29%2Ctov%3ATuple%28Vec3%2CVec3%29%29%3Aself-class-method" class="signature"><strong>.aligning</strong>(u : Tuple(Vec3, Vec3), to v : Tuple(Vec3, Vec3)) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a transformation encoding the rotation to align <em>u[0]</em> to <em>v[0]</em> and <em>u[1]</em> to <em>v[1]</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#aligning%28u%3AVec3%2Ctov%3AVec3%29%3Aself-class-method" class="signature"><strong>.aligning</strong>(u : Vec3, to v : Vec3) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a transformation encoding the rotation operation to align <em>u</em> to <em>v</em>.</p></div>
+        
+      </li>
     
       <li class="entry-summary">
         <a href="#euler%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-class-method" class="signature"><strong>.euler</strong>(x : Number, y : Number, z : Number) : <span class="k">self</span></a>
@@ -1033,6 +1047,13 @@ transform <span class="o">*</span> vec <span class="c"># =&gt; Vec3[3.0, 2.0, 5.
       </li>
     
       <li class="entry-summary">
+        <a href="#rotation%3Aself-instance-method" class="signature"><strong>#rotation</strong> : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the rotation component of the transformation.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#scale%28sx%3ANumber%2Csy%3ANumber%2Csz%3ANumber%29%3Aself-instance-method" class="signature"><strong>#scale</strong>(sx : Number, sy : Number, sz : Number) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the transformation scaled by the given factors.</p></div>
@@ -1057,6 +1078,13 @@ transform <span class="o">*</span> vec <span class="c"># =&gt; Vec3[3.0, 2.0, 5.
         <a href="#translate%28byoffset%3AVec3%29%3Aself-instance-method" class="signature"><strong>#translate</strong>(by offset : Vec3) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the transformation translated by <em>offset</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#translation%3Aself-instance-method" class="signature"><strong>#translation</strong> : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the translation component of the transformation.</p></div>
         
       </li>
     
@@ -1110,6 +1138,53 @@ transform <span class="o">*</span> vec <span class="c"># =&gt; Vec3[3.0, 2.0, 5.
     Constructor Detail
   </h2>
   
+    <div class="entry-detail" id="aligning(u:Tuple(Vec3,Vec3),tov:Tuple(Vec3,Vec3)):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>aligning</strong>(u : Tuple(<a href="../../Chem/Spatial/Vec3.html">Vec3</a>, <a href="../../Chem/Spatial/Vec3.html">Vec3</a>), to v : Tuple(<a href="../../Chem/Spatial/Vec3.html">Vec3</a>, <a href="../../Chem/Spatial/Vec3.html">Vec3</a>)) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#aligning%28u%3ATuple%28Vec3%2CVec3%29%2Ctov%3ATuple%28Vec3%2CVec3%29%29%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a transformation encoding the rotation to align <em>u[0]</em> to
+<em>v[0]</em> and <em>u[1]</em> to <em>v[1]</em>.</p>
+<p>First compute the alignment of <em>u[0]</em> to <em>v[0]</em>, then the
+alignment of the transformed <em>u[1]</em> to <em>v[1]</em> on the plane
+perpendicular to <em>v[0]</em> by taking their projections.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/affine.cr#L76" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="aligning(u:Vec3,tov:Vec3):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>aligning</strong>(u : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, to v : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#aligning%28u%3AVec3%2Ctov%3AVec3%29%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a transformation encoding the rotation operation to align
+<em>u</em> to <em>v</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/affine.cr#L66" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="euler(x:Number,y:Number,z:Number):self-class-method">
       <div class="signature">
         
@@ -1127,7 +1202,7 @@ degrees. Delegates to <code><a href="../../Chem/Spatial/Quat.html#euler%28x%3ANu
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/affine.cr#L71" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/affine.cr#L87" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1148,7 +1223,7 @@ degrees. Delegates to <code><a href="../../Chem/Spatial/Quat.html#euler%28x%3ANu
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/affine.cr#L65" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/affine.cr#L81" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1169,7 +1244,7 @@ degrees. Delegates to <code><a href="../../Chem/Spatial/Quat.html#euler%28x%3ANu
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/affine.cr#L61" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/affine.cr#L61" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1192,7 +1267,7 @@ computing the rotation.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/affine.cr#L78" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/affine.cr#L94" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1213,7 +1288,7 @@ computing the rotation.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/affine.cr#L88" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/affine.cr#L104" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1234,7 +1309,7 @@ computing the rotation.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/affine.cr#L83" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/affine.cr#L99" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1255,7 +1330,7 @@ computing the rotation.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/affine.cr#L93" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/affine.cr#L109" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1293,7 +1368,7 @@ i.e., <code>a * b != b * a</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/affine.cr#L102" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/affine.cr#L118" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1315,7 +1390,7 @@ effectively applies the transformation to <em>rhs</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/affine.cr#L110" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/affine.cr#L126" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1331,7 +1406,7 @@ effectively applies the transformation to <em>rhs</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/affine.cr#L114" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/affine.cr#L130" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1353,7 +1428,7 @@ effectively applies the transformation to <em>rhs</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/affine.cr#L120" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/affine.cr#L136" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1389,7 +1464,7 @@ Overflow.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/affine.cr#L151" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/affine.cr#L167" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1410,7 +1485,7 @@ Overflow.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/affine.cr#L56" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/affine.cr#L56" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1431,7 +1506,7 @@ Overflow.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/affine.cr#L58" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/affine.cr#L58" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1453,7 +1528,7 @@ Delegates to <code><a href="../../Chem/Spatial/Quat.html#euler%28x%3ANumber%2Cy%
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/affine.cr#L158" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/affine.cr#L174" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1475,7 +1550,28 @@ degrees. Delegates to <code><a href="../../Chem/Spatial/Quat.html#rotation%28abo
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/affine.cr#L165" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/affine.cr#L181" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rotation:self-instance-method">
+      <div class="signature">
+        
+        def <strong>rotation</strong> : <span class="k">self</span>
+
+        <a class="method-permalink" href="#rotation%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the rotation component of the transformation.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/affine.cr#L187" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1496,7 +1592,7 @@ degrees. Delegates to <code><a href="../../Chem/Spatial/Quat.html#rotation%28abo
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/affine.cr#L176" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/affine.cr#L197" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1517,7 +1613,7 @@ degrees. Delegates to <code><a href="../../Chem/Spatial/Quat.html#rotation%28abo
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/affine.cr#L171" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/affine.cr#L192" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1542,7 +1638,7 @@ degrees. Delegates to <code><a href="../../Chem/Spatial/Quat.html#rotation%28abo
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/affine.cr#L182" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/affine.cr#L203" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1563,7 +1659,28 @@ degrees. Delegates to <code><a href="../../Chem/Spatial/Quat.html#rotation%28abo
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/230e468163854a7a127242fdb3a9836f5dbdce2c/src/chem/spatial/affine.cr#L200" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/affine.cr#L221" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="translation:self-instance-method">
+      <div class="signature">
+        
+        def <strong>translation</strong> : <span class="k">self</span>
+
+        <a class="method-permalink" href="#translation%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the translation component of the transformation.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/7e82acd745aeed446de298c9ebf4a3f6943bad3f/src/chem/spatial/affine.cr#L226" target="_blank">View source</a>]
         
       </div>
     </div>
