@@ -371,6 +371,19 @@ module Chem::Spatial
         !alpha.close_to?(90, 1e-8)
     end
 
+    # Returns the parallelepiped rotated about the axis vector *rotaxis*
+    # by *angle* degrees. Delegates to `AffineTransform.rotation` for
+    # computing the rotation.
+    def rotate(about rotaxis : Vec3, by angle : Number) : self
+      transform AffineTransform.rotation(rotaxis, angle)
+    end
+
+    # Returns the parallelepiped rotated by the Euler angles in degrees.
+    # Delegates to `AffineTransform.euler` for computing the rotation.
+    def rotate(x : Number, y : Number, z : Number) : self
+      transform AffineTransform.euler(x, y, z)
+    end
+
     # Returns the lengths of the basis vectors.
     def size : Size3
       Size3[*basisvec.map(&.abs)]

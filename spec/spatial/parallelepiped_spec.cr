@@ -335,6 +335,16 @@ describe Chem::Spatial::Parallelepiped do
     end
   end
 
+  describe "#rotate" do
+    it "returns a rotated parallelepiped" do
+      pld = Chem::Spatial::Parallelepiped.hexagonal(2.3, 23.3)
+      pld.rotate(vec3(1, 2, 3), 65).should eq \
+        pld.transform(Chem::Spatial::AffineTransform.rotation(vec3(1, 2, 3), 65))
+      pld.rotate(10, 6.4, 64.2).should eq \
+        pld.transform(Chem::Spatial::AffineTransform.euler(10, 6.4, 64.2))
+    end
+  end
+
   describe "#size" do
     it "returns parallelepiped' size" do
       Chem::Spatial::Parallelepiped.hexagonal(5, 4).size.should be_close [5, 5, 4], 1e-15
