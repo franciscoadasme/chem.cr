@@ -514,31 +514,6 @@ module Chem::Spatial
   end
 
   struct Vec3
-    # Returns vector's PBC image with respect to the parallelepiped.
-    #
-    # ```
-    # pld = new Parallelepiped.new({2, 2, 3}, {90, 90, 120})
-    # pld.i # => Vec3[2.0, 0.0, 0.0]
-    # pld.j # => Vec3[-1, 1.732, 0.0]
-    # pld.k # => Vec3[0.0, 0.0, 3.0]
-    #
-    # vec = Vec3[1, 1, 1.5]
-    # vec.image(pld, 1, 0, 0) # => Vec3[3.0, 1.0, 1.5]
-    # vec.image(pld, 0, 1, 0) # => Vec3[0.0, 2.732, 1.5]
-    # vec.image(pld, 0, 0, 1) # => Vec3[1.0, 1.0, 4.5]
-    # vec.image(pld, 1, 0, 1) # => Vec3[3.0, 1.0, 4.5]
-    # vec.image(pld, 1, 1, 1) # => Vec3[2.0, 2.732, 4.5]
-    # ```
-    def image(pld : Parallelepiped, i : Int, j : Int, k : Int) : self
-      # TODO: replace this method by pld.image(vec, {i, j, k})
-      {% begin %}
-        {% for var, i in %w(i j k) %}
-          pld.basisvec[{{i}}] * {{var.id}} +
-        {% end %}
-        self
-      {% end %}
-    end
-
     # Returns a vector in Cartesian coordinates relative to *pld* (see
     # `Parallelepiped#cart`). The vector is assumed to be expressed in
     # fractional coordinates.

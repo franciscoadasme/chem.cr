@@ -139,16 +139,6 @@ describe Chem::Spatial::Vec3 do
     end
   end
 
-  describe "#image" do
-    it "returns vector's pbc image" do
-      lat = Chem::Spatial::Parallelepiped.new({8.77, 9.5, 24.74}, {88.22, 80, 70.34})
-      vec = vec3(8.745528, 6.330571, 1.334073)
-      vec.image(lat, 1, 0, 0).should be_close [17.515528, 6.330571, 1.334073], 1e-6
-      vec.image(lat, -1, 0, 0).should be_close [-0.024472, 6.330571, 1.334073], 1e-6
-      vec.image(lat, -1, 1, -5).should be_close [-18.308592, 18.870709, -120.433621], 1e-6
-    end
-  end
-
   describe "#inv" do
     it "returns the inverse vector" do
       v1.inv.should eq [-3, -4, 0]
