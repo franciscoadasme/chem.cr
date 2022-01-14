@@ -512,18 +512,4 @@ module Chem::Spatial
       orthogonal? && basisvec[0].x?
     end
   end
-
-  struct Vec3
-    # Returns the vector by wrapping into *pld*. The vector is assumed to
-    # be expressed in Cartesian coordinates.
-    def wrap(pld : Parallelepiped) : self
-      pld.wrap self
-    end
-
-    # Returns the vector by wrapping into *pld* centered at *center*. The
-    # vector is assumed to be expressed in Cartesian coordinates.
-    def wrap(pld : Parallelepiped, around center : self) : self
-      pld.wrap self, center
-    end
-  end
 end

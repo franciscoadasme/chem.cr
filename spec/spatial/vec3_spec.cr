@@ -236,29 +236,6 @@ describe Chem::Spatial::Vec3 do
       vec3(0.5, 0.3, 1.1).wrap(center).should be_close [0.5, 0.3, 0.1], 1e-15
       vec3(0.01, -0.3, 2.4).wrap(center).should be_close [0.01, -0.3, 0.4], 1e-12
     end
-
-    it "wraps a Cartesian vector" do
-      cell = Chem::Spatial::Parallelepiped.new({15, 20, 9})
-
-      vec3(0, 0, 0).wrap(cell).should eq [0, 0, 0]
-      vec3(15, 20, 9).wrap(cell).should be_close [15, 20, 9], 1e-12
-      vec3(10, 10, 5).wrap(cell).should be_close [10, 10, 5], 1e-12
-      vec3(15.5, 21, -5).wrap(cell).should be_close [0.5, 1, 4], 1e-12
-    end
-
-    it "wraps a Cartesian vector around a center" do
-      cell = Chem::Spatial::Parallelepiped.new({32, 20, 19})
-      center = vec3(32, 20, 19)
-
-      [
-        {vec3(0, 0, 0), vec3(32, 20, 19)},
-        {vec3(32, 20, 19), vec3(32, 20, 19)},
-        {vec3(20.285, 14.688, 16.487), vec3(20.285, 14.688, 16.487)},
-        {vec3(23.735, 19.25, 1.716), vec3(23.735, 19.25, 20.716)},
-      ].each do |vec, expected|
-        vec.wrap(cell, center).should be_close expected, 1e-12
-      end
-    end
   end
 
   describe "#x?" do

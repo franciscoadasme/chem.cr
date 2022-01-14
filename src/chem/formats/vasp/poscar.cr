@@ -136,7 +136,7 @@ module Chem::VASP::Poscar
             vec = cell.fract vec
             vec = vec.wrap if @wrap
           elsif @wrap
-            vec = vec.wrap cell
+            vec = cell.wrap vec
           end
 
           @io.printf "%22.16f%22.16f%22.16f", vec.x, vec.y, vec.z

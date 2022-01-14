@@ -20,13 +20,13 @@ module Chem::Protein
       ca3 = next_res.dig("CA").coords
 
       if cell = residue.structure.cell
-        n2 = n2.wrap cell, around: ca2
-        c2 = c2.wrap cell, around: ca2
-        cb2 = cb2.try &.wrap(cell, around: ca2)
-        c1 = c1.wrap cell, around: n2
-        ca1 = ca1.wrap cell, around: c1
-        n3 = n3.wrap cell, around: c2
-        ca3 = ca3.wrap cell, around: n3
+        n2 = cell.wrap n2, around: ca2
+        c2 = cell.wrap c2, around: ca2
+        cb2 = cb2.try { |cb2| cell.wrap cb2, around: ca2 }
+        c1 = cell.wrap c1, around: n2
+        ca1 = cell.wrap ca1, around: c1
+        n3 = cell.wrap n3, around: c2
+        ca3 = cell.wrap ca3, around: n3
       end
 
       # compute helix rotation axis using auxiliary vectors
