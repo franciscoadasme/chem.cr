@@ -214,6 +214,16 @@ describe Chem::Spatial::Parallelepiped do
     end
   end
 
+  describe "#image" do
+    it "returns vector's image" do
+      vec = vec3(8.745528, 6.330571, 1.334073)
+      pld = Chem::Spatial::Parallelepiped.new({8.77, 9.5, 24.74}, {88.22, 80, 70.34})
+      pld.image(vec, {1, 0, 0}).should be_close [17.515528, 6.330571, 1.334073], 1e-6
+      pld.image(vec, {-1, 0, 0}).should be_close [-0.024472, 6.330571, 1.334073], 1e-6
+      pld.image(vec, {-1, 1, -5}).should be_close [-18.308592, 18.870709, -120.433621], 1e-6
+    end
+  end
+
   describe "#includes?" do
     it "tells if a vector is enclosed" do
       pld = Chem::Spatial::Parallelepiped[10, 20, 30]

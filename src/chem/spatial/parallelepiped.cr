@@ -255,6 +255,30 @@ module Chem::Spatial
         gamma.close_to?(120, 1e-8)
     end
 
+    # Returns the vector's image with respect to the parallelepiped.
+    #
+    # ```
+    # pld = new Parallelepiped.new({2, 2, 3}, {90, 90, 120})
+    # pld.i # => Vec3[2.0, 0.0, 0.0]
+    # pld.j # => Vec3[-1, 1.732, 0.0]
+    # pld.k # => Vec3[0.0, 0.0, 3.0]
+    #
+    # vec = Vec3[1, 1, 1.5]
+    # pld.image(vec, {1, 0, 0}) # => Vec3[3.0, 1.0, 1.5]
+    # pld.image(vec, {0, 1, 0}) # => Vec3[0.0, 2.732, 1.5]
+    # pld.image(vec, {0, 0, 1}) # => Vec3[1.0, 1.0, 4.5]
+    # pld.image(vec, {1, 0, 1}) # => Vec3[3.0, 1.0, 4.5]
+    # pld.image(vec, {1, 1, 1}) # => Vec3[2.0, 2.732, 4.5]
+    # ```
+    def image(vec : Vec3, ix : Tuple(Int, Int, Int)) : Vec3
+      {% begin %}
+        {% for i in 0..2 %}
+          basisvec[{{i}}] * ix[{{i}}] +
+        {% end %}
+        vec
+      {% end %}
+    end
+
     # Returns `true` if the parallelepiped encloses *other*, `false`
     # otherwise.
     #
