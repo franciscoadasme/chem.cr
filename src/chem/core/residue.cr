@@ -282,9 +282,8 @@ module Chem
     end
 
     # Returns bonded residues. Residues may be bonded through any atom.
-    #
-    # Returned residues are ordered by their chain id, residue number
-    # and insertion code if present (refer to #<=>).
+    # Residues are ordered by their chain id, residue number and
+    # insertion code if present (refer to #<=>).
     #
     # ```
     # # Covalent ligand (JG7) is bonded to CYS sidechain
@@ -300,10 +299,9 @@ module Chem
       residues.sort!
     end
 
-    # Returns residues bonded through *bond_t*.
-    #
-    # Returned residues are ordered by their chain id, residue number
-    # and insertion code if present (refer to #<=>).
+    # Returns residues bonded through *bond_t*. Residues are ordered by
+    # their chain id, residue number and insertion code if present
+    # (refer to #<=>).
     #
     # ```
     # # Covalent ligand (JG7) is bonded to CYS sidechain
@@ -315,16 +313,16 @@ module Chem
     # residues[3].bonded_residues(bond_t).map(&.name) # => []
     # ```
     #
-    # If *forward_only* is false, then bond directionality is ignored:
+    # If *forward_only* is `false`, then bond directionality is ignored:
     #
     # ```
-    # residues[0].bonded_residues(bond_t, forward_only: true).map(&.name) # => ["CYS"]
-    # residues[1].bonded_residues(bond_t, forward_only: true).map(&.name) # => ["ALA", "THR"]
-    # residues[2].bonded_residues(bond_t, forward_only: true).map(&.name) # => ["CYS"]
-    # residues[3].bonded_residues(bond_t, forward_only: true).map(&.name) # => []
+    # residues[0].bonded_residues(bond_t, forward_only: false).map(&.name) # => ["CYS"]
+    # residues[1].bonded_residues(bond_t, forward_only: false).map(&.name) # => ["ALA", "THR"]
+    # residues[2].bonded_residues(bond_t, forward_only: false).map(&.name) # => ["CYS"]
+    # residues[3].bonded_residues(bond_t, forward_only: false).map(&.name) # => []
     # ```
     #
-    # If *strict* is false, bond search checks elements only, and bond
+    # If *strict* is `false`, bond search checks elements only, and bond
     # order is ignored (fuzzy search). In the following example, using
     # `strict: false` makes that any C-N bond is accepted regardless of
     # atom names or bond order:
