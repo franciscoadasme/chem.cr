@@ -295,13 +295,9 @@ module Chem
     # residues[3].bonded_residues.map(&.name) # => ["CYS"]
     # ```
     def bonded_residues : Array(Residue)
-      residues = Set(Residue).new
-      @atoms.each do |atom|
-        atom.each_bonded_atom do |other|
-          residues << other.residue unless other.residue == self
-        end
-      end
-      residues.to_a.sort!
+      residues = [] of Residue
+      each_bonded_residue { |residue| residues << residue }
+      residues.sort!
     end
 
     # Returns residues bonded through *bond_t*.
@@ -343,11 +339,9 @@ module Chem
     def bonded_residues(bond_t : Topology::BondType,
                         forward_only : Bool = true,
                         strict : Bool = true) : Array(Residue)
-      bonded_residues.select! do |residue|
-        bonded = bonded?(residue, bond_t, strict)
-        bonded ||= residue.bonded?(self, bond_t, strict) unless forward_only
-        bonded
-      end
+      residues = [] of Residue
+      each_bonded_residue(bond_t, forward_only, strict) { |residue| residues << residue }
+      residues
     end
 
     def chain=(new_chain : Chain) : Chain
@@ -410,6 +404,40 @@ module Chem
     def each_atom(&block : Atom ->)
       @atoms.each do |atom|
         yield atom
+      end
+    end
+
+    # Yields each bonded residue. Residues may be bonded through any
+    # atom.
+    #
+    # See `#bonded_residues` for examples.
+    def each_bonded_residue(& : Residue ->) : Nil
+      residues = Set(Residue).new
+      @atoms.each do |atom|
+        atom.each_bonded_atom do |other|
+          residue = other.residue
+          yield residue if residue != self && !residue.in?(residues)
+          residues << residue
+        end
+      end
+    end
+
+    # Yields each residue bonded through *bond_t*.
+    #
+    # If *forward_only* is `false`, then bond directionality is ignored.
+    #
+    # If *strict* is `false`, bond search checks elements only, and bond
+    # order is ignored (fuzzy search).
+    #
+    # See `#bonded_residues(bond_t, forward_only, strict)` for examples.
+    def each_bonded_residue(bond_t : Topology::BondType,
+                            forward_only : Bool = true,
+                            strict : Bool = true,
+                            & : Residue ->) : Nil
+      each_bonded_residue do |residue|
+        bonded = bonded?(residue, bond_t, strict)
+        bonded ||= residue.bonded?(self, bond_t, strict) unless forward_only
+        yield residue if bonded
       end
     end
 
