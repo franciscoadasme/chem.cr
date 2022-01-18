@@ -515,13 +515,19 @@ module Chem
     # residue (e.g., branched polymers), it returns the first residue
     # among them.
     def succ(strict : Bool = true, use_numbering : Bool = true) : Residue?
+      bonded_residue = nil
       if bond_t = type.try(&.link_bond)
-        residues = bonded_residues bond_t
-        residues = bonded_residues bond_t, strict: false if residues.empty? && !strict
-        residues.sort!.first?
+        each_bonded_residue(bond_t, strict: strict) do |residue|
+          bonded_residue = residue if !bonded_residue || residue < bonded_residue
+        end
       elsif use_numbering
-        bonded_residues.select!(&.>(self)).sort!.first?
+        each_bonded_residue do |residue|
+          if residue > self && (!bonded_residue || residue < bonded_residue)
+            bonded_residue = residue
+          end
+        end
       end
+      bonded_residue
     end
 
     def omega : Float64
@@ -574,13 +580,19 @@ module Chem
     # residue (e.g., branched polymers), it returns the last residue
     # among them.
     def pred(strict : Bool = true, use_numbering : Bool = true) : Residue?
-      if bond_t = type.try(&.link_bond).try(&.inverse)
-        residues = bonded_residues bond_t
-        residues = bonded_residues bond_t, strict: false if residues.empty? && !strict
-        residues.sort!.last?
+      bonded_residue = nil
+      if bond_t = type.try(&.link_bond)
+        each_bonded_residue(bond_t.inverse, strict: strict) do |residue|
+          bonded_residue = residue if !bonded_residue || residue > bonded_residue
+        end
       elsif use_numbering
-        bonded_residues.select!(&.<(self)).sort!.last?
+        each_bonded_residue do |residue|
+          if residue < self && (!bonded_residue || residue > bonded_residue)
+            bonded_residue = residue
+          end
+        end
       end
+      bonded_residue
     end
 
     def psi : Float64
