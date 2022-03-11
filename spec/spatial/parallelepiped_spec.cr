@@ -35,7 +35,7 @@ describe Chem::Spatial::Parallelepiped do
     it "returns a parallelepiped with the given size placed at origin" do
       pld = Chem::Spatial::Parallelepiped[1, 2, 3]
       pld.origin.should eq [0, 0, 0]
-      pld.size.should eq Chem::Spatial::Size3[1, 2, 3]
+      pld.size.should eq [1, 2, 3]
       pld.basis.should eq Chem::Spatial::Mat3.diagonal(1, 2, 3)
     end
   end
@@ -312,7 +312,7 @@ describe Chem::Spatial::Parallelepiped do
       it "returns a padded parallelepiped" do
         pld = Chem::Spatial::Parallelepiped.cubic(10)
         pld = pld.pad(2)
-        pld.size.should eq Chem::Spatial::Size3[14, 14, 14]
+        pld.size.should eq [14, 14, 14]
         pld.center.should eq pld.center
       end
     end
@@ -321,7 +321,7 @@ describe Chem::Spatial::Parallelepiped do
       it "returns a padded parallelepiped" do
         pld = Chem::Spatial::Parallelepiped.new({4, 7, 8.5}, {90, 120, 90})
         pld = pld.pad(0.5)
-        pld.size.should eq Chem::Spatial::Size3[5, 8, 9.5]
+        pld.size.should eq [5, 8, 9.5]
         pld.center.should be_close pld.center, 1e-15
       end
     end
@@ -399,7 +399,7 @@ describe Chem::Spatial::Parallelepiped do
       pld = pld.translate(vec3(-5, 1, 20)).translate(vec3(1, 2, 10))
       pld.vmin.should eq [-4, 3, 30]
       pld.angles.should be_close({90, 90, 120}, 1e-3)
-      pld.size.should be_close Chem::Spatial::Size3[10, 10, 10], 1e-12
+      pld.size.should be_close [10, 10, 10], 1e-12
     end
   end
 

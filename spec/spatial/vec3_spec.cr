@@ -54,7 +54,7 @@ describe Chem::Spatial::Vec3 do
     end
 
     it "sums a vector and a size" do
-      (vec3(1, 2, 3) + Chem::Spatial::Size3[3, 2, 1]).should eq [4, 4, 4]
+      (vec3(1, 2, 3) + size3(3, 2, 1)).should eq [4, 4, 4]
     end
   end
 
@@ -72,7 +72,7 @@ describe Chem::Spatial::Vec3 do
     end
 
     it "subtracts a size from a vector" do
-      (vec3(1, 2, 3) - Chem::Spatial::Size3[3, 2, 1]).should eq [-2, 0, 2]
+      (vec3(1, 2, 3) - size3(3, 2, 1)).should eq [-2, 0, 2]
     end
   end
 

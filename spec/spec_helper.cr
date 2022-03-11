@@ -135,6 +135,10 @@ def vec3(x : Number, y : Number, z : Number) : Chem::Spatial::Vec3
   Chem::Spatial::Vec3[x, y, z]
 end
 
+def size3(x : Number, y : Number, z : Number) : Chem::Spatial::Size3
+  Chem::Spatial::Size3[x, y, z]
+end
+
 def bounds(a : Number, b : Number, c : Number) : Chem::Spatial::Parallelepiped
   Chem::Spatial::Parallelepiped[a, b, c]
 end
