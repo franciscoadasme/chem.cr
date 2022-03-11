@@ -2,13 +2,17 @@ module Chem::Spatial
   # A `Size3` represents the size of an object in three-dimensional
   # space.
   struct Size3
-    @buffer : FloatTriple
+    # X component of the size.
+    getter x : Float64
+    # Y component of the size.
+    getter y : Float64
+    # Z component of the size.
+    getter z : Float64
 
     # Creates a size with values *x*, *y* and *z*. Raises
     # `ArgumentError` if *x*, *y* or *z* is negative.
-    def initialize(x : Float64, y : Float64, z : Float64)
-      raise ArgumentError.new "Negative size" if x < 0 || y < 0 || z < 0
-      @buffer = {x, y, z}
+    def initialize(@x : Float64, @y : Float64, @z : Float64)
+      raise ArgumentError.new("Negative size") if x < 0 || y < 0 || z < 0
     end
 
     # Returns a size with values *x*, *y* and *z*.
@@ -28,13 +32,13 @@ module Chem::Spatial
         # Returns the element-wise {{op_map[op].id}} of the vector by
         # *rhs*.
         def {{op.id}}(rhs : Number) : self
-          Size3[*@buffer.map(&.{{op.id}}(rhs))]
+          self.class[@x {{op.id}} rhs, @y {{op.id}} rhs, @z {{op.id}} rhs]
         end
       {% end %}
     {% end %}
 
-    # Returns the element at *index*. Raises `IndexError` if *index* is
-    # out of bounds.
+    # Returns the element at *index* in the XYZ order. Raises
+    # `IndexError` if *index* is out of bounds.
     #
     # ```
     # size = Size3[10, 15, 20]
@@ -45,10 +49,11 @@ module Chem::Spatial
     # size[-1] # raises IndexError
     # ```
     def [](index : Int) : Float64
-      if 0 <= index < 3
-        @buffer[index]
-      else
-        raise IndexError.new
+      case index
+      when 0 then @x
+      when 1 then @y
+      when 2 then @z
+      else        raise IndexError.new
       end
     end
 
@@ -62,10 +67,9 @@ module Chem::Spatial
     # Size3[1, 2, 3].close_to?(Size3[1.001, 1.999, 3.00004], 1e-8) # => false
     # ```
     def close_to?(rhs : self, delta : Number = Float64::EPSILON) : Bool
-      # TODO: add Indexable.close_to? and use that instead
-      (0..2).all? do |i|
-        @buffer[i].close_to?(rhs[i], delta)
-      end
+      @x.close_to?(rhs.x, delta) &&
+        @y.close_to?(rhs.y, delta) &&
+        @z.close_to?(rhs.z, delta)
     end
   end
 end
