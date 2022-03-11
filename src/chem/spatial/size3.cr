@@ -26,13 +26,35 @@ module Chem::Spatial
       Size3[0, 0, 0]
     end
 
+    # Returns the element-wise substraction of the size by *rhs*.
+    #
+    # WARNING: This will clamp negative values to zero.
+    def -(rhs : self) : self
+      self.class.new(
+        Math.max(0.0, @x - rhs.x),
+        Math.max(0.0, @y - rhs.y),
+        Math.max(0.0, @z - rhs.z),
+      )
+    end
+
     {% begin %}
-      {% op_map = {"*" => "multiplication", "/" => "division"} %}
+      {% op_name_map = {"+" => "addition",
+                        "-" => "substraction",
+                        "*" => "multiplication",
+                        "/" => "division"} %}
       {% for op in %w(* /) %}
-        # Returns the element-wise {{op_map[op].id}} of the vector by
+        # Returns the element-wise {{op_name_map[op].id}} of the size by
         # *rhs*.
         def {{op.id}}(rhs : Number) : self
           self.class[@x {{op.id}} rhs, @y {{op.id}} rhs, @z {{op.id}} rhs]
+        end
+      {% end %}
+
+      {% for op in %w(+ * /) %}
+        # Returns the element-wise {{op_name_map[op].id}} of the size by
+        # *rhs*.
+        def {{op.id}}(rhs : self) : self
+          self.class.new(@x {{op.id}} rhs.x, @y {{op.id}} rhs.y, @z {{op.id}} rhs.z)
         end
       {% end %}
     {% end %}
