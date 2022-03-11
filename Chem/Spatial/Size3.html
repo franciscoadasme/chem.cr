@@ -840,7 +840,7 @@ space.</p>
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/ecdaae2c2579a8906eb4e70abaa818d57eecf00d/src/chem/spatial/size3.cr#L4" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/size3.cr#L4" target="_blank">
         chem/spatial/size3.cr
       </a>
     
@@ -901,21 +901,49 @@ space.</p>
       <li class="entry-summary">
         <a href="#%2A%28rhs%3ANumber%29%3Aself-instance-method" class="signature"><strong>#*</strong>(rhs : Number) : <span class="k">self</span></a>
         
-          <div class="summary"><p>Returns the element-wise multiplication of the vector by <em>rhs</em>.</p></div>
+          <div class="summary"><p>Returns the element-wise multiplication of the size by <em>rhs</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%2A%28rhs%3Aself%29%3Aself-instance-method" class="signature"><strong>#*</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the element-wise multiplication of the size by <em>rhs</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%2B%28rhs%3Aself%29%3Aself-instance-method" class="signature"><strong>#+</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the element-wise addition of the size by <em>rhs</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#-%28rhs%3Aself%29%3Aself-instance-method" class="signature"><strong>#-</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the element-wise substraction of the size by <em>rhs</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#/%28rhs%3ANumber%29%3Aself-instance-method" class="signature"><strong>#/</strong>(rhs : Number) : <span class="k">self</span></a>
         
-          <div class="summary"><p>Returns the element-wise division of the vector by <em>rhs</em>.</p></div>
+          <div class="summary"><p>Returns the element-wise division of the size by <em>rhs</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#/%28rhs%3Aself%29%3Aself-instance-method" class="signature"><strong>#/</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the element-wise division of the size by <em>rhs</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#%5B%5D%28index%3AInt%29%3AFloat64-instance-method" class="signature"><strong>#[]</strong>(index : Int) : Float64</a>
         
-          <div class="summary"><p>Returns the element at <em>index</em>.</p></div>
+          <div class="summary"><p>Returns the element at <em>index</em> in the XYZ order.</p></div>
         
       </li>
     
@@ -923,6 +951,34 @@ space.</p>
         <a href="#close_to%3F%28rhs%3Aself%2Cdelta%3ANumber%3DFloat64%3A%3AEPSILON%29%3ABool-instance-method" class="signature"><strong>#close_to?</strong>(rhs : <span class="k">self</span>, delta : Number = <span class="t">Float64</span><span class="t">::</span><span class="t">EPSILON</span>) : Bool</a>
         
           <div class="summary"><p>Returns <code>true</code> if the elements of the size are within <em>delta</em> from each other, else <code>false</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#transform%28%26%3AFloat64%2CFloat64%2CFloat64-%3EFloatTriple%29%3Aself-instance-method" class="signature"><strong>#transform</strong>(& : Float64, Float64, Float64 -> FloatTriple) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a new size with the return value of the given block, which is invoked with the X, Y, and Z components.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#x%3AFloat64-instance-method" class="signature"><strong>#x</strong> : Float64</a>
+        
+          <div class="summary"><p>X component of the size.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#y%3AFloat64-instance-method" class="signature"><strong>#y</strong> : Float64</a>
+        
+          <div class="summary"><p>Y component of the size.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#z%3AFloat64-instance-method" class="signature"><strong>#z</strong> : Float64</a>
+        
+          <div class="summary"><p>Z component of the size.</p></div>
         
       </li>
     
@@ -992,7 +1048,7 @@ space.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ecdaae2c2579a8906eb4e70abaa818d57eecf00d/src/chem/spatial/size3.cr#L16" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/size3.cr#L20" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1014,7 +1070,7 @@ space.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ecdaae2c2579a8906eb4e70abaa818d57eecf00d/src/chem/spatial/size3.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/size3.cr#L14" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1035,7 +1091,7 @@ space.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ecdaae2c2579a8906eb4e70abaa818d57eecf00d/src/chem/spatial/size3.cr#L21" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/size3.cr#L25" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1064,14 +1120,80 @@ space.</p>
       
         <div class="doc">
           
-          <p>Returns the element-wise multiplication of the vector by
+          <p>Returns the element-wise multiplication of the size by
 <em>rhs</em>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ecdaae2c2579a8906eb4e70abaa818d57eecf00d/src/chem/spatial/size3.cr#L25" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/size3.cr#L40" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="*(rhs:self):self-instance-method">
+      <div class="signature">
+        
+        def <strong>*</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#%2A%28rhs%3Aself%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the element-wise multiplication of the size by
+<em>rhs</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/size3.cr#L40" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="+(rhs:self):self-instance-method">
+      <div class="signature">
+        
+        def <strong>+</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#%2B%28rhs%3Aself%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the element-wise addition of the size by
+<em>rhs</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/size3.cr#L40" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="-(rhs:self):self-instance-method">
+      <div class="signature">
+        
+        def <strong>-</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#-%28rhs%3Aself%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the element-wise substraction of the size by <em>rhs</em>.</p>
+<p><span class="flag yellow">WARNING</span>  This will clamp negative values to zero.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/size3.cr#L32" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1086,14 +1208,36 @@ space.</p>
       
         <div class="doc">
           
-          <p>Returns the element-wise division of the vector by
+          <p>Returns the element-wise division of the size by
 <em>rhs</em>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ecdaae2c2579a8906eb4e70abaa818d57eecf00d/src/chem/spatial/size3.cr#L25" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/size3.cr#L40" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="/(rhs:self):self-instance-method">
+      <div class="signature">
+        
+        def <strong>/</strong>(rhs : <span class="k">self</span>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#/%28rhs%3Aself%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the element-wise division of the size by
+<em>rhs</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/size3.cr#L40" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1108,8 +1252,8 @@ space.</p>
       
         <div class="doc">
           
-          <p>Returns the element at <em>index</em>. Raises <code>IndexError</code> if <em>index</em> is
-out of bounds.</p>
+          <p>Returns the element at <em>index</em> in the XYZ order. Raises
+<code>IndexError</code> if <em>index</em> is out of bounds.</p>
 <pre><code class="language-crystal">size <span class="o">=</span> <span class="t">Size3</span>[<span class="n">10</span>, <span class="n">15</span>, <span class="n">20</span>]
 size[<span class="n">0</span>]  <span class="c"># =&gt; 10</span>
 size[<span class="n">1</span>]  <span class="c"># =&gt; 15</span>
@@ -1121,7 +1265,7 @@ size[<span class="n">-1</span>] <span class="c"># raises IndexError</span></code
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ecdaae2c2579a8906eb4e70abaa818d57eecf00d/src/chem/spatial/size3.cr#L47" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/size3.cr#L73" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1147,7 +1291,97 @@ from each other, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ecdaae2c2579a8906eb4e70abaa818d57eecf00d/src/chem/spatial/size3.cr#L64" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/size3.cr#L91" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="transform(&amp;:Float64,Float64,Float64-&gt;FloatTriple):self-instance-method">
+      <div class="signature">
+        
+        def <strong>transform</strong>(& : Float64, Float64, Float64 -> <a href="../../Chem/Spatial/FloatTriple.html">FloatTriple</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#transform%28%26%3AFloat64%2CFloat64%2CFloat64-%3EFloatTriple%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a new size with the return value of the given block, which
+is invoked with the X, Y, and Z components.</p>
+<pre><code class="language-crystal"><span class="t">Size3</span>[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>].transform <span class="k">do</span> <span class="o">|</span>x, y, z<span class="o">|</span>
+  x *= <span class="n">2</span>
+  z /= <span class="n">0.3</span>
+  {x, y, z}
+<span class="k">end</span> <span class="c"># =&gt; Size3[2, 2, 10]</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/size3.cr#L107" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="x:Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>x</strong> : Float64
+
+        <a class="method-permalink" href="#x%3AFloat64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>X component of the size.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/size3.cr#L6" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="y:Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>y</strong> : Float64
+
+        <a class="method-permalink" href="#y%3AFloat64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Y component of the size.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/size3.cr#L8" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="z:Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>z</strong> : Float64
+
+        <a class="method-permalink" href="#z%3AFloat64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Z component of the size.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/size3.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>

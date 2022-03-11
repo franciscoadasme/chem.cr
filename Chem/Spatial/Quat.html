@@ -873,7 +873,7 @@ q <span class="o">=</span> <span class="t">Quat</span>.rotation <span class="t">
 q <span class="o">*</span> v <span class="c"># =&gt; [3.0 2.0 -1.0]</span>
 v <span class="o">*</span> q <span class="c"># =&gt; [-3.0 2.0 1.0]</span></code></pre>
 <p><span class="flag purple">NOTE</span>  Quat multiplication is not commutative: <code>q * v != v * p</code>, the former will apply the rotation encoded in <em>q</em> to <em>v</em> but the
-latter will produce the inverse rotation. Use <code><a href="../../Chem/Spatial/Vec3.html#transform%28transformation%3AAffineTransform%29%3Aself-instance-method">Vec3#transform</a></code> to
+latter will produce the inverse rotation. Use <code><a href="../../Chem/Spatial/Vec3.html#transform%28%26%3AFloat64%2CFloat64%2CFloat64-%3EFloatTriple%29%3Aself-instance-method">Vec3#transform</a></code> to
 avoid the ambiguity.</p>
 
 
@@ -899,7 +899,7 @@ avoid the ambiguity.</p>
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/ecdaae2c2579a8906eb4e70abaa818d57eecf00d/src/chem/spatial/quat.cr#L77" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/quat.cr#L77" target="_blank">
         chem/spatial/quat.cr
       </a>
     
@@ -1213,7 +1213,7 @@ avoid the ambiguity.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ecdaae2c2579a8906eb4e70abaa818d57eecf00d/src/chem/spatial/quat.cr#L95" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/quat.cr#L95" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1235,7 +1235,7 @@ to <em>v</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ecdaae2c2579a8906eb4e70abaa818d57eecf00d/src/chem/spatial/quat.cr#L101" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/quat.cr#L101" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1260,7 +1260,7 @@ perpendicular to <em>v[0]</em> by taking their projections.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ecdaae2c2579a8906eb4e70abaa818d57eecf00d/src/chem/spatial/quat.cr#L112" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/quat.cr#L112" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1284,7 +1284,7 @@ that order (XYZ).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ecdaae2c2579a8906eb4e70abaa818d57eecf00d/src/chem/spatial/quat.cr#L123" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/quat.cr#L123" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1306,7 +1306,7 @@ that order (XYZ).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ecdaae2c2579a8906eb4e70abaa818d57eecf00d/src/chem/spatial/quat.cr#L89" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/quat.cr#L89" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1328,7 +1328,7 @@ that order (XYZ).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ecdaae2c2579a8906eb4e70abaa818d57eecf00d/src/chem/spatial/quat.cr#L140" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/quat.cr#L140" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1363,7 +1363,7 @@ that order (XYZ).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ecdaae2c2579a8906eb4e70abaa818d57eecf00d/src/chem/spatial/quat.cr#L162" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/quat.cr#L162" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1394,7 +1394,7 @@ effectively applies such rotation to <em>rhs</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ecdaae2c2579a8906eb4e70abaa818d57eecf00d/src/chem/spatial/quat.cr#L181" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/quat.cr#L181" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1415,7 +1415,7 @@ effectively applies such rotation to <em>rhs</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ecdaae2c2579a8906eb4e70abaa818d57eecf00d/src/chem/spatial/quat.cr#L187" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/quat.cr#L187" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1436,7 +1436,7 @@ effectively applies such rotation to <em>rhs</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ecdaae2c2579a8906eb4e70abaa818d57eecf00d/src/chem/spatial/quat.cr#L147" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/quat.cr#L147" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1457,7 +1457,7 @@ effectively applies such rotation to <em>rhs</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ecdaae2c2579a8906eb4e70abaa818d57eecf00d/src/chem/spatial/quat.cr#L157" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/quat.cr#L157" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1478,7 +1478,7 @@ effectively applies such rotation to <em>rhs</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ecdaae2c2579a8906eb4e70abaa818d57eecf00d/src/chem/spatial/quat.cr#L152" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/quat.cr#L152" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1499,7 +1499,7 @@ effectively applies such rotation to <em>rhs</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ecdaae2c2579a8906eb4e70abaa818d57eecf00d/src/chem/spatial/quat.cr#L192" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/quat.cr#L192" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1520,7 +1520,7 @@ effectively applies such rotation to <em>rhs</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ecdaae2c2579a8906eb4e70abaa818d57eecf00d/src/chem/spatial/quat.cr#L197" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/quat.cr#L197" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1541,7 +1541,7 @@ effectively applies such rotation to <em>rhs</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ecdaae2c2579a8906eb4e70abaa818d57eecf00d/src/chem/spatial/quat.cr#L202" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/quat.cr#L202" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1567,7 +1567,7 @@ effectively applies such rotation to <em>rhs</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ecdaae2c2579a8906eb4e70abaa818d57eecf00d/src/chem/spatial/quat.cr#L215" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/quat.cr#L215" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1588,7 +1588,7 @@ effectively applies such rotation to <em>rhs</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ecdaae2c2579a8906eb4e70abaa818d57eecf00d/src/chem/spatial/quat.cr#L223" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/quat.cr#L223" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1609,7 +1609,7 @@ effectively applies such rotation to <em>rhs</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ecdaae2c2579a8906eb4e70abaa818d57eecf00d/src/chem/spatial/quat.cr#L228" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/quat.cr#L228" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1630,7 +1630,7 @@ effectively applies such rotation to <em>rhs</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ecdaae2c2579a8906eb4e70abaa818d57eecf00d/src/chem/spatial/quat.cr#L233" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/quat.cr#L233" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1651,7 +1651,7 @@ effectively applies such rotation to <em>rhs</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ecdaae2c2579a8906eb4e70abaa818d57eecf00d/src/chem/spatial/quat.cr#L238" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/quat.cr#L238" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1672,7 +1672,7 @@ effectively applies such rotation to <em>rhs</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ecdaae2c2579a8906eb4e70abaa818d57eecf00d/src/chem/spatial/quat.cr#L243" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/quat.cr#L243" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1693,7 +1693,7 @@ effectively applies such rotation to <em>rhs</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ecdaae2c2579a8906eb4e70abaa818d57eecf00d/src/chem/spatial/quat.cr#L249" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/quat.cr#L249" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1714,7 +1714,7 @@ effectively applies such rotation to <em>rhs</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ecdaae2c2579a8906eb4e70abaa818d57eecf00d/src/chem/spatial/quat.cr#L254" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/quat.cr#L254" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1739,7 +1739,7 @@ effectively applies such rotation to <em>rhs</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ecdaae2c2579a8906eb4e70abaa818d57eecf00d/src/chem/spatial/quat.cr#L262" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/quat.cr#L262" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1761,7 +1761,7 @@ effectively applies such rotation to <em>rhs</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ecdaae2c2579a8906eb4e70abaa818d57eecf00d/src/chem/spatial/quat.cr#L275" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/quat.cr#L275" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1782,7 +1782,7 @@ effectively applies such rotation to <em>rhs</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ecdaae2c2579a8906eb4e70abaa818d57eecf00d/src/chem/spatial/quat.cr#L79" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/quat.cr#L79" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1803,7 +1803,7 @@ effectively applies such rotation to <em>rhs</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ecdaae2c2579a8906eb4e70abaa818d57eecf00d/src/chem/spatial/quat.cr#L81" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/quat.cr#L81" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1824,7 +1824,7 @@ effectively applies such rotation to <em>rhs</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ecdaae2c2579a8906eb4e70abaa818d57eecf00d/src/chem/spatial/quat.cr#L83" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/quat.cr#L83" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1845,7 +1845,7 @@ effectively applies such rotation to <em>rhs</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ecdaae2c2579a8906eb4e70abaa818d57eecf00d/src/chem/spatial/quat.cr#L85" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/quat.cr#L85" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1867,7 +1867,7 @@ effectively applies such rotation to <em>rhs</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ecdaae2c2579a8906eb4e70abaa818d57eecf00d/src/chem/spatial/quat.cr#L281" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4449189469afb69d9bf8584380550326e6020590/src/chem/spatial/quat.cr#L281" target="_blank">View source</a>]
         
       </div>
     </div>
