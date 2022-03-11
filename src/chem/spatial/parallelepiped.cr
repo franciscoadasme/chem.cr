@@ -365,32 +365,45 @@ module Chem::Spatial
     end
 
     # Returns a new parallelepiped by expanding the extents by *padding*
-    # in each direction. Note that its size is actually increased by
-    # `padding * 2`. *padding* can be either a single value, three
+    # in each direction. *padding* can be either a single value, three
     # values, or a `Size3` instance.
+    #
+    # If *centered* is `true`, the origin will be changed such that the
+    # center does not change, else it will be kept intact.
     #
     # ```
     # pld = Parallelepiped.new(Vec3[1, 5, 3], {10, 5, 12})
-    # pld.center # => Vec3[6.0, 7.5, 9.0]
-    # pld.pad(2.5)
-    # pld.size   # => Size3[15, 10, 17]
-    # pld.center # => Vec3[6.0, 7.5, 9.0]
+    #
+    # other = pld.pad(2.5)
+    # other.size                 # => Size3[15, 10, 17]
+    # other.origin == pld.origin # => false
+    # other.center == pld.center # => true
+    #
+    # other = pld.pad(2.5, centered: false)
+    # other.size                 # => Size3[15, 10, 17]
+    # other.origin == pld.origin # => true
+    # other.center == pld.center # => false
     # ```
-    def pad(padding : Number) : self
-      pad padding, padding, padding
+    #
+    # NOTE: Note that its size is actually increased by `padding * 2`.
+    def pad(padding : Number, centered : Bool = true) : self
+      pad padding, padding, padding, centered
     end
 
     # :ditto:
-    def pad(padding : Size3) : self
-      new_origin = @origin - basisvec.map_with_index { |bv, i| bv.resize(padding[i]) }.sum
+    def pad(padding : Size3, centered : Bool = true) : self
+      new_origin = @origin
+      if centered
+        new_origin -= basisvec.map_with_index { |bv, i| bv.resize(padding[i]) }.sum
+      end
       padding *= 2
       new_basis = Mat3.basis *basisvec.map_with_index { |bv, i| bv.pad(padding[i]) }
       self.class.new new_origin, new_basis
     end
 
     # :ditto:
-    def pad(px : Number, py : Number, pz : Number) : self
-      pad Size3[px, py, pz]
+    def pad(px : Number, py : Number, pz : Number, centered : Bool = true) : self
+      pad Size3[px, py, pz], centered
     end
 
     # Returns a parallelepiped by resizing the basis vectors to the

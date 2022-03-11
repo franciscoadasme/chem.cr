@@ -322,6 +322,14 @@ describe Chem::Spatial::Parallelepiped do
         other.size.should eq [14, 30, 12]
         other.center.should eq pld.center
       end
+
+      it "pads a parallelepiped without modifying the origin" do
+        pld = Chem::Spatial::Parallelepiped.cubic(10)
+        other = pld.pad(2, centered: false)
+        other.origin.should eq pld.origin
+        other.size.should eq [14, 14, 14]
+        other.center.should eq pld.center + vec3(2, 2, 2)
+      end
     end
 
     context "given a non-orthogonal parallelepiped" do
