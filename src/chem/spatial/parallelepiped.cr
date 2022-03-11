@@ -450,6 +450,25 @@ module Chem::Spatial
       {{@type}}.new @origin - offset, *new_basisvec
     end
 
+    # Returns a new parallelepiped with the return value of the given
+    # block, which is invoked with the basis vectors.
+    #
+    # ```
+    # pld = Parallelepiped.cubic(10).transform do |bi, bj, bk|
+    #   bi *= 2
+    #   bk /= 0.4
+    #   {bi, bj, bk}
+    # end
+    # pld.basisvec[0] # => Vec3[20, 0, 0]
+    # pld.basisvec[1] # => Vec3[0, 10, 0]
+    # pld.basisvec[2] # => Vec3[0, 0, 25]
+    # ```
+    def transform(& : Vec3, Vec3, Vec3 -> {Vec3, Vec3, Vec3}) : self
+      bi, bj, bk = basisvec
+      components = yield bi, bj, bk
+      self.class.new *components
+    end
+
     # Returns `true` if the parallelepiped is triclinic (not orthogonal,
     # hexagonal, monoclinic, nor rhombohedral), else `false`.
     def triclinic? : Bool

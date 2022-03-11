@@ -391,6 +391,15 @@ describe Chem::Spatial::Parallelepiped do
         vec3(7.581878263486369, 8.221081114385012, 6.683967420139389),
       ]
     end
+
+    it "returns a transformed parallelepiped with block" do
+      pld = Chem::Spatial::Parallelepiped.cubic(10).transform do |bi, bj, bk|
+        {bi * 2, bj, bk / 0.4}
+      end
+      pld.basisvec[0].should eq [20, 0, 0]
+      pld.basisvec[1].should eq [0, 10, 0]
+      pld.basisvec[2].should eq [0, 0, 25]
+    end
   end
 
   describe "#translate" do
