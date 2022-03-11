@@ -241,6 +241,21 @@ module Chem::Spatial
       q * self
     end
 
+    # Returns a new vector with the return value of the given block,
+    # which is invoked with the X, Y, and Z components.
+    #
+    # ```
+    # Vec3[3, 2, 1].transform do |x, y, z|
+    #   x *= 2
+    #   z /= 0.5
+    #   {x, y, z}
+    # end # => Vec3[6, 2, 2]
+    # ```
+    def transform(& : Float64, Float64, Float64 -> FloatTriple) : self
+      components = yield @x, @y, @z
+      self.class.new *components
+    end
+
     # Returns the vector by wrapping into the primary unit cell. The
     # vector is assumed to be expressed in fractional coordinates.
     def wrap : self

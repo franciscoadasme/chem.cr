@@ -210,6 +210,12 @@ describe Chem::Spatial::Vec3 do
     end
   end
 
+  describe "#transform" do
+    it "returns a transformed vector" do
+      vec3(3, 2, 1).transform { |x, y, z| {x * 2, y, z / 0.5} }.should eq [6, 2, 2]
+    end
+  end
+
   describe "#zero?" do
     it "returns whether the vector is zero" do
       vec3(0, 0, 0).zero?.should be_true
