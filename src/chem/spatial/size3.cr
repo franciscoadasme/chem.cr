@@ -93,5 +93,20 @@ module Chem::Spatial
         @y.close_to?(rhs.y, delta) &&
         @z.close_to?(rhs.z, delta)
     end
+
+    # Returns a new size with the return value of the given block, which
+    # is invoked with the X, Y, and Z components.
+    #
+    # ```
+    # Size3[1, 2, 3].transform do |x, y, z|
+    #   x *= 2
+    #   z /= 0.3
+    #   {x, y, z}
+    # end # => Size3[2, 2, 10]
+    # ```
+    def transform(& : Float64, Float64, Float64 -> FloatTriple) : self
+      components = yield @x, @y, @z
+      self.class.new *components
+    end
   end
 end

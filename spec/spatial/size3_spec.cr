@@ -75,4 +75,10 @@ describe Chem::Spatial::Size3 do
       end
     end
   end
+
+  describe "#transform" do
+    it "returns a transformed size" do
+      size3(1, 2, 3).transform { |x, y, z| {x * 2, y, z / 0.3} }.should eq [2, 2, 10]
+    end
+  end
 end
