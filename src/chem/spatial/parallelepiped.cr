@@ -365,8 +365,9 @@ module Chem::Spatial
     end
 
     # Returns a new parallelepiped by expanding the extents by *padding*
-    # in every direction. Note that its size is actually increased by
-    # `padding * 2`.
+    # in each direction. Note that its size is actually increased by
+    # `padding * 2`. *padding* can be either a single value, three
+    # values, or a `Size3` instance.
     #
     # ```
     # pld = Parallelepiped.new(Vec3[1, 5, 3], {10, 5, 12})
@@ -376,11 +377,20 @@ module Chem::Spatial
     # pld.center # => Vec3[6.0, 7.5, 9.0]
     # ```
     def pad(padding : Number) : self
-      raise ArgumentError.new "Negative padding" if padding < 0
-      origin = @origin - basisvec.map(&.resize(padding)).sum
+      pad padding, padding, padding
+    end
+
+    # :ditto:
+    def pad(padding : Size3) : self
+      new_origin = @origin - basisvec.map_with_index { |bv, i| bv.resize(padding[i]) }.sum
       padding *= 2
-      basis = Mat3.basis(*basisvec.map(&.pad(padding)))
-      {{@type}}.new origin, basis
+      new_basis = Mat3.basis *basisvec.map_with_index { |bv, i| bv.pad(padding[i]) }
+      self.class.new new_origin, new_basis
+    end
+
+    # :ditto:
+    def pad(px : Number, py : Number, pz : Number) : self
+      pad Size3[px, py, pz]
     end
 
     # Returns `true` if the parallelepiped is rhombohedral (*a* = *b* =

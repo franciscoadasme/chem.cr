@@ -311,23 +311,30 @@ describe Chem::Spatial::Parallelepiped do
     context "given an orthogonal parallelepiped" do
       it "returns a padded parallelepiped" do
         pld = Chem::Spatial::Parallelepiped.cubic(10)
-        pld = pld.pad(2)
-        pld.size.should eq [14, 14, 14]
-        pld.center.should eq pld.center
+        other = pld.pad(2)
+        other.size.should eq [14, 14, 14]
+        other.center.should eq pld.center
+      end
+
+      it "pads with different paddings" do
+        pld = Chem::Spatial::Parallelepiped.cubic(10)
+        other = pld.pad(2, 10, 1)
+        other.size.should eq [14, 30, 12]
+        other.center.should eq pld.center
       end
     end
 
     context "given a non-orthogonal parallelepiped" do
       it "returns a padded parallelepiped" do
         pld = Chem::Spatial::Parallelepiped.new({4, 7, 8.5}, {90, 120, 90})
-        pld = pld.pad(0.5)
-        pld.size.should eq [5, 8, 9.5]
-        pld.center.should be_close pld.center, 1e-15
+        other = pld.pad(0.5)
+        other.size.should eq [5, 8, 9.5]
+        other.center.should be_close pld.center, 1e-15
       end
     end
 
     it "raises on negative padding" do
-      expect_raises ArgumentError, "Negative padding" do
+      expect_raises ArgumentError, "Negative size" do
         Chem::Spatial::Parallelepiped.cubic(1).pad -5
       end
     end
