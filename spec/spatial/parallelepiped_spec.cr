@@ -340,6 +340,18 @@ describe Chem::Spatial::Parallelepiped do
     end
   end
 
+  describe "#resize" do
+    it "resizes a parallelepiped" do
+      pld = Chem::Spatial::Parallelepiped.hexagonal(1, 2)
+      other = pld.resize(5, 5, 12)
+      other.size.should be_close [5, 5, 12], 1e-15
+      other.angles.should be_close [90, 90, 120], 1e-8
+      other.basisvec[0].should be_close pld.basisvec[0].resize(5), 1e-15
+      other.basisvec[1].should be_close pld.basisvec[1].resize(5), 1e-15
+      other.basisvec[2].should be_close pld.basisvec[2].resize(12), 1e-15
+    end
+  end
+
   describe "#rhombohedral?" do
     it "tells if the parallelepiped is rhombohedral" do
       Chem::Spatial::Parallelepiped.cubic(1).rhombohedral?.should be_false

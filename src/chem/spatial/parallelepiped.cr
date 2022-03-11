@@ -393,6 +393,25 @@ module Chem::Spatial
       pad Size3[px, py, pz]
     end
 
+    # Returns a parallelepiped by resizing the basis vectors to the
+    # given values.
+    #
+    # ```
+    # pld = Parallelepiped.hexagonal(1, 2).resize(5, 5, 12)
+    # pld.size   # => Size3[5, 5, 12]
+    # pld.angles # => {90, 90, 120}
+    # ```
+    def resize(size : Chem::Spatial::Size3) : self
+      transform do |bi, bj, bk|
+        {bi.resize(size[0]), bj.resize(size[1]), bk.resize(size[2])}
+      end
+    end
+
+    # :ditto:
+    def resize(sx : Number, sy : Number, sz : Number) : self
+      resize Size3[sx, sy, sz]
+    end
+
     # Returns `true` if the parallelepiped is rhombohedral (*a* = *b* =
     # *c* and *α* = *β* = *γ* ≠ 90°), else `false`.
     def rhombohedral? : Bool
