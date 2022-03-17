@@ -173,7 +173,7 @@ describe Chem::Spatial::AffineTransform do
   describe "#to_s" do
     it "returns a string representation" do
       expected = "[\
-        [ 5.551115e-16 -1.931852  0.5176381 -2.310789 ], \
+        [ 4.440892e-16 -1.931852  0.5176381 -2.310789 ], \
         [ 1.414214 -0.3660254 -1.366025 -3.415913 ], \
         [ 1.414214  0.3660254  1.366025  6.244341 ], \
         [0  0  0  1]]"
