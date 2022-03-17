@@ -252,6 +252,7 @@ module Chem::Spatial
 
     # Returns the rotation matrix equivalent to the quaternion.
     def to_mat3 : Mat3
+      return Mat3.zero if zero?
       w2 = @w**2
       x2 = @x**2
       y2 = @y**2
