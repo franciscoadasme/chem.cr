@@ -82,8 +82,15 @@ module Chem::Spatial
   # Returns the root mean square deviation (RMSD) in Å between two atom
   # collections. This is a convenience overload so arguments are
   # forwarded to specific `.rmsd` methods.
-  def self.rmsd(atoms : AtomCollection, other : AtomCollection, *args, **options)
+  def self.rmsd(
+    atoms : AtomCollection | CoordinatesProxy,
+    other : AtomCollection | CoordinatesProxy,
+    *args,
+    **options
+  )
     # TODO: add option to ensure to atom equivalency
-    rmsd atoms.coords, other.coords, *args, **options
+    atoms = atoms.coords unless atoms.is_a?(CoordinatesProxy)
+    other = other.coords unless other.is_a?(CoordinatesProxy)
+    rmsd atoms, other, *args, **options
   end
 end
