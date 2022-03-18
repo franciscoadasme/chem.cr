@@ -268,9 +268,9 @@ module Chem::Spatial
       yz = q.y * q.z
 
       Mat3[
-        {w2 + x2 - y2 - z2, 2 * (xy - wz), 2 * (xz + wy)},
-        {2 * (xy + wz), w2 - x2 + y2 - z2, 2 * (yz - wx)},
-        {2 * (xz - wy), 2 * (yz + wx), w2 - x2 - y2 + z2},
+        [w2 + x2 - y2 - z2, 2 * (xy - wz), 2 * (xz + wy)],
+        [2 * (xy + wz), w2 - x2 + y2 - z2, 2 * (yz - wx)],
+        [2 * (xz - wy), 2 * (yz + wx), w2 - x2 - y2 + z2],
       ]
     end
 

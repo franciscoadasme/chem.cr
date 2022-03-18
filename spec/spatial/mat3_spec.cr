@@ -3,8 +3,8 @@ require "../spec_helper"
 describe Chem::Spatial::Mat3 do
   describe ".[]" do
     it "returns a matrix with the given values" do
-      expected = Chem::Spatial::Mat3.new({1.0, 2.0, 3.0}, {4.0, 5.0, 6.0}, {7.0, 8.0, 9.0})
-      Chem::Spatial::Mat3[{1, 2, 3}, {4, 5, 6}, {7, 8, 9}].should eq expected
+      mat = Chem::Spatial::Mat3[{1, 2, 3}, {4, 5, 6}, {7, 8, 9}]
+      (0..8).map { |i| mat.unsafe_fetch(i) }.should eq (1..9).to_a
     end
   end
 

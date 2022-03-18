@@ -2,17 +2,27 @@ module Chem::Spatial
   # A 3x3 matrix in row-major order. This is useful for encoding linear
   # maps such as scaling and rotation (see `AffineTransform`).
   struct Mat3
-    @buffer : Tuple(FloatTriple, FloatTriple, FloatTriple)
+    @buffer = uninitialized Float64[9]
 
-    # Creates a new matrix with the given rows.
-    def initialize(r1 : FloatTriple, r2 : FloatTriple, r3 : FloatTriple)
-      @buffer = {r1, r2, r3}
-    end
+    private def initialize; end # prevents uninitialized matrix
 
-    # Returns a new matrix with the given rows.
-    @[AlwaysInline]
-    def self.[](r1 : NumberTriple, r2 : NumberTriple, r3 : NumberTriple) : self
-      Mat3.new(r1.map(&.to_f), r2.map(&.to_f), r3.map(&.to_f))
+    # Returns a new 3x3 matrix using a matrix literal, i.e., three
+    # indexable (array or tuple) literals.
+    #
+    # ```
+    # Mat3[[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+    # ```
+    macro [](*rows)
+      {% if rows.size != 3 ||
+              rows.any? { |r| !r.is_a?(TupleLiteral) && !r.is_a?(ArrayLiteral) } ||
+              rows.any?(&.size.!=(3)) %}
+        {% raise "Expected a matrix literal for #{@type}#[], not `Mat3[#{rows}]`)" %}
+      {% end %}
+      {{@type}}.build do |buffer|
+        {% for i in 0..8 %}
+          buffer[{{i}}] = {{rows[i // 3][i % 3]}}
+        {% end %}
+      end
     end
 
     # Returns the additive identity of the matrix (zero matrix).
@@ -24,10 +34,21 @@ module Chem::Spatial
     # defined by the basis vectors.
     def self.basis(i : Vec3, j : Vec3, k : Vec3) : Spatial::Mat3
       Mat3[
-        {i[0], j[0], k[0]},
-        {i[1], j[1], k[1]},
-        {i[2], j[2], k[2]},
+        [i.x, j.x, k.x],
+        [i.y, j.y, k.y],
+        [i.z, j.z, k.z],
       ]
+    end
+
+    # Creates a new `Mat3`, allocating an internal buffer, and yielding
+    # that buffer to the passed block.
+    #
+    # This method is **unsafe**, but is usually used to initialize the
+    # buffer by other convenience methods without doing bounds check.
+    def self.build(& : Pointer(Float64) ->) : self
+      mat = new
+      yield mat.to_unsafe
+      mat
     end
 
     # Returns a new matrix with the diagonal set to *value*.
@@ -38,20 +59,16 @@ module Chem::Spatial
     # Returns a new matrix with the elements at the diagonal set to the
     # given values.
     def self.diagonal(d1 : Number, d2 : Number, d3 : Number) : self
-      Mat3[
-        {d1, 0, 0},
-        {0, d2, 0},
-        {0, 0, d3},
-      ]
+      Mat3.build do |buffer|
+        buffer[0] = d1
+        buffer[4] = d2
+        buffer[8] = d3
+      end
     end
 
     # Returns the identity matrix.
     def self.identity : self
-      Mat3[
-        {1, 0, 0},
-        {0, 1, 0},
-        {0, 0, 1},
-      ]
+      Mat3.diagonal(1)
     end
 
     # Returns the multiplicative identity of the matrix (identity
@@ -62,29 +79,31 @@ module Chem::Spatial
 
     # Returns the zero matrix.
     def self.zero : self
-      Mat3[
-        {0, 0, 0},
-        {0, 0, 0},
-        {0, 0, 0},
-      ]
+      Mat3.build do |buffer|
+        buffer.clear(9)
+      end
     end
 
     # Returns the row at *row*. Raises `IndexError` if *row* is out of
     # bounds.
     def [](row : Int, cols : Range(Nil, Nil)) : FloatTriple
-      @buffer[row]
+      raise IndexError.new unless 0 <= row < 3
+      offset = row * 3
+      {unsafe_fetch(offset), unsafe_fetch(offset + 1), unsafe_fetch(offset + 2)}
     end
 
     # Returns the column at *col*. Raises `IndexError` if *col* is out
     # of bounds.
     def [](rows : Range(Nil, Nil), col : Int) : FloatTriple
-      {self[0, col], self[1, col], self[2, col]}
+      raise IndexError.new unless 0 <= col < 3
+      {unsafe_fetch(col), unsafe_fetch(col + 3), unsafe_fetch(col + 6)}
     end
 
-    # Returns the element at row *i* and column *j*. Raises `IndexError`
-    # if indices are out of bounds.
-    def [](i : Int, j : Int) : Float64
-      @buffer[i][j]
+    # Returns the element at the given row and column. Raises
+    # `IndexError` if indices are out of bounds.
+    def [](row : Int, col : Int) : Float64
+      raise IndexError.new unless 0 <= row < 3 && 0 <= col < 3
+      unsafe_fetch(row, col)
     end
 
     # Returns the negation of the matrix.
@@ -98,79 +117,81 @@ module Chem::Spatial
         {% op_name = op_map[op] %}
         # Returns the element-wise {{op_name.id}} of the matrix by *rhs*.
         def {{op.id}}(rhs : self) : self
-          Mat3[
-            {% for i in 0..2 %}
-              {
-                {% for j in 0..2 %}
-                  self[{{i}}, {{j}}] {{op.id}} rhs[{{i}}, {{j}}],
-                {% end %}
-              },
+          ptr = to_unsafe
+          other = rhs.to_unsafe
+          self.class.build do |buffer|
+            {% for i in 0..8 %}
+              buffer[{{i}}] = ptr[{{i}}] {{op.id}} other[{{i}}]
             {% end %}
-          ]
+          end
         end
       {% end %}
     {% end %}
 
     # Returns the element-wise multiplication of the matrix by *rhs*.
     def *(rhs : Number) : self
-      Mat3.new *@buffer.map { |row| row.map(&.*(rhs)) }
+      map &.*(rhs)
     end
 
     # Returns the row-wise multiplication of the matrix by *rhs*.
     def *(rhs : NumberTriple) : self
-      Mat3.new *@buffer.map_with_index { |row, i| row.map(&.*(rhs[i])) }
+      {% begin %}
+        ptr = to_unsafe
+        Mat3.build do |buffer|
+          {% for i in 0..8 %}
+            buffer[{{i}}] = ptr[{{i}}] * rhs.unsafe_fetch({{i // 3}})
+          {% end %}
+        end
+      {% end %}
     end
 
     # Returns the multiplication of the matrix by *rhs*.
     def *(rhs : Vec3) : Vec3
-      {% begin %}
-        Vec3[
-          {% for i in 0..2 %}
-            {% for j in 0..2 %}
-              self[{{i}}, {{j}}] * rhs[{{j}}] {{(j < 2 ? "+" : ",").id}}
-            {% end %}
-          {% end %}
-        ]
-      {% end %}
+      ptr = to_unsafe
+      Vec3[
+        ptr[0] * rhs.x + ptr[1] * rhs.y + ptr[2] * rhs.z,
+        ptr[3] * rhs.x + ptr[4] * rhs.y + ptr[5] * rhs.z,
+        ptr[6] * rhs.x + ptr[7] * rhs.y + ptr[8] * rhs.z,
+      ]
     end
 
     # :ditto:
     def *(rhs : self) : self
       {% begin %}
-        Mat3[
+        ptr = to_unsafe
+        other = rhs.to_unsafe
+        self.class.build do |buffer|
           {% for i in 0..2 %}
-            {
-              {% for j in 0..2 %}
-                {% for k in 0..2 %}
-                  self[{{i}}, {{k}}] * rhs[{{k}}, {{j}}] {{(k < 2 ? "+" : ",").id}}
-                {% end %}
+            {% for j in 0..2 %}
+              buffer[{{i * 3 + j}}] = \
+              {% for k in 0..2 %}
+                ptr[{{i * 3 + k}}] * other[{{k * 3 + j}}] {{"+".id if k < 2}}
               {% end %}
-            },
+            {% end %}
           {% end %}
-        ]
+        end
       {% end %}
     end
 
     # Returns the element-wise division of the matrix by *rhs*.
     def /(rhs : Number) : self
-      Mat3.new *@buffer.map { |row| row.map(&./(rhs)) }
+      map &./(rhs)
     end
 
     # Returns `true` if the elements of the matrices are within *delta*
     # from each other, else `false`.
     def close_to?(rhs : self, delta : Float64 = Float64::EPSILON) : Bool
-      (0..2).all? do |i|
-        (0..2).all? do |j|
-          self[i, j].close_to?(rhs[i, j], delta)
-        end
+      (0..8).all? do |i|
+        unsafe_fetch(i).close_to?(rhs.unsafe_fetch(i), delta)
       end
     end
 
     # Returns the determinant of the matrix.
     def det : Float64
-      self[0, 0] * self[1, 1] * self[2, 2] - self[0, 0] * self[1, 2] * self[2, 1] -
-        self[0, 1] * self[1, 0] * self[2, 2] + self[0, 1] * self[1, 2] * self[2, 0] +
-        self[0, 2] * self[1, 0] * self[2, 1] - self[0, 2] * self[1, 1] * self[2, 0]
+      ptr = to_unsafe
+      ptr[0] * ptr[4] * ptr[8] - ptr[0] * ptr[5] * ptr[7] -
+        ptr[1] * ptr[3] * ptr[8] + ptr[1] * ptr[5] * ptr[6] +
+        ptr[2] * ptr[3] * ptr[7] - ptr[2] * ptr[4] * ptr[6]
     end
 
     # Returns the inverse matrix. Raises `ArgumentError` if the matrix
@@ -183,23 +204,28 @@ module Chem::Spatial
       det = self.det
       raise ArgumentError.new("Matrix cannot be inverted") if det.close_to?(0)
       inv_det = 1 / det
-      Mat3[
-        {
-          (self[1, 1] * self[2, 2] - self[1, 2] * self[2, 1]) * inv_det,
-          (self[0, 2] * self[2, 1] - self[0, 1] * self[2, 2]) * inv_det,
-          (self[0, 1] * self[1, 2] - self[0, 2] * self[1, 1]) * inv_det,
-        },
-        {
-          (self[1, 2] * self[2, 0] - self[1, 0] * self[2, 2]) * inv_det,
-          (self[0, 0] * self[2, 2] - self[0, 2] * self[2, 0]) * inv_det,
-          (self[1, 0] * self[0, 2] - self[0, 0] * self[1, 2]) * inv_det,
-        },
-        {
-          (self[1, 0] * self[2, 1] - self[2, 0] * self[1, 1]) * inv_det,
-          (self[2, 0] * self[0, 1] - self[0, 0] * self[2, 1]) * inv_det,
-          (self[0, 0] * self[1, 1] - self[1, 0] * self[0, 1]) * inv_det,
-        },
-      ]
+      ptr = to_unsafe
+      self.class.build do |buffer|
+        buffer[0] = (ptr[4] * ptr[8] - ptr[5] * ptr[7]) * inv_det
+        buffer[1] = (ptr[2] * ptr[7] - ptr[1] * ptr[8]) * inv_det
+        buffer[2] = (ptr[1] * ptr[5] - ptr[2] * ptr[4]) * inv_det
+        buffer[3] = (ptr[5] * ptr[6] - ptr[3] * ptr[8]) * inv_det
+        buffer[4] = (ptr[0] * ptr[8] - ptr[2] * ptr[6]) * inv_det
+        buffer[5] = (ptr[3] * ptr[2] - ptr[0] * ptr[5]) * inv_det
+        buffer[6] = (ptr[3] * ptr[7] - ptr[6] * ptr[4]) * inv_det
+        buffer[7] = (ptr[6] * ptr[1] - ptr[0] * ptr[7]) * inv_det
+        buffer[8] = (ptr[0] * ptr[4] - ptr[3] * ptr[1]) * inv_det
+      end
+    end
+
+    # Returns a new matrix with the results of the passed block for each
+    # element in the matrix.
+    def map(& : Float64 -> Float64) : self
+      self.class.build do |buffer|
+        9.times do |i|
+          buffer[i] = yield unsafe_fetch(i)
+        end
+      end
     end
 
     def to_s(io : IO) : Nil
@@ -208,13 +234,47 @@ module Chem::Spatial
       0.upto(2) do |i|
         io << "[ "
         0.upto(2) do |j|
-          io << (self[i, j] >= 0 ? "  " : ' ') if j > 0
-          io.printf format_spec, self[i, j]
+          value = unsafe_fetch(i, j)
+          io << (value >= 0 ? "  " : ' ') if j > 0
+          io.printf format_spec, value
         end
         io << " ]"
         io << ", " if i < 2
       end
       io << ']'
+    end
+
+    # Returns a pointer to the internal buffer where the matrix elements
+    # are stored.
+    @[AlwaysInline]
+    def to_unsafe : Pointer(Float64)
+      @buffer.to_unsafe
+    end
+
+    # Returns the element at *row* and *col*, without doing any bounds
+    # check.
+    #
+    # This should be called with *row* and *col* within `0...3`. Use
+    # `#[](i, j)` and `#[]?(i, j)` instead for bounds checking and
+    # support for negative indexes.
+    #
+    # NOTE: This method should only be directly invoked if you are
+    # absolutely sure *row* and *col* are within bounds, to avoid a
+    # bounds check for a small boost of performance.
+    @[AlwaysInline]
+    def unsafe_fetch(row : Int, col : Int) : Float64
+      unsafe_fetch(row * 3 + col)
+    end
+
+    # Returns the element at the given index , without doing any bounds
+    # check.
+    #
+    # NOTE: This method should only be directly invoked if you are
+    # absolutely sure the index is within bounds, to avoid a bounds
+    # check for a small boost of performance.
+    @[AlwaysInline]
+    def unsafe_fetch(index : Int) : Float64
+      to_unsafe[index]
     end
   end
 end
