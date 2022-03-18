@@ -10,6 +10,8 @@ require "./spatial/parallelepiped"
 require "./spatial/coordinates_proxy"
 require "./spatial/kdtree"
 require "./spatial/pbc"
+require "./spatial/rmsd"
+require "./spatial/qcp"
 
 module Chem::Spatial
   # TODO: Move aliases to Chem
