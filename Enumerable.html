@@ -13,7 +13,7 @@
 <script type="text/javascript" src="js/doc.js"></script>
 
   <meta name="repository-name" content="chem.cr">
-  <title>Number - chem.cr master</title>
+  <title>Enumerable(T) - chem.cr master</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "";
   </script>
@@ -766,7 +766,7 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Enumerable" data-name="enumerable(t)">
+  <li class=" current" data-id="chem.cr/Enumerable" data-name="enumerable(t)">
       <a href="Enumerable.html">Enumerable</a>
       
     </li>
@@ -781,7 +781,7 @@
       
     </li>
   
-  <li class=" current" data-id="chem.cr/Number" data-name="number">
+  <li class=" " data-id="chem.cr/Number" data-name="number">
       <a href="Number.html">Number</a>
       
     </li>
@@ -800,12 +800,10 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">abstract struct</span> Number
+  <span class="kind">module</span> Enumerable(T)
 
 </h1>
 
-
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="Number.html">Number</a></li><li class="superclass">Value</li><li class="superclass">Object</li></ul>
 
 
 
@@ -819,47 +817,56 @@
     Overview
   </h2>
 
-  <p>The top-level number type.</p>
+  <p>The <code><a href="Enumerable.html">Enumerable</a></code> mixin provides collection classes with several traversal, searching,
+filtering and querying methods.</p>
+<p>Including types must provide an <code>each</code> method, which yields successive members
+of the collection.</p>
+<p>For example:</p>
+<pre><code class="language-crystal"><span class="k">class</span> <span class="t">Three</span>
+  <span class="k">include</span> <span class="t">Enumerable</span>(<span class="t">Int32</span>)
+
+  <span class="k">def</span> <span class="m">each</span>
+    <span class="k">yield</span> <span class="n">1</span>
+    <span class="k">yield</span> <span class="n">2</span>
+    <span class="k">yield</span> <span class="n">3</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+three <span class="o">=</span> <span class="t">Three</span>.<span class="k">new</span>
+three.to_a                <span class="c"># =&gt; [1, 2, 3]</span>
+three.<span class="k">select</span> <span class="o">&amp;</span>.odd?       <span class="c"># =&gt; [1, 3]</span>
+three.all? { <span class="o">|</span>x<span class="o">|</span> x <span class="o">&lt;</span> <span class="n">10</span> } <span class="c"># =&gt; true</span></code></pre>
+<p>Note that most search and filter methods traverse an Enumerable eagerly,
+producing an <code><a href="Array.html">Array</a></code> as the result. For a lazy alternative refer to
+the <code>Iterator</code> and <code>Iterable</code> modules.</p>
+
+
+
+
+
+
 
 
 
 
 
   <h2>
-    <a id="included-modules" class="anchor" href="#included-modules">
+    <a id="direct-including-types" class="anchor" href="#direct-including-types">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>
-    Included Modules
+    Direct including types
   </h2>
   <ul class="other-types-list">
     
-      <li class="other-type">Comparable(<a href="Number.html">Number</a>)</li>
+      <li class="other-type"><a href="Chem/Spatial/CoordinatesProxy.html">Chem::Spatial::CoordinatesProxy</a></li>
     
-      <li class="other-type">Steppable</li>
+      <li class="other-type"><a href="Indexable.html">Indexable(T)</a></li>
     
-  </ul>
-
-
-
-
-
-  <h2>
-    <a id="direct-known-subclasses" class="anchor" href="#direct-known-subclasses">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Direct Known Subclasses
-  </h2>
-  <ul class="other-types-list">
-    
-      <li class="other-type"><a href="Float.html">Float</a></li>
+      <li class="other-type"><a href="Range.html">Range(B, E)</a></li>
     
   </ul>
-
-
 
 
 
@@ -874,38 +881,14 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/579dee84fb05b42352e13bdc18dc7e60eaa1264b/src/chem/core_ext/number.cr#L1" target="_blank">
-        chem/core_ext/number.cr
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/579dee84fb05b42352e13bdc18dc7e60eaa1264b/src/chem/core_ext/enumerable.cr#L1" target="_blank">
+        chem/core_ext/enumerable.cr
       </a>
     
     <br/>
   
 
 
-
-  
-    <h2>
-      <a id="constant-summary" class="anchor" href="#constant-summary">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-      Constant Summary
-    </h2>
-  
-  <dl>
-    
-      <dt class="entry-const" id="DEGREE_TO_RADIAN">
-        <strong>DEGREE_TO_RADIAN</strong> = <code><span class="t">Math</span><span class="t">::</span><span class="t">PI</span> <span class="o">/</span> <span class="n">180</span></code>
-      </dt>
-      
-    
-      <dt class="entry-const" id="RADIAN_TO_DEGREE">
-        <strong>RADIAN_TO_DEGREE</strong> = <code><span class="n">180</span> <span class="o">/</span> <span class="t">Math</span><span class="t">::</span><span class="t">PI</span></code>
-      </dt>
-      
-    
-  </dl>
 
 
 
@@ -924,62 +907,30 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#%2A%28other%3AChem%3A%3ASpatial%3A%3AVec3%29%3AChem%3A%3ASpatial%3A%3AVec3-instance-method" class="signature"><strong>#*</strong>(other : Chem::Spatial::Vec3) : Chem::Spatial::Vec3</a>
+        <a href="#average%28weights%3AIndexable%28Number%29%29-instance-method" class="signature"><strong>#average</strong>(weights : Indexable(Number))</a>
+        
+          <div class="summary"><p>Returns the weighted average of the elements in the collection.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#close_to%3F%28rhs%3ANumber%2Cdelta%3ANumber%3D0%29%3ABool-instance-method" class="signature"><strong>#close_to?</strong>(rhs : Number, delta : Number = <span class="n">0</span>) : Bool</a>
+        <a href="#average%28weights%3AIndexable%28Number%29%2C%26%3AT-%3E_%29-instance-method" class="signature"><strong>#average</strong>(weights : Indexable(Number), & : T -> _)</a>
         
-          <div class="summary"><p>Returns <code>true</code> if numbers are within <em>delta</em> from each other, else <code>false</code>.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#degree-instance-method" class="signature"><strong>#degree</strong></a>
+          <div class="summary"><p>Returns the weighted average of the results of the passed block for each element in the collection.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#degrees-instance-method" class="signature"><strong>#degrees</strong></a>
+        <a href="#mean-instance-method" class="signature"><strong>#mean</strong></a>
+        
+          <div class="summary"><p>Returns the arithmetic mean of the elements in the collection.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#radian-instance-method" class="signature"><strong>#radian</strong></a>
+        <a href="#mean%28%26%3AT-%3E_%29-instance-method" class="signature"><strong>#mean</strong>(& : T -> _)</a>
         
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#radians-instance-method" class="signature"><strong>#radians</strong></a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#scale%28min%3ANumber%2Cmax%3ANumber%29%3AFloat64-instance-method" class="signature"><strong>#scale</strong>(min : Number, max : Number) : Float64</a>
-        
-          <div class="summary"><p>Scales the number into the given range.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#scale%28range%3ARange%28Number%2CNumber%29%29%3AFloat64-instance-method" class="signature"><strong>#scale</strong>(range : Range(Number, Number)) : Float64</a>
-        
-          <div class="summary"><p>Scales the number into the given range.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#unscale%28min%3ANumber%2Cmax%3ANumber%29%3AFloat64-instance-method" class="signature"><strong>#unscale</strong>(min : Number, max : Number) : Float64</a>
-        
-          <div class="summary"><p>Reverts the scaling in the given range.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#unscale%28range%3ARange%28Number%2CNumber%29%29%3AFloat64-instance-method" class="signature"><strong>#unscale</strong>(range : Range(Number, Number)) : Float64</a>
-        
-          <div class="summary"><p>Reverts the scaling in the given range.</p></div>
+          <div class="summary"><p>Returns the arithmetic mean of the results of the passed block for each element in the collection.</p></div>
         
       </li>
     
@@ -990,46 +941,6 @@
 
 
 <div class="methods-inherited">
-  
-    
-
-
-    
-
-
-    
-
-
-  
-    
-
-
-    
-
-
-    
-
-
-  
-    
-
-
-    
-
-
-    
-
-
-  
-    
-
-
-    
-
-
-    
-
-
   
 </div>
 
@@ -1047,210 +958,122 @@
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="*(other:Chem::Spatial::Vec3):Chem::Spatial::Vec3-instance-method">
+    <div class="entry-detail" id="average(weights:Indexable(Number))-instance-method">
       <div class="signature">
         
-        def <strong>*</strong>(other : <a href="Chem/Spatial/Vec3.html">Chem::Spatial::Vec3</a>) : <a href="Chem/Spatial/Vec3.html">Chem::Spatial::Vec3</a>
+        def <strong>average</strong>(weights : <a href="Indexable.html">Indexable</a>(<a href="Number.html">Number</a>))
 
-        <a class="method-permalink" href="#%2A%28other%3AChem%3A%3ASpatial%3A%3AVec3%29%3AChem%3A%3ASpatial%3A%3AVec3-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/579dee84fb05b42352e13bdc18dc7e60eaa1264b/src/chem/core_ext/number.cr#L5" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="close_to?(rhs:Number,delta:Number=0):Bool-instance-method">
-      <div class="signature">
-        
-        def <strong>close_to?</strong>(rhs : <a href="Number.html">Number</a>, delta : <a href="Number.html">Number</a> = <span class="n">0</span>) : Bool
-
-        <a class="method-permalink" href="#close_to%3F%28rhs%3ANumber%2Cdelta%3ANumber%3D0%29%3ABool-instance-method">#</a>
+        <a class="method-permalink" href="#average%28weights%3AIndexable%28Number%29%29-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Returns <code>true</code> if numbers are within <em>delta</em> from each other, else
-<code>false</code>.</p>
-<pre><code class="language-crystal"><span class="n">1.0</span>.close_to?(<span class="n">1.0</span>)                          <span class="c"># =&gt; true</span>
-<span class="n">1.0_f32</span>.close_to?(<span class="n">1.0</span>)                      <span class="c"># =&gt; true</span>
-<span class="n">1.0</span>.close_to?(<span class="n">1.0</span> <span class="o">+</span> <span class="t">Float64</span><span class="t">::</span><span class="t">EPSILON</span>)       <span class="c"># =&gt; true</span>
-<span class="n">1.0_f32</span>.close_to?(<span class="n">1.0</span> <span class="o">+</span> <span class="t">Float32</span><span class="t">::</span><span class="t">EPSILON</span>)   <span class="c"># =&gt; true</span>
-<span class="n">1.0</span>.close_to?(<span class="n">1.0005</span>, <span class="n">1e-3</span>)                 <span class="c"># =&gt; true</span>
-<span class="n">1.0</span>.close_to?(<span class="n">1.0</span> <span class="o">+</span> <span class="t">Float64</span><span class="t">::</span><span class="t">EPSILON</span><span class="o">*</span><span class="n">2</span>)     <span class="c"># =&gt; false</span>
-<span class="n">1.0_f32</span>.close_to?(<span class="n">1.0</span> <span class="o">+</span> <span class="t">Float32</span><span class="t">::</span><span class="t">EPSILON</span><span class="o">*</span><span class="n">2</span>) <span class="c"># =&gt; false</span>
-<span class="n">1.0</span>.close_to?(<span class="n">1.01</span>, <span class="n">1e-3</span>)                   <span class="c"># =&gt; false</span></code></pre>
+          <p>Returns the weighted average of the elements in the collection.
+Raises <code>EmptyError</code> if the collection is empty or <code>ArgumentError</code> if
+<em>weights</em> has a different number of elements.</p>
+<p>Expects all element types to respond to <code>#+</code> and <code>#/</code> methods.</p>
+<pre><code class="language-crystal">[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>, <span class="n">4</span>, <span class="n">5</span>, <span class="n">6</span>].average((<span class="n">1</span>..<span class="n">6</span>).to_a) <span class="c"># =&gt; 4.333333333333333</span>
+(<span class="n">1</span>..<span class="n">6</span>).average((<span class="n">1</span>..<span class="n">6</span>).to_a)             <span class="c"># =&gt; 4.333333333333333</span>
+(<span class="o">[]</span> <span class="k">of</span> <span class="t">Int32</span>).average([<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>])        <span class="c"># raises EmptyError</span>
+(<span class="n">1</span>..<span class="n">6</span>).average([<span class="n">1</span>, <span class="n">1</span>])                  <span class="c"># raises ArgumentError</span></code></pre>
+<p><span class="flag purple">NOTE</span>  This method calls <code>.additive_identity</code> on the element type and
+<em>weights</em>' element type to determine the type of the intermediate
+sum values.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/579dee84fb05b42352e13bdc18dc7e60eaa1264b/src/chem/core_ext/number.cr#L22" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/579dee84fb05b42352e13bdc18dc7e60eaa1264b/src/chem/core_ext/enumerable.cr#L18" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="degree-instance-method">
+    <div class="entry-detail" id="average(weights:Indexable(Number),&amp;:T-&gt;_)-instance-method">
       <div class="signature">
         
-        def <strong>degree</strong>
+        def <strong>average</strong>(weights : <a href="Indexable.html">Indexable</a>(<a href="Number.html">Number</a>), & : T -> _)
 
-        <a class="method-permalink" href="#degree-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/579dee84fb05b42352e13bdc18dc7e60eaa1264b/src/chem/core_ext/number.cr#L26" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="degrees-instance-method">
-      <div class="signature">
-        
-        def <strong>degrees</strong>
-
-        <a class="method-permalink" href="#degrees-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/579dee84fb05b42352e13bdc18dc7e60eaa1264b/src/chem/core_ext/number.cr#L30" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="radian-instance-method">
-      <div class="signature">
-        
-        def <strong>radian</strong>
-
-        <a class="method-permalink" href="#radian-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/579dee84fb05b42352e13bdc18dc7e60eaa1264b/src/chem/core_ext/number.cr#L34" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="radians-instance-method">
-      <div class="signature">
-        
-        def <strong>radians</strong>
-
-        <a class="method-permalink" href="#radians-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/579dee84fb05b42352e13bdc18dc7e60eaa1264b/src/chem/core_ext/number.cr#L38" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="scale(min:Number,max:Number):Float64-instance-method">
-      <div class="signature">
-        
-        def <strong>scale</strong>(min : <a href="Number.html">Number</a>, max : <a href="Number.html">Number</a>) : Float64
-
-        <a class="method-permalink" href="#scale%28min%3ANumber%2Cmax%3ANumber%29%3AFloat64-instance-method">#</a>
+        <a class="method-permalink" href="#average%28weights%3AIndexable%28Number%29%2C%26%3AT-%3E_%29-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Scales the number into the given range. The result will be between
-zero and one.</p>
-<pre><code class="language-crystal"><span class="n">10</span>.scale(<span class="n">0</span>, <span class="n">100</span>)   <span class="c"># =&gt; 0.1</span>
-<span class="n">2.5</span>.scale(<span class="n">0</span>, <span class="n">5</span>)    <span class="c"># 0.5</span>
-<span class="n">401</span>.scale(<span class="n">50</span>, <span class="n">500</span>) <span class="c"># =&gt; 0.78</span></code></pre>
+          <p>Returns the weighted average of the results of the passed block for
+each element in the collection. Raises <code>EmptyError</code> if the
+collection is empty or <code>ArgumentError</code> if <em>weights</em> has a different
+number of elements.</p>
+<p>Expects all element types to respond to <code>#+</code> and <code>#/</code> methods.</p>
+<pre><code class="language-crystal">[<span class="s">&quot;Alice&quot;</span>, <span class="s">&quot;Bob&quot;</span>].average([<span class="n">7</span>, <span class="n">2</span>], <span class="o">&amp;</span>.size)    <span class="c"># =&gt; 4.555555555555555</span>
+(<span class="s">&#39;a&#39;</span>..<span class="s">&#39;z&#39;</span>).average((<span class="n">0</span>..<span class="n">25</span>).to_a, <span class="o">&amp;</span>.ord)     <span class="c"># =&gt; 4.333333333333333</span>
+(<span class="o">[]</span> <span class="k">of</span> <span class="t">String</span>).average([<span class="n">1</span>, <span class="n">1</span>], <span class="o">&amp;</span>.size)      <span class="c"># raises EmptyError</span>
+[<span class="s">&quot;Alice&quot;</span>, <span class="s">&quot;Bob&quot;</span>].average([<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>], <span class="o">&amp;</span>.size) <span class="c"># raises ArgumentError</span></code></pre>
+<p><span class="flag purple">NOTE</span>  This method calls <code>.additive_identity</code> on the yielded type and
+<em>weights</em>' element type to determine the type of the intermediate
+sum values.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/579dee84fb05b42352e13bdc18dc7e60eaa1264b/src/chem/core_ext/number.cr#L50" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/579dee84fb05b42352e13bdc18dc7e60eaa1264b/src/chem/core_ext/enumerable.cr#L39" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="scale(range:Range(Number,Number)):Float64-instance-method">
+    <div class="entry-detail" id="mean-instance-method">
       <div class="signature">
         
-        def <strong>scale</strong>(range : <a href="Range.html">Range</a>(<a href="Number.html">Number</a>, <a href="Number.html">Number</a>)) : Float64
+        def <strong>mean</strong>
 
-        <a class="method-permalink" href="#scale%28range%3ARange%28Number%2CNumber%29%29%3AFloat64-instance-method">#</a>
+        <a class="method-permalink" href="#mean-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Scales the number into the given range. The result will be between
-zero and one.</p>
-<pre><code class="language-crystal"><span class="n">10</span>.scale(<span class="n">0</span>, <span class="n">100</span>)   <span class="c"># =&gt; 0.1</span>
-<span class="n">2.5</span>.scale(<span class="n">0</span>, <span class="n">5</span>)    <span class="c"># 0.5</span>
-<span class="n">401</span>.scale(<span class="n">50</span>, <span class="n">500</span>) <span class="c"># =&gt; 0.78</span></code></pre>
+          <p>Returns the arithmetic mean of the elements in the collection.
+Raises <code>EmptyError</code> if the collection is empty.</p>
+<p>Expects all element types to respond to <code>#+</code> and <code>#/</code> methods.</p>
+<pre><code class="language-crystal">[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>, <span class="n">4</span>, <span class="n">5</span>, <span class="n">6</span>].mean <span class="c"># =&gt; 3.5</span>
+(<span class="n">1</span>..<span class="n">6</span>).mean             <span class="c"># =&gt; 3.5</span>
+(<span class="o">[]</span> <span class="k">of</span> <span class="t">Int32</span>).mean      <span class="c"># raises EmptyError</span></code></pre>
+<p><span class="flag purple">NOTE</span>  This method calls <code>.additive_identity</code> on the element type to
+determine the type of the intermediate sum.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/579dee84fb05b42352e13bdc18dc7e60eaa1264b/src/chem/core_ext/number.cr#L55" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/579dee84fb05b42352e13bdc18dc7e60eaa1264b/src/chem/core_ext/enumerable.cr#L78" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="unscale(min:Number,max:Number):Float64-instance-method">
+    <div class="entry-detail" id="mean(&amp;:T-&gt;_)-instance-method">
       <div class="signature">
         
-        def <strong>unscale</strong>(min : <a href="Number.html">Number</a>, max : <a href="Number.html">Number</a>) : Float64
+        def <strong>mean</strong>(& : T -> _)
 
-        <a class="method-permalink" href="#unscale%28min%3ANumber%2Cmax%3ANumber%29%3AFloat64-instance-method">#</a>
+        <a class="method-permalink" href="#mean%28%26%3AT-%3E_%29-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Reverts the scaling in the given range.</p>
-<p>0.5.unscale(0, 100) # =&gt; 50.0
-0.1.unscale(0, 5) # =&gt; 0.05
-5.scale(-4, 20).unscale(-4, 20) # =&gt; 5.0</p>
+          <p>Returns the arithmetic mean of the results of the passed block for
+each element in the collection. Raises <code>EmptyError</code> if the
+collection is empty.</p>
+<p>Expects all element types to respond to <code>#+</code> and <code>#/</code> methods.</p>
+<pre><code class="language-crystal">[<span class="s">&quot;Alice&quot;</span>, <span class="s">&quot;Bob&quot;</span>].mean(<span class="o">&amp;</span>.size) <span class="c"># =&gt; 4</span>
+(<span class="s">&#39;a&#39;</span>..<span class="s">&#39;z&#39;</span>).mean(<span class="o">&amp;</span>.ord)        <span class="c"># =&gt; 109.5</span>
+(<span class="o">[]</span> <span class="k">of</span> <span class="t">String</span>).mean(<span class="o">&amp;</span>.size)   <span class="c"># raises EmptyError</span></code></pre>
+<p><span class="flag purple">NOTE</span>  This method calls <code>.additive_identity</code> on the yielded type to
+determine the type of the intermediate sum.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/579dee84fb05b42352e13bdc18dc7e60eaa1264b/src/chem/core_ext/number.cr#L64" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="unscale(range:Range(Number,Number)):Float64-instance-method">
-      <div class="signature">
-        
-        def <strong>unscale</strong>(range : <a href="Range.html">Range</a>(<a href="Number.html">Number</a>, <a href="Number.html">Number</a>)) : Float64
-
-        <a class="method-permalink" href="#unscale%28range%3ARange%28Number%2CNumber%29%29%3AFloat64-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Reverts the scaling in the given range.</p>
-<p>0.5.unscale(0, 100) # =&gt; 50.0
-0.1.unscale(0, 5) # =&gt; 0.05
-5.scale(-4, 20).unscale(-4, 20) # =&gt; 5.0</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/579dee84fb05b42352e13bdc18dc7e60eaa1264b/src/chem/core_ext/number.cr#L69" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/579dee84fb05b42352e13bdc18dc7e60eaa1264b/src/chem/core_ext/enumerable.cr#L96" target="_blank">View source</a>]
         
       </div>
     </div>
