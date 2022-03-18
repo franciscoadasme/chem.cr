@@ -11,6 +11,18 @@ module Chem::Spatial
       true
     end
 
+    # Superimposes the coordinates onto *other*. Raises `ArgumentError`
+    # if the two coordinate sets are of different size.
+    #
+    # The transformation is obtained via the
+    # `AffineTransform.aligning(pos, ref_pos)` method, which computes
+    # the optimal rotation matrix by minimizing the root mean square
+    # deviation (RMSD) using the QCP method (refer to `Spatial.qcp` for
+    # details).
+    def align_to(other : self) : self
+      transform! AffineTransform.aligning(self, other)
+    end
+
     def bounds : Parallelepiped
       min = StaticArray[Float64::MAX, Float64::MAX, Float64::MAX]
       max = StaticArray[Float64::MIN, Float64::MIN, Float64::MIN]

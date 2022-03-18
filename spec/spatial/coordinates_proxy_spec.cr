@@ -9,6 +9,17 @@ describe Chem::Spatial::CoordinatesProxy do
     atom Chem::PeriodicTable::H, vec3(7, 8, 9)
   end
 
+  describe "#align_to" do
+    it "aligns coordinates to a reference" do
+      s = Array(Chem::Structure).read spec_file("E20_conformers.mol2")
+      ref_pos = s[0].coords
+      Chem::Spatial.rmsd(s[1].coords.align_to(ref_pos), ref_pos).should be_close 3.463298, 1e-6
+      Chem::Spatial.rmsd(s[2].coords.align_to(ref_pos), ref_pos).should be_close 1.818679, 1e-6
+      Chem::Spatial.rmsd(s[3].coords.align_to(ref_pos), ref_pos).should be_close 3.845655, 1e-6
+      Chem::Spatial.rmsd(s[4].coords.align_to(ref_pos), ref_pos).should be_close 1.475276, 1e-6
+    end
+  end
+
   describe "#bounds" do
     it "returns the bounds" do
       bounds = structure.coords.bounds
