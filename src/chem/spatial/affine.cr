@@ -77,6 +77,13 @@ module Chem::Spatial
       new Quat.aligning(u, v).to_mat3, Vec3.zero
     end
 
+    # Returns the transformation encoding the rotation and traslation to
+    # align *pos* onto *ref_pos*. Raises `ArgumentError` if the two
+    # coordinate sets are of different size.
+    #
+    # The optimal rotation matrix is computed by minimizing the root
+    # mean square deviation (RMSD) using the QCP method (refer to
+    # `Spatial.qcp` for details).
     def self.aligning(pos : CoordinatesProxy, to ref_pos : CoordinatesProxy) : self
       pos = pos.to_a         # FIXME: avoid copying coordinates
       ref_pos = ref_pos.to_a # FIXME: avoid copying coordinates
