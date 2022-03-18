@@ -77,6 +77,20 @@ module Chem::Spatial
       new Quat.aligning(u, v).to_mat3, Vec3.zero
     end
 
+    def self.aligning(pos : CoordinatesProxy, to ref_pos : CoordinatesProxy) : self
+      pos = pos.to_a         # FIXME: avoid copying coordinates
+      ref_pos = ref_pos.to_a # FIXME: avoid copying coordinates
+      raise ArgumentError.new("Incompatible coordinates") if pos.size != ref_pos.size
+
+      center = pos.mean
+      pos.map! &.-(center)
+      ref_center = ref_pos.mean
+      ref_pos.map! &.-(ref_center)
+      transform = translation(ref_center - center)
+      Spatial.qcp pos, ref_pos, out_rotmat: transform.linear_map.to_unsafe
+      transform
+    end
+
     # Returns the identity transformation.
     def self.identity : self
       AffineTransform.new Mat3.identity, Vec3.zero
@@ -234,5 +248,11 @@ module Chem::Spatial
     def *(rhs : AffineTransform) : self
       rhs.inv * self
     end
+  end
+end
+
+struct Chem::Spatial::AffineTransform
+  def self.aligning(pos : AtomCollection, to ref_pos : AtomCollection) : self
+    aligning pos.coords, ref_pos.coords
   end
 end

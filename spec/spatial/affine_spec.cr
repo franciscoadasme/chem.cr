@@ -10,14 +10,27 @@ describe Chem::Spatial::AffineTransform do
     end
 
     it "returns a transformation that aligns two pairs of vectors" do
-      transform = Chem::Spatial::Quat.rotation(vec3(1, 2, 3), 65)
+      transform = Chem::Spatial::AffineTransform.rotation(vec3(1, 2, 3), 65)
       u = vec3(-5, 1, 3)
       v = vec3(6, 2, 62)
       uu = transform * u
       vv = transform * v
-      transform = Chem::Spatial::Quat.aligning({uu, vv}, to: {u, v})
+      transform = Chem::Spatial::AffineTransform.aligning({uu, vv}, to: {u, v})
       (transform * uu).normalize.should be_close u.normalize, 1e-15
       (transform * vv).normalize.should be_close v.normalize, 1e-15
+    end
+
+    it "returns a transformation that aligns two coordinate sets" do
+      s = Array(Chem::Structure).read spec_file("E20_conformers.mol2")
+      transform = Chem::Spatial::AffineTransform.aligning(s[1], s[0])
+      s[1].coords.transform! transform
+      Chem::Spatial.rmsd(s[1], s[0]).should be_close 3.463298, 1e-6
+    end
+
+    it "returns the identity matrix for the same coordinate set" do
+      s = Array(Chem::Structure).read spec_file("E20_conformers.mol2")
+      transform = Chem::Spatial::AffineTransform.aligning(s[0], s[0])
+      transform.should eq Chem::Spatial::AffineTransform.identity
     end
   end
 
