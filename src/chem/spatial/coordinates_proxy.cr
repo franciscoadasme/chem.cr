@@ -14,6 +14,17 @@ module Chem::Spatial
     # Superimposes the coordinates onto *other*. Raises `ArgumentError`
     # if the two coordinate sets are of different size.
     #
+    # ```
+    # conformers = Array(Structure).read "E20_conformers.mol2"
+    # ref_pos = conformers[0].coords
+    # pos = conformers[1].coords
+    # Spatial.rmsd(pos, ref_pos)   # => 7.933736
+    # pos.center == ref_pos.center # => false
+    # pos.align_to(res_pos)
+    # Spatial.rmsd(pos, ref_pos)   # => 3.463298
+    # pos.center == ref_pos.center # => true
+    # ```
+    #
     # The transformation is obtained via the
     # `AffineTransform.aligning(pos, ref_pos)` method, which computes
     # the optimal rotation matrix by minimizing the root mean square
