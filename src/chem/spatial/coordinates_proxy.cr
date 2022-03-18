@@ -130,12 +130,6 @@ module Chem::Spatial
       end
     end
 
-    def map(fractional : Bool = false, &block : Vec3 -> Vec3) : Array(Vec3)
-      ary = [] of Vec3
-      each(fractional) { |coords| ary << yield coords }
-      ary
-    end
-
     def map!(fractional : Bool = false, &block : Vec3 -> Vec3) : self
       if fractional
         raise NotPeriodicError.new unless cell = @cell
@@ -148,15 +142,6 @@ module Chem::Spatial
       self
     end
 
-    def map_with_atom(fractional : Bool = false,
-                      &block : Vec3, Atom -> Vec3) : Array(Vec3)
-      ary = [] of Vec3
-      each_with_atom(fractional) do |coords, atom|
-        ary << yield coords, atom
-      end
-      ary
-    end
-
     def map_with_atom!(fractional : Bool = false, &block : Vec3, Atom -> Vec3) : self
       iter = @atoms.each_atom
       map!(fractional) do |vec|
@@ -166,16 +151,9 @@ module Chem::Spatial
       self
     end
 
-    def transform(transform : AffineTransform) : Array(Vec3)
-      map &.transform(transform)
-    end
 
     def transform!(transform : AffineTransform) : self
       map! &.transform(transform)
-    end
-
-    def translate(by offset : Vec3) : Array(Vec3)
-      map &.+(offset)
     end
 
     def translate!(by offset : Vec3) : self

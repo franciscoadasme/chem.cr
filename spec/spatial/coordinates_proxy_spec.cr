@@ -117,24 +117,6 @@ describe Chem::Spatial::CoordinatesProxy do
     end
   end
 
-  describe "#map" do
-    it "returns the modified atom coordinates" do
-      expected = [[2, 4, 6], [8, 10, 12], [14, 16, 18]]
-      structure.coords.map(&.*(2)).should eq expected
-    end
-
-    it "returns the modified fractional atom coordinates" do
-      expected = [[0.2, 0.4, 0.6], [0.8, 1.0, 1.2], [1.4, 1.6, 1.8]]
-      structure.coords.map(fractional: true, &.*(2)).should be_close expected, 1e-15
-    end
-
-    it "fails for a non-periodic atom collection" do
-      expect_raises Chem::Spatial::NotPeriodicError do
-        fake_structure.coords.map fractional: true, &.itself
-      end
-    end
-  end
-
   describe "#map!" do
     it "modifies the atom coordinates" do
       other = Chem::Structure.build do
@@ -161,30 +143,6 @@ describe Chem::Spatial::CoordinatesProxy do
     it "fails for a non-periodic atom collection" do
       expect_raises Chem::Spatial::NotPeriodicError do
         fake_structure.coords.map! fractional: true, &.itself
-      end
-    end
-  end
-
-  describe "#map_with_atom" do
-    it "returns the modified atom coordinates" do
-      expected = [[2, 4, 6], [4, 5, 6], [7, 8, 9]]
-      coords = structure.coords.map_with_atom do |vec, atom|
-        vec * (atom.element.hydrogen? ? 1 : 2)
-      end
-      coords.should eq expected
-    end
-
-    it "returns the modified fractional atom coordinates" do
-      expected = [[0.2, 0.4, 0.6], [0.4, 0.5, 0.6], [0.7, 0.8, 0.9]]
-      coords = structure.coords.map_with_atom(fractional: true) do |vec, atom|
-        vec * (atom.element.hydrogen? ? 1 : 2)
-      end
-      coords.should be_close expected, 1e-15
-    end
-
-    it "fails for a non-periodic atom collection" do
-      expect_raises Chem::Spatial::NotPeriodicError do
-        fake_structure.coords.map_with_atom fractional: true, &.itself
       end
     end
   end
@@ -223,14 +181,6 @@ describe Chem::Spatial::CoordinatesProxy do
     end
   end
 
-  describe "#transform" do
-    it "returns the transformed atom coordinates" do
-      transform = Chem::Spatial::AffineTransform.translation vec3(3, 2, 1)
-      expected = [[4, 4, 4], [7, 7, 7], [10, 10, 10]]
-      structure.coords.transform(transform).should eq expected
-    end
-  end
-
   describe "#transform!" do
     it "transforms the atom coordinates" do
       other = Chem::Structure.build do
@@ -241,13 +191,6 @@ describe Chem::Spatial::CoordinatesProxy do
 
       transform = Chem::Spatial::AffineTransform.translation vec3(-1, 0, 1)
       other.coords.transform!(transform).should eq [[0, 2, 4], [3, 5, 7], [6, 8, 10]]
-    end
-  end
-
-  describe "#translate" do
-    it "returns the translated atom coordinates" do
-      expected = [[-1, 0, 1], [2, 3, 4], [5, 6, 7]]
-      structure.coords.translate(by: vec3(-2, -2, -2)).should eq expected
     end
   end
 
