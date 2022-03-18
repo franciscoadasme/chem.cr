@@ -849,7 +849,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/b5de7a6c27b58f88de11fbc315e49a986889447c/src/chem/spatial/coordinates_proxy.cr#L2" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/290092001ff7bcc121e47c5369e405e924bbed5f/src/chem/spatial/coordinates_proxy.cr#L2" target="_blank">
         chem/spatial/coordinates_proxy.cr
       </a>
     
@@ -1109,7 +1109,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b5de7a6c27b58f88de11fbc315e49a986889447c/src/chem/spatial/coordinates_proxy.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/290092001ff7bcc121e47c5369e405e924bbed5f/src/chem/spatial/coordinates_proxy.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1139,7 +1139,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b5de7a6c27b58f88de11fbc315e49a986889447c/src/chem/spatial/coordinates_proxy.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/290092001ff7bcc121e47c5369e405e924bbed5f/src/chem/spatial/coordinates_proxy.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1156,6 +1156,14 @@
           
           <p>Superimposes the coordinates onto <em>other</em>. Raises <code>ArgumentError</code>
 if the two coordinate sets are of different size.</p>
+<pre><code class="language-crystal">conformers <span class="o">=</span> <span class="t">Array</span>(<span class="t">Structure</span>).read <span class="s">&quot;E20_conformers.mol2&quot;</span>
+ref_pos <span class="o">=</span> conformers[<span class="n">0</span>].coords
+pos <span class="o">=</span> conformers[<span class="n">1</span>].coords
+<span class="t">Spatial</span>.rmsd(pos, ref_pos)   <span class="c"># =&gt; 7.933736</span>
+pos.center <span class="o">==</span> ref_pos.center <span class="c"># =&gt; false</span>
+pos.align_to(res_pos)
+<span class="t">Spatial</span>.rmsd(pos, ref_pos)   <span class="c"># =&gt; 3.463298</span>
+pos.center <span class="o">==</span> ref_pos.center <span class="c"># =&gt; true</span></code></pre>
 <p>The transformation is obtained via the
 <code><a href="../../Chem/Spatial/AffineTransform.html#aligning%28u%3ATuple%28Vec3%2CVec3%29%2Ctov%3ATuple%28Vec3%2CVec3%29%29%3Aself-class-method">AffineTransform.aligning(pos, ref_pos)</a></code> method, which computes
 the optimal rotation matrix by minimizing the root mean square
@@ -1166,7 +1174,7 @@ details).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b5de7a6c27b58f88de11fbc315e49a986889447c/src/chem/spatial/coordinates_proxy.cr#L22" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/290092001ff7bcc121e47c5369e405e924bbed5f/src/chem/spatial/coordinates_proxy.cr#L33" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1182,7 +1190,7 @@ details).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b5de7a6c27b58f88de11fbc315e49a986889447c/src/chem/spatial/coordinates_proxy.cr#L26" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/290092001ff7bcc121e47c5369e405e924bbed5f/src/chem/spatial/coordinates_proxy.cr#L37" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1198,7 +1206,7 @@ details).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b5de7a6c27b58f88de11fbc315e49a986889447c/src/chem/spatial/coordinates_proxy.cr#L38" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/290092001ff7bcc121e47c5369e405e924bbed5f/src/chem/spatial/coordinates_proxy.cr#L49" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1223,7 +1231,7 @@ structure.coords.center <span class="c"># =&gt; [1.5 5.0 3.2]</span></code></pre
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b5de7a6c27b58f88de11fbc315e49a986889447c/src/chem/spatial/coordinates_proxy.cr#L50" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/290092001ff7bcc121e47c5369e405e924bbed5f/src/chem/spatial/coordinates_proxy.cr#L61" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1248,7 +1256,7 @@ structure.coords.center <span class="c"># =&gt; [10 20 30]</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b5de7a6c27b58f88de11fbc315e49a986889447c/src/chem/spatial/coordinates_proxy.cr#L63" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/290092001ff7bcc121e47c5369e405e924bbed5f/src/chem/spatial/coordinates_proxy.cr#L74" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1278,7 +1286,7 @@ structure.coords.center_at_cell <span class="c"># raises NotPeriodicError</span>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b5de7a6c27b58f88de11fbc315e49a986889447c/src/chem/spatial/coordinates_proxy.cr#L81" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/290092001ff7bcc121e47c5369e405e924bbed5f/src/chem/spatial/coordinates_proxy.cr#L92" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1303,7 +1311,7 @@ structure.coords.center <span class="c"># =&gt; [0.0 0.0 0.0]</span></code></pre
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b5de7a6c27b58f88de11fbc315e49a986889447c/src/chem/spatial/coordinates_proxy.cr#L94" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/290092001ff7bcc121e47c5369e405e924bbed5f/src/chem/spatial/coordinates_proxy.cr#L105" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1331,7 +1339,7 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b5de7a6c27b58f88de11fbc315e49a986889447c/src/chem/spatial/coordinates_proxy.cr#L109" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/290092001ff7bcc121e47c5369e405e924bbed5f/src/chem/spatial/coordinates_proxy.cr#L120" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1356,7 +1364,7 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b5de7a6c27b58f88de11fbc315e49a986889447c/src/chem/spatial/coordinates_proxy.cr#L119" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/290092001ff7bcc121e47c5369e405e924bbed5f/src/chem/spatial/coordinates_proxy.cr#L130" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1381,7 +1389,7 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b5de7a6c27b58f88de11fbc315e49a986889447c/src/chem/spatial/coordinates_proxy.cr#L128" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/290092001ff7bcc121e47c5369e405e924bbed5f/src/chem/spatial/coordinates_proxy.cr#L139" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1397,7 +1405,7 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b5de7a6c27b58f88de11fbc315e49a986889447c/src/chem/spatial/coordinates_proxy.cr#L137" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/290092001ff7bcc121e47c5369e405e924bbed5f/src/chem/spatial/coordinates_proxy.cr#L148" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1413,7 +1421,7 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b5de7a6c27b58f88de11fbc315e49a986889447c/src/chem/spatial/coordinates_proxy.cr#L145" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/290092001ff7bcc121e47c5369e405e924bbed5f/src/chem/spatial/coordinates_proxy.cr#L156" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1429,7 +1437,7 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b5de7a6c27b58f88de11fbc315e49a986889447c/src/chem/spatial/coordinates_proxy.cr#L157" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/290092001ff7bcc121e47c5369e405e924bbed5f/src/chem/spatial/coordinates_proxy.cr#L168" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1455,7 +1463,7 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b5de7a6c27b58f88de11fbc315e49a986889447c/src/chem/spatial/coordinates_proxy.cr#L180" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/290092001ff7bcc121e47c5369e405e924bbed5f/src/chem/spatial/coordinates_proxy.cr#L191" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1471,7 +1479,7 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b5de7a6c27b58f88de11fbc315e49a986889447c/src/chem/spatial/coordinates_proxy.cr#L186" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/290092001ff7bcc121e47c5369e405e924bbed5f/src/chem/spatial/coordinates_proxy.cr#L197" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1487,7 +1495,7 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b5de7a6c27b58f88de11fbc315e49a986889447c/src/chem/spatial/coordinates_proxy.cr#L191" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/290092001ff7bcc121e47c5369e405e924bbed5f/src/chem/spatial/coordinates_proxy.cr#L202" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1503,7 +1511,7 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b5de7a6c27b58f88de11fbc315e49a986889447c/src/chem/spatial/coordinates_proxy.cr#L166" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/290092001ff7bcc121e47c5369e405e924bbed5f/src/chem/spatial/coordinates_proxy.cr#L177" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1519,7 +1527,7 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b5de7a6c27b58f88de11fbc315e49a986889447c/src/chem/spatial/coordinates_proxy.cr#L176" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/290092001ff7bcc121e47c5369e405e924bbed5f/src/chem/spatial/coordinates_proxy.cr#L187" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1535,7 +1543,7 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b5de7a6c27b58f88de11fbc315e49a986889447c/src/chem/spatial/coordinates_proxy.cr#L196" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/290092001ff7bcc121e47c5369e405e924bbed5f/src/chem/spatial/coordinates_proxy.cr#L207" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1551,7 +1559,7 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b5de7a6c27b58f88de11fbc315e49a986889447c/src/chem/spatial/coordinates_proxy.cr#L201" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/290092001ff7bcc121e47c5369e405e924bbed5f/src/chem/spatial/coordinates_proxy.cr#L212" target="_blank">View source</a>]
         
       </div>
     </div>
