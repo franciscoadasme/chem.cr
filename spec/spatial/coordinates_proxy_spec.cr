@@ -192,6 +192,20 @@ describe Chem::Spatial::CoordinatesProxy do
       transform = Chem::Spatial::AffineTransform.translation vec3(-1, 0, 1)
       other.coords.transform!(transform).should eq [[0, 2, 4], [3, 5, 7], [6, 8, 10]]
     end
+
+    it "rotates and translates atom coordinates" do
+      other = Chem::Structure.build do
+        atom Chem::PeriodicTable::O, vec3(1, 2, 3)
+        atom Chem::PeriodicTable::H, vec3(4, 5, 6)
+        atom Chem::PeriodicTable::H, vec3(7, 8, 9)
+      end
+      center = other.coords.center
+      transform = Chem::Spatial::AffineTransform.euler(10, 50, 15).translate(vec3(1, 2, 3))
+      expected = other.coords.to_a.map do |vec|
+        (transform * (vec - center)) + center
+      end
+      other.coords.transform!(transform).should eq expected
+    end
   end
 
   describe "#translate!" do
