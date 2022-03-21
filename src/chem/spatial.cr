@@ -213,6 +213,18 @@ module Chem::Spatial
 end
 
 module Chem::Spatial
+  # Superimposes *atoms* onto *other*. Delegates to
+  # `CoordinatesProxy.align_to`.
+  def self.align(
+    atoms : AtomCollection | CoordinatesProxy,
+    ref_pos : AtomCollection | CoordinatesProxy
+  )
+    # TODO: add option to ensure to atom equivalency
+    atoms = atoms.coords unless atoms.is_a?(CoordinatesProxy)
+    ref_pos = ref_pos.coords unless ref_pos.is_a?(CoordinatesProxy)
+    atoms.align_to ref_pos
+  end
+
   # Returns the root mean square deviation (RMSD) in Å between two atom
   # collections. This is a convenience overload so arguments are
   # forwarded to specific `.rmsd` methods.
