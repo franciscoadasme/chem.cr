@@ -9,7 +9,9 @@ describe Chem::Topology::Templates::Builder do
         description "Glycine"
         name "Gly"
         code 'G'
-        remove_atom "HA"
+        structure do
+          remove_atom "HA"
+        end
       end
 
       residue.atom_names.should eq ["N", "H", "CA", "HA1", "HA2", "C", "O"]
@@ -22,7 +24,9 @@ describe Chem::Topology::Templates::Builder do
         description "Alanine"
         name "ALA"
         code 'A'
-        sidechain "CB"
+        structure do
+          sidechain "CB"
+        end
       end
 
       residue.atom_names.should eq bb_names + ["CB", "HB1", "HB2", "HB3"]
@@ -35,9 +39,11 @@ describe Chem::Topology::Templates::Builder do
         description "Isoleucine"
         name "ILE"
         code 'I'
-        sidechain do
-          main "CB-CG1-CD1"
-          branch "CB-CG2"
+        structure do
+          sidechain do
+            main "CB-CG1-CD1"
+            branch "CB-CG2"
+          end
         end
       end
 
@@ -53,7 +59,9 @@ describe Chem::Topology::Templates::Builder do
         description "Lysine"
         name "LYS"
         code 'K'
-        sidechain "CB-CG-CD-CE-NZ+"
+        structure do
+          sidechain "CB-CG-CD-CE-NZ+"
+        end
       end
 
       names = bb_names + ["CB", "HB1", "HB2", "CG", "HG1", "HG2", "CD", "HD1", "HD2",
@@ -68,9 +76,11 @@ describe Chem::Topology::Templates::Builder do
         description "Aspartate"
         name "ASP"
         code 'D'
-        sidechain do
-          main "CB-CG=OE1"
-          branch "CG-OE2-"
+        structure do
+          sidechain do
+            main "CB-CG=OE1"
+            branch "CG-OE2-"
+          end
         end
       end
 
@@ -84,7 +94,9 @@ describe Chem::Topology::Templates::Builder do
       residue = Chem::Topology::ResidueType.build(:ion) do
         description "Magnesium"
         name "MG"
-        main "MG+2"
+        structure do
+          main "MG+2"
+        end
       end
 
       residue.formal_charge.should eq 2
@@ -95,9 +107,11 @@ describe Chem::Topology::Templates::Builder do
         description "Arginine"
         name "ARG"
         code 'R'
-        sidechain do
-          main "CB-CG-CD-NE-CZ-NH1"
-          branch "CZ=NH2+"
+        structure do
+          sidechain do
+            main "CB-CG-CD-NE-CZ-NH1"
+            branch "CZ=NH2+"
+          end
         end
       end
 
@@ -114,9 +128,11 @@ describe Chem::Topology::Templates::Builder do
         description "Histidine"
         name "HIS"
         code 'H'
-        sidechain do
-          main "CB-CG"
-          cycle "CG=CD2-NE2=CE1-ND1"
+        structure do
+          sidechain do
+            main "CB-CG"
+            cycle "CG=CD2-NE2=CE1-ND1"
+          end
         end
       end
 
@@ -132,9 +148,11 @@ describe Chem::Topology::Templates::Builder do
         description "Histidine"
         name "HIS"
         code 'H'
-        sidechain do
-          main "CB-CG"
-          cycle "CG-ND1-CE1=NE2-CD2="
+        structure do
+          sidechain do
+            main "CB-CG"
+            cycle "CG-ND1-CE1=NE2-CD2="
+          end
         end
       end
 
@@ -150,10 +168,12 @@ describe Chem::Topology::Templates::Builder do
         description "Tryptophan"
         name "TRP"
         code 'W'
-        sidechain do
-          main "CB-CG"
-          cycle "CG=CD1-NE1-CE2=CD2"
-          cycle "CE2-CZ2=CH2-CZ3=CE3-CD2="
+        structure do
+          sidechain do
+            main "CB-CG"
+            cycle "CG=CD1-NE1-CE2=CD2"
+            cycle "CE2-CZ2=CH2-CZ3=CE3-CD2="
+          end
         end
       end
 
@@ -169,9 +189,11 @@ describe Chem::Topology::Templates::Builder do
         description "Proline"
         name "PRO"
         code 'P'
-        remove_atom "H"
-        sidechain do
-          cycle "CA-CB-CG-CD-N"
+        structure do
+          remove_atom "H"
+          sidechain do
+            cycle "CA-CB-CG-CD-N"
+          end
         end
       end
 
@@ -187,7 +209,9 @@ describe Chem::Topology::Templates::Builder do
         description "Cysteine"
         name "CYX"
         code 'C'
-        sidechain "CB-SG(1)"
+        structure do
+          sidechain "CB-SG(1)"
+        end
       end
 
       residue.atom_names.should eq bb_names + ["CB", "HB1", "HB2", "SG"]
@@ -199,7 +223,7 @@ describe Chem::Topology::Templates::Builder do
       residue = Chem::Topology::ResidueType.build(:ion) do
         description "Sulfate"
         name "SO4"
-        main "S(2)=O1"
+        structure "S(2)=O1"
       end
 
       residue.atom_names.should eq ["S", "O1"]
@@ -211,7 +235,7 @@ describe Chem::Topology::Templates::Builder do
       residue = Chem::Topology::ResidueType.build(:ion) do
         description "Calcium"
         name "CA"
-        main "CA[Ca]"
+        structure "CA[Ca]"
       end
       residue.atom_types[0].element.should eq Chem::PeriodicTable::Ca
     end
@@ -220,7 +244,7 @@ describe Chem::Topology::Templates::Builder do
       residue_t = Chem::Topology::ResidueType.build(:other) do
         description "Fake"
         name "UNK"
-        main "C1-C2-C3"
+        structure "C1-C2-C3"
         link_adjacent_by "C3=C1"
       end
 
@@ -238,7 +262,7 @@ describe Chem::Topology::Templates::Builder do
       residue_t = Chem::Topology::ResidueType.build(:other) do
         description "Fake"
         name "UNK"
-        main "C1=C2"
+        structure "C1=C2"
         root "C2"
       end
 
@@ -251,8 +275,10 @@ describe Chem::Topology::Templates::Builder do
       residue = Chem::Topology::ResidueType.build(:solvent) do
         description "Glycerol"
         name "GOL"
-        main "O1-C1-C2-C3-O3"
-        branch "C2-O2"
+        structure do
+          main "O1-C1-C2-C3-O3"
+          branch "C2-O2"
+        end
       end
 
       names = ["O1", "H1", "C1", "H4", "H5", "C2", "H6", "C3", "H7", "H8", "O3", "H3",
@@ -264,8 +290,10 @@ describe Chem::Topology::Templates::Builder do
       residue = Chem::Topology::ResidueType.build(:other) do
         description "C-ter"
         name "CTER"
-        main "CA-C=O"
-        branch "C-OXT"
+        structure do
+          main "CA-C=O"
+          branch "C-OXT"
+        end
       end
 
       residue.atom_names.should eq ["CA", "HA1", "HA2", "HA3", "C", "O", "OXT", "HXT"]
@@ -281,9 +309,11 @@ describe Chem::Topology::Templates::Builder do
           name "TRP"
           code 'W'
 
-          main "CB-CG"
-          cycle "CG=CD1-NE1-CE2=CD2"
-          cycle "CE2-CZ2=CH2-CZ3=CE3-CD2"
+          structure do
+            main "CB-CG"
+            cycle "CG=CD1-NE1-CE2=CD2"
+            cycle "CE2-CZ2=CH2-CZ3=CE3-CD2"
+          end
         end
       end
     end
@@ -296,9 +326,11 @@ describe Chem::Topology::Templates::Builder do
           name "TRP"
           code 'W'
 
-          main "CB-CG=CD"
-          branch "CG-CZ"
-          branch "CG-OTX-"
+          structure do
+            main "CB-CG=CD"
+            branch "CG-CZ"
+            branch "CG-OTX-"
+          end
         end
       end
     end
@@ -306,7 +338,11 @@ describe Chem::Topology::Templates::Builder do
     it "fails when adding a branch without existing root" do
       msg = "Branch must start with an existing atom type, got CB"
       expect_raises Chem::Topology::Templates::Error, msg do
-        Chem::Topology::ResidueType.build(:protein) { branch "CB-CG2" }
+        Chem::Topology::ResidueType.build(:protein) do
+          structure do
+            branch "CB-CG2"
+          end
+        end
       end
     end
   end
@@ -316,8 +352,10 @@ describe Chem::Topology::Templates do
   Chem::Topology::Templates.residue do
     description "Anything"
     name "LFG"
-    main "N1+-C2-C3-O4-C5-C6"
-    branch "C5=O7"
+    structure do
+      main "N1+-C2-C3-O4-C5-C6"
+      branch "C5=O7"
+    end
   end
 
   describe "#[]" do

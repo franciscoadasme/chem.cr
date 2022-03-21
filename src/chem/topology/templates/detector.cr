@@ -4,30 +4,34 @@ module Chem::Topology::Templates
       description "C-ter"
       name "CTER"
       code 'c'
-      main "CA-C=O"
-      branch "C-OXT"
+      structure do
+        main "CA-C=O"
+        branch "C-OXT"
+      end
       root "C"
     end
     CHARGED_CTER_T = ResidueType.build do
       description "Charged C-ter"
       name "CTER"
       code 'c'
-      main "CA-C=O"
-      branch "C-OXT-"
+      structure do
+        main "CA-C=O"
+        branch "C-OXT-"
+      end
       root "C"
     end
     NTER_T = ResidueType.build do
       description "N-ter"
       name "NTER"
       code 'n'
-      main "CA-N"
+      structure "CA-N"
       root "N"
     end
     CHARGED_NTER_T = ResidueType.build do
       description "Charged N-ter"
       name "NTER"
       code 'n'
-      main "CA-N+"
+      structure "CA-N+"
       root "N"
     end
 

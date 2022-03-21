@@ -84,6 +84,14 @@ module Chem::Topology::Templates
       @root = atom_type! atom_name
     end
 
+    def structure(spec : String) : Nil
+      parse_spec spec
+    end
+
+    def structure(& : self ->) : Nil
+      with self yield self
+    end
+
     def sidechain
       fatal "Sidechain is only valid for protein residues" unless @kind.protein?
       with self yield
