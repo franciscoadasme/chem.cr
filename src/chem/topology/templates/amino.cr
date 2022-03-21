@@ -14,7 +14,7 @@ module Chem::Topology::Templates
     code 'R'
     structure do
       sidechain do
-        main "CB-CG-CD-NE-CZ=NH1+"
+        stem "CB-CG-CD-NE-CZ=NH1+"
         branch "CZ-NH2"
       end
     end
@@ -26,7 +26,7 @@ module Chem::Topology::Templates
     code 'D'
     structure do
       sidechain do
-        main "CB-CG=OD1"
+        stem "CB-CG=OD1"
         branch "CG-OD2"
       end
     end
@@ -38,7 +38,7 @@ module Chem::Topology::Templates
     code 'N'
     structure do
       sidechain do
-        main "CB-CG-ND2"
+        stem "CB-CG-ND2"
         branch "CG=OD1"
       end
     end
@@ -50,7 +50,7 @@ module Chem::Topology::Templates
     code 'D'
     structure do
       sidechain do
-        main "CB-CG=OD1"
+        stem "CB-CG=OD1"
         branch "CG-OD2-"
       end
     end
@@ -80,7 +80,7 @@ module Chem::Topology::Templates
     code 'E'
     structure do
       sidechain do
-        main "CB-CG-CD=OE1"
+        stem "CB-CG-CD=OE1"
         branch "CD-OE2"
       end
     end
@@ -92,7 +92,7 @@ module Chem::Topology::Templates
     code 'Q'
     structure do
       sidechain do
-        main "CB-CG-CD=OE1"
+        stem "CB-CG-CD=OE1"
         branch "CD-NE2"
       end
     end
@@ -104,7 +104,7 @@ module Chem::Topology::Templates
     code 'E'
     structure do
       sidechain do
-        main "CB-CG-CD=OE1"
+        stem "CB-CG-CD=OE1"
         branch "CD-OE2-"
       end
     end
@@ -125,7 +125,7 @@ module Chem::Topology::Templates
     code 'H'
     structure do
       sidechain do
-        main "CB-CG"
+        stem "CB-CG"
         cycle "CG=CD2-NE2=CE1-ND1"
       end
     end
@@ -137,7 +137,7 @@ module Chem::Topology::Templates
     code 'H'
     structure do
       sidechain do
-        main "CB-CG"
+        stem "CB-CG"
         cycle "CG=CD2-NE2-CE1=ND1"
       end
     end
@@ -149,7 +149,7 @@ module Chem::Topology::Templates
     code 'H'
     structure do
       sidechain do
-        main "CB-CG"
+        stem "CB-CG"
         cycle "CG=CD2-NE2+=CE1-ND1"
       end
     end
@@ -161,7 +161,7 @@ module Chem::Topology::Templates
     code 'I'
     structure do
       sidechain do
-        main "CB-CG1-CD1"
+        stem "CB-CG1-CD1"
         branch "CB-CG2"
       end
     end
@@ -173,7 +173,7 @@ module Chem::Topology::Templates
     code 'L'
     structure do
       sidechain do
-        main "CB-CG-CD1"
+        stem "CB-CG-CD1"
         branch "CG-CD2"
       end
     end
@@ -203,7 +203,7 @@ module Chem::Topology::Templates
     code 'F'
     structure do
       sidechain do
-        main "CB-CG"
+        stem "CB-CG"
         cycle "CG=CD1-CE1=CZ-CE2=CD2"
       end
     end
@@ -237,7 +237,7 @@ module Chem::Topology::Templates
     code 'T'
     structure do
       sidechain do
-        main "CB-OG1"
+        stem "CB-OG1"
         branch "CB-CG2"
       end
     end
@@ -249,7 +249,7 @@ module Chem::Topology::Templates
     code 'W'
     structure do
       sidechain do
-        main "CB-CG"
+        stem "CB-CG"
         cycle "CG=CD1-NE1-CE2=CD2"
         cycle "CE2-CZ2=CH2-CZ3=CE3-CD2="
       end
@@ -262,7 +262,7 @@ module Chem::Topology::Templates
     code 'Y'
     structure do
       sidechain do
-        main "CB-CG"
+        stem "CB-CG"
         cycle "CG=CD1-CE1=CZ-CE2=CD2"
         branch "CZ-OH"
       end
@@ -275,7 +275,7 @@ module Chem::Topology::Templates
     code 'V'
     structure do
       sidechain do
-        main "CB-CG1"
+        stem "CB-CG1"
         branch "CB-CG2"
       end
     end

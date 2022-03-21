@@ -3,7 +3,7 @@ module Chem::Topology::Templates
     description "Water"
     names "HOH", "WAT"
     structure do
-      main "O"
+      stem "O"
     end
     root "O"
   end

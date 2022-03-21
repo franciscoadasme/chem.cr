@@ -65,7 +65,7 @@ module Chem::Topology::Templates
       @link_bond = parse_bond spec
     end
 
-    def main(spec : String)
+    def stem(spec : String)
       spec = "CA-" + spec if @kind.protein?
       parse_spec spec
     end
@@ -99,7 +99,7 @@ module Chem::Topology::Templates
 
     def sidechain(spec : String)
       sidechain do
-        main spec
+        stem spec
       end
     end
 

@@ -5,7 +5,7 @@ module Chem::Topology::Templates
       name "CTER"
       code 'c'
       structure do
-        main "CA-C=O"
+        stem "CA-C=O"
         branch "C-OXT"
       end
       root "C"
@@ -15,7 +15,7 @@ module Chem::Topology::Templates
       name "CTER"
       code 'c'
       structure do
-        main "CA-C=O"
+        stem "CA-C=O"
         branch "C-OXT-"
       end
       root "C"

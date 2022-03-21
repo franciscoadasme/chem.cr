@@ -43,13 +43,13 @@ describe Chem::Topology::ResidueType do
       Chem::Topology::ResidueType.build do
         name "O2"
         description "Molecular oxygen"
-        main "O=O"
+        stem "O=O"
       end.inspect.should eq "<ResidueType O2>"
 
       Chem::Topology::ResidueType.build(:solvent) do
         name "HOH"
         description "Water"
-        main "O"
+        stem "O"
       end.inspect.should eq "<ResidueType HOH, solvent>"
 
       Chem::Topology::ResidueType.build(:protein) do

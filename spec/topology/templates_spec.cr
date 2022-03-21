@@ -41,7 +41,7 @@ describe Chem::Topology::Templates::Builder do
         code 'I'
         structure do
           sidechain do
-            main "CB-CG1-CD1"
+            stem "CB-CG1-CD1"
             branch "CB-CG2"
           end
         end
@@ -78,7 +78,7 @@ describe Chem::Topology::Templates::Builder do
         code 'D'
         structure do
           sidechain do
-            main "CB-CG=OE1"
+            stem "CB-CG=OE1"
             branch "CG-OE2-"
           end
         end
@@ -95,7 +95,7 @@ describe Chem::Topology::Templates::Builder do
         description "Magnesium"
         name "MG"
         structure do
-          main "MG+2"
+          stem "MG+2"
         end
       end
 
@@ -109,7 +109,7 @@ describe Chem::Topology::Templates::Builder do
         code 'R'
         structure do
           sidechain do
-            main "CB-CG-CD-NE-CZ-NH1"
+            stem "CB-CG-CD-NE-CZ-NH1"
             branch "CZ=NH2+"
           end
         end
@@ -130,7 +130,7 @@ describe Chem::Topology::Templates::Builder do
         code 'H'
         structure do
           sidechain do
-            main "CB-CG"
+            stem "CB-CG"
             cycle "CG=CD2-NE2=CE1-ND1"
           end
         end
@@ -150,7 +150,7 @@ describe Chem::Topology::Templates::Builder do
         code 'H'
         structure do
           sidechain do
-            main "CB-CG"
+            stem "CB-CG"
             cycle "CG-ND1-CE1=NE2-CD2="
           end
         end
@@ -170,7 +170,7 @@ describe Chem::Topology::Templates::Builder do
         code 'W'
         structure do
           sidechain do
-            main "CB-CG"
+            stem "CB-CG"
             cycle "CG=CD1-NE1-CE2=CD2"
             cycle "CE2-CZ2=CH2-CZ3=CE3-CD2="
           end
@@ -276,7 +276,7 @@ describe Chem::Topology::Templates::Builder do
         description "Glycerol"
         name "GOL"
         structure do
-          main "O1-C1-C2-C3-O3"
+          stem "O1-C1-C2-C3-O3"
           branch "C2-O2"
         end
       end
@@ -291,7 +291,7 @@ describe Chem::Topology::Templates::Builder do
         description "C-ter"
         name "CTER"
         structure do
-          main "CA-C=O"
+          stem "CA-C=O"
           branch "C-OXT"
         end
       end
@@ -310,7 +310,7 @@ describe Chem::Topology::Templates::Builder do
           code 'W'
 
           structure do
-            main "CB-CG"
+            stem "CB-CG"
             cycle "CG=CD1-NE1-CE2=CD2"
             cycle "CE2-CZ2=CH2-CZ3=CE3-CD2"
           end
@@ -327,7 +327,7 @@ describe Chem::Topology::Templates::Builder do
           code 'W'
 
           structure do
-            main "CB-CG=CD"
+            stem "CB-CG=CD"
             branch "CG-CZ"
             branch "CG-OTX-"
           end
@@ -353,7 +353,7 @@ describe Chem::Topology::Templates do
     description "Anything"
     name "LFG"
     structure do
-      main "N1+-C2-C3-O4-C5-C6"
+      stem "N1+-C2-C3-O4-C5-C6"
       branch "C5=O7"
     end
   end
@@ -388,7 +388,7 @@ describe Chem::Topology::Templates do
       Chem::Topology::Templates.residue do
         description "Anything"
         names "LXE", "EGR"
-        main "C1"
+        stem "C1"
       end
       Chem::Topology::Templates["LXE"].should be Chem::Topology::Templates["EGR"]
     end
@@ -398,7 +398,7 @@ describe Chem::Topology::Templates do
         Chem::Topology::Templates.residue do
           description "Anything"
           name "LXE"
-          main "C1"
+          stem "C1"
         end
       end
     end
