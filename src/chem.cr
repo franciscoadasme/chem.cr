@@ -22,6 +22,7 @@ require "./chem/core/structure"
 require "./chem/core/structure/*"
 
 require "./chem/protein"
+require "./chem/typing"
 require "./chem/topology"
 
 require "./chem/pull_parser"

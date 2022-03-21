@@ -53,17 +53,17 @@ module Chem
     # ```
     # structure = Structure.read "peptide.pdb"
     # desc = case structure.dig('A', 5, "CA")
-    #        when Topology::AtomType("C")  then "carbonyl carbon"
-    #        when Topology::AtomType("CA") then "alpha carbon"
-    #        when Topology::AtomType("CB") then "beta carbon"
-    #        when Topology::AtomType("CG") then "gamma carbon"
-    #        when Topology::AtomType("CD") then "delta carbon"
+    #        when AtomType("C")  then "carbonyl carbon"
+    #        when AtomType("CA") then "alpha carbon"
+    #        when AtomType("CB") then "beta carbon"
+    #        when AtomType("CG") then "gamma carbon"
+    #        when AtomType("CD") then "delta carbon"
     #        when PeriodicTable::C         then "carbon"
     #        else                               "non-carbon"
     #        end
     # desc # => "alpha carbon"
     # ```
-    def ===(atom_t : Topology::AtomType) : Bool
+    def ===(atom_t : AtomType) : Bool
       match? atom_t
     end
 
@@ -73,11 +73,11 @@ module Chem
     # ```
     # structure = Structure.read "peptide.pdb"
     # desc = case structure.dig('A', 5, "CK")
-    #        when Topology::AtomType("C")  then "carbonyl carbon"
-    #        when Topology::AtomType("CA") then "alpha carbon"
-    #        when Topology::AtomType("CB") then "beta carbon"
-    #        when Topology::AtomType("CG") then "gamma carbon"
-    #        when Topology::AtomType("CD") then "delta carbon"
+    #        when AtomType("C")  then "carbonyl carbon"
+    #        when AtomType("CA") then "alpha carbon"
+    #        when AtomType("CB") then "beta carbon"
+    #        when AtomType("CG") then "gamma carbon"
+    #        when AtomType("CD") then "delta carbon"
     #        when PeriodicTable::C         then "carbon"
     #        else                               "non-carbon"
     #        end
@@ -145,11 +145,11 @@ module Chem
     #
     # ```
     # atom = Structure.read("peptide.pdb").dig 'A', 1, "CA"
-    # atom.match?(Topology::AtomType.new("CA"))               # => true
-    # atom.match?(Topology::AtomType.new("CA", element: "N")) # => false
-    # atom.match?(Topology::AtomType.new("ND2"))              # => false
+    # atom.match?(AtomType.new("CA"))               # => true
+    # atom.match?(AtomType.new("CA", element: "N")) # => false
+    # atom.match?(AtomType.new("ND2"))              # => false
     # ```
-    def match?(atom_t : Topology::AtomType) : Bool
+    def match?(atom_t : AtomType) : Bool
       @name == atom_t.name && @element == atom_t.element
     end
 

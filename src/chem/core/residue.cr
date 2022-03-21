@@ -91,11 +91,11 @@ module Chem
     #
     # ```
     # residue = Structure.read("peptide.pdb").residues[0]
-    # residue[Topology::AtomType("CA")]               # => <Atom A:TRP1:CA(2)
-    # residue[Topology::AtomType("CA", element: "N")] # raises IndexError
-    # residue[Topology::AtomType("CX")]               # raises IndexError
+    # residue[AtomType("CA")]               # => <Atom A:TRP1:CA(2)
+    # residue[AtomType("CA", element: "N")] # raises IndexError
+    # residue[AtomType("CX")]               # raises IndexError
     # ```
-    def [](atom_t : Topology::AtomType) : Atom
+    def [](atom_t : AtomType) : Atom
       self[atom_t]? || raise IndexError.new "Cannot find atom for atom type: #{atom_t}"
     end
 
@@ -106,11 +106,11 @@ module Chem
     #
     # ```
     # residue = Structure.read("peptide.pdb").residues[0]
-    # residue[Topology::AtomType("CA")]               # => <Atom A:TRP1:CA(2)
-    # residue[Topology::AtomType("CA", element: "N")] # => nil
-    # residue[Topology::AtomType("CX")]               # => nil
+    # residue[AtomType("CA")]               # => <Atom A:TRP1:CA(2)
+    # residue[AtomType("CA", element: "N")] # => nil
+    # residue[AtomType("CX")]               # => nil
     # ```
-    def []?(atom_t : Topology::AtomType) : Atom?
+    def []?(atom_t : AtomType) : Atom?
       if atom = self[atom_t.name]?
         atom if atom.match?(atom_t)
       end
@@ -140,7 +140,7 @@ module Chem
     # ```
     # # Covalent ligand (JG7) is bonded to CYS sidechain
     # residues = Structure.read("ala-cys-thr-jg7.pdb").residues
-    # bond_t = Topology::BondType.new "C", "N"
+    # bond_t = BondType.new "C", "N"
     # residues[0].bonded?(residues[1], bond_t) # => true
     # residues[1].bonded?(residues[2], bond_t) # => true
     # residues[2].bonded?(residues[3], bond_t) # => false
@@ -159,7 +159,7 @@ module Chem
     # Note that bond order is taken into account, e.g.:
     #
     # ```
-    # bond_t = Topology::BondType.new "C", "N", order: 2
+    # bond_t = BondType.new "C", "N", order: 2
     # residues[0].bonded?(residues[1], bond_t) # => false
     # ```
     #
@@ -167,11 +167,11 @@ module Chem
     # bonded atoms, and bond order is ignored.
     #
     # ```
-    # bond_t = Topology::BondType.new "C", "NX", order: 2
+    # bond_t = BondType.new "C", "NX", order: 2
     # residues[0].bonded?(residues[1], bond_t)                # => false
     # residues[0].bonded?(residues[1], bond_t, strict: false) # => true
     # ```
-    def bonded?(other : self, bond_t : Topology::BondType, strict : Bool = true) : Bool
+    def bonded?(other : self, bond_t : BondType, strict : Bool = true) : Bool
       bonded?(other, bond_t[0], bond_t[1], bond_t.order) ||
         (!strict && bonded?(other, bond_t[0].element, bond_t[1].element))
     end
@@ -187,7 +187,7 @@ module Chem
     # One can use atom names, atom types or elements:
     #
     # ```
-    # a, b = Topology::AtomType.new("C"), Topology::AtomType.new("N")
+    # a, b = AtomType.new("C"), AtomType.new("N")
     # residues[0].bonded? residues[1], "C", "N"            # => true
     # residues[0].bonded? residues[1], a, b                # => true
     # residues[0].bonded? residues[1], a, PeriodicTable::N # => true
@@ -209,7 +209,7 @@ module Chem
     # false if missing:
     #
     # ```
-    # missing_atom_t = Topology::AtomType.new("OZ5")
+    # missing_atom_t = AtomType.new("OZ5")
     # residues[0].bonded? residues[1], "CX1", "N"             # => false
     # residues[0].bonded? residues[1], missing_atom_t, "N"    # => false
     # residues[0].bonded? residues[1], "C", PeriodicTable::Mg # => false
@@ -231,8 +231,8 @@ module Chem
     # residues[0].bonded? residues[1], "C", "N", 2 # => false
     # ```
     def bonded?(other : self,
-                lhs : Topology::AtomType | String,
-                rhs : Topology::AtomType | String,
+                lhs : AtomType | String,
+                rhs : AtomType | String,
                 order : Int? = nil) : Bool
       return false if other.same?(self)
       return false unless (a = self[lhs]?) && (b = other[rhs]?)
@@ -242,7 +242,7 @@ module Chem
 
     # :ditto:
     def bonded?(other : self,
-                lhs : Topology::AtomType | String,
+                lhs : AtomType | String,
                 rhs : Element,
                 order : Int? = nil) : Bool
       return false if other.same?(self)
@@ -257,7 +257,7 @@ module Chem
     # :ditto:
     def bonded?(other : self,
                 lhs : Element,
-                rhs : Topology::AtomType | String,
+                rhs : AtomType | String,
                 order : Int? = nil) : Bool
       return false if other.same?(self)
       return false unless b = other[rhs]?
@@ -306,7 +306,7 @@ module Chem
     # ```
     # # Covalent ligand (JG7) is bonded to CYS sidechain
     # residues = Structure.read("ala-cys-thr-jg7.pdb").residues
-    # bond_t = Topology::BondType.new("C", "N")
+    # bond_t = BondType.new("C", "N")
     # residues[0].bonded_residues(bond_t).map(&.name) # => ["CYS"]
     # residues[1].bonded_residues(bond_t).map(&.name) # => ["THR"]
     # residues[2].bonded_residues(bond_t).map(&.name) # => []
@@ -328,13 +328,13 @@ module Chem
     # atom names or bond order:
     #
     # ```
-    # bond_t = Topology::BondType.new "C", "NX", order: 2
+    # bond_t = BondType.new "C", "NX", order: 2
     # residues[0].bonded_residues(bond_t, strict: false).map(&.name) # => ["CYS"]
     # residues[1].bonded_residues(bond_t, strict: false).map(&.name) # => ["THR"]
     # residues[2].bonded_residues(bond_t, strict: false).map(&.name) # => []
     # residues[3].bonded_residues(bond_t, strict: false).map(&.name) # => []
     # ```
-    def bonded_residues(bond_t : Topology::BondType,
+    def bonded_residues(bond_t : BondType,
                         forward_only : Bool = true,
                         strict : Bool = true) : Array(Residue)
       residues = [] of Residue
@@ -428,7 +428,7 @@ module Chem
     # order is ignored (fuzzy search).
     #
     # See `#bonded_residues(bond_t, forward_only, strict)` for examples.
-    def each_bonded_residue(bond_t : Topology::BondType,
+    def each_bonded_residue(bond_t : BondType,
                             forward_only : Bool = true,
                             strict : Bool = true,
                             & : Residue ->) : Nil
@@ -635,7 +635,7 @@ module Chem
     # Returns associated residue type if registered, otherwise nil.
     #
     # The type of a residue is fetched by its name.
-    def type : Topology::ResidueType?
+    def type : ResidueType?
       Topology::Templates[@name]?
     end
 

@@ -1,4 +1,4 @@
-module Chem::Topology
+module Chem
   class AtomType
     getter element : Element
     getter formal_charge : Int32
@@ -112,20 +112,22 @@ module Chem::Topology
     getter root : AtomType?
     getter code : Char?
 
-    def initialize(@description : String,
-                   @name : String,
-                   @code : Char?,
-                   @kind : Residue::Kind,
-                   atom_types : Array(AtomType),
-                   bonds : Array(BondType),
-                   @link_bond : BondType? = nil,
-                   @root : AtomType? = nil)
+    def initialize(
+      @description : String,
+      @name : String,
+      @code : Char?,
+      @kind : Residue::Kind,
+      atom_types : Array(AtomType),
+      bonds : Array(BondType),
+      @link_bond : BondType? = nil,
+      @root : AtomType? = nil,
+    )
       @atom_types = atom_types.dup
       @bonds = bonds.dup
     end
 
     def self.build(kind : Residue::Kind = :other) : self
-      builder = Templates::Builder.new kind
+      builder = Topology::Templates::Builder.new kind
       with builder yield builder
       builder.build
     end

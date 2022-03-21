@@ -14,9 +14,9 @@ describe Chem::Atom do
     atom = Chem::Structure.build { atom "NG1", vec3(0, 0, 0) }.atoms[0]
 
     it "tells if atom matches atom type" do
-      (atom === Chem::Topology::AtomType.new("NG1")).should be_true
-      (atom === Chem::Topology::AtomType.new("NG1", element: "O")).should be_false
-      (atom === Chem::Topology::AtomType.new("CA")).should be_false
+      (atom === Chem::AtomType.new("NG1")).should be_true
+      (atom === Chem::AtomType.new("NG1", element: "O")).should be_false
+      (atom === Chem::AtomType.new("CA")).should be_false
     end
 
     it "tells if atom matches element" do
@@ -81,9 +81,9 @@ describe Chem::Atom do
   describe "#match?" do
     it "tells if atom matches atom type" do
       atom = Chem::Structure.build { atom "CD2", vec3(0, 0, 0) }.atoms[0]
-      atom.match?(Chem::Topology::AtomType.new("CD2", element: "C")).should be_true
-      atom.match?(Chem::Topology::AtomType.new("CD2", element: "N")).should be_false
-      atom.match?(Chem::Topology::AtomType.new("ND2")).should be_false
+      atom.match?(Chem::AtomType.new("CD2", element: "C")).should be_true
+      atom.match?(Chem::AtomType.new("CD2", element: "N")).should be_false
+      atom.match?(Chem::AtomType.new("ND2")).should be_false
     end
   end
 
