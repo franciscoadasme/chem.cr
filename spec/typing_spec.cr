@@ -57,6 +57,7 @@ describe Chem::ResidueType do
         name "GLY"
         code 'G'
         structure do
+          backbone
           remove_atom "HA"
         end
       end.inspect.should eq "<ResidueType GLY(G), protein>"

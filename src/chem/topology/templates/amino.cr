@@ -4,6 +4,7 @@ module Chem::Topology::Templates
     name "ALA"
     code 'A'
     structure do
+      backbone
       sidechain "CB"
     end
   end
@@ -13,6 +14,7 @@ module Chem::Topology::Templates
     name "ARG"
     code 'R'
     structure do
+      backbone
       sidechain do
         stem "CB-CG-CD-NE-CZ=NH1+"
         branch "CZ-NH2"
@@ -25,6 +27,7 @@ module Chem::Topology::Templates
     name "ASH"
     code 'D'
     structure do
+      backbone
       sidechain do
         stem "CB-CG=OD1"
         branch "CG-OD2"
@@ -37,6 +40,7 @@ module Chem::Topology::Templates
     name "ASN"
     code 'N'
     structure do
+      backbone
       sidechain do
         stem "CB-CG-ND2"
         branch "CG=OD1"
@@ -49,6 +53,7 @@ module Chem::Topology::Templates
     name "ASP"
     code 'D'
     structure do
+      backbone
       sidechain do
         stem "CB-CG=OD1"
         branch "CG-OD2-"
@@ -61,6 +66,7 @@ module Chem::Topology::Templates
     name "CYS"
     code 'C'
     structure do
+      backbone
       sidechain "CB-SG(2)"
     end
   end
@@ -70,6 +76,7 @@ module Chem::Topology::Templates
     name "CYX"
     code 'C'
     structure do
+      backbone
       sidechain "CB-SG(1)"
     end
   end
@@ -79,6 +86,7 @@ module Chem::Topology::Templates
     name "GLH"
     code 'E'
     structure do
+      backbone
       sidechain do
         stem "CB-CG-CD=OE1"
         branch "CD-OE2"
@@ -91,6 +99,7 @@ module Chem::Topology::Templates
     name "GLN"
     code 'Q'
     structure do
+      backbone
       sidechain do
         stem "CB-CG-CD=OE1"
         branch "CD-NE2"
@@ -103,6 +112,7 @@ module Chem::Topology::Templates
     name "GLU"
     code 'E'
     structure do
+      backbone
       sidechain do
         stem "CB-CG-CD=OE1"
         branch "CD-OE2-"
@@ -115,6 +125,7 @@ module Chem::Topology::Templates
     name "GLY"
     code 'G'
     structure do
+      backbone
       remove_atom "HA"
     end
   end
@@ -124,6 +135,7 @@ module Chem::Topology::Templates
     name "HIS"
     code 'H'
     structure do
+      backbone
       sidechain do
         stem "CB-CG"
         cycle "CG=CD2-NE2=CE1-ND1"
@@ -136,6 +148,7 @@ module Chem::Topology::Templates
     name "HIE"
     code 'H'
     structure do
+      backbone
       sidechain do
         stem "CB-CG"
         cycle "CG=CD2-NE2-CE1=ND1"
@@ -148,6 +161,7 @@ module Chem::Topology::Templates
     name "HIP"
     code 'H'
     structure do
+      backbone
       sidechain do
         stem "CB-CG"
         cycle "CG=CD2-NE2+=CE1-ND1"
@@ -160,6 +174,7 @@ module Chem::Topology::Templates
     name "ILE"
     code 'I'
     structure do
+      backbone
       sidechain do
         stem "CB-CG1-CD1"
         branch "CB-CG2"
@@ -172,6 +187,7 @@ module Chem::Topology::Templates
     name "LEU"
     code 'L'
     structure do
+      backbone
       sidechain do
         stem "CB-CG-CD1"
         branch "CG-CD2"
@@ -184,6 +200,7 @@ module Chem::Topology::Templates
     name "LYS"
     code 'K'
     structure do
+      backbone
       sidechain "CB-CG-CD-CE-NZ+"
     end
   end
@@ -193,6 +210,7 @@ module Chem::Topology::Templates
     name "MET"
     code 'M'
     structure do
+      backbone
       sidechain "CB-CG-SD(2)-CE"
     end
   end
@@ -202,6 +220,7 @@ module Chem::Topology::Templates
     name "PHE"
     code 'F'
     structure do
+      backbone
       sidechain do
         stem "CB-CG"
         cycle "CG=CD1-CE1=CZ-CE2=CD2"
@@ -215,6 +234,7 @@ module Chem::Topology::Templates
     code 'P'
 
     structure do
+      backbone
       remove_atom "H"
       sidechain do
         cycle "CA-CB-CG-CD-N"
@@ -227,6 +247,7 @@ module Chem::Topology::Templates
     name "SER"
     code 'S'
     structure do
+      backbone
       sidechain "CB-OG"
     end
   end
@@ -236,6 +257,7 @@ module Chem::Topology::Templates
     name "THR"
     code 'T'
     structure do
+      backbone
       sidechain do
         stem "CB-OG1"
         branch "CB-CG2"
@@ -248,6 +270,7 @@ module Chem::Topology::Templates
     name "TRP"
     code 'W'
     structure do
+      backbone
       sidechain do
         stem "CB-CG"
         cycle "CG=CD1-NE1-CE2=CD2"
@@ -261,6 +284,7 @@ module Chem::Topology::Templates
     name "TYR"
     code 'Y'
     structure do
+      backbone
       sidechain do
         stem "CB-CG"
         cycle "CG=CD1-CE1=CZ-CE2=CD2"
@@ -274,6 +298,7 @@ module Chem::Topology::Templates
     name "VAL"
     code 'V'
     structure do
+      backbone
       sidechain do
         stem "CB-CG1"
         branch "CB-CG2"

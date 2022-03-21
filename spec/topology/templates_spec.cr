@@ -10,6 +10,7 @@ describe Chem::ResidueType::Builder do
         name "Gly"
         code 'G'
         structure do
+          backbone
           remove_atom "HA"
         end
       end
@@ -25,6 +26,7 @@ describe Chem::ResidueType::Builder do
         name "ALA"
         code 'A'
         structure do
+          backbone
           sidechain "CB"
         end
       end
@@ -40,6 +42,7 @@ describe Chem::ResidueType::Builder do
         name "ILE"
         code 'I'
         structure do
+          backbone
           sidechain do
             stem "CB-CG1-CD1"
             branch "CB-CG2"
@@ -60,6 +63,7 @@ describe Chem::ResidueType::Builder do
         name "LYS"
         code 'K'
         structure do
+          backbone
           sidechain "CB-CG-CD-CE-NZ+"
         end
       end
@@ -77,6 +81,7 @@ describe Chem::ResidueType::Builder do
         name "ASP"
         code 'D'
         structure do
+          backbone
           sidechain do
             stem "CB-CG=OE1"
             branch "CG-OE2-"
@@ -108,6 +113,7 @@ describe Chem::ResidueType::Builder do
         name "ARG"
         code 'R'
         structure do
+          backbone
           sidechain do
             stem "CB-CG-CD-NE-CZ-NH1"
             branch "CZ=NH2+"
@@ -129,6 +135,7 @@ describe Chem::ResidueType::Builder do
         name "HIS"
         code 'H'
         structure do
+          backbone
           sidechain do
             stem "CB-CG"
             cycle "CG=CD2-NE2=CE1-ND1"
@@ -149,6 +156,7 @@ describe Chem::ResidueType::Builder do
         name "HIS"
         code 'H'
         structure do
+          backbone
           sidechain do
             stem "CB-CG"
             cycle "CG-ND1-CE1=NE2-CD2="
@@ -169,6 +177,7 @@ describe Chem::ResidueType::Builder do
         name "TRP"
         code 'W'
         structure do
+          backbone
           sidechain do
             stem "CB-CG"
             cycle "CG=CD1-NE1-CE2=CD2"
@@ -190,6 +199,7 @@ describe Chem::ResidueType::Builder do
         name "PRO"
         code 'P'
         structure do
+          backbone
           remove_atom "H"
           sidechain do
             cycle "CA-CB-CG-CD-N"
@@ -210,6 +220,7 @@ describe Chem::ResidueType::Builder do
         name "CYX"
         code 'C'
         structure do
+          backbone
           sidechain "CB-SG(1)"
         end
       end
@@ -286,7 +297,7 @@ describe Chem::ResidueType::Builder do
       residue.atom_names.should eq names
     end
 
-    it "builds a residue with three-letter atom names" do
+    it "builds a residue with four-letter atom names" do
       residue = Chem::ResidueType.build(:other) do
         description "C-ter"
         name "CTER"
@@ -310,6 +321,7 @@ describe Chem::ResidueType::Builder do
           code 'W'
 
           structure do
+            backbone
             stem "CB-CG"
             cycle "CG=CD1-NE1-CE2=CD2"
             cycle "CE2-CZ2=CH2-CZ3=CE3-CD2"
@@ -327,9 +339,12 @@ describe Chem::ResidueType::Builder do
           code 'W'
 
           structure do
-            stem "CB-CG=CD"
-            branch "CG-CZ"
-            branch "CG-OTX-"
+            backbone
+            sidechain do
+              stem "CB-CG=CD"
+              branch "CG-CZ"
+              branch "CG-OTX-"
+            end
           end
         end
       end

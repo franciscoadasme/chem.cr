@@ -16,13 +16,26 @@ class Chem::ResidueType::Builder
   @code : Char?
 
   def initialize(@kind : Residue::Kind = :other)
-    setup
   end
 
   def self.build(kind : Residue::Kind = :other) : ResidueType
     builder = Builder.new kind
     with builder yield
     builder.build
+  end
+
+  def backbone : Nil
+    atom_type "N"
+    atom_type "H"
+    atom_type "CA"
+    atom_type "HA"
+    atom_type "C"
+    atom_type "O"
+    parse_spec "N-CA-C=O"
+    add_bond "N", "H"
+    add_bond "CA", "HA"
+    link_adjacent_by "C-N"
+    root "CA"
   end
 
   def branch(spec : String)
@@ -243,23 +256,6 @@ class Chem::ResidueType::Builder
     atom_types = atom_specs.map { |spec| parse_atom spec }
     bond_chars.each_with_index do |bond_char, i|
       add_bond atom_types[i], atom_types[i + 1], parse_bond_order(bond_char)
-    end
-  end
-
-  private def setup
-    case @kind
-    when .protein?
-      atom_type "N"
-      atom_type "H"
-      atom_type "CA"
-      atom_type "HA"
-      atom_type "C"
-      atom_type "O"
-      parse_spec "N-CA-C=O"
-      add_bond "N", "H"
-      add_bond "CA", "HA"
-      link_adjacent_by "C-N"
-      root "CA"
     end
   end
 end
