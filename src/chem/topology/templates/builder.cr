@@ -56,7 +56,7 @@ module Chem::Topology::Templates
     end
 
     def cycle(spec : String)
-      check_root! "cycle", spec
+      # check_root! "cycle", spec
       spec += '-' unless /#{BOND_ORDER_PATTERN}$/ =~ spec
       parse_spec "#{spec}#{extract_root spec}"
     end
