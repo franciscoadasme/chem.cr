@@ -25,6 +25,7 @@ class Chem::ResidueType::Builder
   end
 
   def backbone : Nil
+    fail "Backbone is only valid for protein residues" unless @kind.protein?
     atom_type "N"
     atom_type "H"
     atom_type "CA"
