@@ -23,6 +23,7 @@ require "./chem/core/structure/*"
 
 require "./chem/protein"
 require "./chem/typing"
+require "./chem/residue_type_builder"
 require "./chem/topology"
 
 require "./chem/pull_parser"

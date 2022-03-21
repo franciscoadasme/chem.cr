@@ -1,6 +1,6 @@
 require "../spec_helper"
 
-describe Chem::Topology::Templates::Builder do
+describe Chem::ResidueType::Builder do
   describe ".build" do
     bb_names = ["N", "H", "CA", "HA", "C", "O"]
 
@@ -303,7 +303,7 @@ describe Chem::Topology::Templates::Builder do
       # #cycle connects the first and last atoms with a single bond unless there is a
       # bond char (-, =, # or @) at the end. In this case, both CE2=CD2 and CD2-CE2 are
       # added
-      expect_raises Chem::Topology::Templates::Error, "Bond CD2=CE2 already exists" do
+      expect_raises Chem::Error, "Bond CD2=CE2 already exists" do
         Chem::ResidueType.build(:protein) do
           description "Tryptophan"
           name "TRP"
@@ -320,7 +320,7 @@ describe Chem::Topology::Templates::Builder do
 
     it "fails on incorrect valency" do
       msg = "Atom type CG has incorrect valency (5), expected 4"
-      expect_raises Chem::Topology::Templates::Error, msg do
+      expect_raises Chem::Error, msg do
         Chem::ResidueType.build(:protein) do
           description "Tryptophan"
           name "TRP"
@@ -337,7 +337,7 @@ describe Chem::Topology::Templates::Builder do
 
     it "fails when adding a branch without existing root" do
       msg = "Branch must start with an existing atom type, got CB"
-      expect_raises Chem::Topology::Templates::Error, msg do
+      expect_raises Chem::Error, msg do
         Chem::ResidueType.build(:protein) do
           structure do
             branch "CB-CG2"

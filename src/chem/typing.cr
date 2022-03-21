@@ -127,7 +127,7 @@ module Chem
     end
 
     def self.build(kind : Residue::Kind = :other) : self
-      builder = Topology::Templates::Builder.new kind
+      builder = ResidueType::Builder.new kind
       with builder yield builder
       builder.build
     end

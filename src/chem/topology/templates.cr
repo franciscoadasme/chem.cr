@@ -36,5 +36,4 @@ module Chem::Topology::Templates
   build_method solvent
 end
 
-require "./templates/builder"
 require "./templates/detector"
