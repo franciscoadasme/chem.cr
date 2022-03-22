@@ -1,5 +1,3 @@
-require "../../topology/templates/all"
-
 module Chem
   class Structure::Builder
     @aromatic_bonds : Array(Bond)?
