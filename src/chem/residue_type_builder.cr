@@ -4,19 +4,11 @@ module Chem
     @bonds = [] of BondType
     @code : Char?
     @description : String?
+    @kind : Residue::Kind = :other
     @link_bond : BondType?
     @names = [] of String
     @root : AtomType?
     @symmetric_atom_groups = [] of Array(Tuple(String, String))
-
-    def initialize(@kind : Residue::Kind = :other)
-    end
-
-    def self.build(kind : Residue::Kind = :other) : ResidueType
-      builder = Builder.new kind
-      with builder yield
-      builder.build
-    end
 
     def build : ResidueType
       raise Error.new("Missing residue description") unless (description = @description)
@@ -34,6 +26,10 @@ module Chem
 
     def description(name : String)
       @description = name
+    end
+
+    def kind(kind : Residue::Kind)
+      @kind = kind
     end
 
     def name(name : String)

@@ -13,8 +13,8 @@ module Chem::Topology::Templates
     TEMPLATES.values
   end
 
-  def self.register_type(kind : Residue::Kind = :other) : ResidueType
-    ResidueType.build(kind) do |builder|
+  def self.register_type : ResidueType
+    ResidueType.build do |builder|
       with builder yield builder
       residue = builder.build
       builder.names.each do |name|

@@ -25,8 +25,8 @@ class Chem::ResidueType
     @bonds = bonds.dup
   end
 
-  def self.build(kind : Residue::Kind = :other) : self
-    builder = ResidueType::Builder.new kind
+  def self.build : self
+    builder = ResidueType::Builder.new
     with builder yield builder
     builder.build
   end

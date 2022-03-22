@@ -5,10 +5,11 @@ describe Chem::ResidueType::Builder do
     bb_names = ["N", "H", "CA", "HA", "C", "O"]
 
     it "builds a residue without sidechain" do
-      residue = Chem::ResidueType.build(:protein) do
+      residue = Chem::ResidueType.build do
         description "Glycine"
         name "Gly"
         code 'G'
+        kind :protein
         structure do
           backbone
           remove_atom "HA"
@@ -21,10 +22,11 @@ describe Chem::ResidueType::Builder do
     end
 
     it "builds a residue with short sidechain" do
-      residue = Chem::ResidueType.build(:protein) do
+      residue = Chem::ResidueType.build do
         description "Alanine"
         name "ALA"
         code 'A'
+        kind :protein
         structure do
           backbone
           sidechain "CB"
@@ -37,10 +39,11 @@ describe Chem::ResidueType::Builder do
     end
 
     it "builds a residue with branched sidechain" do
-      residue = Chem::ResidueType.build(:protein) do
+      residue = Chem::ResidueType.build do
         description "Isoleucine"
         name "ILE"
         code 'I'
+        kind :protein
         structure do
           backbone
           sidechain do
@@ -58,10 +61,11 @@ describe Chem::ResidueType::Builder do
     end
 
     it "builds a positively charged residue" do
-      residue = Chem::ResidueType.build(:protein) do
+      residue = Chem::ResidueType.build do
         description "Lysine"
         name "LYS"
         code 'K'
+        kind :protein
         structure do
           backbone
           sidechain "CB-CG-CD-CE-NZ+"
@@ -76,10 +80,11 @@ describe Chem::ResidueType::Builder do
     end
 
     it "builds a negatively charged residue" do
-      residue = Chem::ResidueType.build(:protein) do
+      residue = Chem::ResidueType.build do
         description "Aspartate"
         name "ASP"
         code 'D'
+        kind :protein
         structure do
           backbone
           sidechain do
@@ -96,9 +101,10 @@ describe Chem::ResidueType::Builder do
     end
 
     it "builds a residue with charge +2" do
-      residue = Chem::ResidueType.build(:ion) do
+      residue = Chem::ResidueType.build do
         description "Magnesium"
         name "MG"
+        kind :ion
         structure do
           stem "MG+2"
         end
@@ -108,10 +114,11 @@ describe Chem::ResidueType::Builder do
     end
 
     it "builds a positively charged residue with one branch in the sidechain" do
-      residue = Chem::ResidueType.build(:protein) do
+      residue = Chem::ResidueType.build do
         description "Arginine"
         name "ARG"
         code 'R'
+        kind :protein
         structure do
           backbone
           sidechain do
@@ -130,10 +137,11 @@ describe Chem::ResidueType::Builder do
     end
 
     it "builds a residue with a cyclic sidechain" do
-      residue = Chem::ResidueType.build(:protein) do
+      residue = Chem::ResidueType.build do
         description "Histidine"
         name "HIS"
         code 'H'
+        kind :protein
         structure do
           backbone
           sidechain do
@@ -151,10 +159,11 @@ describe Chem::ResidueType::Builder do
     end
 
     it "builds a residue with a cyclic sidechain with terminal bond" do
-      residue = Chem::ResidueType.build(:protein) do
+      residue = Chem::ResidueType.build do
         description "Histidine"
         name "HIS"
         code 'H'
+        kind :protein
         structure do
           backbone
           sidechain do
@@ -172,10 +181,11 @@ describe Chem::ResidueType::Builder do
     end
 
     it "builds a residue with a bicyclic sidechain" do
-      residue = Chem::ResidueType.build(:protein) do
+      residue = Chem::ResidueType.build do
         description "Tryptophan"
         name "TRP"
         code 'W'
+        kind :protein
         structure do
           backbone
           sidechain do
@@ -194,10 +204,11 @@ describe Chem::ResidueType::Builder do
     end
 
     it "builds a cyclic residue" do
-      residue = Chem::ResidueType.build(:protein) do
+      residue = Chem::ResidueType.build do
         description "Proline"
         name "PRO"
         code 'P'
+        kind :protein
         structure do
           backbone
           remove_atom "H"
@@ -215,10 +226,11 @@ describe Chem::ResidueType::Builder do
     end
 
     it "builds a residue having an atom with explicit valency" do
-      residue = Chem::ResidueType.build(:protein) do
+      residue = Chem::ResidueType.build do
         description "Cysteine"
         name "CYX"
         code 'C'
+        kind :protein
         structure do
           backbone
           sidechain "CB-SG(1)"
@@ -231,9 +243,10 @@ describe Chem::ResidueType::Builder do
     end
 
     it "builds a residue having an atom with explicit valency followed by a bond" do
-      residue = Chem::ResidueType.build(:ion) do
+      residue = Chem::ResidueType.build do
         description "Sulfate"
         name "SO4"
+        kind :ion
         structure "S(2)=O1"
       end
 
@@ -243,16 +256,17 @@ describe Chem::ResidueType::Builder do
     end
 
     it "builds a residue having an atom with explicit element" do
-      residue = Chem::ResidueType.build(:ion) do
+      residue = Chem::ResidueType.build do
         description "Calcium"
         name "CA"
+        kind :ion
         structure "CA[Ca]"
       end
       residue.atom_types[0].element.should eq Chem::PeriodicTable::Ca
     end
 
     it "builds a polymer residue" do
-      residue_t = Chem::ResidueType.build(:other) do
+      residue_t = Chem::ResidueType.build do
         description "Fake"
         name "UNK"
         structure do
@@ -272,7 +286,7 @@ describe Chem::ResidueType::Builder do
     end
 
     it "builds a rooted residue" do
-      residue_t = Chem::ResidueType.build(:other) do
+      residue_t = Chem::ResidueType.build do
         description "Fake"
         name "UNK"
         structure "C1=C2"
@@ -285,9 +299,10 @@ describe Chem::ResidueType::Builder do
     end
 
     it "builds a residue with numbered atoms per element" do
-      residue = Chem::ResidueType.build(:solvent) do
+      residue = Chem::ResidueType.build do
         description "Glycerol"
         name "GOL"
+        kind :solvent
         structure do
           stem "O1-C1-C2-C3-O3"
           branch "C2-O2"
@@ -300,7 +315,7 @@ describe Chem::ResidueType::Builder do
     end
 
     it "builds a residue with four-letter atom names" do
-      residue = Chem::ResidueType.build(:other) do
+      residue = Chem::ResidueType.build do
         description "C-ter"
         name "CTER"
         structure do
@@ -317,10 +332,11 @@ describe Chem::ResidueType::Builder do
       # bond char (-, =, # or @) at the end. In this case, both CE2=CD2 and CD2-CE2 are
       # added
       expect_raises Chem::Error, "Bond CD2=CE2 already exists" do
-        Chem::ResidueType.build(:protein) do
+        Chem::ResidueType.build do
           description "Tryptophan"
           name "TRP"
           code 'W'
+          kind :protein
 
           structure do
             backbone
@@ -335,10 +351,11 @@ describe Chem::ResidueType::Builder do
     it "fails on incorrect valency" do
       msg = "Atom type CG has incorrect valency (5), expected 4"
       expect_raises Chem::Error, msg do
-        Chem::ResidueType.build(:protein) do
+        Chem::ResidueType.build do
           description "Tryptophan"
           name "TRP"
           code 'W'
+          kind :protein
 
           structure do
             backbone
@@ -355,7 +372,7 @@ describe Chem::ResidueType::Builder do
     it "fails when adding a branch without existing root" do
       msg = "Branch must start with an existing atom type, got CB"
       expect_raises Chem::Error, msg do
-        Chem::ResidueType.build(:protein) do
+        Chem::ResidueType.build do
           structure do
             branch "CB-CG2"
           end

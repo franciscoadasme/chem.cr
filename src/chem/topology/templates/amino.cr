@@ -1,18 +1,20 @@
 module Chem::Topology::Templates
-  register_type(:protein) do
+  register_type do
     description "Alanine"
     name "ALA"
     code 'A'
+    kind :protein
     structure do
       backbone
       sidechain "CB"
     end
   end
 
-  register_type(:protein) do
+  register_type do
     description "Arginine"
     name "ARG"
     code 'R'
+    kind :protein
     structure do
       backbone
       sidechain do
@@ -22,10 +24,11 @@ module Chem::Topology::Templates
     end
   end
 
-  register_type(:protein) do
+  register_type do
     description "Aspartate"
     name "ASH"
     code 'D'
+    kind :protein
     structure do
       backbone
       sidechain do
@@ -35,10 +38,11 @@ module Chem::Topology::Templates
     end
   end
 
-  register_type(:protein) do
+  register_type do
     description "Asparagine"
     name "ASN"
     code 'N'
+    kind :protein
     structure do
       backbone
       sidechain do
@@ -48,10 +52,11 @@ module Chem::Topology::Templates
     end
   end
 
-  register_type(:protein) do
+  register_type do
     description "Aspartate"
     name "ASP"
     code 'D'
+    kind :protein
     structure do
       backbone
       sidechain do
@@ -61,30 +66,33 @@ module Chem::Topology::Templates
     end
   end
 
-  register_type(:protein) do
+  register_type do
     description "Cysteine"
     name "CYS"
     code 'C'
+    kind :protein
     structure do
       backbone
       sidechain "CB-SG(2)"
     end
   end
 
-  register_type(:protein) do
+  register_type do
     description "Cysteine"
     name "CYX"
     code 'C'
+    kind :protein
     structure do
       backbone
       sidechain "CB-SG(1)"
     end
   end
 
-  register_type(:protein) do
+  register_type do
     description "Glutamate"
     name "GLH"
     code 'E'
+    kind :protein
     structure do
       backbone
       sidechain do
@@ -94,10 +102,11 @@ module Chem::Topology::Templates
     end
   end
 
-  register_type(:protein) do
+  register_type do
     description "Glutamine"
     name "GLN"
     code 'Q'
+    kind :protein
     structure do
       backbone
       sidechain do
@@ -107,10 +116,11 @@ module Chem::Topology::Templates
     end
   end
 
-  register_type(:protein) do
+  register_type do
     description "Glutamate"
     name "GLU"
     code 'E'
+    kind :protein
     structure do
       backbone
       sidechain do
@@ -120,20 +130,22 @@ module Chem::Topology::Templates
     end
   end
 
-  register_type(:protein) do
+  register_type do
     description "Glycine"
     name "GLY"
     code 'G'
+    kind :protein
     structure do
       backbone
       remove_atom "HA"
     end
   end
 
-  register_type(:protein) do
+  register_type do
     description "Histidine"
     name "HIS"
     code 'H'
+    kind :protein
     structure do
       backbone
       sidechain do
@@ -143,10 +155,11 @@ module Chem::Topology::Templates
     end
   end
 
-  register_type(:protein) do
+  register_type do
     description "Histidine"
     name "HIE"
     code 'H'
+    kind :protein
     structure do
       backbone
       sidechain do
@@ -156,10 +169,11 @@ module Chem::Topology::Templates
     end
   end
 
-  register_type(:protein) do
+  register_type do
     description "Histidine"
     name "HIP"
     code 'H'
+    kind :protein
     structure do
       backbone
       sidechain do
@@ -169,10 +183,11 @@ module Chem::Topology::Templates
     end
   end
 
-  register_type(:protein) do
+  register_type do
     description "Isoleucine"
     name "ILE"
     code 'I'
+    kind :protein
     structure do
       backbone
       sidechain do
@@ -182,10 +197,11 @@ module Chem::Topology::Templates
     end
   end
 
-  register_type(:protein) do
+  register_type do
     description "Leucine"
     name "LEU"
     code 'L'
+    kind :protein
     structure do
       backbone
       sidechain do
@@ -196,30 +212,33 @@ module Chem::Topology::Templates
     symmetry({"CD1", "CD2"})
   end
 
-  register_type(:protein) do
+  register_type do
     description "Lysine"
     name "LYS"
     code 'K'
+    kind :protein
     structure do
       backbone
       sidechain "CB-CG-CD-CE-NZ+"
     end
   end
 
-  register_type(:protein) do
+  register_type do
     description "Methionine "
     name "MET"
     code 'M'
+    kind :protein
     structure do
       backbone
       sidechain "CB-CG-SD(2)-CE"
     end
   end
 
-  register_type(:protein) do
+  register_type do
     description "Phenylalanine"
     name "PHE"
     code 'F'
+    kind :protein
     structure do
       backbone
       sidechain do
@@ -230,10 +249,11 @@ module Chem::Topology::Templates
     symmetry({"CD1", "CD2"}, {"CE1", "CE2"})
   end
 
-  register_type(:protein) do
+  register_type do
     description "Proline"
     name "PRO"
     code 'P'
+    kind :protein
 
     structure do
       backbone
@@ -244,20 +264,22 @@ module Chem::Topology::Templates
     end
   end
 
-  register_type(:protein) do
+  register_type do
     description "Serine"
     name "SER"
     code 'S'
+    kind :protein
     structure do
       backbone
       sidechain "CB-OG"
     end
   end
 
-  register_type(:protein) do
+  register_type do
     description "Threonine"
     name "THR"
     code 'T'
+    kind :protein
     structure do
       backbone
       sidechain do
@@ -267,10 +289,11 @@ module Chem::Topology::Templates
     end
   end
 
-  register_type(:protein) do
+  register_type do
     description "Tryptophan"
     name "TRP"
     code 'W'
+    kind :protein
     structure do
       backbone
       sidechain do
@@ -281,10 +304,11 @@ module Chem::Topology::Templates
     end
   end
 
-  register_type(:protein) do
+  register_type do
     description "Tyrosine"
     name "TYR"
     code 'Y'
+    kind :protein
     structure do
       backbone
       sidechain do
@@ -296,10 +320,11 @@ module Chem::Topology::Templates
     symmetry({"CD1", "CD2"}, {"CE1", "CE2"})
   end
 
-  register_type(:protein) do
+  register_type do
     description "Valine"
     name "VAL"
     code 'V'
+    kind :protein
     structure do
       backbone
       sidechain do

@@ -46,16 +46,18 @@ describe Chem::ResidueType do
         structure "O=O"
       end.inspect.should eq "<ResidueType O2>"
 
-      Chem::ResidueType.build(:solvent) do
+      Chem::ResidueType.build do
         name "HOH"
+        kind :solvent
         description "Water"
         structure "O"
       end.inspect.should eq "<ResidueType HOH, solvent>"
 
-      Chem::ResidueType.build(:protein) do
+      Chem::ResidueType.build do
         description "Glycine"
         name "GLY"
         code 'G'
+        kind :protein
         structure do
           backbone
           remove_atom "HA"
