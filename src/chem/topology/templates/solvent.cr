@@ -1,7 +1,8 @@
 module Chem
   ResidueType.register do
     description "Water"
-    names "HOH", "WAT"
+    name "HOH"
+    aliases "WAT", "TIP3"
     kind :solvent
     structure do
       stem "O"

@@ -108,6 +108,7 @@ module Chem
     @bonds : Array(BondType)
 
     getter name : String
+    getter aliases : Array(String)
     getter kind : Residue::Kind
     getter link_bond : BondType?
     getter description : String
@@ -116,13 +117,14 @@ module Chem
     getter symmetric_atom_groups : Array(Array(Tuple(String, String)))?
 
     def initialize(
-      @description : String,
       @name : String,
       @code : Char?,
       @kind : Residue::Kind,
+      @description : String,
       atom_types : Array(AtomType),
       bonds : Array(BondType),
       @root_atom : AtomType,
+      @aliases : Array(String) = [] of String,
       @link_bond : BondType? = nil,
       @symmetric_atom_groups : Array(Array(Tuple(String, String)))? = nil
     )
@@ -152,7 +154,7 @@ module Chem
       ResidueType.build do |builder|
         with builder yield builder
         residue = builder.build
-        builder.names.each do |name|
+        ([residue.name] + residue.aliases).each do |name|
           raise Error.new("#{name} residue type already exists") if REGISTRY.has_key?(name)
           REGISTRY[name] = residue
         end
@@ -224,7 +226,12 @@ module Chem
     @root_atom : AtomType?
     @symmetric_atom_groups = [] of Array(Tuple(String, String))
 
-    def build : ResidueType
+    def aliases(*names : String)
+      raise Error.new("Aliases cannot be set for unnamed residue type") if @names.empty?
+      @names.concat names
+    end
+
+    protected def build : ResidueType
       raise Error.new("Missing residue description") unless (description = @description)
       raise Error.new("Missing residue name") if @names.empty?
       @root_atom ||= if @kind.protein?
@@ -234,8 +241,9 @@ module Chem
                      end
       raise Error.new("Missing root for residue type #{@names[0]}") unless root_atom = @root_atom
 
-      ResidueType.new description, @names.first, @code, @kind, @atom_types, @bonds,
-        root_atom, @link_bond, @symmetric_atom_groups
+      ResidueType.new @names.first, @code, @kind, description,
+        @atom_types, @bonds, root_atom,
+        @names[1..], @link_bond, @symmetric_atom_groups
     end
 
     def code(char : Char) : Nil
@@ -252,14 +260,6 @@ module Chem
 
     def name(name : String)
       @names << name
-    end
-
-    def names : Array(String)
-      @names.dup
-    end
-
-    def names(*names : String)
-      @names.concat names
     end
 
     def root(atom_name : String)

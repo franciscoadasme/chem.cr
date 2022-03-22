@@ -71,7 +71,8 @@ describe Chem::ResidueType do
     it "creates a residue template with multiple names" do
       Chem::ResidueType.register do
         description "Anything"
-        names "LXE", "EGR"
+        name "LXE"
+        aliases "EGR"
         structure "C1"
       end
       Chem::ResidueType.fetch("LXE").should be Chem::ResidueType.fetch("EGR")
@@ -568,7 +569,7 @@ describe Chem::ResidueType::Builder do
       end
     end
 
-    it "raises if the linkd specifies the same atom" do
+    it "raises if the link bond specifies the same atom" do
       expect_raises Chem::Error, "Atom O1 cannot be bonded to itself" do
         Chem::ResidueType.build do
           name "O2"
@@ -578,6 +579,14 @@ describe Chem::ResidueType::Builder do
             link_adjacent_by "O1=O1"
           end
           root "O"
+        end
+      end
+    end
+
+    it "raises if alias is called before name" do
+      expect_raises(Chem::Error, "Aliases cannot be set for unnamed residue type") do
+        Chem::ResidueType.register do
+          aliases "WAT", "TIP3"
         end
       end
     end
