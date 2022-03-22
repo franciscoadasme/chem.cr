@@ -45,6 +45,7 @@ describe Chem::ResidueType do
       stem "N1+-C2-C3-O4-C5-C6"
       branch "C5=O7"
     end
+    root "C5"
   end
 
   describe ".fetch" do
@@ -71,9 +72,7 @@ describe Chem::ResidueType do
       Chem::ResidueType.register do
         description "Anything"
         names "LXE", "EGR"
-        structure do
-          stem "C1"
-        end
+        structure "C1"
       end
       Chem::ResidueType.fetch("LXE").should be Chem::ResidueType.fetch("EGR")
     end
@@ -86,6 +85,7 @@ describe Chem::ResidueType do
           structure do
             stem "C1"
           end
+          root "C1"
         end
       end
     end
@@ -97,6 +97,7 @@ describe Chem::ResidueType do
         name "O2"
         description "Molecular oxygen"
         structure "O1=O2"
+        root "O1"
       end.inspect.should eq "<ResidueType O2>"
 
       Chem::ResidueType.build do
@@ -368,6 +369,7 @@ describe Chem::ResidueType::Builder do
         name "SO4"
         kind :ion
         structure "S(2)=O1"
+        root "S"
       end
 
       residue.atom_names.should eq ["S", "O1"]
@@ -393,6 +395,7 @@ describe Chem::ResidueType::Builder do
           stem "C1-C2-C3"
           link_adjacent_by "C3=C1"
         end
+        root "C2"
       end
 
       residue_t.atom_names.should eq ["C1", "H1", "C2", "H2", "H3", "C3", "H4"]
@@ -415,7 +418,7 @@ describe Chem::ResidueType::Builder do
 
       residue_t.atom_names.should eq ["C1", "H1", "H2", "C2", "H3", "H4"]
       residue_t.bonds.size.should eq 5
-      residue_t.root.should eq residue_t["C2"]
+      residue_t.root_atom.should eq residue_t["C2"]
     end
 
     it "builds a residue with numbered atoms per element" do
@@ -427,6 +430,7 @@ describe Chem::ResidueType::Builder do
           stem "O1-C1-C2-C3-O3"
           branch "C2-O2"
         end
+        root "C2"
       end
 
       names = ["O1", "H1", "C1", "H4", "H5", "C2", "H6", "C3", "H7", "H8", "O3", "H3",
@@ -442,6 +446,7 @@ describe Chem::ResidueType::Builder do
           stem "CA-C=O"
           branch "C-OXT"
         end
+        root "C"
       end
 
       residue.atom_names.should eq ["CA", "HA1", "HA2", "HA3", "C", "O", "OXT", "HXT"]
@@ -514,6 +519,7 @@ describe Chem::ResidueType::Builder do
           branch "N14-C17-C18"
           cycle "C18=C19-C20=C21-C22=C23"
         end
+        root "C1"
         symmetry({"C12", "C16"}, {"C13", "C15"})
         symmetry({"C19", "C23"}, {"C20", "C22"})
       end
@@ -557,6 +563,7 @@ describe Chem::ResidueType::Builder do
           name "O2"
           description "Molecular oxygen"
           structure "O=O"
+          root "O"
         end
       end
     end
@@ -570,6 +577,7 @@ describe Chem::ResidueType::Builder do
             stem "O1=O2"
             link_adjacent_by "O1=O1"
           end
+          root "O"
         end
       end
     end

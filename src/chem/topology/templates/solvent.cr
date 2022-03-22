@@ -6,6 +6,5 @@ module Chem
     structure do
       stem "O"
     end
-    root "O"
   end
 end

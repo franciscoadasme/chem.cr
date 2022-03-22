@@ -51,7 +51,7 @@ class Chem::Topology::Detector
     @atoms.each do |atom|
       next if mapped?(atom, atom_map)
       @templates.each do |res_t|
-        next if @atoms.size < res_t.n_atoms || res_t.root.nil?
+        next if @atoms.size < res_t.n_atoms
         if match?(res_t, atom, atom_map)
           yield MatchData.new(res_t, atom_map.invert)
           @atoms.subtract atom_map.each_key
@@ -102,7 +102,7 @@ class Chem::Topology::Detector
     ter_map = {} of Atom => String
     [NTER_T, CHARGED_NTER_T, CTER_T, CHARGED_CTER_T].each do |ter_t|
       root.each_bonded_atom do |other|
-        search ter_t, ter_t.root.not_nil!, other, ter_map
+        search ter_t, ter_t.root_atom, other, ter_map
       end
 
       if ter_map.size == ter_t.n_atoms - 4 # ter has an extra CH3
@@ -124,7 +124,7 @@ class Chem::Topology::Detector
   private def match?(res_t : ResidueType,
                      atom : Atom,
                      atom_map : Hash(Atom, String)) : Bool
-    search res_t, res_t.root.not_nil!, atom, atom_map
+    search res_t, res_t.root_atom, atom, atom_map
     if res_t.kind.protein? && (root = atom_map.key_for?("CA"))
       extend_match res_t, root, atom_map
     end

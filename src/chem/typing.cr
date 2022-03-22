@@ -111,7 +111,7 @@ module Chem
     getter kind : Residue::Kind
     getter link_bond : BondType?
     getter description : String
-    getter root : AtomType?
+    getter root_atom : AtomType
     getter code : Char?
     getter symmetric_atom_groups : Array(Array(Tuple(String, String)))?
 
@@ -122,8 +122,8 @@ module Chem
       @kind : Residue::Kind,
       atom_types : Array(AtomType),
       bonds : Array(BondType),
+      @root_atom : AtomType,
       @link_bond : BondType? = nil,
-      @root : AtomType? = nil,
       @symmetric_atom_groups : Array(Array(Tuple(String, String)))? = nil
     )
       @atom_types = atom_types.dup
@@ -221,17 +221,21 @@ module Chem
     @kind : Residue::Kind = :other
     @link_bond : BondType?
     @names = [] of String
-    @root : AtomType?
+    @root_atom : AtomType?
     @symmetric_atom_groups = [] of Array(Tuple(String, String))
 
     def build : ResidueType
       raise Error.new("Missing residue description") unless (description = @description)
       raise Error.new("Missing residue name") if @names.empty?
-
-      root "CA" if !@root && @kind.protein?
+      @root_atom ||= if @kind.protein?
+                       check_atom_type("CA")
+                     elsif @atom_types.count { |a| !a.element.hydrogen? } == 1
+                       @atom_types[0]
+                     end
+      raise Error.new("Missing root for residue type #{@names[0]}") unless root_atom = @root_atom
 
       ResidueType.new description, @names.first, @code, @kind, @atom_types, @bonds,
-        @link_bond, @root, @symmetric_atom_groups
+        root_atom, @link_bond, @symmetric_atom_groups
     end
 
     def code(char : Char) : Nil
@@ -259,7 +263,7 @@ module Chem
     end
 
     def root(atom_name : String)
-      @root = check_atom_type atom_name
+      @root_atom = check_atom_type atom_name
     end
 
     def structure(spec : String) : Nil
