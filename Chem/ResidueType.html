@@ -591,6 +591,11 @@
       
         <ul>
   
+  <li class=" " data-id="chem.cr/Chem/Topology/Detector" data-name="chem::topology::detector">
+      <a href="../Chem/Topology/Detector.html">Detector</a>
+      
+    </li>
+  
   <li class=" " data-id="chem.cr/Chem/Topology/MatchData" data-name="chem::topology::matchdata">
       <a href="../Chem/Topology/MatchData.html">MatchData</a>
       
@@ -598,26 +603,6 @@
   
   <li class=" " data-id="chem.cr/Chem/Topology/Perception" data-name="chem::topology::perception">
       <a href="../Chem/Topology/Perception.html">Perception</a>
-      
-    </li>
-  
-  <li class="parent " data-id="chem.cr/Chem/Topology/Templates" data-name="chem::topology::templates">
-      <a href="../Chem/Topology/Templates.html">Templates</a>
-      
-        <ul>
-  
-  <li class=" " data-id="chem.cr/Chem/Topology/Templates/Detector" data-name="chem::topology::templates::detector">
-      <a href="../Chem/Topology/Templates/Detector.html">Detector</a>
-      
-    </li>
-  
-  <li class=" " data-id="chem.cr/Chem/Topology/Templates/Error" data-name="chem::topology::templates::error">
-      <a href="../Chem/Topology/Templates/Error.html">Error</a>
-      
-    </li>
-  
-</ul>
-
       
     </li>
   
@@ -828,7 +813,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/typing.cr#L104" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/5ee7f5351da5067ca2be4a979bae70fd77d15f0d/src/chem/typing.cr#L104" target="_blank">
         chem/typing.cr
       </a>
     
@@ -850,18 +835,50 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#build%28kind%3AResidue%3A%3AKind%3D%3Aother%2C%26%29%3Aself-class-method" class="signature"><strong>.build</strong>(kind : Residue::Kind = <span class="n">:other</span>, &) : <span class="k">self</span></a>
+        <a href="#build%28%26%29%3Aself-class-method" class="signature"><strong>.build</strong>(&) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new%28description%3AString%2Cname%3AString%2Ccode%3AChar%3F%2Ckind%3AResidue%3A%3AKind%2Catom_types%3AArray%28AtomType%29%2Cbonds%3AArray%28BondType%29%2Clink_bond%3ABondType%3F%3Dnil%2Croot%3AAtomType%3F%3Dnil%2Csymmetric_groups%3AArray%28Array%28Tuple%28String%2CString%29%29%29%3F%3Dnil%29-class-method" class="signature"><strong>.new</strong>(description : String, name : String, code : Char?, kind : Residue::Kind, atom_types : Array(AtomType), bonds : Array(BondType), link_bond : BondType? = <span class="n">nil</span>, root : AtomType? = <span class="n">nil</span>, symmetric_groups : Array(Array(Tuple(String, String)))? = <span class="n">nil</span>)</a>
+        <a href="#fetch%28name%3AString%29%3AResidueType-class-method" class="signature"><strong>.fetch</strong>(name : String) : ResidueType</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new%28description%3AString%2Cname%3AString%2Ccode%3AChar%3F%2Ckind%3AResidue%3A%3AKind%2Catom_types%3AArray%28AtomType%29%2Cbonds%3AArray%28BondType%29%2Clink_bond%3ABondType%3F%3Dnil%2Croot%3AAtomType%3F%3Dnil%2Csymmetric_atom_groups%3AArray%28Array%28Tuple%28String%2CString%29%29%29%3F%3Dnil%29-class-method" class="signature"><strong>.new</strong>(description : String, name : String, code : Char?, kind : Residue::Kind, atom_types : Array(AtomType), bonds : Array(BondType), link_bond : BondType? = <span class="n">nil</span>, root : AtomType? = <span class="n">nil</span>, symmetric_atom_groups : Array(Array(Tuple(String, String)))? = <span class="n">nil</span>)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#register%28%26%29%3AResidueType-class-method" class="signature"><strong>.register</strong>(&) : ResidueType</a>
         
       </li>
     
   </ul>
 
 
+
+  <h2>
+    <a id="class-method-summary" class="anchor" href="#class-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#all_types%3AArray%28ResidueType%29-class-method" class="signature"><strong>.all_types</strong> : Array(ResidueType)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#fetch%28name%3AString%2C%26%3A-%3ET%29%3AResidueType%7CTforallT-class-method" class="signature"><strong>.fetch</strong>(name : String, & :  -> T) : ResidueType | T forall T</a>
+        
+      </li>
+    
+  </ul>
 
 
 
@@ -968,7 +985,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#symmetric_groups%3AArray%28Array%28Tuple%28String%2CString%29%29%29%3F-instance-method" class="signature"><strong>#symmetric_groups</strong> : Array(Array(Tuple(String, String)))?</a>
+        <a href="#symmetric_atom_groups%3AArray%28Array%28Tuple%28String%2CString%29%29%29%3F-instance-method" class="signature"><strong>#symmetric_atom_groups</strong> : Array(Array(Tuple(String, String)))?</a>
         
       </li>
     
@@ -1012,40 +1029,114 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="build(kind:Residue::Kind=:other,&amp;):self-class-method">
+    <div class="entry-detail" id="build(&amp;):self-class-method">
       <div class="signature">
         
-        def self.<strong>build</strong>(kind : <a href="../Chem/Residue/Kind.html">Residue::Kind</a> = <span class="n">:other</span>, &) : <span class="k">self</span>
+        def self.<strong>build</strong>(&) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#build%28kind%3AResidue%3A%3AKind%3D%3Aother%2C%26%29%3Aself-class-method">#</a>
+        <a class="method-permalink" href="#build%28%26%29%3Aself-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/typing.cr#L131" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ee7f5351da5067ca2be4a979bae70fd77d15f0d/src/chem/typing.cr#L137" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="new(description:String,name:String,code:Char?,kind:Residue::Kind,atom_types:Array(AtomType),bonds:Array(BondType),link_bond:BondType?=nil,root:AtomType?=nil,symmetric_groups:Array(Array(Tuple(String,String)))?=nil)-class-method">
+    <div class="entry-detail" id="fetch(name:String):ResidueType-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(description : String, name : String, code : <a href="../Char.html">Char</a>?, kind : <a href="../Chem/Residue/Kind.html">Residue::Kind</a>, atom_types : <a href="../Array.html">Array</a>(<a href="../Chem/AtomType.html">AtomType</a>), bonds : <a href="../Array.html">Array</a>(<a href="../Chem/BondType.html">BondType</a>), link_bond : <a href="../Chem/BondType.html">BondType</a>? = <span class="n">nil</span>, root : <a href="../Chem/AtomType.html">AtomType</a>? = <span class="n">nil</span>, symmetric_groups : <a href="../Array.html">Array</a>(<a href="../Array.html">Array</a>(Tuple(String, String)))? = <span class="n">nil</span>)
+        def self.<strong>fetch</strong>(name : String) : <a href="../Chem/ResidueType.html">ResidueType</a>
 
-        <a class="method-permalink" href="#new%28description%3AString%2Cname%3AString%2Ccode%3AChar%3F%2Ckind%3AResidue%3A%3AKind%2Catom_types%3AArray%28AtomType%29%2Cbonds%3AArray%28BondType%29%2Clink_bond%3ABondType%3F%3Dnil%2Croot%3AAtomType%3F%3Dnil%2Csymmetric_groups%3AArray%28Array%28Tuple%28String%2CString%29%29%29%3F%3Dnil%29-class-method">#</a>
+        <a class="method-permalink" href="#fetch%28name%3AString%29%3AResidueType-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/typing.cr#L116" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ee7f5351da5067ca2be4a979bae70fd77d15f0d/src/chem/typing.cr#L143" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(description:String,name:String,code:Char?,kind:Residue::Kind,atom_types:Array(AtomType),bonds:Array(BondType),link_bond:BondType?=nil,root:AtomType?=nil,symmetric_atom_groups:Array(Array(Tuple(String,String)))?=nil)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(description : String, name : String, code : <a href="../Char.html">Char</a>?, kind : <a href="../Chem/Residue/Kind.html">Residue::Kind</a>, atom_types : <a href="../Array.html">Array</a>(<a href="../Chem/AtomType.html">AtomType</a>), bonds : <a href="../Array.html">Array</a>(<a href="../Chem/BondType.html">BondType</a>), link_bond : <a href="../Chem/BondType.html">BondType</a>? = <span class="n">nil</span>, root : <a href="../Chem/AtomType.html">AtomType</a>? = <span class="n">nil</span>, symmetric_atom_groups : <a href="../Array.html">Array</a>(<a href="../Array.html">Array</a>(Tuple(String, String)))? = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#new%28description%3AString%2Cname%3AString%2Ccode%3AChar%3F%2Ckind%3AResidue%3A%3AKind%2Catom_types%3AArray%28AtomType%29%2Cbonds%3AArray%28BondType%29%2Clink_bond%3ABondType%3F%3Dnil%2Croot%3AAtomType%3F%3Dnil%2Csymmetric_atom_groups%3AArray%28Array%28Tuple%28String%2CString%29%29%29%3F%3Dnil%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ee7f5351da5067ca2be4a979bae70fd77d15f0d/src/chem/typing.cr#L118" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="register(&amp;):ResidueType-class-method">
+      <div class="signature">
+        
+        def self.<strong>register</strong>(&) : <a href="../Chem/ResidueType.html">ResidueType</a>
+
+        <a class="method-permalink" href="#register%28%26%29%3AResidueType-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ee7f5351da5067ca2be4a979bae70fd77d15f0d/src/chem/typing.cr#L151" target="_blank">View source</a>]
         
       </div>
     </div>
   
 
 
+
+  <h2>
+    <a id="class-method-detail" class="anchor" href="#class-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="all_types:Array(ResidueType)-class-method">
+      <div class="signature">
+        
+        def self.<strong>all_types</strong> : <a href="../Array.html">Array</a>(<a href="../Chem/ResidueType.html">ResidueType</a>)
+
+        <a class="method-permalink" href="#all_types%3AArray%28ResidueType%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ee7f5351da5067ca2be4a979bae70fd77d15f0d/src/chem/typing.cr#L133" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="fetch(name:String,&amp;:-&gt;T):ResidueType|TforallT-class-method">
+      <div class="signature">
+        
+        def self.<strong>fetch</strong>(name : String, & :  -> T) : <a href="../Chem/ResidueType.html">ResidueType</a> | T forall T
+
+        <a class="method-permalink" href="#fetch%28name%3AString%2C%26%3A-%3ET%29%3AResidueType%7CTforallT-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ee7f5351da5067ca2be4a979bae70fd77d15f0d/src/chem/typing.cr#L147" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
 
 
 
@@ -1069,7 +1160,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/typing.cr#L137" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ee7f5351da5067ca2be4a979bae70fd77d15f0d/src/chem/typing.cr#L162" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1085,7 +1176,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/typing.cr#L141" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ee7f5351da5067ca2be4a979bae70fd77d15f0d/src/chem/typing.cr#L166" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1101,7 +1192,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/typing.cr#L145" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ee7f5351da5067ca2be4a979bae70fd77d15f0d/src/chem/typing.cr#L170" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1117,7 +1208,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/typing.cr#L151" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ee7f5351da5067ca2be4a979bae70fd77d15f0d/src/chem/typing.cr#L176" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1133,7 +1224,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/typing.cr#L155" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ee7f5351da5067ca2be4a979bae70fd77d15f0d/src/chem/typing.cr#L180" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1149,7 +1240,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/typing.cr#L163" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ee7f5351da5067ca2be4a979bae70fd77d15f0d/src/chem/typing.cr#L188" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1165,7 +1256,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/typing.cr#L167" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ee7f5351da5067ca2be4a979bae70fd77d15f0d/src/chem/typing.cr#L192" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1181,7 +1272,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/typing.cr#L113" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ee7f5351da5067ca2be4a979bae70fd77d15f0d/src/chem/typing.cr#L115" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1197,7 +1288,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/typing.cr#L111" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ee7f5351da5067ca2be4a979bae70fd77d15f0d/src/chem/typing.cr#L113" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1213,7 +1304,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/typing.cr#L159" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ee7f5351da5067ca2be4a979bae70fd77d15f0d/src/chem/typing.cr#L184" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1229,7 +1320,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/typing.cr#L171" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ee7f5351da5067ca2be4a979bae70fd77d15f0d/src/chem/typing.cr#L196" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1262,7 +1353,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/typing.cr#L175" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ee7f5351da5067ca2be4a979bae70fd77d15f0d/src/chem/typing.cr#L200" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1278,7 +1369,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/typing.cr#L109" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ee7f5351da5067ca2be4a979bae70fd77d15f0d/src/chem/typing.cr#L111" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1294,7 +1385,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/typing.cr#L110" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ee7f5351da5067ca2be4a979bae70fd77d15f0d/src/chem/typing.cr#L112" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1310,7 +1401,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/typing.cr#L182" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ee7f5351da5067ca2be4a979bae70fd77d15f0d/src/chem/typing.cr#L207" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1326,7 +1417,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/typing.cr#L186" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ee7f5351da5067ca2be4a979bae70fd77d15f0d/src/chem/typing.cr#L211" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1342,7 +1433,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/typing.cr#L108" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ee7f5351da5067ca2be4a979bae70fd77d15f0d/src/chem/typing.cr#L110" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1358,23 +1449,23 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/typing.cr#L112" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ee7f5351da5067ca2be4a979bae70fd77d15f0d/src/chem/typing.cr#L114" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="symmetric_groups:Array(Array(Tuple(String,String)))?-instance-method">
+    <div class="entry-detail" id="symmetric_atom_groups:Array(Array(Tuple(String,String)))?-instance-method">
       <div class="signature">
         
-        def <strong>symmetric_groups</strong> : <a href="../Array.html">Array</a>(<a href="../Array.html">Array</a>(Tuple(String, String)))?
+        def <strong>symmetric_atom_groups</strong> : <a href="../Array.html">Array</a>(<a href="../Array.html">Array</a>(Tuple(String, String)))?
 
-        <a class="method-permalink" href="#symmetric_groups%3AArray%28Array%28Tuple%28String%2CString%29%29%29%3F-instance-method">#</a>
+        <a class="method-permalink" href="#symmetric_atom_groups%3AArray%28Array%28Tuple%28String%2CString%29%29%29%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/typing.cr#L114" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ee7f5351da5067ca2be4a979bae70fd77d15f0d/src/chem/typing.cr#L116" target="_blank">View source</a>]
         
       </div>
     </div>

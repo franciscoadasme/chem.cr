@@ -591,6 +591,11 @@
       
         <ul>
   
+  <li class=" " data-id="chem.cr/Chem/Topology/Detector" data-name="chem::topology::detector">
+      <a href="../../Chem/Topology/Detector.html">Detector</a>
+      
+    </li>
+  
   <li class=" " data-id="chem.cr/Chem/Topology/MatchData" data-name="chem::topology::matchdata">
       <a href="../../Chem/Topology/MatchData.html">MatchData</a>
       
@@ -598,26 +603,6 @@
   
   <li class=" " data-id="chem.cr/Chem/Topology/Perception" data-name="chem::topology::perception">
       <a href="../../Chem/Topology/Perception.html">Perception</a>
-      
-    </li>
-  
-  <li class="parent " data-id="chem.cr/Chem/Topology/Templates" data-name="chem::topology::templates">
-      <a href="../../Chem/Topology/Templates.html">Templates</a>
-      
-        <ul>
-  
-  <li class=" " data-id="chem.cr/Chem/Topology/Templates/Detector" data-name="chem::topology::templates::detector">
-      <a href="../../Chem/Topology/Templates/Detector.html">Detector</a>
-      
-    </li>
-  
-  <li class=" " data-id="chem.cr/Chem/Topology/Templates/Error" data-name="chem::topology::templates::error">
-      <a href="../../Chem/Topology/Templates/Error.html">Error</a>
-      
-    </li>
-  
-</ul>
-
       
     </li>
   
@@ -805,18 +790,6 @@
 
 
 
-  <h2>
-    <a id="overview" class="anchor" href="#overview">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Overview
-  </h2>
-
-  <p><span class="flag orange">TODO</span>  move structure definition into another class so that it's
-yieled inside the <code><a href="../../Chem/ResidueType/Builder.html#structure%28%26%3Aself-%3E%29%3ANil-instance-method">#structure</a></code> block.</p>
-
 
 
 
@@ -840,8 +813,8 @@ yieled inside the <code><a href="../../Chem/ResidueType/Builder.html#structure%2
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/residue_type_builder.cr#L3" target="_blank">
-        chem/residue_type_builder.cr
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/5ee7f5351da5067ca2be4a979bae70fd77d15f0d/src/chem/typing.cr#L216" target="_blank">
+        chem/typing.cr
       </a>
     
     <br/>
@@ -849,82 +822,9 @@ yieled inside the <code><a href="../../Chem/ResidueType/Builder.html#structure%2
 
 
 
-  
-    <h2>
-      <a id="constant-summary" class="anchor" href="#constant-summary">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-      Constant Summary
-    </h2>
-  
-  <dl>
-    
-      <dt class="entry-const" id="ATOM_NAME_PATTERN">
-        <strong>ATOM_NAME_PATTERN</strong> = <code><span class="s">&quot;[A-Z]{1,3}[0-9]{0,2}&quot;</span></code>
-      </dt>
-      
-    
-      <dt class="entry-const" id="ATOM_SEP_REGEX">
-        <strong>ATOM_SEP_REGEX</strong> = <code><span class="s">/(?&lt;=[A-Z0-9\)\]])</span><span class="i">#{</span><span class="t">BOND_ORDER_PATTERN</span><span class="i">}</span><span class="s">(?=[A-Z0-9])/</span></code>
-      </dt>
-      
-    
-      <dt class="entry-const" id="ATOM_SPEC_REGEX">
-        <strong>ATOM_SPEC_REGEX</strong> = <code><span class="s">/(</span><span class="i">#{</span><span class="t">ATOM_NAME_PATTERN</span><span class="i">}</span><span class="s">)(\[([A-Z][a-z]?)\])?([\+-]\d?)?(\((\d)\))?/</span></code>
-      </dt>
-      
-    
-      <dt class="entry-const" id="BOND_ORDER_PATTERN">
-        <strong>BOND_ORDER_PATTERN</strong> = <code><span class="s">&quot;[-=#]&quot;</span></code>
-      </dt>
-      
-    
-      <dt class="entry-const" id="BOND_REGEX">
-        <strong>BOND_REGEX</strong> = <code><span class="s">/(</span><span class="i">#{</span><span class="t">ATOM_NAME_PATTERN</span><span class="i">}</span><span class="s">)(</span><span class="i">#{</span><span class="t">BOND_ORDER_PATTERN</span><span class="i">}</span><span class="s">)(</span><span class="i">#{</span><span class="t">ATOM_NAME_PATTERN</span><span class="i">}</span><span class="s">)/</span></code>
-      </dt>
-      
-    
-  </dl>
 
 
 
-  <h2>
-    <a id="constructors" class="anchor" href="#constructors">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Constructors
-  </h2>
-  <ul class="list-summary">
-    
-      <li class="entry-summary">
-        <a href="#new%28kind%3AResidue%3A%3AKind%3D%3Aother%29-class-method" class="signature"><strong>.new</strong>(kind : Residue::Kind = <span class="n">:other</span>)</a>
-        
-      </li>
-    
-  </ul>
-
-
-
-  <h2>
-    <a id="class-method-summary" class="anchor" href="#class-method-summary">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Class Method Summary
-  </h2>
-  <ul class="list-summary">
-    
-      <li class="entry-summary">
-        <a href="#build%28kind%3AResidue%3A%3AKind%3D%3Aother%2C%26%29%3AResidueType-class-method" class="signature"><strong>.build</strong>(kind : Residue::Kind = <span class="n">:other</span>, &) : ResidueType</a>
-        
-      </li>
-    
-  </ul>
 
 
 
@@ -939,16 +839,6 @@ yieled inside the <code><a href="../../Chem/ResidueType/Builder.html#structure%2
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#backbone%3ANil-instance-method" class="signature"><strong>#backbone</strong> : Nil</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#branch%28spec%3AString%29-instance-method" class="signature"><strong>#branch</strong>(spec : String)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
         <a href="#build%3AResidueType-instance-method" class="signature"><strong>#build</strong> : ResidueType</a>
         
       </li>
@@ -959,17 +849,12 @@ yieled inside the <code><a href="../../Chem/ResidueType/Builder.html#structure%2
       </li>
     
       <li class="entry-summary">
-        <a href="#cycle%28spec%3AString%29-instance-method" class="signature"><strong>#cycle</strong>(spec : String)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
         <a href="#description%28name%3AString%29-instance-method" class="signature"><strong>#description</strong>(name : String)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#link_adjacent_by%28spec%3AString%29-instance-method" class="signature"><strong>#link_adjacent_by</strong>(spec : String)</a>
+        <a href="#kind%28kind%3AResidue%3A%3AKind%29-instance-method" class="signature"><strong>#kind</strong>(kind : Residue::Kind)</a>
         
       </li>
     
@@ -989,27 +874,7 @@ yieled inside the <code><a href="../../Chem/ResidueType/Builder.html#structure%2
       </li>
     
       <li class="entry-summary">
-        <a href="#remove_atom%28atom_name%3AString%29-instance-method" class="signature"><strong>#remove_atom</strong>(atom_name : String)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
         <a href="#root%28atom_name%3AString%29-instance-method" class="signature"><strong>#root</strong>(atom_name : String)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#sidechain%28%26%29-instance-method" class="signature"><strong>#sidechain</strong>(&)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#sidechain%28spec%3AString%29-instance-method" class="signature"><strong>#sidechain</strong>(spec : String)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#stem%28spec%3AString%29-instance-method" class="signature"><strong>#stem</strong>(spec : String)</a>
         
       </li>
     
@@ -1019,7 +884,12 @@ yieled inside the <code><a href="../../Chem/ResidueType/Builder.html#structure%2
       </li>
     
       <li class="entry-summary">
-        <a href="#structure%28%26%3Aself-%3E%29%3ANil-instance-method" class="signature"><strong>#structure</strong>(& : <span class="k">self</span> -> ) : Nil</a>
+        <a href="#structure%28%26%29-instance-method" class="signature"><strong>#structure</strong>(&)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#symmetry%28%2Apairs%3ATuple%28String%2CString%29%29%3ANil-instance-method" class="signature"><strong>#symmetry</strong>(*pairs : Tuple(String, String)) : Nil</a>
         
       </li>
     
@@ -1054,59 +924,7 @@ yieled inside the <code><a href="../../Chem/ResidueType/Builder.html#structure%2
 </div>
 
 
-  <h2>
-    <a id="constructor-detail" class="anchor" href="#constructor-detail">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Constructor Detail
-  </h2>
-  
-    <div class="entry-detail" id="new(kind:Residue::Kind=:other)-class-method">
-      <div class="signature">
-        
-        def self.<strong>new</strong>(kind : <a href="../../Chem/Residue/Kind.html">Residue::Kind</a> = <span class="n">:other</span>)
 
-        <a class="method-permalink" href="#new%28kind%3AResidue%3A%3AKind%3D%3Aother%29-class-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/residue_type_builder.cr#L19" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-
-
-
-  <h2>
-    <a id="class-method-detail" class="anchor" href="#class-method-detail">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Class Method Detail
-  </h2>
-  
-    <div class="entry-detail" id="build(kind:Residue::Kind=:other,&amp;):ResidueType-class-method">
-      <div class="signature">
-        
-        def self.<strong>build</strong>(kind : <a href="../../Chem/Residue/Kind.html">Residue::Kind</a> = <span class="n">:other</span>, &) : <a href="../../Chem/ResidueType.html">ResidueType</a>
-
-        <a class="method-permalink" href="#build%28kind%3AResidue%3A%3AKind%3D%3Aother%2C%26%29%3AResidueType-class-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/residue_type_builder.cr#L22" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
 
 
 
@@ -1119,38 +937,6 @@ yieled inside the <code><a href="../../Chem/ResidueType/Builder.html#structure%2
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="backbone:Nil-instance-method">
-      <div class="signature">
-        
-        def <strong>backbone</strong> : Nil
-
-        <a class="method-permalink" href="#backbone%3ANil-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/residue_type_builder.cr#L28" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="branch(spec:String)-instance-method">
-      <div class="signature">
-        
-        def <strong>branch</strong>(spec : String)
-
-        <a class="method-permalink" href="#branch%28spec%3AString%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/residue_type_builder.cr#L43" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
     <div class="entry-detail" id="build:ResidueType-instance-method">
       <div class="signature">
         
@@ -1162,7 +948,7 @@ yieled inside the <code><a href="../../Chem/ResidueType/Builder.html#structure%2
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/residue_type_builder.cr#L48" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ee7f5351da5067ca2be4a979bae70fd77d15f0d/src/chem/typing.cr#L227" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1178,23 +964,7 @@ yieled inside the <code><a href="../../Chem/ResidueType/Builder.html#structure%2
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/residue_type_builder.cr#L120" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="cycle(spec:String)-instance-method">
-      <div class="signature">
-        
-        def <strong>cycle</strong>(spec : String)
-
-        <a class="method-permalink" href="#cycle%28spec%3AString%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/residue_type_builder.cr#L72" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ee7f5351da5067ca2be4a979bae70fd77d15f0d/src/chem/typing.cr#L237" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1210,23 +980,23 @@ yieled inside the <code><a href="../../Chem/ResidueType/Builder.html#structure%2
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/residue_type_builder.cr#L87" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ee7f5351da5067ca2be4a979bae70fd77d15f0d/src/chem/typing.cr#L241" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="link_adjacent_by(spec:String)-instance-method">
+    <div class="entry-detail" id="kind(kind:Residue::Kind)-instance-method">
       <div class="signature">
         
-        def <strong>link_adjacent_by</strong>(spec : String)
+        def <strong>kind</strong>(kind : <a href="../../Chem/Residue/Kind.html">Residue::Kind</a>)
 
-        <a class="method-permalink" href="#link_adjacent_by%28spec%3AString%29-instance-method">#</a>
+        <a class="method-permalink" href="#kind%28kind%3AResidue%3A%3AKind%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/residue_type_builder.cr#L78" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ee7f5351da5067ca2be4a979bae70fd77d15f0d/src/chem/typing.cr#L245" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1242,7 +1012,7 @@ yieled inside the <code><a href="../../Chem/ResidueType/Builder.html#structure%2
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/residue_type_builder.cr#L60" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ee7f5351da5067ca2be4a979bae70fd77d15f0d/src/chem/typing.cr#L249" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1258,7 +1028,7 @@ yieled inside the <code><a href="../../Chem/ResidueType/Builder.html#structure%2
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/residue_type_builder.cr#L64" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ee7f5351da5067ca2be4a979bae70fd77d15f0d/src/chem/typing.cr#L253" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1274,23 +1044,7 @@ yieled inside the <code><a href="../../Chem/ResidueType/Builder.html#structure%2
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/residue_type_builder.cr#L68" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="remove_atom(atom_name:String)-instance-method">
-      <div class="signature">
-        
-        def <strong>remove_atom</strong>(atom_name : String)
-
-        <a class="method-permalink" href="#remove_atom%28atom_name%3AString%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/residue_type_builder.cr#L91" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ee7f5351da5067ca2be4a979bae70fd77d15f0d/src/chem/typing.cr#L257" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1306,55 +1060,7 @@ yieled inside the <code><a href="../../Chem/ResidueType/Builder.html#structure%2
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/residue_type_builder.cr#L97" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="sidechain(&amp;)-instance-method">
-      <div class="signature">
-        
-        def <strong>sidechain</strong>(&)
-
-        <a class="method-permalink" href="#sidechain%28%26%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/residue_type_builder.cr#L109" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="sidechain(spec:String)-instance-method">
-      <div class="signature">
-        
-        def <strong>sidechain</strong>(spec : String)
-
-        <a class="method-permalink" href="#sidechain%28spec%3AString%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/residue_type_builder.cr#L114" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="stem(spec:String)-instance-method">
-      <div class="signature">
-        
-        def <strong>stem</strong>(spec : String)
-
-        <a class="method-permalink" href="#stem%28spec%3AString%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/residue_type_builder.cr#L82" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ee7f5351da5067ca2be4a979bae70fd77d15f0d/src/chem/typing.cr#L261" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1370,23 +1076,39 @@ yieled inside the <code><a href="../../Chem/ResidueType/Builder.html#structure%2
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/residue_type_builder.cr#L101" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ee7f5351da5067ca2be4a979bae70fd77d15f0d/src/chem/typing.cr#L265" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="structure(&amp;:self-&gt;):Nil-instance-method">
+    <div class="entry-detail" id="structure(&amp;)-instance-method">
       <div class="signature">
         
-        def <strong>structure</strong>(& : <span class="k">self</span> -> ) : Nil
+        def <strong>structure</strong>(&)
 
-        <a class="method-permalink" href="#structure%28%26%3Aself-%3E%29%3ANil-instance-method">#</a>
+        <a class="method-permalink" href="#structure%28%26%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8b07a7c807f8e634225416e3323379e2a92ed1f9/src/chem/residue_type_builder.cr#L105" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ee7f5351da5067ca2be4a979bae70fd77d15f0d/src/chem/typing.cr#L271" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="symmetry(*pairs:Tuple(String,String)):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>symmetry</strong>(*pairs : Tuple(String, String)) : Nil
+
+        <a class="method-permalink" href="#symmetry%28%2Apairs%3ATuple%28String%2CString%29%29%3ANil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/5ee7f5351da5067ca2be4a979bae70fd77d15f0d/src/chem/typing.cr#L277" target="_blank">View source</a>]
         
       </div>
     </div>
