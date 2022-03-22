@@ -360,6 +360,30 @@ describe Chem::ResidueType::Builder do
         end
       end
     end
+
+    it "builds a residue with symmetry" do
+      residue = Chem::ResidueType.build do
+        description "Donepezil"
+        name "E20"
+        structure do
+          cycle "C1=C2-C3=C4-C5=C6"
+          branch "C1-O25-C26"
+          branch "C2-O27-C28"
+          cycle "C4-C9-C8-C7-C5"
+          branch "C8-C10-C11"
+          cycle "C11-C12-C13-N14-C15-C16"
+          branch "N14-C17-C18"
+          cycle "C18=C19-C20=C21-C22=C23"
+        end
+        symmetry({"C12", "C16"}, {"C13", "C15"})
+        symmetry({"C19", "C23"}, {"C20", "C22"})
+      end
+
+      groups = residue.symmetric_groups.should_not be_nil
+      groups.size.should eq 2
+      groups[0].should eq [{"C12", "C16"}, {"C13", "C15"}]
+      groups[1].should eq [{"C19", "C23"}, {"C20", "C22"}]
+    end
   end
 end
 

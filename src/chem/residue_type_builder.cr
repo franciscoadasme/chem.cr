@@ -14,6 +14,7 @@ class Chem::ResidueType::Builder
   @description : String?
   @root : AtomType?
   @code : Char?
+  @symmetric_groups = [] of Array(Tuple(String, String))
 
   def initialize(@kind : Residue::Kind = :other)
   end
