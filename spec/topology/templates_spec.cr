@@ -255,8 +255,10 @@ describe Chem::ResidueType::Builder do
       residue_t = Chem::ResidueType.build(:other) do
         description "Fake"
         name "UNK"
-        structure "C1-C2-C3"
-        link_adjacent_by "C3=C1"
+        structure do
+          stem "C1-C2-C3"
+          link_adjacent_by "C3=C1"
+        end
       end
 
       residue_t.atom_names.should eq ["C1", "H1", "C2", "H2", "H3", "C3", "H4"]
@@ -454,7 +456,9 @@ describe Chem::Topology::Templates do
       Chem::Topology::Templates.residue do
         description "Anything"
         names "LXE", "EGR"
-        stem "C1"
+        structure do
+          stem "C1"
+        end
       end
       Chem::Topology::Templates["LXE"].should be Chem::Topology::Templates["EGR"]
     end
@@ -464,7 +468,9 @@ describe Chem::Topology::Templates do
         Chem::Topology::Templates.residue do
           description "Anything"
           name "LXE"
-          stem "C1"
+          structure do
+            stem "C1"
+          end
         end
       end
     end
