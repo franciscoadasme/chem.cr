@@ -1,4 +1,4 @@
-require "../../spec_helper"
+require "../spec_helper"
 
 macro it_detects(description, path, expected)
   it "detects {{description.id}}" do
@@ -6,7 +6,7 @@ macro it_detects(description, path, expected)
 
     %structure = load_file {{path}}
     %templates = %expected.keys.map { |name| Chem::ResidueType.fetch(name) }
-    %detector = Chem::Topology::Templates::Detector.new %structure, %templates
+    %detector = Chem::Topology::Detector.new %structure, %templates
 
     %res_idxs = {} of String => Array(Hash(Int32, String))
     %detector.each_match do |m|
@@ -17,7 +17,7 @@ macro it_detects(description, path, expected)
   end
 end
 
-describe Chem::Topology::Templates::Detector do
+describe Chem::Topology::Detector do
   it_detects "protein residues", "5e61--unwrapped.poscar", {
     "ALA" => [
       {12 => "CA", 13 => "CB", 14 => "C", 78 => "H", 79 => "HA", 80 => "HB2",
@@ -87,7 +87,7 @@ describe Chem::Topology::Templates::Detector do
   describe "#matches" do
     it "returns found matches" do
       structure = load_file "waters.xyz"
-      matches = Chem::Topology::Templates::Detector.new(structure).matches
+      matches = Chem::Topology::Detector.new(structure).matches
       matches.should eq [
         Chem::Topology::MatchData.new(Chem::ResidueType.fetch("HOH"), {
           "O"  => structure.atoms[0],
@@ -111,14 +111,14 @@ describe Chem::Topology::Templates::Detector do
   describe "#unmatched_atoms" do
     it "returns atoms not matched by any template" do
       structure = load_file "5e5v--unwrapped.poscar"
-      detector = Chem::Topology::Templates::Detector.new structure, [Chem::ResidueType.fetch("HOH")]
+      detector = Chem::Topology::Detector.new structure, [Chem::ResidueType.fetch("HOH")]
       detector.each_match { } # triggers search
       detector.unmatched_atoms.try(&.size).should eq 206
     end
 
     it "returns an empty array when all atoms are matched" do
       structure = load_file "waters.xyz"
-      detector = Chem::Topology::Templates::Detector.new structure
+      detector = Chem::Topology::Detector.new structure
       detector.each_match { } # triggers search
       detector.unmatched_atoms.empty?.should be_true
     end

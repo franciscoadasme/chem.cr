@@ -174,7 +174,7 @@ class Chem::Topology::Perception
   private def detect_residues(atoms : AtomView) : Array(Array(MatchData))
     fragments = [] of Array(MatchData)
     atoms.each_fragment do |frag|
-      detector = Templates::Detector.new frag
+      detector = Detector.new frag
       matches = [] of MatchData
       matches.concat detector.matches
       detector.unmatched_atoms.each_fragment do |frag|
