@@ -1,7 +1,7 @@
 require "../spec_helper"
 
 describe Chem::Topology::Templates do
-  Chem::Topology::Templates.residue do
+  Chem::Topology::Templates.register_type do
     description "Anything"
     name "LFG"
     structure do
@@ -19,7 +19,7 @@ describe Chem::Topology::Templates do
     end
 
     it "fails when no matching residue template exists" do
-      expect_raises Chem::Topology::Templates::Error, "Unknown residue template" do
+      expect_raises Chem::Error, "Unknown residue type ASD" do
         Chem::Topology::Templates["ASD"]
       end
     end
@@ -35,9 +35,9 @@ describe Chem::Topology::Templates do
     end
   end
 
-  describe "#residue" do
+  describe "#register_type" do
     it "creates a residue template with multiple names" do
-      Chem::Topology::Templates.residue do
+      Chem::Topology::Templates.register_type do
         description "Anything"
         names "LXE", "EGR"
         structure do
@@ -48,8 +48,8 @@ describe Chem::Topology::Templates do
     end
 
     it "fails when the residue name already exists" do
-      expect_raises Chem::Topology::Templates::Error, "Duplicate residue template" do
-        Chem::Topology::Templates.residue do
+      expect_raises Chem::Error, "LXE residue type already exists" do
+        Chem::Topology::Templates.register_type do
           description "Anything"
           name "LXE"
           structure do

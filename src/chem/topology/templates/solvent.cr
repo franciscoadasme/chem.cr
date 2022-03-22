@@ -1,5 +1,5 @@
 module Chem::Topology::Templates
-  solvent do
+  register_type(:solvent) do
     description "Water"
     names "HOH", "WAT"
     structure do

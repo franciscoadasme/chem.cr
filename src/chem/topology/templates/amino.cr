@@ -1,5 +1,5 @@
 module Chem::Topology::Templates
-  aminoacid do
+  register_type(:protein) do
     description "Alanine"
     name "ALA"
     code 'A'
@@ -9,7 +9,7 @@ module Chem::Topology::Templates
     end
   end
 
-  aminoacid do
+  register_type(:protein) do
     description "Arginine"
     name "ARG"
     code 'R'
@@ -22,7 +22,7 @@ module Chem::Topology::Templates
     end
   end
 
-  aminoacid do
+  register_type(:protein) do
     description "Aspartate"
     name "ASH"
     code 'D'
@@ -35,7 +35,7 @@ module Chem::Topology::Templates
     end
   end
 
-  aminoacid do
+  register_type(:protein) do
     description "Asparagine"
     name "ASN"
     code 'N'
@@ -48,7 +48,7 @@ module Chem::Topology::Templates
     end
   end
 
-  aminoacid do
+  register_type(:protein) do
     description "Aspartate"
     name "ASP"
     code 'D'
@@ -61,7 +61,7 @@ module Chem::Topology::Templates
     end
   end
 
-  aminoacid do
+  register_type(:protein) do
     description "Cysteine"
     name "CYS"
     code 'C'
@@ -71,7 +71,7 @@ module Chem::Topology::Templates
     end
   end
 
-  aminoacid do
+  register_type(:protein) do
     description "Cysteine"
     name "CYX"
     code 'C'
@@ -81,7 +81,7 @@ module Chem::Topology::Templates
     end
   end
 
-  aminoacid do
+  register_type(:protein) do
     description "Glutamate"
     name "GLH"
     code 'E'
@@ -94,7 +94,7 @@ module Chem::Topology::Templates
     end
   end
 
-  aminoacid do
+  register_type(:protein) do
     description "Glutamine"
     name "GLN"
     code 'Q'
@@ -107,7 +107,7 @@ module Chem::Topology::Templates
     end
   end
 
-  aminoacid do
+  register_type(:protein) do
     description "Glutamate"
     name "GLU"
     code 'E'
@@ -120,7 +120,7 @@ module Chem::Topology::Templates
     end
   end
 
-  aminoacid do
+  register_type(:protein) do
     description "Glycine"
     name "GLY"
     code 'G'
@@ -130,7 +130,7 @@ module Chem::Topology::Templates
     end
   end
 
-  aminoacid do
+  register_type(:protein) do
     description "Histidine"
     name "HIS"
     code 'H'
@@ -143,7 +143,7 @@ module Chem::Topology::Templates
     end
   end
 
-  aminoacid do
+  register_type(:protein) do
     description "Histidine"
     name "HIE"
     code 'H'
@@ -156,7 +156,7 @@ module Chem::Topology::Templates
     end
   end
 
-  aminoacid do
+  register_type(:protein) do
     description "Histidine"
     name "HIP"
     code 'H'
@@ -169,7 +169,7 @@ module Chem::Topology::Templates
     end
   end
 
-  aminoacid do
+  register_type(:protein) do
     description "Isoleucine"
     name "ILE"
     code 'I'
@@ -182,7 +182,7 @@ module Chem::Topology::Templates
     end
   end
 
-  aminoacid do
+  register_type(:protein) do
     description "Leucine"
     name "LEU"
     code 'L'
@@ -193,9 +193,10 @@ module Chem::Topology::Templates
         branch "CG-CD2"
       end
     end
+    symmetry({"CD1", "CD2"})
   end
 
-  aminoacid do
+  register_type(:protein) do
     description "Lysine"
     name "LYS"
     code 'K'
@@ -205,7 +206,7 @@ module Chem::Topology::Templates
     end
   end
 
-  aminoacid do
+  register_type(:protein) do
     description "Methionine "
     name "MET"
     code 'M'
@@ -215,7 +216,7 @@ module Chem::Topology::Templates
     end
   end
 
-  aminoacid do
+  register_type(:protein) do
     description "Phenylalanine"
     name "PHE"
     code 'F'
@@ -226,9 +227,10 @@ module Chem::Topology::Templates
         cycle "CG=CD1-CE1=CZ-CE2=CD2"
       end
     end
+    symmetry({"CD1", "CD2"}, {"CE1", "CE2"})
   end
 
-  aminoacid do
+  register_type(:protein) do
     description "Proline"
     name "PRO"
     code 'P'
@@ -242,7 +244,7 @@ module Chem::Topology::Templates
     end
   end
 
-  aminoacid do
+  register_type(:protein) do
     description "Serine"
     name "SER"
     code 'S'
@@ -252,7 +254,7 @@ module Chem::Topology::Templates
     end
   end
 
-  aminoacid do
+  register_type(:protein) do
     description "Threonine"
     name "THR"
     code 'T'
@@ -265,7 +267,7 @@ module Chem::Topology::Templates
     end
   end
 
-  aminoacid do
+  register_type(:protein) do
     description "Tryptophan"
     name "TRP"
     code 'W'
@@ -279,7 +281,7 @@ module Chem::Topology::Templates
     end
   end
 
-  aminoacid do
+  register_type(:protein) do
     description "Tyrosine"
     name "TYR"
     code 'Y'
@@ -291,9 +293,10 @@ module Chem::Topology::Templates
         branch "CZ-OH"
       end
     end
+    symmetry({"CD1", "CD2"}, {"CE1", "CE2"})
   end
 
-  aminoacid do
+  register_type(:protein) do
     description "Valine"
     name "VAL"
     code 'V'
@@ -304,5 +307,6 @@ module Chem::Topology::Templates
         branch "CB-CG2"
       end
     end
+    symmetry({"CG1", "CG2"})
   end
 end
