@@ -86,6 +86,11 @@
       
     </li>
   
+  <li class=" " data-id="chem.cr/Chem/AtomType" data-name="chem::atomtype">
+      <a href="../Chem/AtomType.html">AtomType</a>
+      
+    </li>
+  
   <li class=" " data-id="chem.cr/Chem/AtomView" data-name="chem::atomview">
       <a href="../Chem/AtomView.html">AtomView</a>
       
@@ -113,6 +118,11 @@
   
   <li class=" " data-id="chem.cr/Chem/BondArray" data-name="chem::bondarray">
       <a href="../Chem/BondArray.html">BondArray</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/BondType" data-name="chem::bondtype">
+      <a href="../Chem/BondType.html">BondType</a>
       
     </li>
   
@@ -426,6 +436,21 @@
       
     </li>
   
+  <li class="parent " data-id="chem.cr/Chem/ResidueType" data-name="chem::residuetype">
+      <a href="../Chem/ResidueType.html">ResidueType</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueType/Builder" data-name="chem::residuetype::builder">
+      <a href="../Chem/ResidueType/Builder.html">Builder</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
   <li class=" " data-id="chem.cr/Chem/ResidueView" data-name="chem::residueview">
       <a href="../Chem/ResidueView.html">ResidueView</a>
       
@@ -566,16 +591,6 @@
       
         <ul>
   
-  <li class=" " data-id="chem.cr/Chem/Topology/AtomType" data-name="chem::topology::atomtype">
-      <a href="../Chem/Topology/AtomType.html">AtomType</a>
-      
-    </li>
-  
-  <li class=" " data-id="chem.cr/Chem/Topology/BondType" data-name="chem::topology::bondtype">
-      <a href="../Chem/Topology/BondType.html">BondType</a>
-      
-    </li>
-  
   <li class=" " data-id="chem.cr/Chem/Topology/MatchData" data-name="chem::topology::matchdata">
       <a href="../Chem/Topology/MatchData.html">MatchData</a>
       
@@ -586,30 +601,10 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Topology/ResidueType" data-name="chem::topology::residuetype">
-      <a href="../Chem/Topology/ResidueType.html">ResidueType</a>
-      
-    </li>
-  
   <li class="parent " data-id="chem.cr/Chem/Topology/Templates" data-name="chem::topology::templates">
       <a href="../Chem/Topology/Templates.html">Templates</a>
       
         <ul>
-  
-  <li class="parent " data-id="chem.cr/Chem/Topology/Templates/Builder" data-name="chem::topology::templates::builder">
-      <a href="../Chem/Topology/Templates/Builder.html">Builder</a>
-      
-        <ul>
-  
-  <li class=" " data-id="chem.cr/Chem/Topology/Templates/Builder/ParseException" data-name="chem::topology::templates::builder::parseexception">
-      <a href="../Chem/Topology/Templates/Builder/ParseException.html">ParseException</a>
-      
-    </li>
-  
-</ul>
-
-      
-    </li>
   
   <li class=" " data-id="chem.cr/Chem/Topology/Templates/Detector" data-name="chem::topology::templates::detector">
       <a href="../Chem/Topology/Templates/Detector.html">Detector</a>
@@ -849,7 +844,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L2" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L2" target="_blank">
         chem/core/residue.cr
       </a>
     
@@ -911,7 +906,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#%5B%5D%28atom_t%3ATopology%3A%3AAtomType%29%3AAtom-instance-method" class="signature"><strong>#[]</strong>(atom_t : Topology::AtomType) : Atom</a>
+        <a href="#%5B%5D%28atom_t%3AAtomType%29%3AAtom-instance-method" class="signature"><strong>#[]</strong>(atom_t : AtomType) : Atom</a>
         
           <div class="summary"><p>Returns the atom that matches <em>atom_t</em>.</p></div>
         
@@ -928,7 +923,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#%5B%5D%3F%28atom_t%3ATopology%3A%3AAtomType%29%3AAtom%3F-instance-method" class="signature"><strong>#[]?</strong>(atom_t : Topology::AtomType) : Atom?</a>
+        <a href="#%5B%5D%3F%28atom_t%3AAtomType%29%3AAtom%3F-instance-method" class="signature"><strong>#[]?</strong>(atom_t : AtomType) : Atom?</a>
         
           <div class="summary"><p>Returns the atom that matches <em>atom_t</em>.</p></div>
         
@@ -945,7 +940,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#bonded%3F%28other%3Aself%2Cbond_t%3ATopology%3A%3ABondType%2Cstrict%3ABool%3Dtrue%29%3ABool-instance-method" class="signature"><strong>#bonded?</strong>(other : <span class="k">self</span>, bond_t : Topology::BondType, strict : Bool = <span class="n">true</span>) : Bool</a>
+        <a href="#bonded%3F%28other%3Aself%2Cbond_t%3ABondType%2Cstrict%3ABool%3Dtrue%29%3ABool-instance-method" class="signature"><strong>#bonded?</strong>(other : <span class="k">self</span>, bond_t : BondType, strict : Bool = <span class="n">true</span>) : Bool</a>
         
           <div class="summary"><p>Returns true if <code>self</code> is bonded to <em>other</em> through <em>bond_t</em>, otherwise false.</p></div>
         
@@ -959,21 +954,21 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#bonded%3F%28other%3Aself%2Clhs%3ATopology%3A%3AAtomType%7CString%2Crhs%3AElement%2Corder%3AInt%3F%3Dnil%29%3ABool-instance-method" class="signature"><strong>#bonded?</strong>(other : <span class="k">self</span>, lhs : Topology::AtomType | String, rhs : Element, order : Int? = <span class="n">nil</span>) : Bool</a>
+        <a href="#bonded%3F%28other%3Aself%2Clhs%3AAtomType%7CString%2Crhs%3AElement%2Corder%3AInt%3F%3Dnil%29%3ABool-instance-method" class="signature"><strong>#bonded?</strong>(other : <span class="k">self</span>, lhs : AtomType | String, rhs : Element, order : Int? = <span class="n">nil</span>) : Bool</a>
         
           <div class="summary"><p>Returns true if <code>self</code> is bonded to <em>other</em> through a bond between <em>lhs</em> and <em>rhs</em>, otherwise false.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#bonded%3F%28other%3Aself%2Clhs%3AElement%2Crhs%3ATopology%3A%3AAtomType%7CString%2Corder%3AInt%3F%3Dnil%29%3ABool-instance-method" class="signature"><strong>#bonded?</strong>(other : <span class="k">self</span>, lhs : Element, rhs : Topology::AtomType | String, order : Int? = <span class="n">nil</span>) : Bool</a>
+        <a href="#bonded%3F%28other%3Aself%2Clhs%3AElement%2Crhs%3AAtomType%7CString%2Corder%3AInt%3F%3Dnil%29%3ABool-instance-method" class="signature"><strong>#bonded?</strong>(other : <span class="k">self</span>, lhs : Element, rhs : AtomType | String, order : Int? = <span class="n">nil</span>) : Bool</a>
         
           <div class="summary"><p>Returns true if <code>self</code> is bonded to <em>other</em> through a bond between <em>lhs</em> and <em>rhs</em>, otherwise false.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#bonded%3F%28other%3Aself%2Clhs%3ATopology%3A%3AAtomType%7CString%2Crhs%3ATopology%3A%3AAtomType%7CString%2Corder%3AInt%3F%3Dnil%29%3ABool-instance-method" class="signature"><strong>#bonded?</strong>(other : <span class="k">self</span>, lhs : Topology::AtomType | String, rhs : Topology::AtomType | String, order : Int? = <span class="n">nil</span>) : Bool</a>
+        <a href="#bonded%3F%28other%3Aself%2Clhs%3AAtomType%7CString%2Crhs%3AAtomType%7CString%2Corder%3AInt%3F%3Dnil%29%3ABool-instance-method" class="signature"><strong>#bonded?</strong>(other : <span class="k">self</span>, lhs : AtomType | String, rhs : AtomType | String, order : Int? = <span class="n">nil</span>) : Bool</a>
         
           <div class="summary"><p>Returns true if <code>self</code> is bonded to <em>other</em> through a bond between <em>lhs</em> and <em>rhs</em>, otherwise false.</p></div>
         
@@ -987,7 +982,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#bonded_residues%28bond_t%3ATopology%3A%3ABondType%2Cforward_only%3ABool%3Dtrue%2Cstrict%3ABool%3Dtrue%29%3AArray%28Residue%29-instance-method" class="signature"><strong>#bonded_residues</strong>(bond_t : Topology::BondType, forward_only : Bool = <span class="n">true</span>, strict : Bool = <span class="n">true</span>) : Array(Residue)</a>
+        <a href="#bonded_residues%28bond_t%3ABondType%2Cforward_only%3ABool%3Dtrue%2Cstrict%3ABool%3Dtrue%29%3AArray%28Residue%29-instance-method" class="signature"><strong>#bonded_residues</strong>(bond_t : BondType, forward_only : Bool = <span class="n">true</span>, strict : Bool = <span class="n">true</span>) : Array(Residue)</a>
         
           <div class="summary"><p>Returns residues bonded through <em>bond_t</em>.</p></div>
         
@@ -1067,7 +1062,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#each_bonded_residue%28bond_t%3ATopology%3A%3ABondType%2Cforward_only%3ABool%3Dtrue%2Cstrict%3ABool%3Dtrue%2C%26%3AResidue-%3E%29%3ANil-instance-method" class="signature"><strong>#each_bonded_residue</strong>(bond_t : Topology::BondType, forward_only : Bool = <span class="n">true</span>, strict : Bool = <span class="n">true</span>, & : Residue -> ) : Nil</a>
+        <a href="#each_bonded_residue%28bond_t%3ABondType%2Cforward_only%3ABool%3Dtrue%2Cstrict%3ABool%3Dtrue%2C%26%3AResidue-%3E%29%3ANil-instance-method" class="signature"><strong>#each_bonded_residue</strong>(bond_t : BondType, forward_only : Bool = <span class="n">true</span>, strict : Bool = <span class="n">true</span>, & : Residue -> ) : Nil</a>
         
           <div class="summary"><p>Yields each residue bonded through <em>bond_t</em>.</p></div>
         
@@ -1278,7 +1273,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#type%3ATopology%3A%3AResidueType%3F-instance-method" class="signature"><strong>#type</strong> : Topology::ResidueType?</a>
+        <a href="#type%3AResidueType%3F-instance-method" class="signature"><strong>#type</strong> : ResidueType?</a>
         
           <div class="summary"><p>Returns associated residue type if registered, otherwise nil.</p></div>
         
@@ -1441,7 +1436,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L32" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L32" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1457,7 +1452,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L28" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L28" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1510,7 +1505,7 @@ residues[<span class="n">5</span>] <span class="o">&lt;=&gt;</span> residues[<sp
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L63" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L63" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1535,17 +1530,17 @@ insertion code.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L83" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L83" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="[](atom_t:Topology::AtomType):Atom-instance-method">
+    <div class="entry-detail" id="[](atom_t:AtomType):Atom-instance-method">
       <div class="signature">
         
-        def <strong>[]</strong>(atom_t : <a href="../Chem/Topology/AtomType.html">Topology::AtomType</a>) : <a href="../Chem/Atom.html">Atom</a>
+        def <strong>[]</strong>(atom_t : <a href="../Chem/AtomType.html">AtomType</a>) : <a href="../Chem/Atom.html">Atom</a>
 
-        <a class="method-permalink" href="#%5B%5D%28atom_t%3ATopology%3A%3AAtomType%29%3AAtom-instance-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%28atom_t%3AAtomType%29%3AAtom-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1554,15 +1549,15 @@ insertion code.</p>
 <p>Atom must match both atom type's name and element, otherwise it
 raises <code>IndexError</code>.</p>
 <pre><code class="language-crystal">residue <span class="o">=</span> <span class="t">Structure</span>.read(<span class="s">&quot;peptide.pdb&quot;</span>).residues[<span class="n">0</span>]
-residue[<span class="t">Topology</span><span class="t">::</span><span class="t">AtomType</span>(<span class="s">&quot;CA&quot;</span>)]               <span class="c"># =&gt; &lt;Atom A:TRP1:CA(2)</span>
-residue[<span class="t">Topology</span><span class="t">::</span><span class="t">AtomType</span>(<span class="s">&quot;CA&quot;</span>, element: <span class="s">&quot;N&quot;</span>)] <span class="c"># raises IndexError</span>
-residue[<span class="t">Topology</span><span class="t">::</span><span class="t">AtomType</span>(<span class="s">&quot;CX&quot;</span>)]               <span class="c"># raises IndexError</span></code></pre>
+residue[<span class="t">AtomType</span>(<span class="s">&quot;CA&quot;</span>)]               <span class="c"># =&gt; &lt;Atom A:TRP1:CA(2)</span>
+residue[<span class="t">AtomType</span>(<span class="s">&quot;CA&quot;</span>, element: <span class="s">&quot;N&quot;</span>)] <span class="c"># raises IndexError</span>
+residue[<span class="t">AtomType</span>(<span class="s">&quot;CX&quot;</span>)]               <span class="c"># raises IndexError</span></code></pre>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L98" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L98" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1578,7 +1573,7 @@ residue[<span class="t">Topology</span><span class="t">::</span><span class="t">
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L25" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L25" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1594,17 +1589,17 @@ residue[<span class="t">Topology</span><span class="t">::</span><span class="t">
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L25" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L25" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="[]?(atom_t:Topology::AtomType):Atom?-instance-method">
+    <div class="entry-detail" id="[]?(atom_t:AtomType):Atom?-instance-method">
       <div class="signature">
         
-        def <strong>[]?</strong>(atom_t : <a href="../Chem/Topology/AtomType.html">Topology::AtomType</a>) : <a href="../Chem/Atom.html">Atom</a>?
+        def <strong>[]?</strong>(atom_t : <a href="../Chem/AtomType.html">AtomType</a>) : <a href="../Chem/Atom.html">Atom</a>?
 
-        <a class="method-permalink" href="#%5B%5D%3F%28atom_t%3ATopology%3A%3AAtomType%29%3AAtom%3F-instance-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%3F%28atom_t%3AAtomType%29%3AAtom%3F-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1613,15 +1608,15 @@ residue[<span class="t">Topology</span><span class="t">::</span><span class="t">
 <p>Atom must match both atom type's name and element, otherwise it
 returns <code>nil</code>.</p>
 <pre><code class="language-crystal">residue <span class="o">=</span> <span class="t">Structure</span>.read(<span class="s">&quot;peptide.pdb&quot;</span>).residues[<span class="n">0</span>]
-residue[<span class="t">Topology</span><span class="t">::</span><span class="t">AtomType</span>(<span class="s">&quot;CA&quot;</span>)]               <span class="c"># =&gt; &lt;Atom A:TRP1:CA(2)</span>
-residue[<span class="t">Topology</span><span class="t">::</span><span class="t">AtomType</span>(<span class="s">&quot;CA&quot;</span>, element: <span class="s">&quot;N&quot;</span>)] <span class="c"># =&gt; nil</span>
-residue[<span class="t">Topology</span><span class="t">::</span><span class="t">AtomType</span>(<span class="s">&quot;CX&quot;</span>)]               <span class="c"># =&gt; nil</span></code></pre>
+residue[<span class="t">AtomType</span>(<span class="s">&quot;CA&quot;</span>)]               <span class="c"># =&gt; &lt;Atom A:TRP1:CA(2)</span>
+residue[<span class="t">AtomType</span>(<span class="s">&quot;CA&quot;</span>, element: <span class="s">&quot;N&quot;</span>)] <span class="c"># =&gt; nil</span>
+residue[<span class="t">AtomType</span>(<span class="s">&quot;CX&quot;</span>)]               <span class="c"># =&gt; nil</span></code></pre>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L113" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L113" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1637,7 +1632,7 @@ residue[<span class="t">Topology</span><span class="t">::</span><span class="t">
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L25" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L25" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1653,17 +1648,17 @@ residue[<span class="t">Topology</span><span class="t">::</span><span class="t">
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L25" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L25" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="bonded?(other:self,bond_t:Topology::BondType,strict:Bool=true):Bool-instance-method">
+    <div class="entry-detail" id="bonded?(other:self,bond_t:BondType,strict:Bool=true):Bool-instance-method">
       <div class="signature">
         
-        def <strong>bonded?</strong>(other : <span class="k">self</span>, bond_t : <a href="../Chem/Topology/BondType.html">Topology::BondType</a>, strict : Bool = <span class="n">true</span>) : Bool
+        def <strong>bonded?</strong>(other : <span class="k">self</span>, bond_t : <a href="../Chem/BondType.html">BondType</a>, strict : Bool = <span class="n">true</span>) : Bool
 
-        <a class="method-permalink" href="#bonded%3F%28other%3Aself%2Cbond_t%3ATopology%3A%3ABondType%2Cstrict%3ABool%3Dtrue%29%3ABool-instance-method">#</a>
+        <a class="method-permalink" href="#bonded%3F%28other%3Aself%2Cbond_t%3ABondType%2Cstrict%3ABool%3Dtrue%29%3ABool-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1672,7 +1667,7 @@ residue[<span class="t">Topology</span><span class="t">::</span><span class="t">
 otherwise false.</p>
 <pre><code class="language-crystal"><span class="c"># Covalent ligand (JG7) is bonded to CYS sidechain</span>
 residues <span class="o">=</span> <span class="t">Structure</span>.read(<span class="s">&quot;ala-cys-thr-jg7.pdb&quot;</span>).residues
-bond_t <span class="o">=</span> <span class="t">Topology</span><span class="t">::</span><span class="t">BondType</span>.<span class="k">new</span> <span class="s">&quot;C&quot;</span>, <span class="s">&quot;N&quot;</span>
+bond_t <span class="o">=</span> <span class="t">BondType</span>.<span class="k">new</span> <span class="s">&quot;C&quot;</span>, <span class="s">&quot;N&quot;</span>
 residues[<span class="n">0</span>].bonded?(residues[<span class="n">1</span>], bond_t) <span class="c"># =&gt; true</span>
 residues[<span class="n">1</span>].bonded?(residues[<span class="n">2</span>], bond_t) <span class="c"># =&gt; true</span>
 residues[<span class="n">2</span>].bonded?(residues[<span class="n">3</span>], bond_t) <span class="c"># =&gt; false</span>
@@ -1683,11 +1678,11 @@ respectively:</p>
 <pre><code class="language-crystal">residues[<span class="n">0</span>].bonded?(residues[<span class="n">1</span>], bond_t) <span class="c"># =&gt; true</span>
 residues[<span class="n">1</span>].bonded?(residues[<span class="n">0</span>], bond_t) <span class="c"># =&gt; false</span></code></pre>
 <p>Note that bond order is taken into account, e.g.:</p>
-<pre><code class="language-crystal">bond_t <span class="o">=</span> <span class="t">Topology</span><span class="t">::</span><span class="t">BondType</span>.<span class="k">new</span> <span class="s">&quot;C&quot;</span>, <span class="s">&quot;N&quot;</span>, order: <span class="n">2</span>
+<pre><code class="language-crystal">bond_t <span class="o">=</span> <span class="t">BondType</span>.<span class="k">new</span> <span class="s">&quot;C&quot;</span>, <span class="s">&quot;N&quot;</span>, order: <span class="n">2</span>
 residues[<span class="n">0</span>].bonded?(residues[<span class="n">1</span>], bond_t) <span class="c"># =&gt; false</span></code></pre>
 <p>If <em>strict</em> is false, it uses elements only instead to look for
 bonded atoms, and bond order is ignored.</p>
-<pre><code class="language-crystal">bond_t <span class="o">=</span> <span class="t">Topology</span><span class="t">::</span><span class="t">BondType</span>.<span class="k">new</span> <span class="s">&quot;C&quot;</span>, <span class="s">&quot;NX&quot;</span>, order: <span class="n">2</span>
+<pre><code class="language-crystal">bond_t <span class="o">=</span> <span class="t">BondType</span>.<span class="k">new</span> <span class="s">&quot;C&quot;</span>, <span class="s">&quot;NX&quot;</span>, order: <span class="n">2</span>
 residues[<span class="n">0</span>].bonded?(residues[<span class="n">1</span>], bond_t)                <span class="c"># =&gt; false</span>
 residues[<span class="n">0</span>].bonded?(residues[<span class="n">1</span>], bond_t, strict: <span class="n">false</span>) <span class="c"># =&gt; true</span></code></pre>
         </div>
@@ -1695,7 +1690,7 @@ residues[<span class="n">0</span>].bonded?(residues[<span class="n">1</span>], b
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L174" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L174" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1715,7 +1710,7 @@ residues[<span class="n">0</span>].bonded?(residues[<span class="n">1</span>], b
 <pre><code class="language-crystal"><span class="c"># Covalent ligand (JG7) is bonded to CYS sidechain</span>
 residues <span class="o">=</span> <span class="t">Structure</span>.read(<span class="s">&quot;ala-cys-thr-jg7.pdb&quot;</span>).residues</code></pre>
 <p>One can use atom names, atom types or elements:</p>
-<pre><code class="language-crystal">a, b <span class="o">=</span> <span class="t">Topology</span><span class="t">::</span><span class="t">AtomType</span>.<span class="k">new</span>(<span class="s">&quot;C&quot;</span>), <span class="t">Topology</span><span class="t">::</span><span class="t">AtomType</span>.<span class="k">new</span>(<span class="s">&quot;N&quot;</span>)
+<pre><code class="language-crystal">a, b <span class="o">=</span> <span class="t">AtomType</span>.<span class="k">new</span>(<span class="s">&quot;C&quot;</span>), <span class="t">AtomType</span>.<span class="k">new</span>(<span class="s">&quot;N&quot;</span>)
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <span class="s">&quot;C&quot;</span>, <span class="s">&quot;N&quot;</span>            <span class="c"># =&gt; true</span>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], a, b                <span class="c"># =&gt; true</span>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], a, <span class="t">PeriodicTable</span><span class="t">::</span><span class="t">N</span> <span class="c"># =&gt; true</span>
@@ -1729,7 +1724,7 @@ respectively, i.e., the arguments are not interchangeable:</p>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <span class="s">&quot;N&quot;</span>, <span class="s">&quot;C&quot;</span> <span class="c"># =&gt; false</span></code></pre>
 <p>When atom names or atom types are specified, this method returns
 false if missing:</p>
-<pre><code class="language-crystal">missing_atom_t <span class="o">=</span> <span class="t">Topology</span><span class="t">::</span><span class="t">AtomType</span>.<span class="k">new</span>(<span class="s">&quot;OZ5&quot;</span>)
+<pre><code class="language-crystal">missing_atom_t <span class="o">=</span> <span class="t">AtomType</span>.<span class="k">new</span>(<span class="s">&quot;OZ5&quot;</span>)
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <span class="s">&quot;CX1&quot;</span>, <span class="s">&quot;N&quot;</span>             <span class="c"># =&gt; false</span>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], missing_atom_t, <span class="s">&quot;N&quot;</span>    <span class="c"># =&gt; false</span>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <span class="s">&quot;C&quot;</span>, <span class="t">PeriodicTable</span><span class="t">::</span><span class="t">Mg</span> <span class="c"># =&gt; false</span></code></pre>
@@ -1746,17 +1741,17 @@ residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L272" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L272" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="bonded?(other:self,lhs:Topology::AtomType|String,rhs:Element,order:Int?=nil):Bool-instance-method">
+    <div class="entry-detail" id="bonded?(other:self,lhs:AtomType|String,rhs:Element,order:Int?=nil):Bool-instance-method">
       <div class="signature">
         
-        def <strong>bonded?</strong>(other : <span class="k">self</span>, lhs : <a href="../Chem/Topology/AtomType.html">Topology::AtomType</a> | String, rhs : <a href="../Chem/Element.html">Element</a>, order : Int? = <span class="n">nil</span>) : Bool
+        def <strong>bonded?</strong>(other : <span class="k">self</span>, lhs : <a href="../Chem/AtomType.html">AtomType</a> | String, rhs : <a href="../Chem/Element.html">Element</a>, order : Int? = <span class="n">nil</span>) : Bool
 
-        <a class="method-permalink" href="#bonded%3F%28other%3Aself%2Clhs%3ATopology%3A%3AAtomType%7CString%2Crhs%3AElement%2Corder%3AInt%3F%3Dnil%29%3ABool-instance-method">#</a>
+        <a class="method-permalink" href="#bonded%3F%28other%3Aself%2Clhs%3AAtomType%7CString%2Crhs%3AElement%2Corder%3AInt%3F%3Dnil%29%3ABool-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1766,7 +1761,7 @@ residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <
 <pre><code class="language-crystal"><span class="c"># Covalent ligand (JG7) is bonded to CYS sidechain</span>
 residues <span class="o">=</span> <span class="t">Structure</span>.read(<span class="s">&quot;ala-cys-thr-jg7.pdb&quot;</span>).residues</code></pre>
 <p>One can use atom names, atom types or elements:</p>
-<pre><code class="language-crystal">a, b <span class="o">=</span> <span class="t">Topology</span><span class="t">::</span><span class="t">AtomType</span>.<span class="k">new</span>(<span class="s">&quot;C&quot;</span>), <span class="t">Topology</span><span class="t">::</span><span class="t">AtomType</span>.<span class="k">new</span>(<span class="s">&quot;N&quot;</span>)
+<pre><code class="language-crystal">a, b <span class="o">=</span> <span class="t">AtomType</span>.<span class="k">new</span>(<span class="s">&quot;C&quot;</span>), <span class="t">AtomType</span>.<span class="k">new</span>(<span class="s">&quot;N&quot;</span>)
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <span class="s">&quot;C&quot;</span>, <span class="s">&quot;N&quot;</span>            <span class="c"># =&gt; true</span>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], a, b                <span class="c"># =&gt; true</span>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], a, <span class="t">PeriodicTable</span><span class="t">::</span><span class="t">N</span> <span class="c"># =&gt; true</span>
@@ -1780,7 +1775,7 @@ respectively, i.e., the arguments are not interchangeable:</p>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <span class="s">&quot;N&quot;</span>, <span class="s">&quot;C&quot;</span> <span class="c"># =&gt; false</span></code></pre>
 <p>When atom names or atom types are specified, this method returns
 false if missing:</p>
-<pre><code class="language-crystal">missing_atom_t <span class="o">=</span> <span class="t">Topology</span><span class="t">::</span><span class="t">AtomType</span>.<span class="k">new</span>(<span class="s">&quot;OZ5&quot;</span>)
+<pre><code class="language-crystal">missing_atom_t <span class="o">=</span> <span class="t">AtomType</span>.<span class="k">new</span>(<span class="s">&quot;OZ5&quot;</span>)
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <span class="s">&quot;CX1&quot;</span>, <span class="s">&quot;N&quot;</span>             <span class="c"># =&gt; false</span>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], missing_atom_t, <span class="s">&quot;N&quot;</span>    <span class="c"># =&gt; false</span>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <span class="s">&quot;C&quot;</span>, <span class="t">PeriodicTable</span><span class="t">::</span><span class="t">Mg</span> <span class="c"># =&gt; false</span></code></pre>
@@ -1797,17 +1792,17 @@ residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L244" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L244" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="bonded?(other:self,lhs:Element,rhs:Topology::AtomType|String,order:Int?=nil):Bool-instance-method">
+    <div class="entry-detail" id="bonded?(other:self,lhs:Element,rhs:AtomType|String,order:Int?=nil):Bool-instance-method">
       <div class="signature">
         
-        def <strong>bonded?</strong>(other : <span class="k">self</span>, lhs : <a href="../Chem/Element.html">Element</a>, rhs : <a href="../Chem/Topology/AtomType.html">Topology::AtomType</a> | String, order : Int? = <span class="n">nil</span>) : Bool
+        def <strong>bonded?</strong>(other : <span class="k">self</span>, lhs : <a href="../Chem/Element.html">Element</a>, rhs : <a href="../Chem/AtomType.html">AtomType</a> | String, order : Int? = <span class="n">nil</span>) : Bool
 
-        <a class="method-permalink" href="#bonded%3F%28other%3Aself%2Clhs%3AElement%2Crhs%3ATopology%3A%3AAtomType%7CString%2Corder%3AInt%3F%3Dnil%29%3ABool-instance-method">#</a>
+        <a class="method-permalink" href="#bonded%3F%28other%3Aself%2Clhs%3AElement%2Crhs%3AAtomType%7CString%2Corder%3AInt%3F%3Dnil%29%3ABool-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1817,7 +1812,7 @@ residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <
 <pre><code class="language-crystal"><span class="c"># Covalent ligand (JG7) is bonded to CYS sidechain</span>
 residues <span class="o">=</span> <span class="t">Structure</span>.read(<span class="s">&quot;ala-cys-thr-jg7.pdb&quot;</span>).residues</code></pre>
 <p>One can use atom names, atom types or elements:</p>
-<pre><code class="language-crystal">a, b <span class="o">=</span> <span class="t">Topology</span><span class="t">::</span><span class="t">AtomType</span>.<span class="k">new</span>(<span class="s">&quot;C&quot;</span>), <span class="t">Topology</span><span class="t">::</span><span class="t">AtomType</span>.<span class="k">new</span>(<span class="s">&quot;N&quot;</span>)
+<pre><code class="language-crystal">a, b <span class="o">=</span> <span class="t">AtomType</span>.<span class="k">new</span>(<span class="s">&quot;C&quot;</span>), <span class="t">AtomType</span>.<span class="k">new</span>(<span class="s">&quot;N&quot;</span>)
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <span class="s">&quot;C&quot;</span>, <span class="s">&quot;N&quot;</span>            <span class="c"># =&gt; true</span>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], a, b                <span class="c"># =&gt; true</span>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], a, <span class="t">PeriodicTable</span><span class="t">::</span><span class="t">N</span> <span class="c"># =&gt; true</span>
@@ -1831,7 +1826,7 @@ respectively, i.e., the arguments are not interchangeable:</p>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <span class="s">&quot;N&quot;</span>, <span class="s">&quot;C&quot;</span> <span class="c"># =&gt; false</span></code></pre>
 <p>When atom names or atom types are specified, this method returns
 false if missing:</p>
-<pre><code class="language-crystal">missing_atom_t <span class="o">=</span> <span class="t">Topology</span><span class="t">::</span><span class="t">AtomType</span>.<span class="k">new</span>(<span class="s">&quot;OZ5&quot;</span>)
+<pre><code class="language-crystal">missing_atom_t <span class="o">=</span> <span class="t">AtomType</span>.<span class="k">new</span>(<span class="s">&quot;OZ5&quot;</span>)
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <span class="s">&quot;CX1&quot;</span>, <span class="s">&quot;N&quot;</span>             <span class="c"># =&gt; false</span>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], missing_atom_t, <span class="s">&quot;N&quot;</span>    <span class="c"># =&gt; false</span>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <span class="s">&quot;C&quot;</span>, <span class="t">PeriodicTable</span><span class="t">::</span><span class="t">Mg</span> <span class="c"># =&gt; false</span></code></pre>
@@ -1848,17 +1843,17 @@ residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L258" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L258" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="bonded?(other:self,lhs:Topology::AtomType|String,rhs:Topology::AtomType|String,order:Int?=nil):Bool-instance-method">
+    <div class="entry-detail" id="bonded?(other:self,lhs:AtomType|String,rhs:AtomType|String,order:Int?=nil):Bool-instance-method">
       <div class="signature">
         
-        def <strong>bonded?</strong>(other : <span class="k">self</span>, lhs : <a href="../Chem/Topology/AtomType.html">Topology::AtomType</a> | String, rhs : <a href="../Chem/Topology/AtomType.html">Topology::AtomType</a> | String, order : Int? = <span class="n">nil</span>) : Bool
+        def <strong>bonded?</strong>(other : <span class="k">self</span>, lhs : <a href="../Chem/AtomType.html">AtomType</a> | String, rhs : <a href="../Chem/AtomType.html">AtomType</a> | String, order : Int? = <span class="n">nil</span>) : Bool
 
-        <a class="method-permalink" href="#bonded%3F%28other%3Aself%2Clhs%3ATopology%3A%3AAtomType%7CString%2Crhs%3ATopology%3A%3AAtomType%7CString%2Corder%3AInt%3F%3Dnil%29%3ABool-instance-method">#</a>
+        <a class="method-permalink" href="#bonded%3F%28other%3Aself%2Clhs%3AAtomType%7CString%2Crhs%3AAtomType%7CString%2Corder%3AInt%3F%3Dnil%29%3ABool-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1868,7 +1863,7 @@ residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <
 <pre><code class="language-crystal"><span class="c"># Covalent ligand (JG7) is bonded to CYS sidechain</span>
 residues <span class="o">=</span> <span class="t">Structure</span>.read(<span class="s">&quot;ala-cys-thr-jg7.pdb&quot;</span>).residues</code></pre>
 <p>One can use atom names, atom types or elements:</p>
-<pre><code class="language-crystal">a, b <span class="o">=</span> <span class="t">Topology</span><span class="t">::</span><span class="t">AtomType</span>.<span class="k">new</span>(<span class="s">&quot;C&quot;</span>), <span class="t">Topology</span><span class="t">::</span><span class="t">AtomType</span>.<span class="k">new</span>(<span class="s">&quot;N&quot;</span>)
+<pre><code class="language-crystal">a, b <span class="o">=</span> <span class="t">AtomType</span>.<span class="k">new</span>(<span class="s">&quot;C&quot;</span>), <span class="t">AtomType</span>.<span class="k">new</span>(<span class="s">&quot;N&quot;</span>)
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <span class="s">&quot;C&quot;</span>, <span class="s">&quot;N&quot;</span>            <span class="c"># =&gt; true</span>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], a, b                <span class="c"># =&gt; true</span>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], a, <span class="t">PeriodicTable</span><span class="t">::</span><span class="t">N</span> <span class="c"># =&gt; true</span>
@@ -1882,7 +1877,7 @@ respectively, i.e., the arguments are not interchangeable:</p>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <span class="s">&quot;N&quot;</span>, <span class="s">&quot;C&quot;</span> <span class="c"># =&gt; false</span></code></pre>
 <p>When atom names or atom types are specified, this method returns
 false if missing:</p>
-<pre><code class="language-crystal">missing_atom_t <span class="o">=</span> <span class="t">Topology</span><span class="t">::</span><span class="t">AtomType</span>.<span class="k">new</span>(<span class="s">&quot;OZ5&quot;</span>)
+<pre><code class="language-crystal">missing_atom_t <span class="o">=</span> <span class="t">AtomType</span>.<span class="k">new</span>(<span class="s">&quot;OZ5&quot;</span>)
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <span class="s">&quot;CX1&quot;</span>, <span class="s">&quot;N&quot;</span>             <span class="c"># =&gt; false</span>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], missing_atom_t, <span class="s">&quot;N&quot;</span>    <span class="c"># =&gt; false</span>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <span class="s">&quot;C&quot;</span>, <span class="t">PeriodicTable</span><span class="t">::</span><span class="t">Mg</span> <span class="c"># =&gt; false</span></code></pre>
@@ -1899,7 +1894,7 @@ residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L233" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L233" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1927,17 +1922,17 @@ residues[<span class="n">1</span>].bonded?(residues[<span class="n">3</span>]) <
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L130" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L130" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="bonded_residues(bond_t:Topology::BondType,forward_only:Bool=true,strict:Bool=true):Array(Residue)-instance-method">
+    <div class="entry-detail" id="bonded_residues(bond_t:BondType,forward_only:Bool=true,strict:Bool=true):Array(Residue)-instance-method">
       <div class="signature">
         
-        def <strong>bonded_residues</strong>(bond_t : <a href="../Chem/Topology/BondType.html">Topology::BondType</a>, forward_only : Bool = <span class="n">true</span>, strict : Bool = <span class="n">true</span>) : <a href="../Array.html">Array</a>(<a href="../Chem/Residue.html">Residue</a>)
+        def <strong>bonded_residues</strong>(bond_t : <a href="../Chem/BondType.html">BondType</a>, forward_only : Bool = <span class="n">true</span>, strict : Bool = <span class="n">true</span>) : <a href="../Array.html">Array</a>(<a href="../Chem/Residue.html">Residue</a>)
 
-        <a class="method-permalink" href="#bonded_residues%28bond_t%3ATopology%3A%3ABondType%2Cforward_only%3ABool%3Dtrue%2Cstrict%3ABool%3Dtrue%29%3AArray%28Residue%29-instance-method">#</a>
+        <a class="method-permalink" href="#bonded_residues%28bond_t%3ABondType%2Cforward_only%3ABool%3Dtrue%2Cstrict%3ABool%3Dtrue%29%3AArray%28Residue%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1947,7 +1942,7 @@ their chain id, residue number and insertion code if present
 (refer to #&lt;=&gt;).</p>
 <pre><code class="language-crystal"><span class="c"># Covalent ligand (JG7) is bonded to CYS sidechain</span>
 residues <span class="o">=</span> <span class="t">Structure</span>.read(<span class="s">&quot;ala-cys-thr-jg7.pdb&quot;</span>).residues
-bond_t <span class="o">=</span> <span class="t">Topology</span><span class="t">::</span><span class="t">BondType</span>.<span class="k">new</span>(<span class="s">&quot;C&quot;</span>, <span class="s">&quot;N&quot;</span>)
+bond_t <span class="o">=</span> <span class="t">BondType</span>.<span class="k">new</span>(<span class="s">&quot;C&quot;</span>, <span class="s">&quot;N&quot;</span>)
 residues[<span class="n">0</span>].bonded_residues(bond_t).map(<span class="o">&amp;</span>.name) <span class="c"># =&gt; [&quot;CYS&quot;]</span>
 residues[<span class="n">1</span>].bonded_residues(bond_t).map(<span class="o">&amp;</span>.name) <span class="c"># =&gt; [&quot;THR&quot;]</span>
 residues[<span class="n">2</span>].bonded_residues(bond_t).map(<span class="o">&amp;</span>.name) <span class="c"># =&gt; []</span>
@@ -1961,7 +1956,7 @@ residues[<span class="n">3</span>].bonded_residues(bond_t, forward_only: <span c
 order is ignored (fuzzy search). In the following example, using
 <code>strict: false</code> makes that any C-N bond is accepted regardless of
 atom names or bond order:</p>
-<pre><code class="language-crystal">bond_t <span class="o">=</span> <span class="t">Topology</span><span class="t">::</span><span class="t">BondType</span>.<span class="k">new</span> <span class="s">&quot;C&quot;</span>, <span class="s">&quot;NX&quot;</span>, order: <span class="n">2</span>
+<pre><code class="language-crystal">bond_t <span class="o">=</span> <span class="t">BondType</span>.<span class="k">new</span> <span class="s">&quot;C&quot;</span>, <span class="s">&quot;NX&quot;</span>, order: <span class="n">2</span>
 residues[<span class="n">0</span>].bonded_residues(bond_t, strict: <span class="n">false</span>).map(<span class="o">&amp;</span>.name) <span class="c"># =&gt; [&quot;CYS&quot;]</span>
 residues[<span class="n">1</span>].bonded_residues(bond_t, strict: <span class="n">false</span>).map(<span class="o">&amp;</span>.name) <span class="c"># =&gt; [&quot;THR&quot;]</span>
 residues[<span class="n">2</span>].bonded_residues(bond_t, strict: <span class="n">false</span>).map(<span class="o">&amp;</span>.name) <span class="c"># =&gt; []</span>
@@ -1971,7 +1966,7 @@ residues[<span class="n">3</span>].bonded_residues(bond_t, strict: <span class="
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L337" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L337" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2000,7 +1995,7 @@ residues[<span class="n">3</span>].bonded_residues.map(<span class="o">&amp;</sp
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L296" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L296" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2016,7 +2011,7 @@ residues[<span class="n">3</span>].bonded_residues.map(<span class="o">&amp;</sp
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L18" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L18" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2032,7 +2027,7 @@ residues[<span class="n">3</span>].bonded_residues.map(<span class="o">&amp;</sp
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L345" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L345" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2048,7 +2043,7 @@ residues[<span class="n">3</span>].bonded_residues.map(<span class="o">&amp;</sp
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L351" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L351" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2064,7 +2059,7 @@ residues[<span class="n">3</span>].bonded_residues.map(<span class="o">&amp;</sp
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L355" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L355" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2087,7 +2082,7 @@ the method returns <em>default</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L364" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L364" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2103,7 +2098,7 @@ the method returns <em>default</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L368" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L368" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2129,7 +2124,7 @@ of <code><a href="../Chem/Residue.html#levo%3F%3ABool-instance-method">#levo?</a
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L382" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L382" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2145,7 +2140,7 @@ of <code><a href="../Chem/Residue.html#levo%3F%3ABool-instance-method">#levo?</a
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L390" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L390" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2161,7 +2156,7 @@ of <code><a href="../Chem/Residue.html#levo%3F%3ABool-instance-method">#levo?</a
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L394" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L394" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2182,7 +2177,7 @@ of <code><a href="../Chem/Residue.html#levo%3F%3ABool-instance-method">#levo?</a
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L649" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L649" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2198,7 +2193,7 @@ of <code><a href="../Chem/Residue.html#levo%3F%3ABool-instance-method">#levo?</a
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L398" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L398" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2214,17 +2209,17 @@ of <code><a href="../Chem/Residue.html#levo%3F%3ABool-instance-method">#levo?</a
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L402" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L402" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="each_bonded_residue(bond_t:Topology::BondType,forward_only:Bool=true,strict:Bool=true,&amp;:Residue-&gt;):Nil-instance-method">
+    <div class="entry-detail" id="each_bonded_residue(bond_t:BondType,forward_only:Bool=true,strict:Bool=true,&amp;:Residue-&gt;):Nil-instance-method">
       <div class="signature">
         
-        def <strong>each_bonded_residue</strong>(bond_t : <a href="../Chem/Topology/BondType.html">Topology::BondType</a>, forward_only : Bool = <span class="n">true</span>, strict : Bool = <span class="n">true</span>, & : <a href="../Chem/Residue.html">Residue</a> -> ) : Nil
+        def <strong>each_bonded_residue</strong>(bond_t : <a href="../Chem/BondType.html">BondType</a>, forward_only : Bool = <span class="n">true</span>, strict : Bool = <span class="n">true</span>, & : <a href="../Chem/Residue.html">Residue</a> -> ) : Nil
 
-        <a class="method-permalink" href="#each_bonded_residue%28bond_t%3ATopology%3A%3ABondType%2Cforward_only%3ABool%3Dtrue%2Cstrict%3ABool%3Dtrue%2C%26%3AResidue-%3E%29%3ANil-instance-method">#</a>
+        <a class="method-permalink" href="#each_bonded_residue%28bond_t%3ABondType%2Cforward_only%3ABool%3Dtrue%2Cstrict%3ABool%3Dtrue%2C%26%3AResidue-%3E%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2233,13 +2228,13 @@ of <code><a href="../Chem/Residue.html#levo%3F%3ABool-instance-method">#levo?</a
 <p>If <em>forward_only</em> is <code>false</code>, then bond directionality is ignored.</p>
 <p>If <em>strict</em> is <code>false</code>, bond search checks elements only, and bond
 order is ignored (fuzzy search).</p>
-<p>See <code><a href="../Chem/Residue.html#bonded_residues%28bond_t%3ATopology%3A%3ABondType%2Cforward_only%3ABool%3Dtrue%2Cstrict%3ABool%3Dtrue%29%3AArray%28Residue%29-instance-method">#bonded_residues(bond_t, forward_only, strict)</a></code> for examples.</p>
+<p>See <code><a href="../Chem/Residue.html#bonded_residues%28bond_t%3ABondType%2Cforward_only%3ABool%3Dtrue%2Cstrict%3ABool%3Dtrue%29%3AArray%28Residue%29-instance-method">#bonded_residues(bond_t, forward_only, strict)</a></code> for examples.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L431" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L431" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2262,7 +2257,7 @@ atom.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L412" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L412" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2278,7 +2273,7 @@ atom.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L442" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L442" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2300,7 +2295,7 @@ else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L448" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L448" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2316,7 +2311,7 @@ else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L452" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L452" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2332,7 +2327,7 @@ else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L19" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L19" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2348,7 +2343,7 @@ else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L458" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L458" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2381,7 +2376,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L464" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L464" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2402,7 +2397,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L649" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L649" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2418,7 +2413,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L20" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L20" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2434,7 +2429,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L20" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L20" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2460,7 +2455,7 @@ of <code><a href="../Chem/Residue.html#dextro%3F%3ABool-instance-method">#dextro
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L478" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L478" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2481,7 +2476,7 @@ of <code><a href="../Chem/Residue.html#dextro%3F%3ABool-instance-method">#dextro
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L649" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L649" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2497,7 +2492,7 @@ of <code><a href="../Chem/Residue.html#dextro%3F%3ABool-instance-method">#dextro
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L486" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L486" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2513,7 +2508,7 @@ of <code><a href="../Chem/Residue.html#dextro%3F%3ABool-instance-method">#dextro
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L21" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L21" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2529,7 +2524,7 @@ of <code><a href="../Chem/Residue.html#dextro%3F%3ABool-instance-method">#dextro
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L490" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L490" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2545,7 +2540,7 @@ of <code><a href="../Chem/Residue.html#dextro%3F%3ABool-instance-method">#dextro
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L22" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L22" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2561,7 +2556,7 @@ of <code><a href="../Chem/Residue.html#dextro%3F%3ABool-instance-method">#dextro
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L496" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L496" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2577,7 +2572,7 @@ of <code><a href="../Chem/Residue.html#dextro%3F%3ABool-instance-method">#dextro
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L533" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L533" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2593,7 +2588,7 @@ of <code><a href="../Chem/Residue.html#dextro%3F%3ABool-instance-method">#dextro
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L537" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L537" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2614,7 +2609,7 @@ of <code><a href="../Chem/Residue.html#dextro%3F%3ABool-instance-method">#dextro
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L649" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L649" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2630,7 +2625,7 @@ of <code><a href="../Chem/Residue.html#dextro%3F%3ABool-instance-method">#dextro
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L550" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L550" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2646,7 +2641,7 @@ of <code><a href="../Chem/Residue.html#dextro%3F%3ABool-instance-method">#dextro
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L554" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L554" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2662,7 +2657,7 @@ of <code><a href="../Chem/Residue.html#dextro%3F%3ABool-instance-method">#dextro
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L615" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L615" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2694,7 +2689,7 @@ among them.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L582" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L582" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2715,7 +2710,7 @@ among them.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L649" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L649" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2731,7 +2726,7 @@ among them.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L598" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L598" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2747,7 +2742,7 @@ among them.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L602" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L602" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2763,7 +2758,7 @@ among them.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L619" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L619" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2779,7 +2774,7 @@ among them.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L23" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L23" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2795,7 +2790,7 @@ among them.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L23" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L23" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2816,7 +2811,7 @@ among them.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L649" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L649" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2832,7 +2827,7 @@ among them.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L26" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L26" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2848,7 +2843,7 @@ among them.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L26" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L26" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2880,7 +2875,7 @@ among them.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L517" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L517" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2912,7 +2907,7 @@ which includes its class name and its object address.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L623" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L623" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2928,17 +2923,17 @@ which includes its class name and its object address.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L631" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L631" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="type:Topology::ResidueType?-instance-method">
+    <div class="entry-detail" id="type:ResidueType?-instance-method">
       <div class="signature">
         
-        def <strong>type</strong> : <a href="../Chem/Topology/ResidueType.html">Topology::ResidueType</a>?
+        def <strong>type</strong> : <a href="../Chem/ResidueType.html">ResidueType</a>?
 
-        <a class="method-permalink" href="#type%3ATopology%3A%3AResidueType%3F-instance-method">#</a>
+        <a class="method-permalink" href="#type%3AResidueType%3F-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2950,7 +2945,7 @@ which includes its class name and its object address.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L638" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L638" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2973,7 +2968,7 @@ correspond to the water template.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/core/residue.cr#L645" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/core/residue.cr#L645" target="_blank">View source</a>]
         
       </div>
     </div>

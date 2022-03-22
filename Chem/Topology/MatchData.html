@@ -86,6 +86,11 @@
       
     </li>
   
+  <li class=" " data-id="chem.cr/Chem/AtomType" data-name="chem::atomtype">
+      <a href="../../Chem/AtomType.html">AtomType</a>
+      
+    </li>
+  
   <li class=" " data-id="chem.cr/Chem/AtomView" data-name="chem::atomview">
       <a href="../../Chem/AtomView.html">AtomView</a>
       
@@ -113,6 +118,11 @@
   
   <li class=" " data-id="chem.cr/Chem/BondArray" data-name="chem::bondarray">
       <a href="../../Chem/BondArray.html">BondArray</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/BondType" data-name="chem::bondtype">
+      <a href="../../Chem/BondType.html">BondType</a>
       
     </li>
   
@@ -426,6 +436,21 @@
       
     </li>
   
+  <li class="parent " data-id="chem.cr/Chem/ResidueType" data-name="chem::residuetype">
+      <a href="../../Chem/ResidueType.html">ResidueType</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueType/Builder" data-name="chem::residuetype::builder">
+      <a href="../../Chem/ResidueType/Builder.html">Builder</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
   <li class=" " data-id="chem.cr/Chem/ResidueView" data-name="chem::residueview">
       <a href="../../Chem/ResidueView.html">ResidueView</a>
       
@@ -566,16 +591,6 @@
       
         <ul>
   
-  <li class=" " data-id="chem.cr/Chem/Topology/AtomType" data-name="chem::topology::atomtype">
-      <a href="../../Chem/Topology/AtomType.html">AtomType</a>
-      
-    </li>
-  
-  <li class=" " data-id="chem.cr/Chem/Topology/BondType" data-name="chem::topology::bondtype">
-      <a href="../../Chem/Topology/BondType.html">BondType</a>
-      
-    </li>
-  
   <li class=" current" data-id="chem.cr/Chem/Topology/MatchData" data-name="chem::topology::matchdata">
       <a href="../../Chem/Topology/MatchData.html">MatchData</a>
       
@@ -586,30 +601,10 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Topology/ResidueType" data-name="chem::topology::residuetype">
-      <a href="../../Chem/Topology/ResidueType.html">ResidueType</a>
-      
-    </li>
-  
   <li class="parent " data-id="chem.cr/Chem/Topology/Templates" data-name="chem::topology::templates">
       <a href="../../Chem/Topology/Templates.html">Templates</a>
       
         <ul>
-  
-  <li class="parent " data-id="chem.cr/Chem/Topology/Templates/Builder" data-name="chem::topology::templates::builder">
-      <a href="../../Chem/Topology/Templates/Builder.html">Builder</a>
-      
-        <ul>
-  
-  <li class=" " data-id="chem.cr/Chem/Topology/Templates/Builder/ParseException" data-name="chem::topology::templates::builder::parseexception">
-      <a href="../../Chem/Topology/Templates/Builder/ParseException.html">ParseException</a>
-      
-    </li>
-  
-</ul>
-
-      
-    </li>
   
   <li class=" " data-id="chem.cr/Chem/Topology/Templates/Detector" data-name="chem::topology::templates::detector">
       <a href="../../Chem/Topology/Templates/Detector.html">Detector</a>
@@ -833,7 +828,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/topology/match_data.cr#L2" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/topology/match_data.cr#L2" target="_blank">
         chem/topology/match_data.cr
       </a>
     
@@ -996,7 +991,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/topology/match_data.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/topology/match_data.cr#L8" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1004,7 +999,7 @@
     <div class="entry-detail" id="new(res_t:ResidueType,atom_map:Hash(String,Atom)):self-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(res_t : <a href="../../Chem/Topology/ResidueType.html">ResidueType</a>, atom_map : Hash(String, <a href="../../Chem/Atom.html">Atom</a>)) : <span class="k">self</span>
+        def self.<strong>new</strong>(res_t : <a href="../../Chem/ResidueType.html">ResidueType</a>, atom_map : Hash(String, <a href="../../Chem/Atom.html">Atom</a>)) : <span class="k">self</span>
 
         <a class="method-permalink" href="#new%28res_t%3AResidueType%2Catom_map%3AHash%28String%2CAtom%29%29%3Aself-class-method">#</a>
       </div>
@@ -1012,7 +1007,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/topology/match_data.cr#L13" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/topology/match_data.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1042,7 +1037,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/topology/match_data.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/topology/match_data.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1058,7 +1053,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/topology/match_data.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/topology/match_data.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1074,7 +1069,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/topology/match_data.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/topology/match_data.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1090,7 +1085,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/topology/match_data.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/topology/match_data.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1106,7 +1101,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/topology/match_data.cr#L19" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/topology/match_data.cr#L19" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1122,7 +1117,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/topology/match_data.cr#L23" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/topology/match_data.cr#L23" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1138,7 +1133,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/topology/match_data.cr#L3" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/topology/match_data.cr#L3" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1154,7 +1149,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/topology/match_data.cr#L4" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/topology/match_data.cr#L4" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1170,7 +1165,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/topology/match_data.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/topology/match_data.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1186,7 +1181,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/topology/match_data.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/topology/match_data.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1202,7 +1197,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f29b8ae4acf1dade90eaa1df276397942cb3ba4a/src/chem/topology/match_data.cr#L29" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/356bbcf43b00a4c3e61247de3285a2ee5cd5accd/src/chem/topology/match_data.cr#L29" target="_blank">View source</a>]
         
       </div>
     </div>
