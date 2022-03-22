@@ -1,5 +1,5 @@
-module Chem::Topology::Templates
-  register_type do
+module Chem
+  ResidueType.register do
     description "Water"
     names "HOH", "WAT"
     kind :solvent

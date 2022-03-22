@@ -1,5 +1,5 @@
-module Chem::Topology::Templates
-  register_type do
+module Chem
+  ResidueType.register do
     description "Alanine"
     name "ALA"
     code 'A'
@@ -10,7 +10,7 @@ module Chem::Topology::Templates
     end
   end
 
-  register_type do
+  ResidueType.register do
     description "Arginine"
     name "ARG"
     code 'R'
@@ -24,7 +24,7 @@ module Chem::Topology::Templates
     end
   end
 
-  register_type do
+  ResidueType.register do
     description "Aspartate"
     name "ASH"
     code 'D'
@@ -38,7 +38,7 @@ module Chem::Topology::Templates
     end
   end
 
-  register_type do
+  ResidueType.register do
     description "Asparagine"
     name "ASN"
     code 'N'
@@ -52,7 +52,7 @@ module Chem::Topology::Templates
     end
   end
 
-  register_type do
+  ResidueType.register do
     description "Aspartate"
     name "ASP"
     code 'D'
@@ -66,7 +66,7 @@ module Chem::Topology::Templates
     end
   end
 
-  register_type do
+  ResidueType.register do
     description "Cysteine"
     name "CYS"
     code 'C'
@@ -77,7 +77,7 @@ module Chem::Topology::Templates
     end
   end
 
-  register_type do
+  ResidueType.register do
     description "Cysteine"
     name "CYX"
     code 'C'
@@ -88,7 +88,7 @@ module Chem::Topology::Templates
     end
   end
 
-  register_type do
+  ResidueType.register do
     description "Glutamate"
     name "GLH"
     code 'E'
@@ -102,7 +102,7 @@ module Chem::Topology::Templates
     end
   end
 
-  register_type do
+  ResidueType.register do
     description "Glutamine"
     name "GLN"
     code 'Q'
@@ -116,7 +116,7 @@ module Chem::Topology::Templates
     end
   end
 
-  register_type do
+  ResidueType.register do
     description "Glutamate"
     name "GLU"
     code 'E'
@@ -130,7 +130,7 @@ module Chem::Topology::Templates
     end
   end
 
-  register_type do
+  ResidueType.register do
     description "Glycine"
     name "GLY"
     code 'G'
@@ -141,7 +141,7 @@ module Chem::Topology::Templates
     end
   end
 
-  register_type do
+  ResidueType.register do
     description "Histidine"
     name "HIS"
     code 'H'
@@ -155,7 +155,7 @@ module Chem::Topology::Templates
     end
   end
 
-  register_type do
+  ResidueType.register do
     description "Histidine"
     name "HIE"
     code 'H'
@@ -169,7 +169,7 @@ module Chem::Topology::Templates
     end
   end
 
-  register_type do
+  ResidueType.register do
     description "Histidine"
     name "HIP"
     code 'H'
@@ -183,7 +183,7 @@ module Chem::Topology::Templates
     end
   end
 
-  register_type do
+  ResidueType.register do
     description "Isoleucine"
     name "ILE"
     code 'I'
@@ -197,7 +197,7 @@ module Chem::Topology::Templates
     end
   end
 
-  register_type do
+  ResidueType.register do
     description "Leucine"
     name "LEU"
     code 'L'
@@ -212,7 +212,7 @@ module Chem::Topology::Templates
     symmetry({"CD1", "CD2"})
   end
 
-  register_type do
+  ResidueType.register do
     description "Lysine"
     name "LYS"
     code 'K'
@@ -223,7 +223,7 @@ module Chem::Topology::Templates
     end
   end
 
-  register_type do
+  ResidueType.register do
     description "Methionine "
     name "MET"
     code 'M'
@@ -234,7 +234,7 @@ module Chem::Topology::Templates
     end
   end
 
-  register_type do
+  ResidueType.register do
     description "Phenylalanine"
     name "PHE"
     code 'F'
@@ -249,7 +249,7 @@ module Chem::Topology::Templates
     symmetry({"CD1", "CD2"}, {"CE1", "CE2"})
   end
 
-  register_type do
+  ResidueType.register do
     description "Proline"
     name "PRO"
     code 'P'
@@ -264,7 +264,7 @@ module Chem::Topology::Templates
     end
   end
 
-  register_type do
+  ResidueType.register do
     description "Serine"
     name "SER"
     code 'S'
@@ -275,7 +275,7 @@ module Chem::Topology::Templates
     end
   end
 
-  register_type do
+  ResidueType.register do
     description "Threonine"
     name "THR"
     code 'T'
@@ -289,7 +289,7 @@ module Chem::Topology::Templates
     end
   end
 
-  register_type do
+  ResidueType.register do
     description "Tryptophan"
     name "TRP"
     code 'W'
@@ -304,7 +304,7 @@ module Chem::Topology::Templates
     end
   end
 
-  register_type do
+  ResidueType.register do
     description "Tyrosine"
     name "TYR"
     code 'Y'
@@ -320,7 +320,7 @@ module Chem::Topology::Templates
     symmetry({"CD1", "CD2"}, {"CE1", "CE2"})
   end
 
-  register_type do
+  ResidueType.register do
     description "Valine"
     name "VAL"
     code 'V'

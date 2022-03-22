@@ -38,6 +38,59 @@ describe Chem::BondType do
 end
 
 describe Chem::ResidueType do
+  Chem::ResidueType.register do
+    description "Anything"
+    name "LFG"
+    structure do
+      stem "N1+-C2-C3-O4-C5-C6"
+      branch "C5=O7"
+    end
+  end
+
+  describe ".fetch" do
+    it "returns a residue type by name" do
+      residue_t = Chem::ResidueType.fetch("LFG")
+      residue_t.should be_a Chem::ResidueType
+      residue_t.description.should eq "Anything"
+      residue_t.name.should eq "LFG"
+    end
+
+    it "raises if residue type does not exist" do
+      expect_raises Chem::Error, "Unknown residue type ASD" do
+        Chem::ResidueType.fetch("ASD")
+      end
+    end
+
+    it "returns block's return value if residue type does not exist" do
+      Chem::ResidueType.fetch("ASD") { nil }.should be_nil
+    end
+  end
+
+  describe ".register" do
+    it "creates a residue template with multiple names" do
+      Chem::ResidueType.register do
+        description "Anything"
+        names "LXE", "EGR"
+        structure do
+          stem "C1"
+        end
+      end
+      Chem::ResidueType.fetch("LXE").should be Chem::ResidueType.fetch("EGR")
+    end
+
+    it "fails when the residue name already exists" do
+      expect_raises Chem::Error, "LXE residue type already exists" do
+        Chem::ResidueType.register do
+          description "Anything"
+          name "LXE"
+          structure do
+            stem "C1"
+          end
+        end
+      end
+    end
+  end
+
   describe "#inspect" do
     it "returns a string representation" do
       Chem::ResidueType.build do

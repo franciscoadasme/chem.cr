@@ -636,7 +636,7 @@ module Chem
     #
     # The type of a residue is fetched by its name.
     def type : ResidueType?
-      Topology::Templates[@name]?
+      ResidueType.fetch(@name) { nil }
     end
 
     # Returns `true` if the residue is a water residue, else `false`.

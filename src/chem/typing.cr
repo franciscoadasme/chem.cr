@@ -102,6 +102,8 @@ module Chem
   end
 
   class ResidueType
+    private REGISTRY = {} of String => ResidueType
+
     @atom_types : Array(AtomType)
     @bonds : Array(BondType)
 
@@ -128,10 +130,33 @@ module Chem
       @bonds = bonds.dup
     end
 
+    def self.all_types : Array(ResidueType)
+      REGISTRY.values
+    end
+
     def self.build : self
       builder = ResidueType::Builder.new
       with builder yield builder
       builder.build
+    end
+
+    def self.fetch(name : String) : ResidueType
+      fetch(name) { raise Error.new("Unknown residue type #{name}") }
+    end
+
+    def self.fetch(name : String, & : -> T) : ResidueType | T forall T
+      REGISTRY[name]? || yield
+    end
+
+    def self.register : ResidueType
+      ResidueType.build do |builder|
+        with builder yield builder
+        residue = builder.build
+        builder.names.each do |name|
+          raise Error.new("#{name} residue type already exists") if REGISTRY.has_key?(name)
+          REGISTRY[name] = residue
+        end
+      end
     end
 
     def [](atom_name : String) : AtomType

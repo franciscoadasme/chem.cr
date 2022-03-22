@@ -41,7 +41,7 @@ module Chem::Topology::Templates
     def initialize(atoms : AtomCollection, templates : Array(ResidueType)? = nil)
       @atoms = Set(Atom).new(atoms.n_atoms).concat atoms.each_atom
       @atom_table = {} of Atom | AtomType => String
-      @templates = templates || Templates.all
+      @templates = templates || ResidueType.all_types
       compute_atom_descriptions @atoms
       compute_atom_descriptions @templates
       compute_atom_descriptions [CTER_T, NTER_T, CHARGED_CTER_T, CHARGED_NTER_T]
