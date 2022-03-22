@@ -96,7 +96,7 @@ describe Chem::ResidueType do
       Chem::ResidueType.build do
         name "O2"
         description "Molecular oxygen"
-        structure "O=O"
+        structure "O1=O2"
       end.inspect.should eq "<ResidueType O2>"
 
       Chem::ResidueType.build do
@@ -547,6 +547,29 @@ describe Chem::ResidueType::Builder do
         Chem::ResidueType.build do
           structure "C1=C2-C3=C4-C5=C6"
           symmetry({"C2", "C4"}, {"C5", "C2"})
+        end
+      end
+    end
+
+    it "raises if a bond specifies the same atom" do
+      expect_raises Chem::Error, "Atom O cannot be bonded to itself" do
+        Chem::ResidueType.build do
+          name "O2"
+          description "Molecular oxygen"
+          structure "O=O"
+        end
+      end
+    end
+
+    it "raises if the linkd specifies the same atom" do
+      expect_raises Chem::Error, "Atom O1 cannot be bonded to itself" do
+        Chem::ResidueType.build do
+          name "O2"
+          description "Molecular oxygen"
+          structure do
+            stem "O1=O2"
+            link_adjacent_by "O1=O1"
+          end
         end
       end
     end

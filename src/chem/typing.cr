@@ -453,6 +453,7 @@ module Chem
     private def parse_bond(spec : String)
       if spec =~ BOND_REGEX
         _, lhs, bond_str, rhs = $~
+        raise Error.new("Atom #{lhs} cannot be bonded to itself") if lhs == rhs
         BondType.new atom_type!(lhs), atom_type!(rhs), parse_bond_order(bond_str[0])
       else
         parse_exception "Invalid bond specification \"#{spec}\""
@@ -488,7 +489,10 @@ module Chem
 
       atom_types = atom_specs.map { |spec| parse_atom spec }
       bond_chars.each_with_index do |bond_char, i|
-        add_bond atom_types[i], atom_types[i + 1], parse_bond_order(bond_char)
+        lhs = atom_types[i]
+        rhs = atom_types[i + 1]
+        raise Error.new("Atom #{lhs.name} cannot be bonded to itself") if lhs == rhs
+        add_bond lhs, rhs, parse_bond_order(bond_char)
       end
     end
 
