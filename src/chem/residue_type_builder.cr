@@ -14,7 +14,7 @@ class Chem::ResidueType::Builder
   @description : String?
   @root : AtomType?
   @code : Char?
-  @symmetric_groups = [] of Array(Tuple(String, String))
+  @symmetric_atom_groups = [] of Array(Tuple(String, String))
 
   def initialize(@kind : Residue::Kind = :other)
   end
@@ -54,7 +54,7 @@ class Chem::ResidueType::Builder
     check_valencies!
 
     ResidueType.new description, @names.first, @code, @kind, @atom_types, @bonds,
-      @link_bond, @root, @symmetric_groups
+      @link_bond, @root, @symmetric_atom_groups
   end
 
   def name(name : String)
@@ -115,6 +115,19 @@ class Chem::ResidueType::Builder
     sidechain do
       stem spec
     end
+  end
+
+  def symmetry(*pairs : Tuple(String, String)) : Nil
+    visited = Set(String).new pairs.size * 2
+    pairs.each do |(a, b)|
+      atom_type!(a) && atom_type!(b) # ensure they exists
+      fail "#{a} cannot be symmetric with itself" if a == b
+      {a, b}.each do |name|
+        fail "#{name} cannot be reassigned for symmetry" if name.in?(visited)
+      end
+      visited << a << b
+    end
+    @symmetric_atom_groups << pairs.to_a
   end
 
   def code(char : Char) : Nil

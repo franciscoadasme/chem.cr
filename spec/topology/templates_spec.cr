@@ -379,10 +379,37 @@ describe Chem::ResidueType::Builder do
         symmetry({"C19", "C23"}, {"C20", "C22"})
       end
 
-      groups = residue.symmetric_groups.should_not be_nil
+      groups = residue.symmetric_atom_groups.should_not be_nil
       groups.size.should eq 2
       groups[0].should eq [{"C12", "C16"}, {"C13", "C15"}]
       groups[1].should eq [{"C19", "C23"}, {"C20", "C22"}]
+    end
+
+    it "raises if a symmetry atom is unknown" do
+      expect_raises(Chem::Error, "Unknown atom type C13") do
+        Chem::ResidueType.build do
+          structure "C1=C2-C3=C4-C5=C6"
+          symmetry({"C2", "C5"}, {"C13", "C15"})
+        end
+      end
+    end
+
+    it "raises if a symmetry atom is unknown" do
+      expect_raises(Chem::Error, "C3 cannot be symmetric with itself") do
+        Chem::ResidueType.build do
+          structure "C1=C2-C3=C4-C5=C6"
+          symmetry({"C2", "C4"}, {"C3", "C3"})
+        end
+      end
+    end
+
+    it "raises if a symmetry atom is repeated" do
+      expect_raises(Chem::Error, "C2 cannot be reassigned for symmetry") do
+        Chem::ResidueType.build do
+          structure "C1=C2-C3=C4-C5=C6"
+          symmetry({"C2", "C4"}, {"C5", "C2"})
+        end
+      end
     end
   end
 end

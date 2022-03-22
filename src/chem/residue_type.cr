@@ -8,7 +8,7 @@ class Chem::ResidueType
   getter description : String
   getter root : AtomType?
   getter code : Char?
-  getter symmetric_groups : Array(Array(Tuple(String, String)))?
+  getter symmetric_atom_groups : Array(Array(Tuple(String, String)))?
 
   def initialize(
     @description : String,
@@ -19,7 +19,7 @@ class Chem::ResidueType
     bonds : Array(BondType),
     @link_bond : BondType? = nil,
     @root : AtomType? = nil,
-    @symmetric_groups : Array(Array(Tuple(String, String)))? = nil
+    @symmetric_atom_groups : Array(Array(Tuple(String, String)))? = nil
   )
     @atom_types = atom_types.dup
     @bonds = bonds.dup
