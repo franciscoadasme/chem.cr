@@ -268,11 +268,6 @@ module Chem
       end
     end
 
-    def aliases(*names : String)
-      raise Error.new("Aliases cannot be set for unnamed residue type") if @names.empty?
-      @names.concat names
-    end
-
     protected def build : ResidueType
       raise Error.new("Missing residue description") unless (description = @description)
       raise Error.new("Missing residue name") if @names.empty?
@@ -373,8 +368,8 @@ module Chem
       valency - @bonds.each.select(&.includes?(atom_t.name)).map(&.order).sum
     end
 
-    def name(name : String)
-      @names << name
+    def name(*names : String)
+      @names.concat names
     end
 
     def root(atom_name : String)

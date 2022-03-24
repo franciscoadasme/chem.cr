@@ -90,8 +90,7 @@ module Chem
 
   ResidueType.register do
     description "Histidine"
-    name "HIS"
-    aliases "HID", "HSD"
+    name "HIS", "HID", "HSD"
     code 'H'
     kind :protein
     structure "{backbone}-CB-CG=CD2-NE2=CE1-ND1-CG"
@@ -99,8 +98,7 @@ module Chem
 
   ResidueType.register do
     description "Histidine"
-    name "HIE"
-    aliases "HSE"
+    name "HIE", "HSE"
     code 'H'
     kind :protein
     structure "{backbone}-CB-CG=CD2-NE2-CE1=ND1-CG"
@@ -108,8 +106,7 @@ module Chem
 
   ResidueType.register do
     description "Histidine"
-    name "HIP"
-    aliases "HSP"
+    name "HIP", "HSP"
     code 'H'
     kind :protein
     structure "{backbone}-CB-CG=CD2-NE2+=CE1-ND1-CG"

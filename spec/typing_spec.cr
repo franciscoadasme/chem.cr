@@ -68,8 +68,7 @@ describe Chem::ResidueType do
     it "creates a residue template with multiple names" do
       Chem::ResidueType.register do
         description "Anything"
-        name "LXE"
-        aliases "EGR"
+        name "LXE", "EGR"
         structure "C1"
       end
       Chem::ResidueType.fetch("LXE").should be Chem::ResidueType.fetch("EGR")
@@ -458,14 +457,6 @@ describe Chem::ResidueType::Builder do
           structure "O1=O2"
           link_adjacent_by "O1=O1"
           root "O"
-        end
-      end
-    end
-
-    it "raises if alias is called before name" do
-      expect_raises(Chem::Error, "Aliases cannot be set for unnamed residue type") do
-        Chem::ResidueType.register do
-          aliases "WAT", "TIP3"
         end
       end
     end
