@@ -475,5 +475,19 @@ describe Chem::ResidueType::Builder do
       residue.bonds.size.should eq 31 + 29
       residue.bonds.count(&.double?).should eq 7
     end
+
+    it "supports structure aliases" do
+      residue = Chem::ResidueType.build do
+        description "Unknown"
+        name "UNK"
+        structure "{foo}-CB", aliases: {"foo" => "C-CA"}
+        root "CA"
+      end
+      residue.atom_names.should eq [
+        "C", "H1", "H2", "H3", "CA", "HA1", "HA2", "CB", "HB1", "HB2", "HB3",
+      ]
+      residue.bonds.size.should eq 10
+      residue.formal_charge.should eq 0
+    end
   end
 end

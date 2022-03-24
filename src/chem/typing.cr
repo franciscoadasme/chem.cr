@@ -269,6 +269,7 @@ module Chem
     end
 
     protected def build : ResidueType
+      # TODO: make description optional
       raise Error.new("Missing residue description") unless (description = @description)
       raise Error.new("Missing residue name") if @names.empty?
 
@@ -376,11 +377,8 @@ module Chem
       @root_atom = check_atom_type atom_name
     end
 
-    def structure(spec : String) : Nil
-      {"backbone" => "N(-H)-CA(-HA)(-C=O)"}.each do |name, partial_spec|
-        spec = spec.gsub "{#{name}}", partial_spec
-      end
-      parser = SpecificationParser.new(spec)
+    def structure(spec : String, aliases : Hash(String, String)? = nil) : Nil
+      parser = SpecificationParser.new(spec, aliases)
       parser.parse
       @atom_types = parser.atom_types
       @bonds = parser.bond_types
@@ -402,10 +400,15 @@ module Chem
   end
 
   private class ResidueType::SpecificationParser
-    def initialize(str)
+    ALIASES = {"backbone" => "N(-H)-CA(-HA)(-C=O)"}
+
+    def initialize(str, aliases : Hash(String, String)? = nil)
       @reader = Char::Reader.new(str.strip)
       @atom_type_map = {} of String => AtomType
       @bond_type_map = {} of Tuple(String, String) => BondType
+      @aliases = {} of String => String
+      @aliases.merge! ALIASES
+      @aliases.merge! aliases if aliases
     end
 
     def atom_types : Array(AtomType)
@@ -519,6 +522,13 @@ module Chem
           if char = peek_char
             parse_exception("Expected bond after a branch") unless char.in?("-=#(")
           end
+        when '{' # alias like "{backbone}"
+          name = consume_while &.ascii_lowercase?
+          parse_exception("Expected alias") if name.empty?
+          spec = @aliases[name]? || parse_exception("Unknown alias #{name}")
+          parse_exception("Unclosed alias") unless next_char == '}'
+          raw_value = @reader.string.insert @reader.pos + 1, spec
+          @reader = Char::Reader.new(raw_value, @reader.pos)
         when .nil?
           break
         else
