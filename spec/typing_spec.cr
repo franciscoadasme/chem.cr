@@ -484,5 +484,20 @@ describe Chem::ResidueType::Builder do
         end
       end
     end
+
+    it "builds a complex residue" do
+      residue = Chem::ResidueType.build do
+        description "Donepezil"
+        name "E20"
+        structure "C1(-O25-C26)=C2(-O27-C28)-C3=C4(-C5=C6-C1)-C9-C8\
+                   (-C7(=O24)-C5)-C10-C11-C12-C13-N14(-C15-C16-C11)\
+                   -C17-C18=C19-C20=C21-C22=C23-C18"
+        root "C1"
+      end
+      residue.atom_types.size.should eq 28 + 29 # heavy + hydrogens
+      residue.atom_types.count(&.element.hydrogen?).should eq 29
+      residue.bonds.size.should eq 31 + 29
+      residue.bonds.count(&.double?).should eq 7
+    end
   end
 end
