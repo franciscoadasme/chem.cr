@@ -31,7 +31,10 @@ module Chem
     end
 
     private def nominal_valency : Int32
-      @element.max_valency + @formal_charge
+      # FIXME: this is completely wrong. N+ and Mg2+ behave differently.
+      valency = @element.max_valency
+      valency += @element.ionic? ? -@formal_charge.abs : @formal_charge
+      valency
     end
   end
 
@@ -61,8 +64,14 @@ module Chem
       any? &.name.==(name)
     end
 
+    def includes?(atom_type : AtomType) : Bool
+      any? &.name.==(atom_type.name)
+    end
+
     def inspect(io : IO) : Nil
-      io << "<BondType " << self[0].name << to_char << self[1].name << '>'
+      io << "<BondType "
+      to_s io
+      io << '>'
     end
 
     def inverse : self
@@ -91,13 +100,14 @@ module Chem
       end
     end
 
-    def to_char : Char
-      case @order
-      when 1 then '-'
-      when 2 then '='
-      when 3 then '#'
-      else        raise "BUG: unreachable"
-      end
+    def to_s(io : IO) : Nil
+      bond_char = case @order
+                  when 1 then '-'
+                  when 2 then '='
+                  when 3 then '#'
+                  else        raise "BUG: unreachable"
+                  end
+      io << self[0].name << bond_char << self[1].name
     end
   end
 
@@ -226,6 +236,26 @@ module Chem
     @root_atom : AtomType?
     @symmetric_atom_groups = [] of Array(Tuple(String, String))
 
+    private def add_hydrogens
+      use_name_suffix = @atom_types.any? &.suffix.to_i?.nil?
+      atom_types = use_name_suffix ? @atom_types : @atom_types.sort_by do |atom_t|
+        {atom_t.element.atomic_number * -1, atom_t.suffix.to_i}
+      end
+
+      h_i = 0
+      atom_types.each do |atom_t|
+        i = @atom_types.index! atom_t
+        h_count = missing_bonds_of(atom_t)
+        h_count.times do |j|
+          h_i += 1
+          name = use_name_suffix ? "H#{atom_t.suffix}#{j + 1 if h_count > 1}" : "H#{h_i}"
+          atom_type = AtomType.new(name, element: "H")
+          @atom_types.insert i + 1 + j, atom_type
+          @bonds << BondType.new(atom_t, atom_type)
+        end
+      end
+    end
+
     def aliases(*names : String)
       raise Error.new("Aliases cannot be set for unnamed residue type") if @names.empty?
       @names.concat names
@@ -234,6 +264,14 @@ module Chem
     protected def build : ResidueType
       raise Error.new("Missing residue description") unless (description = @description)
       raise Error.new("Missing residue name") if @names.empty?
+
+      raise Error.new("No atoms for residue type") if @atom_types.empty?
+      raise Error.new("No bonds for residue type") if @atom_types.size > 1 && @bonds.empty?
+
+      @link_bond ||= BondType.new(check_atom_type("C"), check_atom_type("N")) if @kind.protein?
+      add_hydrogens
+      check_valencies
+
       @root_atom ||= if @kind.protein?
                        check_atom_type("CA")
                      elsif @atom_types.count { |a| !a.element.hydrogen? } == 1
@@ -250,12 +288,77 @@ module Chem
       @code = char
     end
 
+    private def check_atom_type(name : String) : AtomType
+      if atom_type = @atom_types.find(&.name.==(name))
+        atom_type
+      else
+        raise Error.new("Unknown atom type #{name}")
+      end
+    end
+
+    # private def check_valencies
+    #   @atom_types.each do |atom_t|
+    #     bond_count = missing_bonds_of(atom_t)
+    #     if bond_count > 0
+    #       raise Error.new(
+    #         "Atom type #{atom_t} has incorrect valency (#{valency}), \
+    #          expected #{atom_t.valency}")
+    #     end
+    #   end
+    # end
+
+    private def check_valencies
+      @atom_types.each do |atom_t|
+        num = missing_bonds_of atom_t
+        next if num == 0
+        raise Error.new(
+          "Atom type #{atom_t} has incorrect valency (#{atom_t.valency - num}), " \
+          "expected #{atom_t.valency}")
+      end
+    end
+
     def description(name : String)
       @description = name
     end
 
     def kind(kind : Residue::Kind)
       @kind = kind
+    end
+
+    def link_adjacent_by(bond_spec : String)
+      lhs, bond_str, rhs = bond_spec.partition(/[-=#]/)
+      raise ParseException.new("Invalid bond") if bond_str.empty? || rhs.empty?
+      lhs = check_atom_type(lhs)
+      rhs = check_atom_type(rhs)
+      raise ParseException.new("Atom #{lhs} cannot be bonded to itself") if lhs == rhs
+      bond_order = case bond_str
+                   when "-" then 1
+                   when "=" then 2
+                   when "#" then 3
+                   else          raise "BUG: unreachable"
+                   end
+      @link_bond = BondType.new lhs, rhs, bond_order
+    end
+
+    # private def missing_bonds_of(atom_type : AtomType) : Int32
+    #   bond_order = @bonds.sum { |bond| atom_type.name.in?(bond) ? bond.order : 0 }
+    #   if bond = @link_bond
+    #     bond_order += bond.order if atom_type.in?(bond)
+    #   end
+    #   nominal_valency = atom_type.element.valencies.find(&.>=(bond_order))
+    #   nominal_valency ||= atom_type.element.max_valency
+    #   # NOTE: why `+ formal_charge`?
+    #   bound_count = nominal_valency - bond_order + atom_type.formal_charge
+    #   raise "BUG: negative bond count for #{atom_type}" if bound_count < 0
+    #   bound_count
+    # end
+
+    private def missing_bonds_of(atom_t : AtomType) : Int32
+      valency = atom_t.valency
+      if bond = @link_bond
+        valency -= bond.order if atom_t.in?(bond)
+      end
+      valency - @bonds.each.select(&.includes?(atom_t.name)).map(&.order).sum
     end
 
     def name(name : String)
@@ -267,9 +370,13 @@ module Chem
     end
 
     def structure(spec : String) : Nil
-      structure do
-        stem spec
+      {"backbone" => "N(-H)-CA(-HA)(-C=O)"}.each do |name, partial_spec|
+        spec = spec.gsub "{#{name}}", partial_spec
       end
+      parser = SpecificationParser.new(spec)
+      parser.parse
+      @atom_types = parser.atom_types
+      @bonds = parser.bond_types
     end
 
     def structure # (& : StructureBuilder ->) : Nil
@@ -290,14 +397,6 @@ module Chem
         visited << a << b
       end
       @symmetric_atom_groups << pairs.to_a
-    end
-
-    private def check_atom_type(name : String) : AtomType
-      if atom_type = @atom_types.find(&.name.==(name))
-        atom_type
-      else
-        raise Error.new("Unknown atom type #{name}")
-      end
     end
   end
 
@@ -321,7 +420,7 @@ module Chem
     private def add_bond(atom_t : AtomType, other : AtomType, order : Int = 1)
       bond = @bond_types.find { |bond| atom_t.in?(bond) && other.in?(bond) }
       if bond && bond.order != order
-        raise Error.new("Bond #{atom_t.name}#{bond.to_char}#{other.name} already exists")
+        raise Error.new("Bond #{bond} already exists")
       elsif bond.nil?
         @bond_types << BondType.new atom_t, other, order
       end
@@ -520,6 +619,207 @@ module Chem
     def stem(spec : String)
       spec = "CA-" + spec if @kind.protein?
       parse_spec spec
+    end
+  end
+
+  private class ResidueType::SpecificationParser
+    def initialize(str)
+      @reader = Char::Reader.new(str.strip)
+      @atom_type_map = {} of String => AtomType
+      @bond_type_map = {} of Tuple(String, String) => BondType
+    end
+
+    def atom_types : Array(AtomType)
+      @atom_type_map.values
+    end
+
+    def bond_types : Array(BondType)
+      @bond_type_map.values
+    end
+
+    private def check_pred(msg : String) : AtomType
+      @atom_type_map.last_value? || parse_exception(msg)
+    end
+
+    private def consume_element : String
+      symbol = String.build do |io|
+        io << current_char if current_char.ascii_uppercase?
+        if (char = peek_char) && char.ascii_lowercase?
+          io << char
+          next_char
+        end
+      end
+      parse_exception("Expected element") if symbol.empty?
+      symbol
+    end
+
+    private def consume_int : Int32
+      consume_while(&.ascii_number?).to_i
+    end
+
+    private def consume_while(io : IO, & : Char -> Bool) : Nil
+      if (yield current_char)
+        io << current_char
+      end
+      while (char = peek_char) && (yield char)
+        io << char
+        next_char
+      end
+    end
+
+    private def consume_while(& : Char -> Bool) : String
+      String.build do |io|
+        consume_while(io) do |char|
+          yield char
+        end
+      end
+    end
+
+    private def current_char
+      @reader.current_char
+    end
+
+    private def each_char(& : Char ->) : Nil
+      loop do
+        yield current_char
+        break unless next_char
+      end
+    end
+
+    private def next_char : Char?
+      if @reader.has_next?
+        char = @reader.next_char
+        char if char != '\0'
+      end
+    end
+
+    def parse : Nil
+      bond_atom = nil
+      bond_order = 1
+      root_stack = Deque(AtomType).new
+      each_char do |char|
+        case char
+        when .ascii_letter?
+          atom_type = read_atom_type
+          @atom_type_map[atom_type.name] ||= atom_type
+          if bond_atom
+            if bond_atom == atom_type
+              parse_exception("Atom #{atom_type.name} cannot be bonded to itself")
+            end
+            bond_key = {String, String}.from [bond_atom.name, atom_type.name].sort!
+            if bond_type = @bond_type_map[bond_key]?
+              if bond_type.order != bond_order
+                parse_exception("Bond #{bond_type} already exists")
+              end
+            else
+              @bond_type_map[bond_key] = BondType.new(bond_atom, atom_type, bond_order)
+            end
+            bond_atom = nil
+          end
+        when '-'
+          parse_exception("Unterminated bond") unless peek_char
+          bond_atom ||= check_pred("Bond must be preceded by an atom")
+          bond_order = 1
+        when '='
+          parse_exception("Unterminated bond") unless peek_char
+          bond_atom ||= check_pred("Bond must be preceded by an atom")
+          bond_order = 2
+        when '#'
+          parse_exception("Unterminated bond") unless peek_char
+          bond_atom ||= check_pred("Bond must be preceded by an atom")
+          bond_order = 3
+        when '('
+          if char = peek_char
+            parse_exception("Expected bond at the beginning of a branch") unless char.in?("-=#")
+          else # end of string
+            parse_exception("Unclosed branch")
+          end
+          root_stack << (bond_atom || check_pred("Branch must be preceded by an atom"))
+        when ')'
+          bond_atom = root_stack.pop? || parse_exception("Invalid branch termination")
+          if char = peek_char
+            parse_exception("Expected bond after a branch") unless char.in?("-=#(")
+          end
+        when .nil?
+          break
+        else
+          parse_exception("Invalid character #{char}")
+        end
+      end
+      parse_exception("Unclosed branch") unless root_stack.empty?
+    end
+
+    # Rename to fail
+    private def parse_exception(msg)
+      raise ParseException.new(msg)
+    end
+
+    private def peek_char : Char?
+      if @reader.has_next?
+        char = @reader.peek_next_char
+        char if char != '\0'
+      end
+    end
+
+    private def read_atom_type : AtomType
+      atom_name = String.build do |io|
+        consume_while io, &.ascii_uppercase?
+        consume_while io, &.ascii_number?
+      end
+      parse_exception("Expected atom name") if atom_name.empty?
+      atom_type = @atom_type_map[atom_name]?
+
+      next_char
+
+      element = nil
+      formal_charge = 0
+      valency = nil
+      each_char do |char|
+        case char
+        when '+'
+          formal_charge = peek_char.try(&.ascii_number?) ? consume_int : 1
+        when '-'
+          case peek_char
+          when .nil?, '-' # minus charge
+            parse_exception("Cannot modify charge of #{atom_name}") if atom_type
+            formal_charge = -1
+          when .ascii_number? # minus charge as -2, -3, etc.
+            parse_exception("Cannot modify charge of #{atom_name}") if atom_type
+            formal_charge = consume_int * -1
+          when .ascii_letter? # single bond
+            @reader.previous_char
+            break
+          end
+        when '['
+          parse_exception("Cannot modify element of #{atom_name}") if atom_type
+          next_char
+          element = consume_element
+          case next_char
+          when ']' # ok
+          when .nil?
+            parse_exception("Unclosed bracket")
+          when .ascii_uppercase?
+            parse_exception("Invalid element")
+          else
+            parse_exception("Unclosed bracket")
+          end
+        when '(' # explicit valency
+          parse_exception("Cannot modify valency of #{atom_name}") if atom_type
+          if peek_char.try(&.ascii_number?) # valency
+            next_char
+            valency = consume_int
+            parse_exception("Unclosed bracket") unless next_char == ')'
+          else
+            @reader.previous_char
+            break
+          end
+        else
+          @reader.previous_char
+          break
+        end
+      end
+
+      atom_type || AtomType.new(atom_name, formal_charge, element, valency)
     end
   end
 end

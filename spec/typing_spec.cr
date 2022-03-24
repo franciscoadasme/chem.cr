@@ -1,126 +1,126 @@
 require "./spec_helper"
 
-describe Chem::AtomType do
-  describe "#inspect" do
-    it "returns a string representation" do
-      Chem::AtomType.new("CA").inspect.should eq "<AtomType CA>"
-      Chem::AtomType.new("NZ", formal_charge: 1).inspect.should eq "<AtomType NZ+>"
-      Chem::AtomType.new("SG", valency: 1).inspect.should eq "<AtomType SG(1)>"
-    end
-  end
+# describe Chem::AtomType do
+#   describe "#inspect" do
+#     it "returns a string representation" do
+#       Chem::AtomType.new("CA").inspect.should eq "<AtomType CA>"
+#       Chem::AtomType.new("NZ", formal_charge: 1).inspect.should eq "<AtomType NZ+>"
+#       Chem::AtomType.new("SG", valency: 1).inspect.should eq "<AtomType SG(1)>"
+#     end
+#   end
 
-  describe "#to_s" do
-    it "returns atom name" do
-      Chem::AtomType.new("CA").to_s.should eq "CA"
-    end
+#   describe "#to_s" do
+#     it "returns atom name" do
+#       Chem::AtomType.new("CA").to_s.should eq "CA"
+#     end
 
-    it "returns atom name plus charge sign when charge is not zero" do
-      Chem::AtomType.new("NZ", formal_charge: 1).to_s.should eq "NZ+"
-      Chem::AtomType.new("OE1", formal_charge: -1).to_s.should eq "OE1-"
-      Chem::AtomType.new("NA", formal_charge: 2).to_s.should eq "NA+2"
-      Chem::AtomType.new("UK", formal_charge: -5).to_s.should eq "UK-5"
-    end
+#     it "returns atom name plus charge sign when charge is not zero" do
+#       Chem::AtomType.new("NZ", formal_charge: 1).to_s.should eq "NZ+"
+#       Chem::AtomType.new("OE1", formal_charge: -1).to_s.should eq "OE1-"
+#       Chem::AtomType.new("NA", formal_charge: 2).to_s.should eq "NA+2"
+#       Chem::AtomType.new("UK", formal_charge: -5).to_s.should eq "UK-5"
+#     end
 
-    it "returns atom name plus valency when its not nominal" do
-      Chem::AtomType.new("SG", valency: 1).to_s.should eq "SG(1)"
-    end
-  end
-end
+#     it "returns atom name plus valency when its not nominal" do
+#       Chem::AtomType.new("SG", valency: 1).to_s.should eq "SG(1)"
+#     end
+#   end
+# end
 
-describe Chem::BondType do
-  describe "#inspect" do
-    it "returns a string representation" do
-      Chem::BondType.new("CA", "CB").inspect.should eq "<BondType CA-CB>"
-      Chem::BondType.new("C", "O", order: 2).inspect.should eq "<BondType C=O>"
-      Chem::BondType.new("C", "N", order: 3).inspect.should eq "<BondType C#N>"
-    end
-  end
-end
+# describe Chem::BondType do
+#   describe "#inspect" do
+#     it "returns a string representation" do
+#       Chem::BondType.new("CA", "CB").inspect.should eq "<BondType CA-CB>"
+#       Chem::BondType.new("C", "O", order: 2).inspect.should eq "<BondType C=O>"
+#       Chem::BondType.new("C", "N", order: 3).inspect.should eq "<BondType C#N>"
+#     end
+#   end
+# end
 
-describe Chem::ResidueType do
-  Chem::ResidueType.register do
-    description "Anything"
-    name "LFG"
-    structure do
-      stem "N1+-C2-C3-O4-C5-C6"
-      branch "C5=O7"
-    end
-    root "C5"
-  end
+# describe Chem::ResidueType do
+#   Chem::ResidueType.register do
+#     description "Anything"
+#     name "LFG"
+#     structure do
+#       stem "N1+-C2-C3-O4-C5-C6"
+#       branch "C5=O7"
+#     end
+#     root "C5"
+#   end
 
-  describe ".fetch" do
-    it "returns a residue type by name" do
-      residue_t = Chem::ResidueType.fetch("LFG")
-      residue_t.should be_a Chem::ResidueType
-      residue_t.description.should eq "Anything"
-      residue_t.name.should eq "LFG"
-    end
+#   describe ".fetch" do
+#     it "returns a residue type by name" do
+#       residue_t = Chem::ResidueType.fetch("LFG")
+#       residue_t.should be_a Chem::ResidueType
+#       residue_t.description.should eq "Anything"
+#       residue_t.name.should eq "LFG"
+#     end
 
-    it "raises if residue type does not exist" do
-      expect_raises Chem::Error, "Unknown residue type ASD" do
-        Chem::ResidueType.fetch("ASD")
-      end
-    end
+#     it "raises if residue type does not exist" do
+#       expect_raises Chem::Error, "Unknown residue type ASD" do
+#         Chem::ResidueType.fetch("ASD")
+#       end
+#     end
 
-    it "returns block's return value if residue type does not exist" do
-      Chem::ResidueType.fetch("ASD") { nil }.should be_nil
-    end
-  end
+#     it "returns block's return value if residue type does not exist" do
+#       Chem::ResidueType.fetch("ASD") { nil }.should be_nil
+#     end
+#   end
 
-  describe ".register" do
-    it "creates a residue template with multiple names" do
-      Chem::ResidueType.register do
-        description "Anything"
-        name "LXE"
-        aliases "EGR"
-        structure "C1"
-      end
-      Chem::ResidueType.fetch("LXE").should be Chem::ResidueType.fetch("EGR")
-    end
+#   describe ".register" do
+#     it "creates a residue template with multiple names" do
+#       Chem::ResidueType.register do
+#         description "Anything"
+#         name "LXE"
+#         aliases "EGR"
+#         structure "C1"
+#       end
+#       Chem::ResidueType.fetch("LXE").should be Chem::ResidueType.fetch("EGR")
+#     end
 
-    it "fails when the residue name already exists" do
-      expect_raises Chem::Error, "LXE residue type already exists" do
-        Chem::ResidueType.register do
-          description "Anything"
-          name "LXE"
-          structure do
-            stem "C1"
-          end
-          root "C1"
-        end
-      end
-    end
-  end
+#     it "fails when the residue name already exists" do
+#       expect_raises Chem::Error, "LXE residue type already exists" do
+#         Chem::ResidueType.register do
+#           description "Anything"
+#           name "LXE"
+#           structure do
+#             stem "C1"
+#           end
+#           root "C1"
+#         end
+#       end
+#     end
+#   end
 
-  describe "#inspect" do
-    it "returns a string representation" do
-      Chem::ResidueType.build do
-        name "O2"
-        description "Molecular oxygen"
-        structure "O1=O2"
-        root "O1"
-      end.inspect.should eq "<ResidueType O2>"
+#   describe "#inspect" do
+#     it "returns a string representation" do
+#       Chem::ResidueType.build do
+#         name "O2"
+#         description "Molecular oxygen"
+#         structure "O1=O2"
+#         root "O1"
+#       end.inspect.should eq "<ResidueType O2>"
 
-      Chem::ResidueType.build do
-        name "HOH"
-        kind :solvent
-        description "Water"
-        structure "O"
-      end.inspect.should eq "<ResidueType HOH, solvent>"
+#       Chem::ResidueType.build do
+#         name "HOH"
+#         kind :solvent
+#         description "Water"
+#         structure "O"
+#       end.inspect.should eq "<ResidueType HOH, solvent>"
 
-      Chem::ResidueType.build do
-        description "Glycine"
-        name "GLY"
-        code 'G'
-        kind :protein
-        structure do
-          backbone
-          remove_atom "HA"
-        end
-      end.inspect.should eq "<ResidueType GLY(G), protein>"
-    end
-  end
-end
+#       Chem::ResidueType.build do
+#         description "Glycine"
+#         name "GLY"
+#         code 'G'
+#         kind :protein
+#         structure do
+#           backbone
+#           remove_atom "HA"
+#         end
+#       end.inspect.should eq "<ResidueType GLY(G), protein>"
+#     end
+#   end
+# end
 
 describe Chem::ResidueType::Builder do
   describe ".build" do
@@ -132,12 +132,8 @@ describe Chem::ResidueType::Builder do
         name "Gly"
         code 'G'
         kind :protein
-        structure do
-          backbone
-          remove_atom "HA"
-        end
+        structure "N(-H)-CA(-C=O)"
       end
-
       residue.atom_names.should eq ["N", "H", "CA", "HA1", "HA2", "C", "O"]
       residue.bonds.size.should eq 6
       residue.formal_charge.should eq 0
@@ -149,12 +145,8 @@ describe Chem::ResidueType::Builder do
         name "ALA"
         code 'A'
         kind :protein
-        structure do
-          backbone
-          sidechain "CB"
-        end
+        structure "{backbone}-CB"
       end
-
       residue.atom_names.should eq bb_names + ["CB", "HB1", "HB2", "HB3"]
       residue.bonds.size.should eq 9
       residue.formal_charge.should eq 0
@@ -166,15 +158,8 @@ describe Chem::ResidueType::Builder do
         name "ILE"
         code 'I'
         kind :protein
-        structure do
-          backbone
-          sidechain do
-            stem "CB-CG1-CD1"
-            branch "CB-CG2"
-          end
-        end
+        structure "{backbone}-CB(-CG1-CD1)-CG2"
       end
-
       names = bb_names + ["CB", "HB", "CG1", "HG11", "HG12", "CD1", "HD11", "HD12",
                           "HD13", "CG2", "HG21", "HG22", "HG23"]
       residue.atom_names.should eq names
@@ -188,12 +173,8 @@ describe Chem::ResidueType::Builder do
         name "LYS"
         code 'K'
         kind :protein
-        structure do
-          backbone
-          sidechain "CB-CG-CD-CE-NZ+"
-        end
+        structure "{backbone}-CB-CG-CD-CE-NZ+"
       end
-
       names = bb_names + ["CB", "HB1", "HB2", "CG", "HG1", "HG2", "CD", "HD1", "HD2",
                           "CE", "HE1", "HE2", "NZ", "HZ1", "HZ2", "HZ3"]
       residue.atom_names.should eq names
@@ -207,17 +188,9 @@ describe Chem::ResidueType::Builder do
         name "ASP"
         code 'D'
         kind :protein
-        structure do
-          backbone
-          sidechain do
-            stem "CB-CG=OE1"
-            branch "CG-OE2-"
-          end
-        end
+        structure "{backbone}-CB-CG(=OE1)-OE2-"
       end
-
-      names = bb_names + ["CB", "HB1", "HB2", "CG", "OE1", "OE2"]
-      residue.atom_names.should eq names
+      residue.atom_names.should eq(bb_names + ["CB", "HB1", "HB2", "CG", "OE1", "OE2"])
       residue.bonds.size.should eq 11
       residue.formal_charge.should eq -1
     end
@@ -227,11 +200,10 @@ describe Chem::ResidueType::Builder do
         description "Magnesium"
         name "MG"
         kind :ion
-        structure do
-          stem "MG+2"
-        end
+        structure "MG+2"
       end
-
+      residue.atom_types.size.should eq 1
+      residue.bonds.size.should eq 0
       residue.formal_charge.should eq 2
     end
 
@@ -241,13 +213,7 @@ describe Chem::ResidueType::Builder do
         name "ARG"
         code 'R'
         kind :protein
-        structure do
-          backbone
-          sidechain do
-            stem "CB-CG-CD-NE-CZ-NH1"
-            branch "CZ=NH2+"
-          end
-        end
+        structure "{backbone}-CB-CG-CD-NE-CZ(-NH1)=NH2+"
       end
 
       names = bb_names + ["CB", "HB1", "HB2", "CG", "HG1", "HG2", "CD", "HD1", "HD2",
@@ -264,13 +230,7 @@ describe Chem::ResidueType::Builder do
         name "HIS"
         code 'H'
         kind :protein
-        structure do
-          backbone
-          sidechain do
-            stem "CB-CG"
-            cycle "CG=CD2-NE2=CE1-ND1"
-          end
-        end
+        structure "{backbone}-CB-CG=CD2-NE2=CE1-ND1-CG"
       end
 
       names = bb_names + ["CB", "HB1", "HB2", "CG", "CD2", "HD2", "NE2", "CE1", "HE1",
@@ -286,13 +246,7 @@ describe Chem::ResidueType::Builder do
         name "HIS"
         code 'H'
         kind :protein
-        structure do
-          backbone
-          sidechain do
-            stem "CB-CG"
-            cycle "CG-ND1-CE1=NE2-CD2="
-          end
-        end
+        structure "{backbone}-CB-CG-ND1-CE1=NE2-CD2=CG"
       end
 
       names = bb_names + ["CB", "HB1", "HB2", "CG", "ND1", "HD1", "CE1", "HE1", "NE2",
@@ -308,14 +262,7 @@ describe Chem::ResidueType::Builder do
         name "TRP"
         code 'W'
         kind :protein
-        structure do
-          backbone
-          sidechain do
-            stem "CB-CG"
-            cycle "CG=CD1-NE1-CE2=CD2"
-            cycle "CE2-CZ2=CH2-CZ3=CE3-CD2="
-          end
-        end
+        structure "{backbone}-CB-CG=CD1-NE1-CE2(=CD2-CG)-CZ2=CH2-CZ3=CE3-CD2"
       end
 
       names = bb_names + ["CB", "HB1", "HB2", "CG", "CD1", "HD1", "NE1", "HE1", "CE2",
@@ -331,18 +278,12 @@ describe Chem::ResidueType::Builder do
         name "PRO"
         code 'P'
         kind :protein
-        structure do
-          backbone
-          remove_atom "H"
-          sidechain do
-            cycle "CA-CB-CG-CD-N"
-          end
-        end
+        structure "N-CA(-C=O)-CB-CG-CD-N"
       end
-
-      names = ["N", "CA", "HA", "C", "O", "CB", "HB1", "HB2", "CG", "HG1", "HG2", "CD",
-               "HD1", "HD2"]
-      residue.atom_names.should eq names
+      residue.atom_names.should eq [
+        "N", "CA", "HA", "C", "O", "CB", "HB1", "HB2", "CG", "HG1", "HG2", "CD",
+        "HD1", "HD2",
+      ]
       residue.bonds.size.should eq 14
       residue.formal_charge.should eq 0
     end
@@ -353,12 +294,8 @@ describe Chem::ResidueType::Builder do
         name "CYX"
         code 'C'
         kind :protein
-        structure do
-          backbone
-          sidechain "CB-SG(1)"
-        end
+        structure "{backbone}-CB-SG(1)"
       end
-
       residue.atom_names.should eq bb_names + ["CB", "HB1", "HB2", "SG"]
       residue.bonds.size.should eq 9
       residue.formal_charge.should eq 0
@@ -372,7 +309,6 @@ describe Chem::ResidueType::Builder do
         structure "S(2)=O1"
         root "S"
       end
-
       residue.atom_names.should eq ["S", "O1"]
       residue.atom_types.map(&.valency).should eq [2, 2]
       residue.formal_charge.should eq 0
@@ -392,17 +328,13 @@ describe Chem::ResidueType::Builder do
       residue_t = Chem::ResidueType.build do
         description "Fake"
         name "UNK"
-        structure do
-          stem "C1-C2-C3"
-          link_adjacent_by "C3=C1"
-        end
+        structure "C1-C2-C3"
+        link_adjacent_by "C3=C1"
         root "C2"
       end
-
       residue_t.atom_names.should eq ["C1", "H1", "C2", "H2", "H3", "C3", "H4"]
       residue_t.bonds.size.should eq 6
       residue_t.monomer?.should be_true
-
       bond_t = residue_t.link_bond.should_not be_nil
       bond_t[0].name.should eq "C3"
       bond_t[1].name.should eq "C1"
@@ -427,49 +359,32 @@ describe Chem::ResidueType::Builder do
         description "Glycerol"
         name "GOL"
         kind :solvent
-        structure do
-          stem "O1-C1-C2-C3-O3"
-          branch "C2-O2"
-        end
+        structure "O1-C1-C2(-C3-O3)-O2"
         root "C2"
       end
-
-      names = ["O1", "H1", "C1", "H4", "H5", "C2", "H6", "C3", "H7", "H8", "O3", "H3",
-               "O2", "H2"]
-      residue.atom_names.should eq names
+      residue.atom_names.should eq [
+        "O1", "H1", "C1", "H4", "H5", "C2", "H6", "C3", "H7", "H8", "O3", "H3",
+        "O2", "H2",
+      ]
     end
 
     it "builds a residue with four-letter atom names" do
       residue = Chem::ResidueType.build do
         description "C-ter"
         name "CTER"
-        structure do
-          stem "CA-C=O"
-          branch "C-OXT"
-        end
+        structure "CA-C(=O)-OXT"
         root "C"
       end
-
       residue.atom_names.should eq ["CA", "HA1", "HA2", "HA3", "C", "O", "OXT", "HXT"]
     end
 
     it "fails when adding the same bond twice with different order" do
-      # #cycle connects the first and last atoms with a single bond unless there is a
-      # bond char (-, =, # or @) at the end. In this case, both CE2=CD2 and CD2-CE2 are
-      # added
-      expect_raises Chem::Error, "Bond CD2=CE2 already exists" do
+      expect_raises Chem::ParseException, "Bond CD2=CE2 already exists" do
         Chem::ResidueType.build do
-          description "Tryptophan"
-          name "TRP"
-          code 'W'
-          kind :protein
-
-          structure do
-            backbone
-            stem "CB-CG"
-            cycle "CG=CD1-NE1-CE2=CD2"
-            cycle "CE2-CZ2=CH2-CZ3=CE3-CD2"
-          end
+          description "Unknown"
+          name "UNK"
+          structure "CD2=CE2-CD2"
+          root "CD2"
         end
       end
     end
@@ -482,26 +397,7 @@ describe Chem::ResidueType::Builder do
           name "TRP"
           code 'W'
           kind :protein
-
-          structure do
-            backbone
-            sidechain do
-              stem "CB-CG=CD"
-              branch "CG-CZ"
-              branch "CG-OTX-"
-            end
-          end
-        end
-      end
-    end
-
-    it "fails when adding a branch without existing root" do
-      msg = "Branch must start with an existing atom type, got CB"
-      expect_raises Chem::Error, msg do
-        Chem::ResidueType.build do
-          structure do
-            branch "CB-CG2"
-          end
+          structure "{backbone}-CB-CG(=CD)(-CZ)-OTX-"
         end
       end
     end
@@ -540,7 +436,7 @@ describe Chem::ResidueType::Builder do
       end
     end
 
-    it "raises if a symmetry atom is unknown" do
+    it "raises if a symmetry pair includes the same atom" do
       expect_raises(Chem::Error, "C3 cannot be symmetric with itself") do
         Chem::ResidueType.build do
           structure "C1=C2-C3=C4-C5=C6"
@@ -574,10 +470,8 @@ describe Chem::ResidueType::Builder do
         Chem::ResidueType.build do
           name "O2"
           description "Molecular oxygen"
-          structure do
-            stem "O1=O2"
-            link_adjacent_by "O1=O1"
-          end
+          structure "O1=O2"
+          link_adjacent_by "O1=O1"
           root "O"
         end
       end

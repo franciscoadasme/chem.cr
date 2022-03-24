@@ -77,6 +77,7 @@ module Chem
     end
   end
 
+  # FIXME: valency=1 is incorrect, it should only remove auto-added hydrogen
   ResidueType.register do
     description "Cysteine"
     name "CYX"

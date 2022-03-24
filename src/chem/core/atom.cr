@@ -157,6 +157,7 @@ module Chem
       (nominal_valency - valency).clamp 0..
     end
 
+    # TODO: rename to valency
     def nominal_valency : Int32
       @element.valencies.find(&.>=(valency)) || max_valency
     end
@@ -172,6 +173,10 @@ module Chem
       io << ':' << @name << '(' << @serial << ')'
     end
 
+    # TODO: this name is incorrect. Only nominal valency has a correct
+    # meaning, valency can only be a few choices. Rename to bond_order
+    # or something like that (check openbabel code)
+    # FIXME: this is completely wrong. N+ and Mg2+ behave differently.
     def valency : Int32
       if element.ionic?
         @element.max_valency
