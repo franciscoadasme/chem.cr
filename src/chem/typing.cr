@@ -60,6 +60,10 @@ module Chem
         (self[0] == rhs[1] && self[1] == rhs[0])
     end
 
+    def double? : Bool
+      @order == 2
+    end
+
     def includes?(name : String) : Bool
       any? &.name.==(name)
     end
@@ -100,6 +104,10 @@ module Chem
       end
     end
 
+    def single? : Bool
+      @order == 1
+    end
+
     def to_s(io : IO) : Nil
       bond_char = case @order
                   when 1 then '-'
@@ -108,6 +116,10 @@ module Chem
                   else        raise "BUG: unreachable"
                   end
       io << self[0].name << bond_char << self[1].name
+    end
+
+    def triple? : Bool
+      @order == 3
     end
   end
 
