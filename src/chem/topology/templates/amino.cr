@@ -4,10 +4,7 @@ module Chem
     name "ALA"
     code 'A'
     kind :protein
-    structure do
-      backbone
-      sidechain "CB"
-    end
+    structure "{backbone}-CB"
   end
 
   ResidueType.register do
@@ -15,13 +12,7 @@ module Chem
     name "ARG"
     code 'R'
     kind :protein
-    structure do
-      backbone
-      sidechain do
-        stem "CB-CG-CD-NE-CZ=NH1+"
-        branch "CZ-NH2"
-      end
-    end
+    structure "{backbone}-CB-CG-CD-NE-CZ(=NH1+)-NH2"
   end
 
   ResidueType.register do
@@ -29,13 +20,7 @@ module Chem
     name "ASH"
     code 'D'
     kind :protein
-    structure do
-      backbone
-      sidechain do
-        stem "CB-CG=OD1"
-        branch "CG-OD2"
-      end
-    end
+    structure "{backbone}-CB-CG(=OD1)-OD2"
   end
 
   ResidueType.register do
@@ -43,13 +28,7 @@ module Chem
     name "ASN"
     code 'N'
     kind :protein
-    structure do
-      backbone
-      sidechain do
-        stem "CB-CG-ND2"
-        branch "CG=OD1"
-      end
-    end
+    structure "{backbone}-CB-CG(-ND2)=OD1"
   end
 
   ResidueType.register do
@@ -57,13 +36,7 @@ module Chem
     name "ASP"
     code 'D'
     kind :protein
-    structure do
-      backbone
-      sidechain do
-        stem "CB-CG=OD1"
-        branch "CG-OD2-"
-      end
-    end
+    structure "{backbone}-CB-CG(=OD1)-OD2-"
   end
 
   ResidueType.register do
@@ -71,10 +44,7 @@ module Chem
     name "CYS"
     code 'C'
     kind :protein
-    structure do
-      backbone
-      sidechain "CB-SG(2)"
-    end
+    structure "{backbone}-CB-SG(2)"
   end
 
   # FIXME: valency=1 is incorrect, it should only remove auto-added hydrogen
@@ -83,10 +53,7 @@ module Chem
     name "CYX"
     code 'C'
     kind :protein
-    structure do
-      backbone
-      sidechain "CB-SG(1)"
-    end
+    structure "{backbone}-CB-SG(1)"
   end
 
   ResidueType.register do
@@ -94,13 +61,7 @@ module Chem
     name "GLH"
     code 'E'
     kind :protein
-    structure do
-      backbone
-      sidechain do
-        stem "CB-CG-CD=OE1"
-        branch "CD-OE2"
-      end
-    end
+    structure "{backbone}-CB-CG-CD(=OE1)-OE2"
   end
 
   ResidueType.register do
@@ -108,13 +69,7 @@ module Chem
     name "GLN"
     code 'Q'
     kind :protein
-    structure do
-      backbone
-      sidechain do
-        stem "CB-CG-CD=OE1"
-        branch "CD-NE2"
-      end
-    end
+    structure "{backbone}-CB-CG-CD(=OE1)-NE2"
   end
 
   ResidueType.register do
@@ -122,13 +77,7 @@ module Chem
     name "GLU"
     code 'E'
     kind :protein
-    structure do
-      backbone
-      sidechain do
-        stem "CB-CG-CD=OE1"
-        branch "CD-OE2-"
-      end
-    end
+    structure "{backbone}-CB-CG-CD(=OE1)-OE2-"
   end
 
   ResidueType.register do
@@ -136,52 +85,34 @@ module Chem
     name "GLY"
     code 'G'
     kind :protein
-    structure do
-      backbone
-      remove_atom "HA"
-    end
+    structure "N(-H)-CA(-C=O)"
   end
 
   ResidueType.register do
     description "Histidine"
     name "HIS"
+    aliases "HID", "HSD"
     code 'H'
     kind :protein
-    structure do
-      backbone
-      sidechain do
-        stem "CB-CG"
-        cycle "CG=CD2-NE2=CE1-ND1"
-      end
-    end
+    structure "{backbone}-CB-CG=CD2-NE2=CE1-ND1-CG"
   end
 
   ResidueType.register do
     description "Histidine"
     name "HIE"
+    aliases "HSE"
     code 'H'
     kind :protein
-    structure do
-      backbone
-      sidechain do
-        stem "CB-CG"
-        cycle "CG=CD2-NE2-CE1=ND1"
-      end
-    end
+    structure "{backbone}-CB-CG=CD2-NE2-CE1=ND1-CG"
   end
 
   ResidueType.register do
     description "Histidine"
     name "HIP"
+    aliases "HSP"
     code 'H'
     kind :protein
-    structure do
-      backbone
-      sidechain do
-        stem "CB-CG"
-        cycle "CG=CD2-NE2+=CE1-ND1"
-      end
-    end
+    structure "{backbone}-CB-CG=CD2-NE2+=CE1-ND1-CG"
   end
 
   ResidueType.register do
@@ -189,13 +120,7 @@ module Chem
     name "ILE"
     code 'I'
     kind :protein
-    structure do
-      backbone
-      sidechain do
-        stem "CB-CG1-CD1"
-        branch "CB-CG2"
-      end
-    end
+    structure "{backbone}-CB(-CG1-CD1)-CG2"
   end
 
   ResidueType.register do
@@ -203,13 +128,7 @@ module Chem
     name "LEU"
     code 'L'
     kind :protein
-    structure do
-      backbone
-      sidechain do
-        stem "CB-CG-CD1"
-        branch "CG-CD2"
-      end
-    end
+    structure "{backbone}-CB-CG(-CD1)-CD2"
     symmetry({"CD1", "CD2"})
   end
 
@@ -218,10 +137,7 @@ module Chem
     name "LYS"
     code 'K'
     kind :protein
-    structure do
-      backbone
-      sidechain "CB-CG-CD-CE-NZ+"
-    end
+    structure "{backbone}-CB-CG-CD-CE-NZ+"
   end
 
   ResidueType.register do
@@ -229,10 +145,8 @@ module Chem
     name "MET"
     code 'M'
     kind :protein
-    structure do
-      backbone
-      sidechain "CB-CG-SD(2)-CE"
-    end
+    # FIXME: no need for SD(2)... should default to valency of 2
+    structure "{backbone}-CB-CG-SD(2)-CE"
   end
 
   ResidueType.register do
@@ -240,13 +154,7 @@ module Chem
     name "PHE"
     code 'F'
     kind :protein
-    structure do
-      backbone
-      sidechain do
-        stem "CB-CG"
-        cycle "CG=CD1-CE1=CZ-CE2=CD2"
-      end
-    end
+    structure "{backbone}-CB-CG=CD1-CE1=CZ-CE2=CD2-CG"
     symmetry({"CD1", "CD2"}, {"CE1", "CE2"})
   end
 
@@ -255,14 +163,7 @@ module Chem
     name "PRO"
     code 'P'
     kind :protein
-
-    structure do
-      backbone
-      remove_atom "H"
-      sidechain do
-        cycle "CA-CB-CG-CD-N"
-      end
-    end
+    structure "N-CA(-C=O)-CB-CG-CD-N"
   end
 
   ResidueType.register do
@@ -270,10 +171,7 @@ module Chem
     name "SER"
     code 'S'
     kind :protein
-    structure do
-      backbone
-      sidechain "CB-OG"
-    end
+    structure "{backbone}-CB-OG"
   end
 
   ResidueType.register do
@@ -281,13 +179,7 @@ module Chem
     name "THR"
     code 'T'
     kind :protein
-    structure do
-      backbone
-      sidechain do
-        stem "CB-OG1"
-        branch "CB-CG2"
-      end
-    end
+    structure "{backbone}-CB(-OG1)-CG2"
   end
 
   ResidueType.register do
@@ -295,14 +187,7 @@ module Chem
     name "TRP"
     code 'W'
     kind :protein
-    structure do
-      backbone
-      sidechain do
-        stem "CB-CG"
-        cycle "CG=CD1-NE1-CE2=CD2"
-        cycle "CE2-CZ2=CH2-CZ3=CE3-CD2="
-      end
-    end
+    structure "{backbone}-CB-CG=CD1-NE1-CE2(-CZ2=CH2-CZ3=CE3-CD2)=CD2-CG"
   end
 
   ResidueType.register do
@@ -310,14 +195,7 @@ module Chem
     name "TYR"
     code 'Y'
     kind :protein
-    structure do
-      backbone
-      sidechain do
-        stem "CB-CG"
-        cycle "CG=CD1-CE1=CZ-CE2=CD2"
-        branch "CZ-OH"
-      end
-    end
+    structure "{backbone}-CB-CG=CD1-CE1=CZ(-OH)-CE2=CD2-CG"
     symmetry({"CD1", "CD2"}, {"CE1", "CE2"})
   end
 
@@ -326,13 +204,7 @@ module Chem
     name "VAL"
     code 'V'
     kind :protein
-    structure do
-      backbone
-      sidechain do
-        stem "CB-CG1"
-        branch "CB-CG2"
-      end
-    end
+    structure "{backbone}-CB(-CG1)-CG2"
     symmetry({"CG1", "CG2"})
   end
 end

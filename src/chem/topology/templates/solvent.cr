@@ -4,8 +4,6 @@ module Chem
     name "HOH"
     aliases "WAT", "TIP3"
     kind :solvent
-    structure do
-      stem "O"
-    end
+    structure "O"
   end
 end

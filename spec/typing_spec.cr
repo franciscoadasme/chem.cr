@@ -41,10 +41,7 @@ describe Chem::ResidueType do
   Chem::ResidueType.register do
     description "Anything"
     name "LFG"
-    structure do
-      stem "N1+-C2-C3-O4-C5-C6"
-      branch "C5=O7"
-    end
+    structure "N1+-C2-C3-O4-C5(-C6)=O7"
     root "C5"
   end
 
@@ -83,9 +80,7 @@ describe Chem::ResidueType do
         Chem::ResidueType.register do
           description "Anything"
           name "LXE"
-          structure do
-            stem "C1"
-          end
+          structure "C1"
           root "C1"
         end
       end
@@ -113,10 +108,7 @@ describe Chem::ResidueType do
         name "GLY"
         code 'G'
         kind :protein
-        structure do
-          backbone
-          remove_atom "HA"
-        end
+        structure "N(-H)-CA(-C=O)"
       end.inspect.should eq "<ResidueType GLY(G), protein>"
     end
   end
@@ -406,16 +398,9 @@ describe Chem::ResidueType::Builder do
       residue = Chem::ResidueType.build do
         description "Donepezil"
         name "E20"
-        structure do
-          cycle "C1=C2-C3=C4-C5=C6"
-          branch "C1-O25-C26"
-          branch "C2-O27-C28"
-          cycle "C4-C9-C8-C7-C5"
-          branch "C8-C10-C11"
-          cycle "C11-C12-C13-N14-C15-C16"
-          branch "N14-C17-C18"
-          cycle "C18=C19-C20=C21-C22=C23"
-        end
+        structure "C1(-O25-C26)=C2(-O27-C28)-C3=C4(-C5=C6-C1)-C9-C8\
+                   (-C7(=O24)-C5)-C10-C11-C12-C13-N14(-C15-C16-C11)\
+                   -C17-C18=C19-C20=C21-C22=C23-C18"
         root "C1"
         symmetry({"C12", "C16"}, {"C13", "C15"})
         symmetry({"C19", "C23"}, {"C20", "C22"})

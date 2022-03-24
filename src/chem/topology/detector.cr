@@ -3,20 +3,14 @@ class Chem::Topology::Detector
     description "C-ter"
     name "CTER"
     code 'c'
-    structure do
-      stem "CA-C=O"
-      branch "C-OXT"
-    end
+    structure "CA-C(=O)-OXT"
     root "C"
   end
   CHARGED_CTER_T = ResidueType.build do
     description "Charged C-ter"
     name "CTER"
     code 'c'
-    structure do
-      stem "CA-C=O"
-      branch "C-OXT-"
-    end
+    structure "CA-C(=O)-OXT-"
     root "C"
   end
   NTER_T = ResidueType.build do
