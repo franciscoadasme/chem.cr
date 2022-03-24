@@ -813,7 +813,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/82ab4a8a5584995856ed1bc3922695e46a8c37f8/src/chem/typing.cr#L228" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/67387bf506a73dca49de39e04c7678fbe1bcda58/src/chem/typing.cr#L240" target="_blank">
         chem/typing.cr
       </a>
     
@@ -839,11 +839,6 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#aliases%28%2Anames%3AString%29-instance-method" class="signature"><strong>#aliases</strong>(*names : String)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
         <a href="#code%28char%3AChar%29%3ANil-instance-method" class="signature"><strong>#code</strong>(char : Char) : Nil</a>
         
       </li>
@@ -864,7 +859,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#name%28name%3AString%29-instance-method" class="signature"><strong>#name</strong>(name : String)</a>
+        <a href="#name%28%2Anames%3AString%29-instance-method" class="signature"><strong>#name</strong>(*names : String)</a>
         
       </li>
     
@@ -874,12 +869,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#structure%28spec%3AString%29%3ANil-instance-method" class="signature"><strong>#structure</strong>(spec : String) : Nil</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#structure%28%26%29-instance-method" class="signature"><strong>#structure</strong>(&)</a>
+        <a href="#structure%28spec%3AString%2Caliases%3AHash%28String%2CString%29%3F%3Dnil%29%3ANil-instance-method" class="signature"><strong>#structure</strong>(spec : String, aliases : Hash(String, String)? = <span class="n">nil</span>) : Nil</a>
         
       </li>
     
@@ -932,22 +922,6 @@
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="aliases(*names:String)-instance-method">
-      <div class="signature">
-        
-        def <strong>aliases</strong>(*names : String)
-
-        <a class="method-permalink" href="#aliases%28%2Anames%3AString%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/82ab4a8a5584995856ed1bc3922695e46a8c37f8/src/chem/typing.cr#L259" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
     <div class="entry-detail" id="code(char:Char):Nil-instance-method">
       <div class="signature">
         
@@ -959,7 +933,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/82ab4a8a5584995856ed1bc3922695e46a8c37f8/src/chem/typing.cr#L287" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/67387bf506a73dca49de39e04c7678fbe1bcda58/src/chem/typing.cr#L295" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -975,7 +949,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/82ab4a8a5584995856ed1bc3922695e46a8c37f8/src/chem/typing.cr#L320" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/67387bf506a73dca49de39e04c7678fbe1bcda58/src/chem/typing.cr#L328" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -991,7 +965,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/82ab4a8a5584995856ed1bc3922695e46a8c37f8/src/chem/typing.cr#L324" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/67387bf506a73dca49de39e04c7678fbe1bcda58/src/chem/typing.cr#L332" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1007,23 +981,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/82ab4a8a5584995856ed1bc3922695e46a8c37f8/src/chem/typing.cr#L328" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/67387bf506a73dca49de39e04c7678fbe1bcda58/src/chem/typing.cr#L336" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="name(name:String)-instance-method">
+    <div class="entry-detail" id="name(*names:String)-instance-method">
       <div class="signature">
         
-        def <strong>name</strong>(name : String)
+        def <strong>name</strong>(*names : String)
 
-        <a class="method-permalink" href="#name%28name%3AString%29-instance-method">#</a>
+        <a class="method-permalink" href="#name%28%2Anames%3AString%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/82ab4a8a5584995856ed1bc3922695e46a8c37f8/src/chem/typing.cr#L364" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/67387bf506a73dca49de39e04c7678fbe1bcda58/src/chem/typing.cr#L372" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1039,39 +1013,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/82ab4a8a5584995856ed1bc3922695e46a8c37f8/src/chem/typing.cr#L368" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/67387bf506a73dca49de39e04c7678fbe1bcda58/src/chem/typing.cr#L376" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="structure(spec:String):Nil-instance-method">
+    <div class="entry-detail" id="structure(spec:String,aliases:Hash(String,String)?=nil):Nil-instance-method">
       <div class="signature">
         
-        def <strong>structure</strong>(spec : String) : Nil
+        def <strong>structure</strong>(spec : String, aliases : Hash(String, String)? = <span class="n">nil</span>) : Nil
 
-        <a class="method-permalink" href="#structure%28spec%3AString%29%3ANil-instance-method">#</a>
+        <a class="method-permalink" href="#structure%28spec%3AString%2Caliases%3AHash%28String%2CString%29%3F%3Dnil%29%3ANil-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/82ab4a8a5584995856ed1bc3922695e46a8c37f8/src/chem/typing.cr#L372" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="structure(&amp;)-instance-method">
-      <div class="signature">
-        
-        def <strong>structure</strong>(&)
-
-        <a class="method-permalink" href="#structure%28%26%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/82ab4a8a5584995856ed1bc3922695e46a8c37f8/src/chem/typing.cr#L382" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/67387bf506a73dca49de39e04c7678fbe1bcda58/src/chem/typing.cr#L380" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1087,7 +1045,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/82ab4a8a5584995856ed1bc3922695e46a8c37f8/src/chem/typing.cr#L388" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/67387bf506a73dca49de39e04c7678fbe1bcda58/src/chem/typing.cr#L387" target="_blank">View source</a>]
         
       </div>
     </div>
