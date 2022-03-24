@@ -743,7 +743,7 @@ module Chem
         when .nil?
           break
         else
-          parse_exception("Invalid character #{char}")
+          parse_exception("Invalid character #{char.inspect}")
         end
       end
       parse_exception("Unclosed branch") unless root_stack.empty?
