@@ -5,10 +5,10 @@ class Chem::AtomType
   getter valency : Int32
 
   def initialize(@name : String,
+                 element : Element | String,
                  @formal_charge : Int32 = 0,
-                 element : String? = nil,
                  valency : Int32? = nil)
-    @element = element ? PeriodicTable[element] : PeriodicTable[atom_name: name]
+    @element = element.is_a?(Element) ? element : PeriodicTable[element]
     @valency = valency || nominal_valency
   end
 

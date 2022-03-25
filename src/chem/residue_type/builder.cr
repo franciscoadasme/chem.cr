@@ -22,7 +22,7 @@ class Chem::ResidueType::Builder
       h_count.times do |j|
         h_i += 1
         name = use_name_suffix ? "H#{atom_t.suffix}#{j + 1 if h_count > 1}" : "H#{h_i}"
-        atom_type = AtomType.new(name, element: "H")
+        atom_type = AtomType.new(name, element: PeriodicTable::H)
         @atom_types.insert i + 1 + j, atom_type
         @bonds << BondType.new(atom_t, atom_type)
       end

@@ -10,10 +10,6 @@ class Chem::BondType
     @atoms = StaticArray[lhs, rhs]
   end
 
-  def self.new(lhs : String, rhs : String, order : Int = 1) : self
-    BondType.new AtomType.new(lhs), AtomType.new(rhs), order
-  end
-
   def ==(rhs : self) : Bool
     return false if @order != rhs.order
     (self[0] == rhs[0] && self[1] == rhs[1]) ||

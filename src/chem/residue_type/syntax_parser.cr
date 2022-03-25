@@ -195,10 +195,11 @@ class Chem::ResidueType::SyntaxParser
       break unless next_char
     end
 
-    atom_type || AtomType.new(atom_name, formal_charge, element, valency)
+    element ||= PeriodicTable[atom_name: atom_name]
+    atom_type || AtomType.new(atom_name, element, formal_charge, valency)
   end
 
-  private def read_element : String
+  private def read_element : Element
     symbol = String.build do |io|
       io << @reader.current_char if @reader.current_char.ascii_uppercase?
       if (char = peek_char) && char.ascii_lowercase?
@@ -207,7 +208,7 @@ class Chem::ResidueType::SyntaxParser
       end
     end
     parse_exception("Expected element") if symbol.empty?
-    symbol
+    PeriodicTable[symbol]
   end
 
   private def read_int : Int32
