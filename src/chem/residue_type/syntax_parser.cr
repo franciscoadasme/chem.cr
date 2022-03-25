@@ -24,7 +24,7 @@ class Chem::ResidueType::SyntaxParser
 
   private def consume_element : String
     symbol = String.build do |io|
-      io << current_char if current_char.ascii_uppercase?
+      io << @reader.current_char if @reader.current_char.ascii_uppercase?
       if (char = peek_char) && char.ascii_lowercase?
         io << char
         next_char
@@ -39,8 +39,8 @@ class Chem::ResidueType::SyntaxParser
   end
 
   private def consume_while(io : IO, & : Char -> Bool) : Nil
-    if (yield current_char)
-      io << current_char
+    if (yield @reader.current_char)
+      io << @reader.current_char
     end
     while (char = peek_char) && (yield char)
       io << char
@@ -54,10 +54,6 @@ class Chem::ResidueType::SyntaxParser
         yield char
       end
     end
-  end
-
-  private def current_char
-    @reader.current_char
   end
 
   private def next_char : Char?
