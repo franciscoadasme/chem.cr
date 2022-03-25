@@ -21,9 +21,9 @@ describe Chem::ResidueType::SyntaxParser do
 
   it "parses a complex residue" do
     parser = Chem::ResidueType::SyntaxParser.new <<-SPEC.gsub(/\s+/, "")
-      C1(-O25-C26)=C2(-O27-C28)-C3=C4(-C5=C6-C1)-C9-C8
-      (-C7(=O24)-C5)-C10-C11-C12-C13-N14(-C15-C16-C11)
-      -C17-C18=C19-C20=C21-C22=C23-C18
+      C1%1(-O25-C26)=C2(-O27-C28)-C3=C4(-C5%2=C6-%1)-C9-C8
+      (-C7(=O24)-%2)-C10-C11%3-C12-C13-N14(-C15-C16-%3)
+      -C17-C18%4=C19-C20=C21-C22=C23-%4
     SPEC
     parser.parse
     parser.atom_types.size.should eq 28
@@ -32,14 +32,14 @@ describe Chem::ResidueType::SyntaxParser do
   end
 
   it "raises if a bond specifies the same atom" do
-    expect_raises Chem::Error, "Atom O cannot be bonded to itself" do
-      Chem::ResidueType::SyntaxParser.new("O=O").parse
+    expect_raises Chem::ParseException, "Atom O cannot be bonded to itself" do
+      Chem::ResidueType::SyntaxParser.new("O%1=%1").parse
     end
   end
 
   it "raises when adding the same bond twice with different order" do
     expect_raises Chem::ParseException, "Bond CD2=CE2 already exists" do
-      Chem::ResidueType::SyntaxParser.new("CD2=CE2-CD2").parse
+      Chem::ResidueType::SyntaxParser.new("CD2%1=CE2-%1").parse
     end
   end
 

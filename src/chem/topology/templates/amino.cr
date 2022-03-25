@@ -93,7 +93,7 @@ module Chem
     name "HIS", "HID", "HSD"
     code 'H'
     kind :protein
-    structure "{backbone}-CB-CG=CD2-NE2=CE1-ND1-CG"
+    structure "{backbone}-CB-CG%1=CD2-NE2=CE1-ND1-%1"
   end
 
   ResidueType.register do
@@ -101,7 +101,7 @@ module Chem
     name "HIE", "HSE"
     code 'H'
     kind :protein
-    structure "{backbone}-CB-CG=CD2-NE2-CE1=ND1-CG"
+    structure "{backbone}-CB-CG%1=CD2-NE2-CE1=ND1-%1"
   end
 
   ResidueType.register do
@@ -109,7 +109,7 @@ module Chem
     name "HIP", "HSP"
     code 'H'
     kind :protein
-    structure "{backbone}-CB-CG=CD2-NE2+=CE1-ND1-CG"
+    structure "{backbone}-CB-CG%1=CD2-NE2+=CE1-ND1-%1"
   end
 
   ResidueType.register do
@@ -151,7 +151,7 @@ module Chem
     name "PHE"
     code 'F'
     kind :protein
-    structure "{backbone}-CB-CG=CD1-CE1=CZ-CE2=CD2-CG"
+    structure "{backbone}-CB-CG%1=CD1-CE1=CZ-CE2=CD2-%1"
     symmetry({"CD1", "CD2"}, {"CE1", "CE2"})
   end
 
@@ -160,7 +160,7 @@ module Chem
     name "PRO"
     code 'P'
     kind :protein
-    structure "N-CA(-C=O)-CB-CG-CD-N"
+    structure "N%1-CA(-C=O)-CB-CG-CD-%1"
   end
 
   ResidueType.register do
@@ -184,7 +184,7 @@ module Chem
     name "TRP"
     code 'W'
     kind :protein
-    structure "{backbone}-CB-CG=CD1-NE1-CE2(-CZ2=CH2-CZ3=CE3-CD2)=CD2-CG"
+    structure "{backbone}-CB-CG%1=CD1-NE1-CE2(-CZ2=CH2-CZ3=CE3-CD2%2)=%2-%1"
   end
 
   ResidueType.register do
@@ -192,7 +192,7 @@ module Chem
     name "TYR"
     code 'Y'
     kind :protein
-    structure "{backbone}-CB-CG=CD1-CE1=CZ(-OH)-CE2=CD2-CG"
+    structure "{backbone}-CB-CG%1=CD1-CE1=CZ(-OH)-CE2=CD2-%1"
     symmetry({"CD1", "CD2"}, {"CE1", "CE2"})
   end
 

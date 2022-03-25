@@ -108,7 +108,7 @@ describe Chem::ResidueType::Builder do
         name "HIS"
         code 'H'
         kind :protein
-        structure "{backbone}-CB-CG=CD2-NE2=CE1-ND1-CG"
+        structure "{backbone}-CB-CG%1=CD2-NE2=CE1-ND1-%1"
       end
 
       names = bb_names + ["CB", "HB1", "HB2", "CG", "CD2", "HD2", "NE2", "CE1", "HE1",
@@ -124,7 +124,7 @@ describe Chem::ResidueType::Builder do
         name "HIS"
         code 'H'
         kind :protein
-        structure "{backbone}-CB-CG-ND1-CE1=NE2-CD2=CG"
+        structure "{backbone}-CB-CG%1-ND1-CE1=NE2-CD2=%1"
       end
 
       names = bb_names + ["CB", "HB1", "HB2", "CG", "ND1", "HD1", "CE1", "HE1", "NE2",
@@ -140,7 +140,7 @@ describe Chem::ResidueType::Builder do
         name "TRP"
         code 'W'
         kind :protein
-        structure "{backbone}-CB-CG=CD1-NE1-CE2(=CD2-CG)-CZ2=CH2-CZ3=CE3-CD2"
+        structure "{backbone}-CB-CG%1=CD1-NE1-CE2(=CD2%2-%1)-CZ2=CH2-CZ3=CE3-%2"
       end
 
       names = bb_names + ["CB", "HB1", "HB2", "CG", "CD1", "HD1", "NE1", "HE1", "CE2",
@@ -156,7 +156,7 @@ describe Chem::ResidueType::Builder do
         name "PRO"
         code 'P'
         kind :protein
-        structure "N-CA(-C=O)-CB-CG-CD-N"
+        structure "N%1-CA(-C=O)-CB-CG-CD-%1"
       end
       residue.atom_names.should eq [
         "N", "CA", "HA", "C", "O", "CB", "HB1", "HB2", "CG", "HG1", "HG2", "CD",
@@ -237,9 +237,11 @@ describe Chem::ResidueType::Builder do
       residue = Chem::ResidueType.build do
         description "Donepezil"
         name "E20"
-        structure "C1(-O25-C26)=C2(-O27-C28)-C3=C4(-C5=C6-C1)-C9-C8\
-                   (-C7(=O24)-C5)-C10-C11-C12-C13-N14(-C15-C16-C11)\
-                   -C17-C18=C19-C20=C21-C22=C23-C18"
+        structure <<-SPEC.gsub(/\s+/, "")
+          C1%1(-O25-C26)=C2(-O27-C28)-C3=C4(-C5%2=C6-%1)-C9-C8
+          (-C7(=O24)-%2)-C10-C11%3-C12-C13-N14(-C15-C16-%3)
+          -C17-C18%4=C19-C20=C21-C22=C23-%4
+          SPEC
         root "C1"
         symmetry({"C12", "C16"}, {"C13", "C15"})
         symmetry({"C19", "C23"}, {"C20", "C22"})
@@ -254,7 +256,7 @@ describe Chem::ResidueType::Builder do
     it "raises if a symmetry atom is unknown" do
       expect_raises(Chem::Error, "Unknown atom type C13") do
         Chem::ResidueType.build do
-          structure "C1=C2-C3=C4-C5=C6"
+          structure "C1%1=C2-C3=C4-C5=C6-%1"
           symmetry({"C2", "C5"}, {"C13", "C15"})
         end
       end
@@ -263,7 +265,7 @@ describe Chem::ResidueType::Builder do
     it "raises if a symmetry pair includes the same atom" do
       expect_raises(Chem::Error, "C3 cannot be symmetric with itself") do
         Chem::ResidueType.build do
-          structure "C1=C2-C3=C4-C5=C6"
+          structure "C1%1=C2-C3=C4-C5=C6-%1"
           symmetry({"C2", "C4"}, {"C3", "C3"})
         end
       end
@@ -272,7 +274,7 @@ describe Chem::ResidueType::Builder do
     it "raises if a symmetry atom is repeated" do
       expect_raises(Chem::Error, "C2 cannot be reassigned for symmetry") do
         Chem::ResidueType.build do
-          structure "C1=C2-C3=C4-C5=C6"
+          structure "C1%1=C2-C3=C4-C5=C6-%1"
           symmetry({"C2", "C4"}, {"C5", "C2"})
         end
       end
