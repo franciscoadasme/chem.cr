@@ -461,13 +461,6 @@ module Chem
       @reader.current_char
     end
 
-    private def each_char(& : Char ->) : Nil
-      loop do
-        yield current_char
-        break unless next_char
-      end
-    end
-
     private def next_char : Char?
       if @reader.has_next?
         char = @reader.next_char
@@ -479,8 +472,8 @@ module Chem
       bond_atom = nil
       bond_order = 1
       root_stack = Deque(AtomType).new
-      each_char do |char|
-        case char
+      loop do
+        case char = @reader.current_char
         when .ascii_letter?
           atom_type = read_atom_type
           @atom_type_map[atom_type.name] ||= atom_type
@@ -534,6 +527,7 @@ module Chem
         else
           parse_exception("Invalid character #{char.inspect}")
         end
+        break unless next_char
       end
       parse_exception("Unclosed branch") unless root_stack.empty?
     end
@@ -563,8 +557,8 @@ module Chem
       element = nil
       formal_charge = 0
       valency = nil
-      each_char do |char|
-        case char
+      loop do
+        case char = @reader.current_char
         when '+'
           formal_charge = peek_char.try(&.ascii_number?) ? consume_int : 1
         when '-'
@@ -606,6 +600,7 @@ module Chem
           @reader.previous_char
           break
         end
+        break unless next_char
       end
 
       atom_type || AtomType.new(atom_name, formal_charge, element, valency)
