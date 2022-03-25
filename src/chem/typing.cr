@@ -563,13 +563,13 @@ module Chem
           formal_charge = peek_char.try(&.ascii_number?) ? consume_int : 1
         when '-'
           case peek_char
-          when .nil?, '-' # minus charge
+          when .nil?, '-' # minus charge (end of str or --, which is equal to -1-)
             parse_exception("Cannot modify charge of #{atom_name}") if atom_type
             formal_charge = -1
           when .ascii_number? # minus charge as -2, -3, etc.
             parse_exception("Cannot modify charge of #{atom_name}") if atom_type
             formal_charge = consume_int * -1
-          when .ascii_letter? # single bond
+          else # single bond
             @reader.previous_char
             break
           end
