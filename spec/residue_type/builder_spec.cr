@@ -1,117 +1,4 @@
-require "./spec_helper"
-
-describe Chem::AtomType do
-  describe "#inspect" do
-    it "returns a string representation" do
-      Chem::AtomType.new("CA").inspect.should eq "<AtomType CA>"
-      Chem::AtomType.new("NZ", formal_charge: 1).inspect.should eq "<AtomType NZ+>"
-      Chem::AtomType.new("SG", valency: 1).inspect.should eq "<AtomType SG(1)>"
-    end
-  end
-
-  describe "#to_s" do
-    it "returns atom name" do
-      Chem::AtomType.new("CA").to_s.should eq "CA"
-    end
-
-    it "returns atom name plus charge sign when charge is not zero" do
-      Chem::AtomType.new("NZ", formal_charge: 1).to_s.should eq "NZ+"
-      Chem::AtomType.new("OE1", formal_charge: -1).to_s.should eq "OE1-"
-      Chem::AtomType.new("NA", formal_charge: 2).to_s.should eq "NA+2"
-      Chem::AtomType.new("UK", formal_charge: -5).to_s.should eq "UK-5"
-    end
-
-    it "returns atom name plus valency when its not nominal" do
-      Chem::AtomType.new("SG", valency: 1).to_s.should eq "SG(1)"
-    end
-  end
-end
-
-describe Chem::BondType do
-  describe "#inspect" do
-    it "returns a string representation" do
-      Chem::BondType.new("CA", "CB").inspect.should eq "<BondType CA-CB>"
-      Chem::BondType.new("C", "O", order: 2).inspect.should eq "<BondType C=O>"
-      Chem::BondType.new("C", "N", order: 3).inspect.should eq "<BondType C#N>"
-    end
-  end
-end
-
-describe Chem::ResidueType do
-  Chem::ResidueType.register do
-    description "Anything"
-    name "LFG"
-    structure "N1+-C2-C3-O4-C5(-C6)=O7"
-    root "C5"
-  end
-
-  describe ".fetch" do
-    it "returns a residue type by name" do
-      residue_t = Chem::ResidueType.fetch("LFG")
-      residue_t.should be_a Chem::ResidueType
-      residue_t.description.should eq "Anything"
-      residue_t.name.should eq "LFG"
-    end
-
-    it "raises if residue type does not exist" do
-      expect_raises Chem::Error, "Unknown residue type ASD" do
-        Chem::ResidueType.fetch("ASD")
-      end
-    end
-
-    it "returns block's return value if residue type does not exist" do
-      Chem::ResidueType.fetch("ASD") { nil }.should be_nil
-    end
-  end
-
-  describe ".register" do
-    it "creates a residue template with multiple names" do
-      Chem::ResidueType.register do
-        description "Anything"
-        name "LXE", "EGR"
-        structure "C1"
-      end
-      Chem::ResidueType.fetch("LXE").should be Chem::ResidueType.fetch("EGR")
-    end
-
-    it "fails when the residue name already exists" do
-      expect_raises Chem::Error, "LXE residue type already exists" do
-        Chem::ResidueType.register do
-          description "Anything"
-          name "LXE"
-          structure "C1"
-          root "C1"
-        end
-      end
-    end
-  end
-
-  describe "#inspect" do
-    it "returns a string representation" do
-      Chem::ResidueType.build do
-        name "O2"
-        description "Molecular oxygen"
-        structure "O1=O2"
-        root "O1"
-      end.inspect.should eq "<ResidueType O2>"
-
-      Chem::ResidueType.build do
-        name "HOH"
-        kind :solvent
-        description "Water"
-        structure "O"
-      end.inspect.should eq "<ResidueType HOH, solvent>"
-
-      Chem::ResidueType.build do
-        description "Glycine"
-        name "GLY"
-        code 'G'
-        kind :protein
-        structure "N(-H)-CA(-C=O)"
-      end.inspect.should eq "<ResidueType GLY(G), protein>"
-    end
-  end
-end
+require "../spec_helper"
 
 describe Chem::ResidueType::Builder do
   describe ".build" do
@@ -279,42 +166,6 @@ describe Chem::ResidueType::Builder do
       residue.formal_charge.should eq 0
     end
 
-    it "builds a residue having an atom with explicit valency" do
-      residue = Chem::ResidueType.build do
-        description "Cysteine"
-        name "CYX"
-        code 'C'
-        kind :protein
-        structure "{backbone}-CB-SG(1)"
-      end
-      residue.atom_names.should eq bb_names + ["CB", "HB1", "HB2", "SG"]
-      residue.bonds.size.should eq 9
-      residue.formal_charge.should eq 0
-    end
-
-    it "builds a residue having an atom with explicit valency followed by a bond" do
-      residue = Chem::ResidueType.build do
-        description "Sulfate"
-        name "SO4"
-        kind :ion
-        structure "S(2)=O1"
-        root "S"
-      end
-      residue.atom_names.should eq ["S", "O1"]
-      residue.atom_types.map(&.valency).should eq [2, 2]
-      residue.formal_charge.should eq 0
-    end
-
-    it "builds a residue having an atom with explicit element" do
-      residue = Chem::ResidueType.build do
-        description "Calcium"
-        name "CA"
-        kind :ion
-        structure "CA[Ca]"
-      end
-      residue.atom_types[0].element.should eq Chem::PeriodicTable::Ca
-    end
-
     it "builds a polymer residue" do
       residue_t = Chem::ResidueType.build do
         description "Fake"
@@ -367,17 +218,6 @@ describe Chem::ResidueType::Builder do
         root "C"
       end
       residue.atom_names.should eq ["CA", "HA1", "HA2", "HA3", "C", "O", "OXT", "HXT"]
-    end
-
-    it "fails when adding the same bond twice with different order" do
-      expect_raises Chem::ParseException, "Bond CD2=CE2 already exists" do
-        Chem::ResidueType.build do
-          description "Unknown"
-          name "UNK"
-          structure "CD2=CE2-CD2"
-          root "CD2"
-        end
-      end
     end
 
     it "fails on incorrect valency" do
@@ -438,17 +278,6 @@ describe Chem::ResidueType::Builder do
       end
     end
 
-    it "raises if a bond specifies the same atom" do
-      expect_raises Chem::Error, "Atom O cannot be bonded to itself" do
-        Chem::ResidueType.build do
-          name "O2"
-          description "Molecular oxygen"
-          structure "O=O"
-          root "O"
-        end
-      end
-    end
-
     it "raises if the link bond specifies the same atom" do
       expect_raises Chem::Error, "Atom O1 cannot be bonded to itself" do
         Chem::ResidueType.build do
@@ -459,40 +288,6 @@ describe Chem::ResidueType::Builder do
           root "O"
         end
       end
-    end
-
-    it "builds a complex residue" do
-      residue = Chem::ResidueType.build do
-        description "Donepezil"
-        name "E20"
-        structure "C1(-O25-C26)=C2(-O27-C28)-C3=C4(-C5=C6-C1)-C9-C8\
-                   (-C7(=O24)-C5)-C10-C11-C12-C13-N14(-C15-C16-C11)\
-                   -C17-C18=C19-C20=C21-C22=C23-C18"
-        root "C1"
-      end
-      residue.atom_types.size.should eq 28 + 29 # heavy + hydrogens
-      residue.atom_types.count(&.element.hydrogen?).should eq 29
-      residue.bonds.size.should eq 31 + 29
-      residue.bonds.count(&.double?).should eq 7
-    end
-
-    it "supports structure aliases" do
-      residue = Chem::ResidueType.build do
-        description "Unknown"
-        name "UNK"
-        structure "{foo}-CB-{bar}-CD2={baz}", aliases: {
-          "foo" => "C-CA",
-          "bar" => "CG(=CD1)",
-          "baz" => "OZ",
-        }
-        root "CA"
-      end
-      residue.atom_names.should eq [
-        "C", "H1", "H2", "H3", "CA", "HA1", "HA2", "CB", "HB1", "HB2",
-        "CG", "CD1", "HD11", "HD12", "CD2", "HD2", "OZ",
-      ]
-      residue.bonds.size.should eq 16
-      residue.formal_charge.should eq 0
     end
   end
 end

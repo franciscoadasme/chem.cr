@@ -21,7 +21,10 @@ require "./chem/core/chain_view"
 require "./chem/core/structure"
 require "./chem/core/structure/*"
 
-require "./chem/typing"
+require "./chem/atom_type"
+require "./chem/bond_type"
+require "./chem/residue_type"
+require "./chem/residue_type/*"
 
 require "./chem/protein"
 require "./chem/topology"
