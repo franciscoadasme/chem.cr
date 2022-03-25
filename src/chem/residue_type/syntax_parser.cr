@@ -22,22 +22,6 @@ class Chem::ResidueType::SyntaxParser
     @atom_type_map.last_value? || parse_exception(msg)
   end
 
-  private def consume_element : String
-    symbol = String.build do |io|
-      io << @reader.current_char if @reader.current_char.ascii_uppercase?
-      if (char = peek_char) && char.ascii_lowercase?
-        io << char
-        next_char
-      end
-    end
-    parse_exception("Expected element") if symbol.empty?
-    symbol
-  end
-
-  private def consume_int : Int32
-    consume_while(&.ascii_number?).to_i
-  end
-
   private def consume_while(io : IO, & : Char -> Bool) : Nil
     if (yield @reader.current_char)
       io << @reader.current_char
@@ -168,7 +152,7 @@ class Chem::ResidueType::SyntaxParser
     loop do
       case char = @reader.current_char
       when '+'
-        formal_charge = peek_char.try(&.ascii_number?) ? consume_int : 1
+        formal_charge = peek_char.try(&.ascii_number?) ? read_int : 1
       when '-'
         case peek_char
         when .nil?, '-' # minus charge (end of str or --, which is equal to -1-)
@@ -176,7 +160,7 @@ class Chem::ResidueType::SyntaxParser
           formal_charge = -1
         when .ascii_number? # minus charge as -2, -3, etc.
           parse_exception("Cannot modify charge of #{atom_name}") if atom_type
-          formal_charge = consume_int * -1
+          formal_charge = read_int * -1
         else # single bond
           @reader.previous_char
           break
@@ -184,7 +168,7 @@ class Chem::ResidueType::SyntaxParser
       when '['
         parse_exception("Cannot modify element of #{atom_name}") if atom_type
         next_char
-        element = consume_element
+        element = read_element
         case next_char
         when ']' # ok
         when .nil?
@@ -198,7 +182,7 @@ class Chem::ResidueType::SyntaxParser
         parse_exception("Cannot modify valency of #{atom_name}") if atom_type
         if peek_char.try(&.ascii_number?) # valency
           next_char
-          valency = consume_int
+          valency = read_int
           parse_exception("Unclosed bracket") unless next_char == ')'
         else
           @reader.previous_char
@@ -212,5 +196,21 @@ class Chem::ResidueType::SyntaxParser
     end
 
     atom_type || AtomType.new(atom_name, formal_charge, element, valency)
+  end
+
+  private def read_element : String
+    symbol = String.build do |io|
+      io << @reader.current_char if @reader.current_char.ascii_uppercase?
+      if (char = peek_char) && char.ascii_lowercase?
+        io << char
+        next_char
+      end
+    end
+    parse_exception("Expected element") if symbol.empty?
+    symbol
+  end
+
+  private def read_int : Int32
+    consume_while(&.ascii_number?).to_i
   end
 end
