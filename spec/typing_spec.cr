@@ -480,13 +480,18 @@ describe Chem::ResidueType::Builder do
       residue = Chem::ResidueType.build do
         description "Unknown"
         name "UNK"
-        structure "{foo}-CB", aliases: {"foo" => "C-CA"}
+        structure "{foo}-CB-{bar}-CD2={baz}", aliases: {
+          "foo" => "C-CA",
+          "bar" => "CG(=CD1)",
+          "baz" => "OZ",
+        }
         root "CA"
       end
       residue.atom_names.should eq [
-        "C", "H1", "H2", "H3", "CA", "HA1", "HA2", "CB", "HB1", "HB2", "HB3",
+        "C", "H1", "H2", "H3", "CA", "HA1", "HA2", "CB", "HB1", "HB2",
+        "CG", "CD1", "HD11", "HD12", "CD2", "HD2", "OZ",
       ]
-      residue.bonds.size.should eq 10
+      residue.bonds.size.should eq 16
       residue.formal_charge.should eq 0
     end
   end
