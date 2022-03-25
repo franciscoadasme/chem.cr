@@ -472,10 +472,13 @@ module Chem
       bond_atom = nil
       bond_order = 1
       root_stack = Deque(AtomType).new
+      advance_char = true
       loop do
         case char = @reader.current_char
         when .ascii_letter?
           atom_type = read_atom_type
+          # TODO: Remove this hack: use * to denote cycles
+          # TODO: check for duplicates in read_atom_type
           @atom_type_map[atom_type.name] ||= atom_type
           if bond_atom
             if bond_atom == atom_type
@@ -520,14 +523,24 @@ module Chem
           parse_exception("Expected alias") if name.empty?
           spec = @aliases[name]? || parse_exception("Unknown alias #{name}")
           parse_exception("Unclosed alias") unless next_char == '}'
-          raw_value = @reader.string.insert @reader.pos + 1, spec
-          @reader = Char::Reader.new(raw_value, @reader.pos)
+          raw_value = String.build do |io|
+            io << @reader.string[0, @reader.pos - name.size - 1] \
+              << spec \
+              << @reader.string[(@reader.pos + 1)..]
+          end
+          @reader = Char::Reader.new(raw_value, @reader.pos - name.size - 1)
+          advance_char = false # reader already consumes first char on creation
         when .nil?
           break
         else
           parse_exception("Invalid character #{char.inspect}")
         end
-        break unless next_char
+
+        if advance_char
+          break unless next_char
+        else
+          advance_char = true
+        end
       end
       parse_exception("Unclosed branch") unless root_stack.empty?
     end
