@@ -446,6 +446,11 @@
       
     </li>
   
+  <li class=" " data-id="chem.cr/Chem/ResidueType/SyntaxParser" data-name="chem::residuetype::syntaxparser">
+      <a href="../Chem/ResidueType/SyntaxParser.html">SyntaxParser</a>
+      
+    </li>
+  
 </ul>
 
       
@@ -813,8 +818,8 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/67387bf506a73dca49de39e04c7678fbe1bcda58/src/chem/typing.cr#L2" target="_blank">
-        chem/typing.cr
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/535211cb36dc29c8086496a2ef3df9625e354c90/src/chem/atom_type.cr#L1" target="_blank">
+        chem/atom_type.cr
       </a>
     
     <br/>
@@ -835,7 +840,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28name%3AString%2Cformal_charge%3AInt32%3D0%2Celement%3AString%3F%3Dnil%2Cvalency%3AInt32%3F%3Dnil%29-class-method" class="signature"><strong>.new</strong>(name : String, formal_charge : Int32 = <span class="n">0</span>, element : String? = <span class="n">nil</span>, valency : Int32? = <span class="n">nil</span>)</a>
+        <a href="#new%28name%3AString%2Celement%3AElement%7CString%2Cformal_charge%3AInt32%3D0%2Cvalency%3AInt32%3F%3Dnil%29-class-method" class="signature"><strong>.new</strong>(name : String, element : Element | String, formal_charge : Int32 = <span class="n">0</span>, valency : Int32? = <span class="n">nil</span>)</a>
         
       </li>
     
@@ -892,6 +897,8 @@
       <li class="entry-summary">
         <a href="#valency%3AInt32-instance-method" class="signature"><strong>#valency</strong> : Int32</a>
         
+          <div class="summary"><p><span class="flag orange">TODO</span>  drop valency</p></div>
+        
       </li>
     
   </ul>
@@ -934,18 +941,18 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(name:String,formal_charge:Int32=0,element:String?=nil,valency:Int32?=nil)-class-method">
+    <div class="entry-detail" id="new(name:String,element:Element|String,formal_charge:Int32=0,valency:Int32?=nil)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(name : String, formal_charge : Int32 = <span class="n">0</span>, element : String? = <span class="n">nil</span>, valency : Int32? = <span class="n">nil</span>)
+        def self.<strong>new</strong>(name : String, element : <a href="../Chem/Element.html">Element</a> | String, formal_charge : Int32 = <span class="n">0</span>, valency : Int32? = <span class="n">nil</span>)
 
-        <a class="method-permalink" href="#new%28name%3AString%2Cformal_charge%3AInt32%3D0%2Celement%3AString%3F%3Dnil%2Cvalency%3AInt32%3F%3Dnil%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28name%3AString%2Celement%3AElement%7CString%2Cformal_charge%3AInt32%3D0%2Cvalency%3AInt32%3F%3Dnil%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/67387bf506a73dca49de39e04c7678fbe1bcda58/src/chem/typing.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/535211cb36dc29c8086496a2ef3df9625e354c90/src/chem/atom_type.cr#L8" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -975,7 +982,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/67387bf506a73dca49de39e04c7678fbe1bcda58/src/chem/typing.cr#L3" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/535211cb36dc29c8086496a2ef3df9625e354c90/src/chem/atom_type.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -991,7 +998,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/67387bf506a73dca49de39e04c7678fbe1bcda58/src/chem/typing.cr#L4" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/535211cb36dc29c8086496a2ef3df9625e354c90/src/chem/atom_type.cr#L3" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1024,7 +1031,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/67387bf506a73dca49de39e04c7678fbe1bcda58/src/chem/typing.cr#L16" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/535211cb36dc29c8086496a2ef3df9625e354c90/src/chem/atom_type.cr#L16" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1040,7 +1047,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/67387bf506a73dca49de39e04c7678fbe1bcda58/src/chem/typing.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/535211cb36dc29c8086496a2ef3df9625e354c90/src/chem/atom_type.cr#L4" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1056,7 +1063,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/67387bf506a73dca49de39e04c7678fbe1bcda58/src/chem/typing.cr#L22" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/535211cb36dc29c8086496a2ef3df9625e354c90/src/chem/atom_type.cr#L22" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1088,7 +1095,7 @@ which includes its class name and its object address.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/67387bf506a73dca49de39e04c7678fbe1bcda58/src/chem/typing.cr#L26" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/535211cb36dc29c8086496a2ef3df9625e354c90/src/chem/atom_type.cr#L26" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1101,10 +1108,15 @@ which includes its class name and its object address.</p>
         <a class="method-permalink" href="#valency%3AInt32-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p><span class="flag orange">TODO</span>  drop valency</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/67387bf506a73dca49de39e04c7678fbe1bcda58/src/chem/typing.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/535211cb36dc29c8086496a2ef3df9625e354c90/src/chem/atom_type.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
