@@ -1,4 +1,4 @@
-class Chem::ResidueType::SpecificationParser
+class Chem::ResidueType::SyntaxParser
   ALIASES = {"backbone" => "N(-H)-CA(-HA)(-C=O)"}
 
   def initialize(str, aliases : Hash(String, String)? = nil)

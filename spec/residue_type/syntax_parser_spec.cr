@@ -1,8 +1,8 @@
 require "../spec_helper"
 
-describe Chem::ResidueType::SpecificationParser do
+describe Chem::ResidueType::SyntaxParser do
   it "parses aliases" do
-    parser = Chem::ResidueType::SpecificationParser.new(
+    parser = Chem::ResidueType::SyntaxParser.new(
       "{foo}-CB-{bar}-CD2={baz}",
       aliases: {
         "foo" => "C-CA",
@@ -20,7 +20,7 @@ describe Chem::ResidueType::SpecificationParser do
   end
 
   it "parses a complex residue" do
-    parser = Chem::ResidueType::SpecificationParser.new <<-SPEC.gsub(/\s+/, "")
+    parser = Chem::ResidueType::SyntaxParser.new <<-SPEC.gsub(/\s+/, "")
       C1(-O25-C26)=C2(-O27-C28)-C3=C4(-C5=C6-C1)-C9-C8
       (-C7(=O24)-C5)-C10-C11-C12-C13-N14(-C15-C16-C11)
       -C17-C18=C19-C20=C21-C22=C23-C18
@@ -33,18 +33,18 @@ describe Chem::ResidueType::SpecificationParser do
 
   it "raises if a bond specifies the same atom" do
     expect_raises Chem::Error, "Atom O cannot be bonded to itself" do
-      Chem::ResidueType::SpecificationParser.new("O=O").parse
+      Chem::ResidueType::SyntaxParser.new("O=O").parse
     end
   end
 
   it "raises when adding the same bond twice with different order" do
     expect_raises Chem::ParseException, "Bond CD2=CE2 already exists" do
-      Chem::ResidueType::SpecificationParser.new("CD2=CE2-CD2").parse
+      Chem::ResidueType::SyntaxParser.new("CD2=CE2-CD2").parse
     end
   end
 
   it "parses an atom with explicit valency" do
-    parser = Chem::ResidueType::SpecificationParser.new "CB-SG(1)"
+    parser = Chem::ResidueType::SyntaxParser.new "CB-SG(1)"
     parser.parse
     parser.atom_types.size.should eq 2
     parser.bond_types.size.should eq 1
@@ -52,7 +52,7 @@ describe Chem::ResidueType::SpecificationParser do
   end
 
   it "parses an atom with explicit valency followed by a bond" do
-    parser = Chem::ResidueType::SpecificationParser.new "S(2)=O1"
+    parser = Chem::ResidueType::SyntaxParser.new "S(2)=O1"
     parser.parse
     parser.atom_types.size.should eq 2
     parser.bond_types.size.should eq 1
@@ -60,7 +60,7 @@ describe Chem::ResidueType::SpecificationParser do
   end
 
   it "parses an atom with explicit element" do
-    parser = Chem::ResidueType::SpecificationParser.new "CA[Ca]"
+    parser = Chem::ResidueType::SyntaxParser.new "CA[Ca]"
     parser.parse
     parser.atom_types.size.should eq 1
     parser.bond_types.size.should eq 0
