@@ -106,4 +106,10 @@ describe Chem::ResidueType::SyntaxParser do
       Chem::ResidueType::SyntaxParser.new("CB%1-CG-CD").parse
     end
   end
+
+  it "raises if atom type is duplicate" do
+    expect_raises(Chem::ParseException, "Duplicate atom type CB") do
+      Chem::ResidueType::SyntaxParser.new("CB-CG-CD-CB").parse
+    end
+  end
 end

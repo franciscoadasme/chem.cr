@@ -69,9 +69,7 @@ class Chem::ResidueType::SyntaxParser
       case char = @reader.current_char
       when .ascii_letter?
         atom_type = read_atom_type
-        # TODO: Remove this hack: use * to denote cycles
-        # TODO: check for duplicates in read_atom_type
-        @atom_type_map[atom_type.name] ||= atom_type
+        @atom_type_map[atom_type.name] = atom_type
         if bond_atom
           add_bond bond_atom, atom_type, bond_order
           bond_atom = nil
@@ -157,7 +155,7 @@ class Chem::ResidueType::SyntaxParser
       consume_while io, &.ascii_number?
     end
     raise "Expected atom name" if atom_name.empty?
-    atom_type = @atom_type_map[atom_name]?
+    raise "Duplicate atom type #{atom_name}" if @atom_type_map.has_key?(atom_name)
 
     next_char
 
@@ -171,17 +169,14 @@ class Chem::ResidueType::SyntaxParser
       when '-'
         case peek_char
         when .nil?, '-' # minus charge (end of str or --, which is equal to -1-)
-          raise "Cannot modify charge of #{atom_name}" if atom_type
           formal_charge = -1
         when .ascii_number? # minus charge as -2, -3, etc.
-          raise "Cannot modify charge of #{atom_name}" if atom_type
           formal_charge = read_int * -1
         else # single bond
           @reader.previous_char
           break
         end
       when '['
-        raise "Cannot modify element of #{atom_name}" if atom_type
         next_char
         element = read_element
         case next_char
@@ -193,9 +188,8 @@ class Chem::ResidueType::SyntaxParser
         else
           raise "Unclosed bracket"
         end
+      when '('
         # TODO: drop explicit valency
-      when '(' # explicit valency
-        raise "Cannot modify valency of #{atom_name}" if atom_type
         if peek_char.try(&.ascii_number?) # valency
           next_char
           valency = read_int
@@ -212,7 +206,7 @@ class Chem::ResidueType::SyntaxParser
     end
 
     element ||= PeriodicTable[atom_name: atom_name]
-    atom_type || AtomType.new(atom_name, element, formal_charge, valency)
+    AtomType.new(atom_name, element, formal_charge, valency)
   end
 
   private def read_element : Element
