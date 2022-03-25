@@ -66,4 +66,44 @@ describe Chem::ResidueType::SyntaxParser do
     parser.bond_types.size.should eq 0
     parser.atom_types[0].element.should eq Chem::PeriodicTable::Ca
   end
+
+  it "parses labels" do
+    spec = "CB-CG%1=CD1-NE1-CE2(=CD2%2#%1)-CZ2=CH2-CZ3=CE3=%2"
+    parser = Chem::ResidueType::SyntaxParser.new spec
+    parser.parse
+    parser.atom_types.size.should eq 10
+    parser.bond_types.size.should eq 11
+
+    bond_type = parser.bond_types.find { |b| b[0].name == "CG" && b[1].name == "CD2" }
+    bond_type = bond_type.should_not be_nil
+    bond_type.order.should eq 3
+
+    bond_type = parser.bond_types.find { |b| b[0].name == "CD2" && b[1].name == "CE3" }
+    bond_type = bond_type.should_not be_nil
+    bond_type.order.should eq 2
+  end
+
+  it "raises if label is before an atom" do
+    expect_raises(Chem::ParseException, "Label %1 must be preceded by an atom") do
+      Chem::ResidueType::SyntaxParser.new("%1CB").parse
+    end
+  end
+
+  it "raises if label is unknown" do
+    expect_raises(Chem::ParseException, "Unknown label %1") do
+      Chem::ResidueType::SyntaxParser.new("CB-CG-CD-%1").parse
+    end
+  end
+
+  it "raises if label is duplicate" do
+    expect_raises(Chem::ParseException, "Duplicate label %1") do
+      Chem::ResidueType::SyntaxParser.new("CB%1-CG-CD%1").parse
+    end
+  end
+
+  it "raises if unused label" do
+    expect_raises(Chem::ParseException, "Unclosed label %1") do
+      Chem::ResidueType::SyntaxParser.new("CB%1-CG-CD").parse
+    end
+  end
 end

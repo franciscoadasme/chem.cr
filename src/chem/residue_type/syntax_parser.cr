@@ -40,6 +40,18 @@ class Chem::ResidueType::SyntaxParser
     end
   end
 
+  private def add_bond(atom_type : AtomType, other : AtomType, order : Int32) : Nil
+    raise "Atom #{atom_type.name} cannot be bonded to itself" if atom_type == other
+    bond_key = {String, String}.from [atom_type.name, other.name].sort!
+    if bond_type = @bond_type_map[bond_key]?
+      if bond_type.order != order
+        raise "Bond #{bond_type} already exists"
+      end
+    else
+      @bond_type_map[bond_key] = BondType.new(atom_type, other, order)
+    end
+  end
+
   private def next_char : Char?
     if @reader.has_next?
       char = @reader.next_char
@@ -51,6 +63,7 @@ class Chem::ResidueType::SyntaxParser
     bond_atom = nil
     bond_order = 1
     root_stack = Deque(AtomType).new
+    label_map = {} of Int32 => AtomType
     advance_char = true
     loop do
       case char = @reader.current_char
@@ -60,17 +73,7 @@ class Chem::ResidueType::SyntaxParser
         # TODO: check for duplicates in read_atom_type
         @atom_type_map[atom_type.name] ||= atom_type
         if bond_atom
-          if bond_atom == atom_type
-            raise "Atom #{atom_type.name} cannot be bonded to itself"
-          end
-          bond_key = {String, String}.from [bond_atom.name, atom_type.name].sort!
-          if bond_type = @bond_type_map[bond_key]?
-            if bond_type.order != bond_order
-              raise "Bond #{bond_type} already exists"
-            end
-          else
-            @bond_type_map[bond_key] = BondType.new(bond_atom, atom_type, bond_order)
-          end
+          add_bond bond_atom, atom_type, bond_order
           bond_atom = nil
         end
       when '-'
@@ -109,6 +112,18 @@ class Chem::ResidueType::SyntaxParser
         end
         @reader = Char::Reader.new(raw_value, @reader.pos - name.size - 1)
         advance_char = false # reader already consumes first char on creation
+      when '%'
+        next_char
+        label_id = read_int
+        if bond_atom # after a bond so add bond
+          atom_type = label_map[label_id]? || raise "Unknown label %#{label_id}"
+          add_bond atom_type, bond_atom, bond_order
+          bond_atom = nil
+          label_map.delete label_id
+        else # label previous atom
+          raise "Duplicate label %#{label_id}" if label_map.has_key?(label_id)
+          label_map[label_id] = check_pred("Label %#{label_id} must be preceded by an atom")
+        end
       when .nil?
         break
       else
@@ -122,6 +137,7 @@ class Chem::ResidueType::SyntaxParser
       end
     end
     raise "Unclosed branch" unless root_stack.empty?
+    raise "Unclosed label %#{label_map.first_key}" unless label_map.empty?
   end
 
   private def peek_char : Char?
