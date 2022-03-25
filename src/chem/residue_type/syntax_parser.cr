@@ -19,7 +19,7 @@ class Chem::ResidueType::SyntaxParser
   end
 
   private def check_pred(msg : String) : AtomType
-    @atom_type_map.last_value? || parse_exception(msg)
+    @atom_type_map.last_value? || raise(msg)
   end
 
   private def consume_while(io : IO, & : Char -> Bool) : Nil
@@ -61,12 +61,12 @@ class Chem::ResidueType::SyntaxParser
         @atom_type_map[atom_type.name] ||= atom_type
         if bond_atom
           if bond_atom == atom_type
-            parse_exception("Atom #{atom_type.name} cannot be bonded to itself")
+            raise "Atom #{atom_type.name} cannot be bonded to itself"
           end
           bond_key = {String, String}.from [bond_atom.name, atom_type.name].sort!
           if bond_type = @bond_type_map[bond_key]?
             if bond_type.order != bond_order
-              parse_exception("Bond #{bond_type} already exists")
+              raise "Bond #{bond_type} already exists"
             end
           else
             @bond_type_map[bond_key] = BondType.new(bond_atom, atom_type, bond_order)
@@ -74,34 +74,34 @@ class Chem::ResidueType::SyntaxParser
           bond_atom = nil
         end
       when '-'
-        parse_exception("Unterminated bond") unless peek_char
+        raise "Unterminated bond" unless peek_char
         bond_atom ||= check_pred("Bond must be preceded by an atom")
         bond_order = 1
       when '='
-        parse_exception("Unterminated bond") unless peek_char
+        raise "Unterminated bond" unless peek_char
         bond_atom ||= check_pred("Bond must be preceded by an atom")
         bond_order = 2
       when '#'
-        parse_exception("Unterminated bond") unless peek_char
+        raise "Unterminated bond" unless peek_char
         bond_atom ||= check_pred("Bond must be preceded by an atom")
         bond_order = 3
       when '('
         if char = peek_char
-          parse_exception("Expected bond at the beginning of a branch") unless char.in?("-=#")
+          raise "Expected bond at the beginning of a branch" unless char.in?("-=#")
         else # end of string
-          parse_exception("Unclosed branch")
+          raise "Unclosed branch"
         end
         root_stack << (bond_atom || check_pred("Branch must be preceded by an atom"))
       when ')'
-        bond_atom = root_stack.pop? || parse_exception("Invalid branch termination")
+        bond_atom = root_stack.pop? || raise "Invalid branch termination"
         if char = peek_char
-          parse_exception("Expected bond after a branch") unless char.in?("-=#(")
+          raise "Expected bond after a branch" unless char.in?("-=#(")
         end
       when '{' # alias like "{backbone}"
         name = consume_while &.ascii_lowercase?
-        parse_exception("Expected alias") if name.empty?
-        spec = @aliases[name]? || parse_exception("Unknown alias #{name}")
-        parse_exception("Unclosed alias") unless next_char == '}'
+        raise "Expected alias" if name.empty?
+        spec = @aliases[name]? || raise "Unknown alias #{name}"
+        raise "Unclosed alias" unless next_char == '}'
         raw_value = String.build do |io|
           io << @reader.string[0, @reader.pos - name.size - 1] \
             << spec \
@@ -112,7 +112,7 @@ class Chem::ResidueType::SyntaxParser
       when .nil?
         break
       else
-        parse_exception("Invalid character #{char.inspect}")
+        raise "Invalid character #{char.inspect}"
       end
 
       if advance_char
@@ -121,12 +121,7 @@ class Chem::ResidueType::SyntaxParser
         advance_char = true
       end
     end
-    parse_exception("Unclosed branch") unless root_stack.empty?
-  end
-
-  # Rename to fail
-  private def parse_exception(msg)
-    raise ParseException.new(msg)
+    raise "Unclosed branch" unless root_stack.empty?
   end
 
   private def peek_char : Char?
@@ -136,12 +131,16 @@ class Chem::ResidueType::SyntaxParser
     end
   end
 
+  private def raise(msg)
+    ::raise ParseException.new(msg)
+  end
+
   private def read_atom_type : AtomType
     atom_name = String.build do |io|
       consume_while io, &.ascii_uppercase?
       consume_while io, &.ascii_number?
     end
-    parse_exception("Expected atom name") if atom_name.empty?
+    raise "Expected atom name" if atom_name.empty?
     atom_type = @atom_type_map[atom_name]?
 
     next_char
@@ -156,34 +155,35 @@ class Chem::ResidueType::SyntaxParser
       when '-'
         case peek_char
         when .nil?, '-' # minus charge (end of str or --, which is equal to -1-)
-          parse_exception("Cannot modify charge of #{atom_name}") if atom_type
+          raise "Cannot modify charge of #{atom_name}" if atom_type
           formal_charge = -1
         when .ascii_number? # minus charge as -2, -3, etc.
-          parse_exception("Cannot modify charge of #{atom_name}") if atom_type
+          raise "Cannot modify charge of #{atom_name}" if atom_type
           formal_charge = read_int * -1
         else # single bond
           @reader.previous_char
           break
         end
       when '['
-        parse_exception("Cannot modify element of #{atom_name}") if atom_type
+        raise "Cannot modify element of #{atom_name}" if atom_type
         next_char
         element = read_element
         case next_char
         when ']' # ok
         when .nil?
-          parse_exception("Unclosed bracket")
+          raise "Unclosed bracket"
         when .ascii_uppercase?
-          parse_exception("Invalid element")
+          raise "Invalid element"
         else
-          parse_exception("Unclosed bracket")
+          raise "Unclosed bracket"
         end
+        # TODO: drop explicit valency
       when '(' # explicit valency
-        parse_exception("Cannot modify valency of #{atom_name}") if atom_type
+        raise "Cannot modify valency of #{atom_name}" if atom_type
         if peek_char.try(&.ascii_number?) # valency
           next_char
           valency = read_int
-          parse_exception("Unclosed bracket") unless next_char == ')'
+          raise "Unclosed bracket" unless next_char == ')'
         else
           @reader.previous_char
           break
@@ -207,7 +207,7 @@ class Chem::ResidueType::SyntaxParser
         next_char
       end
     end
-    parse_exception("Expected element") if symbol.empty?
+    raise "Expected element" if symbol.empty?
     PeriodicTable[symbol]
   end
 

@@ -2,6 +2,7 @@ class Chem::AtomType
   getter element : Element
   getter formal_charge : Int32
   getter name : String
+  # TODO: drop valency
   getter valency : Int32
 
   def initialize(@name : String,
