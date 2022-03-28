@@ -285,4 +285,37 @@ describe Chem::ResidueType::Builder do
       end
     end
   end
+
+  it "handles multiple valencies" do
+    restype = Chem::ResidueType.build do
+      name "UNK"
+      structure "CB-SG"
+      root "CB"
+    end
+    restype.atom_types.size.should eq 6
+    restype.atom_types.count(&.element.hydrogen?).should eq 4
+    restype.bonds.size.should eq 5
+    restype.bonds.count(&.includes?("SG")).should eq 2
+
+    restype = Chem::ResidueType.build do
+      name "UNK"
+      structure "CB-SG-"
+      root "CB"
+    end
+    restype.atom_types.size.should eq 5
+    restype.atom_types.count(&.element.hydrogen?).should eq 3
+    restype.bonds.size.should eq 4
+    restype.bonds.count(&.includes?("SG")).should eq 1
+
+    restype = Chem::ResidueType.build do
+      name "UNK"
+      structure "S(=O1)(=O2)(-O3-)(-O4-)"
+      root "S"
+    end
+    restype.atom_types.size.should eq 5
+    restype.atom_types.count(&.element.hydrogen?).should eq 0
+    restype.atom_types.map(&.formal_charge).should eq [0, 0, 0, -1, -1]
+    restype.bonds.size.should eq 4
+    restype.bonds.count(&.includes?("S")).should eq 4
+  end
 end
