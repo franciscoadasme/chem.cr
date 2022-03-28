@@ -113,6 +113,14 @@ describe Chem::ResidueType::Parser do
     end
   end
 
+  it "parses a bond preceded by a minus sign" do
+    parser = Chem::ResidueType::Parser.new("CB--CG")
+    parser.parse
+    parser.atom_types.size.should eq 2
+    parser.bond_types.size.should eq 1
+    parser.atom_types.map(&.formal_charge).should eq [-1, 0]
+  end
+
   it "raises if bond is at the end" do
     expect_raises(Chem::ParseException, "Unmatched bond") do
       Chem::ResidueType::Parser.new("CB-CG=").parse
@@ -132,5 +140,13 @@ describe Chem::ResidueType::Parser do
     expect_raises(Chem::ParseException, "Branching bond must be inside the branch") do
       Chem::ResidueType::Parser.new("CB-CG-(-CD1)").parse
     end
+  end
+
+  it "parses negative charge at the end of branch" do
+    parser = Chem::ResidueType::Parser.new "S(=O1)(=O2)(-O3-)(-O4-)"
+    parser.parse
+    parser.atom_types.size.should eq 5
+    parser.bond_types.size.should eq 4
+    parser.atom_types.map(&.formal_charge).should eq [0, 0, 0, -1, -1]
   end
 end

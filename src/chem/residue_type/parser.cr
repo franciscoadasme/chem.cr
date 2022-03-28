@@ -177,11 +177,12 @@ class Chem::ResidueType::Parser
       case char = @reader.current_char
       when '+'
         formal_charge = peek_char.try(&.ascii_number?) ? read_int : 1
-      when '-'
+      when '-' # negative charge
         case peek_char
-        when .nil?, '-' # minus charge (end of str or --, which is equal to -1-)
+        when .nil?, '-', ')' # end of str or branch, or -- (equivalent to -1-)
           formal_charge = -1
-        when .ascii_number? # minus charge as -2, -3, etc.
+          break
+        when .ascii_number? # -1, -2, -3, etc.
           formal_charge = read_int * -1
         else # single bond
           @reader.previous_char
