@@ -43,20 +43,13 @@ describe Chem::ResidueType::Parser do
     end
   end
 
-  it "parses an atom with explicit valency" do
-    parser = Chem::ResidueType::Parser.new "CB-SG(1)"
-    parser.parse
-    parser.atom_types.size.should eq 2
-    parser.bond_types.size.should eq 1
-    parser.atom_types[1].valency.should eq 1
-  end
-
-  it "parses an atom with explicit valency followed by a bond" do
-    parser = Chem::ResidueType::Parser.new "S(2)=O1"
-    parser.parse
-    parser.atom_types.size.should eq 2
-    parser.bond_types.size.should eq 1
-    parser.atom_types[0].valency.should eq 2
+  it "raises if branch does not start with a bond" do
+    expect_raises(
+      Chem::ParseException,
+      "Expected a bond at the beginning of a branch, got '1'"
+    ) do
+      Chem::ResidueType::Parser.new("CB-SG(1)").parse
+    end
   end
 
   it "parses an atom with explicit element" do

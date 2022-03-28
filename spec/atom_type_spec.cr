@@ -5,7 +5,6 @@ describe Chem::AtomType do
     it "returns a string representation" do
       Chem::AtomType.new("CA", "C").inspect.should eq "<AtomType CA>"
       Chem::AtomType.new("NZ", "N", formal_charge: 1).inspect.should eq "<AtomType NZ+>"
-      Chem::AtomType.new("SG", "S", valency: 1).inspect.should eq "<AtomType SG(1)>"
     end
   end
 
@@ -19,10 +18,6 @@ describe Chem::AtomType do
       Chem::AtomType.new("OE1", "O", formal_charge: -1).to_s.should eq "OE1-"
       Chem::AtomType.new("NA", "N", formal_charge: 2).to_s.should eq "NA+2"
       Chem::AtomType.new("UK", "C", formal_charge: -5).to_s.should eq "UK-5"
-    end
-
-    it "returns atom name plus valency when its not nominal" do
-      Chem::AtomType.new("SG", "S", valency: 1).to_s.should eq "SG(1)"
     end
   end
 end

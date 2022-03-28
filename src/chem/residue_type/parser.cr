@@ -99,7 +99,9 @@ class Chem::ResidueType::Parser
         bond_order = 3
       when '('
         if char = peek_char
-          raise "Expected bond at the beginning of a branch" unless char.in?("-=#")
+          unless char.in?("-=#")
+            raise "Expected a bond at the beginning of a branch, got #{char.inspect}"
+          end
         else # end of string
           raise "Unclosed branch"
         end
@@ -172,7 +174,6 @@ class Chem::ResidueType::Parser
 
     element = nil
     formal_charge = 0
-    valency = nil
     loop do
       case char = @reader.current_char
       when '+'
@@ -200,16 +201,6 @@ class Chem::ResidueType::Parser
         else
           raise "Unclosed bracket"
         end
-      when '('
-        # TODO: drop explicit valency
-        if peek_char.try(&.ascii_number?) # valency
-          next_char
-          valency = read_int
-          raise "Unclosed bracket" unless next_char == ')'
-        else
-          @reader.previous_char
-          break
-        end
       else
         @reader.previous_char
         break
@@ -218,7 +209,7 @@ class Chem::ResidueType::Parser
     end
 
     element ||= PeriodicTable[atom_name: atom_name]
-    AtomType.new(atom_name, element, formal_charge, valency)
+    AtomType.new(atom_name, element, formal_charge)
   end
 
   private def read_element : Element

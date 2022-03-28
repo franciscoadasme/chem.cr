@@ -44,16 +44,16 @@ module Chem
     name "CYS"
     code 'C'
     kind :protein
-    structure "{backbone}-CB-SG(2)"
+    structure "{backbone}-CB-SG"
   end
 
-  # FIXME: valency=1 is incorrect, it should only remove auto-added hydrogen
   ResidueType.register do
     description "Cysteine"
     name "CYX"
     code 'C'
     kind :protein
-    structure "{backbone}-CB-SG(1)"
+    structure "{backbone}-CB-SG"
+    implicit_bonds({"SG" => 1})
   end
 
   ResidueType.register do
@@ -142,8 +142,7 @@ module Chem
     name "MET"
     code 'M'
     kind :protein
-    # FIXME: no need for SD(2)... should default to valency of 2
-    structure "{backbone}-CB-CG-SD(2)-CE"
+    structure "{backbone}-CB-CG-SD-CE"
   end
 
   ResidueType.register do

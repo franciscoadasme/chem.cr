@@ -69,9 +69,7 @@ class Chem::ResidueType::Builder
     @atom_types.each do |atom_t|
       num = missing_bonds_of atom_t
       next if num == 0
-      raise Error.new(
-        "Atom type #{atom_t} has incorrect valency (#{atom_t.valency - num}), " \
-        "expected #{atom_t.valency}")
+      raise Error.new("Atom type #{atom_t} has incorrect valency")
     end
   end
 
