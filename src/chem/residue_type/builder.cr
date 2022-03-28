@@ -8,6 +8,7 @@ class Chem::ResidueType::Builder
   @names = [] of String
   @root_atom : AtomType?
   @symmetric_atom_groups = [] of Array(Tuple(String, String))
+  @implicit_bonds = {} of String => Int32
 
   private def add_hydrogens
     use_name_suffix = @atom_types.any? &.suffix.to_i?.nil?
@@ -78,6 +79,16 @@ class Chem::ResidueType::Builder
     @description = name
   end
 
+  def implicit_bonds(bond_count_map : Hash(String, Int32)) : Nil
+    bond_count_map.each do |name, count|
+      check_atom_type(name)
+      if @implicit_bonds.has_key?(name)
+        raise Error.new("Atom #{name} already has implicit bonds")
+      end
+      @implicit_bonds[name] = count
+    end
+  end
+
   def kind(kind : Residue::Kind)
     @kind = kind
   end
@@ -103,6 +114,8 @@ class Chem::ResidueType::Builder
     if bond = @link_bond
       bond_order += bond.order if atom_type.in?(bond)
     end
+    bond_order += @implicit_bonds[atom_type.name]? || 0
+
     nominal_valency = atom_type.element.valencies.find(&.>=(bond_order))
     nominal_valency ||= atom_type.element.max_valency
 
