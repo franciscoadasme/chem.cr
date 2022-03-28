@@ -643,7 +643,7 @@ module Chem
     # This is done by checking if the associated residue type (if any)
     # correspond to the water template.
     def water? : Bool
-      type.try(&.description.downcase) == "water"
+      type == ResidueType.fetch("HOH")
     end
 
     {% for member in Kind.constants %}

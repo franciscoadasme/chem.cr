@@ -75,7 +75,6 @@ describe Chem::ResidueType::Builder do
 
     it "builds a residue with charge +2" do
       residue = Chem::ResidueType.build do
-        description "Magnesium"
         name "MG"
         kind :ion
         structure "MG+2"
@@ -168,7 +167,6 @@ describe Chem::ResidueType::Builder do
 
     it "builds a polymer residue" do
       residue_t = Chem::ResidueType.build do
-        description "Fake"
         name "UNK"
         structure "C1-C2-C3"
         link_adjacent_by "C3=C1"
@@ -185,7 +183,6 @@ describe Chem::ResidueType::Builder do
 
     it "builds a rooted residue" do
       residue_t = Chem::ResidueType.build do
-        description "Fake"
         name "UNK"
         structure "C1=C2"
         root "C2"
@@ -212,7 +209,6 @@ describe Chem::ResidueType::Builder do
 
     it "builds a residue with four-letter atom names" do
       residue = Chem::ResidueType.build do
-        description "C-ter"
         name "CTER"
         structure "CA-C(=O)-OXT"
         root "C"
@@ -284,7 +280,6 @@ describe Chem::ResidueType::Builder do
       expect_raises Chem::Error, "Atom O1 cannot be bonded to itself" do
         Chem::ResidueType.build do
           name "O2"
-          description "Molecular oxygen"
           structure "O1=O2"
           link_adjacent_by "O1=O1"
           root "O"

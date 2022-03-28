@@ -2,7 +2,6 @@ require "./spec_helper"
 
 describe Chem::ResidueType do
   Chem::ResidueType.register do
-    description "Anything"
     name "LFG"
     structure "N1+-C2-C3-O4-C5(-C6)=O7"
     root "C5"
@@ -12,7 +11,6 @@ describe Chem::ResidueType do
     it "returns a residue type by name" do
       residue_t = Chem::ResidueType.fetch("LFG")
       residue_t.should be_a Chem::ResidueType
-      residue_t.description.should eq "Anything"
       residue_t.name.should eq "LFG"
     end
 
@@ -30,7 +28,6 @@ describe Chem::ResidueType do
   describe ".register" do
     it "creates a residue template with multiple names" do
       Chem::ResidueType.register do
-        description "Anything"
         name "LXE", "EGR"
         structure "C1"
       end
@@ -40,7 +37,6 @@ describe Chem::ResidueType do
     it "fails when the residue name already exists" do
       expect_raises Chem::Error, "LXE residue type already exists" do
         Chem::ResidueType.register do
-          description "Anything"
           name "LXE"
           structure "C1"
           root "C1"
@@ -53,7 +49,6 @@ describe Chem::ResidueType do
     it "returns a string representation" do
       Chem::ResidueType.build do
         name "O2"
-        description "Molecular oxygen"
         structure "O1=O2"
         root "O1"
       end.inspect.should eq "<ResidueType O2>"
@@ -61,12 +56,10 @@ describe Chem::ResidueType do
       Chem::ResidueType.build do
         name "HOH"
         kind :solvent
-        description "Water"
         structure "O"
       end.inspect.should eq "<ResidueType HOH, solvent>"
 
       Chem::ResidueType.build do
-        description "Glycine"
         name "GLY"
         code 'G'
         kind :protein

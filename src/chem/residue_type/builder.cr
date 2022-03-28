@@ -30,8 +30,6 @@ class Chem::ResidueType::Builder
   end
 
   protected def build : ResidueType
-    # TODO: make description optional
-    raise Error.new("Missing residue description") unless (description = @description)
     raise Error.new("Missing residue name") if @names.empty?
 
     raise Error.new("No atoms for residue type") if @atom_types.empty?
@@ -48,7 +46,7 @@ class Chem::ResidueType::Builder
                    end
     raise Error.new("Missing root for residue type #{@names[0]}") unless root_atom = @root_atom
 
-    ResidueType.new @names.first, @code, @kind, description,
+    ResidueType.new @names.first, @code, @kind, @description,
       @atom_types, @bonds, root_atom,
       @names[1..], @link_bond, @symmetric_atom_groups
   end

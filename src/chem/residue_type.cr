@@ -8,7 +8,7 @@ class Chem::ResidueType
   getter aliases : Array(String)
   getter kind : Residue::Kind
   getter link_bond : BondType?
-  getter description : String
+  getter description : String?
   getter root_atom : AtomType
   getter code : Char?
   getter symmetric_atom_groups : Array(Array(Tuple(String, String)))?
@@ -17,7 +17,7 @@ class Chem::ResidueType
     @name : String,
     @code : Char?,
     @kind : Residue::Kind,
-    @description : String,
+    @description : String?,
     atom_types : Array(AtomType),
     bonds : Array(BondType),
     @root_atom : AtomType,
