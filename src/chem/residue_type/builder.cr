@@ -63,17 +63,7 @@ class Chem::ResidueType::Builder
     end
   end
 
-  # private def check_valencies
-  #   @atom_types.each do |atom_t|
-  #     bond_count = missing_bonds_of(atom_t)
-  #     if bond_count > 0
-  #       raise Error.new(
-  #         "Atom type #{atom_t} has incorrect valency (#{valency}), \
-  #          expected #{atom_t.valency}")
-  #     end
-  #   end
-  # end
-
+  # TODO: do this check within add_hydrogens (h_count < 0)
   private def check_valencies
     @atom_types.each do |atom_t|
       num = missing_bonds_of atom_t
@@ -107,25 +97,18 @@ class Chem::ResidueType::Builder
     @link_bond = BondType.new lhs, rhs, bond_order
   end
 
-  # private def missing_bonds_of(atom_type : AtomType) : Int32
-  #   bond_order = @bonds.sum { |bond| atom_type.name.in?(bond) ? bond.order : 0 }
-  #   if bond = @link_bond
-  #     bond_order += bond.order if atom_type.in?(bond)
-  #   end
-  #   nominal_valency = atom_type.element.valencies.find(&.>=(bond_order))
-  #   nominal_valency ||= atom_type.element.max_valency
-  #   # NOTE: why `+ formal_charge`?
-  #   bound_count = nominal_valency - bond_order + atom_type.formal_charge
-  #   raise "BUG: negative bond count for #{atom_type}" if bound_count < 0
-  #   bound_count
-  # end
-
-  private def missing_bonds_of(atom_t : AtomType) : Int32
-    valency = atom_t.valency
+  # TODO: implement a sane valence model, e.g., smiles model in openbabel
+  private def missing_bonds_of(atom_type : AtomType) : Int32
+    bond_order = @bonds.sum { |bond| atom_type.in?(bond) ? bond.order : 0 }
     if bond = @link_bond
-      valency -= bond.order if atom_t.in?(bond)
+      bond_order += bond.order if atom_type.in?(bond)
     end
-    valency - @bonds.each.select(&.includes?(atom_t.name)).map(&.order).sum
+    nominal_valency = atom_type.element.valencies.find(&.>=(bond_order))
+    nominal_valency ||= atom_type.element.max_valency
+
+    bound_count = nominal_valency - bond_order
+    bound_count += atom_type.element.ionic? ? -atom_type.formal_charge.abs : atom_type.formal_charge
+    bound_count
   end
 
   def name(*names : String)
