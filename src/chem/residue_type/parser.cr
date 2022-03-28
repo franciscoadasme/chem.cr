@@ -20,6 +20,15 @@ class Chem::ResidueType::Parser
     @bond_type_map.values
   end
 
+  private def check_bond_succ
+    case char = peek_char
+    when .nil?, '-', '=', '#'
+      raise "Unmatched bond"
+    when '('
+      raise "Branching bond must be inside the branch"
+    end
+  end
+
   private def check_pred(msg : String) : AtomType
     @atom_type_map.last_value? || raise(msg)
   end
@@ -77,15 +86,15 @@ class Chem::ResidueType::Parser
           bond_atom = nil
         end
       when '-'
-        raise "Unterminated bond" unless peek_char
+        check_bond_succ
         bond_atom ||= check_pred("Bond must be preceded by an atom")
         bond_order = 1
       when '='
-        raise "Unterminated bond" unless peek_char
+        check_bond_succ
         bond_atom ||= check_pred("Bond must be preceded by an atom")
         bond_order = 2
       when '#'
-        raise "Unterminated bond" unless peek_char
+        check_bond_succ
         bond_atom ||= check_pred("Bond must be preceded by an atom")
         bond_order = 3
       when '('

@@ -112,4 +112,25 @@ describe Chem::ResidueType::Parser do
       Chem::ResidueType::Parser.new("CB-CG-CD-CB").parse
     end
   end
+
+  it "raises if bond is at the end" do
+    expect_raises(Chem::ParseException, "Unmatched bond") do
+      Chem::ResidueType::Parser.new("CB-CG=").parse
+    end
+    expect_raises(Chem::ParseException, "Unmatched bond") do
+      Chem::ResidueType::Parser.new("CB-CG--").parse
+    end
+  end
+
+  it "raises if two contiguous bonds" do
+    expect_raises(Chem::ParseException, "Unmatched bond") do
+      Chem::ResidueType::Parser.new("CB-CG-=CD").parse
+    end
+  end
+
+  it "raises if a bond is followed by a branch" do
+    expect_raises(Chem::ParseException, "Branching bond must be inside the branch") do
+      Chem::ResidueType::Parser.new("CB-CG-(-CD1)").parse
+    end
+  end
 end
