@@ -139,7 +139,7 @@ class Chem::ResidueType::Builder
   end
 
   def structure(spec : String, aliases : Hash(String, String)? = nil) : Nil
-    parser = SyntaxParser.new(spec, aliases)
+    parser = ResidueType::Parser.new(spec, aliases)
     parser.parse
     @atom_types = parser.atom_types
     @bonds = parser.bond_types

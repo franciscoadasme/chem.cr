@@ -1,4 +1,6 @@
-class Chem::ResidueType::SyntaxParser
+class Chem::ResidueType::Parser
+  # TODO: add custom error classes
+
   ALIASES = {"backbone" => "N(-H)-CA(-HA)(-C=O)"}
 
   def initialize(str, aliases : Hash(String, String)? = nil)
