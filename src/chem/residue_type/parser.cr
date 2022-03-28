@@ -12,6 +12,18 @@ class Chem::ResidueType::Parser
     @aliases.merge! aliases if aliases
   end
 
+  private def add_bond(atom_type : AtomType, other : AtomType, order : Int32) : Nil
+    raise "Atom #{atom_type.name} cannot be bonded to itself" if atom_type == other
+    bond_key = {String, String}.from [atom_type.name, other.name].sort!
+    if bond_type = @bond_type_map[bond_key]?
+      if bond_type.order != order
+        raise "Bond #{bond_type} already exists"
+      end
+    else
+      @bond_type_map[bond_key] = BondType.new(atom_type, other, order)
+    end
+  end
+
   def atom_types : Array(AtomType)
     @atom_type_map.values
   end
@@ -48,18 +60,6 @@ class Chem::ResidueType::Parser
       consume_while(io) do |char|
         yield char
       end
-    end
-  end
-
-  private def add_bond(atom_type : AtomType, other : AtomType, order : Int32) : Nil
-    raise "Atom #{atom_type.name} cannot be bonded to itself" if atom_type == other
-    bond_key = {String, String}.from [atom_type.name, other.name].sort!
-    if bond_type = @bond_type_map[bond_key]?
-      if bond_type.order != order
-        raise "Bond #{bond_type} already exists"
-      end
-    else
-      @bond_type_map[bond_key] = BondType.new(atom_type, other, order)
     end
   end
 
