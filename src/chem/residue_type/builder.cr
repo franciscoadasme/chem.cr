@@ -17,15 +17,32 @@ class Chem::ResidueType::Builder
     end
 
     h_i = 0
-    atom_types.each do |atom_t|
-      i = @atom_types.index! atom_t
-      h_count = missing_bonds_of(atom_t)
-      h_count.times do |j|
-        h_i += 1
-        name = use_name_suffix ? "H#{atom_t.suffix}#{j + 1 if h_count > 1}" : "H#{h_i}"
-        atom_type = AtomType.new(name, element: PeriodicTable::H)
-        @atom_types.insert i + 1 + j, atom_type
-        @bonds << BondType.new(atom_t, atom_type)
+    atom_types.each do |atom_type|
+      i = @atom_types.index! atom_type
+
+      # TODO: implement a sane valence model, e.g., smiles model in openbabel
+      bond_count = @bonds.sum { |bond| atom_type.in?(bond) ? bond.order : 0 }
+      if bond = @link_bond
+        bond_count += bond.order if atom_type.in?(bond)
+      end
+      bond_count += @implicit_bonds[atom_type.name]? || 0
+
+      valency = atom_type.element.valencies.find(&.>=(bond_count))
+      valency ||= atom_type.element.max_valency
+      valency += atom_type.element.ionic? ? -atom_type.formal_charge.abs : atom_type.formal_charge
+
+      h_count = valency - bond_count
+      if h_count >= 0
+        h_count.times do |j|
+          h_i += 1
+          name = use_name_suffix ? "H#{atom_type.suffix}#{j + 1 if h_count > 1}" : "H#{h_i}"
+          h_atom = AtomType.new(name, element: PeriodicTable::H)
+          @atom_types.insert i + 1 + j, h_atom
+          @bonds << BondType.new(atom_type, h_atom)
+        end
+      else
+        raise Error.new("Expected valency of #{atom_type.name} is #{valency}, \
+                         got #{bond_count}")
       end
     end
   end
@@ -38,7 +55,6 @@ class Chem::ResidueType::Builder
 
     @link_bond ||= BondType.new(check_atom_type("C"), check_atom_type("N")) if @kind.protein?
     add_hydrogens
-    check_valencies
 
     @root_atom ||= if @kind.protein?
                      check_atom_type("CA")
@@ -61,15 +77,6 @@ class Chem::ResidueType::Builder
       atom_type
     else
       raise Error.new("Unknown atom type #{name}")
-    end
-  end
-
-  # TODO: do this check within add_hydrogens (h_count < 0)
-  private def check_valencies
-    @atom_types.each do |atom_t|
-      num = missing_bonds_of atom_t
-      next if num == 0
-      raise Error.new("Atom type #{atom_t} has incorrect valency")
     end
   end
 
@@ -104,22 +111,6 @@ class Chem::ResidueType::Builder
                  else          raise "BUG: unreachable"
                  end
     @link_bond = BondType.new lhs, rhs, bond_order
-  end
-
-  # TODO: implement a sane valence model, e.g., smiles model in openbabel
-  private def missing_bonds_of(atom_type : AtomType) : Int32
-    bond_order = @bonds.sum { |bond| atom_type.in?(bond) ? bond.order : 0 }
-    if bond = @link_bond
-      bond_order += bond.order if atom_type.in?(bond)
-    end
-    bond_order += @implicit_bonds[atom_type.name]? || 0
-
-    nominal_valency = atom_type.element.valencies.find(&.>=(bond_order))
-    nominal_valency ||= atom_type.element.max_valency
-
-    bound_count = nominal_valency - bond_order
-    bound_count += atom_type.element.ionic? ? -atom_type.formal_charge.abs : atom_type.formal_charge
-    bound_count
   end
 
   def name(*names : String)

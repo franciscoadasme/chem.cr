@@ -216,8 +216,7 @@ describe Chem::ResidueType::Builder do
   end
 
   it "fails on incorrect valency" do
-    msg = "Atom type CG has incorrect valency"
-    expect_raises Chem::Error, msg do
+    expect_raises(Chem::Error, "Expected valency of CG is 4, got 5") do
       Chem::ResidueType.build do
         description "Tryptophan"
         name "TRP"
