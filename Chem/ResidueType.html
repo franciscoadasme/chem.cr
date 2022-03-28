@@ -446,8 +446,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/ResidueType/SyntaxParser" data-name="chem::residuetype::syntaxparser">
-      <a href="../Chem/ResidueType/SyntaxParser.html">SyntaxParser</a>
+  <li class=" " data-id="chem.cr/Chem/ResidueType/Parser" data-name="chem::residuetype::parser">
+      <a href="../Chem/ResidueType/Parser.html">Parser</a>
       
     </li>
   
@@ -818,7 +818,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/535211cb36dc29c8086496a2ef3df9625e354c90/src/chem/residue_type.cr#L1" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/385e4cdcd423011fe3e5fd1e5c2bac1d694eb01d/src/chem/residue_type.cr#L1" target="_blank">
         chem/residue_type.cr
       </a>
     
@@ -850,7 +850,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#new%28name%3AString%2Ccode%3AChar%3F%2Ckind%3AResidue%3A%3AKind%2Cdescription%3AString%2Catom_types%3AArray%28AtomType%29%2Cbonds%3AArray%28BondType%29%2Croot_atom%3AAtomType%2Caliases%3AArray%28String%29%3D%5B%5DofString%2Clink_bond%3ABondType%3F%3Dnil%2Csymmetric_atom_groups%3AArray%28Array%28Tuple%28String%2CString%29%29%29%3F%3Dnil%29-class-method" class="signature"><strong>.new</strong>(name : String, code : Char?, kind : Residue::Kind, description : String, atom_types : Array(AtomType), bonds : Array(BondType), root_atom : AtomType, aliases : Array(String) = <span class="o">[]</span> <span class="k">of</span> <span class="t">String</span>, link_bond : BondType? = <span class="n">nil</span>, symmetric_atom_groups : Array(Array(Tuple(String, String)))? = <span class="n">nil</span>)</a>
+        <a href="#new%28name%3AString%2Ccode%3AChar%3F%2Ckind%3AResidue%3A%3AKind%2Cdescription%3AString%3F%2Catom_types%3AArray%28AtomType%29%2Cbonds%3AArray%28BondType%29%2Croot_atom%3AAtomType%2Caliases%3AArray%28String%29%3D%5B%5DofString%2Clink_bond%3ABondType%3F%3Dnil%2Csymmetric_atom_groups%3AArray%28Array%28Tuple%28String%2CString%29%29%29%3F%3Dnil%29-class-method" class="signature"><strong>.new</strong>(name : String, code : Char?, kind : Residue::Kind, description : String?, atom_types : Array(AtomType), bonds : Array(BondType), root_atom : AtomType, aliases : Array(String) = <span class="o">[]</span> <span class="k">of</span> <span class="t">String</span>, link_bond : BondType? = <span class="n">nil</span>, symmetric_atom_groups : Array(Array(Tuple(String, String)))? = <span class="n">nil</span>)</a>
         
       </li>
     
@@ -943,7 +943,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#description%3AString-instance-method" class="signature"><strong>#description</strong> : String</a>
+        <a href="#description%3AString%3F-instance-method" class="signature"><strong>#description</strong> : String?</a>
         
       </li>
     
@@ -1050,7 +1050,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/535211cb36dc29c8086496a2ef3df9625e354c90/src/chem/residue_type.cr#L36" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/385e4cdcd423011fe3e5fd1e5c2bac1d694eb01d/src/chem/residue_type.cr#L36" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1066,23 +1066,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/535211cb36dc29c8086496a2ef3df9625e354c90/src/chem/residue_type.cr#L42" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/385e4cdcd423011fe3e5fd1e5c2bac1d694eb01d/src/chem/residue_type.cr#L42" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="new(name:String,code:Char?,kind:Residue::Kind,description:String,atom_types:Array(AtomType),bonds:Array(BondType),root_atom:AtomType,aliases:Array(String)=[]ofString,link_bond:BondType?=nil,symmetric_atom_groups:Array(Array(Tuple(String,String)))?=nil)-class-method">
+    <div class="entry-detail" id="new(name:String,code:Char?,kind:Residue::Kind,description:String?,atom_types:Array(AtomType),bonds:Array(BondType),root_atom:AtomType,aliases:Array(String)=[]ofString,link_bond:BondType?=nil,symmetric_atom_groups:Array(Array(Tuple(String,String)))?=nil)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(name : String, code : <a href="../Char.html">Char</a>?, kind : <a href="../Chem/Residue/Kind.html">Residue::Kind</a>, description : String, atom_types : <a href="../Array.html">Array</a>(<a href="../Chem/AtomType.html">AtomType</a>), bonds : <a href="../Array.html">Array</a>(<a href="../Chem/BondType.html">BondType</a>), root_atom : <a href="../Chem/AtomType.html">AtomType</a>, aliases : <a href="../Array.html">Array</a>(String) = <span class="o">[]</span> <span class="k">of</span> <span class="t">String</span>, link_bond : <a href="../Chem/BondType.html">BondType</a>? = <span class="n">nil</span>, symmetric_atom_groups : <a href="../Array.html">Array</a>(<a href="../Array.html">Array</a>(Tuple(String, String)))? = <span class="n">nil</span>)
+        def self.<strong>new</strong>(name : String, code : <a href="../Char.html">Char</a>?, kind : <a href="../Chem/Residue/Kind.html">Residue::Kind</a>, description : String?, atom_types : <a href="../Array.html">Array</a>(<a href="../Chem/AtomType.html">AtomType</a>), bonds : <a href="../Array.html">Array</a>(<a href="../Chem/BondType.html">BondType</a>), root_atom : <a href="../Chem/AtomType.html">AtomType</a>, aliases : <a href="../Array.html">Array</a>(String) = <span class="o">[]</span> <span class="k">of</span> <span class="t">String</span>, link_bond : <a href="../Chem/BondType.html">BondType</a>? = <span class="n">nil</span>, symmetric_atom_groups : <a href="../Array.html">Array</a>(<a href="../Array.html">Array</a>(Tuple(String, String)))? = <span class="n">nil</span>)
 
-        <a class="method-permalink" href="#new%28name%3AString%2Ccode%3AChar%3F%2Ckind%3AResidue%3A%3AKind%2Cdescription%3AString%2Catom_types%3AArray%28AtomType%29%2Cbonds%3AArray%28BondType%29%2Croot_atom%3AAtomType%2Caliases%3AArray%28String%29%3D%5B%5DofString%2Clink_bond%3ABondType%3F%3Dnil%2Csymmetric_atom_groups%3AArray%28Array%28Tuple%28String%2CString%29%29%29%3F%3Dnil%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28name%3AString%2Ccode%3AChar%3F%2Ckind%3AResidue%3A%3AKind%2Cdescription%3AString%3F%2Catom_types%3AArray%28AtomType%29%2Cbonds%3AArray%28BondType%29%2Croot_atom%3AAtomType%2Caliases%3AArray%28String%29%3D%5B%5DofString%2Clink_bond%3ABondType%3F%3Dnil%2Csymmetric_atom_groups%3AArray%28Array%28Tuple%28String%2CString%29%29%29%3F%3Dnil%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/535211cb36dc29c8086496a2ef3df9625e354c90/src/chem/residue_type.cr#L16" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/385e4cdcd423011fe3e5fd1e5c2bac1d694eb01d/src/chem/residue_type.cr#L16" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1098,7 +1098,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/535211cb36dc29c8086496a2ef3df9625e354c90/src/chem/residue_type.cr#L50" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/385e4cdcd423011fe3e5fd1e5c2bac1d694eb01d/src/chem/residue_type.cr#L50" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1126,7 +1126,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/535211cb36dc29c8086496a2ef3df9625e354c90/src/chem/residue_type.cr#L32" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/385e4cdcd423011fe3e5fd1e5c2bac1d694eb01d/src/chem/residue_type.cr#L32" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1142,7 +1142,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/535211cb36dc29c8086496a2ef3df9625e354c90/src/chem/residue_type.cr#L46" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/385e4cdcd423011fe3e5fd1e5c2bac1d694eb01d/src/chem/residue_type.cr#L46" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1170,7 +1170,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/535211cb36dc29c8086496a2ef3df9625e354c90/src/chem/residue_type.cr#L61" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/385e4cdcd423011fe3e5fd1e5c2bac1d694eb01d/src/chem/residue_type.cr#L61" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1186,7 +1186,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/535211cb36dc29c8086496a2ef3df9625e354c90/src/chem/residue_type.cr#L65" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/385e4cdcd423011fe3e5fd1e5c2bac1d694eb01d/src/chem/residue_type.cr#L65" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1202,7 +1202,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/535211cb36dc29c8086496a2ef3df9625e354c90/src/chem/residue_type.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/385e4cdcd423011fe3e5fd1e5c2bac1d694eb01d/src/chem/residue_type.cr#L8" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1218,7 +1218,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/535211cb36dc29c8086496a2ef3df9625e354c90/src/chem/residue_type.cr#L69" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/385e4cdcd423011fe3e5fd1e5c2bac1d694eb01d/src/chem/residue_type.cr#L69" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1234,7 +1234,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/535211cb36dc29c8086496a2ef3df9625e354c90/src/chem/residue_type.cr#L75" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/385e4cdcd423011fe3e5fd1e5c2bac1d694eb01d/src/chem/residue_type.cr#L75" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1250,7 +1250,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/535211cb36dc29c8086496a2ef3df9625e354c90/src/chem/residue_type.cr#L79" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/385e4cdcd423011fe3e5fd1e5c2bac1d694eb01d/src/chem/residue_type.cr#L79" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1266,7 +1266,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/535211cb36dc29c8086496a2ef3df9625e354c90/src/chem/residue_type.cr#L87" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/385e4cdcd423011fe3e5fd1e5c2bac1d694eb01d/src/chem/residue_type.cr#L87" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1282,7 +1282,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/535211cb36dc29c8086496a2ef3df9625e354c90/src/chem/residue_type.cr#L91" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/385e4cdcd423011fe3e5fd1e5c2bac1d694eb01d/src/chem/residue_type.cr#L91" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1298,23 +1298,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/535211cb36dc29c8086496a2ef3df9625e354c90/src/chem/residue_type.cr#L13" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/385e4cdcd423011fe3e5fd1e5c2bac1d694eb01d/src/chem/residue_type.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="description:String-instance-method">
+    <div class="entry-detail" id="description:String?-instance-method">
       <div class="signature">
         
-        def <strong>description</strong> : String
+        def <strong>description</strong> : String?
 
-        <a class="method-permalink" href="#description%3AString-instance-method">#</a>
+        <a class="method-permalink" href="#description%3AString%3F-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/535211cb36dc29c8086496a2ef3df9625e354c90/src/chem/residue_type.cr#L11" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/385e4cdcd423011fe3e5fd1e5c2bac1d694eb01d/src/chem/residue_type.cr#L11" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1330,7 +1330,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/535211cb36dc29c8086496a2ef3df9625e354c90/src/chem/residue_type.cr#L83" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/385e4cdcd423011fe3e5fd1e5c2bac1d694eb01d/src/chem/residue_type.cr#L83" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1346,7 +1346,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/535211cb36dc29c8086496a2ef3df9625e354c90/src/chem/residue_type.cr#L95" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/385e4cdcd423011fe3e5fd1e5c2bac1d694eb01d/src/chem/residue_type.cr#L95" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1379,7 +1379,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/535211cb36dc29c8086496a2ef3df9625e354c90/src/chem/residue_type.cr#L99" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/385e4cdcd423011fe3e5fd1e5c2bac1d694eb01d/src/chem/residue_type.cr#L99" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1395,7 +1395,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/535211cb36dc29c8086496a2ef3df9625e354c90/src/chem/residue_type.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/385e4cdcd423011fe3e5fd1e5c2bac1d694eb01d/src/chem/residue_type.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1411,7 +1411,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/535211cb36dc29c8086496a2ef3df9625e354c90/src/chem/residue_type.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/385e4cdcd423011fe3e5fd1e5c2bac1d694eb01d/src/chem/residue_type.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1427,7 +1427,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/535211cb36dc29c8086496a2ef3df9625e354c90/src/chem/residue_type.cr#L106" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/385e4cdcd423011fe3e5fd1e5c2bac1d694eb01d/src/chem/residue_type.cr#L106" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1443,7 +1443,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/535211cb36dc29c8086496a2ef3df9625e354c90/src/chem/residue_type.cr#L110" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/385e4cdcd423011fe3e5fd1e5c2bac1d694eb01d/src/chem/residue_type.cr#L110" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1459,7 +1459,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/535211cb36dc29c8086496a2ef3df9625e354c90/src/chem/residue_type.cr#L7" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/385e4cdcd423011fe3e5fd1e5c2bac1d694eb01d/src/chem/residue_type.cr#L7" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1475,7 +1475,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/535211cb36dc29c8086496a2ef3df9625e354c90/src/chem/residue_type.cr#L12" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/385e4cdcd423011fe3e5fd1e5c2bac1d694eb01d/src/chem/residue_type.cr#L12" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1491,7 +1491,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/535211cb36dc29c8086496a2ef3df9625e354c90/src/chem/residue_type.cr#L14" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/385e4cdcd423011fe3e5fd1e5c2bac1d694eb01d/src/chem/residue_type.cr#L14" target="_blank">View source</a>]
         
       </div>
     </div>
