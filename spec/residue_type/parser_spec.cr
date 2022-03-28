@@ -142,4 +142,33 @@ describe Chem::ResidueType::Parser do
     parser.bond_types.size.should eq 4
     parser.atom_types.map(&.formal_charge).should eq [0, 0, 0, -1, -1]
   end
+
+  it "parses implicit bonds" do
+    parser = Chem::ResidueType::Parser.new "O1=SG(=*)(-O3-)-*"
+    parser.parse
+    parser.atom_types.size.should eq 3
+    parser.bond_types.size.should eq 2
+    parser.implicit_bonds.size.should eq 2
+    sg = parser.atom_types[1]
+    parser.implicit_bonds.should eq [{sg, 2}, {sg, 1}]
+    parser.atom_types.map(&.formal_charge).should eq [0, 0, -1]
+  end
+
+  it "raises if an implicit bond is at the middle" do
+    expect_raises(
+      Chem::ParseException,
+      "Implicit bonds must be at the end of a branch or string"
+    ) do
+      Chem::ResidueType::Parser.new("CB-SG-*-CD").parse
+    end
+  end
+
+  it "raises if wildcard is not preceded by a bond" do
+    expect_raises(
+      Chem::ParseException,
+      "Implicit atom '*' must be preceded by a bond"
+    ) do
+      Chem::ResidueType::Parser.new("CB-SG*-CD").parse
+    end
+  end
 end

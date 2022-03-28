@@ -322,26 +322,12 @@ describe Chem::ResidueType::Builder do
     restype = Chem::ResidueType.build do
       description "Cysteine"
       name "CYX"
-      structure "CB-SG"
-      implicit_bonds({"SG" => 1})
+      structure "CB-SG-*"
       root "CB"
     end
     restype.atom_types.size.should eq 5
     restype.atom_types.count(&.element.hydrogen?).should eq 3
     restype.bonds.size.should eq 4
     restype.bonds.count(&.includes?("SG")).should eq 1
-  end
-
-  it "raises if setting implicit bonds multiple times" do
-    expect_raises Chem::Error, "Atom SG already has implicit bonds" do
-      restype = Chem::ResidueType.build do
-        description "Cysteine"
-        name "CYX"
-        structure "CB-SG"
-        implicit_bonds({"SG" => 1})
-        implicit_bonds({"SG" => 2})
-        root "CB"
-      end
-    end
   end
 end

@@ -52,8 +52,7 @@ module Chem
     name "CYX"
     code 'C'
     kind :protein
-    structure "{backbone}-CB-SG"
-    implicit_bonds({"SG" => 1})
+    structure "{backbone}-CB-SG-*"
   end
 
   ResidueType.register do
