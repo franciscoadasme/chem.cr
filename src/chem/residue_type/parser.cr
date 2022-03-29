@@ -86,6 +86,7 @@ class Chem::ResidueType::Parser
       when .ascii_letter?
         atom_type = read_atom_type
         @atom_type_map[atom_type.name] = atom_type
+        raise "Expected bond between atoms" unless @atom_map.empty? || bond_atom
         if bond_atom
           add_bond bond_atom, atom_type, bond_order
           bond_atom = nil

@@ -171,4 +171,10 @@ describe Chem::ResidueType::Parser do
       Chem::ResidueType::Parser.new("CB-SG*-CD").parse
     end
   end
+
+  it "raises if two atoms are contiguous" do
+    expect_raises(Chem::ParseException, "Expected bond between atoms") do
+      Chem::ResidueType::Parser.new("C1C2").parse
+    end
+  end
 end
