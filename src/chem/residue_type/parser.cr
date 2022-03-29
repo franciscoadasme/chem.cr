@@ -7,6 +7,7 @@ class Chem::ResidueType::Parser
     @reader = Char::Reader.new(str.strip)
     @atom_type_map = {} of String => AtomType
     @bond_type_map = {} of Tuple(String, String) => BondType
+    @implicit_bonds = [] of Tuple(AtomType, Int32)
     @aliases = {} of String => String
     @aliases.merge! ALIASES
     @aliases.merge! aliases if aliases
@@ -61,6 +62,10 @@ class Chem::ResidueType::Parser
         yield char
       end
     end
+  end
+
+  def implicit_bonds : Array(Tuple(AtomType, Int32))
+    @implicit_bonds
   end
 
   private def next_char : Char?
@@ -135,6 +140,13 @@ class Chem::ResidueType::Parser
           raise "Duplicate label %#{label_id}" if label_map.has_key?(label_id)
           label_map[label_id] = check_pred("Label %#{label_id} must be preceded by an atom")
         end
+      when '*'
+        raise "Implicit atom '*' must be preceded by a bond" unless bond_atom
+        unless peek_char.in?(nil, ')')
+          raise "Implicit bonds must be at the end of a branch or string"
+        end
+        @implicit_bonds << {bond_atom, bond_order}
+        bond_Atom = nil
       when .nil?
         break
       else
