@@ -26,20 +26,20 @@ describe Chem::Topology::Perception do
 
       # ions
       (638..641).each do |i|
-        structure.atoms[i].valency.should eq 1
+        structure.atoms[i].valence.should eq 1
         structure.atoms[i].bonds.size.should eq 0
         structure.atoms[i].formal_charge.should eq 1
       end
 
       # n-ter
-      structure.atoms[324].valency.should eq 3
+      structure.atoms[324].valence.should eq 3
       structure.atoms[324].bonds.size.should eq 4
       structure.atoms[324].formal_charge.should eq 1
 
       # c-ter
-      structure.atoms[364].valency.should eq 2
+      structure.atoms[364].valence.should eq 2
       structure.atoms[364].formal_charge.should eq -1
-      structure.atoms[365].valency.should eq 2
+      structure.atoms[365].valence.should eq 2
       structure.atoms[365].formal_charge.should eq 0
 
       structure.atoms[149].bonded_atoms.map(&.serial).should eq [145] # H near two Os
@@ -64,13 +64,13 @@ describe Chem::Topology::Perception do
       structure.formal_charge.should eq 0
       structure.atoms.count(&.formal_charge.!=(0)).should eq 0
 
-      structure.atoms[13].valency.should eq 2
+      structure.atoms[13].valence.should eq 2
       structure.atoms[13].bonded_atoms.map(&.serial).sort!.should eq [13, 26]
-      structure.atoms[14].valency.should eq 2
+      structure.atoms[14].valence.should eq 2
       structure.atoms[14].bonded_atoms.map(&.serial).should eq [13]
 
       # sulfate ion
-      structure.atoms[3].valency.should eq 6
+      structure.atoms[3].valence.should eq 6
       structure.atoms[3].bonded_atoms.map(&.serial).sort!.should eq [2, 5, 6, 7]
       structure.atoms[3].bonds[structure.atoms[1]].single?.should be_true
       structure.atoms[3].bonds[structure.atoms[4]].double?.should be_true
@@ -89,12 +89,12 @@ describe Chem::Topology::Perception do
       structure.formal_charge.should eq 0
       structure.atoms.count(&.formal_charge.!=(0)).should eq 0
 
-      structure.atoms[15].valency.should eq 2
+      structure.atoms[15].valence.should eq 2
       structure.atoms[15].bonded_atoms.map(&.serial).should eq [15, 21]
       structure.atoms[15].bonds[structure.atoms[14]].single?.should be_true
       structure.atoms[15].bonds[structure.atoms[20]].single?.should be_true
 
-      structure.atoms[37].valency.should eq 2
+      structure.atoms[37].valence.should eq 2
       structure.atoms[37].bonded_atoms.map(&.serial).should eq [37, 39]
       structure.atoms[37].bonds[structure.atoms[36]].single?.should be_true
       structure.atoms[37].bonds[structure.atoms[38]].single?.should be_true

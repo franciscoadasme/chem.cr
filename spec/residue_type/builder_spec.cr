@@ -214,7 +214,7 @@ describe Chem::ResidueType::Builder do
     residue.atom_names.should eq ["CA", "HA1", "HA2", "HA3", "C", "O", "OXT", "HXT"]
   end
 
-  it "fails on incorrect valency" do
+  it "fails on incorrect valence" do
     expect_raises(Chem::Error, "Expected valence of CG is 4, got 5") do
       Chem::ResidueType.build do
         description "Tryptophan"

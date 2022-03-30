@@ -4,9 +4,8 @@ class Chem::Element
   getter mass : Float64
   getter name : String
   getter symbol : String
+  getter valence : Int32 | Array(Int32) | Nil
   getter valence_electrons : Int32
-  # TODO: rename to valence
-  getter valencies : Int32 | Array(Int32) | Nil
   getter vdw_radius : Float64
 
   protected def initialize(
@@ -17,7 +16,7 @@ class Chem::Element
     @covalent_radius : Float64,
     @vdw_radius : Float64,
     @valence_electrons : Int32,
-    @valencies : Int32 | Array(Int32) | Nil
+    @valence : Int32 | Array(Int32) | Nil
   )
   end
 
@@ -34,29 +33,39 @@ class Chem::Element
     io << "<Element " << @symbol << '(' << @atomic_number << ")>"
   end
 
-  # TODO: rename to max_valence
-  def max_valency : Int32?
-    case valence = @valencies
+  def max_valence : Int32?
+    case valence = @valence
     in Int32, Nil then valence
     in Array      then valence.last
     end
   end
 
   def valence : Int32?
-    case valence = @valencies
+    case valence = @valence
     in Int32, Nil then valence
     in Array      then valence.first
     end
   end
 
   def valence(effective_valence : Int32) : Int32
-    case valence = @valencies
+    case valence = @valence
     in Int32
       valence
     in Array
       valence.find(&.>=(effective_valence)) || valence.last
     in Nil
       effective_valence
+    end
+  end
+
+  def valences : Array(Int32)
+    case valence = @valence
+    in Int32
+      [valence]
+    in Array
+      valence
+    in Nil
+      [] of Int32
     end
   end
 

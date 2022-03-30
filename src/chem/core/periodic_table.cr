@@ -149,7 +149,7 @@ module Chem::PeriodicTable
         covalent_radius: {{rcov.id}},
         vdw_radius: {{rvdw.id == "_" ? "#{rcov.id} + 0.9".id : rvdw.id}},
         valence_electrons: {{nelec.id}},
-        valencies: {{valence}},
+        valence: {{valence}},
       )
     {% end %}
   {% end %}

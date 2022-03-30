@@ -8,7 +8,7 @@ module Chem
     delegate size, unsafe_fetch, to: @bonds
 
     def initialize(@atom : Atom)
-      @bonds = Array(Bond).new @atom.element.max_valency || 0
+      @bonds = Array(Bond).new @atom.element.max_valence || 0
     end
 
     def [](atom : Atom) : Bond
@@ -63,13 +63,13 @@ module Chem
       missing_bonds.zero?
     end
 
-    private def invalid_valency
+    private def invalid_valence
       msg = String.build do |builder|
         builder << "Atom #{@atom.serial} "
         if full?
-          builder << "has its valency shell already full"
+          builder << "has its valence shell already full"
         else
-          builder << "has only #{missing_bonds} valency electron"
+          builder << "has only #{missing_bonds} valence electron"
           builder << 's' if missing_bonds > 1
           builder << " available"
         end
@@ -78,7 +78,7 @@ module Chem
     end
 
     private def missing_bonds : Int32
-      @atom.valency - @bonds.map(&.order.to_i).sum
+      @atom.valence - @bonds.map(&.order.to_i).sum
     end
 
     protected def push(bond : Bond)
@@ -86,7 +86,7 @@ module Chem
     end
 
     protected def validate_bond!(bond : Bond)
-      invalid_valency if bond.order > missing_bonds
+      invalid_valence if bond.order > missing_bonds
     end
   end
 end

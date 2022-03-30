@@ -10,7 +10,7 @@ describe Chem::Element do
     ele.covalent_radius.should eq 0.76
     ele.vdw_radius.should eq 1.77
     ele.valence_electrons.should eq 4
-    ele.valencies.should eq 4
+    ele.valence.should eq 4
   end
 
   describe "#inspect" do

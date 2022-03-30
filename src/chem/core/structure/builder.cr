@@ -203,7 +203,7 @@ module Chem
     # Lewis structure of the aromatic atoms. Different bond orderings
     # may produce distinct but valid Kekule forms. This procedure
     # requires that all atoms have explicit hydrogens such that unfilled
-    # valency is due to missing double bonds only, otherwise it will
+    # valence is due to missing double bonds only, otherwise it will
     # produce incorrect chemical structures or even fail.
     #
     # This method first groups aromatic bonds by their connectivity.
@@ -236,7 +236,7 @@ module Chem
           end
         end
 
-        changeable = bonds.select { |bond| bond[0].missing_valency > 0 && bond[1].missing_valency > 0 }.to_set
+        changeable = bonds.select { |bond| bond[0].missing_valence > 0 && bond[1].missing_valence > 0 }.to_set
         kekulized = false
         subbonds = [] of Bond
         visited = Set(Bond).new bonds.size
@@ -254,7 +254,7 @@ module Chem
             end
           end
 
-          if bonds.all? { |bond| bond[0].nominal_valency == bond[0].valency && bond[1].nominal_valency == bond[1].valency }
+          if bonds.all? { |bond| bond[0].nominal_valence == bond[0].valence && bond[1].nominal_valence == bond[1].valence }
             kekulized = true
             break
           end

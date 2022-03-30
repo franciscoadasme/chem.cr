@@ -63,42 +63,42 @@ class Chem::Topology::Perception
   # First, atom hybridization is guessed from the geometry. Then, the
   # bond orders are determined such that both atoms must have the same
   # hybridization to assign a double (sp2) or triple (sp) bond. Bond
-  # order is only changed if the bonded atoms have missing valency. If
+  # order is only changed if the bonded atoms have missing valence. If
   # multiple bonded atoms fulfill the requirements for increasing the
-  # bond order, the atom with the most missing valency or that is
+  # bond order, the atom with the most missing valence or that is
   # closest to the current atom is selected first.
   #
   # This algorithm is loosely based on OpenBabel's `PerceiveBondOrders`
   # function.
   private def assign_bond_orders(atoms : AtomView) : Nil
     # TODO: cache valences and missing valences in a hash to avoid
-    # computing the valency each cycle
+    # computing the valence each cycle
     hybrid_map = guess_hybridization atoms.select { |atom| atom.degree > 0 }
     atoms.select { |atom| hybrid_map[atom]? }
-      .sort_by! { |atom| {atom.missing_valency, atom.serial} }
+      .sort_by! { |atom| {atom.missing_valence, atom.serial} }
       .each do |atom|
-        missing_valency = atom.missing_valency
-        next if missing_valency == 0
+        missing_valence = atom.missing_valence
+        next if missing_valence == 0
         atom.bonded_atoms
           .select! do |other|
             hybrid_map[other]? == hybrid_map[atom] && (
-              other.missing_valency > 0 ||
-                other.valency < (other.element.max_valency || Int32::MAX)
+              other.missing_valence > 0 ||
+                other.valence < (other.element.max_valence || Int32::MAX)
             )
           end
           .sort_by! do |other|
-            {-missing_valency, Spatial.distance2(atom, other)}
+            {-missing_valence, Spatial.distance2(atom, other)}
           end
           .each do |other|
             case hybrid_map[other]
             when 2
               atom.bonds[other].order = 2
-              missing_valency -= 1
+              missing_valence -= 1
             when 1
               atom.bonds[other].order = 3
-              missing_valency -= 2
+              missing_valence -= 2
             end
-            break if missing_valency == 0
+            break if missing_valence == 0
           end
       end
   end
@@ -106,9 +106,9 @@ class Chem::Topology::Perception
   private def assign_formal_charges(atoms : Enumerable(Atom)) : Nil
     atoms.each do |atom|
       if atom.element.ionic?
-        atom.formal_charge = atom.max_valency || 0
+        atom.formal_charge = atom.max_valence || 0
       elsif atom.formal_charge == 0 # don't reset charge if set
-        atom.formal_charge = atom.bonds.sum(&.order) - atom.nominal_valency
+        atom.formal_charge = atom.bonds.sum(&.order) - atom.nominal_valence
       end
     end
   end
@@ -196,7 +196,7 @@ class Chem::Topology::Perception
   # Guesses the hybridization of *atoms* based on the average bond
   # angles. If an atom has only one bond, the hybridization is copied
   # from the bonded atom if it has multiple bonds, otherwise is set
-  # based on the missing valency.
+  # based on the missing valence.
   #
   # The rules are taken from the OpenBabel's `PerceiveBondOrders` function.
   private def guess_hybridization(atoms : AtomView) : Hash(Atom, Int32)
@@ -218,8 +218,8 @@ class Chem::Topology::Perception
           if other_hybrid = hash[other]? # terminal atom (other have multiple bonds)
             hash[atom] = other_hybrid
           else # diatomic fragment (both atom and other have one bond only)
-            missing_valency = Math.min atom.missing_valency, other.missing_valency
-            hash[atom] = 4 - missing_valency.clamp(1..3)
+            missing_valence = Math.min atom.missing_valence, other.missing_valence
+            hash[atom] = 4 - missing_valence.clamp(1..3)
           end
         end
       end

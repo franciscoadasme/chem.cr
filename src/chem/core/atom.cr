@@ -19,7 +19,7 @@ module Chem
 
     delegate x, y, z, to: @coords
     delegate chain, to: @residue
-    delegate atomic_number, covalent_radius, max_valency, to: @element
+    delegate atomic_number, covalent_radius, max_valence, to: @element
 
     def initialize(@name : String,
                    @serial : Int32,
@@ -153,13 +153,13 @@ module Chem
       @name == atom_t.name && @element == atom_t.element
     end
 
-    def missing_valency : Int32
-      (nominal_valency - valency).clamp 0..
+    def missing_valence : Int32
+      (nominal_valence - valence).clamp 0..
     end
 
-    # TODO: rename to valency
-    def nominal_valency : Int32
-      @element.valence(valency)
+    # TODO: rename to valence
+    def nominal_valence : Int32
+      @element.valence(valence)
     end
 
     def residue=(new_res : Residue) : Residue
@@ -173,13 +173,13 @@ module Chem
       io << ':' << @name << '(' << @serial << ')'
     end
 
-    # TODO: this name is incorrect. Only nominal valency has a correct
-    # meaning, valency can only be a few choices. Rename to bond_order
+    # TODO: this name is incorrect. Only nominal valence has a correct
+    # meaning, valence can only be a few choices. Rename to bond_order
     # or something like that (check openbabel code)
     # FIXME: this is completely wrong. N+ and Mg2+ behave differently.
-    def valency : Int32
+    def valence : Int32
       if element.ionic?
-        @element.max_valency || 0
+        @element.max_valence || 0
       else
         bonds.sum(&.order) - @formal_charge
       end
