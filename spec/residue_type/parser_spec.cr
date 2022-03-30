@@ -208,4 +208,14 @@ describe Chem::ResidueType::Parser do
     parser.atoms[0].explicit_hydrogens.should eq 4
     parser.atoms[0].formal_charge.should eq 1
   end
+
+  it "parses consecutive charge signs" do
+    parser = Chem::ResidueType::Parser.new "[TI++++]"
+    parser.parse
+    parser.atoms.size.should eq 1
+    parser.bonds.size.should eq 0
+    parser.atoms[0].name.should eq "TI"
+    parser.atoms[0].explicit_hydrogens.should eq 0
+    parser.atoms[0].formal_charge.should eq 4
+  end
 end

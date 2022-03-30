@@ -233,12 +233,13 @@ class Chem::ResidueType::Parser
         sign = symbol == '+' ? 1 : -1
         case next_char
         when Nil
-          # end of string
+          formal_charge = sign
         when symbol
           loop do
-            formal_charge += 1 * sign
+            formal_charge += sign
             break unless next_char == symbol
           end
+          formal_charge += sign
         when .ascii_number?
           formal_charge = read_int * sign
           next_char
