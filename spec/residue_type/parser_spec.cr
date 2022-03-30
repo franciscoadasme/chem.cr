@@ -77,7 +77,7 @@ describe Chem::ResidueType::Parser do
   end
 
   it "raises if label is before an atom" do
-    expect_raises(Chem::ParseException, "Label %1 must be preceded by an atom") do
+    expect_raises(Chem::ParseException, "Expected atom before label %1") do
       Chem::ResidueType::Parser.new("%1CB").parse
     end
   end
@@ -171,7 +171,7 @@ describe Chem::ResidueType::Parser do
   it "raises if wildcard is not preceded by a bond" do
     expect_raises(
       Chem::ParseException,
-      "Implicit atom '*' must be preceded by a bond"
+      "Expected bond before implicit atom '*'"
     ) do
       Chem::ResidueType::Parser.new("CB-SG*-CD").parse
     end

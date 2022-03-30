@@ -48,10 +48,6 @@ class Chem::ResidueType::Parser
     end
   end
 
-  private def check_pred(msg : String) : AtomRecord
-    @atom_map.last_value? || raise(msg)
-  end
-
   private def consume_while(io : IO, & : Char -> Bool) : Nil
     return unless yield char = current_char
     io << char
@@ -76,6 +72,10 @@ class Chem::ResidueType::Parser
   private def current_char? : Char?
     char = @reader.current_char
     char if char != '\0'
+  end
+
+  private def expect_atom(msg : String) : AtomRecord
+    @atom_map.last_value? || raise("Expected atom #{msg}")
   end
 
   def implicit_bonds : Array(BondRecord)
@@ -106,15 +106,15 @@ class Chem::ResidueType::Parser
         end
       when '-'
         check_bond_succ
-        bond_atom ||= check_pred("Bond must be preceded by an atom")
+        bond_atom ||= expect_atom("before bond")
         bond_order = 1
       when '='
         check_bond_succ
-        bond_atom ||= check_pred("Bond must be preceded by an atom")
+        bond_atom ||= expect_atom("before bond")
         bond_order = 2
       when '#'
         check_bond_succ
-        bond_atom ||= check_pred("Bond must be preceded by an atom")
+        bond_atom ||= expect_atom("before bond")
         bond_order = 3
       when '('
         if char = peek_char
@@ -124,9 +124,9 @@ class Chem::ResidueType::Parser
         else # end of string
           raise "Unclosed branch"
         end
-        root_stack << (bond_atom || check_pred("Branch must be preceded by an atom"))
+        root_stack << (bond_atom || expect_atom("before branch"))
       when ')'
-        bond_atom = root_stack.pop? || raise "Invalid branch termination"
+        bond_atom = root_stack.pop? || raise "Unmatched branch closing"
         if char = peek_char
           raise "Expected bond after a branch" unless char.in?("-=#(")
         end
@@ -153,10 +153,10 @@ class Chem::ResidueType::Parser
           label_map.delete label_id
         else # label previous atom
           raise "Duplicate label %#{label_id}" if label_map.has_key?(label_id)
-          label_map[label_id] = check_pred("Label %#{label_id} must be preceded by an atom")
+          label_map[label_id] = expect_atom("before label %#{label_id}")
         end
       when '*'
-        raise "Implicit atom '*' must be preceded by a bond" unless bond_atom
+        raise "Expected bond before implicit atom '*'" unless bond_atom
         unless peek_char.in?(nil, ')')
           raise "Implicit bonds must be at the end of a branch or string"
         end
@@ -165,7 +165,7 @@ class Chem::ResidueType::Parser
       when '\0'
         break
       else
-        raise "Invalid character #{char.inspect} in #{@reader.string}"
+        raise "Invalid character #{char.inspect}"
       end
 
       if advance_char
@@ -247,7 +247,7 @@ class Chem::ResidueType::Parser
         end
       end
 
-      raise "Unmatched bracket" if current_char != ']'
+      raise "Unclosed bracket" if current_char != ']'
     end
 
     raise "Duplicate atom #{atom_name}" if @atom_map.has_key?(atom_name)
@@ -256,14 +256,11 @@ class Chem::ResidueType::Parser
   end
 
   private def read_element : Element
-    symbol = String.build do |io|
-      io << @reader.current_char if @reader.current_char.ascii_uppercase?
-      if (char = peek_char) && char.ascii_lowercase?
-        io << char
-        next_char
-      end
-    end
+    symbol = consume_while &.ascii_uppercase?
     raise "Expected element" if symbol.empty?
+    next_char if peek_char.try(&.ascii_lowercase?)
+    symbol += consume_while &.ascii_lowercase?
+
     PeriodicTable[symbol]
   end
 
