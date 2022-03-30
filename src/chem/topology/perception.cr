@@ -71,6 +71,8 @@ class Chem::Topology::Perception
   # This algorithm is loosely based on OpenBabel's `PerceiveBondOrders`
   # function.
   private def assign_bond_orders(atoms : AtomView) : Nil
+    # TODO: cache valences and missing valences in a hash to avoid
+    # computing the valency each cycle
     hybrid_map = guess_hybridization atoms.select { |atom| atom.degree > 0 }
     atoms.select { |atom| hybrid_map[atom]? }
       .sort_by! { |atom| {atom.missing_valency, atom.serial} }
@@ -79,7 +81,10 @@ class Chem::Topology::Perception
         next if missing_valency == 0
         atom.bonded_atoms
           .select! do |other|
-            hybrid_map[other]? == hybrid_map[atom] && other.missing_valency > 0
+            hybrid_map[other]? == hybrid_map[atom] && (
+              other.missing_valency > 0 ||
+                other.valency < (other.element.max_valency || Int32::MAX)
+            )
           end
           .sort_by! do |other|
             {-missing_valency, Spatial.distance2(atom, other)}
@@ -101,7 +106,7 @@ class Chem::Topology::Perception
   private def assign_formal_charges(atoms : Enumerable(Atom)) : Nil
     atoms.each do |atom|
       if atom.element.ionic?
-        atom.formal_charge = atom.max_valency
+        atom.formal_charge = atom.max_valency || 0
       elsif atom.formal_charge == 0 # don't reset charge if set
         atom.formal_charge = atom.bonds.sum(&.order) - atom.nominal_valency
       end

@@ -8,7 +8,7 @@ module Chem
     delegate size, unsafe_fetch, to: @bonds
 
     def initialize(@atom : Atom)
-      @bonds = Array(Bond).new @atom.element.max_valency
+      @bonds = Array(Bond).new @atom.element.max_valency || 0
     end
 
     def [](atom : Atom) : Bond

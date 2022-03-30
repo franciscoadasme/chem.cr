@@ -159,7 +159,7 @@ module Chem
 
     # TODO: rename to valency
     def nominal_valency : Int32
-      @element.valencies.find(&.>=(valency)) || max_valency
+      @element.valence(valency)
     end
 
     def residue=(new_res : Residue) : Residue
@@ -179,7 +179,7 @@ module Chem
     # FIXME: this is completely wrong. N+ and Mg2+ behave differently.
     def valency : Int32
       if element.ionic?
-        @element.max_valency
+        @element.max_valency || 0
       else
         bonds.sum(&.order) - @formal_charge
       end
@@ -202,6 +202,20 @@ module Chem
         @residue.{{member.underscore.id}}?
       end
     {% end %}
+
+    macro finished
+      {% for constant in PeriodicTable.constants %}
+        {% call = PeriodicTable.constant(constant) %} # call to Element#new
+        {% name = call.named_args[2].value %}
+        {% method_name = (name.downcase + "?").id %}
+
+        # Returns `true` if the atom's element is {{name}}, else
+        # `false`.
+        def {{method_name}}
+          @element.{{method_name}}
+        end
+      {% end %}
+    end
 
     # Copies `self` into *residue*
     #

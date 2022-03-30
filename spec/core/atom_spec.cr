@@ -153,7 +153,7 @@ describe Chem::Atom do
         bond "I1", "C1"
         bond "C1", "N1", order: 3
       end
-      structure.atoms.map(&.nominal_valency).should eq [1, 4, 3]
+      structure.atoms.map(&.nominal_valency).should eq [3, 4, 3]
     end
 
     it "returns nominal valency (bonds exceed maximum valency)" do
@@ -176,10 +176,10 @@ describe Chem::Atom do
         atom :C, vec3(-1, 0, 0)
         atom :S, vec3(0, 0, 0)
         atom :H, vec3(1, 0, 0)
-        bond "C1", "S1"
-        bond "S1", "H1"
+        bond "C1", "S1", 3
+        bond "S1", "H1", 1
       end
-      structure.atoms[1].nominal_valency.should eq 2
+      structure.atoms[1].nominal_valency.should eq 4
     end
 
     it "returns nominal valency (multiple valencies, 2)" do

@@ -40,7 +40,7 @@ describe Chem::PeriodicTable do
     it "returns all elements" do
       Chem::PeriodicTable.elements.size.should eq 118
       Chem::PeriodicTable.elements[0].should be Chem::PeriodicTable::H
-      Chem::PeriodicTable.elements[-1].should be Chem::PeriodicTable::Uuo
+      Chem::PeriodicTable.elements[-1].should be Chem::PeriodicTable::Og
     end
   end
 end
