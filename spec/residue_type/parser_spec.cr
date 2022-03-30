@@ -38,7 +38,7 @@ describe Chem::ResidueType::Parser do
   end
 
   it "raises when adding the same bond twice with different order" do
-    expect_raises Chem::ParseException, "Bond CD2=CE2 already exists" do
+    expect_raises Chem::ParseException, "A bond between CD2 and CE2 already exists" do
       Chem::ResidueType::Parser.new("CD2%1=CE2-%1").parse
     end
   end

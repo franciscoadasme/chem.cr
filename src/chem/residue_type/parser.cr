@@ -20,11 +20,8 @@ class Chem::ResidueType::Parser
   private def add_bond(atom : AtomRecord, other : AtomRecord, order : Int32) : Nil
     raise "Atom #{atom.name} cannot be bonded to itself" if atom == other
     bond_key = {String, String}.from [atom.name, other.name].sort!
-    if bond = @bond_map[bond_key]?
-      if bond.order != order
-        symbol = "-=#"[bond.order - 1]
-        raise "Bond #{bond.lhs}#{symbol}#{bond.rhs} already exists"
-      end
+    if @bond_map[bond_key]?
+      raise "A bond between #{atom.name} and #{other.name} already exists"
     else
       @bond_map[bond_key] = BondRecord.new(atom.name, other.name, order)
     end
