@@ -53,8 +53,10 @@ class Chem::ResidueType::Parser
   end
 
   private def consume_while(io : IO, & : Char -> Bool) : Nil
-    if (yield @reader.current_char)
-      io << @reader.current_char
+    if (yield current_char)
+      io << current_char
+    else
+      return
     end
     while (char = peek_char) && (yield char)
       io << char
@@ -133,6 +135,7 @@ class Chem::ResidueType::Parser
           raise "Expected bond after a branch" unless char.in?("-=#(")
         end
       when '{' # alias like "{backbone}"
+        next_char
         name = consume_while &.ascii_lowercase?
         raise "Expected alias" if name.empty?
         spec = @aliases[name]? || raise "Unknown alias #{name}"
@@ -196,6 +199,7 @@ class Chem::ResidueType::Parser
 
     atom_name = String.build do |io|
       consume_while io, &.ascii_uppercase?
+      next_char if peek_char.try(&.ascii_number?)
       consume_while io, &.ascii_number?
     end
     raise "Expected atom name" if atom_name.empty?
