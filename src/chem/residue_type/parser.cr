@@ -53,11 +53,8 @@ class Chem::ResidueType::Parser
   end
 
   private def consume_while(io : IO, & : Char -> Bool) : Nil
-    if (yield current_char)
-      io << current_char
-    else
-      return
-    end
+    return unless yield char = current_char
+    io << char
     while (char = peek_char) && (yield char)
       io << char
       next_char
