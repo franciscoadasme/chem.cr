@@ -1,49 +1,58 @@
 class Chem::ResidueType::Parser
-  # TODO: add custom error classes
-
   ALIASES = {"backbone" => "N(-H)-CA(-HA)(-C=O)"}
+
+  record AtomRecord, name : String,
+    element : Element?,
+    formal_charge : Int32,
+    explicit_hydrogens : Int32?
+  record BondRecord, lhs : String, rhs : String, order : Int32
 
   def initialize(str, aliases : Hash(String, String)? = nil)
     @reader = Char::Reader.new(str.strip)
-    @atom_type_map = {} of String => AtomType
-    @bond_type_map = {} of Tuple(String, String) => BondType
-    @implicit_bonds = [] of Tuple(AtomType, Int32)
+    @atom_map = {} of String => AtomRecord
+    @bond_map = {} of Tuple(String, String) => BondRecord
+    @implicit_bonds = [] of BondRecord
     @aliases = {} of String => String
     @aliases.merge! ALIASES
     @aliases.merge! aliases if aliases
   end
 
-  private def add_bond(atom_type : AtomType, other : AtomType, order : Int32) : Nil
-    raise "Atom #{atom_type.name} cannot be bonded to itself" if atom_type == other
-    bond_key = {String, String}.from [atom_type.name, other.name].sort!
-    if bond_type = @bond_type_map[bond_key]?
-      if bond_type.order != order
-        raise "Bond #{bond_type} already exists"
+  private def add_bond(atom : AtomRecord, other : AtomRecord, order : Int32) : Nil
+    raise "Atom #{atom.name} cannot be bonded to itself" if atom == other
+    bond_key = {String, String}.from [atom.name, other.name].sort!
+    if bond = @bond_map[bond_key]?
+      if bond.order != order
+        symbol = "-=#"[bond.order - 1]
+        raise "Bond #{bond.lhs}#{symbol}#{bond.rhs} already exists"
       end
     else
-      @bond_type_map[bond_key] = BondType.new(atom_type, other, order)
+      @bond_map[bond_key] = BondRecord.new(atom.name, other.name, order)
     end
   end
 
-  def atom_types : Array(AtomType)
-    @atom_type_map.values
+  def atoms : Array(AtomRecord)
+    @atom_map.values
   end
 
-  def bond_types : Array(BondType)
-    @bond_type_map.values
+  def atom_map : Hash(String, AtomRecord)
+    @atom_map
+  end
+
+  def bonds : Array(BondRecord)
+    @bond_map.values
   end
 
   private def check_bond_succ
     case char = peek_char
-    when .nil?, '-', '=', '#'
+    when .nil?, ')', '-', '=', '#'
       raise "Unmatched bond"
     when '('
       raise "Branching bond must be inside the branch"
     end
   end
 
-  private def check_pred(msg : String) : AtomType
-    @atom_type_map.last_value? || raise(msg)
+  private def check_pred(msg : String) : AtomRecord
+    @atom_map.last_value? || raise(msg)
   end
 
   private def consume_while(io : IO, & : Char -> Bool) : Nil
@@ -64,7 +73,16 @@ class Chem::ResidueType::Parser
     end
   end
 
-  def implicit_bonds : Array(Tuple(AtomType, Int32))
+  private def current_char : Char
+    @reader.current_char
+  end
+
+  private def current_char? : Char?
+    char = @reader.current_char
+    char if char != '\0'
+  end
+
+  def implicit_bonds : Array(BondRecord)
     @implicit_bonds
   end
 
@@ -78,17 +96,17 @@ class Chem::ResidueType::Parser
   def parse : Nil
     bond_atom = nil
     bond_order = 1
-    root_stack = Deque(AtomType).new
-    label_map = {} of Int32 => AtomType
+    root_stack = Deque(AtomRecord).new
+    label_map = {} of Int32 => AtomRecord
     advance_char = true
     loop do
-      case char = @reader.current_char
-      when .ascii_letter?
-        atom_type = read_atom_type
-        @atom_type_map[atom_type.name] = atom_type
+      case char = current_char
+      when '[', .ascii_letter?
         raise "Expected bond between atoms" unless @atom_map.empty? || bond_atom
+        atom = read_atom_record
+        @atom_map[atom.name] = atom
         if bond_atom
-          add_bond bond_atom, atom_type, bond_order
+          add_bond bond_atom, atom, bond_order
           bond_atom = nil
         end
       when '-'
@@ -133,8 +151,8 @@ class Chem::ResidueType::Parser
         next_char
         label_id = read_int
         if bond_atom # after a bond so add bond
-          atom_type = label_map[label_id]? || raise "Unknown label %#{label_id}"
-          add_bond atom_type, bond_atom, bond_order
+          atom = label_map[label_id]? || raise "Unknown label %#{label_id}"
+          add_bond atom, bond_atom, bond_order
           bond_atom = nil
           label_map.delete label_id
         else # label previous atom
@@ -146,12 +164,12 @@ class Chem::ResidueType::Parser
         unless peek_char.in?(nil, ')')
           raise "Implicit bonds must be at the end of a branch or string"
         end
-        @implicit_bonds << {bond_atom, bond_order}
-        bond_Atom = nil
-      when .nil?
+        @implicit_bonds << BondRecord.new(bond_atom.name, "*", bond_order)
+        bond_atom = nil
+      when '\0'
         break
       else
-        raise "Invalid character #{char.inspect}"
+        raise "Invalid character #{char.inspect} in #{@reader.string}"
       end
 
       if advance_char
@@ -175,54 +193,74 @@ class Chem::ResidueType::Parser
     ::raise ParseException.new(msg)
   end
 
-  private def read_atom_type : AtomType
+  private def read_atom_record : AtomRecord
+    bracketed = @reader.current_char == '['
+    next_char if bracketed
+
     atom_name = String.build do |io|
       consume_while io, &.ascii_uppercase?
       consume_while io, &.ascii_number?
     end
     raise "Expected atom name" if atom_name.empty?
-    raise "Duplicate atom type #{atom_name}" if @atom_type_map.has_key?(atom_name)
 
+    # Disambiguate cases like [NH4+], where H4 is probably the number of
+    # explicit hydrogens instead of an atom named NH4
+    if bracketed && peek_char != 'H' && atom_name =~ /H\d+$/
+      atom_name, _, num = atom_name.rpartition('H')
+      (num.size + 1).times { @reader.previous_char }
+    end
+
+    raise "Duplicate atom #{atom_name}" if @atom_map.has_key?(atom_name)
     next_char
 
     element = nil
     formal_charge = 0
-    loop do
-      case char = @reader.current_char
-      when '+'
-        formal_charge = peek_char.try(&.ascii_number?) ? read_int : 1
-      when '-' # negative charge
-        case peek_char
-        when .nil?, '-', ')' # end of str or branch, or -- (equivalent to -1-)
-          formal_charge = -1
-          break
-        when .ascii_number? # -1, -2, -3, etc.
-          formal_charge = read_int * -1
-        else # single bond
-          @reader.previous_char
-          break
-        end
-      when '['
+    explicit_hydrogens = nil
+    if bracketed
+      if current_char == '|'
         next_char
         element = read_element
-        case next_char
-        when ']' # ok
-        when .nil?
-          raise "Unclosed bracket"
-        when .ascii_uppercase?
-          raise "Invalid element"
-        else
-          raise "Unclosed bracket"
-        end
-      else
-        @reader.previous_char
-        break
+        next_char
       end
-      break unless next_char
+
+      explicit_hydrogens = 0
+      if current_char == 'H'
+        next_char
+        if current_char.ascii_number?
+          explicit_hydrogens = read_int
+          if explicit_hydrogens <= 0
+            raise "Invalid number of hydrogens (#{explicit_hydrogens}) for #{atom_name}"
+          end
+          next_char
+        else
+          explicit_hydrogens = 1
+        end
+      end
+
+      if (symbol = current_char).in?('+', '-')
+        sign = symbol == '+' ? 1 : -1
+        case next_char
+        when Nil
+          # end of string
+        when symbol
+          loop do
+            formal_charge += 1 * sign
+            break unless next_char == symbol
+          end
+        when .ascii_number?
+          formal_charge = read_int * sign
+          next_char
+        else
+          formal_charge = sign
+        end
+      end
+
+      raise "Unmatched bracket" if current_char != ']'
+    else
+      @reader.previous_char
     end
 
-    element ||= PeriodicTable[atom_name: atom_name]
-    AtomType.new(atom_name, element, formal_charge)
+    AtomRecord.new(atom_name, element, formal_charge, explicit_hydrogens)
   end
 
   private def read_element : Element

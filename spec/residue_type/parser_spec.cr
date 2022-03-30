@@ -11,12 +11,12 @@ describe Chem::ResidueType::Parser do
       }
     )
     parser.parse
-    parser.atom_types.size.should eq 7
-    parser.bond_types.size.should eq 6
-    parser.atom_types.map(&.name).should eq [
+    parser.atoms.size.should eq 7
+    parser.bonds.size.should eq 6
+    parser.atoms.map(&.name).should eq [
       "C", "CA", "CB", "CG", "CD1", "CD2", "OZ",
     ]
-    parser.bond_types.count(&.double?).should eq 2
+    parser.bonds.count(&.order.==(2)).should eq 2
   end
 
   it "parses a complex residue" do
@@ -26,9 +26,9 @@ describe Chem::ResidueType::Parser do
       -C17-C18%4=C19-C20=C21-C22=C23-%4
     SPEC
     parser.parse
-    parser.atom_types.size.should eq 28
-    parser.bond_types.size.should eq 31
-    parser.bond_types.count(&.double?).should eq 7
+    parser.atoms.size.should eq 28
+    parser.bonds.size.should eq 31
+    parser.bonds.count(&.order.==(2)).should eq 7
   end
 
   it "raises if a bond specifies the same atom" do
@@ -53,25 +53,25 @@ describe Chem::ResidueType::Parser do
   end
 
   it "parses an atom with explicit element" do
-    parser = Chem::ResidueType::Parser.new "CA[Ca]"
+    parser = Chem::ResidueType::Parser.new "[CA|Ca]"
     parser.parse
-    parser.atom_types.size.should eq 1
-    parser.bond_types.size.should eq 0
-    parser.atom_types[0].element.should eq Chem::PeriodicTable::Ca
+    parser.atoms.size.should eq 1
+    parser.bonds.size.should eq 0
+    parser.atoms[0].element.should eq Chem::PeriodicTable::Ca
   end
 
   it "parses labels" do
     spec = "CB-CG%1=CD1-NE1-CE2(=CD2%2#%1)-CZ2=CH2-CZ3=CE3=%2"
     parser = Chem::ResidueType::Parser.new spec
     parser.parse
-    parser.atom_types.size.should eq 10
-    parser.bond_types.size.should eq 11
+    parser.atoms.size.should eq 10
+    parser.bonds.size.should eq 11
 
-    bond_type = parser.bond_types.find { |b| b[0].name == "CG" && b[1].name == "CD2" }
+    bond_type = parser.bonds.find { |b| b.lhs == "CG" && b.rhs == "CD2" }
     bond_type = bond_type.should_not be_nil
     bond_type.order.should eq 3
 
-    bond_type = parser.bond_types.find { |b| b[0].name == "CD2" && b[1].name == "CE3" }
+    bond_type = parser.bonds.find { |b| b.lhs == "CD2" && b.rhs == "CE3" }
     bond_type = bond_type.should_not be_nil
     bond_type.order.should eq 2
   end
@@ -100,32 +100,38 @@ describe Chem::ResidueType::Parser do
     end
   end
 
-  it "raises if atom type is duplicate" do
-    expect_raises(Chem::ParseException, "Duplicate atom type CB") do
+  it "raises if atom is duplicate" do
+    expect_raises(Chem::ParseException, "Duplicate atom CB") do
       Chem::ResidueType::Parser.new("CB-CG-CD-CB").parse
     end
   end
 
-  it "parses a bond preceded by a minus sign" do
-    parser = Chem::ResidueType::Parser.new("CB--CG")
+  it "parses an atom with negative charge" do
+    parser = Chem::ResidueType::Parser.new("[CB-]-CG")
     parser.parse
-    parser.atom_types.size.should eq 2
-    parser.bond_types.size.should eq 1
-    parser.atom_types.map(&.formal_charge).should eq [-1, 0]
+    parser.atoms.size.should eq 2
+    parser.bonds.size.should eq 1
+    parser.atoms.map(&.formal_charge).should eq [-1, 0]
   end
 
   it "raises if bond is at the end" do
     expect_raises(Chem::ParseException, "Unmatched bond") do
       Chem::ResidueType::Parser.new("CB-CG=").parse
     end
+  end
+
+  it "raises if bond is at the end of a branch" do
     expect_raises(Chem::ParseException, "Unmatched bond") do
-      Chem::ResidueType::Parser.new("CB-CG--").parse
+      Chem::ResidueType::Parser.new("CB-CG(-CD1-)").parse
     end
   end
 
   it "raises if two contiguous bonds" do
     expect_raises(Chem::ParseException, "Unmatched bond") do
       Chem::ResidueType::Parser.new("CB-CG-=CD").parse
+    end
+    expect_raises(Chem::ParseException, "Unmatched bond") do
+      Chem::ResidueType::Parser.new("CB-CG--").parse
     end
   end
 
@@ -136,22 +142,21 @@ describe Chem::ResidueType::Parser do
   end
 
   it "parses negative charge at the end of branch" do
-    parser = Chem::ResidueType::Parser.new "S(=O1)(=O2)(-O3-)(-O4-)"
+    parser = Chem::ResidueType::Parser.new "S(=O1)(=O2)(-[O3-])(-[O4-])"
     parser.parse
-    parser.atom_types.size.should eq 5
-    parser.bond_types.size.should eq 4
-    parser.atom_types.map(&.formal_charge).should eq [0, 0, 0, -1, -1]
+    parser.atoms.size.should eq 5
+    parser.bonds.size.should eq 4
+    parser.atoms.map(&.formal_charge).should eq [0, 0, 0, -1, -1]
   end
 
   it "parses implicit bonds" do
-    parser = Chem::ResidueType::Parser.new "O1=SG(=*)(-O3-)-*"
+    parser = Chem::ResidueType::Parser.new "O1=SG(=*)(-[O3-])-*"
     parser.parse
-    parser.atom_types.size.should eq 3
-    parser.bond_types.size.should eq 2
+    parser.atoms.size.should eq 3
+    parser.bonds.size.should eq 2
     parser.implicit_bonds.size.should eq 2
-    sg = parser.atom_types[1]
-    parser.implicit_bonds.should eq [{sg, 2}, {sg, 1}]
-    parser.atom_types.map(&.formal_charge).should eq [0, 0, -1]
+    parser.implicit_bonds.map { |bond| {bond.lhs, bond.order} }.should eq [{"SG", 2}, {"SG", 1}]
+    parser.atoms.map(&.formal_charge).should eq [0, 0, -1]
   end
 
   it "raises if an implicit bond is at the middle" do
@@ -176,5 +181,15 @@ describe Chem::ResidueType::Parser do
     expect_raises(Chem::ParseException, "Expected bond between atoms") do
       Chem::ResidueType::Parser.new("C1C2").parse
     end
+  end
+
+  it "parses explicit hydrogens" do
+    parser = Chem::ResidueType::Parser.new "[NH4+]"
+    parser.parse
+    parser.atoms.size.should eq 1
+    parser.bonds.size.should eq 0
+    parser.atoms[0].name.should eq "N"
+    parser.atoms[0].explicit_hydrogens.should eq 4
+    parser.atoms[0].formal_charge.should eq 1
   end
 end
