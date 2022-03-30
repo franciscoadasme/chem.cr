@@ -199,24 +199,21 @@ class Chem::ResidueType::Parser
     next_char if peek_char.try(&.ascii_number?)
     atom_name += consume_while &.ascii_number?
 
-    # Disambiguate cases like [NH4+], where H4 is probably the number of
-    # explicit hydrogens instead of an atom named NH4
-    if bracketed && peek_char != 'H' && atom_name =~ /H\d+$/
-      atom_name, _, num = atom_name.rpartition('H')
-      (num.size + 1).times { @reader.previous_char }
-    end
-
-    raise "Duplicate atom #{atom_name}" if @atom_map.has_key?(atom_name)
-    next_char
-
     element = nil
     formal_charge = 0
     explicit_hydrogens = nil
     if bracketed
+      next_char
+
       if current_char == '|'
         next_char
         element = read_element
         next_char
+      elsif current_char != 'H' && atom_name =~ /H\d+$/
+        # Disambiguate cases like [NH4+], where H4 is probably the
+        # number of explicit hydrogens instead of an atom named NH4
+        atom_name, _, num = atom_name.rpartition('H')
+        (num.size + 1).times { @reader.previous_char }
       end
 
       explicit_hydrogens = 0
@@ -252,10 +249,9 @@ class Chem::ResidueType::Parser
       end
 
       raise "Unmatched bracket" if current_char != ']'
-    else
-      @reader.previous_char
     end
 
+    raise "Duplicate atom #{atom_name}" if @atom_map.has_key?(atom_name)
     AtomRecord.new(atom_name, element, formal_charge, explicit_hydrogens)
   end
 
