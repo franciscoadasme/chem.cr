@@ -99,8 +99,7 @@ class Chem::ResidueType::Parser
       case char = current_char
       when '[', .ascii_letter?
         raise "Expected bond between atoms" unless @atom_map.empty? || bond_atom
-        atom = read_atom_record
-        @atom_map[atom.name] = atom
+        atom = read_atom
         if bond_atom
           add_bond bond_atom, atom, bond_order
           bond_atom = nil
@@ -190,7 +189,7 @@ class Chem::ResidueType::Parser
     ::raise ParseException.new(msg)
   end
 
-  private def read_atom_record : AtomRecord
+  private def read_atom : AtomRecord
     bracketed = @reader.current_char == '['
     next_char if bracketed
 
@@ -252,7 +251,8 @@ class Chem::ResidueType::Parser
     end
 
     raise "Duplicate atom #{atom_name}" if @atom_map.has_key?(atom_name)
-    AtomRecord.new(atom_name, element, formal_charge, explicit_hydrogens)
+    atom = AtomRecord.new(atom_name, element, formal_charge, explicit_hydrogens)
+    @atom_map[atom.name] = atom
   end
 
   private def read_element : Element
