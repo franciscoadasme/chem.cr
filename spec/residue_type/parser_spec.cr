@@ -192,4 +192,10 @@ describe Chem::ResidueType::Parser do
     parser.atoms[0].explicit_hydrogens.should eq 4
     parser.atoms[0].formal_charge.should eq 1
   end
+
+  it "raises on numeric atom name" do
+    expect_raises(Chem::ParseException, "Expected atom name") do
+      Chem::ResidueType::Parser.new("[12H2+]").parse
+    end
+  end
 end

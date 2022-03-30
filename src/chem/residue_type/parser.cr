@@ -194,12 +194,10 @@ class Chem::ResidueType::Parser
     bracketed = @reader.current_char == '['
     next_char if bracketed
 
-    atom_name = String.build do |io|
-      consume_while io, &.ascii_uppercase?
-      next_char if peek_char.try(&.ascii_number?)
-      consume_while io, &.ascii_number?
-    end
+    atom_name = consume_while &.ascii_uppercase?
     raise "Expected atom name" if atom_name.empty?
+    next_char if peek_char.try(&.ascii_number?)
+    atom_name += consume_while &.ascii_number?
 
     # Disambiguate cases like [NH4+], where H4 is probably the number of
     # explicit hydrogens instead of an atom named NH4
