@@ -198,4 +198,14 @@ describe Chem::ResidueType::Parser do
       Chem::ResidueType::Parser.new("[12H2+]").parse
     end
   end
+
+  it "parses an atom name ending with H2 in brackets" do
+    parser = Chem::ResidueType::Parser.new "[NH2H4+]"
+    parser.parse
+    parser.atoms.size.should eq 1
+    parser.bonds.size.should eq 0
+    parser.atoms[0].name.should eq "NH2"
+    parser.atoms[0].explicit_hydrogens.should eq 4
+    parser.atoms[0].formal_charge.should eq 1
+  end
 end
