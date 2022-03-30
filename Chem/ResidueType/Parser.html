@@ -446,8 +446,23 @@
       
     </li>
   
-  <li class=" current" data-id="chem.cr/Chem/ResidueType/Parser" data-name="chem::residuetype::parser">
+  <li class="parent open current" data-id="chem.cr/Chem/ResidueType/Parser" data-name="chem::residuetype::parser">
       <a href="../../Chem/ResidueType/Parser.html">Parser</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueType/Parser/AtomRecord" data-name="chem::residuetype::parser::atomrecord">
+      <a href="../../Chem/ResidueType/Parser/AtomRecord.html">AtomRecord</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueType/Parser/BondRecord" data-name="chem::residuetype::parser::bondrecord">
+      <a href="../../Chem/ResidueType/Parser/BondRecord.html">BondRecord</a>
+      
+    </li>
+  
+</ul>
+
       
     </li>
   
@@ -818,7 +833,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/385e4cdcd423011fe3e5fd1e5c2bac1d694eb01d/src/chem/residue_type/parser.cr#L1" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/residue_type/parser.cr#L1" target="_blank">
         chem/residue_type/parser.cr
       </a>
     
@@ -880,12 +895,22 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#atom_types%3AArray%28AtomType%29-instance-method" class="signature"><strong>#atom_types</strong> : Array(AtomType)</a>
+        <a href="#atom_map%3AHash%28String%2CAtomRecord%29-instance-method" class="signature"><strong>#atom_map</strong> : Hash(String, AtomRecord)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#bond_types%3AArray%28BondType%29-instance-method" class="signature"><strong>#bond_types</strong> : Array(BondType)</a>
+        <a href="#atoms%3AArray%28AtomRecord%29-instance-method" class="signature"><strong>#atoms</strong> : Array(AtomRecord)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bonds%3AArray%28BondRecord%29-instance-method" class="signature"><strong>#bonds</strong> : Array(BondRecord)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#implicit_bonds%3AArray%28BondRecord%29-instance-method" class="signature"><strong>#implicit_bonds</strong> : Array(BondRecord)</a>
         
       </li>
     
@@ -945,7 +970,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/385e4cdcd423011fe3e5fd1e5c2bac1d694eb01d/src/chem/residue_type/parser.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/residue_type/parser.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -964,34 +989,66 @@
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="atom_types:Array(AtomType)-instance-method">
+    <div class="entry-detail" id="atom_map:Hash(String,AtomRecord)-instance-method">
       <div class="signature">
         
-        def <strong>atom_types</strong> : <a href="../../Array.html">Array</a>(<a href="../../Chem/AtomType.html">AtomType</a>)
+        def <strong>atom_map</strong> : Hash(String, <a href="../../Chem/ResidueType/Parser/AtomRecord.html">AtomRecord</a>)
 
-        <a class="method-permalink" href="#atom_types%3AArray%28AtomType%29-instance-method">#</a>
+        <a class="method-permalink" href="#atom_map%3AHash%28String%2CAtomRecord%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/385e4cdcd423011fe3e5fd1e5c2bac1d694eb01d/src/chem/residue_type/parser.cr#L27" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/residue_type/parser.cr#L34" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="bond_types:Array(BondType)-instance-method">
+    <div class="entry-detail" id="atoms:Array(AtomRecord)-instance-method">
       <div class="signature">
         
-        def <strong>bond_types</strong> : <a href="../../Array.html">Array</a>(<a href="../../Chem/BondType.html">BondType</a>)
+        def <strong>atoms</strong> : <a href="../../Array.html">Array</a>(<a href="../../Chem/ResidueType/Parser/AtomRecord.html">AtomRecord</a>)
 
-        <a class="method-permalink" href="#bond_types%3AArray%28BondType%29-instance-method">#</a>
+        <a class="method-permalink" href="#atoms%3AArray%28AtomRecord%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/385e4cdcd423011fe3e5fd1e5c2bac1d694eb01d/src/chem/residue_type/parser.cr#L31" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/residue_type/parser.cr#L30" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bonds:Array(BondRecord)-instance-method">
+      <div class="signature">
+        
+        def <strong>bonds</strong> : <a href="../../Array.html">Array</a>(<a href="../../Chem/ResidueType/Parser/BondRecord.html">BondRecord</a>)
+
+        <a class="method-permalink" href="#bonds%3AArray%28BondRecord%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/residue_type/parser.cr#L38" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="implicit_bonds:Array(BondRecord)-instance-method">
+      <div class="signature">
+        
+        def <strong>implicit_bonds</strong> : <a href="../../Array.html">Array</a>(<a href="../../Chem/ResidueType/Parser/BondRecord.html">BondRecord</a>)
+
+        <a class="method-permalink" href="#implicit_bonds%3AArray%28BondRecord%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/residue_type/parser.cr#L81" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1007,7 +1064,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/385e4cdcd423011fe3e5fd1e5c2bac1d694eb01d/src/chem/residue_type/parser.cr#L73" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/residue_type/parser.cr#L92" target="_blank">View source</a>]
         
       </div>
     </div>
