@@ -9,10 +9,10 @@ class Chem::ResidueType::Builder
   @structure_parser : Parser?
 
   def build : ResidueType
-    raise Error.new("Missing residue name") if @names.empty?
-    raise Error.new("Empty structure") unless parser = @structure_parser
+    raise "Missing residue name" if @names.empty?
+    raise "Empty structure" unless parser = @structure_parser
     if @kind.protein? && {"C", "N", "CA"}.none? { |name| parser.atom_map[name]? }
-      raise Error.new("Missing backbone atoms for #{@names.first}")
+      raise "Missing backbone atoms for #{@names.first}"
     end
 
     # Set link bond if missing for known residue types
@@ -48,8 +48,8 @@ class Chem::ResidueType::Builder
       target_valence = element.valence(effective_valence)
       if effective_valence > target_valence ||
          (atom.explicit_hydrogens && effective_valence != target_valence)
-        raise Error.new("Expected valence of #{atom.name} is #{target_valence}, \
-                         got #{effective_valence}")
+        raise "Expected valence of #{atom.name} is #{target_valence}, \
+               got #{effective_valence}"
       end
 
       # Create and register atom type
@@ -85,7 +85,7 @@ class Chem::ResidueType::Builder
                 elsif atom_types.count(&.element.heavy?) == 1 # one heavy atom
                   atom_types.first
                 else
-                  raise Error.new("Missing root for residue type #{@names.first}")
+                  raise "Missing root for residue type #{@names.first}"
                 end
     link_bond = @link_bond.try do |lhs, rhs, order|
       BondType.new(atom_type_map[lhs], atom_type_map[rhs], order)
@@ -102,7 +102,7 @@ class Chem::ResidueType::Builder
 
   private def check_atom(name : String) : Nil
     unless (parser = @structure_parser) && parser.atom_map[name]?
-      raise Error.new("Unknown atom #{name}")
+      raise "Unknown atom #{name}"
     end
   end
 
@@ -124,7 +124,7 @@ class Chem::ResidueType::Builder
                  when "-" then 1
                  when "=" then 2
                  when "#" then 3
-                 else          raise "BUG: unreachable"
+                 else          ::raise "BUG: unreachable"
                  end
     @link_bond = {lhs, rhs, bond_order}
   end
@@ -133,16 +133,20 @@ class Chem::ResidueType::Builder
     @names.concat names
   end
 
+  private def raise(msg : String)
+    ::raise Error.new(msg)
+  end
+
   def root(atom_name : String)
     check_atom atom_name
     @root_atom = atom_name
   end
 
   def structure(spec : String, aliases : Hash(String, String)? = nil) : Nil
-    raise Error.new("Residue structure already defined") if @structure_parser
+    raise "Residue structure already defined" if @structure_parser
     parser = ResidueType::Parser.new(spec, aliases)
     parser.parse
-    raise Error.new("Empty structure") if parser.atom_map.empty?
+    raise "Empty structure" if parser.atom_map.empty?
     @structure_parser = parser
   end
 
@@ -151,9 +155,9 @@ class Chem::ResidueType::Builder
     pairs.each do |(a, b)|
       check_atom(a)
       check_atom(b)
-      raise Error.new("#{a} cannot be symmetric with itself") if a == b
+      raise "#{a} cannot be symmetric with itself" if a == b
       {a, b}.each do |name|
-        raise Error.new("#{name} cannot be reassigned for symmetry") if name.in?(visited)
+        raise "#{name} cannot be reassigned for symmetry" if name.in?(visited)
       end
       visited << a << b
     end
