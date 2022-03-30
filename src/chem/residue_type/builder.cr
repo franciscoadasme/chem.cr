@@ -1,14 +1,12 @@
 class Chem::ResidueType::Builder
-  @atom_map = {} of String => Parser::AtomRecord
-  @bonds = [] of Parser::BondRecord
   @code : Char?
   @description : String?
   @kind : Residue::Kind = :other
-  @link_bond : Parser::BondRecord?
+  @link_bond : Tuple(String, String, Int32)?
   @names = [] of String
   @root_atom : String?
   @symmetric_atom_groups = [] of Array(Tuple(String, String))
-  @implicit_bonds = Hash(String, Int32).new { 0 }
+  @structure_parser : Parser?
 
   private def add_hydrogens
     use_name_suffix = @atom_types.any? &.suffix.to_i?.nil?
@@ -49,29 +47,35 @@ class Chem::ResidueType::Builder
 
   protected def build : ResidueType
     raise Error.new("Missing residue name") if @names.empty?
-    if @kind.protein? && {"C", "N", "CA"}.none? { |name| @atom_map[name]? }
+    raise Error.new("Empty structure") unless parser = @structure_parser
+
+    if @kind.protein? && {"C", "N", "CA"}.none? { |name| parser.atom_map[name]? }
       raise Error.new("Missing backbone atoms for #{@names.first}")
     end
-
     @link_bond ||= case @kind
-                   when .protein? then Parser::BondRecord.new("C", "N", 1)
+                   when .protein? then {"C", "N", 1}
                    end
+
+    implicit_bonds = Hash(String, Int32).new { 0 }
+    parser.implicit_bonds.each do |bond|
+      implicit_bonds[bond.lhs] += bond.order
+    end
 
     atom_types = [] of AtomType
     atom_type_map = {} of String => AtomType
     bond_types = [] of BondType
     h_i = 0
-    @atom_map.each_value do |atom|
+    parser.atom_map.each_value do |atom|
       element = atom.element || PeriodicTable[atom_name: atom.name]
 
       effective_valence = atom.explicit_hydrogens || 0
       effective_valence += atom.formal_charge * (element.valence_electrons >= 4 ? -1 : 1)
-      effective_valence += @bonds.sum do |bond|
+      effective_valence += parser.bonds.sum do |bond|
         atom.name.in?(bond.lhs, bond.rhs) ? bond.order : 0
       end
-      effective_valence += @implicit_bonds[atom.name]? || 0
+      effective_valence += implicit_bonds[atom.name]? || 0
       if bond = @link_bond
-        effective_valence += bond.order if atom.name.in?(bond.lhs, bond.rhs)
+        effective_valence += bond[2] if atom.name.in?(bond)
       end
 
       target_valence = element.valence(effective_valence)
@@ -96,12 +100,15 @@ class Chem::ResidueType::Builder
       end
     end
 
-    @bonds.each do |bond|
-      bond_types << BondType.new(atom_type_map[bond.lhs], atom_type_map[bond.rhs], bond.order)
+    parser.bonds.each do |bond|
+      bond_types << BondType.new(
+        atom_type_map[bond.lhs],
+        atom_type_map[bond.rhs],
+        bond.order)
     end
 
-    link_bond = @link_bond.try do |bond|
-      BondType.new(atom_type_map[bond.lhs], atom_type_map[bond.rhs], bond.order)
+    link_bond = @link_bond.try do |lhs, rhs, order|
+      BondType.new(atom_type_map[lhs], atom_type_map[rhs], order)
     end
     root_atom = if atom_name = @root_atom
                   atom_type_map[atom_name]
@@ -123,7 +130,11 @@ class Chem::ResidueType::Builder
   end
 
   private def check_atom(name : String) : Parser::AtomRecord
-    @atom_map[name]? || raise Error.new("Unknown atom #{name}")
+    if (parser = @structure_parser) && (atom = parser.atom_map[name]?)
+      atom
+    else
+      raise Error.new("Unknown atom #{name}")
+    end
   end
 
   def description(name : String)
@@ -146,7 +157,7 @@ class Chem::ResidueType::Builder
                  when "#" then 3
                  else          raise "BUG: unreachable"
                  end
-    @link_bond = Parser::BondRecord.new(lhs, rhs, bond_order)
+    @link_bond = {lhs, rhs, bond_order}
   end
 
   def name(*names : String)
@@ -159,15 +170,11 @@ class Chem::ResidueType::Builder
   end
 
   def structure(spec : String, aliases : Hash(String, String)? = nil) : Nil
-    raise Error.new("Residue structure already defined") unless @atom_map.empty?
+    raise Error.new("Residue structure already defined") if @structure_parser
     parser = ResidueType::Parser.new(spec, aliases)
     parser.parse
-    @atom_map.merge! parser.atom_map
-    @bonds.concat parser.bonds
-    parser.implicit_bonds.each do |bond|
-      @implicit_bonds[bond.lhs] += bond.order
-    end
-    raise Error.new("Empty structure") if @atom_map.empty?
+    raise Error.new("Empty structure") if parser.atom_map.empty?
+    @structure_parser = parser
   end
 
   def symmetry(*pairs : Tuple(String, String)) : Nil
