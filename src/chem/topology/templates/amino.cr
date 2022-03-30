@@ -12,7 +12,7 @@ module Chem
     name "ARG"
     code 'R'
     kind :protein
-    structure "{backbone}-CB-CG-CD-NE-CZ(=NH1+)-NH2"
+    structure "{backbone}-CB-CG-CD-NE-CZ(-NH1)=[NH2H2+]"
   end
 
   ResidueType.register do
@@ -36,7 +36,7 @@ module Chem
     name "ASP"
     code 'D'
     kind :protein
-    structure "{backbone}-CB-CG(=OD1)-OD2-"
+    structure "{backbone}-CB-CG(=OD1)-[OD2-]"
   end
 
   ResidueType.register do
@@ -76,7 +76,7 @@ module Chem
     name "GLU"
     code 'E'
     kind :protein
-    structure "{backbone}-CB-CG-CD(=OE1)-OE2-"
+    structure "{backbone}-CB-CG-CD(=OE1)-[OE2-]"
   end
 
   ResidueType.register do
@@ -108,7 +108,7 @@ module Chem
     name "HIP", "HSP"
     code 'H'
     kind :protein
-    structure "{backbone}-CB-CG%1=CD2-NE2+=CE1-ND1-%1"
+    structure "{backbone}-CB-CG%1=CD2-[NE2H+]=CE1-ND1-%1"
   end
 
   ResidueType.register do
@@ -133,7 +133,7 @@ module Chem
     name "LYS"
     code 'K'
     kind :protein
-    structure "{backbone}-CB-CG-CD-CE-NZ+"
+    structure "{backbone}-CB-CG-CD-CE-[NZH3+]"
   end
 
   ResidueType.register do

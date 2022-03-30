@@ -3,7 +3,7 @@ require "./spec_helper"
 describe Chem::ResidueType do
   Chem::ResidueType.register do
     name "LFG"
-    structure "N1+-C2-C3-O4-C5(-C6)=O7"
+    structure "[N1H3+]-C2-C3-O4-C5(-C6)=O7"
     root "C5"
   end
 

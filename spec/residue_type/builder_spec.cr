@@ -50,7 +50,7 @@ describe Chem::ResidueType::Builder do
       name "LYS"
       code 'K'
       kind :protein
-      structure "{backbone}-CB-CG-CD-CE-NZ+"
+      structure "{backbone}-CB-CG-CD-CE-[NZH3+]"
     end
     names = bb_names + ["CB", "HB1", "HB2", "CG", "HG1", "HG2", "CD", "HD1", "HD2",
                         "CE", "HE1", "HE2", "NZ", "HZ1", "HZ2", "HZ3"]
@@ -65,7 +65,7 @@ describe Chem::ResidueType::Builder do
       name "ASP"
       code 'D'
       kind :protein
-      structure "{backbone}-CB-CG(=OE1)-OE2-"
+      structure "{backbone}-CB-CG(=OE1)-[OE2-]"
     end
     residue.atom_names.should eq(bb_names + ["CB", "HB1", "HB2", "CG", "OE1", "OE2"])
     residue.bonds.size.should eq 11
@@ -75,8 +75,7 @@ describe Chem::ResidueType::Builder do
   it "builds a residue with charge +2" do
     residue = Chem::ResidueType.build do
       name "MG"
-      kind :ion
-      structure "MG+2"
+      structure "[MG+2]"
     end
     residue.atom_types.size.should eq 1
     residue.bonds.size.should eq 0
@@ -89,7 +88,7 @@ describe Chem::ResidueType::Builder do
       name "ARG"
       code 'R'
       kind :protein
-      structure "{backbone}-CB-CG-CD-NE-CZ(-NH1)=NH2+"
+      structure "{backbone}-CB-CG-CD-NE-CZ(-NH1)=[NH2H2+]"
     end
 
     names = bb_names + ["CB", "HB1", "HB2", "CG", "HG1", "HG2", "CD", "HD1", "HD2",
@@ -201,8 +200,8 @@ describe Chem::ResidueType::Builder do
       root "C2"
     end
     residue.atom_names.should eq [
-      "O1", "H1", "C1", "H4", "H5", "C2", "H6", "C3", "H7", "H8", "O3", "H3",
-      "O2", "H2",
+      "O1", "H1", "C1", "H2", "H3", "C2", "H4", "C3", "H5", "H6", "O3", "H7",
+      "O2", "H8",
     ]
   end
 
@@ -216,13 +215,13 @@ describe Chem::ResidueType::Builder do
   end
 
   it "fails on incorrect valency" do
-    expect_raises(Chem::Error, "Expected valency of CG is 4, got 5") do
+    expect_raises(Chem::Error, "Expected valence of CG is 4, got 5") do
       Chem::ResidueType.build do
         description "Tryptophan"
         name "TRP"
         code 'W'
         kind :protein
-        structure "{backbone}-CB-CG(=CD)(-CZ)-OTX-"
+        structure "{backbone}-CB-CG(=CD)(-CZ)-[OTX-]"
       end
     end
   end
@@ -248,7 +247,7 @@ describe Chem::ResidueType::Builder do
   end
 
   it "raises if a symmetry atom is unknown" do
-    expect_raises(Chem::Error, "Unknown atom type C13") do
+    expect_raises(Chem::Error, "Unknown atom C13") do
       Chem::ResidueType.build do
         structure "C1%1=C2-C3=C4-C5=C6-%1"
         symmetry({"C2", "C5"}, {"C13", "C15"})
@@ -293,26 +292,30 @@ describe Chem::ResidueType::Builder do
     end
     restype.atom_types.size.should eq 6
     restype.atom_types.count(&.element.hydrogen?).should eq 4
+    restype.atom_types.map(&.valence).should eq [4, 1, 1, 1, 2, 1]
     restype.bonds.size.should eq 5
     restype.bonds.count(&.includes?("SG")).should eq 2
 
     restype = Chem::ResidueType.build do
       name "UNK"
-      structure "CB-SG-"
+      structure "CB-[SG-]"
       root "CB"
     end
     restype.atom_types.size.should eq 5
     restype.atom_types.count(&.element.hydrogen?).should eq 3
+    restype.atom_types.map(&.valence).should eq [4, 1, 1, 1, 2]
+    restype.atom_types.map(&.formal_charge).should eq [0, 0, 0, 0, -1]
     restype.bonds.size.should eq 4
     restype.bonds.count(&.includes?("SG")).should eq 1
 
     restype = Chem::ResidueType.build do
       name "UNK"
-      structure "S(=O1)(=O2)(-O3-)(-O4-)"
+      structure "S(=O1)(=O2)(-[O3-])(-[O4-])"
       root "S"
     end
     restype.atom_types.size.should eq 5
     restype.atom_types.count(&.element.hydrogen?).should eq 0
+    restype.atom_types.map(&.valence).should eq [6, 2, 2, 2, 2]
     restype.atom_types.map(&.formal_charge).should eq [0, 0, 0, -1, -1]
     restype.bonds.size.should eq 4
     restype.bonds.count(&.includes?("S")).should eq 4

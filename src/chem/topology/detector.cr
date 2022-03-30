@@ -10,7 +10,7 @@ class Chem::Topology::Detector
     description "Charged C-ter"
     name "CTER"
     code 'c'
-    structure "CA-C(=O)-OXT-"
+    structure "CA-C(=O)-[OXT-]"
     root "C"
   end
   NTER_T = ResidueType.build do
@@ -24,7 +24,7 @@ class Chem::Topology::Detector
     description "Charged N-ter"
     name "NTER"
     code 'n'
-    structure "CA-N+"
+    structure "CA-[NH3+]"
     root "N"
   end
 

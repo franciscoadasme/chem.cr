@@ -1,12 +1,12 @@
 class Chem::ResidueType::Builder
-  @atom_types = [] of AtomType
-  @bonds = [] of BondType
+  @atom_map = {} of String => Parser::AtomRecord
+  @bonds = [] of Parser::BondRecord
   @code : Char?
   @description : String?
   @kind : Residue::Kind = :other
-  @link_bond : BondType?
+  @link_bond : Parser::BondRecord?
   @names = [] of String
-  @root_atom : AtomType?
+  @root_atom : String?
   @symmetric_atom_groups = [] of Array(Tuple(String, String))
   @implicit_bonds = Hash(String, Int32).new { 0 }
 
@@ -49,35 +49,81 @@ class Chem::ResidueType::Builder
 
   protected def build : ResidueType
     raise Error.new("Missing residue name") if @names.empty?
+    if @kind.protein? && {"C", "N", "CA"}.none? { |name| @atom_map[name]? }
+      raise Error.new("Missing backbone atoms for #{@names.first}")
+    end
 
-    raise Error.new("No atoms for residue type") if @atom_types.empty?
-    raise Error.new("No bonds for residue type") if @atom_types.size > 1 && @bonds.empty?
-
-    @link_bond ||= BondType.new(check_atom_type("C"), check_atom_type("N")) if @kind.protein?
-    add_hydrogens
-
-    @root_atom ||= if @kind.protein?
-                     check_atom_type("CA")
-                   elsif @atom_types.count { |a| !a.element.hydrogen? } == 1
-                     @atom_types[0]
+    @link_bond ||= case @kind
+                   when .protein? then Parser::BondRecord.new("C", "N", 1)
                    end
-    raise Error.new("Missing root for residue type #{@names[0]}") unless root_atom = @root_atom
+
+    atom_types = [] of AtomType
+    atom_type_map = {} of String => AtomType
+    bond_types = [] of BondType
+    h_i = 0
+    @atom_map.each_value do |atom|
+      element = atom.element || PeriodicTable[atom_name: atom.name]
+
+      effective_valence = atom.explicit_hydrogens || 0
+      effective_valence += atom.formal_charge * (element.valence_electrons >= 4 ? -1 : 1)
+      effective_valence += @bonds.sum do |bond|
+        atom.name.in?(bond.lhs, bond.rhs) ? bond.order : 0
+      end
+      effective_valence += @implicit_bonds[atom.name]? || 0
+      if bond = @link_bond
+        effective_valence += bond.order if atom.name.in?(bond.lhs, bond.rhs)
+      end
+
+      target_valence = element.valence(effective_valence)
+      if effective_valence > target_valence ||
+         (atom.explicit_hydrogens && effective_valence != target_valence)
+        raise Error.new("Expected valence of #{atom.name} is #{target_valence}, \
+                         got #{effective_valence}")
+      end
+
+      atom_type = AtomType.new(atom.name, element, target_valence, atom.formal_charge)
+      atom_types << atom_type
+      atom_type_map[atom_type.name] = atom_type
+
+      suffix = atom_type.suffix.presence
+      suffix = nil if suffix && suffix.size == 1 && suffix[0].ascii_number?
+      h_count = atom.explicit_hydrogens || (target_valence - effective_valence)
+      h_count.times do |i|
+        name = suffix ? "H#{suffix}#{i + 1 if h_count > 1}" : "H#{h_i += 1}"
+        h_atom = AtomType.new(name, PeriodicTable::H, valence: 1)
+        atom_types << h_atom
+        bond_types << BondType.new(atom_type, h_atom)
+      end
+    end
+
+    @bonds.each do |bond|
+      bond_types << BondType.new(atom_type_map[bond.lhs], atom_type_map[bond.rhs], bond.order)
+    end
+
+    link_bond = @link_bond.try do |bond|
+      BondType.new(atom_type_map[bond.lhs], atom_type_map[bond.rhs], bond.order)
+    end
+    root_atom = if atom_name = @root_atom
+                  atom_type_map[atom_name]
+                elsif @kind.protein?
+                  atom_type_map["CA"]
+                elsif atom_types.count(&.element.heavy?) == 1
+                  atom_types.first
+                else
+                  raise Error.new("Missing root for residue type #{@names.first}")
+                end
 
     ResidueType.new @names.first, @code, @kind, @description,
-      @atom_types, @bonds, root_atom,
-      @names[1..], @link_bond, @symmetric_atom_groups
+      atom_types, bond_types, root_atom,
+      @names[1..], link_bond, @symmetric_atom_groups
   end
 
   def code(char : Char) : Nil
     @code = char
   end
 
-  private def check_atom_type(name : String) : AtomType
-    if atom_type = @atom_types.find(&.name.==(name))
-      atom_type
-    else
-      raise Error.new("Unknown atom type #{name}")
-    end
+  private def check_atom(name : String) : Parser::AtomRecord
+    @atom_map[name]? || raise Error.new("Unknown atom #{name}")
   end
 
   def description(name : String)
@@ -91,8 +137,8 @@ class Chem::ResidueType::Builder
   def link_adjacent_by(bond_spec : String)
     lhs, bond_str, rhs = bond_spec.partition(/[-=#]/)
     raise ParseException.new("Invalid bond") if bond_str.empty? || rhs.empty?
-    lhs = check_atom_type(lhs)
-    rhs = check_atom_type(rhs)
+    check_atom(lhs)
+    check_atom(rhs)
     raise ParseException.new("Atom #{lhs} cannot be bonded to itself") if lhs == rhs
     bond_order = case bond_str
                  when "-" then 1
@@ -100,7 +146,7 @@ class Chem::ResidueType::Builder
                  when "#" then 3
                  else          raise "BUG: unreachable"
                  end
-    @link_bond = BondType.new lhs, rhs, bond_order
+    @link_bond = Parser::BondRecord.new(lhs, rhs, bond_order)
   end
 
   def name(*names : String)
@@ -108,24 +154,27 @@ class Chem::ResidueType::Builder
   end
 
   def root(atom_name : String)
-    @root_atom = check_atom_type atom_name
+    check_atom atom_name
+    @root_atom = atom_name
   end
 
   def structure(spec : String, aliases : Hash(String, String)? = nil) : Nil
+    raise Error.new("Residue structure already defined") unless @atom_map.empty?
     parser = ResidueType::Parser.new(spec, aliases)
     parser.parse
-    @atom_types = parser.atom_types
-    @bonds = parser.bond_types
-    parser.implicit_bonds.each do |atom_type, bond_order|
-      @implicit_bonds[atom_type.name] += bond_order
+    @atom_map.merge! parser.atom_map
+    @bonds.concat parser.bonds
+    parser.implicit_bonds.each do |bond|
+      @implicit_bonds[bond.lhs] += bond.order
     end
+    raise Error.new("Empty structure") if @atom_map.empty?
   end
 
   def symmetry(*pairs : Tuple(String, String)) : Nil
     visited = Set(String).new pairs.size * 2
     pairs.each do |(a, b)|
-      check_atom_type(a)
-      check_atom_type(b)
+      check_atom(a)
+      check_atom(b)
       raise Error.new("#{a} cannot be symmetric with itself") if a == b
       {a, b}.each do |name|
         raise Error.new("#{name} cannot be reassigned for symmetry") if name.in?(visited)
