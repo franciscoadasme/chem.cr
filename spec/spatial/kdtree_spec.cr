@@ -98,6 +98,20 @@ describe Chem::Spatial::KDTree do
     end
   end
 
+  it "generates adjacent points within the given radius" do
+    structure = load_file "5e61--off-center.poscar"
+    n9 = structure.atoms["N9"]
+    c42 = structure.atoms["C42"]
+    c43 = structure.atoms["C43"]
+    h64 = structure.atoms["H64"]
+    h65 = structure.atoms["H65"]
+
+    max_covalent_dis = 1.82
+    kdtree = Chem::Spatial::KDTree.new(structure, radius: max_covalent_dis)
+    kdtree.neighbors(c42, within: max_covalent_dis).should eq [h64, h65, n9, c43]
+    kdtree.neighbors(h64, within: max_covalent_dis).should eq [c42, h65]
+  end
+
   describe "#nearest_with_distance" do
     it "returns closest neighbor + distance to a point" do
       structure = Chem::Structure.build do
@@ -134,6 +148,7 @@ describe Chem::Spatial::KDTree do
         atom :C, vec3(1, 1, 1)
         atom :H, vec3(1.5, 0.5, 0.5)
       end
+      structure.to_pdb "output.pdb"
       c, h = structure.atoms
 
       kdtree = Chem::Spatial::KDTree.new structure
