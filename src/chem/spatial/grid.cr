@@ -45,7 +45,8 @@ module Chem::Spatial
                            dim : Dimensions,
                            bounds : Parallelepiped? = nil) : self
       grid = new dim, (bounds || structure.coords.bounds)
-      kdtree = KDTree.new structure
+      coords = structure.coords.to_a
+      kdtree = KDTree.new(coords, structure.cell)
       grid.map_with_coords! do |_, vec|
         Math.sqrt kdtree.nearest_with_distance(vec)[1]
       end
@@ -136,7 +137,8 @@ module Chem::Spatial
                       delta : Float64 = 0.02) : self
       grid = new dim, (bounds || structure.coords.bounds)
       delta = Math.min delta, grid.resolution.min / 2
-      kdtree = KDTree.new structure
+      atoms = structure.atoms
+      kdtree = KDTree.new(atoms.map(&.coords), structure.cell)
       vdw_cutoff = structure.each_atom.max_of &.vdw_radius
       # grid.map_with_coords! do |_, vec|
       #   value = 0
@@ -154,7 +156,8 @@ module Chem::Spatial
       structure.each_atom do |atom|
         grid.each_loc(atom.coords, atom.vdw_radius + delta) do |loc, d|
           too_close = false
-          kdtree.each_neighbor(grid.coords_at(loc), within: vdw_cutoff) do |other, od|
+          kdtree.each_neighbor(grid.coords_at(loc), within: vdw_cutoff) do |index, od|
+            other = atoms.unsafe_fetch(index)
             too_close = true if Math.sqrt(od) < other.vdw_radius - delta
           end
           grid[loc] = 1 if !too_close && (d - atom.vdw_radius).abs < delta

@@ -79,6 +79,15 @@ module Chem::Spatial
       end
     end
 
+    def clamp(range : Range) : self
+      clamp range.begin, range.end
+    end
+
+    def clamp(min : Number?, max : Number?) : self
+      min ||= 0.0
+      map &.clamp(min, max)
+    end
+
     # Returns `true` if the elements of the size are within *delta*
     # from each other, else `false`.
     #
@@ -92,6 +101,10 @@ module Chem::Spatial
       @x.close_to?(rhs.x, delta) &&
         @y.close_to?(rhs.y, delta) &&
         @z.close_to?(rhs.z, delta)
+    end
+
+    def map(& : Float64 -> Float64) : self
+      self.class.new (yield @x), (yield @y), (yield @z)
     end
 
     # Returns a new size with the return value of the given block, which

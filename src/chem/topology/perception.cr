@@ -53,9 +53,7 @@ class Chem::Topology::Perception
   end
 
   private getter kdtree : Spatial::KDTree do
-    atom = largest_atom
-    max_covalent_distance = Math.sqrt PeriodicTable.covalent_cutoff(atom, atom)
-    Spatial::KDTree.new @structure, radius: max_covalent_distance
+    Spatial::KDTree.new(@structure.coords.to_a, @structure.cell)
   end
 
   # Determines bond orders from connectivity and geometry.
@@ -158,12 +156,14 @@ class Chem::Topology::Perception
     end
   end
 
-  private def build_connectivity(atoms : Enumerable(Atom)) : Nil
+  private def build_connectivity(atoms : Indexable(Atom)) : Nil
     atoms.each do |atom|
       next if atom.element.ionic?
       cutoff = Math.sqrt PeriodicTable.covalent_cutoff(atom, largest_atom)
-      kdtree.each_neighbor(atom, within: cutoff) do |other, d|
-        next if other.element.ionic? ||
+      kdtree.each_neighbor(atom.coords, within: cutoff) do |index, d|
+        other = atoms.unsafe_fetch(index)
+        next if atom == other ||
+                other.element.ionic? ||
                 atom.bonded?(other) ||
                 (other.element.hydrogen? && other.bonds.size > 0) ||
                 d > PeriodicTable.covalent_cutoff(atom, other)

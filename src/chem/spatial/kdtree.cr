@@ -1,61 +1,51 @@
 module Chem::Spatial
-  # TODO: refactor to a generic such that #initialize accepts a list of
-  # coordinates (or a Coordinates object) and a list of associated
-  # object to be returned. Alternatively, it could return the index of
-  # the neighbors, which can then be used get the associated object
-  # (however, it would require to be indexed).
   class KDTree
-    private class Node
-      getter axis : Int32
-      getter atom : Atom
-      getter coords : Vec3
-      getter left : Node?
-      getter right : Node?
-
-      def initialize(@axis, @atom, @coords, @left = nil, @right = nil)
-      end
-
-      def distance(coords : Vec3) : Float64
-        (coords[@axis] - @coords[@axis]) ** 2
-      end
-
-      def leaf?
-        @left.nil? && @right.nil?
-      end
-
-      def next(coords : Vec3) : Tuple(Node?, Node?)
-        if leaf?
-          {nil, nil}
-        elsif @right.nil? || coords[@axis] <= @coords[@axis]
-          {@left, @right}
-        else
-          {@right, @left}
-        end
-      end
-    end
-
-    DIMENSIONS = 3
-
     @root : Node
 
-    private def initialize(atoms : Array(Tuple(Vec3, Atom)), @cell : Parallelepiped? = nil)
-      if root = build_tree atoms, 0...atoms.size
+    def initialize(points : Array(Vec3))
+      points_with_index = points.map_with_index { |vec, i| {vec, i} }
+      if root = KDTree.build_tree(points_with_index, 0...points.size, depth: 0)
         @root = root
       else
-        raise "kdtree construction failed"
+        raise ArgumentError.new("Empty collection")
       end
     end
 
-    def self.new(structure : Structure, **options) : self
-      new structure, structure.periodic?, **options
+    protected def self.build_tree(
+      points_with_index : Array(Tuple(Vec3, Int32)),
+      range : Range(Int, Int),
+      depth : Int32
+    ) : Node?
+      start, stop = range.begin, range.end
+      stop -= 1 if range.exclusive?
+      size = stop - start + 1
+      return if size == 0
+
+      axis = depth % 3
+      if size > 1
+        points_with_index.sort!(range) do |(u, _), (v, _)|
+          u.unsafe_fetch(axis) <=> v.unsafe_fetch(axis)
+        end
+        middle = start + size // 2
+        point, index = points_with_index.unsafe_fetch(middle)
+        Node.new(
+          axis,
+          index,
+          point,
+          build_tree(points_with_index, start...middle, depth + 1),
+          build_tree(points_with_index, (middle + 1)..stop, depth + 1)
+        )
+      else
+        point, index = points_with_index.unsafe_fetch(start)
+        Node.new(axis, index, point)
+      end
     end
 
-    def self.new(structure : Structure, periodic : Bool, **options)
-      if periodic
-        raise NotPeriodicError.new unless cell = structure.cell
-        new structure.atoms, cell, **options
+    def self.new(points : Array(Vec3), cell : Parallelepiped?)
+      if cell
+        PeriodicKDTree.new(points, cell)
       else
-        new structure.atoms
+        new points
       end
     end
 
@@ -73,195 +63,185 @@ module Chem::Spatial
     # coordinates augmented with adjacent images and the cell, and then
     # wrap the query and search for neighbors.
 
-    def self.new(atoms : Enumerable(Atom)) : self
-      new atoms.map { |atom| {atom.coords, atom} }
+    def each_neighbor(pos : Vec3, *, within radius : Number, &block : Int32, Float64 ->) : Nil
+      search(@root, pos, radius ** 2, &block)
     end
 
-    def self.new(atoms : Enumerable(Atom), cell : Parallelepiped) : self
-      arr = Array({Vec3, Atom}).new(atoms.size)
-      atoms.each do |atom|
-        fvec = cell.fract(atom.coords).wrap
-        x_sense = fvec.x < 0.5 ? 1 : -1
-        y_sense = fvec.y < 0.5 ? 1 : -1
-        z_sense = fvec.z < 0.5 ? 1 : -1
-        x_sense.abs.downto(0) do |i|
-          y_sense.abs.downto(0) do |j|
-            z_sense.abs.downto(0) do |k|
-              img_idx = Vec3[i * x_sense, j * y_sense, k * z_sense]
-              arr << {cell.cart(fvec + img_idx), atom}
-            end
-          end
-        end
+    def nearest(pos : Vec3) : Int32
+      neighbors(pos, 1).first
+    end
+
+    def nearest_with_distance(pos : Vec3) : {Int32, Float64}
+      neighbors_with_distances(pos, 1).first
+    end
+
+    def neighbors(pos : Vec3, count : Int) : Array(Int32)
+      neighbors_with_distances(pos, count).map(&.[0])
+    end
+
+    def neighbors(pos : Vec3, *, within radius : Number) : Array(Int32)
+      neighbors_with_distances(pos, within: radius).map(&.[0])
+    end
+
+    def neighbors_with_distances(pos : Vec3, count : Int) : Array({Int32, Float64})
+      neighbors = Array(Tuple(Int32, Float64)).new(count)
+      search(@root, pos, count, neighbors)
+      neighbors.sort_by!(&.[1])
+    end
+
+    def neighbors_with_distances(
+      pos : Vec3, *,
+      within radius : Number
+    ) : Array({Int32, Float64})
+      neighbors = [] of {Int32, Float64}
+      each_neighbor(pos, within: radius) do |index, dis2|
+        neighbors << {index, dis2}
       end
-      new arr, cell
-    end
-
-    def self.new(atoms : Enumerable(Atom), cell : Parallelepiped, radius : Number) : self
-      raise ArgumentError.new("Negative radius") unless radius >= 0
-      fradii = StaticArray(Float64, 3).new do |i|
-        (radius / cell.size[i]).clamp(0.0, 0.5 - Float64::EPSILON)
-      end
-
-      arr = Array({Vec3, Atom}).new(atoms.size)
-      atoms.each do |atom|
-        fvec = cell.fract(atom.coords).wrap
-
-        {% begin %}
-          {% for var, i in %w(x y z) %}
-            {{var.id}}_sense = case fvec.{{var.id}}
-                               when 0..fradii[{{i}}]       then 1
-                               when (1 - fradii[{{i}}])..1 then -1
-                               else                        0
-                               end
-          {% end %}
-
-          x_sense.abs.downto(0) do |i|
-            y_sense.abs.downto(0) do |j|
-              z_sense.abs.downto(0) do |k|
-                img_idx = Vec3[i * x_sense, j * y_sense, k * z_sense]
-                arr << {cell.cart(fvec + img_idx), atom}
-              end
-            end
-          end
-        {% end %}
-      end
-      new arr, cell
-    end
-
-    def each_neighbor(of atom : Atom,
-                      *,
-                      within radius : Float64,
-                      &block : Atom, Float64 ->) : Nil
-      coords = atom.coords
-      if cell = @cell
-        coords = cell.wrap(coords)
-      end
-      search @root, coords, radius ** 2 do |other, distance|
-        block.call(other, distance) if atom != other
-      end
-    end
-
-    def each_neighbor(of coords : Vec3,
-                      *,
-                      within radius : Float64,
-                      &block : Atom, Float64 ->) : Nil
-      if cell = @cell
-        coords = cell.wrap(coords)
-      end
-      search @root, coords, radius ** 2, &block
-    end
-
-    def nearest(to atom : Atom) : Atom
-      neighbors(atom.coords, count: 2)[1]
-    end
-
-    def nearest(to coords : Vec3) : Atom
-      neighbors(coords, count: 1).first
-    end
-
-    def nearest_with_distance(atom : Atom | Vec3) : Tuple(Atom, Float64)
-      neighbors_with_distance(atom, n: 1).first
-    end
-
-    def neighbors(of atom : Atom, *, count : Int) : Array(Atom)
-      neighbors(atom.coords, count: count + 1).reject! &.==(atom)
-    end
-
-    def neighbors(of coords : Vec3, *, count : Int) : Array(Atom)
-      neighbors = Array(Tuple(Atom, Float64)).new count
-      if cell = @cell
-        coords = cell.wrap(coords)
-      end
-      search @root, coords, count, neighbors
-      neighbors.map &.[0]
-    end
-
-    def neighbors(of atom : Atom, *, within radius : Number) : Array(Atom)
-      neighbors(atom.coords, within: radius).reject! &.==(atom)
-    end
-
-    def neighbors(of coords : Vec3, *, within radius : Number) : Array(Atom)
-      neighbors = [] of Tuple(Atom, Float64)
-      if cell = @cell
-        coords = cell.wrap(coords)
-      end
-      search @root, coords, radius ** 2 do |atom, distance|
-        neighbors << {atom, distance}
-      end
-      neighbors.sort_by!(&.[1]).map &.[0]
-    end
-
-    def neighbors_with_distance(atom : Atom, *, n : Int) : Array(Tuple(Atom, Float64))
-      neighbors_with_distance(atom.coords, n: n + 1).reject! &.[0].==(atom)
-    end
-
-    def neighbors_with_distance(vec : Vec3, *, n : Int) : Array(Tuple(Atom, Float64))
-      neighbors = Array(Tuple(Atom, Float64)).new n
-      if cell = @cell
-        vec = cell.wrap(vec)
-      end
-      search @root, vec, n, neighbors
-      neighbors
-    end
-
-    private def build_tree(atoms : Array(Tuple(Vec3, Atom)),
-                           range : Range(Int, Int),
-                           depth : Int32 = 0) : Node?
-      start, stop = range.begin, range.end
-      stop -= 1 if range.exclusive?
-      size = stop - start + 1
-      return if size == 0
-
-      axis = depth % DIMENSIONS
-      return Node.new axis, atoms[start][1], atoms[start][0] if size == 1
-
-      atoms.sort!(range) { |a, b| a[0][axis] <=> b[0][axis] }
-      middle = start + size // 2
-      Node.new axis,
-        atoms[middle][1],
-        atoms[middle][0],
-        build_tree(atoms, start...middle, depth + 1),
-        build_tree(atoms, (middle + 1)..stop, depth + 1)
+      neighbors.sort_by!(&.[1])
     end
 
     private def search(node : Node,
-                       coords : Vec3,
+                       pos : Vec3,
                        count : Int32,
-                       neighbors : Array(Tuple(Atom, Float64))) : Nil
-      a, b = node.next coords
-      search a, coords, count, neighbors if a
-      if b && (neighbors.size < count || node.distance(coords) < neighbors.last[1])
-        search b, coords, count, neighbors
+                       neighbors : Array(Tuple(Int32, Float64))) : Nil
+      left, right = node.succ(pos)
+      search(left, pos, count, neighbors) if left
+      if right && (neighbors.size < count || node.dis2(pos) < neighbors.last[1])
+        search(right, pos, count, neighbors)
       end
 
-      update_neighbors node, coords, count, neighbors
+      # update neighbors
+      dis2 = Spatial.distance2(node.pos, pos)
+      if neighbors.size < count || dis2 < neighbors.last[1]
+        neighbors.pop if neighbors.size >= count
+        if i = neighbors.bsearch_index { |a| a[1] > dis2 }
+          neighbors.insert i, {node.index, dis2}
+        else
+          neighbors << {node.index, dis2}
+        end
+      end
     end
 
     private def search(node : Node,
-                       coords : Vec3,
+                       pos : Vec3,
                        radius : Number,
-                       &block : Atom, Float64 -> Nil) : Nil
-      distance = Spatial.distance2 node.coords, coords
-      yield node.atom, distance if distance <= radius
+                       &block : Int32, Float64 -> Nil) : Nil
+      dis2 = Spatial.distance2(node.pos, pos)
+      yield node.index, dis2 if dis2 <= radius
 
-      a, b = node.next coords
-      search a, coords, radius, &block if a
-      search b, coords, radius, &block if b && node.distance(coords) <= radius
+      left, right = node.succ(pos)
+      search(left, pos, radius, &block) if left
+      search(right, pos, radius, &block) if right && node.dis2(pos) <= radius
     end
 
-    private def update_neighbors(node : Node,
-                                 point : Vec3,
-                                 count : Int32,
-                                 neighbors : Array(Tuple(Atom, Float64))) : Nil
-      distance = Spatial.distance2 node.coords, point
-      if neighbors.size < count || distance < neighbors.last[1]
-        neighbors.pop if neighbors.size >= count
-        if i = neighbors.bsearch_index { |a| a[1] > distance }
-          neighbors.insert i, {node.atom, distance}
-        else
-          neighbors << {node.atom, distance}
+    private class Node
+      getter axis : Int32
+      getter index : Int32
+      getter pos : Vec3
+      getter left : Node?
+      getter right : Node?
+
+      def initialize(@axis : Int32,
+                     @index : Int32,
+                     @pos : Vec3,
+                     @left : Node? = nil,
+                     @right : Node? = nil)
+      end
+
+      def >(pos : Vec3) : Bool
+        case @axis
+        when 0 then @pos.x > pos.x
+        when 1 then @pos.y > pos.y
+        when 2 then @pos.z > pos.z
+        else        false
         end
       end
+
+      def dis2(pos : Vec3) : Float64
+        case @axis
+        when 0 then (pos.x - @pos.x) ** 2
+        when 1 then (pos.y - @pos.y) ** 2
+        when 2 then (pos.z - @pos.z) ** 2
+        else        Float64::NAN
+        end
+      end
+
+      def leaf? : Bool
+        @left.nil? && @right.nil?
+      end
+
+      def succ(pos : Vec3) : Tuple(Node?, Node?)
+        if leaf?
+          {nil, nil}
+        elsif @right.nil? || self > pos
+          {@left, @right}
+        else
+          {@right, @left}
+        end
+      end
+    end
+  end
+
+  class PeriodicKDTree < KDTree
+    def initialize(points : Array(Vec3), @cell : Parallelepiped)
+      points.map! { |vec| @cell.wrap(vec) }
+      super points
+    end
+
+    private def each_image(pos : Vec3, radii : Size3, & : Vec3 ->)
+      fradii = (radii / @cell.size).clamp(0.0, 0.5 - Float64::EPSILON)
+
+      fpos = @cell.fract(pos).wrap
+      x_sense = case fpos.x
+                when 0..fradii.x       then 1
+                when (1 - fradii.x)..1 then -1
+                else                        0
+                end
+      y_sense = case fpos.y
+                when 0..fradii.y       then 1
+                when (1 - fradii.y)..1 then -1
+                else                        0
+                end
+      z_sense = case fpos.z
+                when 0..fradii.z       then 1
+                when (1 - fradii.z)..1 then -1
+                else                        0
+                end
+      x_sense.abs.downto(0) do |i|
+        y_sense.abs.downto(0) do |j|
+          z_sense.abs.downto(0) do |k|
+            img_idx = Vec3[i * x_sense, j * y_sense, k * z_sense]
+            yield @cell.cart(fpos + img_idx)
+          end
+        end
+      end
+    end
+
+    def each_neighbor(pos : Vec3, *, within radius : Number, &block : Int32, Float64 ->) : Nil
+      raise ArgumentError.new("Negative radius") unless radius >= 0
+      r2 = radius ** 2
+      each_image(pos, Size3[radius, radius, radius]) do |pos|
+        search(@root, pos, r2, &block)
+      end
+    end
+
+    def neighbors_with_distances(pos : Vec3, count : Int) : Array({Int32, Float64})
+      neighbors = Array(Tuple(Int32, Float64)).new(count)
+      each_image(pos, @cell.size / 0.5) do |pos|
+        search(@root, pos, count, neighbors)
+      end
+      neighbors.sort_by!(&.[1])
+    end
+
+    def neighbors_with_distances(
+      pos : Vec3, *,
+      within radius : Number
+    ) : Array({Int32, Float64})
+      neighbors = [] of {Int32, Float64}
+      each_neighbor(pos, within: radius) do |index, dis2|
+        neighbors << {index, dis2}
+      end
+      neighbors.sort_by!(&.[1])
     end
   end
 end

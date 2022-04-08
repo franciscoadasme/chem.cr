@@ -262,6 +262,15 @@ module Chem::Spatial
       self.class.new *components
     end
 
+    def unsafe_fetch(index : Int) : Float64
+      case index
+      when 0 then @x
+      when 1 then @y
+      when 2 then @z
+      else        Float64::NAN
+      end
+    end
+
     # Returns the vector by wrapping into the primary unit cell. The
     # vector is assumed to be expressed in fractional coordinates.
     def wrap : self

@@ -258,13 +258,15 @@ module Chem::Protein
     end
 
     private def update_bridged_residues
-      kdtree = Spatial::KDTree.new @residues.atoms
+      atoms = @residues.atoms.to_a
+      kdtree = Spatial::KDTree.new atoms.map(&.coords)
       @bridged_residues.clear
       @residues.each do |residue|
         next if residue.name == "PRO" && residue.in?(@bridged_residues)
         next unless donor = residue.dig?("N")
         h = residue.dig?("H").try(&.coords) || guess_hydrogen(residue)
-        kdtree.each_neighbor(h, within: HBOND_DISTANCE.end) do |acceptor|
+        kdtree.each_neighbor(h, within: HBOND_DISTANCE.end) do |index|
+          acceptor = atoms.unsafe_fetch(index)
           if acceptor.residue != residue &&
              acceptor.name == "O" &&
              (residue.chain != acceptor.chain ||

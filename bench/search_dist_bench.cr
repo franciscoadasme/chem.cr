@@ -1,8 +1,7 @@
 require "./bench_helper"
 require "./search_dist_helper"
 
-alias KDTree = Chem::Spatial::KDTree
-alias Vec3 = Chem::Spatial::Vec3
+include Chem::Spatial
 
 structure = Chem::Structure.read "spec/data/pdb/1h1s.pdb"
 atoms = structure.atoms
