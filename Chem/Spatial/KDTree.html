@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.2.2">
+<meta name="generator" content="Crystal Docs 1.3.2">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -556,6 +556,11 @@
       
     </li>
   
+  <li class=" " data-id="chem.cr/Chem/Spatial/PeriodicKDTree" data-name="chem::spatial::periodickdtree">
+      <a href="../../Chem/Spatial/PeriodicKDTree.html">PeriodicKDTree</a>
+      
+    </li>
+  
   <li class=" " data-id="chem.cr/Chem/Spatial/Quat" data-name="chem::spatial::quat">
       <a href="../../Chem/Spatial/Quat.html">Quat</a>
       
@@ -818,6 +823,20 @@
 
 
 
+  <h2>
+    <a id="direct-known-subclasses" class="anchor" href="#direct-known-subclasses">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Direct Known Subclasses
+  </h2>
+  <ul class="other-types-list">
+    
+      <li class="other-type"><a href="../../Chem/Spatial/PeriodicKDTree.html">Chem::Spatial::PeriodicKDTree</a></li>
+    
+  </ul>
+
 
 
 
@@ -833,7 +852,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/spatial/kdtree.cr#L2" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/spatial/kdtree.cr#L2" target="_blank">
         chem/spatial/kdtree.cr
       </a>
     
@@ -841,25 +860,6 @@
   
 
 
-
-  
-    <h2>
-      <a id="constant-summary" class="anchor" href="#constant-summary">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-      Constant Summary
-    </h2>
-  
-  <dl>
-    
-      <dt class="entry-const" id="DIMENSIONS">
-        <strong>DIMENSIONS</strong> = <code><span class="n">3</span></code>
-      </dt>
-      
-    
-  </dl>
 
 
 
@@ -874,17 +874,12 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28structure%3AStructure%2Cperiodic%3ABool%2C%2A%2Aoptions%29-class-method" class="signature"><strong>.new</strong>(structure : Structure, periodic : Bool, **options)</a>
+        <a href="#new%28points%3AArray%28Vec3%29%2Ccell%3AParallelepiped%3F%29-class-method" class="signature"><strong>.new</strong>(points : Array(Vec3), cell : Parallelepiped?)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new%28atoms%3AEnumerable%28Atom%29%2Ccell%3AParallelepiped%3F%3Dnil%2C%2A%2Aoptions%29-class-method" class="signature"><strong>.new</strong>(atoms : Enumerable(Atom), cell : Parallelepiped? = <span class="n">nil</span>, **options)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#new%28structure%3AStructure%2C%2A%2Aoptions%29%3Aself-class-method" class="signature"><strong>.new</strong>(structure : Structure, **options) : <span class="k">self</span></a>
+        <a href="#new%28points%3AArray%28Vec3%29%29-class-method" class="signature"><strong>.new</strong>(points : Array(Vec3))</a>
         
       </li>
     
@@ -905,57 +900,37 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#each_neighbor%28ofcoords%3AVec3%2C%2A%2Cwithinradius%3AFloat64%2C%26block%3AAtom%2CFloat64-%3E%29%3ANil-instance-method" class="signature"><strong>#each_neighbor</strong>(of coords : Vec3, *, within radius : Float64, &block : Atom, Float64 -> ) : Nil</a>
+        <a href="#each_neighbor%28pos%3AVec3%2C%2A%2Cwithinradius%3ANumber%2C%26block%3AInt32%2CFloat64-%3E%29%3ANil-instance-method" class="signature"><strong>#each_neighbor</strong>(pos : Vec3, *, within radius : Number, &block : Int32, Float64 -> ) : Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#each_neighbor%28ofatom%3AAtom%2C%2A%2Cwithinradius%3AFloat64%2C%26block%3AAtom%2CFloat64-%3E%29%3ANil-instance-method" class="signature"><strong>#each_neighbor</strong>(of atom : Atom, *, within radius : Float64, &block : Atom, Float64 -> ) : Nil</a>
+        <a href="#nearest%28pos%3AVec3%29%3AInt32-instance-method" class="signature"><strong>#nearest</strong>(pos : Vec3) : Int32</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#nearest%28tocoords%3AVec3%29%3AAtom-instance-method" class="signature"><strong>#nearest</strong>(to coords : Vec3) : Atom</a>
+        <a href="#nearest_with_distance%28pos%3AVec3%29%3ATuple%28Int32%2CFloat64%29-instance-method" class="signature"><strong>#nearest_with_distance</strong>(pos : Vec3) : Tuple(Int32, Float64)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#nearest%28toatom%3AAtom%29%3AAtom-instance-method" class="signature"><strong>#nearest</strong>(to atom : Atom) : Atom</a>
+        <a href="#neighbors%28pos%3AVec3%2Ccount%3AInt%29%3AArray%28Int32%29-instance-method" class="signature"><strong>#neighbors</strong>(pos : Vec3, count : Int) : Array(Int32)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#nearest_with_distance%28atom%3AAtom%7CVec3%29%3ATuple%28Atom%2CFloat64%29-instance-method" class="signature"><strong>#nearest_with_distance</strong>(atom : Atom | Vec3) : Tuple(Atom, Float64)</a>
+        <a href="#neighbors%28pos%3AVec3%2C%2A%2Cwithinradius%3ANumber%29%3AArray%28Int32%29-instance-method" class="signature"><strong>#neighbors</strong>(pos : Vec3, *, within radius : Number) : Array(Int32)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#neighbors%28ofcoords%3AVec3%2C%2A%2Ccount%3AInt%29%3AArray%28Atom%29-instance-method" class="signature"><strong>#neighbors</strong>(of coords : Vec3, *, count : Int) : Array(Atom)</a>
+        <a href="#neighbors_with_distances%28pos%3AVec3%2Ccount%3AInt%29%3AArray%28Tuple%28Int32%2CFloat64%29%29-instance-method" class="signature"><strong>#neighbors_with_distances</strong>(pos : Vec3, count : Int) : Array(Tuple(Int32, Float64))</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#neighbors%28ofatom%3AAtom%2C%2A%2Ccount%3AInt%29%3AArray%28Atom%29-instance-method" class="signature"><strong>#neighbors</strong>(of atom : Atom, *, count : Int) : Array(Atom)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#neighbors%28ofcoords%3AVec3%2C%2A%2Cwithinradius%3ANumber%29%3AArray%28Atom%29-instance-method" class="signature"><strong>#neighbors</strong>(of coords : Vec3, *, within radius : Number) : Array(Atom)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#neighbors%28ofatom%3AAtom%2C%2A%2Cwithinradius%3ANumber%29%3AArray%28Atom%29-instance-method" class="signature"><strong>#neighbors</strong>(of atom : Atom, *, within radius : Number) : Array(Atom)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#neighbors_with_distance%28vec%3AVec3%2C%2A%2Cn%3AInt%29%3AArray%28Tuple%28Atom%2CFloat64%29%29-instance-method" class="signature"><strong>#neighbors_with_distance</strong>(vec : Vec3, *, n : Int) : Array(Tuple(Atom, Float64))</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#neighbors_with_distance%28atom%3AAtom%2C%2A%2Cn%3AInt%29%3AArray%28Tuple%28Atom%2CFloat64%29%29-instance-method" class="signature"><strong>#neighbors_with_distance</strong>(atom : Atom, *, n : Int) : Array(Tuple(Atom, Float64))</a>
+        <a href="#neighbors_with_distances%28pos%3AVec3%2C%2A%2Cwithinradius%3ANumber%29%3AArray%28Tuple%28Int32%2CFloat64%29%29-instance-method" class="signature"><strong>#neighbors_with_distances</strong>(pos : Vec3, *, within radius : Number) : Array(Tuple(Int32, Float64))</a>
         
       </li>
     
@@ -999,50 +974,34 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(structure:Structure,periodic:Bool,**options)-class-method">
+    <div class="entry-detail" id="new(points:Array(Vec3),cell:Parallelepiped?)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(structure : <a href="../../Chem/Structure.html">Structure</a>, periodic : Bool, **options)
+        def self.<strong>new</strong>(points : <a href="../../Array.html">Array</a>(<a href="../../Chem/Spatial/Vec3.html">Vec3</a>), cell : <a href="../../Chem/Spatial/Parallelepiped.html">Parallelepiped</a>?)
 
-        <a class="method-permalink" href="#new%28structure%3AStructure%2Cperiodic%3ABool%2C%2A%2Aoptions%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28points%3AArray%28Vec3%29%2Ccell%3AParallelepiped%3F%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/spatial/kdtree.cr#L48" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/spatial/kdtree.cr#L44" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="new(atoms:Enumerable(Atom),cell:Parallelepiped?=nil,**options)-class-method">
+    <div class="entry-detail" id="new(points:Array(Vec3))-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(atoms : <a href="../../Enumerable.html">Enumerable</a>(<a href="../../Chem/Atom.html">Atom</a>), cell : <a href="../../Chem/Spatial/Parallelepiped.html">Parallelepiped</a>? = <span class="n">nil</span>, **options)
+        def self.<strong>new</strong>(points : <a href="../../Array.html">Array</a>(<a href="../../Chem/Spatial/Vec3.html">Vec3</a>))
 
-        <a class="method-permalink" href="#new%28atoms%3AEnumerable%28Atom%29%2Ccell%3AParallelepiped%3F%3Dnil%2C%2A%2Aoptions%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28points%3AArray%28Vec3%29%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/spatial/kdtree.cr#L57" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="new(structure:Structure,**options):self-class-method">
-      <div class="signature">
-        
-        def self.<strong>new</strong>(structure : <a href="../../Chem/Structure.html">Structure</a>, **options) : <span class="k">self</span>
-
-        <a class="method-permalink" href="#new%28structure%3AStructure%2C%2A%2Aoptions%29%3Aself-class-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/spatial/kdtree.cr#L44" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/spatial/kdtree.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1061,178 +1020,114 @@
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="each_neighbor(ofcoords:Vec3,*,withinradius:Float64,&amp;block:Atom,Float64-&gt;):Nil-instance-method">
+    <div class="entry-detail" id="each_neighbor(pos:Vec3,*,withinradius:Number,&amp;block:Int32,Float64-&gt;):Nil-instance-method">
       <div class="signature">
         
-        def <strong>each_neighbor</strong>(of coords : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, *, within radius : Float64, &block : <a href="../../Chem/Atom.html">Atom</a>, Float64 -> ) : Nil
+        def <strong>each_neighbor</strong>(pos : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, *, within radius : <a href="../../Number.html">Number</a>, &block : Int32, Float64 -> ) : Nil
 
-        <a class="method-permalink" href="#each_neighbor%28ofcoords%3AVec3%2C%2A%2Cwithinradius%3AFloat64%2C%26block%3AAtom%2CFloat64-%3E%29%3ANil-instance-method">#</a>
+        <a class="method-permalink" href="#each_neighbor%28pos%3AVec3%2C%2A%2Cwithinradius%3ANumber%2C%26block%3AInt32%2CFloat64-%3E%29%3ANil-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/spatial/kdtree.cr#L76" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/spatial/kdtree.cr#L66" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="each_neighbor(ofatom:Atom,*,withinradius:Float64,&amp;block:Atom,Float64-&gt;):Nil-instance-method">
+    <div class="entry-detail" id="nearest(pos:Vec3):Int32-instance-method">
       <div class="signature">
         
-        def <strong>each_neighbor</strong>(of atom : <a href="../../Chem/Atom.html">Atom</a>, *, within radius : Float64, &block : <a href="../../Chem/Atom.html">Atom</a>, Float64 -> ) : Nil
+        def <strong>nearest</strong>(pos : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : Int32
 
-        <a class="method-permalink" href="#each_neighbor%28ofatom%3AAtom%2C%2A%2Cwithinradius%3AFloat64%2C%26block%3AAtom%2CFloat64-%3E%29%3ANil-instance-method">#</a>
+        <a class="method-permalink" href="#nearest%28pos%3AVec3%29%3AInt32-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/spatial/kdtree.cr#L67" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/spatial/kdtree.cr#L70" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="nearest(tocoords:Vec3):Atom-instance-method">
+    <div class="entry-detail" id="nearest_with_distance(pos:Vec3):Tuple(Int32,Float64)-instance-method">
       <div class="signature">
         
-        def <strong>nearest</strong>(to coords : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <a href="../../Chem/Atom.html">Atom</a>
+        def <strong>nearest_with_distance</strong>(pos : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : Tuple(Int32, Float64)
 
-        <a class="method-permalink" href="#nearest%28tocoords%3AVec3%29%3AAtom-instance-method">#</a>
+        <a class="method-permalink" href="#nearest_with_distance%28pos%3AVec3%29%3ATuple%28Int32%2CFloat64%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/spatial/kdtree.cr#L87" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/spatial/kdtree.cr#L74" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="nearest(toatom:Atom):Atom-instance-method">
+    <div class="entry-detail" id="neighbors(pos:Vec3,count:Int):Array(Int32)-instance-method">
       <div class="signature">
         
-        def <strong>nearest</strong>(to atom : <a href="../../Chem/Atom.html">Atom</a>) : <a href="../../Chem/Atom.html">Atom</a>
+        def <strong>neighbors</strong>(pos : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, count : Int) : <a href="../../Array.html">Array</a>(Int32)
 
-        <a class="method-permalink" href="#nearest%28toatom%3AAtom%29%3AAtom-instance-method">#</a>
+        <a class="method-permalink" href="#neighbors%28pos%3AVec3%2Ccount%3AInt%29%3AArray%28Int32%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/spatial/kdtree.cr#L83" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/spatial/kdtree.cr#L78" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="nearest_with_distance(atom:Atom|Vec3):Tuple(Atom,Float64)-instance-method">
+    <div class="entry-detail" id="neighbors(pos:Vec3,*,withinradius:Number):Array(Int32)-instance-method">
       <div class="signature">
         
-        def <strong>nearest_with_distance</strong>(atom : <a href="../../Chem/Atom.html">Atom</a> | <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : Tuple(<a href="../../Chem/Atom.html">Atom</a>, Float64)
+        def <strong>neighbors</strong>(pos : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, *, within radius : <a href="../../Number.html">Number</a>) : <a href="../../Array.html">Array</a>(Int32)
 
-        <a class="method-permalink" href="#nearest_with_distance%28atom%3AAtom%7CVec3%29%3ATuple%28Atom%2CFloat64%29-instance-method">#</a>
+        <a class="method-permalink" href="#neighbors%28pos%3AVec3%2C%2A%2Cwithinradius%3ANumber%29%3AArray%28Int32%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/spatial/kdtree.cr#L91" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/spatial/kdtree.cr#L82" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="neighbors(ofcoords:Vec3,*,count:Int):Array(Atom)-instance-method">
+    <div class="entry-detail" id="neighbors_with_distances(pos:Vec3,count:Int):Array(Tuple(Int32,Float64))-instance-method">
       <div class="signature">
         
-        def <strong>neighbors</strong>(of coords : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, *, count : Int) : <a href="../../Array.html">Array</a>(<a href="../../Chem/Atom.html">Atom</a>)
+        def <strong>neighbors_with_distances</strong>(pos : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, count : Int) : <a href="../../Array.html">Array</a>(Tuple(Int32, Float64))
 
-        <a class="method-permalink" href="#neighbors%28ofcoords%3AVec3%2C%2A%2Ccount%3AInt%29%3AArray%28Atom%29-instance-method">#</a>
+        <a class="method-permalink" href="#neighbors_with_distances%28pos%3AVec3%2Ccount%3AInt%29%3AArray%28Tuple%28Int32%2CFloat64%29%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/spatial/kdtree.cr#L99" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/spatial/kdtree.cr#L86" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="neighbors(ofatom:Atom,*,count:Int):Array(Atom)-instance-method">
+    <div class="entry-detail" id="neighbors_with_distances(pos:Vec3,*,withinradius:Number):Array(Tuple(Int32,Float64))-instance-method">
       <div class="signature">
         
-        def <strong>neighbors</strong>(of atom : <a href="../../Chem/Atom.html">Atom</a>, *, count : Int) : <a href="../../Array.html">Array</a>(<a href="../../Chem/Atom.html">Atom</a>)
+        def <strong>neighbors_with_distances</strong>(pos : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, *, within radius : <a href="../../Number.html">Number</a>) : <a href="../../Array.html">Array</a>(Tuple(Int32, Float64))
 
-        <a class="method-permalink" href="#neighbors%28ofatom%3AAtom%2C%2A%2Ccount%3AInt%29%3AArray%28Atom%29-instance-method">#</a>
+        <a class="method-permalink" href="#neighbors_with_distances%28pos%3AVec3%2C%2A%2Cwithinradius%3ANumber%29%3AArray%28Tuple%28Int32%2CFloat64%29%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/spatial/kdtree.cr#L95" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="neighbors(ofcoords:Vec3,*,withinradius:Number):Array(Atom)-instance-method">
-      <div class="signature">
-        
-        def <strong>neighbors</strong>(of coords : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, *, within radius : <a href="../../Number.html">Number</a>) : <a href="../../Array.html">Array</a>(<a href="../../Chem/Atom.html">Atom</a>)
-
-        <a class="method-permalink" href="#neighbors%28ofcoords%3AVec3%2C%2A%2Cwithinradius%3ANumber%29%3AArray%28Atom%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/spatial/kdtree.cr#L109" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="neighbors(ofatom:Atom,*,withinradius:Number):Array(Atom)-instance-method">
-      <div class="signature">
-        
-        def <strong>neighbors</strong>(of atom : <a href="../../Chem/Atom.html">Atom</a>, *, within radius : <a href="../../Number.html">Number</a>) : <a href="../../Array.html">Array</a>(<a href="../../Chem/Atom.html">Atom</a>)
-
-        <a class="method-permalink" href="#neighbors%28ofatom%3AAtom%2C%2A%2Cwithinradius%3ANumber%29%3AArray%28Atom%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/spatial/kdtree.cr#L105" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="neighbors_with_distance(vec:Vec3,*,n:Int):Array(Tuple(Atom,Float64))-instance-method">
-      <div class="signature">
-        
-        def <strong>neighbors_with_distance</strong>(vec : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, *, n : Int) : <a href="../../Array.html">Array</a>(Tuple(<a href="../../Chem/Atom.html">Atom</a>, Float64))
-
-        <a class="method-permalink" href="#neighbors_with_distance%28vec%3AVec3%2C%2A%2Cn%3AInt%29%3AArray%28Tuple%28Atom%2CFloat64%29%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/spatial/kdtree.cr#L121" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="neighbors_with_distance(atom:Atom,*,n:Int):Array(Tuple(Atom,Float64))-instance-method">
-      <div class="signature">
-        
-        def <strong>neighbors_with_distance</strong>(atom : <a href="../../Chem/Atom.html">Atom</a>, *, n : Int) : <a href="../../Array.html">Array</a>(Tuple(<a href="../../Chem/Atom.html">Atom</a>, Float64))
-
-        <a class="method-permalink" href="#neighbors_with_distance%28atom%3AAtom%2C%2A%2Cn%3AInt%29%3AArray%28Tuple%28Atom%2CFloat64%29%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/spatial/kdtree.cr#L117" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/spatial/kdtree.cr#L92" target="_blank">View source</a>]
         
       </div>
     </div>

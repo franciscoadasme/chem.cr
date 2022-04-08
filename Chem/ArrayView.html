@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.2.2">
+<meta name="generator" content="Crystal Docs 1.3.2">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -556,6 +556,11 @@
       
     </li>
   
+  <li class=" " data-id="chem.cr/Chem/Spatial/PeriodicKDTree" data-name="chem::spatial::periodickdtree">
+      <a href="../Chem/Spatial/PeriodicKDTree.html">PeriodicKDTree</a>
+      
+    </li>
+  
   <li class=" " data-id="chem.cr/Chem/Spatial/Quat" data-name="chem::spatial::quat">
       <a href="../Chem/Spatial/Quat.html">Quat</a>
       
@@ -863,7 +868,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L2" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L2" target="_blank">
         chem/core/array_view.cr
       </a>
     
@@ -976,7 +981,7 @@
       <li class="entry-summary">
         <a href="#reject%28%26%3AT-%3E_%29%3Aself-instance-method" class="signature"><strong>#reject</strong>(& : T -> _) : <span class="k">self</span></a>
         
-          <div class="summary"><p>Returns an <code><a href="../Array.html">Array</a></code> with all the elements in the collection for which the passed block returns <code>false</code>.</p></div>
+          <div class="summary"><p>Returns an <code><a href="../Array.html">Array</a></code> with all the elements in the collection for which the passed block is falsey.</p></div>
         
       </li>
     
@@ -1017,7 +1022,7 @@
       <li class="entry-summary">
         <a href="#select%28%26%3AT-%3E_%29%3Aself-instance-method" class="signature"><strong>#select</strong>(& : T -> _) : <span class="k">self</span></a>
         
-          <div class="summary"><p>Returns an <code><a href="../Array.html">Array</a></code> with all the elements in the collection for which the passed block returns <code>true</code>.</p></div>
+          <div class="summary"><p>Returns an <code><a href="../Array.html">Array</a></code> with all the elements in the collection for which the passed block is truthy.</p></div>
         
       </li>
     
@@ -1058,7 +1063,7 @@
       <li class="entry-summary">
         <a href="#skip_while%28%26%3AT-%3E_%29%3Aself-instance-method" class="signature"><strong>#skip_while</strong>(& : T -> _) : <span class="k">self</span></a>
         
-          <div class="summary"><p>Skips elements up to, but not including, the first element for which the block returns <code>nil</code> or <code>false</code> and returns an <code><a href="../Array.html">Array</a></code> containing the remaining elements.</p></div>
+          <div class="summary"><p>Skips elements up to, but not including, the first element for which the block is falsey, and returns an <code><a href="../Array.html">Array</a></code> containing the remaining elements.</p></div>
         
       </li>
     
@@ -1095,7 +1100,7 @@
       <li class="entry-summary">
         <a href="#take_while%28%26%3AT-%3E_%29%3Aself-instance-method" class="signature"><strong>#take_while</strong>(& : T -> _) : <span class="k">self</span></a>
         
-          <div class="summary"><p>Passes elements to the block until the block returns <code>nil</code> or <code>false</code>, then stops iterating and returns an <code><a href="../Array.html">Array</a></code> of all prior elements.</p></div>
+          <div class="summary"><p>Passes elements to the block until the block returns a falsey value, then stops iterating and returns an <code><a href="../Array.html">Array</a></code> of all prior elements.</p></div>
         
       </li>
     
@@ -1205,7 +1210,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L7" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L7" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1235,7 +1240,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L13" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1251,7 +1256,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L13" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1267,7 +1272,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L13" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1283,7 +1288,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L23" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L23" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1299,7 +1304,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L19" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L19" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1315,7 +1320,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L31" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L31" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1331,7 +1336,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L27" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L27" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1367,7 +1372,7 @@ ary <span class="c"># =&gt; [{false, [3, 1]}, {true, [4]}, {false, [1, 5, 9]}, {
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L35" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L35" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1395,7 +1400,7 @@ an empty collection, in which case it returns an empty array.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L40" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L40" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1423,7 +1428,7 @@ an <code><a href="../Array.html">Array</a></code> of the elements for which the 
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L44" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L44" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1439,7 +1444,7 @@ an <code><a href="../Array.html">Array</a></code> of the elements for which the 
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L49" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L49" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1459,15 +1464,15 @@ an <code><a href="../Array.html">Array</a></code> of the elements for which the 
             </div>
           
           <p>Returns a <code>Tuple</code> with two arrays. The first one contains the elements
-in the collection for which the passed block returned <code>true</code>,
-and the second one those for which it returned <code>false</code>.</p>
+in the collection for which the passed block is truthy,
+and the second one those for which the block is falsey.</p>
 <pre><code class="language-crystal">[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>, <span class="n">4</span>, <span class="n">5</span>, <span class="n">6</span>].partition { <span class="o">|</span>i<span class="o">|</span> i <span class="o">%</span> <span class="n">2</span> <span class="o">==</span> <span class="n">0</span> } <span class="c"># =&gt; {[2, 4, 6], [1, 3, 5]}</span></code></pre>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L53" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L53" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1487,14 +1492,14 @@ and the second one those for which it returned <code>false</code>.</p>
             </div>
           
           <p>Returns an <code><a href="../Array.html">Array</a></code> with all the elements in the collection for which
-the passed block returns <code>false</code>.</p>
+the passed block is falsey.</p>
 <pre><code class="language-crystal">[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>, <span class="n">4</span>, <span class="n">5</span>, <span class="n">6</span>].reject { <span class="o">|</span>i<span class="o">|</span> i <span class="o">%</span> <span class="n">2</span> <span class="o">==</span> <span class="n">0</span> } <span class="c"># =&gt; [1, 3, 5]</span></code></pre>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L58" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L58" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1521,7 +1526,7 @@ the passed block returns <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L62" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L62" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1537,7 +1542,7 @@ the passed block returns <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L66" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L66" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1553,7 +1558,7 @@ the passed block returns <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L70" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L70" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1569,7 +1574,7 @@ the passed block returns <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L75" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L75" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1585,7 +1590,7 @@ the passed block returns <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L79" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L79" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1613,7 +1618,7 @@ implementation in <code><a href="../Enumerable.html">Enumerable</a></code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L84" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L84" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1633,14 +1638,14 @@ implementation in <code><a href="../Enumerable.html">Enumerable</a></code>.</p>
             </div>
           
           <p>Returns an <code><a href="../Array.html">Array</a></code> with all the elements in the collection for which
-the passed block returns <code>true</code>.</p>
+the passed block is truthy.</p>
 <pre><code class="language-crystal">[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>, <span class="n">4</span>, <span class="n">5</span>, <span class="n">6</span>].<span class="k">select</span> { <span class="o">|</span>i<span class="o">|</span> i <span class="o">%</span> <span class="n">2</span> <span class="o">==</span> <span class="n">0</span> } <span class="c"># =&gt; [2, 4, 6]</span></code></pre>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L88" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L88" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1668,7 +1673,7 @@ the passed block returns <code>true</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L92" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L92" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1684,7 +1689,7 @@ the passed block returns <code>true</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L96" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L96" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1700,7 +1705,7 @@ the passed block returns <code>true</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L100" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L100" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1716,7 +1721,7 @@ the passed block returns <code>true</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L11" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L11" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1732,7 +1737,7 @@ the passed block returns <code>true</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L11" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L11" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1760,7 +1765,7 @@ from the original collection.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L105" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L105" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1780,7 +1785,7 @@ from the original collection.</p>
             </div>
           
           <p>Skips elements up to, but not including, the first element for which
-the block returns <code>nil</code> or <code>false</code> and returns an <code><a href="../Array.html">Array</a></code>
+the block is falsey, and returns an <code><a href="../Array.html">Array</a></code>
 containing the remaining elements.</p>
 <pre><code class="language-crystal">[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>, <span class="n">4</span>, <span class="n">5</span>, <span class="n">0</span>].skip_while { <span class="o">|</span>i<span class="o">|</span> i <span class="o">&lt;</span> <span class="n">3</span> } <span class="c"># =&gt; [3, 4, 5, 0]</span></code></pre>
         </div>
@@ -1788,7 +1793,7 @@ containing the remaining elements.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L109" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L109" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1804,7 +1809,7 @@ containing the remaining elements.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L113" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L113" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1820,7 +1825,7 @@ containing the remaining elements.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L117" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L117" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1836,7 +1841,7 @@ containing the remaining elements.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L121" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L121" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1852,7 +1857,7 @@ containing the remaining elements.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L126" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L126" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1868,7 +1873,7 @@ containing the remaining elements.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L131" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L131" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1884,7 +1889,7 @@ containing the remaining elements.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L135" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L135" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1903,7 +1908,7 @@ containing the remaining elements.</p>
               Description copied from module <a href="../Enumerable.html">Enumerable(T)</a>
             </div>
           
-          <p>Passes elements to the block until the block returns <code>nil</code> or <code>false</code>,
+          <p>Passes elements to the block until the block returns a falsey value,
 then stops iterating and returns an <code><a href="../Array.html">Array</a></code> of all prior elements.</p>
 <pre><code class="language-crystal">[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>, <span class="n">4</span>, <span class="n">5</span>, <span class="n">0</span>].take_while { <span class="o">|</span>i<span class="o">|</span> i <span class="o">&lt;</span> <span class="n">3</span> } <span class="c"># =&gt; [1, 2]</span></code></pre>
         </div>
@@ -1911,7 +1916,7 @@ then stops iterating and returns an <code><a href="../Array.html">Array</a></cod
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L140" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L140" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1937,7 +1942,7 @@ then stops iterating and returns an <code><a href="../Array.html">Array</a></cod
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L144" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L144" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1953,7 +1958,7 @@ then stops iterating and returns an <code><a href="../Array.html">Array</a></cod
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L11" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L11" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1969,7 +1974,7 @@ then stops iterating and returns an <code><a href="../Array.html">Array</a></cod
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L11" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L11" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1985,7 +1990,7 @@ then stops iterating and returns an <code><a href="../Array.html">Array</a></cod
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ab0988daf4117593686029c5e81ce40e91bf478/src/chem/core/array_view.cr#L13" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/array_view.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>

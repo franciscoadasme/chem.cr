@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../../js/doc.js"></script>
 
   <meta name="repository-name" content="chem.cr">
-  <title>Chem::PDB::Hybrid36 - chem.cr master</title>
+  <title>Chem::Spatial::PeriodicKDTree - chem.cr master</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -286,12 +286,12 @@
       
     </li>
   
-  <li class="parent open current" data-id="chem.cr/Chem/PDB" data-name="chem::pdb">
+  <li class="parent " data-id="chem.cr/Chem/PDB" data-name="chem::pdb">
       <a href="../../Chem/PDB.html">PDB</a>
       
         <ul>
   
-  <li class=" current" data-id="chem.cr/Chem/PDB/Hybrid36" data-name="chem::pdb::hybrid36">
+  <li class=" " data-id="chem.cr/Chem/PDB/Hybrid36" data-name="chem::pdb::hybrid36">
       <a href="../../Chem/PDB/Hybrid36.html">Hybrid36</a>
       
     </li>
@@ -476,7 +476,7 @@
       
     </li>
   
-  <li class="parent " data-id="chem.cr/Chem/Spatial" data-name="chem::spatial">
+  <li class="parent open current" data-id="chem.cr/Chem/Spatial" data-name="chem::spatial">
       <a href="../../Chem/Spatial.html">Spatial</a>
       
         <ul>
@@ -556,7 +556,7 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/PeriodicKDTree" data-name="chem::spatial::periodickdtree">
+  <li class=" current" data-id="chem.cr/Chem/Spatial/PeriodicKDTree" data-name="chem::spatial::periodickdtree">
       <a href="../../Chem/Spatial/PeriodicKDTree.html">PeriodicKDTree</a>
       
     </li>
@@ -805,11 +805,12 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">module</span> Chem::PDB::Hybrid36
+  <span class="kind">class</span> Chem::Spatial::PeriodicKDTree
 
 </h1>
 
 
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Chem/Spatial/PeriodicKDTree.html">Chem::Spatial::PeriodicKDTree</a></li><li class="superclass"><a href="../../Chem/Spatial/KDTree.html">Chem::Spatial::KDTree</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
@@ -819,19 +820,6 @@
 
 
 
-  <h2>
-    <a id="extended-modules" class="anchor" href="#extended-modules">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Extended Modules
-  </h2>
-  <ul class="other-types-list">
-    
-      <li class="other-type"><a href="../../Chem/PDB/Hybrid36.html">Chem::PDB::Hybrid36</a></li>
-    
-  </ul>
 
 
 
@@ -850,8 +838,8 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/formats/pdb.cr#L610" target="_blank">
-        chem/formats/pdb.cr
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/spatial/kdtree.cr#L185" target="_blank">
+        chem/spatial/kdtree.cr
       </a>
     
     <br/>
@@ -860,6 +848,23 @@
 
 
 
+
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new%28points%3AArray%28Vec3%29%2Ccell%3AParallelepiped%29-class-method" class="signature"><strong>.new</strong>(points : Array(Vec3), cell : Parallelepiped)</a>
+        
+      </li>
+    
+  </ul>
 
 
 
@@ -876,32 +881,17 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#decode%28str%3AString%2Cwidth%3AInt%29%3AInt32-instance-method" class="signature"><strong>#decode</strong>(str : String, width : Int) : Int32</a>
+        <a href="#each_neighbor%28pos%3AVec3%2C%2A%2Cwithinradius%3ANumber%2C%26block%3AInt32%2CFloat64-%3E%29%3ANil-instance-method" class="signature"><strong>#each_neighbor</strong>(pos : Vec3, *, within radius : Number, &block : Int32, Float64 -> ) : Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#decode%28str%3AString%29%3AInt32%3F-instance-method" class="signature"><strong>#decode</strong>(str : String) : Int32?</a>
+        <a href="#neighbors_with_distances%28pos%3AVec3%2Ccount%3AInt%29%3AArray%28Tuple%28Int32%2CFloat64%29%29-instance-method" class="signature"><strong>#neighbors_with_distances</strong>(pos : Vec3, count : Int) : Array(Tuple(Int32, Float64))</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#decode%3F%28str%3AString%2Cwidth%3AInt%29%3AInt32%3F-instance-method" class="signature"><strong>#decode?</strong>(str : String, width : Int) : Int32?</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#decode%3F%28str%3AString%29%3AInt32%3F-instance-method" class="signature"><strong>#decode?</strong>(str : String) : Int32?</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#encode%28io%3AIO%2Cnum%3AInt%2Cwidth%3AInt%29%3ANil-instance-method" class="signature"><strong>#encode</strong>(io : IO, num : Int, width : Int) : Nil</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#encode%28num%3AInt%2Cwidth%3AInt%29%3AString-instance-method" class="signature"><strong>#encode</strong>(num : Int, width : Int) : String</a>
+        <a href="#neighbors_with_distances%28pos%3AVec3%2C%2A%2Cwithinradius%3ANumber%29%3AArray%28Tuple%28Int32%2CFloat64%29%29-instance-method" class="signature"><strong>#neighbors_with_distances</strong>(pos : Vec3, *, within radius : Number) : Array(Tuple(Int32, Float64))</a>
         
       </li>
     
@@ -913,8 +903,102 @@
 
 <div class="methods-inherited">
   
+    
+
+  <h3>Instance methods inherited from class <code><a href="../../Chem/Spatial/KDTree.html">Chem::Spatial::KDTree</a></code></h3>
+  
+  
+    <a href="../../Chem/Spatial/KDTree.html#each_neighbor%28pos%3AVec3%2C%2A%2Cwithinradius%3ANumber%2C%26block%3AInt32%2CFloat64-%3E%29%3ANil-instance-method" class="tooltip">
+      <span>each_neighbor(pos : Vec3, *, within radius : Number, &block : Int32, Float64 -> ) : Nil</span>
+    each_neighbor</a>, 
+    
+  
+    <a href="../../Chem/Spatial/KDTree.html#nearest%28pos%3AVec3%29%3AInt32-instance-method" class="tooltip">
+      <span>nearest(pos : Vec3) : Int32</span>
+    nearest</a>, 
+    
+  
+    <a href="../../Chem/Spatial/KDTree.html#nearest_with_distance%28pos%3AVec3%29%3ATuple%28Int32%2CFloat64%29-instance-method" class="tooltip">
+      <span>nearest_with_distance(pos : Vec3) : Tuple(Int32, Float64)</span>
+    nearest_with_distance</a>, 
+    
+  
+    <a href="../../Chem/Spatial/KDTree.html#neighbors%28pos%3AVec3%2Ccount%3AInt%29%3AArray%28Int32%29-instance-method" class="tooltip">
+      <span>neighbors(pos : Vec3, count : Int) : Array(Int32)<br/>neighbors(pos : Vec3, *, within radius : Number) : Array(Int32)</span>
+    neighbors</a>, 
+    
+  
+    <a href="../../Chem/Spatial/KDTree.html#neighbors_with_distances%28pos%3AVec3%2Ccount%3AInt%29%3AArray%28Tuple%28Int32%2CFloat64%29%29-instance-method" class="tooltip">
+      <span>neighbors_with_distances(pos : Vec3, count : Int) : Array(Tuple(Int32, Float64))<br/>neighbors_with_distances(pos : Vec3, *, within radius : Number) : Array(Tuple(Int32, Float64))</span>
+    neighbors_with_distances</a>
+    
+  
+
+
+    
+
+  <h3>Constructor methods inherited from class <code><a href="../../Chem/Spatial/KDTree.html">Chem::Spatial::KDTree</a></code></h3>
+  
+  
+    <a href="../../Chem/Spatial/KDTree.html#new%28points%3AArray%28Vec3%29%2Ccell%3AParallelepiped%3F%29-class-method" class="tooltip">
+      <span>new(points : Array(Vec3), cell : Parallelepiped?)<br/>new(points : Array(Vec3))</span>
+    new</a>
+    
+  
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
 </div>
 
+
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="new(points:Array(Vec3),cell:Parallelepiped)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(points : <a href="../../Array.html">Array</a>(<a href="../../Chem/Spatial/Vec3.html">Vec3</a>), cell : <a href="../../Chem/Spatial/Parallelepiped.html">Parallelepiped</a>)
+
+        <a class="method-permalink" href="#new%28points%3AArray%28Vec3%29%2Ccell%3AParallelepiped%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/spatial/kdtree.cr#L186" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
 
 
 
@@ -929,98 +1013,50 @@
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="decode(str:String,width:Int):Int32-instance-method">
+    <div class="entry-detail" id="each_neighbor(pos:Vec3,*,withinradius:Number,&amp;block:Int32,Float64-&gt;):Nil-instance-method">
       <div class="signature">
         
-        def <strong>decode</strong>(str : String, width : Int) : Int32
+        def <strong>each_neighbor</strong>(pos : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, *, within radius : <a href="../../Number.html">Number</a>, &block : Int32, Float64 -> ) : Nil
 
-        <a class="method-permalink" href="#decode%28str%3AString%2Cwidth%3AInt%29%3AInt32-instance-method">#</a>
+        <a class="method-permalink" href="#each_neighbor%28pos%3AVec3%2C%2A%2Cwithinradius%3ANumber%2C%26block%3AInt32%2CFloat64-%3E%29%3ANil-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/formats/pdb.cr#L617" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/spatial/kdtree.cr#L220" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="decode(str:String):Int32?-instance-method">
+    <div class="entry-detail" id="neighbors_with_distances(pos:Vec3,count:Int):Array(Tuple(Int32,Float64))-instance-method">
       <div class="signature">
         
-        def <strong>decode</strong>(str : String) : Int32?
+        def <strong>neighbors_with_distances</strong>(pos : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, count : Int) : <a href="../../Array.html">Array</a>(Tuple(Int32, Float64))
 
-        <a class="method-permalink" href="#decode%28str%3AString%29%3AInt32%3F-instance-method">#</a>
+        <a class="method-permalink" href="#neighbors_with_distances%28pos%3AVec3%2Ccount%3AInt%29%3AArray%28Tuple%28Int32%2CFloat64%29%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/formats/pdb.cr#L613" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/spatial/kdtree.cr#L228" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="decode?(str:String,width:Int):Int32?-instance-method">
+    <div class="entry-detail" id="neighbors_with_distances(pos:Vec3,*,withinradius:Number):Array(Tuple(Int32,Float64))-instance-method">
       <div class="signature">
         
-        def <strong>decode?</strong>(str : String, width : Int) : Int32?
+        def <strong>neighbors_with_distances</strong>(pos : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, *, within radius : <a href="../../Number.html">Number</a>) : <a href="../../Array.html">Array</a>(Tuple(Int32, Float64))
 
-        <a class="method-permalink" href="#decode%3F%28str%3AString%2Cwidth%3AInt%29%3AInt32%3F-instance-method">#</a>
+        <a class="method-permalink" href="#neighbors_with_distances%28pos%3AVec3%2C%2A%2Cwithinradius%3ANumber%29%3AArray%28Tuple%28Int32%2CFloat64%29%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/formats/pdb.cr#L625" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="decode?(str:String):Int32?-instance-method">
-      <div class="signature">
-        
-        def <strong>decode?</strong>(str : String) : Int32?
-
-        <a class="method-permalink" href="#decode%3F%28str%3AString%29%3AInt32%3F-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/formats/pdb.cr#L621" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="encode(io:IO,num:Int,width:Int):Nil-instance-method">
-      <div class="signature">
-        
-        def <strong>encode</strong>(io : IO, num : Int, width : Int) : Nil
-
-        <a class="method-permalink" href="#encode%28io%3AIO%2Cnum%3AInt%2Cwidth%3AInt%29%3ANil-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/formats/pdb.cr#L645" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="encode(num:Int,width:Int):String-instance-method">
-      <div class="signature">
-        
-        def <strong>encode</strong>(num : Int, width : Int) : String
-
-        <a class="method-permalink" href="#encode%28num%3AInt%2Cwidth%3AInt%29%3AString-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/formats/pdb.cr#L639" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/spatial/kdtree.cr#L236" target="_blank">View source</a>]
         
       </div>
     </div>
