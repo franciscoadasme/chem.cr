@@ -9,7 +9,6 @@ require "./spatial/parallelepiped"
 
 require "./spatial/coordinates_proxy"
 require "./spatial/kdtree"
-require "./spatial/pbc"
 require "./spatial/qcp"
 
 module Chem::Spatial
