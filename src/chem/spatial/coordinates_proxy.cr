@@ -204,6 +204,30 @@ module Chem::Spatial
       map! { |vec| cell.fract(vec) }
     end
 
+    def unwrap : self
+      raise Spatial::NotPeriodicError.new unless cell = @cell
+      to_fract!
+      moved_atoms = Set(Atom).new
+      @atoms.each_fragment do |fragment|
+        assemble_fragment(fragment[0], fragment[0].coords, moved_atoms)
+        fragment.coords.translate!(-fragment.coords.center.map(&.floor))
+        moved_atoms.clear
+      end
+      to_cart!
+      self
+    end
+
+    private def assemble_fragment(atom, center, moved_atoms)
+      return if atom.in?(moved_atoms)
+
+      atom.coords -= (atom.coords - center).map(&.round)
+      moved_atoms << atom
+
+      atom.each_bonded_atom do |other|
+        assemble_fragment other, atom.coords, moved_atoms
+      end
+    end
+
     def wrap(around center : Vec3? = nil) : self
       raise NotPeriodicError.new unless cell = @cell
       wrap cell, center

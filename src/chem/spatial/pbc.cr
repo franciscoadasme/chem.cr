@@ -62,28 +62,6 @@ module Chem::Spatial::PBC
     end
   end
 
-  def unwrap(atoms : AtomCollection, cell : Parallelepiped) : Nil
-    atoms.coords.to_fract!
-    moved_atoms = Set(Atom).new
-    atoms.each_fragment do |fragment|
-      assemble_fragment fragment[0], fragment[0].coords, moved_atoms
-      fragment.coords.translate! by: -fragment.coords.center.map(&.floor)
-      moved_atoms.clear
-    end
-    atoms.coords.to_cart!
-  end
-
-  private def assemble_fragment(atom, center, moved_atoms) : Nil
-    return if atom.in?(moved_atoms)
-
-    atom.coords -= (atom.coords - center).map(&.round)
-    moved_atoms << atom
-
-    atom.each_bonded_atom do |other|
-      assemble_fragment other, atom.coords, moved_atoms
-    end
-  end
-
   # Returns the padding along each unit cell vector as fractional
   # numbers.
   private def cell_paddings(cell : Parallelepiped,

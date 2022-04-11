@@ -206,12 +206,6 @@ module Chem
       io << "periodic>"
     end
 
-    def unwrap : self
-      raise Spatial::NotPeriodicError.new unless cell = @cell
-      Spatial::PBC.unwrap self, cell
-      self
-    end
-
     protected def reset_cache : Nil
       @chain_table.clear
       @chains.sort_by! &.id

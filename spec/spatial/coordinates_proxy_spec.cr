@@ -277,6 +277,22 @@ describe Chem::Spatial::CoordinatesProxy do
     end
   end
 
+  describe "#unwrap" do
+    it "unwraps a structure" do
+      coords = load_file("5e61--wrapped.poscar").coords
+      coords.unwrap
+      expected = load_file("5e61--unwrapped.poscar").coords
+      coords.should be_close expected, 1e-3
+    end
+
+    it "unwraps a structure placing fragments close together" do
+      coords = load_file("5e5v--wrapped.poscar").coords
+      coords.unwrap
+      expected = load_file("5e5v--unwrapped.poscar").coords
+      coords.should be_close expected, 1e-2
+    end
+  end
+
   describe "#wrap" do
     it "wraps atoms into the primary unit cell" do
       coords = load_file("AlaIle--unwrapped.poscar").coords

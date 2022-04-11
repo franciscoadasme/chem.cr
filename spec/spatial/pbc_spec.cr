@@ -127,20 +127,4 @@ describe Chem::Spatial::PBC do
       end
     end
   end
-
-  describe "#unwrap" do
-    it "unwraps a structure" do
-      structure = load_file "5e61--wrapped.poscar"
-      structure.unwrap
-      expected = load_file "5e61--unwrapped.poscar"
-      structure.atoms.map(&.coords).should be_close expected.atoms.map(&.coords), 1e-3
-    end
-
-    it "unwraps a structure placing fragments close together" do
-      structure = load_file "5e5v--wrapped.poscar"
-      structure.unwrap
-      expected = load_file "5e5v--unwrapped.poscar"
-      structure.atoms.map(&.coords).should be_close expected.atoms.map(&.coords), 1e-2
-    end
-  end
 end
