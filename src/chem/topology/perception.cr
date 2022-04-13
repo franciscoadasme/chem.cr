@@ -38,7 +38,7 @@ class Chem::Topology::Perception
     return unless @structure.n_atoms > 0
 
     apply_templates
-    build_connectivity @structure.atoms
+    build_connectivity
     # skip bond order assignment if a protein chain has missing
     # hydrogens (very common in PDB)
     if !@structure.residues.any? { |res| res.protein? && !res.has_hydrogens? }
@@ -156,22 +156,95 @@ class Chem::Topology::Perception
     end
   end
 
-  private def build_connectivity(atoms : Indexable(Atom)) : Nil
+  # Add single bonds based on pairwise distances. Bonds are added such
+  # that the atom's valence is fulfilled if possible (potential bonds
+  # that lead to over-valence are removed). Note that isolated atoms (no
+  # bonds) are preferred for elements that could potentially be as
+  # cations (K, Na, etc.).
+  private def build_connectivity : Nil
+    atoms = @structure.atoms
+
+    bond_table = Hash(Atom, Array(Atom)).new
+    dcov2_map = Hash({Element, Element}, Float64).new
+    elements = Set(Element).new
+    largest_atom = atoms.first
+    cation_atoms = [] of Atom
     atoms.each do |atom|
-      next if atom.element.ionic?
-      cutoff = Math.sqrt PeriodicTable.covalent_cutoff(atom, largest_atom)
-      kdtree.each_neighbor(atom.coords, within: cutoff) do |index, d|
-        other = atoms.unsafe_fetch(index)
-        next if atom == other ||
-                other.element.ionic? ||
-                atom.bonded?(other) ||
-                (other.element.hydrogen? && other.bonds.size > 0) ||
-                d > PeriodicTable.covalent_cutoff(atom, other)
-        if atom.element.hydrogen? && atom.bonds.size == 1
-          next unless d < atom.bonds[0].distance2
-          atom.bonds.delete atom.bonds[0]
+      # Add existing bonds
+      bond_table[atom] = Array(Atom).new(atom.element.max_bonds)
+      atom.each_bonded_atom do |other|
+        bond_table[atom] << other
+      end
+
+      largest_atom = atom if atom.covalent_radius > largest_atom.covalent_radius
+
+      # Cache covalent distances
+      unless atom.element.in?(elements)
+        elements << atom.element
+        elements.each do |ele|
+          dcov2 = PeriodicTable.covalent_distance(atom.element, ele) ** 2
+          dcov2_map[{atom.element, ele}] = dcov2_map[{ele, atom.element}] = dcov2
         end
-        atom.bonds.add other
+      end
+
+      # Cache atoms that could be cations (Mg2+, K+ or metals)
+      if atom.max_valence.nil? || (atom.heavy? && atom.valence_electrons < 4)
+        cation_atoms << atom
+      end
+    end
+
+    # Add potential bonds based on geometry
+    kdtree = Spatial::KDTree.new(atoms.map(&.coords), @structure.cell)
+    atoms.each do |atom|
+      cutoff = Math.sqrt(dcov2_map[{atom.element, largest_atom.element}])
+      kdtree.each_neighbor(atom.coords, within: cutoff) do |index, dis2|
+        other = atoms.unsafe_fetch(index)
+        if atom.serial < other.serial &&                            # check bond once
+           other.element.max_bonds > 0 &&                           # skip non-bonding
+           !other.in?(bond_table[atom]) &&                          # avoid duplication
+           0.16 <= dis2 <= dcov2_map[{atom.element, other.element}] # avoid too short
+          bond_table[atom] << other
+          bond_table[other] << atom
+        end
+      end
+    end
+
+    # Remove bonds for atoms that could potentially be as cation (Mg2+,
+    # K+ or metals) but only if the neighbors are over-valence or can
+    # fulfill their valence by increasing the order of another bond
+    cation_atoms.each do |atom|
+      bond_table[atom].reject! do |other|
+        neighbors = bond_table[other]
+        over_valence = neighbors.size > (other.max_valence || Int32::MAX)
+        can_increase_bond_order = neighbors.any? do |n|
+          bond_table[n].size < (n.max_valence || Int32::MAX)
+        end
+        if over_valence || can_increase_bond_order
+          bond_table[other].reject! &.==(atom)
+        end
+        over_valence || can_increase_bond_order
+      end
+    end
+
+    # Remove extra bonds such that valence is correct
+    bond_table.each do |atom, bonded_atoms|
+      max_bonds = atom.element.max_bonds
+      if bonded_atoms.size > max_bonds
+        if cell = @structure.cell
+          bonded_atoms.sort_by! { |other| Spatial.distance2(cell, atom, other) }
+        else
+          bonded_atoms.sort_by! { |other| Spatial.distance2(atom, other) }
+        end
+        bonded_atoms.each(within: max_bonds..) do |other|
+          bond_table[other].delete atom
+        end
+        bonded_atoms.truncate(0, max_bonds) # keep shortest bonded_atoms
+      end
+    end
+
+    bond_table.each do |atom, bonds|
+      bonds.each do |other|
+        atom.bonds.add other if atom.serial < other.serial # avoid duplication
       end
     end
   end

@@ -153,7 +153,7 @@ describe Chem::Atom do
         bond "I1", "C1"
         bond "C1", "N1", order: 3
       end
-      structure.atoms.map(&.nominal_valence).should eq [3, 4, 3]
+      structure.atoms.map(&.nominal_valence).should eq [1, 4, 3]
     end
 
     it "returns nominal valence (bonds exceed maximum valence)" do
