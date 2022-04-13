@@ -19,7 +19,7 @@ module Chem
 
     delegate x, y, z, to: @coords
     delegate chain, to: @residue
-    delegate atomic_number, covalent_radius, max_valence, to: @element
+    delegate atomic_number, covalent_radius, heavy?, max_valence, valence_electrons, to: @element
 
     def initialize(@name : String,
                    @serial : Int32,
