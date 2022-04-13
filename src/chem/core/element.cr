@@ -2,6 +2,7 @@ class Chem::Element
   getter atomic_number : Int32
   getter covalent_radius : Float64
   getter mass : Float64
+  getter max_bonds : Int32
   getter name : String
   getter symbol : String
   getter valence : Int32 | Array(Int32) | Nil
@@ -16,7 +17,8 @@ class Chem::Element
     @covalent_radius : Float64,
     @vdw_radius : Float64,
     @valence_electrons : Int32,
-    @valence : Int32 | Array(Int32) | Nil
+    @valence : Int32 | Array(Int32) | Nil,
+    @max_bonds : Int32
   )
   end
 
