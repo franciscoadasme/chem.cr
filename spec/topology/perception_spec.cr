@@ -352,4 +352,236 @@ describe Chem::Topology::Perception do
       r3["C"].bonds[r4["N"]]?.should_not be_nil
     end
   end
+
+  describe "#assign_formal_charges" do
+    it "works for methane" do
+      structure = Chem::Structure.build do
+        atom Chem::PeriodicTable::C, vec3(0.00000, 0.00000, 0.00000)
+        atom Chem::PeriodicTable::H, vec3(-0.36330, -0.51380, 0.89000)
+        atom Chem::PeriodicTable::H, vec3(-0.36330, 1.02770, 0.00000)
+        atom Chem::PeriodicTable::H, vec3(-0.36330, -0.51380, -0.89000)
+        atom Chem::PeriodicTable::H, vec3(1.09000, 0.00000, 0.00000)
+        bond 0, 1
+        bond 0, 2
+        bond 0, 3
+        bond 0, 4
+      end
+      structure.formal_charge.should eq 0
+      structure.atoms.map(&.formal_charge).should eq [0, 0, 0, 0, 0]
+    end
+
+    it "works for ammonia" do
+      structure = Chem::Structure.build do
+        atom Chem::PeriodicTable::N, vec3(-2.10870, 1.82800, 0.04300)
+        atom Chem::PeriodicTable::H, vec3(-1.24270, 1.97310, 0.54230)
+        atom Chem::PeriodicTable::H, vec3(-2.70480, 2.63480, 0.16060)
+        atom Chem::PeriodicTable::H, vec3(-2.57490, 1.00960, 0.40750)
+        bond 0, 1
+        bond 0, 2
+        bond 0, 3
+      end
+      structure.formal_charge.should eq 0
+      structure.atoms.map(&.formal_charge).should eq [0, 0, 0, 0]
+    end
+
+    it "works for ammonium" do
+      structure = Chem::Structure.build do
+        atom Chem::PeriodicTable::N, vec3(-2.10870, 1.82800, 0.04300)
+        atom Chem::PeriodicTable::H, vec3(-1.24270, 1.97310, 0.54230)
+        atom Chem::PeriodicTable::H, vec3(-2.70480, 2.63480, 0.16060)
+        atom Chem::PeriodicTable::H, vec3(-2.57490, 1.00960, 0.40750)
+        atom Chem::PeriodicTable::H, vec3(-1.91280, 1.69450, -0.93870)
+        bond 0, 1
+        bond 0, 2
+        bond 0, 3
+        bond 0, 4
+      end
+      structure.formal_charge.should eq 1
+      structure.atoms.map(&.formal_charge).should eq [1, 0, 0, 0, 0]
+    end
+
+    it "works for cyanide" do
+      structure = Chem::Structure.build do
+        atom Chem::PeriodicTable::C, vec3(0, 0, 0)
+        atom Chem::PeriodicTable::N, vec3(1.16, 0, 0)
+        bond 0, 1, order: 3
+      end
+      structure.formal_charge.should eq -1
+      structure.atoms.map(&.formal_charge).should eq [-1, 0]
+    end
+
+    it "works for ozone" do
+      structure = Chem::Structure.build do
+        atom Chem::PeriodicTable::O, vec3(-0.97960, 1.34290, 0.19110)
+        atom Chem::PeriodicTable::O, vec3(-0.18710, 0.62720, -0.20810)
+        atom Chem::PeriodicTable::O, vec3(0.47750, 0.03050, 0.50030)
+        bond 0, 1, order: 1
+        bond 1, 2, order: 2
+      end
+      structure.formal_charge.should eq 0
+      structure.atoms.map(&.formal_charge).should eq [-1, 1, 0]
+    end
+
+    it "works for divalent sulfur (SF2)" do
+      structure = Chem::Structure.build do
+        atom Chem::PeriodicTable::S, vec3(-0.46830, 1.15280, -0.38900)
+        atom Chem::PeriodicTable::F, vec3(-1.04840, 1.50510, 0.71990)
+        atom Chem::PeriodicTable::F, vec3(-1.15490, 0.56490, -1.32330)
+        bond 0, 1
+        bond 0, 2
+      end
+      structure.formal_charge.should eq 0
+      structure.atoms.map(&.formal_charge).should eq [0, 0, 0]
+    end
+
+    it "works for divalent sulfur (SO2)" do
+      structure = Chem::Structure.build do
+        atom Chem::PeriodicTable::S, vec3(-0.25380, -0.14690, 0.13990)
+        atom Chem::PeriodicTable::O, vec3(0.49180, -1.10210, -0.75260)
+        atom Chem::PeriodicTable::O, vec3(-0.99950, 0.80830, 1.03240)
+        bond 0, 1, order: 2
+        bond 0, 2, order: 2
+      end
+      structure.formal_charge.should eq 0
+      structure.atoms.map(&.formal_charge).should eq [0, 0, 0]
+    end
+
+    it "works for divalent sulfur (SO2+)" do
+      structure = Chem::Structure.build do
+        atom Chem::PeriodicTable::S, vec3(-0.78990, 1.25770, -1.15060)
+        atom Chem::PeriodicTable::O, vec3(-0.92360, 0.95430, 0.30200)
+        atom Chem::PeriodicTable::O, vec3(-0.31430, -0.07080, -1.67910)
+        bond 0, 1
+        bond 0, 2, order: 2
+      end
+      structure.formal_charge.should eq 0
+      structure.atoms.map(&.formal_charge).should eq [1, -1, 0]
+    end
+
+    it "works for tetravalent sulfur (SO4)" do
+      structure = Chem::Structure.build do
+        atom Chem::PeriodicTable::S, vec3(-1.02600, -0.68670, -1.14420)
+        atom Chem::PeriodicTable::O, vec3(-1.11420, -1.11800, 0.25940)
+        atom Chem::PeriodicTable::O, vec3(-1.48400, 0.65740, -0.75990)
+        atom Chem::PeriodicTable::O, vec3(-0.56800, -2.03070, -1.52840)
+        atom Chem::PeriodicTable::O, vec3(-0.93780, -0.25540, -2.54770)
+        bond 0, 1
+        bond 0, 2, order: 2
+        bond 0, 3
+        bond 0, 4, order: 2
+      end
+      structure.formal_charge.should eq -2
+      structure.atoms.map(&.formal_charge).should eq [0, -1, 0, -1, 0]
+    end
+
+    it "works for hexavalent sulfur (SF6)" do
+      structure = Chem::Structure.build do
+        atom Chem::PeriodicTable::S, vec3(-1.81210, 0.40270, -1.91430)
+        atom Chem::PeriodicTable::F, vec3(-1.52680, -0.97430, -1.11400)
+        atom Chem::PeriodicTable::F, vec3(-2.03870, 0.33540, -0.31370)
+        atom Chem::PeriodicTable::F, vec3(-2.32400, 1.71240, -1.11400)
+        atom Chem::PeriodicTable::F, vec3(-2.09740, 1.77960, -2.71470)
+        atom Chem::PeriodicTable::F, vec3(-1.58560, 0.46990, -3.51500)
+        atom Chem::PeriodicTable::F, vec3(-1.30030, -0.90710, -2.71470)
+        bond 0, 1
+        bond 0, 2
+        bond 0, 3
+        bond 0, 4
+        bond 0, 5
+        bond 0, 6
+      end
+      structure.formal_charge.should eq 0
+      structure.atoms.map(&.formal_charge).should eq [0, 0, 0, 0, 0, 0, 0]
+    end
+
+    it "works for divalent phosphorus (PO2)" do
+      structure = Chem::Structure.build do
+        atom Chem::PeriodicTable::P, vec3(-2.21100, -0.48150, -2.72450)
+        atom Chem::PeriodicTable::O, vec3(-2.50240, -2.12750, -2.57730)
+        atom Chem::PeriodicTable::O, vec3(-0.63530, -0.52300, -2.09580)
+        bond 0, 1
+        bond 0, 2, order: 2
+      end
+      structure.formal_charge.should eq -1
+      structure.atoms.map(&.formal_charge).should eq [0, -1, 0]
+    end
+
+    pending "works for tetravalent phosphorus (PO4)" do
+      structure = Chem::Structure.build do
+        atom Chem::PeriodicTable::P, vec3(0.0000, -0.0001, 0.0000)
+        atom Chem::PeriodicTable::O, vec3(1.5234, -0.0688, -0.1977)
+        atom Chem::PeriodicTable::O, vec3(-0.6406, 0.7180, -1.1991)
+        atom Chem::PeriodicTable::O, vec3(-0.5679, -1.4248, 0.1073)
+        atom Chem::PeriodicTable::O, vec3(-0.3149, 0.7757, 1.2895)
+        bond 0, 1, order: 2
+        bond 0, 2
+        bond 0, 3
+        bond 0, 4
+      end
+      structure.formal_charge.should eq -3
+      structure.atoms.map(&.formal_charge).should eq [0, 0, -1, -1, -1]
+    end
+
+    it "works for hexavalent phosphorus (PCl5)" do
+      structure = Chem::Structure.build do
+        atom Chem::PeriodicTable::P, vec3(-0.0000, 0.0000, 0.0000)
+        atom Chem::PeriodicTable::Cl, vec3(1.8770, 0.0000, 0.0000)
+        atom Chem::PeriodicTable::Cl, vec3(-1.8770, -0.0000, 0.0000)
+        atom Chem::PeriodicTable::Cl, vec3(-0.0000, 1.8770, 0.0000)
+        atom Chem::PeriodicTable::Cl, vec3(-0.0000, -0.9385, 1.6255)
+        atom Chem::PeriodicTable::Cl, vec3(-0.0000, -0.9385, -1.6255)
+        bond 0, 1
+        bond 0, 2
+        bond 0, 3
+        bond 0, 4
+        bond 0, 5
+      end
+      structure.formal_charge.should eq 0
+      structure.atoms.map(&.formal_charge).should eq [0, 0, 0, 0, 0, 0]
+    end
+
+    it "works for hexavalent phosphorus (PF6)" do
+      structure = Chem::Structure.build do
+        atom Chem::PeriodicTable::P, vec3(7.4422, -3.0649, -0.0994)
+        atom Chem::PeriodicTable::F, vec3(8.0794, -1.8918, -0.6863)
+        atom Chem::PeriodicTable::F, vec3(7.7625, -3.7851, -1.3259)
+        atom Chem::PeriodicTable::F, vec3(6.2011, -2.6421, -0.7360)
+        atom Chem::PeriodicTable::F, vec3(6.3939, -3.2101, 0.9025)
+        atom Chem::PeriodicTable::F, vec3(7.9365, -4.3738, 0.3077)
+        atom Chem::PeriodicTable::F, vec3(8.2813, -2.4845, 0.9418)
+        bond 0, 1
+        bond 0, 2
+        bond 0, 3
+        bond 0, 4
+        bond 0, 5
+        bond 0, 6
+      end
+      structure.formal_charge.should eq -1
+      structure.atoms.map(&.formal_charge).should eq [-1, 0, 0, 0, 0, 0, 0]
+    end
+
+    it "works for monoatomic cations (K+)" do
+      structure = Chem::Structure.build do
+        atom Chem::PeriodicTable::K, vec3(0, 0, 0)
+      end
+      structure.formal_charge.should eq 1
+      structure.atoms.map(&.formal_charge).should eq [1]
+    end
+
+    it "works for monoatomic cations (Mg2+)" do
+      structure = Chem::Structure.build do
+        atom Chem::PeriodicTable::Mg, vec3(0, 0, 0)
+      end
+      structure.formal_charge.should eq 2
+      structure.atoms.map(&.formal_charge).should eq [2]
+    end
+
+    it "works for monoatomic anions" do
+      structure = Chem::Structure.build do
+        atom Chem::PeriodicTable::Cl, vec3(0, 0, 0)
+      end
+      structure.formal_charge.should eq -1
+      structure.atoms.map(&.formal_charge).should eq [-1]
+    end
+  end
 end
