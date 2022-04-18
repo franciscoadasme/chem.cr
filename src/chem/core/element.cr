@@ -42,6 +42,32 @@ class Chem::Element
     end
   end
 
+  # Returns the total number of electrons in the valence shell.
+  #
+  # This method follows the octet rule (duet for hydrogen and helium),
+  # accounting for the expanded octet in the cases of phosphorus,
+  # sulfur, etc.
+  def target_electrons(valence : Int32) : Int32
+    case self
+    when .hydrogen?, .helium?
+      2
+    when .phosphorus?, .arsenic?
+      case valence
+      when 0..4 then 8
+      when 5    then 10
+      else           12
+      end
+    when .sulfur?, .selenium?
+      case valence
+      when 0..3 then 8
+      when 4    then 10
+      else           12
+      end
+    else
+      8 # octet for most organic elements
+    end
+  end
+
   def valence : Int32?
     case valence = @valence
     in Int32, Nil then valence
