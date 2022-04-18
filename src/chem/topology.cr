@@ -109,10 +109,6 @@ class Chem::Topology
     end
   end
 
-  def empty?
-    size == 0
-  end
-
   def n_atoms : Int32
     @chains.sum &.n_atoms
   end
