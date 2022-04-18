@@ -64,8 +64,16 @@ module Chem
 
     def build : Structure
       kekulize
+      @structure.topology.apply_templates
+
+      # skip bond order and formal charge assignment if a protein chain
+      # has missing hydrogens (very common in PDB)
+      include_h = !@structure.each_residue.any? { |r| r.protein? && !r.has_hydrogens? }
+      @structure.topology.guess_bonds perceive_order: include_h
+      @structure.topology.guess_formal_charges if include_h
+
+      @structure.topology.guess_unknown_residue_types
       perception = Topology::Perception.new(@structure)
-      perception.guess_topology
       perception.guess_residues if @guess_topology
       @structure
     end

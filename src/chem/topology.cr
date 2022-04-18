@@ -26,6 +26,39 @@ class Chem::Topology
     self
   end
 
+  # Assign bonds, formal charges, and residue's kind from known residue
+  # types.
+  def apply_templates : Nil
+    prev_res = nil
+    each_residue do |residue|
+      if restype = residue.type
+        residue.kind = restype.kind
+        residue.each_atom do |atom|
+          if atom_type = restype[atom.name]?
+            atom.formal_charge = atom_type.formal_charge
+          end
+        end
+
+        restype.bonds.each do |bond_t|
+          if (lhs = residue[bond_t[0]]?) &&
+             (rhs = residue[bond_t[1]]?) &&
+             lhs.within_covalent_distance?(rhs)
+            lhs.bonds.add rhs, bond_t.order
+          end
+        end
+
+        if prev_res &&
+           (bond_t = restype.link_bond) &&
+           (lhs = prev_res[bond_t[0]]?) &&
+           (rhs = residue[bond_t[1]]?) &&
+           lhs.within_covalent_distance?(rhs)
+          lhs.bonds.add rhs, bond_t.order
+        end
+      end
+      prev_res = residue
+    end
+  end
+
   def clear : self
     @chain_table.clear
     @chains.clear
@@ -109,6 +142,154 @@ class Chem::Topology
     end
   end
 
+  # Determines bonds from connectivity and geometry.
+  #
+  # Bonds are added when the pairwise distances are within the
+  # corresponding covalent distances (see
+  # `PeriodicTable.covalent_distance`). Bonds are added until the atoms'
+  # valences are fulfilled. If extraneous bonds are found (beyond the
+  # maximum number of bonds, see `Element#max_bonds`), the longest ones
+  # will be removed.
+  #
+  # Bonds to atoms that could potential be as cations (K, Na, etc.) are
+  # disfavored such that they won't be added if the neighbor is
+  # over-valence or the bond can be substituted by increasing the bond
+  # order of another bond of the neighbor (e.g., *C-O + K* is preferred
+  # over *C-O-K* since *C-O* can be converted to *C=O*).
+  #
+  # Bond orders are assigned based on the following procedure. First,
+  # atom hybridization is guessed from the geometry. Then, the bond
+  # orders are determined such that both atoms must have the same
+  # hybridization to assign a double (sp2) or triple (sp) bond. Bond
+  # order is only changed if the bonded atoms have missing valence. If
+  # multiple bonded atoms fulfill the requirements for increasing the
+  # bond order, the atom with the most missing valence or that is
+  # closest to the current atom is selected first. This procedure is
+  # loosely based on OpenBabel's `PerceiveBondOrders` function.
+  def guess_bonds(perceive_order : Bool = true) : Nil
+    return if (atoms = self.atoms).empty?
+
+    # Setup existing bonds and cache some values
+    bond_table = Hash(Atom, Array(Atom)).new
+    dcov2_map = Hash({Element, Element}, Float64).new
+    elements = Set(Element).new
+    largest_atom = atoms.first
+    cation_atoms = [] of Atom
+    atoms.each do |atom|
+      # Add existing bonds
+      bond_table[atom] = Array(Atom).new(atom.element.max_bonds)
+      atom.each_bonded_atom do |other|
+        bond_table[atom] << other
+      end
+
+      largest_atom = atom if atom.covalent_radius > largest_atom.covalent_radius
+
+      # Cache covalent distances
+      unless atom.element.in?(elements)
+        elements << atom.element
+        elements.each do |ele|
+          dcov2 = PeriodicTable.covalent_distance(atom.element, ele) ** 2
+          dcov2_map[{atom.element, ele}] = dcov2_map[{ele, atom.element}] = dcov2
+        end
+      end
+
+      # Cache atoms that could be cations (Mg2+, K+ or metals)
+      if atom.max_valence.nil? || (atom.heavy? && atom.valence_electrons < 4)
+        cation_atoms << atom
+      end
+    end
+
+    # Add initial bonds based on pairwise distances
+    kdtree = Spatial::KDTree.new(atoms.map(&.coords), @structure.cell)
+    atoms.each do |atom|
+      cutoff = Math.sqrt(dcov2_map[{atom.element, largest_atom.element}])
+      kdtree.each_neighbor(atom.coords, within: cutoff) do |index, dis2|
+        other = atoms.unsafe_fetch(index)
+        if atom.serial < other.serial &&                            # check bond once
+           other.element.max_bonds > 0 &&                           # skip non-bonding
+           !other.in?(bond_table[atom]) &&                          # avoid duplication
+           0.16 <= dis2 <= dcov2_map[{atom.element, other.element}] # avoid too short
+          bond_table[atom] << other
+          bond_table[other] << atom
+        end
+      end
+    end
+
+    # Remove bonds for atoms that could potentially be as cation (Mg2+,
+    # K+ or metals) but only if the neighbors are over-valence or can
+    # fulfill their valence by increasing the order of another bond
+    cation_atoms.each do |atom|
+      bond_table[atom].reject! do |other|
+        neighbors = bond_table[other]
+        over_valence = neighbors.size > (other.max_valence || Int32::MAX)
+        can_increase_bond_order = neighbors.any? do |n|
+          bond_table[n].size < (n.max_valence || Int32::MAX)
+        end
+        if over_valence || can_increase_bond_order
+          bond_table[other].reject! &.==(atom)
+        end
+        over_valence || can_increase_bond_order
+      end
+    end
+
+    # Remove extra bonds such that valence is correct
+    bond_table.each do |atom, bonded_atoms|
+      max_bonds = atom.element.max_bonds
+      if bonded_atoms.size > max_bonds
+        if cell = @structure.cell
+          bonded_atoms.sort_by! { |other| Spatial.distance2(cell, atom, other) }
+        else
+          bonded_atoms.sort_by! { |other| Spatial.distance2(atom, other) }
+        end
+        bonded_atoms.each(within: max_bonds..) do |other|
+          bond_table[other].delete atom
+        end
+        bonded_atoms.truncate(0, max_bonds) # keep shortest bonded_atoms
+      end
+    end
+
+    # Add detected bonds
+    bond_table.each do |atom, bonds|
+      bonds.each do |other|
+        atom.bonds.add other if atom.serial < other.serial # avoid duplication
+      end
+    end
+
+    # Perceive bond orders if requested
+    if perceive_order
+      # TODO: cache valences and missing valences in a hash to avoid
+      # computing the valence each cycle
+      hybridization_map = guess_hybridization
+      atoms.select { |atom| hybridization_map[atom]? }
+        .sort_by! { |atom| {atom.missing_valence, atom.serial} }
+        .each do |atom|
+          missing_valence = atom.missing_valence
+          next if missing_valence == 0
+          atom.bonded_atoms
+            .select! do |other|
+              hybridization_map[other]? == hybridization_map[atom] && (
+                other.missing_valence > 0 ||
+                  other.valence < (other.element.max_valence || Int32::MAX)
+              )
+            end
+            .sort_by! do |other|
+              {-missing_valence, Spatial.distance2(atom, other)}
+            end
+            .each do |other|
+              case hybridization_map[other]
+              when 2
+                atom.bonds[other].order = 2
+                missing_valence -= 1
+              when 1
+                atom.bonds[other].order = 3
+                missing_valence -= 2
+              end
+              break if missing_valence == 0
+            end
+        end
+    end
+  end
+
   # Sets the formal charges based on the existing bonds.
   #
   # For most cases, the formal charge is calculated as
@@ -144,6 +325,57 @@ class Chem::Topology
         target_electrons = atom.element.target_electrons(valence)
         atom.formal_charge = atom.element.valence_electrons - target_electrons + valence
       end
+    end
+  end
+
+  # Determines the atom hybridizations based on the average bond angles.
+  #
+  # The rules are taken from the OpenBabel's `PerceiveBondOrders`
+  # function. If an atom has only one bond, the hybridization is copied
+  # from the bonded atom if it has multiple bonds, otherwise is set
+  # based on the missing valence.
+  private def guess_hybridization : Hash(Atom, Int32)
+    hybridation_map = Hash(Atom, Int32).new
+    # atoms with multiple connectivity first, terminal (single-bonded) atoms last
+    atoms.sort_by!(&.degree.-).each do |atom|
+      case atom.degree
+      when 0
+        next
+      when 1
+        other = atom.bonded_atoms[0]
+        if hb = hybridation_map[other]? # terminal atom (other have multiple bonds)
+          hybridation_map[atom] = hb
+        else # diatomic fragment (both atom and other have one bond only)
+          missing_valence = Math.min atom.missing_valence, other.missing_valence
+          hybridation_map[atom] = 4 - missing_valence.clamp(1..3)
+        end
+      else
+        avg_bond_angle = atom.bonded_atoms.combinations(2).mean do |(b, c)|
+          Spatial.angle b, atom, c
+        end
+        case {atom.element, avg_bond_angle}
+        when {_, 155..}                then hybridation_map[atom] = 1
+        when {_, 115..}                then hybridation_map[atom] = 2
+        when {PeriodicTable::S, 105..} then hybridation_map[atom] = 2
+        when {PeriodicTable::P, 105..} then hybridation_map[atom] = 2
+        end
+      end
+    end
+    hybridation_map
+  end
+
+  # Determines the kind of unknown residues based on their neighbors.
+  def guess_unknown_residue_types : Nil
+    # TODO: bond_t should be computed from bonded_residues
+    return unless bond_t = each_residue.compact_map(&.type.try(&.link_bond)).first?
+    each_residue do |residue|
+      next if residue.type
+      types = residue
+        .bonded_residues(bond_t, forward_only: false, strict: false)
+        .map(&.kind)
+        .uniq!
+        .reject!(&.other?)
+      residue.kind = types.size == 1 ? types[0] : Residue::Kind::Other
     end
   end
 
