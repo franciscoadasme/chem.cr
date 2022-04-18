@@ -49,7 +49,7 @@ class Chem::Topology::Perception
         end
       end
     end
-    @structure.renumber_residues_by_connectivity split_chains: false
+    @structure.topology.renumber_residues_by_connectivity split_chains: false
     assign_residue_types
   end
 
@@ -121,7 +121,7 @@ class Chem::Topology::Perception
   end
 
   private def assign_residue_types : Nil
-    return unless bond_t = @structure.link_bond
+    return unless bond_t = @structure.topology.link_bond
     @structure.each_residue do |residue|
       next if residue.type
       types = residue

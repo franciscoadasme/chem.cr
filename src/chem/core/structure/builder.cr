@@ -80,7 +80,7 @@ module Chem
     end
 
     def chain(id : Char) : Chain
-      @chain = @structure[id]? || Chain.new(id, @structure)
+      @chain = @structure[id]? || Chain.new(id, @structure.topology)
     end
 
     def chain(id : Char, & : self ->) : Nil

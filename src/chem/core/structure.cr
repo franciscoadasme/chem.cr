@@ -4,20 +4,24 @@ module Chem
     include ChainCollection
     include ResidueCollection
 
-    @chain_table = {} of Char => Chain
-    @chains = [] of Chain
-
     getter biases = [] of Chem::Bias
     property experiment : Structure::Experiment?
     property cell : Spatial::Parallelepiped?
     getter source_file : Path?
     property title : String = ""
+    getter topology : Topology
 
-    delegate :[], :[]?, to: @chain_table
+    # TODO: remove this delegates... directly use the topology class
+    delegate :[], :[]?,
+      delete,
+      dig, dig?,
+      atoms, chains, residues,
+      to: @topology
 
-    def initialize(source_file : Path | String | Nil = nil)
+    def initialize(@topology : Topology = Topology.new, source_file : Path | String | Nil = nil)
       source_file = Path.new(source_file) if source_file.is_a?(String)
       @source_file = source_file.try(&.expand)
+      @topology.structure = self
     end
 
     def self.build(*args, **options, &) : self
@@ -26,15 +30,8 @@ module Chem
       builder.build
     end
 
-    protected def <<(chain : Chain) : self
-      @chains << chain
-      @chain_table[chain.id] = chain
-      self
-    end
-
     def clear : self
-      @chain_table.clear
-      @chains.clear
+      @topology.clear
       self
     end
 
@@ -54,47 +51,16 @@ module Chem
     # other.dig('A', 23, "OG").partial_charge             # => 0.0
     # ```
     def clone : self
-      structure = Structure.new @source_file
+      structure = Structure.new @topology.clone, @source_file
       structure.biases.concat @biases
       structure.experiment = @experiment
       structure.cell = @cell
       structure.title = @title
-      each_chain &.copy_to(structure)
-      bonds.each do |bond|
-        a, b = bond
-        a = structure.dig a.chain.id, a.residue.number, a.residue.insertion_code, a.name
-        b = structure.dig b.chain.id, b.residue.number, b.residue.insertion_code, b.name
-        a.bonds.add b, order: bond.order
-      end
       structure
     end
 
     def coords : Spatial::CoordinatesProxy
       Spatial::CoordinatesProxy.new self, @cell
-    end
-
-    def delete(ch : Chain) : Chain?
-      ch = @chains.delete ch
-      @chain_table.delete(ch.id) if ch && @chain_table[ch.id]?.same?(ch)
-      ch
-    end
-
-    def dig(id : Char) : Chain
-      self[id]
-    end
-
-    def dig(id : Char, *subindexes)
-      self[id].dig *subindexes
-    end
-
-    def dig?(id : Char) : Chain?
-      self[id]?
-    end
-
-    def dig?(id : Char, *subindexes)
-      if chain = self[id]?
-        chain.dig? *subindexes
-      end
     end
 
     def each_atom : Iterator(Atom)
@@ -107,8 +73,8 @@ module Chem
       Iterator.chain iterators
     end
 
-    def each_atom(&block : Atom ->)
-      @chains.each do |chain|
+    def each_atom(& : Atom ->)
+      each_chain do |chain|
         chain.each_atom do |atom|
           yield atom
         end
@@ -116,11 +82,11 @@ module Chem
     end
 
     def each_chain : Iterator(Chain)
-      @chains.each
+      @topology.each_chain
     end
 
-    def each_chain(&block : Chain ->)
-      @chains.each do |chain|
+    def each_chain(& : Chain ->)
+      @topology.each_chain do |chain|
         yield chain
       end
     end
@@ -129,70 +95,28 @@ module Chem
       Iterator.chain each_chain.map(&.each_residue).to_a
     end
 
-    def each_residue(&block : Residue ->)
-      @chains.each do |chain|
+    def each_residue(& : Residue ->)
+      each_chain do |chain|
         chain.each_residue do |residue|
           yield residue
         end
       end
     end
 
-    def empty?
-      size == 0
-    end
-
-    def inspect(io : IO)
-      to_s io
-    end
-
     def n_atoms : Int32
-      each_chain.sum &.n_atoms
+      @topology.n_atoms
     end
 
     def n_chains : Int32
-      @chains.size
+      @topology.n_chains
     end
 
     def n_residues : Int32
-      each_chain.sum &.n_residues
+      @topology.n_residues
     end
 
     def periodic? : Bool
       !!@cell
-    end
-
-    # Renumber residues per chain based on the order by the output value
-    # of the block.
-    #
-    # NOTE: This won't change the order of the existing chains.
-    def renumber_residues_by(& : Residue -> _) : Nil
-      each_chain do |chain|
-        chain.renumber_residues_by do |residue|
-          yield residue
-        end
-      end
-    end
-
-    # Renumber chain and residues based on bond information.
-    #
-    # Residue fragments are assigned to unique chains unless
-    # *split_chains* is `false`, which keeps existing chains intact.
-    # Residue ordering is computed based on the link bond if available.
-    #
-    # NOTE: existing chains are reused to re-arrang the residues among
-    # them, so avoid caching them before calling this.
-    def renumber_residues_by_connectivity(split_chains : Bool = true) : Nil
-      if split_chains
-        id = 'A'.pred
-        residues.residue_fragments.each do |residues|
-          chain = dig?(id = id.succ) || Chain.new id, self
-          chain.clear
-          residues.each &.chain=(chain)
-          chain.renumber_residues_by_connectivity
-        end
-      else
-        each_chain &.renumber_residues_by_connectivity
-      end
     end
 
     def to_s(io : IO)
@@ -204,14 +128,6 @@ module Chem
       io << ", "
       io << "non-" unless @cell
       io << "periodic>"
-    end
-
-    protected def reset_cache : Nil
-      @chain_table.clear
-      @chains.sort_by! &.id
-      @chains.each do |chain|
-        @chain_table[chain.id] = chain
-      end
     end
   end
 end

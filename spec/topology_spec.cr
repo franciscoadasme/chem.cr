@@ -242,3 +242,150 @@ describe Chem::ChainView do
     end
   end
 end
+
+describe Chem::Topology do
+  describe "#delete" do
+    it "deletes a chain" do
+      top = Chem::Structure.build do
+        3.times { chain { } }
+      end.topology
+      top.n_chains.should eq 3
+      top.chains.map(&.id).should eq "ABC".chars
+
+      top.delete top.chains[1]
+      top.n_chains.should eq 2
+      top.chains.map(&.id).should eq "AC".chars
+      top.dig?('B').should be_nil
+    end
+
+    it "does not delete another chain with the same id from the internal table (#86)" do
+      top = Chem::Topology.new
+      Chem::Chain.new 'A', top
+      Chem::Chain.new 'B', top
+      Chem::Chain.new 'A', top
+
+      top.n_chains.should eq 3
+      top.chains.map(&.id).should eq "ABA".chars
+
+      top.delete top.chains[0]
+
+      top.n_chains.should eq 2
+      top.chains.map(&.id).should eq "BA".chars
+      top.dig('A').should be top.chains[1]
+    end
+  end
+
+  describe "#dig" do
+    top = fake_structure
+
+    it "returns a chain" do
+      top.dig('A').id.should eq 'A'
+    end
+
+    it "returns a residue" do
+      top.dig('A', 2).name.should eq "PHE"
+      top.dig('A', 2, nil).name.should eq "PHE"
+    end
+
+    it "returns an atom" do
+      top.dig('A', 2, "CA").name.should eq "CA"
+      top.dig('A', 2, nil, "CA").name.should eq "CA"
+    end
+
+    it "fails when index is invalid" do
+      expect_raises(KeyError) { top.dig 'C' }
+      expect_raises(KeyError) { top.dig 'A', 25 }
+      expect_raises(KeyError) { top.dig 'A', 2, "OH" }
+    end
+  end
+
+  describe "#dig?" do
+    top = fake_structure
+
+    it "returns nil when index is invalid" do
+      top.dig?('C').should be_nil
+      top.dig?('A', 25).should be_nil
+      top.dig?('A', 2, "OH").should be_nil
+    end
+  end
+
+  describe "#renumber_residues_by" do
+    it "renumbers residues by the given order" do
+      top = load_file("3sgr.pdb").topology
+      expected = top.chains.map { |chain| chain.residues.sort_by!(&.code) }
+      top.renumber_residues_by(&.code)
+      top.chains.map(&.residues).should eq expected
+    end
+  end
+
+  describe "#renumber_residues_by_connectivity" do
+    it "renumbers residues in ascending order based on the link bond" do
+      top = load_file("5e5v--unwrapped.poscar", guess_topology: true).topology
+      top.renumber_residues_by_connectivity split_chains: false
+
+      chains = top.chains
+      chains[0].residues.map(&.number).should eq (1..7).to_a
+      chains[0].residues.map(&.name).should eq %w(ASN PHE GLY ALA ILE LEU SER)
+      chains[1].residues.map(&.number).should eq (1..7).to_a
+      chains[1].residues.map(&.name).should eq %w(UNK PHE GLY ALA ILE LEU SER)
+      chains[2].residues.map(&.name).should eq %w(HOH HOH HOH HOH HOH HOH HOH)
+      chains[2].residues.map(&.number).should eq (1..7).to_a
+      chains[3].residues.map(&.name).should eq %w(UNK)
+      chains[3].residues.map(&.number).should eq [1]
+
+      chains[0].residues[0].pred.should be_nil
+      chains[0].residues[3].pred.try(&.name).should eq "GLY"
+      chains[0].residues[3].succ.try(&.name).should eq "ILE"
+      chains[0].residues[-1].succ.should be_nil
+    end
+
+    it "renumbers residues of a periodic peptide" do
+      top = load_file("hlx_gly.poscar").topology
+      top.each_residue.cons(2, reuse: true).each do |(a, b)|
+        a["C"].bonded?(b["N"]).should be_true
+        a.succ.should eq b
+        b.pred.should eq a
+      end
+    end
+
+    it "does not depend on current residue numbering (#82)" do
+      [
+        "polyala-trp--theta-80.000--c-19.91.poscar",
+        "polyala-trp--theta-180.000--c-10.00.poscar",
+      ].each do |filename|
+        top = load_file(filename, guess_topology: true).topology
+        top.renumber_residues_by_connectivity
+        residues = top.residues.to_a.sort_by(&.number)
+        residues.map(&.number).should eq (1..residues.size).to_a
+        residues.each_with_index do |residue, i|
+          j = i + 1
+          j = 0 if j >= residues.size
+          residues[j].number.should eq j + 1
+          residue.bonded?(residues[j]).should be_true
+        end
+      end
+    end
+
+    it "does not split chains (#85)" do
+      top = load_file("cylindrin--size-09.pdb").topology
+      top.renumber_residues_by_connectivity split_chains: false
+      top.chains.map(&.id).should eq "ABC".chars
+      top.chains.map(&.n_residues).should eq [18] * 3
+      top.chains.map(&.residues.map(&.number)).should eq [(1..18).to_a] * 3
+      top.chains.map(&.residues.map(&.name)).should eq [
+        %w(LEU LYS VAL LEU GLY ASP VAL ILE GLU LEU LYS VAL LEU GLY ASP VAL ILE GLU),
+      ] * 3
+    end
+
+    it "splits chains (#85)" do
+      top = load_file("cylindrin--size-09.pdb").topology
+      top.renumber_residues_by_connectivity split_chains: true
+      top.chains.map(&.id).should eq "ABCDEF".chars
+      top.chains.map(&.n_residues).should eq [9] * 6
+      top.chains.map(&.residues.map(&.number)).should eq [(1..9).to_a] * 6
+      top.chains.map(&.residues.map(&.name)).should eq [
+        %w(LEU LYS VAL LEU GLY ASP VAL ILE GLU),
+      ] * 6
+    end
+  end
+end
