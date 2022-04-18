@@ -233,11 +233,11 @@ describe Chem::Structure::Builder do
 
   it "adds atom with named arguments" do
     st = Chem::Structure.build do
-      atom "OD1", vec3(0, 0, 0), formal_charge: -1, temperature_factor: 43.24
+      atom "OD1", vec3(0, 0, 0), partial_charge: -0.56, temperature_factor: 43.24
     end
 
     atom = st.atoms[-1]
-    atom.formal_charge.should eq -1
+    atom.partial_charge.should eq -0.56
     atom.temperature_factor.should eq 43.24
   end
 

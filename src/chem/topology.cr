@@ -109,6 +109,44 @@ class Chem::Topology
     end
   end
 
+  # Sets the formal charges based on the existing bonds.
+  #
+  # For most cases, the formal charge is calculated as
+  #
+  #     Nele - Tele + V
+  #
+  # where *Nele* is the number of valence electrons, *Tele* is the
+  # number of electrons in the full valence shell, and *V* is the
+  # effective valence, which is equivalent to the sum of the bond
+  # orders. *Tele* is usually 8 following the octet rule, but there are
+  # some exceptions (see `Element#target_electrons`).
+  #
+  # If an atom has no bonds, it is considered as a monoatomic ion, where
+  # the formal charge is set according to the following rule: if the
+  # valence electrons < 4 (cation, e.g., Na+, Mg2+), the formal charge
+  # is equal to the number of valence electrons, else (anions, e.g.,
+  # Cl-) it is equal to `Nele - Tele`.
+  #
+  # WARNING: Elements that have no valence determined such as transition
+  # metals are ignored.
+  def guess_formal_charges : Nil
+    each_atom do |atom|
+      # TODO: replace by atom.valence
+      valence = atom.bonds.sum(&.order)
+      if valence == 0
+        if atom.element.valence_electrons < 4 # monoatomic cations
+          atom.formal_charge = atom.element.valence_electrons
+        else # monoatomic anions
+          target_electrons = atom.element.target_electrons(valence)
+          atom.formal_charge = atom.element.valence_electrons - target_electrons
+        end
+      elsif atom.element.max_valence # skip transition metals and others
+        target_electrons = atom.element.target_electrons(valence)
+        atom.formal_charge = atom.element.valence_electrons - target_electrons + valence
+      end
+    end
+  end
+
   def n_atoms : Int32
     @chains.sum &.n_atoms
   end

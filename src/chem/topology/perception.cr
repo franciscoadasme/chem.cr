@@ -6,25 +6,6 @@ class Chem::Topology::Perception
   def initialize(@structure : Structure)
   end
 
-  private def assign_formal_charges : Nil
-    @structure.each_atom do |atom|
-      next unless atom.formal_charge == 0 # don't reset charge if set
-      # TODO: replace by atom.valence
-      valence = atom.bonds.sum(&.order)
-      if valence == 0
-        if atom.element.valence_electrons < 4 # monoatomic cations
-          atom.formal_charge = atom.element.valence_electrons
-        else # monoatomic anions
-          target_electrons = atom.element.target_electrons(valence)
-          atom.formal_charge = atom.element.valence_electrons - target_electrons
-        end
-      elsif atom.element.max_valence # skip transition metals and others
-        target_electrons = atom.element.target_electrons(valence)
-        atom.formal_charge = atom.element.valence_electrons - target_electrons + valence
-      end
-    end
-  end
-
   # Guesses residues from existing bonds.
   #
   # Atoms are split in fragments, where each fragment is mapped to a list of residues.
@@ -62,7 +43,7 @@ class Chem::Topology::Perception
     # hydrogens (very common in PDB)
     if !@structure.residues.any? { |res| res.protein? && !res.has_hydrogens? }
       assign_bond_orders @structure.atoms
-      assign_formal_charges
+      @structure.topology.guess_formal_charges
     end
     assign_residue_types
   end
