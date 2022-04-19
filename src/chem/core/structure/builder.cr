@@ -12,6 +12,8 @@ module Chem
       @structure = Structure.new **options
     end
 
+    # TODO: #build is often not called when using this, which can lead
+    # to incorrect structures
     def initialize(structure : Structure)
       @structure = structure
       structure.each_chain { |chain| @chain = chain }
@@ -73,8 +75,7 @@ module Chem
       @structure.topology.guess_formal_charges if include_h
 
       @structure.topology.guess_unknown_residue_types
-      perception = Topology::Perception.new(@structure)
-      perception.guess_residues if @guess_topology
+      @structure.topology.guess_names if @guess_topology
       @structure
     end
 

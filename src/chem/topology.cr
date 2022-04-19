@@ -3,6 +3,8 @@ class Chem::Topology
   include ChainCollection
   include ResidueCollection
 
+  MAX_CHAINS = 62 # chain id is alphanumeric: A-Z, a-z or 0-9
+
   @chain_table = {} of Char => Chain
   @chains = [] of Chain
 
@@ -328,6 +330,80 @@ class Chem::Topology
     end
   end
 
+  # Detects and assigns topology names from known residue types based on
+  # bond information.
+  #
+  # The method creates chains and residues according to the detected
+  # fragments and residue matches. The procedure is as follows. First,
+  # atoms are split into fragments, where each fragment is scanned for
+  # matches to known residue types. Then, fragments are divided into
+  # polymer (e.g., peptide) and non-polymer (e.g., water) fragments
+  # based on the number of residues per fragment. Non-polymer residues
+  # are grouped together by their kind (i.e., ion, solvent, etc.).
+  # Finally, every polymer fragment and group of non-polymer fragments
+  # are assigned to a unique chain and residues are created for each
+  # match.
+  #
+  # NOTE: Fragments are assigned to a unique chain unless the chain
+  # limit (62) is reached, otherwise all residues are assigned to the
+  # same chain.
+  #
+  # WARNING: Existing chains and residues are invalid after calling this
+  # method so do not cache them.
+  def guess_names : Nil
+    ele_index = Hash(Element, Int32).new(default_value: 0)
+    fragment_matches = [] of Array(MatchData)
+    each_fragment do |atoms|
+      detector = Detector.new atoms
+      matches = detector.matches.dup
+      detector.unmatched_atoms.each_fragment do |atoms|
+        atom_map = atoms.index_by { |atom|
+          "#{atom.element.symbol.upcase}#{ele_index[atom.element] += 1}"
+        }
+        matches << MatchData.new("UNK", :other, atom_map)
+        ele_index.clear
+      end
+      fragment_matches << matches
+    end
+
+    # Create groups to be transformed into chains
+    # FIXME: do .sort_by!(&.size).reverse! before partition, otherwise it may fail
+    polymers, others = fragment_matches.partition &.size.>(1)
+    others = others.flatten.sort_by!(&.reskind).chunks(&.reskind).map(&.[1])
+    fragment_matches = if polymers.size + others.size <= MAX_CHAINS
+                         polymers + others
+                       else
+                         [fragment_matches.flatten] # TODO: split by residue's kind
+                       end
+
+    # Create chains and residues according to the found matches
+    clear # reset chains
+    chain_id = 'A'
+    fragment_matches.each do |matches|
+      chain = Chain.new chain_id, self
+      resid = 0
+      matches.each do |match|
+        # TODO: avoid triggering reset_cache internally when setting residue.chain
+        residue = Residue.new(match.resname, (resid += 1), chain)
+        residue.kind = match.reskind # TODO: set in the Residue constructor
+        match.each_atom do |atom, atom_name|
+          atom.name = atom_name
+          # TODO: avoid triggering reset_cache internally when setting atom.residue
+          atom.residue = residue
+        end
+      end
+      chain_id = case chain_id
+                 when 'A'..'Y', 'a'..'y', '0'..'8' then chain_id.succ
+                 when 'Z'                          then 'a'
+                 when 'z'                          then '0'
+                 else                                   raise "BUG: unreachable"
+                 end
+    end
+
+    renumber_residues_by_connectivity split_chains: false
+    guess_unknown_residue_types
+  end
+
   # Determines the atom hybridizations based on the average bond angles.
   #
   # The rules are taken from the OpenBabel's `PerceiveBondOrders`
@@ -434,4 +510,4 @@ class Chem::Topology
   end
 end
 
-require "./topology/*"
+require "./topology/**"
