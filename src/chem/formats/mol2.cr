@@ -28,7 +28,10 @@ module Chem::Mol2
       @pull.next_line
 
       Structure.build(
-        source_file: (file = @io).is_a?(File) ? file.path : nil
+        guess_bonds: false,
+        guess_names: false,
+        source_file: (file = @io).is_a?(File) ? file.path : nil,
+        use_templates: false,
       ) do |builder|
         builder.title title
         @pull.each_line do
@@ -85,6 +88,7 @@ module Chem::Mol2
           end
         end
       end
+        .tap &.topology.guess_formal_charges
     end
 
     private def skip_to_tag(tag : String) : Nil

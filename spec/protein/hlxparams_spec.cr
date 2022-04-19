@@ -62,7 +62,7 @@ describe Chem::Protein::HlxParams do
 
     context "given a periodic peptide" do
       it "returns helical parameters" do
-        structure = load_file "hlx_gly.poscar", guess_topology: true
+        structure = load_file "hlx_gly.poscar", guess_bonds: true, guess_names: true
         structure.each_residue do |residue|
           params = Chem::Protein::HlxParams.new residue
           params.twist.degrees.should be_close 166.15, 1e-2

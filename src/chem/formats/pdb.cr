@@ -28,6 +28,7 @@ module Chem::PDB
     def initialize(@io : IO,
                    @alt_loc : Char? = nil,
                    chains : Enumerable(Char) | String | Nil = nil,
+                   @guess_bonds : Bool = false,
                    @het : Bool = true,
                    @sync_close : Bool = false)
       @pull = PullParser.new(@io)
@@ -230,7 +231,10 @@ module Chem::PDB
       @pull.next_line if @pull.at(0, 6).str == "MODEL "
 
       @builder = Structure::Builder.new(
+        guess_bonds: @guess_bonds,
+        guess_names: false,
         source_file: (file = @io).is_a?(File) ? file.path : nil,
+        use_templates: true,
       )
       @builder.title @pdb_title
       @builder.cell @pdb_cell

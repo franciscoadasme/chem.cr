@@ -144,7 +144,7 @@ def bounds(a : Number, b : Number, c : Number) : Chem::Spatial::Parallelepiped
 end
 
 def fake_structure(*, include_bonds : Bool = true) : Chem::Structure
-  structure = Chem::Structure.build do
+  structure = Chem::Structure.build(guess_bonds: include_bonds) do
     title "Asp-Phe Ser"
 
     chain do
@@ -185,13 +185,6 @@ def fake_structure(*, include_bonds : Bool = true) : Chem::Structure
       end
     end
   end
-  unless include_bonds
-    structure.each_atom do |atom|
-      atom.bonded_atoms.each do |other|
-        atom.bonds.delete other
-      end
-    end
-  end
   structure
 end
 
@@ -209,12 +202,17 @@ end
 
 # Returns the structure associated with *filename*. The latter is
 # expected to be a filename, not a path.
-def load_file(filename : String, guess_topology : Bool = false) : Chem::Structure
+def load_file(
+  filename : String,
+  guess_bonds : Bool = false,
+  guess_names : Bool = false
+) : Chem::Structure
   path = spec_file filename
   case Chem::Format.from_filename(filename)
-  when .xyz?    then Chem::Structure.from_xyz(path, guess_topology: guess_topology)
-  when .poscar? then Chem::Structure.from_poscar(path, guess_topology: guess_topology)
-  when .gen?    then Chem::Structure.from_gen(path, guess_topology: guess_topology)
+  when .xyz?    then Chem::Structure.from_xyz(path, guess_bonds, guess_names)
+  when .poscar? then Chem::Structure.from_poscar(path, guess_bonds, guess_names)
+  when .gen?    then Chem::Structure.from_gen(path, guess_bonds, guess_names)
+  when .pdb?    then Chem::Structure.from_pdb(path, guess_bonds: guess_bonds)
   else               Chem::Structure.read(path)
   end
 end

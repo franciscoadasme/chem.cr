@@ -27,7 +27,7 @@ describe Chem::Atom do
 
   describe "#bonded?" do
     it "tells if two atoms are bonded" do
-      structure = Chem::Structure.build do
+      structure = Chem::Structure.build(guess_bonds: true) do
         atom :O, vec3(2.336, 3.448, 7.781)
         atom :H, vec3(1.446, 3.485, 7.315)
         atom :H, vec3(2.977, 2.940, 7.234)
@@ -38,7 +38,7 @@ describe Chem::Atom do
     end
 
     it "returns false when atom is itself" do
-      structure = Chem::Structure.build do
+      structure = Chem::Structure.build(guess_bonds: true) do
         atom :O, vec3(2.336, 3.448, 7.781)
         atom :H, vec3(1.446, 3.485, 7.315)
         atom :H, vec3(2.977, 2.940, 7.234)
@@ -104,7 +104,6 @@ describe Chem::Atom do
         bond "C1", "H1"
         bond "C1", "H2"
       end
-      structure.atoms[0].bonded_atoms.each { |atom| structure.atoms[0].bonds.delete atom }
       structure.atoms[0].missing_valence.should eq 2
     end
 

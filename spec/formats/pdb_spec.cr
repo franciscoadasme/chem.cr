@@ -475,7 +475,7 @@ describe Chem::PDB::Writer do
 
   it "writes ter records at the end of polymer chains" do
     content = File.read spec_file("5e5v.pdb")
-    structure = Chem::Structure.from_pdb IO::Memory.new(content)
+    structure = Chem::Structure.from_pdb IO::Memory.new(content), guess_bonds: true
     structure.to_pdb.should eq content
   end
 
@@ -584,7 +584,7 @@ describe Chem::PDB::Writer do
   end
 
   it "writes four-letter residue names (#45)" do
-    structure = Chem::Structure.build do
+    structure = Chem::Structure.build(guess_bonds: true) do
       residue "DMPG" do
         atom "C13", vec3(9.194, 10.488, 13.865)
         atom "H13A", vec3(8.843, 9.508, 14.253)
@@ -645,7 +645,7 @@ describe Chem::PDB::Writer do
   end
 
   it "writes CONECT records for standard residues only" do
-    structure = load_file("AlaIle--unwrapped.poscar", guess_topology: true)
+    structure = load_file("AlaIle--unwrapped.poscar", guess_bonds: true, guess_names: true)
     pdb_content = structure.to_pdb(bonds: :standard)
     pdb_content.lines.select(/^CONECT/).join('\n').should eq <<-PDB.delete('|')
       CONECT    1    2   10   11                                                      |
@@ -699,13 +699,13 @@ describe Chem::PDB::Writer do
   end
 
   it "does not write CONECT records for water residues if bonds is HET" do
-    structure = load_file("waters.xyz", guess_topology: true)
+    structure = load_file("waters.xyz", guess_bonds: true, guess_names: true)
     pdb_content = structure.to_pdb(bonds: :het)
     pdb_content.lines.select(/^CONECT/).join('\n').should eq ""
   end
 
   it "writes CONECT records for water residues if bonds is standard" do
-    structure = load_file("waters.xyz", guess_topology: true)
+    structure = load_file("waters.xyz", guess_bonds: true, guess_names: true)
     pdb_content = structure.to_pdb(bonds: :standard)
     pdb_content.lines.select(/^CONECT/).join('\n').should eq <<-PDB.delete('|')
       CONECT    1    2    3                                                           |
@@ -721,7 +721,7 @@ describe Chem::PDB::Writer do
   end
 
   it "writes TER per each fragment (#89)" do
-    structure = load_file("waters.xyz", guess_topology: true)
+    structure = load_file("waters.xyz", guess_bonds: true, guess_names: true)
     structure.to_pdb(ter_on_fragment: true).should eq <<-PDB.delete('|')
       TITLE     Three waters                                                          |
       REMARK   4                                                                      |
@@ -744,7 +744,7 @@ describe Chem::PDB::Writer do
   end
 
   it "writes TER per each fragment for a view (#89)" do
-    structure = load_file("waters.xyz", guess_topology: true)
+    structure = load_file("waters.xyz", guess_bonds: true, guess_names: true)
     structure.atoms.to_pdb(ter_on_fragment: true).should eq <<-PDB.delete('|')
       REMARK   4                                                                      |
       REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         |
@@ -766,7 +766,7 @@ describe Chem::PDB::Writer do
   end
 
   it "writes correct numbers in CONECT with TER" do
-    structure = load_file("waters.xyz", guess_topology: true)
+    structure = load_file("waters.xyz", guess_bonds: true, guess_names: true)
     structure.to_pdb(bonds: :all, ter_on_fragment: true).should eq <<-PDB.delete('|')
       TITLE     Three waters                                                          |
       REMARK   4                                                                      |

@@ -4,11 +4,19 @@ module Chem
     @atom_serial : Int32 = 0
     @atoms : Indexable(Atom)?
     @chain : Chain?
-    @guess_topology = false
+    @guess_bonds = false
+    @guess_names = false
     @residue : Residue?
     @structure : Structure
+    @use_templates : Bool = false
 
-    def initialize(*args, @guess_topology : Bool = false, **options)
+    def initialize(
+      *args,
+      @guess_bonds : Bool = false,
+      @guess_names : Bool = false,
+      @use_templates : Bool = false,
+      **options
+    )
       @structure = Structure.new **options
     end
 
@@ -66,16 +74,21 @@ module Chem
 
     def build : Structure
       kekulize
-      @structure.topology.apply_templates
+      @structure.topology.apply_templates if @use_templates
 
-      # skip bond order and formal charge assignment if a protein chain
-      # has missing hydrogens (very common in PDB)
-      include_h = !@structure.each_residue.any? { |r| r.protein? && !r.has_hydrogens? }
-      @structure.topology.guess_bonds perceive_order: include_h
-      @structure.topology.guess_formal_charges if include_h
+      if @guess_bonds
+        # skip bond order and formal charge assignment if a protein chain
+        # has missing hydrogens (very common in PDB)
+        include_h = !@structure.each_residue.any? { |r| r.protein? && !r.has_hydrogens? }
+        @structure.topology.guess_bonds perceive_order: include_h
+        @structure.topology.guess_formal_charges if include_h
+      end
 
-      @structure.topology.guess_unknown_residue_types
-      @structure.topology.guess_names if @guess_topology
+      @structure.topology.guess_names if @guess_names
+      if @guess_bonds || @guess_names || @use_templates
+        @structure.topology.guess_unknown_residue_types
+      end
+
       @structure
     end
 

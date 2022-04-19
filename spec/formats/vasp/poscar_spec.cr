@@ -3,7 +3,7 @@ require "../../spec_helper.cr"
 describe Chem::VASP::Poscar do
   describe ".parse" do
     it "parses a basic file" do
-      st = load_file "basic.poscar", guess_topology: true
+      st = load_file "basic.poscar", guess_bonds: true, guess_names: true
       st.source_file.should eq Path[spec_file("basic.poscar")].expand
       st.n_atoms.should eq 49
 
@@ -106,7 +106,7 @@ describe Chem::VASP::Poscar do
 end
 
 describe Chem::VASP::Poscar::Writer do
-  structure = Chem::Structure.build do
+  structure = Chem::Structure.build(guess_bonds: true) do
     title "NaCl-O-NaCl"
     cell 40, 20, 10
     atom :Cl, vec3(30, 15, 10)

@@ -279,14 +279,14 @@ describe Chem::Spatial::CoordinatesProxy do
 
   describe "#unwrap" do
     it "unwraps a structure" do
-      coords = load_file("5e61--wrapped.poscar").coords
+      coords = load_file("5e61--wrapped.poscar", guess_bonds: true).coords
       coords.unwrap
       expected = load_file("5e61--unwrapped.poscar").coords
       coords.should be_close expected, 1e-3
     end
 
     it "unwraps a structure placing fragments close together" do
-      coords = load_file("5e5v--wrapped.poscar").coords
+      coords = load_file("5e5v--wrapped.poscar", guess_bonds: true).coords
       coords.unwrap
       expected = load_file("5e5v--unwrapped.poscar").coords
       coords.should be_close expected, 1e-2

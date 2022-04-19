@@ -17,7 +17,7 @@ describe Chem::Structure do
 
   describe "#clone" do
     it "returns a copy of the structure" do
-      structure = load_file "1crn.pdb"
+      structure = load_file "1crn.pdb", guess_bonds: true
       other = structure.clone
 
       other.should_not be structure

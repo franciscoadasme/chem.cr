@@ -140,7 +140,7 @@ describe Chem::Mol2::Writer do
   end
 
   it "writes cell" do
-    structure = load_file("waters.xyz", guess_topology: true)
+    structure = load_file("waters.xyz", guess_bonds: true, guess_names: true)
     structure.cell = Chem::Spatial::Parallelepiped.new({40.961, 18.65, 22.52}, {90, 90.77, 120})
     structure.to_mol2.should eq File.read(spec_file("water_in_box.mol2"))
   end

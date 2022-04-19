@@ -28,7 +28,7 @@ describe Chem::ResidueCollection do
     end
 
     it "iterates over secondary structure elements non-strictly" do
-      s = load_file "hlx_gly.poscar", guess_topology: true
+      s = load_file "hlx_gly.poscar", guess_bonds: true, guess_names: true
       builder = Chem::Structure::Builder.new s
       builder.secondary_structure({'A', 2, nil}, {'A', 4, nil}, :right_handed_helix_alpha)
       builder.secondary_structure({'A', 5, nil}, {'A', 8, nil}, :right_handed_helix3_10)
@@ -55,7 +55,7 @@ describe Chem::ResidueCollection do
     end
 
     it "returns an iterator over secondary structure elements non-strictly" do
-      s = load_file "hlx_gly.poscar", guess_topology: true
+      s = load_file "hlx_gly.poscar", guess_bonds: true, guess_names: true
       builder = Chem::Structure::Builder.new s
       builder.secondary_structure({'A', 1, nil}, {'A', 5, nil}, :right_handed_helix_alpha)
       builder.secondary_structure({'A', 6, nil}, {'A', 10, nil}, :right_handed_helix3_10)

@@ -266,6 +266,27 @@ describe Chem::Structure::Builder do
     structure.each_residue.map(&.sec.code).to_a.should eq ['H', 'H', '0', '0', 'E']
   end
 
+  it "does not guess bond orders if hydrogens are missing" do
+    structure = load_file("residue_kind_unknown_covalent_ligand.pdb", guess_bonds: true)
+    structure.formal_charge.should eq 0
+    structure.atoms.count(&.formal_charge.zero?.!).should eq 0
+    structure.bonds.size.should eq 59
+    structure.bonds.count(&.single?.!).should eq 3 # backbone C=O
+  end
+
+  it "assigns bond orders for a structure without hydrogens" do
+    structure = Chem::Structure.build(guess_bonds: true) do
+      residue "ICN" do
+        atom :i, vec3(3.149, 0, 0)
+        atom :c, vec3(1.148, 0, 0)
+        atom :n, vec3(0, 0, 0)
+      end
+    end
+    structure.bonds.size.should eq 2
+    structure.dig('A', 1, "I1").bonds[structure.dig('A', 1, "C1")].order.should eq 1
+    structure.dig('A', 1, "C1").bonds[structure.dig('A', 1, "N1")].order.should eq 3
+  end
+
   describe "#kekulize" do
     it_kekulizes "indole and benzene", "783.mol2", %w(
       C1=C2 C2-C3 C3=C4 C4-C5 C6=C5 C1-C6

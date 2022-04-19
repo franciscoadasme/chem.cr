@@ -3,20 +3,23 @@ require "../spec_helper"
 describe Chem::AtomCollection do
   describe "#fragments" do
     it "returns the fragments (1)" do
-      load_file("5e61--unwrapped.poscar").fragments.map(&.size).should eq [100, 100]
+      structure = load_file("5e61--unwrapped.poscar", guess_bonds: true)
+      structure.fragments.map(&.size).should eq [100, 100]
     end
 
     it "returns the fragments (2)" do
-      load_file("5e61--unwrapped.poscar").fragments.map(&.size).should eq [100, 100]
+      structure = load_file("5e61--unwrapped.poscar", guess_bonds: true)
+      structure.fragments.map(&.size).should eq [100, 100]
     end
 
     it "returns the fragments (3)" do
       expected = [1, 1, 1, 1, 304, 334]
-      load_file("k2p_pore_b.xyz").fragments.map(&.size).sort!.should eq expected
+      structure = load_file("k2p_pore_b.xyz", guess_bonds: true)
+      structure.fragments.map(&.size).sort!.should eq expected
     end
 
     it "returns fragments limited to the selected atoms " do
-      atoms = load_file("5e5v.pdb").atoms
+      atoms = load_file("5e5v.pdb", guess_bonds: true).atoms
       atoms[0..205].fragments.map(&.size).should eq [103, 103]
       atoms[0..150].fragments.map(&.size).should eq [103, 48]
       atoms[0..50].fragments.map(&.size).should eq [51]

@@ -3,7 +3,12 @@ module Chem::VASP::Poscar
   class Reader
     include FormatReader(Structure)
 
-    def initialize(@io : IO, @guess_topology : Bool = false, @sync_close : Bool = false)
+    def initialize(
+      @io : IO,
+      @guess_bonds : Bool = false,
+      @guess_names : Bool = false,
+      @sync_close : Bool = false
+    )
       @pull = PullParser.new(@io)
     end
 
@@ -66,8 +71,10 @@ module Chem::VASP::Poscar
       @pull.next_line
 
       Structure.build(
-        guess_topology: @guess_topology,
+        guess_bonds: @guess_bonds,
+        guess_names: @guess_names,
         source_file: (file = @io).is_a?(File) ? file.path : nil,
+        use_templates: false,
       ) do |builder|
         builder.title title
         builder.cell cell
