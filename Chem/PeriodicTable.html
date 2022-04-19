@@ -551,11 +551,6 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/PBC" data-name="chem::spatial::pbc">
-      <a href="../Chem/Spatial/PBC.html">PBC</a>
-      
-    </li>
-  
   <li class=" " data-id="chem.cr/Chem/Spatial/PeriodicKDTree" data-name="chem::spatial::periodickdtree">
       <a href="../Chem/Spatial/PeriodicKDTree.html">PeriodicKDTree</a>
       
@@ -623,11 +618,6 @@
   
   <li class=" " data-id="chem.cr/Chem/Topology/MatchData" data-name="chem::topology::matchdata">
       <a href="../Chem/Topology/MatchData.html">MatchData</a>
-      
-    </li>
-  
-  <li class=" " data-id="chem.cr/Chem/Topology/Perception" data-name="chem::topology::perception">
-      <a href="../Chem/Topology/Perception.html">Perception</a>
       
     </li>
   
@@ -831,6 +821,7 @@ values are set to 1.5 Å</p>
 <p><span class="flag purple">NOTE</span>  vdW radii (in Å) are taken from Alvarez  S.  Dalton Trans.  2013  42  pp
 8617-8636  doi:<a href="https://dx.doi.org/10.1039/c3dt50599e">10.1039/c3dt50599e</a>. Missing
 values are set to covalent radius + 0.9 Å</p>
+<p>Maximum number of bonds are taken from OpenBabel.</p>
 
 
 
@@ -869,7 +860,7 @@ values are set to covalent radius + 0.9 Å</p>
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/periodic_table.cr#L12" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/periodic_table.cr#L14" target="_blank">
         chem/core/periodic_table.cr
       </a>
     
@@ -891,592 +882,592 @@ values are set to covalent radius + 0.9 Å</p>
   <dl>
     
       <dt class="entry-const" id="Ac">
-        <strong>Ac</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">89</span>, symbol: <span class="s">&quot;Ac&quot;</span>, name: <span class="s">&quot;Actinium&quot;</span>, mass: <span class="n">227.0</span>, covalent_radius: <span class="n">2.15</span>, vdw_radius: <span class="n">2.80</span>, valence_electrons: <span class="n">3</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Ac</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">89</span>, symbol: <span class="s">&quot;Ac&quot;</span>, name: <span class="s">&quot;Actinium&quot;</span>, mass: <span class="n">227.0</span>, covalent_radius: <span class="n">2.15</span>, vdw_radius: <span class="n">2.80</span>, valence_electrons: <span class="n">3</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Ag">
-        <strong>Ag</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">47</span>, symbol: <span class="s">&quot;Ag&quot;</span>, name: <span class="s">&quot;Silver&quot;</span>, mass: <span class="n">107.8682</span>, covalent_radius: <span class="n">1.45</span>, vdw_radius: <span class="n">2.53</span>, valence_electrons: <span class="n">11</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Ag</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">47</span>, symbol: <span class="s">&quot;Ag&quot;</span>, name: <span class="s">&quot;Silver&quot;</span>, mass: <span class="n">107.8682</span>, covalent_radius: <span class="n">1.45</span>, vdw_radius: <span class="n">2.53</span>, valence_electrons: <span class="n">11</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Al">
-        <strong>Al</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">13</span>, symbol: <span class="s">&quot;Al&quot;</span>, name: <span class="s">&quot;Aluminum&quot;</span>, mass: <span class="n">26.9815</span>, covalent_radius: <span class="n">1.21</span>, vdw_radius: <span class="n">2.25</span>, valence_electrons: <span class="n">3</span>, valence: [<span class="n">3</span>, <span class="n">6</span>])</code>
+        <strong>Al</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">13</span>, symbol: <span class="s">&quot;Al&quot;</span>, name: <span class="s">&quot;Aluminum&quot;</span>, mass: <span class="n">26.9815</span>, covalent_radius: <span class="n">1.21</span>, vdw_radius: <span class="n">2.25</span>, valence_electrons: <span class="n">3</span>, valence: [<span class="n">3</span>, <span class="n">6</span>], max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Am">
-        <strong>Am</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">95</span>, symbol: <span class="s">&quot;Am&quot;</span>, name: <span class="s">&quot;Americium&quot;</span>, mass: <span class="n">243.0</span>, covalent_radius: <span class="n">1.80</span>, vdw_radius: <span class="n">2.83</span>, valence_electrons: <span class="n">7</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Am</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">95</span>, symbol: <span class="s">&quot;Am&quot;</span>, name: <span class="s">&quot;Americium&quot;</span>, mass: <span class="n">243.0</span>, covalent_radius: <span class="n">1.80</span>, vdw_radius: <span class="n">2.83</span>, valence_electrons: <span class="n">7</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Ar">
-        <strong>Ar</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">18</span>, symbol: <span class="s">&quot;Ar&quot;</span>, name: <span class="s">&quot;Argon&quot;</span>, mass: <span class="n">39.948</span>, covalent_radius: <span class="n">1.06</span>, vdw_radius: <span class="n">1.83</span>, valence_electrons: <span class="n">8</span>, valence: <span class="n">0</span>)</code>
+        <strong>Ar</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">18</span>, symbol: <span class="s">&quot;Ar&quot;</span>, name: <span class="s">&quot;Argon&quot;</span>, mass: <span class="n">39.948</span>, covalent_radius: <span class="n">1.06</span>, vdw_radius: <span class="n">1.83</span>, valence_electrons: <span class="n">8</span>, valence: <span class="n">0</span>, max_bonds: <span class="n">0</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="As">
-        <strong>As</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">33</span>, symbol: <span class="s">&quot;As&quot;</span>, name: <span class="s">&quot;Arsenic&quot;</span>, mass: <span class="n">74.9216</span>, covalent_radius: <span class="n">1.19</span>, vdw_radius: <span class="n">1.88</span>, valence_electrons: <span class="n">5</span>, valence: [<span class="n">3</span>, <span class="n">5</span>, <span class="n">7</span>])</code>
+        <strong>As</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">33</span>, symbol: <span class="s">&quot;As&quot;</span>, name: <span class="s">&quot;Arsenic&quot;</span>, mass: <span class="n">74.9216</span>, covalent_radius: <span class="n">1.19</span>, vdw_radius: <span class="n">1.88</span>, valence_electrons: <span class="n">5</span>, valence: [<span class="n">3</span>, <span class="n">5</span>, <span class="n">7</span>], max_bonds: <span class="n">3</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="At">
-        <strong>At</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">85</span>, symbol: <span class="s">&quot;At&quot;</span>, name: <span class="s">&quot;Astatine&quot;</span>, mass: <span class="n">210.0</span>, covalent_radius: <span class="n">1.50</span>, vdw_radius: <span class="n">1.50</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">7</span>, valence: [<span class="n">1</span>, <span class="n">3</span>, <span class="n">5</span>])</code>
+        <strong>At</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">85</span>, symbol: <span class="s">&quot;At&quot;</span>, name: <span class="s">&quot;Astatine&quot;</span>, mass: <span class="n">210.0</span>, covalent_radius: <span class="n">1.50</span>, vdw_radius: <span class="n">1.50</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">7</span>, valence: [<span class="n">1</span>, <span class="n">3</span>, <span class="n">5</span>], max_bonds: <span class="n">1</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Au">
-        <strong>Au</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">79</span>, symbol: <span class="s">&quot;Au&quot;</span>, name: <span class="s">&quot;Gold&quot;</span>, mass: <span class="n">196.9666</span>, covalent_radius: <span class="n">1.36</span>, vdw_radius: <span class="n">2.32</span>, valence_electrons: <span class="n">11</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Au</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">79</span>, symbol: <span class="s">&quot;Au&quot;</span>, name: <span class="s">&quot;Gold&quot;</span>, mass: <span class="n">196.9666</span>, covalent_radius: <span class="n">1.36</span>, vdw_radius: <span class="n">2.32</span>, valence_electrons: <span class="n">11</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="B">
-        <strong>B</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">5</span>, symbol: <span class="s">&quot;B&quot;</span>, name: <span class="s">&quot;Boron&quot;</span>, mass: <span class="n">10.811</span>, covalent_radius: <span class="n">0.84</span>, vdw_radius: <span class="n">1.91</span>, valence_electrons: <span class="n">3</span>, valence: <span class="n">3</span>)</code>
+        <strong>B</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">5</span>, symbol: <span class="s">&quot;B&quot;</span>, name: <span class="s">&quot;Boron&quot;</span>, mass: <span class="n">10.811</span>, covalent_radius: <span class="n">0.84</span>, vdw_radius: <span class="n">1.91</span>, valence_electrons: <span class="n">3</span>, valence: <span class="n">3</span>, max_bonds: <span class="n">4</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Ba">
-        <strong>Ba</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">56</span>, symbol: <span class="s">&quot;Ba&quot;</span>, name: <span class="s">&quot;Barium&quot;</span>, mass: <span class="n">137.327</span>, covalent_radius: <span class="n">2.15</span>, vdw_radius: <span class="n">3.03</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">2</span>)</code>
+        <strong>Ba</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">56</span>, symbol: <span class="s">&quot;Ba&quot;</span>, name: <span class="s">&quot;Barium&quot;</span>, mass: <span class="n">137.327</span>, covalent_radius: <span class="n">2.15</span>, vdw_radius: <span class="n">3.03</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">2</span>, max_bonds: <span class="n">2</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Be">
-        <strong>Be</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">4</span>, symbol: <span class="s">&quot;Be&quot;</span>, name: <span class="s">&quot;Beryllium&quot;</span>, mass: <span class="n">9.0122</span>, covalent_radius: <span class="n">0.96</span>, vdw_radius: <span class="n">1.98</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">2</span>)</code>
+        <strong>Be</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">4</span>, symbol: <span class="s">&quot;Be&quot;</span>, name: <span class="s">&quot;Beryllium&quot;</span>, mass: <span class="n">9.0122</span>, covalent_radius: <span class="n">0.96</span>, vdw_radius: <span class="n">1.98</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">2</span>, max_bonds: <span class="n">2</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Bh">
-        <strong>Bh</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">107</span>, symbol: <span class="s">&quot;Bh&quot;</span>, name: <span class="s">&quot;Bohrium&quot;</span>, mass: <span class="n">264.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">1.5</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Bh</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">107</span>, symbol: <span class="s">&quot;Bh&quot;</span>, name: <span class="s">&quot;Bohrium&quot;</span>, mass: <span class="n">264.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">1.5</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Bi">
-        <strong>Bi</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">83</span>, symbol: <span class="s">&quot;Bi&quot;</span>, name: <span class="s">&quot;Bismuth&quot;</span>, mass: <span class="n">208.9804</span>, covalent_radius: <span class="n">1.48</span>, vdw_radius: <span class="n">2.54</span>, valence_electrons: <span class="n">5</span>, valence: [<span class="n">3</span>, <span class="n">5</span>, <span class="n">7</span>])</code>
+        <strong>Bi</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">83</span>, symbol: <span class="s">&quot;Bi&quot;</span>, name: <span class="s">&quot;Bismuth&quot;</span>, mass: <span class="n">208.9804</span>, covalent_radius: <span class="n">1.48</span>, vdw_radius: <span class="n">2.54</span>, valence_electrons: <span class="n">5</span>, valence: [<span class="n">3</span>, <span class="n">5</span>, <span class="n">7</span>], max_bonds: <span class="n">3</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Bk">
-        <strong>Bk</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">97</span>, symbol: <span class="s">&quot;Bk&quot;</span>, name: <span class="s">&quot;Berkelium&quot;</span>, mass: <span class="n">247.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">3.40</span>, valence_electrons: <span class="n">9</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Bk</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">97</span>, symbol: <span class="s">&quot;Bk&quot;</span>, name: <span class="s">&quot;Berkelium&quot;</span>, mass: <span class="n">247.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">3.40</span>, valence_electrons: <span class="n">9</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Br">
-        <strong>Br</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">35</span>, symbol: <span class="s">&quot;Br&quot;</span>, name: <span class="s">&quot;Bromine&quot;</span>, mass: <span class="n">79.904</span>, covalent_radius: <span class="n">1.20</span>, vdw_radius: <span class="n">1.86</span>, valence_electrons: <span class="n">7</span>, valence: <span class="n">1</span>)</code>
+        <strong>Br</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">35</span>, symbol: <span class="s">&quot;Br&quot;</span>, name: <span class="s">&quot;Bromine&quot;</span>, mass: <span class="n">79.904</span>, covalent_radius: <span class="n">1.20</span>, vdw_radius: <span class="n">1.86</span>, valence_electrons: <span class="n">7</span>, valence: <span class="n">1</span>, max_bonds: <span class="n">1</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="C">
-        <strong>C</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">6</span>, symbol: <span class="s">&quot;C&quot;</span>, name: <span class="s">&quot;Carbon&quot;</span>, mass: <span class="n">12.0107</span>, covalent_radius: <span class="n">0.76</span>, vdw_radius: <span class="n">1.77</span>, valence_electrons: <span class="n">4</span>, valence: <span class="n">4</span>)</code>
+        <strong>C</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">6</span>, symbol: <span class="s">&quot;C&quot;</span>, name: <span class="s">&quot;Carbon&quot;</span>, mass: <span class="n">12.0107</span>, covalent_radius: <span class="n">0.76</span>, vdw_radius: <span class="n">1.77</span>, valence_electrons: <span class="n">4</span>, valence: <span class="n">4</span>, max_bonds: <span class="n">4</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Ca">
-        <strong>Ca</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">20</span>, symbol: <span class="s">&quot;Ca&quot;</span>, name: <span class="s">&quot;Calcium&quot;</span>, mass: <span class="n">40.078</span>, covalent_radius: <span class="n">1.76</span>, vdw_radius: <span class="n">2.62</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">2</span>)</code>
+        <strong>Ca</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">20</span>, symbol: <span class="s">&quot;Ca&quot;</span>, name: <span class="s">&quot;Calcium&quot;</span>, mass: <span class="n">40.078</span>, covalent_radius: <span class="n">1.76</span>, vdw_radius: <span class="n">2.62</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">2</span>, max_bonds: <span class="n">2</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Cd">
-        <strong>Cd</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">48</span>, symbol: <span class="s">&quot;Cd&quot;</span>, name: <span class="s">&quot;Cadmium&quot;</span>, mass: <span class="n">112.411</span>, covalent_radius: <span class="n">1.44</span>, vdw_radius: <span class="n">2.49</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Cd</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">48</span>, symbol: <span class="s">&quot;Cd&quot;</span>, name: <span class="s">&quot;Cadmium&quot;</span>, mass: <span class="n">112.411</span>, covalent_radius: <span class="n">1.44</span>, vdw_radius: <span class="n">2.49</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Ce">
-        <strong>Ce</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">58</span>, symbol: <span class="s">&quot;Ce&quot;</span>, name: <span class="s">&quot;Cerium&quot;</span>, mass: <span class="n">140.116</span>, covalent_radius: <span class="n">2.04</span>, vdw_radius: <span class="n">2.88</span>, valence_electrons: <span class="n">4</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Ce</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">58</span>, symbol: <span class="s">&quot;Ce&quot;</span>, name: <span class="s">&quot;Cerium&quot;</span>, mass: <span class="n">140.116</span>, covalent_radius: <span class="n">2.04</span>, vdw_radius: <span class="n">2.88</span>, valence_electrons: <span class="n">4</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Cf">
-        <strong>Cf</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">98</span>, symbol: <span class="s">&quot;Cf&quot;</span>, name: <span class="s">&quot;Californium&quot;</span>, mass: <span class="n">251.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">3.05</span>, valence_electrons: <span class="n">10</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Cf</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">98</span>, symbol: <span class="s">&quot;Cf&quot;</span>, name: <span class="s">&quot;Californium&quot;</span>, mass: <span class="n">251.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">3.05</span>, valence_electrons: <span class="n">10</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Cl">
-        <strong>Cl</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">17</span>, symbol: <span class="s">&quot;Cl&quot;</span>, name: <span class="s">&quot;Chlorine&quot;</span>, mass: <span class="n">35.453</span>, covalent_radius: <span class="n">1.02</span>, vdw_radius: <span class="n">1.82</span>, valence_electrons: <span class="n">7</span>, valence: <span class="n">1</span>)</code>
+        <strong>Cl</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">17</span>, symbol: <span class="s">&quot;Cl&quot;</span>, name: <span class="s">&quot;Chlorine&quot;</span>, mass: <span class="n">35.453</span>, covalent_radius: <span class="n">1.02</span>, vdw_radius: <span class="n">1.82</span>, valence_electrons: <span class="n">7</span>, valence: <span class="n">1</span>, max_bonds: <span class="n">1</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Cm">
-        <strong>Cm</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">96</span>, symbol: <span class="s">&quot;Cm&quot;</span>, name: <span class="s">&quot;Curium&quot;</span>, mass: <span class="n">247.0</span>, covalent_radius: <span class="n">1.69</span>, vdw_radius: <span class="n">3.05</span>, valence_electrons: <span class="n">8</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Cm</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">96</span>, symbol: <span class="s">&quot;Cm&quot;</span>, name: <span class="s">&quot;Curium&quot;</span>, mass: <span class="n">247.0</span>, covalent_radius: <span class="n">1.69</span>, vdw_radius: <span class="n">3.05</span>, valence_electrons: <span class="n">8</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Cn">
-        <strong>Cn</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">112</span>, symbol: <span class="s">&quot;Cn&quot;</span>, name: <span class="s">&quot;Copernicium&quot;</span>, mass: <span class="n">285.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">1.5</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Cn</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">112</span>, symbol: <span class="s">&quot;Cn&quot;</span>, name: <span class="s">&quot;Copernicium&quot;</span>, mass: <span class="n">285.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">1.5</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Co">
-        <strong>Co</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">27</span>, symbol: <span class="s">&quot;Co&quot;</span>, name: <span class="s">&quot;Cobalt&quot;</span>, mass: <span class="n">58.9331</span>, covalent_radius: <span class="n">1.50</span>, vdw_radius: <span class="n">2.40</span>, valence_electrons: <span class="n">9</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Co</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">27</span>, symbol: <span class="s">&quot;Co&quot;</span>, name: <span class="s">&quot;Cobalt&quot;</span>, mass: <span class="n">58.9331</span>, covalent_radius: <span class="n">1.50</span>, vdw_radius: <span class="n">2.40</span>, valence_electrons: <span class="n">9</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Cr">
-        <strong>Cr</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">24</span>, symbol: <span class="s">&quot;Cr&quot;</span>, name: <span class="s">&quot;Chromium&quot;</span>, mass: <span class="n">51.9961</span>, covalent_radius: <span class="n">1.39</span>, vdw_radius: <span class="n">2.45</span>, valence_electrons: <span class="n">6</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Cr</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">24</span>, symbol: <span class="s">&quot;Cr&quot;</span>, name: <span class="s">&quot;Chromium&quot;</span>, mass: <span class="n">51.9961</span>, covalent_radius: <span class="n">1.39</span>, vdw_radius: <span class="n">2.45</span>, valence_electrons: <span class="n">6</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Cs">
-        <strong>Cs</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">55</span>, symbol: <span class="s">&quot;Cs&quot;</span>, name: <span class="s">&quot;Cesium&quot;</span>, mass: <span class="n">132.9055</span>, covalent_radius: <span class="n">2.44</span>, vdw_radius: <span class="n">3.48</span>, valence_electrons: <span class="n">1</span>, valence: <span class="n">1</span>)</code>
+        <strong>Cs</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">55</span>, symbol: <span class="s">&quot;Cs&quot;</span>, name: <span class="s">&quot;Cesium&quot;</span>, mass: <span class="n">132.9055</span>, covalent_radius: <span class="n">2.44</span>, vdw_radius: <span class="n">3.48</span>, valence_electrons: <span class="n">1</span>, valence: <span class="n">1</span>, max_bonds: <span class="n">1</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Cu">
-        <strong>Cu</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">29</span>, symbol: <span class="s">&quot;Cu&quot;</span>, name: <span class="s">&quot;Copper&quot;</span>, mass: <span class="n">63.546</span>, covalent_radius: <span class="n">1.32</span>, vdw_radius: <span class="n">2.38</span>, valence_electrons: <span class="n">11</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Cu</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">29</span>, symbol: <span class="s">&quot;Cu&quot;</span>, name: <span class="s">&quot;Copper&quot;</span>, mass: <span class="n">63.546</span>, covalent_radius: <span class="n">1.32</span>, vdw_radius: <span class="n">2.38</span>, valence_electrons: <span class="n">11</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Db">
-        <strong>Db</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">105</span>, symbol: <span class="s">&quot;Db&quot;</span>, name: <span class="s">&quot;Dubnium&quot;</span>, mass: <span class="n">262.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">1.5</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Db</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">105</span>, symbol: <span class="s">&quot;Db&quot;</span>, name: <span class="s">&quot;Dubnium&quot;</span>, mass: <span class="n">262.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">1.5</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Ds">
-        <strong>Ds</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">110</span>, symbol: <span class="s">&quot;Ds&quot;</span>, name: <span class="s">&quot;Darmstadtium&quot;</span>, mass: <span class="n">281.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">1.5</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Ds</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">110</span>, symbol: <span class="s">&quot;Ds&quot;</span>, name: <span class="s">&quot;Darmstadtium&quot;</span>, mass: <span class="n">281.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">1.5</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Dy">
-        <strong>Dy</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">66</span>, symbol: <span class="s">&quot;Dy&quot;</span>, name: <span class="s">&quot;Dysprosium&quot;</span>, mass: <span class="n">162.5</span>, covalent_radius: <span class="n">1.92</span>, vdw_radius: <span class="n">2.87</span>, valence_electrons: <span class="n">10</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Dy</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">66</span>, symbol: <span class="s">&quot;Dy&quot;</span>, name: <span class="s">&quot;Dysprosium&quot;</span>, mass: <span class="n">162.5</span>, covalent_radius: <span class="n">1.92</span>, vdw_radius: <span class="n">2.87</span>, valence_electrons: <span class="n">10</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Er">
-        <strong>Er</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">68</span>, symbol: <span class="s">&quot;Er&quot;</span>, name: <span class="s">&quot;Erbium&quot;</span>, mass: <span class="n">167.259</span>, covalent_radius: <span class="n">1.89</span>, vdw_radius: <span class="n">2.83</span>, valence_electrons: <span class="n">12</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Er</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">68</span>, symbol: <span class="s">&quot;Er&quot;</span>, name: <span class="s">&quot;Erbium&quot;</span>, mass: <span class="n">167.259</span>, covalent_radius: <span class="n">1.89</span>, vdw_radius: <span class="n">2.83</span>, valence_electrons: <span class="n">12</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Es">
-        <strong>Es</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">99</span>, symbol: <span class="s">&quot;Es&quot;</span>, name: <span class="s">&quot;Einsteinium&quot;</span>, mass: <span class="n">252.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">2.70</span>, valence_electrons: <span class="n">11</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Es</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">99</span>, symbol: <span class="s">&quot;Es&quot;</span>, name: <span class="s">&quot;Einsteinium&quot;</span>, mass: <span class="n">252.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">2.70</span>, valence_electrons: <span class="n">11</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Eu">
-        <strong>Eu</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">63</span>, symbol: <span class="s">&quot;Eu&quot;</span>, name: <span class="s">&quot;Europium&quot;</span>, mass: <span class="n">151.964</span>, covalent_radius: <span class="n">1.98</span>, vdw_radius: <span class="n">2.87</span>, valence_electrons: <span class="n">7</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Eu</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">63</span>, symbol: <span class="s">&quot;Eu&quot;</span>, name: <span class="s">&quot;Europium&quot;</span>, mass: <span class="n">151.964</span>, covalent_radius: <span class="n">1.98</span>, vdw_radius: <span class="n">2.87</span>, valence_electrons: <span class="n">7</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="F">
-        <strong>F</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">9</span>, symbol: <span class="s">&quot;F&quot;</span>, name: <span class="s">&quot;Fluorine&quot;</span>, mass: <span class="n">18.9984</span>, covalent_radius: <span class="n">0.57</span>, vdw_radius: <span class="n">1.46</span>, valence_electrons: <span class="n">7</span>, valence: <span class="n">1</span>)</code>
+        <strong>F</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">9</span>, symbol: <span class="s">&quot;F&quot;</span>, name: <span class="s">&quot;Fluorine&quot;</span>, mass: <span class="n">18.9984</span>, covalent_radius: <span class="n">0.57</span>, vdw_radius: <span class="n">1.46</span>, valence_electrons: <span class="n">7</span>, valence: <span class="n">1</span>, max_bonds: <span class="n">1</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Fe">
-        <strong>Fe</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">26</span>, symbol: <span class="s">&quot;Fe&quot;</span>, name: <span class="s">&quot;Iron&quot;</span>, mass: <span class="n">55.845</span>, covalent_radius: <span class="n">1.52</span>, vdw_radius: <span class="n">2.44</span>, valence_electrons: <span class="n">8</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Fe</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">26</span>, symbol: <span class="s">&quot;Fe&quot;</span>, name: <span class="s">&quot;Iron&quot;</span>, mass: <span class="n">55.845</span>, covalent_radius: <span class="n">1.52</span>, vdw_radius: <span class="n">2.44</span>, valence_electrons: <span class="n">8</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Fl">
-        <strong>Fl</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">114</span>, symbol: <span class="s">&quot;Fl&quot;</span>, name: <span class="s">&quot;Flerovium&quot;</span>, mass: <span class="n">289.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">1.5</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Fl</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">114</span>, symbol: <span class="s">&quot;Fl&quot;</span>, name: <span class="s">&quot;Flerovium&quot;</span>, mass: <span class="n">289.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">1.5</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Fm">
-        <strong>Fm</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">100</span>, symbol: <span class="s">&quot;Fm&quot;</span>, name: <span class="s">&quot;Fermium&quot;</span>, mass: <span class="n">257.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">1.5</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">12</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Fm</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">100</span>, symbol: <span class="s">&quot;Fm&quot;</span>, name: <span class="s">&quot;Fermium&quot;</span>, mass: <span class="n">257.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">1.5</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">12</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Fr">
-        <strong>Fr</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">87</span>, symbol: <span class="s">&quot;Fr&quot;</span>, name: <span class="s">&quot;Francium&quot;</span>, mass: <span class="n">223.0</span>, covalent_radius: <span class="n">2.60</span>, vdw_radius: <span class="n">2.60</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">1</span>, valence: <span class="n">1</span>)</code>
+        <strong>Fr</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">87</span>, symbol: <span class="s">&quot;Fr&quot;</span>, name: <span class="s">&quot;Francium&quot;</span>, mass: <span class="n">223.0</span>, covalent_radius: <span class="n">2.60</span>, vdw_radius: <span class="n">2.60</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">1</span>, valence: <span class="n">1</span>, max_bonds: <span class="n">1</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Ga">
-        <strong>Ga</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">31</span>, symbol: <span class="s">&quot;Ga&quot;</span>, name: <span class="s">&quot;Gallium&quot;</span>, mass: <span class="n">69.723</span>, covalent_radius: <span class="n">1.22</span>, vdw_radius: <span class="n">2.32</span>, valence_electrons: <span class="n">3</span>, valence: <span class="n">3</span>)</code>
+        <strong>Ga</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">31</span>, symbol: <span class="s">&quot;Ga&quot;</span>, name: <span class="s">&quot;Gallium&quot;</span>, mass: <span class="n">69.723</span>, covalent_radius: <span class="n">1.22</span>, vdw_radius: <span class="n">2.32</span>, valence_electrons: <span class="n">3</span>, valence: <span class="n">3</span>, max_bonds: <span class="n">3</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Gd">
-        <strong>Gd</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">64</span>, symbol: <span class="s">&quot;Gd&quot;</span>, name: <span class="s">&quot;Gadolinium&quot;</span>, mass: <span class="n">157.25</span>, covalent_radius: <span class="n">1.96</span>, vdw_radius: <span class="n">2.83</span>, valence_electrons: <span class="n">8</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Gd</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">64</span>, symbol: <span class="s">&quot;Gd&quot;</span>, name: <span class="s">&quot;Gadolinium&quot;</span>, mass: <span class="n">157.25</span>, covalent_radius: <span class="n">1.96</span>, vdw_radius: <span class="n">2.83</span>, valence_electrons: <span class="n">8</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Ge">
-        <strong>Ge</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">32</span>, symbol: <span class="s">&quot;Ge&quot;</span>, name: <span class="s">&quot;Germanium&quot;</span>, mass: <span class="n">72.64</span>, covalent_radius: <span class="n">1.20</span>, vdw_radius: <span class="n">2.29</span>, valence_electrons: <span class="n">4</span>, valence: <span class="n">4</span>)</code>
+        <strong>Ge</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">32</span>, symbol: <span class="s">&quot;Ge&quot;</span>, name: <span class="s">&quot;Germanium&quot;</span>, mass: <span class="n">72.64</span>, covalent_radius: <span class="n">1.20</span>, vdw_radius: <span class="n">2.29</span>, valence_electrons: <span class="n">4</span>, valence: <span class="n">4</span>, max_bonds: <span class="n">4</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="H">
-        <strong>H</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">1</span>, symbol: <span class="s">&quot;H&quot;</span>, name: <span class="s">&quot;Hydrogen&quot;</span>, mass: <span class="n">1.0079</span>, covalent_radius: <span class="n">0.31</span>, vdw_radius: <span class="n">1.20</span>, valence_electrons: <span class="n">1</span>, valence: <span class="n">1</span>)</code>
+        <strong>H</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">1</span>, symbol: <span class="s">&quot;H&quot;</span>, name: <span class="s">&quot;Hydrogen&quot;</span>, mass: <span class="n">1.0079</span>, covalent_radius: <span class="n">0.31</span>, vdw_radius: <span class="n">1.20</span>, valence_electrons: <span class="n">1</span>, valence: <span class="n">1</span>, max_bonds: <span class="n">1</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="He">
-        <strong>He</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">2</span>, symbol: <span class="s">&quot;He&quot;</span>, name: <span class="s">&quot;Helium&quot;</span>, mass: <span class="n">4.0026</span>, covalent_radius: <span class="n">0.20</span>, vdw_radius: <span class="n">1.43</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">0</span>)</code>
+        <strong>He</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">2</span>, symbol: <span class="s">&quot;He&quot;</span>, name: <span class="s">&quot;Helium&quot;</span>, mass: <span class="n">4.0026</span>, covalent_radius: <span class="n">0.20</span>, vdw_radius: <span class="n">1.43</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">0</span>, max_bonds: <span class="n">0</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Hf">
-        <strong>Hf</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">72</span>, symbol: <span class="s">&quot;Hf&quot;</span>, name: <span class="s">&quot;Hafnium&quot;</span>, mass: <span class="n">178.49</span>, covalent_radius: <span class="n">1.75</span>, vdw_radius: <span class="n">2.63</span>, valence_electrons: <span class="n">4</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Hf</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">72</span>, symbol: <span class="s">&quot;Hf&quot;</span>, name: <span class="s">&quot;Hafnium&quot;</span>, mass: <span class="n">178.49</span>, covalent_radius: <span class="n">1.75</span>, vdw_radius: <span class="n">2.63</span>, valence_electrons: <span class="n">4</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Hg">
-        <strong>Hg</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">80</span>, symbol: <span class="s">&quot;Hg&quot;</span>, name: <span class="s">&quot;Mercury&quot;</span>, mass: <span class="n">200.59</span>, covalent_radius: <span class="n">1.32</span>, vdw_radius: <span class="n">2.45</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Hg</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">80</span>, symbol: <span class="s">&quot;Hg&quot;</span>, name: <span class="s">&quot;Mercury&quot;</span>, mass: <span class="n">200.59</span>, covalent_radius: <span class="n">1.32</span>, vdw_radius: <span class="n">2.45</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Ho">
-        <strong>Ho</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">67</span>, symbol: <span class="s">&quot;Ho&quot;</span>, name: <span class="s">&quot;Holmium&quot;</span>, mass: <span class="n">164.9303</span>, covalent_radius: <span class="n">1.92</span>, vdw_radius: <span class="n">2.81</span>, valence_electrons: <span class="n">11</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Ho</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">67</span>, symbol: <span class="s">&quot;Ho&quot;</span>, name: <span class="s">&quot;Holmium&quot;</span>, mass: <span class="n">164.9303</span>, covalent_radius: <span class="n">1.92</span>, vdw_radius: <span class="n">2.81</span>, valence_electrons: <span class="n">11</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Hs">
-        <strong>Hs</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">108</span>, symbol: <span class="s">&quot;Hs&quot;</span>, name: <span class="s">&quot;Hassium&quot;</span>, mass: <span class="n">277.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">1.5</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Hs</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">108</span>, symbol: <span class="s">&quot;Hs&quot;</span>, name: <span class="s">&quot;Hassium&quot;</span>, mass: <span class="n">277.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">1.5</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="I">
-        <strong>I</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">53</span>, symbol: <span class="s">&quot;I&quot;</span>, name: <span class="s">&quot;Iodine&quot;</span>, mass: <span class="n">126.9045</span>, covalent_radius: <span class="n">1.39</span>, vdw_radius: <span class="n">2.04</span>, valence_electrons: <span class="n">7</span>, valence: [<span class="n">1</span>, <span class="n">3</span>, <span class="n">5</span>])</code>
+        <strong>I</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">53</span>, symbol: <span class="s">&quot;I&quot;</span>, name: <span class="s">&quot;Iodine&quot;</span>, mass: <span class="n">126.9045</span>, covalent_radius: <span class="n">1.39</span>, vdw_radius: <span class="n">2.04</span>, valence_electrons: <span class="n">7</span>, valence: [<span class="n">1</span>, <span class="n">3</span>, <span class="n">5</span>], max_bonds: <span class="n">1</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="In">
-        <strong>In</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">49</span>, symbol: <span class="s">&quot;In&quot;</span>, name: <span class="s">&quot;Indium&quot;</span>, mass: <span class="n">114.818</span>, covalent_radius: <span class="n">1.42</span>, vdw_radius: <span class="n">2.43</span>, valence_electrons: <span class="n">3</span>, valence: <span class="n">3</span>)</code>
+        <strong>In</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">49</span>, symbol: <span class="s">&quot;In&quot;</span>, name: <span class="s">&quot;Indium&quot;</span>, mass: <span class="n">114.818</span>, covalent_radius: <span class="n">1.42</span>, vdw_radius: <span class="n">2.43</span>, valence_electrons: <span class="n">3</span>, valence: <span class="n">3</span>, max_bonds: <span class="n">3</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Ir">
-        <strong>Ir</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">77</span>, symbol: <span class="s">&quot;Ir&quot;</span>, name: <span class="s">&quot;Iridium&quot;</span>, mass: <span class="n">192.217</span>, covalent_radius: <span class="n">1.41</span>, vdw_radius: <span class="n">2.41</span>, valence_electrons: <span class="n">9</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Ir</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">77</span>, symbol: <span class="s">&quot;Ir&quot;</span>, name: <span class="s">&quot;Iridium&quot;</span>, mass: <span class="n">192.217</span>, covalent_radius: <span class="n">1.41</span>, vdw_radius: <span class="n">2.41</span>, valence_electrons: <span class="n">9</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="K">
-        <strong>K</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">19</span>, symbol: <span class="s">&quot;K&quot;</span>, name: <span class="s">&quot;Potassium&quot;</span>, mass: <span class="n">39.0983</span>, covalent_radius: <span class="n">2.03</span>, vdw_radius: <span class="n">2.73</span>, valence_electrons: <span class="n">1</span>, valence: <span class="n">1</span>)</code>
+        <strong>K</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">19</span>, symbol: <span class="s">&quot;K&quot;</span>, name: <span class="s">&quot;Potassium&quot;</span>, mass: <span class="n">39.0983</span>, covalent_radius: <span class="n">2.03</span>, vdw_radius: <span class="n">2.73</span>, valence_electrons: <span class="n">1</span>, valence: <span class="n">1</span>, max_bonds: <span class="n">1</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Kr">
-        <strong>Kr</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">36</span>, symbol: <span class="s">&quot;Kr&quot;</span>, name: <span class="s">&quot;Krypton&quot;</span>, mass: <span class="n">83.798</span>, covalent_radius: <span class="n">1.16</span>, vdw_radius: <span class="n">2.25</span>, valence_electrons: <span class="n">8</span>, valence: <span class="n">0</span>)</code>
+        <strong>Kr</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">36</span>, symbol: <span class="s">&quot;Kr&quot;</span>, name: <span class="s">&quot;Krypton&quot;</span>, mass: <span class="n">83.798</span>, covalent_radius: <span class="n">1.16</span>, vdw_radius: <span class="n">2.25</span>, valence_electrons: <span class="n">8</span>, valence: <span class="n">0</span>, max_bonds: <span class="n">0</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="La">
-        <strong>La</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">57</span>, symbol: <span class="s">&quot;La&quot;</span>, name: <span class="s">&quot;Lanthanum&quot;</span>, mass: <span class="n">138.9055</span>, covalent_radius: <span class="n">2.07</span>, vdw_radius: <span class="n">2.98</span>, valence_electrons: <span class="n">3</span>, valence: <span class="n">nil</span>)</code>
+        <strong>La</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">57</span>, symbol: <span class="s">&quot;La&quot;</span>, name: <span class="s">&quot;Lanthanum&quot;</span>, mass: <span class="n">138.9055</span>, covalent_radius: <span class="n">2.07</span>, vdw_radius: <span class="n">2.98</span>, valence_electrons: <span class="n">3</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">2</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Li">
-        <strong>Li</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">3</span>, symbol: <span class="s">&quot;Li&quot;</span>, name: <span class="s">&quot;Lithium&quot;</span>, mass: <span class="n">6.941</span>, covalent_radius: <span class="n">1.28</span>, vdw_radius: <span class="n">2.12</span>, valence_electrons: <span class="n">1</span>, valence: <span class="n">1</span>)</code>
+        <strong>Li</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">3</span>, symbol: <span class="s">&quot;Li&quot;</span>, name: <span class="s">&quot;Lithium&quot;</span>, mass: <span class="n">6.941</span>, covalent_radius: <span class="n">1.28</span>, vdw_radius: <span class="n">2.12</span>, valence_electrons: <span class="n">1</span>, valence: <span class="n">1</span>, max_bonds: <span class="n">1</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Lr">
-        <strong>Lr</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">103</span>, symbol: <span class="s">&quot;Lr&quot;</span>, name: <span class="s">&quot;Lawrencium&quot;</span>, mass: <span class="n">262.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">1.5</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">15</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Lr</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">103</span>, symbol: <span class="s">&quot;Lr&quot;</span>, name: <span class="s">&quot;Lawrencium&quot;</span>, mass: <span class="n">262.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">1.5</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">15</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Lu">
-        <strong>Lu</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">71</span>, symbol: <span class="s">&quot;Lu&quot;</span>, name: <span class="s">&quot;Lutetium&quot;</span>, mass: <span class="n">174.967</span>, covalent_radius: <span class="n">1.87</span>, vdw_radius: <span class="n">2.74</span>, valence_electrons: <span class="n">15</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Lu</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">71</span>, symbol: <span class="s">&quot;Lu&quot;</span>, name: <span class="s">&quot;Lutetium&quot;</span>, mass: <span class="n">174.967</span>, covalent_radius: <span class="n">1.87</span>, vdw_radius: <span class="n">2.74</span>, valence_electrons: <span class="n">15</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Lv">
-        <strong>Lv</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">116</span>, symbol: <span class="s">&quot;Lv&quot;</span>, name: <span class="s">&quot;Livermorium&quot;</span>, mass: <span class="n">292.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">1.5</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Lv</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">116</span>, symbol: <span class="s">&quot;Lv&quot;</span>, name: <span class="s">&quot;Livermorium&quot;</span>, mass: <span class="n">292.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">1.5</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Mc">
-        <strong>Mc</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">115</span>, symbol: <span class="s">&quot;Mc&quot;</span>, name: <span class="s">&quot;Moscovium&quot;</span>, mass: <span class="n">288.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">1.5</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Mc</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">115</span>, symbol: <span class="s">&quot;Mc&quot;</span>, name: <span class="s">&quot;Moscovium&quot;</span>, mass: <span class="n">288.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">1.5</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Md">
-        <strong>Md</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">101</span>, symbol: <span class="s">&quot;Md&quot;</span>, name: <span class="s">&quot;Mendelevium&quot;</span>, mass: <span class="n">258.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">1.5</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">13</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Md</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">101</span>, symbol: <span class="s">&quot;Md&quot;</span>, name: <span class="s">&quot;Mendelevium&quot;</span>, mass: <span class="n">258.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">1.5</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">13</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Mg">
-        <strong>Mg</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">12</span>, symbol: <span class="s">&quot;Mg&quot;</span>, name: <span class="s">&quot;Magnesium&quot;</span>, mass: <span class="n">24.305</span>, covalent_radius: <span class="n">1.41</span>, vdw_radius: <span class="n">2.51</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">2</span>)</code>
+        <strong>Mg</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">12</span>, symbol: <span class="s">&quot;Mg&quot;</span>, name: <span class="s">&quot;Magnesium&quot;</span>, mass: <span class="n">24.305</span>, covalent_radius: <span class="n">1.41</span>, vdw_radius: <span class="n">2.51</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">2</span>, max_bonds: <span class="n">2</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Mn">
-        <strong>Mn</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">25</span>, symbol: <span class="s">&quot;Mn&quot;</span>, name: <span class="s">&quot;Manganese&quot;</span>, mass: <span class="n">54.938</span>, covalent_radius: <span class="n">1.61</span>, vdw_radius: <span class="n">2.45</span>, valence_electrons: <span class="n">7</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Mn</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">25</span>, symbol: <span class="s">&quot;Mn&quot;</span>, name: <span class="s">&quot;Manganese&quot;</span>, mass: <span class="n">54.938</span>, covalent_radius: <span class="n">1.61</span>, vdw_radius: <span class="n">2.45</span>, valence_electrons: <span class="n">7</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">8</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Mo">
-        <strong>Mo</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">42</span>, symbol: <span class="s">&quot;Mo&quot;</span>, name: <span class="s">&quot;Molybdenum&quot;</span>, mass: <span class="n">95.94</span>, covalent_radius: <span class="n">1.54</span>, vdw_radius: <span class="n">2.45</span>, valence_electrons: <span class="n">6</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Mo</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">42</span>, symbol: <span class="s">&quot;Mo&quot;</span>, name: <span class="s">&quot;Molybdenum&quot;</span>, mass: <span class="n">95.94</span>, covalent_radius: <span class="n">1.54</span>, vdw_radius: <span class="n">2.45</span>, valence_electrons: <span class="n">6</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Mt">
-        <strong>Mt</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">109</span>, symbol: <span class="s">&quot;Mt&quot;</span>, name: <span class="s">&quot;Meitnerium&quot;</span>, mass: <span class="n">268.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">1.5</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Mt</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">109</span>, symbol: <span class="s">&quot;Mt&quot;</span>, name: <span class="s">&quot;Meitnerium&quot;</span>, mass: <span class="n">268.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">1.5</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="N">
-        <strong>N</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">7</span>, symbol: <span class="s">&quot;N&quot;</span>, name: <span class="s">&quot;Nitrogen&quot;</span>, mass: <span class="n">14.0067</span>, covalent_radius: <span class="n">0.71</span>, vdw_radius: <span class="n">1.66</span>, valence_electrons: <span class="n">5</span>, valence: <span class="n">3</span>)</code>
+        <strong>N</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">7</span>, symbol: <span class="s">&quot;N&quot;</span>, name: <span class="s">&quot;Nitrogen&quot;</span>, mass: <span class="n">14.0067</span>, covalent_radius: <span class="n">0.71</span>, vdw_radius: <span class="n">1.66</span>, valence_electrons: <span class="n">5</span>, valence: <span class="n">3</span>, max_bonds: <span class="n">4</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Na">
-        <strong>Na</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">11</span>, symbol: <span class="s">&quot;Na&quot;</span>, name: <span class="s">&quot;Sodium&quot;</span>, mass: <span class="n">22.9898</span>, covalent_radius: <span class="n">1.66</span>, vdw_radius: <span class="n">2.50</span>, valence_electrons: <span class="n">1</span>, valence: <span class="n">1</span>)</code>
+        <strong>Na</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">11</span>, symbol: <span class="s">&quot;Na&quot;</span>, name: <span class="s">&quot;Sodium&quot;</span>, mass: <span class="n">22.9898</span>, covalent_radius: <span class="n">1.66</span>, vdw_radius: <span class="n">2.50</span>, valence_electrons: <span class="n">1</span>, valence: <span class="n">1</span>, max_bonds: <span class="n">1</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Nb">
-        <strong>Nb</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">41</span>, symbol: <span class="s">&quot;Nb&quot;</span>, name: <span class="s">&quot;Niobium&quot;</span>, mass: <span class="n">92.9064</span>, covalent_radius: <span class="n">1.64</span>, vdw_radius: <span class="n">2.56</span>, valence_electrons: <span class="n">5</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Nb</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">41</span>, symbol: <span class="s">&quot;Nb&quot;</span>, name: <span class="s">&quot;Niobium&quot;</span>, mass: <span class="n">92.9064</span>, covalent_radius: <span class="n">1.64</span>, vdw_radius: <span class="n">2.56</span>, valence_electrons: <span class="n">5</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Nd">
-        <strong>Nd</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">60</span>, symbol: <span class="s">&quot;Nd&quot;</span>, name: <span class="s">&quot;Neodymium&quot;</span>, mass: <span class="n">144.242</span>, covalent_radius: <span class="n">2.01</span>, vdw_radius: <span class="n">2.95</span>, valence_electrons: <span class="n">4</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Nd</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">60</span>, symbol: <span class="s">&quot;Nd&quot;</span>, name: <span class="s">&quot;Neodymium&quot;</span>, mass: <span class="n">144.242</span>, covalent_radius: <span class="n">2.01</span>, vdw_radius: <span class="n">2.95</span>, valence_electrons: <span class="n">4</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Ne">
-        <strong>Ne</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">10</span>, symbol: <span class="s">&quot;Ne&quot;</span>, name: <span class="s">&quot;Neon&quot;</span>, mass: <span class="n">20.1797</span>, covalent_radius: <span class="n">0.50</span>, vdw_radius: <span class="n">1.58</span>, valence_electrons: <span class="n">8</span>, valence: <span class="n">0</span>)</code>
+        <strong>Ne</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">10</span>, symbol: <span class="s">&quot;Ne&quot;</span>, name: <span class="s">&quot;Neon&quot;</span>, mass: <span class="n">20.1797</span>, covalent_radius: <span class="n">0.50</span>, vdw_radius: <span class="n">1.58</span>, valence_electrons: <span class="n">8</span>, valence: <span class="n">0</span>, max_bonds: <span class="n">0</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Nh">
-        <strong>Nh</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">113</span>, symbol: <span class="s">&quot;Nh&quot;</span>, name: <span class="s">&quot;Nihonium&quot;</span>, mass: <span class="n">284.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">1.5</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Nh</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">113</span>, symbol: <span class="s">&quot;Nh&quot;</span>, name: <span class="s">&quot;Nihonium&quot;</span>, mass: <span class="n">284.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">1.5</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Ni">
-        <strong>Ni</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">28</span>, symbol: <span class="s">&quot;Ni&quot;</span>, name: <span class="s">&quot;Nickel&quot;</span>, mass: <span class="n">58.6934</span>, covalent_radius: <span class="n">1.24</span>, vdw_radius: <span class="n">2.40</span>, valence_electrons: <span class="n">10</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Ni</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">28</span>, symbol: <span class="s">&quot;Ni&quot;</span>, name: <span class="s">&quot;Nickel&quot;</span>, mass: <span class="n">58.6934</span>, covalent_radius: <span class="n">1.24</span>, vdw_radius: <span class="n">2.40</span>, valence_electrons: <span class="n">10</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="No">
-        <strong>No</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">102</span>, symbol: <span class="s">&quot;No&quot;</span>, name: <span class="s">&quot;Nobelium&quot;</span>, mass: <span class="n">259.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">1.5</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">14</span>, valence: <span class="n">nil</span>)</code>
+        <strong>No</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">102</span>, symbol: <span class="s">&quot;No&quot;</span>, name: <span class="s">&quot;Nobelium&quot;</span>, mass: <span class="n">259.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">1.5</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">14</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Np">
-        <strong>Np</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">93</span>, symbol: <span class="s">&quot;Np&quot;</span>, name: <span class="s">&quot;Neptunium&quot;</span>, mass: <span class="n">237.0</span>, covalent_radius: <span class="n">1.90</span>, vdw_radius: <span class="n">2.82</span>, valence_electrons: <span class="n">5</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Np</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">93</span>, symbol: <span class="s">&quot;Np&quot;</span>, name: <span class="s">&quot;Neptunium&quot;</span>, mass: <span class="n">237.0</span>, covalent_radius: <span class="n">1.90</span>, vdw_radius: <span class="n">2.82</span>, valence_electrons: <span class="n">5</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="O">
-        <strong>O</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">8</span>, symbol: <span class="s">&quot;O&quot;</span>, name: <span class="s">&quot;Oxygen&quot;</span>, mass: <span class="n">15.9994</span>, covalent_radius: <span class="n">0.66</span>, vdw_radius: <span class="n">1.50</span>, valence_electrons: <span class="n">6</span>, valence: <span class="n">2</span>)</code>
+        <strong>O</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">8</span>, symbol: <span class="s">&quot;O&quot;</span>, name: <span class="s">&quot;Oxygen&quot;</span>, mass: <span class="n">15.9994</span>, covalent_radius: <span class="n">0.66</span>, vdw_radius: <span class="n">1.50</span>, valence_electrons: <span class="n">6</span>, valence: <span class="n">2</span>, max_bonds: <span class="n">2</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Og">
-        <strong>Og</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">118</span>, symbol: <span class="s">&quot;Og&quot;</span>, name: <span class="s">&quot;Oganesson&quot;</span>, mass: <span class="n">294.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">1.5</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Og</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">118</span>, symbol: <span class="s">&quot;Og&quot;</span>, name: <span class="s">&quot;Oganesson&quot;</span>, mass: <span class="n">294.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">1.5</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Os">
-        <strong>Os</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">76</span>, symbol: <span class="s">&quot;Os&quot;</span>, name: <span class="s">&quot;Osmium&quot;</span>, mass: <span class="n">190.23</span>, covalent_radius: <span class="n">1.44</span>, vdw_radius: <span class="n">2.48</span>, valence_electrons: <span class="n">8</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Os</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">76</span>, symbol: <span class="s">&quot;Os&quot;</span>, name: <span class="s">&quot;Osmium&quot;</span>, mass: <span class="n">190.23</span>, covalent_radius: <span class="n">1.44</span>, vdw_radius: <span class="n">2.48</span>, valence_electrons: <span class="n">8</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="P">
-        <strong>P</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">15</span>, symbol: <span class="s">&quot;P&quot;</span>, name: <span class="s">&quot;Phosphorus&quot;</span>, mass: <span class="n">30.9738</span>, covalent_radius: <span class="n">1.07</span>, vdw_radius: <span class="n">1.90</span>, valence_electrons: <span class="n">5</span>, valence: [<span class="n">3</span>, <span class="n">5</span>, <span class="n">7</span>])</code>
+        <strong>P</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">15</span>, symbol: <span class="s">&quot;P&quot;</span>, name: <span class="s">&quot;Phosphorus&quot;</span>, mass: <span class="n">30.9738</span>, covalent_radius: <span class="n">1.07</span>, vdw_radius: <span class="n">1.90</span>, valence_electrons: <span class="n">5</span>, valence: [<span class="n">3</span>, <span class="n">5</span>, <span class="n">7</span>], max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Pa">
-        <strong>Pa</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">91</span>, symbol: <span class="s">&quot;Pa&quot;</span>, name: <span class="s">&quot;Proactinium&quot;</span>, mass: <span class="n">231.0359</span>, covalent_radius: <span class="n">2.00</span>, vdw_radius: <span class="n">2.88</span>, valence_electrons: <span class="n">3</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Pa</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">91</span>, symbol: <span class="s">&quot;Pa&quot;</span>, name: <span class="s">&quot;Proactinium&quot;</span>, mass: <span class="n">231.0359</span>, covalent_radius: <span class="n">2.00</span>, vdw_radius: <span class="n">2.88</span>, valence_electrons: <span class="n">3</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Pb">
-        <strong>Pb</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">82</span>, symbol: <span class="s">&quot;Pb&quot;</span>, name: <span class="s">&quot;Lead&quot;</span>, mass: <span class="n">207.2</span>, covalent_radius: <span class="n">1.46</span>, vdw_radius: <span class="n">2.60</span>, valence_electrons: <span class="n">4</span>, valence: [<span class="n">2</span>, <span class="n">4</span>])</code>
+        <strong>Pb</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">82</span>, symbol: <span class="s">&quot;Pb&quot;</span>, name: <span class="s">&quot;Lead&quot;</span>, mass: <span class="n">207.2</span>, covalent_radius: <span class="n">1.46</span>, vdw_radius: <span class="n">2.60</span>, valence_electrons: <span class="n">4</span>, valence: [<span class="n">2</span>, <span class="n">4</span>], max_bonds: <span class="n">4</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Pd">
-        <strong>Pd</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">46</span>, symbol: <span class="s">&quot;Pd&quot;</span>, name: <span class="s">&quot;Palladium&quot;</span>, mass: <span class="n">106.42</span>, covalent_radius: <span class="n">1.39</span>, vdw_radius: <span class="n">2.15</span>, valence_electrons: <span class="n">10</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Pd</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">46</span>, symbol: <span class="s">&quot;Pd&quot;</span>, name: <span class="s">&quot;Palladium&quot;</span>, mass: <span class="n">106.42</span>, covalent_radius: <span class="n">1.39</span>, vdw_radius: <span class="n">2.15</span>, valence_electrons: <span class="n">10</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Pm">
-        <strong>Pm</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">61</span>, symbol: <span class="s">&quot;Pm&quot;</span>, name: <span class="s">&quot;Promethium&quot;</span>, mass: <span class="n">145.0</span>, covalent_radius: <span class="n">1.90</span>, vdw_radius: <span class="n">1.90</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">5</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Pm</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">61</span>, symbol: <span class="s">&quot;Pm&quot;</span>, name: <span class="s">&quot;Promethium&quot;</span>, mass: <span class="n">145.0</span>, covalent_radius: <span class="n">1.90</span>, vdw_radius: <span class="n">1.90</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">5</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Po">
-        <strong>Po</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">84</span>, symbol: <span class="s">&quot;Po&quot;</span>, name: <span class="s">&quot;Polonium&quot;</span>, mass: <span class="n">209.0</span>, covalent_radius: <span class="n">1.40</span>, vdw_radius: <span class="n">1.40</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">6</span>, valence: [<span class="n">2</span>, <span class="n">4</span>, <span class="n">6</span>])</code>
+        <strong>Po</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">84</span>, symbol: <span class="s">&quot;Po&quot;</span>, name: <span class="s">&quot;Polonium&quot;</span>, mass: <span class="n">209.0</span>, covalent_radius: <span class="n">1.40</span>, vdw_radius: <span class="n">1.40</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">6</span>, valence: [<span class="n">2</span>, <span class="n">4</span>, <span class="n">6</span>], max_bonds: <span class="n">2</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Pr">
-        <strong>Pr</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">59</span>, symbol: <span class="s">&quot;Pr&quot;</span>, name: <span class="s">&quot;Praseodymium&quot;</span>, mass: <span class="n">140.9077</span>, covalent_radius: <span class="n">2.03</span>, vdw_radius: <span class="n">2.92</span>, valence_electrons: <span class="n">3</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Pr</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">59</span>, symbol: <span class="s">&quot;Pr&quot;</span>, name: <span class="s">&quot;Praseodymium&quot;</span>, mass: <span class="n">140.9077</span>, covalent_radius: <span class="n">2.03</span>, vdw_radius: <span class="n">2.92</span>, valence_electrons: <span class="n">3</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Pt">
-        <strong>Pt</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">78</span>, symbol: <span class="s">&quot;Pt&quot;</span>, name: <span class="s">&quot;Platinum&quot;</span>, mass: <span class="n">195.084</span>, covalent_radius: <span class="n">1.36</span>, vdw_radius: <span class="n">2.29</span>, valence_electrons: <span class="n">10</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Pt</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">78</span>, symbol: <span class="s">&quot;Pt&quot;</span>, name: <span class="s">&quot;Platinum&quot;</span>, mass: <span class="n">195.084</span>, covalent_radius: <span class="n">1.36</span>, vdw_radius: <span class="n">2.29</span>, valence_electrons: <span class="n">10</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Pu">
-        <strong>Pu</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">94</span>, symbol: <span class="s">&quot;Pu&quot;</span>, name: <span class="s">&quot;Plutonium&quot;</span>, mass: <span class="n">244.0</span>, covalent_radius: <span class="n">1.87</span>, vdw_radius: <span class="n">2.81</span>, valence_electrons: <span class="n">6</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Pu</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">94</span>, symbol: <span class="s">&quot;Pu&quot;</span>, name: <span class="s">&quot;Plutonium&quot;</span>, mass: <span class="n">244.0</span>, covalent_radius: <span class="n">1.87</span>, vdw_radius: <span class="n">2.81</span>, valence_electrons: <span class="n">6</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Ra">
-        <strong>Ra</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">88</span>, symbol: <span class="s">&quot;Ra&quot;</span>, name: <span class="s">&quot;Radium&quot;</span>, mass: <span class="n">226.0</span>, covalent_radius: <span class="n">2.21</span>, vdw_radius: <span class="n">2.21</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">2</span>)</code>
+        <strong>Ra</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">88</span>, symbol: <span class="s">&quot;Ra&quot;</span>, name: <span class="s">&quot;Radium&quot;</span>, mass: <span class="n">226.0</span>, covalent_radius: <span class="n">2.21</span>, vdw_radius: <span class="n">2.21</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">2</span>, max_bonds: <span class="n">2</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Rb">
-        <strong>Rb</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">37</span>, symbol: <span class="s">&quot;Rb&quot;</span>, name: <span class="s">&quot;Rubidium&quot;</span>, mass: <span class="n">85.4678</span>, covalent_radius: <span class="n">2.20</span>, vdw_radius: <span class="n">3.21</span>, valence_electrons: <span class="n">1</span>, valence: <span class="n">1</span>)</code>
+        <strong>Rb</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">37</span>, symbol: <span class="s">&quot;Rb&quot;</span>, name: <span class="s">&quot;Rubidium&quot;</span>, mass: <span class="n">85.4678</span>, covalent_radius: <span class="n">2.20</span>, vdw_radius: <span class="n">3.21</span>, valence_electrons: <span class="n">1</span>, valence: <span class="n">1</span>, max_bonds: <span class="n">1</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Re">
-        <strong>Re</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">75</span>, symbol: <span class="s">&quot;Re&quot;</span>, name: <span class="s">&quot;Rhenium&quot;</span>, mass: <span class="n">186.207</span>, covalent_radius: <span class="n">1.51</span>, vdw_radius: <span class="n">2.49</span>, valence_electrons: <span class="n">7</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Re</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">75</span>, symbol: <span class="s">&quot;Re&quot;</span>, name: <span class="s">&quot;Rhenium&quot;</span>, mass: <span class="n">186.207</span>, covalent_radius: <span class="n">1.51</span>, vdw_radius: <span class="n">2.49</span>, valence_electrons: <span class="n">7</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Rf">
-        <strong>Rf</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">104</span>, symbol: <span class="s">&quot;Rf&quot;</span>, name: <span class="s">&quot;Rutherfordium&quot;</span>, mass: <span class="n">261.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">1.5</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Rf</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">104</span>, symbol: <span class="s">&quot;Rf&quot;</span>, name: <span class="s">&quot;Rutherfordium&quot;</span>, mass: <span class="n">261.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">1.5</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Rg">
-        <strong>Rg</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">111</span>, symbol: <span class="s">&quot;Rg&quot;</span>, name: <span class="s">&quot;Roentgenium&quot;</span>, mass: <span class="n">272.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">1.5</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Rg</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">111</span>, symbol: <span class="s">&quot;Rg&quot;</span>, name: <span class="s">&quot;Roentgenium&quot;</span>, mass: <span class="n">272.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">1.5</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Rh">
-        <strong>Rh</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">45</span>, symbol: <span class="s">&quot;Rh&quot;</span>, name: <span class="s">&quot;Rhodium&quot;</span>, mass: <span class="n">102.9055</span>, covalent_radius: <span class="n">1.42</span>, vdw_radius: <span class="n">2.44</span>, valence_electrons: <span class="n">9</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Rh</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">45</span>, symbol: <span class="s">&quot;Rh&quot;</span>, name: <span class="s">&quot;Rhodium&quot;</span>, mass: <span class="n">102.9055</span>, covalent_radius: <span class="n">1.42</span>, vdw_radius: <span class="n">2.44</span>, valence_electrons: <span class="n">9</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Rn">
-        <strong>Rn</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">86</span>, symbol: <span class="s">&quot;Rn&quot;</span>, name: <span class="s">&quot;Radon&quot;</span>, mass: <span class="n">222.0</span>, covalent_radius: <span class="n">1.50</span>, vdw_radius: <span class="n">1.50</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">8</span>, valence: <span class="n">0</span>)</code>
+        <strong>Rn</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">86</span>, symbol: <span class="s">&quot;Rn&quot;</span>, name: <span class="s">&quot;Radon&quot;</span>, mass: <span class="n">222.0</span>, covalent_radius: <span class="n">1.50</span>, vdw_radius: <span class="n">1.50</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">8</span>, valence: <span class="n">0</span>, max_bonds: <span class="n">0</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Ru">
-        <strong>Ru</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">44</span>, symbol: <span class="s">&quot;Ru&quot;</span>, name: <span class="s">&quot;Ruthenium&quot;</span>, mass: <span class="n">101.07</span>, covalent_radius: <span class="n">1.46</span>, vdw_radius: <span class="n">2.46</span>, valence_electrons: <span class="n">8</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Ru</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">44</span>, symbol: <span class="s">&quot;Ru&quot;</span>, name: <span class="s">&quot;Ruthenium&quot;</span>, mass: <span class="n">101.07</span>, covalent_radius: <span class="n">1.46</span>, vdw_radius: <span class="n">2.46</span>, valence_electrons: <span class="n">8</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="S">
-        <strong>S</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">16</span>, symbol: <span class="s">&quot;S&quot;</span>, name: <span class="s">&quot;Sulfur&quot;</span>, mass: <span class="n">32.065</span>, covalent_radius: <span class="n">1.05</span>, vdw_radius: <span class="n">1.89</span>, valence_electrons: <span class="n">6</span>, valence: [<span class="n">2</span>, <span class="n">4</span>, <span class="n">6</span>])</code>
+        <strong>S</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">16</span>, symbol: <span class="s">&quot;S&quot;</span>, name: <span class="s">&quot;Sulfur&quot;</span>, mass: <span class="n">32.065</span>, covalent_radius: <span class="n">1.05</span>, vdw_radius: <span class="n">1.89</span>, valence_electrons: <span class="n">6</span>, valence: [<span class="n">2</span>, <span class="n">4</span>, <span class="n">6</span>], max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Sb">
-        <strong>Sb</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">51</span>, symbol: <span class="s">&quot;Sb&quot;</span>, name: <span class="s">&quot;Antimony&quot;</span>, mass: <span class="n">121.76</span>, covalent_radius: <span class="n">1.39</span>, vdw_radius: <span class="n">2.47</span>, valence_electrons: <span class="n">5</span>, valence: [<span class="n">3</span>, <span class="n">5</span>, <span class="n">7</span>])</code>
+        <strong>Sb</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">51</span>, symbol: <span class="s">&quot;Sb&quot;</span>, name: <span class="s">&quot;Antimony&quot;</span>, mass: <span class="n">121.76</span>, covalent_radius: <span class="n">1.39</span>, vdw_radius: <span class="n">2.47</span>, valence_electrons: <span class="n">5</span>, valence: [<span class="n">3</span>, <span class="n">5</span>, <span class="n">7</span>], max_bonds: <span class="n">3</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Sc">
-        <strong>Sc</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">21</span>, symbol: <span class="s">&quot;Sc&quot;</span>, name: <span class="s">&quot;Scandium&quot;</span>, mass: <span class="n">44.9559</span>, covalent_radius: <span class="n">1.70</span>, vdw_radius: <span class="n">2.58</span>, valence_electrons: <span class="n">3</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Sc</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">21</span>, symbol: <span class="s">&quot;Sc&quot;</span>, name: <span class="s">&quot;Scandium&quot;</span>, mass: <span class="n">44.9559</span>, covalent_radius: <span class="n">1.70</span>, vdw_radius: <span class="n">2.58</span>, valence_electrons: <span class="n">3</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Se">
-        <strong>Se</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">34</span>, symbol: <span class="s">&quot;Se&quot;</span>, name: <span class="s">&quot;Selenium&quot;</span>, mass: <span class="n">78.96</span>, covalent_radius: <span class="n">1.20</span>, vdw_radius: <span class="n">1.82</span>, valence_electrons: <span class="n">6</span>, valence: [<span class="n">2</span>, <span class="n">4</span>, <span class="n">6</span>])</code>
+        <strong>Se</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">34</span>, symbol: <span class="s">&quot;Se&quot;</span>, name: <span class="s">&quot;Selenium&quot;</span>, mass: <span class="n">78.96</span>, covalent_radius: <span class="n">1.20</span>, vdw_radius: <span class="n">1.82</span>, valence_electrons: <span class="n">6</span>, valence: [<span class="n">2</span>, <span class="n">4</span>, <span class="n">6</span>], max_bonds: <span class="n">2</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Sg">
-        <strong>Sg</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">106</span>, symbol: <span class="s">&quot;Sg&quot;</span>, name: <span class="s">&quot;Seaborgium&quot;</span>, mass: <span class="n">266.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">1.5</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Sg</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">106</span>, symbol: <span class="s">&quot;Sg&quot;</span>, name: <span class="s">&quot;Seaborgium&quot;</span>, mass: <span class="n">266.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">1.5</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Si">
-        <strong>Si</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">14</span>, symbol: <span class="s">&quot;Si&quot;</span>, name: <span class="s">&quot;Silicon&quot;</span>, mass: <span class="n">28.0855</span>, covalent_radius: <span class="n">1.11</span>, vdw_radius: <span class="n">2.19</span>, valence_electrons: <span class="n">4</span>, valence: [<span class="n">4</span>, <span class="n">6</span>])</code>
+        <strong>Si</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">14</span>, symbol: <span class="s">&quot;Si&quot;</span>, name: <span class="s">&quot;Silicon&quot;</span>, mass: <span class="n">28.0855</span>, covalent_radius: <span class="n">1.11</span>, vdw_radius: <span class="n">2.19</span>, valence_electrons: <span class="n">4</span>, valence: [<span class="n">4</span>, <span class="n">6</span>], max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Sm">
-        <strong>Sm</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">62</span>, symbol: <span class="s">&quot;Sm&quot;</span>, name: <span class="s">&quot;Samarium&quot;</span>, mass: <span class="n">150.36</span>, covalent_radius: <span class="n">1.98</span>, vdw_radius: <span class="n">2.90</span>, valence_electrons: <span class="n">6</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Sm</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">62</span>, symbol: <span class="s">&quot;Sm&quot;</span>, name: <span class="s">&quot;Samarium&quot;</span>, mass: <span class="n">150.36</span>, covalent_radius: <span class="n">1.98</span>, vdw_radius: <span class="n">2.90</span>, valence_electrons: <span class="n">6</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Sn">
-        <strong>Sn</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">50</span>, symbol: <span class="s">&quot;Sn&quot;</span>, name: <span class="s">&quot;Tin&quot;</span>, mass: <span class="n">118.71</span>, covalent_radius: <span class="n">1.39</span>, vdw_radius: <span class="n">2.42</span>, valence_electrons: <span class="n">4</span>, valence: [<span class="n">2</span>, <span class="n">4</span>])</code>
+        <strong>Sn</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">50</span>, symbol: <span class="s">&quot;Sn&quot;</span>, name: <span class="s">&quot;Tin&quot;</span>, mass: <span class="n">118.71</span>, covalent_radius: <span class="n">1.39</span>, vdw_radius: <span class="n">2.42</span>, valence_electrons: <span class="n">4</span>, valence: [<span class="n">2</span>, <span class="n">4</span>], max_bonds: <span class="n">4</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Sr">
-        <strong>Sr</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">38</span>, symbol: <span class="s">&quot;Sr&quot;</span>, name: <span class="s">&quot;Strontium&quot;</span>, mass: <span class="n">87.62</span>, covalent_radius: <span class="n">1.95</span>, vdw_radius: <span class="n">2.84</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">2</span>)</code>
+        <strong>Sr</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">38</span>, symbol: <span class="s">&quot;Sr&quot;</span>, name: <span class="s">&quot;Strontium&quot;</span>, mass: <span class="n">87.62</span>, covalent_radius: <span class="n">1.95</span>, vdw_radius: <span class="n">2.84</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">2</span>, max_bonds: <span class="n">2</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Ta">
-        <strong>Ta</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">73</span>, symbol: <span class="s">&quot;Ta&quot;</span>, name: <span class="s">&quot;Tantalum&quot;</span>, mass: <span class="n">180.9479</span>, covalent_radius: <span class="n">1.70</span>, vdw_radius: <span class="n">2.53</span>, valence_electrons: <span class="n">5</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Ta</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">73</span>, symbol: <span class="s">&quot;Ta&quot;</span>, name: <span class="s">&quot;Tantalum&quot;</span>, mass: <span class="n">180.9479</span>, covalent_radius: <span class="n">1.70</span>, vdw_radius: <span class="n">2.53</span>, valence_electrons: <span class="n">5</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Tb">
-        <strong>Tb</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">65</span>, symbol: <span class="s">&quot;Tb&quot;</span>, name: <span class="s">&quot;Terbium&quot;</span>, mass: <span class="n">158.9254</span>, covalent_radius: <span class="n">1.94</span>, vdw_radius: <span class="n">2.79</span>, valence_electrons: <span class="n">9</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Tb</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">65</span>, symbol: <span class="s">&quot;Tb&quot;</span>, name: <span class="s">&quot;Terbium&quot;</span>, mass: <span class="n">158.9254</span>, covalent_radius: <span class="n">1.94</span>, vdw_radius: <span class="n">2.79</span>, valence_electrons: <span class="n">9</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Tc">
-        <strong>Tc</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">43</span>, symbol: <span class="s">&quot;Tc&quot;</span>, name: <span class="s">&quot;Technetium&quot;</span>, mass: <span class="n">98.0</span>, covalent_radius: <span class="n">1.47</span>, vdw_radius: <span class="n">2.44</span>, valence_electrons: <span class="n">7</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Tc</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">43</span>, symbol: <span class="s">&quot;Tc&quot;</span>, name: <span class="s">&quot;Technetium&quot;</span>, mass: <span class="n">98.0</span>, covalent_radius: <span class="n">1.47</span>, vdw_radius: <span class="n">2.44</span>, valence_electrons: <span class="n">7</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Te">
-        <strong>Te</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">52</span>, symbol: <span class="s">&quot;Te&quot;</span>, name: <span class="s">&quot;Tellurium&quot;</span>, mass: <span class="n">127.6</span>, covalent_radius: <span class="n">1.38</span>, vdw_radius: <span class="n">1.99</span>, valence_electrons: <span class="n">6</span>, valence: [<span class="n">2</span>, <span class="n">4</span>, <span class="n">6</span>])</code>
+        <strong>Te</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">52</span>, symbol: <span class="s">&quot;Te&quot;</span>, name: <span class="s">&quot;Tellurium&quot;</span>, mass: <span class="n">127.6</span>, covalent_radius: <span class="n">1.38</span>, vdw_radius: <span class="n">1.99</span>, valence_electrons: <span class="n">6</span>, valence: [<span class="n">2</span>, <span class="n">4</span>, <span class="n">6</span>], max_bonds: <span class="n">2</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Th">
-        <strong>Th</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">90</span>, symbol: <span class="s">&quot;Th&quot;</span>, name: <span class="s">&quot;Thorium&quot;</span>, mass: <span class="n">232.0381</span>, covalent_radius: <span class="n">2.06</span>, vdw_radius: <span class="n">2.93</span>, valence_electrons: <span class="n">4</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Th</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">90</span>, symbol: <span class="s">&quot;Th&quot;</span>, name: <span class="s">&quot;Thorium&quot;</span>, mass: <span class="n">232.0381</span>, covalent_radius: <span class="n">2.06</span>, vdw_radius: <span class="n">2.93</span>, valence_electrons: <span class="n">4</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Ti">
-        <strong>Ti</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">22</span>, symbol: <span class="s">&quot;Ti&quot;</span>, name: <span class="s">&quot;Titanium&quot;</span>, mass: <span class="n">47.867</span>, covalent_radius: <span class="n">1.60</span>, vdw_radius: <span class="n">2.46</span>, valence_electrons: <span class="n">4</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Ti</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">22</span>, symbol: <span class="s">&quot;Ti&quot;</span>, name: <span class="s">&quot;Titanium&quot;</span>, mass: <span class="n">47.867</span>, covalent_radius: <span class="n">1.60</span>, vdw_radius: <span class="n">2.46</span>, valence_electrons: <span class="n">4</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Tl">
-        <strong>Tl</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">81</span>, symbol: <span class="s">&quot;Tl&quot;</span>, name: <span class="s">&quot;Thallium&quot;</span>, mass: <span class="n">204.3833</span>, covalent_radius: <span class="n">1.45</span>, vdw_radius: <span class="n">2.47</span>, valence_electrons: <span class="n">3</span>, valence: <span class="n">3</span>)</code>
+        <strong>Tl</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">81</span>, symbol: <span class="s">&quot;Tl&quot;</span>, name: <span class="s">&quot;Thallium&quot;</span>, mass: <span class="n">204.3833</span>, covalent_radius: <span class="n">1.45</span>, vdw_radius: <span class="n">2.47</span>, valence_electrons: <span class="n">3</span>, valence: <span class="n">3</span>, max_bonds: <span class="n">3</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Tm">
-        <strong>Tm</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">69</span>, symbol: <span class="s">&quot;Tm&quot;</span>, name: <span class="s">&quot;Thulium&quot;</span>, mass: <span class="n">168.9342</span>, covalent_radius: <span class="n">1.90</span>, vdw_radius: <span class="n">2.79</span>, valence_electrons: <span class="n">13</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Tm</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">69</span>, symbol: <span class="s">&quot;Tm&quot;</span>, name: <span class="s">&quot;Thulium&quot;</span>, mass: <span class="n">168.9342</span>, covalent_radius: <span class="n">1.90</span>, vdw_radius: <span class="n">2.79</span>, valence_electrons: <span class="n">13</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Ts">
-        <strong>Ts</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">117</span>, symbol: <span class="s">&quot;Ts&quot;</span>, name: <span class="s">&quot;Tennessine&quot;</span>, mass: <span class="n">291.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">1.5</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Ts</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">117</span>, symbol: <span class="s">&quot;Ts&quot;</span>, name: <span class="s">&quot;Tennessine&quot;</span>, mass: <span class="n">291.0</span>, covalent_radius: <span class="n">1.5</span>, vdw_radius: <span class="n">1.5</span> <span class="o">+</span> <span class="n">0.9</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="U">
-        <strong>U</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">92</span>, symbol: <span class="s">&quot;U&quot;</span>, name: <span class="s">&quot;Uranium&quot;</span>, mass: <span class="n">238.0289</span>, covalent_radius: <span class="n">1.96</span>, vdw_radius: <span class="n">2.71</span>, valence_electrons: <span class="n">4</span>, valence: <span class="n">nil</span>)</code>
+        <strong>U</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">92</span>, symbol: <span class="s">&quot;U&quot;</span>, name: <span class="s">&quot;Uranium&quot;</span>, mass: <span class="n">238.0289</span>, covalent_radius: <span class="n">1.96</span>, vdw_radius: <span class="n">2.71</span>, valence_electrons: <span class="n">4</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="V">
-        <strong>V</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">23</span>, symbol: <span class="s">&quot;V&quot;</span>, name: <span class="s">&quot;Vanadium&quot;</span>, mass: <span class="n">50.9415</span>, covalent_radius: <span class="n">1.53</span>, vdw_radius: <span class="n">2.42</span>, valence_electrons: <span class="n">5</span>, valence: <span class="n">nil</span>)</code>
+        <strong>V</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">23</span>, symbol: <span class="s">&quot;V&quot;</span>, name: <span class="s">&quot;Vanadium&quot;</span>, mass: <span class="n">50.9415</span>, covalent_radius: <span class="n">1.53</span>, vdw_radius: <span class="n">2.42</span>, valence_electrons: <span class="n">5</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="W">
-        <strong>W</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">74</span>, symbol: <span class="s">&quot;W&quot;</span>, name: <span class="s">&quot;Tungsten&quot;</span>, mass: <span class="n">183.84</span>, covalent_radius: <span class="n">1.62</span>, vdw_radius: <span class="n">2.57</span>, valence_electrons: <span class="n">6</span>, valence: <span class="n">nil</span>)</code>
+        <strong>W</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">74</span>, symbol: <span class="s">&quot;W&quot;</span>, name: <span class="s">&quot;Tungsten&quot;</span>, mass: <span class="n">183.84</span>, covalent_radius: <span class="n">1.62</span>, vdw_radius: <span class="n">2.57</span>, valence_electrons: <span class="n">6</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Xe">
-        <strong>Xe</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">54</span>, symbol: <span class="s">&quot;Xe&quot;</span>, name: <span class="s">&quot;Xenon&quot;</span>, mass: <span class="n">131.293</span>, covalent_radius: <span class="n">1.40</span>, vdw_radius: <span class="n">2.06</span>, valence_electrons: <span class="n">8</span>, valence: [<span class="n">0</span>, <span class="n">2</span>, <span class="n">4</span>, <span class="n">6</span>])</code>
+        <strong>Xe</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">54</span>, symbol: <span class="s">&quot;Xe&quot;</span>, name: <span class="s">&quot;Xenon&quot;</span>, mass: <span class="n">131.293</span>, covalent_radius: <span class="n">1.40</span>, vdw_radius: <span class="n">2.06</span>, valence_electrons: <span class="n">8</span>, valence: [<span class="n">0</span>, <span class="n">2</span>, <span class="n">4</span>, <span class="n">6</span>], max_bonds: <span class="n">0</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Y">
-        <strong>Y</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">39</span>, symbol: <span class="s">&quot;Y&quot;</span>, name: <span class="s">&quot;Yttrium&quot;</span>, mass: <span class="n">88.9059</span>, covalent_radius: <span class="n">1.90</span>, vdw_radius: <span class="n">2.75</span>, valence_electrons: <span class="n">3</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Y</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">39</span>, symbol: <span class="s">&quot;Y&quot;</span>, name: <span class="s">&quot;Yttrium&quot;</span>, mass: <span class="n">88.9059</span>, covalent_radius: <span class="n">1.90</span>, vdw_radius: <span class="n">2.75</span>, valence_electrons: <span class="n">3</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Yb">
-        <strong>Yb</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">70</span>, symbol: <span class="s">&quot;Yb&quot;</span>, name: <span class="s">&quot;Ytterbium&quot;</span>, mass: <span class="n">173.04</span>, covalent_radius: <span class="n">1.87</span>, vdw_radius: <span class="n">2.80</span>, valence_electrons: <span class="n">14</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Yb</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">70</span>, symbol: <span class="s">&quot;Yb&quot;</span>, name: <span class="s">&quot;Ytterbium&quot;</span>, mass: <span class="n">173.04</span>, covalent_radius: <span class="n">1.87</span>, vdw_radius: <span class="n">2.80</span>, valence_electrons: <span class="n">14</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Zn">
-        <strong>Zn</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">30</span>, symbol: <span class="s">&quot;Zn&quot;</span>, name: <span class="s">&quot;Zinc&quot;</span>, mass: <span class="n">65.409</span>, covalent_radius: <span class="n">1.22</span>, vdw_radius: <span class="n">2.39</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Zn</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">30</span>, symbol: <span class="s">&quot;Zn&quot;</span>, name: <span class="s">&quot;Zinc&quot;</span>, mass: <span class="n">65.409</span>, covalent_radius: <span class="n">1.22</span>, vdw_radius: <span class="n">2.39</span>, valence_electrons: <span class="n">2</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
       <dt class="entry-const" id="Zr">
-        <strong>Zr</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">40</span>, symbol: <span class="s">&quot;Zr&quot;</span>, name: <span class="s">&quot;Zirconium&quot;</span>, mass: <span class="n">91.224</span>, covalent_radius: <span class="n">1.75</span>, vdw_radius: <span class="n">2.52</span>, valence_electrons: <span class="n">4</span>, valence: <span class="n">nil</span>)</code>
+        <strong>Zr</strong> = <code><span class="t">Element</span>.<span class="k">new</span>(atomic_number: <span class="n">40</span>, symbol: <span class="s">&quot;Zr&quot;</span>, name: <span class="s">&quot;Zirconium&quot;</span>, mass: <span class="n">91.224</span>, covalent_radius: <span class="n">1.75</span>, vdw_radius: <span class="n">2.52</span>, valence_electrons: <span class="n">4</span>, valence: <span class="n">nil</span>, max_bonds: <span class="n">6</span>)</code>
       </dt>
       
     
@@ -1535,6 +1526,13 @@ values are set to covalent radius + 0.9 Å</p>
       <li class="entry-summary">
         <a href="#covalent_cutoff%28atom%3AAtom%2Cother%3AAtom%29%3AFloat64-instance-method" class="signature"><strong>#covalent_cutoff</strong>(atom : Atom, other : Atom) : Float64</a>
         
+          <div class="summary"><p><span class="flag orange">TODO</span>  delete this! it's only used in building connectivity</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#covalent_distance%28ele%3AElement%2Cother%3AElement%29%3AFloat64-instance-method" class="signature"><strong>#covalent_distance</strong>(ele : Element, other : Element) : Float64</a>
+        
       </li>
     
       <li class="entry-summary">
@@ -1577,7 +1575,7 @@ values are set to covalent radius + 0.9 Å</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/periodic_table.cr#L157" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/periodic_table.cr#L160" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1593,7 +1591,7 @@ values are set to covalent radius + 0.9 Å</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/periodic_table.cr#L161" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/periodic_table.cr#L164" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1609,7 +1607,7 @@ values are set to covalent radius + 0.9 Å</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/periodic_table.cr#L174" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/periodic_table.cr#L177" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1625,7 +1623,7 @@ values are set to covalent radius + 0.9 Å</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/periodic_table.cr#L187" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/periodic_table.cr#L190" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1647,7 +1645,7 @@ values are set to covalent radius + 0.9 Å</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/periodic_table.cr#L202" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/periodic_table.cr#L205" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1671,7 +1669,7 @@ about 0.1 Å.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/periodic_table.cr#L215" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/periodic_table.cr#L219" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1684,10 +1682,31 @@ about 0.1 Å.</p>
         <a class="method-permalink" href="#covalent_cutoff%28atom%3AAtom%2Cother%3AAtom%29%3AFloat64-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p><span class="flag orange">TODO</span>  delete this! it's only used in building connectivity</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/periodic_table.cr#L207" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/periodic_table.cr#L211" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="covalent_distance(ele:Element,other:Element):Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>covalent_distance</strong>(ele : <a href="../Chem/Element.html">Element</a>, other : <a href="../Chem/Element.html">Element</a>) : Float64
+
+        <a class="method-permalink" href="#covalent_distance%28ele%3AElement%2Cother%3AElement%29%3AFloat64-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/periodic_table.cr#L224" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1703,7 +1722,7 @@ about 0.1 Å.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/periodic_table.cr#L220" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/periodic_table.cr#L232" target="_blank">View source</a>]
         
       </div>
     </div>

@@ -551,11 +551,6 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/PBC" data-name="chem::spatial::pbc">
-      <a href="../Chem/Spatial/PBC.html">PBC</a>
-      
-    </li>
-  
   <li class=" " data-id="chem.cr/Chem/Spatial/PeriodicKDTree" data-name="chem::spatial::periodickdtree">
       <a href="../Chem/Spatial/PeriodicKDTree.html">PeriodicKDTree</a>
       
@@ -623,11 +618,6 @@
   
   <li class=" " data-id="chem.cr/Chem/Topology/MatchData" data-name="chem::topology::matchdata">
       <a href="../Chem/Topology/MatchData.html">MatchData</a>
-      
-    </li>
-  
-  <li class=" " data-id="chem.cr/Chem/Topology/Perception" data-name="chem::topology::perception">
-      <a href="../Chem/Topology/Perception.html">Perception</a>
       
     </li>
   
@@ -805,17 +795,37 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">module</span> Chem::Topology
+  <span class="kind">class</span> Chem::Topology
 
 </h1>
 
 
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Chem/Topology.html">Chem::Topology</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
 
 
 
+
+
+  <h2>
+    <a id="included-modules" class="anchor" href="#included-modules">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Included Modules
+  </h2>
+  <ul class="other-types-list">
+    
+      <li class="other-type"><a href="../Chem/AtomCollection.html">Chem::AtomCollection</a></li>
+    
+      <li class="other-type"><a href="../Chem/ChainCollection.html">Chem::ChainCollection</a></li>
+    
+      <li class="other-type"><a href="../Chem/ResidueCollection.html">Chem::ResidueCollection</a></li>
+    
+  </ul>
 
 
 
@@ -836,15 +846,8 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/topology/detector.cr#L1" target="_blank">
-        chem/topology/detector.cr
-      </a>
-    
-    <br/>
-  
-    
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/topology/match_data.cr#L1" target="_blank">
-        chem/topology/match_data.cr
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/topology.cr#L1" target="_blank">
+        chem/topology.cr
       </a>
     
     <br/>
@@ -852,11 +855,191 @@
 
 
 
+  
+    <h2>
+      <a id="constant-summary" class="anchor" href="#constant-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+      Constant Summary
+    </h2>
+  
+  <dl>
+    
+      <dt class="entry-const" id="MAX_CHAINS">
+        <strong>MAX_CHAINS</strong> = <code><span class="n">62</span></code>
+      </dt>
+      
+    
+  </dl>
 
 
 
 
 
+
+
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#%5B%5D%28chain_id%3AChar%29%3AChain-instance-method" class="signature"><strong>#[]</strong>(chain_id : Char) : Chain</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%5B%5D%3F%28chain_id%3AChar%29%3AChain%3F-instance-method" class="signature"><strong>#[]?</strong>(chain_id : Char) : Chain?</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#apply_templates%3ANil-instance-method" class="signature"><strong>#apply_templates</strong> : Nil</a>
+        
+          <div class="summary"><p>Assign bonds, formal charges, and residue's kind from known residue types.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#clear%3Aself-instance-method" class="signature"><strong>#clear</strong> : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#clone%3Aself-instance-method" class="signature"><strong>#clone</strong> : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#delete%28ch%3AChain%29%3AChain%3F-instance-method" class="signature"><strong>#delete</strong>(ch : Chain) : Chain?</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dig%28id%3AChar%29%3AChain-instance-method" class="signature"><strong>#dig</strong>(id : Char) : Chain</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dig%28id%3AChar%2C%2Asubindexes%29-instance-method" class="signature"><strong>#dig</strong>(id : Char, *subindexes)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dig%3F%28id%3AChar%29%3AChain%3F-instance-method" class="signature"><strong>#dig?</strong>(id : Char) : Chain?</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dig%3F%28id%3AChar%2C%2Asubindexes%29-instance-method" class="signature"><strong>#dig?</strong>(id : Char, *subindexes)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#each_atom%3AIterator%28Atom%29-instance-method" class="signature"><strong>#each_atom</strong> : Iterator(Atom)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#each_atom%28%26block%3AAtom-%3E%29-instance-method" class="signature"><strong>#each_atom</strong>(&block : Atom -> )</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#each_chain%3AIterator%28Chain%29-instance-method" class="signature"><strong>#each_chain</strong> : Iterator(Chain)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#each_chain%28%26block%3AChain-%3E%29-instance-method" class="signature"><strong>#each_chain</strong>(&block : Chain -> )</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#each_residue%3AIterator%28Residue%29-instance-method" class="signature"><strong>#each_residue</strong> : Iterator(Residue)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#each_residue%28%26block%3AResidue-%3E%29-instance-method" class="signature"><strong>#each_residue</strong>(&block : Residue -> )</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#guess_bonds%28perceive_order%3ABool%3Dtrue%29%3ANil-instance-method" class="signature"><strong>#guess_bonds</strong>(perceive_order : Bool = <span class="n">true</span>) : Nil</a>
+        
+          <div class="summary"><p>Determines bonds from connectivity and geometry.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#guess_formal_charges%3ANil-instance-method" class="signature"><strong>#guess_formal_charges</strong> : Nil</a>
+        
+          <div class="summary"><p>Sets the formal charges based on the existing bonds.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#guess_names%3ANil-instance-method" class="signature"><strong>#guess_names</strong> : Nil</a>
+        
+          <div class="summary"><p>Detects and assigns topology names from known residue types based on bond information.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#guess_unknown_residue_types%3ANil-instance-method" class="signature"><strong>#guess_unknown_residue_types</strong> : Nil</a>
+        
+          <div class="summary"><p>Determines the kind of unknown residues based on their neighbors.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#n_atoms%3AInt32-instance-method" class="signature"><strong>#n_atoms</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#n_chains%3AInt32-instance-method" class="signature"><strong>#n_chains</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#n_residues%3AInt32-instance-method" class="signature"><strong>#n_residues</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#renumber_residues_by%28%26%3AResidue-%3E_%29%3ANil-instance-method" class="signature"><strong>#renumber_residues_by</strong>(& : Residue -> _) : Nil</a>
+        
+          <div class="summary"><p>Renumber residues per chain based on the order by the output value of the block.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#renumber_residues_by_connectivity%28split_chains%3ABool%3Dtrue%29%3ANil-instance-method" class="signature"><strong>#renumber_residues_by_connectivity</strong>(split_chains : Bool = <span class="n">true</span>) : Nil</a>
+        
+          <div class="summary"><p>Renumber chain and residues based on bond information.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#structure%3AStructure-instance-method" class="signature"><strong>#structure</strong> : Structure</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#structure%3D%28structure%3AStructure%29-instance-method" class="signature"><strong>#structure=</strong>(structure : Structure)</a>
+        
+      </li>
+    
+  </ul>
 
 
 
@@ -864,12 +1047,749 @@
 
 <div class="methods-inherited">
   
+    
+
+  <h3>Instance methods inherited from module <code><a href="../Chem/ResidueCollection.html">Chem::ResidueCollection</a></code></h3>
+  
+  
+    <a href="../Chem/ResidueCollection.html#each_residue%3AIterator%28Residue%29-instance-method" class="tooltip">
+      <span>each_residue : Iterator(Residue)<br/>each_residue(&block : Residue -> )</span>
+    each_residue</a>, 
+    
+  
+    <a href="../Chem/ResidueCollection.html#each_residue_fragment%28%26%3AResidueView-%3E%29%3ANil-instance-method" class="tooltip">
+      <span>each_residue_fragment(& : ResidueView -> ) : Nil</span>
+    each_residue_fragment</a>, 
+    
+  
+    <a href="../Chem/ResidueCollection.html#each_secondary_structure%28reuse%3ABool%7CArray%28Residue%29%3Dfalse%2Cstrict%3ABool%3Dtrue%2Chandedness%3ABool%3Dtrue%29%3AIterator%28ResidueView%29-instance-method" class="tooltip">
+      <span>each_secondary_structure(reuse : Bool | Array(Residue) = <span class="n">false</span>, strict : Bool = <span class="n">true</span>, handedness : Bool = <span class="n">true</span>) : Iterator(ResidueView)<br/>each_secondary_structure(reuse : Bool | Array(Residue) = <span class="n">false</span>, strict : Bool = <span class="n">true</span>, handedness : Bool = <span class="n">true</span>, & : ResidueView, Protein::SecondaryStructure -> ) : Nil</span>
+    each_secondary_structure</a>, 
+    
+  
+    <a href="../Chem/ResidueCollection.html#link_bond%3ABondType%3F-instance-method" class="tooltip">
+      <span>link_bond : BondType?</span>
+    link_bond</a>, 
+    
+  
+    <a href="../Chem/ResidueCollection.html#n_residues%3AInt32-instance-method" class="tooltip">
+      <span>n_residues : Int32</span>
+    n_residues</a>, 
+    
+  
+    <a href="../Chem/ResidueCollection.html#reset_secondary_structure%3Aself-instance-method" class="tooltip">
+      <span>reset_secondary_structure : <span class="k">self</span></span>
+    reset_secondary_structure</a>, 
+    
+  
+    <a href="../Chem/ResidueCollection.html#residue_fragments%3AArray%28ResidueView%29-instance-method" class="tooltip">
+      <span>residue_fragments : Array(ResidueView)</span>
+    residue_fragments</a>, 
+    
+  
+    <a href="../Chem/ResidueCollection.html#residues%3AResidueView-instance-method" class="tooltip">
+      <span>residues : ResidueView</span>
+    residues</a>, 
+    
+  
+    <a href="../Chem/ResidueCollection.html#sec%3D%28seclist%3AArray%28Protein%3A%3ASecondaryStructure%29%29%3AArray%28Protein%3A%3ASecondaryStructure%29-instance-method" class="tooltip">
+      <span>sec=(seclist : Array(Protein::SecondaryStructure)) : Array(Protein::SecondaryStructure)<br/>sec=(sec : Protein::SecondaryStructure) : Protein::SecondaryStructure</span>
+    sec=</a>, 
+    
+  
+    <a href="../Chem/ResidueCollection.html#secondary_structures%28strict%3ABool%3Dtrue%2Chandedness%3ABool%3Dtrue%29%3AArray%28ResidueView%29-instance-method" class="tooltip">
+      <span>secondary_structures(strict : Bool = <span class="n">true</span>, handedness : Bool = <span class="n">true</span>) : Array(ResidueView)</span>
+    secondary_structures</a>
+    
+  
+
+
+    
+
+
+    
+
+
+  
+    
+
+  <h3>Instance methods inherited from module <code><a href="../Chem/ChainCollection.html">Chem::ChainCollection</a></code></h3>
+  
+  
+    <a href="../Chem/ChainCollection.html#chains%3AChainView-instance-method" class="tooltip">
+      <span>chains : ChainView</span>
+    chains</a>, 
+    
+  
+    <a href="../Chem/ChainCollection.html#each_chain%3AIterator%28Chain%29-instance-method" class="tooltip">
+      <span>each_chain : Iterator(Chain)<br/>each_chain(&block : Chain -> )</span>
+    each_chain</a>, 
+    
+  
+    <a href="../Chem/ChainCollection.html#n_chains%3AInt32-instance-method" class="tooltip">
+      <span>n_chains : Int32</span>
+    n_chains</a>
+    
+  
+
+
+    
+
+
+    
+
+
+  
+    
+
+  <h3>Instance methods inherited from module <code><a href="../Chem/AtomCollection.html">Chem::AtomCollection</a></code></h3>
+  
+  
+    <a href="../Chem/AtomCollection.html#atoms%3AAtomView-instance-method" class="tooltip">
+      <span>atoms : AtomView</span>
+    atoms</a>, 
+    
+  
+    <a href="../Chem/AtomCollection.html#bonds%3AArray%28Bond%29-instance-method" class="tooltip">
+      <span>bonds : Array(Bond)</span>
+    bonds</a>, 
+    
+  
+    <a href="../Chem/AtomCollection.html#coords%3ASpatial%3A%3ACoordinatesProxy-instance-method" class="tooltip">
+      <span>coords : Spatial::CoordinatesProxy</span>
+    coords</a>, 
+    
+  
+    <a href="../Chem/AtomCollection.html#each_atom%3AIterator%28Atom%29-instance-method" class="tooltip">
+      <span>each_atom : Iterator(Atom)<br/>each_atom(&block : Atom -> )</span>
+    each_atom</a>, 
+    
+  
+    <a href="../Chem/AtomCollection.html#each_fragment%28%26%3AAtomView-%3E%29%3ANil-instance-method" class="tooltip">
+      <span>each_fragment(& : AtomView -> ) : Nil</span>
+    each_fragment</a>, 
+    
+  
+    <a href="../Chem/AtomCollection.html#formal_charge%3AInt32-instance-method" class="tooltip">
+      <span>formal_charge : Int32</span>
+    formal_charge</a>, 
+    
+  
+    <a href="../Chem/AtomCollection.html#formal_charges%3AArray%28Int32%29-instance-method" class="tooltip">
+      <span>formal_charges : Array(Int32)</span>
+    formal_charges</a>, 
+    
+  
+    <a href="../Chem/AtomCollection.html#fragments%3AArray%28AtomView%29-instance-method" class="tooltip">
+      <span>fragments : Array(AtomView)</span>
+    fragments</a>, 
+    
+  
+    <a href="../Chem/AtomCollection.html#has_hydrogens%3F%3ABool-instance-method" class="tooltip">
+      <span>has_hydrogens? : Bool</span>
+    has_hydrogens?</a>, 
+    
+  
+    <a href="../Chem/AtomCollection.html#n_atoms%3AInt32-instance-method" class="tooltip">
+      <span>n_atoms : Int32</span>
+    n_atoms</a>, 
+    
+  
+    <a href="../Chem/AtomCollection.html#to_gen%28fractional%3ABool%3Dfalse%29%3AString-instance-method" class="tooltip">
+      <span>to_gen(fractional : Bool = <span class="n">false</span>) : String<br/>to_gen(output : IO | Path | String, fractional : Bool = <span class="n">false</span>) : Nil</span>
+    to_gen</a>, 
+    
+  
+    <a href="../Chem/AtomCollection.html#to_mol2%28output%3AIO%7CPath%7CString%29%3ANil-instance-method" class="tooltip">
+      <span>to_mol2(output : IO | Path | String) : Nil<br/>to_mol2 : String</span>
+    to_mol2</a>, 
+    
+  
+    <a href="../Chem/AtomCollection.html#to_pdb%28bonds%3AChem%3A%3APDB%3A%3AWriter%3A%3ABondOptions%3DChem%3A%3APDB%3A%3AWriter%3A%3ABondOptions.flags%28Het%2CDisulfide%29%2Crenumber%3ABool%3Dtrue%2Cter_on_fragment%3ABool%3Dfalse%29%3AString-instance-method" class="tooltip">
+      <span>to_pdb(bonds : Chem::PDB::Writer::BondOptions = <span class="t">Chem</span><span class="t">::</span><span class="t">PDB</span><span class="t">::</span><span class="t">Writer</span><span class="t">::</span><span class="t">BondOptions</span>.flags(<span class="t">Het</span>, <span class="t">Disulfide</span>), renumber : Bool = <span class="n">true</span>, ter_on_fragment : Bool = <span class="n">false</span>) : String<br/>to_pdb(output : IO | Path | String, bonds : Chem::PDB::Writer::BondOptions = <span class="t">Chem</span><span class="t">::</span><span class="t">PDB</span><span class="t">::</span><span class="t">Writer</span><span class="t">::</span><span class="t">BondOptions</span>.flags(<span class="t">Het</span>, <span class="t">Disulfide</span>), renumber : Bool = <span class="n">true</span>, ter_on_fragment : Bool = <span class="n">false</span>) : Nil</span>
+    to_pdb</a>, 
+    
+  
+    <a href="../Chem/AtomCollection.html#to_xyz%28output%3AIO%7CPath%7CString%29%3ANil-instance-method" class="tooltip">
+      <span>to_xyz(output : IO | Path | String) : Nil<br/>to_xyz : String</span>
+    to_xyz</a>, 
+    
+  
+    <a href="../Chem/AtomCollection.html#write%28output%3AIO%7CPath%7CString%2Cformat%3AChem%3A%3AFormat%7CString%29%3ANil-instance-method" class="tooltip">
+      <span>write(output : IO | Path | String, format : Chem::Format | String) : Nil<br/>write(path : Path | String) : Nil</span>
+    write</a>
+    
+  
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
 </div>
 
 
 
 
 
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="[](chain_id:Char):Chain-instance-method">
+      <div class="signature">
+        
+        def <strong>[]</strong>(chain_id : <a href="../Char.html">Char</a>) : <a href="../Chem/Chain.html">Chain</a>
+
+        <a class="method-permalink" href="#%5B%5D%28chain_id%3AChar%29%3AChain-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/topology.cr#L17" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[]?(chain_id:Char):Chain?-instance-method">
+      <div class="signature">
+        
+        def <strong>[]?</strong>(chain_id : <a href="../Char.html">Char</a>) : <a href="../Chem/Chain.html">Chain</a>?
+
+        <a class="method-permalink" href="#%5B%5D%3F%28chain_id%3AChar%29%3AChain%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/topology.cr#L21" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="apply_templates:Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>apply_templates</strong> : Nil
+
+        <a class="method-permalink" href="#apply_templates%3ANil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Assign bonds, formal charges, and residue's kind from known residue
+types.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/topology.cr#L33" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="clear:self-instance-method">
+      <div class="signature">
+        
+        def <strong>clear</strong> : <span class="k">self</span>
+
+        <a class="method-permalink" href="#clear%3Aself-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/topology.cr#L64" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="clone:self-instance-method">
+      <div class="signature">
+        
+        def <strong>clone</strong> : <span class="k">self</span>
+
+        <a class="method-permalink" href="#clone%3Aself-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/topology.cr#L70" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="delete(ch:Chain):Chain?-instance-method">
+      <div class="signature">
+        
+        def <strong>delete</strong>(ch : <a href="../Chem/Chain.html">Chain</a>) : <a href="../Chem/Chain.html">Chain</a>?
+
+        <a class="method-permalink" href="#delete%28ch%3AChain%29%3AChain%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/topology.cr#L83" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dig(id:Char):Chain-instance-method">
+      <div class="signature">
+        
+        def <strong>dig</strong>(id : <a href="../Char.html">Char</a>) : <a href="../Chem/Chain.html">Chain</a>
+
+        <a class="method-permalink" href="#dig%28id%3AChar%29%3AChain-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/topology.cr#L89" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dig(id:Char,*subindexes)-instance-method">
+      <div class="signature">
+        
+        def <strong>dig</strong>(id : <a href="../Char.html">Char</a>, *subindexes)
+
+        <a class="method-permalink" href="#dig%28id%3AChar%2C%2Asubindexes%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/topology.cr#L93" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dig?(id:Char):Chain?-instance-method">
+      <div class="signature">
+        
+        def <strong>dig?</strong>(id : <a href="../Char.html">Char</a>) : <a href="../Chem/Chain.html">Chain</a>?
+
+        <a class="method-permalink" href="#dig%3F%28id%3AChar%29%3AChain%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/topology.cr#L97" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dig?(id:Char,*subindexes)-instance-method">
+      <div class="signature">
+        
+        def <strong>dig?</strong>(id : <a href="../Char.html">Char</a>, *subindexes)
+
+        <a class="method-permalink" href="#dig%3F%28id%3AChar%2C%2Asubindexes%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/topology.cr#L101" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="each_atom:Iterator(Atom)-instance-method">
+      <div class="signature">
+        
+        def <strong>each_atom</strong> : Iterator(<a href="../Chem/Atom.html">Atom</a>)
+
+        <a class="method-permalink" href="#each_atom%3AIterator%28Atom%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/topology.cr#L107" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="each_atom(&amp;block:Atom-&gt;)-instance-method">
+      <div class="signature">
+        
+        def <strong>each_atom</strong>(&block : <a href="../Chem/Atom.html">Atom</a> -> )
+
+        <a class="method-permalink" href="#each_atom%28%26block%3AAtom-%3E%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/topology.cr#L117" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="each_chain:Iterator(Chain)-instance-method">
+      <div class="signature">
+        
+        def <strong>each_chain</strong> : Iterator(<a href="../Chem/Chain.html">Chain</a>)
+
+        <a class="method-permalink" href="#each_chain%3AIterator%28Chain%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/topology.cr#L125" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="each_chain(&amp;block:Chain-&gt;)-instance-method">
+      <div class="signature">
+        
+        def <strong>each_chain</strong>(&block : <a href="../Chem/Chain.html">Chain</a> -> )
+
+        <a class="method-permalink" href="#each_chain%28%26block%3AChain-%3E%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/topology.cr#L129" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="each_residue:Iterator(Residue)-instance-method">
+      <div class="signature">
+        
+        def <strong>each_residue</strong> : Iterator(<a href="../Chem/Residue.html">Residue</a>)
+
+        <a class="method-permalink" href="#each_residue%3AIterator%28Residue%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/topology.cr#L135" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="each_residue(&amp;block:Residue-&gt;)-instance-method">
+      <div class="signature">
+        
+        def <strong>each_residue</strong>(&block : <a href="../Chem/Residue.html">Residue</a> -> )
+
+        <a class="method-permalink" href="#each_residue%28%26block%3AResidue-%3E%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/topology.cr#L139" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="guess_bonds(perceive_order:Bool=true):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>guess_bonds</strong>(perceive_order : Bool = <span class="n">true</span>) : Nil
+
+        <a class="method-permalink" href="#guess_bonds%28perceive_order%3ABool%3Dtrue%29%3ANil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Determines bonds from connectivity and geometry.</p>
+<p>Bonds are added when the pairwise distances are within the
+corresponding covalent distances (see
+<code><a href="../Chem/PeriodicTable.html#covalent_distance%28ele%3AElement%2Cother%3AElement%29%3AFloat64-instance-method">PeriodicTable.covalent_distance</a></code>). Bonds are added until the atoms'
+valences are fulfilled. If extraneous bonds are found (beyond the
+maximum number of bonds, see <code><a href="../Chem/Element.html#max_bonds%3AInt32-instance-method">Element#max_bonds</a></code>), the longest ones
+will be removed.</p>
+<p>Bonds to atoms that could potential be as cations (K, Na, etc.) are
+disfavored such that they won't be added if the neighbor is
+over-valence or the bond can be substituted by increasing the bond
+order of another bond of the neighbor (e.g., <em>C-O + K</em> is preferred
+over <em>C-O-K</em> since <em>C-O</em> can be converted to <em>C=O</em>).</p>
+<p>Bond orders are assigned based on the following procedure. First,
+atom hybridization is guessed from the geometry. Then, the bond
+orders are determined such that both atoms must have the same
+hybridization to assign a double (sp2) or triple (sp) bond. Bond
+order is only changed if the bonded atoms have missing valence. If
+multiple bonded atoms fulfill the requirements for increasing the
+bond order, the atom with the most missing valence or that is
+closest to the current atom is selected first. This procedure is
+loosely based on OpenBabel's <code>PerceiveBondOrders</code> function.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/topology.cr#L171" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="guess_formal_charges:Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>guess_formal_charges</strong> : Nil
+
+        <a class="method-permalink" href="#guess_formal_charges%3ANil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Sets the formal charges based on the existing bonds.</p>
+<p>For most cases, the formal charge is calculated as</p>
+<pre><code class="language-crystal"><span class="t">Nele</span> <span class="o">-</span> <span class="t">Tele</span> <span class="o">+</span> <span class="t">V</span></code></pre>
+<p>where <em>Nele</em> is the number of valence electrons, <em>Tele</em> is the
+number of electrons in the full valence shell, and <em>V</em> is the
+effective valence, which is equivalent to the sum of the bond
+orders. <em>Tele</em> is usually 8 following the octet rule, but there are
+some exceptions (see <code><a href="../Chem/Element.html#target_electrons%28valence%3AInt32%29%3AInt32-instance-method">Element#target_electrons</a></code>).</p>
+<p>If an atom has no bonds, it is considered as a monoatomic ion, where
+the formal charge is set according to the following rule: if the
+valence electrons &lt; 4 (cation, e.g., Na+, Mg2+), the formal charge
+is equal to the number of valence electrons, else (anions, e.g.,
+Cl-) it is equal to <code>Nele - Tele</code>.</p>
+<p><span class="flag yellow">WARNING</span>  Elements that have no valence determined such as transition
+metals are ignored.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/topology.cr#L315" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="guess_names:Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>guess_names</strong> : Nil
+
+        <a class="method-permalink" href="#guess_names%3ANil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Detects and assigns topology names from known residue types based on
+bond information.</p>
+<p>The method creates chains and residues according to the detected
+fragments and residue matches. The procedure is as follows. First,
+atoms are split into fragments, where each fragment is scanned for
+matches to known residue types. Then, fragments are divided into
+polymer (e.g., peptide) and non-polymer (e.g., water) fragments
+based on the number of residues per fragment. Non-polymer residues
+are grouped together by their kind (i.e., ion, solvent, etc.).
+Finally, every polymer fragment and group of non-polymer fragments
+are assigned to a unique chain and residues are created for each
+match.</p>
+<p><span class="flag purple">NOTE</span>  Fragments are assigned to a unique chain unless the chain
+limit (62) is reached, otherwise all residues are assigned to the
+same chain.</p>
+<p><span class="flag yellow">WARNING</span>  Existing chains and residues are invalid after calling this
+method so do not cache them.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/topology.cr#L353" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="guess_unknown_residue_types:Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>guess_unknown_residue_types</strong> : Nil
+
+        <a class="method-permalink" href="#guess_unknown_residue_types%3ANil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Determines the kind of unknown residues based on their neighbors.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/topology.cr#L444" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="n_atoms:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>n_atoms</strong> : Int32
+
+        <a class="method-permalink" href="#n_atoms%3AInt32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/topology.cr#L458" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="n_chains:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>n_chains</strong> : Int32
+
+        <a class="method-permalink" href="#n_chains%3AInt32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/topology.cr#L462" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="n_residues:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>n_residues</strong> : Int32
+
+        <a class="method-permalink" href="#n_residues%3AInt32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/topology.cr#L466" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="renumber_residues_by(&amp;:Residue-&gt;_):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>renumber_residues_by</strong>(& : <a href="../Chem/Residue.html">Residue</a> -> _) : Nil
+
+        <a class="method-permalink" href="#renumber_residues_by%28%26%3AResidue-%3E_%29%3ANil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Renumber residues per chain based on the order by the output value
+of the block.</p>
+<p><span class="flag purple">NOTE</span>  This won't change the order of the existing chains.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/topology.cr#L474" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="renumber_residues_by_connectivity(split_chains:Bool=true):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>renumber_residues_by_connectivity</strong>(split_chains : Bool = <span class="n">true</span>) : Nil
+
+        <a class="method-permalink" href="#renumber_residues_by_connectivity%28split_chains%3ABool%3Dtrue%29%3ANil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Renumber chain and residues based on bond information.</p>
+<p>Residue fragments are assigned to unique chains unless
+<em>split_chains</em> is <code>false</code>, which keeps existing chains intact.
+Residue ordering is computed based on the link bond if available.</p>
+<p><span class="flag purple">NOTE</span>  existing chains are reused to re-arrang the residues among
+them, so avoid caching them before calling this.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/topology.cr#L490" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="structure:Structure-instance-method">
+      <div class="signature">
+        
+        def <strong>structure</strong> : <a href="../Chem/Structure.html">Structure</a>
+
+        <a class="method-permalink" href="#structure%3AStructure-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/topology.cr#L15" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="structure=(structure:Structure)-instance-method">
+      <div class="signature">
+        
+        def <strong>structure=</strong>(structure : <a href="../Chem/Structure.html">Structure</a>)
+
+        <a class="method-permalink" href="#structure%3D%28structure%3AStructure%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/topology.cr#L15" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
 
 
 

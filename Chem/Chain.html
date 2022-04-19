@@ -551,11 +551,6 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/PBC" data-name="chem::spatial::pbc">
-      <a href="../Chem/Spatial/PBC.html">PBC</a>
-      
-    </li>
-  
   <li class=" " data-id="chem.cr/Chem/Spatial/PeriodicKDTree" data-name="chem::spatial::periodickdtree">
       <a href="../Chem/Spatial/PeriodicKDTree.html">PeriodicKDTree</a>
       
@@ -623,11 +618,6 @@
   
   <li class=" " data-id="chem.cr/Chem/Topology/MatchData" data-name="chem::topology::matchdata">
       <a href="../Chem/Topology/MatchData.html">MatchData</a>
-      
-    </li>
-  
-  <li class=" " data-id="chem.cr/Chem/Topology/Perception" data-name="chem::topology::perception">
-      <a href="../Chem/Topology/Perception.html">Perception</a>
       
     </li>
   
@@ -854,7 +844,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/chain.cr#L2" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/chain.cr#L2" target="_blank">
         chem/core/chain.cr
       </a>
     
@@ -876,7 +866,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28id%3AChar%2Cstructure%3AStructure%29-class-method" class="signature"><strong>.new</strong>(id : Char, structure : Structure)</a>
+        <a href="#new%28id%3AChar%2Ctop%3ATopology%29-class-method" class="signature"><strong>.new</strong>(id : Char, top : Topology)</a>
         
       </li>
     
@@ -1030,12 +1020,17 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#structure%3AStructure-instance-method" class="signature"><strong>#structure</strong> : Structure</a>
+        <a href="#structure%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#structure</strong>(*args, **options)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#structure%3D%28new_structure%3AStructure%29%3AStructure-instance-method" class="signature"><strong>#structure=</strong>(new_structure : Structure) : Structure</a>
+        <a href="#structure%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#structure</strong>(*args, **options, &)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#top%3ATopology-instance-method" class="signature"><strong>#top</strong> : Topology</a>
         
       </li>
     
@@ -1232,18 +1227,18 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(id:Char,structure:Structure)-class-method">
+    <div class="entry-detail" id="new(id:Char,top:Topology)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(id : <a href="../Char.html">Char</a>, structure : <a href="../Chem/Structure.html">Structure</a>)
+        def self.<strong>new</strong>(id : <a href="../Char.html">Char</a>, top : <a href="../Chem/Topology.html">Topology</a>)
 
-        <a class="method-permalink" href="#new%28id%3AChar%2Cstructure%3AStructure%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28id%3AChar%2Ctop%3ATopology%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/chain.cr#L12" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/chain.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1286,7 +1281,7 @@ chains[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> chains[<span c
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/chain.cr#L36" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/chain.cr#L37" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1302,7 +1297,7 @@ chains[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> chains[<span c
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/chain.cr#L40" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/chain.cr#L41" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1318,7 +1313,7 @@ chains[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> chains[<span c
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/chain.cr#L44" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/chain.cr#L45" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1334,7 +1329,7 @@ chains[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> chains[<span c
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/chain.cr#L48" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/chain.cr#L49" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1350,7 +1345,7 @@ chains[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> chains[<span c
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/chain.cr#L54" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/chain.cr#L55" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1366,7 +1361,7 @@ chains[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> chains[<span c
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/chain.cr#L71" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/chain.cr#L72" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1382,7 +1377,7 @@ chains[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> chains[<span c
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/chain.cr#L75" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/chain.cr#L76" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1398,7 +1393,7 @@ chains[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> chains[<span c
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/chain.cr#L63" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/chain.cr#L64" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1414,7 +1409,7 @@ chains[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> chains[<span c
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/chain.cr#L67" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/chain.cr#L68" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1430,7 +1425,7 @@ chains[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> chains[<span c
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/chain.cr#L89" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/chain.cr#L90" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1446,7 +1441,7 @@ chains[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> chains[<span c
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/chain.cr#L93" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/chain.cr#L94" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1462,7 +1457,7 @@ chains[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> chains[<span c
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/chain.cr#L79" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/chain.cr#L80" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1478,7 +1473,7 @@ chains[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> chains[<span c
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/chain.cr#L83" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/chain.cr#L84" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1494,7 +1489,7 @@ chains[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> chains[<span c
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/chain.cr#L99" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/chain.cr#L100" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1510,7 +1505,7 @@ chains[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> chains[<span c
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/chain.cr#L103" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/chain.cr#L104" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1526,7 +1521,7 @@ chains[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> chains[<span c
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/chain.cr#L111" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/chain.cr#L112" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1542,7 +1537,7 @@ chains[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> chains[<span c
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/chain.cr#L115" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/chain.cr#L116" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1558,7 +1553,7 @@ chains[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> chains[<span c
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/chain.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/chain.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1591,7 +1586,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/chain.cr#L121" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/chain.cr#L122" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1607,7 +1602,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/chain.cr#L129" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/chain.cr#L130" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1623,7 +1618,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/chain.cr#L133" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/chain.cr#L134" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1639,7 +1634,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/chain.cr#L125" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/chain.cr#L126" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1661,7 +1656,7 @@ block.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/chain.cr#L139" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/chain.cr#L140" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1683,7 +1678,7 @@ computed based on the link bond if available.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/chain.cr#L152" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/chain.cr#L153" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1699,39 +1694,55 @@ computed based on the link bond if available.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/chain.cr#L183" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/chain.cr#L178" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="structure:Structure-instance-method">
+    <div class="entry-detail" id="structure(*args,**options)-instance-method">
       <div class="signature">
         
-        def <strong>structure</strong> : <a href="../Chem/Structure.html">Structure</a>
+        def <strong>structure</strong>(*args, **options)
 
-        <a class="method-permalink" href="#structure%3AStructure-instance-method">#</a>
+        <a class="method-permalink" href="#structure%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/chain.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/chain.cr#L11" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="structure=(new_structure:Structure):Structure-instance-method">
+    <div class="entry-detail" id="structure(*args,**options,&amp;)-instance-method">
       <div class="signature">
         
-        def <strong>structure=</strong>(new_structure : <a href="../Chem/Structure.html">Structure</a>) : <a href="../Chem/Structure.html">Structure</a>
+        def <strong>structure</strong>(*args, **options, &)
 
-        <a class="method-permalink" href="#structure%3D%28new_structure%3AStructure%29%3AStructure-instance-method">#</a>
+        <a class="method-permalink" href="#structure%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/531e477e4900fbaae5e5f144aead3c694dffcb5b/src/chem/core/chain.cr#L167" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/chain.cr#L11" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="top:Topology-instance-method">
+      <div class="signature">
+        
+        def <strong>top</strong> : <a href="../Chem/Topology.html">Topology</a>
+
+        <a class="method-permalink" href="#top%3ATopology-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/core/chain.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
