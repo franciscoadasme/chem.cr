@@ -68,14 +68,9 @@ class Chem::Element
     end
   end
 
-  def valence : Int32?
-    case valence = @valence
-    in Int32, Nil then valence
-    in Array      then valence.first
-    end
-  end
-
-  def valence(effective_valence : Int32) : Int32
+  # Returns the target valence given the effective valence. This is
+  # useful for multi-valent elements (e.g., sulfur, phosphorus).
+  def target_valence(effective_valence : Int) : Int32
     case valence = @valence
     in Int32
       valence
@@ -83,6 +78,13 @@ class Chem::Element
       valence.find(&.>=(effective_valence)) || valence.last
     in Nil
       effective_valence
+    end
+  end
+
+  def valence : Int32?
+    case valence = @valence
+    in Int32, Nil then valence
+    in Array      then valence.first
     end
   end
 

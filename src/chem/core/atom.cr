@@ -159,7 +159,7 @@ module Chem
 
     # TODO: rename to valence
     def nominal_valence : Int32
-      @element.valence(valence)
+      @element.target_valence(valence)
     end
 
     def residue=(new_res : Residue) : Residue

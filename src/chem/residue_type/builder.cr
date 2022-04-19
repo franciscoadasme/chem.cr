@@ -45,7 +45,7 @@ class Chem::ResidueType::Builder
       end
 
       # Check that effective valence is correct
-      target_valence = element.valence(effective_valence)
+      target_valence = element.target_valence(effective_valence)
       if effective_valence > target_valence ||
          (atom.explicit_hydrogens && effective_valence != target_valence)
         raise "Expected valence of #{atom.name} is #{target_valence}, \
