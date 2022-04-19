@@ -88,7 +88,7 @@ describe Chem::Atom do
   end
 
   describe "#missing_valence" do
-    it "returns number of bonds to reach closest nominal valence (no bonds)" do
+    it "returns number of bonds to reach closest target valence (no bonds)" do
       structure = Chem::Structure.build do
         atom :C, vec3(0, 0, 0)
       end
@@ -96,7 +96,7 @@ describe Chem::Atom do
       structure.atoms[0].missing_valence.should eq 4
     end
 
-    it "returns number of bonds to reach closest nominal valence (bonds)" do
+    it "returns number of bonds to reach closest target valence (bonds)" do
       structure = Chem::Structure.build do
         atom :C, vec3(0, 0, 0)
         atom :H, vec3(1, 0, 0)
@@ -107,7 +107,7 @@ describe Chem::Atom do
       structure.atoms[0].missing_valence.should eq 2
     end
 
-    it "returns number of bonds to reach closest nominal valence (full bonds)" do
+    it "returns number of bonds to reach closest target valence (full bonds)" do
       structure = Chem::Structure.build do
         atom :C, vec3(0, 0, 0)
         atom :O, vec3(0, 1, 0)
@@ -120,7 +120,7 @@ describe Chem::Atom do
       structure.atoms[0].missing_valence.should eq 0
     end
 
-    it "returns number of bonds to reach closest nominal valence (over bonds)" do
+    it "returns number of bonds to reach closest target valence (over bonds)" do
       structure = Chem::Structure.build do
         atom :N, vec3(0, 0, 0)
         atom :C, vec3(-1, 0, 0)
@@ -136,15 +136,15 @@ describe Chem::Atom do
     end
   end
 
-  describe "#nominal_valence" do
-    it "returns nominal valence (no bonds)" do
+  describe "#target_valence" do
+    it "returns target valence (no bonds)" do
       structure = Chem::Structure.build do
         atom :C, vec3(0, 0, 0)
       end
-      structure.atoms[0].nominal_valence.should eq 4
+      structure.atoms[0].target_valence.should eq 4
     end
 
-    it "returns nominal valence (bonds)" do
+    it "returns target valence (bonds)" do
       structure = Chem::Structure.build do
         atom :I, vec3(-1, 0, 0)
         atom :C, vec3(0, 0, 0)
@@ -152,10 +152,10 @@ describe Chem::Atom do
         bond "I1", "C1"
         bond "C1", "N1", order: 3
       end
-      structure.atoms.map(&.nominal_valence).should eq [1, 4, 3]
+      structure.atoms.map(&.target_valence).should eq [1, 4, 3]
     end
 
-    it "returns nominal valence (bonds exceed maximum valence)" do
+    it "returns target valence (bonds exceed maximum valence)" do
       structure = Chem::Structure.build do
         atom :N, vec3(1, 0, 0)
         atom :H, vec3(-1, 0, 0)
@@ -167,10 +167,10 @@ describe Chem::Atom do
         bond "N1", "H3"
         bond "N1", "H4"
       end
-      structure.atoms[0].nominal_valence.should eq 3
+      structure.atoms[0].target_valence.should eq 3
     end
 
-    it "returns nominal valence (multiple valencies, 1)" do
+    it "returns target valence (multiple valencies, 1)" do
       structure = Chem::Structure.build do
         atom :C, vec3(-1, 0, 0)
         atom :S, vec3(0, 0, 0)
@@ -178,10 +178,10 @@ describe Chem::Atom do
         bond "C1", "S1", 3
         bond "S1", "H1", 1
       end
-      structure.atoms[1].nominal_valence.should eq 4
+      structure.atoms[1].target_valence.should eq 4
     end
 
-    it "returns nominal valence (multiple valencies, 2)" do
+    it "returns target valence (multiple valencies, 2)" do
       structure = Chem::Structure.build do
         atom :O, vec3(-1, 0, 0)
         atom :S, vec3(0, 0, 0)
@@ -193,10 +193,10 @@ describe Chem::Atom do
         bond "S1", "O3", order: 2
         bond "S1", "O4", order: 2
       end
-      structure.atoms[1].nominal_valence.should eq 6
+      structure.atoms[1].target_valence.should eq 6
     end
 
-    it "returns nominal valence (multiple valencies, 3)" do
+    it "returns target valence (multiple valencies, 3)" do
       structure = Chem::Structure.build do
         atom :O, vec3(-1, 0, 0)
         atom :S, vec3(0, 0, 0)
@@ -210,14 +210,14 @@ describe Chem::Atom do
         bond "S1", "O4", order: 2
         bond "S1", "O5"
       end
-      structure.atoms[1].nominal_valence.should eq 6
+      structure.atoms[1].target_valence.should eq 6
     end
 
     it "returns maximum valence for ionic elements" do
       structure = Chem::Structure.build do
         atom :Na, vec3(0, 0, 0)
       end
-      structure.atoms[0].nominal_valence.should eq 1
+      structure.atoms[0].target_valence.should eq 1
     end
   end
 

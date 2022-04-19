@@ -154,18 +154,19 @@ module Chem
     end
 
     def missing_valence : Int32
-      (nominal_valence - valence).clamp 0..
-    end
-
-    # TODO: rename to valence
-    def nominal_valence : Int32
-      @element.target_valence(valence)
+      (target_valence - valence).clamp 0..
     end
 
     def residue=(new_res : Residue) : Residue
       @residue.delete self
       @residue = new_res
       new_res << self
+    end
+
+    # Returns the target valence based on the effective valence. This is
+    # useful for multi-valent elements (e.g., sulfur, phosphorus).
+    def target_valence : Int32
+      @element.target_valence(valence)
     end
 
     def to_s(io : IO)
