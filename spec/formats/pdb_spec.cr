@@ -1,7 +1,6 @@
 require "../spec_helper"
 
 describe Chem::PDB do
-  # TODO test partial occupancy and insertion code (5tun)
   describe ".parse" do
     it "parses a (real) PDB file" do
       st = load_file "1h1s.pdb"

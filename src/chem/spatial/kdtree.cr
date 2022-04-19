@@ -49,20 +49,6 @@ module Chem::Spatial
       end
     end
 
-    # FIXME: this is incorrect because issues of
-    # PBC.each_adjacent_image. Either fix that or use an alternative
-    # approach to include periodicity like
-    # github.com/patvarilly/periodic_kdtree, where they save the wrapped
-    # coordinates and search for neighbors of every possible image of
-    # the query. While it's more memory efficient and tree creation is
-    # faster, query could be up to 9 times slower since all images must
-    # be tested (check _gen_relevant_images of the aforementioned code).
-    # Another alternative is to generate the adjacent coordinates here
-    # to avoid the current limitations of the API, where coordinates
-    # cannot be wrapped without modifying original data. Save wrapped
-    # coordinates augmented with adjacent images and the cell, and then
-    # wrap the query and search for neighbors.
-
     def each_neighbor(pos : Vec3, *, within radius : Number, &block : Int32, Float64 ->) : Nil
       search(@root, pos, radius ** 2, &block)
     end

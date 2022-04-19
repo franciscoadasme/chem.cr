@@ -1,7 +1,4 @@
 module Chem
-  # TODO rename `charge` to `formal_charge`
-  # TODO add `partial_charge : Float64 = 0.0`
-  # TODO add `residue_index` that starts from 0 and does not reset per chain
   class Atom
     getter bonds : BondArray { BondArray.new self }
     property constraint : Constraint?
