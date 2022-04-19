@@ -22,11 +22,6 @@ class Chem::Element
   )
   end
 
-  # TODO: delete this!
-  def ionic? : Bool
-    @symbol.in?("Na", "Mg", "K", "Ca")
-  end
-
   def heavy? : Bool
     !hydrogen?
   end
