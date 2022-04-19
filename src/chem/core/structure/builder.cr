@@ -276,7 +276,10 @@ module Chem
             end
           end
 
-          if bonds.all? { |bond| bond[0].nominal_valence == bond[0].valence && bond[1].nominal_valence == bond[1].valence }
+          if bonds.all? { |bond|
+               bond[0].nominal_valence == bond[0].valence &&
+               bond[1].nominal_valence == bond[1].valence
+             }
             kekulized = true
             break
           end

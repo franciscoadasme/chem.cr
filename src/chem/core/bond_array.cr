@@ -27,8 +27,6 @@ module Chem
     def add(bond : Bond) : Bond
       unless bond.in?(@bonds)
         other_bonds = bond.other(@atom).bonds
-        # validate_bond! bond
-        # other_bonds.validate_bond! bond
         push bond
         other_bonds.push bond
       end
@@ -59,34 +57,8 @@ module Chem
       bond.other(@atom).bonds.delete bond
     end
 
-    def full? : Bool
-      missing_bonds.zero?
-    end
-
-    private def invalid_valence
-      msg = String.build do |builder|
-        builder << "Atom #{@atom.serial} "
-        if full?
-          builder << "has its valence shell already full"
-        else
-          builder << "has only #{missing_bonds} valence electron"
-          builder << 's' if missing_bonds > 1
-          builder << " available"
-        end
-      end
-      raise Error.new msg
-    end
-
-    private def missing_bonds : Int32
-      @atom.valence - @bonds.map(&.order.to_i).sum
-    end
-
     protected def push(bond : Bond)
       @bonds << bond
-    end
-
-    protected def validate_bond!(bond : Bond)
-      invalid_valence if bond.order > missing_bonds
     end
   end
 end

@@ -314,8 +314,7 @@ class Chem::Topology
   # metals are ignored.
   def guess_formal_charges : Nil
     each_atom do |atom|
-      # TODO: replace by atom.valence
-      valence = atom.bonds.sum(&.order)
+      valence = atom.valence
       if valence == 0
         if atom.element.valence_electrons < 4 # monoatomic cations
           atom.formal_charge = atom.element.valence_electrons

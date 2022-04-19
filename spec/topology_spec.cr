@@ -340,18 +340,18 @@ describe Chem::Topology do
 
       # ions
       (638..641).each do |i|
-        top.atoms[i].valence.should eq 1
+        top.atoms[i].valence.should eq 0
         top.atoms[i].bonds.size.should eq 0
         top.atoms[i].formal_charge.should eq 1
       end
 
       # n-ter
-      top.atoms[324].valence.should eq 3
+      top.atoms[324].valence.should eq 4
       top.atoms[324].bonds.size.should eq 4
       top.atoms[324].formal_charge.should eq 1
 
       # c-ter
-      top.atoms[364].valence.should eq 2
+      top.atoms[364].valence.should eq 1
       top.atoms[364].formal_charge.should eq -1
       top.atoms[365].valence.should eq 2
       top.atoms[365].formal_charge.should eq 0

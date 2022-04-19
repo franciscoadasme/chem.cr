@@ -173,16 +173,10 @@ module Chem
       io << ':' << @name << '(' << @serial << ')'
     end
 
-    # TODO: this name is incorrect. Only nominal valence has a correct
-    # meaning, valence can only be a few choices. Rename to bond_order
-    # or something like that (check openbabel code)
-    # FIXME: this is completely wrong. N+ and Mg2+ behave differently.
+    # Returns the effective valence. This is equivalent to the sum of
+    # the bond orders.
     def valence : Int32
-      if element.ionic?
-        @element.max_valence || 0
-      else
-        bonds.sum(&.order) - @formal_charge
-      end
+      bonds.sum(&.order)
     end
 
     # Returns `true` if the atom belongs to a water residue, else
