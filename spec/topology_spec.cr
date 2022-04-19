@@ -436,6 +436,18 @@ describe Chem::Topology do
         residue.succ.should_not be_nil
       end
     end
+
+    it "guesses bond order between atoms far apart in a periodic structure (#164)" do
+      structure = load_file "polyala-beta--theta-180.000--c-10.00.poscar"
+      structure.topology.guess_bonds
+      structure.topology.guess_names
+      structure.topology.guess_formal_charges
+
+      structure.formal_charge.should eq 0
+      structure.atoms.count(&.formal_charge.!=(0)).should eq 0
+      structure.dig('A', 5, "C").bonds[structure.dig('A', 5, "O")].order.should eq 2
+      structure.dig('B', 5, "C").bonds[structure.dig('B', 5, "O")].order.should eq 2
+    end
   end
 
   describe "#guess_names" do

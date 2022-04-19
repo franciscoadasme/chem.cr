@@ -427,7 +427,11 @@ class Chem::Topology
         end
       else
         avg_bond_angle = atom.bonded_atoms.combinations(2).mean do |(b, c)|
-          Spatial.angle b, atom, c
+          if cell = @structure.cell
+            Spatial.angle cell, b, atom, c
+          else
+            Spatial.angle b, atom, c
+          end
         end
         case {atom.element, avg_bond_angle}
         when {_, 155..}                then hybridation_map[atom] = 1
