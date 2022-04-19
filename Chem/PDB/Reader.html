@@ -846,7 +846,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/formats/pdb.cr#L3" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/2b911d26e5100ff91392ead8d5589854a7482e28/src/chem/formats/pdb.cr#L3" target="_blank">
         chem/formats/pdb.cr
       </a>
     
@@ -887,12 +887,12 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28io%3AIO%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Chet%3ABool%3Dtrue%2Csync_close%3ABool%3Dfalse%29-class-method" class="signature"><strong>.new</strong>(io : IO, alt_loc : Char? = <span class="n">nil</span>, chains : Enumerable(Char) | String | Nil = <span class="n">nil</span>, het : Bool = <span class="n">true</span>, sync_close : Bool = <span class="n">false</span>)</a>
+        <a href="#new%28io%3AIO%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%2Csync_close%3ABool%3Dfalse%29-class-method" class="signature"><strong>.new</strong>(io : IO, alt_loc : Char? = <span class="n">nil</span>, chains : Enumerable(Char) | String | Nil = <span class="n">nil</span>, guess_bonds : Bool = <span class="n">false</span>, het : Bool = <span class="n">true</span>, sync_close : Bool = <span class="n">false</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new%28path%3APath%7CString%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Chet%3ABool%3Dtrue%29%3Aself-class-method" class="signature"><strong>.new</strong>(path : Path | String, alt_loc : Char? = <span class="n">nil</span>, chains : Enumerable(Char) | String | Nil = <span class="n">nil</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span></a>
+        <a href="#new%28path%3APath%7CString%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%29%3Aself-class-method" class="signature"><strong>.new</strong>(path : Path | String, alt_loc : Char? = <span class="n">nil</span>, chains : Enumerable(Char) | String | Nil = <span class="n">nil</span>, guess_bonds : Bool = <span class="n">false</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span></a>
         
           <div class="summary"><p>Creates a new object from the given <em>path</em>.</p></div>
         
@@ -913,14 +913,14 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#open%28io%3AIO%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Chet%3ABool%3Dtrue%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method" class="signature"><strong>.open</strong>(io : IO, alt_loc : Char? = <span class="n">nil</span>, chains : Enumerable(Char) | String | Nil = <span class="n">nil</span>, het : Bool = <span class="n">true</span>, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )</a>
+        <a href="#open%28io%3AIO%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method" class="signature"><strong>.open</strong>(io : IO, alt_loc : Char? = <span class="n">nil</span>, chains : Enumerable(Char) | String | Nil = <span class="n">nil</span>, guess_bonds : Bool = <span class="n">false</span>, het : Bool = <span class="n">true</span>, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )</a>
         
           <div class="summary"><p>Creates a new object from the given <em>io</em>, yields it to the given block, and closes it at the end.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#open%28path%3APath%7CString%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Chet%3ABool%3Dtrue%2C%26%3Aself-%3E%29-class-method" class="signature"><strong>.open</strong>(path : Path | String, alt_loc : Char? = <span class="n">nil</span>, chains : Enumerable(Char) | String | Nil = <span class="n">nil</span>, het : Bool = <span class="n">true</span>, & : <span class="k">self</span> -> )</a>
+        <a href="#open%28path%3APath%7CString%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%2C%26%3Aself-%3E%29-class-method" class="signature"><strong>.open</strong>(path : Path | String, alt_loc : Char? = <span class="n">nil</span>, chains : Enumerable(Char) | String | Nil = <span class="n">nil</span>, guess_bonds : Bool = <span class="n">false</span>, het : Bool = <span class="n">true</span>, & : <span class="k">self</span> -> )</a>
         
           <div class="summary"><p>Creates a new object from the given <em>path</em> yields it to the given block, and closes it at the end.</p></div>
         
@@ -1112,28 +1112,28 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(io:IO,alt_loc:Char?=nil,chains:Enumerable(Char)|String|Nil=nil,het:Bool=true,sync_close:Bool=false)-class-method">
+    <div class="entry-detail" id="new(io:IO,alt_loc:Char?=nil,chains:Enumerable(Char)|String|Nil=nil,guess_bonds:Bool=false,het:Bool=true,sync_close:Bool=false)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(io : IO, alt_loc : <a href="../../Char.html">Char</a>? = <span class="n">nil</span>, chains : <a href="../../Enumerable.html">Enumerable</a>(<a href="../../Char.html">Char</a>) | String | Nil = <span class="n">nil</span>, het : Bool = <span class="n">true</span>, sync_close : Bool = <span class="n">false</span>)
+        def self.<strong>new</strong>(io : IO, alt_loc : <a href="../../Char.html">Char</a>? = <span class="n">nil</span>, chains : <a href="../../Enumerable.html">Enumerable</a>(<a href="../../Char.html">Char</a>) | String | Nil = <span class="n">nil</span>, guess_bonds : Bool = <span class="n">false</span>, het : Bool = <span class="n">true</span>, sync_close : Bool = <span class="n">false</span>)
 
-        <a class="method-permalink" href="#new%28io%3AIO%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Chet%3ABool%3Dtrue%2Csync_close%3ABool%3Dfalse%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28io%3AIO%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%2Csync_close%3ABool%3Dfalse%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/formats/pdb.cr#L28" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2b911d26e5100ff91392ead8d5589854a7482e28/src/chem/formats/pdb.cr#L28" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="new(path:Path|String,alt_loc:Char?=nil,chains:Enumerable(Char)|String|Nil=nil,het:Bool=true):self-class-method">
+    <div class="entry-detail" id="new(path:Path|String,alt_loc:Char?=nil,chains:Enumerable(Char)|String|Nil=nil,guess_bonds:Bool=false,het:Bool=true):self-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(path : Path | String, alt_loc : <a href="../../Char.html">Char</a>? = <span class="n">nil</span>, chains : <a href="../../Enumerable.html">Enumerable</a>(<a href="../../Char.html">Char</a>) | String | Nil = <span class="n">nil</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span>
+        def self.<strong>new</strong>(path : Path | String, alt_loc : <a href="../../Char.html">Char</a>? = <span class="n">nil</span>, chains : <a href="../../Enumerable.html">Enumerable</a>(<a href="../../Char.html">Char</a>) | String | Nil = <span class="n">nil</span>, guess_bonds : Bool = <span class="n">false</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#new%28path%3APath%7CString%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Chet%3ABool%3Dtrue%29%3Aself-class-method">#</a>
+        <a class="method-permalink" href="#new%28path%3APath%7CString%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1163,12 +1163,12 @@ constant.</p>
     Class Method Detail
   </h2>
   
-    <div class="entry-detail" id="open(io:IO,alt_loc:Char?=nil,chains:Enumerable(Char)|String|Nil=nil,het:Bool=true,sync_close:Bool=false,&amp;:self-&gt;)-class-method">
+    <div class="entry-detail" id="open(io:IO,alt_loc:Char?=nil,chains:Enumerable(Char)|String|Nil=nil,guess_bonds:Bool=false,het:Bool=true,sync_close:Bool=false,&amp;:self-&gt;)-class-method">
       <div class="signature">
         
-        def self.<strong>open</strong>(io : IO, alt_loc : <a href="../../Char.html">Char</a>? = <span class="n">nil</span>, chains : <a href="../../Enumerable.html">Enumerable</a>(<a href="../../Char.html">Char</a>) | String | Nil = <span class="n">nil</span>, het : Bool = <span class="n">true</span>, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )
+        def self.<strong>open</strong>(io : IO, alt_loc : <a href="../../Char.html">Char</a>? = <span class="n">nil</span>, chains : <a href="../../Enumerable.html">Enumerable</a>(<a href="../../Char.html">Char</a>) | String | Nil = <span class="n">nil</span>, guess_bonds : Bool = <span class="n">false</span>, het : Bool = <span class="n">true</span>, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )
 
-        <a class="method-permalink" href="#open%28io%3AIO%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Chet%3ABool%3Dtrue%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">#</a>
+        <a class="method-permalink" href="#open%28io%3AIO%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1184,12 +1184,12 @@ are forwarded to the constructor.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="open(path:Path|String,alt_loc:Char?=nil,chains:Enumerable(Char)|String|Nil=nil,het:Bool=true,&amp;:self-&gt;)-class-method">
+    <div class="entry-detail" id="open(path:Path|String,alt_loc:Char?=nil,chains:Enumerable(Char)|String|Nil=nil,guess_bonds:Bool=false,het:Bool=true,&amp;:self-&gt;)-class-method">
       <div class="signature">
         
-        def self.<strong>open</strong>(path : Path | String, alt_loc : <a href="../../Char.html">Char</a>? = <span class="n">nil</span>, chains : <a href="../../Enumerable.html">Enumerable</a>(<a href="../../Char.html">Char</a>) | String | Nil = <span class="n">nil</span>, het : Bool = <span class="n">true</span>, & : <span class="k">self</span> -> )
+        def self.<strong>open</strong>(path : Path | String, alt_loc : <a href="../../Char.html">Char</a>? = <span class="n">nil</span>, chains : <a href="../../Enumerable.html">Enumerable</a>(<a href="../../Char.html">Char</a>) | String | Nil = <span class="n">nil</span>, guess_bonds : Bool = <span class="n">false</span>, het : Bool = <span class="n">true</span>, & : <span class="k">self</span> -> )
 
-        <a class="method-permalink" href="#open%28path%3APath%7CString%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Chet%3ABool%3Dtrue%2C%26%3Aself-%3E%29-class-method">#</a>
+        <a class="method-permalink" href="#open%28path%3APath%7CString%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%2C%26%3Aself-%3E%29-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1241,7 +1241,7 @@ entries.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/formats/pdb.cr#L37" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2b911d26e5100ff91392ead8d5589854a7482e28/src/chem/formats/pdb.cr#L38" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1268,7 +1268,7 @@ decoded.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/formats/pdb.cr#L65" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2b911d26e5100ff91392ead8d5589854a7482e28/src/chem/formats/pdb.cr#L66" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1293,7 +1293,7 @@ decoded.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/444b8b6a4846684c90004d513fb96250db690d0f/src/chem/formats/pdb.cr#L51" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2b911d26e5100ff91392ead8d5589854a7482e28/src/chem/formats/pdb.cr#L52" target="_blank">View source</a>]
         
       </div>
     </div>
