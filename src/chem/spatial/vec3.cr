@@ -186,15 +186,16 @@ module Chem::Spatial
     end
 
     # Returns the projection of the vector on *vec*.
-    def proj(vec : self) : self
+    def project(vec : self) : self
       vec = vec.normalize
       dot(vec) * vec
     end
 
     # Returns the projection of the vector on the plane perpendicular
     # to *normal*.
-    def proj_plane(normal : self) : self
-      self - proj(normal)
+    def project_plane(normal : self) : self
+      self - project(normal)
+    end
     end
 
     # Returns a vector pointing in the same direction with the given

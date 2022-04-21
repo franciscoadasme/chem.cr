@@ -111,7 +111,9 @@ module Chem::Spatial
     # perpendicular to *v[0]* by taking their projections.
     def self.aligning(u : Tuple(Vec3, Vec3), to v : Tuple(Vec3, Vec3)) : self
       q = Spatial::Quat.aligning(u[0], to: v[0])
-      qq = Spatial::Quat.aligning (q * u[1]).proj_plane(v[0]), to: v[1].proj_plane(v[0])
+      u = (q * u[1]).project_plane(v[0])
+      v = v[1].project_plane(v[0])
+      qq = Spatial::Quat.aligning u, to: v
       qq * q
     end
 
