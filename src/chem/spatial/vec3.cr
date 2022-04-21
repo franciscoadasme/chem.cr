@@ -191,11 +191,9 @@ module Chem::Spatial
       dot(vec) * vec
     end
 
-    # Returns the projection of the vector on the plane perpendicular
-    # to *normal*.
-    def project_plane(normal : self) : self
-      self - project(normal)
-    end
+    # Returns the rejection of the vector on *vec*.
+    def reject(vec : self) : self
+      self - project(vec)
     end
 
     # Returns a vector pointing in the same direction with the given

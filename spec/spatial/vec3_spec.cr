@@ -176,9 +176,10 @@ describe Chem::Spatial::Vec3 do
     end
   end
 
-  describe "#project_plane" do
-    it "returns the projection on the plane" do
-      vec3(1, 2, 3).project_plane(vec3(1, 0, 1)).should be_close [-1, 2, 1], 1e-15
+  describe "#reject" do
+    it "returns the rejection on the vector" do
+      vec3(5, 5, 0).reject(vec3(0, 10, 0)).should be_close [5, 0, 0], 1e-15
+      vec3(1, 2, 3).reject(vec3(1, 0, 1)).should be_close [-1, 2, 1], 1e-15
     end
   end
 
