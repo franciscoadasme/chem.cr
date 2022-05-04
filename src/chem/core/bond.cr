@@ -34,6 +34,11 @@ module Chem
       @first == other.second && @second == other.first
     end
 
+    # Returns the bonded atoms. Atoms are sorted by their serial number.
+    def atoms : {Atom, Atom}
+      first.serial < second.serial ? {first, second} : {second, first}
+    end
+
     def bonded?(other : self) : Bool
       @first.in?(other) || @second.in?(other)
     end
