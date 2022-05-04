@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Crystal Docs 1.3.2">
-<meta name="crystal_docs.project_version" content="master">
+<meta name="crystal_docs.project_version" content="0.5.6">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
 
@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../js/doc.js"></script>
 
   <meta name="repository-name" content="chem.cr">
-  <title>Chem::Bond - chem.cr master</title>
+  <title>Chem::Bond - chem.cr 0.5.6</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
@@ -39,7 +39,7 @@
       </h1>
 
       <span class="project-version">
-        master
+        0.5.6
       </span>
     </div>
   </div>
@@ -70,11 +70,6 @@
       <a href="../Chem.html">Chem</a>
       
         <ul>
-  
-  <li class=" " data-id="chem.cr/Chem/ArrayView" data-name="chem::arrayview(t)">
-      <a href="../Chem/ArrayView.html">ArrayView</a>
-      
-    </li>
   
   <li class=" " data-id="chem.cr/Chem/Atom" data-name="chem::atom">
       <a href="../Chem/Atom.html">Atom</a>
@@ -828,9 +823,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/59dee6a77d41014890cc96e2741d123818c407af/src/chem/core/bond.cr#L2" target="_blank">
-        chem/core/bond.cr
-      </a>
+      chem/core/bond.cr
     
     <br/>
   
@@ -884,6 +877,13 @@
     
       <li class="entry-summary">
         <a href="#%5B%5D%28index%3AInt32%29%3AAtom-instance-method" class="signature"><strong>#[]</strong>(index : Int32) : Atom</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#atoms%3ATuple%28Atom%2CAtom%29-instance-method" class="signature"><strong>#atoms</strong> : Tuple(Atom, Atom)</a>
+        
+          <div class="summary"><p>Returns the bonded atoms.</p></div>
         
       </li>
     
@@ -1062,8 +1062,6 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/59dee6a77d41014890cc96e2741d123818c407af/src/chem/core/bond.cr#L17" target="_blank">View source</a>]
-        
       </div>
     </div>
   
@@ -1077,8 +1075,6 @@
       
       <br/>
       <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/59dee6a77d41014890cc96e2741d123818c407af/src/chem/core/bond.cr#L20" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1117,8 +1113,6 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/59dee6a77d41014890cc96e2741d123818c407af/src/chem/core/bond.cr#L32" target="_blank">View source</a>]
-        
       </div>
     </div>
   
@@ -1133,7 +1127,24 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/59dee6a77d41014890cc96e2741d123818c407af/src/chem/core/bond.cr#L24" target="_blank">View source</a>]
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="atoms:Tuple(Atom,Atom)-instance-method">
+      <div class="signature">
+        
+        def <strong>atoms</strong> : Tuple(<a href="../Chem/Atom.html">Atom</a>, <a href="../Chem/Atom.html">Atom</a>)
+
+        <a class="method-permalink" href="#atoms%3ATuple%28Atom%2CAtom%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the bonded atoms. Atoms are sorted by their serial number.</p>
+        </div>
+      
+      <br/>
+      <div>
         
       </div>
     </div>
@@ -1149,8 +1160,6 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/59dee6a77d41014890cc96e2741d123818c407af/src/chem/core/bond.cr#L37" target="_blank">View source</a>]
-        
       </div>
     </div>
   
@@ -1164,8 +1173,6 @@
       
       <br/>
       <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/59dee6a77d41014890cc96e2741d123818c407af/src/chem/core/bond.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1181,8 +1188,6 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/59dee6a77d41014890cc96e2741d123818c407af/src/chem/core/bond.cr#L15" target="_blank">View source</a>]
-        
       </div>
     </div>
   
@@ -1196,8 +1201,6 @@
       
       <br/>
       <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/59dee6a77d41014890cc96e2741d123818c407af/src/chem/core/bond.cr#L41" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1213,8 +1216,6 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/59dee6a77d41014890cc96e2741d123818c407af/src/chem/core/bond.cr#L82" target="_blank">View source</a>]
-        
       </div>
     </div>
   
@@ -1228,8 +1229,6 @@
       
       <br/>
       <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/59dee6a77d41014890cc96e2741d123818c407af/src/chem/core/bond.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1245,8 +1244,6 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/59dee6a77d41014890cc96e2741d123818c407af/src/chem/core/bond.cr#L15" target="_blank">View source</a>]
-        
       </div>
     </div>
   
@@ -1261,8 +1258,6 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/59dee6a77d41014890cc96e2741d123818c407af/src/chem/core/bond.cr#L11" target="_blank">View source</a>]
-        
       </div>
     </div>
   
@@ -1276,8 +1271,6 @@
       
       <br/>
       <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/59dee6a77d41014890cc96e2741d123818c407af/src/chem/core/bond.cr#L45" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1310,8 +1303,6 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/59dee6a77d41014890cc96e2741d123818c407af/src/chem/core/bond.cr#L49" target="_blank">View source</a>]
-        
       </div>
     </div>
   
@@ -1325,8 +1316,6 @@ and the values of all instance variables.</p>
       
       <br/>
       <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/59dee6a77d41014890cc96e2741d123818c407af/src/chem/core/bond.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1342,8 +1331,6 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/59dee6a77d41014890cc96e2741d123818c407af/src/chem/core/bond.cr#L13" target="_blank">View source</a>]
-        
       </div>
     </div>
   
@@ -1357,8 +1344,6 @@ and the values of all instance variables.</p>
       
       <br/>
       <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/59dee6a77d41014890cc96e2741d123818c407af/src/chem/core/bond.cr#L57" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1374,8 +1359,6 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/59dee6a77d41014890cc96e2741d123818c407af/src/chem/core/bond.cr#L66" target="_blank">View source</a>]
-        
       </div>
     </div>
   
@@ -1389,8 +1372,6 @@ and the values of all instance variables.</p>
       
       <br/>
       <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/59dee6a77d41014890cc96e2741d123818c407af/src/chem/core/bond.cr#L71" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1406,8 +1387,6 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/59dee6a77d41014890cc96e2741d123818c407af/src/chem/core/bond.cr#L12" target="_blank">View source</a>]
-        
       </div>
     </div>
   
@@ -1421,8 +1400,6 @@ and the values of all instance variables.</p>
       
       <br/>
       <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/59dee6a77d41014890cc96e2741d123818c407af/src/chem/core/bond.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1438,8 +1415,6 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/59dee6a77d41014890cc96e2741d123818c407af/src/chem/core/bond.cr#L15" target="_blank">View source</a>]
-        
       </div>
     </div>
   
@@ -1453,8 +1428,6 @@ and the values of all instance variables.</p>
       
       <br/>
       <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/59dee6a77d41014890cc96e2741d123818c407af/src/chem/core/bond.cr#L86" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1486,8 +1459,6 @@ which includes its class name and its object address.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/59dee6a77d41014890cc96e2741d123818c407af/src/chem/core/bond.cr#L96" target="_blank">View source</a>]
-        
       </div>
     </div>
   
@@ -1501,8 +1472,6 @@ which includes its class name and its object address.</p>
       
       <br/>
       <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/59dee6a77d41014890cc96e2741d123818c407af/src/chem/core/bond.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1518,8 +1487,6 @@ which includes its class name and its object address.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/59dee6a77d41014890cc96e2741d123818c407af/src/chem/core/bond.cr#L15" target="_blank">View source</a>]
-        
       </div>
     </div>
   
@@ -1534,8 +1501,6 @@ which includes its class name and its object address.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/59dee6a77d41014890cc96e2741d123818c407af/src/chem/core/bond.cr#L15" target="_blank">View source</a>]
-        
       </div>
     </div>
   
@@ -1549,8 +1514,6 @@ which includes its class name and its object address.</p>
       
       <br/>
       <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/59dee6a77d41014890cc96e2741d123818c407af/src/chem/core/bond.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
