@@ -407,11 +407,23 @@ describe Chem::Residue do
   end
 
   describe "#succ" do
+    it "raises if no succeeding residue" do
+      expect_raises(Chem::Error, "No residue follows A:ASN46") do
+        load_file("1crn.pdb").residues[-1].succ
+      end
+    end
+  end
+
+  describe "#succ?" do
     context "given a periodic peptide" do
       it "returns a residue for the last residue" do
         structure = load_file("hlx_gly.poscar", guess_bonds: true, guess_names: true)
-        structure.residues.map(&.succ.try(&.number)).should eq (2..13).to_a + [1]
+        structure.residues.map(&.succ?.try(&.number)).should eq (2..13).to_a + [1]
       end
+    end
+
+    it "returns nil if no succeeding residue" do
+      load_file("1crn.pdb").residues[-1].succ?.should be_nil
     end
   end
 
@@ -488,11 +500,23 @@ describe Chem::Residue do
   end
 
   describe "#pred" do
+    it "raises if no preceding residue" do
+      expect_raises(Chem::Error, "No residue precedes A:THR1") do
+        load_file("1crn.pdb").residues[0].pred
+      end
+    end
+  end
+
+  describe "#pred?" do
     context "given a periodic peptide" do
       it "returns the last residue for the first one" do
         structure = load_file("hlx_gly.poscar", guess_bonds: true, guess_names: true)
-        structure.residues.map(&.pred.try(&.number)).should eq [13] + (1..12).to_a
+        structure.residues.map(&.pred?.try(&.number)).should eq [13] + (1..12).to_a
       end
+    end
+
+    it "returns nil if no preceding residue" do
+      load_file("1crn.pdb").residues[0].pred?.should be_nil
     end
   end
 

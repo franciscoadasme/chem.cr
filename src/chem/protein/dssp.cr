@@ -58,9 +58,9 @@ module Chem::Protein
 
     private def alpha_angle(index : Int) : Float64
       if (j = res(index)["CA"]?) &&
-         (i = res(index).pred.try(&.["CA"]?)) &&
-         (k = res(index).succ.try(&.["CA"]?)) &&
-         (l = res(index).succ.try(&.succ).try(&.["CA"]?))
+         (i = res(index).pred?.try(&.["CA"]?)) &&
+         (k = res(index).succ?.try(&.["CA"]?)) &&
+         (l = res(index).succ?.try(&.succ?).try(&.["CA"]?))
         Spatial.dihedral i, j, k, l
       else
         360.0
@@ -391,7 +391,7 @@ module Chem::Protein
       def self.guess_hydrogen(residue : Residue) : Spatial::Vec3
         r_n = residue["N"]?.as(Atom).coords
         return r_n if residue.name == "PRO"
-        return r_n unless prev_res = residue.pred
+        return r_n unless prev_res = residue.pred?
         return r_n unless carbon = prev_res["C"]?
         return r_n unless oxygen = prev_res["O"]?
         r_n + ((carbon.coords - oxygen.coords) / Spatial.distance(carbon, oxygen))

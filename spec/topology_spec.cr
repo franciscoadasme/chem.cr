@@ -432,8 +432,8 @@ describe Chem::Topology do
       top.guess_bonds
 
       top.each_residue do |residue|
-        residue.pred.should_not be_nil
-        residue.succ.should_not be_nil
+        residue.pred?.should_not be_nil
+        residue.succ?.should_not be_nil
       end
     end
 
@@ -1002,18 +1002,18 @@ describe Chem::Topology do
       chains[3].residues.map(&.name).should eq %w(UNK)
       chains[3].residues.map(&.number).should eq [1]
 
-      chains[0].residues[0].pred.should be_nil
-      chains[0].residues[3].pred.try(&.name).should eq "GLY"
-      chains[0].residues[3].succ.try(&.name).should eq "ILE"
-      chains[0].residues[-1].succ.should be_nil
+      chains[0].residues[0].pred?.should be_nil
+      chains[0].residues[3].pred?.try(&.name).should eq "GLY"
+      chains[0].residues[3].succ?.try(&.name).should eq "ILE"
+      chains[0].residues[-1].succ?.should be_nil
     end
 
     it "renumbers residues of a periodic peptide" do
       top = load_file("hlx_gly.poscar").topology
       top.each_residue.cons(2, reuse: true).each do |(a, b)|
         a["C"].bonded?(b["N"]).should be_true
-        a.succ.should eq b
-        b.pred.should eq a
+        a.succ?.should eq b
+        b.pred?.should eq a
       end
     end
 

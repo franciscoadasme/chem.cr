@@ -499,6 +499,12 @@ module Chem
       @number
     end
 
+    # Returns the following residue if exists, else raises `Error`.
+    # Refer to `#succ?` for details.
+    def succ(strict : Bool = true, use_numbering : Bool = true) : Residue
+      succ?(strict, use_numbering) || raise Error.new("No residue follows #{self}")
+    end
+
     # Returns the following residue if exists, otherwise `nil`.
     #
     # It uses the link bond type of the associated residue type, if
@@ -514,7 +520,7 @@ module Chem
     # Note that when multiple residues can be connected to the same
     # residue (e.g., branched polymers), it returns the first residue
     # among them.
-    def succ(strict : Bool = true, use_numbering : Bool = true) : Residue?
+    def succ?(strict : Bool = true, use_numbering : Bool = true) : Residue?
       bonded_residue = nil
       if bond_t = type.try(&.link_bond)
         each_bonded_residue(bond_t, strict: strict) do |residue|
@@ -535,8 +541,8 @@ module Chem
     end
 
     def omega? : Float64?
-      if (ca1 = pred.try(&.[]?("CA"))) &&
-         (c = pred.try(&.[]?("C"))) &&
+      if (ca1 = pred?.try(&.[]?("CA"))) &&
+         (c = pred?.try(&.[]?("C"))) &&
          (n = self["N"]?) &&
          (ca2 = self["CA"]?)
         if cell = structure.cell
@@ -552,7 +558,7 @@ module Chem
     end
 
     def phi? : Float64?
-      if (ca1 = pred.try(&.[]?("C"))) &&
+      if (ca1 = pred?.try(&.[]?("C"))) &&
          (n = self["N"]?) &&
          (ca2 = self["CA"]?) &&
          (c = self["C"]?)
@@ -562,6 +568,12 @@ module Chem
           Spatial.dihedral ca1, n, ca2, c
         end
       end
+    end
+
+    # Returns the preceding residue if exists, else raises `Error`.
+    # Refer to `#pred?` for details.
+    def pred(strict : Bool = true, use_numbering : Bool = true) : Residue
+      pred?(strict, use_numbering) || raise Error.new("No residue precedes #{self}")
     end
 
     # Returns the preceding residue if exists, otherwise `nil`.
@@ -579,7 +591,7 @@ module Chem
     # Note that when multiple residues can be connected to the same
     # residue (e.g., branched polymers), it returns the last residue
     # among them.
-    def pred(strict : Bool = true, use_numbering : Bool = true) : Residue?
+    def pred?(strict : Bool = true, use_numbering : Bool = true) : Residue?
       bonded_residue = nil
       if bond_t = type.try(&.link_bond)
         each_bonded_residue(bond_t.inverse, strict: strict) do |residue|
@@ -603,7 +615,7 @@ module Chem
       if (n1 = self["N"]?) &&
          (ca = self["CA"]?) &&
          (c = self["C"]?) &&
-         (n2 = succ.try(&.[]?("N")))
+         (n2 = succ?.try(&.[]?("N")))
         if cell = structure.cell
           Spatial.dihedral cell, n1, ca, c, n2
         else

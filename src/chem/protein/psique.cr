@@ -201,8 +201,8 @@ module Chem::Protein
 
     private def in_bridge?(residue : Residue) : Bool
       residue.in?(@bridged_residues) ||
-        (residue.pred.in?(@bridged_residues) &&
-          residue.succ.in?(@bridged_residues))
+        (residue.pred?.in?(@bridged_residues) &&
+          residue.succ?.in?(@bridged_residues))
     end
 
     private def extend_elements
@@ -223,7 +223,7 @@ module Chem::Protein
 
     private def guess_hydrogen(residue : Residue) : Spatial::Vec3
       n = residue.dig("N").coords
-      if (pred = residue.pred) && (c = pred.dig?("C")) && (o = pred.dig?("O"))
+      if (pred = residue.pred?) && (c = pred.dig?("C")) && (o = pred.dig?("O"))
         n + (c.coords - o.coords).normalize
       else
         n
