@@ -28,6 +28,16 @@ class Chem::Topology
     self
   end
 
+  # Returns triples of bonded atoms that form an angle. See
+  # `#each_angle` for details.
+  def angles : Array({Atom, Atom, Atom})
+    Array({Atom, Atom, Atom}).new.tap do |angles|
+      each_angle do |a1, a2, a3|
+        angles << {a1, a2, a3}
+      end
+    end
+  end
+
   # Assign bonds, formal charges, and residue's kind from known residue
   # types.
   def apply_templates : Nil
@@ -58,6 +68,15 @@ class Chem::Topology
         end
       end
       prev_res = residue
+    end
+  end
+
+  # Returns the bonds between all atoms.
+  def bonds : Array(Bond)
+    Array(Bond).new.tap do |bonds|
+      each_bond do |bond|
+        bonds << bond
+      end
     end
   end
 
@@ -104,6 +123,16 @@ class Chem::Topology
     end
   end
 
+  # Returns quadruples of bonded atoms that form a dihedral angle. See
+  # `#each_dihedral` for details
+  def dihedrals : Array({Atom, Atom, Atom, Atom})
+    Array({Atom, Atom, Atom, Atom}).new.tap do |dihedrals|
+      each_dihedral do |a1, a2, a3, a4|
+        dihedrals << {a1, a2, a3, a4}
+      end
+    end
+  end
+
   def each_atom : Iterator(Atom)
     iterators = [] of Iterator(Atom)
     @chains.each do |chain|
@@ -118,6 +147,64 @@ class Chem::Topology
     @chains.each do |chain|
       chain.each_atom do |atom|
         yield atom
+      end
+    end
+  end
+
+  # Yields each bond between all atoms.
+  def each_bond(& : Bond ->) : Nil
+    each_atom do |atom|
+      atom.bonds.each do |bond|
+        yield bond if atom.serial < bond.other(atom).serial
+      end
+    end
+  end
+
+  # Yields each triple of atoms forming an angle.
+  #
+  # An angle is defined by three contiguous bonded atoms (1, 2, 3),
+  # where 1-2 and 2-3 are bonded.
+  def each_angle(& : Atom, Atom, Atom ->) : Nil
+    each_atom do |a2|
+      a2.bonded_atoms.each_combination(2, reuse: true) do |(a1, a3)|
+        a1, a3 = a3, a1 if a1.serial > a3.serial
+        yield a1, a2, a3
+      end
+    end
+  end
+
+  # Yields each quadruple of atoms forming a dihedral angle.
+  #
+  # A dihedral angle is defined by four contiguous bonded atoms (1, 2,
+  # 3, 4), where 1-2, 2-3, and 3-4 are bonded. It measures the angle
+  # between the planes formed by 1-2-3 and 2-3-4.
+  def each_dihedral(& : Atom, Atom, Atom, Atom ->) : Nil
+    dihedrals = Set({Atom, Atom, Atom, Atom}).new
+    each_angle do |a1, a2, a3|
+      a1.each_bonded_atom do |a0|
+        next if a0 == a2 || a0 == a3
+        dihedral = {a0, a1, a2, a3}
+        dihedral = dihedral.reverse if a0.serial > a3.serial
+        yield *dihedral if dihedrals.add?(dihedral) # false if already visited
+      end
+      a3.each_bonded_atom do |a4|
+        next if a4 == a2 || a4 == a1
+        dihedral = {a1, a2, a3, a4}
+        dihedral = dihedral.reverse if a1.serial > a4.serial
+        yield *dihedral if dihedrals.add?(dihedral) # false if already visited
+      end
+    end
+  end
+
+  # Yields each quadruple of atoms forming an improper dihedral angle.
+  #
+  # An improper dihedral angle is defined by four atoms (1, 2, 3, 4),
+  # where 1-2, 2-3, and 2-4 are bonded. It measures the out-of-plane
+  # angle between the planes formed by 1-2-3 and 2-3-4.
+  def each_improper(& : Atom, Atom, Atom, Atom ->) : Nil
+    each_angle do |a1, a2, a3|
+      a2.each_bonded_atom do |a4|
+        yield a1, a2, a3, a4 unless a4.in?(a1, a3)
       end
     end
   end
@@ -455,6 +542,16 @@ class Chem::Topology
         .uniq!
         .reject!(&.other?)
       residue.kind = types.size == 1 ? types[0] : Residue::Kind::Other
+    end
+  end
+
+  # Returns quadruples of bonded atoms that form an improper dihedral
+  # angle. See `#each_improper` for details
+  def impropers : Array({Atom, Atom, Atom, Atom})
+    Array({Atom, Atom, Atom, Atom}).new.tap do |impropers|
+      each_improper do |a1, a2, a3, a4|
+        impropers << {a1, a2, a3, a4}
+      end
     end
   end
 
