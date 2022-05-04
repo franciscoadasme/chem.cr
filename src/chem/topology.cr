@@ -350,7 +350,7 @@ class Chem::Topology
       # computing the valence each cycle
       hybridization_map = guess_hybridization
       atoms.select { |atom| hybridization_map[atom]? }
-        .sort_by! { |atom| {atom.missing_valence, atom.serial} }
+        .sort_by { |atom| {atom.missing_valence, atom.serial} }
         .each do |atom|
           missing_valence = atom.missing_valence
           next if missing_valence == 0
@@ -499,7 +499,7 @@ class Chem::Topology
   private def guess_hybridization : Hash(Atom, Int32)
     hybridation_map = Hash(Atom, Int32).new
     # atoms with multiple connectivity first, terminal (single-bonded) atoms last
-    atoms.sort_by!(&.degree.-).each do |atom|
+    atoms.sort_by(&.degree.-).each do |atom|
       case atom.degree
       when 0
         next

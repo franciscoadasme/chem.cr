@@ -1,3 +1,4 @@
+require "views"
 require "./chem/core_ext/**"
 
 require "./chem/spatial"
@@ -13,11 +14,9 @@ require "./chem/core/atom"
 require "./chem/core/residue_collection"
 require "./chem/core/chain"
 require "./chem/core/chain_collection"
-require "./chem/core/array_view"
 require "./chem/core/atom_view"
 require "./chem/core/residue_view"
 require "./chem/core/chain_view"
-# require "./chem/core/unit_cell"
 require "./chem/core/structure"
 require "./chem/core/structure/*"
 

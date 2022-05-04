@@ -1,6 +1,6 @@
 module Chem
   struct AtomView
-    include ArrayView(Atom)
+    include ArrayWrapper(Atom)
     include AtomCollection
     include ChainCollection
     include ResidueCollection

@@ -62,7 +62,7 @@ class Chem::Topology::Detector
   end
 
   def unmatched_atoms : AtomView
-    AtomView.new @atoms
+    AtomView.new @atoms.to_a.sort_by!(&.serial)
   end
 
   private def compute_atom_descriptions(atoms : Enumerable(Atom))

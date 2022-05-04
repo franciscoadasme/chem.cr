@@ -980,7 +980,7 @@ describe Chem::Topology do
   describe "#renumber_residues_by" do
     it "renumbers residues by the given order" do
       top = load_file("3sgr.pdb").topology
-      expected = top.chains.map { |chain| chain.residues.sort_by!(&.code) }
+      expected = top.chains.map { |chain| chain.residues.sort_by(&.code) }
       top.renumber_residues_by(&.code)
       top.chains.map(&.residues).should eq expected
     end

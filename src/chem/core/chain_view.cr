@@ -1,6 +1,6 @@
 module Chem
   struct ChainView
-    include ArrayView(Chain)
+    include ArrayWrapper(Chain)
     include AtomCollection
     include ChainCollection
     include ResidueCollection

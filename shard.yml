@@ -6,6 +6,10 @@ authors:
 
 crystal: 1.2.1
 
+dependencies:
+  views:
+    github: franciscoadasme/views
+
 executables:
   - psique
 

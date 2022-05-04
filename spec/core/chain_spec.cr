@@ -31,7 +31,7 @@ describe Chem::Chain do
   describe "#renumber_residues_by" do
     it "renumbers residues by the given order" do
       chain = load_file("3sgr.pdb").dig('A')
-      expected = chain.residues.sort_by!(&.name)
+      expected = chain.residues.sort_by(&.name)
       chain.renumber_residues_by(&.name)
       chain.residues.should eq expected
     end
