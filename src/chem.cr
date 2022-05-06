@@ -26,6 +26,7 @@ require "./chem/residue_type"
 require "./chem/residue_type/*"
 
 require "./chem/protein"
+require "./chem/connectivity"
 require "./chem/topology"
 
 require "./chem/pull_parser"

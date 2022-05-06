@@ -1,5 +1,7 @@
 module Chem
   class Atom
+    include Comparable(Atom)
+
     getter bonds : BondArray { BondArray.new self }
     property constraint : Constraint?
     property coords : Spatial::Vec3
