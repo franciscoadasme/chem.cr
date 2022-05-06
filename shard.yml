@@ -9,6 +9,7 @@ crystal: 1.2.1
 dependencies:
   views:
     github: franciscoadasme/views
+    branch: master
 
 executables:
   - psique
