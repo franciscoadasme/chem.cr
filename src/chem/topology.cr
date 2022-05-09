@@ -34,12 +34,7 @@ class Chem::Topology
 
   # Returns the angles in the topology. See `Angle` for details.
   def angles : Array::View(Angle)
-    @angles.clear
-    each_atom do |a2|
-      a2.bonded_atoms.each_combination(2, reuse: true) do |(a1, a3)|
-        @angles << Angle[a1, a2, a3]
-      end
-    end
+    guess_angles if @angles.empty?
     @angles.view
   end
 
@@ -134,22 +129,7 @@ class Chem::Topology
   # Returns the dihedral angles in the topology. See `Dihedral` for
   # details.
   def dihedrals : Array::View(Dihedral)
-    @dihedrals.clear
-    # TODO: use a sorted set
-    dihedrals = Set(Dihedral).new
-    angles.each do |angle|
-      a1, a2, a3 = angle.atoms
-      a1.each_bonded_atom do |a0|
-        next if a0 == a2 || a0 == a3
-        dihedrals << Dihedral[a0, a1, a2, a3]
-      end
-
-      a3.each_bonded_atom do |a4|
-        next if a4 == a2 || a4 == a1
-        dihedrals << Dihedral[a1, a2, a3, a4]
-      end
-    end
-    dihedrals.each { |dihedral| @dihedrals << dihedral }
+    guess_dihedrals if @dihedrals.empty?
     @dihedrals.view
   end
 
@@ -189,6 +169,18 @@ class Chem::Topology
     @chains.each do |chain|
       chain.each_residue do |residue|
         yield residue
+      end
+    end
+  end
+
+  # Determines angles based on connectivity. See `Angle` for definition.
+  #
+  # NOTE: It deletes existing angles.
+  def guess_angles : Nil
+    @angles.clear
+    each_atom do |a2|
+      a2.bonded_atoms.each_combination(2, reuse: true) do |(a1, a3)|
+        @angles << Angle[a1, a2, a3]
       end
     end
   end
@@ -341,6 +333,29 @@ class Chem::Topology
     end
   end
 
+  # Determines dihedral angles based on connectivity. See `Dihedral` for
+  # definition.
+  #
+  # NOTE: It deletes existing dihedral angles.
+  def guess_dihedrals : Nil
+    @dihedrals.clear
+    # TODO: use a sorted set
+    dihedrals = Set(Dihedral).new
+    angles.each do |angle|
+      a1, a2, a3 = angle.atoms
+      a1.each_bonded_atom do |a0|
+        next if a0 == a2 || a0 == a3
+        dihedrals << Dihedral[a0, a1, a2, a3]
+      end
+
+      a3.each_bonded_atom do |a4|
+        next if a4 == a2 || a4 == a1
+        dihedrals << Dihedral[a1, a2, a3, a4]
+      end
+    end
+    dihedrals.each { |dihedral| @dihedrals << dihedral }
+  end
+
   # Sets the formal charges based on the existing bonds.
   #
   # For most cases, the formal charge is calculated as
@@ -376,6 +391,30 @@ class Chem::Topology
         atom.formal_charge = atom.element.valence_electrons - target_electrons + valence
       end
     end
+  end
+
+  # Determines improper dihedral angles based on connectivity. See
+  # `Improper` for definition.
+  #
+  # Improper dihedral angles are often used to constraint the planarity
+  # of certain functional groups of molecules in molecular mechanics
+  # simulations, and so not every possible improper dihedral angle is
+  # required. This method lists every possible improper dihedral angle
+  # following the formal definition, which will probably generate
+  # extraneous angles.
+  #
+  # NOTE: It deletes existing improper dihedral angles.
+  def guess_impropers : Nil
+    @impropers.clear
+    # TODO: use a sorted set
+    impropers = Set(Improper).new
+    angles.each do |angle|
+      a1, a2, a3 = angle.atoms
+      a2.each_bonded_atom do |a4|
+        impropers << Improper[a1, a2, a3, a4] unless a4.in?(a1, a3)
+      end
+    end
+    impropers.each { |improper| @impropers << improper }
   end
 
   # Detects and assigns topology names from known residue types based on
@@ -510,16 +549,7 @@ class Chem::Topology
   # Returns the improper dihedral angles in the topology. See `Improper`
   # for details.
   def impropers : Array::View(Improper)
-    @impropers.clear
-    # TODO: use a sorted set
-    impropers = Set(Improper).new
-    angles.each do |angle|
-      a1, a2, a3 = angle.atoms
-      a2.each_bonded_atom do |a4|
-        impropers << Improper[a1, a2, a3, a4] unless a4.in?(a1, a3)
-      end
-    end
-    impropers.each { |improper| @impropers << improper }
+    guess_impropers if @impropers.empty?
     @impropers.view
   end
 

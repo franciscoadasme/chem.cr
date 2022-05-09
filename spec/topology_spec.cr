@@ -1068,9 +1068,10 @@ describe Chem::Topology do
     end
   end
 
-  describe "#angles" do
-    it "returns the angles" do
+  describe "#guess_angles" do
+    it "computes the angles" do
       top = load_file("8FX.mol2").topology
+      top.guess_angles
       top.angles.map(&.atoms.map(&.serial)).sort!.should eq [
         {1, 2, 3}, {1, 2, 23}, {1, 28, 27}, {1, 28, 29}, {2, 1, 28}, {2, 1, 30},
         {2, 3, 4}, {2, 3, 31}, {3, 2, 23}, {3, 4, 29}, {3, 4, 32}, {4, 3, 31},
@@ -1096,9 +1097,10 @@ describe Chem::Topology do
     end
   end
 
-  describe "#dihedrals" do
-    it "returns the dihedrals" do
+  describe "#guess_dihedrals" do
+    it "computes the dihedrals" do
       top = load_file("8FX.mol2").topology
+      top.guess_dihedrals
       top.dihedrals.map(&.atoms.map(&.serial)).sort!.should eq [
         {1, 2, 3, 4}, {1, 2, 3, 31}, {1, 28, 29, 4}, {1, 28, 29, 24},
         {2, 1, 28, 27}, {2, 1, 28, 29}, {2, 3, 4, 29}, {2, 3, 4, 32},
@@ -1142,9 +1144,10 @@ describe Chem::Topology do
     end
   end
 
-  describe "#impropers" do
+  describe "#guess_impropers" do
     it "returns the impropers" do
       top = load_file("8FX.mol2").topology
+      top.guess_impropers
       top.impropers.map(&.atoms.map(&.serial)).sort!.should eq [
         {1, 2, 3, 23}, {1, 28, 27, 29}, {2, 1, 28, 30}, {2, 3, 4, 31},
         {3, 4, 29, 32}, {4, 29, 24, 28}, {5, 6, 7, 33}, {5, 15, 27, 45},
