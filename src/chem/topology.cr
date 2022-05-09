@@ -32,7 +32,7 @@ class Chem::Topology
     self
   end
 
-  # Returns the angles in the topology. See `Angle` for details.
+  # Returns the angles in the topology. See `Angle` for definition.
   def angles : Array::View(Angle)
     guess_angles if @angles.empty?
     @angles.view
@@ -127,7 +127,7 @@ class Chem::Topology
   end
 
   # Returns the dihedral angles in the topology. See `Dihedral` for
-  # details.
+  # definition.
   def dihedrals : Array::View(Dihedral)
     guess_dihedrals if @dihedrals.empty?
     @dihedrals.view
@@ -173,7 +173,8 @@ class Chem::Topology
     end
   end
 
-  # Determines angles based on connectivity. See `Angle` for definition.
+  # Determines the angles based on connectivity. See `Angle` for
+  # definition.
   #
   # NOTE: It deletes existing angles.
   def guess_angles : Nil
@@ -185,7 +186,7 @@ class Chem::Topology
     end
   end
 
-  # Determines bonds from connectivity and geometry.
+  # Determines the bonds from connectivity and geometry.
   #
   # Bonds are added when the pairwise distances are within the
   # corresponding covalent distances (see
@@ -333,8 +334,8 @@ class Chem::Topology
     end
   end
 
-  # Determines dihedral angles based on connectivity. See `Dihedral` for
-  # definition.
+  # Determines the dihedral angles based on connectivity. See `Dihedral`
+  # for definition.
   #
   # NOTE: It deletes existing dihedral angles.
   def guess_dihedrals : Nil
@@ -393,7 +394,7 @@ class Chem::Topology
     end
   end
 
-  # Determines improper dihedral angles based on connectivity. See
+  # Determines the improper dihedral angles based on connectivity. See
   # `Improper` for definition.
   #
   # Improper dihedral angles are often used to constraint the planarity
@@ -547,7 +548,7 @@ class Chem::Topology
   end
 
   # Returns the improper dihedral angles in the topology. See `Improper`
-  # for details.
+  # for definition.
   def impropers : Array::View(Improper)
     guess_impropers if @impropers.empty?
     @impropers.view
