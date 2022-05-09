@@ -8,6 +8,10 @@ class Chem::Topology
   @chain_table = {} of Char => Chain
   @chains = [] of Chain
 
+  @angles = [] of Angle
+  @dihedrals = [] of Dihedral
+  @impropers = [] of Improper
+
   # TODO: This hack is only needed to give access atom, residue, etc. to
   # the encompasing structure that currently holds the cell and
   # coordinates.
@@ -29,14 +33,14 @@ class Chem::Topology
   end
 
   # Returns the angles in the topology. See `Angle` for details.
-  def angles : Array(Angle)
-    Array(Angle).new.tap do |angles|
-      each_atom do |a2|
-        a2.bonded_atoms.each_combination(2, reuse: true) do |(a1, a3)|
-          angles << Angle[a1, a2, a3]
-        end
+  def angles : Array::View(Angle)
+    @angles.clear
+    each_atom do |a2|
+      a2.bonded_atoms.each_combination(2, reuse: true) do |(a1, a3)|
+        @angles << Angle[a1, a2, a3]
       end
     end
+    @angles.view
   end
 
   # Assign bonds, formal charges, and residue's kind from known residue
@@ -129,7 +133,8 @@ class Chem::Topology
 
   # Returns the dihedral angles in the topology. See `Dihedral` for
   # details.
-  def dihedrals : Array(Dihedral)
+  def dihedrals : Array::View(Dihedral)
+    @dihedrals.clear
     # TODO: use a sorted set
     dihedrals = Set(Dihedral).new
     angles.each do |angle|
@@ -138,12 +143,14 @@ class Chem::Topology
         next if a0 == a2 || a0 == a3
         dihedrals << Dihedral[a0, a1, a2, a3]
       end
+
       a3.each_bonded_atom do |a4|
         next if a4 == a2 || a4 == a1
         dihedrals << Dihedral[a1, a2, a3, a4]
       end
     end
-    dihedrals.to_a
+    dihedrals.each { |dihedral| @dihedrals << dihedral }
+    @dihedrals.view
   end
 
   def each_atom : Iterator(Atom)
@@ -502,7 +509,8 @@ class Chem::Topology
 
   # Returns the improper dihedral angles in the topology. See `Improper`
   # for details.
-  def impropers : Array(Improper)
+  def impropers : Array::View(Improper)
+    @impropers.clear
     # TODO: use a sorted set
     impropers = Set(Improper).new
     angles.each do |angle|
@@ -511,7 +519,8 @@ class Chem::Topology
         impropers << Improper[a1, a2, a3, a4] unless a4.in?(a1, a3)
       end
     end
-    impropers.to_a
+    impropers.each { |improper| @impropers << improper }
+    @impropers.view
   end
 
   def n_atoms : Int32
