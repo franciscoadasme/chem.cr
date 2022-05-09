@@ -8,9 +8,13 @@ class Chem::Topology
   @chain_table = {} of Char => Chain
   @chains = [] of Chain
 
-  @angles = [] of Angle
-  @dihedrals = [] of Dihedral
-  @impropers = [] of Improper
+  # Angles in the topology. See `Angle` for definition.
+  setter angles = [] of Angle
+  # Dihedral angles in the topology. See `Dihedral` for definition.
+  setter dihedrals = [] of Dihedral
+  # Improper dihedral angles in the topology. See `Improper` for
+  # definition.
+  setter impropers = [] of Improper
 
   # TODO: This hack is only needed to give access atom, residue, etc. to
   # the encompasing structure that currently holds the cell and
