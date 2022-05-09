@@ -1,6 +1,6 @@
 module Chem
   struct ResidueView
-    include ArrayWrapper(Residue)
+    include Array::Wrapper(Residue)
     include AtomCollection
     include ChainCollection
     include ResidueCollection

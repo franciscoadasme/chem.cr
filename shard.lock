@@ -2,5 +2,5 @@ version: 2.0
 shards:
   views:
     git: https://github.com/franciscoadasme/views.git
-    version: 0.1.0+git.commit.7872871d36f861f45df0b1d35b8bf276e259ac3b
+    version: 0.1.0+git.commit.3a6dcfe203ff3d6e942bf5a204404b80909f7073
 
