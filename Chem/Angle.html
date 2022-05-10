@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../js/doc.js"></script>
 
   <meta name="repository-name" content="chem.cr">
-  <title>Chem::AtomType - chem.cr 0.5.6</title>
+  <title>Chem::Angle - chem.cr 0.5.6</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
@@ -71,7 +71,7 @@
       
         <ul>
   
-  <li class=" " data-id="chem.cr/Chem/Angle" data-name="chem::angle">
+  <li class=" current" data-id="chem.cr/Chem/Angle" data-name="chem::angle">
       <a href="../Chem/Angle.html">Angle</a>
       
     </li>
@@ -86,7 +86,7 @@
       
     </li>
   
-  <li class=" current" data-id="chem.cr/Chem/AtomType" data-name="chem::atomtype">
+  <li class=" " data-id="chem.cr/Chem/AtomType" data-name="chem::atomtype">
       <a href="../Chem/AtomType.html">AtomType</a>
       
     </li>
@@ -825,19 +825,51 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">class</span> Chem::AtomType
+  <span class="kind">struct</span> Chem::Angle
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Chem/AtomType.html">Chem::AtomType</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Chem/Angle.html">Chem::Angle</a></li><li class="superclass">Struct</li><li class="superclass">Value</li><li class="superclass">Object</li></ul>
+
+
+
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>An <code><a href="../Chem/Angle.html">Angle</a></code> provides a canonical representation of an angle between
+three bonded atoms.</p>
+<p>An angle is defined by two contiguous bonds:</p>
+<pre><code class="language-crystal">A       C
+  \   /
+    B</code></pre>
+<p>It measures the angle between the two vectors defined by the atoms
+(A,B) and (B,C).</p>
 
 
 
 
 
-
-
+  <h2>
+    <a id="included-modules" class="anchor" href="#included-modules">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Included Modules
+  </h2>
+  <ul class="other-types-list">
+    
+      <li class="other-type"><a href="../Chem/Connectivity.html">Chem::Connectivity</a>({<a href="../Chem/Atom.html">Chem::Atom</a>, <a href="../Chem/Atom.html">Chem::Atom</a>, <a href="../Chem/Atom.html">Chem::Atom</a>})</li>
+    
+  </ul>
 
 
 
@@ -858,7 +890,7 @@
   </h2>
   
     
-      chem/atom_type.cr
+      chem/connectivity.cr
     
     <br/>
   
@@ -878,7 +910,16 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28name%3AString%2Celement%3AElement%7CString%2Cvalence%3AInt32%3F%3Dnil%2Cformal_charge%3AInt32%3D0%29-class-method" class="signature"><strong>.new</strong>(name : String, element : Element | String, valence : Int32? = <span class="n">nil</span>, formal_charge : Int32 = <span class="n">0</span>)</a>
+        <a href="#%5B%5D%28%2Aatoms%3AAtom%29%3Aself-class-method" class="signature"><strong>.[]</strong>(*atoms : Atom) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a new connectivity object.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new%28%2Aatoms%3AAtom%29%3Aself-class-method" class="signature"><strong>.new</strong>(*atoms : Atom) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a new connectivity object.</p></div>
         
       </li>
     
@@ -899,41 +940,9 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#element%3AElement-instance-method" class="signature"><strong>#element</strong> : Element</a>
+        <a href="#measure%3AFloat64-instance-method" class="signature"><strong>#measure</strong> : Float64</a>
         
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#formal_charge%3AInt32-instance-method" class="signature"><strong>#formal_charge</strong> : Int32</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#inspect%28io%3AIO%29%3ANil-instance-method" class="signature"><strong>#inspect</strong>(io : IO) : Nil</a>
-        
-          <div class="summary"><p>Appends a String representation of this object which includes its class name, its object address and the values of all instance variables.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#name%3AString-instance-method" class="signature"><strong>#name</strong> : String</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#suffix%3AString-instance-method" class="signature"><strong>#suffix</strong> : String</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#to_s%28io%3AIO%29-instance-method" class="signature"><strong>#to_s</strong>(io : IO)</a>
-        
-          <div class="summary"><p>Appends a short String representation of this object which includes its class name and its object address.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#valence%3AInt32%3F-instance-method" class="signature"><strong>#valence</strong> : Int32?</a>
+          <div class="summary"><p>Returns the current value of the angle in radians.</p></div>
         
       </li>
     
@@ -944,6 +953,74 @@
 
 
 <div class="methods-inherited">
+  
+    
+
+  <h3>Instance methods inherited from module <code><a href="../Chem/Connectivity.html">Chem::Connectivity</a>({<a href="../Chem/Atom.html">Chem::Atom</a>, <a href="../Chem/Atom.html">Chem::Atom</a>, <a href="../Chem/Atom.html">Chem::Atom</a>})</code></h3>
+  
+  
+    <a href="../Chem/Connectivity.html#%3C%3D%3E%28rhs%3Aself%29%3AInt32-instance-method" class="tooltip">
+      <span><=>(rhs : <span class="k">self</span>) : Int32</span>
+    <=></a>, 
+    
+  
+    <a href="../Chem/Connectivity.html#atoms%3A%7BChem%3A%3AAtom%2CChem%3A%3AAtom%2CChem%3A%3AAtom%7D-instance-method" class="tooltip">
+      <span>atoms : {Chem::Atom, Chem::Atom, Chem::Atom}</span>
+    atoms</a>, 
+    
+  
+    <a href="../Chem/Connectivity.html#inspect%28io%3AIO%29%3ANil-instance-method" class="tooltip">
+      <span>inspect(io : IO) : Nil</span>
+    inspect</a>, 
+    
+  
+    <a href="../Chem/Connectivity.html#measure%3AFloat64-instance-method" class="tooltip">
+      <span>measure : Float64</span>
+    measure</a>, 
+    
+  
+    <a href="../Chem/Connectivity.html#to_s%28io%3AIO%29%3ANil-instance-method" class="tooltip">
+      <span>to_s(io : IO) : Nil</span>
+    to_s</a>
+    
+  
+
+
+    
+
+  <h3>Constructor methods inherited from module <code><a href="../Chem/Connectivity.html">Chem::Connectivity</a>({<a href="../Chem/Atom.html">Chem::Atom</a>, <a href="../Chem/Atom.html">Chem::Atom</a>, <a href="../Chem/Atom.html">Chem::Atom</a>})</code></h3>
+  
+  
+    <a href="../Chem/Connectivity.html#new%28atoms%3A%7BChem%3A%3AAtom%2CChem%3A%3AAtom%2CChem%3A%3AAtom%7D%29-class-method" class="tooltip">
+      <span>new(atoms : {Chem::Atom, Chem::Atom, Chem::Atom})</span>
+    new</a>
+    
+  
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
   
     
 
@@ -977,13 +1054,37 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(name:String,element:Element|String,valence:Int32?=nil,formal_charge:Int32=0)-class-method">
+    <div class="entry-detail" id="[](*atoms:Atom):self-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(name : String, element : <a href="../Chem/Element.html">Element</a> | String, valence : Int32? = <span class="n">nil</span>, formal_charge : Int32 = <span class="n">0</span>)
+        def self.<strong>[]</strong>(*atoms : <a href="../Chem/Atom.html">Atom</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#new%28name%3AString%2Celement%3AElement%7CString%2Cvalence%3AInt32%3F%3Dnil%2Cformal_charge%3AInt32%3D0%29-class-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%28%2Aatoms%3AAtom%29%3Aself-class-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns a new connectivity object. Shorthand for <code>#new({a, b, ...})</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(*atoms:Atom):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(*atoms : <a href="../Chem/Atom.html">Atom</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#new%28%2Aatoms%3AAtom%29%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a new connectivity object. Shorthand for <code>#new({a, b, ...})</code>.</p>
+        </div>
       
       <br/>
       <div>
@@ -1005,130 +1106,18 @@
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="element:Element-instance-method">
+    <div class="entry-detail" id="measure:Float64-instance-method">
       <div class="signature">
         
-        def <strong>element</strong> : <a href="../Chem/Element.html">Element</a>
+        def <strong>measure</strong> : Float64
 
-        <a class="method-permalink" href="#element%3AElement-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="formal_charge:Int32-instance-method">
-      <div class="signature">
-        
-        def <strong>formal_charge</strong> : Int32
-
-        <a class="method-permalink" href="#formal_charge%3AInt32-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="inspect(io:IO):Nil-instance-method">
-      <div class="signature">
-        
-        def <strong>inspect</strong>(io : IO) : Nil
-
-        <a class="method-permalink" href="#inspect%28io%3AIO%29%3ANil-instance-method">#</a>
+        <a class="method-permalink" href="#measure%3AFloat64-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-            <div class="doc-inherited">
-              Description copied from class Reference
-            </div>
-          
-          <p>Appends a String representation of this object
-which includes its class name, its object address
-and the values of all instance variables.</p>
-<pre><code class="language-crystal"><span class="k">class</span> <span class="t">Person</span>
-  <span class="k">def</span> <span class="m">initialize</span>(@name : <span class="t">String</span>, @age : <span class="t">Int32</span>)
-  <span class="k">end</span>
-<span class="k">end</span>
-
-<span class="t">Person</span>.<span class="k">new</span>(<span class="s">&quot;John&quot;</span>, <span class="n">32</span>).inspect <span class="c"># =&gt; #&lt;Person:0x10fd31f20 @name=&quot;John&quot;, @age=32&gt;</span></code></pre>
+          <p>Returns the current value of the angle in radians.</p>
         </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="name:String-instance-method">
-      <div class="signature">
-        
-        def <strong>name</strong> : String
-
-        <a class="method-permalink" href="#name%3AString-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="suffix:String-instance-method">
-      <div class="signature">
-        
-        def <strong>suffix</strong> : String
-
-        <a class="method-permalink" href="#suffix%3AString-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="to_s(io:IO)-instance-method">
-      <div class="signature">
-        
-        def <strong>to_s</strong>(io : IO)
-
-        <a class="method-permalink" href="#to_s%28io%3AIO%29-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-            <div class="doc-inherited">
-              Description copied from class Reference
-            </div>
-          
-          <p>Appends a short String representation of this object
-which includes its class name and its object address.</p>
-<pre><code class="language-crystal"><span class="k">class</span> <span class="t">Person</span>
-  <span class="k">def</span> <span class="m">initialize</span>(@name : <span class="t">String</span>, @age : <span class="t">Int32</span>)
-  <span class="k">end</span>
-<span class="k">end</span>
-
-<span class="t">Person</span>.<span class="k">new</span>(<span class="s">&quot;John&quot;</span>, <span class="n">32</span>).to_s <span class="c"># =&gt; #&lt;Person:0x10a199f20&gt;</span></code></pre>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="valence:Int32?-instance-method">
-      <div class="signature">
-        
-        def <strong>valence</strong> : Int32?
-
-        <a class="method-permalink" href="#valence%3AInt32%3F-instance-method">#</a>
-      </div>
       
       <br/>
       <div>

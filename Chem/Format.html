@@ -71,6 +71,11 @@
       
         <ul>
   
+  <li class=" " data-id="chem.cr/Chem/Angle" data-name="chem::angle">
+      <a href="../Chem/Angle.html">Angle</a>
+      
+    </li>
+  
   <li class=" " data-id="chem.cr/Chem/Atom" data-name="chem::atom">
       <a href="../Chem/Atom.html">Atom</a>
       
@@ -136,6 +141,11 @@
       
     </li>
   
+  <li class=" " data-id="chem.cr/Chem/Connectivity" data-name="chem::connectivity(t)">
+      <a href="../Chem/Connectivity.html">Connectivity</a>
+      
+    </li>
+  
   <li class=" " data-id="chem.cr/Chem/Constraint" data-name="chem::constraint">
       <a href="../Chem/Constraint.html">Constraint</a>
       
@@ -158,6 +168,11 @@
   
 </ul>
 
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Dihedral" data-name="chem::dihedral">
+      <a href="../Chem/Dihedral.html">Dihedral</a>
       
     </li>
   
@@ -253,6 +268,11 @@
   
 </ul>
 
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Improper" data-name="chem::improper">
+      <a href="../Chem/Improper.html">Improper</a>
       
     </li>
   
@@ -378,6 +398,21 @@
   
 </ul>
 
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/PSF" data-name="chem::psf">
+      <a href="../Chem/PSF.html">PSF</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/PSF/Reader" data-name="chem::psf::reader">
+      <a href="../Chem/PSF/Reader.html">Reader</a>
       
     </li>
   
@@ -933,8 +968,17 @@ information declared in the annotations.</p>
       </dd>
       
     
+      <dt class="entry-const" id="PSF">
+        <strong>PSF</strong> = <code><span class="n">7</span></code>
+      </dt>
+      
+      <dd class="entry-const-doc">
+        <p>The PSF format implemented by <code><a href="../Chem/PSF.html">Chem::PSF</a></code>.</p>
+      </dd>
+      
+    
       <dt class="entry-const" id="Poscar">
-        <strong>Poscar</strong> = <code><span class="n">7</span></code>
+        <strong>Poscar</strong> = <code><span class="n">8</span></code>
       </dt>
       
       <dd class="entry-const-doc">
@@ -943,7 +987,7 @@ information declared in the annotations.</p>
       
     
       <dt class="entry-const" id="PyMOL">
-        <strong>PyMOL</strong> = <code><span class="n">8</span></code>
+        <strong>PyMOL</strong> = <code><span class="n">9</span></code>
       </dt>
       
       <dd class="entry-const-doc">
@@ -952,7 +996,7 @@ information declared in the annotations.</p>
       
     
       <dt class="entry-const" id="Stride">
-        <strong>Stride</strong> = <code><span class="n">9</span></code>
+        <strong>Stride</strong> = <code><span class="n">10</span></code>
       </dt>
       
       <dd class="entry-const-doc">
@@ -961,7 +1005,7 @@ information declared in the annotations.</p>
       
     
       <dt class="entry-const" id="VMD">
-        <strong>VMD</strong> = <code><span class="n">10</span></code>
+        <strong>VMD</strong> = <code><span class="n">11</span></code>
       </dt>
       
       <dd class="entry-const-doc">
@@ -970,7 +1014,7 @@ information declared in the annotations.</p>
       
     
       <dt class="entry-const" id="XYZ">
-        <strong>XYZ</strong> = <code><span class="n">11</span></code>
+        <strong>XYZ</strong> = <code><span class="n">12</span></code>
       </dt>
       
       <dd class="entry-const-doc">
@@ -1135,6 +1179,13 @@ information declared in the annotations.</p>
       </li>
     
       <li class="entry-summary">
+        <a href="#psf%3F%3ABool-instance-method" class="signature"><strong>#psf?</strong> : Bool</a>
+        
+          <div class="summary"><p>Returns <code>true</code> if the member is the <code><a href="../Chem/Format.html#PSF">PSF</a></code> format.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#py_mol%3F-instance-method" class="signature"><strong>#py_mol?</strong></a>
         
       </li>
@@ -1155,6 +1206,13 @@ information declared in the annotations.</p>
     
       <li class="entry-summary">
         <a href="#reader%28type%3AChem%3A%3AStructure.class%29-instance-method" class="signature"><strong>#reader</strong>(type : <span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>.<span class="k">class</span>)</a>
+        
+          <div class="summary"><p>Returns the reader associated with the format.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#reader%28type%3AChem%3A%3ATopology.class%29-instance-method" class="signature"><strong>#reader</strong>(type : <span class="t">Chem</span><span class="t">::</span><span class="t">Topology</span>.<span class="k">class</span>)</a>
         
           <div class="summary"><p>Returns the reader associated with the format.</p></div>
         
@@ -1754,6 +1812,25 @@ the beginning or end).</li>
       </div>
     </div>
   
+    <div class="entry-detail" id="psf?:Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>psf?</strong> : Bool
+
+        <a class="method-permalink" href="#psf%3F%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if the member is the <code><a href="../Chem/Format.html#PSF">PSF</a></code> format.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="py_mol?-instance-method">
       <div class="signature">
         
@@ -1820,6 +1897,33 @@ write only.</p>
         def <strong>reader</strong>(type : <span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>.<span class="k">class</span>)
 
         <a class="method-permalink" href="#reader%28type%3AChem%3A%3AStructure.class%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the reader associated with the format. Raises
+<code>ArgumentError</code> if the format does not decode <em>type</em> or it is
+write only.</p>
+<pre><code class="language-crystal"><span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">XYZ</span>.reader(<span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>)           <span class="c"># =&gt; Chem::XYZ::Reader</span>
+<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">DX</span>.reader(<span class="t">Chem</span><span class="t">::</span><span class="t">Spatial</span><span class="t">::</span><span class="t">Grid</span>)        <span class="c"># =&gt; Chem::DX::Reader</span>
+<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">XYZ</span>.reader(<span class="t">Array</span>(<span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>))    <span class="c"># =&gt; Chem::XYZ::Reader</span>
+<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">DX</span>.reader(<span class="t">Array</span>(<span class="t">Chem</span><span class="t">::</span><span class="t">Spatial</span><span class="t">::</span><span class="t">Grid</span>)) <span class="c"># raises ArgumentError</span>
+<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">VMD</span>.reader(<span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>)           <span class="c"># raises ArgumentError</span>
+<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">XYZ</span>.reader(<span class="t">Int32</span>)                     <span class="c"># raises ArgumentError</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="reader(type:Chem::Topology.class)-instance-method">
+      <div class="signature">
+        
+        def <strong>reader</strong>(type : <span class="t">Chem</span><span class="t">::</span><span class="t">Topology</span>.<span class="k">class</span>)
+
+        <a class="method-permalink" href="#reader%28type%3AChem%3A%3ATopology.class%29-instance-method">#</a>
       </div>
       
         <div class="doc">
