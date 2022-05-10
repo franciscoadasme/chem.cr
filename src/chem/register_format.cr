@@ -545,9 +545,6 @@ macro finished
               {{arg}},
             {% end %}
           ) : String
-            \{% unless (type = @type.type_vars[0]) <= {{etype}} %}
-              \{% raise "undefined method 'to_{{method_name}}' for #{@type}.class" %}
-            \{% end %}
             String.build do |io|
               to_{{method_name}}(
                 io \
@@ -566,9 +563,6 @@ macro finished
               {{arg}},
             {% end %}
           ) : Nil
-            \{% unless (type = @type.type_vars[0]) <= {{etype}} %}
-              \{% raise "undefined method 'to_{{method_name}}' for #{@type}.class" %}
-            \{% end %}
             {{writer}}.open(
               output,
               {% for arg in args %}
@@ -650,13 +644,13 @@ macro finished
     def self.read(path : Path | String) : self
       read path, Chem::Format.from_filename(path)
     end
-  
+
     # Returns the entries encoded in the specified file using *format*.
     # Raises `ArgumentError` if *format* is invalid.
     def self.read(input : IO | Path | String, format : String) : self
       read input, Chem::Format.parse(format)
     end
-  
+
     # Returns the entries encoded in the specified file using *format*.
     # Raises `ArgumentError` if *format* cannot read the element type or
     # it is write only.
