@@ -8,12 +8,18 @@ describe Chem::PullParser do
       expect_raises(Chem::ParseException, "Cursor out of current line") do
         pull.at(10, 2)
       end
+      expect_raises(Chem::ParseException, "Cursor out of current line") do
+        pull.at(10..)
+      end
     end
 
     it "raises at beginning of file" do
       pull = parser_for "123\n456\n"
       expect_raises(Chem::ParseException, "Cursor out of current line") do
         pull.at(0, 2)
+      end
+      expect_raises(Chem::ParseException, "Cursor out of current line") do
+        pull.at(0...2)
       end
     end
 
@@ -22,6 +28,9 @@ describe Chem::PullParser do
       while pull.next_line; end
       expect_raises(Chem::ParseException, "Cursor out of current line") do
         pull.at(0, 2)
+      end
+      expect_raises(Chem::ParseException, "Cursor out of current line") do
+        pull.at(0..2)
       end
     end
   end
@@ -48,6 +57,15 @@ describe Chem::PullParser do
       pull.next_line
       pull.at?(10, 2)
       pull.str?.should be_nil
+    end
+
+    it "sets the cursor from a range" do
+      pull = parser_for "123 456\n"
+      pull.next_line
+      pull.at?(0..2).str.should eq "123"
+      pull.at?(1..).str.should eq "23 456"
+      pull.at?(..5).str.should eq "123 45"
+      pull.at?(..).str.should eq "123 456"
     end
   end
 

@@ -92,6 +92,17 @@ module Chem
       self
     end
 
+    # Sets the cursor at *range* in the current line. Raises
+    # `ParseException` if *range* is out of bounds.
+    def at(range : Range) : self
+      bytesize = @line.try(&.bytesize) || 0
+      if index_and_count = Indexable.range_to_index_and_count(range, bytesize)
+        at(*index_and_count)
+      else
+        raise error("Cursor out of current line")
+      end
+    end
+
     # Sets the cursor to the character at *index* in the current line.
     # If *index* is out of bounds, the current token will be set to
     # `nil`.
@@ -104,6 +115,16 @@ module Chem
     # of bounds, the current token will be set to `nil`.
     def at?(start : Int, count : Int) : self
       set_cursor(start, count) { return self }
+      self
+    end
+
+    # Sets the cursor at *range* in the current line. If *range* is out
+    # of bounds, the current token will be set to `nil`.
+    def at?(range : Range) : self
+      bytesize = @line.try(&.bytesize) || 0
+      if index_and_count = Indexable.range_to_index_and_count(range, bytesize)
+        at?(*index_and_count)
+      end
       self
     end
 
