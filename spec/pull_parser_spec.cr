@@ -675,6 +675,15 @@ describe Chem::PullParser do
       pull.str?.should be_nil
     end
   end
+
+  describe "#skip_blank_lines" do
+    it "discards blank lines" do
+      pull = parser_for("  \t \n \t \r\n\n\n123 456")
+      pull.skip_blank_lines
+      pull.next_token
+      pull.str?.should eq "123"
+    end
+  end
 end
 
 private def it_parses(str : String, expected, &block : Chem::PullParser -> _) : Nil

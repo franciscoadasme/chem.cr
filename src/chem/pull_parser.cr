@@ -406,6 +406,12 @@ module Chem
       end
     end
 
+    # Discards blank lines.
+    def skip_blank_lines : self
+      while next_line.presence.nil?; end
+      self
+    end
+
     # Returns the current token as a string. Raises `ParseException` if
     # the token is not set.
     def str : String
