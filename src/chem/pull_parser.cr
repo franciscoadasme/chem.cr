@@ -266,7 +266,7 @@ module Chem
         value = 0
         while ptr != endptr
           char = ptr.value.unsafe_chr
-          return unless '0' <= char <= '9' # return on invalid character
+          break unless '0' <= char <= '9' # return on invalid character
           value *= 10
           old = value
           value &+= char - '0'
@@ -323,7 +323,7 @@ module Chem
     {% for type in [Float64, Int32, String] %}
       {% method = type == String ? "str" : type.stringify.downcase.gsub(/\d/, "") %}
       {% suffix = type.name.stringify.downcase.chars[0] %}
-      
+
       # Reads the next token in the current line, and interprets it via
       # `#{{method.id}}`, which raises `ParseException` at the end of
       # line or if the token is an invalid representation.

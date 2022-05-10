@@ -279,6 +279,7 @@ describe Chem::PullParser do
     it_parses "foo", nil, &.float?
     it_parses "1234.56foo", nil, &.float?
     it_parses "x1.2", nil, &.float?
+    it_parses "12.34   \n", 12.34, &.float?
 
     it "returns nil at the beginning of line" do
       parser_for("123.45").float?.should be_nil
@@ -372,6 +373,7 @@ describe Chem::PullParser do
     it_parses "foo", nil, &.int?
     it_parses "123456foo", nil, &.int?
     it_parses "x123456", nil, &.int?
+    it_parses "8   \n", 8, &.int?
 
     it "returns nil at the beginning of line" do
       parser_for("123456\n").int?.should be_nil
@@ -661,7 +663,7 @@ private def it_parses(str : String, expected, &block : Chem::PullParser -> _) : 
   it "parses #{str}" do
     pull = parser_for str
     pull.next_line
-    pull.next_token
+    pull.at(0, str.bytesize)
     value = block.call(pull)
     value.should eq expected
   end
