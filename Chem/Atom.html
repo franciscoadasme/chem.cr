@@ -892,7 +892,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28name%3AString%2Cserial%3AInt32%2Ccoords%3ASpatial%3A%3AVec3%2Cresidue%3AResidue%2Celement%3AElement%3F%3Dnil%2Cformal_charge%3AInt32%3D0%2Cmass%3ANumber%3F%3Dnil%2Coccupancy%3AFloat64%3D1%2Cpartial_charge%3AFloat64%3D0.0%2Ctemperature_factor%3AFloat64%3D0%2Cvdw_radius%3ANumber%3F%3Dnil%29-class-method" class="signature"><strong>.new</strong>(name : String, serial : Int32, coords : Spatial::Vec3, residue : Residue, element : Element? = <span class="n">nil</span>, formal_charge : Int32 = <span class="n">0</span>, mass : Number? = <span class="n">nil</span>, occupancy : Float64 = <span class="n">1</span>, partial_charge : Float64 = <span class="n">0.0</span>, temperature_factor : Float64 = <span class="n">0</span>, vdw_radius : Number? = <span class="n">nil</span>)</a>
+        <a href="#new%28name%3AString%2Cserial%3AInt32%2Ccoords%3ASpatial%3A%3AVec3%2Cresidue%3AResidue%2Celement%3AElement%3F%3Dnil%2Ctype%3AString%3F%3Dnil%2Cformal_charge%3AInt32%3D0%2Cmass%3ANumber%3F%3Dnil%2Coccupancy%3AFloat64%3D1%2Cpartial_charge%3AFloat64%3D0.0%2Ctemperature_factor%3AFloat64%3D0%2Cvdw_radius%3ANumber%3F%3Dnil%29-class-method" class="signature"><strong>.new</strong>(name : String, serial : Int32, coords : Spatial::Vec3, residue : Residue, element : Element? = <span class="n">nil</span>, type : String? = <span class="n">nil</span>, formal_charge : Int32 = <span class="n">0</span>, mass : Number? = <span class="n">nil</span>, occupancy : Float64 = <span class="n">1</span>, partial_charge : Float64 = <span class="n">0.0</span>, temperature_factor : Float64 = <span class="n">0</span>, vdw_radius : Number? = <span class="n">nil</span>)</a>
         
       </li>
     
@@ -1985,6 +1985,20 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#type%3AString%3F-instance-method" class="signature"><strong>#type</strong> : String?</a>
+        
+          <div class="summary"><p>Atom type.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#type%3D%28type%3AString%3F%29-instance-method" class="signature"><strong>#type=</strong>(type : String?)</a>
+        
+          <div class="summary"><p>Atom type.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#uranium%3F-instance-method" class="signature"><strong>#uranium?</strong></a>
         
           <div class="summary"><p>Returns <code>true</code> if the atom's element is &quot;Uranium&quot;, else <code>false</code>.</p></div>
@@ -2152,12 +2166,12 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(name:String,serial:Int32,coords:Spatial::Vec3,residue:Residue,element:Element?=nil,formal_charge:Int32=0,mass:Number?=nil,occupancy:Float64=1,partial_charge:Float64=0.0,temperature_factor:Float64=0,vdw_radius:Number?=nil)-class-method">
+    <div class="entry-detail" id="new(name:String,serial:Int32,coords:Spatial::Vec3,residue:Residue,element:Element?=nil,type:String?=nil,formal_charge:Int32=0,mass:Number?=nil,occupancy:Float64=1,partial_charge:Float64=0.0,temperature_factor:Float64=0,vdw_radius:Number?=nil)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(name : String, serial : Int32, coords : <a href="../Chem/Spatial/Vec3.html">Spatial::Vec3</a>, residue : <a href="../Chem/Residue.html">Residue</a>, element : <a href="../Chem/Element.html">Element</a>? = <span class="n">nil</span>, formal_charge : Int32 = <span class="n">0</span>, mass : <a href="../Number.html">Number</a>? = <span class="n">nil</span>, occupancy : Float64 = <span class="n">1</span>, partial_charge : Float64 = <span class="n">0.0</span>, temperature_factor : Float64 = <span class="n">0</span>, vdw_radius : <a href="../Number.html">Number</a>? = <span class="n">nil</span>)
+        def self.<strong>new</strong>(name : String, serial : Int32, coords : <a href="../Chem/Spatial/Vec3.html">Spatial::Vec3</a>, residue : <a href="../Chem/Residue.html">Residue</a>, element : <a href="../Chem/Element.html">Element</a>? = <span class="n">nil</span>, type : String? = <span class="n">nil</span>, formal_charge : Int32 = <span class="n">0</span>, mass : <a href="../Number.html">Number</a>? = <span class="n">nil</span>, occupancy : Float64 = <span class="n">1</span>, partial_charge : Float64 = <span class="n">0.0</span>, temperature_factor : Float64 = <span class="n">0</span>, vdw_radius : <a href="../Number.html">Number</a>? = <span class="n">nil</span>)
 
-        <a class="method-permalink" href="#new%28name%3AString%2Cserial%3AInt32%2Ccoords%3ASpatial%3A%3AVec3%2Cresidue%3AResidue%2Celement%3AElement%3F%3Dnil%2Cformal_charge%3AInt32%3D0%2Cmass%3ANumber%3F%3Dnil%2Coccupancy%3AFloat64%3D1%2Cpartial_charge%3AFloat64%3D0.0%2Ctemperature_factor%3AFloat64%3D0%2Cvdw_radius%3ANumber%3F%3Dnil%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28name%3AString%2Cserial%3AInt32%2Ccoords%3ASpatial%3A%3AVec3%2Cresidue%3AResidue%2Celement%3AElement%3F%3Dnil%2Ctype%3AString%3F%3Dnil%2Cformal_charge%3AInt32%3D0%2Cmass%3ANumber%3F%3Dnil%2Coccupancy%3AFloat64%3D1%2Cpartial_charge%3AFloat64%3D0.0%2Ctemperature_factor%3AFloat64%3D0%2Cvdw_radius%3ANumber%3F%3Dnil%29-class-method">#</a>
       </div>
       
       <br/>
@@ -5276,6 +5290,46 @@ which includes its class name and its object address.</p>
           
           <p>Returns <code>true</code> if the atom's element is &quot;Tungsten&quot;, else
 <code>false</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="type:String?-instance-method">
+      <div class="signature">
+        
+        def <strong>type</strong> : String?
+
+        <a class="method-permalink" href="#type%3AString%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Atom type. Usually specifies the atomic parameter set assigned to
+this atom within a given force field.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="type=(type:String?)-instance-method">
+      <div class="signature">
+        
+        def <strong>type=</strong>(type : String?)
+
+        <a class="method-permalink" href="#type%3D%28type%3AString%3F%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Atom type. Usually specifies the atomic parameter set assigned to
+this atom within a given force field.</p>
         </div>
       
       <br/>
