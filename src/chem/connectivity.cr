@@ -57,6 +57,11 @@ module Chem
       @atoms <=> rhs.atoms
     end
 
+    # Returns `true` if the connectivity involves *atom*, else `false`.
+    def includes?(atom : Atom) : Bool
+      atom.in? @atoms
+    end
+
     def inspect(io : IO) : Nil
       io << self.class.name << '{'
       @atoms.join io, ", ", &.inspect(io)
