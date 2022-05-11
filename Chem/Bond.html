@@ -101,23 +101,18 @@
       
     </li>
   
-  <li class="parent open current" data-id="chem.cr/Chem/Bond" data-name="chem::bond">
+  <li class=" current" data-id="chem.cr/Chem/Bond" data-name="chem::bond">
       <a href="../Chem/Bond.html">Bond</a>
-      
-        <ul>
-  
-  <li class=" " data-id="chem.cr/Chem/Bond/Kind" data-name="chem::bond::kind">
-      <a href="../Chem/Bond/Kind.html">Kind</a>
-      
-    </li>
-  
-</ul>
-
       
     </li>
   
   <li class=" " data-id="chem.cr/Chem/BondArray" data-name="chem::bondarray">
       <a href="../Chem/BondArray.html">BondArray</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/BondOrder" data-name="chem::bondorder">
+      <a href="../Chem/BondOrder.html">BondOrder</a>
       
     </li>
   
@@ -835,9 +830,35 @@
 
 
 
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>A <code><a href="../Chem/Bond.html">Bond</a></code> provides a canonical representation of a covalent bond
+between two atoms.</p>
 
 
 
+
+
+  <h2>
+    <a id="included-modules" class="anchor" href="#included-modules">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Included Modules
+  </h2>
+  <ul class="other-types-list">
+    
+      <li class="other-type"><a href="../Chem/Connectivity.html">Chem::Connectivity</a>({<a href="../Chem/Atom.html">Chem::Atom</a>, <a href="../Chem/Atom.html">Chem::Atom</a>})</li>
+    
+  </ul>
 
 
 
@@ -858,7 +879,7 @@
   </h2>
   
     
-      chem/core/bond.cr
+      chem/connectivity.cr
     
     <br/>
   
@@ -878,12 +899,26 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28first%2Csecond%2Ckind%3AKind%3D%3Asingle%29-class-method" class="signature"><strong>.new</strong>(first, second, kind : Kind = <span class="n">:single</span>)</a>
+        <a href="#%5B%5D%28%2Aatoms%3AAtom%29%3Aself-class-method" class="signature"><strong>.[]</strong>(*atoms : Atom) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a new connectivity object.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new%28first%2Csecond%2Corder%3AInt32%29-class-method" class="signature"><strong>.new</strong>(first, second, order : Int32)</a>
+        <a href="#new%28atom%3AAtom%2Cother%3AAtom%2Corder%3ABondOrder%29%3Aself-class-method" class="signature"><strong>.new</strong>(atom : Atom, other : Atom, order : BondOrder) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new%28atoms%3ATuple%28Atom%2CAtom%29%2Corder%3ABondOrder%3D%3Asingle%29-class-method" class="signature"><strong>.new</strong>(atoms : Tuple(Atom, Atom), order : BondOrder = <span class="n">:single</span>)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new%28%2Aatoms%3AAtom%29%3Aself-class-method" class="signature"><strong>.new</strong>(*atoms : Atom) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a new connectivity object.</p></div>
         
       </li>
     
@@ -904,46 +939,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#%3D%3D%28other%3Aself%29-instance-method" class="signature"><strong>#==</strong>(other : <span class="k">self</span>)</a>
-        
-          <div class="summary"><p>Returns <code>true</code> if this reference is the same as <em>other</em>.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#%5B%5D%28index%3AInt32%29%3AAtom-instance-method" class="signature"><strong>#[]</strong>(index : Int32) : Atom</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#atoms%3ATuple%28Atom%2CAtom%29-instance-method" class="signature"><strong>#atoms</strong> : Tuple(Atom, Atom)</a>
-        
-          <div class="summary"><p>Returns the bonded atoms.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
         <a href="#bonded%3F%28other%3Aself%29%3ABool-instance-method" class="signature"><strong>#bonded?</strong>(other : <span class="k">self</span>) : Bool</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#dative%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#dative?</strong>(*args, **options)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#dative%3F%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#dative?</strong>(*args, **options, &)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#distance%3AFloat64-instance-method" class="signature"><strong>#distance</strong> : Float64</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#distance2%3AFloat64-instance-method" class="signature"><strong>#distance2</strong> : Float64</a>
         
       </li>
     
@@ -958,16 +954,6 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#first%3AAtom-instance-method" class="signature"><strong>#first</strong> : Atom</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#includes%3F%28atom%3AAtom%29%3ABool-instance-method" class="signature"><strong>#includes?</strong>(atom : Atom) : Bool</a>
-        
-      </li>
-    
-      <li class="entry-summary">
         <a href="#inspect%28io%3AIO%29%3ANil-instance-method" class="signature"><strong>#inspect</strong>(io : IO) : Nil</a>
         
           <div class="summary"><p>Appends a String representation of this object which includes its class name, its object address and the values of all instance variables.</p></div>
@@ -975,32 +961,24 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#kind%3AKind-instance-method" class="signature"><strong>#kind</strong> : Kind</a>
+        <a href="#measure%3AFloat64-instance-method" class="signature"><strong>#measure</strong> : Float64</a>
+        
+          <div class="summary"><p>Returns the current value of the angle in radians.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#kind%3D%28kind%3AKind%29-instance-method" class="signature"><strong>#kind=</strong>(kind : Kind)</a>
+        <a href="#order%3ABondOrder-instance-method" class="signature"><strong>#order</strong> : BondOrder</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#order%3AInt32-instance-method" class="signature"><strong>#order</strong> : Int32</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#order%3D%28order%3AInt32%29-instance-method" class="signature"><strong>#order=</strong>(order : Int32)</a>
+        <a href="#order%3D%28order%3ABondOrder%29-instance-method" class="signature"><strong>#order=</strong>(order : BondOrder)</a>
         
       </li>
     
       <li class="entry-summary">
         <a href="#other%28atom%3AAtom%29%3AAtom-instance-method" class="signature"><strong>#other</strong>(atom : Atom) : Atom</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#second%3AAtom-instance-method" class="signature"><strong>#second</strong> : Atom</a>
         
       </li>
     
@@ -1011,11 +989,6 @@
     
       <li class="entry-summary">
         <a href="#single%3F%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#single?</strong>(*args, **options, &)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#to_char%3AChar-instance-method" class="signature"><strong>#to_char</strong> : Char</a>
         
       </li>
     
@@ -1056,6 +1029,69 @@
   
     
 
+  <h3>Instance methods inherited from module <code><a href="../Chem/Connectivity.html">Chem::Connectivity</a>({<a href="../Chem/Atom.html">Chem::Atom</a>, <a href="../Chem/Atom.html">Chem::Atom</a>})</code></h3>
+  
+  
+    <a href="../Chem/Connectivity.html#%3C%3D%3E%28rhs%3Aself%29%3AInt32-instance-method" class="tooltip">
+      <span><=>(rhs : <span class="k">self</span>) : Int32</span>
+    <=></a>, 
+    
+  
+    <a href="../Chem/Connectivity.html#atoms%3A%7BChem%3A%3AAtom%2CChem%3A%3AAtom%7D-instance-method" class="tooltip">
+      <span>atoms : {Chem::Atom, Chem::Atom}</span>
+    atoms</a>, 
+    
+  
+    <a href="../Chem/Connectivity.html#includes%3F%28atom%3AAtom%29%3ABool-instance-method" class="tooltip">
+      <span>includes?(atom : Atom) : Bool</span>
+    includes?</a>, 
+    
+  
+    <a href="../Chem/Connectivity.html#inspect%28io%3AIO%29%3ANil-instance-method" class="tooltip">
+      <span>inspect(io : IO) : Nil</span>
+    inspect</a>, 
+    
+  
+    <a href="../Chem/Connectivity.html#measure%3AFloat64-instance-method" class="tooltip">
+      <span>measure : Float64</span>
+    measure</a>, 
+    
+  
+    <a href="../Chem/Connectivity.html#to_s%28io%3AIO%29%3ANil-instance-method" class="tooltip">
+      <span>to_s(io : IO) : Nil</span>
+    to_s</a>
+    
+  
+
+
+    
+
+  <h3>Constructor methods inherited from module <code><a href="../Chem/Connectivity.html">Chem::Connectivity</a>({<a href="../Chem/Atom.html">Chem::Atom</a>, <a href="../Chem/Atom.html">Chem::Atom</a>})</code></h3>
+  
+  
+    <a href="../Chem/Connectivity.html#new%28atoms%3A%7BChem%3A%3AAtom%2CChem%3A%3AAtom%7D%29-class-method" class="tooltip">
+      <span>new(atoms : {Chem::Atom, Chem::Atom})</span>
+    new</a>
+    
+  
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
 
     
 
@@ -1086,12 +1122,31 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(first,second,kind:Kind=:single)-class-method">
+    <div class="entry-detail" id="[](*atoms:Atom):self-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(first, second, kind : <a href="../Chem/Bond/Kind.html">Kind</a> = <span class="n">:single</span>)
+        def self.<strong>[]</strong>(*atoms : <a href="../Chem/Atom.html">Atom</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#new%28first%2Csecond%2Ckind%3AKind%3D%3Asingle%29-class-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%28%2Aatoms%3AAtom%29%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a new connectivity object. Shorthand for <code><a href="../Chem/Bond.html#new%28atom%3AAtom%2Cother%3AAtom%2Corder%3ABondOrder%29%3Aself-class-method">#new({a, b, ...})</a></code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(atom:Atom,other:Atom,order:BondOrder):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(atom : <a href="../Chem/Atom.html">Atom</a>, other : <a href="../Chem/Atom.html">Atom</a>, order : <a href="../Chem/BondOrder.html">BondOrder</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#new%28atom%3AAtom%2Cother%3AAtom%2Corder%3ABondOrder%29%3Aself-class-method">#</a>
       </div>
       
       <br/>
@@ -1100,13 +1155,32 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="new(first,second,order:Int32)-class-method">
+    <div class="entry-detail" id="new(atoms:Tuple(Atom,Atom),order:BondOrder=:single)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(first, second, order : Int32)
+        def self.<strong>new</strong>(atoms : Tuple(<a href="../Chem/Atom.html">Atom</a>, <a href="../Chem/Atom.html">Atom</a>), order : <a href="../Chem/BondOrder.html">BondOrder</a> = <span class="n">:single</span>)
 
-        <a class="method-permalink" href="#new%28first%2Csecond%2Corder%3AInt32%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28atoms%3ATuple%28Atom%2CAtom%29%2Corder%3ABondOrder%3D%3Asingle%29-class-method">#</a>
       </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(*atoms:Atom):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(*atoms : <a href="../Chem/Atom.html">Atom</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#new%28%2Aatoms%3AAtom%29%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a new connectivity object. Shorthand for <code><a href="../Chem/Bond.html#new%28atom%3AAtom%2Cother%3AAtom%2Corder%3ABondOrder%29%3Aself-class-method">#new({a, b, ...})</a></code>.</p>
+        </div>
       
       <br/>
       <div>
@@ -1128,124 +1202,12 @@
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="==(other:self)-instance-method">
-      <div class="signature">
-        
-        def <strong>==</strong>(other : <span class="k">self</span>)
-
-        <a class="method-permalink" href="#%3D%3D%28other%3Aself%29-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-            <div class="doc-inherited">
-              Description copied from class Reference
-            </div>
-          
-          <p>Returns <code>true</code> if this reference is the same as <em>other</em>. Invokes <code>same?</code>.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="[](index:Int32):Atom-instance-method">
-      <div class="signature">
-        
-        def <strong>[]</strong>(index : Int32) : <a href="../Chem/Atom.html">Atom</a>
-
-        <a class="method-permalink" href="#%5B%5D%28index%3AInt32%29%3AAtom-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="atoms:Tuple(Atom,Atom)-instance-method">
-      <div class="signature">
-        
-        def <strong>atoms</strong> : Tuple(<a href="../Chem/Atom.html">Atom</a>, <a href="../Chem/Atom.html">Atom</a>)
-
-        <a class="method-permalink" href="#atoms%3ATuple%28Atom%2CAtom%29-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Returns the bonded atoms. Atoms are sorted by their serial number.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
     <div class="entry-detail" id="bonded?(other:self):Bool-instance-method">
       <div class="signature">
         
         def <strong>bonded?</strong>(other : <span class="k">self</span>) : Bool
 
         <a class="method-permalink" href="#bonded%3F%28other%3Aself%29%3ABool-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="dative?(*args,**options)-instance-method">
-      <div class="signature">
-        
-        def <strong>dative?</strong>(*args, **options)
-
-        <a class="method-permalink" href="#dative%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="dative?(*args,**options,&amp;)-instance-method">
-      <div class="signature">
-        
-        def <strong>dative?</strong>(*args, **options, &)
-
-        <a class="method-permalink" href="#dative%3F%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="distance:Float64-instance-method">
-      <div class="signature">
-        
-        def <strong>distance</strong> : Float64
-
-        <a class="method-permalink" href="#distance%3AFloat64-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="distance2:Float64-instance-method">
-      <div class="signature">
-        
-        def <strong>distance2</strong> : Float64
-
-        <a class="method-permalink" href="#distance2%3AFloat64-instance-method">#</a>
       </div>
       
       <br/>
@@ -1274,34 +1236,6 @@
         def <strong>double?</strong>(*args, **options, &)
 
         <a class="method-permalink" href="#double%3F%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="first:Atom-instance-method">
-      <div class="signature">
-        
-        def <strong>first</strong> : <a href="../Chem/Atom.html">Atom</a>
-
-        <a class="method-permalink" href="#first%3AAtom-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="includes?(atom:Atom):Bool-instance-method">
-      <div class="signature">
-        
-        def <strong>includes?</strong>(atom : <a href="../Chem/Atom.html">Atom</a>) : Bool
-
-        <a class="method-permalink" href="#includes%3F%28atom%3AAtom%29%3ABool-instance-method">#</a>
       </div>
       
       <br/>
@@ -1341,12 +1275,31 @@ and the values of all instance variables.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="kind:Kind-instance-method">
+    <div class="entry-detail" id="measure:Float64-instance-method">
       <div class="signature">
         
-        def <strong>kind</strong> : <a href="../Chem/Bond/Kind.html">Kind</a>
+        def <strong>measure</strong> : Float64
 
-        <a class="method-permalink" href="#kind%3AKind-instance-method">#</a>
+        <a class="method-permalink" href="#measure%3AFloat64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the current value of the angle in radians.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="order:BondOrder-instance-method">
+      <div class="signature">
+        
+        def <strong>order</strong> : <a href="../Chem/BondOrder.html">BondOrder</a>
+
+        <a class="method-permalink" href="#order%3ABondOrder-instance-method">#</a>
       </div>
       
       <br/>
@@ -1355,40 +1308,12 @@ and the values of all instance variables.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="kind=(kind:Kind)-instance-method">
+    <div class="entry-detail" id="order=(order:BondOrder)-instance-method">
       <div class="signature">
         
-        def <strong>kind=</strong>(kind : <a href="../Chem/Bond/Kind.html">Kind</a>)
+        def <strong>order=</strong>(order : <a href="../Chem/BondOrder.html">BondOrder</a>)
 
-        <a class="method-permalink" href="#kind%3D%28kind%3AKind%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="order:Int32-instance-method">
-      <div class="signature">
-        
-        def <strong>order</strong> : Int32
-
-        <a class="method-permalink" href="#order%3AInt32-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="order=(order:Int32)-instance-method">
-      <div class="signature">
-        
-        def <strong>order=</strong>(order : Int32)
-
-        <a class="method-permalink" href="#order%3D%28order%3AInt32%29-instance-method">#</a>
+        <a class="method-permalink" href="#order%3D%28order%3ABondOrder%29-instance-method">#</a>
       </div>
       
       <br/>
@@ -1403,20 +1328,6 @@ and the values of all instance variables.</p>
         def <strong>other</strong>(atom : <a href="../Chem/Atom.html">Atom</a>) : <a href="../Chem/Atom.html">Atom</a>
 
         <a class="method-permalink" href="#other%28atom%3AAtom%29%3AAtom-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="second:Atom-instance-method">
-      <div class="signature">
-        
-        def <strong>second</strong> : <a href="../Chem/Atom.html">Atom</a>
-
-        <a class="method-permalink" href="#second%3AAtom-instance-method">#</a>
       </div>
       
       <br/>
@@ -1445,20 +1356,6 @@ and the values of all instance variables.</p>
         def <strong>single?</strong>(*args, **options, &)
 
         <a class="method-permalink" href="#single%3F%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="to_char:Char-instance-method">
-      <div class="signature">
-        
-        def <strong>to_char</strong> : <a href="../Char.html">Char</a>
-
-        <a class="method-permalink" href="#to_char%3AChar-instance-method">#</a>
       </div>
       
       <br/>

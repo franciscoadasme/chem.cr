@@ -101,23 +101,18 @@
       
     </li>
   
-  <li class="parent " data-id="chem.cr/Chem/Bond" data-name="chem::bond">
+  <li class=" " data-id="chem.cr/Chem/Bond" data-name="chem::bond">
       <a href="../Chem/Bond.html">Bond</a>
-      
-        <ul>
-  
-  <li class=" " data-id="chem.cr/Chem/Bond/Kind" data-name="chem::bond::kind">
-      <a href="../Chem/Bond/Kind.html">Kind</a>
-      
-    </li>
-  
-</ul>
-
       
     </li>
   
   <li class=" " data-id="chem.cr/Chem/BondArray" data-name="chem::bondarray">
       <a href="../Chem/BondArray.html">BondArray</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/BondOrder" data-name="chem::bondorder">
+      <a href="../Chem/BondOrder.html">BondOrder</a>
       
     </li>
   
@@ -892,7 +887,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28lhs%3AAtomType%2Crhs%3AAtomType%2Corder%3AInt%3D1%29-class-method" class="signature"><strong>.new</strong>(lhs : AtomType, rhs : AtomType, order : Int = <span class="n">1</span>)</a>
+        <a href="#new%28lhs%3AAtomType%2Crhs%3AAtomType%2Corder%3ABondOrder%3D%3Asingle%29-class-method" class="signature"><strong>.new</strong>(lhs : AtomType, rhs : AtomType, order : BondOrder = <span class="n">:single</span>)</a>
         
       </li>
     
@@ -920,7 +915,12 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#double%3F%3ABool-instance-method" class="signature"><strong>#double?</strong> : Bool</a>
+        <a href="#double%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#double?</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#double%3F%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#double?</strong>(*args, **options, &)</a>
         
       </li>
     
@@ -947,7 +947,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#order%3AInt32-instance-method" class="signature"><strong>#order</strong> : Int32</a>
+        <a href="#order%3ABondOrder-instance-method" class="signature"><strong>#order</strong> : BondOrder</a>
         
       </li>
     
@@ -962,7 +962,12 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#single%3F%3ABool-instance-method" class="signature"><strong>#single?</strong> : Bool</a>
+        <a href="#single%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#single?</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#single%3F%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#single?</strong>(*args, **options, &)</a>
         
       </li>
     
@@ -984,7 +989,12 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#triple%3F%3ABool-instance-method" class="signature"><strong>#triple?</strong> : Bool</a>
+        <a href="#triple%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#triple?</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#triple%3F%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#triple?</strong>(*args, **options, &)</a>
         
       </li>
     
@@ -995,6 +1005,16 @@
     
       <li class="entry-summary">
         <a href="#unsafe_fetch%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#unsafe_fetch</strong>(*args, **options, &)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#zero%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#zero?</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#zero%3F%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#zero?</strong>(*args, **options, &)</a>
         
       </li>
     
@@ -1091,12 +1111,12 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(lhs:AtomType,rhs:AtomType,order:Int=1)-class-method">
+    <div class="entry-detail" id="new(lhs:AtomType,rhs:AtomType,order:BondOrder=:single)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(lhs : <a href="../Chem/AtomType.html">AtomType</a>, rhs : <a href="../Chem/AtomType.html">AtomType</a>, order : Int = <span class="n">1</span>)
+        def self.<strong>new</strong>(lhs : <a href="../Chem/AtomType.html">AtomType</a>, rhs : <a href="../Chem/AtomType.html">AtomType</a>, order : <a href="../Chem/BondOrder.html">BondOrder</a> = <span class="n">:single</span>)
 
-        <a class="method-permalink" href="#new%28lhs%3AAtomType%2Crhs%3AAtomType%2Corder%3AInt%3D1%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28lhs%3AAtomType%2Crhs%3AAtomType%2Corder%3ABondOrder%3D%3Asingle%29-class-method">#</a>
       </div>
       
       <br/>
@@ -1142,12 +1162,26 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="double?:Bool-instance-method">
+    <div class="entry-detail" id="double?(*args,**options)-instance-method">
       <div class="signature">
         
-        def <strong>double?</strong> : Bool
+        def <strong>double?</strong>(*args, **options)
 
-        <a class="method-permalink" href="#double%3F%3ABool-instance-method">#</a>
+        <a class="method-permalink" href="#double%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="double?(*args,**options,&amp;)-instance-method">
+      <div class="signature">
+        
+        def <strong>double?</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#double%3F%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
       </div>
       
       <br/>
@@ -1229,12 +1263,12 @@ and the values of all instance variables.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="order:Int32-instance-method">
+    <div class="entry-detail" id="order:BondOrder-instance-method">
       <div class="signature">
         
-        def <strong>order</strong> : Int32
+        def <strong>order</strong> : <a href="../Chem/BondOrder.html">BondOrder</a>
 
-        <a class="method-permalink" href="#order%3AInt32-instance-method">#</a>
+        <a class="method-permalink" href="#order%3ABondOrder-instance-method">#</a>
       </div>
       
       <br/>
@@ -1271,12 +1305,26 @@ and the values of all instance variables.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="single?:Bool-instance-method">
+    <div class="entry-detail" id="single?(*args,**options)-instance-method">
       <div class="signature">
         
-        def <strong>single?</strong> : Bool
+        def <strong>single?</strong>(*args, **options)
 
-        <a class="method-permalink" href="#single%3F%3ABool-instance-method">#</a>
+        <a class="method-permalink" href="#single%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="single?(*args,**options,&amp;)-instance-method">
+      <div class="signature">
+        
+        def <strong>single?</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#single%3F%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
       </div>
       
       <br/>
@@ -1343,12 +1391,26 @@ which includes its class name and its object address.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="triple?:Bool-instance-method">
+    <div class="entry-detail" id="triple?(*args,**options)-instance-method">
       <div class="signature">
         
-        def <strong>triple?</strong> : Bool
+        def <strong>triple?</strong>(*args, **options)
 
-        <a class="method-permalink" href="#triple%3F%3ABool-instance-method">#</a>
+        <a class="method-permalink" href="#triple%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="triple?(*args,**options,&amp;)-instance-method">
+      <div class="signature">
+        
+        def <strong>triple?</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#triple%3F%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
       </div>
       
       <br/>
@@ -1377,6 +1439,34 @@ which includes its class name and its object address.</p>
         def <strong>unsafe_fetch</strong>(*args, **options, &)
 
         <a class="method-permalink" href="#unsafe_fetch%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="zero?(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>zero?</strong>(*args, **options)
+
+        <a class="method-permalink" href="#zero%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="zero?(*args,**options,&amp;)-instance-method">
+      <div class="signature">
+        
+        def <strong>zero?</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#zero%3F%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
       </div>
       
       <br/>

@@ -101,23 +101,18 @@
       
     </li>
   
-  <li class="parent " data-id="chem.cr/Chem/Bond" data-name="chem::bond">
+  <li class=" " data-id="chem.cr/Chem/Bond" data-name="chem::bond">
       <a href="../Chem/Bond.html">Bond</a>
-      
-        <ul>
-  
-  <li class=" " data-id="chem.cr/Chem/Bond/Kind" data-name="chem::bond::kind">
-      <a href="../Chem/Bond/Kind.html">Kind</a>
-      
-    </li>
-  
-</ul>
-
       
     </li>
   
   <li class=" " data-id="chem.cr/Chem/BondArray" data-name="chem::bondarray">
       <a href="../Chem/BondArray.html">BondArray</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/BondOrder" data-name="chem::bondorder">
+      <a href="../Chem/BondOrder.html">BondOrder</a>
       
     </li>
   
@@ -881,6 +876,8 @@ enclosing bonded atoms such an angle.</p>
     
       <li class="other-type"><a href="../Chem/Angle.html">Chem::Angle</a></li>
     
+      <li class="other-type"><a href="../Chem/Bond.html">Chem::Bond</a></li>
+    
       <li class="other-type"><a href="../Chem/Dihedral.html">Chem::Dihedral</a></li>
     
       <li class="other-type"><a href="../Chem/Improper.html">Chem::Improper</a></li>
@@ -953,6 +950,13 @@ enclosing bonded atoms such an angle.</p>
         <a href="#atoms%3AT-instance-method" class="signature"><strong>#atoms</strong> : T</a>
         
           <div class="summary"><p>Returns the bonded atoms.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#includes%3F%28atom%3AAtom%29%3ABool-instance-method" class="signature"><strong>#includes?</strong>(atom : Atom) : Bool</a>
+        
+          <div class="summary"><p>Returns <code>true</code> if the connectivity involves <em>atom</em>, else <code>false</code>.</p></div>
         
       </li>
     
@@ -1077,6 +1081,25 @@ a positive number if this object is considered greater than
         <div class="doc">
           
           <p>Returns the bonded atoms.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="includes?(atom:Atom):Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>includes?</strong>(atom : <a href="../Chem/Atom.html">Atom</a>) : Bool
+
+        <a class="method-permalink" href="#includes%3F%28atom%3AAtom%29%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if the connectivity involves <em>atom</em>, else <code>false</code>.</p>
         </div>
       
       <br/>

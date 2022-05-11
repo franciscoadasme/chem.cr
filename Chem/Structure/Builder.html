@@ -101,23 +101,18 @@
       
     </li>
   
-  <li class="parent " data-id="chem.cr/Chem/Bond" data-name="chem::bond">
+  <li class=" " data-id="chem.cr/Chem/Bond" data-name="chem::bond">
       <a href="../../Chem/Bond.html">Bond</a>
-      
-        <ul>
-  
-  <li class=" " data-id="chem.cr/Chem/Bond/Kind" data-name="chem::bond::kind">
-      <a href="../../Chem/Bond/Kind.html">Kind</a>
-      
-    </li>
-  
-</ul>
-
       
     </li>
   
   <li class=" " data-id="chem.cr/Chem/BondArray" data-name="chem::bondarray">
       <a href="../../Chem/BondArray.html">BondArray</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/BondOrder" data-name="chem::bondorder">
+      <a href="../../Chem/BondOrder.html">BondOrder</a>
       
     </li>
   
@@ -926,17 +921,17 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#bond%28name%3AString%2Cother%3AString%2Corder%3AInt%3D1%29%3ABond-instance-method" class="signature"><strong>#bond</strong>(name : String, other : String, order : Int = <span class="n">1</span>) : Bond</a>
+        <a href="#bond%28name%3AString%2Cother%3AString%2Corder%3ABondOrder%3D%3Asingle%29%3ABond-instance-method" class="signature"><strong>#bond</strong>(name : String, other : String, order : BondOrder = <span class="n">:single</span>) : Bond</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#bond%28i%3AInt%2Cj%3AInt%2Corder%3AInt%3D1%2Caromatic%3ABool%3Dfalse%29%3ABond-instance-method" class="signature"><strong>#bond</strong>(i : Int, j : Int, order : Int = <span class="n">1</span>, aromatic : Bool = <span class="n">false</span>) : Bond</a>
+        <a href="#bond%28i%3AInt%2Cj%3AInt%2Corder%3ABondOrder%3D%3Asingle%2Caromatic%3ABool%3Dfalse%29%3ABond-instance-method" class="signature"><strong>#bond</strong>(i : Int, j : Int, order : BondOrder = <span class="n">:single</span>, aromatic : Bool = <span class="n">false</span>) : Bond</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#bonds%28bond_table%3AHash%28Tuple%28Int32%2CInt32%29%2CInt32%29%29%3ANil-instance-method" class="signature"><strong>#bonds</strong>(bond_table : Hash(Tuple(Int32, Int32), Int32)) : Nil</a>
+        <a href="#bonds%28bond_table%3AHash%28Tuple%28Int32%2CInt32%29%2CBondOrder%29%29%3ANil-instance-method" class="signature"><strong>#bonds</strong>(bond_table : Hash(Tuple(Int32, Int32), BondOrder)) : Nil</a>
         
       </li>
     
@@ -1189,12 +1184,12 @@ to incorrect structures</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="bond(name:String,other:String,order:Int=1):Bond-instance-method">
+    <div class="entry-detail" id="bond(name:String,other:String,order:BondOrder=:single):Bond-instance-method">
       <div class="signature">
         
-        def <strong>bond</strong>(name : String, other : String, order : Int = <span class="n">1</span>) : <a href="../../Chem/Bond.html">Bond</a>
+        def <strong>bond</strong>(name : String, other : String, order : <a href="../../Chem/BondOrder.html">BondOrder</a> = <span class="n">:single</span>) : <a href="../../Chem/Bond.html">Bond</a>
 
-        <a class="method-permalink" href="#bond%28name%3AString%2Cother%3AString%2Corder%3AInt%3D1%29%3ABond-instance-method">#</a>
+        <a class="method-permalink" href="#bond%28name%3AString%2Cother%3AString%2Corder%3ABondOrder%3D%3Asingle%29%3ABond-instance-method">#</a>
       </div>
       
       <br/>
@@ -1203,12 +1198,12 @@ to incorrect structures</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="bond(i:Int,j:Int,order:Int=1,aromatic:Bool=false):Bond-instance-method">
+    <div class="entry-detail" id="bond(i:Int,j:Int,order:BondOrder=:single,aromatic:Bool=false):Bond-instance-method">
       <div class="signature">
         
-        def <strong>bond</strong>(i : Int, j : Int, order : Int = <span class="n">1</span>, aromatic : Bool = <span class="n">false</span>) : <a href="../../Chem/Bond.html">Bond</a>
+        def <strong>bond</strong>(i : Int, j : Int, order : <a href="../../Chem/BondOrder.html">BondOrder</a> = <span class="n">:single</span>, aromatic : Bool = <span class="n">false</span>) : <a href="../../Chem/Bond.html">Bond</a>
 
-        <a class="method-permalink" href="#bond%28i%3AInt%2Cj%3AInt%2Corder%3AInt%3D1%2Caromatic%3ABool%3Dfalse%29%3ABond-instance-method">#</a>
+        <a class="method-permalink" href="#bond%28i%3AInt%2Cj%3AInt%2Corder%3ABondOrder%3D%3Asingle%2Caromatic%3ABool%3Dfalse%29%3ABond-instance-method">#</a>
       </div>
       
       <br/>
@@ -1217,12 +1212,12 @@ to incorrect structures</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="bonds(bond_table:Hash(Tuple(Int32,Int32),Int32)):Nil-instance-method">
+    <div class="entry-detail" id="bonds(bond_table:Hash(Tuple(Int32,Int32),BondOrder)):Nil-instance-method">
       <div class="signature">
         
-        def <strong>bonds</strong>(bond_table : Hash(Tuple(Int32, Int32), Int32)) : Nil
+        def <strong>bonds</strong>(bond_table : Hash(Tuple(Int32, Int32), <a href="../../Chem/BondOrder.html">BondOrder</a>)) : Nil
 
-        <a class="method-permalink" href="#bonds%28bond_table%3AHash%28Tuple%28Int32%2CInt32%29%2CInt32%29%29%3ANil-instance-method">#</a>
+        <a class="method-permalink" href="#bonds%28bond_table%3AHash%28Tuple%28Int32%2CInt32%29%2CBondOrder%29%29%3ANil-instance-method">#</a>
       </div>
       
       <br/>

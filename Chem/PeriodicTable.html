@@ -101,23 +101,18 @@
       
     </li>
   
-  <li class="parent " data-id="chem.cr/Chem/Bond" data-name="chem::bond">
+  <li class=" " data-id="chem.cr/Chem/Bond" data-name="chem::bond">
       <a href="../Chem/Bond.html">Bond</a>
-      
-        <ul>
-  
-  <li class=" " data-id="chem.cr/Chem/Bond/Kind" data-name="chem::bond::kind">
-      <a href="../Chem/Bond/Kind.html">Kind</a>
-      
-    </li>
-  
-</ul>
-
       
     </li>
   
   <li class=" " data-id="chem.cr/Chem/BondArray" data-name="chem::bondarray">
       <a href="../Chem/BondArray.html">BondArray</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/BondOrder" data-name="chem::bondorder">
+      <a href="../Chem/BondOrder.html">BondOrder</a>
       
     </li>
   
@@ -1545,16 +1540,16 @@ values are set to covalent radius + 0.9 Å</p>
       </li>
     
       <li class="entry-summary">
-        <a href="#covalent_cutoff%28ele%3AElement%2Cother%3AElement%29%3AFloat64-instance-method" class="signature"><strong>#covalent_cutoff</strong>(ele : Element, other : Element) : Float64</a>
+        <a href="#covalent_cutoff%28atom%3AAtom%2Cother%3AAtom%29%3AFloat64-instance-method" class="signature"><strong>#covalent_cutoff</strong>(atom : Atom, other : Atom) : Float64</a>
         
-          <div class="summary"><p><span class="flag purple">NOTE</span>  The additional term (0.3 Å) is taken from the covalent radii reference, which states that about 96% of the surveyed bonds are within three standard deviations of the sum of the radii, where the found average standard deviation is about 0.1 Å.</p></div>
+          <div class="summary"><p><span class="flag orange">TODO</span>  delete this! it's only used in building connectivity</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#covalent_cutoff%28atom%3AAtom%2Cother%3AAtom%29%3AFloat64-instance-method" class="signature"><strong>#covalent_cutoff</strong>(atom : Atom, other : Atom) : Float64</a>
+        <a href="#covalent_cutoff%28ele%3AElement%2Cother%3AElement%29%3AFloat64-instance-method" class="signature"><strong>#covalent_cutoff</strong>(ele : Element, other : Element) : Float64</a>
         
-          <div class="summary"><p><span class="flag orange">TODO</span>  delete this! it's only used in building connectivity</p></div>
+          <div class="summary"><p><span class="flag purple">NOTE</span>  The additional term (0.3 Å) is taken from the covalent radii reference, which states that about 96% of the surveyed bonds are within three standard deviations of the sum of the radii, where the found average standard deviation is about 0.1 Å.</p></div>
         
       </li>
     
@@ -1668,6 +1663,25 @@ values are set to covalent radius + 0.9 Å</p>
       </div>
     </div>
   
+    <div class="entry-detail" id="covalent_cutoff(atom:Atom,other:Atom):Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>covalent_cutoff</strong>(atom : <a href="../Chem/Atom.html">Atom</a>, other : <a href="../Chem/Atom.html">Atom</a>) : Float64
+
+        <a class="method-permalink" href="#covalent_cutoff%28atom%3AAtom%2Cother%3AAtom%29%3AFloat64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p><span class="flag orange">TODO</span>  delete this! it's only used in building connectivity</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="covalent_cutoff(ele:Element,other:Element):Float64-instance-method">
       <div class="signature">
         
@@ -1682,25 +1696,6 @@ values are set to covalent radius + 0.9 Å</p>
 which states that about 96% of the surveyed bonds are within three standard
 deviations of the sum of the radii, where the found average standard deviation is
 about 0.1 Å.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="covalent_cutoff(atom:Atom,other:Atom):Float64-instance-method">
-      <div class="signature">
-        
-        def <strong>covalent_cutoff</strong>(atom : <a href="../Chem/Atom.html">Atom</a>, other : <a href="../Chem/Atom.html">Atom</a>) : Float64
-
-        <a class="method-permalink" href="#covalent_cutoff%28atom%3AAtom%2Cother%3AAtom%29%3AFloat64-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p><span class="flag orange">TODO</span>  delete this! it's only used in building connectivity</p>
         </div>
       
       <br/>

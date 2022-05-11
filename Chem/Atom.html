@@ -101,23 +101,18 @@
       
     </li>
   
-  <li class="parent " data-id="chem.cr/Chem/Bond" data-name="chem::bond">
+  <li class=" " data-id="chem.cr/Chem/Bond" data-name="chem::bond">
       <a href="../Chem/Bond.html">Bond</a>
-      
-        <ul>
-  
-  <li class=" " data-id="chem.cr/Chem/Bond/Kind" data-name="chem::bond::kind">
-      <a href="../Chem/Bond/Kind.html">Kind</a>
-      
-    </li>
-  
-</ul>
-
       
     </li>
   
   <li class=" " data-id="chem.cr/Chem/BondArray" data-name="chem::bondarray">
       <a href="../Chem/BondArray.html">BondArray</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/BondOrder" data-name="chem::bondorder">
+      <a href="../Chem/BondOrder.html">BondOrder</a>
       
     </li>
   
@@ -920,14 +915,14 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#%3D%3D%3D%28element%3AElement%29%3ABool-instance-method" class="signature"><strong>#===</strong>(element : Element) : Bool</a>
+        <a href="#%3D%3D%3D%28atom_t%3AAtomType%29%3ABool-instance-method" class="signature"><strong>#===</strong>(atom_t : AtomType) : Bool</a>
         
           <div class="summary"><p>Case equality.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#%3D%3D%3D%28atom_t%3AAtomType%29%3ABool-instance-method" class="signature"><strong>#===</strong>(atom_t : AtomType) : Bool</a>
+        <a href="#%3D%3D%3D%28element%3AElement%29%3ABool-instance-method" class="signature"><strong>#===</strong>(element : Element) : Bool</a>
         
           <div class="summary"><p>Case equality.</p></div>
         
@@ -2221,6 +2216,36 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       </div>
     </div>
   
+    <div class="entry-detail" id="===(atom_t:AtomType):Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>===</strong>(atom_t : <a href="../Chem/AtomType.html">AtomType</a>) : Bool
+
+        <a class="method-permalink" href="#%3D%3D%3D%28atom_t%3AAtomType%29%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Case equality. This is equivalent to <code><a href="../Chem/Atom.html#match%3F%28atom_t%3AAtomType%29%3ABool-instance-method">#match?</a></code>.</p>
+<pre><code class="language-crystal">structure <span class="o">=</span> <span class="t">Structure</span>.read <span class="s">&quot;peptide.pdb&quot;</span>
+desc <span class="o">=</span> <span class="k">case</span> structure.dig(<span class="s">&#39;A&#39;</span>, <span class="n">5</span>, <span class="s">&quot;CA&quot;</span>)
+       <span class="k">when</span> <span class="t">AtomType</span>(<span class="s">&quot;C&quot;</span>)  <span class="k">then</span> <span class="s">&quot;carbonyl carbon&quot;</span>
+       <span class="k">when</span> <span class="t">AtomType</span>(<span class="s">&quot;CA&quot;</span>) <span class="k">then</span> <span class="s">&quot;alpha carbon&quot;</span>
+       <span class="k">when</span> <span class="t">AtomType</span>(<span class="s">&quot;CB&quot;</span>) <span class="k">then</span> <span class="s">&quot;beta carbon&quot;</span>
+       <span class="k">when</span> <span class="t">AtomType</span>(<span class="s">&quot;CG&quot;</span>) <span class="k">then</span> <span class="s">&quot;gamma carbon&quot;</span>
+       <span class="k">when</span> <span class="t">AtomType</span>(<span class="s">&quot;CD&quot;</span>) <span class="k">then</span> <span class="s">&quot;delta carbon&quot;</span>
+       <span class="k">when</span> <span class="t">PeriodicTable</span><span class="t">::</span><span class="t">C</span>         <span class="k">then</span> <span class="s">&quot;carbon&quot;</span>
+       <span class="k">else</span>                               <span class="s">&quot;non-carbon&quot;</span>
+       <span class="k">end</span>
+desc <span class="c"># =&gt; &quot;alpha carbon&quot;</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="===(element:Element):Bool-instance-method">
       <div class="signature">
         
@@ -2244,36 +2269,6 @@ desc <span class="o">=</span> <span class="k">case</span> structure.dig(<span cl
        <span class="k">else</span>                               <span class="s">&quot;non-carbon&quot;</span>
        <span class="k">end</span>
 desc <span class="c"># =&gt; &quot;non-carbon&quot;</span></code></pre>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="===(atom_t:AtomType):Bool-instance-method">
-      <div class="signature">
-        
-        def <strong>===</strong>(atom_t : <a href="../Chem/AtomType.html">AtomType</a>) : Bool
-
-        <a class="method-permalink" href="#%3D%3D%3D%28atom_t%3AAtomType%29%3ABool-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Case equality. This is equivalent to <code><a href="../Chem/Atom.html#match%3F%28atom_t%3AAtomType%29%3ABool-instance-method">#match?</a></code>.</p>
-<pre><code class="language-crystal">structure <span class="o">=</span> <span class="t">Structure</span>.read <span class="s">&quot;peptide.pdb&quot;</span>
-desc <span class="o">=</span> <span class="k">case</span> structure.dig(<span class="s">&#39;A&#39;</span>, <span class="n">5</span>, <span class="s">&quot;CA&quot;</span>)
-       <span class="k">when</span> <span class="t">AtomType</span>(<span class="s">&quot;C&quot;</span>)  <span class="k">then</span> <span class="s">&quot;carbonyl carbon&quot;</span>
-       <span class="k">when</span> <span class="t">AtomType</span>(<span class="s">&quot;CA&quot;</span>) <span class="k">then</span> <span class="s">&quot;alpha carbon&quot;</span>
-       <span class="k">when</span> <span class="t">AtomType</span>(<span class="s">&quot;CB&quot;</span>) <span class="k">then</span> <span class="s">&quot;beta carbon&quot;</span>
-       <span class="k">when</span> <span class="t">AtomType</span>(<span class="s">&quot;CG&quot;</span>) <span class="k">then</span> <span class="s">&quot;gamma carbon&quot;</span>
-       <span class="k">when</span> <span class="t">AtomType</span>(<span class="s">&quot;CD&quot;</span>) <span class="k">then</span> <span class="s">&quot;delta carbon&quot;</span>
-       <span class="k">when</span> <span class="t">PeriodicTable</span><span class="t">::</span><span class="t">C</span>         <span class="k">then</span> <span class="s">&quot;carbon&quot;</span>
-       <span class="k">else</span>                               <span class="s">&quot;non-carbon&quot;</span>
-       <span class="k">end</span>
-desc <span class="c"># =&gt; &quot;alpha carbon&quot;</span></code></pre>
         </div>
       
       <br/>

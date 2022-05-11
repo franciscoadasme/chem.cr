@@ -101,23 +101,18 @@
       
     </li>
   
-  <li class="parent " data-id="chem.cr/Chem/Bond" data-name="chem::bond">
+  <li class=" " data-id="chem.cr/Chem/Bond" data-name="chem::bond">
       <a href="../Chem/Bond.html">Bond</a>
-      
-        <ul>
-  
-  <li class=" " data-id="chem.cr/Chem/Bond/Kind" data-name="chem::bond::kind">
-      <a href="../Chem/Bond/Kind.html">Kind</a>
-      
-    </li>
-  
-</ul>
-
       
     </li>
   
   <li class=" " data-id="chem.cr/Chem/BondArray" data-name="chem::bondarray">
       <a href="../Chem/BondArray.html">BondArray</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/BondOrder" data-name="chem::bondorder">
+      <a href="../Chem/BondOrder.html">BondOrder</a>
       
     </li>
   
@@ -975,28 +970,28 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#bonded%3F%28other%3Aself%2Clhs%3AElement%2Crhs%3AElement%2Corder%3AInt%3F%3Dnil%29%3ABool-instance-method" class="signature"><strong>#bonded?</strong>(other : <span class="k">self</span>, lhs : Element, rhs : Element, order : Int? = <span class="n">nil</span>) : Bool</a>
+        <a href="#bonded%3F%28other%3Aself%2Clhs%3AAtomType%7CString%2Crhs%3AAtomType%7CString%2Corder%3ABondOrder%3F%3Dnil%29%3ABool-instance-method" class="signature"><strong>#bonded?</strong>(other : <span class="k">self</span>, lhs : AtomType | String, rhs : AtomType | String, order : BondOrder? = <span class="n">nil</span>) : Bool</a>
         
           <div class="summary"><p>Returns true if <code>self</code> is bonded to <em>other</em> through a bond between <em>lhs</em> and <em>rhs</em>, otherwise false.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#bonded%3F%28other%3Aself%2Clhs%3AAtomType%7CString%2Crhs%3AElement%2Corder%3AInt%3F%3Dnil%29%3ABool-instance-method" class="signature"><strong>#bonded?</strong>(other : <span class="k">self</span>, lhs : AtomType | String, rhs : Element, order : Int? = <span class="n">nil</span>) : Bool</a>
+        <a href="#bonded%3F%28other%3Aself%2Clhs%3AAtomType%7CString%2Crhs%3AElement%2Corder%3ABondOrder%3F%3Dnil%29%3ABool-instance-method" class="signature"><strong>#bonded?</strong>(other : <span class="k">self</span>, lhs : AtomType | String, rhs : Element, order : BondOrder? = <span class="n">nil</span>) : Bool</a>
         
           <div class="summary"><p>Returns true if <code>self</code> is bonded to <em>other</em> through a bond between <em>lhs</em> and <em>rhs</em>, otherwise false.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#bonded%3F%28other%3Aself%2Clhs%3AElement%2Crhs%3AAtomType%7CString%2Corder%3AInt%3F%3Dnil%29%3ABool-instance-method" class="signature"><strong>#bonded?</strong>(other : <span class="k">self</span>, lhs : Element, rhs : AtomType | String, order : Int? = <span class="n">nil</span>) : Bool</a>
+        <a href="#bonded%3F%28other%3Aself%2Clhs%3AElement%2Crhs%3AAtomType%7CString%2Corder%3ABondOrder%3F%3Dnil%29%3ABool-instance-method" class="signature"><strong>#bonded?</strong>(other : <span class="k">self</span>, lhs : Element, rhs : AtomType | String, order : BondOrder? = <span class="n">nil</span>) : Bool</a>
         
           <div class="summary"><p>Returns true if <code>self</code> is bonded to <em>other</em> through a bond between <em>lhs</em> and <em>rhs</em>, otherwise false.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#bonded%3F%28other%3Aself%2Clhs%3AAtomType%7CString%2Crhs%3AAtomType%7CString%2Corder%3AInt%3F%3Dnil%29%3ABool-instance-method" class="signature"><strong>#bonded?</strong>(other : <span class="k">self</span>, lhs : AtomType | String, rhs : AtomType | String, order : Int? = <span class="n">nil</span>) : Bool</a>
+        <a href="#bonded%3F%28other%3Aself%2Clhs%3AElement%2Crhs%3AElement%2Corder%3ABondOrder%3F%3Dnil%29%3ABool-instance-method" class="signature"><strong>#bonded?</strong>(other : <span class="k">self</span>, lhs : Element, rhs : Element, order : BondOrder? = <span class="n">nil</span>) : Bool</a>
         
           <div class="summary"><p>Returns true if <code>self</code> is bonded to <em>other</em> through a bond between <em>lhs</em> and <em>rhs</em>, otherwise false.</p></div>
         
@@ -1715,12 +1710,12 @@ residues[<span class="n">0</span>].bonded?(residues[<span class="n">1</span>], b
       </div>
     </div>
   
-    <div class="entry-detail" id="bonded?(other:self,lhs:Element,rhs:Element,order:Int?=nil):Bool-instance-method">
+    <div class="entry-detail" id="bonded?(other:self,lhs:AtomType|String,rhs:AtomType|String,order:BondOrder?=nil):Bool-instance-method">
       <div class="signature">
         
-        def <strong>bonded?</strong>(other : <span class="k">self</span>, lhs : <a href="../Chem/Element.html">Element</a>, rhs : <a href="../Chem/Element.html">Element</a>, order : Int? = <span class="n">nil</span>) : Bool
+        def <strong>bonded?</strong>(other : <span class="k">self</span>, lhs : <a href="../Chem/AtomType.html">AtomType</a> | String, rhs : <a href="../Chem/AtomType.html">AtomType</a> | String, order : <a href="../Chem/BondOrder.html">BondOrder</a>? = <span class="n">nil</span>) : Bool
 
-        <a class="method-permalink" href="#bonded%3F%28other%3Aself%2Clhs%3AElement%2Crhs%3AElement%2Corder%3AInt%3F%3Dnil%29%3ABool-instance-method">#</a>
+        <a class="method-permalink" href="#bonded%3F%28other%3Aself%2Clhs%3AAtomType%7CString%2Crhs%3AAtomType%7CString%2Corder%3ABondOrder%3F%3Dnil%29%3ABool-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1764,12 +1759,12 @@ residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <
       </div>
     </div>
   
-    <div class="entry-detail" id="bonded?(other:self,lhs:AtomType|String,rhs:Element,order:Int?=nil):Bool-instance-method">
+    <div class="entry-detail" id="bonded?(other:self,lhs:AtomType|String,rhs:Element,order:BondOrder?=nil):Bool-instance-method">
       <div class="signature">
         
-        def <strong>bonded?</strong>(other : <span class="k">self</span>, lhs : <a href="../Chem/AtomType.html">AtomType</a> | String, rhs : <a href="../Chem/Element.html">Element</a>, order : Int? = <span class="n">nil</span>) : Bool
+        def <strong>bonded?</strong>(other : <span class="k">self</span>, lhs : <a href="../Chem/AtomType.html">AtomType</a> | String, rhs : <a href="../Chem/Element.html">Element</a>, order : <a href="../Chem/BondOrder.html">BondOrder</a>? = <span class="n">nil</span>) : Bool
 
-        <a class="method-permalink" href="#bonded%3F%28other%3Aself%2Clhs%3AAtomType%7CString%2Crhs%3AElement%2Corder%3AInt%3F%3Dnil%29%3ABool-instance-method">#</a>
+        <a class="method-permalink" href="#bonded%3F%28other%3Aself%2Clhs%3AAtomType%7CString%2Crhs%3AElement%2Corder%3ABondOrder%3F%3Dnil%29%3ABool-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1813,12 +1808,12 @@ residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <
       </div>
     </div>
   
-    <div class="entry-detail" id="bonded?(other:self,lhs:Element,rhs:AtomType|String,order:Int?=nil):Bool-instance-method">
+    <div class="entry-detail" id="bonded?(other:self,lhs:Element,rhs:AtomType|String,order:BondOrder?=nil):Bool-instance-method">
       <div class="signature">
         
-        def <strong>bonded?</strong>(other : <span class="k">self</span>, lhs : <a href="../Chem/Element.html">Element</a>, rhs : <a href="../Chem/AtomType.html">AtomType</a> | String, order : Int? = <span class="n">nil</span>) : Bool
+        def <strong>bonded?</strong>(other : <span class="k">self</span>, lhs : <a href="../Chem/Element.html">Element</a>, rhs : <a href="../Chem/AtomType.html">AtomType</a> | String, order : <a href="../Chem/BondOrder.html">BondOrder</a>? = <span class="n">nil</span>) : Bool
 
-        <a class="method-permalink" href="#bonded%3F%28other%3Aself%2Clhs%3AElement%2Crhs%3AAtomType%7CString%2Corder%3AInt%3F%3Dnil%29%3ABool-instance-method">#</a>
+        <a class="method-permalink" href="#bonded%3F%28other%3Aself%2Clhs%3AElement%2Crhs%3AAtomType%7CString%2Corder%3ABondOrder%3F%3Dnil%29%3ABool-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1862,12 +1857,12 @@ residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <
       </div>
     </div>
   
-    <div class="entry-detail" id="bonded?(other:self,lhs:AtomType|String,rhs:AtomType|String,order:Int?=nil):Bool-instance-method">
+    <div class="entry-detail" id="bonded?(other:self,lhs:Element,rhs:Element,order:BondOrder?=nil):Bool-instance-method">
       <div class="signature">
         
-        def <strong>bonded?</strong>(other : <span class="k">self</span>, lhs : <a href="../Chem/AtomType.html">AtomType</a> | String, rhs : <a href="../Chem/AtomType.html">AtomType</a> | String, order : Int? = <span class="n">nil</span>) : Bool
+        def <strong>bonded?</strong>(other : <span class="k">self</span>, lhs : <a href="../Chem/Element.html">Element</a>, rhs : <a href="../Chem/Element.html">Element</a>, order : <a href="../Chem/BondOrder.html">BondOrder</a>? = <span class="n">nil</span>) : Bool
 
-        <a class="method-permalink" href="#bonded%3F%28other%3Aself%2Clhs%3AAtomType%7CString%2Crhs%3AAtomType%7CString%2Corder%3AInt%3F%3Dnil%29%3ABool-instance-method">#</a>
+        <a class="method-permalink" href="#bonded%3F%28other%3Aself%2Clhs%3AElement%2Crhs%3AElement%2Corder%3ABondOrder%3F%3Dnil%29%3ABool-instance-method">#</a>
       </div>
       
         <div class="doc">
