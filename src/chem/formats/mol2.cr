@@ -61,7 +61,7 @@ module Chem::Mol2
               j = @pull.next_i - 1
               case bond_t = @pull.next_s
               when "1", "2", "3"
-                builder.bond i, j, order: bond_t.to_i
+                builder.bond i, j, BondOrder.from_value(bond_t.to_i)
               when "ar"
                 builder.bond i, j, aromatic: true
               when "am", "du"

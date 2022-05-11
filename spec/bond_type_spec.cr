@@ -9,8 +9,8 @@ describe Chem::BondType do
       o = Chem::AtomType.new("O", "O")
       n = Chem::AtomType.new("N", "N")
       Chem::BondType.new(ca, cb).inspect.should eq "<BondType CA-CB>"
-      Chem::BondType.new(c, o, order: 2).inspect.should eq "<BondType C=O>"
-      Chem::BondType.new(c, n, order: 3).inspect.should eq "<BondType C#N>"
+      Chem::BondType.new(c, o, :double).inspect.should eq "<BondType C=O>"
+      Chem::BondType.new(c, n, :triple).inspect.should eq "<BondType C#N>"
     end
   end
 end

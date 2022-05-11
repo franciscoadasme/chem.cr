@@ -5,7 +5,7 @@ class Chem::ResidueType::Parser
     element : Element?,
     formal_charge : Int32,
     explicit_hydrogens : Int32?
-  record BondRecord, lhs : String, rhs : String, order : Int32
+  record BondRecord, lhs : String, rhs : String, order : BondOrder
 
   def initialize(str, aliases : Hash(String, String)? = nil)
     @reader = Char::Reader.new(str.strip)
@@ -17,7 +17,7 @@ class Chem::ResidueType::Parser
     @aliases.merge! aliases if aliases
   end
 
-  private def add_bond(atom : AtomRecord, other : AtomRecord, order : Int32) : Nil
+  private def add_bond(atom : AtomRecord, other : AtomRecord, order : BondOrder) : Nil
     raise "Atom #{atom.name} cannot be bonded to itself" if atom == other
     bond_key = {String, String}.from [atom.name, other.name].sort!
     if @bond_map[bond_key]?
@@ -91,7 +91,7 @@ class Chem::ResidueType::Parser
 
   def parse : Nil
     bond_atom = nil
-    bond_order = 1
+    bond_order = BondOrder::Single
     root_stack = Deque(AtomRecord).new
     label_map = {} of Int32 => AtomRecord
     advance_char = true
@@ -107,15 +107,15 @@ class Chem::ResidueType::Parser
       when '-'
         check_bond_succ
         bond_atom ||= expect_atom("before bond")
-        bond_order = 1
+        bond_order = BondOrder::Single
       when '='
         check_bond_succ
         bond_atom ||= expect_atom("before bond")
-        bond_order = 2
+        bond_order = BondOrder::Double
       when '#'
         check_bond_succ
         bond_atom ||= expect_atom("before bond")
-        bond_order = 3
+        bond_order = BondOrder::Triple
       when '('
         if char = peek_char
           unless char.in?("-=#")

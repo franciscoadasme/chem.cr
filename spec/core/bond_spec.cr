@@ -42,8 +42,8 @@ describe Chem::Bond do
         atom :P, vec3(1, 0, 0)
         atom :O, vec3(2, 0, 0)
         bond "I1", "C1"
-        bond "C1", "P1", order: 3
-        bond "P1", "O1", order: 2
+        bond "C1", "P1", :triple
+        bond "P1", "O1", :double
       end
       bond_map = structure.bonds.index_by &.atoms.map(&.name)
       bond_map[{"I1", "C1"}].inspect.should eq "<Bond A:ICN91:I1(1)-A:ICN91:C1(2)>"
@@ -54,38 +54,10 @@ describe Chem::Bond do
 
   describe "#order" do
     it "returns order as a number" do
-      Chem::Bond.new(glu_cd, glu_oe1).order.should eq 1
-      Chem::Bond.new(glu_cd, glu_oe1, :zero).order.should eq 0
-      Chem::Bond.new(glu_cd, glu_oe1, :double).order.should eq 2
-      Chem::Bond.new(glu_cd, glu_oe1, :triple).order.should eq 3
-      Chem::Bond.new(glu_cd, glu_oe1, :dative).order.should eq 1
-    end
-  end
-
-  describe "#order=" do
-    bond = Chem::Bond.new glu_cd, glu_oe1
-
-    it "changes bond order" do
-      bond.kind.should eq Chem::Bond::Kind::Single
-      bond.order.should eq 1
-
-      bond.order = 2
-      bond.kind.should eq Chem::Bond::Kind::Double
-      bond.order.should eq 2
-
-      bond.order = 3
-      bond.kind.should eq Chem::Bond::Kind::Triple
-      bond.order.should eq 3
-
-      bond.order = 0
-      bond.kind.should eq Chem::Bond::Kind::Zero
-      bond.order.should eq 0
-    end
-
-    it "fails when order is invalid" do
-      expect_raises Chem::Error, "Bond order 5 is invalid" do
-        bond.order = 5
-      end
+      Chem::Bond.new(glu_cd, glu_oe1).order.to_i.should eq 1
+      Chem::Bond.new(glu_cd, glu_oe1, :zero).order.to_i.should eq 0
+      Chem::Bond.new(glu_cd, glu_oe1, :double).order.to_i.should eq 2
+      Chem::Bond.new(glu_cd, glu_oe1, :triple).order.to_i.should eq 3
     end
   end
 

@@ -2,7 +2,7 @@ class Chem::ResidueType::Builder
   @code : Char?
   @description : String?
   @kind : Residue::Kind = :other
-  @link_bond : Tuple(String, String, Int32)?
+  @link_bond : Tuple(String, String, BondOrder)?
   @names = [] of String
   @root_atom : String?
   @symmetric_atom_groups = [] of Array(Tuple(String, String))
@@ -17,13 +17,13 @@ class Chem::ResidueType::Builder
 
     # Set link bond if missing for known residue types
     @link_bond ||= case @kind
-                   when .protein? then {"C", "N", 1}
+                   when .protein? then {"C", "N", BondOrder::Single}
                    end
 
     # Count total of implicit bonds per atom
     implicit_bonds = Hash(String, Int32).new { 0 }
     parser.implicit_bonds.each do |bond|
-      implicit_bonds[bond.lhs] += bond.order
+      implicit_bonds[bond.lhs] += bond.order.to_i
     end
 
     atom_types = [] of AtomType
@@ -37,11 +37,11 @@ class Chem::ResidueType::Builder
       effective_valence = atom.explicit_hydrogens || 0
       effective_valence += atom.formal_charge * (element.valence_electrons >= 4 ? -1 : 1)
       effective_valence += parser.bonds.sum do |bond| # sum of bond orders
-        atom.name.in?(bond.lhs, bond.rhs) ? bond.order : 0
+        atom.name.in?(bond.lhs, bond.rhs) ? bond.order.to_i : 0
       end
       effective_valence += implicit_bonds[atom.name]? || 0
       if bond = @link_bond
-        effective_valence += bond[2] if atom.name.in?(bond)
+        effective_valence += bond[2].to_i if atom.name.in?(bond)
       end
 
       # Check that effective valence is correct
@@ -121,9 +121,9 @@ class Chem::ResidueType::Builder
     check_atom(rhs)
     raise ParseException.new("Atom #{lhs} cannot be bonded to itself") if lhs == rhs
     bond_order = case bond_str
-                 when "-" then 1
-                 when "=" then 2
-                 when "#" then 3
+                 when "-" then BondOrder::Single
+                 when "=" then BondOrder::Double
+                 when "#" then BondOrder::Triple
                  else          ::raise "BUG: unreachable"
                  end
     @link_bond = {lhs, rhs, bond_order}

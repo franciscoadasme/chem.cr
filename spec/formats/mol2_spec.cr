@@ -105,10 +105,10 @@ describe Chem::Mol2::Writer do
           atom "H4", vec3(0.4755, 0.1646, -1.2374), partial_charge: -0.5482
           atom "O5", vec3(0.1044, 1.2949, 0.7131), partial_charge: -0.7244
 
-          bond "S1", "O2", order: 2
+          bond "S1", "O2", :double
           bond "S1", "H3"
           bond "S1", "H4"
-          bond "S1", "O5", order: 2
+          bond "S1", "O5", :double
         end
       end
     end

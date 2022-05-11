@@ -75,43 +75,73 @@ module Chem
     end
   end
 
+  # A `BondOrder` provides a type-safe representation of the bond order
+  # of a covalent between two atoms.
+  enum BondOrder
+    # Zero bond order, e.g., Schrodinger represents bonds between metals
+    # as zero-order bonds. May also indicate unknown or unspecified
+    # order.
+    Zero = 0
+    # Single bond order
+    Single = 1
+    # Double bond order
+    Double = 2
+    # Triple bond order
+    Triple = 3
+
+    # Returns `true` if the integer representation of the bond order is
+    # equal to *rhs*, else `false`.
+    def ==(rhs : Int) : Bool
+      to_i == rhs
+    end
+
+    # Decreases the bond order. Raises `Error` if the bond order is
+    # zero.
+    def pred : self
+      case self
+      in .zero?   then raise Error.new("Cannot decrease order")
+      in .single? then Zero
+      in .double? then Single
+      in .triple? then Double
+      end
+    end
+
+    # Increases the bond order. Raises `Error` if the bond order is
+    # triple.
+    def succ : self
+      case self
+      in .zero?   then Single
+      in .single? then Double
+      in .double? then Triple
+      in .triple? then raise Error.new("Cannot increase order")
+      end
+    end
+
+    # Returns the char representation of the bond order.
+    def to_char : Char
+      case self
+      in .zero?   then '·'
+      in .single? then '-'
+      in .double? then '='
+      in .triple? then '#'
+      end
+    end
+  end
+
   # A `Bond` provides a canonical representation of a covalent bond
   # between two atoms.
   class Bond
     include Connectivity({Atom, Atom})
 
-    enum Kind
-      Dative = -1
-      Zero   =  0
-      Single =  1
-      Double =  2
-      Triple =  3
+    property order : BondOrder
+    delegate zero?, single?, double?, triple?, to: @order
 
-      def to_char : Char
-        case self
-        in .dative? then '-'
-        in .zero?   then '·'
-        in .single? then '-'
-        in .double? then '='
-        in .triple? then '#'
-        end
-      end
-    end
-
-    property kind : Kind
-
-    delegate dative?, zero?, single?, double?, triple?, to: @kind
-
-    def initialize(@atoms : {Atom, Atom}, @kind : Kind = :single)
+    def initialize(@atoms : {Atom, Atom}, @order : BondOrder = :single)
       super atoms
     end
 
-    def self.new(first : Atom, second : Atom, kind : Kind) : self
-      new({first, second}, kind)
-    end
-
-    def self.new(first : Atom, second : Atom, order : Int32) : self
-      new(first, second, Kind.from_value(order))
+    def self.new(atom : Atom, other : Atom, order : BondOrder) : self
+      new({atom, other}, order)
     end
 
     def bonded?(other : self) : Bool
@@ -119,27 +149,12 @@ module Chem
     end
 
     def inspect(io : IO) : Nil
-      io << "<Bond " << @atoms[0] << @kind.to_char << @atoms[1] << '>'
+      io << "<Bond " << @atoms[0] << @order.to_char << @atoms[1] << '>'
     end
 
     # Returns the current value of the angle in radians.
     def measure : Float64
       Spatial.distance(*@atoms.map(&.coords))
-    end
-
-    def order : Int32
-      case @kind
-      when .dative?
-        1
-      else
-        @kind.to_i
-      end
-    end
-
-    def order=(order : Int32) : Int32
-      raise Error.new("Bond order #{order} is invalid") unless 0 <= order <= 3
-      @kind = Kind.from_value(order)
-      order
     end
 
     def other(atom : Atom) : Atom
@@ -158,7 +173,7 @@ module Chem
     end
 
     def to_s(io : IO) : Nil
-      io << @atoms[0].name << @kind.to_char << @atoms[1].name
+      io << @atoms[0].name << @order.to_char << @atoms[1].name
     end
   end
 

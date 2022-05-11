@@ -180,7 +180,7 @@ module Chem
     # Returns the effective valence. This is equivalent to the sum of
     # the bond orders.
     def valence : Int32
-      bonds.sum(&.order)
+      bonds.sum(&.order.to_i)
     end
 
     # Returns `true` if the atom belongs to a water residue, else

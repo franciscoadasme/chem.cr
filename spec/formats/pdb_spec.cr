@@ -502,7 +502,7 @@ describe Chem::PDB::Writer do
         atom :n, vec3(0, 0, 0)
 
         bond "I1", "C1"
-        bond "C1", "N1", order: 3
+        bond "C1", "N1", :triple
       end
     end
 
@@ -527,7 +527,7 @@ describe Chem::PDB::Writer do
         atom :n, vec3(0, 0, 0)
 
         bond "I1", "C1"
-        bond "C1", "N1", order: 3
+        bond "C1", "N1", :triple
       end
 
       residue "ICN" do
@@ -536,7 +536,7 @@ describe Chem::PDB::Writer do
         atom :n, vec3(10, 0, 0)
 
         bond "I1", "C1"
-        bond "C1", "N1", order: 3
+        bond "C1", "N1", :triple
       end
     end
 
@@ -561,7 +561,7 @@ describe Chem::PDB::Writer do
         atom :n, vec3(0, 0, 0)
 
         bond "I1", "C1"
-        bond "C1", "N1", order: 3
+        bond "C1", "N1", :triple
       end
     end
     structure.atoms[0].serial = 99_999

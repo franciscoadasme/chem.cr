@@ -155,7 +155,9 @@ describe Chem::ResidueType::Parser do
     parser.atoms.size.should eq 3
     parser.bonds.size.should eq 2
     parser.implicit_bonds.size.should eq 2
-    parser.implicit_bonds.map { |bond| {bond.lhs, bond.order} }.should eq [{"SG", 2}, {"SG", 1}]
+    parser.implicit_bonds.map { |bond| {bond.lhs, bond.order.to_i} }.should eq [
+      {"SG", 2}, {"SG", 1},
+    ]
     parser.atoms.map(&.formal_charge).should eq [0, 0, -1]
   end
 

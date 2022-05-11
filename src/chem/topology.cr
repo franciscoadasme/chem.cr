@@ -326,10 +326,10 @@ class Chem::Topology
             .each do |other|
               case hybridization_map[other]
               when 2
-                atom.bonds[other].order = 2
+                atom.bonds[other].order = :double
                 missing_valence -= 1
               when 1
-                atom.bonds[other].order = 3
+                atom.bonds[other].order = :triple
                 missing_valence -= 2
               end
               break if missing_valence == 0

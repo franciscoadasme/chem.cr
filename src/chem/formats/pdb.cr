@@ -14,7 +14,7 @@ module Chem::PDB
       5 => Sec::RightHandedHelix3_10,
     }
 
-    @pdb_bonds = Hash(Tuple(Int32, Int32), Int32).new 0
+    @pdb_bonds = Hash(Tuple(Int32, Int32), BondOrder).new BondOrder::Zero
     @pdb_cell : Spatial::Parallelepiped?
     @pdb_title = ""
     @header_decoded = false
@@ -219,7 +219,7 @@ module Chem::PDB
       i = seqnum_at(6, 5)
       (11..).step(5).each do |start|
         break unless j = seqnum_at?(start, 5)
-        @pdb_bonds[{i, j}] += 1 unless i > j # skip redundant bonds
+        @pdb_bonds.update({i, j}, &.succ) unless i > j # skip redundant bonds
       end
     end
 
@@ -484,7 +484,7 @@ module Chem::PDB
       bonds.each do |bond|
         i, j = bond.atoms.map(&.serial)
         i, j = @atom_index_table[i], @atom_index_table[j] if @renumber
-        bond.order.clamp(1..3).times do
+        bond.order.to_i.times do
           idx_pairs << {i, j} << {j, i}
         end
       end

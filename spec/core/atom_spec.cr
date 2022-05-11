@@ -55,7 +55,7 @@ describe Chem::Atom do
       atom :C, vec3(0, 0, 0)
       atom :N, vec3(1, 0, 0)
       bond "I1", "C1"
-      bond "C1", "N1", order: 3
+      bond "C1", "N1", :triple
     end
 
     it "yields bonded atoms" do
@@ -113,7 +113,7 @@ describe Chem::Atom do
         atom :O, vec3(0, 1, 0)
         atom :C, vec3(-1, 0, 0)
         atom :C, vec3(1, 0, 0)
-        bond "C1", "O1", order: 2
+        bond "C1", "O1", :double
         bond "C1", "C2"
         bond "C1", "C3"
       end
@@ -150,7 +150,7 @@ describe Chem::Atom do
         atom :C, vec3(0, 0, 0)
         atom :N, vec3(1, 0, 0)
         bond "I1", "C1"
-        bond "C1", "N1", order: 3
+        bond "C1", "N1", :triple
       end
       structure.atoms.map(&.target_valence).should eq [1, 4, 3]
     end
@@ -175,8 +175,8 @@ describe Chem::Atom do
         atom :C, vec3(-1, 0, 0)
         atom :S, vec3(0, 0, 0)
         atom :H, vec3(1, 0, 0)
-        bond "C1", "S1", 3
-        bond "S1", "H1", 1
+        bond "C1", "S1", :triple
+        bond "S1", "H1"
       end
       structure.atoms[1].target_valence.should eq 4
     end
@@ -190,8 +190,8 @@ describe Chem::Atom do
         atom :O, vec3(0, -1, 0)
         bond "O1", "S1"
         bond "S1", "O2"
-        bond "S1", "O3", order: 2
-        bond "S1", "O4", order: 2
+        bond "S1", "O3", :double
+        bond "S1", "O4", :double
       end
       structure.atoms[1].target_valence.should eq 6
     end
@@ -206,8 +206,8 @@ describe Chem::Atom do
         atom :O, vec3(1, -1, 0)
         bond "O1", "S1"
         bond "S1", "O2"
-        bond "S1", "O3", order: 2
-        bond "S1", "O4", order: 2
+        bond "S1", "O3", :double
+        bond "S1", "O4", :double
         bond "S1", "O5"
       end
       structure.atoms[1].target_valence.should eq 6

@@ -123,7 +123,7 @@ describe Chem::Residue do
         bond_type = Chem::BondType.new(
           Chem::AtomType.new("C", "C"),
           Chem::AtomType.new("N", "N"),
-          2,
+          :double,
         )
         a1.bonded?(a2, bond_type).should be_false
       end
@@ -148,7 +148,7 @@ describe Chem::Residue do
       end
 
       it "returns false when bond order is different" do
-        a1.bonded?(a2, "C", "N", 2).should be_false
+        a1.bonded?(a2, "C", "N", :double).should be_false
       end
     end
 
@@ -181,7 +181,7 @@ describe Chem::Residue do
 
       it "returns false when bond order is different" do
         atom_t = Chem::AtomType.new "C", "C"
-        a1.bonded?(a2, atom_t, Chem::PeriodicTable::N, 2).should be_false
+        a1.bonded?(a2, atom_t, Chem::PeriodicTable::N, :double).should be_false
       end
     end
 
@@ -214,7 +214,7 @@ describe Chem::Residue do
 
       it "returns false when bond order is different" do
         atom_t = Chem::AtomType.new "N", "N"
-        a1.bonded?(a2, Chem::PeriodicTable::C, atom_t, 2).should be_false
+        a1.bonded?(a2, Chem::PeriodicTable::C, atom_t, :double).should be_false
       end
     end
 
@@ -238,7 +238,7 @@ describe Chem::Residue do
       end
 
       it "returns false when bond order is different" do
-        a1.bonded?(a2, Chem::PeriodicTable::C, Chem::PeriodicTable::N, 2).should be_false
+        a1.bonded?(a2, Chem::PeriodicTable::C, Chem::PeriodicTable::N, :double).should be_false
       end
     end
   end

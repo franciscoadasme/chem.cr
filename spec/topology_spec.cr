@@ -331,7 +331,7 @@ describe Chem::Topology do
       top.guess_formal_charges
 
       top.bonds.size.should eq 644
-      top.bonds.sum(&.order).should eq 714
+      top.bonds.sum(&.order.to_i).should eq 714
       top.bonds.count(&.single?).should eq 574
       top.bonds.count(&.double?).should eq 70
 
@@ -373,7 +373,7 @@ describe Chem::Topology do
       top.guess_formal_charges
 
       top.bonds.size.should eq 27
-      top.bonds.sum(&.order).should eq 31
+      top.bonds.sum(&.order.to_i).should eq 31
       top.bonds.count(&.single?).should eq 23
       top.bonds.count(&.double?).should eq 4
 
@@ -400,7 +400,7 @@ describe Chem::Topology do
       top.guess_formal_charges
 
       top.bonds.size.should eq 60
-      top.bonds.sum(&.order).should eq 65
+      top.bonds.sum(&.order.to_i).should eq 65
       top.bonds.count(&.single?).should eq 55
       top.bonds.count(&.double?).should eq 5
 
@@ -768,7 +768,7 @@ describe Chem::Topology do
       structure = Chem::Structure.build do
         atom Chem::PeriodicTable::C, vec3(0, 0, 0)
         atom Chem::PeriodicTable::N, vec3(1.16, 0, 0)
-        bond 0, 1, order: 3
+        bond 0, 1, :triple
       end
       structure.topology.guess_formal_charges
 
@@ -781,8 +781,8 @@ describe Chem::Topology do
         atom Chem::PeriodicTable::O, vec3(-0.97960, 1.34290, 0.19110)
         atom Chem::PeriodicTable::O, vec3(-0.18710, 0.62720, -0.20810)
         atom Chem::PeriodicTable::O, vec3(0.47750, 0.03050, 0.50030)
-        bond 0, 1, order: 1
-        bond 1, 2, order: 2
+        bond 0, 1, :single
+        bond 1, 2, :double
       end
       structure.topology.guess_formal_charges
 
@@ -809,8 +809,8 @@ describe Chem::Topology do
         atom Chem::PeriodicTable::S, vec3(-0.25380, -0.14690, 0.13990)
         atom Chem::PeriodicTable::O, vec3(0.49180, -1.10210, -0.75260)
         atom Chem::PeriodicTable::O, vec3(-0.99950, 0.80830, 1.03240)
-        bond 0, 1, order: 2
-        bond 0, 2, order: 2
+        bond 0, 1, :double
+        bond 0, 2, :double
       end
       structure.topology.guess_formal_charges
 
@@ -824,7 +824,7 @@ describe Chem::Topology do
         atom Chem::PeriodicTable::O, vec3(-0.92360, 0.95430, 0.30200)
         atom Chem::PeriodicTable::O, vec3(-0.31430, -0.07080, -1.67910)
         bond 0, 1
-        bond 0, 2, order: 2
+        bond 0, 2, :double
       end
       structure.topology.guess_formal_charges
 
@@ -840,9 +840,9 @@ describe Chem::Topology do
         atom Chem::PeriodicTable::O, vec3(-0.56800, -2.03070, -1.52840)
         atom Chem::PeriodicTable::O, vec3(-0.93780, -0.25540, -2.54770)
         bond 0, 1
-        bond 0, 2, order: 2
+        bond 0, 2, :double
         bond 0, 3
-        bond 0, 4, order: 2
+        bond 0, 4, :double
       end
       structure.topology.guess_formal_charges
 
@@ -878,7 +878,7 @@ describe Chem::Topology do
         atom Chem::PeriodicTable::O, vec3(-2.50240, -2.12750, -2.57730)
         atom Chem::PeriodicTable::O, vec3(-0.63530, -0.52300, -2.09580)
         bond 0, 1
-        bond 0, 2, order: 2
+        bond 0, 2, :double
       end
       structure.topology.guess_formal_charges
 
@@ -893,7 +893,7 @@ describe Chem::Topology do
         atom Chem::PeriodicTable::O, vec3(-0.6406, 0.7180, -1.1991)
         atom Chem::PeriodicTable::O, vec3(-0.5679, -1.4248, 0.1073)
         atom Chem::PeriodicTable::O, vec3(-0.3149, 0.7757, 1.2895)
-        bond 0, 1, order: 2
+        bond 0, 1, :double
         bond 0, 2
         bond 0, 3
         bond 0, 4

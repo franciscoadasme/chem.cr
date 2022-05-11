@@ -233,7 +233,7 @@ module Chem
     def bonded?(other : self,
                 lhs : AtomType | String,
                 rhs : AtomType | String,
-                order : Int? = nil) : Bool
+                order : BondOrder? = nil) : Bool
       return false if other.same?(self)
       return false unless (a = self[lhs]?) && (b = other[rhs]?)
       return false unless bond = a.bonds[b]?
@@ -244,7 +244,7 @@ module Chem
     def bonded?(other : self,
                 lhs : AtomType | String,
                 rhs : Element,
-                order : Int? = nil) : Bool
+                order : BondOrder? = nil) : Bool
       return false if other.same?(self)
       return false unless a = self[lhs]?
       other.each_atom.any? do |b|
@@ -258,7 +258,7 @@ module Chem
     def bonded?(other : self,
                 lhs : Element,
                 rhs : AtomType | String,
-                order : Int? = nil) : Bool
+                order : BondOrder? = nil) : Bool
       return false if other.same?(self)
       return false unless b = other[rhs]?
       @atoms.any? do |a|
@@ -269,7 +269,7 @@ module Chem
     end
 
     # :ditto:
-    def bonded?(other : self, lhs : Element, rhs : Element, order : Int? = nil) : Bool
+    def bonded?(other : self, lhs : Element, rhs : Element, order : BondOrder? = nil) : Bool
       return false if other.same?(self)
       @atoms.any? do |a|
         next unless a === lhs

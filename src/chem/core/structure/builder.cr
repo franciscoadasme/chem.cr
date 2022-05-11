@@ -48,17 +48,17 @@ module Chem
       Atom.new name, @atom_serial, coords, residue, **options
     end
 
-    def bond(name : String, other : String, order : Int = 1) : Bond
+    def bond(name : String, other : String, order : BondOrder = :single) : Bond
       atom!(name).bonds.add atom!(other), order
     end
 
-    def bond(i : Int, j : Int, order : Int = 1, aromatic : Bool = false) : Bond
+    def bond(i : Int, j : Int, order : BondOrder = :single, aromatic : Bool = false) : Bond
       bond = atoms[i].bonds.add atoms[j], order
       aromatic_bonds << bond if aromatic
       bond
     end
 
-    def bonds(bond_table : Hash(Tuple(Int32, Int32), Int32)) : Nil
+    def bonds(bond_table : Hash(Tuple(Int32, Int32), BondOrder)) : Nil
       atom_table = {} of Int32 => Atom
       atom_serials = Set(Int32).new bond_table.size * 2
       bond_table.each_key { |(i, j)| atom_serials << i << j }
@@ -269,7 +269,7 @@ module Chem
           until subbonds.empty?
             bond = subbonds.pop
             next if bond.in?(visited)
-            bond.order = 2 if bond.in?(changeable) && ctab[bond].all?(&.single?)
+            bond.order = :double if bond.in?(changeable) && ctab[bond].all?(&.single?)
             visited << bond
             ctab[bond].each do |other|
               subbonds << other unless other.in?(visited)
@@ -281,7 +281,7 @@ module Chem
             break
           end
 
-          bonds.each &.order=(1)
+          bonds.each &.order=(:single)
           subbonds.clear
           visited.clear
         end

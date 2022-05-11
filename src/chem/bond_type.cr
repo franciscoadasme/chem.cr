@@ -1,12 +1,14 @@
 class Chem::BondType
   include Indexable(AtomType)
 
-  getter order : Int32
+  getter order : BondOrder
+
+  delegate double?, single?, triple?, zero?, to: @order
   delegate size, unsafe_fetch, to: @atoms
 
   @atoms : StaticArray(AtomType, 2)
 
-  def initialize(lhs : AtomType, rhs : AtomType, @order : Int = 1)
+  def initialize(lhs : AtomType, rhs : AtomType, @order : BondOrder = :single)
     @atoms = StaticArray[lhs, rhs]
   end
 
@@ -14,10 +16,6 @@ class Chem::BondType
     return false if @order != rhs.order
     (self[0] == rhs[0] && self[1] == rhs[1]) ||
       (self[0] == rhs[1] && self[1] == rhs[0])
-  end
-
-  def double? : Bool
-    @order == 2
   end
 
   def includes?(name : String) : Bool
@@ -60,21 +58,7 @@ class Chem::BondType
     end
   end
 
-  def single? : Bool
-    @order == 1
-  end
-
   def to_s(io : IO) : Nil
-    bond_char = case @order
-                when 1 then '-'
-                when 2 then '='
-                when 3 then '#'
-                else        raise "BUG: unreachable"
-                end
-    io << self[0].name << bond_char << self[1].name
-  end
-
-  def triple? : Bool
-    @order == 3
+    io << self[0].name << @order.to_char << self[1].name
   end
 end
