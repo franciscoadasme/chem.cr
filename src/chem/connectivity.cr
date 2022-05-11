@@ -75,6 +75,93 @@ module Chem
     end
   end
 
+  # A `Bond` provides a canonical representation of a covalent bond
+  # between two atoms.
+  class Bond
+    include Connectivity({Atom, Atom})
+
+    enum Kind
+      Dative = -1
+      Zero   =  0
+      Single =  1
+      Double =  2
+      Triple =  3
+
+      def to_char : Char
+        case self
+        in .dative? then '-'
+        in .zero?   then '·'
+        in .single? then '-'
+        in .double? then '='
+        in .triple? then '#'
+        end
+      end
+    end
+
+    property kind : Kind
+
+    delegate dative?, zero?, single?, double?, triple?, to: @kind
+
+    def initialize(@atoms : {Atom, Atom}, @kind : Kind = :single)
+      super atoms
+    end
+
+    def self.new(first : Atom, second : Atom, kind : Kind) : self
+      new({first, second}, kind)
+    end
+
+    def self.new(first : Atom, second : Atom, order : Int32) : self
+      new(first, second, Kind.from_value(order))
+    end
+
+    def bonded?(other : self) : Bool
+      @atoms.any? &.in?(other)
+    end
+
+    def inspect(io : IO) : Nil
+      io << "<Bond " << @atoms[0] << @kind.to_char << @atoms[1] << '>'
+    end
+
+    # Returns the current value of the angle in radians.
+    def measure : Float64
+      Spatial.distance(*@atoms.map(&.coords))
+    end
+
+    def order : Int32
+      case @kind
+      when .dative?
+        1
+      else
+        @kind.to_i
+      end
+    end
+
+    def order=(order : Int32) : Int32
+      raise Error.new("Bond order #{order} is invalid") unless 0 <= order <= 3
+      @kind = Kind.from_value(order)
+      order
+    end
+
+    def other(atom : Atom) : Atom
+      case atom
+      when @atoms[0]
+        @atoms[1]
+      when @atoms[1]
+        @atoms[0]
+      else
+        raise Error.new("Bond doesn't include #{atom}")
+      end
+    end
+
+    private def sort! : Nil
+      @atoms = @atoms.reverse if @atoms[0] > @atoms[1]
+    end
+
+    def to_s(io : IO) : Nil
+      io << @atoms[0].name << @kind.to_char << @atoms[1].name
+    end
+  end
+
   # An `Angle` provides a canonical representation of an angle between
   # three bonded atoms.
   #

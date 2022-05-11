@@ -258,7 +258,7 @@ module Chem
           end
         end
 
-        changeable = bonds.select { |bond| bond[0].missing_valence > 0 && bond[1].missing_valence > 0 }.to_set
+        changeable = bonds.select(&.atoms.any?(&.missing_valence.>(0))).to_set
         kekulized = false
         subbonds = [] of Bond
         visited = Set(Bond).new bonds.size
@@ -276,10 +276,7 @@ module Chem
             end
           end
 
-          if bonds.all? { |(atom, other)|
-               atom.target_valence == atom.valence &&
-               other.target_valence == other.valence
-             }
+          if bonds.all? &.atoms.all? { |atom| atom.target_valence == atom.valence }
             kekulized = true
             break
           end

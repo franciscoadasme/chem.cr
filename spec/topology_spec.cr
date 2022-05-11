@@ -106,7 +106,7 @@ describe Chem::BondArray do
       st = fake_structure include_bonds: false
       glu_cd, glu_oe1, glu_oe2 = st.atoms[6..8]
 
-      expect_raises Chem::Error, "Bond doesn't include atom 7" do
+      expect_raises Chem::Error, "Bond doesn't include A:ASP1:OD1(7)" do
         glu_cd.bonds << Chem::Bond.new glu_oe1, glu_oe2
       end
     end

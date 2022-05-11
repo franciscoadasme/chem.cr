@@ -98,7 +98,7 @@ class Chem::Topology
     # TODO: drop copy_to and implement the nested loops here
     @chains.each &.copy_to(top)
     bonds.each do |bond|
-      a, b = bond
+      a, b = bond.atoms
       a = top.dig a.chain.id, a.residue.number, a.residue.insertion_code, a.name
       b = top.dig b.chain.id, b.residue.number, b.residue.insertion_code, b.name
       a.bonds.add b, order: bond.order

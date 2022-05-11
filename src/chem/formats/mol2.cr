@@ -172,8 +172,8 @@ module Chem::Mol2
     private def write(bond : Bond, i : Int32)
       @io.printf "%5d%5d%5d%2d\n",
         i,
-        atom_index(bond.first),
-        atom_index(bond.second),
+        atom_index(bond.atoms[0]),
+        atom_index(bond.atoms[1]),
         bond.order
     end
 

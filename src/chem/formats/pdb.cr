@@ -409,7 +409,7 @@ module Chem::PDB
         bonds = obj.bonds
         if @bonds != BondOptions::All
           bonds.select! do |bond|
-            a, b = bond[0], bond[1]
+            a, b = bond.atoms
             ok = false
             ok ||= (a.protein? || a.water?) && (b.protein? || b.water?) if @bonds.standard?
             ok ||= (a.het? && !a.water?) || (b.het? && !b.water?) if @bonds.het?
@@ -482,8 +482,7 @@ module Chem::PDB
     private def write_bonds(bonds : Array(Bond)) : Nil
       idx_pairs = Array(Tuple(Int32, Int32)).new bonds.size
       bonds.each do |bond|
-        i = bond.first.serial
-        j = bond.second.serial
+        i, j = bond.atoms.map(&.serial)
         i, j = @atom_index_table[i], @atom_index_table[j] if @renumber
         bond.order.clamp(1..3).times do
           idx_pairs << {i, j} << {j, i}

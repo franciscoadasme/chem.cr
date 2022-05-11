@@ -66,7 +66,7 @@ module Chem::PSF
       end.topology
 
       parse_connectivity(Bond, "BOND").each do |bond|
-        bond.first.bonds << bond
+        bond.atoms[0].bonds << bond
       end
       top.angles = parse_connectivity(Angle, "THETA")
       top.dihedrals = parse_connectivity(Dihedral, "PHI")

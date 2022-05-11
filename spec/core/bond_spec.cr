@@ -45,7 +45,7 @@ describe Chem::Bond do
         bond "C1", "P1", order: 3
         bond "P1", "O1", order: 2
       end
-      bond_map = structure.bonds.index_by { |bond| {bond[0].name, bond[1].name} }
+      bond_map = structure.bonds.index_by &.atoms.map(&.name)
       bond_map[{"I1", "C1"}].inspect.should eq "<Bond A:ICN91:I1(1)-A:ICN91:C1(2)>"
       bond_map[{"C1", "P1"}].inspect.should eq "<Bond A:ICN91:C1(2)#A:ICN91:P1(3)>"
       bond_map[{"P1", "O1"}].inspect.should eq "<Bond A:ICN91:P1(3)=A:ICN91:O1(4)>"
@@ -83,7 +83,7 @@ describe Chem::Bond do
     end
 
     it "fails when order is invalid" do
-      expect_raises Chem::Error, "Bond order (5) is invalid" do
+      expect_raises Chem::Error, "Bond order 5 is invalid" do
         bond.order = 5
       end
     end
@@ -97,7 +97,7 @@ describe Chem::Bond do
     end
 
     it "fails when the bond does not include the given atom" do
-      expect_raises Chem::Error, "Bond doesn't include atom 9" do
+      expect_raises Chem::Error, "Bond doesn't include A:PHE2:N(9)" do
         Chem::Bond.new(glu_cd, glu_oe1).other glu_oe2
       end
     end

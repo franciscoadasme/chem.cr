@@ -252,7 +252,7 @@ describe Chem::Structure::Builder do
     end
 
     expected = [{"O1", "H1"}, {"O1", "H2"}]
-    structure.bonds.map { |bond| {bond[0].name, bond[1].name} }.should eq expected
+    structure.bonds.map(&.atoms.map(&.name)).should eq expected
   end
 
   it "sets secondary structure" do
@@ -289,10 +289,10 @@ describe Chem::Structure::Builder do
 
   describe "#kekulize" do
     it_kekulizes "indole and benzene", "783.mol2", %w(
-      C1=C2 C2-C3 C3=C4 C4-C5 C6=C5 C1-C6
+      C1=C2 C2-C3 C3=C4 C4-C5 C5=C6 C1-C6
       C4-N3 N3-C8 CN4=C8
-      C1'=C2' C2'-C3' C3'=C4' C5'-C4' C6'=C5' C1'-C6'
-      C1B-C2B C2B=C3B C3B-C4B C5B=C4B C6B-C5B C1B=C6B
+      C1'=C2' C2'-C3' C3'=C4' C4'-C5' C5'=C6' C1'-C6'
+      C1B-C2B C2B=C3B C3B-C4B C4B=C5B C5B-C6B C1B=C6B
     )
 
     it_kekulizes "quinazoline and pyrazole", "8FX.mol2", %w(
@@ -307,8 +307,8 @@ describe Chem::Structure::Builder do
     )
 
     it_kekulizes "three fused rings", "tac.mol2", %w(
-      C6=C4 C4-C7 C8=C7 C9-C8 N1=C9
-      C8-C10 C11-C9 C12=C10 C11=C13 C13-C12
+      C4=C6 C4-C7 C7=C8 C8-C9 N1=C9
+      C8-C10 C9-C11 C10=C12 C11=C13 C12-C13
     )
 
     it_kekulizes "four fused rings", "ac1.mol2", %w(
