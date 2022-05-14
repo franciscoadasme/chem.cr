@@ -939,6 +939,32 @@
 
 
 
+  <h2>
+    <a id="class-method-summary" class="anchor" href="#class-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#guess_element%28atom_name%3AString%29%3AElement-class-method" class="signature"><strong>.guess_element</strong>(atom_name : String) : Element</a>
+        
+          <div class="summary"><p>Returns the element of an atom based on its name.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#guess_element%3F%28atom_name%3AString%29%3AElement%3F-class-method" class="signature"><strong>.guess_element?</strong>(atom_name : String) : Element?</a>
+        
+          <div class="summary"><p>Returns the element of an atom based on its name if possible, else <code>nil</code>.</p></div>
+        
+      </li>
+    
+  </ul>
+
 
 
   <h2>
@@ -1537,6 +1563,60 @@ decoded in the corresponding file format if possible.</p>
   
 
 
+
+  <h2>
+    <a id="class-method-detail" class="anchor" href="#class-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="guess_element(atom_name:String):Element-class-method">
+      <div class="signature">
+        
+        def self.<strong>guess_element</strong>(atom_name : String) : <a href="../Chem/Element.html">Element</a>
+
+        <a class="method-permalink" href="#guess_element%28atom_name%3AString%29%3AElement-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the element of an atom based on its name. Raises <code><a href="../Chem/Error.html">Error</a></code> if
+the element could not be determined. Refer to <code><a href="../Chem/Topology.html#guess_element%3F%28atom_name%3AString%29%3AElement%3F-class-method">.guess_element?</a></code> for
+details.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="guess_element?(atom_name:String):Element?-class-method">
+      <div class="signature">
+        
+        def self.<strong>guess_element?</strong>(atom_name : String) : <a href="../Chem/Element.html">Element</a>?
+
+        <a class="method-permalink" href="#guess_element%3F%28atom_name%3AString%29%3AElement%3F-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the element of an atom based on its name if possible, else
+<code>nil</code>.</p>
+<p>This is a naive approach, where the first letter of <em>atom_name</em> is
+tested first to get the element, then the name with trailing digits
+stripped.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
 
 
 
