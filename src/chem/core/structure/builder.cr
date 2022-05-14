@@ -49,7 +49,7 @@ module Chem
 
     def atom(name : String, serial : Int32, coords : Spatial::Vec3, element : Element, **options) : Atom
       @atom_serial = serial
-      Atom.new name, @atom_serial, coords, residue, element, **options
+      Atom.new residue, @atom_serial, element, name, coords, **options
     end
 
     def bond(name : String, other : String, order : BondOrder = :single) : Bond
@@ -106,7 +106,7 @@ module Chem
     end
 
     def chain(id : Char) : Chain
-      @chain = @structure[id]? || Chain.new(id, @structure.topology)
+      @chain = @structure[id]? || Chain.new(@structure.topology, id)
     end
 
     def chain(id : Char, & : self ->) : Nil
@@ -160,7 +160,7 @@ module Chem
     end
 
     def residue(name : String, number : Int32, inscode : Char? = nil) : Residue
-      @residue = chain[number, inscode]? || Residue.new(name, number, inscode, chain)
+      @residue = chain[number, inscode]? || Residue.new(chain, number, inscode, name)
     end
 
     def residue(name : String, number : Int32, inscode : Char? = nil, & : self ->) : Nil

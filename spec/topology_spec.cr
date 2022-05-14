@@ -260,9 +260,9 @@ describe Chem::Topology do
 
     it "does not delete another chain with the same id from the internal table (#86)" do
       top = Chem::Topology.new
-      Chem::Chain.new 'A', top
-      Chem::Chain.new 'B', top
-      Chem::Chain.new 'A', top
+      Chem::Chain.new top, 'A'
+      Chem::Chain.new top, 'B'
+      Chem::Chain.new top, 'A'
 
       top.n_chains.should eq 3
       top.chains.map(&.id).should eq "ABA".chars

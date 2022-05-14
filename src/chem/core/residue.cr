@@ -25,16 +25,18 @@ module Chem
     delegate :[], :[]?, to: @atom_table
     delegate structure, to: @chain
 
-    def initialize(name : String, number : Int32, chain : Chain)
-      initialize name, number, nil, chain
-    end
-
-    def initialize(@name : String,
-                   @number : Int32,
-                   @insertion_code : Char?,
-                   @chain : Chain)
+    def initialize(
+      @chain : Chain,
+      @number : Int32,
+      @insertion_code : Char?,
+      @name : String
+    )
       assign_kind_from_templates
       @chain << self
+    end
+
+    def self.new(chain : Chain, number : Int32, name : String) : self
+      new chain, number, nil, name
     end
 
     # The comparison operator.
@@ -676,7 +678,7 @@ module Chem
     #
     # NOTE: bonds are not copied and must be set manually for the copy.
     protected def copy_to(chain : Chain) : self
-      residue = Residue.new @name, @number, @insertion_code, chain
+      residue = Residue.new chain, @number, @insertion_code, @name
       residue.kind = @kind
       residue.sec = @sec
       each_atom &.copy_to(residue)

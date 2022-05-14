@@ -490,11 +490,11 @@ class Chem::Topology
     clear # reset chains
     chain_id = 'A'
     fragment_matches.each do |matches|
-      chain = Chain.new chain_id, self
+      chain = Chain.new self, chain_id
       resid = 0
       matches.each do |match|
         # TODO: avoid triggering reset_cache internally when setting residue.chain
-        residue = Residue.new(match.resname, (resid += 1), chain)
+        residue = Residue.new(chain, (resid += 1), match.resname)
         residue.kind = match.reskind # TODO: set in the Residue constructor
         match.each_atom do |atom, atom_name|
           atom.name = atom_name
@@ -612,7 +612,7 @@ class Chem::Topology
     if split_chains
       id = 'A'.pred
       residues.residue_fragments.each do |residues|
-        chain = dig?(id = id.succ) || Chain.new id, self
+        chain = dig?(id = id.succ) || Chain.new(self, id)
         chain.clear
         residues.each &.chain=(chain)
         chain.renumber_residues_by_connectivity

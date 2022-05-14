@@ -10,7 +10,7 @@ module Chem
     getter top : Topology
     delegate structure, to: @top
 
-    def initialize(@id : Char, @top : Topology)
+    def initialize(@top : Topology, @id : Char)
       raise ArgumentError.new("Non-alphanumeric chain id") unless @id.ascii_alphanumeric?
       @top << self
     end
@@ -170,7 +170,7 @@ module Chem
     #
     # NOTE: bonds are not copied and must be set manually for the copy.
     protected def copy_to(top : Topology) : self
-      chain = Chain.new @id, top
+      chain = Chain.new top, @id
       each_residue &.copy_to(chain)
       chain
     end

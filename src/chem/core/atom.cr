@@ -23,18 +23,20 @@ module Chem
     delegate chain, to: @residue
     delegate atomic_number, covalent_radius, heavy?, max_valence, valence_electrons, to: @element
 
-    def initialize(@name : String,
-                   @serial : Int32,
-                   @coords : Spatial::Vec3,
-                   @residue : Residue,
-                   @element : Element,
-                   type : String? = nil,
-                   @formal_charge : Int32 = 0,
-                   mass : Number? = nil,
-                   @occupancy : Float64 = 1,
-                   @partial_charge : Float64 = 0.0,
-                   @temperature_factor : Float64 = 0,
-                   vdw_radius : Number? = nil)
+    def initialize(
+      @residue : Residue,
+      @serial : Int32,
+      @element : Element,
+      @name : String,
+      @coords : Spatial::Vec3,
+      type : String? = nil,
+      @formal_charge : Int32 = 0,
+      mass : Number? = nil,
+      @occupancy : Float64 = 1,
+      @partial_charge : Float64 = 0.0,
+      @temperature_factor : Float64 = 0,
+      vdw_radius : Number? = nil
+    )
       @mass = if mass
                 raise ArgumentError.new("Negative mass") if mass < 0
                 mass.to_f
@@ -218,7 +220,7 @@ module Chem
     #
     # NOTE: bonds are not copied and must be set manually for the copy.
     protected def copy_to(residue : Residue) : self
-      atom = Atom.new @name, @serial, @coords, residue, @element, @type, @formal_charge,
+      atom = Atom.new residue, @serial, @element, @name, @coords, @type, @formal_charge,
         @occupancy, @partial_charge, @temperature_factor
       atom.constraint = @constraint
       atom
