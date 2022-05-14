@@ -27,7 +27,7 @@ module Chem
                    @serial : Int32,
                    @coords : Spatial::Vec3,
                    @residue : Residue,
-                   element : Element? = nil,
+                   @element : Element,
                    type : String? = nil,
                    @formal_charge : Int32 = 0,
                    mass : Number? = nil,
@@ -35,7 +35,6 @@ module Chem
                    @partial_charge : Float64 = 0.0,
                    @temperature_factor : Float64 = 0,
                    vdw_radius : Number? = nil)
-      @element = element || PeriodicTable[atom_name: @name]
       @mass = if mass
                 raise ArgumentError.new("Negative mass") if mass < 0
                 mass.to_f

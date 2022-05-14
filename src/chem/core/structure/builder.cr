@@ -40,12 +40,16 @@ module Chem
     end
 
     def atom(name : String, coords : Spatial::Vec3, **options) : Atom
-      Atom.new name, (@atom_serial += 1), coords, residue, **options
+      atom name, @atom_serial + 1, coords, **options
     end
 
     def atom(name : String, serial : Int32, coords : Spatial::Vec3, **options) : Atom
+      atom name, serial, coords, Topology.guess_element(name), **options
+    end
+
+    def atom(name : String, serial : Int32, coords : Spatial::Vec3, element : Element, **options) : Atom
       @atom_serial = serial
-      Atom.new name, @atom_serial, coords, residue, **options
+      Atom.new name, @atom_serial, coords, residue, element, **options
     end
 
     def bond(name : String, other : String, order : BondOrder = :single) : Bond

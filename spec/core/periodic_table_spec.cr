@@ -26,11 +26,6 @@ describe Chem::PeriodicTable do
       Chem::PeriodicTable[name: "Bromine"]?.should be Chem::PeriodicTable::Br
     end
 
-    it "returns the element by atom name" do
-      Chem::PeriodicTable[atom_name: "O"]?.should be Chem::PeriodicTable::O
-      Chem::PeriodicTable[atom_name: "CA"]?.should be Chem::PeriodicTable::C
-    end
-
     it "returns nil with unknown element" do
       Chem::PeriodicTable[0]?.should be_nil
     end

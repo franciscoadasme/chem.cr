@@ -361,6 +361,24 @@ class Chem::Topology
     dihedrals.each { |dihedral| @dihedrals << dihedral }
   end
 
+  # Returns the element of an atom based on its name. Raises `Error` if
+  # the element could not be determined. Refer to `guess_element?` for
+  # details.
+  def self.guess_element(atom_name : String) : Element
+    guess_element?(atom_name) || raise Error.new("Could not guess element of #{atom_name}")
+  end
+
+  # Returns the element of an atom based on its name if possible, else
+  # `nil`.
+  #
+  # This is a naive approach, where the first letter of *atom_name* is
+  # tested first to get the element, then the name with trailing digits
+  # stripped.
+  def self.guess_element?(atom_name : String) : Element?
+    atom_name = atom_name.lstrip("123456789").capitalize
+    PeriodicTable[atom_name[0]]? || PeriodicTable[atom_name]?
+  end
+
   # Sets the formal charges based on the existing bonds.
   #
   # For most cases, the formal charge is calculated as

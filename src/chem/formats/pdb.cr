@@ -188,7 +188,7 @@ module Chem::PDB
             when String
               PeriodicTable[symbol]? || @pull.error("Unknown element")
             else
-              PeriodicTable[atom_name: atom_name]? || @pull.error("Could not guess element")
+              Topology.guess_element?(atom_name) || @pull.error("Could not guess element")
             end
 
       @builder.chain chid if chid.alphanumeric?

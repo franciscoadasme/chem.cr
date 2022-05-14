@@ -1164,4 +1164,24 @@ describe Chem::Topology do
       ]
     end
   end
+
+  describe ".guess_element" do
+    it "raises if unknown" do
+      expect_raises(Chem::Error, "Could not guess element of X1") do
+        Chem::Topology.guess_element("X1")
+      end
+    end
+  end
+
+  describe ".guess_element?" do
+    it "returns the element by atom name" do
+      # TODO: test different atom names (#116)
+      Chem::Topology.guess_element?("O").should be Chem::PeriodicTable::O
+      Chem::Topology.guess_element?("CA").should be Chem::PeriodicTable::C
+    end
+
+    it "returns nil if unknown" do
+      Chem::Topology.guess_element?("X1").should be_nil
+    end
+  end
 end

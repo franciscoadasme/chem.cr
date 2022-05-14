@@ -200,13 +200,6 @@ module Chem::PeriodicTable
     {% end %}
   end
 
-  # TODO rename to guess_element?
-  # TODO test different atom names
-  def []?(*, atom_name : String) : Element?
-    atom_name = atom_name.lstrip("123456789").capitalize
-    self[atom_name[0]]? || self[atom_name]?
-  end
-
   # TODO: delete this! it's only used in building connectivity
   def covalent_cutoff(atom : Atom, other : Atom) : Float64
     covalent_cutoff atom.element, other.element

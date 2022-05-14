@@ -31,7 +31,7 @@ class Chem::ResidueType::Builder
     bond_types = [] of BondType
     h_i = 0
     parser.atom_map.each_value do |atom|
-      element = atom.element || PeriodicTable[atom_name: atom.name]
+      element = atom.element || Topology.guess_element(atom.name)
 
       # Calculate effective valence
       effective_valence = atom.explicit_hydrogens || 0
