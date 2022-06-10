@@ -446,6 +446,12 @@ describe Chem::PDB do
         PDB
       Chem::Structure.from_pdb(io).cell.should be_nil
     end
+
+    it "parses a truncated PDB without occupancy" do
+      structure = load_file "DTD.pdb"
+      structure.atoms.size.should eq 16
+      structure.bonds.size.should eq 16
+    end
   end
 end
 
