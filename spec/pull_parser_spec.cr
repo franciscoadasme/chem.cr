@@ -269,19 +269,15 @@ describe Chem::PullParser do
         end
       end
 
-      it "raises at the beginning of line" do
-        expect_raises(Chem::ParseException, "Invalid real number") do
-          parser_for("123.45").float(if_blank: Math::PI)
-        end
+      it "returns default at the beginning of line" do
+        parser_for("123.45").float(if_blank: Math::PI).should eq Math::PI
       end
 
-      it "raises at the end of line" do
-        expect_raises(Chem::ParseException, "Invalid real number") do
-          pull = parser_for("123.45\n")
-          pull.next_line
-          while pull.next_token; end
-          pull.float(if_blank: Math::PI)
-        end
+      it "returns default at the end of line" do
+        pull = parser_for("123.45\n")
+        pull.next_line
+        while pull.next_token; end
+        pull.float(if_blank: Math::PI).should eq Math::PI
       end
     end
   end
@@ -360,19 +356,15 @@ describe Chem::PullParser do
         end
       end
 
-      it "raises at the beginning of line" do
-        expect_raises(Chem::ParseException, "Invalid integer") do
-          parser_for("12345\n").int(if_blank: 789)
-        end
+      it "returns default at the beginning of line" do
+        parser_for("12345\n").int(if_blank: 789).should eq 789
       end
 
-      it "raises at the end of line" do
-        expect_raises(Chem::ParseException, "Invalid integer") do
-          pull = parser_for("12345\n")
-          pull.next_line
-          while pull.next_token; end
-          pull.int(if_blank: 789)
-        end
+      it "returns default at the end of line" do
+        pull = parser_for("12345\n")
+        pull.next_line
+        while pull.next_token; end
+        pull.int(if_blank: 789).should eq 789
       end
     end
   end

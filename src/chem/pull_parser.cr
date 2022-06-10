@@ -217,7 +217,7 @@ module Chem
     # blank. Raises `ParseException` if the token is not set or it is
     # not a valid float representation.
     def float(if_blank default : Float64) : Float64
-      if (token = current_token) && token.all?(&.unsafe_chr.ascii_whitespace?)
+      if !(token = current_token) || token.all?(&.unsafe_chr.ascii_whitespace?)
         default
       else
         float
@@ -256,7 +256,7 @@ module Chem
     # `ParseException` if the token is not set or it is not a valid
     # number.
     def int(if_blank default : Int32) : Int32
-      if (token = current_token) && token.all?(&.unsafe_chr.ascii_whitespace?)
+      if !(token = current_token) || token.all?(&.unsafe_chr.ascii_whitespace?)
         default
       else
         int
