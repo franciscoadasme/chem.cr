@@ -104,7 +104,9 @@ module Chem::PSF
         n_lines.times do
           @pull.next_line
           records_per_line.times do
+            break unless size > 0
             records << T.new(*tuple.map { @atoms[@pull.next_i - 1] })
+            size -= 1
           end
         end
       end

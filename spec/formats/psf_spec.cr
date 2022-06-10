@@ -30,4 +30,13 @@ describe Chem::PSF::Reader do
     top.dihedrals[6].atoms.map(&.serial).should eq({4, 1, 5, 7})
     top.impropers[15].atoms.map(&.serial).should eq({80, 90, 91, 92})
   end
+
+  it "parses PSF with non-multiple number of records (#178)" do
+    top = Chem::Topology.from_psf spec_file("DTD.psf")
+    top.atoms.size.should eq 16
+    top.bonds.size.should eq 16
+    top.angles.size.should eq 28
+    top.dihedrals.size.should eq 40
+    top.impropers.size.should eq 8
+  end
 end
