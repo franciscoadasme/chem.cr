@@ -905,16 +905,9 @@ between four bonded atoms.</p>
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#%5B%5D%28%2Aatoms%3AAtom%29%3Aself-class-method" class="signature"><strong>.[]</strong>(*atoms : Atom) : <span class="k">self</span></a>
+        <a href="#new%28a1%3AAtom%2Ca2%3AAtom%2Ca3%3AAtom%2Ca4%3AAtom%29-class-method" class="signature"><strong>.new</strong>(a1 : Atom, a2 : Atom, a3 : Atom, a4 : Atom)</a>
         
-          <div class="summary"><p>Returns a new connectivity object.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#new%28%2Aatoms%3AAtom%29%3Aself-class-method" class="signature"><strong>.new</strong>(*atoms : Atom) : <span class="k">self</span></a>
-        
-          <div class="summary"><p>Returns a new connectivity object.</p></div>
+          <div class="summary"><p>Creates a new <em>Dihedral</em> with the given atoms.</p></div>
         
       </li>
     
@@ -988,15 +981,6 @@ between four bonded atoms.</p>
 
     
 
-  <h3>Constructor methods inherited from module <code><a href="../Chem/Connectivity.html">Chem::Connectivity</a>({<a href="../Chem/Atom.html">Chem::Atom</a>, <a href="../Chem/Atom.html">Chem::Atom</a>, <a href="../Chem/Atom.html">Chem::Atom</a>, <a href="../Chem/Atom.html">Chem::Atom</a>})</code></h3>
-  
-  
-    <a href="../Chem/Connectivity.html#new%28atoms%3A%7BChem%3A%3AAtom%2CChem%3A%3AAtom%2CChem%3A%3AAtom%2CChem%3A%3AAtom%7D%29-class-method" class="tooltip">
-      <span>new(atoms : {Chem::Atom, Chem::Atom, Chem::Atom, Chem::Atom})</span>
-    new</a>
-    
-  
-
 
     
 
@@ -1054,36 +1038,17 @@ between four bonded atoms.</p>
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="[](*atoms:Atom):self-class-method">
+    <div class="entry-detail" id="new(a1:Atom,a2:Atom,a3:Atom,a4:Atom)-class-method">
       <div class="signature">
         
-        def self.<strong>[]</strong>(*atoms : <a href="../Chem/Atom.html">Atom</a>) : <span class="k">self</span>
+        def self.<strong>new</strong>(a1 : <a href="../Chem/Atom.html">Atom</a>, a2 : <a href="../Chem/Atom.html">Atom</a>, a3 : <a href="../Chem/Atom.html">Atom</a>, a4 : <a href="../Chem/Atom.html">Atom</a>)
 
-        <a class="method-permalink" href="#%5B%5D%28%2Aatoms%3AAtom%29%3Aself-class-method">#</a>
+        <a class="method-permalink" href="#new%28a1%3AAtom%2Ca2%3AAtom%2Ca3%3AAtom%2Ca4%3AAtom%29-class-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Returns a new connectivity object. Shorthand for <code>#new({a, b, ...})</code>.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="new(*atoms:Atom):self-class-method">
-      <div class="signature">
-        
-        def self.<strong>new</strong>(*atoms : <a href="../Chem/Atom.html">Atom</a>) : <span class="k">self</span>
-
-        <a class="method-permalink" href="#new%28%2Aatoms%3AAtom%29%3Aself-class-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Returns a new connectivity object. Shorthand for <code>#new({a, b, ...})</code>.</p>
+          <p>Creates a new <em>Dihedral</em> with the given atoms.</p>
         </div>
       
       <br/>

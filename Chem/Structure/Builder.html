@@ -913,6 +913,8 @@
       <li class="entry-summary">
         <a href="#atom%28element%3AElement%7CSymbol%2Ccoords%3ASpatial%3A%3AVec3%2C%2A%2Aoptions%29%3AAtom-instance-method" class="signature"><strong>#atom</strong>(element : Element | Symbol, coords : Spatial::Vec3, **options) : Atom</a>
         
+          <div class="summary"><p>Creates an <code><a href="../../Chem/Atom.html">Atom</a></code> of <em>element</em> at the given coordinates.</p></div>
+        
       </li>
     
       <li class="entry-summary">
@@ -1168,6 +1170,32 @@ to incorrect structures</p>
 
         <a class="method-permalink" href="#atom%28element%3AElement%7CSymbol%2Ccoords%3ASpatial%3A%3AVec3%2C%2A%2Aoptions%29%3AAtom-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Creates an <code><a href="../../Chem/Atom.html">Atom</a></code> of <em>element</em> at the given coordinates. Extra
+named arguments are forwarded to the <code><a href="../../Chem/Atom.html">Atom</a></code> constructor.</p>
+<p>The atom name will set to the element's symbol followed by the
+number of atoms with the same element within the current residue.</p>
+<pre><code class="language-crystal">structure <span class="o">=</span> <span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>.build <span class="k">do</span> <span class="o">|</span>builder<span class="o">|</span>
+  builder.residue
+  builder.atom <span class="t">Chem</span><span class="t">::</span><span class="t">PeriodicTable</span><span class="t">::</span><span class="t">H</span>, <span class="t">Chem</span><span class="t">::</span><span class="t">Spatial</span><span class="t">::</span><span class="t">Vec3</span>.zero
+  builder.atom <span class="t">Chem</span><span class="t">::</span><span class="t">PeriodicTable</span><span class="t">::</span><span class="t">C</span>, <span class="t">Chem</span><span class="t">::</span><span class="t">Spatial</span><span class="t">::</span><span class="t">Vec3</span>.zero
+  builder.atom <span class="t">Chem</span><span class="t">::</span><span class="t">PeriodicTable</span><span class="t">::</span><span class="t">H</span>, <span class="t">Chem</span><span class="t">::</span><span class="t">Spatial</span><span class="t">::</span><span class="t">Vec3</span>.zero
+  builder.atom <span class="t">Chem</span><span class="t">::</span><span class="t">PeriodicTable</span><span class="t">::</span><span class="t">H</span>, <span class="t">Chem</span><span class="t">::</span><span class="t">Spatial</span><span class="t">::</span><span class="t">Vec3</span>.zero
+  builder.atom <span class="t">Chem</span><span class="t">::</span><span class="t">PeriodicTable</span><span class="t">::</span><span class="t">C</span>, <span class="t">Chem</span><span class="t">::</span><span class="t">Spatial</span><span class="t">::</span><span class="t">Vec3</span>.zero
+  builder.residue
+  builder.atom <span class="t">Chem</span><span class="t">::</span><span class="t">PeriodicTable</span><span class="t">::</span><span class="t">H</span>, <span class="t">Chem</span><span class="t">::</span><span class="t">Spatial</span><span class="t">::</span><span class="t">Vec3</span>.zero
+  builder.atom <span class="t">Chem</span><span class="t">::</span><span class="t">PeriodicTable</span><span class="t">::</span><span class="t">C</span>, <span class="t">Chem</span><span class="t">::</span><span class="t">Spatial</span><span class="t">::</span><span class="t">Vec3</span>.zero
+  builder.atom <span class="t">Chem</span><span class="t">::</span><span class="t">PeriodicTable</span><span class="t">::</span><span class="t">N</span>, <span class="t">Chem</span><span class="t">::</span><span class="t">Spatial</span><span class="t">::</span><span class="t">Vec3</span>.zero
+<span class="k">end</span>
+structure.atoms.map(<span class="o">&amp;</span>.name) <span class="c"># =&gt; [&quot;H1&quot;, &quot;C1&quot;, &quot;H2&quot;, &quot;H3&quot;, &quot;C2&quot;, &quot;H1&quot;, &quot;C1&quot;, &quot;N1&quot;]</span></code></pre>
+<p>Note that the atom names resets on a new residue.</p>
+<p><span class="flag yellow">WARNING</span>  This method assumes that residues are created in
+sequence, so calling <code><a href="../../Chem/Structure/Builder.html#residue%3AResidue-instance-method">#residue</a></code> will always create a new residue,
+not retrieving a preceding one. Otherwise, the order of the atom
+names will be reset.</p>
+        </div>
       
       <br/>
       <div>

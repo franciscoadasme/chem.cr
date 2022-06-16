@@ -899,26 +899,9 @@ between two atoms.</p>
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#%5B%5D%28%2Aatoms%3AAtom%29%3Aself-class-method" class="signature"><strong>.[]</strong>(*atoms : Atom) : <span class="k">self</span></a>
+        <a href="#new%28atom%3AAtom%2Cother%3AAtom%2Corder%3ABondOrder%3D%3Asingle%29-class-method" class="signature"><strong>.new</strong>(atom : Atom, other : Atom, order : BondOrder = <span class="n">:single</span>)</a>
         
-          <div class="summary"><p>Returns a new connectivity object.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#new%28atom%3AAtom%2Cother%3AAtom%2Corder%3ABondOrder%29%3Aself-class-method" class="signature"><strong>.new</strong>(atom : Atom, other : Atom, order : BondOrder) : <span class="k">self</span></a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#new%28atoms%3ATuple%28Atom%2CAtom%29%2Corder%3ABondOrder%3D%3Asingle%29-class-method" class="signature"><strong>.new</strong>(atoms : Tuple(Atom, Atom), order : BondOrder = <span class="n">:single</span>)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#new%28%2Aatoms%3AAtom%29%3Aself-class-method" class="signature"><strong>.new</strong>(*atoms : Atom) : <span class="k">self</span></a>
-        
-          <div class="summary"><p>Returns a new connectivity object.</p></div>
+          <div class="summary"><p>Creates a new <code><a href="../Chem/Bond.html">Bond</a></code> with the given atoms and <em>order</em>.</p></div>
         
       </li>
     
@@ -940,6 +923,8 @@ between two atoms.</p>
     
       <li class="entry-summary">
         <a href="#bonded%3F%28other%3Aself%29%3ABool-instance-method" class="signature"><strong>#bonded?</strong>(other : <span class="k">self</span>) : Bool</a>
+        
+          <div class="summary"><p>Returns <code>true</code> if the bond shares an atom with <em>other</em>, else <code>false</code>.</p></div>
         
       </li>
     
@@ -963,7 +948,7 @@ between two atoms.</p>
       <li class="entry-summary">
         <a href="#measure%3AFloat64-instance-method" class="signature"><strong>#measure</strong> : Float64</a>
         
-          <div class="summary"><p>Returns the current value of the angle in radians.</p></div>
+          <div class="summary"><p>Returns the current value of the bond in angstroms.</p></div>
         
       </li>
     
@@ -979,6 +964,8 @@ between two atoms.</p>
     
       <li class="entry-summary">
         <a href="#other%28atom%3AAtom%29%3AAtom-instance-method" class="signature"><strong>#other</strong>(atom : Atom) : Atom</a>
+        
+          <div class="summary"><p>Returns the atom bonded to <em>atom</em>.</p></div>
         
       </li>
     
@@ -1066,15 +1053,6 @@ between two atoms.</p>
 
     
 
-  <h3>Constructor methods inherited from module <code><a href="../Chem/Connectivity.html">Chem::Connectivity</a>({<a href="../Chem/Atom.html">Chem::Atom</a>, <a href="../Chem/Atom.html">Chem::Atom</a>})</code></h3>
-  
-  
-    <a href="../Chem/Connectivity.html#new%28atoms%3A%7BChem%3A%3AAtom%2CChem%3A%3AAtom%7D%29-class-method" class="tooltip">
-      <span>new(atoms : {Chem::Atom, Chem::Atom})</span>
-    new</a>
-    
-  
-
 
     
 
@@ -1122,64 +1100,17 @@ between two atoms.</p>
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="[](*atoms:Atom):self-class-method">
+    <div class="entry-detail" id="new(atom:Atom,other:Atom,order:BondOrder=:single)-class-method">
       <div class="signature">
         
-        def self.<strong>[]</strong>(*atoms : <a href="../Chem/Atom.html">Atom</a>) : <span class="k">self</span>
+        def self.<strong>new</strong>(atom : <a href="../Chem/Atom.html">Atom</a>, other : <a href="../Chem/Atom.html">Atom</a>, order : <a href="../Chem/BondOrder.html">BondOrder</a> = <span class="n">:single</span>)
 
-        <a class="method-permalink" href="#%5B%5D%28%2Aatoms%3AAtom%29%3Aself-class-method">#</a>
+        <a class="method-permalink" href="#new%28atom%3AAtom%2Cother%3AAtom%2Corder%3ABondOrder%3D%3Asingle%29-class-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Returns a new connectivity object. Shorthand for <code><a href="../Chem/Bond.html#new%28atom%3AAtom%2Cother%3AAtom%2Corder%3ABondOrder%29%3Aself-class-method">#new({a, b, ...})</a></code>.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="new(atom:Atom,other:Atom,order:BondOrder):self-class-method">
-      <div class="signature">
-        
-        def self.<strong>new</strong>(atom : <a href="../Chem/Atom.html">Atom</a>, other : <a href="../Chem/Atom.html">Atom</a>, order : <a href="../Chem/BondOrder.html">BondOrder</a>) : <span class="k">self</span>
-
-        <a class="method-permalink" href="#new%28atom%3AAtom%2Cother%3AAtom%2Corder%3ABondOrder%29%3Aself-class-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="new(atoms:Tuple(Atom,Atom),order:BondOrder=:single)-class-method">
-      <div class="signature">
-        
-        def self.<strong>new</strong>(atoms : Tuple(<a href="../Chem/Atom.html">Atom</a>, <a href="../Chem/Atom.html">Atom</a>), order : <a href="../Chem/BondOrder.html">BondOrder</a> = <span class="n">:single</span>)
-
-        <a class="method-permalink" href="#new%28atoms%3ATuple%28Atom%2CAtom%29%2Corder%3ABondOrder%3D%3Asingle%29-class-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="new(*atoms:Atom):self-class-method">
-      <div class="signature">
-        
-        def self.<strong>new</strong>(*atoms : <a href="../Chem/Atom.html">Atom</a>) : <span class="k">self</span>
-
-        <a class="method-permalink" href="#new%28%2Aatoms%3AAtom%29%3Aself-class-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Returns a new connectivity object. Shorthand for <code><a href="../Chem/Bond.html#new%28atom%3AAtom%2Cother%3AAtom%2Corder%3ABondOrder%29%3Aself-class-method">#new({a, b, ...})</a></code>.</p>
+          <p>Creates a new <code><a href="../Chem/Bond.html">Bond</a></code> with the given atoms and <em>order</em>.</p>
         </div>
       
       <br/>
@@ -1209,6 +1140,12 @@ between two atoms.</p>
 
         <a class="method-permalink" href="#bonded%3F%28other%3Aself%29%3ABool-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if the bond shares an atom with <em>other</em>, else
+<code>false</code>.</p>
+        </div>
       
       <br/>
       <div>
@@ -1285,7 +1222,7 @@ and the values of all instance variables.</p>
       
         <div class="doc">
           
-          <p>Returns the current value of the angle in radians.</p>
+          <p>Returns the current value of the bond in angstroms.</p>
         </div>
       
       <br/>
@@ -1329,6 +1266,12 @@ and the values of all instance variables.</p>
 
         <a class="method-permalink" href="#other%28atom%3AAtom%29%3AAtom-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns the atom bonded to <em>atom</em>. Raises <code><a href="../Chem/Error.html">Error</a></code> if <em>atom</em> is not
+included in the bond.</p>
+        </div>
       
       <br/>
       <div>
