@@ -14,9 +14,9 @@ module Chem
     property residue : Residue
     property serial : Int32
     property temperature_factor : Float64 = 0
-    # Atom type. Usually specifies the atomic parameter set assigned to
-    # this atom within a given force field.
-    property type : String?
+    # Atom typename. Usually specifies the atomic parameter set assigned
+    # to this atom within a given force field.
+    property typename : String?
     property vdw_radius : Float64
 
     delegate x, y, z, to: @coords
@@ -220,8 +220,8 @@ module Chem
     #
     # NOTE: bonds are not copied and must be set manually for the copy.
     protected def copy_to(residue : Residue) : self
-      atom = Atom.new residue, @serial, @element, @name, @coords, @type, @formal_charge,
-        @occupancy, @partial_charge, @temperature_factor
+      atom = Atom.new residue, @serial, @element, @name, @coords, @typename,
+        @formal_charge, @occupancy, @partial_charge, @temperature_factor
       atom.constraint = @constraint
       atom
     end

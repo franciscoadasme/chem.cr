@@ -39,7 +39,7 @@ module Chem::PSF
             resid = @pull.at(cols[2]).int
             resname = @pull.at(cols[3]).str.strip
             name = @pull.at(cols[4]).str.strip
-            type = @pull.at(cols[5]).str.strip
+            typename = @pull.at(cols[5]).str.strip
             charge = @pull.at(cols[6]).float
             mass = @pull.at(cols[7]).float
           else # whitespace separated
@@ -48,7 +48,7 @@ module Chem::PSF
             resid = @pull.next_i
             resname = @pull.next_s
             name = @pull.next_s
-            type = @pull.next_s
+            typename = @pull.next_s
             charge = @pull.next_f
             mass = @pull.next_f
           end
@@ -56,7 +56,7 @@ module Chem::PSF
           builder.chain { } unless segment == prev_seg # force new chain
           builder.residue resname, resid
           atom = builder.atom name, serial, Spatial::Vec3.zero
-          atom.type = type
+          atom.typename = typename
           atom.partial_charge = charge
           atom.mass = mass
           @atoms << atom

@@ -18,7 +18,7 @@ describe Chem::PSF::Reader do
     atom = top.atoms[753]?.should_not be_nil
     atom.serial.should eq 754
     atom.name.should eq "CG"
-    atom.type.should eq "C136"
+    atom.typename.should eq "C136"
     atom.residue.number.should eq 81
     atom.residue.name.should eq "PRO"
     atom.chain.id.should eq 'P'
