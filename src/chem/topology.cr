@@ -185,7 +185,7 @@ class Chem::Topology
     @angles.clear
     each_atom do |a2|
       a2.bonded_atoms.each_combination(2, reuse: true) do |(a1, a3)|
-        @angles << Angle[a1, a2, a3]
+        @angles << Angle.new(a1, a2, a3)
       end
     end
   end
@@ -350,12 +350,12 @@ class Chem::Topology
       a1, a2, a3 = angle.atoms
       a1.each_bonded_atom do |a0|
         next if a0 == a2 || a0 == a3
-        dihedrals << Dihedral[a0, a1, a2, a3]
+        dihedrals << Dihedral.new(a0, a1, a2, a3)
       end
 
       a3.each_bonded_atom do |a4|
         next if a4 == a2 || a4 == a1
-        dihedrals << Dihedral[a1, a2, a3, a4]
+        dihedrals << Dihedral.new(a1, a2, a3, a4)
       end
     end
     dihedrals.each { |dihedral| @dihedrals << dihedral }
@@ -434,7 +434,7 @@ class Chem::Topology
     angles.each do |angle|
       a1, a2, a3 = angle.atoms
       a2.each_bonded_atom do |a4|
-        impropers << Improper[a1, a2, a3, a4] unless a4.in?(a1, a3)
+        impropers << Improper.new(a1, a2, a3, a4) unless a4.in?(a1, a3)
       end
     end
     impropers.each { |improper| @impropers << improper }

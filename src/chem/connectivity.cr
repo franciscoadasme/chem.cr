@@ -4,42 +4,11 @@ module Chem
   module Connectivity(T)
     include Comparable(self)
 
-    # Sorts the atoms according to their serial numbers.
-    private abstract def sort! : Nil
-
     # Returns the current value of the measurement.
     abstract def measure : Float64
 
     # Returns the bonded atoms.
     getter atoms : T
-
-    # Creates a connectivity object with the given atoms. Raises
-    # `ArgumentError` on duplicate atoms.
-    #
-    # NOTE: Atoms are internally sorted to ensure a canonical
-    # representation.
-    def initialize(@atoms : T)
-      @atoms.each_with_index do |atom, i|
-        @atoms.each(within: (i + 1)..) do |other|
-          raise ArgumentError.new("Duplicate atom") if atom == other
-        end
-      end
-      sort!
-    end
-
-    macro included
-      # Returns a new connectivity object. Shorthand for `#new({a, b,
-      # ...})`.
-      def self.[](*atoms : Atom) : self
-        new atoms
-      end
-
-      # Returns a new connectivity object. Shorthand for `#new({a, b,
-      # ...})`.
-      def self.new(*atoms : Atom) : self
-        new atoms
-      end
-    end
 
     # The comparison operator. Returns `0` if the two objects are equal,
     # a negative number if this object is considered less than *other*,
@@ -57,6 +26,15 @@ module Chem
       @atoms <=> rhs.atoms
     end
 
+    # Raises if there are duplicate atoms.
+    private def check_duplicate : Nil
+      @atoms.each_with_index do |atom, i|
+        @atoms.each(within: (i + 1)..) do |other|
+          raise ArgumentError.new("Duplicate atom") if atom == other
+        end
+      end
+    end
+
     # Returns `true` if the connectivity involves *atom*, else `false`.
     def includes?(atom : Atom) : Bool
       atom.in? @atoms
@@ -66,6 +44,11 @@ module Chem
       io << self.class.name << '{'
       @atoms.join io, ", ", &.inspect(io)
       io << '}'
+    end
+
+    # Sorts the atoms according to their serial numbers.
+    private def sort! : Nil
+      @atoms = @atoms.reverse if @atoms.first > @atoms.last
     end
 
     def to_s(io : IO) : Nil
@@ -136,14 +119,15 @@ module Chem
     property order : BondOrder
     delegate zero?, single?, double?, triple?, to: @order
 
-    def initialize(@atoms : {Atom, Atom}, @order : BondOrder = :single)
-      super atoms
+    # Creates a new `Bond` with the given atoms and *order*.
+    def initialize(atom : Atom, other : Atom, @order : BondOrder = :single)
+      @atoms = {atom, other}
+      check_duplicate
+      sort!
     end
 
-    def self.new(atom : Atom, other : Atom, order : BondOrder) : self
-      new({atom, other}, order)
-    end
-
+    # Returns `true` if the bond shares an atom with *other*, else
+    # `false`.
     def bonded?(other : self) : Bool
       @atoms.any? &.in?(other)
     end
@@ -152,11 +136,13 @@ module Chem
       io << "<Bond " << @atoms[0] << @order.to_char << @atoms[1] << '>'
     end
 
-    # Returns the current value of the angle in radians.
+    # Returns the current value of the bond in angstroms.
     def measure : Float64
       Spatial.distance(*@atoms.map(&.coords))
     end
 
+    # Returns the atom bonded to *atom*. Raises `Error` if *atom* is not
+    # included in the bond.
     def other(atom : Atom) : Atom
       case atom
       when @atoms[0]
@@ -166,10 +152,6 @@ module Chem
       else
         raise Error.new("Bond doesn't include #{atom}")
       end
-    end
-
-    private def sort! : Nil
-      @atoms = @atoms.reverse if @atoms[0] > @atoms[1]
     end
 
     def to_s(io : IO) : Nil
@@ -191,13 +173,16 @@ module Chem
   struct Angle
     include Connectivity({Atom, Atom, Atom})
 
+    # Creates a new *Angle* with the given atoms.
+    def initialize(a1 : Atom, a2 : Atom, a3 : Atom)
+      @atoms = {a1, a2, a3}
+      check_duplicate
+      sort!
+    end
+
     # Returns the current value of the angle in radians.
     def measure : Float64
       Spatial.angle(*@atoms.map(&.coords))
-    end
-
-    private def sort! : Nil
-      @atoms = {@atoms[2], @atoms[1], @atoms[0]} if @atoms[0] > @atoms[2]
     end
   end
 
@@ -214,6 +199,13 @@ module Chem
   # (A,B,C) and (B,C,D).
   struct Dihedral
     include Connectivity({Atom, Atom, Atom, Atom})
+
+    # Creates a new *Dihedral* with the given atoms.
+    def initialize(a1 : Atom, a2 : Atom, a3 : Atom, a4 : Atom)
+      @atoms = {a1, a2, a3, a4}
+      check_duplicate
+      sort!
+    end
 
     # Returns the current value of the dihedral angle in radians.
     def measure : Float64
@@ -243,6 +235,13 @@ module Chem
   # (A,B,C) and (C,B,D).
   struct Improper
     include Connectivity({Atom, Atom, Atom, Atom})
+
+    # Creates a new *Improper* with the given atoms.
+    def initialize(a1 : Atom, a2 : Atom, a3 : Atom, a4 : Atom)
+      @atoms = {a1, a2, a3, a4}
+      check_duplicate
+      sort!
+    end
 
     # Returns the current value of the improper dihedral angle in
     # radians.
