@@ -183,15 +183,28 @@ describe Chem::Structure::Builder do
 
   it "names atoms automatically when called with element" do
     st = Chem::Structure.build do
-      atom :C, vec3(0, 0, 0)
-      atom :C, vec3(0, 0, 0)
-      atom :O, vec3(0, 0, 0)
-      atom :N, vec3(0, 0, 0)
-      atom :C, vec3(0, 0, 0)
-      atom :N, vec3(0, 0, 0)
+      residue "UNK" do
+        atom :C, vec3(0, 0, 0)
+        atom :C, vec3(0, 0, 0)
+        atom :O, vec3(0, 0, 0)
+        atom :N, vec3(0, 0, 0)
+        atom :C, vec3(0, 0, 0)
+        atom :N, vec3(0, 0, 0)
+      end
+
+      residue "UNK" do
+        atom :C, vec3(0, 0, 0)
+        atom :H, vec3(0, 0, 0)
+        atom :O, vec3(0, 0, 0)
+        atom :P, vec3(0, 0, 0)
+        atom :C, vec3(0, 0, 0)
+        atom :H, vec3(0, 0, 0)
+        atom :N, vec3(0, 0, 0)
+      end
     end
 
-    st.atoms.map(&.name).should eq ["C1", "C2", "O1", "N1", "C3", "N2"]
+    st.residues[0].atoms.map(&.name).should eq %w(C1 C2 O1 N1 C3 N2)
+    st.residues[1].atoms.map(&.name).should eq %w(C1 H1 O1 P1 C2 H2 N1)
   end
 
   it "creates a chain automatically" do

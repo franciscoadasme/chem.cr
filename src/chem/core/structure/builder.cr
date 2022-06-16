@@ -9,6 +9,7 @@ module Chem
     @residue : Residue?
     @structure : Structure
     @use_templates : Bool = false
+    @element_counter = Hash(Element, Int32).new(default_value: 0)
 
     def initialize(
       *args,
@@ -33,9 +34,38 @@ module Chem
       atom :C, coords, **options
     end
 
+    # Creates an `Atom` of *element* at the given coordinates. Extra
+    # named arguments are forwarded to the `Atom` constructor.
+    #
+    # The atom name will set to the element's symbol followed by the
+    # number of atoms with the same element within the current residue.
+    #
+    # ```
+    # structure = Chem::Structure.build do |builder|
+    #   builder.residue
+    #   builder.atom Chem::PeriodicTable::H, Chem::Spatial::Vec3.zero
+    #   builder.atom Chem::PeriodicTable::C, Chem::Spatial::Vec3.zero
+    #   builder.atom Chem::PeriodicTable::H, Chem::Spatial::Vec3.zero
+    #   builder.atom Chem::PeriodicTable::H, Chem::Spatial::Vec3.zero
+    #   builder.atom Chem::PeriodicTable::C, Chem::Spatial::Vec3.zero
+    #   builder.residue
+    #   builder.atom Chem::PeriodicTable::H, Chem::Spatial::Vec3.zero
+    #   builder.atom Chem::PeriodicTable::C, Chem::Spatial::Vec3.zero
+    #   builder.atom Chem::PeriodicTable::N, Chem::Spatial::Vec3.zero
+    # end
+    # structure.atoms.map(&.name) # => ["H1", "C1", "H2", "H3", "C2", "H1", "C1", "N1"]
+    # ```
+    #
+    # Note that the atom names resets on a new residue.
+    #
+    # WARNING: This method assumes that residues are created in
+    # sequence, so calling `#residue` will always create a new residue,
+    # not retrieving a preceding one. Otherwise, the order of the atom
+    # names will be reset.
     def atom(element : Element | Symbol, coords : Spatial::Vec3, **options) : Atom
       element = PeriodicTable[element.to_s.capitalize] if element.is_a?(Symbol)
-      id = residue.each_atom.count(&.element.==(element)) + 1
+
+      id = (@element_counter[element] += 1)
       atom "#{element.symbol}#{id}", coords, **options.merge(element: element)
     end
 
@@ -160,7 +190,12 @@ module Chem
     end
 
     def residue(name : String, number : Int32, inscode : Char? = nil) : Residue
-      @residue = chain[number, inscode]? || Residue.new(chain, number, inscode, name)
+      @element_counter.clear if @residue
+      if residue = chain[number, inscode]?
+        @residue = residue
+      else
+        @residue = Residue.new(chain, number, inscode, name)
+      end
     end
 
     def residue(name : String, number : Int32, inscode : Char? = nil, & : self ->) : Nil
