@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.3.2">
+<meta name="generator" content="Crystal Docs 1.5.0">
 <meta name="crystal_docs.project_version" content="0.5.6">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -843,7 +843,7 @@
 <p>It can hold the location of the issue found in a text document. Call
 <code><a href="../Chem/ParseException.html#inspect_with_location%3AString-instance-method">#inspect_with_location</a></code> to print a human-friendly error showing
 such information.</p>
-<pre><code class="language-crystal">ex <span class="o">=</span> <span class="t">ParseException</span>.<span class="k">new</span>(
+<pre><code class="language-crystal">ex <span class="o">=</span> <span class="t">ParseException</span>.new(
   message: <span class="s">&quot;Invalid letters&quot;</span>,
   path: <span class="s">&quot;path/to/file&quot;</span>,
   line: <span class="s">&quot;abc def 123456 ABC DEF&quot;</span>,

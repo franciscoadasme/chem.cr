@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.3.2">
+<meta name="generator" content="Crystal Docs 1.5.0">
 <meta name="crystal_docs.project_version" content="0.5.6">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -1998,7 +1998,7 @@ given Cartesian coordinates.</p>
         <div class="doc">
           
           <p>Returns the vector's image with respect to the parallelepiped.</p>
-<pre><code class="language-crystal">pld <span class="o">=</span> <span class="k">new</span> <span class="t">Parallelepiped</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">2</span>, <span class="n">3</span>}, {<span class="n">90</span>, <span class="n">90</span>, <span class="n">120</span>})
+<pre><code class="language-crystal">pld <span class="o">=</span> new <span class="t">Parallelepiped</span>.new({<span class="n">2</span>, <span class="n">2</span>, <span class="n">3</span>}, {<span class="n">90</span>, <span class="n">90</span>, <span class="n">120</span>})
 pld.i <span class="c"># =&gt; Vec3[2.0, 0.0, 0.0]</span>
 pld.j <span class="c"># =&gt; Vec3[-1, 1.732, 0.0]</span>
 pld.k <span class="c"># =&gt; Vec3[0.0, 0.0, 3.0]</span>
@@ -2031,9 +2031,9 @@ pld.image(vec, {<span class="n">1</span>, <span class="n">1</span>, <span class=
 otherwise.</p>
 <p>It effectively checks if every vertex of <em>other</em> is contained by
 the parallelepiped.</p>
-<pre><code class="language-crystal">pld <span class="o">=</span> <span class="t">Parallelepiped</span>.<span class="k">new</span>({<span class="n">10</span>, <span class="n">10</span>, <span class="n">10</span>}, {<span class="n">90</span>, <span class="n">90</span>, <span class="n">120</span>})
+<pre><code class="language-crystal">pld <span class="o">=</span> <span class="t">Parallelepiped</span>.new({<span class="n">10</span>, <span class="n">10</span>, <span class="n">10</span>}, {<span class="n">90</span>, <span class="n">90</span>, <span class="n">120</span>})
 pld.includes? <span class="t">Parallelepiped</span>[<span class="n">5</span>, <span class="n">4</span>, <span class="n">6</span>]                        <span class="c"># =&gt; true</span>
-pld.includes? <span class="t">Parallelepiped</span>.<span class="k">new</span>(<span class="t">Vec3</span>[<span class="n">-1</span>, <span class="n">2</span>, <span class="n">-4</span>], {<span class="n">5</span>, <span class="n">4</span>, <span class="n">6</span>}) <span class="c"># =&gt; false</span></code></pre>
+pld.includes? <span class="t">Parallelepiped</span>.new(<span class="t">Vec3</span>[<span class="n">-1</span>, <span class="n">2</span>, <span class="n">-4</span>], {<span class="n">5</span>, <span class="n">4</span>, <span class="n">6</span>}) <span class="c"># =&gt; false</span></code></pre>
         </div>
       
       <br/>
@@ -2054,7 +2054,7 @@ pld.includes? <span class="t">Parallelepiped</span>.<span class="k">new</span>(<
           
           <p>Returns <code>true</code> if the parallelepiped encloses <em>vec</em>, <code>false</code>
 otherwise.</p>
-<pre><code class="language-crystal">pld <span class="o">=</span> <span class="t">Parallelepiped</span>.<span class="k">new</span>({<span class="n">23.803</span>, <span class="n">23.828</span>, <span class="n">5.387</span>}, {<span class="n">90</span>, <span class="n">90</span>, <span class="n">120</span>})
+<pre><code class="language-crystal">pld <span class="o">=</span> <span class="t">Parallelepiped</span>.new({<span class="n">23.803</span>, <span class="n">23.828</span>, <span class="n">5.387</span>}, {<span class="n">90</span>, <span class="n">90</span>, <span class="n">120</span>})
 pld.includes? <span class="t">Vec3</span>[<span class="n">10</span>, <span class="n">20</span>, <span class="n">2</span>]  <span class="c"># =&gt; true</span>
 pld.includes? <span class="t">Vec3</span>[<span class="n">0</span>, <span class="n">0</span>, <span class="n">0</span>]    <span class="c"># =&gt; true</span>
 pld.includes? <span class="t">Vec3</span>[<span class="n">30</span>, <span class="n">30</span>, <span class="n">10</span>] <span class="c"># =&gt; false</span>
@@ -2089,7 +2089,7 @@ to the given IO.</p>
   <span class="k">end</span>
 <span class="k">end</span>
 
-p1 <span class="o">=</span> <span class="t">Point</span>.<span class="k">new</span> <span class="n">1</span>, <span class="n">2</span>
+p1 <span class="o">=</span> <span class="t">Point</span>.new <span class="n">1</span>, <span class="n">2</span>
 p1.to_s    <span class="c"># &quot;Point(@x=1, @y=2)&quot;</span>
 p1.inspect <span class="c"># &quot;Point(@x=1, @y=2)&quot;</span></code></pre>
         </div>
@@ -2194,7 +2194,7 @@ in each direction. <em>padding</em> can be either a single value, three
 values, or a <code><a href="../../Chem/Spatial/Size3.html">Size3</a></code> instance.</p>
 <p>If <em>centered</em> is <code>true</code>, the origin will be changed such that the
 center does not change, else it will be kept intact.</p>
-<pre><code class="language-crystal">pld <span class="o">=</span> <span class="t">Parallelepiped</span>.<span class="k">new</span>(<span class="t">Vec3</span>[<span class="n">1</span>, <span class="n">5</span>, <span class="n">3</span>], {<span class="n">10</span>, <span class="n">5</span>, <span class="n">12</span>})
+<pre><code class="language-crystal">pld <span class="o">=</span> <span class="t">Parallelepiped</span>.new(<span class="t">Vec3</span>[<span class="n">1</span>, <span class="n">5</span>, <span class="n">3</span>], {<span class="n">10</span>, <span class="n">5</span>, <span class="n">12</span>})
 
 other <span class="o">=</span> pld.pad(<span class="n">2.5</span>)
 other.size                 <span class="c"># =&gt; Size3[15, 10, 17]</span>
@@ -2229,7 +2229,7 @@ in each direction. <em>padding</em> can be either a single value, three
 values, or a <code><a href="../../Chem/Spatial/Size3.html">Size3</a></code> instance.</p>
 <p>If <em>centered</em> is <code>true</code>, the origin will be changed such that the
 center does not change, else it will be kept intact.</p>
-<pre><code class="language-crystal">pld <span class="o">=</span> <span class="t">Parallelepiped</span>.<span class="k">new</span>(<span class="t">Vec3</span>[<span class="n">1</span>, <span class="n">5</span>, <span class="n">3</span>], {<span class="n">10</span>, <span class="n">5</span>, <span class="n">12</span>})
+<pre><code class="language-crystal">pld <span class="o">=</span> <span class="t">Parallelepiped</span>.new(<span class="t">Vec3</span>[<span class="n">1</span>, <span class="n">5</span>, <span class="n">3</span>], {<span class="n">10</span>, <span class="n">5</span>, <span class="n">12</span>})
 
 other <span class="o">=</span> pld.pad(<span class="n">2.5</span>)
 other.size                 <span class="c"># =&gt; Size3[15, 10, 17]</span>
@@ -2264,7 +2264,7 @@ in each direction. <em>padding</em> can be either a single value, three
 values, or a <code><a href="../../Chem/Spatial/Size3.html">Size3</a></code> instance.</p>
 <p>If <em>centered</em> is <code>true</code>, the origin will be changed such that the
 center does not change, else it will be kept intact.</p>
-<pre><code class="language-crystal">pld <span class="o">=</span> <span class="t">Parallelepiped</span>.<span class="k">new</span>(<span class="t">Vec3</span>[<span class="n">1</span>, <span class="n">5</span>, <span class="n">3</span>], {<span class="n">10</span>, <span class="n">5</span>, <span class="n">12</span>})
+<pre><code class="language-crystal">pld <span class="o">=</span> <span class="t">Parallelepiped</span>.new(<span class="t">Vec3</span>[<span class="n">1</span>, <span class="n">5</span>, <span class="n">3</span>], {<span class="n">10</span>, <span class="n">5</span>, <span class="n">12</span>})
 
 other <span class="o">=</span> pld.pad(<span class="n">2.5</span>)
 other.size                 <span class="c"># =&gt; Size3[15, 10, 17]</span>
@@ -2487,8 +2487,8 @@ parallelepiped. Translation will be applied afterwards.</p>
           <p>Returns a new parallelepiped with the return value of the given
 block, which is invoked with the basis vectors.</p>
 <pre><code class="language-crystal">pld <span class="o">=</span> <span class="t">Parallelepiped</span>.cubic(<span class="n">10</span>).transform <span class="k">do</span> <span class="o">|</span>bi, bj, bk<span class="o">|</span>
-  bi *= <span class="n">2</span>
-  bk /= <span class="n">0.4</span>
+  bi <span class="o">*=</span> <span class="n">2</span>
+  bk <span class="o">/=</span> <span class="n">0.4</span>
   {bi, bj, bk}
 <span class="k">end</span>
 pld.basisvec[<span class="n">0</span>] <span class="c"># =&gt; Vec3[20, 0, 0]</span>
@@ -2513,7 +2513,7 @@ pld.basisvec[<span class="n">2</span>] <span class="c"># =&gt; Vec3[0, 0, 25]</s
         <div class="doc">
           
           <p>Returns a new parallelepiped translated by <em>offset</em>.</p>
-<pre><code class="language-crystal">pld <span class="o">=</span> <span class="t">Parallelepiped</span>.<span class="k">new</span>(<span class="t">Vec3</span>[<span class="n">-5</span>, <span class="n">1</span>, <span class="n">20</span>], {<span class="n">10</span>, <span class="n">10</span>, <span class="n">10</span>}, {<span class="n">90</span>, <span class="n">90</span>, <span class="n">120</span>})
+<pre><code class="language-crystal">pld <span class="o">=</span> <span class="t">Parallelepiped</span>.new(<span class="t">Vec3</span>[<span class="n">-5</span>, <span class="n">1</span>, <span class="n">20</span>], {<span class="n">10</span>, <span class="n">10</span>, <span class="n">10</span>}, {<span class="n">90</span>, <span class="n">90</span>, <span class="n">120</span>})
 pld.translate <span class="t">Vec3</span>[<span class="n">1</span>, <span class="n">2</span>, <span class="n">10</span>]
 pld.origin <span class="c"># =&gt; Vec3[-4.0, 3.0, 30.0]</span></code></pre>
         </div>
@@ -2576,7 +2576,7 @@ pld.vertices <span class="c"># =&gt; [Vec3[0.0, 0.0, 0.0], Vec3[0.0, 0.0, 20.0],
         <div class="doc">
           
           <p>Returns the maximum vertex.</p>
-<pre><code class="language-crystal">pld <span class="o">=</span> <span class="t">Parallelepiped</span>.<span class="k">new</span>(<span class="t">Vec3</span>[<span class="n">1.5</span>, <span class="n">3</span>, <span class="n">-0.4</span>], {<span class="n">10</span>, <span class="n">10</span>, <span class="n">12</span>}, {<span class="n">90</span>, <span class="n">90</span>, <span class="n">120</span>})
+<pre><code class="language-crystal">pld <span class="o">=</span> <span class="t">Parallelepiped</span>.new(<span class="t">Vec3</span>[<span class="n">1.5</span>, <span class="n">3</span>, <span class="n">-0.4</span>], {<span class="n">10</span>, <span class="n">10</span>, <span class="n">12</span>}, {<span class="n">90</span>, <span class="n">90</span>, <span class="n">120</span>})
 pld.vmax <span class="c"># =&gt; Vec3[6.5, 11.66, 11.6]</span></code></pre>
         </div>
       
@@ -2598,7 +2598,7 @@ pld.vmax <span class="c"># =&gt; Vec3[6.5, 11.66, 11.6]</span></code></pre>
           
           <p>Returns the minimum vertex. This is equivalent to the
 parallelepiped's origin.</p>
-<pre><code class="language-crystal">pld <span class="o">=</span> <span class="t">Parallelepiped</span>.<span class="k">new</span>(<span class="t">Vec3</span>[<span class="n">1.5</span>, <span class="n">3</span>, <span class="n">-0.4</span>], {<span class="n">10</span>, <span class="n">10</span>, <span class="n">12</span>}, {<span class="n">90</span>, <span class="n">90</span>, <span class="n">120</span>})
+<pre><code class="language-crystal">pld <span class="o">=</span> <span class="t">Parallelepiped</span>.new(<span class="t">Vec3</span>[<span class="n">1.5</span>, <span class="n">3</span>, <span class="n">-0.4</span>], {<span class="n">10</span>, <span class="n">10</span>, <span class="n">12</span>}, {<span class="n">90</span>, <span class="n">90</span>, <span class="n">120</span>})
 pld.vmin <span class="c"># =&gt; Vec3[1.5, 3, -0.4]</span></code></pre>
         </div>
       

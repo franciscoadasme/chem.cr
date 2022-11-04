@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.3.2">
+<meta name="generator" content="Crystal Docs 1.5.0">
 <meta name="crystal_docs.project_version" content="0.5.6">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -964,8 +964,8 @@ st <span class="c"># =&gt; &lt;Structure &quot;1cbn&quot;: 644 atoms, 47 residue
 <span class="c"># read 2th and 5th models</span>
 <span class="t">Array</span>(<span class="t">Structure</span>).from_pdb <span class="s">&quot;/path/to/file.pdb&quot;</span>, indexes: [<span class="n">1</span>, <span class="n">4</span>]</code></pre>
 <p>Alternatively, you could use an IO iterator to read one by one:</p>
-<pre><code class="language-crystal"><span class="t">PDB</span><span class="t">::</span><span class="t">Parser</span>.<span class="k">new</span>(<span class="s">&quot;/path/to/file.pdb&quot;</span>).each { <span class="o">|</span>st<span class="o">|</span> ... }
-<span class="t">PDB</span><span class="t">::</span><span class="t">Parser</span>.<span class="k">new</span>(<span class="s">&quot;/path/to/file.pdb&quot;</span>).each(indexes: [<span class="n">1</span>, <span class="n">4</span>]) { <span class="o">|</span>st<span class="o">|</span> ... }</code></pre>
+<pre><code class="language-crystal"><span class="t">PDB</span><span class="t">::</span><span class="t">Parser</span>.new(<span class="s">&quot;/path/to/file.pdb&quot;</span>).each { <span class="o">|</span>st<span class="o">|</span> ... }
+<span class="t">PDB</span><span class="t">::</span><span class="t">Parser</span>.new(<span class="s">&quot;/path/to/file.pdb&quot;</span>).each(indexes: [<span class="n">1</span>, <span class="n">4</span>]) { <span class="o">|</span>st<span class="o">|</span> ... }</code></pre>
 <h3><a id="topology-access" class="anchor" href="#topology-access">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>

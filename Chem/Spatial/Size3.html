@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.3.2">
+<meta name="generator" content="Crystal Docs 1.5.0">
 <meta name="crystal_docs.project_version" content="0.5.6">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -1367,8 +1367,8 @@ from each other, else <code>false</code>.</p>
           <p>Returns a new size with the return value of the given block, which
 is invoked with the X, Y, and Z components.</p>
 <pre><code class="language-crystal"><span class="t">Size3</span>[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>].transform <span class="k">do</span> <span class="o">|</span>x, y, z<span class="o">|</span>
-  x *= <span class="n">2</span>
-  z /= <span class="n">0.3</span>
+  x <span class="o">*=</span> <span class="n">2</span>
+  z <span class="o">/=</span> <span class="n">0.3</span>
   {x, y, z}
 <span class="k">end</span> <span class="c"># =&gt; Size3[2, 2, 10]</span></code></pre>
         </div>

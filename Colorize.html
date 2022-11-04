@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.3.2">
+<meta name="generator" content="Crystal Docs 1.5.0">
 <meta name="crystal_docs.project_version" content="0.5.6">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -866,13 +866,13 @@ when it comes to obtaining a string representation of the object.</p>
 
 <span class="c"># This is the same as:</span>
 
-<span class="s">&quot;foo&quot;</span>.colorize(<span class="t">Colorize</span><span class="t">::</span><span class="t">ColorRGB</span>.<span class="k">new</span>(<span class="n">0</span>, <span class="n">255</span>, <span class="n">255</span>))      <span class="c"># =&gt; &quot;foo&quot; in aqua</span>
-<span class="s">&quot;foo&quot;</span>.colorize.fore(<span class="t">Colorize</span><span class="t">::</span><span class="t">ColorRGB</span>.<span class="k">new</span>(<span class="n">0</span>, <span class="n">255</span>, <span class="n">255</span>)) <span class="c"># =&gt; &quot;foo&quot; in aqua</span></code></pre>
+<span class="s">&quot;foo&quot;</span>.colorize(<span class="t">Colorize</span><span class="t">::</span><span class="t">ColorRGB</span>.new(<span class="n">0</span>, <span class="n">255</span>, <span class="n">255</span>))      <span class="c"># =&gt; &quot;foo&quot; in aqua</span>
+<span class="s">&quot;foo&quot;</span>.colorize.fore(<span class="t">Colorize</span><span class="t">::</span><span class="t">ColorRGB</span>.new(<span class="n">0</span>, <span class="n">255</span>, <span class="n">255</span>)) <span class="c"># =&gt; &quot;foo&quot; in aqua</span></code></pre>
 <p>Or an 8-bit color:</p>
 <pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;colorize&quot;</span>
 
-<span class="s">&quot;foo&quot;</span>.colorize(<span class="t">Colorize</span><span class="t">::</span><span class="t">Color256</span>.<span class="k">new</span>(<span class="n">208</span>))      <span class="c"># =&gt; &quot;foo&quot; in orange</span>
-<span class="s">&quot;foo&quot;</span>.colorize.fore(<span class="t">Colorize</span><span class="t">::</span><span class="t">Color256</span>.<span class="k">new</span>(<span class="n">208</span>)) <span class="c"># =&gt; &quot;foo&quot; in orange</span></code></pre>
+<span class="s">&quot;foo&quot;</span>.colorize(<span class="t">Colorize</span><span class="t">::</span><span class="t">Color256</span>.new(<span class="n">208</span>))      <span class="c"># =&gt; &quot;foo&quot; in orange</span>
+<span class="s">&quot;foo&quot;</span>.colorize.fore(<span class="t">Colorize</span><span class="t">::</span><span class="t">Color256</span>.new(<span class="n">208</span>)) <span class="c"># =&gt; &quot;foo&quot; in orange</span></code></pre>
 <p>It's also possible to change the text decoration:</p>
 <pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;colorize&quot;</span>
 

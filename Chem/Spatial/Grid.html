@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.3.2">
+<meta name="generator" content="Crystal Docs 1.5.0">
 <meta name="crystal_docs.project_version" content="0.5.6">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -1667,7 +1667,7 @@
           <p>Returns a grid filled with the distances to the nearest atom. It will have the
 same bounds and points as <em>other</em>.</p>
 <pre><code class="language-crystal">structure <span class="o">=</span> <span class="t">Structure</span>.read <span class="s">&quot;path/to/file&quot;</span>
-info <span class="o">=</span> <span class="t">Grid</span><span class="t">::</span><span class="t">Info</span>.<span class="k">new</span> <span class="t">Parallelepiped</span>[<span class="n">1.5</span>, <span class="n">2.135</span>, <span class="n">6.12</span>], {<span class="n">10</span>, <span class="n">10</span>, <span class="n">10</span>}
+info <span class="o">=</span> <span class="t">Grid</span><span class="t">::</span><span class="t">Info</span>.new <span class="t">Parallelepiped</span>[<span class="n">1.5</span>, <span class="n">2.135</span>, <span class="n">6.12</span>], {<span class="n">10</span>, <span class="n">10</span>, <span class="n">10</span>}
 grid <span class="o">=</span> <span class="t">Grid</span>.atom_distance structure, info.dim, info.bounds
 <span class="t">Grid</span>.atom_distance_like(info, structure) <span class="o">==</span> grid <span class="c"># =&gt; true</span></code></pre>
         </div>
@@ -1980,7 +1980,7 @@ decoded in the corresponding file format if possible.</p>
           <p>Returns a grid mask with the points at the vdW spheres set to 1. It will have the
 same bounds and points as <em>other</em>.</p>
 <pre><code class="language-crystal">structure <span class="o">=</span> <span class="t">Structure</span>.read <span class="s">&quot;path/to/file&quot;</span>
-info <span class="o">=</span> <span class="t">Grid</span><span class="t">::</span><span class="t">Info</span>.<span class="k">new</span> <span class="t">Parallelepiped</span>[<span class="n">5.213</span>, <span class="n">6.823</span>, <span class="n">10.352</span>], {<span class="n">20</span>, <span class="n">25</span>, <span class="n">40</span>}
+info <span class="o">=</span> <span class="t">Grid</span><span class="t">::</span><span class="t">Info</span>.new <span class="t">Parallelepiped</span>[<span class="n">5.213</span>, <span class="n">6.823</span>, <span class="n">10.352</span>], {<span class="n">20</span>, <span class="n">25</span>, <span class="n">40</span>}
 grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, info.dim, info.bounds
 <span class="t">Grid</span>.vdw_mask_like(info, structure) <span class="o">==</span> grid <span class="c"># =&gt; true</span></code></pre>
         </div>
@@ -2365,7 +2365,7 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
           <p>Iterates over slices along <em>axis</em>. Axis is specified as an
 integer: 0-2 refer to the direction of the first, second or third
 basis vector, respectively.</p>
-<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">3</span>, <span class="n">2</span>}, <span class="t">Parallelepiped</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">6</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">2</span> <span class="o">+</span> k }
+<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.new({<span class="n">2</span>, <span class="n">3</span>, <span class="n">2</span>}, <span class="t">Parallelepiped</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">6</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">2</span> <span class="o">+</span> k }
 grid.to_a <span class="c"># =&gt; [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]</span>
 slices <span class="o">=</span> <span class="o">[]</span> <span class="k">of</span> <span class="t">Array</span>(<span class="t">Float64</span>)
 grid.each_axial_slice(axis: <span class="n">1</span>) { <span class="o">|</span>slice<span class="o">|</span> slices <span class="o">&lt;&lt;</span> slice }
@@ -2718,7 +2718,7 @@ from there.</p>
 1, otherwise 0.</p>
 <p>Grid masks are very useful to deal with multiple grids, and when points are to be
 selected based on one grid only.</p>
-<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">2</span>, <span class="n">2</span>}, <span class="t">Parallelepiped</span>[<span class="n">10</span>, <span class="n">10</span>, <span class="n">10</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">+</span> j <span class="o">+</span> k }
+<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.new({<span class="n">2</span>, <span class="n">2</span>, <span class="n">2</span>}, <span class="t">Parallelepiped</span>[<span class="n">10</span>, <span class="n">10</span>, <span class="n">10</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">+</span> j <span class="o">+</span> k }
 grid.to_a              <span class="c"># =&gt; [0, 1, 1, 2, 1, 2, 2, 3]</span>
 grid.mask(<span class="o">&amp;</span>.<span class="o">&gt;</span>(<span class="n">1</span>)).to_a <span class="c"># =&gt; [0, 0, 0, 1, 0, 1, 1, 1]</span>
 grid.to_a              <span class="c"># =&gt; [0, 1, 1, 2, 1, 2, 2, 3]</span></code></pre>
@@ -2744,7 +2744,7 @@ grid.to_a              <span class="c"># =&gt; [0, 1, 1, 2, 1, 2, 2, 3]</span></
 <code>true</code> are set to 1, otherwise 0.</p>
 <p>Grid masks are very useful to deal with multiple grids, and when points are to be
 selected based on one grid only.</p>
-<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">2</span>, <span class="n">3</span>}, <span class="t">Parallelepiped</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> (i <span class="o">+</span> <span class="n">1</span>) <span class="o">*</span> (j <span class="o">+</span> <span class="n">1</span>) <span class="o">*</span> (k <span class="o">+</span> <span class="n">1</span>) <span class="o">/</span> <span class="n">5</span> }
+<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.new({<span class="n">2</span>, <span class="n">2</span>, <span class="n">3</span>}, <span class="t">Parallelepiped</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> (i <span class="o">+</span> <span class="n">1</span>) <span class="o">*</span> (j <span class="o">+</span> <span class="n">1</span>) <span class="o">*</span> (k <span class="o">+</span> <span class="n">1</span>) <span class="o">/</span> <span class="n">5</span> }
 grid.to_a              <span class="c"># =&gt; [0.2, 0.4, 0.6, 0.4, 0.8, 1.2, 0.4, 0.8, 1.2, 0.8, 1.6, 2.4]</span>
 grid.mask(<span class="n">1</span>, <span class="n">0.5</span>).to_a <span class="c"># =&gt; [0, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 0]</span>
 grid.to_a              <span class="c"># =&gt; [0.2, 0.4, 0.6, 0.4, 0.8, 1.2, 0.4, 0.8, 1.2, 0.8, 1.6, 2.4]</span></code></pre>
@@ -2770,7 +2770,7 @@ grid.to_a              <span class="c"># =&gt; [0.2, 0.4, 0.6, 0.4, 0.8, 1.2, 0.
 set to 1, otherwise 0.</p>
 <p>Grid masks are very useful to deal with multiple grids, and when points are to be
 selected based on one grid only.</p>
-<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">2</span>, <span class="n">3</span>}, <span class="t">Parallelepiped</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> (i <span class="o">+</span> <span class="n">1</span>) <span class="o">*</span> (j <span class="o">+</span> <span class="n">1</span>) <span class="o">*</span> (k <span class="o">+</span> <span class="n">1</span>) }
+<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.new({<span class="n">2</span>, <span class="n">2</span>, <span class="n">3</span>}, <span class="t">Parallelepiped</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> (i <span class="o">+</span> <span class="n">1</span>) <span class="o">*</span> (j <span class="o">+</span> <span class="n">1</span>) <span class="o">*</span> (k <span class="o">+</span> <span class="n">1</span>) }
 grid.to_a              <span class="c"># =&gt; [1, 2, 3, 2, 4, 6, 2, 4, 6, 4, 8, 12]</span>
 grid.mask(<span class="n">2</span>..<span class="n">4.5</span>).to_a <span class="c"># =&gt; [0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0]</span>
 grid.to_a              <span class="c"># =&gt; [1, 2, 3, 2, 4, 6, 2, 4, 6, 4, 8, 12]</span></code></pre>
@@ -2796,7 +2796,7 @@ grid.to_a              <span class="c"># =&gt; [1, 2, 3, 2, 4, 6, 2, 4, 6, 4, 8,
 <code>false</code> are set to 0.</p>
 <p>Optimized version of creating a mask and applying it to the same grid, but avoids
 creating intermediate grids. This is equivalent to <code>grid = grid * grid.mask { ... }</code>.</p>
-<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">2</span>, <span class="n">2</span>}, <span class="t">Parallelepiped</span>[<span class="n">10</span>, <span class="n">10</span>, <span class="n">10</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">+</span> j <span class="o">+</span> k }
+<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.new({<span class="n">2</span>, <span class="n">2</span>, <span class="n">2</span>}, <span class="t">Parallelepiped</span>[<span class="n">10</span>, <span class="n">10</span>, <span class="n">10</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">+</span> j <span class="o">+</span> k }
 grid.to_a <span class="c"># =&gt; [0, 1, 1, 2, 1, 2, 2, 3]</span>
 grid.mask! <span class="o">&amp;</span>.<span class="o">&gt;</span>(<span class="n">1</span>)
 grid.to_a <span class="c"># =&gt; [0, 0, 0, 2, 0, 2, 2, 3]</span></code></pre>
@@ -2822,7 +2822,7 @@ grid.to_a <span class="c"># =&gt; [0, 0, 0, 2, 0, 2, 2, 3]</span></code></pre>
 returns <code>true</code> are set to 0.</p>
 <p>Optimized version of creating a mask and applying it to the same grid, but avoids
 creating intermediate grids. This is equivalent to <code>grid = grid * grid.mask(value, delta)</code></p>
-<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">2</span>, <span class="n">3</span>}, <span class="t">Parallelepiped</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> (i <span class="o">+</span> j <span class="o">+</span> k) <span class="o">/</span> <span class="n">5</span> }
+<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.new({<span class="n">2</span>, <span class="n">2</span>, <span class="n">3</span>}, <span class="t">Parallelepiped</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> (i <span class="o">+</span> j <span class="o">+</span> k) <span class="o">/</span> <span class="n">5</span> }
 grid.to_a <span class="c"># =&gt; [0.0, 0.2, 0.4, 0.2, 0.4, 0.6, 0.2, 0.4, 0.6, 0.4, 0.6, 0.8]</span>
 grid.mask! <span class="n">0.5</span>, <span class="n">0.1</span>
 grid.to_a <span class="c"># =&gt; [0.0, 0.0, 0.4, 0.0, 0.4, 0.6, 0.0, 0.4, 0.6, 0.4, 0.6, 0.0]</span></code></pre>
@@ -2848,7 +2848,7 @@ grid.to_a <span class="c"># =&gt; [0.0, 0.0, 0.4, 0.0, 0.4, 0.6, 0.0, 0.4, 0.6, 
 <code>false</code> are set to 0.</p>
 <p>Optimized version of creating a mask and applying it to the same grid, but avoids
 creating intermediate grids. This is equivalent to <code>grid = grid * grid.mask(pattern)</code></p>
-<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">2</span>, <span class="n">3</span>}, <span class="t">Parallelepiped</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> (i <span class="o">+</span> <span class="n">1</span>) <span class="o">*</span> (j <span class="o">+</span> <span class="n">1</span>) <span class="o">*</span> (k <span class="o">+</span> <span class="n">1</span>) }
+<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.new({<span class="n">2</span>, <span class="n">2</span>, <span class="n">3</span>}, <span class="t">Parallelepiped</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> (i <span class="o">+</span> <span class="n">1</span>) <span class="o">*</span> (j <span class="o">+</span> <span class="n">1</span>) <span class="o">*</span> (k <span class="o">+</span> <span class="n">1</span>) }
 grid.to_a <span class="c"># =&gt; [1, 2, 3, 2, 4, 6, 2, 4, 6, 4, 8, 12]</span>
 grid.mask! <span class="n">2</span>..<span class="n">4.5</span>
 grid.to_a <span class="c"># =&gt; [0, 2, 3, 2, 4, 0, 2, 4, 0, 4, 0, 0]</span></code></pre>
@@ -2874,7 +2874,7 @@ grid.to_a <span class="c"># =&gt; [0, 2, 3, 2, 4, 0, 2, 4, 0, 4, 0, 0]</span></c
 to 1, otherwise 0.</p>
 <p>Grid masks are very useful to deal with multiple grids, and when points are to be
 selected based on one grid only.</p>
-<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">2</span>, <span class="n">2</span>}, <span class="t">Parallelepiped</span>[<span class="n">10</span>, <span class="n">10</span>, <span class="n">10</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">4</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">2</span> <span class="o">+</span> k }
+<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.new({<span class="n">2</span>, <span class="n">2</span>, <span class="n">2</span>}, <span class="t">Parallelepiped</span>[<span class="n">10</span>, <span class="n">10</span>, <span class="n">10</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">4</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">2</span> <span class="o">+</span> k }
 grid.to_a                           <span class="c"># =&gt; [0, 1, 2, 3, 4, 5, 6, 7]</span>
 grid.mask_by_coords(<span class="o">&amp;</span>.x.<span class="o">==</span>(<span class="n">0</span>)).to_a <span class="c"># =&gt; [1, 1, 1, 1, 0, 0, 0, 0]</span>
 grid.to_a                           <span class="c"># =&gt; [0, 1, 2, 3, 4, 5, 6, 7]</span></code></pre>
@@ -2900,7 +2900,7 @@ grid.to_a                           <span class="c"># =&gt; [0, 1, 2, 3, 4, 5, 6
 <code>false</code> are set to 0.</p>
 <p>Optimized version of creating a mask and applying it to the same grid, but avoids
 creating intermediate grids. This is equivalent to <code>grid = grid * grid.mask_by_coords { ... }</code></p>
-<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">2</span>, <span class="n">2</span>}, <span class="t">Parallelepiped</span>[<span class="n">5</span>, <span class="n">5</span>, <span class="n">5</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">4</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">2</span> <span class="o">+</span> k }
+<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.new({<span class="n">2</span>, <span class="n">2</span>, <span class="n">2</span>}, <span class="t">Parallelepiped</span>[<span class="n">5</span>, <span class="n">5</span>, <span class="n">5</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">4</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">2</span> <span class="o">+</span> k }
 grid.to_a <span class="c"># =&gt; [0, 1, 2, 3, 4, 5, 6, 7]</span>
 grid.mask_by_coords! { <span class="o">|</span>vec<span class="o">|</span> vec.y <span class="o">==</span> <span class="n">5</span> }
 grid.to_a <span class="c"># =&gt; [0, 0, 2, 3, 0, 0, 6, 7]</span></code></pre>
@@ -2926,7 +2926,7 @@ grid.to_a <span class="c"># =&gt; [0, 0, 2, 3, 0, 0, 6, 7]</span></code></pre>
 1, otherwise 0.</p>
 <p>Grid masks are very useful to deal with multiple grids, and when points are to be
 selected based on one grid only.</p>
-<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">2</span>, <span class="n">2</span>}, <span class="t">Parallelepiped</span>[<span class="n">10</span>, <span class="n">10</span>, <span class="n">10</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">4</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">2</span> <span class="o">+</span> k }
+<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.new({<span class="n">2</span>, <span class="n">2</span>, <span class="n">2</span>}, <span class="t">Parallelepiped</span>[<span class="n">10</span>, <span class="n">10</span>, <span class="n">10</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">4</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">2</span> <span class="o">+</span> k }
 grid.to_a                       <span class="c"># =&gt; [0, 1, 2, 3, 4, 5, 6, 7]</span>
 grid.mask_by_index(<span class="o">&amp;</span>.<span class="o">&gt;</span>(<span class="n">4</span>)).to_a <span class="c"># =&gt; [0, 0, 0, 0, 0, 1, 1, 1]</span>
 grid.to_a                       <span class="c"># =&gt; [0, 1, 2, 3, 4, 5, 6, 7]</span></code></pre>
@@ -2952,7 +2952,7 @@ grid.to_a                       <span class="c"># =&gt; [0, 1, 2, 3, 4, 5, 6, 7]
 to 0.</p>
 <p>Optimized version of creating a mask and applying it to the same grid, but avoids
 creating intermediate grids. This is equivalent to <code>grid = grid * grid.mask_by_index { ... }</code></p>
-<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">2</span>, <span class="n">2</span>}, <span class="t">Parallelepiped</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">4</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">2</span> <span class="o">+</span> k }
+<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.new({<span class="n">2</span>, <span class="n">2</span>, <span class="n">2</span>}, <span class="t">Parallelepiped</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">4</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">2</span> <span class="o">+</span> k }
 grid.to_a <span class="c"># =&gt; [0, 1, 2, 3, 4, 5, 6, 7]</span>
 grid.mask_by_index! <span class="o">&amp;</span>.<span class="o">&lt;</span>(<span class="n">3</span>)
 grid.to_a <span class="c"># =&gt; [0, 1, 2, 0, 0, 0, 0, 0]</span></code></pre>
@@ -2978,7 +2978,7 @@ grid.to_a <span class="c"># =&gt; [0, 1, 2, 0, 0, 0, 0, 0]</span></code></pre>
 to 1, otherwise 0.</p>
 <p>Grid masks are very useful to deal with multiple grids, and when points are to be
 selected based on one grid only.</p>
-<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">2</span>, <span class="n">2</span>}, <span class="t">Parallelepiped</span>[<span class="n">10</span>, <span class="n">10</span>, <span class="n">10</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">4</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">2</span> <span class="o">+</span> k }
+<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.new({<span class="n">2</span>, <span class="n">2</span>, <span class="n">2</span>}, <span class="t">Parallelepiped</span>[<span class="n">10</span>, <span class="n">10</span>, <span class="n">10</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">4</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">2</span> <span class="o">+</span> k }
 grid.to_a                                  <span class="c"># =&gt; [0, 1, 2, 3, 4, 5, 6, 7]</span>
 grid.mask_by_loc { <span class="o">|</span>i, j, k<span class="o">|</span> k <span class="o">==</span> <span class="n">1</span> }.to_a <span class="c"># =&gt; [0, 1, 0, 1, 0, 1, 0, 1]</span>
 grid.to_a                                  <span class="c"># =&gt; [0, 1, 2, 3, 4, 5, 6, 7]</span></code></pre>
@@ -3004,7 +3004,7 @@ grid.to_a                                  <span class="c"># =&gt; [0, 1, 2, 3, 
 set to 0.</p>
 <p>Optimized version of creating a mask and applying it to the same grid, but avoids
 creating intermediate grids. This is equivalent to <code>grid = grid * grid.mask_by_loc { ... }</code></p>
-<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">2</span>, <span class="n">2</span>}, <span class="t">Parallelepiped</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">4</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">2</span> <span class="o">+</span> k }
+<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.new({<span class="n">2</span>, <span class="n">2</span>, <span class="n">2</span>}, <span class="t">Parallelepiped</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">4</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">2</span> <span class="o">+</span> k }
 grid.to_a <span class="c"># =&gt; [0, 1, 2, 3, 4, 5, 6, 7]</span>
 grid.mask_by_loc! { <span class="o">|</span>(i, j, k)<span class="o">|</span> i <span class="o">==</span> <span class="n">1</span> }
 grid.to_a <span class="c"># =&gt; [0, 0, 0, 0, 4, 5, 6, 7]</span></code></pre>
@@ -3030,7 +3030,7 @@ grid.to_a <span class="c"># =&gt; [0, 0, 0, 0, 4, 5, 6, 7]</span></code></pre>
 integer: 0-2 refer to the direction of the first, second or third
 basis vector, respectively.</p>
 <p>Raises IndexError is <em>axis</em> is out of bounds.</p>
-<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">3</span>, <span class="n">4</span>}, <span class="t">Parallelepiped</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">12</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">4</span> <span class="o">+</span> k }
+<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.new({<span class="n">2</span>, <span class="n">3</span>, <span class="n">4</span>}, <span class="t">Parallelepiped</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">12</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">4</span> <span class="o">+</span> k }
 grid.mean(axis: <span class="n">0</span>) <span class="c"># =&gt; [5.5, 17.5]</span>
 grid.mean(axis: <span class="n">1</span>) <span class="c"># =&gt; [7.5, 11.5, 15.5]</span>
 grid.mean(axis: <span class="n">2</span>) <span class="c"># =&gt; [10, 11, 12, 13]</span>
@@ -3054,7 +3054,7 @@ grid.mean(axis: <span class="n">3</span>) <span class="c"># raises IndexError</s
         <div class="doc">
           
           <p>Returns the arithmetic mean of the grid elements.</p>
-<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">3</span>, <span class="n">4</span>}, <span class="t">Parallelepiped</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">12</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">4</span> <span class="o">+</span> k }
+<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.new({<span class="n">2</span>, <span class="n">3</span>, <span class="n">4</span>}, <span class="t">Parallelepiped</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">12</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">4</span> <span class="o">+</span> k }
 grid.mean <span class="c"># =&gt; 11.5</span></code></pre>
         </div>
       
@@ -3078,7 +3078,7 @@ grid.mean <span class="c"># =&gt; 11.5</span></code></pre>
 Axis is specified as an integer: 0-2 refer to the direction of the
 first, second or third basis vector, respectively.</p>
 <p>Raises IndexError is <em>axis</em> is out of bounds.</p>
-<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.<span class="k">new</span>({<span class="n">2</span>, <span class="n">3</span>, <span class="n">5</span>}, <span class="t">Parallelepiped</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">12</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">4</span> <span class="o">+</span> k }
+<pre><code class="language-crystal">grid <span class="o">=</span> <span class="t">Grid</span>.new({<span class="n">2</span>, <span class="n">3</span>, <span class="n">5</span>}, <span class="t">Parallelepiped</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>]) { <span class="o">|</span>i, j, k<span class="o">|</span> i <span class="o">*</span> <span class="n">12</span> <span class="o">+</span> j <span class="o">*</span> <span class="n">4</span> <span class="o">+</span> k }
 grid.mean(axis: <span class="n">1</span>) <span class="c"># =&gt; [{9.5, 0.0}, {14.5, 0.5}, {19.5, 1.0}]</span></code></pre>
         </div>
       
