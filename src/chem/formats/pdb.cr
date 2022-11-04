@@ -99,19 +99,25 @@ module Chem::PDB
         case @pull.at?(0, 6).str?
         when "CRYST1"
           x = @pull.at(6, 9).float
-          @pull.error "Invalid size" unless x > 0
+          @pull.error "Negative cell size a" if x < 0
           y = @pull.at(15, 9).float
-          @pull.error "Invalid size" unless y > 0
+          @pull.error "Negative cell size b" if y < 0
           z = @pull.at(24, 9).float
-          @pull.error "Invalid size" unless z > 0
+          @pull.error "Negative cell size c" if z < 0
           alpha = @pull.at(33, 7).float
-          @pull.error "Invalid angle" unless 0 < alpha <= 180
+          @pull.error "Invalid cell angle alpha" unless 0 < alpha <= 180
           beta = @pull.at(40, 7).float
-          @pull.error "Invalid angle" unless 0 < beta <= 180
+          @pull.error "Invalid cell angle beta" unless 0 < beta <= 180
           gamma = @pull.at(47, 7).float
-          @pull.error "Invalid angle" unless 0 < gamma <= 180
-          unless x == 1 && y == 1 && z == 1 && alpha == 90 && beta == 90 && gamma == 90
+          @pull.error "Invalid cell angle gamma" unless 0 < gamma <= 180
+
+          case {x, y, z, alpha, beta, gamma}
+          when {0, 0, 0, 90, 90, 90}, {1, 1, 1, 90, 90, 90}
+            next
+          when {.positive?, .positive?, .positive?, .positive?, .positive?, .positive?}
             @pdb_cell = Spatial::Parallelepiped.new({x, y, z}, {alpha, beta, gamma})
+          else
+            @pull.error "Invalid cell parameters: #{{x, y, z, alpha, beta, gamma}}"
           end
         when "EXPDTA"
           str = @pull.at(10, 70).str.split(';')[0].delete "- "

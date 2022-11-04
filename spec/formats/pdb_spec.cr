@@ -421,7 +421,7 @@ describe Chem::PDB do
       io = IO::Memory.new <<-PDB
         CRYST1   40.960   18.650   22.520  90.00  90.77 -90.00 P 1 21 1
         PDB
-      ex = expect_raises Chem::ParseException, "Invalid angle" do
+      ex = expect_raises Chem::ParseException, "Invalid cell angle gamma" do
         Chem::Structure::Experiment.from_pdb io
       end
       ex.inspect_with_location.should eq <<-PDB
@@ -429,7 +429,7 @@ describe Chem::PDB do
 
          1 | CRYST1   40.960   18.650   22.520  90.00  90.77 -90.00 P 1 21 1
                                                             ^^^^^^^
-        Error: Invalid angle
+        Error: Invalid cell angle gamma
         PDB
     end
 
@@ -451,6 +451,32 @@ describe Chem::PDB do
       structure = load_file "DTD.pdb"
       structure.atoms.size.should eq 16
       structure.bonds.size.should eq 16
+    end
+
+    it "parses zero-sized cell as nil (#189)" do
+      io = IO::Memory.new <<-PDB
+        CRYST1    0.000    0.000    0.000  90.00  90.00  90.00 P 1           1
+        ATOM      1  N   SER A   0      14.353  62.634  39.550  1.00 48.24           N
+        PDB
+      Chem::Structure.from_pdb(io).cell.should be_nil
+    end
+
+    it "parses one-sized cell as nil" do
+      io = IO::Memory.new <<-PDB
+        CRYST1    1.000    1.000    1.000  90.00  90.00  90.00 P 1           1
+        ATOM      1  N   SER A   0      14.353  62.634  39.550  1.00 48.24           N
+        PDB
+      Chem::Structure.from_pdb(io).cell.should be_nil
+    end
+
+    it "raises on invalid cell parameters" do
+      io = IO::Memory.new <<-PDB
+        CRYST1   31.000    0.000   11.000  90.00 120.00  90.00 P 1           1
+        ATOM      1  N   SER A   0      14.353  62.634  39.550  1.00 48.24           N
+        PDB
+      expect_raises(Chem::ParseException, "Invalid cell parameters") do
+        Chem::Structure.from_pdb(io).cell.should be_nil
+      end
     end
   end
 end
