@@ -4,7 +4,7 @@ version: 0.5.6
 authors:
   - Francisco Adasme <francisco.adasme@gmail.com>
 
-crystal: 1.2.1
+crystal: 1.6
 
 dependencies:
   views:
