@@ -796,11 +796,6 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Indexable" data-name="indexable(t)">
-      <a href="../../Indexable.html">Indexable</a>
-      
-    </li>
-  
   <li class=" " data-id="chem.cr/Number" data-name="number">
       <a href="../../Number.html">Number</a>
       
@@ -858,7 +853,7 @@
   </h2>
   <ul class="other-types-list">
     
-      <li class="other-type"><a href="../../Indexable.html">Indexable(Float64)</a></li>
+      <li class="other-type">Indexable(Float64)</li>
     
   </ul>
 
@@ -1498,7 +1493,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#unsafe_fetch%28i%3AInt%29%3AFloat64-instance-method" class="signature"><strong>#unsafe_fetch</strong>(i : Int) : Float64</a>
+        <a href="#unsafe_fetch%28index%3AInt%29%3AFloat64-instance-method" class="signature"><strong>#unsafe_fetch</strong>(index : Int) : Float64</a>
         
           <div class="summary"><p>Returns the element at the given <em>index</em>, without doing any bounds check.</p></div>
         
@@ -1542,15 +1537,6 @@
 <div class="methods-inherited">
   
     
-
-  <h3>Instance methods inherited from module <code><a href="../../Indexable.html">Indexable(Float64)</a></code></h3>
-  
-  
-    <a href="../../Indexable.html#index%21%28ofobject%2Coffset%3AInt%3D0%29%3AInt-instance-method" class="tooltip">
-      <span>index!(of object, offset : Int = <span class="n">0</span>) : Int<br/>index!(offset : Int = <span class="n">0</span>, &block : T -> Bool) : Int</span>
-    index!</a>
-    
-  
 
 
     
@@ -3183,7 +3169,7 @@ grid.mean(axis: <span class="n">1</span>) <span class="c"># =&gt; [{9.5, 0.0}, {
         <div class="doc">
           
             <div class="doc-inherited">
-              Description copied from module <a href="../../Indexable.html">Indexable(Float64)</a>
+              Description copied from module Indexable(Float64)
             </div>
           
           <p>Returns the number of elements in this container.</p>
@@ -3248,7 +3234,7 @@ grid.mean(axis: <span class="n">1</span>) <span class="c"># =&gt; [{9.5, 0.0}, {
         <div class="doc">
           
             <div class="doc-inherited">
-              Description copied from module <a href="../../Indexable.html">Indexable(Float64)</a>
+              Description copied from module Indexable(Float64)
             </div>
           
           <p>Returns an <code><a href="../../Array.html">Array</a></code> with all the elements in the collection.</p>
@@ -3439,22 +3425,22 @@ the <code><a href="../../Chem/VASP/Locpot.html">Chem::VASP::Locpot</a></code> fi
       </div>
     </div>
   
-    <div class="entry-detail" id="unsafe_fetch(i:Int):Float64-instance-method">
+    <div class="entry-detail" id="unsafe_fetch(index:Int):Float64-instance-method">
       <div class="signature">
         
-        def <strong>unsafe_fetch</strong>(i : Int) : Float64
+        def <strong>unsafe_fetch</strong>(index : Int) : Float64
 
-        <a class="method-permalink" href="#unsafe_fetch%28i%3AInt%29%3AFloat64-instance-method">#</a>
+        <a class="method-permalink" href="#unsafe_fetch%28index%3AInt%29%3AFloat64-instance-method">#</a>
       </div>
       
         <div class="doc">
           
             <div class="doc-inherited">
-              Description copied from module <a href="../../Indexable.html">Indexable(Float64)</a>
+              Description copied from module Indexable(Float64)
             </div>
           
           <p>Returns the element at the given <em>index</em>, without doing any bounds check.</p>
-<p><code><a href="../../Indexable.html">Indexable</a></code> makes sure to invoke this method with <em>index</em> in <code>0..<a href="../../Chem/Spatial/Grid.html#size%3AInt32-instance-method">.size</a></code>,
+<p><code>Indexable</code> makes sure to invoke this method with <em>index</em> in <code>0..<a href="../../Chem/Spatial/Grid.html#size%3AInt32-instance-method">.size</a></code>,
 so converting negative indices to positive ones is not needed here.</p>
 <p>Clients never invoke this method directly. Instead, they access
 elements with <code><a href="../../Chem/Spatial/Grid.html#%5B%5D%28%2Aargs%2C%2A%2Aoptions%29%3AFloat64-instance-method">#[](index)</a></code> and <code><a href="../../Chem/Spatial/Grid.html#%5B%5D%3F%28loc%3ALocation%29%3AFloat64%3F-instance-method">#[]?(index)</a></code>.</p>
