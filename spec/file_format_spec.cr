@@ -177,12 +177,17 @@ describe Chem::Format do
 
     it "fails for non-decoded types", tags: %w(codegen) do
       assert_error "Chem::Format::PDB.reader(Int32)",
-        "no overload matches 'Chem::Format#reader' with type Int32.class"
+        "expected argument #1 to 'Chem::Format#reader' to be \
+        Array(Chem::Structure).class, Chem::Spatial::Grid.class, \
+        Chem::Structure.class or Chem::Topology.class, not Int32.class"
     end
 
     it "fails with an array for a single-entry type", tags: %w(codegen) do
       assert_error "Chem::Format::DX.reader(Array(Chem::Spatial::Grid))",
-        "no overload matches 'Chem::Format#reader' with type Array(Chem::Spatial::Grid).class"
+        "expected argument #1 to 'Chem::Format#reader' to be \
+        Array(Chem::Structure).class, Chem::Spatial::Grid.class, \
+        Chem::Structure.class or Chem::Topology.class, not \
+        Array(Chem::Spatial::Grid).class"
     end
   end
 
@@ -223,12 +228,17 @@ describe Chem::Format do
 
     it "fails for non-encoded types", tags: %w(codegen) do
       assert_error "Chem::Format::PDB.writer(Int32)",
-        "no overload matches 'Chem::Format#writer' with type Int32.class"
+        "expected argument #1 to 'Chem::Format#writer' to be \
+        Array(Chem::AtomCollection).class, Chem::AtomCollection:Module, \
+        Chem::Spatial::Grid.class or Chem::Structure.class, not Int32.class"
     end
 
     it "fails with an array for a single-entry type", tags: %w(codegen) do
       assert_error "Chem::Format::DX.writer(Array(Chem::Spatial::Grid))",
-        "no overload matches 'Chem::Format#writer' with type Array(Chem::Spatial::Grid).class"
+        "expected argument #1 to 'Chem::Format#writer' to be \
+        Array(Chem::AtomCollection).class, Chem::AtomCollection:Module, \
+        Chem::Spatial::Grid.class or Chem::Structure.class, not \
+        Array(Chem::Spatial::Grid).class"
     end
   end
 
