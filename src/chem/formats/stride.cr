@@ -5,14 +5,14 @@ class Chem::Protein::Stride < Chem::Protein::SecondaryStructureCalculator
 
     @pdbid = "0000"
 
-    protected def encode_entry(structure : Structure) : Nil
+    protected def encode_entry(obj : Structure) : Nil
       check_open
-      @pdbid = structure.experiment.try(&.pdb_accession.upcase) || "0000"
+      @pdbid = obj.experiment.try(&.pdb_accession.upcase) || "0000"
 
       header
-      structure.experiment.try { |expt| info expt }
-      summary structure
-      detail structure
+      obj.experiment.try { |expt| info expt }
+      summary obj
+      detail obj
     end
 
     private def detail(residue : Residue)

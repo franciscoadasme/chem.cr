@@ -28,10 +28,10 @@ module Chem::PyMOL
       Protein::SecondaryStructure::Polyproline           => "pp",
     }
 
-    protected def encode_entry(structure : Structure) : Nil
+    protected def encode_entry(obj : Structure) : Nil
       check_open
-      header structure.source_file
-      structure.each_secondary_structure do |residues, sec|
+      header obj.source_file
+      obj.each_secondary_structure do |residues, sec|
         next unless code = CODES[sec]?
         ch = residues[0].chain.id
         first = residues[0].number

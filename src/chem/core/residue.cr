@@ -62,12 +62,12 @@ module Chem
     # residues[0] <=> residues[5] # => -1
     # residues[5] <=> residues[6] # => -1
     # ```
-    def <=>(rhs : self) : Int32
-      c = chain.id <=> rhs.chain.id
+    def <=>(other : self) : Int32
+      c = chain.id <=> other.chain.id
       return c unless c.zero?
-      c = number <=> rhs.number
+      c = number <=> other.number
       return c unless c.zero?
-      (insertion_code || 'A'.pred) <=> (rhs.insertion_code || 'A'.pred)
+      (insertion_code || 'A'.pred) <=> (other.insertion_code || 'A'.pred)
     end
 
     protected def <<(atom : Atom) : self

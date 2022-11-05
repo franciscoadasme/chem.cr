@@ -82,11 +82,11 @@ module Chem::Cube
     def initialize(@io : IO, @atoms : AtomCollection, @sync_close : Bool = false)
     end
 
-    protected def encode_entry(grid : Spatial::Grid) : Nil
+    protected def encode_entry(obj : Spatial::Grid) : Nil
       check_open
-      write_header grid
+      write_header obj
       write_atoms
-      write_array grid
+      write_array obj
     end
 
     private def write_array(grid : Spatial::Grid) : Nil

@@ -104,8 +104,8 @@ module Chem
     # atoms[1] <=> atoms[1] # => 0
     # atoms[2] <=> atoms[1] # => 1
     # ```
-    def <=>(rhs : self) : Int32
-      @serial <=> rhs.serial
+    def <=>(other : self) : Int32
+      @serial <=> other.serial
     end
 
     def bonded?(to other : self) : Bool

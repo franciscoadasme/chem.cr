@@ -51,11 +51,11 @@ module Chem::DX
   class Writer
     include FormatWriter(Spatial::Grid)
 
-    protected def encode_entry(grid : Spatial::Grid) : Nil
+    protected def encode_entry(obj : Spatial::Grid) : Nil
       check_open
-      write_header grid
-      write_connections grid
-      write_array grid
+      write_header obj
+      write_connections obj
+      write_array obj
     end
 
     private def write_array(grid : Spatial::Grid) : Nil

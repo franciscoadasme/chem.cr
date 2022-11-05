@@ -122,15 +122,15 @@ module Chem::VASP::Poscar
       @ele_order = order
     end
 
-    protected def encode_entry(structure : Structure) : Nil
-      raise Spatial::NotPeriodicError.new unless cell = structure.cell
+    protected def encode_entry(obj : Structure) : Nil
+      raise Spatial::NotPeriodicError.new unless cell = obj.cell
 
-      atoms = structure.atoms
+      atoms = obj.atoms
       coordinate_system = @fractional ? "Direct" : "Cartesian"
       ele_tally = count_elements atoms
       has_constraints = atoms.any? &.constraint
 
-      @io.puts structure.title.gsub(/ *\n */, ' ')
+      @io.puts obj.title.gsub(/ *\n */, ' ')
       write cell
       write_elements ele_tally
       @io.puts "Selective dynamics" if has_constraints

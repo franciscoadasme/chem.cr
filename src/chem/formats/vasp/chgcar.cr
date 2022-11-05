@@ -23,11 +23,11 @@ module Chem::VASP::Chgcar
     include FormatWriter(Spatial::Grid)
     include VASP::GridWriter
 
-    protected def encode_entry(grid : Spatial::Grid) : Nil
-      incompatible_expcetion if (lat = @structure.cell) && lat.size != grid.bounds.size
+    protected def encode_entry(obj : Spatial::Grid) : Nil
+      incompatible_expcetion if (lat = @structure.cell) && lat.size != obj.bounds.size
       write_header
-      volume = grid.volume
-      write_array grid, &.*(volume)
+      volume = obj.volume
+      write_array obj, &.*(volume)
     end
   end
 end

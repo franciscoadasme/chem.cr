@@ -756,8 +756,8 @@ module Chem::Spatial
     end
 
     @[AlwaysInline]
-    def unsafe_fetch(i : Int) : Float64
-      @buffer[i]
+    def unsafe_fetch(index : Int) : Float64
+      @buffer[index]
     end
 
     @[AlwaysInline]

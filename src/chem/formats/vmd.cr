@@ -3,10 +3,10 @@ module Chem::VMD
   class Writer
     include FormatWriter(Structure)
 
-    protected def encode_entry(structure : Structure) : Nil
+    protected def encode_entry(obj : Structure) : Nil
       check_open
-      header structure.source_file
-      structure.each_secondary_structure do |residues, sec|
+      header obj.source_file
+      obj.each_secondary_structure do |residues, sec|
         ch = residues[0].chain.id
         first = residues[0].number
         last = residues[-1].number
