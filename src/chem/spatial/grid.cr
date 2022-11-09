@@ -753,6 +753,23 @@ module Chem::Spatial
       end
     end
 
+    # Writes the binary representation of the grid to *io* in the given
+    # *format*. See also `IO#write_bytes`. Raises `ArgumentError` is the
+    # encoding is not UTF-8.
+    def to_io(io : IO, format : IO::ByteFormat = :system_endian) : Nil
+      raise ArgumentError.new("Invalid IO encoding") unless io.encoding == "UTF-8"
+      io.write_bytes @bounds, format
+      if str = @source_file.try(&.to_s)
+        io.write_bytes str.bytesize, format
+        io.write_string str.to_slice
+      else
+        io.write_bytes 0, format
+      end
+      @dim.each &.to_io(io, format)
+      n_bytes = sizeof(Float64) // sizeof(UInt8) * size
+      io.write Bytes.new(@buffer.as(Pointer(UInt8)), n_bytes)
+    end
+
     def to_unsafe : Pointer(Float64)
       @buffer
     end

@@ -782,4 +782,37 @@ describe Chem::Spatial::Grid do
       make_grid({2, 2, 2}).to_a.should eq (0..7).to_a
     end
   end
+
+  describe "#to_io" do
+    it "writes the binary representation of a grid" do
+      origin = vec3(10.1, 20.2, 30.3)
+      basis = Chem::Spatial::Mat3[{1, 2, 3}, {4, 5, 6}, {7, 8, 9}]
+      bounds = Chem::Spatial::Parallelepiped.new origin, basis
+      grid = Chem::Spatial::Grid.new({2, 2, 2}, bounds, "foo.pdb")
+        .map_with_index! { |_, i| i * 1.1 }
+      bytesize = grid.source_file.not_nil!.to_s.bytesize
+
+      io = IO::Memory.new
+      io.write_bytes grid
+      io.rewind
+      io.read_bytes(Chem::Spatial::Parallelepiped).should eq bounds
+      io.read_bytes(Int32).should eq bytesize
+      io.read_string(bytesize).should eq grid.source_file.to_s
+      Array.new(3) { io.read_bytes(Int32) }.should eq grid.dim.to_a
+      Array.new(grid.dim.product) { io.read_bytes(Float64) }.should eq grid.to_a
+      io.read_byte.should be_nil
+    end
+
+    it "writes zero bytes when source file is nil" do
+      grid = make_grid({3, 2, 5})
+      io = IO::Memory.new
+      io.write_bytes grid
+      io.rewind
+      io.read_bytes(Chem::Spatial::Parallelepiped).should eq grid.bounds
+      io.read_bytes(Int32).should eq 0
+      Array.new(3) { io.read_bytes(Int32) }.should eq grid.dim.to_a
+      Array.new(grid.dim.product) { io.read_bytes(Float64) }.should eq grid.to_a
+      io.read_byte.should be_nil
+    end
+  end
 end
