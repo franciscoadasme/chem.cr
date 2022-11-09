@@ -236,6 +236,14 @@ module Chem::Spatial
       end
     end
 
+    # Writes the binary representation of the matrix to *io* in the
+    # given *format*. See also `IO#write_bytes`.
+    def to_io(io : IO, format : IO::ByteFormat = :system_endian) : Nil
+      @buffer.each do |value|
+        io.write_bytes value, format
+      end
+    end
+
     def to_s(io : IO) : Nil
       format_spec = "%.#{PRINT_PRECISION}g"
       io << "["

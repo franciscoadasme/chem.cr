@@ -181,4 +181,15 @@ describe Chem::Spatial::Mat3 do
       mat.to_a.should eq [1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9]
     end
   end
+
+  describe "#to_io" do
+    it "writes a binary representation of the vector" do
+      mat = Chem::Spatial::Mat3[{1.1, 2.2, 3.3}, {4.4, 5.5, 6.6}, {7.7, 8.8, 9.9}]
+      io = IO::Memory.new
+      io.write_bytes mat
+      io.rewind
+      Array.new(9) { io.read_bytes Float64 }.should eq mat.to_a
+      io.read_byte.should be_nil
+    end
+  end
 end
