@@ -66,6 +66,16 @@ module Chem::Spatial
       end
     end
 
+    # Reads a matrix from *io* in the given *format*. See also:
+    # `IO#read_bytes`.
+    def self.from_io(io : IO, format : IO::ByteFormat) : self
+      Mat3.build do |buffer|
+        9.times do |i|
+          buffer[i] = io.read_bytes(Float64, format)
+        end
+      end
+    end
+
     # Returns the identity matrix.
     def self.identity : self
       Mat3.diagonal(1)

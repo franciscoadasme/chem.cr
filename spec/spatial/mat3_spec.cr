@@ -192,4 +192,14 @@ describe Chem::Spatial::Mat3 do
       io.read_byte.should be_nil
     end
   end
+
+  describe ".from_io" do
+    it "reads a matrix from IO" do
+      mat = Chem::Spatial::Mat3[{1.1, 2.2, 3.3}, {4.4, 5.5, 6.6}, {7.7, 8.8, 9.9}]
+      io = IO::Memory.new
+      io.write_bytes mat
+      io.rewind
+      io.read_bytes(Chem::Spatial::Mat3).should eq mat
+    end
+  end
 end
