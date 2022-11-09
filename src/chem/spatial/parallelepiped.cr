@@ -462,6 +462,13 @@ module Chem::Spatial
       a.close_to?(b, 1e-15) && !a.close_to?(c, 1e-15) && orthogonal?
     end
 
+    # Writes the binary representation of the parallelepiped to *io* in
+    # the given *format*. See also `IO#write_bytes`.
+    def to_io(io : IO, format : IO::ByteFormat = :system_endian) : Nil
+      io.write_bytes @origin, format
+      io.write_bytes @basis, format
+    end
+
     # Returns a new parallelepiped translated by *offset*.
     #
     # ```

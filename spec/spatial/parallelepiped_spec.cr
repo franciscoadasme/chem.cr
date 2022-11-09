@@ -550,4 +550,17 @@ describe Chem::Spatial::Parallelepiped do
       Chem::Spatial::Parallelepiped.hexagonal(5, 10).xyz?.should be_false
     end
   end
+
+  describe "#to_io" do
+    origin = vec3(10.1, 20.2, 30.3)
+    basis = Chem::Spatial::Mat3[{1, 2, 3}, {4, 5, 6}, {7, 8, 9}]
+    pld = Chem::Spatial::Parallelepiped.new origin, basis
+
+    io = IO::Memory.new
+    io.write_bytes pld
+    io.rewind
+    io.read_bytes(Chem::Spatial::Vec3).should eq origin
+    io.read_bytes(Chem::Spatial::Mat3).should eq basis
+    io.read_byte.should be_nil
+  end
 end
