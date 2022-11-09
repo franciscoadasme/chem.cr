@@ -563,4 +563,17 @@ describe Chem::Spatial::Parallelepiped do
     io.read_bytes(Chem::Spatial::Mat3).should eq basis
     io.read_byte.should be_nil
   end
+
+  describe ".from_io" do
+    it "reads a parallelepiped from IO" do
+      origin = vec3(10.1, 20.2, 30.3)
+      basis = Chem::Spatial::Mat3[{1, 2, 3}, {4, 5, 6}, {7, 8, 9}]
+      pld = Chem::Spatial::Parallelepiped.new origin, basis
+
+      io = IO::Memory.new
+      io.write_bytes pld
+      io.rewind
+      io.read_bytes(Chem::Spatial::Parallelepiped).should eq pld
+    end
+  end
 end

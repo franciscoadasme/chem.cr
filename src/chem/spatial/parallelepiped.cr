@@ -22,6 +22,12 @@ module Chem::Spatial
     def initialize(@origin : Vec3, @basis : Mat3)
     end
 
+    # Reads a parallelepiped from *io* in the given *format*. See also:
+    # `IO#read_bytes`.
+    def self.from_io(io : IO, format : IO::ByteFormat) : self
+      new io.read_bytes(Vec3, format), io.read_bytes(Mat3, format)
+    end
+
     # Creates a `Parallelepiped` with *basis* located at the origin.
     def self.new(basis : Mat3) : self
       new Vec3.zero, basis
