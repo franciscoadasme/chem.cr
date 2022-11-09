@@ -228,6 +228,14 @@ module Chem::Spatial
       end
     end
 
+    # Returns an array with all the elements of the matrix.
+    def to_a : Array(Float64)
+      Array(Float64).build(9) do |buffer|
+        buffer.copy_from @buffer.to_unsafe, 9
+        9
+      end
+    end
+
     def to_s(io : IO) : Nil
       format_spec = "%.#{PRINT_PRECISION}g"
       io << "["

@@ -174,4 +174,11 @@ describe Chem::Spatial::Mat3 do
       transform.to_s.should eq expected
     end
   end
+
+  describe "#to_a" do
+    it "returns an array" do
+      mat = Chem::Spatial::Mat3[{1.1, 2.2, 3.3}, {4.4, 5.5, 6.6}, {7.7, 8.8, 9.9}]
+      mat.to_a.should eq [1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9]
+    end
+  end
 end
