@@ -225,6 +225,14 @@ module Chem::Spatial
       [@x, @y, @z]
     end
 
+    # Writes the binary representation of the vector to *io* in the
+    # given *format*. See also `IO#write_bytes`.
+    def to_io(io : IO, format : IO::ByteFormat = :system_endian) : Nil
+      @x.to_io io, format
+      @y.to_io io, format
+      @z.to_io io, format
+    end
+
     def to_s(io : IO) : Nil
       io << "Vec3[ "
       {% for name, i in %w(x y z) %}

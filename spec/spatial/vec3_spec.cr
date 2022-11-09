@@ -322,4 +322,14 @@ describe Chem::Spatial::Vec3 do
       vec3(1, 1, 1).z?.should be_false
     end
   end
+
+  describe "#to_io" do
+    it "writes a binary representation of the vector" do
+      io = IO::Memory.new
+      io.write_bytes vec3(1.1, 2.2, 3.3)
+      io.rewind
+      Array.new(3) { io.read_bytes Float64 }.should eq [1.1, 2.2, 3.3]
+      io.read_byte.should be_nil
+    end
+  end
 end
