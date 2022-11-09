@@ -815,4 +815,41 @@ describe Chem::Spatial::Grid do
       io.read_byte.should be_nil
     end
   end
+
+  describe ".from_io" do
+    it "reads a grid from IO" do
+      origin = vec3(10.1, 20.2, 30.3)
+      basis = Chem::Spatial::Mat3[{1, 2, 3}, {4, 5, 6}, {7, 8, 9}]
+      bounds = Chem::Spatial::Parallelepiped.new origin, basis
+      grid = Chem::Spatial::Grid.new({2, 2, 2}, bounds, "foo.pdb")
+        .map_with_index! { |_, i| i * 14.1 }
+
+      io = IO::Memory.new
+      io.write_bytes grid
+      io.rewind
+      io.read_bytes(Chem::Spatial::Grid).should eq grid
+      io.read_byte.should be_nil
+    end
+
+    it "reads a grid without source file" do
+      grid = make_grid({3, 2, 5})
+      io = IO::Memory.new
+      io.write_bytes grid
+      io.rewind
+      encoded_grid = io.read_bytes(Chem::Spatial::Grid)
+      encoded_grid.should eq grid
+      encoded_grid.source_file.should be_nil
+      io.read_byte.should be_nil
+    end
+
+    it "raises if missing data" do
+      io = IO::Memory.new
+      io.write_bytes make_grid({3, 2, 5})
+
+      truncated_io = IO::Memory.new io.to_slice[..-5]
+      expect_raises IO::Error, "Missing grid data" do
+        truncated_io.read_bytes(Chem::Spatial::Grid)
+      end
+    end
+  end
 end

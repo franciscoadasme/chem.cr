@@ -120,6 +120,20 @@ module Chem::Spatial
       new other.dim, other.bounds, value.to_f
     end
 
+    # Reads a grid from *io* in the given *format*. See also:
+    # `IO#read_bytes`. Raises `IO::Error` if there is missing data.
+    def self.from_io(io : IO, format : IO::ByteFormat) : self
+      bounds = io.read_bytes Parallelepiped, format
+      bytesize = io.read_bytes Int32, format
+      source_file = io.read_string(bytesize) if bytesize > 0
+      dim = {0, 0, 0}.map { io.read_bytes(Int32, format) }
+      build(dim, bounds, source_file) do |buffer, size|
+        bytes = buffer.to_slice(size).to_unsafe_bytes
+        read_bytes = io.read bytes
+        raise IO::Error.new("Missing grid data") unless read_bytes == bytes.size
+      end
+    end
+
     def self.new(dim : Dimensions,
                  bounds : Parallelepiped,
                  source_file : String | Path | Nil = nil,
