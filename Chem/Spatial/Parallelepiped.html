@@ -901,6 +901,13 @@ fractional coordinates, and viceversa, by matrix multiplication (see
       </li>
     
       <li class="entry-summary">
+        <a href="#from_io%28io%3AIO%2Cformat%3AIO%3A%3AByteFormat%29%3Aself-class-method" class="signature"><strong>.from_io</strong>(io : IO, format : IO::ByteFormat) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Reads a parallelepiped from <em>io</em> in the given <em>format</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#hexagonal%28a%3ANumber%2Cc%3ANumber%29%3Aself-class-method" class="signature"><strong>.hexagonal</strong>(a : Number, c : Number) : <span class="k">self</span></a>
         
           <div class="summary"><p>Creates a hexagonal parallelepiped (<em>a</em> = <em>b</em>, <em>α</em> = <em>β</em> = 90°, and <em>γ</em> = 120°).</p></div>
@@ -1237,6 +1244,13 @@ fractional coordinates, and viceversa, by matrix multiplication (see
       </li>
     
       <li class="entry-summary">
+        <a href="#to_io%28io%3AIO%2Cformat%3AIO%3A%3AByteFormat%3D%3Asystem_endian%29%3ANil-instance-method" class="signature"><strong>#to_io</strong>(io : IO, format : IO::ByteFormat = <span class="n">:system_endian</span>) : Nil</a>
+        
+          <div class="summary"><p>Writes the binary representation of the parallelepiped to <em>io</em> in the given <em>format</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#transform%28transformation%3AAffineTransform%29%3Aself-instance-method" class="signature"><strong>#transform</strong>(transformation : AffineTransform) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the parallelepiped resulting of applying the given transformation.</p></div>
@@ -1402,6 +1416,26 @@ origin.</p>
           
           <p>Creates a cubic parallelepiped (<em>a</em> = <em>b</em> = <em>c</em> and <em>α</em> = <em>β</em> =
 <em>γ</em> = 90°).</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="from_io(io:IO,format:IO::ByteFormat):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>from_io</strong>(io : IO, format : IO::ByteFormat) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#from_io%28io%3AIO%2Cformat%3AIO%3A%3AByteFormat%29%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Reads a parallelepiped from <em>io</em> in the given <em>format</em>. See also:
+<code>IO#read_bytes</code>.</p>
         </div>
       
       <br/>
@@ -2417,6 +2451,26 @@ computing the rotation.</p>
           
           <p>Returns <code>true</code> if the parallelepiped is tetragonal (<em>a</em> = <em>b</em> ≠
 <em>c</em> and <em>α</em> = <em>β</em> = <em>γ</em> = 90°), else <code>false</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_io(io:IO,format:IO::ByteFormat=:system_endian):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>to_io</strong>(io : IO, format : IO::ByteFormat = <span class="n">:system_endian</span>) : Nil
+
+        <a class="method-permalink" href="#to_io%28io%3AIO%2Cformat%3AIO%3A%3AByteFormat%3D%3Asystem_endian%29%3ANil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Writes the binary representation of the parallelepiped to <em>io</em> in
+the given <em>format</em>. See also <code>IO#write_bytes</code>.</p>
         </div>
       
       <br/>

@@ -908,6 +908,13 @@ maps such as scaling and rotation (see <code><a href="../../Chem/Spatial/AffineT
       </li>
     
       <li class="entry-summary">
+        <a href="#from_io%28io%3AIO%2Cformat%3AIO%3A%3AByteFormat%29%3Aself-class-method" class="signature"><strong>.from_io</strong>(io : IO, format : IO::ByteFormat) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Reads a matrix from <em>io</em> in the given <em>format</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#identity%3Aself-class-method" class="signature"><strong>.identity</strong> : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the identity matrix.</p></div>
@@ -1065,6 +1072,20 @@ maps such as scaling and rotation (see <code><a href="../../Chem/Spatial/AffineT
         <a href="#map%28%26%3AFloat64-%3EFloat64%29%3Aself-instance-method" class="signature"><strong>#map</strong>(& : Float64 -> Float64) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns a new matrix with the results of the passed block for each element in the matrix.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_a%3AArray%28Float64%29-instance-method" class="signature"><strong>#to_a</strong> : Array(Float64)</a>
+        
+          <div class="summary"><p>Returns an array with all the elements of the matrix.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_io%28io%3AIO%2Cformat%3AIO%3A%3AByteFormat%3D%3Asystem_endian%29%3ANil-instance-method" class="signature"><strong>#to_io</strong>(io : IO, format : IO::ByteFormat = <span class="n">:system_endian</span>) : Nil</a>
+        
+          <div class="summary"><p>Writes the binary representation of the matrix to <em>io</em> in the given <em>format</em>.</p></div>
         
       </li>
     
@@ -1237,6 +1258,26 @@ given values.</p>
         <div class="doc">
           
           <p>Returns a new matrix with the diagonal set to <em>value</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="from_io(io:IO,format:IO::ByteFormat):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>from_io</strong>(io : IO, format : IO::ByteFormat) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#from_io%28io%3AIO%2Cformat%3AIO%3A%3AByteFormat%29%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Reads a matrix from <em>io</em> in the given <em>format</em>. See also:
+<code>IO#read_bytes</code>.</p>
         </div>
       
       <br/>
@@ -1632,6 +1673,45 @@ states that <code>inv(A) = 1 / det(A) * adj(A)</code> provided that <code>det(A)
           
           <p>Returns a new matrix with the results of the passed block for each
 element in the matrix.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_a:Array(Float64)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_a</strong> : <a href="../../Array.html">Array</a>(Float64)
+
+        <a class="method-permalink" href="#to_a%3AArray%28Float64%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns an array with all the elements of the matrix.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_io(io:IO,format:IO::ByteFormat=:system_endian):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>to_io</strong>(io : IO, format : IO::ByteFormat = <span class="n">:system_endian</span>) : Nil
+
+        <a class="method-permalink" href="#to_io%28io%3AIO%2Cformat%3AIO%3A%3AByteFormat%3D%3Asystem_endian%29%3ANil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Writes the binary representation of the matrix to <em>io</em> in the
+given <em>format</em>. See also <code>IO#write_bytes</code>.</p>
         </div>
       
       <br/>

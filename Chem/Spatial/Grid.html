@@ -965,6 +965,13 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#from_io%28io%3AIO%2Cformat%3AIO%3A%3AByteFormat%29%3Aself-class-method" class="signature"><strong>.from_io</strong>(io : IO, format : IO::ByteFormat) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Reads a grid from <em>io</em> in the given <em>format</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#from_locpot%28input%3AIO%7CPath%7CString%29%3Aself-class-method" class="signature"><strong>.from_locpot</strong>(input : IO | Path | String) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the grid encoded in <em>input</em> using the <code><a href="../../Chem/VASP/Locpot.html">Chem::VASP::Locpot</a></code> file format.</p></div>
@@ -1474,6 +1481,13 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#to_io%28io%3AIO%2Cformat%3AIO%3A%3AByteFormat%3D%3Asystem_endian%29%3ANil-instance-method" class="signature"><strong>#to_io</strong>(io : IO, format : IO::ByteFormat = <span class="n">:system_endian</span>) : Nil</a>
+        
+          <div class="summary"><p>Writes the binary representation of the grid to <em>io</em> in the given <em>format</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#to_locpot%28output%3AIO%7CPath%7CString%2Cstructure%3AStructure%29%3ANil-instance-method" class="signature"><strong>#to_locpot</strong>(output : IO | Path | String, structure : Structure) : Nil</a>
         
           <div class="summary"><p>Writes the grid to <em>output</em> using the <code><a href="../../Chem/VASP/Locpot.html">Chem::VASP::Locpot</a></code> file format.</p></div>
@@ -1807,6 +1821,26 @@ other.to_a.minmax           <span class="c"># =&gt; {2345.123, 2345.123}</span><
           <p>Returns the grid encoded in <em>input</em> using the
 <code><a href="../../Chem/DX.html">Chem::DX</a></code> file format. Arguments are forwarded to
 <code><a href="../../Chem/DX/Reader.html#open%28io%3AIO%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::DX::Reader.open</a></code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="from_io(io:IO,format:IO::ByteFormat):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>from_io</strong>(io : IO, format : IO::ByteFormat) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#from_io%28io%3AIO%2Cformat%3AIO%3A%3AByteFormat%29%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Reads a grid from <em>io</em> in the given <em>format</em>. See also:
+<code>IO#read_bytes</code>. Raises <code>IO::Error</code> if there is missing data.</p>
         </div>
       
       <br/>
@@ -3362,6 +3396,27 @@ file format. Arguments are fowarded to <code><a href="../../Chem/DX/Writer.html#
           <p>Returns a string representation of the grid using
 the <code><a href="../../Chem/DX.html">Chem::DX</a></code> file format. Arguments are fowarded to
 <code><a href="../../Chem/DX/Writer.html#open%28io%3AIO%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::DX::Writer.open</a></code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_io(io:IO,format:IO::ByteFormat=:system_endian):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>to_io</strong>(io : IO, format : IO::ByteFormat = <span class="n">:system_endian</span>) : Nil
+
+        <a class="method-permalink" href="#to_io%28io%3AIO%2Cformat%3AIO%3A%3AByteFormat%3D%3Asystem_endian%29%3ANil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Writes the binary representation of the grid to <em>io</em> in the given
+<em>format</em>. See also <code>IO#write_bytes</code>. Raises <code>ArgumentError</code> is the
+encoding is not UTF-8.</p>
         </div>
       
       <br/>

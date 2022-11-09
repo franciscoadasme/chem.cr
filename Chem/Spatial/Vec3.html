@@ -892,6 +892,13 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#from_io%28io%3AIO%2Cformat%3AIO%3A%3AByteFormat%29%3Aself-class-method" class="signature"><strong>.from_io</strong>(io : IO, format : IO::ByteFormat) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Reads a vector from <em>io</em> in the given <em>format</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#new%28x%3AFloat64%2Cy%3AFloat64%2Cz%3AFloat64%29-class-method" class="signature"><strong>.new</strong>(x : Float64, y : Float64, z : Float64)</a>
         
           <div class="summary"><p>Creates a new vector representing the position (<em>x</em>, <em>y</em>, <em>z</em>).</p></div>
@@ -1139,6 +1146,13 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#to_io%28io%3AIO%2Cformat%3AIO%3A%3AByteFormat%3D%3Asystem_endian%29%3ANil-instance-method" class="signature"><strong>#to_io</strong>(io : IO, format : IO::ByteFormat = <span class="n">:system_endian</span>) : Nil</a>
+        
+          <div class="summary"><p>Writes the binary representation of the vector to <em>io</em> in the given <em>format</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#to_q%3AQuat-instance-method" class="signature"><strong>#to_q</strong> : Quat</a>
         
           <div class="summary"><p>Returns the quaternion representation of the vector, i.e., <code><a href="../../Chem/Spatial/Quat.html">Quat</a>[0, x, y, z]</code>.</p></div>
@@ -1343,6 +1357,26 @@
           
           <p>Returns the additive identity of this type. This is the zero
 vector.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="from_io(io:IO,format:IO::ByteFormat):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>from_io</strong>(io : IO, format : IO::ByteFormat) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#from_io%28io%3AIO%2Cformat%3AIO%3A%3AByteFormat%29%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Reads a vector from <em>io</em> in the given <em>format</em>. See also:
+<code>IO#read_bytes</code>.</p>
         </div>
       
       <br/>
@@ -2031,6 +2065,26 @@ b.normalize.close_to?(a.normalize) <span class="c"># =&gt; true</span></code></p
           
           <p>Returns an array with the components of the vector.</p>
 <pre><code class="language-crystal"><span class="t">Vec3</span>[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>].to_a <span class="c"># =&gt; [1.0, 2.0, 3.0]</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_io(io:IO,format:IO::ByteFormat=:system_endian):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>to_io</strong>(io : IO, format : IO::ByteFormat = <span class="n">:system_endian</span>) : Nil
+
+        <a class="method-permalink" href="#to_io%28io%3AIO%2Cformat%3AIO%3A%3AByteFormat%3D%3Asystem_endian%29%3ANil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Writes the binary representation of the vector to <em>io</em> in the
+given <em>format</em>. See also <code>IO#write_bytes</code>.</p>
         </div>
       
       <br/>
