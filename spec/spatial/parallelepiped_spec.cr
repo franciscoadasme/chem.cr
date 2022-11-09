@@ -552,16 +552,18 @@ describe Chem::Spatial::Parallelepiped do
   end
 
   describe "#to_io" do
-    origin = vec3(10.1, 20.2, 30.3)
-    basis = Chem::Spatial::Mat3[{1, 2, 3}, {4, 5, 6}, {7, 8, 9}]
-    pld = Chem::Spatial::Parallelepiped.new origin, basis
+    it "writes a binary representation of the parallelepiped" do
+      origin = vec3(10.1, 20.2, 30.3)
+      basis = Chem::Spatial::Mat3[{1, 2, 3}, {4, 5, 6}, {7, 8, 9}]
+      pld = Chem::Spatial::Parallelepiped.new origin, basis
 
-    io = IO::Memory.new
-    io.write_bytes pld
-    io.rewind
-    io.read_bytes(Chem::Spatial::Vec3).should eq origin
-    io.read_bytes(Chem::Spatial::Mat3).should eq basis
-    io.read_byte.should be_nil
+      io = IO::Memory.new
+      io.write_bytes pld
+      io.rewind
+      io.read_bytes(Chem::Spatial::Vec3).should eq origin
+      io.read_bytes(Chem::Spatial::Mat3).should eq basis
+      io.read_byte.should be_nil
+    end
   end
 
   describe ".from_io" do
