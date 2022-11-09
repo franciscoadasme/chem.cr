@@ -182,7 +182,9 @@ module Chem::Spatial
     end
 
     def ==(rhs : self) : Bool
-      return false unless @dim == rhs.dim && @bounds == rhs.bounds
+      return false unless @dim == rhs.dim &&
+                          @bounds == rhs.bounds &&
+                          @source_file == rhs.source_file
       each_with_index do |ele, i|
         return false if ele != rhs.unsafe_fetch(i)
       end
