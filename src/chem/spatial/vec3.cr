@@ -23,6 +23,14 @@ module Chem::Spatial
       zero
     end
 
+    # Reads a vector from *io* in the given *format*. See also:
+    # `IO#read_bytes`.
+    def self.from_io(io : IO, format : IO::ByteFormat) : self
+      new io.read_bytes(Float64, format),
+        io.read_bytes(Float64, format),
+        io.read_bytes(Float64, format)
+    end
+
     # Returns a random vector with the elements within 0 and 1.
     def self.rand(random = Random::DEFAULT) : self
       Vec3[random.rand, random.rand, random.rand]

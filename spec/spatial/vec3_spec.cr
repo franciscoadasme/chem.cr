@@ -333,4 +333,14 @@ describe Chem::Spatial::Vec3 do
       io.read_byte.should be_nil
     end
   end
+
+  describe ".from_io" do
+    it "reads a vector from IO" do
+      vec = vec3(1.1, 2.2, 3.3)
+      io = IO::Memory.new
+      io.write_bytes vec
+      io.rewind
+      io.read_bytes(Chem::Spatial::Vec3).should eq vec
+    end
+  end
 end
