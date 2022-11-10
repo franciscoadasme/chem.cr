@@ -847,9 +847,22 @@ describe Chem::Spatial::Grid do
       io.write_bytes make_grid({3, 2, 5})
 
       truncated_io = IO::Memory.new io.to_slice[..-5]
-      expect_raises IO::Error, "Missing grid data" do
+      expect_raises IO::EOFError do
         truncated_io.read_bytes(Chem::Spatial::Grid)
       end
+    end
+
+    it "reads a grid from a buffered IO" do
+      grid = make_grid({10, 45, 10}, {10, 20, 30})
+      tempfile = File.tempfile do |io|
+        io.buffer_size = 512
+        io.write_bytes(grid)
+        io.rewind
+        encoded_grid = io.read_bytes(Chem::Spatial::Grid)
+        encoded_grid.should eq grid
+      end
+    ensure
+      tempfile.try &.delete
     end
   end
 end
