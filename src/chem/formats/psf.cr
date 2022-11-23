@@ -1,13 +1,23 @@
 @[Chem::RegisterFormat(ext: %w(.psf))]
 module Chem::PSF
+  # :nodoc:
+  enum Variant
+    Standard
+    Extended
+    NAMD
+
+    def self.parse?(str : String) : self?
+      case str.camelcase.downcase
+      when "standard"        then Standard
+      when "ext", "extended" then Extended
+      when "namd"            then NAMD
+      else                        nil
+      end
+    end
+  end
+
   class Reader
     include FormatReader(Topology)
-
-    # :nodoc:
-    FORMAT_COLUMN_SPANS = {
-      "STANDARD" => [0..7, 9..12, 14..17, 19..22, 24..27, 29..32, 34..47, 48..61],
-      "EXT"      => [0..9, 11..18, 20..27, 29..36, 38..45, 47..50, 52..65, 66..79],
-    }
 
     def initialize(@io : IO, @sync_close : Bool = false)
       @pull = PullParser.new @io
@@ -19,7 +29,7 @@ module Chem::PSF
 
       @pull.error("Invalid PSF header") unless @pull.next_s? == "PSF"
       flags = @pull.line.split
-      format = {"NAMD", "EXT"}.find(&.in?(flags)) || "STANDARD"
+      variant = flags.compact_map { |f| Variant.parse?(f) }.first? || Variant::Standard
       @pull.next_line # skip empty line
       @pull.next_line
       n_remarks = @pull.next_i? || @pull.error("Invalid PSF header")
@@ -33,16 +43,26 @@ module Chem::PSF
         prev_seg = nil
         n_atoms.times do
           @pull.next_line || @pull.error("Expected ATOM line")
-          if cols = FORMAT_COLUMN_SPANS[format]?
-            serial = @pull.at(cols[0]).int
-            segment = @pull.at(cols[1]).str.strip
-            resid = @pull.at(cols[2]).int
-            resname = @pull.at(cols[3]).str.strip
-            name = @pull.at(cols[4]).str.strip
-            typename = @pull.at(cols[5]).str.strip
-            charge = @pull.at(cols[6]).float
-            mass = @pull.at(cols[7]).float
-          else # whitespace separated
+          case variant
+          in .standard?
+            serial = @pull.at(0..7).int
+            segment = @pull.at(9..12).str.strip
+            resid = @pull.at(14..17).int
+            resname = @pull.at(19..22).str.strip
+            name = @pull.at(24..27).str.strip
+            typename = @pull.at(29..32).str.strip
+            charge = @pull.at(34..47).float
+            mass = @pull.at(48..61).float
+          in .extended? # longer (wider columns) numbers and names
+            serial = @pull.at(0..9).int
+            segment = @pull.at(11..18).str.strip
+            resid = @pull.at(20..27).int
+            resname = @pull.at(29..36).str.strip
+            name = @pull.at(38..45).str.strip
+            typename = @pull.at(47..50).str.strip
+            charge = @pull.at(52..65).float
+            mass = @pull.at(66..79).float
+          in .namd? # whitespace separated
             serial = @pull.next_i
             segment = @pull.next_s
             resid = @pull.next_i
