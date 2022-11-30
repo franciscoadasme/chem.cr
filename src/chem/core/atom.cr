@@ -57,17 +57,17 @@ module Chem
     # ```
     # structure = Structure.read "peptide.pdb"
     # desc = case structure.dig('A', 5, "CA")
-    #        when AtomType("C")  then "carbonyl carbon"
-    #        when AtomType("CA") then "alpha carbon"
-    #        when AtomType("CB") then "beta carbon"
-    #        when AtomType("CG") then "gamma carbon"
-    #        when AtomType("CD") then "delta carbon"
+    #        when AtomTemplate("C")  then "carbonyl carbon"
+    #        when AtomTemplate("CA") then "alpha carbon"
+    #        when AtomTemplate("CB") then "beta carbon"
+    #        when AtomTemplate("CG") then "gamma carbon"
+    #        when AtomTemplate("CD") then "delta carbon"
     #        when PeriodicTable::C         then "carbon"
     #        else                               "non-carbon"
     #        end
     # desc # => "alpha carbon"
     # ```
-    def ===(atom_t : AtomType) : Bool
+    def ===(atom_t : AtomTemplate) : Bool
       match? atom_t
     end
 
@@ -77,11 +77,11 @@ module Chem
     # ```
     # structure = Structure.read "peptide.pdb"
     # desc = case structure.dig('A', 5, "CK")
-    #        when AtomType("C")  then "carbonyl carbon"
-    #        when AtomType("CA") then "alpha carbon"
-    #        when AtomType("CB") then "beta carbon"
-    #        when AtomType("CG") then "gamma carbon"
-    #        when AtomType("CD") then "delta carbon"
+    #        when AtomTemplate("C")  then "carbonyl carbon"
+    #        when AtomTemplate("CA") then "alpha carbon"
+    #        when AtomTemplate("CB") then "beta carbon"
+    #        when AtomTemplate("CG") then "gamma carbon"
+    #        when AtomTemplate("CD") then "delta carbon"
     #        when PeriodicTable::C         then "carbon"
     #        else                               "non-carbon"
     #        end
@@ -149,11 +149,11 @@ module Chem
     #
     # ```
     # atom = Structure.read("peptide.pdb").dig 'A', 1, "CA"
-    # atom.match?(AtomType.new("CA"))               # => true
-    # atom.match?(AtomType.new("CA", element: "N")) # => false
-    # atom.match?(AtomType.new("ND2"))              # => false
+    # atom.match?(AtomTemplate.new("CA"))               # => true
+    # atom.match?(AtomTemplate.new("CA", element: "N")) # => false
+    # atom.match?(AtomTemplate.new("ND2"))              # => false
     # ```
-    def match?(atom_t : AtomType) : Bool
+    def match?(atom_t : AtomTemplate) : Bool
       @name == atom_t.name && @element == atom_t.element
     end
 

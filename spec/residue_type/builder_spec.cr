@@ -77,7 +77,7 @@ describe Chem::ResidueTemplate::Builder do
       name "MG"
       structure "[MG+2]"
     end
-    residue.atom_types.size.should eq 1
+    residue.atoms.size.should eq 1
     residue.bonds.size.should eq 0
     residue.formal_charge.should eq 2
   end
@@ -290,9 +290,9 @@ describe Chem::ResidueTemplate::Builder do
       structure "CB-SG"
       root "CB"
     end
-    restype.atom_types.size.should eq 6
-    restype.atom_types.count(&.element.hydrogen?).should eq 4
-    restype.atom_types.map(&.valence).should eq [4, 1, 1, 1, 2, 1]
+    restype.atoms.size.should eq 6
+    restype.atoms.count(&.element.hydrogen?).should eq 4
+    restype.atoms.map(&.valence).should eq [4, 1, 1, 1, 2, 1]
     restype.bonds.size.should eq 5
     restype.bonds.count(&.includes?("SG")).should eq 2
 
@@ -301,10 +301,10 @@ describe Chem::ResidueTemplate::Builder do
       structure "CB-[SG-]"
       root "CB"
     end
-    restype.atom_types.size.should eq 5
-    restype.atom_types.count(&.element.hydrogen?).should eq 3
-    restype.atom_types.map(&.valence).should eq [4, 1, 1, 1, 2]
-    restype.atom_types.map(&.formal_charge).should eq [0, 0, 0, 0, -1]
+    restype.atoms.size.should eq 5
+    restype.atoms.count(&.element.hydrogen?).should eq 3
+    restype.atoms.map(&.valence).should eq [4, 1, 1, 1, 2]
+    restype.atoms.map(&.formal_charge).should eq [0, 0, 0, 0, -1]
     restype.bonds.size.should eq 4
     restype.bonds.count(&.includes?("SG")).should eq 1
 
@@ -313,10 +313,10 @@ describe Chem::ResidueTemplate::Builder do
       structure "S(=O1)(=O2)(-[O3-])(-[O4-])"
       root "S"
     end
-    restype.atom_types.size.should eq 5
-    restype.atom_types.count(&.element.hydrogen?).should eq 0
-    restype.atom_types.map(&.valence).should eq [6, 2, 2, 2, 2]
-    restype.atom_types.map(&.formal_charge).should eq [0, 0, 0, -1, -1]
+    restype.atoms.size.should eq 5
+    restype.atoms.count(&.element.hydrogen?).should eq 0
+    restype.atoms.map(&.valence).should eq [6, 2, 2, 2, 2]
+    restype.atoms.map(&.formal_charge).should eq [0, 0, 0, -1, -1]
     restype.bonds.size.should eq 4
     restype.bonds.count(&.includes?("S")).should eq 4
   end
@@ -328,8 +328,8 @@ describe Chem::ResidueTemplate::Builder do
       structure "CB-SG-*"
       root "CB"
     end
-    restype.atom_types.size.should eq 5
-    restype.atom_types.count(&.element.hydrogen?).should eq 3
+    restype.atoms.size.should eq 5
+    restype.atoms.count(&.element.hydrogen?).should eq 3
     restype.bonds.size.should eq 4
     restype.bonds.count(&.includes?("SG")).should eq 1
   end

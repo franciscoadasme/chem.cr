@@ -1,7 +1,7 @@
 class Chem::ResidueTemplate
   private REGISTRY = {} of String => ResidueTemplate
 
-  @atom_types : Array(AtomType)
+  @atoms : Array(AtomTemplate)
   @bonds : Array(BondType)
 
   getter name : String
@@ -9,7 +9,7 @@ class Chem::ResidueTemplate
   getter kind : Residue::Kind
   getter link_bond : BondType?
   getter description : String?
-  getter root_atom : AtomType
+  getter root_atom : AtomTemplate
   getter code : Char?
   getter symmetric_atom_groups : Array(Array(Tuple(String, String)))?
 
@@ -18,14 +18,14 @@ class Chem::ResidueTemplate
     @code : Char?,
     @kind : Residue::Kind,
     @description : String?,
-    atom_types : Array(AtomType),
+    atoms : Array(AtomTemplate),
     bonds : Array(BondType),
-    @root_atom : AtomType,
+    @root_atom : AtomTemplate,
     @aliases : Array(String) = [] of String,
     @link_bond : BondType? = nil,
     @symmetric_atom_groups : Array(Array(Tuple(String, String)))? = nil
   )
-    @atom_types = atom_types.dup
+    @atoms = atoms.dup
     @bonds = bonds.dup
   end
 
@@ -58,33 +58,33 @@ class Chem::ResidueTemplate
     end
   end
 
-  def [](atom_name : String) : AtomType
-    self[atom_name]? || raise Error.new "Unknown atom type #{atom_name}"
+  def [](atom_name : String) : AtomTemplate
+    self[atom_name]? || raise Error.new "Unknown atom template #{atom_name}"
   end
 
-  def []?(atom_name : String) : AtomType?
-    @atom_types.find &.name.==(atom_name)
+  def []?(atom_name : String) : AtomTemplate?
+    @atoms.find &.name.==(atom_name)
   end
 
   def atom_count(*, include_hydrogens : Bool = true)
-    size = @atom_types.size
-    size -= @atom_types.count &.element.hydrogen? unless include_hydrogens
+    size = @atoms.size
+    size -= @atoms.count &.element.hydrogen? unless include_hydrogens
     size
   end
 
   def atom_names : Array(String)
-    @atom_types.map &.name
+    @atoms.map &.name
   end
 
-  def atom_types : Array(AtomType)
-    @atom_types.dup
+  def atoms : Array(AtomTemplate)
+    @atoms.dup
   end
 
-  def each_atom_type(&block : AtomType ->)
-    @atom_types.each &block
+  def each_atom_t(&block : AtomTemplate ->)
+    @atoms.each &block
   end
 
-  def bonded_atoms(atom_t : AtomType) : Array(AtomType)
+  def bonded_atoms(atom_t : AtomTemplate) : Array(AtomTemplate)
     @bonds.select(&.includes?(atom_t)).map &.other(atom_t)
   end
 
@@ -93,7 +93,7 @@ class Chem::ResidueTemplate
   end
 
   def formal_charge : Int32
-    @atom_types.each.map(&.formal_charge).sum
+    @atoms.each.map(&.formal_charge).sum
   end
 
   def inspect(io : IO) : Nil
@@ -108,6 +108,6 @@ class Chem::ResidueTemplate
   end
 
   def n_atoms : Int32
-    @atom_types.size
+    @atoms.size
   end
 end

@@ -33,7 +33,7 @@ class Chem::Topology::Detector
 
   def initialize(atoms : AtomCollection, templates : Array(ResidueTemplate)? = nil)
     @atoms = Set(Atom).new(atoms.n_atoms).concat atoms.each_atom
-    @atom_table = {} of Atom | AtomType => String
+    @atom_table = {} of Atom | AtomTemplate => String
     @templates = templates || ResidueTemplate.all_templates
     compute_atom_descriptions @atoms
     compute_atom_descriptions @templates
@@ -76,7 +76,7 @@ class Chem::Topology::Detector
 
   private def compute_atom_descriptions(res_types : Array(ResidueTemplate))
     res_types.each do |res_t|
-      res_t.each_atom_type do |atom_t|
+      res_t.each_atom_t do |atom_t|
         @atom_table[atom_t] = String.build do |io|
           bonded_atoms = res_t.bonded_atoms(atom_t)
           if (bond = res_t.link_bond) && atom_t.in?(bond)
@@ -111,7 +111,7 @@ class Chem::Topology::Detector
     !atom.in?(@atoms) || atom_map.has_key?(atom)
   end
 
-  private def mapped?(atom_t : AtomType, atom_map : Hash(Atom, String)) : Bool
+  private def mapped?(atom_t : AtomTemplate, atom_map : Hash(Atom, String)) : Bool
     atom_map.has_value? atom_t.name
   end
 
@@ -125,12 +125,12 @@ class Chem::Topology::Detector
     atom_map.size >= res_t.atom_count
   end
 
-  private def match?(atom_t : AtomType, atom : Atom) : Bool
+  private def match?(atom_t : AtomTemplate, atom : Atom) : Bool
     @atom_table[atom] == @atom_table[atom_t]
   end
 
   private def search(res_t : ResidueTemplate,
-                     atom_t : AtomType,
+                     atom_t : AtomTemplate,
                      atom : Atom,
                      atom_map : Hash(Atom, String)) : Nil
     return if mapped?(atom, atom_map) || mapped?(atom_t, atom_map)

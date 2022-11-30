@@ -13,10 +13,10 @@ describe Chem::Atom do
   describe "#===" do
     atom = Chem::Structure.build { atom "NG1", vec3(0, 0, 0) }.atoms[0]
 
-    it "tells if atom matches atom type" do
-      (atom === Chem::AtomType.new("NG1", "N")).should be_true
-      (atom === Chem::AtomType.new("NG1", "O")).should be_false
-      (atom === Chem::AtomType.new("CA", "C")).should be_false
+    it "tells if atom matches template" do
+      (atom === Chem::AtomTemplate.new("NG1", "N")).should be_true
+      (atom === Chem::AtomTemplate.new("NG1", "O")).should be_false
+      (atom === Chem::AtomTemplate.new("CA", "C")).should be_false
     end
 
     it "tells if atom matches element" do
@@ -79,11 +79,11 @@ describe Chem::Atom do
   end
 
   describe "#match?" do
-    it "tells if atom matches atom type" do
+    it "tells if atom matches template" do
       atom = Chem::Structure.build { atom "CD2", vec3(0, 0, 0) }.atoms[0]
-      atom.match?(Chem::AtomType.new("CD2", "C")).should be_true
-      atom.match?(Chem::AtomType.new("CD2", "N")).should be_false
-      atom.match?(Chem::AtomType.new("ND2", "N")).should be_false
+      atom.match?(Chem::AtomTemplate.new("CD2", "C")).should be_true
+      atom.match?(Chem::AtomTemplate.new("CD2", "N")).should be_false
+      atom.match?(Chem::AtomTemplate.new("ND2", "N")).should be_false
     end
   end
 

@@ -26,8 +26,8 @@ class Chem::ResidueTemplate::Builder
       implicit_bonds[bond.lhs] += bond.order.to_i
     end
 
-    atom_types = [] of AtomType
-    atom_type_map = {} of String => AtomType
+    atoms = [] of AtomTemplate
+    atom_t_map = {} of String => AtomTemplate
     bond_types = [] of BondType
     h_i = 0
     parser.atom_map.each_value do |atom|
@@ -52,47 +52,47 @@ class Chem::ResidueTemplate::Builder
                got #{effective_valence}"
       end
 
-      # Create and register atom type
-      atom_type = AtomType.new(atom.name, element, target_valence, atom.formal_charge)
-      atom_types << atom_type
-      atom_type_map[atom_type.name] = atom_type
+      # Create and register atom template
+      atom_t = AtomTemplate.new(atom.name, element, target_valence, atom.formal_charge)
+      atoms << atom_t
+      atom_t_map[atom_t.name] = atom_t
 
       # Add hydrogens (either explicit or implicit)
-      suffix = atom_type.suffix.presence
+      suffix = atom_t.suffix.presence
       suffix = nil if suffix && suffix.size == 1 && suffix[0].ascii_number?
       h_count = atom.explicit_hydrogens || (target_valence - effective_valence)
       h_count.times do |i|
         name = suffix ? "H#{suffix}#{i + 1 if h_count > 1}" : "H#{h_i += 1}"
-        h_atom = AtomType.new(name, PeriodicTable::H, valence: 1)
-        atom_types << h_atom
-        bond_types << BondType.new(atom_type, h_atom)
+        h_atom = AtomTemplate.new(name, PeriodicTable::H, valence: 1)
+        atoms << h_atom
+        bond_types << BondType.new(atom_t, h_atom)
       end
     end
 
     parser.bonds.each do |bond|
       bond_types << BondType.new(
-        atom_type_map[bond.lhs],
-        atom_type_map[bond.rhs],
+        atom_t_map[bond.lhs],
+        atom_t_map[bond.rhs],
         bond.order)
     end
 
     # Get root atom or sets it for known residue templates if missing,
     # otherwise raise
     root_atom = if atom_name = @root_atom
-                  atom_type_map[atom_name]
+                  atom_t_map[atom_name]
                 elsif @kind.protein?
-                  atom_type_map["CA"]
-                elsif atom_types.count(&.element.heavy?) == 1 # one heavy atom
-                  atom_types.first
+                  atom_t_map["CA"]
+                elsif atoms.count(&.element.heavy?) == 1 # one heavy atom
+                  atoms.first
                 else
                   raise "Missing root for residue template #{@names.first}"
                 end
     link_bond = @link_bond.try do |lhs, rhs, order|
-      BondType.new(atom_type_map[lhs], atom_type_map[rhs], order)
+      BondType.new(atom_t_map[lhs], atom_t_map[rhs], order)
     end
 
     ResidueTemplate.new @names.first, @code, @kind, @description,
-      atom_types, bond_types, root_atom,
+      atoms, bond_types, root_atom,
       @names[1..], link_bond, @symmetric_atom_groups
   end
 

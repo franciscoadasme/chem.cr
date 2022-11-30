@@ -1,4 +1,4 @@
-class Chem::AtomType
+class Chem::AtomTemplate
   getter element : Element
   getter formal_charge : Int32
   getter name : String
@@ -14,7 +14,7 @@ class Chem::AtomType
   end
 
   def inspect(io : IO) : Nil
-    io << "<AtomType "
+    io << '<' << self.class.name << ' '
     to_s io
     io << '>'
   end

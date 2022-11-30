@@ -50,8 +50,8 @@ class Chem::Topology
       if template = residue.template
         residue.kind = template.kind
         residue.each_atom do |atom|
-          if atom_type = template[atom.name]?
-            atom.formal_charge = atom_type.formal_charge
+          if atom_t = template[atom.name]?
+            atom.formal_charge = atom_t.formal_charge
           end
         end
 

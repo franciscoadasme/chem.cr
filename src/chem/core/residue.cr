@@ -88,31 +88,31 @@ module Chem
 
     # Returns the atom that matches *atom_t*.
     #
-    # Atom must match both atom type's name and element, otherwise it
-    # raises `IndexError`.
+    # Atom must match both atom template's name and element, otherwise
+    # it raises `IndexError`.
     #
     # ```
     # residue = Structure.read("peptide.pdb").residues[0]
-    # residue[AtomType("CA")]               # => <Atom A:TRP1:CA(2)
-    # residue[AtomType("CA", element: "N")] # raises IndexError
-    # residue[AtomType("CX")]               # raises IndexError
+    # residue[AtomTemplate("CA")]               # => <Atom A:TRP1:CA(2)
+    # residue[AtomTemplate("CA", element: "N")] # raises IndexError
+    # residue[AtomTemplate("CX")]               # raises IndexError
     # ```
-    def [](atom_t : AtomType) : Atom
-      self[atom_t]? || raise IndexError.new "Cannot find atom for atom type: #{atom_t}"
+    def [](atom_t : AtomTemplate) : Atom
+      self[atom_t]? || raise IndexError.new "Cannot find atom for template: #{atom_t}"
     end
 
     # Returns the atom that matches *atom_t*.
     #
-    # Atom must match both atom type's name and element, otherwise it
-    # returns `nil`.
+    # Atom must match both atom template's name and element, otherwise
+    # it returns `nil`.
     #
     # ```
     # residue = Structure.read("peptide.pdb").residues[0]
-    # residue[AtomType("CA")]               # => <Atom A:TRP1:CA(2)
-    # residue[AtomType("CA", element: "N")] # => nil
-    # residue[AtomType("CX")]               # => nil
+    # residue[AtomTemplate("CA")]               # => <Atom A:TRP1:CA(2)
+    # residue[AtomTemplate("CA", element: "N")] # => nil
+    # residue[AtomTemplate("CX")]               # => nil
     # ```
-    def []?(atom_t : AtomType) : Atom?
+    def []?(atom_t : AtomTemplate) : Atom?
       if atom = self[atom_t.name]?
         atom if atom.match?(atom_t)
       end
@@ -186,10 +186,10 @@ module Chem
     # residues = Structure.read("ala-cys-thr-jg7.pdb").residues
     # ```
     #
-    # One can use atom names, atom types or elements:
+    # One can use atom names, atom template, or elements:
     #
     # ```
-    # a, b = AtomType.new("C"), AtomType.new("N")
+    # a, b = AtomTemplate.new("C"), AtomTemplate.new("N")
     # residues[0].bonded? residues[1], "C", "N"            # => true
     # residues[0].bonded? residues[1], a, b                # => true
     # residues[0].bonded? residues[1], a, PeriodicTable::N # => true
@@ -207,11 +207,11 @@ module Chem
     # residues[0].bonded? residues[1], "N", "C" # => false
     # ```
     #
-    # When atom names or atom types are specified, this method returns
-    # false if missing:
+    # When atom names or atom template are specified, this method
+    # returns false if missing:
     #
     # ```
-    # missing_atom_t = AtomType.new("OZ5")
+    # missing_atom_t = AtomTemplate.new("OZ5")
     # residues[0].bonded? residues[1], "CX1", "N"             # => false
     # residues[0].bonded? residues[1], missing_atom_t, "N"    # => false
     # residues[0].bonded? residues[1], "C", PeriodicTable::Mg # => false
@@ -233,8 +233,8 @@ module Chem
     # residues[0].bonded? residues[1], "C", "N", 2 # => false
     # ```
     def bonded?(other : self,
-                lhs : AtomType | String,
-                rhs : AtomType | String,
+                lhs : AtomTemplate | String,
+                rhs : AtomTemplate | String,
                 order : BondOrder? = nil) : Bool
       return false if other.same?(self)
       return false unless (a = self[lhs]?) && (b = other[rhs]?)
@@ -244,7 +244,7 @@ module Chem
 
     # :ditto:
     def bonded?(other : self,
-                lhs : AtomType | String,
+                lhs : AtomTemplate | String,
                 rhs : Element,
                 order : BondOrder? = nil) : Bool
       return false if other.same?(self)
@@ -259,7 +259,7 @@ module Chem
     # :ditto:
     def bonded?(other : self,
                 lhs : Element,
-                rhs : AtomType | String,
+                rhs : AtomTemplate | String,
                 order : BondOrder? = nil) : Bool
       return false if other.same?(self)
       return false unless b = other[rhs]?

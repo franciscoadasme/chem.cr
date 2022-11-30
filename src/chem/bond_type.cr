@@ -1,14 +1,14 @@
 class Chem::BondType
-  include Indexable(AtomType)
+  include Indexable(AtomTemplate)
 
   getter order : BondOrder
 
   delegate double?, single?, triple?, zero?, to: @order
   delegate size, unsafe_fetch, to: @atoms
 
-  @atoms : StaticArray(AtomType, 2)
+  @atoms : StaticArray(AtomTemplate, 2)
 
-  def initialize(lhs : AtomType, rhs : AtomType, @order : BondOrder = :single)
+  def initialize(lhs : AtomTemplate, rhs : AtomTemplate, @order : BondOrder = :single)
     @atoms = StaticArray[lhs, rhs]
   end
 
@@ -22,8 +22,8 @@ class Chem::BondType
     any? &.name.==(name)
   end
 
-  def includes?(atom_type : AtomType) : Bool
-    any? &.name.==(atom_type.name)
+  def includes?(atom_t : AtomTemplate) : Bool
+    any? &.name.==(atom_t.name)
   end
 
   def inspect(io : IO) : Nil
@@ -36,25 +36,25 @@ class Chem::BondType
     BondType.new self[1], self[0], @order
   end
 
-  def other(atom_t : AtomType) : AtomType
+  def other(atom_t : AtomTemplate) : AtomTemplate
     case atom_t
     when self[0]
       self[1]
     when self[1]
       self[0]
     else
-      raise ArgumentError.new("Cannot find atom type #{atom_t}")
+      raise ArgumentError.new("Cannot find atom template #{atom_t}")
     end
   end
 
-  def other(name : String) : AtomType
+  def other(name : String) : AtomTemplate
     case name
     when self[0].name
       self[1]
     when self[1].name
       self[0]
     else
-      raise ArgumentError.new("Cannot find atom type named #{name}")
+      raise ArgumentError.new("Cannot find atom template named #{name}")
     end
   end
 

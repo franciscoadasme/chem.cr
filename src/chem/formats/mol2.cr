@@ -42,8 +42,8 @@ module Chem::Mol2
               serial = @pull.next_i
               name = @pull.next_s
               coords = Spatial::Vec3[@pull.next_f, @pull.next_f, @pull.next_f]
-              atom_type = @pull.next_s
-              symbol = atom_type[...atom_type.index('.')] # ignore sybyl type
+              atom_t = @pull.next_s
+              symbol = atom_t[...atom_t.index('.')] # ignore sybyl type
               element = PeriodicTable[symbol]? || @pull.error("Unknown element")
               if @pull.next_token
                 resid = @pull.int
