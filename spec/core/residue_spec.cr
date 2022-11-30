@@ -84,48 +84,48 @@ describe Chem::Residue do
 
     context "given a bond type" do
       it "tells if two residues are bonded" do
-        bond_t = Chem::BondType.new Chem::AtomTemplate.new("C", "C"), Chem::AtomTemplate.new("N", "N")
+        bond_t = Chem::BondTemplate.new Chem::AtomTemplate.new("C", "C"), Chem::AtomTemplate.new("N", "N")
         a1.bonded?(a2, bond_t).should be_true
         a2.bonded?(b1, bond_t).should be_false
       end
 
       it "tells if two residues are bonded by element-based search" do
-        bond_t = Chem::BondType.new Chem::AtomTemplate.new("C", "C"), Chem::AtomTemplate.new("NX", "N")
+        bond_t = Chem::BondTemplate.new Chem::AtomTemplate.new("C", "C"), Chem::AtomTemplate.new("NX", "N")
         a1.bonded?(a2, bond_t, strict: false).should be_true
         a2.bonded?(b1, bond_t, strict: false).should be_false
       end
 
       it "returns false if bond is inverted" do
-        bond_type = Chem::BondType.new(
+        bond_t = Chem::BondTemplate.new(
           Chem::AtomTemplate.new("N", "N"),
           Chem::AtomTemplate.new("C", "C"),
         )
-        a1.bonded?(a2, bond_type).should be_false
+        a1.bonded?(a2, bond_t).should be_false
       end
 
       it "returns false if an atom if missing" do
-        bond_type = Chem::BondType.new(
+        bond_t = Chem::BondTemplate.new(
           Chem::AtomTemplate.new("C", "C"),
           Chem::AtomTemplate.new("CX1", "C"),
         )
-        a1.bonded?(a2, bond_type).should be_false
+        a1.bonded?(a2, bond_t).should be_false
       end
 
       it "returns false when residue is itself" do
-        bond_type = Chem::BondType.new(
+        bond_t = Chem::BondTemplate.new(
           Chem::AtomTemplate.new("C", "C"),
           Chem::AtomTemplate.new("N", "N"),
         )
-        a1.bonded?(a1, bond_type).should be_false
+        a1.bonded?(a1, bond_t).should be_false
       end
 
       it "returns false when bond order is different" do
-        bond_type = Chem::BondType.new(
+        bond_t = Chem::BondTemplate.new(
           Chem::AtomTemplate.new("C", "C"),
           Chem::AtomTemplate.new("N", "N"),
           :double,
         )
-        a1.bonded?(a2, bond_type).should be_false
+        a1.bonded?(a2, bond_t).should be_false
       end
     end
 
@@ -257,7 +257,7 @@ describe Chem::Residue do
         residues = load_file("residue_kind_unknown_covalent_ligand.pdb").residues
         c = Chem::AtomTemplate.new("C", "C")
         n = Chem::AtomTemplate.new("N", "N")
-        bond_t = Chem::BondType.new(c, n)
+        bond_t = Chem::BondTemplate.new(c, n)
         residues[0].bonded_residues(bond_t).map(&.name).should eq %w(ALA)
         residues[1].bonded_residues(bond_t).map(&.name).should eq %w(CYS)
         residues[2].bonded_residues(bond_t).map(&.name).should eq %w()
@@ -268,7 +268,7 @@ describe Chem::Residue do
         residues = load_file("residue_kind_unknown_covalent_ligand.pdb").residues
         c = Chem::AtomTemplate.new("C", "C")
         n = Chem::AtomTemplate.new("N", "N")
-        bond_t = Chem::BondType.new(c, n)
+        bond_t = Chem::BondTemplate.new(c, n)
         residues[0].bonded_residues(bond_t, forward_only: false).map(&.name).should eq %w(ALA)
         residues[1].bonded_residues(bond_t, forward_only: false).map(&.name).should eq %w(GLY CYS)
         residues[2].bonded_residues(bond_t, forward_only: false).map(&.name).should eq %w(ALA)
@@ -279,7 +279,7 @@ describe Chem::Residue do
         residues = load_file("residue_kind_unknown_covalent_ligand.pdb").residues
         c = Chem::AtomTemplate.new("C", "C")
         n = Chem::AtomTemplate.new("NX", "N")
-        bond_t = Chem::BondType.new(c, n)
+        bond_t = Chem::BondTemplate.new(c, n)
         residues[0].bonded_residues(bond_t, strict: false).map(&.name).should eq %w(ALA)
         residues[1].bonded_residues(bond_t, strict: false).map(&.name).should eq %w(CYS)
         residues[2].bonded_residues(bond_t, strict: false).map(&.name).should eq %w()

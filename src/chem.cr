@@ -21,7 +21,7 @@ require "./chem/core/structure"
 require "./chem/core/structure/*"
 
 require "./chem/atom_template"
-require "./chem/bond_type"
+require "./chem/bond_template"
 require "./chem/residue_template"
 require "./chem/residue_template/*"
 

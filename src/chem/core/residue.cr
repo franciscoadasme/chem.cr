@@ -142,7 +142,7 @@ module Chem
     # ```
     # # Covalent ligand (JG7) is bonded to CYS sidechain
     # residues = Structure.read("ala-cys-thr-jg7.pdb").residues
-    # bond_t = BondType.new "C", "N"
+    # bond_t = BondTemplate.new "C", "N"
     # residues[0].bonded?(residues[1], bond_t) # => true
     # residues[1].bonded?(residues[2], bond_t) # => true
     # residues[2].bonded?(residues[3], bond_t) # => false
@@ -161,7 +161,7 @@ module Chem
     # Note that bond order is taken into account, e.g.:
     #
     # ```
-    # bond_t = BondType.new "C", "N", order: 2
+    # bond_t = BondTemplate.new "C", "N", order: 2
     # residues[0].bonded?(residues[1], bond_t) # => false
     # ```
     #
@@ -169,11 +169,11 @@ module Chem
     # bonded atoms, and bond order is ignored.
     #
     # ```
-    # bond_t = BondType.new "C", "NX", order: 2
+    # bond_t = BondTemplate.new "C", "NX", order: 2
     # residues[0].bonded?(residues[1], bond_t)                # => false
     # residues[0].bonded?(residues[1], bond_t, strict: false) # => true
     # ```
-    def bonded?(other : self, bond_t : BondType, strict : Bool = true) : Bool
+    def bonded?(other : self, bond_t : BondTemplate, strict : Bool = true) : Bool
       bonded?(other, bond_t[0], bond_t[1], bond_t.order) ||
         (!strict && bonded?(other, bond_t[0].element, bond_t[1].element))
     end
@@ -308,7 +308,7 @@ module Chem
     # ```
     # # Covalent ligand (JG7) is bonded to CYS sidechain
     # residues = Structure.read("ala-cys-thr-jg7.pdb").residues
-    # bond_t = BondType.new("C", "N")
+    # bond_t = BondTemplate.new("C", "N")
     # residues[0].bonded_residues(bond_t).map(&.name) # => ["CYS"]
     # residues[1].bonded_residues(bond_t).map(&.name) # => ["THR"]
     # residues[2].bonded_residues(bond_t).map(&.name) # => []
@@ -330,13 +330,13 @@ module Chem
     # atom names or bond order:
     #
     # ```
-    # bond_t = BondType.new "C", "NX", order: 2
+    # bond_t = BondTemplate.new "C", "NX", order: 2
     # residues[0].bonded_residues(bond_t, strict: false).map(&.name) # => ["CYS"]
     # residues[1].bonded_residues(bond_t, strict: false).map(&.name) # => ["THR"]
     # residues[2].bonded_residues(bond_t, strict: false).map(&.name) # => []
     # residues[3].bonded_residues(bond_t, strict: false).map(&.name) # => []
     # ```
-    def bonded_residues(bond_t : BondType,
+    def bonded_residues(bond_t : BondTemplate,
                         forward_only : Bool = true,
                         strict : Bool = true) : Array(Residue)
       residues = [] of Residue
@@ -430,7 +430,7 @@ module Chem
     # order is ignored (fuzzy search).
     #
     # See `#bonded_residues(bond_t, forward_only, strict)` for examples.
-    def each_bonded_residue(bond_t : BondType,
+    def each_bonded_residue(bond_t : BondTemplate,
                             forward_only : Bool = true,
                             strict : Bool = true,
                             & : Residue ->) : Nil

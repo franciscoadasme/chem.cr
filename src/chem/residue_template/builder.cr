@@ -28,7 +28,7 @@ class Chem::ResidueTemplate::Builder
 
     atoms = [] of AtomTemplate
     atom_t_map = {} of String => AtomTemplate
-    bond_types = [] of BondType
+    bond_ts = [] of BondTemplate
     h_i = 0
     parser.atom_map.each_value do |atom|
       element = atom.element || Topology.guess_element(atom.name)
@@ -65,12 +65,12 @@ class Chem::ResidueTemplate::Builder
         name = suffix ? "H#{suffix}#{i + 1 if h_count > 1}" : "H#{h_i += 1}"
         h_atom = AtomTemplate.new(name, PeriodicTable::H, valence: 1)
         atoms << h_atom
-        bond_types << BondType.new(atom_t, h_atom)
+        bond_ts << BondTemplate.new(atom_t, h_atom)
       end
     end
 
     parser.bonds.each do |bond|
-      bond_types << BondType.new(
+      bond_ts << BondTemplate.new(
         atom_t_map[bond.lhs],
         atom_t_map[bond.rhs],
         bond.order)
@@ -88,11 +88,11 @@ class Chem::ResidueTemplate::Builder
                   raise "Missing root for residue template #{@names.first}"
                 end
     link_bond = @link_bond.try do |lhs, rhs, order|
-      BondType.new(atom_t_map[lhs], atom_t_map[rhs], order)
+      BondTemplate.new(atom_t_map[lhs], atom_t_map[rhs], order)
     end
 
     ResidueTemplate.new @names.first, @code, @kind, @description,
-      atoms, bond_types, root_atom,
+      atoms, bond_ts, root_atom,
       @names[1..], link_bond, @symmetric_atom_groups
   end
 

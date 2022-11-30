@@ -1,6 +1,6 @@
 require "./spec_helper"
 
-describe Chem::BondType do
+describe Chem::BondTemplate do
   describe "#inspect" do
     it "returns a string representation" do
       c = Chem::AtomTemplate.new("C", "C")
@@ -8,9 +8,9 @@ describe Chem::BondType do
       cb = Chem::AtomTemplate.new("CB", "C")
       o = Chem::AtomTemplate.new("O", "O")
       n = Chem::AtomTemplate.new("N", "N")
-      Chem::BondType.new(ca, cb).inspect.should eq "<BondType CA-CB>"
-      Chem::BondType.new(c, o, :double).inspect.should eq "<BondType C=O>"
-      Chem::BondType.new(c, n, :triple).inspect.should eq "<BondType C#N>"
+      Chem::BondTemplate.new(ca, cb).inspect.should eq "<BondTemplate CA-CB>"
+      Chem::BondTemplate.new(c, o, :double).inspect.should eq "<BondTemplate C=O>"
+      Chem::BondTemplate.new(c, n, :triple).inspect.should eq "<BondTemplate C#N>"
     end
   end
 end

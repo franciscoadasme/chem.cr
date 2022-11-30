@@ -67,13 +67,13 @@ describe Chem::ResidueTemplate::Parser do
     parser.atoms.size.should eq 10
     parser.bonds.size.should eq 11
 
-    bond_type = parser.bonds.find { |b| b.lhs == "CG" && b.rhs == "CD2" }
-    bond_type = bond_type.should_not be_nil
-    bond_type.order.should eq 3
+    bond_t = parser.bonds.find { |b| b.lhs == "CG" && b.rhs == "CD2" }
+    bond_t = bond_t.should_not be_nil
+    bond_t.order.should eq 3
 
-    bond_type = parser.bonds.find { |b| b.lhs == "CD2" && b.rhs == "CE3" }
-    bond_type = bond_type.should_not be_nil
-    bond_type.order.should eq 2
+    bond_t = parser.bonds.find { |b| b.lhs == "CD2" && b.rhs == "CE3" }
+    bond_t = bond_t.should_not be_nil
+    bond_t.order.should eq 2
   end
 
   it "raises if label is before an atom" do

@@ -2,12 +2,12 @@ class Chem::ResidueTemplate
   private REGISTRY = {} of String => ResidueTemplate
 
   @atoms : Array(AtomTemplate)
-  @bonds : Array(BondType)
+  @bonds : Array(BondTemplate)
 
   getter name : String
   getter aliases : Array(String)
   getter kind : Residue::Kind
-  getter link_bond : BondType?
+  getter link_bond : BondTemplate?
   getter description : String?
   getter root_atom : AtomTemplate
   getter code : Char?
@@ -19,10 +19,10 @@ class Chem::ResidueTemplate
     @kind : Residue::Kind,
     @description : String?,
     atoms : Array(AtomTemplate),
-    bonds : Array(BondType),
+    bonds : Array(BondTemplate),
     @root_atom : AtomTemplate,
     @aliases : Array(String) = [] of String,
-    @link_bond : BondType? = nil,
+    @link_bond : BondTemplate? = nil,
     @symmetric_atom_groups : Array(Array(Tuple(String, String)))? = nil
   )
     @atoms = atoms.dup
@@ -88,7 +88,7 @@ class Chem::ResidueTemplate
     @bonds.select(&.includes?(atom_t)).map &.other(atom_t)
   end
 
-  def bonds : Array(BondType)
+  def bonds : Array(BondTemplate)
     @bonds.dup
   end
 

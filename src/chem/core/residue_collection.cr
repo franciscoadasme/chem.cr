@@ -133,7 +133,7 @@ module Chem
       yield ResidueView.new(accum), accum[0].sec unless accum.empty?
     end
 
-    def link_bond : BondType?
+    def link_bond : BondTemplate?
       each_residue.compact_map(&.template.try(&.link_bond)).first?
     end
 

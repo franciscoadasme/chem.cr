@@ -1,4 +1,4 @@
-class Chem::BondType
+class Chem::BondTemplate
   include Indexable(AtomTemplate)
 
   getter order : BondOrder
@@ -27,13 +27,13 @@ class Chem::BondType
   end
 
   def inspect(io : IO) : Nil
-    io << "<BondType "
+    io << '<' << {{@type.name.split("::").last}} << ' '
     to_s io
     io << '>'
   end
 
   def inverse : self
-    BondType.new self[1], self[0], @order
+    BondTemplate.new self[1], self[0], @order
   end
 
   def other(atom_t : AtomTemplate) : AtomTemplate
