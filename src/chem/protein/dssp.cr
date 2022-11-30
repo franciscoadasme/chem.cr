@@ -155,7 +155,7 @@ module Chem::Protein
     end
 
     private def bulge?(bi : Bridge, bj : Bridge) : Bool
-      return false unless bi.kind == bj.kind
+      return false unless bi.type == bj.type
 
       ibi = bi.i.first
       iei = bi.i.last
@@ -276,7 +276,7 @@ module Chem::Protein
 
     private def find_bridge(bridge_t : Bridge::Type, i : Int32, j : Int32) : Bridge?
       @bridges.find do |bridge|
-        next if bridge.kind != bridge_t || i != bridge.i.last + 1
+        next if bridge.type != bridge_t || i != bridge.i.last + 1
         if bridge_t.parallel?
           bridge.j.last + 1 == j
         elsif bridge_t.anti_parallel?
@@ -342,11 +342,11 @@ module Chem::Protein
       getter i = Deque(Int32).new
       getter index : Int32
       getter j = Deque(Int32).new
-      getter kind : Type
+      getter type : Type
 
-      delegate antiparallel?, parallel?, to: @kind
+      delegate antiparallel?, parallel?, to: @type
 
-      def initialize(@index : Int32, @kind : Type, i : Int32, j : Int32)
+      def initialize(@index : Int32, @type : Type, i : Int32, j : Int32)
         @i << i
         @j << j
       end
