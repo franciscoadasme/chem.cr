@@ -23,11 +23,11 @@ describe Chem::PDB do
       st.chains['C'].n_residues.should eq 436
       st.chains['D'].n_residues.should eq 370
 
-      st['A'][290].kind.protein?.should be_true
-      st['A'][1298].kind.other?.should be_true
-      st['A'][2008].kind.solvent?.should be_true
-      st['D'][342].kind.protein?.should be_true
-      st['D'][2080].kind.solvent?.should be_true
+      st['A'][290].type.protein?.should be_true
+      st['A'][1298].type.other?.should be_true
+      st['A'][2008].type.solvent?.should be_true
+      st['D'][342].type.protein?.should be_true
+      st['D'][2080].type.solvent?.should be_true
 
       atom = st.atoms[-1]
       atom.serial.should eq 9705

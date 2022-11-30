@@ -42,13 +42,13 @@ class Chem::Topology
     @angles.view
   end
 
-  # Assign bonds, formal charges, and residue's kind from known residue
+  # Assign bonds, formal charges, and residue's type from known residue
   # types.
   def apply_templates : Nil
     prev_res = nil
     each_residue do |residue|
       if template = residue.template
-        residue.kind = template.kind
+        residue.type = template.type
         residue.each_atom do |atom|
           if atom_t = template[atom.name]?
             atom.formal_charge = atom_t.formal_charge
@@ -449,7 +449,7 @@ class Chem::Topology
   # matches to known residue templates. Then, fragments are divided into
   # polymer (e.g., peptide) and non-polymer (e.g., water) fragments
   # based on the number of residues per fragment. Non-polymer residues
-  # are grouped together by their kind (i.e., ion, solvent, etc.).
+  # are grouped together by their type (i.e., ion, solvent, etc.).
   # Finally, every polymer fragment and group of non-polymer fragments
   # are assigned to a unique chain and residues are created for each
   # match.
@@ -479,11 +479,11 @@ class Chem::Topology
     # Create groups to be transformed into chains
     # FIXME: do .sort_by!(&.size).reverse! before partition, otherwise it may fail
     polymers, others = fragment_matches.partition &.size.>(1)
-    others = others.flatten.sort_by!(&.reskind).chunks(&.reskind).map(&.[1])
+    others = others.flatten.sort_by!(&.rtype).chunks(&.rtype).map(&.[1])
     fragment_matches = if polymers.size + others.size <= MAX_CHAINS
                          polymers + others
                        else
-                         [fragment_matches.flatten] # TODO: split by residue's kind
+                         [fragment_matches.flatten] # TODO: split by residue's type
                        end
 
     # Create chains and residues according to the found matches
@@ -495,7 +495,7 @@ class Chem::Topology
       matches.each do |match|
         # TODO: avoid triggering reset_cache internally when setting residue.chain
         residue = Residue.new(chain, (resid += 1), match.resname)
-        residue.kind = match.reskind # TODO: set in the Residue constructor
+        residue.type = match.rtype # TODO: set in the Residue constructor
         match.each_atom do |atom, atom_name|
           atom.name = atom_name
           # TODO: avoid triggering reset_cache internally when setting atom.residue
@@ -554,7 +554,7 @@ class Chem::Topology
     hybridation_map
   end
 
-  # Determines the kind of unknown residues based on their neighbors.
+  # Determines the type of unknown residues based on their neighbors.
   def guess_unknown_residue_types : Nil
     # TODO: bond_t should be computed from bonded_residues
     return unless bond_t = each_residue.compact_map(&.template.try(&.link_bond)).first?
@@ -562,10 +562,10 @@ class Chem::Topology
       next if residue.template
       types = residue
         .bonded_residues(bond_t, forward_only: false, strict: false)
-        .map(&.kind)
+        .map(&.type)
         .uniq!
         .reject!(&.other?)
-      residue.kind = types.size == 1 ? types[0] : Residue::Kind::Other
+      residue.type = types.size == 1 ? types[0] : ResidueType::Other
     end
   end
 

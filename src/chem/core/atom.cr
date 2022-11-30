@@ -194,7 +194,7 @@ module Chem
       Spatial.distance2(self, rhs) <= PeriodicTable.covalent_cutoff(self, rhs)
     end
 
-    {% for member in Residue::Kind.constants %}
+    {% for member in ResidueType.constants %}
       # Returns `true` if the atom belongs to a {{member.downcase}}
       # residue, else `false`.
       def {{member.underscore.id}}? : Bool

@@ -1,7 +1,7 @@
 class Chem::ResidueTemplate::Builder
   @code : Char?
   @description : String?
-  @kind : Residue::Kind = :other
+  @type : ResidueType = :other
   @link_bond : Tuple(String, String, BondOrder)?
   @names = [] of String
   @root_atom : String?
@@ -11,12 +11,12 @@ class Chem::ResidueTemplate::Builder
   def build : ResidueTemplate
     raise "Missing residue name" if @names.empty?
     raise "Empty structure" unless parser = @structure_parser
-    if @kind.protein? && {"C", "N", "CA"}.none? { |name| parser.atom_map[name]? }
+    if @type.protein? && {"C", "N", "CA"}.none? { |name| parser.atom_map[name]? }
       raise "Missing backbone atoms for #{@names.first}"
     end
 
     # Set link bond if missing for known residue templates
-    @link_bond ||= case @kind
+    @link_bond ||= case @type
                    when .protein? then {"C", "N", BondOrder::Single}
                    end
 
@@ -80,7 +80,7 @@ class Chem::ResidueTemplate::Builder
     # otherwise raise
     root_atom = if atom_name = @root_atom
                   atom_t_map[atom_name]
-                elsif @kind.protein?
+                elsif @type.protein?
                   atom_t_map["CA"]
                 elsif atoms.count(&.element.heavy?) == 1 # one heavy atom
                   atoms.first
@@ -91,7 +91,7 @@ class Chem::ResidueTemplate::Builder
       BondTemplate.new(atom_t_map[lhs], atom_t_map[rhs], order)
     end
 
-    ResidueTemplate.new @names.first, @code, @kind, @description,
+    ResidueTemplate.new @names.first, @code, @type, @description,
       atoms, bond_ts, root_atom,
       @names[1..], link_bond, @symmetric_atom_groups
   end
@@ -110,8 +110,8 @@ class Chem::ResidueTemplate::Builder
     @description = name
   end
 
-  def kind(kind : Residue::Kind)
-    @kind = kind
+  def type(type : ResidueType)
+    @type = type
   end
 
   def link_adjacent_by(bond_spec : String)

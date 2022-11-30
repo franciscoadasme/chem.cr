@@ -2,12 +2,12 @@ require "../spec_helper"
 
 describe Chem::Residue do
   describe ".new" do
-    it "sets kind from templates" do
+    it "sets type from templates" do
       top = Chem::Topology.new
       chain = Chem::Chain.new top, 'A'
-      Chem::Residue.new(chain, 1, "TYR").kind.protein?.should be_true
-      Chem::Residue.new(chain, 2, "HOH").kind.solvent?.should be_true
-      Chem::Residue.new(chain, 2, "ULK").kind.other?.should be_true
+      Chem::Residue.new(chain, 1, "TYR").type.protein?.should be_true
+      Chem::Residue.new(chain, 2, "HOH").type.solvent?.should be_true
+      Chem::Residue.new(chain, 2, "ULK").type.other?.should be_true
     end
   end
 
@@ -245,7 +245,7 @@ describe Chem::Residue do
 
   describe "#bonded_residues" do
     it "returns bonded residues" do
-      structure = load_file("residue_kind_unknown_covalent_ligand.pdb", guess_bonds: true)
+      structure = load_file("residue_type_unknown_covalent_ligand.pdb", guess_bonds: true)
       structure.residues[0].bonded_residues.map(&.name).should eq %w(ALA)
       structure.residues[1].bonded_residues.map(&.name).should eq %w(GLY CYS)
       structure.residues[2].bonded_residues.map(&.name).should eq %w(ALA JG7)
@@ -254,7 +254,7 @@ describe Chem::Residue do
 
     context "given a bond type" do
       it "returns residues bonded via X(i)-Y(j)" do
-        residues = load_file("residue_kind_unknown_covalent_ligand.pdb").residues
+        residues = load_file("residue_type_unknown_covalent_ligand.pdb").residues
         c = Chem::AtomTemplate.new("C", "C")
         n = Chem::AtomTemplate.new("N", "N")
         bond_t = Chem::BondTemplate.new(c, n)
@@ -265,7 +265,7 @@ describe Chem::Residue do
       end
 
       it "returns residues bonded via X(i)-Y(j) or X(j)-Y(i)" do
-        residues = load_file("residue_kind_unknown_covalent_ligand.pdb").residues
+        residues = load_file("residue_type_unknown_covalent_ligand.pdb").residues
         c = Chem::AtomTemplate.new("C", "C")
         n = Chem::AtomTemplate.new("N", "N")
         bond_t = Chem::BondTemplate.new(c, n)
@@ -276,7 +276,7 @@ describe Chem::Residue do
       end
 
       it "returns bonded residues using fuzzy search" do
-        residues = load_file("residue_kind_unknown_covalent_ligand.pdb").residues
+        residues = load_file("residue_type_unknown_covalent_ligand.pdb").residues
         c = Chem::AtomTemplate.new("C", "C")
         n = Chem::AtomTemplate.new("NX", "N")
         bond_t = Chem::BondTemplate.new(c, n)
@@ -383,15 +383,15 @@ describe Chem::Residue do
   end
 
   describe "#name=" do
-    it "sets kind from templates" do
+    it "sets type from templates" do
       top = Chem::Topology.new
       chain = Chem::Chain.new top, 'A'
       residue = Chem::Residue.new(chain, 1, "TYR")
-      residue.kind.protein?.should be_true
+      residue.type.protein?.should be_true
       residue.name = "HOH"
-      residue.kind.solvent?.should be_true
+      residue.type.solvent?.should be_true
       residue.name = "ULK"
-      residue.kind.other?.should be_true
+      residue.type.other?.should be_true
     end
   end
 

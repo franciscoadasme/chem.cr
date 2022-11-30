@@ -8,7 +8,7 @@ describe Chem::ResidueTemplate::Builder do
       description "Glycine"
       name "Gly"
       code 'G'
-      kind :protein
+      type :protein
       structure "N(-H)-CA(-C=O)"
     end
     residue.atom_names.should eq ["N", "H", "CA", "HA1", "HA2", "C", "O"]
@@ -21,7 +21,7 @@ describe Chem::ResidueTemplate::Builder do
       description "Alanine"
       name "ALA"
       code 'A'
-      kind :protein
+      type :protein
       structure "{backbone}-CB"
     end
     residue.atom_names.should eq bb_names + ["CB", "HB1", "HB2", "HB3"]
@@ -34,7 +34,7 @@ describe Chem::ResidueTemplate::Builder do
       description "Isoleucine"
       name "ILE"
       code 'I'
-      kind :protein
+      type :protein
       structure "{backbone}-CB(-CG1-CD1)-CG2"
     end
     names = bb_names + ["CB", "HB", "CG1", "HG11", "HG12", "CD1", "HD11", "HD12",
@@ -49,7 +49,7 @@ describe Chem::ResidueTemplate::Builder do
       description "Lysine"
       name "LYS"
       code 'K'
-      kind :protein
+      type :protein
       structure "{backbone}-CB-CG-CD-CE-[NZH3+]"
     end
     names = bb_names + ["CB", "HB1", "HB2", "CG", "HG1", "HG2", "CD", "HD1", "HD2",
@@ -64,7 +64,7 @@ describe Chem::ResidueTemplate::Builder do
       description "Aspartate"
       name "ASP"
       code 'D'
-      kind :protein
+      type :protein
       structure "{backbone}-CB-CG(=OE1)-[OE2-]"
     end
     residue.atom_names.should eq(bb_names + ["CB", "HB1", "HB2", "CG", "OE1", "OE2"])
@@ -87,7 +87,7 @@ describe Chem::ResidueTemplate::Builder do
       description "Arginine"
       name "ARG"
       code 'R'
-      kind :protein
+      type :protein
       structure "{backbone}-CB-CG-CD-NE-CZ(-NH1)=[NH2H2+]"
     end
 
@@ -104,7 +104,7 @@ describe Chem::ResidueTemplate::Builder do
       description "Histidine"
       name "HIS"
       code 'H'
-      kind :protein
+      type :protein
       structure "{backbone}-CB-CG%1=CD2-NE2=CE1-ND1-%1"
     end
 
@@ -120,7 +120,7 @@ describe Chem::ResidueTemplate::Builder do
       description "Histidine"
       name "HIS"
       code 'H'
-      kind :protein
+      type :protein
       structure "{backbone}-CB-CG%1-ND1-CE1=NE2-CD2=%1"
     end
 
@@ -136,7 +136,7 @@ describe Chem::ResidueTemplate::Builder do
       description "Tryptophan"
       name "TRP"
       code 'W'
-      kind :protein
+      type :protein
       structure "{backbone}-CB-CG%1=CD1-NE1-CE2(=CD2%2-%1)-CZ2=CH2-CZ3=CE3-%2"
     end
 
@@ -152,7 +152,7 @@ describe Chem::ResidueTemplate::Builder do
       description "Proline"
       name "PRO"
       code 'P'
-      kind :protein
+      type :protein
       structure "N%1-CA(-C=O)-CB-CG-CD-%1"
     end
     residue.atom_names.should eq [
@@ -195,7 +195,7 @@ describe Chem::ResidueTemplate::Builder do
     residue = Chem::ResidueTemplate.build do
       description "Glycerol"
       name "GOL"
-      kind :solvent
+      type :solvent
       structure "O1-C1-C2(-C3-O3)-O2"
       root "C2"
     end
@@ -220,7 +220,7 @@ describe Chem::ResidueTemplate::Builder do
         description "Tryptophan"
         name "TRP"
         code 'W'
-        kind :protein
+        type :protein
         structure "{backbone}-CB-CG(=CD)(-CZ)-[OTX-]"
       end
     end
@@ -285,52 +285,52 @@ describe Chem::ResidueTemplate::Builder do
   end
 
   it "handles multiple valencies" do
-    restype = Chem::ResidueTemplate.build do
+    rtype = Chem::ResidueTemplate.build do
       name "UNK"
       structure "CB-SG"
       root "CB"
     end
-    restype.atoms.size.should eq 6
-    restype.atoms.count(&.element.hydrogen?).should eq 4
-    restype.atoms.map(&.valence).should eq [4, 1, 1, 1, 2, 1]
-    restype.bonds.size.should eq 5
-    restype.bonds.count(&.includes?("SG")).should eq 2
+    rtype.atoms.size.should eq 6
+    rtype.atoms.count(&.element.hydrogen?).should eq 4
+    rtype.atoms.map(&.valence).should eq [4, 1, 1, 1, 2, 1]
+    rtype.bonds.size.should eq 5
+    rtype.bonds.count(&.includes?("SG")).should eq 2
 
-    restype = Chem::ResidueTemplate.build do
+    rtype = Chem::ResidueTemplate.build do
       name "UNK"
       structure "CB-[SG-]"
       root "CB"
     end
-    restype.atoms.size.should eq 5
-    restype.atoms.count(&.element.hydrogen?).should eq 3
-    restype.atoms.map(&.valence).should eq [4, 1, 1, 1, 2]
-    restype.atoms.map(&.formal_charge).should eq [0, 0, 0, 0, -1]
-    restype.bonds.size.should eq 4
-    restype.bonds.count(&.includes?("SG")).should eq 1
+    rtype.atoms.size.should eq 5
+    rtype.atoms.count(&.element.hydrogen?).should eq 3
+    rtype.atoms.map(&.valence).should eq [4, 1, 1, 1, 2]
+    rtype.atoms.map(&.formal_charge).should eq [0, 0, 0, 0, -1]
+    rtype.bonds.size.should eq 4
+    rtype.bonds.count(&.includes?("SG")).should eq 1
 
-    restype = Chem::ResidueTemplate.build do
+    rtype = Chem::ResidueTemplate.build do
       name "UNK"
       structure "S(=O1)(=O2)(-[O3-])(-[O4-])"
       root "S"
     end
-    restype.atoms.size.should eq 5
-    restype.atoms.count(&.element.hydrogen?).should eq 0
-    restype.atoms.map(&.valence).should eq [6, 2, 2, 2, 2]
-    restype.atoms.map(&.formal_charge).should eq [0, 0, 0, -1, -1]
-    restype.bonds.size.should eq 4
-    restype.bonds.count(&.includes?("S")).should eq 4
+    rtype.atoms.size.should eq 5
+    rtype.atoms.count(&.element.hydrogen?).should eq 0
+    rtype.atoms.map(&.valence).should eq [6, 2, 2, 2, 2]
+    rtype.atoms.map(&.formal_charge).should eq [0, 0, 0, -1, -1]
+    rtype.bonds.size.should eq 4
+    rtype.bonds.count(&.includes?("S")).should eq 4
   end
 
   it "handles implicit bonds" do
-    restype = Chem::ResidueTemplate.build do
+    rtype = Chem::ResidueTemplate.build do
       description "Cysteine"
       name "CYX"
       structure "CB-SG-*"
       root "CB"
     end
-    restype.atoms.size.should eq 5
-    restype.atoms.count(&.element.hydrogen?).should eq 3
-    restype.bonds.size.should eq 4
-    restype.bonds.count(&.includes?("SG")).should eq 1
+    rtype.atoms.size.should eq 5
+    rtype.atoms.count(&.element.hydrogen?).should eq 3
+    rtype.bonds.size.should eq 4
+    rtype.bonds.count(&.includes?("SG")).should eq 1
   end
 end

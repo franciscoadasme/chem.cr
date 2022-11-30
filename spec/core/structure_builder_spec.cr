@@ -280,7 +280,7 @@ describe Chem::Structure::Builder do
   end
 
   it "does not guess bond orders if hydrogens are missing" do
-    structure = load_file("residue_kind_unknown_covalent_ligand.pdb", guess_bonds: true)
+    structure = load_file("residue_type_unknown_covalent_ligand.pdb", guess_bonds: true)
     structure.formal_charge.should eq 0
     structure.atoms.count(&.formal_charge.zero?.!).should eq 0
     structure.bonds.size.should eq 59

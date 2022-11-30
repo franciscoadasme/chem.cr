@@ -2,7 +2,7 @@ module Chem
   ResidueTemplate.register do
     description "Water"
     name "HOH", "WAT", "TIP3"
-    kind :solvent
+    type :solvent
     structure "O"
   end
 end

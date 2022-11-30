@@ -55,14 +55,14 @@ describe Chem::ResidueTemplate do
 
       Chem::ResidueTemplate.build do
         name "HOH"
-        kind :solvent
+        type :solvent
         structure "O"
       end.inspect.should eq "<ResidueTemplate HOH, solvent>"
 
       Chem::ResidueTemplate.build do
         name "GLY"
         code 'G'
-        kind :protein
+        type :protein
         structure "N(-H)-CA(-C=O)"
       end.inspect.should eq "<ResidueTemplate GLY(G), protein>"
     end

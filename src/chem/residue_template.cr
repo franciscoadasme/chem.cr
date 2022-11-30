@@ -6,7 +6,7 @@ class Chem::ResidueTemplate
 
   getter name : String
   getter aliases : Array(String)
-  getter kind : Residue::Kind
+  getter type : ResidueType
   getter link_bond : BondTemplate?
   getter description : String?
   getter root_atom : AtomTemplate
@@ -16,7 +16,7 @@ class Chem::ResidueTemplate
   def initialize(
     @name : String,
     @code : Char?,
-    @kind : Residue::Kind,
+    @type : ResidueType,
     @description : String?,
     atoms : Array(AtomTemplate),
     bonds : Array(BondTemplate),
@@ -99,7 +99,7 @@ class Chem::ResidueTemplate
   def inspect(io : IO) : Nil
     io << "<ResidueTemplate " << @name
     io << '(' << @code << ')' if @code
-    io << ", " << @kind.to_s.downcase unless @kind.other?
+    io << ", " << @type.to_s.downcase unless @type.other?
     io << '>'
   end
 

@@ -419,7 +419,7 @@ describe Chem::Topology do
     end
 
     it "guesses bonds of unknown residues" do
-      top = load_file("residue_kind_unknown_covalent_ligand.pdb").topology
+      top = load_file("residue_type_unknown_covalent_ligand.pdb").topology
       top.guess_bonds
 
       top.dig('A', 148, "C20").bonded?(top.dig('A', 147, "SG")).should be_true
@@ -598,49 +598,49 @@ describe Chem::Topology do
   end
 
   describe "#guess_unknown_residue_types" do
-    it "guesses kind of unknown residue when previous is known" do
-      top = load_file("residue_kind_unknown_previous.pdb").topology
+    it "guesses type of unknown residue when previous is known" do
+      top = load_file("residue_type_unknown_previous.pdb").topology
       top.guess_bonds
       top.guess_unknown_residue_types
       top.residues[1].protein?.should be_true
     end
 
-    it "guesses kind of unknown residue when next is known" do
-      top = load_file("residue_kind_unknown_next.pdb").topology
+    it "guesses type of unknown residue when next is known" do
+      top = load_file("residue_type_unknown_next.pdb").topology
       top.guess_bonds
       top.guess_unknown_residue_types
       top.residues[0].protein?.should be_true
     end
 
-    it "guesses kind of unknown residue when its flanked by known residues" do
-      top = load_file("residue_kind_unknown_flanked.pdb").topology
+    it "guesses type of unknown residue when its flanked by known residues" do
+      top = load_file("residue_type_unknown_flanked.pdb").topology
       top.guess_bonds
       top.guess_unknown_residue_types
       top.residues[1].protein?.should be_true
     end
 
-    it "does not guess kind of unknown residue" do
-      top = load_file("residue_kind_unknown_single.pdb").topology
+    it "does not guess type of unknown residue" do
+      top = load_file("residue_type_unknown_single.pdb").topology
       top.guess_bonds
       top.guess_unknown_residue_types
       top.residues[0].other?.should be_true
     end
 
-    it "does not guess kind of unknown residue when its not connected to others" do
-      top = load_file("residue_kind_unknown_next_gap.pdb").topology
+    it "does not guess type of unknown residue when its not connected to others" do
+      top = load_file("residue_type_unknown_next_gap.pdb").topology
       top.guess_bonds
       top.guess_unknown_residue_types
       top.residues.first.other?.should be_true
     end
 
-    it "does not guess kind of unknown residue when it's not bonded by link bond" do
-      top = load_file("residue_kind_unknown_covalent_ligand.pdb").topology
+    it "does not guess type of unknown residue when it's not bonded by link bond" do
+      top = load_file("residue_type_unknown_covalent_ligand.pdb").topology
       top.guess_bonds
       top.guess_unknown_residue_types
-      top.residues.map(&.kind.to_s).should eq %w(Protein Protein Protein Other)
+      top.residues.map(&.type.to_s).should eq %w(Protein Protein Protein Other)
     end
 
-    it "guess kind of unknown residue with non-standard atom names" do
+    it "guess type of unknown residue with non-standard atom names" do
       top = load_file("residue_unknown_non_standard_names.pdb").topology
       top.guess_bonds
       top.guess_unknown_residue_types

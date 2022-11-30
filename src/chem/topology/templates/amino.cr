@@ -3,7 +3,7 @@ module Chem
     description "Alanine"
     name "ALA"
     code 'A'
-    kind :protein
+    type :protein
     structure "{backbone}-CB"
   end
 
@@ -11,7 +11,7 @@ module Chem
     description "Arginine"
     name "ARG"
     code 'R'
-    kind :protein
+    type :protein
     structure "{backbone}-CB-CG-CD-NE-CZ(-NH1)=[NH2H2+]"
   end
 
@@ -19,7 +19,7 @@ module Chem
     description "Aspartate"
     name "ASH"
     code 'D'
-    kind :protein
+    type :protein
     structure "{backbone}-CB-CG(=OD1)-OD2"
   end
 
@@ -27,7 +27,7 @@ module Chem
     description "Asparagine"
     name "ASN"
     code 'N'
-    kind :protein
+    type :protein
     structure "{backbone}-CB-CG(-ND2)=OD1"
   end
 
@@ -35,7 +35,7 @@ module Chem
     description "Aspartate"
     name "ASP"
     code 'D'
-    kind :protein
+    type :protein
     structure "{backbone}-CB-CG(=OD1)-[OD2-]"
   end
 
@@ -43,7 +43,7 @@ module Chem
     description "Cysteine"
     name "CYS"
     code 'C'
-    kind :protein
+    type :protein
     structure "{backbone}-CB-SG"
   end
 
@@ -51,7 +51,7 @@ module Chem
     description "Cysteine"
     name "CYX"
     code 'C'
-    kind :protein
+    type :protein
     structure "{backbone}-CB-SG-*"
   end
 
@@ -59,7 +59,7 @@ module Chem
     description "Glutamate"
     name "GLH"
     code 'E'
-    kind :protein
+    type :protein
     structure "{backbone}-CB-CG-CD(=OE1)-OE2"
   end
 
@@ -67,7 +67,7 @@ module Chem
     description "Glutamine"
     name "GLN"
     code 'Q'
-    kind :protein
+    type :protein
     structure "{backbone}-CB-CG-CD(=OE1)-NE2"
   end
 
@@ -75,7 +75,7 @@ module Chem
     description "Glutamate"
     name "GLU"
     code 'E'
-    kind :protein
+    type :protein
     structure "{backbone}-CB-CG-CD(=OE1)-[OE2-]"
   end
 
@@ -83,7 +83,7 @@ module Chem
     description "Glycine"
     name "GLY"
     code 'G'
-    kind :protein
+    type :protein
     structure "N(-H)-CA(-C=O)"
   end
 
@@ -91,7 +91,7 @@ module Chem
     description "Histidine"
     name "HIS", "HID", "HSD"
     code 'H'
-    kind :protein
+    type :protein
     structure "{backbone}-CB-CG%1=CD2-NE2=CE1-ND1-%1"
   end
 
@@ -99,7 +99,7 @@ module Chem
     description "Histidine"
     name "HIE", "HSE"
     code 'H'
-    kind :protein
+    type :protein
     structure "{backbone}-CB-CG%1=CD2-NE2-CE1=ND1-%1"
   end
 
@@ -107,7 +107,7 @@ module Chem
     description "Histidine"
     name "HIP", "HSP"
     code 'H'
-    kind :protein
+    type :protein
     structure "{backbone}-CB-CG%1=CD2-[NE2H+]=CE1-ND1-%1"
   end
 
@@ -115,7 +115,7 @@ module Chem
     description "Isoleucine"
     name "ILE"
     code 'I'
-    kind :protein
+    type :protein
     structure "{backbone}-CB(-CG1-CD1)-CG2"
   end
 
@@ -123,7 +123,7 @@ module Chem
     description "Leucine"
     name "LEU"
     code 'L'
-    kind :protein
+    type :protein
     structure "{backbone}-CB-CG(-CD1)-CD2"
     symmetry({"CD1", "CD2"})
   end
@@ -132,7 +132,7 @@ module Chem
     description "Lysine"
     name "LYS"
     code 'K'
-    kind :protein
+    type :protein
     structure "{backbone}-CB-CG-CD-CE-[NZH3+]"
   end
 
@@ -140,7 +140,7 @@ module Chem
     description "Methionine "
     name "MET"
     code 'M'
-    kind :protein
+    type :protein
     structure "{backbone}-CB-CG-SD-CE"
   end
 
@@ -148,7 +148,7 @@ module Chem
     description "Phenylalanine"
     name "PHE"
     code 'F'
-    kind :protein
+    type :protein
     structure "{backbone}-CB-CG%1=CD1-CE1=CZ-CE2=CD2-%1"
     symmetry({"CD1", "CD2"}, {"CE1", "CE2"})
   end
@@ -157,7 +157,7 @@ module Chem
     description "Proline"
     name "PRO"
     code 'P'
-    kind :protein
+    type :protein
     structure "N%1-CA(-C=O)-CB-CG-CD-%1"
   end
 
@@ -165,7 +165,7 @@ module Chem
     description "Serine"
     name "SER"
     code 'S'
-    kind :protein
+    type :protein
     structure "{backbone}-CB-OG"
   end
 
@@ -173,7 +173,7 @@ module Chem
     description "Threonine"
     name "THR"
     code 'T'
-    kind :protein
+    type :protein
     structure "{backbone}-CB(-OG1)-CG2"
   end
 
@@ -181,7 +181,7 @@ module Chem
     description "Tryptophan"
     name "TRP"
     code 'W'
-    kind :protein
+    type :protein
     structure "{backbone}-CB-CG%1=CD1-NE1-CE2(-CZ2=CH2-CZ3=CE3-CD2%2)=%2-%1"
   end
 
@@ -189,7 +189,7 @@ module Chem
     description "Tyrosine"
     name "TYR"
     code 'Y'
-    kind :protein
+    type :protein
     structure "{backbone}-CB-CG%1=CD1-CE1=CZ(-OH)-CE2=CD2-%1"
     symmetry({"CD1", "CD2"}, {"CE1", "CE2"})
   end
@@ -198,7 +198,7 @@ module Chem
     description "Valine"
     name "VAL"
     code 'V'
-    kind :protein
+    type :protein
     structure "{backbone}-CB(-CG1)-CG2"
     symmetry({"CG1", "CG2"})
   end

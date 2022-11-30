@@ -119,7 +119,7 @@ class Chem::Topology::Detector
                      atom : Atom,
                      atom_map : Hash(Atom, String)) : Bool
     search res_t, res_t.root_atom, atom, atom_map
-    if res_t.kind.protein? && (root = atom_map.key_for?("CA"))
+    if res_t.type.protein? && (root = atom_map.key_for?("CA"))
       extend_match res_t, root, atom_map
     end
     atom_map.size >= res_t.atom_count
