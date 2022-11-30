@@ -1,10 +1,10 @@
 require "../spec_helper"
 
-describe Chem::ResidueType::Builder do
+describe Chem::ResidueTemplate::Builder do
   bb_names = ["N", "H", "CA", "HA", "C", "O"]
 
   it "builds a residue without sidechain" do
-    residue = Chem::ResidueType.build do
+    residue = Chem::ResidueTemplate.build do
       description "Glycine"
       name "Gly"
       code 'G'
@@ -17,7 +17,7 @@ describe Chem::ResidueType::Builder do
   end
 
   it "builds a residue with short sidechain" do
-    residue = Chem::ResidueType.build do
+    residue = Chem::ResidueTemplate.build do
       description "Alanine"
       name "ALA"
       code 'A'
@@ -30,7 +30,7 @@ describe Chem::ResidueType::Builder do
   end
 
   it "builds a residue with branched sidechain" do
-    residue = Chem::ResidueType.build do
+    residue = Chem::ResidueTemplate.build do
       description "Isoleucine"
       name "ILE"
       code 'I'
@@ -45,7 +45,7 @@ describe Chem::ResidueType::Builder do
   end
 
   it "builds a positively charged residue" do
-    residue = Chem::ResidueType.build do
+    residue = Chem::ResidueTemplate.build do
       description "Lysine"
       name "LYS"
       code 'K'
@@ -60,7 +60,7 @@ describe Chem::ResidueType::Builder do
   end
 
   it "builds a negatively charged residue" do
-    residue = Chem::ResidueType.build do
+    residue = Chem::ResidueTemplate.build do
       description "Aspartate"
       name "ASP"
       code 'D'
@@ -73,7 +73,7 @@ describe Chem::ResidueType::Builder do
   end
 
   it "builds a residue with charge +2" do
-    residue = Chem::ResidueType.build do
+    residue = Chem::ResidueTemplate.build do
       name "MG"
       structure "[MG+2]"
     end
@@ -83,7 +83,7 @@ describe Chem::ResidueType::Builder do
   end
 
   it "builds a positively charged residue with one branch in the sidechain" do
-    residue = Chem::ResidueType.build do
+    residue = Chem::ResidueTemplate.build do
       description "Arginine"
       name "ARG"
       code 'R'
@@ -100,7 +100,7 @@ describe Chem::ResidueType::Builder do
   end
 
   it "builds a residue with a cyclic sidechain" do
-    residue = Chem::ResidueType.build do
+    residue = Chem::ResidueTemplate.build do
       description "Histidine"
       name "HIS"
       code 'H'
@@ -116,7 +116,7 @@ describe Chem::ResidueType::Builder do
   end
 
   it "builds a residue with a cyclic sidechain with terminal bond" do
-    residue = Chem::ResidueType.build do
+    residue = Chem::ResidueTemplate.build do
       description "Histidine"
       name "HIS"
       code 'H'
@@ -132,7 +132,7 @@ describe Chem::ResidueType::Builder do
   end
 
   it "builds a residue with a bicyclic sidechain" do
-    residue = Chem::ResidueType.build do
+    residue = Chem::ResidueTemplate.build do
       description "Tryptophan"
       name "TRP"
       code 'W'
@@ -148,7 +148,7 @@ describe Chem::ResidueType::Builder do
   end
 
   it "builds a cyclic residue" do
-    residue = Chem::ResidueType.build do
+    residue = Chem::ResidueTemplate.build do
       description "Proline"
       name "PRO"
       code 'P'
@@ -164,7 +164,7 @@ describe Chem::ResidueType::Builder do
   end
 
   it "builds a polymer residue" do
-    residue_t = Chem::ResidueType.build do
+    residue_t = Chem::ResidueTemplate.build do
       name "UNK"
       structure "C1-C2-C3"
       link_adjacent_by "C3=C1"
@@ -180,7 +180,7 @@ describe Chem::ResidueType::Builder do
   end
 
   it "builds a rooted residue" do
-    residue_t = Chem::ResidueType.build do
+    residue_t = Chem::ResidueTemplate.build do
       name "UNK"
       structure "C1=C2"
       root "C2"
@@ -192,7 +192,7 @@ describe Chem::ResidueType::Builder do
   end
 
   it "builds a residue with numbered atoms per element" do
-    residue = Chem::ResidueType.build do
+    residue = Chem::ResidueTemplate.build do
       description "Glycerol"
       name "GOL"
       kind :solvent
@@ -206,7 +206,7 @@ describe Chem::ResidueType::Builder do
   end
 
   it "builds a residue with four-letter atom names" do
-    residue = Chem::ResidueType.build do
+    residue = Chem::ResidueTemplate.build do
       name "CTER"
       structure "CA-C(=O)-OXT"
       root "C"
@@ -216,7 +216,7 @@ describe Chem::ResidueType::Builder do
 
   it "fails on incorrect valence" do
     expect_raises(Chem::Error, "Expected valence of CG is 4, got 5") do
-      Chem::ResidueType.build do
+      Chem::ResidueTemplate.build do
         description "Tryptophan"
         name "TRP"
         code 'W'
@@ -227,7 +227,7 @@ describe Chem::ResidueType::Builder do
   end
 
   it "builds a residue with symmetry" do
-    residue = Chem::ResidueType.build do
+    residue = Chem::ResidueTemplate.build do
       description "Donepezil"
       name "E20"
       structure <<-SPEC.gsub(/\s+/, "")
@@ -248,7 +248,7 @@ describe Chem::ResidueType::Builder do
 
   it "raises if a symmetry atom is unknown" do
     expect_raises(Chem::Error, "Unknown atom C13") do
-      Chem::ResidueType.build do
+      Chem::ResidueTemplate.build do
         structure "C1%1=C2-C3=C4-C5=C6-%1"
         symmetry({"C2", "C5"}, {"C13", "C15"})
       end
@@ -257,7 +257,7 @@ describe Chem::ResidueType::Builder do
 
   it "raises if a symmetry pair includes the same atom" do
     expect_raises(Chem::Error, "C3 cannot be symmetric with itself") do
-      Chem::ResidueType.build do
+      Chem::ResidueTemplate.build do
         structure "C1%1=C2-C3=C4-C5=C6-%1"
         symmetry({"C2", "C4"}, {"C3", "C3"})
       end
@@ -266,7 +266,7 @@ describe Chem::ResidueType::Builder do
 
   it "raises if a symmetry atom is repeated" do
     expect_raises(Chem::Error, "C2 cannot be reassigned for symmetry") do
-      Chem::ResidueType.build do
+      Chem::ResidueTemplate.build do
         structure "C1%1=C2-C3=C4-C5=C6-%1"
         symmetry({"C2", "C4"}, {"C5", "C2"})
       end
@@ -275,7 +275,7 @@ describe Chem::ResidueType::Builder do
 
   it "raises if the link bond specifies the same atom" do
     expect_raises Chem::Error, "Atom O1 cannot be bonded to itself" do
-      Chem::ResidueType.build do
+      Chem::ResidueTemplate.build do
         name "O2"
         structure "O1=O2"
         link_adjacent_by "O1=O1"
@@ -285,7 +285,7 @@ describe Chem::ResidueType::Builder do
   end
 
   it "handles multiple valencies" do
-    restype = Chem::ResidueType.build do
+    restype = Chem::ResidueTemplate.build do
       name "UNK"
       structure "CB-SG"
       root "CB"
@@ -296,7 +296,7 @@ describe Chem::ResidueType::Builder do
     restype.bonds.size.should eq 5
     restype.bonds.count(&.includes?("SG")).should eq 2
 
-    restype = Chem::ResidueType.build do
+    restype = Chem::ResidueTemplate.build do
       name "UNK"
       structure "CB-[SG-]"
       root "CB"
@@ -308,7 +308,7 @@ describe Chem::ResidueType::Builder do
     restype.bonds.size.should eq 4
     restype.bonds.count(&.includes?("SG")).should eq 1
 
-    restype = Chem::ResidueType.build do
+    restype = Chem::ResidueTemplate.build do
       name "UNK"
       structure "S(=O1)(=O2)(-[O3-])(-[O4-])"
       root "S"
@@ -322,7 +322,7 @@ describe Chem::ResidueType::Builder do
   end
 
   it "handles implicit bonds" do
-    restype = Chem::ResidueType.build do
+    restype = Chem::ResidueTemplate.build do
       description "Cysteine"
       name "CYX"
       structure "CB-SG-*"

@@ -22,8 +22,8 @@ require "./chem/core/structure/*"
 
 require "./chem/atom_type"
 require "./chem/bond_type"
-require "./chem/residue_type"
-require "./chem/residue_type/*"
+require "./chem/residue_template"
+require "./chem/residue_template/*"
 
 require "./chem/protein"
 require "./chem/topology"

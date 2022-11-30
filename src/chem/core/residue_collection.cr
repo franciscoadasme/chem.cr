@@ -134,7 +134,7 @@ module Chem
     end
 
     def link_bond : BondType?
-      each_residue.compact_map(&.type.try(&.link_bond)).first?
+      each_residue.compact_map(&.template.try(&.link_bond)).first?
     end
 
     # Sets secondary structure of every residue to none.

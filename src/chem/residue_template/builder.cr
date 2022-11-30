@@ -1,4 +1,4 @@
-class Chem::ResidueType::Builder
+class Chem::ResidueTemplate::Builder
   @code : Char?
   @description : String?
   @kind : Residue::Kind = :other
@@ -8,14 +8,14 @@ class Chem::ResidueType::Builder
   @symmetric_atom_groups = [] of Array(Tuple(String, String))
   @structure_parser : Parser?
 
-  def build : ResidueType
+  def build : ResidueTemplate
     raise "Missing residue name" if @names.empty?
     raise "Empty structure" unless parser = @structure_parser
     if @kind.protein? && {"C", "N", "CA"}.none? { |name| parser.atom_map[name]? }
       raise "Missing backbone atoms for #{@names.first}"
     end
 
-    # Set link bond if missing for known residue types
+    # Set link bond if missing for known residue templates
     @link_bond ||= case @kind
                    when .protein? then {"C", "N", BondOrder::Single}
                    end
@@ -76,7 +76,7 @@ class Chem::ResidueType::Builder
         bond.order)
     end
 
-    # Get root atom or sets it for known residue types if missing,
+    # Get root atom or sets it for known residue templates if missing,
     # otherwise raise
     root_atom = if atom_name = @root_atom
                   atom_type_map[atom_name]
@@ -85,13 +85,13 @@ class Chem::ResidueType::Builder
                 elsif atom_types.count(&.element.heavy?) == 1 # one heavy atom
                   atom_types.first
                 else
-                  raise "Missing root for residue type #{@names.first}"
+                  raise "Missing root for residue template #{@names.first}"
                 end
     link_bond = @link_bond.try do |lhs, rhs, order|
       BondType.new(atom_type_map[lhs], atom_type_map[rhs], order)
     end
 
-    ResidueType.new @names.first, @code, @kind, @description,
+    ResidueTemplate.new @names.first, @code, @kind, @description,
       atom_types, bond_types, root_atom,
       @names[1..], link_bond, @symmetric_atom_groups
   end
@@ -144,7 +144,7 @@ class Chem::ResidueType::Builder
 
   def structure(spec : String, aliases : Hash(String, String)? = nil) : Nil
     raise "Residue structure already defined" if @structure_parser
-    parser = ResidueType::Parser.new(spec, aliases)
+    parser = ResidueTemplate::Parser.new(spec, aliases)
     parser.parse
     raise "Empty structure" if parser.atom_map.empty?
     @structure_parser = parser

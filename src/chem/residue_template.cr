@@ -1,5 +1,5 @@
-class Chem::ResidueType
-  private REGISTRY = {} of String => ResidueType
+class Chem::ResidueTemplate
+  private REGISTRY = {} of String => ResidueTemplate
 
   @atom_types : Array(AtomType)
   @bonds : Array(BondType)
@@ -29,30 +29,30 @@ class Chem::ResidueType
     @bonds = bonds.dup
   end
 
-  def self.all_types : Array(ResidueType)
+  def self.all_templates : Array(ResidueTemplate)
     REGISTRY.values
   end
 
   def self.build : self
-    builder = ResidueType::Builder.new
+    builder = ResidueTemplate::Builder.new
     with builder yield builder
     builder.build
   end
 
-  def self.fetch(name : String) : ResidueType
-    fetch(name) { raise Error.new("Unknown residue type #{name}") }
+  def self.fetch(name : String) : ResidueTemplate
+    fetch(name) { raise Error.new("Unknown residue template #{name}") }
   end
 
-  def self.fetch(name : String, & : -> T) : ResidueType | T forall T
+  def self.fetch(name : String, & : -> T) : ResidueTemplate | T forall T
     REGISTRY[name]? || yield
   end
 
-  def self.register : ResidueType
-    ResidueType.build do |builder|
+  def self.register : ResidueTemplate
+    ResidueTemplate.build do |builder|
       with builder yield builder
       residue = builder.build
       ([residue.name] + residue.aliases).each do |name|
-        raise Error.new("#{name} residue type already exists") if REGISTRY.has_key?(name)
+        raise Error.new("#{name} residue template already exists") if REGISTRY.has_key?(name)
         REGISTRY[name] = residue
       end
     end
@@ -97,7 +97,7 @@ class Chem::ResidueType
   end
 
   def inspect(io : IO) : Nil
-    io << "<ResidueType " << @name
+    io << "<ResidueTemplate " << @name
     io << '(' << @code << ')' if @code
     io << ", " << @kind.to_s.downcase unless @kind.other?
     io << '>'

@@ -47,15 +47,15 @@ class Chem::Topology
   def apply_templates : Nil
     prev_res = nil
     each_residue do |residue|
-      if restype = residue.type
-        residue.kind = restype.kind
+      if template = residue.template
+        residue.kind = template.kind
         residue.each_atom do |atom|
-          if atom_type = restype[atom.name]?
+          if atom_type = template[atom.name]?
             atom.formal_charge = atom_type.formal_charge
           end
         end
 
-        restype.bonds.each do |bond_t|
+        template.bonds.each do |bond_t|
           if (lhs = residue[bond_t[0]]?) &&
              (rhs = residue[bond_t[1]]?) &&
              lhs.within_covalent_distance?(rhs)
@@ -64,7 +64,7 @@ class Chem::Topology
         end
 
         if prev_res &&
-           (bond_t = restype.link_bond) &&
+           (bond_t = template.link_bond) &&
            (lhs = prev_res[bond_t[0]]?) &&
            (rhs = residue[bond_t[1]]?) &&
            lhs.within_covalent_distance?(rhs)
@@ -440,13 +440,13 @@ class Chem::Topology
     impropers.each { |improper| @impropers << improper }
   end
 
-  # Detects and assigns topology names from known residue types based on
+  # Detects and assigns topology names from known residue templates based on
   # bond information.
   #
   # The method creates chains and residues according to the detected
   # fragments and residue matches. The procedure is as follows. First,
   # atoms are split into fragments, where each fragment is scanned for
-  # matches to known residue types. Then, fragments are divided into
+  # matches to known residue templates. Then, fragments are divided into
   # polymer (e.g., peptide) and non-polymer (e.g., water) fragments
   # based on the number of residues per fragment. Non-polymer residues
   # are grouped together by their kind (i.e., ion, solvent, etc.).
@@ -557,9 +557,9 @@ class Chem::Topology
   # Determines the kind of unknown residues based on their neighbors.
   def guess_unknown_residue_types : Nil
     # TODO: bond_t should be computed from bonded_residues
-    return unless bond_t = each_residue.compact_map(&.type.try(&.link_bond)).first?
+    return unless bond_t = each_residue.compact_map(&.template.try(&.link_bond)).first?
     each_residue do |residue|
-      next if residue.type
+      next if residue.template
       types = residue
         .bonded_residues(bond_t, forward_only: false, strict: false)
         .map(&.kind)

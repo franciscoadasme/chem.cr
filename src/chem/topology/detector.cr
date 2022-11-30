@@ -1,26 +1,26 @@
 class Chem::Topology::Detector
-  CTER_T = ResidueType.build do
+  CTER_T = ResidueTemplate.build do
     description "C-ter"
     name "CTER"
     code 'c'
     structure "CA-C(=O)-OXT"
     root "C"
   end
-  CHARGED_CTER_T = ResidueType.build do
+  CHARGED_CTER_T = ResidueTemplate.build do
     description "Charged C-ter"
     name "CTER"
     code 'c'
     structure "CA-C(=O)-[OXT-]"
     root "C"
   end
-  NTER_T = ResidueType.build do
+  NTER_T = ResidueTemplate.build do
     description "N-ter"
     name "NTER"
     code 'n'
     structure "CA-N"
     root "N"
   end
-  CHARGED_NTER_T = ResidueType.build do
+  CHARGED_NTER_T = ResidueTemplate.build do
     description "Charged N-ter"
     name "NTER"
     code 'n'
@@ -29,12 +29,12 @@ class Chem::Topology::Detector
   end
 
   @atoms : Set(Atom)
-  @templates : Array(ResidueType)
+  @templates : Array(ResidueTemplate)
 
-  def initialize(atoms : AtomCollection, templates : Array(ResidueType)? = nil)
+  def initialize(atoms : AtomCollection, templates : Array(ResidueTemplate)? = nil)
     @atoms = Set(Atom).new(atoms.n_atoms).concat atoms.each_atom
     @atom_table = {} of Atom | AtomType => String
-    @templates = templates || ResidueType.all_types
+    @templates = templates || ResidueTemplate.all_templates
     compute_atom_descriptions @atoms
     compute_atom_descriptions @templates
     compute_atom_descriptions [CTER_T, NTER_T, CHARGED_CTER_T, CHARGED_NTER_T]
@@ -74,7 +74,7 @@ class Chem::Topology::Detector
     end
   end
 
-  private def compute_atom_descriptions(res_types : Array(ResidueType))
+  private def compute_atom_descriptions(res_types : Array(ResidueTemplate))
     res_types.each do |res_t|
       res_t.each_atom_type do |atom_t|
         @atom_table[atom_t] = String.build do |io|
@@ -90,7 +90,7 @@ class Chem::Topology::Detector
     end
   end
 
-  private def extend_match(res_t : ResidueType,
+  private def extend_match(res_t : ResidueTemplate,
                            root : Atom,
                            atom_map : Hash(Atom, String))
     ter_map = {} of Atom => String
@@ -115,7 +115,7 @@ class Chem::Topology::Detector
     atom_map.has_value? atom_t.name
   end
 
-  private def match?(res_t : ResidueType,
+  private def match?(res_t : ResidueTemplate,
                      atom : Atom,
                      atom_map : Hash(Atom, String)) : Bool
     search res_t, res_t.root_atom, atom, atom_map
@@ -129,7 +129,7 @@ class Chem::Topology::Detector
     @atom_table[atom] == @atom_table[atom_t]
   end
 
-  private def search(res_t : ResidueType,
+  private def search(res_t : ResidueTemplate,
                      atom_t : AtomType,
                      atom : Atom,
                      atom_map : Hash(Atom, String)) : Nil

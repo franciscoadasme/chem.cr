@@ -115,7 +115,7 @@ class Chem::Protein::Stride < Chem::Protein::SecondaryStructureCalculator
         residues = residues.compact
         spacer
         remark "     " + (".".rjust(10) * (residues.size / 10).to_i)
-        seq = residues.join { |r| r.type.try(&.code) || 'X' }
+        seq = residues.join { |r| r.template.try(&.code) || 'X' }
         record "SEQ", "%-4d %-50s %4d", residues[0].number, seq, residues[-1].number
         seq = residues.join { |r| r.sec.regular? ? r.sec.code : ' ' }
         record "STR", "     %-50s", seq

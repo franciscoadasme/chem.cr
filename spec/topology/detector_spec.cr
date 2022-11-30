@@ -5,7 +5,7 @@ macro it_detects(description, path, expected)
     %expected = {{expected}}
 
     %structure = load_file {{path}}, guess_bonds: true
-    %templates = %expected.keys.map { |name| Chem::ResidueType.fetch(name) }
+    %templates = %expected.keys.map { |name| Chem::ResidueTemplate.fetch(name) }
     %detector = Chem::Topology::Detector.new %structure, %templates
 
     %res_idxs = {} of String => Array(Hash(Int32, String))
@@ -89,17 +89,17 @@ describe Chem::Topology::Detector do
       structure = load_file "waters.xyz", guess_bonds: true
       matches = Chem::Topology::Detector.new(structure).matches
       matches.should eq [
-        Chem::Topology::MatchData.new(Chem::ResidueType.fetch("HOH"), {
+        Chem::Topology::MatchData.new(Chem::ResidueTemplate.fetch("HOH"), {
           "O"  => structure.atoms[0],
           "H1" => structure.atoms[1],
           "H2" => structure.atoms[2],
         }),
-        Chem::Topology::MatchData.new(Chem::ResidueType.fetch("HOH"), {
+        Chem::Topology::MatchData.new(Chem::ResidueTemplate.fetch("HOH"), {
           "O"  => structure.atoms[3],
           "H1" => structure.atoms[4],
           "H2" => structure.atoms[5],
         }),
-        Chem::Topology::MatchData.new(Chem::ResidueType.fetch("HOH"), {
+        Chem::Topology::MatchData.new(Chem::ResidueTemplate.fetch("HOH"), {
           "O"  => structure.atoms[6],
           "H1" => structure.atoms[7],
           "H2" => structure.atoms[8],
@@ -111,7 +111,7 @@ describe Chem::Topology::Detector do
   describe "#unmatched_atoms" do
     it "returns atoms not matched by any template" do
       structure = load_file "5e5v--unwrapped.poscar", guess_bonds: true
-      detector = Chem::Topology::Detector.new structure, [Chem::ResidueType.fetch("HOH")]
+      detector = Chem::Topology::Detector.new structure, [Chem::ResidueTemplate.fetch("HOH")]
       detector.each_match { } # triggers search
       detector.unmatched_atoms.try(&.size).should eq 206
     end

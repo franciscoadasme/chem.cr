@@ -9,7 +9,7 @@ struct Chem::Topology::MatchData
                  @atom_map : Hash(String, Atom))
   end
 
-  def self.new(res_t : ResidueType, atom_map : Hash(String, Atom)) : self
+  def self.new(res_t : ResidueTemplate, atom_map : Hash(String, Atom)) : self
     atom_names = res_t.atom_names
     atom_map = atom_map.to_a.sort_by! { |(k, _)| atom_names.index(k) || 99 }.to_h
     MatchData.new res_t.name, res_t.kind, atom_map

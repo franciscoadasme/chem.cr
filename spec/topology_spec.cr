@@ -649,7 +649,7 @@ describe Chem::Topology do
   end
 
   describe "#apply_templates" do
-    it "assigns bonds, formal charges, and residue types" do
+    it "assigns bonds, formal charges, and residue templates" do
       structure = fake_structure(include_bonds: false)
       structure.topology.apply_templates
 

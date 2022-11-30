@@ -1,5 +1,5 @@
 module Chem
-  ResidueType.register do
+  ResidueTemplate.register do
     description "Water"
     name "HOH", "WAT", "TIP3"
     kind :solvent

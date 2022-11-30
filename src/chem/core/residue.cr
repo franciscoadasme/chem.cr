@@ -360,11 +360,11 @@ module Chem
       self
     end
 
-    # Returns a single-letter code associated with the residue's type.
-    # If the residue has no associated type or it doesn't have a code,
-    # the method returns *default*.
+    # Returns a single-letter code associated with the residue's
+    # template. If the residue has no associated template or it doesn't
+    # have a code, the method returns *default*.
     def code(default : Char = 'X') : Char
-      type.try(&.code) || default
+      template.try(&.code) || default
     end
 
     def delete(atom : Atom) : Atom?
@@ -509,7 +509,7 @@ module Chem
 
     # Returns the following residue if exists, otherwise `nil`.
     #
-    # It uses the link bond type of the associated residue type, if
+    # It uses the link bond type of the associated residue template, if
     # present, to search for the next residue. Thus, link bond
     # determines the direction, e.g., C(i)-N(i+1). Be aware that atom
     # types must match exactly to find a residue unless *strict* is
@@ -524,7 +524,7 @@ module Chem
     # among them.
     def succ?(strict : Bool = true, use_numbering : Bool = true) : Residue?
       bonded_residue = nil
-      if bond_t = type.try(&.link_bond)
+      if bond_t = template.try(&.link_bond)
         each_bonded_residue(bond_t, strict: strict) do |residue|
           bonded_residue = residue if !bonded_residue || residue < bonded_residue
         end
@@ -580,7 +580,7 @@ module Chem
 
     # Returns the preceding residue if exists, otherwise `nil`.
     #
-    # It uses the link bond type of the associated residue type, if
+    # It uses the link bond type of the associated residue template, if
     # present, to search for the previous residue. Thus, link bond
     # determines the direction, e.g., C(i-1)-N(i). Be aware that atom
     # types must match exactly to find a residue unless *strict* is
@@ -595,7 +595,7 @@ module Chem
     # among them.
     def pred?(strict : Bool = true, use_numbering : Bool = true) : Residue?
       bonded_residue = nil
-      if bond_t = type.try(&.link_bond)
+      if bond_t = template.try(&.link_bond)
         each_bonded_residue(bond_t.inverse, strict: strict) do |residue|
           bonded_residue = residue if !bonded_residue || residue > bonded_residue
         end
@@ -627,7 +627,7 @@ module Chem
     end
 
     def polymer? : Bool
-      !!(protein? || dna? || type.try(&.monomer?))
+      !!(protein? || dna? || template.try(&.monomer?))
     end
 
     def ramachandran_angles : Tuple(Float64, Float64)
@@ -646,18 +646,18 @@ module Chem
       (angle = omega?) ? angle.abs > 150 : false
     end
 
-    # Returns associated residue type if registered, otherwise nil.
+    # Returns associated residue template if registered, otherwise nil.
     #
-    # The type of a residue is fetched by its name.
-    def type : ResidueType?
-      ResidueType.fetch(@name) { nil }
+    # The template is fetched by the residue name.
+    def template : ResidueTemplate?
+      ResidueTemplate.fetch(@name) { nil }
     end
 
     # Returns `true` if the residue is a water residue, else `false`.
-    # This is done by checking if the associated residue type (if any)
-    # correspond to the water template.
+    # This is done by checking if the associated residue template (if
+    # any) correspond to the water template.
     def water? : Bool
-      type == ResidueType.fetch("HOH")
+      template == ResidueTemplate.fetch("HOH")
     end
 
     {% for member in Kind.constants %}
@@ -670,7 +670,7 @@ module Chem
     {% end %}
 
     private def assign_kind_from_templates : Nil
-      @kind = type.try(&.kind) || Kind::Other
+      @kind = template.try(&.kind) || Kind::Other
     end
 
     # Copies `self` into *chain*
