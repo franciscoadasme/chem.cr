@@ -14,7 +14,7 @@ class Chem::AtomTemplate
   end
 
   def inspect(io : IO) : Nil
-    io << '<' << self.class.name << ' '
+    io << '<' << {{@type.name.split("::").last}} << ' '
     to_s io
     io << '>'
   end
