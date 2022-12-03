@@ -86,8 +86,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/AtomType" data-name="chem::atomtype">
-      <a href="../../Chem/AtomType.html">AtomType</a>
+  <li class=" " data-id="chem.cr/Chem/AtomTemplate" data-name="chem::atomtemplate">
+      <a href="../../Chem/AtomTemplate.html">AtomTemplate</a>
       
     </li>
   
@@ -116,8 +116,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/BondType" data-name="chem::bondtype">
-      <a href="../../Chem/BondType.html">BondType</a>
+  <li class=" " data-id="chem.cr/Chem/BondTemplate" data-name="chem::bondtemplate">
+      <a href="../../Chem/BondTemplate.html">BondTemplate</a>
       
     </li>
   
@@ -441,18 +441,8 @@
       
     </li>
   
-  <li class="parent " data-id="chem.cr/Chem/Residue" data-name="chem::residue">
+  <li class=" " data-id="chem.cr/Chem/Residue" data-name="chem::residue">
       <a href="../../Chem/Residue.html">Residue</a>
-      
-        <ul>
-  
-  <li class=" " data-id="chem.cr/Chem/Residue/Kind" data-name="chem::residue::kind">
-      <a href="../../Chem/Residue/Kind.html">Kind</a>
-      
-    </li>
-  
-</ul>
-
       
     </li>
   
@@ -461,38 +451,43 @@
       
     </li>
   
-  <li class="parent " data-id="chem.cr/Chem/ResidueType" data-name="chem::residuetype">
+  <li class="parent " data-id="chem.cr/Chem/ResidueTemplate" data-name="chem::residuetemplate">
+      <a href="../../Chem/ResidueTemplate.html">ResidueTemplate</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueTemplate/Builder" data-name="chem::residuetemplate::builder">
+      <a href="../../Chem/ResidueTemplate/Builder.html">Builder</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/ResidueTemplate/Parser" data-name="chem::residuetemplate::parser">
+      <a href="../../Chem/ResidueTemplate/Parser.html">Parser</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueTemplate/Parser/AtomRecord" data-name="chem::residuetemplate::parser::atomrecord">
+      <a href="../../Chem/ResidueTemplate/Parser/AtomRecord.html">AtomRecord</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueTemplate/Parser/BondRecord" data-name="chem::residuetemplate::parser::bondrecord">
+      <a href="../../Chem/ResidueTemplate/Parser/BondRecord.html">BondRecord</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueType" data-name="chem::residuetype">
       <a href="../../Chem/ResidueType.html">ResidueType</a>
-      
-        <ul>
-  
-  <li class=" " data-id="chem.cr/Chem/ResidueType/Builder" data-name="chem::residuetype::builder">
-      <a href="../../Chem/ResidueType/Builder.html">Builder</a>
-      
-    </li>
-  
-  <li class="parent " data-id="chem.cr/Chem/ResidueType/Parser" data-name="chem::residuetype::parser">
-      <a href="../../Chem/ResidueType/Parser.html">Parser</a>
-      
-        <ul>
-  
-  <li class=" " data-id="chem.cr/Chem/ResidueType/Parser/AtomRecord" data-name="chem::residuetype::parser::atomrecord">
-      <a href="../../Chem/ResidueType/Parser/AtomRecord.html">AtomRecord</a>
-      
-    </li>
-  
-  <li class=" " data-id="chem.cr/Chem/ResidueType/Parser/BondRecord" data-name="chem::residuetype::parser::bondrecord">
-      <a href="../../Chem/ResidueType/Parser/BondRecord.html">BondRecord</a>
-      
-    </li>
-  
-</ul>
-
-      
-    </li>
-  
-</ul>
-
       
     </li>
   
@@ -868,7 +863,7 @@
   <dl>
     
       <dt class="entry-const" id="CHARGED_CTER_T">
-        <strong>CHARGED_CTER_T</strong> = <code><span class="t">ResidueType</span>.build <span class="k">do</span>
+        <strong>CHARGED_CTER_T</strong> = <code><span class="t">ResidueTemplate</span>.build <span class="k">do</span>
   description(<span class="s">&quot;Charged C-ter&quot;</span>)
   name(<span class="s">&quot;CTER&quot;</span>)
   code(<span class="s">&#39;c&#39;</span>)
@@ -879,7 +874,7 @@
       
     
       <dt class="entry-const" id="CHARGED_NTER_T">
-        <strong>CHARGED_NTER_T</strong> = <code><span class="t">ResidueType</span>.build <span class="k">do</span>
+        <strong>CHARGED_NTER_T</strong> = <code><span class="t">ResidueTemplate</span>.build <span class="k">do</span>
   description(<span class="s">&quot;Charged N-ter&quot;</span>)
   name(<span class="s">&quot;NTER&quot;</span>)
   code(<span class="s">&#39;n&#39;</span>)
@@ -890,7 +885,7 @@
       
     
       <dt class="entry-const" id="CTER_T">
-        <strong>CTER_T</strong> = <code><span class="t">ResidueType</span>.build <span class="k">do</span>
+        <strong>CTER_T</strong> = <code><span class="t">ResidueTemplate</span>.build <span class="k">do</span>
   description(<span class="s">&quot;C-ter&quot;</span>)
   name(<span class="s">&quot;CTER&quot;</span>)
   code(<span class="s">&#39;c&#39;</span>)
@@ -901,7 +896,7 @@
       
     
       <dt class="entry-const" id="NTER_T">
-        <strong>NTER_T</strong> = <code><span class="t">ResidueType</span>.build <span class="k">do</span>
+        <strong>NTER_T</strong> = <code><span class="t">ResidueTemplate</span>.build <span class="k">do</span>
   description(<span class="s">&quot;N-ter&quot;</span>)
   name(<span class="s">&quot;NTER&quot;</span>)
   code(<span class="s">&#39;n&#39;</span>)
@@ -926,7 +921,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28atoms%3AAtomCollection%2Ctemplates%3AArray%28ResidueType%29%3F%3Dnil%29-class-method" class="signature"><strong>.new</strong>(atoms : AtomCollection, templates : Array(ResidueType)? = <span class="n">nil</span>)</a>
+        <a href="#new%28atoms%3AAtomCollection%2Ctemplates%3AArray%28ResidueTemplate%29%3F%3Dnil%29-class-method" class="signature"><strong>.new</strong>(atoms : AtomCollection, templates : Array(ResidueTemplate)? = <span class="n">nil</span>)</a>
         
       </li>
     
@@ -1001,12 +996,12 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(atoms:AtomCollection,templates:Array(ResidueType)?=nil)-class-method">
+    <div class="entry-detail" id="new(atoms:AtomCollection,templates:Array(ResidueTemplate)?=nil)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(atoms : <a href="../../Chem/AtomCollection.html">AtomCollection</a>, templates : <a href="../../Array.html">Array</a>(<a href="../../Chem/ResidueType.html">ResidueType</a>)? = <span class="n">nil</span>)
+        def self.<strong>new</strong>(atoms : <a href="../../Chem/AtomCollection.html">AtomCollection</a>, templates : <a href="../../Array.html">Array</a>(<a href="../../Chem/ResidueTemplate.html">ResidueTemplate</a>)? = <span class="n">nil</span>)
 
-        <a class="method-permalink" href="#new%28atoms%3AAtomCollection%2Ctemplates%3AArray%28ResidueType%29%3F%3Dnil%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28atoms%3AAtomCollection%2Ctemplates%3AArray%28ResidueTemplate%29%3F%3Dnil%29-class-method">#</a>
       </div>
       
       <br/>

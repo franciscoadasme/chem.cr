@@ -86,8 +86,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/AtomType" data-name="chem::atomtype">
-      <a href="../../Chem/AtomType.html">AtomType</a>
+  <li class=" " data-id="chem.cr/Chem/AtomTemplate" data-name="chem::atomtemplate">
+      <a href="../../Chem/AtomTemplate.html">AtomTemplate</a>
       
     </li>
   
@@ -116,8 +116,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/BondType" data-name="chem::bondtype">
-      <a href="../../Chem/BondType.html">BondType</a>
+  <li class=" " data-id="chem.cr/Chem/BondTemplate" data-name="chem::bondtemplate">
+      <a href="../../Chem/BondTemplate.html">BondTemplate</a>
       
     </li>
   
@@ -441,18 +441,8 @@
       
     </li>
   
-  <li class="parent " data-id="chem.cr/Chem/Residue" data-name="chem::residue">
+  <li class=" " data-id="chem.cr/Chem/Residue" data-name="chem::residue">
       <a href="../../Chem/Residue.html">Residue</a>
-      
-        <ul>
-  
-  <li class=" " data-id="chem.cr/Chem/Residue/Kind" data-name="chem::residue::kind">
-      <a href="../../Chem/Residue/Kind.html">Kind</a>
-      
-    </li>
-  
-</ul>
-
       
     </li>
   
@@ -461,38 +451,43 @@
       
     </li>
   
-  <li class="parent " data-id="chem.cr/Chem/ResidueType" data-name="chem::residuetype">
+  <li class="parent " data-id="chem.cr/Chem/ResidueTemplate" data-name="chem::residuetemplate">
+      <a href="../../Chem/ResidueTemplate.html">ResidueTemplate</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueTemplate/Builder" data-name="chem::residuetemplate::builder">
+      <a href="../../Chem/ResidueTemplate/Builder.html">Builder</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/ResidueTemplate/Parser" data-name="chem::residuetemplate::parser">
+      <a href="../../Chem/ResidueTemplate/Parser.html">Parser</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueTemplate/Parser/AtomRecord" data-name="chem::residuetemplate::parser::atomrecord">
+      <a href="../../Chem/ResidueTemplate/Parser/AtomRecord.html">AtomRecord</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueTemplate/Parser/BondRecord" data-name="chem::residuetemplate::parser::bondrecord">
+      <a href="../../Chem/ResidueTemplate/Parser/BondRecord.html">BondRecord</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueType" data-name="chem::residuetype">
       <a href="../../Chem/ResidueType.html">ResidueType</a>
-      
-        <ul>
-  
-  <li class=" " data-id="chem.cr/Chem/ResidueType/Builder" data-name="chem::residuetype::builder">
-      <a href="../../Chem/ResidueType/Builder.html">Builder</a>
-      
-    </li>
-  
-  <li class="parent " data-id="chem.cr/Chem/ResidueType/Parser" data-name="chem::residuetype::parser">
-      <a href="../../Chem/ResidueType/Parser.html">Parser</a>
-      
-        <ul>
-  
-  <li class=" " data-id="chem.cr/Chem/ResidueType/Parser/AtomRecord" data-name="chem::residuetype::parser::atomrecord">
-      <a href="../../Chem/ResidueType/Parser/AtomRecord.html">AtomRecord</a>
-      
-    </li>
-  
-  <li class=" " data-id="chem.cr/Chem/ResidueType/Parser/BondRecord" data-name="chem::residuetype::parser::bondrecord">
-      <a href="../../Chem/ResidueType/Parser/BondRecord.html">BondRecord</a>
-      
-    </li>
-  
-</ul>
-
-      
-    </li>
-  
-</ul>
-
       
     </li>
   
@@ -868,12 +863,12 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28resname%3AString%2Creskind%3AResidue%3A%3AKind%2Catom_map%3AHash%28String%2CAtom%29%29-class-method" class="signature"><strong>.new</strong>(resname : String, reskind : Residue::Kind, atom_map : Hash(String, Atom))</a>
+        <a href="#new%28resname%3AString%2Crtype%3AResidueType%2Catom_map%3AHash%28String%2CAtom%29%29-class-method" class="signature"><strong>.new</strong>(resname : String, rtype : ResidueType, atom_map : Hash(String, Atom))</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new%28res_t%3AResidueType%2Catom_map%3AHash%28String%2CAtom%29%29%3Aself-class-method" class="signature"><strong>.new</strong>(res_t : ResidueType, atom_map : Hash(String, Atom)) : <span class="k">self</span></a>
+        <a href="#new%28res_t%3AResidueTemplate%2Catom_map%3AHash%28String%2CAtom%29%29%3Aself-class-method" class="signature"><strong>.new</strong>(res_t : ResidueTemplate, atom_map : Hash(String, Atom)) : <span class="k">self</span></a>
         
       </li>
     
@@ -924,12 +919,12 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#reskind%3AResidue%3A%3AKind-instance-method" class="signature"><strong>#reskind</strong> : Residue::Kind</a>
+        <a href="#resname%3AString-instance-method" class="signature"><strong>#resname</strong> : String</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#resname%3AString-instance-method" class="signature"><strong>#resname</strong> : String</a>
+        <a href="#rtype%3AResidueType-instance-method" class="signature"><strong>#rtype</strong> : ResidueType</a>
         
       </li>
     
@@ -998,12 +993,12 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(resname:String,reskind:Residue::Kind,atom_map:Hash(String,Atom))-class-method">
+    <div class="entry-detail" id="new(resname:String,rtype:ResidueType,atom_map:Hash(String,Atom))-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(resname : String, reskind : <a href="../../Chem/Residue/Kind.html">Residue::Kind</a>, atom_map : Hash(String, <a href="../../Chem/Atom.html">Atom</a>))
+        def self.<strong>new</strong>(resname : String, rtype : <a href="../../Chem/ResidueType.html">ResidueType</a>, atom_map : Hash(String, <a href="../../Chem/Atom.html">Atom</a>))
 
-        <a class="method-permalink" href="#new%28resname%3AString%2Creskind%3AResidue%3A%3AKind%2Catom_map%3AHash%28String%2CAtom%29%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28resname%3AString%2Crtype%3AResidueType%2Catom_map%3AHash%28String%2CAtom%29%29-class-method">#</a>
       </div>
       
       <br/>
@@ -1012,12 +1007,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="new(res_t:ResidueType,atom_map:Hash(String,Atom)):self-class-method">
+    <div class="entry-detail" id="new(res_t:ResidueTemplate,atom_map:Hash(String,Atom)):self-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(res_t : <a href="../../Chem/ResidueType.html">ResidueType</a>, atom_map : Hash(String, <a href="../../Chem/Atom.html">Atom</a>)) : <span class="k">self</span>
+        def self.<strong>new</strong>(res_t : <a href="../../Chem/ResidueTemplate.html">ResidueTemplate</a>, atom_map : Hash(String, <a href="../../Chem/Atom.html">Atom</a>)) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#new%28res_t%3AResidueType%2Catom_map%3AHash%28String%2CAtom%29%29%3Aself-class-method">#</a>
+        <a class="method-permalink" href="#new%28res_t%3AResidueTemplate%2Catom_map%3AHash%28String%2CAtom%29%29%3Aself-class-method">#</a>
       </div>
       
       <br/>
@@ -1124,12 +1119,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="reskind:Residue::Kind-instance-method">
+    <div class="entry-detail" id="resname:String-instance-method">
       <div class="signature">
         
-        def <strong>reskind</strong> : <a href="../../Chem/Residue/Kind.html">Residue::Kind</a>
+        def <strong>resname</strong> : String
 
-        <a class="method-permalink" href="#reskind%3AResidue%3A%3AKind-instance-method">#</a>
+        <a class="method-permalink" href="#resname%3AString-instance-method">#</a>
       </div>
       
       <br/>
@@ -1138,12 +1133,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="resname:String-instance-method">
+    <div class="entry-detail" id="rtype:ResidueType-instance-method">
       <div class="signature">
         
-        def <strong>resname</strong> : String
+        def <strong>rtype</strong> : <a href="../../Chem/ResidueType.html">ResidueType</a>
 
-        <a class="method-permalink" href="#resname%3AString-instance-method">#</a>
+        <a class="method-permalink" href="#rtype%3AResidueType-instance-method">#</a>
       </div>
       
       <br/>

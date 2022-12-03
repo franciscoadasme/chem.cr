@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../../js/doc.js"></script>
 
   <meta name="repository-name" content="chem.cr">
-  <title>Chem::Residue::Kind - chem.cr 0.5.6</title>
+  <title>Chem::ResidueTemplate::Parser - chem.cr 0.5.6</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -86,8 +86,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/AtomType" data-name="chem::atomtype">
-      <a href="../../Chem/AtomType.html">AtomType</a>
+  <li class=" " data-id="chem.cr/Chem/AtomTemplate" data-name="chem::atomtemplate">
+      <a href="../../Chem/AtomTemplate.html">AtomTemplate</a>
       
     </li>
   
@@ -116,8 +116,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/BondType" data-name="chem::bondtype">
-      <a href="../../Chem/BondType.html">BondType</a>
+  <li class=" " data-id="chem.cr/Chem/BondTemplate" data-name="chem::bondtemplate">
+      <a href="../../Chem/BondTemplate.html">BondTemplate</a>
       
     </li>
   
@@ -441,18 +441,8 @@
       
     </li>
   
-  <li class="parent open current" data-id="chem.cr/Chem/Residue" data-name="chem::residue">
+  <li class=" " data-id="chem.cr/Chem/Residue" data-name="chem::residue">
       <a href="../../Chem/Residue.html">Residue</a>
-      
-        <ul>
-  
-  <li class=" current" data-id="chem.cr/Chem/Residue/Kind" data-name="chem::residue::kind">
-      <a href="../../Chem/Residue/Kind.html">Kind</a>
-      
-    </li>
-  
-</ul>
-
       
     </li>
   
@@ -461,38 +451,43 @@
       
     </li>
   
-  <li class="parent " data-id="chem.cr/Chem/ResidueType" data-name="chem::residuetype">
+  <li class="parent open current" data-id="chem.cr/Chem/ResidueTemplate" data-name="chem::residuetemplate">
+      <a href="../../Chem/ResidueTemplate.html">ResidueTemplate</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueTemplate/Builder" data-name="chem::residuetemplate::builder">
+      <a href="../../Chem/ResidueTemplate/Builder.html">Builder</a>
+      
+    </li>
+  
+  <li class="parent open current" data-id="chem.cr/Chem/ResidueTemplate/Parser" data-name="chem::residuetemplate::parser">
+      <a href="../../Chem/ResidueTemplate/Parser.html">Parser</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueTemplate/Parser/AtomRecord" data-name="chem::residuetemplate::parser::atomrecord">
+      <a href="../../Chem/ResidueTemplate/Parser/AtomRecord.html">AtomRecord</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueTemplate/Parser/BondRecord" data-name="chem::residuetemplate::parser::bondrecord">
+      <a href="../../Chem/ResidueTemplate/Parser/BondRecord.html">BondRecord</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueType" data-name="chem::residuetype">
       <a href="../../Chem/ResidueType.html">ResidueType</a>
-      
-        <ul>
-  
-  <li class=" " data-id="chem.cr/Chem/ResidueType/Builder" data-name="chem::residuetype::builder">
-      <a href="../../Chem/ResidueType/Builder.html">Builder</a>
-      
-    </li>
-  
-  <li class="parent " data-id="chem.cr/Chem/ResidueType/Parser" data-name="chem::residuetype::parser">
-      <a href="../../Chem/ResidueType/Parser.html">Parser</a>
-      
-        <ul>
-  
-  <li class=" " data-id="chem.cr/Chem/ResidueType/Parser/AtomRecord" data-name="chem::residuetype::parser::atomrecord">
-      <a href="../../Chem/ResidueType/Parser/AtomRecord.html">AtomRecord</a>
-      
-    </li>
-  
-  <li class=" " data-id="chem.cr/Chem/ResidueType/Parser/BondRecord" data-name="chem::residuetype::parser::bondrecord">
-      <a href="../../Chem/ResidueType/Parser/BondRecord.html">BondRecord</a>
-      
-    </li>
-  
-</ul>
-
-      
-    </li>
-  
-</ul>
-
       
     </li>
   
@@ -815,10 +810,12 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">enum</span> Chem::Residue::Kind
+  <span class="kind">class</span> Chem::ResidueTemplate::Parser
 
 </h1>
 
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Chem/ResidueTemplate/Parser.html">Chem::ResidueTemplate::Parser</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
@@ -846,7 +843,7 @@
   </h2>
   
     
-      chem/core/residue.cr
+      chem/residue_template/parser.cr
     
     <br/>
   
@@ -855,49 +852,41 @@
 
   
     <h2>
-      <a id="enum-members" class="anchor" href="#enum-members">
+      <a id="constant-summary" class="anchor" href="#constant-summary">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>
-      Enum Members
+      Constant Summary
     </h2>
   
   <dl>
     
-      <dt class="entry-const" id="Protein">
-        <strong>Protein</strong> = <code><span class="n">0</span></code>
-      </dt>
-      
-    
-      <dt class="entry-const" id="DNA">
-        <strong>DNA</strong> = <code><span class="n">1</span></code>
-      </dt>
-      
-    
-      <dt class="entry-const" id="Ion">
-        <strong>Ion</strong> = <code><span class="n">2</span></code>
-      </dt>
-      
-    
-      <dt class="entry-const" id="Solvent">
-        <strong>Solvent</strong> = <code><span class="n">3</span></code>
-      </dt>
-      
-    
-      <dt class="entry-const" id="Membrane">
-        <strong>Membrane</strong> = <code><span class="n">4</span></code>
-      </dt>
-      
-    
-      <dt class="entry-const" id="Other">
-        <strong>Other</strong> = <code><span class="n">5</span></code>
+      <dt class="entry-const" id="ALIASES">
+        <strong>ALIASES</strong> = <code>{<span class="s">&quot;backbone&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;N(-H)-CA(-HA)(-C=O)&quot;</span>}</code>
       </dt>
       
     
   </dl>
 
 
+
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new%28str%2Caliases%3AHash%28String%2CString%29%3F%3Dnil%29-class-method" class="signature"><strong>.new</strong>(str, aliases : Hash(String, String)? = <span class="n">nil</span>)</a>
+        
+      </li>
+    
+  </ul>
 
 
 
@@ -914,32 +903,27 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#dna%3F-instance-method" class="signature"><strong>#dna?</strong></a>
+        <a href="#atom_map%3AHash%28String%2CAtomRecord%29-instance-method" class="signature"><strong>#atom_map</strong> : Hash(String, AtomRecord)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#ion%3F-instance-method" class="signature"><strong>#ion?</strong></a>
+        <a href="#atoms%3AArray%28AtomRecord%29-instance-method" class="signature"><strong>#atoms</strong> : Array(AtomRecord)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#membrane%3F-instance-method" class="signature"><strong>#membrane?</strong></a>
+        <a href="#bonds%3AArray%28BondRecord%29-instance-method" class="signature"><strong>#bonds</strong> : Array(BondRecord)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#other%3F-instance-method" class="signature"><strong>#other?</strong></a>
+        <a href="#implicit_bonds%3AArray%28BondRecord%29-instance-method" class="signature"><strong>#implicit_bonds</strong> : Array(BondRecord)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#protein%3F-instance-method" class="signature"><strong>#protein?</strong></a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#solvent%3F-instance-method" class="signature"><strong>#solvent?</strong></a>
+        <a href="#parse%3ANil-instance-method" class="signature"><strong>#parse</strong> : Nil</a>
         
       </li>
     
@@ -971,28 +955,32 @@
 
 
   
-    
-
-
-    
-
-
-    
-
-
-  
-    
-
-
-    
-
-
-    
-
-
-  
 </div>
 
+
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="new(str,aliases:Hash(String,String)?=nil)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(str, aliases : Hash(String, String)? = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#new%28str%2Caliases%3AHash%28String%2CString%29%3F%3Dnil%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
 
 
 
@@ -1007,12 +995,12 @@
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="dna?-instance-method">
+    <div class="entry-detail" id="atom_map:Hash(String,AtomRecord)-instance-method">
       <div class="signature">
         
-        def <strong>dna?</strong>
+        def <strong>atom_map</strong> : Hash(String, <a href="../../Chem/ResidueTemplate/Parser/AtomRecord.html">AtomRecord</a>)
 
-        <a class="method-permalink" href="#dna%3F-instance-method">#</a>
+        <a class="method-permalink" href="#atom_map%3AHash%28String%2CAtomRecord%29-instance-method">#</a>
       </div>
       
       <br/>
@@ -1021,12 +1009,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="ion?-instance-method">
+    <div class="entry-detail" id="atoms:Array(AtomRecord)-instance-method">
       <div class="signature">
         
-        def <strong>ion?</strong>
+        def <strong>atoms</strong> : <a href="../../Array.html">Array</a>(<a href="../../Chem/ResidueTemplate/Parser/AtomRecord.html">AtomRecord</a>)
 
-        <a class="method-permalink" href="#ion%3F-instance-method">#</a>
+        <a class="method-permalink" href="#atoms%3AArray%28AtomRecord%29-instance-method">#</a>
       </div>
       
       <br/>
@@ -1035,12 +1023,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="membrane?-instance-method">
+    <div class="entry-detail" id="bonds:Array(BondRecord)-instance-method">
       <div class="signature">
         
-        def <strong>membrane?</strong>
+        def <strong>bonds</strong> : <a href="../../Array.html">Array</a>(<a href="../../Chem/ResidueTemplate/Parser/BondRecord.html">BondRecord</a>)
 
-        <a class="method-permalink" href="#membrane%3F-instance-method">#</a>
+        <a class="method-permalink" href="#bonds%3AArray%28BondRecord%29-instance-method">#</a>
       </div>
       
       <br/>
@@ -1049,12 +1037,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="other?-instance-method">
+    <div class="entry-detail" id="implicit_bonds:Array(BondRecord)-instance-method">
       <div class="signature">
         
-        def <strong>other?</strong>
+        def <strong>implicit_bonds</strong> : <a href="../../Array.html">Array</a>(<a href="../../Chem/ResidueTemplate/Parser/BondRecord.html">BondRecord</a>)
 
-        <a class="method-permalink" href="#other%3F-instance-method">#</a>
+        <a class="method-permalink" href="#implicit_bonds%3AArray%28BondRecord%29-instance-method">#</a>
       </div>
       
       <br/>
@@ -1063,26 +1051,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="protein?-instance-method">
+    <div class="entry-detail" id="parse:Nil-instance-method">
       <div class="signature">
         
-        def <strong>protein?</strong>
+        def <strong>parse</strong> : Nil
 
-        <a class="method-permalink" href="#protein%3F-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="solvent?-instance-method">
-      <div class="signature">
-        
-        def <strong>solvent?</strong>
-
-        <a class="method-permalink" href="#solvent%3F-instance-method">#</a>
+        <a class="method-permalink" href="#parse%3ANil-instance-method">#</a>
       </div>
       
       <br/>

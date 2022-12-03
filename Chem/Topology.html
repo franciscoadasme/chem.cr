@@ -86,8 +86,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/AtomType" data-name="chem::atomtype">
-      <a href="../Chem/AtomType.html">AtomType</a>
+  <li class=" " data-id="chem.cr/Chem/AtomTemplate" data-name="chem::atomtemplate">
+      <a href="../Chem/AtomTemplate.html">AtomTemplate</a>
       
     </li>
   
@@ -116,8 +116,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/BondType" data-name="chem::bondtype">
-      <a href="../Chem/BondType.html">BondType</a>
+  <li class=" " data-id="chem.cr/Chem/BondTemplate" data-name="chem::bondtemplate">
+      <a href="../Chem/BondTemplate.html">BondTemplate</a>
       
     </li>
   
@@ -441,18 +441,8 @@
       
     </li>
   
-  <li class="parent " data-id="chem.cr/Chem/Residue" data-name="chem::residue">
+  <li class=" " data-id="chem.cr/Chem/Residue" data-name="chem::residue">
       <a href="../Chem/Residue.html">Residue</a>
-      
-        <ul>
-  
-  <li class=" " data-id="chem.cr/Chem/Residue/Kind" data-name="chem::residue::kind">
-      <a href="../Chem/Residue/Kind.html">Kind</a>
-      
-    </li>
-  
-</ul>
-
       
     </li>
   
@@ -461,38 +451,43 @@
       
     </li>
   
-  <li class="parent " data-id="chem.cr/Chem/ResidueType" data-name="chem::residuetype">
+  <li class="parent " data-id="chem.cr/Chem/ResidueTemplate" data-name="chem::residuetemplate">
+      <a href="../Chem/ResidueTemplate.html">ResidueTemplate</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueTemplate/Builder" data-name="chem::residuetemplate::builder">
+      <a href="../Chem/ResidueTemplate/Builder.html">Builder</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/ResidueTemplate/Parser" data-name="chem::residuetemplate::parser">
+      <a href="../Chem/ResidueTemplate/Parser.html">Parser</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueTemplate/Parser/AtomRecord" data-name="chem::residuetemplate::parser::atomrecord">
+      <a href="../Chem/ResidueTemplate/Parser/AtomRecord.html">AtomRecord</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueTemplate/Parser/BondRecord" data-name="chem::residuetemplate::parser::bondrecord">
+      <a href="../Chem/ResidueTemplate/Parser/BondRecord.html">BondRecord</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueType" data-name="chem::residuetype">
       <a href="../Chem/ResidueType.html">ResidueType</a>
-      
-        <ul>
-  
-  <li class=" " data-id="chem.cr/Chem/ResidueType/Builder" data-name="chem::residuetype::builder">
-      <a href="../Chem/ResidueType/Builder.html">Builder</a>
-      
-    </li>
-  
-  <li class="parent " data-id="chem.cr/Chem/ResidueType/Parser" data-name="chem::residuetype::parser">
-      <a href="../Chem/ResidueType/Parser.html">Parser</a>
-      
-        <ul>
-  
-  <li class=" " data-id="chem.cr/Chem/ResidueType/Parser/AtomRecord" data-name="chem::residuetype::parser::atomrecord">
-      <a href="../Chem/ResidueType/Parser/AtomRecord.html">AtomRecord</a>
-      
-    </li>
-  
-  <li class=" " data-id="chem.cr/Chem/ResidueType/Parser/BondRecord" data-name="chem::residuetype::parser::bondrecord">
-      <a href="../Chem/ResidueType/Parser/BondRecord.html">BondRecord</a>
-      
-    </li>
-  
-</ul>
-
-      
-    </li>
-  
-</ul>
-
       
     </li>
   
@@ -999,7 +994,7 @@
       <li class="entry-summary">
         <a href="#apply_templates%3ANil-instance-method" class="signature"><strong>#apply_templates</strong> : Nil</a>
         
-          <div class="summary"><p>Assign bonds, formal charges, and residue's kind from known residue types.</p></div>
+          <div class="summary"><p>Assign bonds, formal charges, and residue's type from known residue types.</p></div>
         
       </li>
     
@@ -1127,14 +1122,14 @@
       <li class="entry-summary">
         <a href="#guess_names%3ANil-instance-method" class="signature"><strong>#guess_names</strong> : Nil</a>
         
-          <div class="summary"><p>Detects and assigns topology names from known residue types based on bond information.</p></div>
+          <div class="summary"><p>Detects and assigns topology names from known residue templates based on bond information.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#guess_unknown_residue_types%3ANil-instance-method" class="signature"><strong>#guess_unknown_residue_types</strong> : Nil</a>
         
-          <div class="summary"><p>Determines the kind of unknown residues based on their neighbors.</p></div>
+          <div class="summary"><p>Determines the type of unknown residues based on their neighbors.</p></div>
         
       </li>
     
@@ -1289,8 +1284,8 @@
     each_secondary_structure</a>, 
     
   
-    <a href="../Chem/ResidueCollection.html#link_bond%3ABondType%3F-instance-method" class="tooltip">
-      <span>link_bond : BondType?</span>
+    <a href="../Chem/ResidueCollection.html#link_bond%3ABondTemplate%3F-instance-method" class="tooltip">
+      <span>link_bond : BondTemplate?</span>
     link_bond</a>, 
     
   
@@ -1700,7 +1695,7 @@ stripped.</p>
       
         <div class="doc">
           
-          <p>Assign bonds, formal charges, and residue's kind from known residue
+          <p>Assign bonds, formal charges, and residue's type from known residue
 types.</p>
         </div>
       
@@ -2101,15 +2096,15 @@ extraneous angles.</p>
       
         <div class="doc">
           
-          <p>Detects and assigns topology names from known residue types based on
+          <p>Detects and assigns topology names from known residue templates based on
 bond information.</p>
 <p>The method creates chains and residues according to the detected
 fragments and residue matches. The procedure is as follows. First,
 atoms are split into fragments, where each fragment is scanned for
-matches to known residue types. Then, fragments are divided into
+matches to known residue templates. Then, fragments are divided into
 polymer (e.g., peptide) and non-polymer (e.g., water) fragments
 based on the number of residues per fragment. Non-polymer residues
-are grouped together by their kind (i.e., ion, solvent, etc.).
+are grouped together by their type (i.e., ion, solvent, etc.).
 Finally, every polymer fragment and group of non-polymer fragments
 are assigned to a unique chain and residues are created for each
 match.</p>
@@ -2136,7 +2131,7 @@ method so do not cache them.</p>
       
         <div class="doc">
           
-          <p>Determines the kind of unknown residues based on their neighbors.</p>
+          <p>Determines the type of unknown residues based on their neighbors.</p>
         </div>
       
       <br/>

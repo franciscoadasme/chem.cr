@@ -86,8 +86,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/AtomType" data-name="chem::atomtype">
-      <a href="../Chem/AtomType.html">AtomType</a>
+  <li class=" " data-id="chem.cr/Chem/AtomTemplate" data-name="chem::atomtemplate">
+      <a href="../Chem/AtomTemplate.html">AtomTemplate</a>
       
     </li>
   
@@ -116,8 +116,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/BondType" data-name="chem::bondtype">
-      <a href="../Chem/BondType.html">BondType</a>
+  <li class=" " data-id="chem.cr/Chem/BondTemplate" data-name="chem::bondtemplate">
+      <a href="../Chem/BondTemplate.html">BondTemplate</a>
       
     </li>
   
@@ -441,18 +441,8 @@
       
     </li>
   
-  <li class="parent open current" data-id="chem.cr/Chem/Residue" data-name="chem::residue">
+  <li class=" current" data-id="chem.cr/Chem/Residue" data-name="chem::residue">
       <a href="../Chem/Residue.html">Residue</a>
-      
-        <ul>
-  
-  <li class=" " data-id="chem.cr/Chem/Residue/Kind" data-name="chem::residue::kind">
-      <a href="../Chem/Residue/Kind.html">Kind</a>
-      
-    </li>
-  
-</ul>
-
       
     </li>
   
@@ -461,38 +451,43 @@
       
     </li>
   
-  <li class="parent " data-id="chem.cr/Chem/ResidueType" data-name="chem::residuetype">
+  <li class="parent " data-id="chem.cr/Chem/ResidueTemplate" data-name="chem::residuetemplate">
+      <a href="../Chem/ResidueTemplate.html">ResidueTemplate</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueTemplate/Builder" data-name="chem::residuetemplate::builder">
+      <a href="../Chem/ResidueTemplate/Builder.html">Builder</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/ResidueTemplate/Parser" data-name="chem::residuetemplate::parser">
+      <a href="../Chem/ResidueTemplate/Parser.html">Parser</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueTemplate/Parser/AtomRecord" data-name="chem::residuetemplate::parser::atomrecord">
+      <a href="../Chem/ResidueTemplate/Parser/AtomRecord.html">AtomRecord</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueTemplate/Parser/BondRecord" data-name="chem::residuetemplate::parser::bondrecord">
+      <a href="../Chem/ResidueTemplate/Parser/BondRecord.html">BondRecord</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueType" data-name="chem::residuetype">
       <a href="../Chem/ResidueType.html">ResidueType</a>
-      
-        <ul>
-  
-  <li class=" " data-id="chem.cr/Chem/ResidueType/Builder" data-name="chem::residuetype::builder">
-      <a href="../Chem/ResidueType/Builder.html">Builder</a>
-      
-    </li>
-  
-  <li class="parent " data-id="chem.cr/Chem/ResidueType/Parser" data-name="chem::residuetype::parser">
-      <a href="../Chem/ResidueType/Parser.html">Parser</a>
-      
-        <ul>
-  
-  <li class=" " data-id="chem.cr/Chem/ResidueType/Parser/AtomRecord" data-name="chem::residuetype::parser::atomrecord">
-      <a href="../Chem/ResidueType/Parser/AtomRecord.html">AtomRecord</a>
-      
-    </li>
-  
-  <li class=" " data-id="chem.cr/Chem/ResidueType/Parser/BondRecord" data-name="chem::residuetype::parser::bondrecord">
-      <a href="../Chem/ResidueType/Parser/BondRecord.html">BondRecord</a>
-      
-    </li>
-  
-</ul>
-
-      
-    </li>
-  
-</ul>
-
       
     </li>
   
@@ -924,7 +919,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#%5B%5D%28atom_t%3AAtomType%29%3AAtom-instance-method" class="signature"><strong>#[]</strong>(atom_t : AtomType) : Atom</a>
+        <a href="#%5B%5D%28atom_t%3AAtomTemplate%29%3AAtom-instance-method" class="signature"><strong>#[]</strong>(atom_t : AtomTemplate) : Atom</a>
         
           <div class="summary"><p>Returns the atom that matches <em>atom_t</em>.</p></div>
         
@@ -941,7 +936,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#%5B%5D%3F%28atom_t%3AAtomType%29%3AAtom%3F-instance-method" class="signature"><strong>#[]?</strong>(atom_t : AtomType) : Atom?</a>
+        <a href="#%5B%5D%3F%28atom_t%3AAtomTemplate%29%3AAtom%3F-instance-method" class="signature"><strong>#[]?</strong>(atom_t : AtomTemplate) : Atom?</a>
         
           <div class="summary"><p>Returns the atom that matches <em>atom_t</em>.</p></div>
         
@@ -958,28 +953,28 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#bonded%3F%28other%3Aself%2Cbond_t%3ABondType%2Cstrict%3ABool%3Dtrue%29%3ABool-instance-method" class="signature"><strong>#bonded?</strong>(other : <span class="k">self</span>, bond_t : BondType, strict : Bool = <span class="n">true</span>) : Bool</a>
+        <a href="#bonded%3F%28other%3Aself%2Cbond_t%3ABondTemplate%2Cstrict%3ABool%3Dtrue%29%3ABool-instance-method" class="signature"><strong>#bonded?</strong>(other : <span class="k">self</span>, bond_t : BondTemplate, strict : Bool = <span class="n">true</span>) : Bool</a>
         
           <div class="summary"><p>Returns true if <code>self</code> is bonded to <em>other</em> through <em>bond_t</em>, otherwise false.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#bonded%3F%28other%3Aself%2Clhs%3AAtomType%7CString%2Crhs%3AAtomType%7CString%2Corder%3ABondOrder%3F%3Dnil%29%3ABool-instance-method" class="signature"><strong>#bonded?</strong>(other : <span class="k">self</span>, lhs : AtomType | String, rhs : AtomType | String, order : BondOrder? = <span class="n">nil</span>) : Bool</a>
+        <a href="#bonded%3F%28other%3Aself%2Clhs%3AAtomTemplate%7CString%2Crhs%3AAtomTemplate%7CString%2Corder%3ABondOrder%3F%3Dnil%29%3ABool-instance-method" class="signature"><strong>#bonded?</strong>(other : <span class="k">self</span>, lhs : AtomTemplate | String, rhs : AtomTemplate | String, order : BondOrder? = <span class="n">nil</span>) : Bool</a>
         
           <div class="summary"><p>Returns true if <code>self</code> is bonded to <em>other</em> through a bond between <em>lhs</em> and <em>rhs</em>, otherwise false.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#bonded%3F%28other%3Aself%2Clhs%3AAtomType%7CString%2Crhs%3AElement%2Corder%3ABondOrder%3F%3Dnil%29%3ABool-instance-method" class="signature"><strong>#bonded?</strong>(other : <span class="k">self</span>, lhs : AtomType | String, rhs : Element, order : BondOrder? = <span class="n">nil</span>) : Bool</a>
+        <a href="#bonded%3F%28other%3Aself%2Clhs%3AAtomTemplate%7CString%2Crhs%3AElement%2Corder%3ABondOrder%3F%3Dnil%29%3ABool-instance-method" class="signature"><strong>#bonded?</strong>(other : <span class="k">self</span>, lhs : AtomTemplate | String, rhs : Element, order : BondOrder? = <span class="n">nil</span>) : Bool</a>
         
           <div class="summary"><p>Returns true if <code>self</code> is bonded to <em>other</em> through a bond between <em>lhs</em> and <em>rhs</em>, otherwise false.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#bonded%3F%28other%3Aself%2Clhs%3AElement%2Crhs%3AAtomType%7CString%2Corder%3ABondOrder%3F%3Dnil%29%3ABool-instance-method" class="signature"><strong>#bonded?</strong>(other : <span class="k">self</span>, lhs : Element, rhs : AtomType | String, order : BondOrder? = <span class="n">nil</span>) : Bool</a>
+        <a href="#bonded%3F%28other%3Aself%2Clhs%3AElement%2Crhs%3AAtomTemplate%7CString%2Corder%3ABondOrder%3F%3Dnil%29%3ABool-instance-method" class="signature"><strong>#bonded?</strong>(other : <span class="k">self</span>, lhs : Element, rhs : AtomTemplate | String, order : BondOrder? = <span class="n">nil</span>) : Bool</a>
         
           <div class="summary"><p>Returns true if <code>self</code> is bonded to <em>other</em> through a bond between <em>lhs</em> and <em>rhs</em>, otherwise false.</p></div>
         
@@ -1000,7 +995,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#bonded_residues%28bond_t%3ABondType%2Cforward_only%3ABool%3Dtrue%2Cstrict%3ABool%3Dtrue%29%3AArray%28Residue%29-instance-method" class="signature"><strong>#bonded_residues</strong>(bond_t : BondType, forward_only : Bool = <span class="n">true</span>, strict : Bool = <span class="n">true</span>) : Array(Residue)</a>
+        <a href="#bonded_residues%28bond_t%3ABondTemplate%2Cforward_only%3ABool%3Dtrue%2Cstrict%3ABool%3Dtrue%29%3AArray%28Residue%29-instance-method" class="signature"><strong>#bonded_residues</strong>(bond_t : BondTemplate, forward_only : Bool = <span class="n">true</span>, strict : Bool = <span class="n">true</span>) : Array(Residue)</a>
         
           <div class="summary"><p>Returns residues bonded through <em>bond_t</em>.</p></div>
         
@@ -1036,7 +1031,7 @@
       <li class="entry-summary">
         <a href="#code%28default%3AChar%3D%27X%27%29%3AChar-instance-method" class="signature"><strong>#code</strong>(default : Char = <span class="s">&#39;X&#39;</span>) : Char</a>
         
-          <div class="summary"><p>Returns a single-letter code associated with the residue's type.</p></div>
+          <div class="summary"><p>Returns a single-letter code associated with the residue's template.</p></div>
         
       </li>
     
@@ -1080,7 +1075,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#each_bonded_residue%28bond_t%3ABondType%2Cforward_only%3ABool%3Dtrue%2Cstrict%3ABool%3Dtrue%2C%26%3AResidue-%3E%29%3ANil-instance-method" class="signature"><strong>#each_bonded_residue</strong>(bond_t : BondType, forward_only : Bool = <span class="n">true</span>, strict : Bool = <span class="n">true</span>, & : Residue -> ) : Nil</a>
+        <a href="#each_bonded_residue%28bond_t%3ABondTemplate%2Cforward_only%3ABool%3Dtrue%2Cstrict%3ABool%3Dtrue%2C%26%3AResidue-%3E%29%3ANil-instance-method" class="signature"><strong>#each_bonded_residue</strong>(bond_t : BondTemplate, forward_only : Bool = <span class="n">true</span>, strict : Bool = <span class="n">true</span>, & : Residue -> ) : Nil</a>
         
           <div class="summary"><p>Yields each residue bonded through <em>bond_t</em>.</p></div>
         
@@ -1131,16 +1126,6 @@
         <a href="#ion%3F%3ABool-instance-method" class="signature"><strong>#ion?</strong> : Bool</a>
         
           <div class="summary"><p>Returns <code>true</code> if the residue is a ion residue, else <code>false</code>.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#kind%3AKind-instance-method" class="signature"><strong>#kind</strong> : Kind</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#kind%3D%28kind%3AKind%29-instance-method" class="signature"><strong>#kind=</strong>(kind : Kind)</a>
         
       </li>
     
@@ -1293,6 +1278,13 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#template%3AResidueTemplate%3F-instance-method" class="signature"><strong>#template</strong> : ResidueTemplate?</a>
+        
+          <div class="summary"><p>Returns associated residue template if registered, otherwise nil.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#to_s%28io%3AIO%29-instance-method" class="signature"><strong>#to_s</strong>(io : IO)</a>
         
           <div class="summary"><p>Appends a short String representation of this object which includes its class name and its object address.</p></div>
@@ -1305,9 +1297,12 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#type%3AResidueType%3F-instance-method" class="signature"><strong>#type</strong> : ResidueType?</a>
+        <a href="#type%3AResidueType-instance-method" class="signature"><strong>#type</strong> : ResidueType</a>
         
-          <div class="summary"><p>Returns associated residue type if registered, otherwise nil.</p></div>
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#type%3D%28type%3AResidueType%29-instance-method" class="signature"><strong>#type=</strong>(type : ResidueType)</a>
         
       </li>
     
@@ -1559,23 +1554,23 @@ insertion code.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="[](atom_t:AtomType):Atom-instance-method">
+    <div class="entry-detail" id="[](atom_t:AtomTemplate):Atom-instance-method">
       <div class="signature">
         
-        def <strong>[]</strong>(atom_t : <a href="../Chem/AtomType.html">AtomType</a>) : <a href="../Chem/Atom.html">Atom</a>
+        def <strong>[]</strong>(atom_t : <a href="../Chem/AtomTemplate.html">AtomTemplate</a>) : <a href="../Chem/Atom.html">Atom</a>
 
-        <a class="method-permalink" href="#%5B%5D%28atom_t%3AAtomType%29%3AAtom-instance-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%28atom_t%3AAtomTemplate%29%3AAtom-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns the atom that matches <em>atom_t</em>.</p>
-<p>Atom must match both atom type's name and element, otherwise it
-raises <code>IndexError</code>.</p>
+<p>Atom must match both atom template's name and element, otherwise
+it raises <code>IndexError</code>.</p>
 <pre><code class="language-crystal">residue <span class="o">=</span> <span class="t">Structure</span>.read(<span class="s">&quot;peptide.pdb&quot;</span>).residues[<span class="n">0</span>]
-residue[<span class="t">AtomType</span>(<span class="s">&quot;CA&quot;</span>)]               <span class="c"># =&gt; &lt;Atom A:TRP1:CA(2)</span>
-residue[<span class="t">AtomType</span>(<span class="s">&quot;CA&quot;</span>, element: <span class="s">&quot;N&quot;</span>)] <span class="c"># raises IndexError</span>
-residue[<span class="t">AtomType</span>(<span class="s">&quot;CX&quot;</span>)]               <span class="c"># raises IndexError</span></code></pre>
+residue[<span class="t">AtomTemplate</span>(<span class="s">&quot;CA&quot;</span>)]               <span class="c"># =&gt; &lt;Atom A:TRP1:CA(2)</span>
+residue[<span class="t">AtomTemplate</span>(<span class="s">&quot;CA&quot;</span>, element: <span class="s">&quot;N&quot;</span>)] <span class="c"># raises IndexError</span>
+residue[<span class="t">AtomTemplate</span>(<span class="s">&quot;CX&quot;</span>)]               <span class="c"># raises IndexError</span></code></pre>
         </div>
       
       <br/>
@@ -1612,23 +1607,23 @@ residue[<span class="t">AtomType</span>(<span class="s">&quot;CX&quot;</span>)] 
       </div>
     </div>
   
-    <div class="entry-detail" id="[]?(atom_t:AtomType):Atom?-instance-method">
+    <div class="entry-detail" id="[]?(atom_t:AtomTemplate):Atom?-instance-method">
       <div class="signature">
         
-        def <strong>[]?</strong>(atom_t : <a href="../Chem/AtomType.html">AtomType</a>) : <a href="../Chem/Atom.html">Atom</a>?
+        def <strong>[]?</strong>(atom_t : <a href="../Chem/AtomTemplate.html">AtomTemplate</a>) : <a href="../Chem/Atom.html">Atom</a>?
 
-        <a class="method-permalink" href="#%5B%5D%3F%28atom_t%3AAtomType%29%3AAtom%3F-instance-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%3F%28atom_t%3AAtomTemplate%29%3AAtom%3F-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns the atom that matches <em>atom_t</em>.</p>
-<p>Atom must match both atom type's name and element, otherwise it
-returns <code>nil</code>.</p>
+<p>Atom must match both atom template's name and element, otherwise
+it returns <code>nil</code>.</p>
 <pre><code class="language-crystal">residue <span class="o">=</span> <span class="t">Structure</span>.read(<span class="s">&quot;peptide.pdb&quot;</span>).residues[<span class="n">0</span>]
-residue[<span class="t">AtomType</span>(<span class="s">&quot;CA&quot;</span>)]               <span class="c"># =&gt; &lt;Atom A:TRP1:CA(2)</span>
-residue[<span class="t">AtomType</span>(<span class="s">&quot;CA&quot;</span>, element: <span class="s">&quot;N&quot;</span>)] <span class="c"># =&gt; nil</span>
-residue[<span class="t">AtomType</span>(<span class="s">&quot;CX&quot;</span>)]               <span class="c"># =&gt; nil</span></code></pre>
+residue[<span class="t">AtomTemplate</span>(<span class="s">&quot;CA&quot;</span>)]               <span class="c"># =&gt; &lt;Atom A:TRP1:CA(2)</span>
+residue[<span class="t">AtomTemplate</span>(<span class="s">&quot;CA&quot;</span>, element: <span class="s">&quot;N&quot;</span>)] <span class="c"># =&gt; nil</span>
+residue[<span class="t">AtomTemplate</span>(<span class="s">&quot;CX&quot;</span>)]               <span class="c"># =&gt; nil</span></code></pre>
         </div>
       
       <br/>
@@ -1665,12 +1660,12 @@ residue[<span class="t">AtomType</span>(<span class="s">&quot;CX&quot;</span>)] 
       </div>
     </div>
   
-    <div class="entry-detail" id="bonded?(other:self,bond_t:BondType,strict:Bool=true):Bool-instance-method">
+    <div class="entry-detail" id="bonded?(other:self,bond_t:BondTemplate,strict:Bool=true):Bool-instance-method">
       <div class="signature">
         
-        def <strong>bonded?</strong>(other : <span class="k">self</span>, bond_t : <a href="../Chem/BondType.html">BondType</a>, strict : Bool = <span class="n">true</span>) : Bool
+        def <strong>bonded?</strong>(other : <span class="k">self</span>, bond_t : <a href="../Chem/BondTemplate.html">BondTemplate</a>, strict : Bool = <span class="n">true</span>) : Bool
 
-        <a class="method-permalink" href="#bonded%3F%28other%3Aself%2Cbond_t%3ABondType%2Cstrict%3ABool%3Dtrue%29%3ABool-instance-method">#</a>
+        <a class="method-permalink" href="#bonded%3F%28other%3Aself%2Cbond_t%3ABondTemplate%2Cstrict%3ABool%3Dtrue%29%3ABool-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1679,7 +1674,7 @@ residue[<span class="t">AtomType</span>(<span class="s">&quot;CX&quot;</span>)] 
 otherwise false.</p>
 <pre><code class="language-crystal"><span class="c"># Covalent ligand (JG7) is bonded to CYS sidechain</span>
 residues <span class="o">=</span> <span class="t">Structure</span>.read(<span class="s">&quot;ala-cys-thr-jg7.pdb&quot;</span>).residues
-bond_t <span class="o">=</span> <span class="t">BondType</span>.new <span class="s">&quot;C&quot;</span>, <span class="s">&quot;N&quot;</span>
+bond_t <span class="o">=</span> <span class="t">BondTemplate</span>.new <span class="s">&quot;C&quot;</span>, <span class="s">&quot;N&quot;</span>
 residues[<span class="n">0</span>].bonded?(residues[<span class="n">1</span>], bond_t) <span class="c"># =&gt; true</span>
 residues[<span class="n">1</span>].bonded?(residues[<span class="n">2</span>], bond_t) <span class="c"># =&gt; true</span>
 residues[<span class="n">2</span>].bonded?(residues[<span class="n">3</span>], bond_t) <span class="c"># =&gt; false</span>
@@ -1690,11 +1685,11 @@ respectively:</p>
 <pre><code class="language-crystal">residues[<span class="n">0</span>].bonded?(residues[<span class="n">1</span>], bond_t) <span class="c"># =&gt; true</span>
 residues[<span class="n">1</span>].bonded?(residues[<span class="n">0</span>], bond_t) <span class="c"># =&gt; false</span></code></pre>
 <p>Note that bond order is taken into account, e.g.:</p>
-<pre><code class="language-crystal">bond_t <span class="o">=</span> <span class="t">BondType</span>.new <span class="s">&quot;C&quot;</span>, <span class="s">&quot;N&quot;</span>, order: <span class="n">2</span>
+<pre><code class="language-crystal">bond_t <span class="o">=</span> <span class="t">BondTemplate</span>.new <span class="s">&quot;C&quot;</span>, <span class="s">&quot;N&quot;</span>, order: <span class="n">2</span>
 residues[<span class="n">0</span>].bonded?(residues[<span class="n">1</span>], bond_t) <span class="c"># =&gt; false</span></code></pre>
 <p>If <em>strict</em> is false, it uses elements only instead to look for
 bonded atoms, and bond order is ignored.</p>
-<pre><code class="language-crystal">bond_t <span class="o">=</span> <span class="t">BondType</span>.new <span class="s">&quot;C&quot;</span>, <span class="s">&quot;NX&quot;</span>, order: <span class="n">2</span>
+<pre><code class="language-crystal">bond_t <span class="o">=</span> <span class="t">BondTemplate</span>.new <span class="s">&quot;C&quot;</span>, <span class="s">&quot;NX&quot;</span>, order: <span class="n">2</span>
 residues[<span class="n">0</span>].bonded?(residues[<span class="n">1</span>], bond_t)                <span class="c"># =&gt; false</span>
 residues[<span class="n">0</span>].bonded?(residues[<span class="n">1</span>], bond_t, strict: <span class="n">false</span>) <span class="c"># =&gt; true</span></code></pre>
         </div>
@@ -1705,12 +1700,12 @@ residues[<span class="n">0</span>].bonded?(residues[<span class="n">1</span>], b
       </div>
     </div>
   
-    <div class="entry-detail" id="bonded?(other:self,lhs:AtomType|String,rhs:AtomType|String,order:BondOrder?=nil):Bool-instance-method">
+    <div class="entry-detail" id="bonded?(other:self,lhs:AtomTemplate|String,rhs:AtomTemplate|String,order:BondOrder?=nil):Bool-instance-method">
       <div class="signature">
         
-        def <strong>bonded?</strong>(other : <span class="k">self</span>, lhs : <a href="../Chem/AtomType.html">AtomType</a> | String, rhs : <a href="../Chem/AtomType.html">AtomType</a> | String, order : <a href="../Chem/BondOrder.html">BondOrder</a>? = <span class="n">nil</span>) : Bool
+        def <strong>bonded?</strong>(other : <span class="k">self</span>, lhs : <a href="../Chem/AtomTemplate.html">AtomTemplate</a> | String, rhs : <a href="../Chem/AtomTemplate.html">AtomTemplate</a> | String, order : <a href="../Chem/BondOrder.html">BondOrder</a>? = <span class="n">nil</span>) : Bool
 
-        <a class="method-permalink" href="#bonded%3F%28other%3Aself%2Clhs%3AAtomType%7CString%2Crhs%3AAtomType%7CString%2Corder%3ABondOrder%3F%3Dnil%29%3ABool-instance-method">#</a>
+        <a class="method-permalink" href="#bonded%3F%28other%3Aself%2Clhs%3AAtomTemplate%7CString%2Crhs%3AAtomTemplate%7CString%2Corder%3ABondOrder%3F%3Dnil%29%3ABool-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1719,8 +1714,8 @@ residues[<span class="n">0</span>].bonded?(residues[<span class="n">1</span>], b
 <em>lhs</em> and <em>rhs</em>, otherwise false.</p>
 <pre><code class="language-crystal"><span class="c"># Covalent ligand (JG7) is bonded to CYS sidechain</span>
 residues <span class="o">=</span> <span class="t">Structure</span>.read(<span class="s">&quot;ala-cys-thr-jg7.pdb&quot;</span>).residues</code></pre>
-<p>One can use atom names, atom types or elements:</p>
-<pre><code class="language-crystal">a, b <span class="o">=</span> <span class="t">AtomType</span>.new(<span class="s">&quot;C&quot;</span>), <span class="t">AtomType</span>.new(<span class="s">&quot;N&quot;</span>)
+<p>One can use atom names, atom template, or elements:</p>
+<pre><code class="language-crystal">a, b <span class="o">=</span> <span class="t">AtomTemplate</span>.new(<span class="s">&quot;C&quot;</span>), <span class="t">AtomTemplate</span>.new(<span class="s">&quot;N&quot;</span>)
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <span class="s">&quot;C&quot;</span>, <span class="s">&quot;N&quot;</span>            <span class="c"># =&gt; true</span>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], a, b                <span class="c"># =&gt; true</span>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], a, <span class="t">PeriodicTable</span><span class="t">::</span><span class="t">N</span> <span class="c"># =&gt; true</span>
@@ -1732,9 +1727,9 @@ residues[<span class="n">2</span>].bonded? residues[<span class="n">3</span>], a
 respectively, i.e., the arguments are not interchangeable:</p>
 <pre><code class="language-crystal">residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <span class="s">&quot;C&quot;</span>, <span class="s">&quot;N&quot;</span> <span class="c"># =&gt; true</span>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <span class="s">&quot;N&quot;</span>, <span class="s">&quot;C&quot;</span> <span class="c"># =&gt; false</span></code></pre>
-<p>When atom names or atom types are specified, this method returns
-false if missing:</p>
-<pre><code class="language-crystal">missing_atom_t <span class="o">=</span> <span class="t">AtomType</span>.new(<span class="s">&quot;OZ5&quot;</span>)
+<p>When atom names or atom template are specified, this method
+returns false if missing:</p>
+<pre><code class="language-crystal">missing_atom_t <span class="o">=</span> <span class="t">AtomTemplate</span>.new(<span class="s">&quot;OZ5&quot;</span>)
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <span class="s">&quot;CX1&quot;</span>, <span class="s">&quot;N&quot;</span>             <span class="c"># =&gt; false</span>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], missing_atom_t, <span class="s">&quot;N&quot;</span>    <span class="c"># =&gt; false</span>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <span class="s">&quot;C&quot;</span>, <span class="t">PeriodicTable</span><span class="t">::</span><span class="t">Mg</span> <span class="c"># =&gt; false</span></code></pre>
@@ -1754,12 +1749,12 @@ residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <
       </div>
     </div>
   
-    <div class="entry-detail" id="bonded?(other:self,lhs:AtomType|String,rhs:Element,order:BondOrder?=nil):Bool-instance-method">
+    <div class="entry-detail" id="bonded?(other:self,lhs:AtomTemplate|String,rhs:Element,order:BondOrder?=nil):Bool-instance-method">
       <div class="signature">
         
-        def <strong>bonded?</strong>(other : <span class="k">self</span>, lhs : <a href="../Chem/AtomType.html">AtomType</a> | String, rhs : <a href="../Chem/Element.html">Element</a>, order : <a href="../Chem/BondOrder.html">BondOrder</a>? = <span class="n">nil</span>) : Bool
+        def <strong>bonded?</strong>(other : <span class="k">self</span>, lhs : <a href="../Chem/AtomTemplate.html">AtomTemplate</a> | String, rhs : <a href="../Chem/Element.html">Element</a>, order : <a href="../Chem/BondOrder.html">BondOrder</a>? = <span class="n">nil</span>) : Bool
 
-        <a class="method-permalink" href="#bonded%3F%28other%3Aself%2Clhs%3AAtomType%7CString%2Crhs%3AElement%2Corder%3ABondOrder%3F%3Dnil%29%3ABool-instance-method">#</a>
+        <a class="method-permalink" href="#bonded%3F%28other%3Aself%2Clhs%3AAtomTemplate%7CString%2Crhs%3AElement%2Corder%3ABondOrder%3F%3Dnil%29%3ABool-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1768,8 +1763,8 @@ residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <
 <em>lhs</em> and <em>rhs</em>, otherwise false.</p>
 <pre><code class="language-crystal"><span class="c"># Covalent ligand (JG7) is bonded to CYS sidechain</span>
 residues <span class="o">=</span> <span class="t">Structure</span>.read(<span class="s">&quot;ala-cys-thr-jg7.pdb&quot;</span>).residues</code></pre>
-<p>One can use atom names, atom types or elements:</p>
-<pre><code class="language-crystal">a, b <span class="o">=</span> <span class="t">AtomType</span>.new(<span class="s">&quot;C&quot;</span>), <span class="t">AtomType</span>.new(<span class="s">&quot;N&quot;</span>)
+<p>One can use atom names, atom template, or elements:</p>
+<pre><code class="language-crystal">a, b <span class="o">=</span> <span class="t">AtomTemplate</span>.new(<span class="s">&quot;C&quot;</span>), <span class="t">AtomTemplate</span>.new(<span class="s">&quot;N&quot;</span>)
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <span class="s">&quot;C&quot;</span>, <span class="s">&quot;N&quot;</span>            <span class="c"># =&gt; true</span>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], a, b                <span class="c"># =&gt; true</span>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], a, <span class="t">PeriodicTable</span><span class="t">::</span><span class="t">N</span> <span class="c"># =&gt; true</span>
@@ -1781,9 +1776,9 @@ residues[<span class="n">2</span>].bonded? residues[<span class="n">3</span>], a
 respectively, i.e., the arguments are not interchangeable:</p>
 <pre><code class="language-crystal">residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <span class="s">&quot;C&quot;</span>, <span class="s">&quot;N&quot;</span> <span class="c"># =&gt; true</span>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <span class="s">&quot;N&quot;</span>, <span class="s">&quot;C&quot;</span> <span class="c"># =&gt; false</span></code></pre>
-<p>When atom names or atom types are specified, this method returns
-false if missing:</p>
-<pre><code class="language-crystal">missing_atom_t <span class="o">=</span> <span class="t">AtomType</span>.new(<span class="s">&quot;OZ5&quot;</span>)
+<p>When atom names or atom template are specified, this method
+returns false if missing:</p>
+<pre><code class="language-crystal">missing_atom_t <span class="o">=</span> <span class="t">AtomTemplate</span>.new(<span class="s">&quot;OZ5&quot;</span>)
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <span class="s">&quot;CX1&quot;</span>, <span class="s">&quot;N&quot;</span>             <span class="c"># =&gt; false</span>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], missing_atom_t, <span class="s">&quot;N&quot;</span>    <span class="c"># =&gt; false</span>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <span class="s">&quot;C&quot;</span>, <span class="t">PeriodicTable</span><span class="t">::</span><span class="t">Mg</span> <span class="c"># =&gt; false</span></code></pre>
@@ -1803,12 +1798,12 @@ residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <
       </div>
     </div>
   
-    <div class="entry-detail" id="bonded?(other:self,lhs:Element,rhs:AtomType|String,order:BondOrder?=nil):Bool-instance-method">
+    <div class="entry-detail" id="bonded?(other:self,lhs:Element,rhs:AtomTemplate|String,order:BondOrder?=nil):Bool-instance-method">
       <div class="signature">
         
-        def <strong>bonded?</strong>(other : <span class="k">self</span>, lhs : <a href="../Chem/Element.html">Element</a>, rhs : <a href="../Chem/AtomType.html">AtomType</a> | String, order : <a href="../Chem/BondOrder.html">BondOrder</a>? = <span class="n">nil</span>) : Bool
+        def <strong>bonded?</strong>(other : <span class="k">self</span>, lhs : <a href="../Chem/Element.html">Element</a>, rhs : <a href="../Chem/AtomTemplate.html">AtomTemplate</a> | String, order : <a href="../Chem/BondOrder.html">BondOrder</a>? = <span class="n">nil</span>) : Bool
 
-        <a class="method-permalink" href="#bonded%3F%28other%3Aself%2Clhs%3AElement%2Crhs%3AAtomType%7CString%2Corder%3ABondOrder%3F%3Dnil%29%3ABool-instance-method">#</a>
+        <a class="method-permalink" href="#bonded%3F%28other%3Aself%2Clhs%3AElement%2Crhs%3AAtomTemplate%7CString%2Corder%3ABondOrder%3F%3Dnil%29%3ABool-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1817,8 +1812,8 @@ residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <
 <em>lhs</em> and <em>rhs</em>, otherwise false.</p>
 <pre><code class="language-crystal"><span class="c"># Covalent ligand (JG7) is bonded to CYS sidechain</span>
 residues <span class="o">=</span> <span class="t">Structure</span>.read(<span class="s">&quot;ala-cys-thr-jg7.pdb&quot;</span>).residues</code></pre>
-<p>One can use atom names, atom types or elements:</p>
-<pre><code class="language-crystal">a, b <span class="o">=</span> <span class="t">AtomType</span>.new(<span class="s">&quot;C&quot;</span>), <span class="t">AtomType</span>.new(<span class="s">&quot;N&quot;</span>)
+<p>One can use atom names, atom template, or elements:</p>
+<pre><code class="language-crystal">a, b <span class="o">=</span> <span class="t">AtomTemplate</span>.new(<span class="s">&quot;C&quot;</span>), <span class="t">AtomTemplate</span>.new(<span class="s">&quot;N&quot;</span>)
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <span class="s">&quot;C&quot;</span>, <span class="s">&quot;N&quot;</span>            <span class="c"># =&gt; true</span>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], a, b                <span class="c"># =&gt; true</span>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], a, <span class="t">PeriodicTable</span><span class="t">::</span><span class="t">N</span> <span class="c"># =&gt; true</span>
@@ -1830,9 +1825,9 @@ residues[<span class="n">2</span>].bonded? residues[<span class="n">3</span>], a
 respectively, i.e., the arguments are not interchangeable:</p>
 <pre><code class="language-crystal">residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <span class="s">&quot;C&quot;</span>, <span class="s">&quot;N&quot;</span> <span class="c"># =&gt; true</span>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <span class="s">&quot;N&quot;</span>, <span class="s">&quot;C&quot;</span> <span class="c"># =&gt; false</span></code></pre>
-<p>When atom names or atom types are specified, this method returns
-false if missing:</p>
-<pre><code class="language-crystal">missing_atom_t <span class="o">=</span> <span class="t">AtomType</span>.new(<span class="s">&quot;OZ5&quot;</span>)
+<p>When atom names or atom template are specified, this method
+returns false if missing:</p>
+<pre><code class="language-crystal">missing_atom_t <span class="o">=</span> <span class="t">AtomTemplate</span>.new(<span class="s">&quot;OZ5&quot;</span>)
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <span class="s">&quot;CX1&quot;</span>, <span class="s">&quot;N&quot;</span>             <span class="c"># =&gt; false</span>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], missing_atom_t, <span class="s">&quot;N&quot;</span>    <span class="c"># =&gt; false</span>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <span class="s">&quot;C&quot;</span>, <span class="t">PeriodicTable</span><span class="t">::</span><span class="t">Mg</span> <span class="c"># =&gt; false</span></code></pre>
@@ -1866,8 +1861,8 @@ residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <
 <em>lhs</em> and <em>rhs</em>, otherwise false.</p>
 <pre><code class="language-crystal"><span class="c"># Covalent ligand (JG7) is bonded to CYS sidechain</span>
 residues <span class="o">=</span> <span class="t">Structure</span>.read(<span class="s">&quot;ala-cys-thr-jg7.pdb&quot;</span>).residues</code></pre>
-<p>One can use atom names, atom types or elements:</p>
-<pre><code class="language-crystal">a, b <span class="o">=</span> <span class="t">AtomType</span>.new(<span class="s">&quot;C&quot;</span>), <span class="t">AtomType</span>.new(<span class="s">&quot;N&quot;</span>)
+<p>One can use atom names, atom template, or elements:</p>
+<pre><code class="language-crystal">a, b <span class="o">=</span> <span class="t">AtomTemplate</span>.new(<span class="s">&quot;C&quot;</span>), <span class="t">AtomTemplate</span>.new(<span class="s">&quot;N&quot;</span>)
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <span class="s">&quot;C&quot;</span>, <span class="s">&quot;N&quot;</span>            <span class="c"># =&gt; true</span>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], a, b                <span class="c"># =&gt; true</span>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], a, <span class="t">PeriodicTable</span><span class="t">::</span><span class="t">N</span> <span class="c"># =&gt; true</span>
@@ -1879,9 +1874,9 @@ residues[<span class="n">2</span>].bonded? residues[<span class="n">3</span>], a
 respectively, i.e., the arguments are not interchangeable:</p>
 <pre><code class="language-crystal">residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <span class="s">&quot;C&quot;</span>, <span class="s">&quot;N&quot;</span> <span class="c"># =&gt; true</span>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <span class="s">&quot;N&quot;</span>, <span class="s">&quot;C&quot;</span> <span class="c"># =&gt; false</span></code></pre>
-<p>When atom names or atom types are specified, this method returns
-false if missing:</p>
-<pre><code class="language-crystal">missing_atom_t <span class="o">=</span> <span class="t">AtomType</span>.new(<span class="s">&quot;OZ5&quot;</span>)
+<p>When atom names or atom template are specified, this method
+returns false if missing:</p>
+<pre><code class="language-crystal">missing_atom_t <span class="o">=</span> <span class="t">AtomTemplate</span>.new(<span class="s">&quot;OZ5&quot;</span>)
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <span class="s">&quot;CX1&quot;</span>, <span class="s">&quot;N&quot;</span>             <span class="c"># =&gt; false</span>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], missing_atom_t, <span class="s">&quot;N&quot;</span>    <span class="c"># =&gt; false</span>
 residues[<span class="n">0</span>].bonded? residues[<span class="n">1</span>], <span class="s">&quot;C&quot;</span>, <span class="t">PeriodicTable</span><span class="t">::</span><span class="t">Mg</span> <span class="c"># =&gt; false</span></code></pre>
@@ -1927,12 +1922,12 @@ residues[<span class="n">1</span>].bonded?(residues[<span class="n">3</span>]) <
       </div>
     </div>
   
-    <div class="entry-detail" id="bonded_residues(bond_t:BondType,forward_only:Bool=true,strict:Bool=true):Array(Residue)-instance-method">
+    <div class="entry-detail" id="bonded_residues(bond_t:BondTemplate,forward_only:Bool=true,strict:Bool=true):Array(Residue)-instance-method">
       <div class="signature">
         
-        def <strong>bonded_residues</strong>(bond_t : <a href="../Chem/BondType.html">BondType</a>, forward_only : Bool = <span class="n">true</span>, strict : Bool = <span class="n">true</span>) : <a href="../Array.html">Array</a>(<a href="../Chem/Residue.html">Residue</a>)
+        def <strong>bonded_residues</strong>(bond_t : <a href="../Chem/BondTemplate.html">BondTemplate</a>, forward_only : Bool = <span class="n">true</span>, strict : Bool = <span class="n">true</span>) : <a href="../Array.html">Array</a>(<a href="../Chem/Residue.html">Residue</a>)
 
-        <a class="method-permalink" href="#bonded_residues%28bond_t%3ABondType%2Cforward_only%3ABool%3Dtrue%2Cstrict%3ABool%3Dtrue%29%3AArray%28Residue%29-instance-method">#</a>
+        <a class="method-permalink" href="#bonded_residues%28bond_t%3ABondTemplate%2Cforward_only%3ABool%3Dtrue%2Cstrict%3ABool%3Dtrue%29%3AArray%28Residue%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1942,7 +1937,7 @@ their chain id, residue number and insertion code if present
 (refer to #&lt;=&gt;).</p>
 <pre><code class="language-crystal"><span class="c"># Covalent ligand (JG7) is bonded to CYS sidechain</span>
 residues <span class="o">=</span> <span class="t">Structure</span>.read(<span class="s">&quot;ala-cys-thr-jg7.pdb&quot;</span>).residues
-bond_t <span class="o">=</span> <span class="t">BondType</span>.new(<span class="s">&quot;C&quot;</span>, <span class="s">&quot;N&quot;</span>)
+bond_t <span class="o">=</span> <span class="t">BondTemplate</span>.new(<span class="s">&quot;C&quot;</span>, <span class="s">&quot;N&quot;</span>)
 residues[<span class="n">0</span>].bonded_residues(bond_t).map(<span class="o">&amp;</span>.name) <span class="c"># =&gt; [&quot;CYS&quot;]</span>
 residues[<span class="n">1</span>].bonded_residues(bond_t).map(<span class="o">&amp;</span>.name) <span class="c"># =&gt; [&quot;THR&quot;]</span>
 residues[<span class="n">2</span>].bonded_residues(bond_t).map(<span class="o">&amp;</span>.name) <span class="c"># =&gt; []</span>
@@ -1956,7 +1951,7 @@ residues[<span class="n">3</span>].bonded_residues(bond_t, forward_only: <span c
 order is ignored (fuzzy search). In the following example, using
 <code>strict: false</code> makes that any C-N bond is accepted regardless of
 atom names or bond order:</p>
-<pre><code class="language-crystal">bond_t <span class="o">=</span> <span class="t">BondType</span>.new <span class="s">&quot;C&quot;</span>, <span class="s">&quot;NX&quot;</span>, order: <span class="n">2</span>
+<pre><code class="language-crystal">bond_t <span class="o">=</span> <span class="t">BondTemplate</span>.new <span class="s">&quot;C&quot;</span>, <span class="s">&quot;NX&quot;</span>, order: <span class="n">2</span>
 residues[<span class="n">0</span>].bonded_residues(bond_t, strict: <span class="n">false</span>).map(<span class="o">&amp;</span>.name) <span class="c"># =&gt; [&quot;CYS&quot;]</span>
 residues[<span class="n">1</span>].bonded_residues(bond_t, strict: <span class="n">false</span>).map(<span class="o">&amp;</span>.name) <span class="c"># =&gt; [&quot;THR&quot;]</span>
 residues[<span class="n">2</span>].bonded_residues(bond_t, strict: <span class="n">false</span>).map(<span class="o">&amp;</span>.name) <span class="c"># =&gt; []</span>
@@ -2062,9 +2057,9 @@ residues[<span class="n">3</span>].bonded_residues.map(<span class="o">&amp;</sp
       
         <div class="doc">
           
-          <p>Returns a single-letter code associated with the residue's type.
-If the residue has no associated type or it doesn't have a code,
-the method returns <em>default</em>.</p>
+          <p>Returns a single-letter code associated with the residue's
+template. If the residue has no associated template or it doesn't
+have a code, the method returns <em>default</em>.</p>
         </div>
       
       <br/>
@@ -2186,12 +2181,12 @@ of <code><a href="../Chem/Residue.html#levo%3F%3ABool-instance-method">#levo?</a
       </div>
     </div>
   
-    <div class="entry-detail" id="each_bonded_residue(bond_t:BondType,forward_only:Bool=true,strict:Bool=true,&amp;:Residue-&gt;):Nil-instance-method">
+    <div class="entry-detail" id="each_bonded_residue(bond_t:BondTemplate,forward_only:Bool=true,strict:Bool=true,&amp;:Residue-&gt;):Nil-instance-method">
       <div class="signature">
         
-        def <strong>each_bonded_residue</strong>(bond_t : <a href="../Chem/BondType.html">BondType</a>, forward_only : Bool = <span class="n">true</span>, strict : Bool = <span class="n">true</span>, & : <a href="../Chem/Residue.html">Residue</a> -> ) : Nil
+        def <strong>each_bonded_residue</strong>(bond_t : <a href="../Chem/BondTemplate.html">BondTemplate</a>, forward_only : Bool = <span class="n">true</span>, strict : Bool = <span class="n">true</span>, & : <a href="../Chem/Residue.html">Residue</a> -> ) : Nil
 
-        <a class="method-permalink" href="#each_bonded_residue%28bond_t%3ABondType%2Cforward_only%3ABool%3Dtrue%2Cstrict%3ABool%3Dtrue%2C%26%3AResidue-%3E%29%3ANil-instance-method">#</a>
+        <a class="method-permalink" href="#each_bonded_residue%28bond_t%3ABondTemplate%2Cforward_only%3ABool%3Dtrue%2Cstrict%3ABool%3Dtrue%2C%26%3AResidue-%3E%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2200,7 +2195,7 @@ of <code><a href="../Chem/Residue.html#levo%3F%3ABool-instance-method">#levo?</a
 <p>If <em>forward_only</em> is <code>false</code>, then bond directionality is ignored.</p>
 <p>If <em>strict</em> is <code>false</code>, bond search checks elements only, and bond
 order is ignored (fuzzy search).</p>
-<p>See <code><a href="../Chem/Residue.html#bonded_residues%28bond_t%3ABondType%2Cforward_only%3ABool%3Dtrue%2Cstrict%3ABool%3Dtrue%29%3AArray%28Residue%29-instance-method">#bonded_residues(bond_t, forward_only, strict)</a></code> for examples.</p>
+<p>See <code><a href="../Chem/Residue.html#bonded_residues%28bond_t%3ABondTemplate%2Cforward_only%3ABool%3Dtrue%2Cstrict%3ABool%3Dtrue%29%3AArray%28Residue%29-instance-method">#bonded_residues(bond_t, forward_only, strict)</a></code> for examples.</p>
         </div>
       
       <br/>
@@ -2349,34 +2344,6 @@ and the values of all instance variables.</p>
           
           <p>Returns <code>true</code> if the residue is a ion residue, else <code>false</code>.</p>
         </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="kind:Kind-instance-method">
-      <div class="signature">
-        
-        def <strong>kind</strong> : <a href="../Chem/Residue/Kind.html">Kind</a>
-
-        <a class="method-permalink" href="#kind%3AKind-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="kind=(kind:Kind)-instance-method">
-      <div class="signature">
-        
-        def <strong>kind=</strong>(kind : <a href="../Chem/Residue/Kind.html">Kind</a>)
-
-        <a class="method-permalink" href="#kind%3D%28kind%3AKind%29-instance-method">#</a>
-      </div>
       
       <br/>
       <div>
@@ -2617,7 +2584,7 @@ Refer to <code><a href="../Chem/Residue.html#pred%3F%28strict%3ABool%3Dtrue%2Cus
         <div class="doc">
           
           <p>Returns the preceding residue if exists, otherwise <code>nil</code>.</p>
-<p>It uses the link bond type of the associated residue type, if
+<p>It uses the link bond type of the associated residue template, if
 present, to search for the previous residue. Thus, link bond
 determines the direction, e.g., C(i-1)-N(i). Be aware that atom
 types must match exactly to find a residue unless <em>strict</em> is
@@ -2803,7 +2770,7 @@ Refer to <code><a href="../Chem/Residue.html#succ%3F%28strict%3ABool%3Dtrue%2Cus
         <div class="doc">
           
           <p>Returns the following residue if exists, otherwise <code>nil</code>.</p>
-<p>It uses the link bond type of the associated residue type, if
+<p>It uses the link bond type of the associated residue template, if
 present, to search for the next residue. Thus, link bond
 determines the direction, e.g., C(i)-N(i+1). Be aware that atom
 types must match exactly to find a residue unless <em>strict</em> is
@@ -2814,6 +2781,26 @@ disabled by setting <em>use_numbering</em> to <code>false</code>.</p>
 <p>Note that when multiple residues can be connected to the same
 residue (e.g., branched polymers), it returns the first residue
 among them.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="template:ResidueTemplate?-instance-method">
+      <div class="signature">
+        
+        def <strong>template</strong> : <a href="../Chem/ResidueTemplate.html">ResidueTemplate</a>?
+
+        <a class="method-permalink" href="#template%3AResidueTemplate%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns associated residue template if registered, otherwise nil.</p>
+<p>The template is fetched by the residue name.</p>
         </div>
       
       <br/>
@@ -2866,19 +2853,27 @@ which includes its class name and its object address.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="type:ResidueType?-instance-method">
+    <div class="entry-detail" id="type:ResidueType-instance-method">
       <div class="signature">
         
-        def <strong>type</strong> : <a href="../Chem/ResidueType.html">ResidueType</a>?
+        def <strong>type</strong> : <a href="../Chem/ResidueType.html">ResidueType</a>
 
-        <a class="method-permalink" href="#type%3AResidueType%3F-instance-method">#</a>
+        <a class="method-permalink" href="#type%3AResidueType-instance-method">#</a>
       </div>
       
-        <div class="doc">
-          
-          <p>Returns associated residue type if registered, otherwise nil.</p>
-<p>The type of a residue is fetched by its name.</p>
-        </div>
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="type=(type:ResidueType)-instance-method">
+      <div class="signature">
+        
+        def <strong>type=</strong>(type : <a href="../Chem/ResidueType.html">ResidueType</a>)
+
+        <a class="method-permalink" href="#type%3D%28type%3AResidueType%29-instance-method">#</a>
+      </div>
       
       <br/>
       <div>
@@ -2897,8 +2892,8 @@ which includes its class name and its object address.</p>
         <div class="doc">
           
           <p>Returns <code>true</code> if the residue is a water residue, else <code>false</code>.
-This is done by checking if the associated residue type (if any)
-correspond to the water template.</p>
+This is done by checking if the associated residue template (if
+any) correspond to the water template.</p>
         </div>
       
       <br/>

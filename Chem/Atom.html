@@ -86,8 +86,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/AtomType" data-name="chem::atomtype">
-      <a href="../Chem/AtomType.html">AtomType</a>
+  <li class=" " data-id="chem.cr/Chem/AtomTemplate" data-name="chem::atomtemplate">
+      <a href="../Chem/AtomTemplate.html">AtomTemplate</a>
       
     </li>
   
@@ -116,8 +116,8 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/BondType" data-name="chem::bondtype">
-      <a href="../Chem/BondType.html">BondType</a>
+  <li class=" " data-id="chem.cr/Chem/BondTemplate" data-name="chem::bondtemplate">
+      <a href="../Chem/BondTemplate.html">BondTemplate</a>
       
     </li>
   
@@ -441,18 +441,8 @@
       
     </li>
   
-  <li class="parent " data-id="chem.cr/Chem/Residue" data-name="chem::residue">
+  <li class=" " data-id="chem.cr/Chem/Residue" data-name="chem::residue">
       <a href="../Chem/Residue.html">Residue</a>
-      
-        <ul>
-  
-  <li class=" " data-id="chem.cr/Chem/Residue/Kind" data-name="chem::residue::kind">
-      <a href="../Chem/Residue/Kind.html">Kind</a>
-      
-    </li>
-  
-</ul>
-
       
     </li>
   
@@ -461,38 +451,43 @@
       
     </li>
   
-  <li class="parent " data-id="chem.cr/Chem/ResidueType" data-name="chem::residuetype">
+  <li class="parent " data-id="chem.cr/Chem/ResidueTemplate" data-name="chem::residuetemplate">
+      <a href="../Chem/ResidueTemplate.html">ResidueTemplate</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueTemplate/Builder" data-name="chem::residuetemplate::builder">
+      <a href="../Chem/ResidueTemplate/Builder.html">Builder</a>
+      
+    </li>
+  
+  <li class="parent " data-id="chem.cr/Chem/ResidueTemplate/Parser" data-name="chem::residuetemplate::parser">
+      <a href="../Chem/ResidueTemplate/Parser.html">Parser</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueTemplate/Parser/AtomRecord" data-name="chem::residuetemplate::parser::atomrecord">
+      <a href="../Chem/ResidueTemplate/Parser/AtomRecord.html">AtomRecord</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueTemplate/Parser/BondRecord" data-name="chem::residuetemplate::parser::bondrecord">
+      <a href="../Chem/ResidueTemplate/Parser/BondRecord.html">BondRecord</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/ResidueType" data-name="chem::residuetype">
       <a href="../Chem/ResidueType.html">ResidueType</a>
-      
-        <ul>
-  
-  <li class=" " data-id="chem.cr/Chem/ResidueType/Builder" data-name="chem::residuetype::builder">
-      <a href="../Chem/ResidueType/Builder.html">Builder</a>
-      
-    </li>
-  
-  <li class="parent " data-id="chem.cr/Chem/ResidueType/Parser" data-name="chem::residuetype::parser">
-      <a href="../Chem/ResidueType/Parser.html">Parser</a>
-      
-        <ul>
-  
-  <li class=" " data-id="chem.cr/Chem/ResidueType/Parser/AtomRecord" data-name="chem::residuetype::parser::atomrecord">
-      <a href="../Chem/ResidueType/Parser/AtomRecord.html">AtomRecord</a>
-      
-    </li>
-  
-  <li class=" " data-id="chem.cr/Chem/ResidueType/Parser/BondRecord" data-name="chem::residuetype::parser::bondrecord">
-      <a href="../Chem/ResidueType/Parser/BondRecord.html">BondRecord</a>
-      
-    </li>
-  
-</ul>
-
-      
-    </li>
-  
-</ul>
-
       
     </li>
   
@@ -910,7 +905,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#%3D%3D%3D%28atom_t%3AAtomType%29%3ABool-instance-method" class="signature"><strong>#===</strong>(atom_t : AtomType) : Bool</a>
+        <a href="#%3D%3D%3D%28atom_t%3AAtomTemplate%29%3ABool-instance-method" class="signature"><strong>#===</strong>(atom_t : AtomTemplate) : Bool</a>
         
           <div class="summary"><p>Case equality.</p></div>
         
@@ -1480,7 +1475,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#match%3F%28atom_t%3AAtomType%29%3ABool-instance-method" class="signature"><strong>#match?</strong>(atom_t : AtomType) : Bool</a>
+        <a href="#match%3F%28atom_t%3AAtomTemplate%29%3ABool-instance-method" class="signature"><strong>#match?</strong>(atom_t : AtomTemplate) : Bool</a>
         
           <div class="summary"><p>Matches <em>self</em> against <em>atom_t</em>.</p></div>
         
@@ -2211,24 +2206,24 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       </div>
     </div>
   
-    <div class="entry-detail" id="===(atom_t:AtomType):Bool-instance-method">
+    <div class="entry-detail" id="===(atom_t:AtomTemplate):Bool-instance-method">
       <div class="signature">
         
-        def <strong>===</strong>(atom_t : <a href="../Chem/AtomType.html">AtomType</a>) : Bool
+        def <strong>===</strong>(atom_t : <a href="../Chem/AtomTemplate.html">AtomTemplate</a>) : Bool
 
-        <a class="method-permalink" href="#%3D%3D%3D%28atom_t%3AAtomType%29%3ABool-instance-method">#</a>
+        <a class="method-permalink" href="#%3D%3D%3D%28atom_t%3AAtomTemplate%29%3ABool-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Case equality. This is equivalent to <code><a href="../Chem/Atom.html#match%3F%28atom_t%3AAtomType%29%3ABool-instance-method">#match?</a></code>.</p>
+          <p>Case equality. This is equivalent to <code><a href="../Chem/Atom.html#match%3F%28atom_t%3AAtomTemplate%29%3ABool-instance-method">#match?</a></code>.</p>
 <pre><code class="language-crystal">structure <span class="o">=</span> <span class="t">Structure</span>.read <span class="s">&quot;peptide.pdb&quot;</span>
 desc <span class="o">=</span> <span class="k">case</span> structure.dig(<span class="s">&#39;A&#39;</span>, <span class="n">5</span>, <span class="s">&quot;CA&quot;</span>)
-       <span class="k">when</span> <span class="t">AtomType</span>(<span class="s">&quot;C&quot;</span>)  <span class="k">then</span> <span class="s">&quot;carbonyl carbon&quot;</span>
-       <span class="k">when</span> <span class="t">AtomType</span>(<span class="s">&quot;CA&quot;</span>) <span class="k">then</span> <span class="s">&quot;alpha carbon&quot;</span>
-       <span class="k">when</span> <span class="t">AtomType</span>(<span class="s">&quot;CB&quot;</span>) <span class="k">then</span> <span class="s">&quot;beta carbon&quot;</span>
-       <span class="k">when</span> <span class="t">AtomType</span>(<span class="s">&quot;CG&quot;</span>) <span class="k">then</span> <span class="s">&quot;gamma carbon&quot;</span>
-       <span class="k">when</span> <span class="t">AtomType</span>(<span class="s">&quot;CD&quot;</span>) <span class="k">then</span> <span class="s">&quot;delta carbon&quot;</span>
+       <span class="k">when</span> <span class="t">AtomTemplate</span>(<span class="s">&quot;C&quot;</span>)  <span class="k">then</span> <span class="s">&quot;carbonyl carbon&quot;</span>
+       <span class="k">when</span> <span class="t">AtomTemplate</span>(<span class="s">&quot;CA&quot;</span>) <span class="k">then</span> <span class="s">&quot;alpha carbon&quot;</span>
+       <span class="k">when</span> <span class="t">AtomTemplate</span>(<span class="s">&quot;CB&quot;</span>) <span class="k">then</span> <span class="s">&quot;beta carbon&quot;</span>
+       <span class="k">when</span> <span class="t">AtomTemplate</span>(<span class="s">&quot;CG&quot;</span>) <span class="k">then</span> <span class="s">&quot;gamma carbon&quot;</span>
+       <span class="k">when</span> <span class="t">AtomTemplate</span>(<span class="s">&quot;CD&quot;</span>) <span class="k">then</span> <span class="s">&quot;delta carbon&quot;</span>
        <span class="k">when</span> <span class="t">PeriodicTable</span><span class="t">::</span><span class="t">C</span>         <span class="k">then</span> <span class="s">&quot;carbon&quot;</span>
        <span class="k">else</span>                               <span class="s">&quot;non-carbon&quot;</span>
        <span class="k">end</span>
@@ -2255,11 +2250,11 @@ desc <span class="c"># =&gt; &quot;alpha carbon&quot;</span></code></pre>
 otherwise false.</p>
 <pre><code class="language-crystal">structure <span class="o">=</span> <span class="t">Structure</span>.read <span class="s">&quot;peptide.pdb&quot;</span>
 desc <span class="o">=</span> <span class="k">case</span> structure.dig(<span class="s">&#39;A&#39;</span>, <span class="n">5</span>, <span class="s">&quot;CK&quot;</span>)
-       <span class="k">when</span> <span class="t">AtomType</span>(<span class="s">&quot;C&quot;</span>)  <span class="k">then</span> <span class="s">&quot;carbonyl carbon&quot;</span>
-       <span class="k">when</span> <span class="t">AtomType</span>(<span class="s">&quot;CA&quot;</span>) <span class="k">then</span> <span class="s">&quot;alpha carbon&quot;</span>
-       <span class="k">when</span> <span class="t">AtomType</span>(<span class="s">&quot;CB&quot;</span>) <span class="k">then</span> <span class="s">&quot;beta carbon&quot;</span>
-       <span class="k">when</span> <span class="t">AtomType</span>(<span class="s">&quot;CG&quot;</span>) <span class="k">then</span> <span class="s">&quot;gamma carbon&quot;</span>
-       <span class="k">when</span> <span class="t">AtomType</span>(<span class="s">&quot;CD&quot;</span>) <span class="k">then</span> <span class="s">&quot;delta carbon&quot;</span>
+       <span class="k">when</span> <span class="t">AtomTemplate</span>(<span class="s">&quot;C&quot;</span>)  <span class="k">then</span> <span class="s">&quot;carbonyl carbon&quot;</span>
+       <span class="k">when</span> <span class="t">AtomTemplate</span>(<span class="s">&quot;CA&quot;</span>) <span class="k">then</span> <span class="s">&quot;alpha carbon&quot;</span>
+       <span class="k">when</span> <span class="t">AtomTemplate</span>(<span class="s">&quot;CB&quot;</span>) <span class="k">then</span> <span class="s">&quot;beta carbon&quot;</span>
+       <span class="k">when</span> <span class="t">AtomTemplate</span>(<span class="s">&quot;CG&quot;</span>) <span class="k">then</span> <span class="s">&quot;gamma carbon&quot;</span>
+       <span class="k">when</span> <span class="t">AtomTemplate</span>(<span class="s">&quot;CD&quot;</span>) <span class="k">then</span> <span class="s">&quot;delta carbon&quot;</span>
        <span class="k">when</span> <span class="t">PeriodicTable</span><span class="t">::</span><span class="t">C</span>         <span class="k">then</span> <span class="s">&quot;carbon&quot;</span>
        <span class="k">else</span>                               <span class="s">&quot;non-carbon&quot;</span>
        <span class="k">end</span>
@@ -3864,12 +3859,12 @@ residue, else <code>false</code>.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="match?(atom_t:AtomType):Bool-instance-method">
+    <div class="entry-detail" id="match?(atom_t:AtomTemplate):Bool-instance-method">
       <div class="signature">
         
-        def <strong>match?</strong>(atom_t : <a href="../Chem/AtomType.html">AtomType</a>) : Bool
+        def <strong>match?</strong>(atom_t : <a href="../Chem/AtomTemplate.html">AtomTemplate</a>) : Bool
 
-        <a class="method-permalink" href="#match%3F%28atom_t%3AAtomType%29%3ABool-instance-method">#</a>
+        <a class="method-permalink" href="#match%3F%28atom_t%3AAtomTemplate%29%3ABool-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -3877,9 +3872,9 @@ residue, else <code>false</code>.</p>
           <p>Matches <em>self</em> against <em>atom_t</em>.</p>
 <p>Checking for a match considers both atom name and element.</p>
 <pre><code class="language-crystal">atom <span class="o">=</span> <span class="t">Structure</span>.read(<span class="s">&quot;peptide.pdb&quot;</span>).dig <span class="s">&#39;A&#39;</span>, <span class="n">1</span>, <span class="s">&quot;CA&quot;</span>
-atom.match?(<span class="t">AtomType</span>.new(<span class="s">&quot;CA&quot;</span>))               <span class="c"># =&gt; true</span>
-atom.match?(<span class="t">AtomType</span>.new(<span class="s">&quot;CA&quot;</span>, element: <span class="s">&quot;N&quot;</span>)) <span class="c"># =&gt; false</span>
-atom.match?(<span class="t">AtomType</span>.new(<span class="s">&quot;ND2&quot;</span>))              <span class="c"># =&gt; false</span></code></pre>
+atom.match?(<span class="t">AtomTemplate</span>.new(<span class="s">&quot;CA&quot;</span>))               <span class="c"># =&gt; true</span>
+atom.match?(<span class="t">AtomTemplate</span>.new(<span class="s">&quot;CA&quot;</span>, element: <span class="s">&quot;N&quot;</span>)) <span class="c"># =&gt; false</span>
+atom.match?(<span class="t">AtomTemplate</span>.new(<span class="s">&quot;ND2&quot;</span>))              <span class="c"># =&gt; false</span></code></pre>
         </div>
       
       <br/>
