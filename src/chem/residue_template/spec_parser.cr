@@ -1,4 +1,4 @@
-class Chem::ResidueTemplate::Parser
+class Chem::ResidueTemplate::SpecParser
   ALIASES = {"backbone" => "N(-H)-CA(-HA)(-C=O)"}
 
   record AtomRecord, name : String,

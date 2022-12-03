@@ -6,11 +6,11 @@ class Chem::ResidueTemplate::Builder
   @names = [] of String
   @root_atom : String?
   @symmetric_atom_groups = [] of Array(Tuple(String, String))
-  @structure_parser : Parser?
+  @spec_parser : SpecParser?
 
   def build : ResidueTemplate
     raise "Missing residue name" if @names.empty?
-    raise "Empty structure" unless parser = @structure_parser
+    raise "Empty structure" unless parser = @spec_parser
     if @type.protein? && {"C", "N", "CA"}.none? { |name| parser.atom_map[name]? }
       raise "Missing backbone atoms for #{@names.first}"
     end
@@ -101,7 +101,7 @@ class Chem::ResidueTemplate::Builder
   end
 
   private def check_atom(name : String) : Nil
-    unless (parser = @structure_parser) && parser.atom_map[name]?
+    unless (parser = @spec_parser) && parser.atom_map[name]?
       raise "Unknown atom #{name}"
     end
   end
@@ -151,11 +151,11 @@ class Chem::ResidueTemplate::Builder
   end
 
   def spec(spec : String, aliases : Hash(String, String)? = nil) : Nil
-    raise "Residue structure already defined" if @structure_parser
-    parser = ResidueTemplate::Parser.new(spec, aliases)
+    raise "Residue structure already defined" if @spec_parser
+    parser = SpecParser.new(spec, aliases)
     parser.parse
     raise "Empty structure" if parser.atom_map.empty?
-    @structure_parser = parser
+    @spec_parser = parser
   end
 
   def symmetry(*pairs : Tuple(String, String)) : Nil

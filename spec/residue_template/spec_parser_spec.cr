@@ -1,8 +1,8 @@
 require "../spec_helper"
 
-describe Chem::ResidueTemplate::Parser do
+describe Chem::ResidueTemplate::SpecParser do
   it "parses aliases" do
-    parser = Chem::ResidueTemplate::Parser.new(
+    parser = Chem::ResidueTemplate::SpecParser.new(
       "{foo}-CB-{bar}-CD2={baz}",
       aliases: {
         "foo" => "C-CA",
@@ -20,7 +20,7 @@ describe Chem::ResidueTemplate::Parser do
   end
 
   it "parses a complex residue" do
-    parser = Chem::ResidueTemplate::Parser.new <<-SPEC.gsub(/\s+/, "")
+    parser = Chem::ResidueTemplate::SpecParser.new <<-SPEC.gsub(/\s+/, "")
       C1%1(-O25-C26)=C2(-O27-C28)-C3=C4(-C5%2=C6-%1)-C9-C8
       (-C7(=O24)-%2)-C10-C11%3-C12-C13-N14(-C15-C16-%3)
       -C17-C18%4=C19-C20=C21-C22=C23-%4
@@ -33,13 +33,13 @@ describe Chem::ResidueTemplate::Parser do
 
   it "raises if a bond specifies the same atom" do
     expect_raises Chem::ParseException, "Atom O cannot be bonded to itself" do
-      Chem::ResidueTemplate::Parser.new("O%1=%1").parse
+      Chem::ResidueTemplate::SpecParser.new("O%1=%1").parse
     end
   end
 
   it "raises when adding the same bond twice with different order" do
     expect_raises Chem::ParseException, "A bond between CD2 and CE2 already exists" do
-      Chem::ResidueTemplate::Parser.new("CD2%1=CE2-%1").parse
+      Chem::ResidueTemplate::SpecParser.new("CD2%1=CE2-%1").parse
     end
   end
 
@@ -48,12 +48,12 @@ describe Chem::ResidueTemplate::Parser do
       Chem::ParseException,
       "Expected a bond at the beginning of a branch, got '1'"
     ) do
-      Chem::ResidueTemplate::Parser.new("CB-SG(1)").parse
+      Chem::ResidueTemplate::SpecParser.new("CB-SG(1)").parse
     end
   end
 
   it "parses an atom with explicit element" do
-    parser = Chem::ResidueTemplate::Parser.new "[CA|Ca]"
+    parser = Chem::ResidueTemplate::SpecParser.new "[CA|Ca]"
     parser.parse
     parser.atoms.size.should eq 1
     parser.bonds.size.should eq 0
@@ -62,7 +62,7 @@ describe Chem::ResidueTemplate::Parser do
 
   it "parses labels" do
     spec = "CB-CG%1=CD1-NE1-CE2(=CD2%2#%1)-CZ2=CH2-CZ3=CE3=%2"
-    parser = Chem::ResidueTemplate::Parser.new spec
+    parser = Chem::ResidueTemplate::SpecParser.new spec
     parser.parse
     parser.atoms.size.should eq 10
     parser.bonds.size.should eq 11
@@ -78,36 +78,36 @@ describe Chem::ResidueTemplate::Parser do
 
   it "raises if label is before an atom" do
     expect_raises(Chem::ParseException, "Expected atom before label %1") do
-      Chem::ResidueTemplate::Parser.new("%1CB").parse
+      Chem::ResidueTemplate::SpecParser.new("%1CB").parse
     end
   end
 
   it "raises if label is unknown" do
     expect_raises(Chem::ParseException, "Unknown label %1") do
-      Chem::ResidueTemplate::Parser.new("CB-CG-CD-%1").parse
+      Chem::ResidueTemplate::SpecParser.new("CB-CG-CD-%1").parse
     end
   end
 
   it "raises if label is duplicate" do
     expect_raises(Chem::ParseException, "Duplicate label %1") do
-      Chem::ResidueTemplate::Parser.new("CB%1-CG-CD%1").parse
+      Chem::ResidueTemplate::SpecParser.new("CB%1-CG-CD%1").parse
     end
   end
 
   it "raises if unused label" do
     expect_raises(Chem::ParseException, "Unclosed label %1") do
-      Chem::ResidueTemplate::Parser.new("CB%1-CG-CD").parse
+      Chem::ResidueTemplate::SpecParser.new("CB%1-CG-CD").parse
     end
   end
 
   it "raises if atom is duplicate" do
     expect_raises(Chem::ParseException, "Duplicate atom CB") do
-      Chem::ResidueTemplate::Parser.new("CB-CG-CD-CB").parse
+      Chem::ResidueTemplate::SpecParser.new("CB-CG-CD-CB").parse
     end
   end
 
   it "parses an atom with negative charge" do
-    parser = Chem::ResidueTemplate::Parser.new("[CB-]-CG")
+    parser = Chem::ResidueTemplate::SpecParser.new("[CB-]-CG")
     parser.parse
     parser.atoms.size.should eq 2
     parser.bonds.size.should eq 1
@@ -116,33 +116,33 @@ describe Chem::ResidueTemplate::Parser do
 
   it "raises if bond is at the end" do
     expect_raises(Chem::ParseException, "Unmatched bond") do
-      Chem::ResidueTemplate::Parser.new("CB-CG=").parse
+      Chem::ResidueTemplate::SpecParser.new("CB-CG=").parse
     end
   end
 
   it "raises if bond is at the end of a branch" do
     expect_raises(Chem::ParseException, "Unmatched bond") do
-      Chem::ResidueTemplate::Parser.new("CB-CG(-CD1-)").parse
+      Chem::ResidueTemplate::SpecParser.new("CB-CG(-CD1-)").parse
     end
   end
 
   it "raises if two contiguous bonds" do
     expect_raises(Chem::ParseException, "Unmatched bond") do
-      Chem::ResidueTemplate::Parser.new("CB-CG-=CD").parse
+      Chem::ResidueTemplate::SpecParser.new("CB-CG-=CD").parse
     end
     expect_raises(Chem::ParseException, "Unmatched bond") do
-      Chem::ResidueTemplate::Parser.new("CB-CG--").parse
+      Chem::ResidueTemplate::SpecParser.new("CB-CG--").parse
     end
   end
 
   it "raises if a bond is followed by a branch" do
     expect_raises(Chem::ParseException, "Branching bond must be inside the branch") do
-      Chem::ResidueTemplate::Parser.new("CB-CG-(-CD1)").parse
+      Chem::ResidueTemplate::SpecParser.new("CB-CG-(-CD1)").parse
     end
   end
 
   it "parses negative charge at the end of branch" do
-    parser = Chem::ResidueTemplate::Parser.new "S(=O1)(=O2)(-[O3-])(-[O4-])"
+    parser = Chem::ResidueTemplate::SpecParser.new "S(=O1)(=O2)(-[O3-])(-[O4-])"
     parser.parse
     parser.atoms.size.should eq 5
     parser.bonds.size.should eq 4
@@ -150,7 +150,7 @@ describe Chem::ResidueTemplate::Parser do
   end
 
   it "parses implicit bonds" do
-    parser = Chem::ResidueTemplate::Parser.new "O1=SG(=*)(-[O3-])-*"
+    parser = Chem::ResidueTemplate::SpecParser.new "O1=SG(=*)(-[O3-])-*"
     parser.parse
     parser.atoms.size.should eq 3
     parser.bonds.size.should eq 2
@@ -166,7 +166,7 @@ describe Chem::ResidueTemplate::Parser do
       Chem::ParseException,
       "Implicit bonds must be at the end of a branch or string"
     ) do
-      Chem::ResidueTemplate::Parser.new("CB-SG-*-CD").parse
+      Chem::ResidueTemplate::SpecParser.new("CB-SG-*-CD").parse
     end
   end
 
@@ -175,18 +175,18 @@ describe Chem::ResidueTemplate::Parser do
       Chem::ParseException,
       "Expected bond before implicit atom '*'"
     ) do
-      Chem::ResidueTemplate::Parser.new("CB-SG*-CD").parse
+      Chem::ResidueTemplate::SpecParser.new("CB-SG*-CD").parse
     end
   end
 
   it "raises if two atoms are contiguous" do
     expect_raises(Chem::ParseException, "Expected bond between atoms") do
-      Chem::ResidueTemplate::Parser.new("C1C2").parse
+      Chem::ResidueTemplate::SpecParser.new("C1C2").parse
     end
   end
 
   it "parses explicit hydrogens" do
-    parser = Chem::ResidueTemplate::Parser.new "[NH4+]"
+    parser = Chem::ResidueTemplate::SpecParser.new "[NH4+]"
     parser.parse
     parser.atoms.size.should eq 1
     parser.bonds.size.should eq 0
@@ -197,12 +197,12 @@ describe Chem::ResidueTemplate::Parser do
 
   it "raises on numeric atom name" do
     expect_raises(Chem::ParseException, "Expected atom name") do
-      Chem::ResidueTemplate::Parser.new("[12H2+]").parse
+      Chem::ResidueTemplate::SpecParser.new("[12H2+]").parse
     end
   end
 
   it "parses an atom name ending with H2 in brackets" do
-    parser = Chem::ResidueTemplate::Parser.new "[NH2H4+]"
+    parser = Chem::ResidueTemplate::SpecParser.new "[NH2H4+]"
     parser.parse
     parser.atoms.size.should eq 1
     parser.bonds.size.should eq 0
@@ -212,7 +212,7 @@ describe Chem::ResidueTemplate::Parser do
   end
 
   it "parses consecutive charge signs" do
-    parser = Chem::ResidueTemplate::Parser.new "[TI++++]"
+    parser = Chem::ResidueTemplate::SpecParser.new "[TI++++]"
     parser.parse
     parser.atoms.size.should eq 1
     parser.bonds.size.should eq 0
