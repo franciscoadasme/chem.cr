@@ -9,7 +9,7 @@ describe Chem::ResidueTemplate::Builder do
       name "Gly"
       code 'G'
       type :protein
-      structure "N(-H)-CA(-C=O)"
+      spec "N(-H)-CA(-C=O)"
     end
     residue.atom_names.should eq ["N", "H", "CA", "HA1", "HA2", "C", "O"]
     residue.bonds.size.should eq 6
@@ -22,7 +22,7 @@ describe Chem::ResidueTemplate::Builder do
       name "ALA"
       code 'A'
       type :protein
-      structure "{backbone}-CB"
+      spec "{backbone}-CB"
     end
     residue.atom_names.should eq bb_names + ["CB", "HB1", "HB2", "HB3"]
     residue.bonds.size.should eq 9
@@ -35,7 +35,7 @@ describe Chem::ResidueTemplate::Builder do
       name "ILE"
       code 'I'
       type :protein
-      structure "{backbone}-CB(-CG1-CD1)-CG2"
+      spec "{backbone}-CB(-CG1-CD1)-CG2"
     end
     names = bb_names + ["CB", "HB", "CG1", "HG11", "HG12", "CD1", "HD11", "HD12",
                         "HD13", "CG2", "HG21", "HG22", "HG23"]
@@ -50,7 +50,7 @@ describe Chem::ResidueTemplate::Builder do
       name "LYS"
       code 'K'
       type :protein
-      structure "{backbone}-CB-CG-CD-CE-[NZH3+]"
+      spec "{backbone}-CB-CG-CD-CE-[NZH3+]"
     end
     names = bb_names + ["CB", "HB1", "HB2", "CG", "HG1", "HG2", "CD", "HD1", "HD2",
                         "CE", "HE1", "HE2", "NZ", "HZ1", "HZ2", "HZ3"]
@@ -65,7 +65,7 @@ describe Chem::ResidueTemplate::Builder do
       name "ASP"
       code 'D'
       type :protein
-      structure "{backbone}-CB-CG(=OE1)-[OE2-]"
+      spec "{backbone}-CB-CG(=OE1)-[OE2-]"
     end
     residue.atom_names.should eq(bb_names + ["CB", "HB1", "HB2", "CG", "OE1", "OE2"])
     residue.bonds.size.should eq 11
@@ -75,7 +75,7 @@ describe Chem::ResidueTemplate::Builder do
   it "builds a residue with charge +2" do
     residue = Chem::ResidueTemplate.build do
       name "MG"
-      structure "[MG+2]"
+      spec "[MG+2]"
     end
     residue.atoms.size.should eq 1
     residue.bonds.size.should eq 0
@@ -88,7 +88,7 @@ describe Chem::ResidueTemplate::Builder do
       name "ARG"
       code 'R'
       type :protein
-      structure "{backbone}-CB-CG-CD-NE-CZ(-NH1)=[NH2H2+]"
+      spec "{backbone}-CB-CG-CD-NE-CZ(-NH1)=[NH2H2+]"
     end
 
     names = bb_names + ["CB", "HB1", "HB2", "CG", "HG1", "HG2", "CD", "HD1", "HD2",
@@ -105,7 +105,7 @@ describe Chem::ResidueTemplate::Builder do
       name "HIS"
       code 'H'
       type :protein
-      structure "{backbone}-CB-CG%1=CD2-NE2=CE1-ND1-%1"
+      spec "{backbone}-CB-CG%1=CD2-NE2=CE1-ND1-%1"
     end
 
     names = bb_names + ["CB", "HB1", "HB2", "CG", "CD2", "HD2", "NE2", "CE1", "HE1",
@@ -121,7 +121,7 @@ describe Chem::ResidueTemplate::Builder do
       name "HIS"
       code 'H'
       type :protein
-      structure "{backbone}-CB-CG%1-ND1-CE1=NE2-CD2=%1"
+      spec "{backbone}-CB-CG%1-ND1-CE1=NE2-CD2=%1"
     end
 
     names = bb_names + ["CB", "HB1", "HB2", "CG", "ND1", "HD1", "CE1", "HE1", "NE2",
@@ -137,7 +137,7 @@ describe Chem::ResidueTemplate::Builder do
       name "TRP"
       code 'W'
       type :protein
-      structure "{backbone}-CB-CG%1=CD1-NE1-CE2(=CD2%2-%1)-CZ2=CH2-CZ3=CE3-%2"
+      spec "{backbone}-CB-CG%1=CD1-NE1-CE2(=CD2%2-%1)-CZ2=CH2-CZ3=CE3-%2"
     end
 
     names = bb_names + ["CB", "HB1", "HB2", "CG", "CD1", "HD1", "NE1", "HE1", "CE2",
@@ -153,7 +153,7 @@ describe Chem::ResidueTemplate::Builder do
       name "PRO"
       code 'P'
       type :protein
-      structure "N%1-CA(-C=O)-CB-CG-CD-%1"
+      spec "N%1-CA(-C=O)-CB-CG-CD-%1"
     end
     residue.atom_names.should eq [
       "N", "CA", "HA", "C", "O", "CB", "HB1", "HB2", "CG", "HG1", "HG2", "CD",
@@ -166,7 +166,7 @@ describe Chem::ResidueTemplate::Builder do
   it "builds a polymer residue" do
     residue_t = Chem::ResidueTemplate.build do
       name "UNK"
-      structure "C1-C2-C3"
+      spec "C1-C2-C3"
       link_adjacent_by "C3=C1"
       root "C2"
     end
@@ -182,7 +182,7 @@ describe Chem::ResidueTemplate::Builder do
   it "builds a rooted residue" do
     residue_t = Chem::ResidueTemplate.build do
       name "UNK"
-      structure "C1=C2"
+      spec "C1=C2"
       root "C2"
     end
 
@@ -196,7 +196,7 @@ describe Chem::ResidueTemplate::Builder do
       description "Glycerol"
       name "GOL"
       type :solvent
-      structure "O1-C1-C2(-C3-O3)-O2"
+      spec "O1-C1-C2(-C3-O3)-O2"
       root "C2"
     end
     residue.atom_names.should eq [
@@ -208,7 +208,7 @@ describe Chem::ResidueTemplate::Builder do
   it "builds a residue with four-letter atom names" do
     residue = Chem::ResidueTemplate.build do
       name "CTER"
-      structure "CA-C(=O)-OXT"
+      spec "CA-C(=O)-OXT"
       root "C"
     end
     residue.atom_names.should eq ["CA", "HA1", "HA2", "HA3", "C", "O", "OXT", "HXT"]
@@ -221,7 +221,7 @@ describe Chem::ResidueTemplate::Builder do
         name "TRP"
         code 'W'
         type :protein
-        structure "{backbone}-CB-CG(=CD)(-CZ)-[OTX-]"
+        spec "{backbone}-CB-CG(=CD)(-CZ)-[OTX-]"
       end
     end
   end
@@ -230,7 +230,7 @@ describe Chem::ResidueTemplate::Builder do
     residue = Chem::ResidueTemplate.build do
       description "Donepezil"
       name "E20"
-      structure <<-SPEC.gsub(/\s+/, "")
+      spec <<-SPEC.gsub(/\s+/, "")
           C1%1(-O25-C26)=C2(-O27-C28)-C3=C4(-C5%2=C6-%1)-C9-C8
           (-C7(=O24)-%2)-C10-C11%3-C12-C13-N14(-C15-C16-%3)
           -C17-C18%4=C19-C20=C21-C22=C23-%4
@@ -249,7 +249,7 @@ describe Chem::ResidueTemplate::Builder do
   it "raises if a symmetry atom is unknown" do
     expect_raises(Chem::Error, "Unknown atom C13") do
       Chem::ResidueTemplate.build do
-        structure "C1%1=C2-C3=C4-C5=C6-%1"
+        spec "C1%1=C2-C3=C4-C5=C6-%1"
         symmetry({"C2", "C5"}, {"C13", "C15"})
       end
     end
@@ -258,7 +258,7 @@ describe Chem::ResidueTemplate::Builder do
   it "raises if a symmetry pair includes the same atom" do
     expect_raises(Chem::Error, "C3 cannot be symmetric with itself") do
       Chem::ResidueTemplate.build do
-        structure "C1%1=C2-C3=C4-C5=C6-%1"
+        spec "C1%1=C2-C3=C4-C5=C6-%1"
         symmetry({"C2", "C4"}, {"C3", "C3"})
       end
     end
@@ -267,7 +267,7 @@ describe Chem::ResidueTemplate::Builder do
   it "raises if a symmetry atom is repeated" do
     expect_raises(Chem::Error, "C2 cannot be reassigned for symmetry") do
       Chem::ResidueTemplate.build do
-        structure "C1%1=C2-C3=C4-C5=C6-%1"
+        spec "C1%1=C2-C3=C4-C5=C6-%1"
         symmetry({"C2", "C4"}, {"C5", "C2"})
       end
     end
@@ -277,7 +277,7 @@ describe Chem::ResidueTemplate::Builder do
     expect_raises Chem::Error, "Atom O1 cannot be bonded to itself" do
       Chem::ResidueTemplate.build do
         name "O2"
-        structure "O1=O2"
+        spec "O1=O2"
         link_adjacent_by "O1=O1"
         root "O"
       end
@@ -287,7 +287,7 @@ describe Chem::ResidueTemplate::Builder do
   it "handles multiple valencies" do
     rtype = Chem::ResidueTemplate.build do
       name "UNK"
-      structure "CB-SG"
+      spec "CB-SG"
       root "CB"
     end
     rtype.atoms.size.should eq 6
@@ -298,7 +298,7 @@ describe Chem::ResidueTemplate::Builder do
 
     rtype = Chem::ResidueTemplate.build do
       name "UNK"
-      structure "CB-[SG-]"
+      spec "CB-[SG-]"
       root "CB"
     end
     rtype.atoms.size.should eq 5
@@ -310,7 +310,7 @@ describe Chem::ResidueTemplate::Builder do
 
     rtype = Chem::ResidueTemplate.build do
       name "UNK"
-      structure "S(=O1)(=O2)(-[O3-])(-[O4-])"
+      spec "S(=O1)(=O2)(-[O3-])(-[O4-])"
       root "S"
     end
     rtype.atoms.size.should eq 5
@@ -325,7 +325,7 @@ describe Chem::ResidueTemplate::Builder do
     rtype = Chem::ResidueTemplate.build do
       description "Cysteine"
       name "CYX"
-      structure "CB-SG-*"
+      spec "CB-SG-*"
       root "CB"
     end
     rtype.atoms.size.should eq 5

@@ -150,7 +150,7 @@ class Chem::ResidueTemplate::Builder
     @root_atom = atom_name
   end
 
-  def structure(spec : String, aliases : Hash(String, String)? = nil) : Nil
+  def spec(spec : String, aliases : Hash(String, String)? = nil) : Nil
     raise "Residue structure already defined" if @structure_parser
     parser = ResidueTemplate::Parser.new(spec, aliases)
     parser.parse

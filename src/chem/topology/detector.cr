@@ -3,28 +3,28 @@ class Chem::Topology::Detector
     description "C-ter"
     name "CTER"
     code 'c'
-    structure "CA-C(=O)-OXT"
+    spec "CA-C(=O)-OXT"
     root "C"
   end
   CHARGED_CTER_T = ResidueTemplate.build do
     description "Charged C-ter"
     name "CTER"
     code 'c'
-    structure "CA-C(=O)-[OXT-]"
+    spec "CA-C(=O)-[OXT-]"
     root "C"
   end
   NTER_T = ResidueTemplate.build do
     description "N-ter"
     name "NTER"
     code 'n'
-    structure "CA-N"
+    spec "CA-N"
     root "N"
   end
   CHARGED_NTER_T = ResidueTemplate.build do
     description "Charged N-ter"
     name "NTER"
     code 'n'
-    structure "CA-[NH3+]"
+    spec "CA-[NH3+]"
     root "N"
   end
 

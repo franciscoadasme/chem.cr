@@ -4,7 +4,7 @@ module Chem
     name "ALA"
     code 'A'
     type :protein
-    structure "{backbone}-CB"
+    spec "{backbone}-CB"
   end
 
   ResidueTemplate.register do
@@ -12,7 +12,7 @@ module Chem
     name "ARG"
     code 'R'
     type :protein
-    structure "{backbone}-CB-CG-CD-NE-CZ(-NH1)=[NH2H2+]"
+    spec "{backbone}-CB-CG-CD-NE-CZ(-NH1)=[NH2H2+]"
   end
 
   ResidueTemplate.register do
@@ -20,7 +20,7 @@ module Chem
     name "ASH"
     code 'D'
     type :protein
-    structure "{backbone}-CB-CG(=OD1)-OD2"
+    spec "{backbone}-CB-CG(=OD1)-OD2"
   end
 
   ResidueTemplate.register do
@@ -28,7 +28,7 @@ module Chem
     name "ASN"
     code 'N'
     type :protein
-    structure "{backbone}-CB-CG(-ND2)=OD1"
+    spec "{backbone}-CB-CG(-ND2)=OD1"
   end
 
   ResidueTemplate.register do
@@ -36,7 +36,7 @@ module Chem
     name "ASP"
     code 'D'
     type :protein
-    structure "{backbone}-CB-CG(=OD1)-[OD2-]"
+    spec "{backbone}-CB-CG(=OD1)-[OD2-]"
   end
 
   ResidueTemplate.register do
@@ -44,7 +44,7 @@ module Chem
     name "CYS"
     code 'C'
     type :protein
-    structure "{backbone}-CB-SG"
+    spec "{backbone}-CB-SG"
   end
 
   ResidueTemplate.register do
@@ -52,7 +52,7 @@ module Chem
     name "CYX"
     code 'C'
     type :protein
-    structure "{backbone}-CB-SG-*"
+    spec "{backbone}-CB-SG-*"
   end
 
   ResidueTemplate.register do
@@ -60,7 +60,7 @@ module Chem
     name "GLH"
     code 'E'
     type :protein
-    structure "{backbone}-CB-CG-CD(=OE1)-OE2"
+    spec "{backbone}-CB-CG-CD(=OE1)-OE2"
   end
 
   ResidueTemplate.register do
@@ -68,7 +68,7 @@ module Chem
     name "GLN"
     code 'Q'
     type :protein
-    structure "{backbone}-CB-CG-CD(=OE1)-NE2"
+    spec "{backbone}-CB-CG-CD(=OE1)-NE2"
   end
 
   ResidueTemplate.register do
@@ -76,7 +76,7 @@ module Chem
     name "GLU"
     code 'E'
     type :protein
-    structure "{backbone}-CB-CG-CD(=OE1)-[OE2-]"
+    spec "{backbone}-CB-CG-CD(=OE1)-[OE2-]"
   end
 
   ResidueTemplate.register do
@@ -84,7 +84,7 @@ module Chem
     name "GLY"
     code 'G'
     type :protein
-    structure "N(-H)-CA(-C=O)"
+    spec "N(-H)-CA(-C=O)"
   end
 
   ResidueTemplate.register do
@@ -92,7 +92,7 @@ module Chem
     name "HIS", "HID", "HSD"
     code 'H'
     type :protein
-    structure "{backbone}-CB-CG%1=CD2-NE2=CE1-ND1-%1"
+    spec "{backbone}-CB-CG%1=CD2-NE2=CE1-ND1-%1"
   end
 
   ResidueTemplate.register do
@@ -100,7 +100,7 @@ module Chem
     name "HIE", "HSE"
     code 'H'
     type :protein
-    structure "{backbone}-CB-CG%1=CD2-NE2-CE1=ND1-%1"
+    spec "{backbone}-CB-CG%1=CD2-NE2-CE1=ND1-%1"
   end
 
   ResidueTemplate.register do
@@ -108,7 +108,7 @@ module Chem
     name "HIP", "HSP"
     code 'H'
     type :protein
-    structure "{backbone}-CB-CG%1=CD2-[NE2H+]=CE1-ND1-%1"
+    spec "{backbone}-CB-CG%1=CD2-[NE2H+]=CE1-ND1-%1"
   end
 
   ResidueTemplate.register do
@@ -116,7 +116,7 @@ module Chem
     name "ILE"
     code 'I'
     type :protein
-    structure "{backbone}-CB(-CG1-CD1)-CG2"
+    spec "{backbone}-CB(-CG1-CD1)-CG2"
   end
 
   ResidueTemplate.register do
@@ -124,7 +124,7 @@ module Chem
     name "LEU"
     code 'L'
     type :protein
-    structure "{backbone}-CB-CG(-CD1)-CD2"
+    spec "{backbone}-CB-CG(-CD1)-CD2"
     symmetry({"CD1", "CD2"})
   end
 
@@ -133,7 +133,7 @@ module Chem
     name "LYS"
     code 'K'
     type :protein
-    structure "{backbone}-CB-CG-CD-CE-[NZH3+]"
+    spec "{backbone}-CB-CG-CD-CE-[NZH3+]"
   end
 
   ResidueTemplate.register do
@@ -141,7 +141,7 @@ module Chem
     name "MET"
     code 'M'
     type :protein
-    structure "{backbone}-CB-CG-SD-CE"
+    spec "{backbone}-CB-CG-SD-CE"
   end
 
   ResidueTemplate.register do
@@ -149,7 +149,7 @@ module Chem
     name "PHE"
     code 'F'
     type :protein
-    structure "{backbone}-CB-CG%1=CD1-CE1=CZ-CE2=CD2-%1"
+    spec "{backbone}-CB-CG%1=CD1-CE1=CZ-CE2=CD2-%1"
     symmetry({"CD1", "CD2"}, {"CE1", "CE2"})
   end
 
@@ -158,7 +158,7 @@ module Chem
     name "PRO"
     code 'P'
     type :protein
-    structure "N%1-CA(-C=O)-CB-CG-CD-%1"
+    spec "N%1-CA(-C=O)-CB-CG-CD-%1"
   end
 
   ResidueTemplate.register do
@@ -166,7 +166,7 @@ module Chem
     name "SER"
     code 'S'
     type :protein
-    structure "{backbone}-CB-OG"
+    spec "{backbone}-CB-OG"
   end
 
   ResidueTemplate.register do
@@ -174,7 +174,7 @@ module Chem
     name "THR"
     code 'T'
     type :protein
-    structure "{backbone}-CB(-OG1)-CG2"
+    spec "{backbone}-CB(-OG1)-CG2"
   end
 
   ResidueTemplate.register do
@@ -182,7 +182,7 @@ module Chem
     name "TRP"
     code 'W'
     type :protein
-    structure "{backbone}-CB-CG%1=CD1-NE1-CE2(-CZ2=CH2-CZ3=CE3-CD2%2)=%2-%1"
+    spec "{backbone}-CB-CG%1=CD1-NE1-CE2(-CZ2=CH2-CZ3=CE3-CD2%2)=%2-%1"
   end
 
   ResidueTemplate.register do
@@ -190,7 +190,7 @@ module Chem
     name "TYR"
     code 'Y'
     type :protein
-    structure "{backbone}-CB-CG%1=CD1-CE1=CZ(-OH)-CE2=CD2-%1"
+    spec "{backbone}-CB-CG%1=CD1-CE1=CZ(-OH)-CE2=CD2-%1"
     symmetry({"CD1", "CD2"}, {"CE1", "CE2"})
   end
 
@@ -199,7 +199,7 @@ module Chem
     name "VAL"
     code 'V'
     type :protein
-    structure "{backbone}-CB(-CG1)-CG2"
+    spec "{backbone}-CB(-CG1)-CG2"
     symmetry({"CG1", "CG2"})
   end
 end

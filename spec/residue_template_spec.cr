@@ -3,7 +3,7 @@ require "./spec_helper"
 describe Chem::ResidueTemplate do
   Chem::ResidueTemplate.register do
     name "LFG"
-    structure "[N1H3+]-C2-C3-O4-C5(-C6)=O7"
+    spec "[N1H3+]-C2-C3-O4-C5(-C6)=O7"
     root "C5"
   end
 
@@ -29,7 +29,7 @@ describe Chem::ResidueTemplate do
     it "creates a residue template with multiple names" do
       Chem::ResidueTemplate.register do
         name "LXE", "EGR"
-        structure "C1"
+        spec "C1"
       end
       Chem::ResidueTemplate.fetch("LXE").should be Chem::ResidueTemplate.fetch("EGR")
     end
@@ -38,7 +38,7 @@ describe Chem::ResidueTemplate do
       expect_raises Chem::Error, "LXE residue template already exists" do
         Chem::ResidueTemplate.register do
           name "LXE"
-          structure "C1"
+          spec "C1"
           root "C1"
         end
       end
@@ -49,21 +49,21 @@ describe Chem::ResidueTemplate do
     it "returns a string representation" do
       Chem::ResidueTemplate.build do
         name "O2"
-        structure "O1=O2"
+        spec "O1=O2"
         root "O1"
       end.inspect.should eq "<ResidueTemplate O2>"
 
       Chem::ResidueTemplate.build do
         name "HOH"
         type :solvent
-        structure "O"
+        spec "O"
       end.inspect.should eq "<ResidueTemplate HOH, solvent>"
 
       Chem::ResidueTemplate.build do
         name "GLY"
         code 'G'
         type :protein
-        structure "N(-H)-CA(-C=O)"
+        spec "N(-H)-CA(-C=O)"
       end.inspect.should eq "<ResidueTemplate GLY(G), protein>"
     end
   end
@@ -78,7 +78,7 @@ describe Chem::ResidueTemplate do
             type: protein
             link_bond: C-N
             root: CA
-            structure: "{backbone}-CB-CG%1=CD1-CE1=CZ-CE2=CD2-%1"
+            spec: "{backbone}-CB-CG%1=CD1-CE1=CZ-CE2=CD2-%1"
             symmetry:
               - [[CD1, CD2], [CE1, CE2]]
         aliases:

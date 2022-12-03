@@ -3,6 +3,6 @@ module Chem
     description "Water"
     name "HOH", "WAT", "TIP3"
     type :solvent
-    structure "O"
+    spec "O"
   end
 end

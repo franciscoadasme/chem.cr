@@ -66,7 +66,7 @@ class Chem::ResidueTemplate
           end
           hash["code"]?.try { |code| builder.code code.as_s[0] }
           hash["type"]?.try { |type| builder.type ResidueType.parse(type.as_s) }
-          hash["structure"]?.try { |spec| builder.structure spec.as_s }
+          hash["spec"]?.try { |spec| builder.spec spec.as_s }
           hash["symmetry"]?.try do |symmetric_atom_groups|
             symmetric_atom_groups.as_a.each do |atom_pairs|
               builder.symmetry atom_pairs.as_a.map { |p| {p[0].as_s, p[1].as_s} }
