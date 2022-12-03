@@ -129,7 +129,15 @@ class Chem::ResidueTemplate::Builder
     @link_bond = {lhs, rhs, bond_order}
   end
 
-  def name(*names : String)
+  def name(*names : String) : Nil
+    names names
+  end
+
+  def names(*names : String) : Nil
+    names names
+  end
+
+  def names(names : Enumerable(String)) : Nil
     @names.concat names
   end
 
@@ -151,6 +159,10 @@ class Chem::ResidueTemplate::Builder
   end
 
   def symmetry(*pairs : Tuple(String, String)) : Nil
+    symmetry pairs
+  end
+
+  def symmetry(pairs : Enumerable(Tuple(String, String))) : Nil
     visited = Set(String).new pairs.size * 2
     pairs.each do |(a, b)|
       check_atom(a)

@@ -67,4 +67,35 @@ describe Chem::ResidueTemplate do
       end.inspect.should eq "<ResidueTemplate GLY(G), protein>"
     end
   end
+
+  describe ".parse" do
+    it "returns residue templates from YAML content" do
+      templates = Chem::ResidueTemplate.parse <<-YAML
+        templates:
+          - description: Phenylalanine
+            names: [PHE, PHY]
+            code: F
+            type: protein
+            link_bond: C-N
+            root: CA
+            structure: "{backbone}-CB-CG%1=CD1-CE1=CZ-CE2=CD2-%1"
+            symmetry:
+              - [[CD1, CD2], [CE1, CE2]]
+        aliases:
+          backbone: N(-H)-CA(-HA)(-C=O)
+        YAML
+      templates.size.should eq 1
+      res_t = templates[0]?.should_not be_nil
+      res_t.name.should eq "PHE"
+      res_t.aliases.should eq %w(PHY)
+      res_t.type.protein?.should be_true
+      res_t.link_bond.to_s.should eq "C-N"
+      res_t.description.should eq "Phenylalanine"
+      res_t.root_atom.name.should eq "CA"
+      res_t.code.should eq 'F'
+      res_t.symmetric_atom_groups.should eq [[{"CD1", "CD2"}, {"CE1", "CE2"}]]
+      res_t.atoms.size.should eq Chem::ResidueTemplate.fetch("PHE").atom_count
+      res_t.bonds.size.should eq Chem::ResidueTemplate.fetch("PHE").bonds.size
+    end
+  end
 end
