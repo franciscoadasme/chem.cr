@@ -138,6 +138,16 @@ class Chem::TemplateRegistry
     self
   end
 
+  # Registers an aliases to a known residue template. Raises `Error` if
+  # *name* is not registered.
+  def alias(new_name : String, to existing_name : String) : Nil
+    if res_t = self[existing_name]?
+      @table[new_name] = res_t
+    else
+      raise Error.new("Unknown residue template #{existing_name}")
+    end
+  end
+
   # Returns `true` if the registry contains the given residue template,
   # else `false`. Both template's name and content are checked for a
   # match.

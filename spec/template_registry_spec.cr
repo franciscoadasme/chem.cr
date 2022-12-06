@@ -61,6 +61,23 @@ describe Chem::TemplateRegistry do
     end
   end
 
+  describe "#alias" do
+    it "registers an alias" do
+      registry = Chem::TemplateRegistry.from_yaml <<-YAML
+        - name: HOH
+          spec: O
+        YAML
+      registry.alias "TIP3", to: "HOH"
+      registry["HOH"].should eq registry["TIP3"]
+    end
+
+    it "raises if unknown template" do
+      expect_raises Chem::Error, "Unknown residue template HOH" do
+        Chem::TemplateRegistry.new.alias "TIP3", to: "HOH"
+      end
+    end
+  end
+
   describe "#includes?" do
     it "tells if registry includes a residue template" do
       res_t1 = Chem::ResidueTemplate.build do |builder|
