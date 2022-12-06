@@ -1,5 +1,3 @@
-# TODO: Make methods return self to allow for method chaining `build
-# &.name("asd").description("asd")`
 # TODO: add docs (include checks)
 class Chem::ResidueTemplate::Builder
   @code : Char?
@@ -102,8 +100,9 @@ class Chem::ResidueTemplate::Builder
       @names[1..], link_bond, @symmetric_atom_groups
   end
 
-  def code(char : Char) : Nil
+  def code(char : Char) : self
     @code = char
+    self
   end
 
   private def check_atom(name : String) : Nil
@@ -112,15 +111,17 @@ class Chem::ResidueTemplate::Builder
     end
   end
 
-  def description(name : String)
+  def description(name : String) : self
     @description = name
+    self
   end
 
-  def type(type : ResidueType)
+  def type(type : ResidueType) : self
     @type = type
+    self
   end
 
-  def link_adjacent_by(bond_spec : String)
+  def link_adjacent_by(bond_spec : String) : self
     lhs, bond_str, rhs = bond_spec.partition(/[-=#]/)
     raise ParseException.new("Invalid bond") if bond_str.empty? || rhs.empty?
     check_atom(lhs)
@@ -133,42 +134,49 @@ class Chem::ResidueTemplate::Builder
                  else          ::raise "BUG: unreachable"
                  end
     @link_bond = {lhs, rhs, bond_order}
+    self
   end
 
-  def name(*names : String) : Nil
+  def name(*names : String) : self
     names names
+    self
   end
 
-  def names(*names : String) : Nil
+  def names(*names : String) : self
     names names
+    self
   end
 
-  def names(names : Enumerable(String)) : Nil
+  def names(names : Enumerable(String)) : self
     @names.concat names
+    self
   end
 
   private def raise(msg : String)
     ::raise Error.new(msg)
   end
 
-  def root(atom_name : String)
+  def root(atom_name : String) : self
     check_atom atom_name
     @root_atom = atom_name
+    self
   end
 
-  def spec(spec : String) : Nil
+  def spec(spec : String) : self
     raise "Residue structure already defined" if @spec_parser
     parser = SpecParser.new(spec, @spec_aliases)
     parser.parse
     raise "Empty structure" if parser.atom_map.empty?
     @spec_parser = parser
+    self
   end
 
-  def symmetry(*pairs : Tuple(String, String)) : Nil
+  def symmetry(*pairs : Tuple(String, String)) : self
     symmetry pairs
+    self
   end
 
-  def symmetry(pairs : Enumerable(Tuple(String, String))) : Nil
+  def symmetry(pairs : Enumerable(Tuple(String, String))) : self
     visited = Set(String).new pairs.size * 2
     pairs.each do |(a, b)|
       check_atom(a)
@@ -180,5 +188,6 @@ class Chem::ResidueTemplate::Builder
       visited << a << b
     end
     @symmetric_atom_groups << pairs.to_a
+    self
   end
 end

@@ -11,10 +11,8 @@ describe Chem::TemplateRegistry do
 
   describe "#[]?" do
     it "returns a residue template by name" do
-      registry = Chem::TemplateRegistry.from_yaml <<-YAML
-        - names: [CX1, CX2]
-          spec: CX
-        YAML
+      registry = Chem::TemplateRegistry.new
+      registry.register &.names(%w(CX1 CX2)).spec("CX")
       res_t = registry["CX1"]?.should_not be_nil
       res_t.should be_a Chem::ResidueTemplate
       res_t.name.should eq "CX1"
@@ -28,45 +26,32 @@ describe Chem::TemplateRegistry do
 
   describe "#<<" do
     it "adds a residue template" do
-      res_t = Chem::ResidueTemplate.build do |builder|
-        builder.name "ASD"
-        builder.spec "CA"
-      end
+      res_t = Chem::ResidueTemplate.build &.name("ASD").spec("CA")
       registry = Chem::TemplateRegistry.new << res_t
       registry.size.should eq 1
       registry["ASD"].should eq res_t
     end
 
     it "adds a residue template with multiple names" do
-      res_t = Chem::ResidueTemplate.build do |builder|
-        builder.names "ASD", "DSA"
-        builder.spec "CA"
-      end
+      res_t = Chem::ResidueTemplate.build &.names(%w(ASD DSA)).spec("CA")
       registry = Chem::TemplateRegistry.new << res_t
       registry.size.should eq 1
       registry["ASD"].should eq registry["DSA"]
     end
 
     it "raises when the residue name already exists" do
-      registry = Chem::TemplateRegistry.from_yaml <<-YAML
-        - name: LXE
-          spec: CX
-        YAML
+      registry = Chem::TemplateRegistry.new
+      registry.register &.name("LXE").spec("CX")
       expect_raises Chem::Error, "LXE residue template already exists" do
-        registry.register do
-          name "LXE"
-          spec "C1"
-        end
+        registry << Chem::ResidueTemplate.build &.name("LXE").spec("C1")
       end
     end
   end
 
   describe "#alias" do
     it "registers an alias" do
-      registry = Chem::TemplateRegistry.from_yaml <<-YAML
-        - name: HOH
-          spec: O
-        YAML
+      registry = Chem::TemplateRegistry.new
+      registry.register &.name("HOH").spec("O")
       registry.alias "TIP3", to: "HOH"
       registry["HOH"].should eq registry["TIP3"]
     end
@@ -80,18 +65,9 @@ describe Chem::TemplateRegistry do
 
   describe "#includes?" do
     it "tells if registry includes a residue template" do
-      res_t1 = Chem::ResidueTemplate.build do |builder|
-        builder.names "ASD", "DSA"
-        builder.spec "CA"
-      end
-      res_t2 = Chem::ResidueTemplate.build do |builder|
-        builder.name "CUX"
-        builder.spec "CU"
-      end
-      res_t3 = Chem::ResidueTemplate.build do |builder|
-        builder.name "ASD"
-        builder.spec "CB"
-      end
+      res_t1 = Chem::ResidueTemplate.build &.names(%w(ASD DSA)).spec("CA")
+      res_t2 = Chem::ResidueTemplate.build &.name("CUX").spec("CU")
+      res_t3 = Chem::ResidueTemplate.build &.name("ASD").spec("CB")
       registry = Chem::TemplateRegistry.new << res_t1
       registry.includes?(res_t1).should be_true
       registry.includes?(res_t2).should be_false
@@ -177,10 +153,7 @@ describe Chem::TemplateRegistry do
   describe "#register" do
     it "creates a residue template with multiple names" do
       registry = Chem::TemplateRegistry.new
-      registry.register do
-        name "LXE", "EGR"
-        spec "C1"
-      end
+      registry.register &.names(%w(LXE EGR)).spec("C1")
       registry.size.should eq 1
       registry["LXE"].should eq registry["EGR"]
     end
@@ -188,28 +161,20 @@ describe Chem::TemplateRegistry do
 
   describe "#reject" do
     it "returns a new registry with selected templates" do
-      registry = Chem::TemplateRegistry.from_yaml <<-YAML
-        - name: DDA
-          spec: CA
-        - name: DDB
-          spec: CB
-        - name: DDO
-          spec: OXT
-        YAML
+      registry = Chem::TemplateRegistry.new
+      registry.register &.name("DDA").spec("CA")
+      registry.register &.name("DDB").spec("CB")
+      registry.register &.name("DDO").spec("OXT")
       registry.reject(&.atoms[0].element.carbon?).to_a.map(&.name).should eq %w(DDO)
     end
   end
 
   describe "#select" do
     it "returns a new registry with selected templates" do
-      registry = Chem::TemplateRegistry.from_yaml <<-YAML
-        - name: DDA
-          spec: CA
-        - name: DDB
-          spec: CB
-        - name: DDO
-          spec: OXT
-        YAML
+      registry = Chem::TemplateRegistry.new
+      registry.register &.name("DDA").spec("CA")
+      registry.register &.name("DDB").spec("CB")
+      registry.register &.name("DDO").spec("OXT")
       registry.select(&.atoms[0].element.carbon?).to_a.map(&.name).should eq %w(DDA DDB)
     end
   end
@@ -218,39 +183,27 @@ describe Chem::TemplateRegistry do
     it "register an spec alias" do
       registry = Chem::TemplateRegistry.new
       registry.spec_alias "asd", "CX=CY"
-      registry.register do
-        name "ASD"
-        spec "{asd}-CZ"
-        root "CX"
-      end
+      registry.register &.name("ASD").spec("{asd}-CZ").root("CX")
       registry["ASD"].atoms.count(&.element.carbon?).should eq 3
     end
   end
 
   describe "#size" do
     it "returns the number of templates" do
-      registry = Chem::TemplateRegistry.from_yaml <<-YAML
-      - names: [DDA, DXA]
-        spec: CA
-      - name: DDB
-        spec: CB
-      - names: [DDO, DXO]
-        spec: OXT
-      YAML
+      registry = Chem::TemplateRegistry.new
+      registry.register &.names(%w(DDA DXA)).spec("CA")
+      registry.register &.name("DDB").spec("CB")
+      registry.register &.names(%w(DDO DXO)).spec("OXT")
       registry.size.should eq 3
     end
   end
 
   describe "#to_a" do
     it "returns the number of templates" do
-      registry = Chem::TemplateRegistry.from_yaml <<-YAML
-      - names: [DDA, DXA]
-        spec: CA
-      - name: DDB
-        spec: CB
-      - names: [DDO, DXO]
-        spec: OXT
-      YAML
+      registry = Chem::TemplateRegistry.new
+      registry.register &.names(%w(DDA DXA)).spec("CA")
+      registry.register &.name("DDB").spec("CB")
+      registry.register &.names(%w(DDO DXO)).spec("OXT")
       registry.to_a.map(&.name).should eq %w(DDA DDB DDO)
     end
   end
