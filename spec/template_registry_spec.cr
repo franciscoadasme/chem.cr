@@ -133,6 +133,16 @@ describe Chem::TemplateRegistry do
       registry.size.should eq 1
       registry["LFG"].root_atom.name.should eq "C5"
     end
+
+    it "parses a single template at top-level" do
+      registry = Chem::TemplateRegistry.new.parse <<-YAML
+        name: LFG
+        spec: '[N1H3+]-C2-C3-O4-C5(-C6)=O7'
+        root: C5
+        YAML
+      registry.size.should eq 1
+      registry["LFG"].root_atom.name.should eq "C5"
+    end
   end
 
   describe "#register" do

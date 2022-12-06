@@ -41,7 +41,8 @@
 # ```
 #
 # Residue templates can be defined either under the `templates` field or
-# at the top-level, and listed as an array of properties. The latter are
+# at the top-level, and listed as an array of records. A single record
+# can also be specified at the top level. The fields in each record are
 # passed to the methods of `ResidueTemplate::Builder`, which have the
 # same names.
 #
@@ -159,15 +160,39 @@ class Chem::TemplateRegistry
   # content.
   #
   # Residue templates can be defined either under the `templates` field
-  # or at the top-level, and listed as an array of properties. The
-  # latter are passed to the methods of `ResidueTemplate::Builder`,
+  # or at the top-level, and listed as an array of records. A single
+  # record can also be specified at the top level. The fields in each
+  # record are passed to the methods of `ResidueTemplate::Builder`,
   # which have the same names.
+  #
+  # The following examples are equivalent:
+  #
+  # ```yaml
+  # templates:
+  #   - name: LFG
+  #     spec: '[N1H3+]-C2-C3-O4-C5(-C6)=O7'
+  #     root: C5
+  # ```
+  #
+  # ```yaml
+  # - name: LFG
+  #   spec: '[N1H3+]-C2-C3-O4-C5(-C6)=O7'
+  #   root: C5
+  # ```
+  #
+  # ```yaml
+  # name: LFG
+  # spec: '[N1H3+]-C2-C3-O4-C5(-C6)=O7'
+  # root: C5
+  # ```
   #
   # Validation on template data is handled by
   # `ResidueTemplate::Builder`, which may raise `Error`.
   def parse(io : IO) : self
     data = YAML.parse(io)
-    (data.dig?("templates") || data).as_a.each do |hash|
+    templates = data.dig?("templates").try(&.as_a)
+    templates ||= data.as_a? || [data]
+    templates.each do |hash|
       register do |builder|
         hash["description"]?.try { |any| builder.description any.as_s }
         if name = hash["name"]?
