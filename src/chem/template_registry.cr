@@ -199,8 +199,26 @@ class Chem::TemplateRegistry
   #
   # Validation on template data is handled by
   # `ResidueTemplate::Builder`, which may raise `Error`.
+  #
+  # Aliases for common residue template specifications can be defined as
+  # a map under the `aliases` field at the top level.
+  #
+  # ```yaml
+  # ...
+  # aliases:
+  #   backbone: 'N(-H)-CA(-HA)(-C=O)'
+  # ```
   def parse(io : IO) : self
     data = YAML.parse(io)
+
+    # Parse spec aliases first
+    data.dig?("aliases").try do |aliases|
+      aliases.as_h.each do |name, spec|
+        @spec_aliases[name.as_s] = spec.as_s
+      end
+    end
+
+    # Parse residue templates
     templates = data.dig?("templates").try(&.as_a)
     templates ||= data.as_a? || [data]
     templates.each do |hash|
@@ -222,6 +240,7 @@ class Chem::TemplateRegistry
         end
       end
     end
+
     self
   end
 

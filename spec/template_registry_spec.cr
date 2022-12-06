@@ -160,6 +160,19 @@ describe Chem::TemplateRegistry do
       registry.size.should eq 1
       registry["LFG"].root_atom.name.should eq "C5"
     end
+
+    it "parses spec aliases" do
+      content = <<-YAML
+        templates:
+          - name: ASD
+            spec: '{asd}-CZ'
+            root: CX
+        aliases:
+          asd: 'CX=CY'
+        YAML
+      registry = Chem::TemplateRegistry.new.parse(content)
+      registry["ASD"].atoms.count(&.element.carbon?).should eq 3
+    end
   end
 
   describe "#register" do
