@@ -233,7 +233,7 @@ class Chem::TemplateRegistry
   # Convenience method that creates and registers a new residue
   # template. See `ResidueTemplate::Builder` and `#<<`.
   def register(&) : ResidueTemplate
-    builder = ResidueTemplate::Builder.new
+    builder = ResidueTemplate::Builder.new @spec_aliases
     with builder yield builder
     res_t = builder.build
     self << res_t
@@ -256,6 +256,16 @@ class Chem::TemplateRegistry
       registry << res_t if !res_t.in?(registry) && yield res_t
     end
     registry
+  end
+
+  # Registers an alias for a residue template specification.
+  #
+  # Registered aliases are passed to `ResidueTemplate::SpecParser` such
+  # that they are expanded when parsing the specification of a residue
+  # template.
+  def spec_alias(name : String, spec : String) : self
+    @spec_aliases[name] = spec
+    self
   end
 
   # Returns an array containing all the residue templates.

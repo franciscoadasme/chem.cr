@@ -11,6 +11,9 @@ class Chem::ResidueTemplate::Builder
   @symmetric_atom_groups = [] of Array(Tuple(String, String))
   @spec_parser : SpecParser?
 
+  def initialize(@spec_aliases : Hash(String, String)? = nil)
+  end
+
   def build : ResidueTemplate
     raise "Missing residue name" if @names.empty?
     raise "Empty structure" unless parser = @spec_parser
@@ -153,9 +156,9 @@ class Chem::ResidueTemplate::Builder
     @root_atom = atom_name
   end
 
-  def spec(spec : String, aliases : Hash(String, String)? = nil) : Nil
+  def spec(spec : String) : Nil
     raise "Residue structure already defined" if @spec_parser
-    parser = SpecParser.new(spec, aliases)
+    parser = SpecParser.new(spec, @spec_aliases)
     parser.parse
     raise "Empty structure" if parser.atom_map.empty?
     @spec_parser = parser

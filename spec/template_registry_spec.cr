@@ -202,6 +202,19 @@ describe Chem::TemplateRegistry do
     end
   end
 
+  describe "#spec_alias" do
+    it "register an spec alias" do
+      registry = Chem::TemplateRegistry.new
+      registry.spec_alias "asd", "CX=CY"
+      registry.register do
+        name "ASD"
+        spec "{asd}-CZ"
+        root "CX"
+      end
+      registry["ASD"].atoms.count(&.element.carbon?).should eq 3
+    end
+  end
+
   describe "#size" do
     it "returns the number of templates" do
       registry = Chem::TemplateRegistry.from_yaml <<-YAML
