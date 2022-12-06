@@ -116,6 +116,17 @@ describe Chem::TemplateRegistry do
     end
 
     pending "parses top-level templates" do
+    it "parses root" do
+      registry = Chem::TemplateRegistry.new.parse <<-YAML
+        templates:
+          - name: LFG
+            spec: 'O1=O2'
+            root: O2
+        YAML
+      res_t = registry["LFG"].should_not be_nil
+      res_t.root_atom.name.should eq "O2"
+    end
+
       registry = Chem::TemplateRegistry.new.parse <<-YAML
         templates:
           - name: LFG
