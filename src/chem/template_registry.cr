@@ -40,10 +40,10 @@
 # registry["PHE"].description # => "Phenylalanine"
 # ```
 #
-# Residue templates must be defined under the `templates` field at the
-# top-level, and listed as an array of properties. The latter are passed
-# to the methods of `ResidueTemplate::Builder`, which have the same
-# names.
+# Residue templates can be defined either under the `templates` field or
+# at the top-level, and listed as an array of properties. The latter are
+# passed to the methods of `ResidueTemplate::Builder`, which have the
+# same names.
 #
 # Residue templates can also be loaded into an existing registry using
 # either the `#load` or `#parse` methods.
@@ -158,38 +158,33 @@ class Chem::TemplateRegistry
   # Parses and registers the residue templates encoded in the given YAML
   # content.
   #
-  # Residue templates must be defined under the `templates` field at the
-  # top-level, and listed as an array of properties. The latter are
-  # passed to the methods of `ResidueTemplate::Builder`, which have the
-  # same names.
+  # Residue templates can be defined either under the `templates` field
+  # or at the top-level, and listed as an array of properties. The
+  # latter are passed to the methods of `ResidueTemplate::Builder`,
+  # which have the same names.
   #
-  # Raises `Error` if either the `templates` field or any of the
-  # required residue template properties is missing (see
-  # `ResidueTemplate::Builder`).
+  # Validation on template data is handled by
+  # `ResidueTemplate::Builder`, which may raise `Error`.
   def parse(io : IO) : self
     data = YAML.parse(io)
-    if templates = data.dig?("templates").try(&.as_a)
-      templates.each do |hash|
-        register do |builder|
-          hash["description"]?.try { |any| builder.description any.as_s }
-          if name = hash["name"]?
-            builder.name name.as_s
-          elsif names = hash["names"]
-            builder.names names.as_a.map(&.as_s)
-          end
-          hash["code"]?.try { |code| builder.code code.as_s[0] }
-          hash["type"]?.try { |type| builder.type ResidueType.parse(type.as_s) }
-          hash["spec"]?.try { |spec| builder.spec spec.as_s }
-          hash["root"]?.try { |any| builder.root any.as_s }
-          hash["symmetry"]?.try do |symmetric_atom_groups|
-            symmetric_atom_groups.as_a.each do |atom_pairs|
-              builder.symmetry atom_pairs.as_a.map { |p| {p[0].as_s, p[1].as_s} }
-            end
+    (data.dig?("templates") || data).as_a.each do |hash|
+      register do |builder|
+        hash["description"]?.try { |any| builder.description any.as_s }
+        if name = hash["name"]?
+          builder.name name.as_s
+        elsif names = hash["names"]
+          builder.names names.as_a.map(&.as_s)
+        end
+        hash["code"]?.try { |code| builder.code code.as_s[0] }
+        hash["type"]?.try { |type| builder.type ResidueType.parse(type.as_s) }
+        hash["spec"]?.try { |spec| builder.spec spec.as_s }
+        hash["root"]?.try { |any| builder.root any.as_s }
+        hash["symmetry"]?.try do |symmetric_atom_groups|
+          symmetric_atom_groups.as_a.each do |atom_pairs|
+            builder.symmetry atom_pairs.as_a.map { |p| {p[0].as_s, p[1].as_s} }
           end
         end
       end
-    else
-      raise Error.new("Missing residue templates")
     end
     self
   end

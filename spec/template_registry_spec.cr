@@ -12,9 +12,8 @@ describe Chem::TemplateRegistry do
   describe "#[]?" do
     it "returns a residue template by name" do
       registry = Chem::TemplateRegistry.from_yaml <<-YAML
-        templates:
-          - names: [CX1, CX2]
-            spec: CX
+        - names: [CX1, CX2]
+          spec: CX
         YAML
       res_t = registry["CX1"]?.should_not be_nil
       res_t.should be_a Chem::ResidueTemplate
@@ -50,9 +49,8 @@ describe Chem::TemplateRegistry do
 
     it "raises when the residue name already exists" do
       registry = Chem::TemplateRegistry.from_yaml <<-YAML
-        templates:
-          - name: LXE
-            spec: CX
+        - name: LXE
+          spec: CX
         YAML
       expect_raises Chem::Error, "LXE residue template already exists" do
         registry.register do
@@ -113,27 +111,27 @@ describe Chem::TemplateRegistry do
       res_t.symmetric_atom_groups.should eq [[{"CD1", "CD2"}, {"CE1", "CE2"}]]
       res_t.atoms.size.should eq 20
       res_t.bonds.size.should eq 20
+      # TODO: check aliases
     end
 
-    pending "parses top-level templates" do
     it "parses root" do
       registry = Chem::TemplateRegistry.new.parse <<-YAML
-        templates:
-          - name: LFG
-            spec: 'O1=O2'
-            root: O2
+        - name: LFG
+          spec: 'O1=O2'
+          root: O2
         YAML
       res_t = registry["LFG"].should_not be_nil
       res_t.root_atom.name.should eq "O2"
     end
 
+    it "parses top-level templates" do
       registry = Chem::TemplateRegistry.new.parse <<-YAML
-        templates:
-          - name: LFG
-            spec: '[N1H3+]-C2-C3-O4-C5(-C6)=O7'
-            root: C5
+        - name: LFG
+          spec: '[N1H3+]-C2-C3-O4-C5(-C6)=O7'
+          root: C5
         YAML
       registry.size.should eq 1
+      registry["LFG"].root_atom.name.should eq "C5"
     end
   end
 
@@ -152,13 +150,12 @@ describe Chem::TemplateRegistry do
   describe "#reject" do
     it "returns a new registry with selected templates" do
       registry = Chem::TemplateRegistry.from_yaml <<-YAML
-        templates:
-          - name: DDA
-            spec: CA
-          - name: DDB
-            spec: CB
-          - name: DDO
-            spec: OXT
+        - name: DDA
+          spec: CA
+        - name: DDB
+          spec: CB
+        - name: DDO
+          spec: OXT
         YAML
       registry.reject(&.atoms[0].element.carbon?).to_a.map(&.name).should eq %w(DDO)
     end
@@ -167,13 +164,12 @@ describe Chem::TemplateRegistry do
   describe "#select" do
     it "returns a new registry with selected templates" do
       registry = Chem::TemplateRegistry.from_yaml <<-YAML
-        templates:
-          - name: DDA
-            spec: CA
-          - name: DDB
-            spec: CB
-          - name: DDO
-            spec: OXT
+        - name: DDA
+          spec: CA
+        - name: DDB
+          spec: CB
+        - name: DDO
+          spec: OXT
         YAML
       registry.select(&.atoms[0].element.carbon?).to_a.map(&.name).should eq %w(DDA DDB)
     end
@@ -182,13 +178,12 @@ describe Chem::TemplateRegistry do
   describe "#size" do
     it "returns the number of templates" do
       registry = Chem::TemplateRegistry.from_yaml <<-YAML
-      templates:
-        - names: [DDA, DXA]
-          spec: CA
-        - name: DDB
-          spec: CB
-        - names: [DDO, DXO]
-          spec: OXT
+      - names: [DDA, DXA]
+        spec: CA
+      - name: DDB
+        spec: CB
+      - names: [DDO, DXO]
+        spec: OXT
       YAML
       registry.size.should eq 3
     end
@@ -197,13 +192,12 @@ describe Chem::TemplateRegistry do
   describe "#to_a" do
     it "returns the number of templates" do
       registry = Chem::TemplateRegistry.from_yaml <<-YAML
-      templates:
-        - names: [DDA, DXA]
-          spec: CA
-        - name: DDB
-          spec: CB
-        - names: [DDO, DXO]
-          spec: OXT
+      - names: [DDA, DXA]
+        spec: CA
+      - name: DDB
+        spec: CB
+      - names: [DDO, DXO]
+        spec: OXT
       YAML
       registry.to_a.map(&.name).should eq %w(DDA DDB DDO)
     end
