@@ -851,7 +851,8 @@ beforehand, or for another reason.</p>
   </svg>
 </a>Loading residue templates</h3>
 <p>Residue templates can be parsed and loaded from a file, IO, or string
-that encodes a registry in the YAML format (see <code><a href="../Chem/TemplateRegistry.html#parse%28io%3AIO%29%3Aself-instance-method">#parse</a></code>).</p>
+that encodes a registry in the YAML format (refer to the <a href="#format-specification">Format
+specification</a> section).</p>
 <p>The following example shows how to create a new registry directly from
 YAML content:</p>
 <pre><code class="language-crystal">registry <span class="o">=</span> <span class="t">Chem</span><span class="t">::</span><span class="t">TemplateRegistry</span>.from_yaml <span class="s">&lt;&lt;-YAML</span>
@@ -870,19 +871,23 @@ YAML content:</p>
   YAML</span>
 registry.size               <span class="c"># =&gt; 1</span>
 registry[<span class="s">&quot;PHE&quot;</span>].description <span class="c"># =&gt; &quot;Phenylalanine&quot;</span></code></pre>
-<p>Residue templates must be defined under the <code>templates</code> field at the
-top-level, and listed as an array of properties. The latter are passed
-to the methods of <code><a href="../Chem/ResidueTemplate/Builder.html">ResidueTemplate::Builder</a></code>, which have the same
-names.</p>
 <p>Residue templates can also be loaded into an existing registry using
 either the <code><a href="../Chem/TemplateRegistry.html#load%28filepath%3APath%7CString%29%3Aself-instance-method">#load</a></code> or <code><a href="../Chem/TemplateRegistry.html#parse%28io%3AIO%29%3Aself-instance-method">#parse</a></code> methods.</p>
+<pre><code class="language-crystal">registry <span class="o">=</span> <span class="t">Chem</span><span class="t">::</span><span class="t">TemplateRegistry</span>.new.parse <span class="s">&lt;&lt;-YAML</span>
+<span class="s">  ...
+  YAML</span></code></pre>
+<p><span class="flag purple">NOTE</span>  A YAML file can be baked into the executable using the
+<code>read_file</code> macro at compilation time so it's can be executed
+anywhere. Otherwise, the hardcoded filepath may be unaccesible at
+runtime.</p>
+<pre><code class="language-crystal">registry <span class="o">=</span> <span class="t">Chem</span><span class="t">::</span><span class="t">TemplateRegistry</span>.from_yaml <span class="o">{{</span>read_file(<span class="s">&quot;/path/to/yaml&quot;</span>)}}</code></pre>
 <h3><a id="registering-a-new-residue-template" class="anchor" href="#registering-a-new-residue-template">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>Registering a new residue template</h3>
-<p>Residue templates can also be registered using the DSL provided by
-<code><a href="../Chem/ResidueTemplate/Builder.html">ResidueTemplate::Builder</a></code> using the <code><a href="../Chem/TemplateRegistry.html#register%28%26%29%3AResidueTemplate-instance-method">#register</a></code> method:</p>
+<p>Residue templates can also be registered using the DSL provided by the
+<code><a href="../Chem/ResidueTemplate/Builder.html">ResidueTemplate::Builder</a></code> type using the <code><a href="../Chem/TemplateRegistry.html#register%28%26%29%3AResidueTemplate-instance-method">#register</a></code> method:</p>
 <pre><code class="language-crystal">registry <span class="o">=</span> <span class="t">Chem</span><span class="t">::</span><span class="t">TemplateRegistry</span>.new
 res_t <span class="o">=</span> registry.register <span class="k">do</span>
   description <span class="s">&quot;Phenylalanine&quot;</span>
@@ -903,15 +908,47 @@ registry[<span class="s">&quot;PHE&quot;</span>] <span class="o">==</span> res_t
 <p>Residue templates are indexed by every residue name, so they can be
 accessed using the bracket methods much like a hash.</p>
 <pre><code class="language-crystal">registry <span class="o">=</span> <span class="t">Chem</span><span class="t">::</span><span class="t">TemplateRegistry</span>.from_yaml <span class="s">&lt;&lt;-YAML</span>
-<span class="s">  templates:
-    - names: [CX1, CX2]
-      description: &quot;Fake residue&quot;
-      spec: CX
+<span class="s">  names: [CX1, CX2]
+  description: &quot;Fake residue&quot;
+  spec: CX
   YAML</span>
 registry[<span class="s">&quot;CX1&quot;</span>].description        <span class="c"># =&gt; &quot;Fake residue&quot;</span>
 registry[<span class="s">&quot;CX1&quot;</span>] <span class="o">==</span> registry[<span class="s">&quot;CX2&quot;</span>] <span class="c"># =&gt; true</span>
 registry[<span class="s">&quot;CX3&quot;</span>]                    <span class="c"># Raises Chem::Error</span>
 registry[<span class="s">&quot;CX3&quot;</span>]?                   <span class="c"># =&gt; nil</span></code></pre>
+<h3><a id="format-specification" class="anchor" href="#format-specification">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Format specification</h3>
+<p>As shown above, residue templates can be encoded in a YAML document.</p>
+<p>Residue templates can be defined either under the <code>templates</code> field or
+at the top-level, and listed as an array of records. A single record
+can also be specified at the top level.</p>
+<p>The following examples are equivalent:</p>
+<pre><code class="language-yaml">templates:
+  - name: LFG
+    spec: '[N1H3+]-C2-C3-O4-C5(-C6)=O7'
+    root: C5</code></pre>
+<pre><code class="language-yaml">- name: LFG
+  spec: '[N1H3+]-C2-C3-O4-C5(-C6)=O7'
+  root: C5</code></pre>
+<pre><code class="language-yaml">name: LFG
+spec: '[N1H3+]-C2-C3-O4-C5(-C6)=O7'
+root: C5</code></pre>
+<p>The records are transformed into <code><a href="../Chem/ResidueTemplate.html">ResidueTemplate</a></code> instances via the
+<code><a href="../Chem/ResidueTemplate/Builder.html">ResidueTemplate::Builder</a></code> type. Each allowed field correspond to a
+specific method of the builder. The latter dictates the type of data
+and also handles validation.</p>
+<p>Aliases for common residue template specifications (spec aliases) can
+be defined as a map under the <code>aliases</code> field at the top level:</p>
+<pre><code class="language-yaml">...
+aliases:
+  backbone: 'N(-H)-CA(-HA)(-C=O)'</code></pre>
+<p>Registered aliases are passed down to the
+<code><a href="../Chem/ResidueTemplate/SpecParser.html">ResidueTemplate::SpecParser</a></code> type such that they are expanded when
+parsing the specification of a residue template via the bracket
+syntax, e.g., '{backbone}-CB-OH'.</p>
 
 
 
@@ -970,16 +1007,16 @@ registry[<span class="s">&quot;CX3&quot;</span>]?                   <span class=
       </li>
     
       <li class="entry-summary">
-        <a href="#load%28filepath%3APath%7CString%29%3Aself-class-method" class="signature"><strong>.load</strong>(filepath : Path | String) : <span class="k">self</span></a>
+        <a href="#new-class-method" class="signature"><strong>.new</strong></a>
         
-          <div class="summary"><p>Returns the residue templates encoded in the given YAML file.</p></div>
+          <div class="summary"><p>Creates a new, empty residue template registry.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new-class-method" class="signature"><strong>.new</strong></a>
+        <a href="#read%28filepath%3APath%7CString%29%3Aself-class-method" class="signature"><strong>.read</strong>(filepath : Path | String) : <span class="k">self</span></a>
         
-          <div class="summary"><p>Creates a new, empty residue template registry.</p></div>
+          <div class="summary"><p>Returns the residue templates encoded in the given YAML file.</p></div>
         
       </li>
     
@@ -1017,6 +1054,13 @@ registry[<span class="s">&quot;CX3&quot;</span>]?                   <span class=
         <a href="#%5B%5D%3F%28name%3AString%29%3AResidueTemplate%3F-instance-method" class="signature"><strong>#[]?</strong>(name : String) : ResidueTemplate?</a>
         
           <div class="summary"><p>Returns the residue template registered under <em>name</em>, or <code>nil</code> if no template exist with the given name.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#alias%28new_name%3AString%2Ctoexisting_name%3AString%29%3Aself-instance-method" class="signature"><strong>#alias</strong>(new_name : String, to existing_name : String) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Registers an aliases to a known residue template.</p></div>
         
       </li>
     
@@ -1073,6 +1117,13 @@ registry[<span class="s">&quot;CX3&quot;</span>]?                   <span class=
         <a href="#size%3AInt32-instance-method" class="signature"><strong>#size</strong> : Int32</a>
         
           <div class="summary"><p>Number of residue templates.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#spec_alias%28name%3AString%2Cspec%3AString%29%3Aself-instance-method" class="signature"><strong>#spec_alias</strong>(name : String, spec : String) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Registers an alias for a residue template specification.</p></div>
         
       </li>
     
@@ -1134,6 +1185,9 @@ registry[<span class="s">&quot;CX3&quot;</span>]?                   <span class=
         <div class="doc">
           
           <p>Returns the global residue template registry.</p>
+<p><span class="flag purple">NOTE</span>  It loads the default templates including proteinogenic
+aminoacids and their variants (e.g., HIS, HSE, and HSP), and
+solvents such as water.</p>
         </div>
       
       <br/>
@@ -1161,25 +1215,6 @@ registry[<span class="s">&quot;CX3&quot;</span>]?                   <span class=
       </div>
     </div>
   
-    <div class="entry-detail" id="load(filepath:Path|String):self-class-method">
-      <div class="signature">
-        
-        def self.<strong>load</strong>(filepath : Path | String) : <span class="k">self</span>
-
-        <a class="method-permalink" href="#load%28filepath%3APath%7CString%29%3Aself-class-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Returns the residue templates encoded in the given YAML file.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
     <div class="entry-detail" id="new-class-method">
       <div class="signature">
         
@@ -1191,6 +1226,25 @@ registry[<span class="s">&quot;CX3&quot;</span>]?                   <span class=
         <div class="doc">
           
           <p>Creates a new, empty residue template registry.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="read(filepath:Path|String):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>read</strong>(filepath : Path | String) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#read%28filepath%3APath%7CString%29%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the residue templates encoded in the given YAML file.</p>
         </div>
       
       <br/>
@@ -1274,6 +1328,26 @@ template exist with the given name.</p>
       </div>
     </div>
   
+    <div class="entry-detail" id="alias(new_name:String,toexisting_name:String):self-instance-method">
+      <div class="signature">
+        
+        def <strong>alias</strong>(new_name : String, to existing_name : String) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#alias%28new_name%3AString%2Ctoexisting_name%3AString%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Registers an aliases to a known residue template. Raises <code><a href="../Chem/Error.html">Error</a></code> if
+<em>name</em> is not registered.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="includes?(res_t:ResidueTemplate):Bool-instance-method">
       <div class="signature">
         
@@ -1326,14 +1400,10 @@ file. See <code><a href="../Chem/TemplateRegistry.html#parse%28io%3AIO%29%3Aself
         <div class="doc">
           
           <p>Parses and registers the residue templates encoded in the given YAML
-content.</p>
-<p>Residue templates must be defined under the <code>templates</code> field at the
-top-level, and listed as an array of properties. The latter are
-passed to the methods of <code><a href="../Chem/ResidueTemplate/Builder.html">ResidueTemplate::Builder</a></code>, which have the
-same names.</p>
-<p>Raises <code><a href="../Chem/Error.html">Error</a></code> if either the <code>templates</code> field or any of the
-required residue template properties is missing (see
-<code><a href="../Chem/ResidueTemplate/Builder.html">ResidueTemplate::Builder</a></code>).</p>
+content. Refer to the <a href="#format-specification">Format specification</a>
+section above.</p>
+<p>Validation on template data is handled by
+<code><a href="../Chem/ResidueTemplate/Builder.html">ResidueTemplate::Builder</a></code>, which may raise <code><a href="../Chem/Error.html">Error</a></code>.</p>
         </div>
       
       <br/>
@@ -1353,14 +1423,10 @@ required residue template properties is missing (see
         <div class="doc">
           
           <p>Parses and registers the residue templates encoded in the given YAML
-content.</p>
-<p>Residue templates must be defined under the <code>templates</code> field at the
-top-level, and listed as an array of properties. The latter are
-passed to the methods of <code><a href="../Chem/ResidueTemplate/Builder.html">ResidueTemplate::Builder</a></code>, which have the
-same names.</p>
-<p>Raises <code><a href="../Chem/Error.html">Error</a></code> if either the <code>templates</code> field or any of the
-required residue template properties is missing (see
-<code><a href="../Chem/ResidueTemplate/Builder.html">ResidueTemplate::Builder</a></code>).</p>
+content. Refer to the <a href="#format-specification">Format specification</a>
+section above.</p>
+<p>Validation on template data is handled by
+<code><a href="../Chem/ResidueTemplate/Builder.html">ResidueTemplate::Builder</a></code>, which may raise <code><a href="../Chem/Error.html">Error</a></code>.</p>
         </div>
       
       <br/>
@@ -1440,6 +1506,28 @@ passed block is truthy.</p>
         <div class="doc">
           
           <p>Number of residue templates.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="spec_alias(name:String,spec:String):self-instance-method">
+      <div class="signature">
+        
+        def <strong>spec_alias</strong>(name : String, spec : String) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#spec_alias%28name%3AString%2Cspec%3AString%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Registers an alias for a residue template specification.</p>
+<p>Registered aliases are passed to <code><a href="../Chem/ResidueTemplate/SpecParser.html">ResidueTemplate::SpecParser</a></code> such
+that they are expanded when parsing the specification of a residue
+template.</p>
         </div>
       
       <br/>
