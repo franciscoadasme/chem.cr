@@ -16,7 +16,8 @@
 # ### Loading residue templates
 #
 # Residue templates can be parsed and loaded from a file, IO, or string
-# that encodes a registry in the YAML format (see `#parse`).
+# that encodes a registry in the YAML format (refer to the [Format
+# specification](#format-specification) section).
 #
 # The following example shows how to create a new registry directly from
 # YAML content:
@@ -40,19 +41,28 @@
 # registry["PHE"].description # => "Phenylalanine"
 # ```
 #
-# Residue templates can be defined either under the `templates` field or
-# at the top-level, and listed as an array of records. A single record
-# can also be specified at the top level. The fields in each record are
-# passed to the methods of `ResidueTemplate::Builder`, which have the
-# same names.
-#
 # Residue templates can also be loaded into an existing registry using
 # either the `#load` or `#parse` methods.
 #
+# ```
+# registry = Chem::TemplateRegistry.new.parse <<-YAML
+#   ...
+#   YAML
+# ```
+#
+# NOTE: A YAML file can be baked into the executable using the
+# `read_file` macro at compilation time so it's can be executed
+# anywhere. Otherwise, the hardcoded filepath may be unaccesible at
+# runtime.
+#
+# ```
+# registry = Chem::TemplateRegistry.from_yaml {{read_file("/path/to/yaml")}}
+# ```
+#
 # ### Registering a new residue template
 #
-# Residue templates can also be registered using the DSL provided by
-# `ResidueTemplate::Builder` using the `#register` method:
+# Residue templates can also be registered using the DSL provided by the
+# `ResidueTemplate::Builder` type using the `#register` method:
 #
 # ```
 # registry = Chem::TemplateRegistry.new
@@ -76,16 +86,63 @@
 #
 # ```
 # registry = Chem::TemplateRegistry.from_yaml <<-YAML
-#   templates:
-#     - names: [CX1, CX2]
-#       description: "Fake residue"
-#       spec: CX
+#   names: [CX1, CX2]
+#   description: "Fake residue"
+#   spec: CX
 #   YAML
 # registry["CX1"].description        # => "Fake residue"
 # registry["CX1"] == registry["CX2"] # => true
 # registry["CX3"]                    # Raises Chem::Error
 # registry["CX3"]?                   # => nil
 # ```
+#
+# ### Format specification
+#
+# As shown above, residue templates can be encoded in a YAML document.
+#
+# Residue templates can be defined either under the `templates` field or
+# at the top-level, and listed as an array of records. A single record
+# can also be specified at the top level.
+#
+# The following examples are equivalent:
+#
+# ```yaml
+# templates:
+#   - name: LFG
+#     spec: '[N1H3+]-C2-C3-O4-C5(-C6)=O7'
+#     root: C5
+# ```
+#
+# ```yaml
+# - name: LFG
+#   spec: '[N1H3+]-C2-C3-O4-C5(-C6)=O7'
+#   root: C5
+# ```
+#
+# ```yaml
+# name: LFG
+# spec: '[N1H3+]-C2-C3-O4-C5(-C6)=O7'
+# root: C5
+# ```
+#
+# The records are transformed into `ResidueTemplate` instances via the
+# `ResidueTemplate::Builder` type. Each allowed field correspond to a
+# specific method of the builder. The latter dictates the type of data
+# and also handles validation.
+#
+# Aliases for common residue template specifications (spec aliases) can
+# be defined as a map under the `aliases` field at the top level:
+#
+# ```yaml
+# ...
+# aliases:
+#   backbone: 'N(-H)-CA(-HA)(-C=O)'
+# ```
+#
+# Registered aliases are passed down to the
+# `ResidueTemplate::SpecParser` type such that they are expanded when
+# parsing the specification of a residue template via the bracket
+# syntax, e.g., '{backbone}-CB-OH'.
 class Chem::TemplateRegistry
   # Number of residue templates.
   getter size : Int32 = 0
@@ -177,46 +234,11 @@ class Chem::TemplateRegistry
   end
 
   # Parses and registers the residue templates encoded in the given YAML
-  # content.
-  #
-  # Residue templates can be defined either under the `templates` field
-  # or at the top-level, and listed as an array of records. A single
-  # record can also be specified at the top level. The fields in each
-  # record are passed to the methods of `ResidueTemplate::Builder`,
-  # which have the same names.
-  #
-  # The following examples are equivalent:
-  #
-  # ```yaml
-  # templates:
-  #   - name: LFG
-  #     spec: '[N1H3+]-C2-C3-O4-C5(-C6)=O7'
-  #     root: C5
-  # ```
-  #
-  # ```yaml
-  # - name: LFG
-  #   spec: '[N1H3+]-C2-C3-O4-C5(-C6)=O7'
-  #   root: C5
-  # ```
-  #
-  # ```yaml
-  # name: LFG
-  # spec: '[N1H3+]-C2-C3-O4-C5(-C6)=O7'
-  # root: C5
-  # ```
+  # content. Refer to the [Format specification](#format-specification)
+  # section above.
   #
   # Validation on template data is handled by
   # `ResidueTemplate::Builder`, which may raise `Error`.
-  #
-  # Aliases for common residue template specifications can be defined as
-  # a map under the `aliases` field at the top level.
-  #
-  # ```yaml
-  # ...
-  # aliases:
-  #   backbone: 'N(-H)-CA(-HA)(-C=O)'
-  # ```
   def parse(io : IO) : self
     data = YAML.parse(io)
 
