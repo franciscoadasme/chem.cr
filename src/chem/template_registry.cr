@@ -111,7 +111,7 @@ class Chem::TemplateRegistry
   end
 
   # Returns the residue templates encoded in the given YAML file.
-  def self.load(filepath : Path | String) : self
+  def self.read(filepath : Path | String) : self
     new.load filepath
   end
 
