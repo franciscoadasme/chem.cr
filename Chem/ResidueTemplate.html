@@ -626,6 +626,11 @@
       
     </li>
   
+  <li class=" " data-id="chem.cr/Chem/TemplateRegistry" data-name="chem::templateregistry">
+      <a href="../Chem/TemplateRegistry.html">TemplateRegistry</a>
+      
+    </li>
+  
   <li class="parent " data-id="chem.cr/Chem/Topology" data-name="chem::topology">
       <a href="../Chem/Topology.html">Topology</a>
       
@@ -868,55 +873,13 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#fetch%28name%3AString%29%3AResidueTemplate-class-method" class="signature"><strong>.fetch</strong>(name : String) : ResidueTemplate</a>
-        
-      </li>
-    
-      <li class="entry-summary">
         <a href="#new%28name%3AString%2Ccode%3AChar%3F%2Ctype%3AResidueType%2Cdescription%3AString%3F%2Catoms%3AArray%28AtomTemplate%29%2Cbonds%3AArray%28BondTemplate%29%2Croot_atom%3AAtomTemplate%2Caliases%3AArray%28String%29%3D%5B%5DofString%2Clink_bond%3ABondTemplate%3F%3Dnil%2Csymmetric_atom_groups%3AArray%28Array%28Tuple%28String%2CString%29%29%29%3F%3Dnil%29-class-method" class="signature"><strong>.new</strong>(name : String, code : Char?, type : ResidueType, description : String?, atoms : Array(AtomTemplate), bonds : Array(BondTemplate), root_atom : AtomTemplate, aliases : Array(String) = <span class="o">[]</span> <span class="k">of</span> <span class="t">String</span>, link_bond : BondTemplate? = <span class="n">nil</span>, symmetric_atom_groups : Array(Array(Tuple(String, String)))? = <span class="n">nil</span>)</a>
         
       </li>
     
-      <li class="entry-summary">
-        <a href="#register%28%26%29%3AResidueTemplate-class-method" class="signature"><strong>.register</strong>(&) : ResidueTemplate</a>
-        
-      </li>
-    
   </ul>
 
 
-
-  <h2>
-    <a id="class-method-summary" class="anchor" href="#class-method-summary">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Class Method Summary
-  </h2>
-  <ul class="list-summary">
-    
-      <li class="entry-summary">
-        <a href="#all_templates%3AArray%28ResidueTemplate%29-class-method" class="signature"><strong>.all_templates</strong> : Array(ResidueTemplate)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#fetch%28name%3AString%2C%26%3A-%3ET%29%3AResidueTemplate%7CTforallT-class-method" class="signature"><strong>.fetch</strong>(name : String, & :  -> T) : ResidueTemplate | T forall T</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#parse%28content%3AString%29%3AArray%28self%29-class-method" class="signature"><strong>.parse</strong>(content : String) : Array(<span class="k">self</span>)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#parse%28io%3AIO%29%3AArray%28self%29-class-method" class="signature"><strong>.parse</strong>(io : IO) : Array(<span class="k">self</span>)</a>
-        
-      </li>
-    
-  </ul>
 
 
 
@@ -1086,20 +1049,6 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="fetch(name:String):ResidueTemplate-class-method">
-      <div class="signature">
-        
-        def self.<strong>fetch</strong>(name : String) : <a href="../Chem/ResidueTemplate.html">ResidueTemplate</a>
-
-        <a class="method-permalink" href="#fetch%28name%3AString%29%3AResidueTemplate-class-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
     <div class="entry-detail" id="new(name:String,code:Char?,type:ResidueType,description:String?,atoms:Array(AtomTemplate),bonds:Array(BondTemplate),root_atom:AtomTemplate,aliases:Array(String)=[]ofString,link_bond:BondTemplate?=nil,symmetric_atom_groups:Array(Array(Tuple(String,String)))?=nil)-class-method">
       <div class="signature">
         
@@ -1114,88 +1063,8 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="register(&amp;):ResidueTemplate-class-method">
-      <div class="signature">
-        
-        def self.<strong>register</strong>(&) : <a href="../Chem/ResidueTemplate.html">ResidueTemplate</a>
-
-        <a class="method-permalink" href="#register%28%26%29%3AResidueTemplate-class-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
 
 
-
-  <h2>
-    <a id="class-method-detail" class="anchor" href="#class-method-detail">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Class Method Detail
-  </h2>
-  
-    <div class="entry-detail" id="all_templates:Array(ResidueTemplate)-class-method">
-      <div class="signature">
-        
-        def self.<strong>all_templates</strong> : <a href="../Array.html">Array</a>(<a href="../Chem/ResidueTemplate.html">ResidueTemplate</a>)
-
-        <a class="method-permalink" href="#all_templates%3AArray%28ResidueTemplate%29-class-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="fetch(name:String,&amp;:-&gt;T):ResidueTemplate|TforallT-class-method">
-      <div class="signature">
-        
-        def self.<strong>fetch</strong>(name : String, & :  -> T) : <a href="../Chem/ResidueTemplate.html">ResidueTemplate</a> | T forall T
-
-        <a class="method-permalink" href="#fetch%28name%3AString%2C%26%3A-%3ET%29%3AResidueTemplate%7CTforallT-class-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="parse(content:String):Array(self)-class-method">
-      <div class="signature">
-        
-        def self.<strong>parse</strong>(content : String) : <a href="../Array.html">Array</a>(<span class="k">self</span>)
-
-        <a class="method-permalink" href="#parse%28content%3AString%29%3AArray%28self%29-class-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="parse(io:IO):Array(self)-class-method">
-      <div class="signature">
-        
-        def self.<strong>parse</strong>(io : IO) : <a href="../Array.html">Array</a>(<span class="k">self</span>)
-
-        <a class="method-permalink" href="#parse%28io%3AIO%29%3AArray%28self%29-class-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
 
 
 

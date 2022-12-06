@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../js/doc.js"></script>
 
   <meta name="repository-name" content="chem.cr">
-  <title>Chem::Constraint - chem.cr 0.5.6</title>
+  <title>Chem::TemplateRegistry - chem.cr 0.5.6</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
@@ -141,7 +141,7 @@
       
     </li>
   
-  <li class=" current" data-id="chem.cr/Chem/Constraint" data-name="chem::constraint">
+  <li class=" " data-id="chem.cr/Chem/Constraint" data-name="chem::constraint">
       <a href="../Chem/Constraint.html">Constraint</a>
       
     </li>
@@ -626,7 +626,7 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/TemplateRegistry" data-name="chem::templateregistry">
+  <li class=" current" data-id="chem.cr/Chem/TemplateRegistry" data-name="chem::templateregistry">
       <a href="../Chem/TemplateRegistry.html">TemplateRegistry</a>
       
     </li>
@@ -815,13 +815,103 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">enum</span> Chem::Constraint
+  <span class="kind">class</span> Chem::TemplateRegistry
 
 </h1>
 
 
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Chem/TemplateRegistry.html">Chem::TemplateRegistry</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
+
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>Stores a map of residue templates (see <code><a href="../Chem/ResidueTemplate.html">ResidueTemplate</a></code>).</p>
+<p>It behaves as a hash, where residue templates are indexed (registered)
+by the residue names.</p>
+<p>A global registry can be accessed via the <code><a href="../Chem/TemplateRegistry.html#default%3Aself-class-method">TemplateRegistry.default</a></code>
+method, which contains the default templates as well as other
+templates that have been globally registered. For instance, the
+topology detection mechanism (see <code><a href="../Chem/Topology/Detector.html">Topology::Detector</a></code>) uses the
+global registry unless a registry is specified.</p>
+<p>Local registries could be used to selectively detect a few templates,
+which would speed up the process if existing residues are known
+beforehand, or for another reason.</p>
+<h3><a id="loading-residue-templates" class="anchor" href="#loading-residue-templates">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Loading residue templates</h3>
+<p>Residue templates can be parsed and loaded from a file, IO, or string
+that encodes a registry in the YAML format (see <code><a href="../Chem/TemplateRegistry.html#parse%28io%3AIO%29%3Aself-instance-method">#parse</a></code>).</p>
+<p>The following example shows how to create a new registry directly from
+YAML content:</p>
+<pre><code class="language-crystal">registry <span class="o">=</span> <span class="t">Chem</span><span class="t">::</span><span class="t">TemplateRegistry</span>.from_yaml <span class="s">&lt;&lt;-YAML</span>
+<span class="s">  templates:
+    - description: Phenylalanine
+      names: [PHE, PHY]
+      code: F
+      type: protein
+      link_bond: C-N
+      root: CA
+      spec: &#39;{backbone}-CB-CG%1=CD1-CE1=CZ-CE2=CD2-%1&#39;
+      symmetry:
+    - [[CD1, CD2], [CE1, CE2]]
+  aliases:
+    backbone: N(-H)-CA(-HA)(-C=O)
+  YAML</span>
+registry.size               <span class="c"># =&gt; 1</span>
+registry[<span class="s">&quot;PHE&quot;</span>].description <span class="c"># =&gt; &quot;Phenylalanine&quot;</span></code></pre>
+<p>Residue templates must be defined under the <code>templates</code> field at the
+top-level, and listed as an array of properties. The latter are passed
+to the methods of <code><a href="../Chem/ResidueTemplate/Builder.html">ResidueTemplate::Builder</a></code>, which have the same
+names.</p>
+<p>Residue templates can also be loaded into an existing registry using
+either the <code><a href="../Chem/TemplateRegistry.html#load%28filepath%3APath%7CString%29%3Aself-instance-method">#load</a></code> or <code><a href="../Chem/TemplateRegistry.html#parse%28io%3AIO%29%3Aself-instance-method">#parse</a></code> methods.</p>
+<h3><a id="registering-a-new-residue-template" class="anchor" href="#registering-a-new-residue-template">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Registering a new residue template</h3>
+<p>Residue templates can also be registered using the DSL provided by
+<code><a href="../Chem/ResidueTemplate/Builder.html">ResidueTemplate::Builder</a></code> using the <code><a href="../Chem/TemplateRegistry.html#register%28%26%29%3AResidueTemplate-instance-method">#register</a></code> method:</p>
+<pre><code class="language-crystal">registry <span class="o">=</span> <span class="t">Chem</span><span class="t">::</span><span class="t">TemplateRegistry</span>.new
+res_t <span class="o">=</span> registry.register <span class="k">do</span>
+  description <span class="s">&quot;Phenylalanine&quot;</span>
+  names <span class="s">%w(PHE PHY)</span>
+  code <span class="s">&#39;F&#39;</span>
+  <span class="k">type</span> <span class="n">:protein</span>
+  link_bond <span class="s">&quot;C-N&quot;</span>
+  root <span class="s">&quot;CA&quot;</span>
+  spec <span class="s">&quot;{backbone}-CB-CG%1=CD1-CE1=CZ-CE2=CD2-%1&quot;</span>
+  symmetry({<span class="t">CD1</span>, <span class="t">CD2</span>}, {<span class="t">CE1</span>, <span class="t">CE2</span>})
+<span class="k">end</span>
+registry[<span class="s">&quot;PHE&quot;</span>] <span class="o">==</span> res_t <span class="c"># =&gt; true</span></code></pre>
+<h3><a id="retrieving-a-residue-template" class="anchor" href="#retrieving-a-residue-template">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Retrieving a residue template</h3>
+<p>Residue templates are indexed by every residue name, so they can be
+accessed using the bracket methods much like a hash.</p>
+<pre><code class="language-crystal">registry <span class="o">=</span> <span class="t">Chem</span><span class="t">::</span><span class="t">TemplateRegistry</span>.from_yaml <span class="s">&lt;&lt;-YAML</span>
+<span class="s">  templates:
+    - names: [CX1, CX2]
+      description: &quot;Fake residue&quot;
+      spec: CX
+  YAML</span>
+registry[<span class="s">&quot;CX1&quot;</span>].description        <span class="c"># =&gt; &quot;Fake residue&quot;</span>
+registry[<span class="s">&quot;CX1&quot;</span>] <span class="o">==</span> registry[<span class="s">&quot;CX2&quot;</span>] <span class="c"># =&gt; true</span>
+registry[<span class="s">&quot;CX3&quot;</span>]                    <span class="c"># Raises Chem::Error</span>
+registry[<span class="s">&quot;CX3&quot;</span>]?                   <span class="c"># =&gt; nil</span></code></pre>
 
 
 
@@ -846,68 +936,54 @@
   </h2>
   
     
-      chem/core/bias.cr
+      chem/template_registry.cr
     
     <br/>
   
 
 
 
-  
-    <h2>
-      <a id="enum-members" class="anchor" href="#enum-members">
+
+
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>
-      Enum Members
-    </h2>
-  
-  <dl>
+    Constructors
+  </h2>
+  <ul class="list-summary">
     
-      <dt class="entry-const" id="None">
-        <strong>None</strong> = <code><span class="n">0</span></code>
-      </dt>
-      
+      <li class="entry-summary">
+        <a href="#default%3Aself-class-method" class="signature"><strong>.default</strong> : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the global residue template registry.</p></div>
+        
+      </li>
     
-      <dt class="entry-const" id="X">
-        <strong>X</strong> = <code><span class="n">1</span></code>
-      </dt>
-      
+      <li class="entry-summary">
+        <a href="#from_yaml%28content%3AIO%7CString%29%3Aself-class-method" class="signature"><strong>.from_yaml</strong>(content : IO | String) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the residue templates encoded in the given YAML content.</p></div>
+        
+      </li>
     
-      <dt class="entry-const" id="Y">
-        <strong>Y</strong> = <code><span class="n">2</span></code>
-      </dt>
-      
+      <li class="entry-summary">
+        <a href="#load%28filepath%3APath%7CString%29%3Aself-class-method" class="signature"><strong>.load</strong>(filepath : Path | String) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the residue templates encoded in the given YAML file.</p></div>
+        
+      </li>
     
-      <dt class="entry-const" id="Z">
-        <strong>Z</strong> = <code><span class="n">3</span></code>
-      </dt>
-      
+      <li class="entry-summary">
+        <a href="#new-class-method" class="signature"><strong>.new</strong></a>
+        
+          <div class="summary"><p>Creates a new, empty residue template registry.</p></div>
+        
+      </li>
     
-      <dt class="entry-const" id="XY">
-        <strong>XY</strong> = <code><span class="n">4</span></code>
-      </dt>
-      
-    
-      <dt class="entry-const" id="XZ">
-        <strong>XZ</strong> = <code><span class="n">5</span></code>
-      </dt>
-      
-    
-      <dt class="entry-const" id="YZ">
-        <strong>YZ</strong> = <code><span class="n">6</span></code>
-      </dt>
-      
-    
-      <dt class="entry-const" id="XYZ">
-        <strong>XYZ</strong> = <code><span class="n">7</span></code>
-      </dt>
-      
-    
-  </dl>
-
-
+  </ul>
 
 
 
@@ -924,47 +1000,86 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#includes%3F%28axis%3ASymbol%29%3ABool-instance-method" class="signature"><strong>#includes?</strong>(axis : Symbol) : Bool</a>
+        <a href="#%3C%3C%28res_t%3AResidueTemplate%29%3Aself-instance-method" class="signature"><strong>#<<</strong>(res_t : ResidueTemplate) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Adds the residue template to the registry.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#none%3F-instance-method" class="signature"><strong>#none?</strong></a>
+        <a href="#%5B%5D%28name%3AString%29%3AResidueTemplate-instance-method" class="signature"><strong>#[]</strong>(name : String) : ResidueTemplate</a>
+        
+          <div class="summary"><p>Returns the residue template registered under <em>name</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#x%3F-instance-method" class="signature"><strong>#x?</strong></a>
+        <a href="#%5B%5D%3F%28name%3AString%29%3AResidueTemplate%3F-instance-method" class="signature"><strong>#[]?</strong>(name : String) : ResidueTemplate?</a>
+        
+          <div class="summary"><p>Returns the residue template registered under <em>name</em>, or <code>nil</code> if no template exist with the given name.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#xy%3F-instance-method" class="signature"><strong>#xy?</strong></a>
+        <a href="#includes%3F%28res_t%3AResidueTemplate%29%3ABool-instance-method" class="signature"><strong>#includes?</strong>(res_t : ResidueTemplate) : Bool</a>
+        
+          <div class="summary"><p>Returns <code>true</code> if the registry contains the given residue template, else <code>false</code>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#xyz%3F-instance-method" class="signature"><strong>#xyz?</strong></a>
+        <a href="#load%28filepath%3APath%7CString%29%3Aself-instance-method" class="signature"><strong>#load</strong>(filepath : Path | String) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Parses and registers the residue templates encoded in the given YAML file.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#xz%3F-instance-method" class="signature"><strong>#xz?</strong></a>
+        <a href="#parse%28io%3AIO%29%3Aself-instance-method" class="signature"><strong>#parse</strong>(io : IO) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Parses and registers the residue templates encoded in the given YAML content.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#y%3F-instance-method" class="signature"><strong>#y?</strong></a>
+        <a href="#parse%28content%3AString%29%3Aself-instance-method" class="signature"><strong>#parse</strong>(content : String) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Parses and registers the residue templates encoded in the given YAML content.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#yz%3F-instance-method" class="signature"><strong>#yz?</strong></a>
+        <a href="#register%28%26%29%3AResidueTemplate-instance-method" class="signature"><strong>#register</strong>(&) : ResidueTemplate</a>
+        
+          <div class="summary"><p>Convenience method that creates and registers a new residue template.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#z%3F-instance-method" class="signature"><strong>#z?</strong></a>
+        <a href="#reject%28%26%3AResidueTemplate-%3E_%29%3Aself-instance-method" class="signature"><strong>#reject</strong>(& : ResidueTemplate -> _) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a new registry with all the residue templates for which the passed block is falsey.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#select%28%26%3AResidueTemplate-%3E_%29%3Aself-instance-method" class="signature"><strong>#select</strong>(& : ResidueTemplate -> _) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a new registry with all the residue templates for which the passed block is truthy.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#size%3AInt32-instance-method" class="signature"><strong>#size</strong> : Int32</a>
+        
+          <div class="summary"><p>Number of residue templates.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_a%3AArray%28ResidueTemplate%29-instance-method" class="signature"><strong>#to_a</strong> : Array(ResidueTemplate)</a>
+        
+          <div class="summary"><p>Returns an array containing all the residue templates.</p></div>
         
       </li>
     
@@ -996,28 +1111,94 @@
 
 
   
-    
-
-
-    
-
-
-    
-
-
-  
-    
-
-
-    
-
-
-    
-
-
-  
 </div>
 
+
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="default:self-class-method">
+      <div class="signature">
+        
+        def self.<strong>default</strong> : <span class="k">self</span>
+
+        <a class="method-permalink" href="#default%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the global residue template registry.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="from_yaml(content:IO|String):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>from_yaml</strong>(content : IO | String) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#from_yaml%28content%3AIO%7CString%29%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the residue templates encoded in the given YAML content.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="load(filepath:Path|String):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>load</strong>(filepath : Path | String) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#load%28filepath%3APath%7CString%29%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the residue templates encoded in the given YAML file.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>
+
+        <a class="method-permalink" href="#new-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Creates a new, empty residue template registry.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
 
 
 
@@ -1032,13 +1213,20 @@
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="includes?(axis:Symbol):Bool-instance-method">
+    <div class="entry-detail" id="&lt;&lt;(res_t:ResidueTemplate):self-instance-method">
       <div class="signature">
         
-        def <strong>includes?</strong>(axis : Symbol) : Bool
+        def <strong><<</strong>(res_t : <a href="../Chem/ResidueTemplate.html">ResidueTemplate</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#includes%3F%28axis%3ASymbol%29%3ABool-instance-method">#</a>
+        <a class="method-permalink" href="#%3C%3C%28res_t%3AResidueTemplate%29%3Aself-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Adds the residue template to the registry. The template is
+registered under every residue name.</p>
+<p>Raises <code><a href="../Chem/Error.html">Error</a></code> if any of the residue names already exists.</p>
+        </div>
       
       <br/>
       <div>
@@ -1046,13 +1234,19 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="none?-instance-method">
+    <div class="entry-detail" id="[](name:String):ResidueTemplate-instance-method">
       <div class="signature">
         
-        def <strong>none?</strong>
+        def <strong>[]</strong>(name : String) : <a href="../Chem/ResidueTemplate.html">ResidueTemplate</a>
 
-        <a class="method-permalink" href="#none%3F-instance-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%28name%3AString%29%3AResidueTemplate-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns the residue template registered under <em>name</em>. Raises <code><a href="../Chem/Error.html">Error</a></code>
+if no template exist with the given name.</p>
+        </div>
       
       <br/>
       <div>
@@ -1060,13 +1254,19 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="x?-instance-method">
+    <div class="entry-detail" id="[]?(name:String):ResidueTemplate?-instance-method">
       <div class="signature">
         
-        def <strong>x?</strong>
+        def <strong>[]?</strong>(name : String) : <a href="../Chem/ResidueTemplate.html">ResidueTemplate</a>?
 
-        <a class="method-permalink" href="#x%3F-instance-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%3F%28name%3AString%29%3AResidueTemplate%3F-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns the residue template registered under <em>name</em>, or <code>nil</code> if no
+template exist with the given name.</p>
+        </div>
       
       <br/>
       <div>
@@ -1074,13 +1274,20 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="xy?-instance-method">
+    <div class="entry-detail" id="includes?(res_t:ResidueTemplate):Bool-instance-method">
       <div class="signature">
         
-        def <strong>xy?</strong>
+        def <strong>includes?</strong>(res_t : <a href="../Chem/ResidueTemplate.html">ResidueTemplate</a>) : Bool
 
-        <a class="method-permalink" href="#xy%3F-instance-method">#</a>
+        <a class="method-permalink" href="#includes%3F%28res_t%3AResidueTemplate%29%3ABool-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if the registry contains the given residue template,
+else <code>false</code>. Both template's name and content are checked for a
+match.</p>
+        </div>
       
       <br/>
       <div>
@@ -1088,13 +1295,19 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="xyz?-instance-method">
+    <div class="entry-detail" id="load(filepath:Path|String):self-instance-method">
       <div class="signature">
         
-        def <strong>xyz?</strong>
+        def <strong>load</strong>(filepath : Path | String) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#xyz%3F-instance-method">#</a>
+        <a class="method-permalink" href="#load%28filepath%3APath%7CString%29%3Aself-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Parses and registers the residue templates encoded in the given YAML
+file. See <code><a href="../Chem/TemplateRegistry.html#parse%28io%3AIO%29%3Aself-instance-method">#parse</a></code> for more details.</p>
+        </div>
       
       <br/>
       <div>
@@ -1102,13 +1315,26 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="xz?-instance-method">
+    <div class="entry-detail" id="parse(io:IO):self-instance-method">
       <div class="signature">
         
-        def <strong>xz?</strong>
+        def <strong>parse</strong>(io : IO) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#xz%3F-instance-method">#</a>
+        <a class="method-permalink" href="#parse%28io%3AIO%29%3Aself-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Parses and registers the residue templates encoded in the given YAML
+content.</p>
+<p>Residue templates must be defined under the <code>templates</code> field at the
+top-level, and listed as an array of properties. The latter are
+passed to the methods of <code><a href="../Chem/ResidueTemplate/Builder.html">ResidueTemplate::Builder</a></code>, which have the
+same names.</p>
+<p>Raises <code><a href="../Chem/Error.html">Error</a></code> if either the <code>templates</code> field or any of the
+required residue template properties is missing (see
+<code><a href="../Chem/ResidueTemplate/Builder.html">ResidueTemplate::Builder</a></code>).</p>
+        </div>
       
       <br/>
       <div>
@@ -1116,13 +1342,26 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="y?-instance-method">
+    <div class="entry-detail" id="parse(content:String):self-instance-method">
       <div class="signature">
         
-        def <strong>y?</strong>
+        def <strong>parse</strong>(content : String) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#y%3F-instance-method">#</a>
+        <a class="method-permalink" href="#parse%28content%3AString%29%3Aself-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Parses and registers the residue templates encoded in the given YAML
+content.</p>
+<p>Residue templates must be defined under the <code>templates</code> field at the
+top-level, and listed as an array of properties. The latter are
+passed to the methods of <code><a href="../Chem/ResidueTemplate/Builder.html">ResidueTemplate::Builder</a></code>, which have the
+same names.</p>
+<p>Raises <code><a href="../Chem/Error.html">Error</a></code> if either the <code>templates</code> field or any of the
+required residue template properties is missing (see
+<code><a href="../Chem/ResidueTemplate/Builder.html">ResidueTemplate::Builder</a></code>).</p>
+        </div>
       
       <br/>
       <div>
@@ -1130,13 +1369,19 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="yz?-instance-method">
+    <div class="entry-detail" id="register(&amp;):ResidueTemplate-instance-method">
       <div class="signature">
         
-        def <strong>yz?</strong>
+        def <strong>register</strong>(&) : <a href="../Chem/ResidueTemplate.html">ResidueTemplate</a>
 
-        <a class="method-permalink" href="#yz%3F-instance-method">#</a>
+        <a class="method-permalink" href="#register%28%26%29%3AResidueTemplate-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Convenience method that creates and registers a new residue
+template. See <code><a href="../Chem/ResidueTemplate/Builder.html">ResidueTemplate::Builder</a></code> and <code>#&lt;&lt;</code>.</p>
+        </div>
       
       <br/>
       <div>
@@ -1144,13 +1389,77 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="z?-instance-method">
+    <div class="entry-detail" id="reject(&amp;:ResidueTemplate-&gt;_):self-instance-method">
       <div class="signature">
         
-        def <strong>z?</strong>
+        def <strong>reject</strong>(& : <a href="../Chem/ResidueTemplate.html">ResidueTemplate</a> -> _) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#z%3F-instance-method">#</a>
+        <a class="method-permalink" href="#reject%28%26%3AResidueTemplate-%3E_%29%3Aself-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns a new registry with all the residue templates for which the
+passed block is falsey.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="select(&amp;:ResidueTemplate-&gt;_):self-instance-method">
+      <div class="signature">
+        
+        def <strong>select</strong>(& : <a href="../Chem/ResidueTemplate.html">ResidueTemplate</a> -> _) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#select%28%26%3AResidueTemplate-%3E_%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a new registry with all the residue templates for which the
+passed block is truthy.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="size:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>size</strong> : Int32
+
+        <a class="method-permalink" href="#size%3AInt32-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Number of residue templates.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_a:Array(ResidueTemplate)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_a</strong> : <a href="../Array.html">Array</a>(<a href="../Chem/ResidueTemplate.html">ResidueTemplate</a>)
+
+        <a class="method-permalink" href="#to_a%3AArray%28ResidueTemplate%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns an array containing all the residue templates.</p>
+        </div>
       
       <br/>
       <div>
