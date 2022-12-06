@@ -90,6 +90,8 @@ class Chem::TemplateRegistry
   # Number of residue templates.
   getter size : Int32 = 0
 
+  @@default_registry : self?
+
   # Creates a new, empty residue template registry.
   def initialize
     @spec_aliases = {} of String => String
@@ -98,8 +100,9 @@ class Chem::TemplateRegistry
 
   # Returns the global residue template registry.
   def self.default : self
-    # FIXME: load default templates here
-    @@default_registry ||= new
+    @@default_registry ||= new.tap do |registry|
+      registry.spec_alias("backbone", "N(-H)-CA(-HA)(-C=O)")
+    end
   end
 
   # Returns the residue templates encoded in the given YAML content.

@@ -1,20 +1,15 @@
 class Chem::ResidueTemplate::SpecParser
-  ALIASES = {"backbone" => "N(-H)-CA(-HA)(-C=O)"}
-
   record AtomRecord, name : String,
     element : Element?,
     formal_charge : Int32,
     explicit_hydrogens : Int32?
   record BondRecord, lhs : String, rhs : String, order : BondOrder
 
-  def initialize(str, aliases : Hash(String, String)? = nil)
+  def initialize(str, @aliases : Hash(String, String)? = nil)
     @reader = Char::Reader.new(str.strip)
     @atom_map = {} of String => AtomRecord
     @bond_map = {} of Tuple(String, String) => BondRecord
     @implicit_bonds = [] of BondRecord
-    @aliases = {} of String => String
-    @aliases.merge! ALIASES
-    @aliases.merge! aliases if aliases
   end
 
   private def add_bond(atom : AtomRecord, other : AtomRecord, order : BondOrder) : Nil
@@ -134,7 +129,7 @@ class Chem::ResidueTemplate::SpecParser
         next_char
         name = consume_while &.ascii_lowercase?
         raise "Expected alias" if name.empty?
-        spec = @aliases[name]? || raise "Unknown alias #{name}"
+        spec = @aliases.try(&.[name]?) || raise "Unknown alias #{name}"
         raise "Unclosed alias" unless next_char == '}'
         raw_value = String.build do |io|
           io << @reader.string[0, @reader.pos - name.size - 1] \

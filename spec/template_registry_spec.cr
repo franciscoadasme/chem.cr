@@ -113,7 +113,7 @@ describe Chem::TemplateRegistry do
             symmetry:
               - [[CD1, CD2], [CE1, CE2]]
         aliases:
-          backbone: N(-H)-CA(-HA)(-C=O)
+          backbone: 'N(-H)-CA(-HA)(-C=O)'
         YAML
       templates = Chem::TemplateRegistry.new.parse(content).to_a
       templates.size.should eq 1
@@ -128,7 +128,6 @@ describe Chem::TemplateRegistry do
       res_t.symmetric_atom_groups.should eq [[{"CD1", "CD2"}, {"CE1", "CE2"}]]
       res_t.atoms.size.should eq 20
       res_t.bonds.size.should eq 20
-      # TODO: check aliases
     end
 
     it "parses root" do
