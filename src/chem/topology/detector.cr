@@ -31,10 +31,10 @@ class Chem::Topology::Detector
   @atoms : Set(Atom)
   @templates : Array(ResidueTemplate)
 
-  def initialize(atoms : AtomCollection, templates : Array(ResidueTemplate)? = nil)
+  def initialize(atoms : AtomCollection, templates : TemplateRegistry = TemplateRegistry.default)
     @atoms = Set(Atom).new(atoms.n_atoms).concat atoms.each_atom
     @atom_table = {} of Atom | AtomTemplate => String
-    @templates = templates || ResidueTemplate.all_templates
+    @templates = templates.to_a
     compute_atom_descriptions @atoms
     compute_atom_descriptions @templates
     compute_atom_descriptions [CTER_T, NTER_T, CHARGED_CTER_T, CHARGED_NTER_T]

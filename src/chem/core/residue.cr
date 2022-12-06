@@ -649,14 +649,14 @@ class Chem::Residue
   #
   # The template is fetched by the residue name.
   def template : ResidueTemplate?
-    ResidueTemplate.fetch(@name) { nil }
+    TemplateRegistry.default[@name]?
   end
 
   # Returns `true` if the residue is a water residue, else `false`.
   # This is done by checking if the associated residue template (if
   # any) correspond to the water template.
   def water? : Bool
-    template == ResidueTemplate.fetch("HOH")
+    !!(template.try &.name.==("HOH"))
   end
 
   {% for member in ResidueType.constants %}

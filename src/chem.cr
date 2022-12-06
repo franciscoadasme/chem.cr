@@ -24,6 +24,7 @@ require "./chem/atom_template"
 require "./chem/bond_template"
 require "./chem/residue_template"
 require "./chem/residue_template/*"
+require "./chem/template_registry"
 
 require "./chem/protein"
 require "./chem/topology"

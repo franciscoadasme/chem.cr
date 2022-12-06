@@ -1,3 +1,6 @@
+# TODO: Make methods return self to allow for method chaining `build
+# &.name("asd").description("asd")`
+# TODO: add docs (include checks)
 class Chem::ResidueTemplate::Builder
   @code : Char?
   @description : String?

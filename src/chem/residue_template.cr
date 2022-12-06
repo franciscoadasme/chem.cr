@@ -1,8 +1,6 @@
 require "yaml"
 
 class Chem::ResidueTemplate
-  private REGISTRY = {} of String => ResidueTemplate
-
   @atoms : Array(AtomTemplate)
   @bonds : Array(BondTemplate)
 
@@ -31,63 +29,10 @@ class Chem::ResidueTemplate
     @bonds = bonds.dup
   end
 
-  def self.all_templates : Array(ResidueTemplate)
-    REGISTRY.values
-  end
-
   def self.build : self
     builder = ResidueTemplate::Builder.new
     with builder yield builder
     builder.build
-  end
-
-  def self.fetch(name : String) : ResidueTemplate
-    fetch(name) { raise Error.new("Unknown residue template #{name}") }
-  end
-
-  def self.fetch(name : String, & : -> T) : ResidueTemplate | T forall T
-    REGISTRY[name]? || yield
-  end
-
-  def self.parse(content : String) : Array(self)
-    parse IO::Memory.new(content)
-  end
-
-  def self.parse(io : IO) : Array(self)
-    data = YAML.parse(io)
-    if templates = data.dig?("templates").try(&.as_a?)
-      templates.map do |hash|
-        build do |builder|
-          builder.description hash["description"].as_s
-          if name = hash["name"]?
-            builder.name name.as_s
-          else
-            builder.names hash["names"].as_a.map(&.as_s)
-          end
-          hash["code"]?.try { |code| builder.code code.as_s[0] }
-          hash["type"]?.try { |type| builder.type ResidueType.parse(type.as_s) }
-          hash["spec"]?.try { |spec| builder.spec spec.as_s }
-          hash["symmetry"]?.try do |symmetric_atom_groups|
-            symmetric_atom_groups.as_a.each do |atom_pairs|
-              builder.symmetry atom_pairs.as_a.map { |p| {p[0].as_s, p[1].as_s} }
-            end
-          end
-        end
-      end
-    else
-      raise IO::Error.new("Missing template residues")
-    end
-  end
-
-  def self.register : ResidueTemplate
-    ResidueTemplate.build do |builder|
-      with builder yield builder
-      residue = builder.build
-      ([residue.name] + residue.aliases).each do |name|
-        raise Error.new("#{name} residue template already exists") if REGISTRY.has_key?(name)
-        REGISTRY[name] = residue
-      end
-    end
   end
 
   def [](atom_name : String) : AtomTemplate
