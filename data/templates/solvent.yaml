@@ -1,0 +1,5 @@
+templates:
+  - description: Water
+    names: [HOH, WAT, TIP3]
+    type: solvent
+    spec: O

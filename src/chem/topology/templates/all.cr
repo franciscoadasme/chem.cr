@@ -1,2 +1,0 @@
-require "./amino"
-require "./solvent"

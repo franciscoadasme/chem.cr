@@ -99,9 +99,15 @@ class Chem::TemplateRegistry
   end
 
   # Returns the global residue template registry.
+  #
+  # NOTE: It loads the default templates including proteinogenic
+  # aminoacids and their variants (e.g., HIS, HSE, and HSP), and
+  # solvents such as water.
   def self.default : self
     @@default_registry ||= new.tap do |registry|
-      registry.spec_alias("backbone", "N(-H)-CA(-HA)(-C=O)")
+      # bake default templates so it can be loaded from anywhere
+      registry.parse {{read_file("data/templates/amino.yaml")}}
+      registry.parse {{read_file("data/templates/solvent.yaml")}}
     end
   end
 
