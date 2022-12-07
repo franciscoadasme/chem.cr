@@ -81,9 +81,9 @@ describe Chem::Atom do
   describe "#matches?" do
     it "tells if atom matches template" do
       atom = Chem::Structure.build { atom "CD2", vec3(0, 0, 0) }.atoms[0]
-      atom.matches?(Chem::AtomTemplate.new("CD2", "C")).should be_true
-      atom.matches?(Chem::AtomTemplate.new("CD2", "N")).should be_false
-      atom.matches?(Chem::AtomTemplate.new("ND2", "N")).should be_false
+      atom.should match Chem::AtomTemplate.new("CD2", "C")
+      atom.should_not match Chem::AtomTemplate.new("CD2", "N")
+      atom.should_not match Chem::AtomTemplate.new("ND2", "N")
     end
   end
 
@@ -243,6 +243,17 @@ describe Chem::Atom do
       structure.dig('A', 56, "C").water?.should be_false     # protein
       structure.dig('A', 1298, "C10").water?.should be_false # ligand
       structure.dig('A', 2181, "O").water?.should be_true    # water
+    end
+  end
+end
+
+struct Spec::MatchExpectation(T)
+  def match(actual_value : Chem::Atom)
+    case expected_value = @expected_value
+    when Chem::AtomTemplate
+      actual_value.matches? expected_value
+    else
+      actual_value =~ @expected_value
     end
   end
 end
