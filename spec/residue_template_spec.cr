@@ -45,15 +45,15 @@ describe Chem::ResidueTemplate do
     end
   end
 
-  describe "#inspect" do
+  describe "#to_s" do
     it "returns a string representation" do
       Chem::ResidueTemplate.build(&.name("O2").spec("O1=O2").root("O1"))
-        .inspect.should eq "<ResidueTemplate O2>"
+        .to_s.should eq "<ResidueTemplate O2>"
       Chem::ResidueTemplate.build(&.name("HOH").type(:solvent).spec("O"))
-        .inspect.should eq "<ResidueTemplate HOH, solvent>"
+        .to_s.should eq "<ResidueTemplate HOH solvent>"
       Chem::ResidueTemplate.build(&.name("GLY").code('G').type(:protein)
         .spec("N(-H)-CA(-C=O)"))
-        .inspect.should eq "<ResidueTemplate GLY(G), protein>"
+        .to_s.should eq "<ResidueTemplate GLY(G) protein>"
     end
   end
 

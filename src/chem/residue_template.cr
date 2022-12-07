@@ -88,14 +88,14 @@ class Chem::ResidueTemplate
     @atoms.sum &.formal_charge
   end
 
-  def inspect(io : IO) : Nil
-    io << "<ResidueTemplate " << @name
-    io << '(' << @code << ')' if @code
-    io << ", " << @type.to_s.downcase unless @type.other?
-    io << '>'
-  end
-
   def polymer? : Bool
     !!link_bond
+  end
+
+  def to_s(io : IO) : Nil
+    io << '<' << {{@type.name.split("::").last}} << ' ' << @name
+    io << '(' << @code << ')' if @code
+    io << ' ' << @type.to_s.downcase unless @type.other?
+    io << '>'
   end
 end
