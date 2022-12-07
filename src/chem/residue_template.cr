@@ -2,6 +2,7 @@ require "yaml"
 
 class Chem::ResidueTemplate
   @atoms : Array(AtomTemplate)
+  @atom_table : Hash(String, AtomTemplate)
   @bonds : Array(BondTemplate)
 
   getter name : String
@@ -19,15 +20,14 @@ class Chem::ResidueTemplate
     @code : Char?,
     @type : ResidueType,
     @description : String?,
-    atoms : Array(AtomTemplate),
-    bonds : Array(BondTemplate),
+    @atoms : Array(AtomTemplate),
+    @bonds : Array(BondTemplate),
     @root_atom : AtomTemplate,
     @aliases : Array(String) = [] of String,
     @link_bond : BondTemplate? = nil,
     @symmetric_atom_groups : Array(Array(Tuple(String, String)))? = nil
   )
-    @atoms = atoms.dup
-    @bonds = bonds.dup
+    @atom_table = @atoms.index_by &.name
   end
 
   def self.build : self
@@ -68,12 +68,12 @@ class Chem::ResidueTemplate
       symmetric_atom_groups
   end
 
-  def [](atom_name : String) : AtomTemplate
-    self[atom_name]? || raise Error.new "Unknown atom template #{atom_name}"
+  def [](name : String) : AtomTemplate
+    self[name]? || raise Error.new("Unknown atom template #{name.inspect} in #{@name}")
   end
 
-  def []?(atom_name : String) : AtomTemplate?
-    @atoms.find &.name.==(atom_name)
+  def []?(name : String) : AtomTemplate?
+    @atom_table[name]?
   end
 
   def atom_count(*, include_hydrogens : Bool = true)
