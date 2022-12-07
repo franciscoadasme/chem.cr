@@ -3,7 +3,7 @@
 # It behaves as a hash, where residue templates are indexed (registered)
 # by the residue names.
 #
-# A global registry can be accessed via the `TemplateRegistry.default`
+# A _global registry_ can be accessed via the `TemplateRegistry.default`
 # method, which contains the default templates as well as other
 # templates that have been globally registered. For instance, the
 # topology detection mechanism (see `Topology::Detector`) uses the
@@ -319,23 +319,42 @@ class Chem::TemplateRegistry
   end
 end
 
-# Parses and registers the residue templates encoded in the given YAML
-# file into the _global registry_. See `TemplateRegistry.default` and
-# `TemplateRegistry#parse` for details.
-def Chem.load_templates(filepath : String) : Nil
-  Chem::TemplateRegistry.default.load filepath
+# Loads and registers the residue template(s) from a structure file or
+# YAML file into the _global registry_.
+#
+# If a valid structure file (checked via `Format.from_filename?`) is
+# passed, it's read from file and the first residue is transformed into
+# a template by calling `ResidueTemplate.from_residue`.
+#
+# If a YAML file is passed, it's loaded by calling
+# `TemplateRegistry#load`.
+#
+# Refer to the `TemplateRegistry` documentation for more information.
+def Chem.load_template(filepath : Path | String) : Nil
+  load_templates filepath
+end
+
+# :ditto:
+def Chem.load_templates(filepath : Path | String) : Nil
+  if Chem::Format.from_filename?(filepath) # valid structure file
+    structure = Chem::Structure.read filepath
+    res_t = Chem::ResidueTemplate.from_residue structure.residues[0]
+    Chem::TemplateRegistry.default << res_t
+  else
+    Chem::TemplateRegistry.default.load filepath
+  end
 end
 
 # Parses and registers the residue templates encoded in the given YAML
-# content into the _global registry_. See `TemplateRegistry.default` and
-# `TemplateRegistry#parse` for details.
+# content into the _global registry_. Refer to the `TemplateRegistry`
+# documentation and `TemplateRegistry#parse` for details.
 def Chem.parse_templates(filepath : String) : Nil
   Chem::TemplateRegistry.default.parse filepath
 end
 
 # Registers an aliases to a known residue template into the _global
-# registry_. See `TemplateRegistry.default` and `TemplateRegistry#alias`
-# for details.
+# registry_. Refer to the `TemplateRegistry` documentation and
+# `TemplateRegistry#alias` for details.
 def Chem.template_alias(new_name : String, to existing_name : String) : Nil
   Chem::TemplateRegistry.default.alias new_name, existing_name
 end

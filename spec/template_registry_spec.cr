@@ -208,6 +208,13 @@ end
 
 describe Chem do
   describe ".load_template" do
+    it "loads and registers a template from structure globally" do
+      Chem.load_template "spec/data/mol2/benzene.mol2"
+      Chem::TemplateRegistry.default["BEN"].atoms
+        .select(&.element.heavy?)
+        .map(&.name).should eq %w(C1 C2 C3 C4 C5 C6)
+    end
+
     it "loads and registers templates from file globally" do
       tempfile = File.tempfile do |io|
         io << <<-YAML
