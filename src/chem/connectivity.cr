@@ -136,6 +136,17 @@ module Chem
       io << "<Bond " << @atoms[0] << @order.to_char << @atoms[1] << '>'
     end
 
+    # Returns `true` if the bond matches the given template, else
+    # `false`.
+    #
+    # Check considers both atom matching (see `Atom#match?`) and bond
+    # order.
+    def matches?(bond_t : BondTemplate) : Bool
+      (atoms[0].match?(bond_t[0]) && atoms[1].match?(bond_t[1]) ||
+        atoms[0].match?(bond_t[1]) && atoms[1].match?(bond_t[0])) &&
+        @order == bond_t.order
+    end
+
     # Returns the current value of the bond in angstroms.
     def measure : Float64
       Spatial.distance(*@atoms.map(&.coords))

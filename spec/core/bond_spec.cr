@@ -74,4 +74,37 @@ describe Chem::Bond do
       end
     end
   end
+
+  describe "#matches?" do
+    it "tells if a bond matches a template" do
+      structure = Chem::Structure.build do |builder|
+        builder.atom "C1", vec3(0, 0, 0)
+        builder.atom "O1", vec3(0, 0, 0)
+        builder.bond "C1", "O1"
+      end
+      bond = structure.bonds[0]
+      bond.should match({ {"C1", "C"}, {"O1", "O"} })
+      bond.should_not match({ {"C1", "C"}, {"O1", "O"}, :double })
+      bond.should_not match({ {"C2", "C"}, {"O1", "O"} })
+      bond.should_not match({ {"C1", "C"}, {"O1", "C"} })
+    end
+  end
+end
+
+struct Spec::MatchExpectation(T)
+  def match(actual_value : Chem::Bond)
+    case expected_value = @expected_value
+    when Tuple(Tuple(String, String), Tuple(String, String))
+      name_and_element, other = expected_value
+      order = Chem::BondOrder::Single
+    when Tuple(Tuple(String, String), Tuple(String, String), Symbol)
+      name_and_element, other, order = expected_value
+      order = Chem::BondOrder.parse order.to_s
+    else
+      return actual_value =~ @expected_value
+    end
+    atom_t = Chem::AtomTemplate.new *name_and_element
+    other = Chem::AtomTemplate.new *other
+    actual_value.matches? Chem::BondTemplate.new atom_t, other, order
+  end
 end
