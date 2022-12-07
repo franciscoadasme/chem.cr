@@ -22,12 +22,17 @@ class Chem::ResidueTemplate
     @description : String?,
     @atoms : Array(AtomTemplate),
     @bonds : Array(BondTemplate),
-    @root_atom : AtomTemplate,
+    root_atom : String,
     @aliases : Array(String) = [] of String,
     @link_bond : BondTemplate? = nil,
     @symmetric_atom_groups : Array(Array(Tuple(String, String)))? = nil
   )
     @atom_table = @atoms.index_by &.name
+    if atom = @atom_table[root_atom]?
+      @root_atom = atom
+    else
+      raise KeyError.new("Atom #{root_atom.inspect} not found in #{self}")
+    end
   end
 
   def self.build : self
@@ -55,14 +60,13 @@ class Chem::ResidueTemplate
     bonds = residue.bonds.map do |bond|
       BondTemplate.new *bond.atoms.map { |atom| atom_table[atom.name] }, bond.order
     end
-    root = atoms.first
     new residue.name,
       residue.code,
       residue.type,
       description,
       atoms,
       bonds,
-      root,
+      atoms.first.name,
       aliases,
       link_bond,
       symmetric_atom_groups

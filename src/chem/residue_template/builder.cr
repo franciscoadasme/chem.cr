@@ -83,11 +83,12 @@ class Chem::ResidueTemplate::Builder
     # Get root atom or sets it for known residue templates if missing,
     # otherwise raise
     root_atom = if atom_name = @root_atom
-                  atom_t_map[atom_name]
+                  atom_name
                 elsif @type.protein?
-                  atom_t_map["CA"]
+                  "CA"
                 elsif atoms.count(&.element.heavy?) == 1 # one heavy atom
-                  atoms.first
+                  # TODO: guess root by maximum valence
+                  atoms.first.name
                 else
                   raise "Missing root for residue template #{@names.first}"
                 end
