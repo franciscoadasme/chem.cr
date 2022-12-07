@@ -173,8 +173,8 @@ class Chem::Residue
   # residues[0].bonded?(residues[1], bond_t, strict: false) # => true
   # ```
   def bonded?(other : self, bond_t : BondTemplate, strict : Bool = true) : Bool
-    bonded?(other, bond_t[0], bond_t[1], bond_t.order) ||
-      (!strict && bonded?(other, bond_t[0].element, bond_t[1].element))
+    bonded?(other, *bond_t.atoms, bond_t.order) ||
+      (!strict && bonded?(other, *bond_t.atoms.map(&.element)))
   end
 
   # Returns true if `self` is bonded to *other* through a bond between
@@ -595,7 +595,7 @@ class Chem::Residue
   def pred?(strict : Bool = true, use_numbering : Bool = true) : Residue?
     bonded_residue = nil
     if bond_t = template.try(&.link_bond)
-      each_bonded_residue(bond_t.inverse, strict: strict) do |residue|
+      each_bonded_residue(bond_t.reverse, strict: strict) do |residue|
         bonded_residue = residue if !bonded_residue || residue > bonded_residue
       end
     elsif use_numbering

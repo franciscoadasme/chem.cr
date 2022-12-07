@@ -83,6 +83,7 @@ describe Chem::Bond do
         builder.bond "C1", "O1"
       end
       bond = structure.bonds[0]
+      # uses Bond#matches?(BondTemplate) internally
       bond.should match({ {"C1", "C"}, {"O1", "O"} })
       bond.should_not match({ {"C1", "C"}, {"O1", "O"}, :double })
       bond.should_not match({ {"C2", "C"}, {"O1", "O"} })

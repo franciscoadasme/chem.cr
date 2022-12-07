@@ -1,16 +1,90 @@
 require "./spec_helper"
 
 describe Chem::BondTemplate do
+  describe "#==" do
+    it "tells if two bond templates are equal" do
+      c = Chem::AtomTemplate.new("C", "C")
+      ca = Chem::AtomTemplate.new("CA", "C")
+      cb = Chem::AtomTemplate.new("CB", "C")
+      Chem::BondTemplate.new(ca, c).should eq Chem::BondTemplate.new(ca, c)
+      Chem::BondTemplate.new(ca, c).should eq Chem::BondTemplate.new(c, ca)
+      Chem::BondTemplate.new(ca, c).should_not eq Chem::BondTemplate.new(ca, cb)
+    end
+  end
+
+  describe "#includes" do
+    it "tells if two bond templates are equal" do
+      c = Chem::AtomTemplate.new("C", "C")
+      ca = Chem::AtomTemplate.new("CA", "C")
+      cb = Chem::AtomTemplate.new("CB", "C")
+      bond_t = Chem::BondTemplate.new(ca, c)
+
+      bond_t.includes?(ca).should be_true
+      bond_t.includes?(c).should be_true
+      bond_t.includes?(cb).should be_false
+
+      # using atom names
+      bond_t.includes?("CA").should be_true
+      bond_t.includes?("C").should be_true
+      bond_t.includes?("CB").should be_false
+    end
+  end
+
   describe "#inspect" do
+    it "returns a string representation" do
+      c = Chem::AtomTemplate.new("C", "C")
+      o = Chem::AtomTemplate.new("O", "O")
+      Chem::BondTemplate.new(c, o, :double).inspect.should eq "<BondTemplate C=O>"
+    end
+  end
+
+  describe "#other" do
+    it "returns the bonded atom" do
+      c = Chem::AtomTemplate.new("C", "C")
+      ca = Chem::AtomTemplate.new("CA", "C")
+      bond_t = Chem::BondTemplate.new(ca, c)
+      bond_t.other(ca).should eq c
+      bond_t.other(c).should eq ca
+
+      # using atom names
+      bond_t.other("CA").should eq c
+      bond_t.other("C").should eq ca
+    end
+
+    it "raises if unknown atom" do
+      c = Chem::AtomTemplate.new("C", "C")
+      ca = Chem::AtomTemplate.new("CA", "C")
+      cb = Chem::AtomTemplate.new("CB", "C")
+      bond_t = Chem::BondTemplate.new(ca, c)
+      expect_raises(IndexError, "Unknown atom template CB in CA-C") do
+        bond_t.other(cb)
+      end
+
+      # using names
+      expect_raises(IndexError, "Unknown atom template CX in CA-C") do
+        bond_t.other("CX")
+      end
+    end
+  end
+
+  describe "#reverse" do
+    c = Chem::AtomTemplate.new("C", "C")
+    ca = Chem::AtomTemplate.new("CA", "C")
+    bond_t = Chem::BondTemplate.new(ca, c)
+    bond_t.reverse.should eq bond_t
+    bond_t.reverse.atoms.map(&.name).to_a.should eq %w(C CA)
+  end
+
+  describe "#to_s" do
     it "returns a string representation" do
       c = Chem::AtomTemplate.new("C", "C")
       ca = Chem::AtomTemplate.new("CA", "C")
       cb = Chem::AtomTemplate.new("CB", "C")
       o = Chem::AtomTemplate.new("O", "O")
       n = Chem::AtomTemplate.new("N", "N")
-      Chem::BondTemplate.new(ca, cb).inspect.should eq "<BondTemplate CA-CB>"
-      Chem::BondTemplate.new(c, o, :double).inspect.should eq "<BondTemplate C=O>"
-      Chem::BondTemplate.new(c, n, :triple).inspect.should eq "<BondTemplate C#N>"
+      Chem::BondTemplate.new(ca, cb).to_s.should eq "CA-CB"
+      Chem::BondTemplate.new(c, o, :double).to_s.should eq "C=O"
+      Chem::BondTemplate.new(c, n, :triple).to_s.should eq "C#N"
     end
   end
 end

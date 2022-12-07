@@ -1,29 +1,24 @@
 class Chem::BondTemplate
-  include Indexable(AtomTemplate)
-
+  getter atoms : {AtomTemplate, AtomTemplate}
   getter order : BondOrder
 
   delegate double?, single?, triple?, zero?, to: @order
-  delegate size, unsafe_fetch, to: @atoms
-
-  @atoms : StaticArray(AtomTemplate, 2)
 
   def initialize(lhs : AtomTemplate, rhs : AtomTemplate, @order : BondOrder = :single)
-    @atoms = StaticArray[lhs, rhs]
+    @atoms = {lhs, rhs}
   end
 
   def ==(rhs : self) : Bool
     return false if @order != rhs.order
-    (self[0] == rhs[0] && self[1] == rhs[1]) ||
-      (self[0] == rhs[1] && self[1] == rhs[0])
-  end
-
-  def includes?(name : String) : Bool
-    any? &.name.==(name)
+    @atoms == rhs.atoms || @atoms.reverse == rhs.atoms
   end
 
   def includes?(atom_t : AtomTemplate) : Bool
-    any? &.name.==(atom_t.name)
+    @atoms.includes? atom_t
+  end
+
+  def includes?(name : String) : Bool
+    @atoms.any? &.name.==(name)
   end
 
   def inspect(io : IO) : Nil
@@ -32,33 +27,33 @@ class Chem::BondTemplate
     io << '>'
   end
 
-  def inverse : self
-    BondTemplate.new self[1], self[0], @order
-  end
-
   def other(atom_t : AtomTemplate) : AtomTemplate
     case atom_t
-    when self[0]
-      self[1]
-    when self[1]
-      self[0]
+    when @atoms[0]
+      @atoms[1]
+    when @atoms[1]
+      @atoms[0]
     else
-      raise ArgumentError.new("Cannot find atom template #{atom_t}")
+      raise IndexError.new("Unknown atom template #{atom_t.name} in #{self}")
     end
   end
 
   def other(name : String) : AtomTemplate
     case name
-    when self[0].name
-      self[1]
-    when self[1].name
-      self[0]
+    when @atoms[0].name
+      @atoms[1]
+    when @atoms[1].name
+      @atoms[0]
     else
-      raise ArgumentError.new("Cannot find atom template named #{name}")
+      raise IndexError.new("Unknown atom template #{name} in #{self}")
     end
   end
 
+  def reverse : self
+    BondTemplate.new *@atoms.reverse, @order
+  end
+
   def to_s(io : IO) : Nil
-    io << self[0].name << @order.to_char << self[1].name
+    io << @atoms[0].name << @order.to_char << @atoms[1].name
   end
 end

@@ -147,8 +147,7 @@ module Chem
     # Check considers both atom matching (see `Atom#match?`) and bond
     # order.
     def matches?(bond_t : BondTemplate) : Bool
-      (atoms[0].matches?(bond_t[0]) && atoms[1].matches?(bond_t[1]) ||
-        atoms[0].matches?(bond_t[1]) && atoms[1].matches?(bond_t[0])) &&
+      (@atoms === bond_t.atoms || @atoms.reverse === bond_t.atoms) &&
         @order == bond_t.order
     end
 

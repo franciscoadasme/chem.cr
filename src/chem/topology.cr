@@ -56,8 +56,8 @@ class Chem::Topology
         end
 
         template.bonds.each do |bond_t|
-          if (lhs = residue[bond_t[0]]?) &&
-             (rhs = residue[bond_t[1]]?) &&
+          if (lhs = residue[bond_t.atoms[0]]?) &&
+             (rhs = residue[bond_t.atoms[1]]?) &&
              lhs.within_covalent_distance?(rhs)
             lhs.bonds.add rhs, bond_t.order
           end
@@ -65,8 +65,8 @@ class Chem::Topology
 
         if prev_res &&
            (bond_t = template.link_bond) &&
-           (lhs = prev_res[bond_t[0]]?) &&
-           (rhs = residue[bond_t[1]]?) &&
+           (lhs = prev_res[bond_t.atoms[0]]?) &&
+           (rhs = residue[bond_t.atoms[1]]?) &&
            lhs.within_covalent_distance?(rhs)
           lhs.bonds.add rhs, bond_t.order
         end
