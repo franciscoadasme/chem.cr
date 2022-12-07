@@ -14,15 +14,34 @@ describe Chem::ResidueTemplate do
       res_t.link_bond.should be_nil
       res_t.symmetric_atom_groups.should be_nil
 
-      res_t.atoms.size.should eq 18
+      res_t.atoms.size.should eq residue.atoms.size
       res_t.atoms.zip(residue.atoms) do |template, atom|
         atom.should match template # uses Atom#matches? internally
       end
 
-      res_t.bonds.size.should eq 19
+      res_t.bonds.size.should eq residue.bonds.size
       res_t.bonds.zip(residue.bonds) do |template, bond|
         bond.should match template # uses Bond#matches? internally
       end
+    end
+
+  describe "#[]" do
+    it "raises if unknown atom" do
+      expect_raises IndexError, "Unknown atom template \"CA\" in ASD" do
+        Chem::ResidueTemplate.build(&.name("ASD").spec("CX"))["CA"]
+      end
+    end
+  end
+
+  describe "#[]?" do
+    it "returns an atom template" do
+      res_t = Chem::ResidueTemplate.build &.name("ASD").spec("CX")
+      atom_t = res_t["CX"]?.should_not be_nil
+      atom_t.name.should eq "CX"
+    end
+
+    it "returns nil if unknown atom" do
+      Chem::ResidueTemplate.build(&.name("ASD").spec("CX"))["CA"]?.should be_nil
     end
   end
 
@@ -35,6 +54,17 @@ describe Chem::ResidueTemplate do
       Chem::ResidueTemplate.build(&.name("GLY").code('G').type(:protein)
         .spec("N(-H)-CA(-C=O)"))
         .inspect.should eq "<ResidueTemplate GLY(G), protein>"
+    end
+  end
+
+  describe "#monomer?" do
+    it "tells if residue template is a monomer" do
+      res_t = Chem::ResidueTemplate.build &.name("X").spec("C1=C2").root("C1")
+      res_t.monomer?.should be_false
+
+      res_t = Chem::ResidueTemplate.build &.name("X").spec("C1=C2").root("C1")
+        .link_adjacent_by("C2=C1")
+      res_t.monomer?.should be_true
     end
   end
 end

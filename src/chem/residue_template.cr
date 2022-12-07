@@ -69,7 +69,7 @@ class Chem::ResidueTemplate
   end
 
   def [](name : String) : AtomTemplate
-    self[name]? || raise Error.new("Unknown atom template #{name.inspect} in #{@name}")
+    self[name]? || raise IndexError.new("Unknown atom template #{name.inspect} in #{@name}")
   end
 
   def []?(name : String) : AtomTemplate?
