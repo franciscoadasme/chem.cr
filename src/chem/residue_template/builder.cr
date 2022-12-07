@@ -57,7 +57,7 @@ class Chem::ResidueTemplate::Builder
       end
 
       # Create and register atom template
-      atom_t = AtomTemplate.new(atom.name, element, target_valence, atom.formal_charge)
+      atom_t = AtomTemplate.new(atom.name, element, atom.formal_charge, target_valence)
       atoms << atom_t
       atom_t_map[atom_t.name] = atom_t
 
