@@ -22,11 +22,11 @@ class Chem::BondTemplate
   end
 
   def other(atom_t : AtomTemplate) : AtomTemplate
-    other?(atom_t) || raise IndexError.new("#{atom_t} not found in #{self}")
+    other?(atom_t) || raise KeyError.new("#{atom_t} not found in #{self}")
   end
 
   def other(name : String) : AtomTemplate
-    other?(name) || raise IndexError.new("Atom #{name.inspect} not found in #{self}")
+    other?(name) || raise KeyError.new("Atom #{name.inspect} not found in #{self}")
   end
 
   def other?(atom_t : AtomTemplate) : AtomTemplate?

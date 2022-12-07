@@ -37,12 +37,12 @@ describe Chem::BondTemplate do
       cb = Chem::AtomTemplate.new("CB", "C")
 
       bond_t = Chem::BondTemplate.new(ca, c)
-      expect_raises(IndexError, "<AtomTemplate CB> not found in <BondTemplate CA-C>") do
+      expect_raises(KeyError, "<AtomTemplate CB> not found in <BondTemplate CA-C>") do
         bond_t.other(cb)
       end
 
       # using names
-      expect_raises(IndexError, "Atom \"CX\" not found in <BondTemplate CA-C>") do
+      expect_raises(KeyError, "Atom \"CX\" not found in <BondTemplate CA-C>") do
         bond_t.other("CX")
       end
     end

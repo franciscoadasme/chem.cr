@@ -27,7 +27,7 @@ describe Chem::ResidueTemplate do
 
   describe "#[]" do
     it "raises if unknown atom" do
-      expect_raises(IndexError,
+      expect_raises(KeyError,
         "Atom \"CA\" not found in <ResidueTemplate ASD>") do
         Chem::ResidueTemplate.build(&.name("ASD").spec("CX"))["CA"]
       end
@@ -35,7 +35,7 @@ describe Chem::ResidueTemplate do
 
     it "raises if unknown bond" do
       res_t = Chem::ResidueTemplate.build &.name("ASD").spec("CA=CB").root("CA")
-      expect_raises(IndexError,
+      expect_raises(KeyError,
         "Bond between \"CA\" and \"CX\" not found in <ResidueTemplate ASD>") do
         res_t["CA", "CX"]
       end

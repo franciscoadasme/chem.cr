@@ -68,13 +68,13 @@ class Chem::ResidueTemplate
       symmetric_atom_groups
   end
 
-  # Returns the bond template between the given atoms. Raises
-  # `IndexError` if the bond does not exist.
+  # Returns the bond template between the given atoms. Raises `KeyError`
+  # if the bond does not exist.
   def [](atom_t : AtomTemplate, other : AtomTemplate) : BondTemplate
     if bond_t = self[name, other]?
       bond_t
     else
-      raise IndexError.new("Bond between #{atom_t} and #{other} not found in #{self}")
+      raise KeyError.new("Bond between #{atom_t} and #{other} not found in #{self}")
     end
   end
 
@@ -83,13 +83,13 @@ class Chem::ResidueTemplate
     if bond_t = self[atom_t, other]?
       bond_t
     else
-      raise IndexError.new("Bond between #{atom_t.inspect} and #{other.inspect} \
+      raise KeyError.new("Bond between #{atom_t.inspect} and #{other.inspect} \
                             not found in #{self}")
     end
   end
 
   def [](name : String) : AtomTemplate
-    self[name]? || raise IndexError.new("Atom #{name.inspect} not found in #{self}")
+    self[name]? || raise KeyError.new("Atom #{name.inspect} not found in #{self}")
   end
 
   # Returns the bond template between the given atoms if exists, else
