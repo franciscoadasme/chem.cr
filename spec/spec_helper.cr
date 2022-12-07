@@ -148,6 +148,8 @@ module Spec
       when Tuple(Tuple(String, String), Tuple(String, String), Symbol)
         name_and_element, other, order = expected_value
         order = Chem::BondOrder.parse order.to_s
+      when Chem::BondTemplate
+        return actual_value.matches? expected_value
       else
         return actual_value =~ @expected_value
       end

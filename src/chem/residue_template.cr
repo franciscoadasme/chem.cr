@@ -9,6 +9,7 @@ class Chem::ResidueTemplate
   getter type : ResidueType
   getter link_bond : BondTemplate?
   getter description : String?
+  # TODO: change to String, and check that exists
   getter root_atom : AtomTemplate
   getter code : Char?
   getter symmetric_atom_groups : Array(Array(Tuple(String, String)))?
@@ -33,6 +34,38 @@ class Chem::ResidueTemplate
     builder = ResidueTemplate::Builder.new
     with builder yield builder
     builder.build
+  end
+
+  # Creates a new residue template from an existing residue.
+  #
+  # Every atom and bond is converted to a template, which are then
+  # passed down to the constructor along with the optional arguments.
+  # Information such as name, code, etc. is obtained from the residue.
+  def self.from_residue(
+    residue : Residue,
+    description : String? = nil,
+    aliases : Array(String) = [] of String,
+    link_bond : BondTemplate? = nil,
+    symmetric_atom_groups : Array(Array(Tuple(String, String)))? = nil
+  ) : self
+    atoms = residue.atoms.map do |atom|
+      AtomTemplate.new(atom.name, atom.element, atom.valence, atom.formal_charge)
+    end
+    atom_table = atoms.index_by &.name
+    bonds = residue.bonds.map do |bond|
+      BondTemplate.new *bond.atoms.map { |atom| atom_table[atom.name] }, bond.order
+    end
+    root = atoms.first
+    new residue.name,
+      residue.code,
+      residue.type,
+      description,
+      atoms,
+      bonds,
+      root,
+      aliases,
+      link_bond,
+      symmetric_atom_groups
   end
 
   def [](atom_name : String) : AtomTemplate
