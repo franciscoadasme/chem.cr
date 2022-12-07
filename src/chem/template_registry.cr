@@ -224,7 +224,7 @@ class Chem::TemplateRegistry
   # file. See `#parse` for more details.
   def load(filepath : Path | String) : self
     File.open(filepath) do |io|
-      load io
+      parse io
     end
   end
 

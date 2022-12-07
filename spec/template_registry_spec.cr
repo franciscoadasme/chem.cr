@@ -207,6 +207,23 @@ describe Chem::TemplateRegistry do
 end
 
 describe Chem do
+  describe ".load_template" do
+    it "loads and registers templates from file globally" do
+      tempfile = File.tempfile do |io|
+        io << <<-YAML
+        name: OIK
+        spec: CH-CJ=CK
+        YAML
+      end
+      Chem.load_templates tempfile.path
+      Chem::TemplateRegistry.default["OIK"].atoms
+        .select(&.element.heavy?)
+        .map(&.name).should eq %w(CH CJ CK)
+    ensure
+      tempfile.try &.delete
+    end
+  end
+
   describe ".parse_templates" do
     it "parses and registers template globally" do
       Chem.parse_templates <<-YAML
