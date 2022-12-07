@@ -168,7 +168,6 @@ describe Chem::ResidueTemplate::Builder do
       name "UNK"
       spec "C1-C2-C3"
       link_adjacent_by "C3=C1"
-      root "C2"
     end
     res_t.atoms.map(&.name).should eq ["C1", "H1", "C2", "H2", "H3", "C3", "H4"]
     res_t.bonds.size.should eq 6
@@ -196,7 +195,6 @@ describe Chem::ResidueTemplate::Builder do
       name "GOL"
       type :solvent
       spec "O1-C1-C2(-C3-O3)-O2"
-      root "C2"
     end
     res_t.atoms.map(&.name).should eq [
       "O1", "H1", "C1", "H2", "H3", "C2", "H4", "C3", "H5", "H6", "O3", "H7",
@@ -208,7 +206,6 @@ describe Chem::ResidueTemplate::Builder do
     res_t = build_template do
       name "CTER"
       spec "CA-C(=O)-OXT"
-      root "C"
     end
     res_t.atoms.map(&.name).should eq ["CA", "HA1", "HA2", "HA3", "C", "O", "OXT", "HXT"]
   end
@@ -234,7 +231,6 @@ describe Chem::ResidueTemplate::Builder do
           (-C7(=O24)-%2)-C10-C11%3-C12-C13-N14(-C15-C16-%3)
           -C17-C18%4=C19-C20=C21-C22=C23-%4
           SPEC
-      root "C1"
       symmetry({"C12", "C16"}, {"C13", "C15"})
       symmetry({"C19", "C23"}, {"C20", "C22"})
     end
@@ -278,7 +274,6 @@ describe Chem::ResidueTemplate::Builder do
         name "O2"
         spec "O1=O2"
         link_adjacent_by "O1=O1"
-        root "O"
       end
     end
   end
@@ -287,7 +282,6 @@ describe Chem::ResidueTemplate::Builder do
     res_t = build_template do
       name "UNK"
       spec "CB-SG"
-      root "CB"
     end
     res_t.atoms.size.should eq 6
     res_t.atoms.count(&.element.hydrogen?).should eq 4
@@ -298,7 +292,6 @@ describe Chem::ResidueTemplate::Builder do
     res_t = build_template do
       name "UNK"
       spec "CB-[SG-]"
-      root "CB"
     end
     res_t.atoms.size.should eq 5
     res_t.atoms.count(&.element.hydrogen?).should eq 3
@@ -310,7 +303,6 @@ describe Chem::ResidueTemplate::Builder do
     res_t = build_template do
       name "UNK"
       spec "S(=O1)(=O2)(-[O3-])(-[O4-])"
-      root "S"
     end
     res_t.atoms.size.should eq 5
     res_t.atoms.count(&.element.hydrogen?).should eq 0
@@ -325,12 +317,27 @@ describe Chem::ResidueTemplate::Builder do
       description "Cysteine"
       name "CYX"
       spec "CB-SG-*"
-      root "CB"
     end
     res_t.atoms.size.should eq 5
     res_t.atoms.count(&.element.hydrogen?).should eq 3
     res_t.bonds.size.should eq 4
     res_t.bonds.count(&.includes?("SG")).should eq 1
+  end
+
+  it "guesses root to be the most complex atom" do
+    res_t = build_template do
+      name "TRP"
+      spec "{backbone}-CB-CG%1=CD1-NE1-CE2(-CZ2=CH2-CZ3=CE3-CD2%2)=%2-%1"
+    end
+    res_t.root_atom.should eq res_t["CE2"]
+
+    res_t = build_template do
+      name "DMPE"
+      spec "C1-C2-C3-C4-C5-C6-C7-C8-C9-C10-C11-C12-C13-C14(-O1)-O2-C15\
+            (-C16-O3-C17(-O4)-C18-C19-C20-C21-C22-C23-C24-C25-C26-C27\
+            -C28-C29-C30)-C31-O5-P1(=O6)(=O7)-O8-C32-C33-N1"
+    end
+    res_t.root_atom.should eq res_t["P1"]
   end
 end
 

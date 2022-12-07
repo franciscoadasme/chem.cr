@@ -34,7 +34,7 @@ describe Chem::ResidueTemplate do
     end
 
     it "raises if unknown bond" do
-      res_t = Chem::ResidueTemplate.build &.name("ASD").spec("CA=CB").root("CA")
+      res_t = Chem::ResidueTemplate.build &.name("ASD").spec("CA=CB")
       expect_raises(KeyError,
         "Bond between \"CA\" and \"CX\" not found in <ResidueTemplate ASD>") do
         res_t["CA", "CX"]
@@ -54,21 +54,21 @@ describe Chem::ResidueTemplate do
     end
 
     it "returns a bond template" do
-      res_t = Chem::ResidueTemplate.build &.name("ASD").spec("CA=CB").root("CA")
+      res_t = Chem::ResidueTemplate.build &.name("ASD").spec("CA=CB")
       bond_t = res_t.bonds.find! { |bond_t| "CA".in?(bond_t) && "CB".in?(bond_t) }
       res_t[res_t["CA"], res_t["CB"]]?.should eq bond_t # using atom templates
       res_t["CA", "CB"]?.should eq bond_t               # using atom names
     end
 
     it "returns nil if unknown atom" do
-      res_t = Chem::ResidueTemplate.build &.name("ASD").spec("CA=CB").root("CA")
+      res_t = Chem::ResidueTemplate.build &.name("ASD").spec("CA=CB")
       res_t["CA", "CX"]?.should be_nil
     end
   end
 
   describe "#to_s" do
     it "returns a string representation" do
-      Chem::ResidueTemplate.build(&.name("O2").spec("O1=O2").root("O1"))
+      Chem::ResidueTemplate.build(&.name("O2").spec("O1=O2"))
         .to_s.should eq "<ResidueTemplate O2>"
       Chem::ResidueTemplate.build(&.name("HOH").type(:solvent).spec("O"))
         .to_s.should eq "<ResidueTemplate HOH solvent>"
@@ -80,10 +80,10 @@ describe Chem::ResidueTemplate do
 
   describe "#polymer?" do
     it "tells if residue template is a polymer" do
-      res_t = Chem::ResidueTemplate.build &.name("X").spec("C1=C2").root("C1")
+      res_t = Chem::ResidueTemplate.build &.name("X").spec("C1=C2")
       res_t.polymer?.should be_false
 
-      res_t = Chem::ResidueTemplate.build &.name("X").spec("C1=C2").root("C1")
+      res_t = Chem::ResidueTemplate.build &.name("X").spec("C1=C2")
         .link_adjacent_by("C2=C1")
       res_t.polymer?.should be_true
     end

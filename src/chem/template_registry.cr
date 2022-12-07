@@ -30,7 +30,6 @@
 #       code: F
 #       type: protein
 #       link_bond: C-N
-#       root: CA
 #       spec: '{backbone}-CB-CG%1=CD1-CE1=CZ-CE2=CD2-%1'
 #       symmetry:
 #     - [[CD1, CD2], [CE1, CE2]]
@@ -72,7 +71,6 @@
 #   code 'F'
 #   type :protein
 #   link_bond "C-N"
-#   root "CA"
 #   spec "{backbone}-CB-CG%1=CD1-CE1=CZ-CE2=CD2-%1"
 #   symmetry({CD1, CD2}, {CE1, CE2})
 # end
@@ -110,19 +108,16 @@
 # templates:
 #   - name: LFG
 #     spec: '[N1H3+]-C2-C3-O4-C5(-C6)=O7'
-#     root: C5
 # ```
 #
 # ```yaml
 # - name: LFG
 #   spec: '[N1H3+]-C2-C3-O4-C5(-C6)=O7'
-#   root: C5
 # ```
 #
 # ```yaml
 # name: LFG
 # spec: '[N1H3+]-C2-C3-O4-C5(-C6)=O7'
-# root: C5
 # ```
 #
 # The records are transformed into `ResidueTemplate` instances via the

@@ -120,20 +120,18 @@ describe Chem::TemplateRegistry do
       registry = Chem::TemplateRegistry.new.parse <<-YAML
         - name: LFG
           spec: '[N1H3+]-C2-C3-O4-C5(-C6)=O7'
-          root: C5
         YAML
       registry.size.should eq 1
-      registry["LFG"].root_atom.name.should eq "C5"
+      registry["LFG"].name.should eq "LFG"
     end
 
     it "parses a single template at top-level" do
       registry = Chem::TemplateRegistry.new.parse <<-YAML
         name: LFG
         spec: '[N1H3+]-C2-C3-O4-C5(-C6)=O7'
-        root: C5
         YAML
       registry.size.should eq 1
-      registry["LFG"].root_atom.name.should eq "C5"
+      registry["LFG"].name.should eq "LFG"
     end
 
     it "parses spec aliases" do
@@ -141,7 +139,6 @@ describe Chem::TemplateRegistry do
         templates:
           - name: ASD
             spec: '{asd}-CZ'
-            root: CX
         aliases:
           asd: 'CX=CY'
         YAML

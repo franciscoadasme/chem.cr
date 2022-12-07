@@ -80,21 +80,17 @@ class Chem::ResidueTemplate::Builder
         bond.order)
     end
 
-    # Get root atom or sets it for known residue templates if missing,
-    # otherwise raise
+    link_bond = @link_bond.try do |lhs, rhs, order|
+      BondTemplate.new(atom_t_map[lhs], atom_t_map[rhs], order)
+    end
+
     root_atom = if atom_name = @root_atom
                   atom_name
                 elsif @type.protein?
                   "CA"
-                elsif atoms.count(&.element.heavy?) == 1 # one heavy atom
-                  # TODO: guess root by maximum valence
-                  atoms.first.name
                 else
-                  raise "Missing root for residue template #{@names.first}"
+                  guess_root(atoms, bond_ts, link_bond)
                 end
-    link_bond = @link_bond.try do |lhs, rhs, order|
-      BondTemplate.new(atom_t_map[lhs], atom_t_map[rhs], order)
-    end
 
     ResidueTemplate.new @names.first, @code, @type, @description,
       atoms, bond_ts, root_atom,
@@ -115,6 +111,53 @@ class Chem::ResidueTemplate::Builder
   def description(name : String) : self
     @description = name
     self
+  end
+
+  # Returns the atom with the highest bonding complexity.
+  #
+  # The bonding complexity of an atom depends on the nature of the atom,
+  # the bonds, and the bonds of its neighbors.
+  #
+  # First, carbon atoms are the most frequent so they have the lowest
+  # complexity (0), followed by non-carbon atoms (+1), and then
+  # non-organic (not CHON) atoms (+2). Hydrogen atoms are ignored.
+  #
+  # The complexity is further increased by the number of bonds with
+  # other heavy atoms, i.e., bonds X-H are ignored.
+  #
+  # The total complexity of an atom is computed as the sum of its
+  # complexity and the complexities of the bonded atoms.
+  private def guess_root(
+    atoms : Array(AtomTemplate),
+    bonds : Array(BondTemplate),
+    link_bond : BondTemplate?
+  ) : String
+    heavy_atoms = atoms.select &.element.heavy?
+    return heavy_atoms[0].name unless heavy_atoms.size > 1
+
+    complexity_table = heavy_atoms.to_h do |atom_t|
+      complexity = case atom_t.element
+                   when .carbon?             then 0
+                   when .oxygen?, .nitrogen? then 1 # non-carbon
+                   else                           2 # non-organic
+                   end
+      {atom_t, complexity}
+    end
+
+    bonded_table = {} of AtomTemplate => Array(AtomTemplate)
+    bonds = bonds + [link_bond] if link_bond
+    bonds.each do |bond_t|
+      next unless bond_t.atoms.all?(&.element.heavy?) # ignore bonds X-H
+      bond_t.atoms.each do |atom_t|
+        (bonded_table[atom_t] ||= [] of AtomTemplate) << bond_t.other(atom_t)
+        complexity_table[atom_t] += 1
+      end
+    end
+
+    heavy_atoms.max_by do |atom_t|
+      complexity_table[atom_t] +
+        bonded_table[atom_t].sum { |other_t| complexity_table[other_t] }
+    end.name
   end
 
   def type(type : ResidueType) : self

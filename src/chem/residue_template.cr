@@ -10,7 +10,6 @@ class Chem::ResidueTemplate
   getter type : ResidueType
   getter link_bond : BondTemplate?
   getter description : String?
-  # TODO: change to String, and check that exists
   getter root_atom : AtomTemplate
   getter code : Char?
   getter symmetric_atom_groups : Array(Array(Tuple(String, String)))?
