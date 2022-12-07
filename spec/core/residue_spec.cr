@@ -350,6 +350,15 @@ describe Chem::Residue do
     end
   end
 
+  describe "#includes?" do
+    it "tells if residue contains an atom" do
+      structure = fake_structure
+      structure.residues[0].should contain structure.atoms[0]
+      structure.residues[0].should_not contain structure.residues[1].atoms[0]
+      structure.residues[1].should_not contain structure.atoms[0]
+    end
+  end
+
   describe "#insertion_code" do
     it "updates residue position" do
       structure = load_file("insertion_codes.pdb")

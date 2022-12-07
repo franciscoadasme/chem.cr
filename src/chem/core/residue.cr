@@ -456,6 +456,13 @@ class Chem::Residue
     nil
   end
 
+  # Returns `true` if the residue contains _atom_, else `false`.
+  #
+  # The check is done by name first, and then by atom equality.
+  def includes?(atom : Atom) : Bool
+    @atom_table[atom.name]? == atom
+  end
+
   def insertion_code=(insertion_code : Char?) : Char?
     @insertion_code = insertion_code
     @chain.reset_cache
