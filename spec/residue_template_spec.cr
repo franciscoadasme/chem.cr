@@ -1,7 +1,7 @@
 require "./spec_helper"
 
 describe Chem::ResidueTemplate do
-  describe "#from_residue" do
+  describe ".from_residue" do
     it "creates a template from a residue" do
       residue = load_file("naphthalene.mol2").residues[0]
       res_t = Chem::ResidueTemplate.from_residue residue
