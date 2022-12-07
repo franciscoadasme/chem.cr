@@ -86,8 +86,8 @@ class Chem::ResidueTemplate
     @atoms.map &.name
   end
 
-  def atoms : Array(AtomTemplate)
-    @atoms.dup
+  def atoms : Array::View(AtomTemplate)
+    @atoms.view
   end
 
   def each_atom_t(&block : AtomTemplate ->)
@@ -98,8 +98,8 @@ class Chem::ResidueTemplate
     @bonds.select(&.includes?(atom_t)).map &.other(atom_t)
   end
 
-  def bonds : Array(BondTemplate)
-    @bonds.dup
+  def bonds : Array::View(BondTemplate)
+    @bonds.view
   end
 
   def formal_charge : Int32
