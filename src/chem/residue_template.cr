@@ -59,6 +59,13 @@ class Chem::ResidueTemplate
     bonds = residue.bonds.map do |bond|
       BondTemplate.new *bond.atoms.map { |atom| atom_table[atom.name] }, bond.order
     end
+
+    link_bond ||= residue.template.try(&.link_bond)
+    if !link_bond && (bond = guess_link_bond(residue))
+      atom_templates = bond.atoms.map { |atom| atom_table[atom.name] }
+      link_bond = BondTemplate.new *atom_templates, bond.order
+    end
+
     new residue.name,
       residue.code,
       residue.type,
@@ -134,5 +141,35 @@ class Chem::ResidueTemplate
     io << '(' << @code << ')' if @code
     io << ' ' << @type.to_s.downcase unless @type.other?
     io << '>'
+  end
+end
+
+# Checks that the residue is connected to two other residues by
+# equivalent bonds and returns one of them, else `nil`.
+private def guess_link_bond(residue : Chem::Residue) : Chem::Bond?
+  bonded_residues = residue.bonded_residues
+  return if bonded_residues.empty?
+
+  if bonded_residues.size == 1 # may be at the beginning/end of a polymer
+    residue = bonded_residues.first
+    bonded_residues = residue.bonded_residues
+    # residue is only connected to the original one, need at least two
+    # bonded residues (two bonds) to guess link bond
+    return unless bonded_residues.size > 1
+  end
+
+  pred, succ = bonded_residues.sort! &.number
+  pred, succ = succ, pred if pred.number > residue.number # periodic chain?
+
+  pred_bond = succ_bond = nil
+  residue.bonds.each do |bond|
+    pred_bond ||= bond if bond.atoms.any?(&.in?(pred))
+    succ_bond ||= bond if bond.atoms.any?(&.in?(succ))
+  end
+
+  if pred_bond && succ_bond
+    atom_names = pred_bond.atoms.map(&.name)
+    succ_bond if (atom_names == succ_bond.atoms.map(&.name) ||
+                 atom_names.reverse == succ_bond.atoms.map(&.name))
   end
 end

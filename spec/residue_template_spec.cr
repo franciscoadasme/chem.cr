@@ -25,6 +25,22 @@ describe Chem::ResidueTemplate do
       end
     end
 
+    it "guesses link bond from connectivity" do
+      residue = load_file("hlx_phe--theta-90.000--c-26.10.pdb").residues[0]
+      residue.name = "UNK" # force link bond guessing (no template)
+      res_t = Chem::ResidueTemplate.from_residue residue
+      link_bond = res_t.link_bond.should_not be_nil
+      link_bond.should eq Chem::BondTemplate.new(res_t["C"], res_t["N"])
+      link_bond.atoms.map(&.name).to_a.should eq %w(C N) # ensure order
+    end
+
+    it "does not find a link bond for an isolated molecule" do
+      residue = load_file("benzene.mol2").residues[0]
+      res_t = Chem::ResidueTemplate.from_residue residue
+      res_t.link_bond.should be_nil
+    end
+  end
+
   describe "#[]" do
     it "raises if unknown atom" do
       expect_raises(KeyError,
