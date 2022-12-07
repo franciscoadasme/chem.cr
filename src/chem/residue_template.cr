@@ -59,6 +59,8 @@ class Chem::ResidueTemplate
     bonds = residue.bonds.map do |bond|
       BondTemplate.new *bond.atoms.map { |atom| atom_table[atom.name] }, bond.order
     end
+    raise Error.new("Cannot create template from #{residue} due to \
+                     missing connectivity") if bonds.empty?
 
     link_bond ||= residue.template.try(&.link_bond)
     if !link_bond && (bond = guess_link_bond(residue))

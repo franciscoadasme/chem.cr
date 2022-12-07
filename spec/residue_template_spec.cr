@@ -39,6 +39,16 @@ describe Chem::ResidueTemplate do
       res_t = Chem::ResidueTemplate.from_residue residue
       res_t.link_bond.should be_nil
     end
+
+    it "raises if missing connectivity" do
+      structure = Chem::Structure.build do |builder|
+        builder.atom vec3(0, 0, 0)
+      end
+      expect_raises(Chem::Error,
+        "Cannot create template from A:UNK1 due to missing connectivity") do
+        Chem::ResidueTemplate.from_residue structure.residues[0]
+      end
+    end
   end
 
   describe "#[]" do
