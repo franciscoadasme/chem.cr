@@ -28,24 +28,28 @@ class Chem::BondTemplate
   end
 
   def other(atom_t : AtomTemplate) : AtomTemplate
+    other?(atom_t) || raise IndexError.new("Unknown atom template #{atom_t.name} in #{self}")
+  end
+
+  def other(name : String) : AtomTemplate
+    other?(name) || raise IndexError.new("Unknown atom template #{name} in #{self}")
+  end
+
+  def other?(atom_t : AtomTemplate) : AtomTemplate?
     case atom_t
     when @atoms[0]
       @atoms[1]
     when @atoms[1]
       @atoms[0]
-    else
-      raise IndexError.new("Unknown atom template #{atom_t.name} in #{self}")
     end
   end
 
-  def other(name : String) : AtomTemplate
+  def other?(name : String) : AtomTemplate?
     case name
     when @atoms[0].name
       @atoms[1]
     when @atoms[1].name
       @atoms[0]
-    else
-      raise IndexError.new("Unknown atom template #{name} in #{self}")
     end
   end
 

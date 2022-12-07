@@ -39,22 +39,11 @@ describe Chem::BondTemplate do
   end
 
   describe "#other" do
-    it "returns the bonded atom" do
-      c = Chem::AtomTemplate.new("C", "C")
-      ca = Chem::AtomTemplate.new("CA", "C")
-      bond_t = Chem::BondTemplate.new(ca, c)
-      bond_t.other(ca).should eq c
-      bond_t.other(c).should eq ca
-
-      # using atom names
-      bond_t.other("CA").should eq c
-      bond_t.other("C").should eq ca
-    end
-
     it "raises if unknown atom" do
       c = Chem::AtomTemplate.new("C", "C")
       ca = Chem::AtomTemplate.new("CA", "C")
       cb = Chem::AtomTemplate.new("CB", "C")
+
       bond_t = Chem::BondTemplate.new(ca, c)
       expect_raises(IndexError, "Unknown atom template CB in CA-C") do
         bond_t.other(cb)
@@ -64,6 +53,31 @@ describe Chem::BondTemplate do
       expect_raises(IndexError, "Unknown atom template CX in CA-C") do
         bond_t.other("CX")
       end
+    end
+  end
+
+  describe "#other?" do
+    it "returns the bonded atom" do
+      c = Chem::AtomTemplate.new("C", "C")
+      ca = Chem::AtomTemplate.new("CA", "C")
+
+      bond_t = Chem::BondTemplate.new(ca, c)
+      bond_t.other?(ca).should eq c
+      bond_t.other?(c).should eq ca
+
+      # using atom names
+      bond_t.other?("CA").should eq c
+      bond_t.other?("C").should eq ca
+    end
+
+    it "returns nil if unknown atom" do
+      c = Chem::AtomTemplate.new("C", "C")
+      ca = Chem::AtomTemplate.new("CA", "C")
+      cb = Chem::AtomTemplate.new("CB", "C")
+
+      bond_t = Chem::BondTemplate.new(ca, c)
+      bond_t.other?(cb).should be_nil
+      bond_t.other?("CX").should be_nil
     end
   end
 
