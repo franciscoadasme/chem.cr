@@ -32,6 +32,11 @@ class Chem::ResidueTemplate
     else
       raise KeyError.new("Atom #{root_atom.inspect} not found in #{self}")
     end
+    @link_bond.try do |link_bond|
+      if link_bond.atoms.any? { |atom_t| atom_t != self[atom_t.name] }
+        raise Error.new("Incompatible link bond #{link_bond} with #{self}")
+      end
+    end
   end
 
   def self.build : self
