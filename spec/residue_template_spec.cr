@@ -27,7 +27,7 @@ describe Chem::ResidueTemplate do
 
   describe "#[]" do
     it "raises if unknown atom" do
-      expect_raises IndexError, "Unknown atom template \"CA\" in ASD" do
+      expect_raises IndexError, "Unknown atom template \"CA\" in <ResidueTemplate ASD>" do
         Chem::ResidueTemplate.build(&.name("ASD").spec("CX"))["CA"]
       end
     end
