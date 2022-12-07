@@ -208,3 +208,24 @@ describe Chem::TemplateRegistry do
     end
   end
 end
+
+describe Chem do
+  describe ".parse_templates" do
+    it "parses and registers template globally" do
+      Chem.parse_templates <<-YAML
+        name: PLF
+        spec: PX
+        YAML
+      Chem::TemplateRegistry.default["PLF"].atoms
+        .select(&.element.heavy?)
+        .map(&.name).should eq %w(PX)
+    end
+  end
+
+  describe ".template_alias" do
+    it "registers a template alias globally" do
+      Chem.template_alias "ASD", to: "HOH"
+      Chem::TemplateRegistry.default["ASD"].should eq Chem::TemplateRegistry.default["HOH"]
+    end
+  end
+end

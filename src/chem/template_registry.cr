@@ -323,3 +323,24 @@ class Chem::TemplateRegistry
     @table.values.uniq!
   end
 end
+
+# Parses and registers the residue templates encoded in the given YAML
+# file into the _global registry_. See `TemplateRegistry.default` and
+# `TemplateRegistry#parse` for details.
+def Chem.load_templates(filepath : String) : Nil
+  Chem::TemplateRegistry.default.load filepath
+end
+
+# Parses and registers the residue templates encoded in the given YAML
+# content into the _global registry_. See `TemplateRegistry.default` and
+# `TemplateRegistry#parse` for details.
+def Chem.parse_templates(filepath : String) : Nil
+  Chem::TemplateRegistry.default.parse filepath
+end
+
+# Registers an aliases to a known residue template into the _global
+# registry_. See `TemplateRegistry.default` and `TemplateRegistry#alias`
+# for details.
+def Chem.template_alias(new_name : String, to existing_name : String) : Nil
+  Chem::TemplateRegistry.default.alias new_name, existing_name
+end
