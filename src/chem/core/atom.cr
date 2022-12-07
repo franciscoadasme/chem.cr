@@ -52,7 +52,7 @@ module Chem
       @residue << self
     end
 
-    # Case equality. This is equivalent to `#match?`.
+    # Case equality. This is equivalent to `#matches?`.
     #
     # ```
     # structure = Structure.read "peptide.pdb"
@@ -68,7 +68,7 @@ module Chem
     # desc # => "alpha carbon"
     # ```
     def ===(atom_t : AtomTemplate) : Bool
-      match? atom_t
+      matches? atom_t
     end
 
     # Case equality. Returns true if atom's element is *element*,
@@ -143,7 +143,8 @@ module Chem
       io << ">"
     end
 
-    # Matches *self* against *atom_t*.
+    # Returns `true` if the atom matches the given template, else
+    # `false`.
     #
     # Checking for a match considers both atom name and element.
     #
@@ -153,7 +154,7 @@ module Chem
     # atom.match?(AtomTemplate.new("CA", element: "N")) # => false
     # atom.match?(AtomTemplate.new("ND2"))              # => false
     # ```
-    def match?(atom_t : AtomTemplate) : Bool
+    def matches?(atom_t : AtomTemplate) : Bool
       @name == atom_t.name && @element == atom_t.element
     end
 

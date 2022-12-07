@@ -78,12 +78,12 @@ describe Chem::Atom do
     end
   end
 
-  describe "#match?" do
+  describe "#matches?" do
     it "tells if atom matches template" do
       atom = Chem::Structure.build { atom "CD2", vec3(0, 0, 0) }.atoms[0]
-      atom.match?(Chem::AtomTemplate.new("CD2", "C")).should be_true
-      atom.match?(Chem::AtomTemplate.new("CD2", "N")).should be_false
-      atom.match?(Chem::AtomTemplate.new("ND2", "N")).should be_false
+      atom.matches?(Chem::AtomTemplate.new("CD2", "C")).should be_true
+      atom.matches?(Chem::AtomTemplate.new("CD2", "N")).should be_false
+      atom.matches?(Chem::AtomTemplate.new("ND2", "N")).should be_false
     end
   end
 

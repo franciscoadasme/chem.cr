@@ -113,7 +113,7 @@ class Chem::Residue
   # ```
   def []?(atom_t : AtomTemplate) : Atom?
     if atom = self[atom_t.name]?
-      atom if atom.match?(atom_t)
+      atom if atom.matches?(atom_t)
     end
   end
 
