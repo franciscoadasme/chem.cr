@@ -30,14 +30,6 @@ describe Chem::BondTemplate do
     end
   end
 
-  describe "#inspect" do
-    it "returns a string representation" do
-      c = Chem::AtomTemplate.new("C", "C")
-      o = Chem::AtomTemplate.new("O", "O")
-      Chem::BondTemplate.new(c, o, :double).inspect.should eq "<BondTemplate C=O>"
-    end
-  end
-
   describe "#other" do
     it "raises if unknown atom" do
       c = Chem::AtomTemplate.new("C", "C")
@@ -45,12 +37,12 @@ describe Chem::BondTemplate do
       cb = Chem::AtomTemplate.new("CB", "C")
 
       bond_t = Chem::BondTemplate.new(ca, c)
-      expect_raises(IndexError, "Unknown atom template CB in CA-C") do
+      expect_raises(IndexError, "Unknown atom template CB in <BondTemplate CA-C>") do
         bond_t.other(cb)
       end
 
       # using names
-      expect_raises(IndexError, "Unknown atom template CX in CA-C") do
+      expect_raises(IndexError, "Unknown atom template CX in <BondTemplate CA-C>") do
         bond_t.other("CX")
       end
     end
@@ -96,9 +88,9 @@ describe Chem::BondTemplate do
       cb = Chem::AtomTemplate.new("CB", "C")
       o = Chem::AtomTemplate.new("O", "O")
       n = Chem::AtomTemplate.new("N", "N")
-      Chem::BondTemplate.new(ca, cb).to_s.should eq "CA-CB"
-      Chem::BondTemplate.new(c, o, :double).to_s.should eq "C=O"
-      Chem::BondTemplate.new(c, n, :triple).to_s.should eq "C#N"
+      Chem::BondTemplate.new(ca, cb).to_s.should eq "<BondTemplate CA-CB>"
+      Chem::BondTemplate.new(c, o, :double).to_s.should eq "<BondTemplate C=O>"
+      Chem::BondTemplate.new(c, n, :triple).to_s.should eq "<BondTemplate C#N>"
     end
   end
 end

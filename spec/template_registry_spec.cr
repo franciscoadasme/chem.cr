@@ -97,7 +97,7 @@ describe Chem::TemplateRegistry do
       res_t.name.should eq "PHE"
       res_t.aliases.should eq %w(PHY)
       res_t.type.protein?.should be_true
-      res_t.link_bond.to_s.should eq "C-N"
+      res_t.link_bond.to_s.should eq "<BondTemplate C-N>"
       res_t.description.should eq "Phenylalanine"
       res_t.root_atom.name.should eq "CA"
       res_t.code.should eq 'F'

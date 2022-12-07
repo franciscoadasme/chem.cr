@@ -21,12 +21,6 @@ class Chem::BondTemplate
     @atoms.any? &.name.==(name)
   end
 
-  def inspect(io : IO) : Nil
-    io << '<' << {{@type.name.split("::").last}} << ' '
-    to_s io
-    io << '>'
-  end
-
   def other(atom_t : AtomTemplate) : AtomTemplate
     other?(atom_t) || raise IndexError.new("Unknown atom template #{atom_t.name} in #{self}")
   end
@@ -58,6 +52,8 @@ class Chem::BondTemplate
   end
 
   def to_s(io : IO) : Nil
+    io << '<' << {{@type.name.split("::").last}} << ' '
     io << @atoms[0].name << @order.to_char << @atoms[1].name
+    io << '>'
   end
 end
