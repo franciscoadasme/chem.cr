@@ -57,14 +57,14 @@ describe Chem::ResidueTemplate do
     end
   end
 
-  describe "#monomer?" do
-    it "tells if residue template is a monomer" do
+  describe "#polymer?" do
+    it "tells if residue template is a polymer" do
       res_t = Chem::ResidueTemplate.build &.name("X").spec("C1=C2").root("C1")
-      res_t.monomer?.should be_false
+      res_t.polymer?.should be_false
 
       res_t = Chem::ResidueTemplate.build &.name("X").spec("C1=C2").root("C1")
         .link_adjacent_by("C2=C1")
-      res_t.monomer?.should be_true
+      res_t.polymer?.should be_true
     end
   end
 end

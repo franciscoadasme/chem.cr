@@ -172,7 +172,7 @@ describe Chem::ResidueTemplate::Builder do
     end
     res_t.atoms.map(&.name).should eq ["C1", "H1", "C2", "H2", "H3", "C3", "H4"]
     res_t.bonds.size.should eq 6
-    res_t.monomer?.should be_true
+    res_t.polymer?.should be_true
     bond_t = res_t.link_bond.should_not be_nil
     bond_t.atoms.map(&.name).to_a.should eq %w(C3 C1)
     bond_t.order.should eq 2

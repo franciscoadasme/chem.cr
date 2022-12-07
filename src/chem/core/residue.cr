@@ -626,7 +626,7 @@ class Chem::Residue
   end
 
   def polymer? : Bool
-    !!(protein? || dna? || template.try(&.monomer?))
+    !!(protein? || dna? || template.try(&.polymer?))
   end
 
   def ramachandran_angles : Tuple(Float64, Float64)

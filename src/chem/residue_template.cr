@@ -95,7 +95,7 @@ class Chem::ResidueTemplate
     io << '>'
   end
 
-  def monomer? : Bool
-    !link_bond.nil?
+  def polymer? : Bool
+    !!link_bond
   end
 end
