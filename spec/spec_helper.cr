@@ -129,6 +129,33 @@ module Spec
       end
     {% end %}
   end
+
+  struct MatchExpectation(T)
+    def match(actual_value : Chem::Atom)
+      case expected_value = @expected_value
+      when Chem::AtomTemplate
+        actual_value.matches? expected_value
+      else
+        actual_value =~ @expected_value
+      end
+    end
+
+    def match(actual_value : Chem::Bond)
+      case expected_value = @expected_value
+      when Tuple(Tuple(String, String), Tuple(String, String))
+        name_and_element, other = expected_value
+        order = Chem::BondOrder::Single
+      when Tuple(Tuple(String, String), Tuple(String, String), Symbol)
+        name_and_element, other, order = expected_value
+        order = Chem::BondOrder.parse order.to_s
+      else
+        return actual_value =~ @expected_value
+      end
+      atom_t = Chem::AtomTemplate.new *name_and_element
+      other = Chem::AtomTemplate.new *other
+      actual_value.matches? Chem::BondTemplate.new atom_t, other, order
+    end
+  end
 end
 
 def vec3(x : Number, y : Number, z : Number) : Chem::Spatial::Vec3

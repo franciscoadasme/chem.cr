@@ -90,21 +90,3 @@ describe Chem::Bond do
     end
   end
 end
-
-struct Spec::MatchExpectation(T)
-  def match(actual_value : Chem::Bond)
-    case expected_value = @expected_value
-    when Tuple(Tuple(String, String), Tuple(String, String))
-      name_and_element, other = expected_value
-      order = Chem::BondOrder::Single
-    when Tuple(Tuple(String, String), Tuple(String, String), Symbol)
-      name_and_element, other, order = expected_value
-      order = Chem::BondOrder.parse order.to_s
-    else
-      return actual_value =~ @expected_value
-    end
-    atom_t = Chem::AtomTemplate.new *name_and_element
-    other = Chem::AtomTemplate.new *other
-    actual_value.matches? Chem::BondTemplate.new atom_t, other, order
-  end
-end

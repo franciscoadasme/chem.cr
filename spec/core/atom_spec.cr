@@ -246,14 +246,3 @@ describe Chem::Atom do
     end
   end
 end
-
-struct Spec::MatchExpectation(T)
-  def match(actual_value : Chem::Atom)
-    case expected_value = @expected_value
-    when Chem::AtomTemplate
-      actual_value.matches? expected_value
-    else
-      actual_value =~ @expected_value
-    end
-  end
-end
