@@ -981,6 +981,39 @@
 
 
 
+  <h2>
+    <a id="class-method-summary" class="anchor" href="#class-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#load_templates%28filepath%3AString%29%3ANil-class-method" class="signature"><strong>.load_templates</strong>(filepath : String) : Nil</a>
+        
+          <div class="summary"><p>Parses and registers the residue templates encoded in the given YAML file into the <em>global registry</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#parse_templates%28filepath%3AString%29%3ANil-class-method" class="signature"><strong>.parse_templates</strong>(filepath : String) : Nil</a>
+        
+          <div class="summary"><p>Parses and registers the residue templates encoded in the given YAML content into the <em>global registry</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#template_alias%28new_name%3AString%2Ctoexisting_name%3AString%29%3ANil-class-method" class="signature"><strong>.template_alias</strong>(new_name : String, to existing_name : String) : Nil</a>
+        
+          <div class="summary"><p>Registers an aliases to a known residue template into the <em>global registry</em>.</p></div>
+        
+      </li>
+    
+  </ul>
+
 
 
 
@@ -993,6 +1026,79 @@
 
 
 
+
+  <h2>
+    <a id="class-method-detail" class="anchor" href="#class-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="load_templates(filepath:String):Nil-class-method">
+      <div class="signature">
+        
+        def self.<strong>load_templates</strong>(filepath : String) : Nil
+
+        <a class="method-permalink" href="#load_templates%28filepath%3AString%29%3ANil-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Parses and registers the residue templates encoded in the given YAML
+file into the <em>global registry</em>. See <code><a href="Chem/TemplateRegistry.html#default%3Aself-class-method">TemplateRegistry.default</a></code> and
+<code><a href="Chem/TemplateRegistry.html#parse%28io%3AIO%29%3Aself-instance-method">TemplateRegistry#parse</a></code> for details.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="parse_templates(filepath:String):Nil-class-method">
+      <div class="signature">
+        
+        def self.<strong>parse_templates</strong>(filepath : String) : Nil
+
+        <a class="method-permalink" href="#parse_templates%28filepath%3AString%29%3ANil-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Parses and registers the residue templates encoded in the given YAML
+content into the <em>global registry</em>. See <code><a href="Chem/TemplateRegistry.html#default%3Aself-class-method">TemplateRegistry.default</a></code> and
+<code><a href="Chem/TemplateRegistry.html#parse%28io%3AIO%29%3Aself-instance-method">TemplateRegistry#parse</a></code> for details.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="template_alias(new_name:String,toexisting_name:String):Nil-class-method">
+      <div class="signature">
+        
+        def self.<strong>template_alias</strong>(new_name : String, to existing_name : String) : Nil
+
+        <a class="method-permalink" href="#template_alias%28new_name%3AString%2Ctoexisting_name%3AString%29%3ANil-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Registers an aliases to a known residue template into the <em>global
+registry</em>. See <code><a href="Chem/TemplateRegistry.html#default%3Aself-class-method">TemplateRegistry.default</a></code> and <code><a href="Chem/TemplateRegistry.html#alias%28new_name%3AString%2Ctoexisting_name%3AString%29%3Aself-instance-method">TemplateRegistry#alias</a></code>
+for details.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
 
 
 
