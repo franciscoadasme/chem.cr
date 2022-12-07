@@ -13,19 +13,14 @@ class Chem::AtomTemplate
     @valence = valence || @element.valence
   end
 
-  def inspect(io : IO) : Nil
-    io << '<' << {{@type.name.split("::").last}} << ' '
-    to_s io
-    io << '>'
-  end
-
   def suffix : String
     name[@element.symbol.size..]
   end
 
   def to_s(io : IO)
-    io << @name
+    io << '<' << {{@type.name.split("::").last}} << ' ' << @name
     io << (@formal_charge > 0 ? '+' : '-') unless @formal_charge == 0
     io << @formal_charge.abs if @formal_charge.abs > 1
+    io << '>'
   end
 end
