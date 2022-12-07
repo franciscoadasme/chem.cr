@@ -45,7 +45,7 @@ class Chem::Topology::Detector
     @atoms.each do |atom|
       next if mapped?(atom, atom_map)
       @templates.each do |res_t|
-        next if @atoms.size < res_t.n_atoms
+        next if @atoms.size < res_t.atoms.size
         if match?(res_t, atom, atom_map)
           yield MatchData.new(res_t, atom_map.invert)
           @atoms.subtract atom_map.each_key
@@ -76,10 +76,10 @@ class Chem::Topology::Detector
 
   private def compute_atom_descriptions(res_types : Array(ResidueTemplate))
     res_types.each do |res_t|
-      res_t.each_atom_t do |atom_t|
+      res_t.atoms.each do |atom_t|
         @atom_table[atom_t] = String.build do |io|
-          bonded_atoms = res_t.bonded_atoms(atom_t)
-          if (bond = res_t.link_bond) && atom_t.in?(bond)
+          bonded_atoms = res_t.bonds.compact_map(&.other?(atom_t))
+          if (bond = res_t.link_bond) && atom_t.in?(bond.atoms)
             bonded_atoms << bond.other(atom_t)
           end
 
@@ -99,7 +99,7 @@ class Chem::Topology::Detector
         search ter_t, ter_t.root_atom, other, ter_map
       end
 
-      if ter_map.size == ter_t.n_atoms - 4 # ter has an extra CH3
+      if ter_map.size == ter_t.atoms.size - 4 # ter has an extra CH3
         atom_map.merge! ter_map
         break
       end
@@ -122,7 +122,7 @@ class Chem::Topology::Detector
     if res_t.type.protein? && (root = atom_map.key_for?("CA"))
       extend_match res_t, root, atom_map
     end
-    atom_map.size >= res_t.atom_count
+    atom_map.size >= res_t.atoms.size
   end
 
   private def match?(atom_t : AtomTemplate, atom : Atom) : Bool
@@ -136,7 +136,7 @@ class Chem::Topology::Detector
     return if mapped?(atom, atom_map) || mapped?(atom_t, atom_map)
     return unless match?(atom_t, atom)
     atom_map[atom] = atom_t.name
-    res_t.bonded_atoms(atom_t).each do |other_t|
+    res_t.bonds.compact_map(&.other?(atom_t)).each do |other_t|
       atom.each_bonded_atom do |other|
         search res_t, other_t, other, atom_map
       end

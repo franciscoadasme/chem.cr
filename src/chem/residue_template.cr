@@ -76,26 +76,8 @@ class Chem::ResidueTemplate
     @atom_table[name]?
   end
 
-  def atom_count(*, include_hydrogens : Bool = true)
-    size = @atoms.size
-    size -= @atoms.count &.element.hydrogen? unless include_hydrogens
-    size
-  end
-
-  def atom_names : Array(String)
-    @atoms.map &.name
-  end
-
   def atoms : Array::View(AtomTemplate)
     @atoms.view
-  end
-
-  def each_atom_t(&block : AtomTemplate ->)
-    @atoms.each &block
-  end
-
-  def bonded_atoms(atom_t : AtomTemplate) : Array(AtomTemplate)
-    @bonds.select(&.includes?(atom_t)).map &.other(atom_t)
   end
 
   def bonds : Array::View(BondTemplate)
@@ -103,7 +85,7 @@ class Chem::ResidueTemplate
   end
 
   def formal_charge : Int32
-    @atoms.each.map(&.formal_charge).sum
+    @atoms.sum &.formal_charge
   end
 
   def inspect(io : IO) : Nil
@@ -115,9 +97,5 @@ class Chem::ResidueTemplate
 
   def monomer? : Bool
     !link_bond.nil?
-  end
-
-  def n_atoms : Int32
-    @atoms.size
   end
 end
