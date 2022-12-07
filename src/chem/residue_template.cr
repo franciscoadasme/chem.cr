@@ -89,7 +89,7 @@ class Chem::ResidueTemplate
   end
 
   def [](name : String) : AtomTemplate
-    self[name]? || raise IndexError.new("Unknown atom template #{name.inspect} in #{self}")
+    self[name]? || raise IndexError.new("Atom #{name.inspect} not found in #{self}")
   end
 
   # Returns the bond template between the given atoms if exists, else
