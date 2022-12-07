@@ -27,8 +27,17 @@ describe Chem::ResidueTemplate do
 
   describe "#[]" do
     it "raises if unknown atom" do
-      expect_raises IndexError, "Unknown atom template \"CA\" in <ResidueTemplate ASD>" do
+      expect_raises(IndexError,
+        "Unknown atom template \"CA\" in <ResidueTemplate ASD>") do
         Chem::ResidueTemplate.build(&.name("ASD").spec("CX"))["CA"]
+      end
+    end
+
+    it "raises if unknown bond" do
+      res_t = Chem::ResidueTemplate.build &.name("ASD").spec("CA=CB").root("CA")
+      expect_raises(IndexError,
+        "Bond between \"CA\" and \"CX\" not found in <ResidueTemplate ASD>") do
+        res_t["CA", "CX"]
       end
     end
   end
@@ -42,6 +51,18 @@ describe Chem::ResidueTemplate do
 
     it "returns nil if unknown atom" do
       Chem::ResidueTemplate.build(&.name("ASD").spec("CX"))["CA"]?.should be_nil
+    end
+
+    it "returns a bond template" do
+      res_t = Chem::ResidueTemplate.build &.name("ASD").spec("CA=CB").root("CA")
+      bond_t = res_t.bonds.find! { |bond_t| "CA".in?(bond_t) && "CB".in?(bond_t) }
+      res_t[res_t["CA"], res_t["CB"]]?.should eq bond_t # using atom templates
+      res_t["CA", "CB"]?.should eq bond_t               # using atom names
+    end
+
+    it "returns nil if unknown atom" do
+      res_t = Chem::ResidueTemplate.build &.name("ASD").spec("CA=CB").root("CA")
+      res_t["CA", "CX"]?.should be_nil
     end
   end
 

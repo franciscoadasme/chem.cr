@@ -68,8 +68,42 @@ class Chem::ResidueTemplate
       symmetric_atom_groups
   end
 
+  # Returns the bond template between the given atoms. Raises
+  # `IndexError` if the bond does not exist.
+  def [](atom_t : AtomTemplate, other : AtomTemplate) : BondTemplate
+    if bond_t = self[name, other]?
+      bond_t
+    else
+      raise IndexError.new("Bond between #{atom_t} and #{other} not found in #{self}")
+    end
+  end
+
+  # :ditto:
+  def [](atom_t : String, other : String) : BondTemplate
+    if bond_t = self[atom_t, other]?
+      bond_t
+    else
+      raise IndexError.new("Bond between #{atom_t.inspect} and #{other.inspect} \
+                            not found in #{self}")
+    end
+  end
+
   def [](name : String) : AtomTemplate
     self[name]? || raise IndexError.new("Unknown atom template #{name.inspect} in #{self}")
+  end
+
+  # Returns the bond template between the given atoms if exists, else
+  # `nil`.
+  def []?(atom_t : AtomTemplate, other : AtomTemplate) : BondTemplate?
+    @bonds.find do |bond_t|
+      atom_t.in?(bond_t) && other.in?(bond_t)
+    end
+  end
+
+  # :ditto:
+  def []?(name : String, other : String) : BondTemplate?
+    return unless (atom_t = self[name]?) && (other_t = self[other]?)
+    self[atom_t, other_t]?
   end
 
   def []?(name : String) : AtomTemplate?
