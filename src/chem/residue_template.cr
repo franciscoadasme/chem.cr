@@ -98,7 +98,7 @@ class Chem::ResidueTemplate
       description,
       atoms,
       bonds,
-      atoms.first.name,
+      Builder.guess_root(atoms, bonds, link_bond),
       aliases,
       link_bond,
       symmetric_atom_groups

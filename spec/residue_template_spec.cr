@@ -24,7 +24,7 @@ describe Chem::ResidueTemplate do
       res_t.code.should eq residue.code
       res_t.type.should eq residue.type
       res_t.description.should be_nil
-      res_t.root_atom.name.should eq residue.atoms[0].name
+      res_t.root_atom.name.should eq "C4"
       res_t.aliases.should be_empty
       res_t.link_bond.should be_nil
       res_t.symmetric_atom_groups.should be_nil
@@ -75,6 +75,12 @@ describe Chem::ResidueTemplate do
         %q(Duplicate atom name "CX1" found in <Residue A:GHY1>) do
         Chem::ResidueTemplate.from_residue structure.residues[0]
       end
+    end
+
+    it "guesses root to be the most complex atom" do
+      structure = Chem::Structure.from_mol2 "spec/data/mol2/dmpe.mol2"
+      res_t = Chem::ResidueTemplate.from_residue structure.residues[0]
+      res_t.root_atom.name.should eq "P"
     end
   end
 

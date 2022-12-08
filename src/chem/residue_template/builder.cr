@@ -94,7 +94,7 @@ class Chem::ResidueTemplate::Builder
                 elsif @type.protein?
                   "CA"
                 else
-                  guess_root(atoms, bond_ts, link_bond)
+                  self.class.guess_root(atoms, bond_ts, link_bond)
                 end
 
     ResidueTemplate.new @names.first, @code, @type, @description,
@@ -132,7 +132,7 @@ class Chem::ResidueTemplate::Builder
   #
   # The total complexity of an atom is computed as the sum of its
   # complexity and the complexities of the bonded atoms.
-  private def guess_root(
+  def self.guess_root(
     atoms : Array(AtomTemplate),
     bonds : Array(BondTemplate),
     link_bond : BondTemplate?
