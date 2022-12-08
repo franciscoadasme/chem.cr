@@ -8,8 +8,8 @@ class Chem::AtomTemplate
                  element : Element | String,
                  @formal_charge : Int32 = 0,
                  valence : Int32? = nil)
-    raise ArgumentError.new("Invalid valence") if valence && valence < 0
     @element = element.is_a?(Element) ? element : PeriodicTable[element]
+    raise ArgumentError.new("Invalid valence #{valence} for #{self}") if valence && valence < 0
     @valence = valence || @element.valence
   end
 
