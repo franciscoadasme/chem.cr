@@ -1,6 +1,6 @@
 class Chem::ResidueTemplate::SpecParser
   record AtomRecord, name : String,
-    element : Element?,
+    element : Element,
     formal_charge : Int32,
     explicit_hydrogens : Int32?
   record BondRecord, lhs : String, rhs : String, order : BondOrder
@@ -247,6 +247,7 @@ class Chem::ResidueTemplate::SpecParser
     end
 
     raise "Duplicate atom #{atom_name}" if @atom_map.has_key?(atom_name)
+    element ||= Topology.guess_element(atom_name)
     atom = AtomRecord.new(atom_name, element, formal_charge, explicit_hydrogens)
     @atom_map[atom.name] = atom
   end

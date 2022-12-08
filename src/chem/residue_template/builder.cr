@@ -35,11 +35,11 @@ class Chem::ResidueTemplate::Builder
     bond_ts = [] of BondTemplate
     h_i = 0
     parser.atom_map.each_value do |atom|
-      element = atom.element || Topology.guess_element(atom.name)
 
       # Calculate effective valence
       effective_valence = atom.explicit_hydrogens || 0
-      effective_valence += atom.formal_charge * (element.valence_electrons >= 4 ? -1 : 1)
+      effective_valence += atom.formal_charge *
+                           (atom.element.valence_electrons >= 4 ? -1 : 1)
       effective_valence += parser.bonds.sum do |bond| # sum of bond orders
         atom.name.in?(bond.lhs, bond.rhs) ? bond.order.to_i : 0
       end
@@ -49,7 +49,7 @@ class Chem::ResidueTemplate::Builder
       end
 
       # Check that effective valence is correct
-      target_valence = element.target_valence(effective_valence)
+      target_valence = atom.element.target_valence(effective_valence)
       if effective_valence > target_valence ||
          (atom.explicit_hydrogens && effective_valence != target_valence)
         raise "Expected valence of #{atom.name} is #{target_valence}, \
@@ -57,8 +57,8 @@ class Chem::ResidueTemplate::Builder
       end
 
       # Create and register atom template
-      atom_t = AtomTemplate.new(atom.name, element, atom.formal_charge, target_valence)
       atoms << atom_t
+      atom_t = AtomTemplate.new(atom.name, atom.element, atom.formal_charge, target_valence)
       atom_t_map[atom_t.name] = atom_t
 
       # Add hydrogens (either explicit or implicit)
