@@ -34,7 +34,7 @@ class Chem::Topology::Detector
   def initialize(atoms : AtomCollection, templates : TemplateRegistry = TemplateRegistry.default)
     @atoms = Set(Atom).new(atoms.n_atoms).concat atoms.each_atom
     @atom_table = {} of Atom | AtomTemplate => String
-    @templates = templates.to_a
+    @templates = templates.to_a.sort_by &.atoms.size.-
     compute_atom_descriptions @atoms
     compute_atom_descriptions @templates
     compute_atom_descriptions [CTER_T, NTER_T, CHARGED_CTER_T, CHARGED_NTER_T]
