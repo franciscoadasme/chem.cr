@@ -32,6 +32,12 @@ class Chem::ResidueTemplate
     else
       raise KeyError.new("Atom #{root_atom.inspect} not found in #{self}")
     end
+
+    if @atom_table.size < atoms.size # atom_table includes unique names only
+      name, _ = @atoms.map(&.name).tally.max_by(&.[1])
+      raise Error.new("Duplicate atom name #{name.inspect} found in #{self}")
+    end
+
     @link_bond.try do |link_bond|
       if link_bond.atoms.any? { |atom_t| atom_t != self[atom_t.name] }
         raise Error.new("Incompatible link bond #{link_bond} with #{self}")
@@ -69,6 +75,11 @@ class Chem::ResidueTemplate
       AtomTemplate.new(atom.name, atom.element, atom.formal_charge, atom.valence)
     end
     atom_table = atoms.index_by &.name
+    if atom_table.size < atoms.size
+      name, _ = atoms.map(&.name).tally.max_by(&.[1])
+      raise Error.new("Duplicate atom name #{name.inspect} found in #{residue.inspect}")
+    end
+
     bonds = residue.bonds.map do |bond|
       BondTemplate.new *bond.atoms.map { |atom| atom_table[atom.name] }, bond.order
     end

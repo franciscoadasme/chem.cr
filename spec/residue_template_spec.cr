@@ -1,6 +1,21 @@
 require "./spec_helper"
 
 describe Chem::ResidueTemplate do
+  describe ".new" do
+    it "raises if duplicate names" do
+      expect_raises Chem::Error,
+        %q(Duplicate atom name "X" found in <ResidueTemplate VYX>) do
+        Chem::ResidueTemplate.new "VYX",
+          code: nil,
+          type: :other,
+          description: nil,
+          atoms: [Chem::AtomTemplate.new("X", "C"), Chem::AtomTemplate.new("X", "O")],
+          bonds: [] of Chem::BondTemplate,
+          root_atom: "X"
+      end
+    end
+  end
+
   describe ".from_residue" do
     it "creates a template from a residue" do
       residue = load_file("naphthalene.mol2").residues[0]
@@ -46,6 +61,18 @@ describe Chem::ResidueTemplate do
       end
       expect_raises(Chem::Error,
         "Cannot create template from A:UNK1 due to missing connectivity") do
+        Chem::ResidueTemplate.from_residue structure.residues[0]
+      end
+    end
+
+    it "raises if duplicate names" do
+      structure = Chem::Structure.build do |builder|
+        builder.residue "GHY"
+        builder.atom "CX1", vec3(1, 0, 5)
+        builder.atom "CX1", vec3(26, 3, 1)
+      end
+      expect_raises Chem::Error,
+        %q(Duplicate atom name "CX1" found in <Residue A:GHY1>) do
         Chem::ResidueTemplate.from_residue structure.residues[0]
       end
     end
