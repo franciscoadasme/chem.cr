@@ -32,8 +32,7 @@ class Chem::ResidueTemplate::Builder
 
     atom_t_map = {} of String => AtomTemplate
     bond_ts = [] of BondTemplate
-    h_i = 0
-    h_set = Set(String).new
+    name_gen = HydrogenNameGenerator.new
     bonded_h_table = {} of String => Array(AtomTemplate)
     parser.atoms.sort_by(&.element.atomic_number.-).each do |atom|
       # Calculate effective valence
@@ -61,21 +60,12 @@ class Chem::ResidueTemplate::Builder
       atom_t_map[atom_t.name] = atom_t
 
       # Add hydrogens (either explicit or implicit)
-      suffix = atom_t.suffix.presence
       h_count = atom.explicit_hydrogens || (target_valence - effective_valence)
       h_count.times do |i|
-        if suffix
-          name = "H#{suffix}#{i + 1 if h_count > 1}"
-          name = "H#{atom.element.symbol}" + name[1..] if !atom.element.carbon? &&
-                                                          name.in?(h_set)
-          name = "H#{suffix}1" if name.in?(h_set) && h_count == 1
-          name = nil if name.in?(h_set)
-        end
-        while (name = "H#{h_i += 1}").in?(h_set); end unless name
+        name = name_gen.next_for(atom_t, (i if h_count > 1))
         h_atom = AtomTemplate.new(name, PeriodicTable::H, valence: 1)
         (bonded_h_table[atom_t.name] ||= [] of AtomTemplate) << h_atom
         bond_ts << BondTemplate.new(atom_t, h_atom)
-        h_set << name
       end
     end
 
@@ -248,5 +238,41 @@ class Chem::ResidueTemplate::Builder
     end
     @symmetric_atom_groups << pairs.to_a
     self
+  end
+end
+
+# Generates hydrogen atom names much like an iterator.
+private class HydrogenNameGenerator
+  @global_counter = 0
+  @names = Set(String).new
+
+  # Returns the next numbered hydrogen name. Atom number is handle by an
+  # internal global counter.
+  def next : String
+    until name = try("H#{@global_counter += 1}"); end
+    @names << name
+    name
+  end
+
+  # Returns the next numbered hydrogen name for the bonded atom
+  # template.
+  #
+  # If *index* indicates the index of the current hydrogen. If `nil`, a
+  # single hydrogen is being added.
+  def next_for(atom_t : Chem::AtomTemplate, index : Int32?) : String
+    non_carbon = !atom_t.element.carbon?
+    if suffix = atom_t.suffix.presence
+      suffix = "#{suffix}#{index.try(&.succ)}"
+      name = try "H#{suffix}"
+      name ||= try "H#{atom_t.element.symbol}H#{suffix}" if non_carbon
+      name ||= try "H#{suffix}1" if !index # singular
+      @names << name if name
+    end
+    name || self.next
+  end
+
+  # Returns *name* if available, else `nil`.
+  def try(name : String) : String?
+    name unless name.in?(@names)
   end
 end
