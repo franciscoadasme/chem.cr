@@ -169,7 +169,7 @@ describe Chem::ResidueTemplate::Builder do
       spec "C1-C2-C3"
       link_adjacent_by "C3=C1"
     end
-    res_t.atoms.map(&.name).should eq ["C1", "H1", "C2", "H2", "H3", "C3", "H4"]
+    res_t.atoms.map(&.name).should eq ["C1", "H1", "C2", "H21", "H22", "C3", "H3"]
     res_t.bonds.size.should eq 6
     res_t.polymer?.should be_true
     bond_t = res_t.link_bond.should_not be_nil
@@ -184,7 +184,7 @@ describe Chem::ResidueTemplate::Builder do
       root "C2"
     end
 
-    res_t.atoms.map(&.name).should eq ["C1", "H1", "H2", "C2", "H3", "H4"]
+    res_t.atoms.map(&.name).should eq ["C1", "H11", "H12", "C2", "H21", "H22"]
     res_t.bonds.size.should eq 5
     res_t.root_atom.should eq res_t["C2"]
   end
@@ -197,8 +197,8 @@ describe Chem::ResidueTemplate::Builder do
       spec "O1-C1-C2(-C3-O3)-O2"
     end
     res_t.atoms.map(&.name).should eq [
-      "O1", "H1", "C1", "H2", "H3", "C2", "H4", "C3", "H5", "H6", "O3", "H7",
-      "O2", "H8",
+      "O1", "H1", "C1", "H11", "H12", "C2", "H21", "C3", "H31", "H32", "O3", "H3",
+      "O2", "H2",
     ]
   end
 
@@ -338,6 +338,16 @@ describe Chem::ResidueTemplate::Builder do
             -C28-C29-C30)-C31-O5-P1(=O6)(=O7)-O8-C32-C33-N1"
     end
     res_t.root_atom.should eq res_t["P1"]
+  end
+
+  it "does not generate duplicate atoms" do
+    res_t = build_template do
+      name "DMPE"
+      spec "C1-C2-C3-C4-C5-C6-C7-C8-C9-C10-C11-C12-C13-C14(-O1)-O2-C15\
+            (-C16-O3-C17(-O4)-C18-C19-C20-C21-C22-C23-C24-C25-C26-C27\
+            -C28-C29-C30)-C31-O5-P1(=O6)(=O7)-O8-C32-C33-N1"
+    end
+    res_t.atoms.tally_by(&.name).max_of(&.[1]).should eq 1
   end
 end
 

@@ -30,12 +30,12 @@ class Chem::ResidueTemplate::Builder
       implicit_bonds[bond.lhs] += bond.order.to_i
     end
 
-    atoms = [] of AtomTemplate
     atom_t_map = {} of String => AtomTemplate
     bond_ts = [] of BondTemplate
     h_i = 0
-    parser.atom_map.each_value do |atom|
-
+    h_set = Set(String).new
+    bonded_h_table = {} of String => Array(AtomTemplate)
+    parser.atoms.sort_by(&.element.atomic_number.-).each do |atom|
       # Calculate effective valence
       effective_valence = atom.explicit_hydrogens || 0
       effective_valence += atom.formal_charge *
@@ -57,19 +57,34 @@ class Chem::ResidueTemplate::Builder
       end
 
       # Create and register atom template
-      atoms << atom_t
       atom_t = AtomTemplate.new(atom.name, atom.element, atom.formal_charge, target_valence)
       atom_t_map[atom_t.name] = atom_t
 
       # Add hydrogens (either explicit or implicit)
       suffix = atom_t.suffix.presence
-      suffix = nil if suffix && suffix.size == 1 && suffix[0].ascii_number?
       h_count = atom.explicit_hydrogens || (target_valence - effective_valence)
       h_count.times do |i|
-        name = suffix ? "H#{suffix}#{i + 1 if h_count > 1}" : "H#{h_i += 1}"
+        if suffix
+          name = "H#{suffix}#{i + 1 if h_count > 1}"
+          name = "H#{atom.element.symbol}" + name[1..] if !atom.element.carbon? &&
+                                                          name.in?(h_set)
+          name = "H#{suffix}1" if name.in?(h_set) && h_count == 1
+          name = nil if name.in?(h_set)
+        end
+        while (name = "H#{h_i += 1}").in?(h_set); end unless name
         h_atom = AtomTemplate.new(name, PeriodicTable::H, valence: 1)
-        atoms << h_atom
+        (bonded_h_table[atom_t.name] ||= [] of AtomTemplate) << h_atom
         bond_ts << BondTemplate.new(atom_t, h_atom)
+        h_set << name
+      end
+    end
+
+    # Adds the atoms in the original order
+    atoms = [] of AtomTemplate
+    parser.atoms.each do |atom_r|
+      atoms << atom_t_map[atom_r.name]
+      if h_atoms = bonded_h_table[atom_r.name]?
+        atoms.concat h_atoms
       end
     end
 
