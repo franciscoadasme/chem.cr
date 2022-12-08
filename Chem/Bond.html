@@ -917,6 +917,13 @@ between two atoms.</p>
   <ul class="list-summary">
     
       <li class="entry-summary">
+        <a href="#%3D%3D%3D%28bond_t%3ABondTemplate%29%3ABool-instance-method" class="signature"><strong>#===</strong>(bond_t : BondTemplate) : Bool</a>
+        
+          <div class="summary"><p>Case equality.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#bonded%3F%28other%3Aself%29%3ABool-instance-method" class="signature"><strong>#bonded?</strong>(other : <span class="k">self</span>) : Bool</a>
         
           <div class="summary"><p>Returns <code>true</code> if the bond shares an atom with <em>other</em>, else <code>false</code>.</p></div>
@@ -937,6 +944,13 @@ between two atoms.</p>
         <a href="#inspect%28io%3AIO%29%3ANil-instance-method" class="signature"><strong>#inspect</strong>(io : IO) : Nil</a>
         
           <div class="summary"><p>Appends a String representation of this object which includes its class name, its object address and the values of all instance variables.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#matches%3F%28bond_t%3ABondTemplate%29%3ABool-instance-method" class="signature"><strong>#matches?</strong>(bond_t : BondTemplate) : Bool</a>
+        
+          <div class="summary"><p>Returns <code>true</code> if the bond matches the given template, else <code>false</code>.</p></div>
         
       </li>
     
@@ -1128,6 +1142,25 @@ between two atoms.</p>
     Instance Method Detail
   </h2>
   
+    <div class="entry-detail" id="===(bond_t:BondTemplate):Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>===</strong>(bond_t : <a href="../Chem/BondTemplate.html">BondTemplate</a>) : Bool
+
+        <a class="method-permalink" href="#%3D%3D%3D%28bond_t%3ABondTemplate%29%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Case equality. This is equivalent to <code>#match?</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="bonded?(other:self):Bool-instance-method">
       <div class="signature">
         
@@ -1199,6 +1232,28 @@ and the values of all instance variables.</p>
 <span class="k">end</span>
 
 <span class="t">Person</span>.new(<span class="s">&quot;John&quot;</span>, <span class="n">32</span>).inspect <span class="c"># =&gt; #&lt;Person:0x10fd31f20 @name=&quot;John&quot;, @age=32&gt;</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="matches?(bond_t:BondTemplate):Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>matches?</strong>(bond_t : <a href="../Chem/BondTemplate.html">BondTemplate</a>) : Bool
+
+        <a class="method-permalink" href="#matches%3F%28bond_t%3ABondTemplate%29%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if the bond matches the given template, else
+<code>false</code>.</p>
+<p>Check considers both atom matching (see <code>Atom#match?</code>) and bond
+order.</p>
         </div>
       
       <br/>

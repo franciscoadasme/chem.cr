@@ -873,7 +873,14 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#new%28name%3AString%2Ccode%3AChar%3F%2Ctype%3AResidueType%2Cdescription%3AString%3F%2Catoms%3AArray%28AtomTemplate%29%2Cbonds%3AArray%28BondTemplate%29%2Croot_atom%3AAtomTemplate%2Caliases%3AArray%28String%29%3D%5B%5DofString%2Clink_bond%3ABondTemplate%3F%3Dnil%2Csymmetric_atom_groups%3AArray%28Array%28Tuple%28String%2CString%29%29%29%3F%3Dnil%29-class-method" class="signature"><strong>.new</strong>(name : String, code : Char?, type : ResidueType, description : String?, atoms : Array(AtomTemplate), bonds : Array(BondTemplate), root_atom : AtomTemplate, aliases : Array(String) = <span class="o">[]</span> <span class="k">of</span> <span class="t">String</span>, link_bond : BondTemplate? = <span class="n">nil</span>, symmetric_atom_groups : Array(Array(Tuple(String, String)))? = <span class="n">nil</span>)</a>
+        <a href="#from_residue%28residue%3AResidue%2Cdescription%3AString%3F%3Dnil%2Caliases%3AArray%28String%29%3D%5B%5DofString%2Clink_bond%3ABondTemplate%3F%3Dnil%2Csymmetric_atom_groups%3AArray%28Array%28Tuple%28String%2CString%29%29%29%3F%3Dnil%29%3Aself-class-method" class="signature"><strong>.from_residue</strong>(residue : Residue, description : String? = <span class="n">nil</span>, aliases : Array(String) = <span class="o">[]</span> <span class="k">of</span> <span class="t">String</span>, link_bond : BondTemplate? = <span class="n">nil</span>, symmetric_atom_groups : Array(Array(Tuple(String, String)))? = <span class="n">nil</span>) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Creates a new residue template from an existing residue.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new%28name%3AString%2Ccode%3AChar%3F%2Ctype%3AResidueType%2Cdescription%3AString%3F%2Catoms%3AArray%28AtomTemplate%29%2Cbonds%3AArray%28BondTemplate%29%2Croot_atom%3AString%2Caliases%3AArray%28String%29%3D%5B%5DofString%2Clink_bond%3ABondTemplate%3F%3Dnil%2Csymmetric_atom_groups%3AArray%28Array%28Tuple%28String%2CString%29%29%29%3F%3Dnil%29-class-method" class="signature"><strong>.new</strong>(name : String, code : Char?, type : ResidueType, description : String?, atoms : Array(AtomTemplate), bonds : Array(BondTemplate), root_atom : String, aliases : Array(String) = <span class="o">[]</span> <span class="k">of</span> <span class="t">String</span>, link_bond : BondTemplate? = <span class="n">nil</span>, symmetric_atom_groups : Array(Array(Tuple(String, String)))? = <span class="n">nil</span>)</a>
         
       </li>
     
@@ -894,12 +901,40 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#%5B%5D%28atom_name%3AString%29%3AAtomTemplate-instance-method" class="signature"><strong>#[]</strong>(atom_name : String) : AtomTemplate</a>
+        <a href="#%5B%5D%28atom_t%3AAtomTemplate%2Cother%3AAtomTemplate%29%3ABondTemplate-instance-method" class="signature"><strong>#[]</strong>(atom_t : AtomTemplate, other : AtomTemplate) : BondTemplate</a>
+        
+          <div class="summary"><p>Returns the bond template between the given atoms.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#%5B%5D%3F%28atom_name%3AString%29%3AAtomTemplate%3F-instance-method" class="signature"><strong>#[]?</strong>(atom_name : String) : AtomTemplate?</a>
+        <a href="#%5B%5D%28atom_t%3AString%2Cother%3AString%29%3ABondTemplate-instance-method" class="signature"><strong>#[]</strong>(atom_t : String, other : String) : BondTemplate</a>
+        
+          <div class="summary"><p>Returns the bond template between the given atoms.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%5B%5D%28name%3AString%29%3AAtomTemplate-instance-method" class="signature"><strong>#[]</strong>(name : String) : AtomTemplate</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%5B%5D%3F%28atom_t%3AAtomTemplate%2Cother%3AAtomTemplate%29%3ABondTemplate%3F-instance-method" class="signature"><strong>#[]?</strong>(atom_t : AtomTemplate, other : AtomTemplate) : BondTemplate?</a>
+        
+          <div class="summary"><p>Returns the bond template between the given atoms if exists, else <code>nil</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%5B%5D%3F%28name%3AString%2Cother%3AString%29%3ABondTemplate%3F-instance-method" class="signature"><strong>#[]?</strong>(name : String, other : String) : BondTemplate?</a>
+        
+          <div class="summary"><p>Returns the bond template between the given atoms if exists, else <code>nil</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%5B%5D%3F%28name%3AString%29%3AAtomTemplate%3F-instance-method" class="signature"><strong>#[]?</strong>(name : String) : AtomTemplate?</a>
         
       </li>
     
@@ -909,27 +944,12 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#atom_count%28%2A%2Cinclude_hydrogens%3ABool%3Dtrue%29-instance-method" class="signature"><strong>#atom_count</strong>(*, include_hydrogens : Bool = <span class="n">true</span>)</a>
+        <a href="#atoms%3AArray%3A%3AView%28AtomTemplate%29-instance-method" class="signature"><strong>#atoms</strong> : Array::View(AtomTemplate)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#atom_names%3AArray%28String%29-instance-method" class="signature"><strong>#atom_names</strong> : Array(String)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#atoms%3AArray%28AtomTemplate%29-instance-method" class="signature"><strong>#atoms</strong> : Array(AtomTemplate)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#bonded_atoms%28atom_t%3AAtomTemplate%29%3AArray%28AtomTemplate%29-instance-method" class="signature"><strong>#bonded_atoms</strong>(atom_t : AtomTemplate) : Array(AtomTemplate)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#bonds%3AArray%28BondTemplate%29-instance-method" class="signature"><strong>#bonds</strong> : Array(BondTemplate)</a>
+        <a href="#bonds%3AArray%3A%3AView%28BondTemplate%29-instance-method" class="signature"><strong>#bonds</strong> : Array::View(BondTemplate)</a>
         
       </li>
     
@@ -944,19 +964,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#each_atom_t%28%26block%3AAtomTemplate-%3E%29-instance-method" class="signature"><strong>#each_atom_t</strong>(&block : AtomTemplate -> )</a>
-        
-      </li>
-    
-      <li class="entry-summary">
         <a href="#formal_charge%3AInt32-instance-method" class="signature"><strong>#formal_charge</strong> : Int32</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#inspect%28io%3AIO%29%3ANil-instance-method" class="signature"><strong>#inspect</strong>(io : IO) : Nil</a>
-        
-          <div class="summary"><p>Appends a String representation of this object which includes its class name, its object address and the values of all instance variables.</p></div>
         
       </li>
     
@@ -966,17 +974,12 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#monomer%3F%3ABool-instance-method" class="signature"><strong>#monomer?</strong> : Bool</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#n_atoms%3AInt32-instance-method" class="signature"><strong>#n_atoms</strong> : Int32</a>
-        
-      </li>
-    
-      <li class="entry-summary">
         <a href="#name%3AString-instance-method" class="signature"><strong>#name</strong> : String</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#polymer%3F%3ABool-instance-method" class="signature"><strong>#polymer?</strong> : Bool</a>
         
       </li>
     
@@ -987,6 +990,13 @@
     
       <li class="entry-summary">
         <a href="#symmetric_atom_groups%3AArray%28Array%28Tuple%28String%2CString%29%29%29%3F-instance-method" class="signature"><strong>#symmetric_atom_groups</strong> : Array(Array(Tuple(String, String)))?</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_s%28io%3AIO%29%3ANil-instance-method" class="signature"><strong>#to_s</strong>(io : IO) : Nil</a>
+        
+          <div class="summary"><p>Appends a short String representation of this object which includes its class name and its object address.</p></div>
         
       </li>
     
@@ -1049,12 +1059,40 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="new(name:String,code:Char?,type:ResidueType,description:String?,atoms:Array(AtomTemplate),bonds:Array(BondTemplate),root_atom:AtomTemplate,aliases:Array(String)=[]ofString,link_bond:BondTemplate?=nil,symmetric_atom_groups:Array(Array(Tuple(String,String)))?=nil)-class-method">
+    <div class="entry-detail" id="from_residue(residue:Residue,description:String?=nil,aliases:Array(String)=[]ofString,link_bond:BondTemplate?=nil,symmetric_atom_groups:Array(Array(Tuple(String,String)))?=nil):self-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(name : String, code : <a href="../Char.html">Char</a>?, type : <a href="../Chem/ResidueType.html">ResidueType</a>, description : String?, atoms : <a href="../Array.html">Array</a>(<a href="../Chem/AtomTemplate.html">AtomTemplate</a>), bonds : <a href="../Array.html">Array</a>(<a href="../Chem/BondTemplate.html">BondTemplate</a>), root_atom : <a href="../Chem/AtomTemplate.html">AtomTemplate</a>, aliases : <a href="../Array.html">Array</a>(String) = <span class="o">[]</span> <span class="k">of</span> <span class="t">String</span>, link_bond : <a href="../Chem/BondTemplate.html">BondTemplate</a>? = <span class="n">nil</span>, symmetric_atom_groups : <a href="../Array.html">Array</a>(<a href="../Array.html">Array</a>(Tuple(String, String)))? = <span class="n">nil</span>)
+        def self.<strong>from_residue</strong>(residue : <a href="../Chem/Residue.html">Residue</a>, description : String? = <span class="n">nil</span>, aliases : <a href="../Array.html">Array</a>(String) = <span class="o">[]</span> <span class="k">of</span> <span class="t">String</span>, link_bond : <a href="../Chem/BondTemplate.html">BondTemplate</a>? = <span class="n">nil</span>, symmetric_atom_groups : <a href="../Array.html">Array</a>(<a href="../Array.html">Array</a>(Tuple(String, String)))? = <span class="n">nil</span>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#new%28name%3AString%2Ccode%3AChar%3F%2Ctype%3AResidueType%2Cdescription%3AString%3F%2Catoms%3AArray%28AtomTemplate%29%2Cbonds%3AArray%28BondTemplate%29%2Croot_atom%3AAtomTemplate%2Caliases%3AArray%28String%29%3D%5B%5DofString%2Clink_bond%3ABondTemplate%3F%3Dnil%2Csymmetric_atom_groups%3AArray%28Array%28Tuple%28String%2CString%29%29%29%3F%3Dnil%29-class-method">#</a>
+        <a class="method-permalink" href="#from_residue%28residue%3AResidue%2Cdescription%3AString%3F%3Dnil%2Caliases%3AArray%28String%29%3D%5B%5DofString%2Clink_bond%3ABondTemplate%3F%3Dnil%2Csymmetric_atom_groups%3AArray%28Array%28Tuple%28String%2CString%29%29%29%3F%3Dnil%29%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Creates a new residue template from an existing residue.</p>
+<p>Every atom and bond is converted to a template, which are then
+passed down to the constructor along with the optional arguments.
+Information such as name, code, etc. is obtained from the residue.</p>
+<p>If <em>link_bond</em> is <code>nil</code>, it will be obtained from the associated
+residue template if exists. Otherwise, it will be guessed from the
+connectivity. If the residue is connected to two other residues by
+equivalent bonds, one of them will be chosen. The sense of the link
+bond will be infered from the residue numbering.</p>
+<p>Raises <code><a href="../Chem/Error.html">Error</a></code> if there is missing connectivity (no bonds).</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(name:String,code:Char?,type:ResidueType,description:String?,atoms:Array(AtomTemplate),bonds:Array(BondTemplate),root_atom:String,aliases:Array(String)=[]ofString,link_bond:BondTemplate?=nil,symmetric_atom_groups:Array(Array(Tuple(String,String)))?=nil)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(name : String, code : <a href="../Char.html">Char</a>?, type : <a href="../Chem/ResidueType.html">ResidueType</a>, description : String?, atoms : <a href="../Array.html">Array</a>(<a href="../Chem/AtomTemplate.html">AtomTemplate</a>), bonds : <a href="../Array.html">Array</a>(<a href="../Chem/BondTemplate.html">BondTemplate</a>), root_atom : String, aliases : <a href="../Array.html">Array</a>(String) = <span class="o">[]</span> <span class="k">of</span> <span class="t">String</span>, link_bond : <a href="../Chem/BondTemplate.html">BondTemplate</a>? = <span class="n">nil</span>, symmetric_atom_groups : <a href="../Array.html">Array</a>(<a href="../Array.html">Array</a>(Tuple(String, String)))? = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#new%28name%3AString%2Ccode%3AChar%3F%2Ctype%3AResidueType%2Cdescription%3AString%3F%2Catoms%3AArray%28AtomTemplate%29%2Cbonds%3AArray%28BondTemplate%29%2Croot_atom%3AString%2Caliases%3AArray%28String%29%3D%5B%5DofString%2Clink_bond%3ABondTemplate%3F%3Dnil%2Csymmetric_atom_groups%3AArray%28Array%28Tuple%28String%2CString%29%29%29%3F%3Dnil%29-class-method">#</a>
       </div>
       
       <br/>
@@ -1077,12 +1115,52 @@
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="[](atom_name:String):AtomTemplate-instance-method">
+    <div class="entry-detail" id="[](atom_t:AtomTemplate,other:AtomTemplate):BondTemplate-instance-method">
       <div class="signature">
         
-        def <strong>[]</strong>(atom_name : String) : <a href="../Chem/AtomTemplate.html">AtomTemplate</a>
+        def <strong>[]</strong>(atom_t : <a href="../Chem/AtomTemplate.html">AtomTemplate</a>, other : <a href="../Chem/AtomTemplate.html">AtomTemplate</a>) : <a href="../Chem/BondTemplate.html">BondTemplate</a>
 
-        <a class="method-permalink" href="#%5B%5D%28atom_name%3AString%29%3AAtomTemplate-instance-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%28atom_t%3AAtomTemplate%2Cother%3AAtomTemplate%29%3ABondTemplate-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the bond template between the given atoms. Raises <code>KeyError</code>
+if the bond does not exist.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[](atom_t:String,other:String):BondTemplate-instance-method">
+      <div class="signature">
+        
+        def <strong>[]</strong>(atom_t : String, other : String) : <a href="../Chem/BondTemplate.html">BondTemplate</a>
+
+        <a class="method-permalink" href="#%5B%5D%28atom_t%3AString%2Cother%3AString%29%3ABondTemplate-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the bond template between the given atoms. Raises <code>KeyError</code>
+if the bond does not exist.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[](name:String):AtomTemplate-instance-method">
+      <div class="signature">
+        
+        def <strong>[]</strong>(name : String) : <a href="../Chem/AtomTemplate.html">AtomTemplate</a>
+
+        <a class="method-permalink" href="#%5B%5D%28name%3AString%29%3AAtomTemplate-instance-method">#</a>
       </div>
       
       <br/>
@@ -1091,12 +1169,52 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="[]?(atom_name:String):AtomTemplate?-instance-method">
+    <div class="entry-detail" id="[]?(atom_t:AtomTemplate,other:AtomTemplate):BondTemplate?-instance-method">
       <div class="signature">
         
-        def <strong>[]?</strong>(atom_name : String) : <a href="../Chem/AtomTemplate.html">AtomTemplate</a>?
+        def <strong>[]?</strong>(atom_t : <a href="../Chem/AtomTemplate.html">AtomTemplate</a>, other : <a href="../Chem/AtomTemplate.html">AtomTemplate</a>) : <a href="../Chem/BondTemplate.html">BondTemplate</a>?
 
-        <a class="method-permalink" href="#%5B%5D%3F%28atom_name%3AString%29%3AAtomTemplate%3F-instance-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%3F%28atom_t%3AAtomTemplate%2Cother%3AAtomTemplate%29%3ABondTemplate%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the bond template between the given atoms if exists, else
+<code>nil</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[]?(name:String,other:String):BondTemplate?-instance-method">
+      <div class="signature">
+        
+        def <strong>[]?</strong>(name : String, other : String) : <a href="../Chem/BondTemplate.html">BondTemplate</a>?
+
+        <a class="method-permalink" href="#%5B%5D%3F%28name%3AString%2Cother%3AString%29%3ABondTemplate%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the bond template between the given atoms if exists, else
+<code>nil</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[]?(name:String):AtomTemplate?-instance-method">
+      <div class="signature">
+        
+        def <strong>[]?</strong>(name : String) : <a href="../Chem/AtomTemplate.html">AtomTemplate</a>?
+
+        <a class="method-permalink" href="#%5B%5D%3F%28name%3AString%29%3AAtomTemplate%3F-instance-method">#</a>
       </div>
       
       <br/>
@@ -1119,12 +1237,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="atom_count(*,include_hydrogens:Bool=true)-instance-method">
+    <div class="entry-detail" id="atoms:Array::View(AtomTemplate)-instance-method">
       <div class="signature">
         
-        def <strong>atom_count</strong>(*, include_hydrogens : Bool = <span class="n">true</span>)
+        def <strong>atoms</strong> : Array::View(<a href="../Chem/AtomTemplate.html">AtomTemplate</a>)
 
-        <a class="method-permalink" href="#atom_count%28%2A%2Cinclude_hydrogens%3ABool%3Dtrue%29-instance-method">#</a>
+        <a class="method-permalink" href="#atoms%3AArray%3A%3AView%28AtomTemplate%29-instance-method">#</a>
       </div>
       
       <br/>
@@ -1133,54 +1251,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="atom_names:Array(String)-instance-method">
+    <div class="entry-detail" id="bonds:Array::View(BondTemplate)-instance-method">
       <div class="signature">
         
-        def <strong>atom_names</strong> : <a href="../Array.html">Array</a>(String)
+        def <strong>bonds</strong> : Array::View(<a href="../Chem/BondTemplate.html">BondTemplate</a>)
 
-        <a class="method-permalink" href="#atom_names%3AArray%28String%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="atoms:Array(AtomTemplate)-instance-method">
-      <div class="signature">
-        
-        def <strong>atoms</strong> : <a href="../Array.html">Array</a>(<a href="../Chem/AtomTemplate.html">AtomTemplate</a>)
-
-        <a class="method-permalink" href="#atoms%3AArray%28AtomTemplate%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="bonded_atoms(atom_t:AtomTemplate):Array(AtomTemplate)-instance-method">
-      <div class="signature">
-        
-        def <strong>bonded_atoms</strong>(atom_t : <a href="../Chem/AtomTemplate.html">AtomTemplate</a>) : <a href="../Array.html">Array</a>(<a href="../Chem/AtomTemplate.html">AtomTemplate</a>)
-
-        <a class="method-permalink" href="#bonded_atoms%28atom_t%3AAtomTemplate%29%3AArray%28AtomTemplate%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="bonds:Array(BondTemplate)-instance-method">
-      <div class="signature">
-        
-        def <strong>bonds</strong> : <a href="../Array.html">Array</a>(<a href="../Chem/BondTemplate.html">BondTemplate</a>)
-
-        <a class="method-permalink" href="#bonds%3AArray%28BondTemplate%29-instance-method">#</a>
+        <a class="method-permalink" href="#bonds%3AArray%3A%3AView%28BondTemplate%29-instance-method">#</a>
       </div>
       
       <br/>
@@ -1217,20 +1293,6 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="each_atom_t(&amp;block:AtomTemplate-&gt;)-instance-method">
-      <div class="signature">
-        
-        def <strong>each_atom_t</strong>(&block : <a href="../Chem/AtomTemplate.html">AtomTemplate</a> -> )
-
-        <a class="method-permalink" href="#each_atom_t%28%26block%3AAtomTemplate-%3E%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
     <div class="entry-detail" id="formal_charge:Int32-instance-method">
       <div class="signature">
         
@@ -1238,37 +1300,6 @@
 
         <a class="method-permalink" href="#formal_charge%3AInt32-instance-method">#</a>
       </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="inspect(io:IO):Nil-instance-method">
-      <div class="signature">
-        
-        def <strong>inspect</strong>(io : IO) : Nil
-
-        <a class="method-permalink" href="#inspect%28io%3AIO%29%3ANil-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-            <div class="doc-inherited">
-              Description copied from class Reference
-            </div>
-          
-          <p>Appends a String representation of this object
-which includes its class name, its object address
-and the values of all instance variables.</p>
-<pre><code class="language-crystal"><span class="k">class</span> <span class="t">Person</span>
-  <span class="k">def</span> <span class="m">initialize</span>(@name : <span class="t">String</span>, @age : <span class="t">Int32</span>)
-  <span class="k">end</span>
-<span class="k">end</span>
-
-<span class="t">Person</span>.new(<span class="s">&quot;John&quot;</span>, <span class="n">32</span>).inspect <span class="c"># =&gt; #&lt;Person:0x10fd31f20 @name=&quot;John&quot;, @age=32&gt;</span></code></pre>
-        </div>
       
       <br/>
       <div>
@@ -1290,40 +1321,26 @@ and the values of all instance variables.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="monomer?:Bool-instance-method">
-      <div class="signature">
-        
-        def <strong>monomer?</strong> : Bool
-
-        <a class="method-permalink" href="#monomer%3F%3ABool-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="n_atoms:Int32-instance-method">
-      <div class="signature">
-        
-        def <strong>n_atoms</strong> : Int32
-
-        <a class="method-permalink" href="#n_atoms%3AInt32-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
     <div class="entry-detail" id="name:String-instance-method">
       <div class="signature">
         
         def <strong>name</strong> : String
 
         <a class="method-permalink" href="#name%3AString-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="polymer?:Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>polymer?</strong> : Bool
+
+        <a class="method-permalink" href="#polymer%3F%3ABool-instance-method">#</a>
       </div>
       
       <br/>
@@ -1353,6 +1370,36 @@ and the values of all instance variables.</p>
 
         <a class="method-permalink" href="#symmetric_atom_groups%3AArray%28Array%28Tuple%28String%2CString%29%29%29%3F-instance-method">#</a>
       </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_s(io:IO):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>to_s</strong>(io : IO) : Nil
+
+        <a class="method-permalink" href="#to_s%28io%3AIO%29%3ANil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from class Reference
+            </div>
+          
+          <p>Appends a short String representation of this object
+which includes its class name and its object address.</p>
+<pre><code class="language-crystal"><span class="k">class</span> <span class="t">Person</span>
+  <span class="k">def</span> <span class="m">initialize</span>(@name : <span class="t">String</span>, @age : <span class="t">Int32</span>)
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="t">Person</span>.new(<span class="s">&quot;John&quot;</span>, <span class="n">32</span>).to_s <span class="c"># =&gt; #&lt;Person:0x10a199f20&gt;</span></code></pre>
+        </div>
       
       <br/>
       <div>

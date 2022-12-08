@@ -829,20 +829,6 @@
 
 
 
-  <h2>
-    <a id="included-modules" class="anchor" href="#included-modules">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Included Modules
-  </h2>
-  <ul class="other-types-list">
-    
-      <li class="other-type">Indexable(<a href="../Chem/AtomTemplate.html">Chem::AtomTemplate</a>)</li>
-    
-  </ul>
-
 
 
 
@@ -910,6 +896,11 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#atoms%3ATuple%28AtomTemplate%2CAtomTemplate%29-instance-method" class="signature"><strong>#atoms</strong> : Tuple(AtomTemplate, AtomTemplate)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#double%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#double?</strong>(*args, **options)</a>
         
       </li>
@@ -920,24 +911,12 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#includes%3F%28name%3AString%29%3ABool-instance-method" class="signature"><strong>#includes?</strong>(name : String) : Bool</a>
-        
-      </li>
-    
-      <li class="entry-summary">
         <a href="#includes%3F%28atom_t%3AAtomTemplate%29%3ABool-instance-method" class="signature"><strong>#includes?</strong>(atom_t : AtomTemplate) : Bool</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#inspect%28io%3AIO%29%3ANil-instance-method" class="signature"><strong>#inspect</strong>(io : IO) : Nil</a>
-        
-          <div class="summary"><p>Appends a String representation of this object which includes its class name, its object address and the values of all instance variables.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#inverse%3Aself-instance-method" class="signature"><strong>#inverse</strong> : <span class="k">self</span></a>
+        <a href="#includes%3F%28name%3AString%29%3ABool-instance-method" class="signature"><strong>#includes?</strong>(name : String) : Bool</a>
         
       </li>
     
@@ -957,22 +936,27 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#other%3F%28atom_t%3AAtomTemplate%29%3AAtomTemplate%3F-instance-method" class="signature"><strong>#other?</strong>(atom_t : AtomTemplate) : AtomTemplate?</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#other%3F%28name%3AString%29%3AAtomTemplate%3F-instance-method" class="signature"><strong>#other?</strong>(name : String) : AtomTemplate?</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#reverse%3Aself-instance-method" class="signature"><strong>#reverse</strong> : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#single%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#single?</strong>(*args, **options)</a>
         
       </li>
     
       <li class="entry-summary">
         <a href="#single%3F%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#single?</strong>(*args, **options, &)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#size%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#size</strong>(*args, **options)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#size%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#size</strong>(*args, **options, &)</a>
         
       </li>
     
@@ -994,16 +978,6 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#unsafe_fetch%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#unsafe_fetch</strong>(*args, **options)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#unsafe_fetch%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#unsafe_fetch</strong>(*args, **options, &)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
         <a href="#zero%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#zero?</strong>(*args, **options)</a>
         
       </li>
@@ -1020,50 +994,6 @@
 
 
 <div class="methods-inherited">
-  
-    
-
-
-    
-
-
-    
-
-
-  
-    
-
-  <h3>Instance methods inherited from module <code><a href="../Enumerable.html">Enumerable</a>(<a href="../Chem/AtomTemplate.html">Chem::AtomTemplate</a>)</code></h3>
-  
-  
-    <a href="../Enumerable.html#average%28weights%3AIndexable%28Number%29%29-instance-method" class="tooltip">
-      <span>average(weights : Indexable(Number))<br/>average(weights : Indexable(Number), & : T -> _)</span>
-    average</a>, 
-    
-  
-    <a href="../Enumerable.html#mean-instance-method" class="tooltip">
-      <span>mean<br/>mean(& : T -> _)</span>
-    mean</a>
-    
-  
-
-
-    
-
-
-    
-
-
-  
-    
-
-
-    
-
-
-    
-
-
   
     
 
@@ -1148,6 +1078,20 @@
       </div>
     </div>
   
+    <div class="entry-detail" id="atoms:Tuple(AtomTemplate,AtomTemplate)-instance-method">
+      <div class="signature">
+        
+        def <strong>atoms</strong> : Tuple(<a href="../Chem/AtomTemplate.html">AtomTemplate</a>, <a href="../Chem/AtomTemplate.html">AtomTemplate</a>)
+
+        <a class="method-permalink" href="#atoms%3ATuple%28AtomTemplate%2CAtomTemplate%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="double?(*args,**options)-instance-method">
       <div class="signature">
         
@@ -1176,20 +1120,6 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="includes?(name:String):Bool-instance-method">
-      <div class="signature">
-        
-        def <strong>includes?</strong>(name : String) : Bool
-
-        <a class="method-permalink" href="#includes%3F%28name%3AString%29%3ABool-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
     <div class="entry-detail" id="includes?(atom_t:AtomTemplate):Bool-instance-method">
       <div class="signature">
         
@@ -1204,43 +1134,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="inspect(io:IO):Nil-instance-method">
+    <div class="entry-detail" id="includes?(name:String):Bool-instance-method">
       <div class="signature">
         
-        def <strong>inspect</strong>(io : IO) : Nil
+        def <strong>includes?</strong>(name : String) : Bool
 
-        <a class="method-permalink" href="#inspect%28io%3AIO%29%3ANil-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-            <div class="doc-inherited">
-              Description copied from class Reference
-            </div>
-          
-          <p>Appends a String representation of this object
-which includes its class name, its object address
-and the values of all instance variables.</p>
-<pre><code class="language-crystal"><span class="k">class</span> <span class="t">Person</span>
-  <span class="k">def</span> <span class="m">initialize</span>(@name : <span class="t">String</span>, @age : <span class="t">Int32</span>)
-  <span class="k">end</span>
-<span class="k">end</span>
-
-<span class="t">Person</span>.new(<span class="s">&quot;John&quot;</span>, <span class="n">32</span>).inspect <span class="c"># =&gt; #&lt;Person:0x10fd31f20 @name=&quot;John&quot;, @age=32&gt;</span></code></pre>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="inverse:self-instance-method">
-      <div class="signature">
-        
-        def <strong>inverse</strong> : <span class="k">self</span>
-
-        <a class="method-permalink" href="#inverse%3Aself-instance-method">#</a>
+        <a class="method-permalink" href="#includes%3F%28name%3AString%29%3ABool-instance-method">#</a>
       </div>
       
       <br/>
@@ -1291,6 +1190,48 @@ and the values of all instance variables.</p>
       </div>
     </div>
   
+    <div class="entry-detail" id="other?(atom_t:AtomTemplate):AtomTemplate?-instance-method">
+      <div class="signature">
+        
+        def <strong>other?</strong>(atom_t : <a href="../Chem/AtomTemplate.html">AtomTemplate</a>) : <a href="../Chem/AtomTemplate.html">AtomTemplate</a>?
+
+        <a class="method-permalink" href="#other%3F%28atom_t%3AAtomTemplate%29%3AAtomTemplate%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="other?(name:String):AtomTemplate?-instance-method">
+      <div class="signature">
+        
+        def <strong>other?</strong>(name : String) : <a href="../Chem/AtomTemplate.html">AtomTemplate</a>?
+
+        <a class="method-permalink" href="#other%3F%28name%3AString%29%3AAtomTemplate%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="reverse:self-instance-method">
+      <div class="signature">
+        
+        def <strong>reverse</strong> : <span class="k">self</span>
+
+        <a class="method-permalink" href="#reverse%3Aself-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="single?(*args,**options)-instance-method">
       <div class="signature">
         
@@ -1311,34 +1252,6 @@ and the values of all instance variables.</p>
         def <strong>single?</strong>(*args, **options, &)
 
         <a class="method-permalink" href="#single%3F%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="size(*args,**options)-instance-method">
-      <div class="signature">
-        
-        def <strong>size</strong>(*args, **options)
-
-        <a class="method-permalink" href="#size%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="size(*args,**options,&amp;)-instance-method">
-      <div class="signature">
-        
-        def <strong>size</strong>(*args, **options, &)
-
-        <a class="method-permalink" href="#size%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
       </div>
       
       <br/>
@@ -1397,34 +1310,6 @@ which includes its class name and its object address.</p>
         def <strong>triple?</strong>(*args, **options, &)
 
         <a class="method-permalink" href="#triple%3F%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="unsafe_fetch(*args,**options)-instance-method">
-      <div class="signature">
-        
-        def <strong>unsafe_fetch</strong>(*args, **options)
-
-        <a class="method-permalink" href="#unsafe_fetch%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="unsafe_fetch(*args,**options,&amp;)-instance-method">
-      <div class="signature">
-        
-        def <strong>unsafe_fetch</strong>(*args, **options, &)
-
-        <a class="method-permalink" href="#unsafe_fetch%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
       </div>
       
       <br/>

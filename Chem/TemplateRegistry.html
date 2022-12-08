@@ -837,7 +837,7 @@
   <p>Stores a map of residue templates (see <code><a href="../Chem/ResidueTemplate.html">ResidueTemplate</a></code>).</p>
 <p>It behaves as a hash, where residue templates are indexed (registered)
 by the residue names.</p>
-<p>A global registry can be accessed via the <code><a href="../Chem/TemplateRegistry.html#default%3Aself-class-method">TemplateRegistry.default</a></code>
+<p>A <em>global registry</em> can be accessed via the <code><a href="../Chem/TemplateRegistry.html#default%3Aself-class-method">TemplateRegistry.default</a></code>
 method, which contains the default templates as well as other
 templates that have been globally registered. For instance, the
 topology detection mechanism (see <code><a href="../Chem/Topology/Detector.html">Topology::Detector</a></code>) uses the
@@ -862,7 +862,6 @@ YAML content:</p>
       code: F
       type: protein
       link_bond: C-N
-      root: CA
       spec: &#39;{backbone}-CB-CG%1=CD1-CE1=CZ-CE2=CD2-%1&#39;
       symmetry:
     - [[CD1, CD2], [CE1, CE2]]
@@ -895,7 +894,6 @@ res_t <span class="o">=</span> registry.register <span class="k">do</span>
   code <span class="s">&#39;F&#39;</span>
   <span class="k">type</span> <span class="n">:protein</span>
   link_bond <span class="s">&quot;C-N&quot;</span>
-  root <span class="s">&quot;CA&quot;</span>
   spec <span class="s">&quot;{backbone}-CB-CG%1=CD1-CE1=CZ-CE2=CD2-%1&quot;</span>
   symmetry({<span class="t">CD1</span>, <span class="t">CD2</span>}, {<span class="t">CE1</span>, <span class="t">CE2</span>})
 <span class="k">end</span>
@@ -928,14 +926,11 @@ can also be specified at the top level.</p>
 <p>The following examples are equivalent:</p>
 <pre><code class="language-yaml">templates:
   - name: LFG
-    spec: '[N1H3+]-C2-C3-O4-C5(-C6)=O7'
-    root: C5</code></pre>
+    spec: '[N1H3+]-C2-C3-O4-C5(-C6)=O7'</code></pre>
 <pre><code class="language-yaml">- name: LFG
-  spec: '[N1H3+]-C2-C3-O4-C5(-C6)=O7'
-  root: C5</code></pre>
+  spec: '[N1H3+]-C2-C3-O4-C5(-C6)=O7'</code></pre>
 <pre><code class="language-yaml">name: LFG
-spec: '[N1H3+]-C2-C3-O4-C5(-C6)=O7'
-root: C5</code></pre>
+spec: '[N1H3+]-C2-C3-O4-C5(-C6)=O7'</code></pre>
 <p>The records are transformed into <code><a href="../Chem/ResidueTemplate.html">ResidueTemplate</a></code> instances via the
 <code><a href="../Chem/ResidueTemplate/Builder.html">ResidueTemplate::Builder</a></code> type. Each allowed field correspond to a
 specific method of the builder. The latter dictates the type of data

@@ -992,9 +992,16 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#load_templates%28filepath%3AString%29%3ANil-class-method" class="signature"><strong>.load_templates</strong>(filepath : String) : Nil</a>
+        <a href="#load_template%28filepath%3APath%7CString%29%3ANil-class-method" class="signature"><strong>.load_template</strong>(filepath : Path | String) : Nil</a>
         
-          <div class="summary"><p>Parses and registers the residue templates encoded in the given YAML file into the <em>global registry</em>.</p></div>
+          <div class="summary"><p>Loads and registers the residue template(s) from a structure file or YAML file into the <em>global registry</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#load_templates%28filepath%3APath%7CString%29%3ANil-class-method" class="signature"><strong>.load_templates</strong>(filepath : Path | String) : Nil</a>
+        
+          <div class="summary"><p>Loads and registers the residue template(s) from a structure file or YAML file into the <em>global registry</em>.</p></div>
         
       </li>
     
@@ -1036,19 +1043,50 @@
     Class Method Detail
   </h2>
   
-    <div class="entry-detail" id="load_templates(filepath:String):Nil-class-method">
+    <div class="entry-detail" id="load_template(filepath:Path|String):Nil-class-method">
       <div class="signature">
         
-        def self.<strong>load_templates</strong>(filepath : String) : Nil
+        def self.<strong>load_template</strong>(filepath : Path | String) : Nil
 
-        <a class="method-permalink" href="#load_templates%28filepath%3AString%29%3ANil-class-method">#</a>
+        <a class="method-permalink" href="#load_template%28filepath%3APath%7CString%29%3ANil-class-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Parses and registers the residue templates encoded in the given YAML
-file into the <em>global registry</em>. See <code><a href="Chem/TemplateRegistry.html#default%3Aself-class-method">TemplateRegistry.default</a></code> and
-<code><a href="Chem/TemplateRegistry.html#parse%28io%3AIO%29%3Aself-instance-method">TemplateRegistry#parse</a></code> for details.</p>
+          <p>Loads and registers the residue template(s) from a structure file or
+YAML file into the <em>global registry</em>.</p>
+<p>If a valid structure file (checked via <code><a href="Chem/Format.html#from_filename%3F%28filename%3APath%7CString%29%3Aself%3F-class-method">Format.from_filename?</a></code>) is
+passed, it's read from file and the first residue is transformed into
+a template by calling <code><a href="Chem/ResidueTemplate.html#from_residue%28residue%3AResidue%2Cdescription%3AString%3F%3Dnil%2Caliases%3AArray%28String%29%3D%5B%5DofString%2Clink_bond%3ABondTemplate%3F%3Dnil%2Csymmetric_atom_groups%3AArray%28Array%28Tuple%28String%2CString%29%29%29%3F%3Dnil%29%3Aself-class-method">ResidueTemplate.from_residue</a></code>.</p>
+<p>If a YAML file is passed, it's loaded by calling
+<code><a href="Chem/TemplateRegistry.html#load%28filepath%3APath%7CString%29%3Aself-instance-method">TemplateRegistry#load</a></code>.</p>
+<p>Refer to the <code><a href="Chem/TemplateRegistry.html">TemplateRegistry</a></code> documentation for more information.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="load_templates(filepath:Path|String):Nil-class-method">
+      <div class="signature">
+        
+        def self.<strong>load_templates</strong>(filepath : Path | String) : Nil
+
+        <a class="method-permalink" href="#load_templates%28filepath%3APath%7CString%29%3ANil-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Loads and registers the residue template(s) from a structure file or
+YAML file into the <em>global registry</em>.</p>
+<p>If a valid structure file (checked via <code><a href="Chem/Format.html#from_filename%3F%28filename%3APath%7CString%29%3Aself%3F-class-method">Format.from_filename?</a></code>) is
+passed, it's read from file and the first residue is transformed into
+a template by calling <code><a href="Chem/ResidueTemplate.html#from_residue%28residue%3AResidue%2Cdescription%3AString%3F%3Dnil%2Caliases%3AArray%28String%29%3D%5B%5DofString%2Clink_bond%3ABondTemplate%3F%3Dnil%2Csymmetric_atom_groups%3AArray%28Array%28Tuple%28String%2CString%29%29%29%3F%3Dnil%29%3Aself-class-method">ResidueTemplate.from_residue</a></code>.</p>
+<p>If a YAML file is passed, it's loaded by calling
+<code><a href="Chem/TemplateRegistry.html#load%28filepath%3APath%7CString%29%3Aself-instance-method">TemplateRegistry#load</a></code>.</p>
+<p>Refer to the <code><a href="Chem/TemplateRegistry.html">TemplateRegistry</a></code> documentation for more information.</p>
         </div>
       
       <br/>
@@ -1068,8 +1106,8 @@ file into the <em>global registry</em>. See <code><a href="Chem/TemplateRegistry
         <div class="doc">
           
           <p>Parses and registers the residue templates encoded in the given YAML
-content into the <em>global registry</em>. See <code><a href="Chem/TemplateRegistry.html#default%3Aself-class-method">TemplateRegistry.default</a></code> and
-<code><a href="Chem/TemplateRegistry.html#parse%28io%3AIO%29%3Aself-instance-method">TemplateRegistry#parse</a></code> for details.</p>
+content into the <em>global registry</em>. Refer to the <code><a href="Chem/TemplateRegistry.html">TemplateRegistry</a></code>
+documentation and <code><a href="Chem/TemplateRegistry.html#parse%28io%3AIO%29%3Aself-instance-method">TemplateRegistry#parse</a></code> for details.</p>
         </div>
       
       <br/>
@@ -1089,8 +1127,8 @@ content into the <em>global registry</em>. See <code><a href="Chem/TemplateRegis
         <div class="doc">
           
           <p>Registers an aliases to a known residue template into the <em>global
-registry</em>. See <code><a href="Chem/TemplateRegistry.html#default%3Aself-class-method">TemplateRegistry.default</a></code> and <code><a href="Chem/TemplateRegistry.html#alias%28new_name%3AString%2Ctoexisting_name%3AString%29%3Aself-instance-method">TemplateRegistry#alias</a></code>
-for details.</p>
+registry</em>. Refer to the <code><a href="Chem/TemplateRegistry.html">TemplateRegistry</a></code> documentation and
+<code><a href="Chem/TemplateRegistry.html#alias%28new_name%3AString%2Ctoexisting_name%3AString%29%3Aself-instance-method">TemplateRegistry#alias</a></code> for details.</p>
         </div>
       
       <br/>

@@ -1480,9 +1480,9 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#match%3F%28atom_t%3AAtomTemplate%29%3ABool-instance-method" class="signature"><strong>#match?</strong>(atom_t : AtomTemplate) : Bool</a>
+        <a href="#matches%3F%28atom_t%3AAtomTemplate%29%3ABool-instance-method" class="signature"><strong>#matches?</strong>(atom_t : AtomTemplate) : Bool</a>
         
-          <div class="summary"><p>Matches <em>self</em> against <em>atom_t</em>.</p></div>
+          <div class="summary"><p>Returns <code>true</code> if the atom matches the given template, else <code>false</code>.</p></div>
         
       </li>
     
@@ -2221,7 +2221,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       
         <div class="doc">
           
-          <p>Case equality. This is equivalent to <code><a href="../Chem/Atom.html#match%3F%28atom_t%3AAtomTemplate%29%3ABool-instance-method">#match?</a></code>.</p>
+          <p>Case equality. This is equivalent to <code><a href="../Chem/Atom.html#matches%3F%28atom_t%3AAtomTemplate%29%3ABool-instance-method">#matches?</a></code>.</p>
 <pre><code class="language-crystal">structure <span class="o">=</span> <span class="t">Structure</span>.read <span class="s">&quot;peptide.pdb&quot;</span>
 desc <span class="o">=</span> <span class="k">case</span> structure.dig(<span class="s">&#39;A&#39;</span>, <span class="n">5</span>, <span class="s">&quot;CA&quot;</span>)
        <span class="k">when</span> <span class="t">AtomTemplate</span>(<span class="s">&quot;C&quot;</span>)  <span class="k">then</span> <span class="s">&quot;carbonyl carbon&quot;</span>
@@ -3864,17 +3864,18 @@ residue, else <code>false</code>.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="match?(atom_t:AtomTemplate):Bool-instance-method">
+    <div class="entry-detail" id="matches?(atom_t:AtomTemplate):Bool-instance-method">
       <div class="signature">
         
-        def <strong>match?</strong>(atom_t : <a href="../Chem/AtomTemplate.html">AtomTemplate</a>) : Bool
+        def <strong>matches?</strong>(atom_t : <a href="../Chem/AtomTemplate.html">AtomTemplate</a>) : Bool
 
-        <a class="method-permalink" href="#match%3F%28atom_t%3AAtomTemplate%29%3ABool-instance-method">#</a>
+        <a class="method-permalink" href="#matches%3F%28atom_t%3AAtomTemplate%29%3ABool-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Matches <em>self</em> against <em>atom_t</em>.</p>
+          <p>Returns <code>true</code> if the atom matches the given template, else
+<code>false</code>.</p>
 <p>Checking for a match considers both atom name and element.</p>
 <pre><code class="language-crystal">atom <span class="o">=</span> <span class="t">Structure</span>.read(<span class="s">&quot;peptide.pdb&quot;</span>).dig <span class="s">&#39;A&#39;</span>, <span class="n">1</span>, <span class="s">&quot;CA&quot;</span>
 atom.match?(<span class="t">AtomTemplate</span>.new(<span class="s">&quot;CA&quot;</span>))               <span class="c"># =&gt; true</span>
