@@ -324,7 +324,7 @@ end
 #
 # If a valid structure file (checked via `Format.from_filename?`) is
 # passed, it's read from file and the first residue is transformed into
-# a template by calling `ResidueTemplate.from_residue`.
+# a template by calling `ResidueTemplate.new`.
 #
 # If a YAML file is passed, it's loaded by calling
 # `TemplateRegistry#load`.
@@ -338,7 +338,7 @@ end
 def Chem.load_templates(filepath : Path | String) : Nil
   if Chem::Format.from_filename?(filepath) # valid structure file
     structure = Chem::Structure.read filepath
-    res_t = Chem::ResidueTemplate.from_residue structure.residues[0]
+    res_t = Chem::ResidueTemplate.new structure.residues[0]
     Chem::TemplateRegistry.default << res_t
   else
     Chem::TemplateRegistry.default.load filepath

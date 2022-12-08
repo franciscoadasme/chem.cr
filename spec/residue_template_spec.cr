@@ -14,12 +14,10 @@ describe Chem::ResidueTemplate do
           root_atom: "X"
       end
     end
-  end
 
-  describe ".from_residue" do
     it "creates a template from a residue" do
       residue = load_file("naphthalene.mol2").residues[0]
-      res_t = Chem::ResidueTemplate.from_residue residue
+      res_t = Chem::ResidueTemplate.new residue
       res_t.name.should eq residue.name
       res_t.code.should eq residue.code
       res_t.type.should eq residue.type
@@ -43,7 +41,7 @@ describe Chem::ResidueTemplate do
     it "guesses link bond from connectivity" do
       residue = load_file("hlx_phe--theta-90.000--c-26.10.pdb").residues[0]
       residue.name = "UNK" # force link bond guessing (no template)
-      res_t = Chem::ResidueTemplate.from_residue residue
+      res_t = Chem::ResidueTemplate.new residue
       link_bond = res_t.link_bond.should_not be_nil
       link_bond.should eq Chem::BondTemplate.new(res_t["C"], res_t["N"])
       link_bond.atoms.map(&.name).to_a.should eq %w(C N) # ensure order
@@ -51,7 +49,7 @@ describe Chem::ResidueTemplate do
 
     it "does not find a link bond for an isolated molecule" do
       residue = load_file("benzene.mol2").residues[0]
-      res_t = Chem::ResidueTemplate.from_residue residue
+      res_t = Chem::ResidueTemplate.new residue
       res_t.link_bond.should be_nil
     end
 
@@ -61,7 +59,7 @@ describe Chem::ResidueTemplate do
       end
       expect_raises(Chem::Error,
         "Cannot create template from A:UNK1 due to missing connectivity") do
-        Chem::ResidueTemplate.from_residue structure.residues[0]
+        Chem::ResidueTemplate.new structure.residues[0]
       end
     end
 
@@ -73,13 +71,13 @@ describe Chem::ResidueTemplate do
       end
       expect_raises Chem::Error,
         %q(Duplicate atom name "CX1" found in <Residue A:GHY1>) do
-        Chem::ResidueTemplate.from_residue structure.residues[0]
+        Chem::ResidueTemplate.new structure.residues[0]
       end
     end
 
     it "guesses root to be the most complex atom" do
       structure = Chem::Structure.from_mol2 "spec/data/mol2/dmpe.mol2"
-      res_t = Chem::ResidueTemplate.from_residue structure.residues[0]
+      res_t = Chem::ResidueTemplate.new structure.residues[0]
       res_t.root_atom.name.should eq "P"
     end
   end
