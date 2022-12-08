@@ -308,20 +308,21 @@ class Chem::Topology
       # TODO: cache valences and missing valences in a hash to avoid
       # computing the valence each cycle
       hybridization_map = guess_hybridization
-      atoms.select { |atom| hybridization_map[atom]? }
-        .sort_by { |atom| {atom.missing_valence, atom.serial} }
+      atoms.select { |atom|
+        atom.valence < (atom.max_valence || Int32::MAX) && hybridization_map[atom]?
+      }
+        .to_a
+        .sort_by! { |atom| {-atom.degree, -atom.missing_valence, atom.serial} }
         .each do |atom|
+          next unless atom.valence < (atom.max_valence || Int32::MAX)
           missing_valence = atom.missing_valence
-          next if missing_valence == 0
           atom.bonded_atoms
             .select! do |other|
-              hybridization_map[other]? == hybridization_map[atom] && (
-                other.missing_valence > 0 ||
-                  other.valence < (other.element.max_valence || Int32::MAX)
-              )
+              hybridization_map[other]? == hybridization_map[atom]? &&
+                other.missing_valence > 0
             end
             .sort_by! do |other|
-              {-missing_valence, Spatial.distance2(atom, other)}
+              {-other.missing_valence, Spatial.distance2(atom, other)}
             end
             .each do |other|
               case hybridization_map[other]
@@ -523,10 +524,8 @@ class Chem::Topology
   private def guess_hybridization : Hash(Atom, Int32)
     hybridation_map = Hash(Atom, Int32).new
     # atoms with multiple connectivity first, terminal (single-bonded) atoms last
-    atoms.sort_by(&.degree.-).each do |atom|
+    atoms.select(&.heavy?).to_a.sort_by!(&.degree.-).each do |atom|
       case atom.degree
-      when 0
-        next
       when 1
         other = atom.bonded_atoms[0]
         if hb = hybridation_map[other]? # terminal atom (other have multiple bonds)
@@ -535,7 +534,7 @@ class Chem::Topology
           missing_valence = Math.min atom.missing_valence, other.missing_valence
           hybridation_map[atom] = 4 - missing_valence.clamp(1..3)
         end
-      else
+      when 2..
         avg_bond_angle = atom.bonded_atoms.combinations(2).mean do |(b, c)|
           if cell = @structure.cell
             Spatial.angle cell, b, atom, c

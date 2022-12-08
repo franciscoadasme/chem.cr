@@ -448,6 +448,19 @@ describe Chem::Topology do
       structure.dig('A', 5, "C").bonds[structure.dig('A', 5, "O")].order.should eq 2
       structure.dig('B', 5, "C").bonds[structure.dig('B', 5, "O")].order.should eq 2
     end
+
+    it "increases bond order of multi-valent atoms first" do
+      structure = load_file("dmpe.xyz")
+      structure.topology.guess_bonds
+      structure.topology.guess_formal_charges
+      structure.to_pdb "/mnt/d/guessed.pdb"
+      structure.bonds.select(&.double?)
+        .map(&.atoms.map(&.name).to_a)
+        .should eq [%w(P1 O1), %w(C5 O6), %w(C8 O8)]
+      structure.atoms.reject(&.formal_charge.zero?)
+        .to_h { |atom| {atom.name, atom.formal_charge} }
+        .should eq({"N1" => 1, "O2" => -1})
+    end
   end
 
   describe "#guess_names" do
