@@ -887,6 +887,25 @@
 
 
 
+  <h2>
+    <a id="class-method-summary" class="anchor" href="#class-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#guess_root%28atoms%3AArray%28AtomTemplate%29%2Cbonds%3AArray%28BondTemplate%29%2Clink_bond%3ABondTemplate%3F%29%3AString-class-method" class="signature"><strong>.guess_root</strong>(atoms : Array(AtomTemplate), bonds : Array(BondTemplate), link_bond : BondTemplate?) : String</a>
+        
+          <div class="summary"><p>Returns the atom with the highest bonding complexity.</p></div>
+        
+      </li>
+    
+  </ul>
+
 
 
   <h2>
@@ -1015,6 +1034,44 @@
   
 
 
+
+  <h2>
+    <a id="class-method-detail" class="anchor" href="#class-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="guess_root(atoms:Array(AtomTemplate),bonds:Array(BondTemplate),link_bond:BondTemplate?):String-class-method">
+      <div class="signature">
+        
+        def self.<strong>guess_root</strong>(atoms : <a href="../../Array.html">Array</a>(<a href="../../Chem/AtomTemplate.html">AtomTemplate</a>), bonds : <a href="../../Array.html">Array</a>(<a href="../../Chem/BondTemplate.html">BondTemplate</a>), link_bond : <a href="../../Chem/BondTemplate.html">BondTemplate</a>?) : String
+
+        <a class="method-permalink" href="#guess_root%28atoms%3AArray%28AtomTemplate%29%2Cbonds%3AArray%28BondTemplate%29%2Clink_bond%3ABondTemplate%3F%29%3AString-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the atom with the highest bonding complexity.</p>
+<p>The bonding complexity of an atom depends on the nature of the atom,
+the bonds, and the bonds of its neighbors.</p>
+<p>First, carbon atoms are the most frequent so they have the lowest
+complexity (0), followed by non-carbon atoms (+1), and then
+non-organic (not CHON) atoms (+2). Hydrogen atoms are ignored.</p>
+<p>The complexity is further increased by the number of bonds with
+other heavy atoms, i.e., bonds X-H are ignored.</p>
+<p>The total complexity of an atom is computed as the sum of its
+complexity and the complexities of the bonded atoms.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
 
 
 
