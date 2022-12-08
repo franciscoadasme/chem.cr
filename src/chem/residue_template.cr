@@ -66,7 +66,7 @@ class Chem::ResidueTemplate
     symmetric_atom_groups : Array(Array(Tuple(String, String)))? = nil
   ) : self
     atoms = residue.atoms.map do |atom|
-      AtomTemplate.new(atom.name, atom.element, atom.valence, atom.formal_charge)
+      AtomTemplate.new(atom.name, atom.element, atom.formal_charge, atom.valence)
     end
     atom_table = atoms.index_by &.name
     bonds = residue.bonds.map do |bond|
