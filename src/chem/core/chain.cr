@@ -165,6 +165,24 @@ module Chem
       reset_cache
     end
 
+    # Returns the chain specification.
+    #
+    # Chain specification is a short string representation encoding
+    # chain information including the id.
+    def spec : String
+      String.build do |io|
+        spec io
+      end
+    end
+
+    # Writes the chain specification to the given IO.
+    #
+    # Chain specification is a short string representation encoding
+    # chain information including the id.
+    def spec(io : IO) : Nil
+      io << @id
+    end
+
     # Copies `self` into *top*
     # It calls `#copy_to` on each residue, which in turn calls `Atom#copy_to`.
     #

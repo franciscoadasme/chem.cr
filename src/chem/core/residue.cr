@@ -651,7 +651,7 @@ class Chem::Residue
   # residue information including chain, name, number, and insertion
   # code.
   def spec(io : IO) : Nil
-    io << chain.id
+    chain.spec io
     io << ':'
     io << @name
     io << @number

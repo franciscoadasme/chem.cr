@@ -48,4 +48,16 @@ describe Chem::Chain do
       )
     end
   end
+
+  describe "#spec" do
+    it "returns the chain specification" do
+      fake_structure.dig('A').spec.should eq "A"
+    end
+
+    it "writes the chain specification" do
+      io = IO::Memory.new
+      fake_structure.dig('B').spec io
+      io.to_s.should eq "B"
+    end
+  end
 end
