@@ -75,6 +75,15 @@ describe Chem::TemplateRegistry do
     end
   end
 
+  describe "#load" do
+    it "loads a template from structure file" do
+      registry = Chem::TemplateRegistry.new.load spec_file("benzene.mol2")
+      registry["BEN"].atoms
+        .select(&.element.heavy?)
+        .map(&.name).should eq %w(C1 C2 C3 C4 C5 C6)
+    end
+  end
+
   describe "#parse" do
     it "parses residue templates from YAML content" do
       content = <<-YAML

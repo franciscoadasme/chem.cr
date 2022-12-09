@@ -220,17 +220,30 @@ class Chem::TemplateRegistry
     end
   end
 
-  # Parses and registers the residue templates encoded in the given YAML
-  # file. See `#parse` for more details.
+  # Loads the residue template(s) encoded in the given YAML or structure
+  # file into the registry.
+  #
+  # If a valid structure file (checked via `Format.from_filename?`) is
+  # passed, it's read into a `Structure` instance, and the first residue
+  # is transformed into a template by calling `ResidueTemplate.new`.
+  #
+  # Otherwise, the content of the YAML file is parsed by calling
+  # `TemplateRegistry#parse`.
   def load(filepath : Path | String) : self
-    File.open(filepath) do |io|
-      parse io
+    if Format.from_filename?(filepath) # valid structure file
+      structure = Structure.read filepath
+      res_t = ResidueTemplate.new structure.residues[0]
+      self << res_t
+    else
+      File.open(filepath) do |io|
+        parse io
+      end
     end
   end
 
-  # Parses and registers the residue templates encoded in the given YAML
-  # content. Refer to the [Format specification](#format-specification)
-  # section above.
+  # Parses the residue templates encoded in the given YAML content into
+  # the registry. Refer to the [Format
+  # specification](#format-specification) section above.
   #
   # Validation on template data is handled by
   # `ResidueTemplate::Builder`, which may raise `Error`.
@@ -322,27 +335,15 @@ end
 # Loads and registers the residue template(s) from a structure file or
 # YAML file into the _global registry_.
 #
-# If a valid structure file (checked via `Format.from_filename?`) is
-# passed, it's read from file and the first residue is transformed into
-# a template by calling `ResidueTemplate.new`.
-#
-# If a YAML file is passed, it's loaded by calling
-# `TemplateRegistry#load`.
-#
-# Refer to the `TemplateRegistry` documentation for more information.
+# Refer to the `TemplateRegistry` documentation and
+# `TemplateRegistry#load` for more information.
 def Chem.load_template(filepath : Path | String) : Nil
   load_templates filepath
 end
 
 # :ditto:
 def Chem.load_templates(filepath : Path | String) : Nil
-  if Chem::Format.from_filename?(filepath) # valid structure file
-    structure = Chem::Structure.read filepath
-    res_t = Chem::ResidueTemplate.new structure.residues[0]
-    Chem::TemplateRegistry.default << res_t
-  else
-    Chem::TemplateRegistry.default.load filepath
-  end
+  Chem::TemplateRegistry.default.load filepath
 end
 
 # Parses and registers the residue templates encoded in the given YAML
