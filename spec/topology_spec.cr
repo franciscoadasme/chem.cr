@@ -453,7 +453,6 @@ describe Chem::Topology do
       structure = load_file("dmpe.xyz")
       structure.topology.guess_bonds
       structure.topology.guess_formal_charges
-      structure.to_pdb "/mnt/d/guessed.pdb"
       structure.bonds.select(&.double?)
         .map(&.atoms.map(&.name).to_a)
         .should eq [%w(P1 O1), %w(C5 O6), %w(C8 O8)]
