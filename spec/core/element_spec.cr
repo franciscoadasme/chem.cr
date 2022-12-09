@@ -13,9 +13,9 @@ describe Chem::Element do
     ele.valence.should eq 4
   end
 
-  describe "#inspect" do
-    it "returns a delimited string representation" do
-      Chem::PeriodicTable::Br.inspect.should eq "<Element Br(35)>"
+  describe "#to_s" do
+    it "returns a string representation" do
+      Chem::PeriodicTable::Br.to_s.should eq "<Element Br>"
     end
   end
 

@@ -26,10 +26,6 @@ class Chem::Element
     !hydrogen?
   end
 
-  def inspect(io : IO) : Nil
-    io << "<Element " << @symbol << '(' << @atomic_number << ")>"
-  end
-
   def max_valence : Int32?
     case valence = @valence
     in Int32, Nil then valence
@@ -92,6 +88,10 @@ class Chem::Element
     in Nil
       [] of Int32
     end
+  end
+
+  def to_s(io : IO) : Nil
+    io << '<' << {{@type.name.split("::").last}} << ' ' << @symbol << '>'
   end
 
   macro finished
