@@ -1069,21 +1069,21 @@ syntax, e.g., '{backbone}-CB-OH'.</p>
       <li class="entry-summary">
         <a href="#load%28filepath%3APath%7CString%29%3Aself-instance-method" class="signature"><strong>#load</strong>(filepath : Path | String) : <span class="k">self</span></a>
         
-          <div class="summary"><p>Parses and registers the residue templates encoded in the given YAML file.</p></div>
+          <div class="summary"><p>Loads the residue template(s) encoded in the given YAML or structure file into the registry.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#parse%28io%3AIO%29%3Aself-instance-method" class="signature"><strong>#parse</strong>(io : IO) : <span class="k">self</span></a>
         
-          <div class="summary"><p>Parses and registers the residue templates encoded in the given YAML content.</p></div>
+          <div class="summary"><p>Parses the residue templates encoded in the given YAML content into the registry.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#parse%28content%3AString%29%3Aself-instance-method" class="signature"><strong>#parse</strong>(content : String) : <span class="k">self</span></a>
         
-          <div class="summary"><p>Parses and registers the residue templates encoded in the given YAML content.</p></div>
+          <div class="summary"><p>Parses the residue templates encoded in the given YAML content into the registry.</p></div>
         
       </li>
     
@@ -1374,8 +1374,13 @@ match.</p>
       
         <div class="doc">
           
-          <p>Parses and registers the residue templates encoded in the given YAML
-file. See <code><a href="../Chem/TemplateRegistry.html#parse%28io%3AIO%29%3Aself-instance-method">#parse</a></code> for more details.</p>
+          <p>Loads the residue template(s) encoded in the given YAML or structure
+file into the registry.</p>
+<p>If a valid structure file (checked via <code><a href="../Chem/Format.html#from_filename%3F%28filename%3APath%7CString%29%3Aself%3F-class-method">Format.from_filename?</a></code>) is
+passed, it's read into a <code><a href="../Chem/Structure.html">Structure</a></code> instance, and the first residue
+is transformed into a template by calling <code><a href="../Chem/ResidueTemplate.html#build%28%26%29%3Aself-class-method">ResidueTemplate.build</a></code>.</p>
+<p>Otherwise, the content of the YAML file is parsed by calling
+<code><a href="../Chem/TemplateRegistry.html#parse%28io%3AIO%29%3Aself-instance-method">TemplateRegistry#parse</a></code>.</p>
         </div>
       
       <br/>
@@ -1394,9 +1399,9 @@ file. See <code><a href="../Chem/TemplateRegistry.html#parse%28io%3AIO%29%3Aself
       
         <div class="doc">
           
-          <p>Parses and registers the residue templates encoded in the given YAML
-content. Refer to the <a href="#format-specification">Format specification</a>
-section above.</p>
+          <p>Parses the residue templates encoded in the given YAML content into
+the registry. Refer to the <a href="#format-specification">Format
+specification</a> section above.</p>
 <p>Validation on template data is handled by
 <code><a href="../Chem/ResidueTemplate/Builder.html">ResidueTemplate::Builder</a></code>, which may raise <code><a href="../Chem/Error.html">Error</a></code>.</p>
         </div>
@@ -1417,9 +1422,9 @@ section above.</p>
       
         <div class="doc">
           
-          <p>Parses and registers the residue templates encoded in the given YAML
-content. Refer to the <a href="#format-specification">Format specification</a>
-section above.</p>
+          <p>Parses the residue templates encoded in the given YAML content into
+the registry. Refer to the <a href="#format-specification">Format
+specification</a> section above.</p>
 <p>Validation on template data is handled by
 <code><a href="../Chem/ResidueTemplate/Builder.html">ResidueTemplate::Builder</a></code>, which may raise <code><a href="../Chem/Error.html">Error</a></code>.</p>
         </div>
