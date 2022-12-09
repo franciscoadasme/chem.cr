@@ -597,4 +597,16 @@ describe Chem::Residue do
       structure.dig('A', 2181).water?.should be_true  # water
     end
   end
+
+  describe "#spec" do
+    it "returns the residue specification" do
+      fake_structure.dig('A', 2).spec.should eq "A:PHE2"
+    end
+
+    it "writes the residue specification" do
+      io = IO::Memory.new
+      fake_structure.dig('B', 1).spec io
+      io.to_s.should eq "B:SER1"
+    end
+  end
 end

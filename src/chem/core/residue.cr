@@ -640,12 +640,32 @@ class Chem::Residue
     {phi, psi}
   end
 
-  def to_s(io : IO)
+  # Returns the residue specification.
+  #
+  # Residue specification is a short string representation encoding
+  # residue information including chain, name, number, and insertion
+  # code.
+  def spec : String
+    String.build do |io|
+      spec io
+    end
+  end
+
+  # Writes the residue specification to the given IO.
+  #
+  # Residue specification is a short string representation encoding
+  # residue information including chain, name, number, and insertion
+  # code.
+  def spec(io : IO) : Nil
     io << chain.id
     io << ':'
     io << @name
     io << @number
     io << @insertion_code
+  end
+
+  def to_s(io : IO)
+    spec io
   end
 
   def trans? : Bool
