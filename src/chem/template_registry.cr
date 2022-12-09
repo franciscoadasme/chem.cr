@@ -190,8 +190,7 @@ class Chem::TemplateRegistry
   #
   # Raises `Error` if any of the residue names already exists.
   def <<(res_t : ResidueTemplate) : self
-    # FIXME: Implement res_t.names
-    ([res_t.name] + res_t.aliases).each do |name|
+    res_t.names.each do |name|
       raise Error.new("#{name} residue template already exists") if @table.has_key?(name)
       @table[name] = res_t
     end
@@ -215,7 +214,7 @@ class Chem::TemplateRegistry
   # match.
   def includes?(res_t : ResidueTemplate) : Bool
     # FIXME: Implement res_t.names
-    ([res_t.name] + res_t.aliases).any? do |name|
+    res_t.names.any? do |name|
       self[name]? == res_t
     end
   end

@@ -5,8 +5,7 @@ class Chem::ResidueTemplate
   @atom_table : Hash(String, AtomTemplate)
   @bonds : Array(BondTemplate)
 
-  getter name : String
-  getter aliases : Array(String)
+  getter names : Array(String)
   getter type : ResidueType
   getter link_bond : BondTemplate?
   getter description : String?
@@ -15,17 +14,17 @@ class Chem::ResidueTemplate
   getter symmetric_atom_groups : Array(Array(Tuple(String, String)))?
 
   def initialize(
-    @name : String,
+    @names : Array(String),
     @code : Char?,
     @type : ResidueType,
     @description : String?,
     @atoms : Array(AtomTemplate),
     @bonds : Array(BondTemplate),
     root root_name : String,
-    @aliases : Array(String) = [] of String,
     @link_bond : BondTemplate? = nil,
     @symmetric_atom_groups : Array(Array(Tuple(String, String)))? = nil
   )
+    raise ArgumentError.new("Empty residue template names") if names.empty?
     @atom_table = @atoms.index_by &.name
     if atom_t = @atom_table[root_name]?
       @root = atom_t
@@ -67,7 +66,6 @@ class Chem::ResidueTemplate
   def self.build(
     residue : Residue,
     description : String? = nil,
-    aliases : Array(String) = [] of String,
     link_bond : BondTemplate? = nil,
     symmetric_atom_groups : Array(Array(Tuple(String, String)))? = nil
   ) : self
@@ -92,14 +90,13 @@ class Chem::ResidueTemplate
       link_bond = BondTemplate.new *atom_templates, bond.order
     end
 
-    new residue.name,
+    new [residue.name],
       residue.code,
       residue.type,
       description,
       atoms,
       bonds,
       Builder.guess_root(atoms, bonds, link_bond),
-      aliases,
       link_bond,
       symmetric_atom_groups
   end
@@ -158,12 +155,17 @@ class Chem::ResidueTemplate
     @atoms.sum &.formal_charge
   end
 
+  # Returns the designated residue name.
+  def name : String
+    @names.first
+  end
+
   def polymer? : Bool
     !!link_bond
   end
 
   def to_s(io : IO) : Nil
-    io << '<' << {{@type.name.split("::").last}} << ' ' << @name
+    io << '<' << {{@type.name.split("::").last}} << ' ' << name
     io << '(' << @code << ')' if @code
     io << ' ' << @type.to_s.downcase unless @type.other?
     io << '>'

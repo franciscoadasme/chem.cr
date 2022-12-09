@@ -5,7 +5,7 @@ describe Chem::ResidueTemplate do
     it "raises if duplicate names" do
       expect_raises Chem::Error,
         %q(Duplicate atom name "X" found in <ResidueTemplate VYX>) do
-        Chem::ResidueTemplate.new "VYX",
+        Chem::ResidueTemplate.new ["VYX"],
           code: nil,
           type: :other,
           description: nil,
@@ -18,12 +18,11 @@ describe Chem::ResidueTemplate do
     it "creates a template from a residue" do
       residue = load_file("naphthalene.mol2").residues[0]
       res_t = Chem::ResidueTemplate.build residue
-      res_t.name.should eq residue.name
+      res_t.names.should eq [residue.name]
       res_t.code.should eq residue.code
       res_t.type.should eq residue.type
       res_t.description.should be_nil
       res_t.root.name.should eq "C4"
-      res_t.aliases.should be_empty
       res_t.link_bond.should be_nil
       res_t.symmetric_atom_groups.should be_nil
 

@@ -97,9 +97,8 @@ class Chem::ResidueTemplate::Builder
                   self.class.guess_root(atoms, bond_ts, link_bond)
                 end
 
-    ResidueTemplate.new @names.first, @code, @type, @description,
-      atoms, bond_ts, root_name,
-      @names[1..], link_bond, @symmetric_atom_groups
+    ResidueTemplate.new @names, @code, @type, @description,
+      atoms, bond_ts, root_name, link_bond, @symmetric_atom_groups
   end
 
   def code(char : Char) : self

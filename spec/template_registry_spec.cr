@@ -103,8 +103,7 @@ describe Chem::TemplateRegistry do
       templates = Chem::TemplateRegistry.new.parse(content).to_a
       templates.size.should eq 1
       res_t = templates[0]?.should_not be_nil
-      res_t.name.should eq "PHE"
-      res_t.aliases.should eq %w(PHY)
+      res_t.names.should eq %w(PHE PHY)
       res_t.type.protein?.should be_true
       res_t.link_bond.to_s.should eq "<BondTemplate C-N>"
       res_t.description.should eq "Phenylalanine"
