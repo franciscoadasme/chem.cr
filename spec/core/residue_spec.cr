@@ -372,14 +372,22 @@ describe Chem::Residue do
     end
   end
 
-  describe "#inspect" do
+  describe "#to_s" do
     it "returns a delimited string representation" do
       top = Chem::Topology.new
       chain = Chem::Chain.new top, 'A'
-      Chem::Residue.new(chain, 1, "TYR").inspect.should eq "<Residue A:TYR1>"
-      Chem::Residue.new(chain, 234, "ARG").inspect.should eq "<Residue A:ARG234>"
+      Chem::Residue.new(chain, 1, "TYR").to_s.should eq "<Residue A:TYR1>"
+      Chem::Residue.new(chain, 234, "ARG").to_s.should eq "<Residue A:ARG234>"
       chain = Chem::Chain.new top, 'B'
-      Chem::Residue.new(chain, 7453, "ALA").inspect.should eq "<Residue B:ALA7453>"
+      Chem::Residue.new(chain, 7453, "ALA").to_s.should eq "<Residue B:ALA7453>"
+    end
+
+    it "includes insertion code" do
+      residues = load_file("insertion_codes.pdb").residues
+      residues[0].to_s.should eq "<Residue A:TRP75>"
+      residues[1].to_s.should eq "<Residue A:GLY75A>"
+      residues[2].to_s.should eq "<Residue A:SER75B>"
+      residues[-1].to_s.should eq "<Residue A:VAL76>"
     end
   end
 
@@ -417,7 +425,7 @@ describe Chem::Residue do
 
   describe "#succ" do
     it "raises if no succeeding residue" do
-      expect_raises(Chem::Error, "No residue follows A:ASN46") do
+      expect_raises(Chem::Error, "No residue follows <Residue A:ASN46>") do
         load_file("1crn.pdb").residues[-1].succ
       end
     end
@@ -444,7 +452,7 @@ describe Chem::Residue do
 
     it "fails when residue is at the start" do
       st = fake_structure
-      expect_raises Chem::Error, "A:ASP1 is terminal" do
+      expect_raises Chem::Error, "<Residue A:ASP1> is terminal" do
         st.residues[0].omega
       end
     end
@@ -480,7 +488,7 @@ describe Chem::Residue do
 
     it "fails when residue is at the start" do
       st = fake_structure
-      expect_raises Chem::Error, "A:ASP1 is terminal" do
+      expect_raises Chem::Error, "<Residue A:ASP1> is terminal" do
         st.residues[0].phi
       end
     end
@@ -510,7 +518,7 @@ describe Chem::Residue do
 
   describe "#pred" do
     it "raises if no preceding residue" do
-      expect_raises(Chem::Error, "No residue precedes A:THR1") do
+      expect_raises(Chem::Error, "No residue precedes <Residue A:THR1>") do
         load_file("1crn.pdb").residues[0].pred
       end
     end
@@ -537,7 +545,7 @@ describe Chem::Residue do
 
     it "fails when residue is at the start" do
       st = fake_structure
-      expect_raises Chem::Error, "A:PHE2 is terminal" do
+      expect_raises Chem::Error, "<Residue A:PHE2> is terminal" do
         st.residues[1].psi
       end
     end
@@ -576,16 +584,6 @@ describe Chem::Residue do
 
     it "returns false when residue is at the start" do
       load_file("cis-trans.pdb").residues[0].trans?.should be_false
-    end
-  end
-
-  describe "#to_s" do
-    it "returns a string representation" do
-      residues = load_file("insertion_codes.pdb").residues
-      residues[0].to_s.should eq "A:TRP75"
-      residues[1].to_s.should eq "A:GLY75A"
-      residues[2].to_s.should eq "A:SER75B"
-      residues[-1].to_s.should eq "A:VAL76"
     end
   end
 

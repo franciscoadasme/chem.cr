@@ -77,7 +77,7 @@ class Chem::ResidueTemplate
     atom_table = atoms.index_by &.name
     if atom_table.size < atoms.size
       name, _ = atoms.map(&.name).tally.max_by(&.[1])
-      raise Error.new("Duplicate atom name #{name.inspect} found in #{residue.inspect}")
+      raise Error.new("Duplicate atom name #{name.inspect} found in #{residue}")
     end
 
     bonds = residue.bonds.map do |bond|

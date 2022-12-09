@@ -177,7 +177,7 @@ module Chem
     # Atom specification is a short string representation encoding atom
     # information including chain, residue, atom name, and atom number.
     def spec(io : IO) : Nil
-      io << @residue
+      @residue.spec io
       io << ':' << @name << '(' << @serial << ')'
     end
 
@@ -190,7 +190,7 @@ module Chem
     def to_s(io : IO)
       io << '<' << {{@type.name.split("::").last}} << ' '
       spec io
-      io << ">"
+      io << '>'
     end
 
     # Returns the effective valence. This is equivalent to the sum of
