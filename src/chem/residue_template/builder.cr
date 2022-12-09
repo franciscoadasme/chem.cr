@@ -5,7 +5,7 @@ class Chem::ResidueTemplate::Builder
   @type : ResidueType = :other
   @link_bond : Tuple(String, String, BondOrder)?
   @names = [] of String
-  @root_atom : String?
+  @root_name : String?
   @symmetric_atom_groups = [] of Array(Tuple(String, String))
   @spec_parser : SpecParser?
 
@@ -89,7 +89,7 @@ class Chem::ResidueTemplate::Builder
       BondTemplate.new(atom_t_map[lhs], atom_t_map[rhs], order)
     end
 
-    root_atom = if atom_name = @root_atom
+    root_name = if atom_name = @root_name
                   atom_name
                 elsif @type.protein?
                   "CA"
@@ -98,7 +98,7 @@ class Chem::ResidueTemplate::Builder
                 end
 
     ResidueTemplate.new @names.first, @code, @type, @description,
-      atoms, bond_ts, root_atom,
+      atoms, bond_ts, root_name,
       @names[1..], link_bond, @symmetric_atom_groups
   end
 
@@ -202,7 +202,7 @@ class Chem::ResidueTemplate::Builder
 
   def root(atom_name : String) : self
     check_atom atom_name
-    @root_atom = atom_name
+    @root_name = atom_name
     self
   end
 

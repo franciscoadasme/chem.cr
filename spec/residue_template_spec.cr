@@ -11,7 +11,7 @@ describe Chem::ResidueTemplate do
           description: nil,
           atoms: [Chem::AtomTemplate.new("X", "C"), Chem::AtomTemplate.new("X", "O")],
           bonds: [] of Chem::BondTemplate,
-          root_atom: "X"
+          root: "X"
       end
     end
 
@@ -22,7 +22,7 @@ describe Chem::ResidueTemplate do
       res_t.code.should eq residue.code
       res_t.type.should eq residue.type
       res_t.description.should be_nil
-      res_t.root_atom.name.should eq "C4"
+      res_t.root.name.should eq "C4"
       res_t.aliases.should be_empty
       res_t.link_bond.should be_nil
       res_t.symmetric_atom_groups.should be_nil
@@ -78,7 +78,7 @@ describe Chem::ResidueTemplate do
     it "guesses root to be the most complex atom" do
       structure = Chem::Structure.from_mol2 "spec/data/mol2/dmpe.mol2"
       res_t = Chem::ResidueTemplate.build structure.residues[0]
-      res_t.root_atom.name.should eq "P"
+      res_t.root.name.should eq "P"
     end
   end
 

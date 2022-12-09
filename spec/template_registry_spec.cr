@@ -108,7 +108,7 @@ describe Chem::TemplateRegistry do
       res_t.type.protein?.should be_true
       res_t.link_bond.to_s.should eq "<BondTemplate C-N>"
       res_t.description.should eq "Phenylalanine"
-      res_t.root_atom.name.should eq "CA"
+      res_t.root.name.should eq "CA"
       res_t.code.should eq 'F'
       res_t.symmetric_atom_groups.should eq [[{"CD1", "CD2"}, {"CE1", "CE2"}]]
       res_t.atoms.size.should eq 20
@@ -122,7 +122,7 @@ describe Chem::TemplateRegistry do
           root: O2
         YAML
       res_t = registry["LFG"].should_not be_nil
-      res_t.root_atom.name.should eq "O2"
+      res_t.root.name.should eq "O2"
     end
 
     it "parses top-level templates" do

@@ -186,7 +186,7 @@ describe Chem::ResidueTemplate::Builder do
 
     res_t.atoms.map(&.name).should eq ["C1", "H11", "H12", "C2", "H21", "H22"]
     res_t.bonds.size.should eq 5
-    res_t.root_atom.should eq res_t["C2"]
+    res_t.root.should eq res_t["C2"]
   end
 
   it "builds a residue with numbered atoms per element" do
@@ -329,7 +329,7 @@ describe Chem::ResidueTemplate::Builder do
       name "TRP"
       spec "{backbone}-CB-CG%1=CD1-NE1-CE2(-CZ2=CH2-CZ3=CE3-CD2%2)=%2-%1"
     end
-    res_t.root_atom.should eq res_t["CE2"]
+    res_t.root.should eq res_t["CE2"]
 
     res_t = build_template do
       name "DMPE"
@@ -337,7 +337,7 @@ describe Chem::ResidueTemplate::Builder do
             (-C16-O3-C17(-O4)-C18-C19-C20-C21-C22-C23-C24-C25-C26-C27\
             -C28-C29-C30)-C31-O5-P1(=O6)(=O7)-O8-C32-C33-N1"
     end
-    res_t.root_atom.should eq res_t["P1"]
+    res_t.root.should eq res_t["P1"]
   end
 
   it "does not generate duplicate atoms" do

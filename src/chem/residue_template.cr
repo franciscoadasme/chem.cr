@@ -10,7 +10,7 @@ class Chem::ResidueTemplate
   getter type : ResidueType
   getter link_bond : BondTemplate?
   getter description : String?
-  getter root_atom : AtomTemplate
+  getter root : AtomTemplate
   getter code : Char?
   getter symmetric_atom_groups : Array(Array(Tuple(String, String)))?
 
@@ -21,16 +21,16 @@ class Chem::ResidueTemplate
     @description : String?,
     @atoms : Array(AtomTemplate),
     @bonds : Array(BondTemplate),
-    root_atom : String,
+    root root_name : String,
     @aliases : Array(String) = [] of String,
     @link_bond : BondTemplate? = nil,
     @symmetric_atom_groups : Array(Array(Tuple(String, String)))? = nil
   )
     @atom_table = @atoms.index_by &.name
-    if atom = @atom_table[root_atom]?
-      @root_atom = atom
+    if atom_t = @atom_table[root_name]?
+      @root = atom_t
     else
-      raise KeyError.new("Atom #{root_atom.inspect} not found in #{self}")
+      raise KeyError.new("Atom #{root_name.inspect} not found in #{self}")
     end
 
     if @atom_table.size < atoms.size # atom_table includes unique names only
