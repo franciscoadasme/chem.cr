@@ -22,9 +22,9 @@ describe Chem::Chain do
     end
   end
 
-  describe "#inspect" do
-    it "returns a delimited string representation" do
-      Chem::Chain.new(Chem::Topology.new, 'K').inspect.should eq "<Chain K>"
+  describe "#to_s" do
+    it "returns a string representation" do
+      Chem::Chain.new(Chem::Topology.new, 'K').to_s.should eq "<Chain K>"
     end
   end
 

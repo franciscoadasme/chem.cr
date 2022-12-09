@@ -119,10 +119,6 @@ module Chem
       end
     end
 
-    def inspect(io : IO) : Nil
-      io << "<Chain " << @id << '>'
-    end
-
     def polymer? : Bool
       @residues.any? &.polymer?
     end
@@ -181,6 +177,12 @@ module Chem
     # chain information including the id.
     def spec(io : IO) : Nil
       io << @id
+    end
+
+    def to_s(io : IO)
+      io << '<' << {{@type.name.split("::").last}} << ' '
+      spec io
+      io << '>'
     end
 
     # Copies `self` into *top*
