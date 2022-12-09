@@ -171,18 +171,13 @@ class Chem::ResidueTemplate::Builder
   end
 
   def link_adjacent_by(bond_spec : String) : self
-    lhs, bond_str, rhs = bond_spec.partition(/[-=#]/)
-    raise ParseException.new("Invalid bond") if bond_str.empty? || rhs.empty?
-    check_atom(lhs)
-    check_atom(rhs)
-    raise ParseException.new("Atom #{lhs} cannot be bonded to itself") if lhs == rhs
-    bond_order = case bond_str
-                 when "-" then BondOrder::Single
-                 when "=" then BondOrder::Double
-                 when "#" then BondOrder::Triple
-                 else          ::raise "BUG: unreachable"
-                 end
-    @link_bond = {lhs, rhs, bond_order}
+    parser = SpecParser.new(bond_spec)
+    parser.parse
+    if bond_r = parser.bonds[0]?
+      @link_bond = {bond_r.lhs, bond_r.rhs, bond_r.order}
+    else
+      raise ParseException.new("Invalid link bond specification #{bond_spec.inspect}")
+    end
     self
   end
 

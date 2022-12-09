@@ -269,7 +269,7 @@ describe Chem::ResidueTemplate::Builder do
   end
 
   it "raises if the link bond specifies the same atom" do
-    expect_raises Chem::Error, "Atom O1 cannot be bonded to itself" do
+    expect_raises Chem::ParseException, "Duplicate atom O1" do
       build_template do
         name "O2"
         spec "O1=O2"
