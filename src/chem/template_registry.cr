@@ -225,14 +225,14 @@ class Chem::TemplateRegistry
   #
   # If a valid structure file (checked via `Format.from_filename?`) is
   # passed, it's read into a `Structure` instance, and the first residue
-  # is transformed into a template by calling `ResidueTemplate.new`.
+  # is transformed into a template by calling `ResidueTemplate.build`.
   #
   # Otherwise, the content of the YAML file is parsed by calling
   # `TemplateRegistry#parse`.
   def load(filepath : Path | String) : self
     if Format.from_filename?(filepath) # valid structure file
       structure = Structure.read filepath
-      res_t = ResidueTemplate.new structure.residues[0]
+      res_t = ResidueTemplate.build structure.residues[0]
       self << res_t
     else
       File.open(filepath) do |io|

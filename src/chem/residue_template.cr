@@ -64,7 +64,7 @@ class Chem::ResidueTemplate
   # bond will be infered from the residue numbering.
   #
   # Raises `Error` if there is missing connectivity (no bonds).
-  def self.new(
+  def self.build(
     residue : Residue,
     description : String? = nil,
     aliases : Array(String) = [] of String,
