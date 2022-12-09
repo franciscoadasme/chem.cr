@@ -168,6 +168,25 @@ module Chem
       new_res << self
     end
 
+    # Returns the atom specification.
+    #
+    # Atom specification is a short string representation encoding atom
+    # information including chain, residue, atom name, and atom number.
+    def spec : String
+      String.build do |io|
+        spec io
+      end
+    end
+
+    # Writes the atom specification to the given IO.
+    #
+    # Atom specification is a short string representation encoding atom
+    # information including chain, residue, atom name, and atom number.
+    def spec(io : IO) : Nil
+      io << @residue
+      io << ':' << @name << '(' << @serial << ')'
+    end
+
     # Returns the target valence based on the effective valence. This is
     # useful for multi-valent elements (e.g., sulfur, phosphorus).
     def target_valence : Int32
@@ -175,8 +194,7 @@ module Chem
     end
 
     def to_s(io : IO)
-      io << @residue
-      io << ':' << @name << '(' << @serial << ')'
+      spec io
     end
 
     # Returns the effective valence. This is equivalent to the sum of

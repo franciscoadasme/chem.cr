@@ -136,6 +136,18 @@ describe Chem::Atom do
     end
   end
 
+  describe "#spec" do
+    it "returns the atom specification" do
+      fake_structure.dig('A', 1, "CA").spec.should eq "A:ASP1:CA(2)"
+    end
+
+    it "writes the atom specification" do
+      io = IO::Memory.new
+      fake_structure.dig('B', 1, "OG").spec io
+      io.to_s.should eq "B:SER1:OG(25)"
+    end
+  end
+
   describe "#target_valence" do
     it "returns target valence (no bonds)" do
       structure = Chem::Structure.build do
