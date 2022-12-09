@@ -42,7 +42,7 @@ module Chem
 
     def inspect(io : IO) : Nil
       io << self.class.name << '{'
-      @atoms.join io, ", ", &.inspect(io)
+      @atoms.join io, ", ", &.to_s(io)
       io << '}'
     end
 
@@ -53,7 +53,7 @@ module Chem
 
     def to_s(io : IO) : Nil
       io << self.class.name << '{'
-      @atoms.join io, ", ", &.to_s(io)
+      @atoms.join io, ", ", &.spec(io)
       io << '}'
     end
   end
@@ -138,7 +138,11 @@ module Chem
     end
 
     def inspect(io : IO) : Nil
-      io << "<Bond " << @atoms[0] << @order.to_char << @atoms[1] << '>'
+      io << "<Bond "
+      @atoms[0].spec io
+      io << @order.to_char
+      @atoms[1].spec io
+      io << '>'
     end
 
     # Returns `true` if the bond matches the given template, else

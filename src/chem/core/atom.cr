@@ -137,12 +137,6 @@ module Chem
       @residue.het?
     end
 
-    def inspect(io : IO)
-      io << "<Atom "
-      to_s io
-      io << ">"
-    end
-
     # Returns `true` if the atom matches the given template, else
     # `false`.
     #
@@ -194,7 +188,9 @@ module Chem
     end
 
     def to_s(io : IO)
+      io << '<' << {{@type.name.split("::").last}} << ' '
       spec io
+      io << ">"
     end
 
     # Returns the effective valence. This is equivalent to the sum of

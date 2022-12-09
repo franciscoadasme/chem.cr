@@ -69,7 +69,7 @@ describe Chem::Bond do
     end
 
     it "fails when the bond does not include the given atom" do
-      expect_raises Chem::Error, "Bond doesn't include A:PHE2:N(9)" do
+      expect_raises Chem::Error, "Bond doesn't include <Atom A:PHE2:N(9)>" do
         Chem::Bond.new(glu_cd, glu_oe1).other glu_oe2
       end
     end
