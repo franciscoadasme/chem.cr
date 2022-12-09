@@ -261,7 +261,7 @@ private class HydrogenNameGenerator
   # single hydrogen is being added.
   def next_for(atom_t : Chem::AtomTemplate, index : Int32?) : String
     non_carbon = !atom_t.element.carbon?
-    if suffix = atom_t.suffix.presence
+    if suffix = atom_t.suffix
       suffix = "#{suffix}#{index.try(&.succ)}"
       name = try "H#{suffix}"
       name ||= try "H#{atom_t.element.symbol}H#{suffix}" if non_carbon

@@ -13,8 +13,8 @@ class Chem::AtomTemplate
     @valence = valence || @element.valence
   end
 
-  def suffix : String
-    name[@element.symbol.size..]
+  def suffix : String?
+    name[@element.symbol.size..].presence
   end
 
   def to_s(io : IO)
