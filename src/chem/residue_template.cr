@@ -29,7 +29,7 @@ class Chem::ResidueTemplate
     if atom_t = @atom_table[root_name]?
       @root = atom_t
     else
-      raise KeyError.new("Atom #{root_name.inspect} not found in #{self}")
+      unknown_atom(root_name)
     end
 
     if @atom_table.size < atoms.size # atom_table includes unique names only
@@ -40,6 +40,16 @@ class Chem::ResidueTemplate
     @link_bond.try do |link_bond|
       if link_bond.atoms.any? { |atom_t| atom_t != self[atom_t.name] }
         raise Error.new("Incompatible link bond #{link_bond} with #{self}")
+      end
+    end
+
+    @symmetric_atom_groups.try do |groups|
+      groups.each do |pairs|
+        pairs.each do |pair|
+          pair.each do |name|
+            unknown_atom(name) unless @atom_table[name]?
+          end
+        end
       end
     end
   end
@@ -104,25 +114,16 @@ class Chem::ResidueTemplate
   # Returns the bond template between the given atoms. Raises `KeyError`
   # if the bond does not exist.
   def [](atom_t : AtomTemplate, other : AtomTemplate) : BondTemplate
-    if bond_t = self[name, other]?
-      bond_t
-    else
-      raise KeyError.new("Bond between #{atom_t} and #{other} not found in #{self}")
-    end
+    self[name, other]? || unknown_bond(atom_t, other)
   end
 
   # :ditto:
-  def [](atom_t : String, other : String) : BondTemplate
-    if bond_t = self[atom_t, other]?
-      bond_t
-    else
-      raise KeyError.new("Bond between #{atom_t.inspect} and #{other.inspect} \
-                            not found in #{self}")
-    end
+  def [](name : String, other : String) : BondTemplate
+    self[name, other]? || unknown_bond(name, other)
   end
 
   def [](name : String) : AtomTemplate
-    self[name]? || raise KeyError.new("Atom #{name.inspect} not found in #{self}")
+    self[name]? || unknown_atom(name)
   end
 
   # Returns the bond template between the given atoms if exists, else
@@ -169,6 +170,19 @@ class Chem::ResidueTemplate
     io << '(' << @code << ')' if @code
     io << ' ' << @type.to_s.downcase unless @type.other?
     io << '>'
+  end
+
+  private def unknown_atom(name : String) : Nil
+    raise KeyError.new("Atom #{name.inspect} not found in #{self}")
+  end
+
+  private def unknown_bond(name : String, other : String) : Nil
+    raise KeyError.new("Bond between #{name.inspect} and #{other.inspect} \
+                        not found in #{self}")
+  end
+
+  private def unknown_bond(atom_t : AtomTemplate, other : AtomTemplate) : Nil
+    raise KeyError.new("Bond between #{atom_t} and #{other} not found in #{self}")
   end
 end
 
