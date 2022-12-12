@@ -159,7 +159,7 @@ describe Chem::Spatial::Quat do
     it "returns the 3x3 matrix" do
       q = Chem::Spatial::Quat.euler(-157, 17, -83)
       vec = vec3(1, 2, 3)
-      (q.to_mat3 * vec).should be_close (q * vec), 1e-15
+      (q.to_mat3 * vec).should be_close (q * vec), 1e-14
     end
   end
 
