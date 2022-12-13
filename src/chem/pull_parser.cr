@@ -426,8 +426,24 @@ module Chem
     # Yields the current token and returns the parsed value. Raises
     # `ParseException` with the given message if no token is set or the
     # block returns `nil`.
-    def parse(message : String, & : String -> T?) : T? forall T
+    def parse(
+      message : String = "Could not parse %{token} at %{loc_with_file}",
+      & : String -> T?
+    ) : T forall T
       parse? { |str| yield str } || error(message)
+    end
+
+    # Yields the current token if set and returns the parsed value.
+    # Raises `ParseException` with the given message if the block
+    # returns `nil`.
+    def parse_if_present(
+      message : String = "Could not parse %{token} at %{loc_with_file}",
+      default : _ = nil,
+      & : String -> _
+    )
+      parse? do |str|
+        (yield str) || error(message)
+      end || default
     end
 
     # Yields the current token if set and returns the parsed value.

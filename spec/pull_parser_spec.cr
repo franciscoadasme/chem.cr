@@ -738,6 +738,47 @@ describe Chem::PullParser do
     end
   end
 
+  describe "#parse_if_present" do
+    it "parses current token" do
+      pull = parser_for(" 0 1")
+      pull.next_line
+      pull.at?(2, 2)
+      pull.parse_if_present("Invalid option %{token}", &.to_i?).should eq 1
+    end
+
+    it "raises if invalid value" do
+      pull = parser_for(" 0 a")
+      pull.next_line
+      pull.at?(2, 2)
+      expect_raises(Chem::ParseException, %q(Could not parse " a" at 1:3)) do
+        pull.parse_if_present &.to_i?
+      end
+    end
+
+    it "raises with message if invalid value" do
+      pull = parser_for(" 0 a")
+      pull.next_line
+      pull.at?(2, 2)
+      expect_raises(Chem::ParseException, %q(Invalid value " a")) do
+        pull.parse_if_present "Invalid value %{token}", &.to_i?
+      end
+    end
+
+    it "returns nil if empty" do
+      pull = parser_for(" 0 1")
+      pull.next_line
+      pull.at?(4, 2)
+      pull.parse_if_present(&.to_i?).should be_nil
+    end
+
+    it "returns default value if empty" do
+      pull = parser_for(" 0 1")
+      pull.next_line
+      pull.at?(4, 2)
+      pull.parse_if_present(default: 'K', &.to_i?).should eq 'K'
+    end
+  end
+
   describe "#str" do
     it "raises if current token is not set" do
       expect_raises(Chem::ParseException, "Empty token") do
