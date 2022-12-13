@@ -70,9 +70,6 @@ module Chem
   # pull.at(100, 5)   # raises ParseException
   # ```
   class PullParser
-    # TODO: Add message to raising methods int, str, etc. to override
-    # default error
-    # TODO: Add placeholder for value %{value} => str.inspect
     @buffer : Bytes = Bytes.empty
     @line : String?
     @line_number = 0
@@ -82,27 +79,34 @@ module Chem
     def initialize(@io : IO); end
 
     # Sets the cursor to the character at *index* in the current line.
-    # Raises `ParseException` if *index* is out of bounds.
-    def at(index : Int) : self
-      at index, 1
+    # Raises `ParseException` with the given message if *index* is out
+    # of bounds.
+    def at(index : Int,
+           message : String = "Cursor out of current line") : self
+      at index, 1, message
     end
 
     # Sets the cursor at *start* spanning *count* or less (if there
     # aren't enough) characters in the current line. Raises
-    # `ParseException` if *start* is out of bounds.
-    def at(start : Int, count : Int) : self
-      set_cursor(start, count) { error("Cursor out of current line") }
+    # `ParseException` with the given message if *start* is out of
+    # bounds.
+    def at(start : Int,
+           count : Int,
+           message : String = "Cursor out of current line") : self
+      set_cursor(start, count) { error(message) }
       self
     end
 
     # Sets the cursor at *range* in the current line. Raises
-    # `ParseException` if *range* is out of bounds.
-    def at(range : Range) : self
+    # `ParseException` with the given message if *range* is out of
+    # bounds.
+    def at(range : Range,
+           message : String = "Cursor out of current line") : self
       bytesize = @line.try(&.bytesize) || 0
       if index_and_count = Indexable.range_to_index_and_count(range, bytesize)
-        at(*index_and_count)
+        at(*index_and_count, message)
       else
-        raise error("Cursor out of current line")
+        raise error(message)
       end
     end
 
@@ -132,9 +136,9 @@ module Chem
     end
 
     # Returns the first character of the curren token. Raises
-    # `ParseException` if the token is not set.
-    def char : Char
-      char? || error("Empty token")
+    # `ParseException` with the message if the token is not set.
+    def char(message : String = "Empty token") : Char
+      char? || error(message)
     end
 
     # Returns the first character of the curren token, or `nil` if it is
@@ -217,10 +221,10 @@ module Chem
     end
 
     # Parses and returns the floating-point number represented by the
-    # current token. Raises `ParseException` if the token is not set or
-    # it is not a valid float representation.
-    def float : Float64
-      float? || error("Invalid real number")
+    # current token. Raises `ParseException` with the given message if
+    # the token is not set or it is not a valid float representation.
+    def float(message : String = "Invalid real number") : Float64
+      float? || error(message)
     end
 
     # Parses and returns the floating-point number represented by the
@@ -256,10 +260,10 @@ module Chem
     end
 
     # Parses and returns the integer represented by the current token.
-    # Raises `ParseException` if the token is not set or it is not a
-    # valid number.
-    def int : Int32
-      int? || error("Invalid integer")
+    # Raises `ParseException` with the given message if the token is not
+    # set or it is not a valid number.
+    def int(message : String = "Invalid integer") : Int32
+      int? || error(message)
     end
 
     # Parses and returns the integer represented by the current token.
@@ -317,7 +321,7 @@ module Chem
 
     # Returns the current line starting at the current token if set. An
     # empty string is returned at the end of line. Raises
-    # `ParseException` at end of file.
+    # `ParseException` with the given message at end of file.
     #
     # ```
     # pull = PullParser.new IO::Memory.new("123 456\n789\n")
@@ -331,14 +335,14 @@ module Chem
     # # token is "456", returns line starting at "456"
     # pull.line # => "456"
     # ```
-    def line : String
+    def line(message : String = "End of file") : String
       if @line
         line = String.new(@buffer)
         @buffer = Bytes.empty
         @token_size = 0
         line
       else
-        error("End of file")
+        error(message)
       end
     end
 
@@ -362,6 +366,15 @@ module Chem
       def next_{{suffix.id}} : {{type}}
         next_token
         {{method.id}}
+      end
+
+      # Reads the next token in the current line, and interprets it via
+      # `#{{method.id}}`, which raises `ParseException` with the given
+      # message at the end of line or if the token is an invalid
+      # representation.
+      def next_{{suffix.id}}(message : String) : {{type}}
+        next_token
+        {{method.id}} message
       end
 
       # Reads the next token in the current line, and interprets it via
@@ -423,10 +436,10 @@ module Chem
       self
     end
 
-    # Returns the current token as a string. Raises `ParseException` if
-    # the token is not set.
-    def str : String
-      str? || error("Empty token")
+    # Returns the current token as a string. Raises `ParseException`
+    # with the given message if the token is not set.
+    def str(message : String = "Empty token") : String
+      str? || error(message)
     end
 
     # Returns the current token as a string, or `nil` if it is not set.

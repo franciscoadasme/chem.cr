@@ -75,6 +75,12 @@ describe Chem::PullParser do
         parser_for("123").char
       end
     end
+
+    it "raises with message" do
+      expect_raises(Chem::ParseException, "Letter not found") do
+        parser_for("123").char "Letter not found"
+      end
+    end
   end
 
   describe "#char?" do
@@ -220,9 +226,9 @@ describe Chem::PullParser do
     end
 
     it "raises with placeholders" do
-        pull = parser_for "KEY=VALUE"
-        pull.next_line
-        pull.at(0, 3)
+      pull = parser_for "KEY=VALUE"
+      pull.next_line
+      pull.at(0, 3)
 
       expect_raises(Chem::ParseException, %q(Invalid key "KEY")) do
         pull.error "Invalid key %{token}"
@@ -285,6 +291,14 @@ describe Chem::PullParser do
         pull.next_line
         while pull.next_token; end
         pull.float
+      end
+    end
+
+    it "raises with message" do
+      pull = parser_for "abc def"
+      pull.next_line
+      expect_raises(Chem::ParseException, %q{Expected a number, got "def"}) do
+        pull.at(4, 3).float("Expected a number, got %{token}")
       end
     end
 
@@ -375,6 +389,15 @@ describe Chem::PullParser do
       end
     end
 
+    it "raises with message" do
+      pull = parser_for "2.3451"
+      pull.next_line
+      pull.next_token
+      expect_raises(Chem::ParseException, %q{Expected an integer, got "2.3451"}) do
+        pull.int("Expected an integer, got %{token}")
+      end
+    end
+
     describe "with default" do
       it "returns it if blank" do
         pull = parser_for "abc   def\n"
@@ -461,6 +484,15 @@ describe Chem::PullParser do
         pull.line
       end
     end
+
+    it "raises with message" do
+      pull = parser_for "abc def\n"
+      pull.next_line
+      pull.next_line
+      expect_raises(Chem::ParseException, "Expected config line") do
+        pull.line("Expected config line")
+      end
+    end
   end
 
   describe "#next_line" do
@@ -512,6 +544,14 @@ describe Chem::PullParser do
         pull.next_f
       end
     end
+
+    it "raises with message" do
+      pull = parser_for "abc def"
+      pull.next_line
+      expect_raises(Chem::ParseException, "Expected charge") do
+        pull.next_f("Expected charge")
+      end
+    end
   end
 
   describe "#next_f?" do
@@ -557,6 +597,14 @@ describe Chem::PullParser do
         pull.next_i
       end
     end
+
+    it "raises with message" do
+      pull = parser_for "abc def\n"
+      pull.next_line
+      expect_raises(Chem::ParseException, %(Expected count, got "abc")) do
+        pull.next_i("Expected count, got %{token}")
+      end
+    end
   end
 
   describe "#next_i?" do
@@ -600,6 +648,15 @@ describe Chem::PullParser do
       while pull.next_line; end
       expect_raises(Chem::ParseException, "Empty token") do
         pull.next_s
+      end
+    end
+
+    it "raises with message" do
+      pull = parser_for "abc def\n"
+      pull.next_line
+      pull.line
+      expect_raises(Chem::ParseException, "Missing type format") do
+        pull.next_s "Missing type format"
       end
     end
   end
@@ -677,6 +734,15 @@ describe Chem::PullParser do
         pull = parser_for("123 456\n789\n")
         pull.next_line
         pull.str
+      end
+    end
+
+    it "raises with message" do
+      pull = parser_for "abc def\n"
+      pull.next_line
+      pull.line
+      expect_raises(Chem::ParseException, "Expected element at the end of line") do
+        pull.str "Expected element at the end of line"
       end
     end
   end
