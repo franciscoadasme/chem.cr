@@ -218,6 +218,15 @@ describe Chem::PullParser do
       ex.line.should eq "abc def"
       ex.location.should eq({1, 7, 0})
     end
+
+    it "raises with placeholders" do
+      expect_raises(Chem::ParseException, %q(Invalid key "KEY")) do
+        pull = parser_for "KEY=VALUE"
+        pull.next_line
+        pull.at(0, 3)
+        pull.error "Invalid key %{token}"
+      end
+    end
   end
 
   describe "#float" do

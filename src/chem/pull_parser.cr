@@ -70,6 +70,9 @@ module Chem
   # pull.at(100, 5)   # raises ParseException
   # ```
   class PullParser
+    # TODO: Add message to raising methods int, str, etc. to override
+    # default error
+    # TODO: Add placeholder for value %{value} => str.inspect
     @buffer : Bytes = Bytes.empty
     @line : String?
     @line_number = 0
@@ -196,9 +199,12 @@ module Chem
 
     # Raises `ParseException` with the given message. The exception will
     # hold the location of the current line and token if set.
+    #
+    # The current token is accessible via the named substitution
+    # `%{token}`.
     def error(message : String) : NoReturn
       raise ParseException.new(
-        message,
+        message % {token: str?.try(&.inspect)},
         (io = @io).is_a?(File) ? io.path : nil,
         @line || "",
         location
