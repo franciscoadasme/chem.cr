@@ -706,22 +706,35 @@ describe Chem::PullParser do
     end
   end
 
-  describe "#parse" do
+  describe "#parse?" do
     it "yields the current token and returns the parsed value" do
       pull = parser_for("123 456\n789\n")
       pull.next_line
       pull.next_token
-      pull.parse { |bytes| bytes.sum(&.-('0'.ord)) }.should eq 6
+      pull.parse? { |str| str.chars.sum(&.to_i) }.should eq 6
     end
 
     it "returns nil at beginning of line" do
-      parser_for("123 456\n789\n").parse { Math::PI }.should be_nil
+      parser_for("123 456\n789\n").parse? { Math::PI }.should be_nil
     end
 
     it "returns nil at end of line" do
       pull = parser_for("123 456\n789\n")
       while pull.next_token; end
-      pull.parse { Math::PI }.should be_nil
+      pull.parse? { Math::PI }.should be_nil
+    end
+  end
+
+  describe "#parse" do
+    it "yields the current token and returns the parsed value" do
+      pull = parser_for("x = baz")
+      pull.next_line
+      pull.next_token
+      expect_raises(Chem::ParseException, %q(Invalid option "x")) do
+        pull.parse("Invalid option %{token}") do |str|
+          %w(foo bar).find &.==(str)
+        end
+      end
     end
   end
 

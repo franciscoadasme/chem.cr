@@ -243,7 +243,7 @@ module Chem
     # current token, or `nil` if the token is not set or it is not a
     # valid float representation.
     def float? : Float64?
-      parse do |bytes|
+      internal_parse do |bytes|
         endptr = bytes.to_unsafe + bytes.size
         # set endptr's position to zero so strtod does not read beyond it
         old_value = endptr.value
@@ -281,7 +281,7 @@ module Chem
     # Parses and returns the integer represented by the current token,
     # or `nil` if the token is not set or it is not a valid number.
     def int? : Int32?
-      parse do |bytes|
+      internal_parse do |bytes|
         ptr = bytes.to_unsafe
         endptr = ptr + bytes.size
 
@@ -423,10 +423,17 @@ module Chem
       current_token
     end
 
+    # Yields the current token and returns the parsed value. Raises
+    # `ParseException` with the given message if no token is set or the
+    # block returns `nil`.
+    def parse(message : String, & : String -> T?) : T? forall T
+      parse? { |str| yield str } || error(message)
+    end
+
     # Yields the current token if set and returns the parsed value.
-    def parse(& : Bytes -> T?) : T? forall T
-      if token = current_token
-        yield token
+    def parse?(& : String -> T?) : T? forall T
+      internal_parse do |bytes|
+        yield String.new(bytes)
       end
     end
 
@@ -444,7 +451,7 @@ module Chem
 
     # Returns the current token as a string, or `nil` if it is not set.
     def str? : String?
-      parse do |bytes|
+      internal_parse do |bytes|
         String.new(bytes)
       end
     end
@@ -459,6 +466,13 @@ module Chem
       return {@line_number, 0, 0} unless line = @line
       column_number = @buffer.empty? ? line.bytesize : @buffer.to_unsafe - line.to_unsafe
       {@line_number, column_number.to_i, @token_size.to_i}
+    end
+
+    # Yields the current token if set and returns the parsed value.
+    def internal_parse(& : Bytes -> T?) : T? forall T
+      if token = current_token
+        yield token
+      end
     end
 
     # Sets the cursor to *size* or less characters starting at *offset*.

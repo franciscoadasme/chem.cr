@@ -287,16 +287,11 @@ module Chem::PDB
     end
 
     private def seqnum_at(start : Int, size : Int) : Int32
-      value = @pull.at(start, size).parse do |bytes|
-        Hybrid36.decode? String.new(bytes)
-      end
-      value || @pull.error("Invalid sequence number")
+      seqnum_at?(start, size) || @pull.error("Invalid sequence number")
     end
 
     private def seqnum_at?(start : Int, size : Int) : Int32?
-      @pull.at?(start, size).parse do |bytes|
-        Hybrid36.decode?(String.new(bytes)) || @pull.error("Invalid sequence number")
-      end
+      @pull.at?(start, size).parse? { |str| Hybrid36.decode?(str) }
     end
 
     private struct AlternateLocation
