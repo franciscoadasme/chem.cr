@@ -203,12 +203,17 @@ module Chem
     # The current token is accessible via the named substitution
     # `%{token}`.
     def error(message : String) : NoReturn
-      raise ParseException.new(
-        message % {token: str?.try(&.inspect)},
-        (io = @io).is_a?(File) ? io.path : nil,
-        @line || "",
-        location
-      )
+      filepath = (io = @io).is_a?(File) ? io.path : nil
+      loc = location
+
+      loc_str = "#{loc[0]}:#{loc[1] + 1}"
+      replacements = {
+        token:         str?.try(&.inspect),
+        file:          filepath,
+        loc:           loc_str,
+        loc_with_file: filepath ? "#{filepath}:#{loc_str}" : loc_str,
+      }
+      raise ParseException.new(message % replacements, filepath, @line || "", loc)
     end
 
     # Parses and returns the floating-point number represented by the

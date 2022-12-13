@@ -220,12 +220,38 @@ describe Chem::PullParser do
     end
 
     it "raises with placeholders" do
-      expect_raises(Chem::ParseException, %q(Invalid key "KEY")) do
         pull = parser_for "KEY=VALUE"
         pull.next_line
         pull.at(0, 3)
+
+      expect_raises(Chem::ParseException, %q(Invalid key "KEY")) do
         pull.error "Invalid key %{token}"
       end
+      expect_raises(Chem::ParseException, %q(Invalid key "KEY" at 1:1)) do
+        pull.error "Invalid key %{token} at %{loc}"
+      end
+      expect_raises(Chem::ParseException, %q(Invalid key "KEY" at 1:1)) do
+        pull.error "Invalid key %{token} at %{loc_with_file}"
+      end
+    end
+
+    it "raises with placeholders for a file" do
+      tempfile = File.tempfile ".txt"
+      tempfile << "abc def\nABC DEF GHI\n123456789\n"
+      tempfile.rewind
+
+      expect_raises(Chem::ParseException,
+        %Q(Found invalid token "DEF" at #{tempfile.path}:2:5)) do
+        pull = Chem::PullParser.new tempfile
+        pull.next_line
+        pull.next_line
+        pull.next_token
+        pull.next_token
+        pull.error("Found invalid token %{token} at %{loc_with_file}")
+      end
+    ensure
+      tempfile.try &.close
+      tempfile.try &.delete
     end
   end
 
