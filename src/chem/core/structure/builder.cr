@@ -2,7 +2,7 @@ module Chem
   class Structure::Builder
     @aromatic_bonds : Array(Bond)?
     @atom_serial = 0
-    @atoms : Indexable(Atom)?
+    @atom_map = {} of Int32 => Atom
     @chain : Chain?
     @residue : Residue?
     @element_counter = Hash(Element, Int32).new(default_value: 0)
@@ -65,7 +65,16 @@ module Chem
 
     def atom(name : String, serial : Int32, coords : Spatial::Vec3, element : Element, **options) : Atom
       @atom_serial = serial
-      Atom.new residue, @atom_serial, element, name, coords, **options
+      Atom.new(residue, @atom_serial, element, name, coords, **options)
+        .tap { |atom| @atom_map[atom.serial] = atom }
+    end
+
+    def atom(index : Int) : Atom
+      @atom_map[index]
+    end
+
+    def atom?(index : Int) : Atom?
+      @atom_map[index]?
     end
 
     def bond(name : String, other : String, order : BondOrder = :single) : Bond
@@ -73,7 +82,7 @@ module Chem
     end
 
     def bond(i : Int, j : Int, order : BondOrder = :single, aromatic : Bool = false) : Bond
-      bond = atoms[i].bonds.add atoms[j], order
+      bond = atom(i).bonds.add atom(j), order
       aromatic_bonds << bond if aromatic
       bond
     end
@@ -219,10 +228,6 @@ module Chem
         end
       end
       raise "Unknown atom #{name.inspect}"
-    end
-
-    private def atoms : Indexable(Atom)
-      @atoms ||= @structure.atoms
     end
 
     private def next_chain : Chain

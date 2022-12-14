@@ -57,8 +57,8 @@ module Chem::Mol2
             n_bonds.times do
               @pull.next_line
               @pull.next_token # skip bond index
-              i = @pull.next_i - 1
-              j = @pull.next_i - 1
+              i = @pull.next_i
+              j = @pull.next_i
               case bond_t = @pull.next_s
               when "1", "2", "3"
                 builder.bond i, j, BondOrder.from_value(bond_t.to_i)

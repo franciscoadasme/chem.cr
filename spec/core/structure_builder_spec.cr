@@ -254,14 +254,14 @@ describe Chem::Structure::Builder do
     atom.temperature_factor.should eq 43.24
   end
 
-  it "adds bonds by atom index" do
+  it "adds bonds by atom serial" do
     structure = Chem::Structure.build do
       atom :O, vec3(0, 0, 0)
       atom :H, vec3(-1, 0, 0)
       atom :H, vec3(1, 0, 0)
 
-      bond 0, 1
-      bond 0, 2
+      bond 1, 2
+      bond 1, 3
     end
 
     expected = [{"O1", "H1"}, {"O1", "H2"}]
