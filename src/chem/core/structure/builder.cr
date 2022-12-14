@@ -1,33 +1,19 @@
 module Chem
   class Structure::Builder
     @aromatic_bonds : Array(Bond)?
-    @atom_serial : Int32 = 0
+    @atom_serial = 0
     @atoms : Indexable(Atom)?
     @chain : Chain?
-    @guess_bonds = false
-    @guess_names = false
     @residue : Residue?
-    @structure : Structure
-    @use_templates : Bool = false
     @element_counter = Hash(Element, Int32).new(default_value: 0)
 
     def initialize(
-      *args,
       @guess_bonds : Bool = false,
       @guess_names : Bool = false,
       @use_templates : Bool = false,
       **options
     )
       @structure = Structure.new **options
-    end
-
-    # TODO: #build is often not called when using this, which can lead
-    # to incorrect structures
-    def initialize(structure : Structure)
-      @structure = structure
-      structure.each_chain { |chain| @chain = chain }
-      @chain.try &.each_residue { |residue| @residue = residue }
-      @atom_serial = structure.each_atom.max_of?(&.serial) || 0
     end
 
     def atom(coords : Spatial::Vec3, **options) : Atom

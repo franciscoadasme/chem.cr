@@ -29,11 +29,11 @@ describe Chem::ResidueCollection do
 
     it "iterates over secondary structure elements non-strictly" do
       s = load_file "hlx_gly.poscar", guess_bonds: true, guess_names: true
-      builder = Chem::Structure::Builder.new s
-      builder.secondary_structure({'A', 2, nil}, {'A', 4, nil}, :right_handed_helix_alpha)
-      builder.secondary_structure({'A', 5, nil}, {'A', 8, nil}, :right_handed_helix3_10)
-      builder.secondary_structure({'A', 9, nil}, {'A', 10, nil}, :none)
-      builder.secondary_structure({'A', 11, nil}, {'A', 13, nil}, :beta_strand)
+      residues = s.dig('A').residues
+      residues.each within: 1..3, &.sec=(:right_handed_helix_alpha)
+      residues.each within: 4..7, &.sec=(:right_handed_helix3_10)
+      residues.each within: 8..9, &.sec=(:none)
+      residues.each within: 10..12, &.sec=(:beta_strand)
 
       ary = [] of Range(Int32, Int32)
       s.each_secondary_structure(strict: false) do |ele, _|
@@ -56,11 +56,11 @@ describe Chem::ResidueCollection do
 
     it "returns an iterator over secondary structure elements non-strictly" do
       s = load_file "hlx_gly.poscar", guess_bonds: true, guess_names: true
-      builder = Chem::Structure::Builder.new s
-      builder.secondary_structure({'A', 1, nil}, {'A', 5, nil}, :right_handed_helix_alpha)
-      builder.secondary_structure({'A', 6, nil}, {'A', 10, nil}, :right_handed_helix3_10)
-      builder.secondary_structure({'A', 11, nil}, {'A', 11, nil}, :none)
-      builder.secondary_structure({'A', 12, nil}, {'A', 13, nil}, :beta_strand)
+      residues = s.dig('A').residues
+      residues.each within: 0..4, &.sec=(:right_handed_helix_alpha)
+      residues.each within: 5..9, &.sec=(:right_handed_helix3_10)
+      residues.each within: 10..10, &.sec=(:none)
+      residues.each within: 11..12, &.sec=(:beta_strand)
 
       s.each_secondary_structure(strict: false)
         .to_a
