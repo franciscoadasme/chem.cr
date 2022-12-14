@@ -4,11 +4,15 @@
 # Format specification found in the [CTFile
 # Formats](http://bit.ly/3WiuePn) document published by BIOVIA.
 #
+# NOTE: The title in the MOL file will be used as residue name if it
+# contains 3-4 uppercase letters and numbers only. In such case, the
+# comment line will be set as the title of the structure.
+#
 # WARNING: Basic support only. MDL valence model (implicit hydrogens),
 # connectivity information besides bonds, stereochemistry information
 # (e.g., chirality, 3D), advanced properties like Sgroup, reaction data,
-# etc. are unsupported/ignored. Therefore, **hydrogens are expected to be
-# defined explicitly**.
+# etc. are unsupported/ignored. Therefore, **hydrogens are expected to
+# be defined explicitly**.
 @[Chem::RegisterFormat(ext: %w(.mol))]
 module Chem::Mol
   class Reader
@@ -21,10 +25,10 @@ module Chem::Mol
     private def decode_entry : Structure
       raise IO::EOFError.new if @pull.eof?
       title = @pull.line.strip
-      @pull.next_line
       @pull.next_line # skip software
-      @pull.next_line # skip comment line
+      comment = @pull.next_line.try(&.strip)
 
+      @pull.next_line
       variant = @pull.at(33, 6).parse("Invalid Mol variant %{token}") do |str|
         case str.strip
         when "V2000" then V2000
@@ -38,7 +42,12 @@ module Chem::Mol
         source_file: (file = @io).is_a?(File) ? file.path : nil,
         use_templates: false,
       ) do |builder|
-        builder.title title
+        if title.matches?(/^[A-Z0-9]{3,4}$/)
+          builder.title comment || ""
+          builder.residue title
+        else
+          builder.title title
+        end
         variant.parse @pull, builder
       end
 
