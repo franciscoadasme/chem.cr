@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../js/doc.js"></script>
 
   <meta name="repository-name" content="chem.cr">
-  <title>Chem::Constraint - chem.cr 0.5.6</title>
+  <title>Chem::Mol - chem.cr 0.5.6</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
@@ -141,7 +141,7 @@
       
     </li>
   
-  <li class=" current" data-id="chem.cr/Chem/Constraint" data-name="chem::constraint">
+  <li class=" " data-id="chem.cr/Chem/Constraint" data-name="chem::constraint">
       <a href="../Chem/Constraint.html">Constraint</a>
       
     </li>
@@ -271,7 +271,7 @@
       
     </li>
   
-  <li class="parent " data-id="chem.cr/Chem/Mol" data-name="chem::mol">
+  <li class="parent open current" data-id="chem.cr/Chem/Mol" data-name="chem::mol">
       <a href="../Chem/Mol.html">Mol</a>
       
         <ul>
@@ -835,7 +835,7 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">enum</span> Chem::Constraint
+  <span class="kind">module</span> Chem::Mol
 
 </h1>
 
@@ -866,129 +866,23 @@
   </h2>
   
     
-      chem/core/bias.cr
+      chem/formats/mol.cr
+    
+    <br/>
+  
+    
+      chem/register_format.cr
     
     <br/>
   
 
 
 
-  
-    <h2>
-      <a id="enum-members" class="anchor" href="#enum-members">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-      Enum Members
-    </h2>
-  
-  <dl>
-    
-      <dt class="entry-const" id="None">
-        <strong>None</strong> = <code><span class="n">0</span></code>
-      </dt>
-      
-    
-      <dt class="entry-const" id="X">
-        <strong>X</strong> = <code><span class="n">1</span></code>
-      </dt>
-      
-    
-      <dt class="entry-const" id="Y">
-        <strong>Y</strong> = <code><span class="n">2</span></code>
-      </dt>
-      
-    
-      <dt class="entry-const" id="Z">
-        <strong>Z</strong> = <code><span class="n">3</span></code>
-      </dt>
-      
-    
-      <dt class="entry-const" id="XY">
-        <strong>XY</strong> = <code><span class="n">4</span></code>
-      </dt>
-      
-    
-      <dt class="entry-const" id="XZ">
-        <strong>XZ</strong> = <code><span class="n">5</span></code>
-      </dt>
-      
-    
-      <dt class="entry-const" id="YZ">
-        <strong>YZ</strong> = <code><span class="n">6</span></code>
-      </dt>
-      
-    
-      <dt class="entry-const" id="XYZ">
-        <strong>XYZ</strong> = <code><span class="n">7</span></code>
-      </dt>
-      
-    
-  </dl>
 
 
 
 
 
-
-
-  <h2>
-    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Instance Method Summary
-  </h2>
-  <ul class="list-summary">
-    
-      <li class="entry-summary">
-        <a href="#includes%3F%28axis%3ASymbol%29%3ABool-instance-method" class="signature"><strong>#includes?</strong>(axis : Symbol) : Bool</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#none%3F-instance-method" class="signature"><strong>#none?</strong></a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#x%3F-instance-method" class="signature"><strong>#x?</strong></a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#xy%3F-instance-method" class="signature"><strong>#xy?</strong></a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#xyz%3F-instance-method" class="signature"><strong>#xyz?</strong></a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#xz%3F-instance-method" class="signature"><strong>#xz?</strong></a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#y%3F-instance-method" class="signature"><strong>#y?</strong></a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#yz%3F-instance-method" class="signature"><strong>#yz?</strong></a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#z%3F-instance-method" class="signature"><strong>#z?</strong></a>
-        
-      </li>
-    
-  </ul>
 
 
 
@@ -996,188 +890,12 @@
 
 <div class="methods-inherited">
   
-    
-
-
-    
-
-
-    
-
-
-  
-    
-
-
-    
-
-
-    
-
-
-  
-    
-
-
-    
-
-
-    
-
-
-  
-    
-
-
-    
-
-
-    
-
-
-  
 </div>
 
 
 
 
 
-
-  <h2>
-    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Instance Method Detail
-  </h2>
-  
-    <div class="entry-detail" id="includes?(axis:Symbol):Bool-instance-method">
-      <div class="signature">
-        
-        def <strong>includes?</strong>(axis : Symbol) : Bool
-
-        <a class="method-permalink" href="#includes%3F%28axis%3ASymbol%29%3ABool-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="none?-instance-method">
-      <div class="signature">
-        
-        def <strong>none?</strong>
-
-        <a class="method-permalink" href="#none%3F-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="x?-instance-method">
-      <div class="signature">
-        
-        def <strong>x?</strong>
-
-        <a class="method-permalink" href="#x%3F-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="xy?-instance-method">
-      <div class="signature">
-        
-        def <strong>xy?</strong>
-
-        <a class="method-permalink" href="#xy%3F-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="xyz?-instance-method">
-      <div class="signature">
-        
-        def <strong>xyz?</strong>
-
-        <a class="method-permalink" href="#xyz%3F-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="xz?-instance-method">
-      <div class="signature">
-        
-        def <strong>xz?</strong>
-
-        <a class="method-permalink" href="#xz%3F-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="y?-instance-method">
-      <div class="signature">
-        
-        def <strong>y?</strong>
-
-        <a class="method-permalink" href="#y%3F-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="yz?-instance-method">
-      <div class="signature">
-        
-        def <strong>yz?</strong>
-
-        <a class="method-permalink" href="#yz%3F-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="z?-instance-method">
-      <div class="signature">
-        
-        def <strong>z?</strong>
-
-        <a class="method-permalink" href="#z%3F-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
 
 
 

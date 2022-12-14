@@ -271,6 +271,26 @@
       
     </li>
   
+  <li class="parent " data-id="chem.cr/Chem/Mol" data-name="chem::mol">
+      <a href="../../Chem/Mol.html">Mol</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Mol/Reader" data-name="chem::mol::reader">
+      <a href="../../Chem/Mol/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Mol/Variant" data-name="chem::mol::variant">
+      <a href="../../Chem/Mol/Variant.html">Variant</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
   <li class="parent " data-id="chem.cr/Chem/Mol2" data-name="chem::mol2">
       <a href="../../Chem/Mol2.html">Mol2</a>
       
@@ -868,14 +888,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28structure%3AStructure%29-class-method" class="signature"><strong>.new</strong>(structure : Structure)</a>
-        
-          <div class="summary"><p><span class="flag orange">TODO</span>  #build is often not called when using this, which can lead to incorrect structures</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#new%28%2Aargs%2Cguess_bonds%3ABool%3Dfalse%2Cguess_names%3ABool%3Dfalse%2Cuse_templates%3ABool%3Dfalse%2C%2A%2Aoptions%29-class-method" class="signature"><strong>.new</strong>(*args, guess_bonds : Bool = <span class="n">false</span>, guess_names : Bool = <span class="n">false</span>, use_templates : Bool = <span class="n">false</span>, **options)</a>
+        <a href="#new%28guess_bonds%3ABool%3Dfalse%2Cguess_names%3ABool%3Dfalse%2Cuse_templates%3ABool%3Dfalse%2C%2A%2Aoptions%29-class-method" class="signature"><strong>.new</strong>(guess_bonds : Bool = <span class="n">false</span>, guess_names : Bool = <span class="n">false</span>, use_templates : Bool = <span class="n">false</span>, **options)</a>
         
       </li>
     
@@ -918,7 +931,17 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#atom%28index%3AInt%29%3AAtom-instance-method" class="signature"><strong>#atom</strong>(index : Int) : Atom</a>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#atom%28coords%3ASpatial%3A%3AVec3%2C%2A%2Aoptions%29%3AAtom-instance-method" class="signature"><strong>#atom</strong>(coords : Spatial::Vec3, **options) : Atom</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#atom%3F%28index%3AInt%29%3AAtom%3F-instance-method" class="signature"><strong>#atom?</strong>(index : Int) : Atom?</a>
         
       </li>
     
@@ -1082,32 +1105,12 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(structure:Structure)-class-method">
+    <div class="entry-detail" id="new(guess_bonds:Bool=false,guess_names:Bool=false,use_templates:Bool=false,**options)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(structure : <a href="../../Chem/Structure.html">Structure</a>)
+        def self.<strong>new</strong>(guess_bonds : Bool = <span class="n">false</span>, guess_names : Bool = <span class="n">false</span>, use_templates : Bool = <span class="n">false</span>, **options)
 
-        <a class="method-permalink" href="#new%28structure%3AStructure%29-class-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p><span class="flag orange">TODO</span>  #build is often not called when using this, which can lead
-to incorrect structures</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="new(*args,guess_bonds:Bool=false,guess_names:Bool=false,use_templates:Bool=false,**options)-class-method">
-      <div class="signature">
-        
-        def self.<strong>new</strong>(*args, guess_bonds : Bool = <span class="n">false</span>, guess_names : Bool = <span class="n">false</span>, use_templates : Bool = <span class="n">false</span>, **options)
-
-        <a class="method-permalink" href="#new%28%2Aargs%2Cguess_bonds%3ABool%3Dfalse%2Cguess_names%3ABool%3Dfalse%2Cuse_templates%3ABool%3Dfalse%2C%2A%2Aoptions%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28guess_bonds%3ABool%3Dfalse%2Cguess_names%3ABool%3Dfalse%2Cuse_templates%3ABool%3Dfalse%2C%2A%2Aoptions%29-class-method">#</a>
       </div>
       
       <br/>
@@ -1212,12 +1215,40 @@ names will be reset.</p>
       </div>
     </div>
   
+    <div class="entry-detail" id="atom(index:Int):Atom-instance-method">
+      <div class="signature">
+        
+        def <strong>atom</strong>(index : Int) : <a href="../../Chem/Atom.html">Atom</a>
+
+        <a class="method-permalink" href="#atom%28index%3AInt%29%3AAtom-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="atom(coords:Spatial::Vec3,**options):Atom-instance-method">
       <div class="signature">
         
         def <strong>atom</strong>(coords : <a href="../../Chem/Spatial/Vec3.html">Spatial::Vec3</a>, **options) : <a href="../../Chem/Atom.html">Atom</a>
 
         <a class="method-permalink" href="#atom%28coords%3ASpatial%3A%3AVec3%2C%2A%2Aoptions%29%3AAtom-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="atom?(index:Int):Atom?-instance-method">
+      <div class="signature">
+        
+        def <strong>atom?</strong>(index : Int) : <a href="../../Chem/Atom.html">Atom</a>?
+
+        <a class="method-permalink" href="#atom%3F%28index%3AInt%29%3AAtom%3F-instance-method">#</a>
       </div>
       
       <br/>

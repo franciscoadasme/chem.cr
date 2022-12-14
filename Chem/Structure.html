@@ -271,6 +271,26 @@
       
     </li>
   
+  <li class="parent " data-id="chem.cr/Chem/Mol" data-name="chem::mol">
+      <a href="../Chem/Mol.html">Mol</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/Mol/Reader" data-name="chem::mol::reader">
+      <a href="../Chem/Mol/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Mol/Variant" data-name="chem::mol::variant">
+      <a href="../Chem/Mol/Variant.html">Variant</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
   <li class="parent " data-id="chem.cr/Chem/Mol2" data-name="chem::mol2">
       <a href="../Chem/Mol2.html">Mol2</a>
       
@@ -920,6 +940,13 @@
         <a href="#from_locpot%28input%3AIO%7CPath%7CString%29%3Aself-class-method" class="signature"><strong>.from_locpot</strong>(input : IO | Path | String) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the structure encoded in <em>input</em> using the <code><a href="../Chem/VASP/Locpot.html">Chem::VASP::Locpot</a></code> file format.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#from_mol%28input%3AIO%7CPath%7CString%29%3Aself-class-method" class="signature"><strong>.from_mol</strong>(input : IO | Path | String) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the structure encoded in <em>input</em> using the <code><a href="../Chem/Mol.html">Chem::Mol</a></code> file format.</p></div>
         
       </li>
     
@@ -1663,6 +1690,27 @@
       </div>
     </div>
   
+    <div class="entry-detail" id="from_mol(input:IO|Path|String):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>from_mol</strong>(input : IO | Path | String) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#from_mol%28input%3AIO%7CPath%7CString%29%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the structure encoded in <em>input</em> using the
+<code><a href="../Chem/Mol.html">Chem::Mol</a></code> file format. Arguments are forwarded to
+<code><a href="../Chem/Mol/Reader.html#open%28io%3AIO%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::Mol::Reader.open</a></code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="from_mol2(input:IO|Path|String):self-class-method">
       <div class="signature">
         
@@ -1788,7 +1836,7 @@ the first one only. Use <code><a href="../Array.html#read%28input%3AIO%7CPath%7C
 <code><a href="../Chem/FormatReader/MultiEntry.html#each%28%26%3AT-%3E%29%3ANil-instance-method">Chem::FormatReader::MultiEntry#each</a></code> (reader can be
 obtained via <code><a href="../Chem/Format.html#reader%28type%3AChem%3A%3ASpatial%3A%3AGrid.class%29-instance-method">Chem::Format.reader</a></code>) to get multiple entries
 instead.</p>
-<p>The supported file formats are <code><a href="../Chem/Cube.html">Chem::Cube</a></code>, <code><a href="../Chem/Gen.html">Chem::Gen</a></code>, <code><a href="../Chem/Mol2.html">Chem::Mol2</a></code>, <code><a href="../Chem/PDB.html">Chem::PDB</a></code>, <code><a href="../Chem/VASP/Chgcar.html">Chem::VASP::Chgcar</a></code>, <code><a href="../Chem/VASP/Locpot.html">Chem::VASP::Locpot</a></code>, <code><a href="../Chem/VASP/Poscar.html">Chem::VASP::Poscar</a></code>, <code><a href="../Chem/XYZ.html">Chem::XYZ</a></code>. Use the
+<p>The supported file formats are <code><a href="../Chem/Cube.html">Chem::Cube</a></code>, <code><a href="../Chem/Gen.html">Chem::Gen</a></code>, <code><a href="../Chem/Mol2.html">Chem::Mol2</a></code>, <code><a href="../Chem/Mol.html">Chem::Mol</a></code>, <code><a href="../Chem/PDB.html">Chem::PDB</a></code>, <code><a href="../Chem/VASP/Chgcar.html">Chem::VASP::Chgcar</a></code>, <code><a href="../Chem/VASP/Locpot.html">Chem::VASP::Locpot</a></code>, <code><a href="../Chem/VASP/Poscar.html">Chem::VASP::Poscar</a></code>, <code><a href="../Chem/XYZ.html">Chem::XYZ</a></code>. Use the
 <code>.from_*</code> methods to customize how the object is decoded in
 the corresponding file format if possible.</p>
         </div>
@@ -1819,6 +1867,7 @@ instead.</p>
 <p>The supported file formats are the following:</p>
 <ul>
 <li><code><a href="../Chem/Gen.html">Chem::Gen</a></code> (.gen)</li>
+<li><code><a href="../Chem/Mol.html">Chem::Mol</a></code> (.mol)</li>
 <li><code><a href="../Chem/Mol2.html">Chem::Mol2</a></code> (.mol2)</li>
 <li><code><a href="../Chem/PDB.html">Chem::PDB</a></code> (.ent, .pdb)</li>
 <li><code><a href="../Chem/XYZ.html">Chem::XYZ</a></code> (.xyz)</li>
