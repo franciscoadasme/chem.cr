@@ -453,6 +453,12 @@ module Chem
       end
     end
 
+    # Sets the cursor at the beginning of the current line if set.
+    def rewind_line : self
+      set_cursor(0, 0) { }
+      self
+    end
+
     # Discards blank lines.
     def skip_blank_lines : self
       while next_line.presence.nil?; end

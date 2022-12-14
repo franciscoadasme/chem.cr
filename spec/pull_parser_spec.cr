@@ -831,6 +831,32 @@ describe Chem::PullParser do
       pull.str?.should eq "123"
     end
   end
+
+  describe "#rewind_line" do
+    it "sets cursor to the beginning of line" do
+      pull = parser_for("123 456 789\n123")
+      pull.next_line
+      pull.next_token
+      pull.next_s?.should eq "456"
+      pull.rewind_line
+      pull.str?.should be_nil
+      pull.next_s?.should eq "123"
+    end
+
+    it "does nothing if no line is set" do
+      pull = parser_for("123 456 789\n123")
+      pull.rewind_line
+      pull.next_line
+      pull.next_s?.should eq "123"
+    end
+
+    it "does nothing at the beginning of line" do
+      pull = parser_for("123 456 789\n123")
+      pull.next_line
+      pull.rewind_line
+      pull.next_s?.should eq "123"
+    end
+  end
 end
 
 private def it_parses(str : String, expected, &block : Chem::PullParser -> _) : Nil
