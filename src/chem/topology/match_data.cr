@@ -4,6 +4,7 @@ struct Chem::Topology::MatchData
 
   delegate :[], :[]?, size, to: @atom_map
 
+  # TODO: accept ResidueTemplate
   def initialize(@resname : String,
                  @rtype : ResidueType,
                  @atom_map : Hash(String, Atom))

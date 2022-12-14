@@ -48,6 +48,7 @@ module Chem::Mol2
               if @pull.next_token
                 resid = @pull.int
                 resname = @pull.next_s
+                # TODO: respect name or truncate at 4 characters?
                 builder.residue resname[..2], resid
                 chg = @pull.next_f if include_charges
               end
