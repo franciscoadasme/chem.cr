@@ -1,4 +1,5 @@
 class Chem::Topology::Detector
+  # TODO: move these to class getter or something and read from YAML.
   CTER_T = ResidueTemplate.build do
     description "C-ter"
     name "CTER"
@@ -42,10 +43,16 @@ class Chem::Topology::Detector
 
   def each_match(& : MatchData ->) : Nil
     atom_map = {} of Atom => String
+    # TODO: invert nested loop and start only with atoms matching root
+    # (cache atom descriptions as description => [atom]), then
+    # `matching_atoms[@atom_table[template.root_name]].each {}`
     @atoms.each do |atom|
       next if mapped?(atom, atom_map)
       @templates.each do |res_t|
+        # TODO: break early since next templates are smaller?
+        # TODO: check if atom matches root first
         next if @atoms.size < res_t.atoms.size
+        # TODO: test only atoms that matches root
         if match?(res_t, atom, atom_map)
           yield MatchData.new(res_t, atom_map.invert)
           @atoms.subtract atom_map.each_key
@@ -55,6 +62,7 @@ class Chem::Topology::Detector
     end
   end
 
+  # TODO: Change API so `Detector.new(registry).detect(structure)`
   def matches : Array(MatchData)
     matches = [] of MatchData
     each_match { |match| matches << match }
@@ -115,6 +123,7 @@ class Chem::Topology::Detector
     atom_map.has_value? atom_t.name
   end
 
+  # FIXME: if some atoms have the same, it fails to match
   private def match?(res_t : ResidueTemplate,
                      atom : Atom,
                      atom_map : Hash(Atom, String)) : Bool
