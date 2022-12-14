@@ -281,11 +281,6 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Mol/Variant" data-name="chem::mol::variant">
-      <a href="../Chem/Mol/Variant.html">Variant</a>
-      
-    </li>
-  
 </ul>
 
       
@@ -842,6 +837,28 @@
 
 
 
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>This module provides support for reading MDL Mol files, including the
+variants V2000 and V3000.</p>
+<p>Format specification found in the <a href="http://bit.ly/3WiuePn">CTFile
+Formats</a> document published by BIOVIA.</p>
+<p><span class="flag purple">NOTE</span>  The title in the MOL file will be used as residue name if it
+contains 3-4 uppercase letters and numbers only. In such case, the
+comment line will be set as the title of the structure.</p>
+<p><span class="flag yellow">WARNING</span>  Basic support only. MDL valence model (implicit hydrogens),
+connectivity information besides bonds, stereochemistry information
+(e.g., chirality, 3D), advanced properties like Sgroup, reaction data,
+etc. are unsupported/ignored. Therefore, <strong>hydrogens are expected to
+be defined explicitly</strong>.</p>
 
 
 
