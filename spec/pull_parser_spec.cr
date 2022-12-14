@@ -857,6 +857,76 @@ describe Chem::PullParser do
       pull.next_s?.should eq "123"
     end
   end
+
+  describe "#parse_next?" do
+    it "yields the next token and returns the parsed value" do
+      pull = parser_for("123 456\n789\n")
+      pull.next_line
+      pull.next_token
+      pull.parse_next?(&.to_i?).should eq 456
+    end
+
+    it "yields the first token at the beginning of line" do
+      parser = parser_for("123 456\n789\n")
+      parser.next_line
+      parser.parse_next?(&.to_i?).should eq 123
+    end
+
+    it "returns nil at end of line" do
+      pull = parser_for("123 456\n789\n")
+      pull.next_line
+      while pull.next_token; end
+      pull.parse?(&.to_i?).should be_nil
+    end
+  end
+
+  describe "#parse_next" do
+    it "raises if block returns nil" do
+      pull = parser_for("x = baz")
+      pull.next_line
+      expect_raises(Chem::ParseException, %q(Invalid option "x")) do
+        pull.parse_next("Invalid option %{token}") do |str|
+          %w(foo bar).find &.==(str)
+        end
+      end
+    end
+  end
+
+  describe "#parse_next_if_present" do
+    it "parses next token" do
+      pull = parser_for(" 0 1")
+      pull.next_line
+      pull.parse_next_if_present("Invalid option %{token}", &.to_i?).should eq 0
+    end
+
+    it "raises if invalid value" do
+      pull = parser_for(" a 1")
+      pull.next_line
+      expect_raises(Chem::ParseException, %q(Could not parse "a" at 1:2)) do
+        pull.parse_next_if_present &.to_i?
+      end
+    end
+
+    it "raises with message if invalid value" do
+      pull = parser_for(" a 1")
+      pull.next_line
+      expect_raises(Chem::ParseException, %q(Invalid value "a")) do
+        pull.parse_next_if_present "Invalid value %{token}", &.to_i?
+      end
+    end
+
+    it "returns nil if empty" do
+      pull = parser_for("\n")
+      pull.next_line
+      pull.parse_next_if_present(&.to_i?).should be_nil
+    end
+
+    it "returns default value if empty" do
+      pull = parser_for("\n")
+      pull.next_line
+      pull.parse_next_if_present(default: 'K', &.to_i?).should eq 'K'
+    end
+  end
 end
 
 private def it_parses(str : String, expected, &block : Chem::PullParser -> _) : Nil

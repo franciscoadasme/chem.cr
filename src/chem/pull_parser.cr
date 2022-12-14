@@ -435,7 +435,7 @@ module Chem
 
     # Yields the current token if set and returns the parsed value.
     # Raises `ParseException` with the given message if the block
-    # returns `nil`.
+    # returns `nil`. If no token is set, returns *default*.
     def parse_if_present(
       message : String = "Could not parse %{token} at %{loc_with_file}",
       default : _ = nil,
@@ -449,6 +449,36 @@ module Chem
     # Yields the current token if set and returns the parsed value.
     def parse?(& : String -> T?) : T? forall T
       internal_parse do |bytes|
+        yield String.new(bytes)
+      end
+    end
+
+    # Yields the next token if present and returns the parsed value.
+    # Raises `ParseException` with the given message if no token is
+    # found or the block returns `nil`.
+    def parse_next(
+      message : String = "Could not parse %{token} at %{loc_with_file}",
+      & : String -> T?
+    ) : T forall T
+      parse_next? { |str| yield str } || error(message)
+    end
+
+    # Yields the next token if present and returns the parsed value.
+    # Raises `ParseException` with the given message if the block
+    # returns `nil`. If no token is found, returns *default*.
+    def parse_next_if_present(
+      message : String = "Could not parse %{token} at %{loc_with_file}",
+      default : _ = nil,
+      & : String -> _
+    )
+      parse_next? do |str|
+        (yield str) || error(message)
+      end || default
+    end
+
+    # Yields the next token if present and returns the parsed value.
+    def parse_next?(& : String -> T?) : T? forall T
+      if bytes = next_token
         yield String.new(bytes)
       end
     end
