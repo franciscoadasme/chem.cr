@@ -31,24 +31,14 @@ module Chem
       @coords : Spatial::Vec3,
       type : String? = nil,
       @formal_charge : Int32 = 0,
-      mass : Number? = nil,
+      @mass : Float64 = element.mass,
       @occupancy : Float64 = 1,
       @partial_charge : Float64 = 0.0,
       @temperature_factor : Float64 = 0,
-      vdw_radius : Number? = nil
+      @vdw_radius : Float64 = element.vdw_radius
     )
-      @mass = if mass
-                raise ArgumentError.new("Negative mass") if mass < 0
-                mass.to_f
-              else
-                @element.mass
-              end
-      @vdw_radius = if vdw_radius
-                      raise ArgumentError.new("Negative vdW radius") if vdw_radius < 0
-                      vdw_radius.to_f
-                    else
-                      @element.vdw_radius
-                    end
+      raise ArgumentError.new("Negative mass") if @mass < 0
+      raise ArgumentError.new("Negative vdW radius") if @vdw_radius < 0
       @residue << self
     end
 
