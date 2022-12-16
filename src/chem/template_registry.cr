@@ -158,8 +158,8 @@ class Chem::TemplateRegistry
   def self.default : self
     @@default_registry ||= new.tap do |registry|
       # bake default templates so it can be loaded from anywhere
-      registry.parse {{read_file("data/templates/amino.yaml")}}
-      registry.parse {{read_file("data/templates/solvent.yaml")}}
+      registry.parse {{read_file("#{__DIR__}/../../data/templates/amino.yaml")}}
+      registry.parse {{read_file("#{__DIR__}/../../data/templates/solvent.yaml")}}
     end
   end
 
