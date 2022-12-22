@@ -46,12 +46,12 @@ class Chem::Topology::Detector
     # TODO: invert nested loop and start only with atoms matching root
     # (cache atom descriptions as description => [atom]), then
     # `matching_atoms[@atom_table[template.root_name]].each {}`
-    @atoms.each do |atom|
-      next if mapped?(atom, atom_map)
-      @templates.each do |res_t|
+    @templates.each do |res_t|
+      next if @atoms.size < res_t.atoms.size
+      @atoms.each do |atom|
+        next if mapped?(atom, atom_map)
         # TODO: break early since next templates are smaller?
         # TODO: check if atom matches root first
-        next if @atoms.size < res_t.atoms.size
         # TODO: test only atoms that matches root
         if match?(res_t, atom, atom_map)
           yield MatchData.new(res_t, atom_map.invert)

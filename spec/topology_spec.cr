@@ -607,6 +607,15 @@ describe Chem::Topology do
       structure.topology.guess_names
       structure.residues.join(&.code).should eq expected
     end
+
+    it "guesses the topology of a phospholipid" do
+      Chem.load_template spec_file("dmpe.mol2")
+      structure = load_file "dmpe.xyz"
+      structure.topology.guess_bonds
+      structure.topology.guess_names
+      structure.residues.size.should eq 1
+      structure.residues[0].name.should eq "DMP"
+    end
   end
 
   describe "#guess_unknown_residue_types" do

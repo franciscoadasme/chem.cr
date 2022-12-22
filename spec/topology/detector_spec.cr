@@ -84,6 +84,17 @@ describe Chem::Topology::Detector do
     ],
   }
 
+  it "detects a phospholipid" do
+    templates = Chem::TemplateRegistry.new
+    templates.load spec_file("dmpe.mol2")
+    structure = load_file "dmpe.xyz", guess_bonds: true
+    detector = Chem::Topology::Detector.new structure, templates
+    matches = detector.matches
+    matches.size.should eq 1
+    matches[0].atom_names.size.should eq 109
+    detector.unmatched_atoms.should be_empty
+  end
+
   describe "#matches" do
     it "returns found matches" do
       structure = load_file "waters.xyz", guess_bonds: true
