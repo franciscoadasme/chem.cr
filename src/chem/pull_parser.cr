@@ -75,6 +75,9 @@ module Chem
     @line_number = 0
     @token_size = 0
 
+    # Returns the enclosed IO.
+    getter io : IO
+
     # Creates a PullParser which will consume the contents of *io*.
     def initialize(@io : IO); end
 

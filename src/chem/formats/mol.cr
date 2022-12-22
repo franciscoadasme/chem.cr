@@ -22,11 +22,16 @@ module Chem::Mol
       @pull = PullParser.new @io
     end
 
+    # :nodoc:
+    protected def initialize(@pull : PullParser, @sync_close : Bool = false)
+      @io = @pull.io
+    end
+
     private def decode_entry : Structure
       raise IO::EOFError.new if @pull.eof?
       title = @pull.line.strip
       @pull.next_line # skip software
-      comment = @pull.next_line.try(&.strip)
+      comment = @pull.next_line.try(&.strip.presence)
 
       @pull.next_line
       variant = @pull.at(33, 6).parse("Invalid Mol variant %{token}") do |str|
