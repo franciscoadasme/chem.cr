@@ -31,33 +31,38 @@ class Chem::Topology::Detector
 
   @atoms : Set(Atom)
   @templates : Array(ResidueTemplate)
+  @atoms_by_spec : Hash(String, Array(Atom))
 
   def initialize(atoms : AtomCollection, templates : TemplateRegistry = TemplateRegistry.default)
     @atoms = Set(Atom).new(atoms.n_atoms).concat atoms.each_atom
-    @atom_table = {} of Atom | AtomTemplate => String
     @templates = templates.to_a.sort_by &.atoms.size.-
+
+    @atom_table = {} of Atom | AtomTemplate => String
     compute_atom_descriptions @atoms
     compute_atom_descriptions @templates
     compute_atom_descriptions [CTER_T, NTER_T, CHARGED_CTER_T, CHARGED_NTER_T]
+    @atoms_by_spec = @atoms.group_by { |atom| @atom_table[atom] }
   end
 
   def each_match(& : MatchData ->) : Nil
     atom_map = {} of Atom => String
-    # TODO: invert nested loop and start only with atoms matching root
-    # (cache atom descriptions as description => [atom]), then
-    # `matching_atoms[@atom_table[template.root_name]].each {}`
     @templates.each do |res_t|
-      next if @atoms.size < res_t.atoms.size
-      @atoms.each do |atom|
+      next unless res_t.atoms.size <= @atoms.size
+      next unless root_atoms = @atoms_by_spec[@atom_table[res_t.root]]?
+      i = 0
+      while i < root_atoms.size
+        atom = root_atoms.unsafe_fetch(i)
         next if mapped?(atom, atom_map)
-        # TODO: break early since next templates are smaller?
-        # TODO: check if atom matches root first
-        # TODO: test only atoms that matches root
         if match?(res_t, atom, atom_map)
           yield MatchData.new(res_t, atom_map.invert)
-          @atoms.subtract atom_map.each_key
+          atom_map.each_key do |atom|
+            @atoms.delete atom
+            @atoms_by_spec[@atom_table[atom]].delete atom
+          end
+          i -= 1 # decrease index because current atom was removed
         end
         atom_map.clear
+        i += 1
       end
     end
   end
