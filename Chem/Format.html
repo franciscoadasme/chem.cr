@@ -511,6 +511,21 @@
       
     </li>
   
+  <li class="parent " data-id="chem.cr/Chem/SDF" data-name="chem::sdf">
+      <a href="../Chem/SDF.html">SDF</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/SDF/Reader" data-name="chem::sdf::reader">
+      <a href="../Chem/SDF/Reader.html">Reader</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
   <li class="parent " data-id="chem.cr/Chem/Spatial" data-name="chem::spatial">
       <a href="../Chem/Spatial.html">Spatial</a>
       
@@ -1009,8 +1024,17 @@ information declared in the annotations.</p>
       </dd>
       
     
+      <dt class="entry-const" id="SDF">
+        <strong>SDF</strong> = <code><span class="n">11</span></code>
+      </dt>
+      
+      <dd class="entry-const-doc">
+        <p>The SDF format implemented by <code><a href="../Chem/SDF.html">Chem::SDF</a></code>.</p>
+      </dd>
+      
+    
       <dt class="entry-const" id="Stride">
-        <strong>Stride</strong> = <code><span class="n">11</span></code>
+        <strong>Stride</strong> = <code><span class="n">12</span></code>
       </dt>
       
       <dd class="entry-const-doc">
@@ -1019,7 +1043,7 @@ information declared in the annotations.</p>
       
     
       <dt class="entry-const" id="VMD">
-        <strong>VMD</strong> = <code><span class="n">12</span></code>
+        <strong>VMD</strong> = <code><span class="n">13</span></code>
       </dt>
       
       <dd class="entry-const-doc">
@@ -1028,7 +1052,7 @@ information declared in the annotations.</p>
       
     
       <dt class="entry-const" id="XYZ">
-        <strong>XYZ</strong> = <code><span class="n">13</span></code>
+        <strong>XYZ</strong> = <code><span class="n">14</span></code>
       </dt>
       
       <dd class="entry-const-doc">
@@ -1243,6 +1267,13 @@ information declared in the annotations.</p>
         <a href="#reader%28type%3AArray%28Chem%3A%3AStructure%29.class%29-instance-method" class="signature"><strong>#reader</strong>(type : <span class="t">Array</span>(<span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>).<span class="k">class</span>)</a>
         
           <div class="summary"><p>Returns the reader associated with the format.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#sdf%3F%3ABool-instance-method" class="signature"><strong>#sdf?</strong> : Bool</a>
+        
+          <div class="summary"><p>Returns <code>true</code> if the member is the <code><a href="../Chem/Format.html#SDF">SDF</a></code> format.</p></div>
         
       </li>
     
@@ -2004,6 +2035,25 @@ write only.</p>
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">DX</span>.reader(<span class="t">Array</span>(<span class="t">Chem</span><span class="t">::</span><span class="t">Spatial</span><span class="t">::</span><span class="t">Grid</span>)) <span class="c"># raises ArgumentError</span>
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">VMD</span>.reader(<span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>)           <span class="c"># raises ArgumentError</span>
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">XYZ</span>.reader(<span class="t">Int32</span>)                     <span class="c"># raises ArgumentError</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="sdf?:Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>sdf?</strong> : Bool
+
+        <a class="method-permalink" href="#sdf%3F%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if the member is the <code><a href="../Chem/Format.html#SDF">SDF</a></code> format.</p>
         </div>
       
       <br/>

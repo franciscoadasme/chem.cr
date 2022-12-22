@@ -511,6 +511,21 @@
       
     </li>
   
+  <li class="parent " data-id="chem.cr/Chem/SDF" data-name="chem::sdf">
+      <a href="../Chem/SDF.html">SDF</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/SDF/Reader" data-name="chem::sdf::reader">
+      <a href="../Chem/SDF/Reader.html">Reader</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
   <li class="parent " data-id="chem.cr/Chem/Spatial" data-name="chem::spatial">
       <a href="../Chem/Spatial.html">Spatial</a>
       
@@ -963,6 +978,13 @@
         <a href="#from_poscar%28input%3AIO%7CPath%7CString%2Cguess_bonds%3ABool%3Dfalse%2Cguess_names%3ABool%3Dfalse%29%3Aself-class-method" class="signature"><strong>.from_poscar</strong>(input : IO | Path | String, guess_bonds : Bool = <span class="n">false</span>, guess_names : Bool = <span class="n">false</span>) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the structure encoded in <em>input</em> using the <code><a href="../Chem/VASP/Poscar.html">Chem::VASP::Poscar</a></code> file format.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#from_sdf%28input%3AIO%7CPath%7CString%29%3Aself-class-method" class="signature"><strong>.from_sdf</strong>(input : IO | Path | String) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the structure encoded in <em>input</em> using the <code><a href="../Chem/SDF.html">Chem::SDF</a></code> file format.</p></div>
         
       </li>
     
@@ -1775,6 +1797,30 @@ the first one only. Use <code><a href="../Array.html#from_pdb%28input%3AIO%7CPat
       </div>
     </div>
   
+    <div class="entry-detail" id="from_sdf(input:IO|Path|String):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>from_sdf</strong>(input : IO | Path | String) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#from_sdf%28input%3AIO%7CPath%7CString%29%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the structure encoded in <em>input</em> using the
+<code><a href="../Chem/SDF.html">Chem::SDF</a></code> file format. Arguments are forwarded to
+<code><a href="../Chem/SDF/Reader.html#open%28io%3AIO%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::SDF::Reader.open</a></code>.</p>
+<p>If <em>input</em> contains multiple entries, this method returns
+the first one only. Use <code><a href="../Array.html#from_sdf%28input%3AIO%7CPath%7CString%2Cindexes%3AArray%28Int%29%29%3Aself-class-method">Array#from_sdf</a></code> or
+<code>Chem::SDF::Reader#each</code> to get multiple entries instead.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="from_xyz(input:IO|Path|String,guess_bonds:Bool=false,guess_names:Bool=false):self-class-method">
       <div class="signature">
         
@@ -1831,7 +1877,7 @@ the first one only. Use <code><a href="../Array.html#read%28input%3AIO%7CPath%7C
 <code><a href="../Chem/FormatReader/MultiEntry.html#each%28%26%3AT-%3E%29%3ANil-instance-method">Chem::FormatReader::MultiEntry#each</a></code> (reader can be
 obtained via <code><a href="../Chem/Format.html#reader%28type%3AChem%3A%3ASpatial%3A%3AGrid.class%29-instance-method">Chem::Format.reader</a></code>) to get multiple entries
 instead.</p>
-<p>The supported file formats are <code><a href="../Chem/Cube.html">Chem::Cube</a></code>, <code><a href="../Chem/Gen.html">Chem::Gen</a></code>, <code><a href="../Chem/Mol2.html">Chem::Mol2</a></code>, <code><a href="../Chem/Mol.html">Chem::Mol</a></code>, <code><a href="../Chem/PDB.html">Chem::PDB</a></code>, <code><a href="../Chem/VASP/Chgcar.html">Chem::VASP::Chgcar</a></code>, <code><a href="../Chem/VASP/Locpot.html">Chem::VASP::Locpot</a></code>, <code><a href="../Chem/VASP/Poscar.html">Chem::VASP::Poscar</a></code>, <code><a href="../Chem/XYZ.html">Chem::XYZ</a></code>. Use the
+<p>The supported file formats are <code><a href="../Chem/Cube.html">Chem::Cube</a></code>, <code><a href="../Chem/Gen.html">Chem::Gen</a></code>, <code><a href="../Chem/Mol2.html">Chem::Mol2</a></code>, <code><a href="../Chem/Mol.html">Chem::Mol</a></code>, <code><a href="../Chem/PDB.html">Chem::PDB</a></code>, <code><a href="../Chem/SDF.html">Chem::SDF</a></code>, <code><a href="../Chem/VASP/Chgcar.html">Chem::VASP::Chgcar</a></code>, <code><a href="../Chem/VASP/Locpot.html">Chem::VASP::Locpot</a></code>, <code><a href="../Chem/VASP/Poscar.html">Chem::VASP::Poscar</a></code>, <code><a href="../Chem/XYZ.html">Chem::XYZ</a></code>. Use the
 <code>.from_*</code> methods to customize how the object is decoded in
 the corresponding file format if possible.</p>
         </div>
@@ -1865,6 +1911,7 @@ instead.</p>
 <li><code><a href="../Chem/Mol.html">Chem::Mol</a></code> (.mol)</li>
 <li><code><a href="../Chem/Mol2.html">Chem::Mol2</a></code> (.mol2)</li>
 <li><code><a href="../Chem/PDB.html">Chem::PDB</a></code> (.ent, .pdb)</li>
+<li><code><a href="../Chem/SDF.html">Chem::SDF</a></code> (.sdf)</li>
 <li><code><a href="../Chem/XYZ.html">Chem::XYZ</a></code> (.xyz)</li>
 <li><code><a href="../Chem/VASP/Poscar.html">Chem::VASP::Poscar</a></code> (.poscar, POSCAR, CONTCAR)</li>
 <li><code><a href="../Chem/Cube.html">Chem::Cube</a></code> (.cube)</li>

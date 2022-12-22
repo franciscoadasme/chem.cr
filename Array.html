@@ -511,6 +511,21 @@
       
     </li>
   
+  <li class="parent " data-id="chem.cr/Chem/SDF" data-name="chem::sdf">
+      <a href="Chem/SDF.html">SDF</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem.cr/Chem/SDF/Reader" data-name="chem::sdf::reader">
+      <a href="Chem/SDF/Reader.html">Reader</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
   <li class="parent " data-id="chem.cr/Chem/Spatial" data-name="chem::spatial">
       <a href="Chem/Spatial.html">Spatial</a>
       
@@ -974,6 +989,20 @@ set <span class="o">&lt;&lt;</span> <span class="n">3</span></code></pre>
       </li>
     
       <li class="entry-summary">
+        <a href="#from_sdf%28input%3AIO%7CPath%7CString%2Cindexes%3AArray%28Int%29%29%3Aself-class-method" class="signature"><strong>.from_sdf</strong>(input : IO | Path | String, indexes : Array(Int)) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Creates a new array of <code><a href="Chem/Structure.html">Chem::Structure</a></code> with the entries at <em>indexes</em> encoded in <em>input</em> using the <code><a href="Chem/SDF.html">Chem::SDF</a></code> file format.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#from_sdf%28input%3AIO%7CPath%7CString%29%3Aself-class-method" class="signature"><strong>.from_sdf</strong>(input : IO | Path | String) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Creates a new array of <code><a href="Chem/Structure.html">Chem::Structure</a></code> with the entries encoded in <em>input</em> using the <code><a href="Chem/SDF.html">Chem::SDF</a></code> file format.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#from_xyz%28input%3AIO%7CPath%7CString%2Cguess_bonds%3ABool%3Dfalse%2Cguess_names%3ABool%3Dfalse%29%3Aself-class-method" class="signature"><strong>.from_xyz</strong>(input : IO | Path | String, guess_bonds : Bool = <span class="n">false</span>, guess_names : Bool = <span class="n">false</span>) : <span class="k">self</span></a>
         
           <div class="summary"><p>Creates a new array of <code><a href="Chem/Structure.html">Chem::Structure</a></code> with the entries encoded in <em>input</em> using the <code><a href="Chem/XYZ.html">Chem::XYZ</a></code> file format.</p></div>
@@ -1287,6 +1316,48 @@ Arguments are fowarded to <code><a href="Chem/PDB/Reader.html#open%28io%3AIO%2Ca
           <p>Creates a new array of <code><a href="Chem/Structure.html">Chem::Structure</a></code> with the entries at
 <em>indexes</em> encoded in <em>input</em> using the <code><a href="Chem/PDB.html">Chem::PDB</a></code> file
 format. Arguments are fowarded to <code><a href="Chem/PDB/Reader.html#open%28io%3AIO%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::PDB::Reader.open</a></code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="from_sdf(input:IO|Path|String,indexes:Array(Int)):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>from_sdf</strong>(input : IO | Path | String, indexes : <a href="Array.html">Array</a>(Int)) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#from_sdf%28input%3AIO%7CPath%7CString%2Cindexes%3AArray%28Int%29%29%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Creates a new array of <code><a href="Chem/Structure.html">Chem::Structure</a></code> with the entries at
+<em>indexes</em> encoded in <em>input</em> using the <code><a href="Chem/SDF.html">Chem::SDF</a></code> file
+format. Arguments are fowarded to <code><a href="Chem/SDF/Reader.html#open%28io%3AIO%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::SDF::Reader.open</a></code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="from_sdf(input:IO|Path|String):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>from_sdf</strong>(input : IO | Path | String) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#from_sdf%28input%3AIO%7CPath%7CString%29%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Creates a new array of <code><a href="Chem/Structure.html">Chem::Structure</a></code> with the entries
+encoded in <em>input</em> using the <code><a href="Chem/SDF.html">Chem::SDF</a></code> file format.
+Arguments are fowarded to <code><a href="Chem/SDF/Reader.html#open%28io%3AIO%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::SDF::Reader.open</a></code>.</p>
         </div>
       
       <br/>
