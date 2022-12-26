@@ -1,114 +1,54 @@
 class Chem::Topology::Detector
-  # TODO: move these to class getter or something and read from YAML.
-  CTER_T = ResidueTemplate.build do
-    description "C-ter"
-    name "CTER"
-    code 'c'
-    spec "CA-C(=O)-OXT"
-    root "C"
-  end
-  CHARGED_CTER_T = ResidueTemplate.build do
-    description "Charged C-ter"
-    name "CTER"
-    code 'c'
-    spec "CA-C(=O)-[OXT-]"
-    root "C"
-  end
-  NTER_T = ResidueTemplate.build do
-    description "N-ter"
-    name "NTER"
-    code 'n'
-    spec "CA-N"
-    root "N"
-  end
-  CHARGED_NTER_T = ResidueTemplate.build do
-    description "Charged N-ter"
-    name "NTER"
-    code 'n'
-    spec "CA-[NH3+]"
-    root "N"
+  @atom_top_specs : Hash(Atom, String)
+  @atoms_with_spec : Hash(String, Array(Atom))
+
+  def initialize(atoms : Enumerable(Atom))
+    @atom_top_specs = atoms.to_h do |atom|
+      top_spec = String.build do |io|
+        io << atom.element.symbol
+        # The order must be the same as the `AtomTemplate#top_spec`!
+        atom.bonded_atoms.sort_by(&.atomic_number.-)
+          .join(io) { |atom| io << atom.element.symbol }
+      end
+      {atom, top_spec}
+    end
+    @unmatched_atoms = atoms.to_set
+    @atoms_with_spec = atoms.to_a.group_by { |atom| @atom_top_specs[atom] }
   end
 
-  @atoms : Set(Atom)
-  @templates : Array(ResidueTemplate)
-  @atoms_by_spec : Hash(String, Array(Atom))
-
-  def initialize(atoms : AtomCollection, templates : TemplateRegistry = TemplateRegistry.default)
-    @atoms = Set(Atom).new(atoms.n_atoms).concat atoms.each_atom
-    @templates = templates.to_a.sort_by &.atoms.size.-
-
-    @atom_table = {} of Atom | AtomTemplate => String
-    compute_atom_descriptions @atoms
-    compute_atom_descriptions @templates
-    compute_atom_descriptions [CTER_T, NTER_T, CHARGED_CTER_T, CHARGED_NTER_T]
-    @atoms_by_spec = @atoms.group_by { |atom| @atom_table[atom] }
-  end
-
-  def each_match(& : MatchData ->) : Nil
-    atom_map = {} of Atom => String
-    @templates.each do |res_t|
-      next unless res_t.atoms.size <= @atoms.size
-      next unless root_atoms = @atoms_by_spec[@atom_table[res_t.root]]?
+  def detect(
+    templates : TemplateRegistry = TemplateRegistry.default
+  ) : {Array(MatchData), AtomView}
+    matches = [] of MatchData
+    templates.to_a.sort_by(&.atoms.size.-).each do |res_t| # largest to smallest
+      next unless (res_t.atoms.size <= @unmatched_atoms.size) &&
+                  (root_atoms = @atoms_with_spec[res_t.root.top_spec]?)
       i = 0
       while i < root_atoms.size
-        atom = root_atoms.unsafe_fetch(i)
-        next if mapped?(atom, atom_map)
-        if match?(res_t, atom, atom_map)
-          yield MatchData.new(res_t, atom_map.invert)
-          atom_map.each_key do |atom|
-            @atoms.delete atom
-            @atoms_by_spec[@atom_table[atom]].delete atom
+        root_atom = root_atoms.unsafe_fetch(i)
+        next unless root_atom.in?(@unmatched_atoms)
+
+        matched_atoms = search res_t, root_atom
+        if matched_atoms.size >= res_t.atoms.size # may contain Ter atoms
+          matches << MatchData.new(res_t, matched_atoms.invert)
+          matched_atoms.each_key do |atom|
+            @unmatched_atoms.delete atom
+            @atoms_with_spec[@atom_top_specs[atom]].delete atom
           end
           i -= 1 # decrease index because current atom was removed
         end
-        atom_map.clear
         i += 1
       end
     end
-  end
-
-  # TODO: Change API so `Detector.new(registry).detect(structure)`
-  def matches : Array(MatchData)
-    matches = [] of MatchData
-    each_match { |match| matches << match }
-    matches
-  end
-
-  def unmatched_atoms : AtomView
-    AtomView.new @atoms.to_a.sort_by!(&.serial)
-  end
-
-  private def compute_atom_descriptions(atoms : Enumerable(Atom))
-    atoms.each do |atom|
-      @atom_table[atom] = String.build do |io|
-        io << atom.element.symbol
-        atom.bonded_atoms.map(&.element.symbol).sort!.join io, ""
-      end
-    end
-  end
-
-  private def compute_atom_descriptions(res_types : Array(ResidueTemplate))
-    res_types.each do |res_t|
-      res_t.atoms.each do |atom_t|
-        @atom_table[atom_t] = String.build do |io|
-          bonded_atoms = res_t.bonds.compact_map(&.other?(atom_t))
-          if (bond = res_t.link_bond) && atom_t.in?(bond.atoms)
-            bonded_atoms << bond.other(atom_t)
-          end
-
-          io << atom_t.element.symbol
-          bonded_atoms.map(&.element.symbol).sort!.join io, ""
-        end
-      end
-    end
+    {matches, AtomView.new(@unmatched_atoms.to_a.sort_by!(&.serial))}
   end
 
   private def extend_match(res_t : ResidueTemplate,
-                           root : Atom,
+                           root_atom : Atom,
                            atom_map : Hash(Atom, String))
     ter_map = {} of Atom => String
-    [NTER_T, CHARGED_NTER_T, CTER_T, CHARGED_CTER_T].each do |ter_t|
-      root.each_bonded_atom do |other|
+    self.class.protein_ters.each do |ter_t|
+      root_atom.each_bonded_atom do |other|
         search ter_t, ter_t.root, other, ter_map
       end
 
@@ -120,39 +60,41 @@ class Chem::Topology::Detector
     end
   end
 
-  private def mapped?(atom : Atom, atom_map : Hash(Atom, String)) : Bool
-    !atom.in?(@atoms) || atom_map.has_key?(atom)
+  # TODO: refactor into Templates::Ter in TemplateRegistry
+  protected def self.protein_ters : Array(ResidueTemplate)
+    @@protein_ters ||= [
+      ResidueTemplate.build(&.name("CTER").spec("CA-C(=O)-OXT").root("C")),
+      ResidueTemplate.build(&.name("CTER").spec("CA-C(=O)-[OXT-]").root("C")),
+      ResidueTemplate.build(&.name("NTER").spec("CA-N").root("N")),
+      ResidueTemplate.build(&.name("NTER").spec("CA-[NH3+]").root("N")),
+    ]
   end
 
-  private def mapped?(atom_t : AtomTemplate, atom_map : Hash(Atom, String)) : Bool
-    atom_map.has_value? atom_t.name
-  end
-
-  # FIXME: if some atoms have the same, it fails to match
-  private def match?(res_t : ResidueTemplate,
-                     atom : Atom,
-                     atom_map : Hash(Atom, String)) : Bool
-    search res_t, res_t.root, atom, atom_map
-    if res_t.type.protein? && (root = atom_map.key_for?("CA"))
-      extend_match res_t, root, atom_map
+  private def search(res_t : ResidueTemplate, root_atom : Atom) : Hash(Atom, String)
+    atom_map = {} of Atom => String
+    search res_t, res_t.root, root_atom, atom_map
+    if res_t.type.protein? && (root_atom = atom_map.key_for?("CA"))
+      extend_match res_t, root_atom, atom_map
     end
-    atom_map.size >= res_t.atoms.size
+    atom_map
   end
 
-  private def match?(atom_t : AtomTemplate, atom : Atom) : Bool
-    @atom_table[atom] == @atom_table[atom_t]
-  end
-
+  # Use *matched_templates* to ensure that it's matched once as multiple
+  # atoms may match the template
   private def search(res_t : ResidueTemplate,
                      atom_t : AtomTemplate,
                      atom : Atom,
-                     atom_map : Hash(Atom, String)) : Nil
-    return if mapped?(atom, atom_map) || mapped?(atom_t, atom_map)
-    return unless match?(atom_t, atom)
+                     atom_map : Hash(Atom, String),
+                     matched_templates : Set(AtomTemplate) = Set(AtomTemplate).new) : Nil
+    return unless atom.in?(@unmatched_atoms) &&
+                  !atom_map.has_key?(atom) &&
+                  !atom_t.in?(matched_templates) &&
+                  @atom_top_specs[atom] == atom_t.top_spec
     atom_map[atom] = atom_t.name
+    matched_templates << atom_t
     res_t.bonds.compact_map(&.other?(atom_t)).each do |other_t|
       atom.each_bonded_atom do |other|
-        search res_t, other_t, other, atom_map
+        search res_t, other_t, other, atom_map, matched_templates
       end
     end
   end

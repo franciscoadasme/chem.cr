@@ -6,10 +6,11 @@ macro it_detects(description, path, expected)
 
     %structure = load_file {{path}}, guess_bonds: true
     %templates = Chem::TemplateRegistry.default.select &.name.in?(%expected.keys)
-    %detector = Chem::Topology::Detector.new %structure, %templates
+    %detector = Chem::Topology::Detector.new %structure.atoms
 
     %res_idxs = {} of String => Array(Hash(Int32, String))
-    %detector.each_match do |m|
+    %matches, _ = %detector.detect(%templates)
+    %matches.each do |m|
       %res_idxs[m.resname] ||= [] of Hash(Int32, String)
       %res_idxs[m.resname] << m.to_h.invert.transform_keys(&.serial)
     end
@@ -88,17 +89,17 @@ describe Chem::Topology::Detector do
     templates = Chem::TemplateRegistry.new
     templates.load spec_file("dmpe.mol2")
     structure = load_file "dmpe.xyz", guess_bonds: true
-    detector = Chem::Topology::Detector.new structure, templates
-    matches = detector.matches
+    detector = Chem::Topology::Detector.new structure.atoms
+    matches, unmatched_atoms = detector.detect(templates)
     matches.size.should eq 1
     matches[0].atom_names.size.should eq 109
-    detector.unmatched_atoms.should be_empty
+    unmatched_atoms.should be_empty
   end
 
-  describe "#matches" do
+  describe "#detect" do
     it "returns found matches" do
       structure = load_file "waters.xyz", guess_bonds: true
-      matches = Chem::Topology::Detector.new(structure).matches
+      matches, _ = Chem::Topology::Detector.new(structure.atoms).detect
       matches.should eq [
         Chem::Topology::MatchData.new(Chem::TemplateRegistry.default["HOH"], {
           "O"  => structure.atoms[0],
@@ -117,22 +118,19 @@ describe Chem::Topology::Detector do
         }),
       ]
     end
-  end
 
-  describe "#unmatched_atoms" do
     it "returns atoms not matched by any template" do
       structure = load_file "5e5v--unwrapped.poscar", guess_bonds: true
       registry = Chem::TemplateRegistry.default.select &.name.==("HOH")
-      detector = Chem::Topology::Detector.new structure, registry
-      detector.each_match { } # triggers search
-      detector.unmatched_atoms.try(&.size).should eq 206
+      detector = Chem::Topology::Detector.new structure.atoms
+      _, unmatched_atoms = detector.detect registry
+      unmatched_atoms.size.should eq 206
     end
 
     it "returns an empty array when all atoms are matched" do
       structure = load_file "waters.xyz", guess_bonds: true
-      detector = Chem::Topology::Detector.new structure
-      detector.each_match { } # triggers search
-      detector.unmatched_atoms.empty?.should be_true
+      _, unmatched_atoms = Chem::Topology::Detector.new(structure.atoms).detect
+      unmatched_atoms.should be_empty
     end
   end
 end

@@ -465,9 +465,8 @@ class Chem::Topology
     ele_index = Hash(Element, Int32).new(default_value: 0)
     fragment_matches = [] of Array(MatchData)
     each_fragment do |atoms|
-      detector = Detector.new atoms
-      matches = detector.matches.dup
-      detector.unmatched_atoms.each_fragment do |atoms|
+      matches, unmatched_atoms = Detector.new(atoms).detect
+      unmatched_atoms.each_fragment do |atoms|
         atom_map = atoms.index_by { |atom|
           "#{atom.element.symbol.upcase}#{ele_index[atom.element] += 1}"
         }
