@@ -35,13 +35,13 @@ class Chem::ResidueTemplate::Builder
     name_gen = HydrogenNameGenerator.new
     bonded_h_table = {} of String => Array(AtomTemplate)
     parser.atoms.sort_by(&.element.atomic_number.-).each do |atom|
+      bonds = parser.bonds.select { |bond| atom.name.in?(bond.lhs, bond.rhs) }
+
       # Calculate effective valence
       effective_valence = atom.explicit_hydrogens || 0
       effective_valence += atom.formal_charge *
                            (atom.element.valence_electrons >= 4 ? -1 : 1)
-      effective_valence += parser.bonds.sum do |bond| # sum of bond orders
-        atom.name.in?(bond.lhs, bond.rhs) ? bond.order.to_i : 0
-      end
+      effective_valence += bonds.sum &.order.to_i
       effective_valence += implicit_bonds[atom.name]? || 0
       if bond = @link_bond
         effective_valence += bond[2].to_i if atom.name.in?(bond)
@@ -54,16 +54,29 @@ class Chem::ResidueTemplate::Builder
         raise "Expected valence of #{atom.name} is #{target_valence}, \
                got #{effective_valence}"
       end
+      h_count = atom.explicit_hydrogens || (target_valence - effective_valence)
+
+      # Gather the bonded elements that defines the atom template
+      bonded_elements = bonds.map do |bond|
+        parser.atom_map[atom.name == bond.lhs ? bond.rhs : bond.lhs].element
+      end
+      @link_bond.try do |lhs, rhs, order|
+        case atom.name
+        when lhs then bonded_elements << parser.atom_map[rhs].element
+        when rhs then bonded_elements << parser.atom_map[lhs].element
+        end
+      end
+      h_count.times { bonded_elements << PeriodicTable::H }
 
       # Create and register atom template
-      atom_t = AtomTemplate.new(atom.name, atom.element, atom.formal_charge, target_valence)
+      atom_t = AtomTemplate.new(atom.name, atom.element, bonded_elements,
+        atom.formal_charge, target_valence)
       atom_t_map[atom_t.name] = atom_t
 
       # Add hydrogens (either explicit or implicit)
-      h_count = atom.explicit_hydrogens || (target_valence - effective_valence)
       h_count.times do |i|
         name = name_gen.next_for(atom_t, (i if h_count > 1))
-        h_atom = AtomTemplate.new(name, PeriodicTable::H, valence: 1)
+        h_atom = AtomTemplate.new(name, PeriodicTable::H, [atom_t.element])
         (bonded_h_table[atom_t.name] ||= [] of AtomTemplate) << h_atom
         bond_ts << BondTemplate.new(atom_t, h_atom)
       end

@@ -138,6 +138,7 @@ module Chem
     # atom.match?(AtomTemplate.new("CA", element: "N")) # => false
     # atom.match?(AtomTemplate.new("ND2"))              # => false
     # ```
+    # TODO: compare topology via AtomTemplate#top_spec
     def matches?(atom_t : AtomTemplate) : Bool
       @name == atom_t.name && @element == atom_t.element
     end
