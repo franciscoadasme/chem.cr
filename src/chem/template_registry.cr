@@ -288,6 +288,14 @@ class Chem::TemplateRegistry
   end
 
   # Convenience method that creates and registers a new residue
+  # template from a structure. See `ResidueTemplate.build` and `#<<`.
+  def register(structure : Structure) : ResidueTemplate
+    res_t = ResidueTemplate.build structure.residues[0]
+    self << res_t
+    res_t
+  end
+
+  # Convenience method that creates and registers a new residue
   # template. See `ResidueTemplate::Builder` and `#<<`.
   def register(&) : ResidueTemplate
     builder = ResidueTemplate::Builder.new @spec_aliases
@@ -350,6 +358,13 @@ end
 # documentation and `TemplateRegistry#parse` for details.
 def Chem.parse_templates(filepath : String) : Nil
   Chem::TemplateRegistry.default.parse filepath
+end
+
+# Creates and registers a residue template from a structure into the
+# _global registry_. Refer to the `TemplateRegistry` documentation and
+# `TemplateRegistry#register` for details.
+def Chem.register_template(structure : Structure) : Nil
+  Chem::TemplateRegistry.default.register structure
 end
 
 # Registers an aliases to a known residue template into the _global
