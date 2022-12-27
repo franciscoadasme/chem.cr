@@ -1257,13 +1257,6 @@ information declared in the annotations.</p>
       </li>
     
       <li class="entry-summary">
-        <a href="#reader%28type%3AChem%3A%3ATopology.class%29-instance-method" class="signature"><strong>#reader</strong>(type : <span class="t">Chem</span><span class="t">::</span><span class="t">Topology</span>.<span class="k">class</span>)</a>
-        
-          <div class="summary"><p>Returns the reader associated with the format.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
         <a href="#reader%28type%3AArray%28Chem%3A%3AStructure%29.class%29-instance-method" class="signature"><strong>#reader</strong>(type : <span class="t">Array</span>(<span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>).<span class="k">class</span>)</a>
         
           <div class="summary"><p>Returns the reader associated with the format.</p></div>
@@ -1968,33 +1961,6 @@ write only.</p>
         def <strong>reader</strong>(type : <span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>.<span class="k">class</span>)
 
         <a class="method-permalink" href="#reader%28type%3AChem%3A%3AStructure.class%29-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Returns the reader associated with the format. Raises
-<code>ArgumentError</code> if the format does not decode <em>type</em> or it is
-write only.</p>
-<pre><code class="language-crystal"><span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">XYZ</span>.reader(<span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>)           <span class="c"># =&gt; Chem::XYZ::Reader</span>
-<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">DX</span>.reader(<span class="t">Chem</span><span class="t">::</span><span class="t">Spatial</span><span class="t">::</span><span class="t">Grid</span>)        <span class="c"># =&gt; Chem::DX::Reader</span>
-<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">XYZ</span>.reader(<span class="t">Array</span>(<span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>))    <span class="c"># =&gt; Chem::XYZ::Reader</span>
-<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">DX</span>.reader(<span class="t">Array</span>(<span class="t">Chem</span><span class="t">::</span><span class="t">Spatial</span><span class="t">::</span><span class="t">Grid</span>)) <span class="c"># raises ArgumentError</span>
-<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">VMD</span>.reader(<span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>)           <span class="c"># raises ArgumentError</span>
-<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">XYZ</span>.reader(<span class="t">Int32</span>)                     <span class="c"># raises ArgumentError</span></code></pre>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="reader(type:Chem::Topology.class)-instance-method">
-      <div class="signature">
-        
-        def <strong>reader</strong>(type : <span class="t">Chem</span><span class="t">::</span><span class="t">Topology</span>.<span class="k">class</span>)
-
-        <a class="method-permalink" href="#reader%28type%3AChem%3A%3ATopology.class%29-instance-method">#</a>
       </div>
       
         <div class="doc">

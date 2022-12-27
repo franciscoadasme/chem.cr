@@ -885,68 +885,6 @@
 
 
 
-  
-    <h2>
-      <a id="constant-summary" class="anchor" href="#constant-summary">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-      Constant Summary
-    </h2>
-  
-  <dl>
-    
-      <dt class="entry-const" id="CHARGED_CTER_T">
-        <strong>CHARGED_CTER_T</strong> = <code><span class="t">ResidueTemplate</span>.build <span class="k">do</span>
-  description(<span class="s">&quot;Charged C-ter&quot;</span>)
-  name(<span class="s">&quot;CTER&quot;</span>)
-  code(<span class="s">&#39;c&#39;</span>)
-  spec(<span class="s">&quot;CA-C(=O)-[OXT-]&quot;</span>)
-  root(<span class="s">&quot;C&quot;</span>)
-<span class="k">end</span></code>
-      </dt>
-      
-    
-      <dt class="entry-const" id="CHARGED_NTER_T">
-        <strong>CHARGED_NTER_T</strong> = <code><span class="t">ResidueTemplate</span>.build <span class="k">do</span>
-  description(<span class="s">&quot;Charged N-ter&quot;</span>)
-  name(<span class="s">&quot;NTER&quot;</span>)
-  code(<span class="s">&#39;n&#39;</span>)
-  spec(<span class="s">&quot;CA-[NH3+]&quot;</span>)
-  root(<span class="s">&quot;N&quot;</span>)
-<span class="k">end</span></code>
-      </dt>
-      
-    
-      <dt class="entry-const" id="CTER_T">
-        <strong>CTER_T</strong> = <code><span class="t">ResidueTemplate</span>.build <span class="k">do</span>
-  description(<span class="s">&quot;C-ter&quot;</span>)
-  name(<span class="s">&quot;CTER&quot;</span>)
-  code(<span class="s">&#39;c&#39;</span>)
-  spec(<span class="s">&quot;CA-C(=O)-OXT&quot;</span>)
-  root(<span class="s">&quot;C&quot;</span>)
-<span class="k">end</span></code>
-      </dt>
-      
-      <dd class="entry-const-doc">
-        <p><span class="flag orange">TODO</span>  move these to class getter or something and read from YAML.</p>
-      </dd>
-      
-    
-      <dt class="entry-const" id="NTER_T">
-        <strong>NTER_T</strong> = <code><span class="t">ResidueTemplate</span>.build <span class="k">do</span>
-  description(<span class="s">&quot;N-ter&quot;</span>)
-  name(<span class="s">&quot;NTER&quot;</span>)
-  code(<span class="s">&#39;n&#39;</span>)
-  spec(<span class="s">&quot;CA-N&quot;</span>)
-  root(<span class="s">&quot;N&quot;</span>)
-<span class="k">end</span></code>
-      </dt>
-      
-    
-  </dl>
-
 
 
   <h2>
@@ -960,7 +898,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28atoms%3AAtomCollection%2Ctemplates%3ATemplateRegistry%3DTemplateRegistry.default%29-class-method" class="signature"><strong>.new</strong>(atoms : AtomCollection, templates : TemplateRegistry = <span class="t">TemplateRegistry</span>.default)</a>
+        <a href="#new%28atoms%3AEnumerable%28Atom%29%29-class-method" class="signature"><strong>.new</strong>(atoms : Enumerable(Atom))</a>
         
       </li>
     
@@ -981,19 +919,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#each_match%28%26%3AMatchData-%3E%29%3ANil-instance-method" class="signature"><strong>#each_match</strong>(& : MatchData -> ) : Nil</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#matches%3AArray%28MatchData%29-instance-method" class="signature"><strong>#matches</strong> : Array(MatchData)</a>
-        
-          <div class="summary"><p><span class="flag orange">TODO</span>  Change API so <code>Detector.new(registry).detect(structure)</code></p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#unmatched_atoms%3AAtomView-instance-method" class="signature"><strong>#unmatched_atoms</strong> : AtomView</a>
+        <a href="#detect%28templates%3ATemplateRegistry%3DTemplateRegistry.default%29%3ATuple%28Array%28MatchData%29%2CAtomView%29-instance-method" class="signature"><strong>#detect</strong>(templates : TemplateRegistry = <span class="t">TemplateRegistry</span>.default) : Tuple(Array(MatchData), AtomView)</a>
         
       </li>
     
@@ -1037,12 +963,12 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(atoms:AtomCollection,templates:TemplateRegistry=TemplateRegistry.default)-class-method">
+    <div class="entry-detail" id="new(atoms:Enumerable(Atom))-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(atoms : <a href="../../Chem/AtomCollection.html">AtomCollection</a>, templates : <a href="../../Chem/TemplateRegistry.html">TemplateRegistry</a> = <span class="t">TemplateRegistry</span>.default)
+        def self.<strong>new</strong>(atoms : <a href="../../Enumerable.html">Enumerable</a>(<a href="../../Chem/Atom.html">Atom</a>))
 
-        <a class="method-permalink" href="#new%28atoms%3AAtomCollection%2Ctemplates%3ATemplateRegistry%3DTemplateRegistry.default%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28atoms%3AEnumerable%28Atom%29%29-class-method">#</a>
       </div>
       
       <br/>
@@ -1065,45 +991,12 @@
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="each_match(&amp;:MatchData-&gt;):Nil-instance-method">
+    <div class="entry-detail" id="detect(templates:TemplateRegistry=TemplateRegistry.default):Tuple(Array(MatchData),AtomView)-instance-method">
       <div class="signature">
         
-        def <strong>each_match</strong>(& : <a href="../../Chem/Topology/MatchData.html">MatchData</a> -> ) : Nil
+        def <strong>detect</strong>(templates : <a href="../../Chem/TemplateRegistry.html">TemplateRegistry</a> = <span class="t">TemplateRegistry</span>.default) : Tuple(<a href="../../Array.html">Array</a>(<a href="../../Chem/Topology/MatchData.html">MatchData</a>), <a href="../../Chem/AtomView.html">AtomView</a>)
 
-        <a class="method-permalink" href="#each_match%28%26%3AMatchData-%3E%29%3ANil-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="matches:Array(MatchData)-instance-method">
-      <div class="signature">
-        
-        def <strong>matches</strong> : <a href="../../Array.html">Array</a>(<a href="../../Chem/Topology/MatchData.html">MatchData</a>)
-
-        <a class="method-permalink" href="#matches%3AArray%28MatchData%29-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p><span class="flag orange">TODO</span>  Change API so <code>Detector.new(registry).detect(structure)</code></p>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="unmatched_atoms:AtomView-instance-method">
-      <div class="signature">
-        
-        def <strong>unmatched_atoms</strong> : <a href="../../Chem/AtomView.html">AtomView</a>
-
-        <a class="method-permalink" href="#unmatched_atoms%3AAtomView-instance-method">#</a>
+        <a class="method-permalink" href="#detect%28templates%3ATemplateRegistry%3DTemplateRegistry.default%29%3ATuple%28Array%28MatchData%29%2CAtomView%29-instance-method">#</a>
       </div>
       
       <br/>

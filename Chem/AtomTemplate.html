@@ -898,7 +898,12 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28name%3AString%2Celement%3AElement%7CString%2Cformal_charge%3AInt32%3D0%2Cvalence%3AInt32%3F%3Dnil%29-class-method" class="signature"><strong>.new</strong>(name : String, element : Element | String, formal_charge : Int32 = <span class="n">0</span>, valence : Int32? = <span class="n">nil</span>)</a>
+        <a href="#new%28name%3AString%2Celement%3AElement%2Cbonded_elements%3AArray%28Element%29%2Cformal_charge%3AInt32%3D0%2Cvalence%3AInt32%3F%3Dnil%29-class-method" class="signature"><strong>.new</strong>(name : String, element : Element, bonded_elements : Array(Element), formal_charge : Int32 = <span class="n">0</span>, valence : Int32? = <span class="n">nil</span>)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new%28name%3AString%2Ctop_spec%3AString%2Cformal_charge%3AInt32%3D0%2Cvalence%3AInt32%3F%3Dnil%29%3Aself-class-method" class="signature"><strong>.new</strong>(name : String, top_spec : String, formal_charge : Int32 = <span class="n">0</span>, valence : Int32? = <span class="n">nil</span>) : <span class="k">self</span></a>
         
       </li>
     
@@ -917,6 +922,11 @@
     Instance Method Summary
   </h2>
   <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#bonded_elements%3AArray%3A%3AView%28Element%29-instance-method" class="signature"><strong>#bonded_elements</strong> : Array::View(Element)</a>
+        
+      </li>
     
       <li class="entry-summary">
         <a href="#element%3AElement-instance-method" class="signature"><strong>#element</strong> : Element</a>
@@ -942,6 +952,11 @@
         <a href="#to_s%28io%3AIO%29-instance-method" class="signature"><strong>#to_s</strong>(io : IO)</a>
         
           <div class="summary"><p>Appends a short String representation of this object which includes its class name and its object address.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#top_spec%3AString-instance-method" class="signature"><strong>#top_spec</strong> : String</a>
         
       </li>
     
@@ -990,12 +1005,26 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(name:String,element:Element|String,formal_charge:Int32=0,valence:Int32?=nil)-class-method">
+    <div class="entry-detail" id="new(name:String,element:Element,bonded_elements:Array(Element),formal_charge:Int32=0,valence:Int32?=nil)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(name : String, element : <a href="../Chem/Element.html">Element</a> | String, formal_charge : Int32 = <span class="n">0</span>, valence : Int32? = <span class="n">nil</span>)
+        def self.<strong>new</strong>(name : String, element : <a href="../Chem/Element.html">Element</a>, bonded_elements : <a href="../Array.html">Array</a>(<a href="../Chem/Element.html">Element</a>), formal_charge : Int32 = <span class="n">0</span>, valence : Int32? = <span class="n">nil</span>)
 
-        <a class="method-permalink" href="#new%28name%3AString%2Celement%3AElement%7CString%2Cformal_charge%3AInt32%3D0%2Cvalence%3AInt32%3F%3Dnil%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28name%3AString%2Celement%3AElement%2Cbonded_elements%3AArray%28Element%29%2Cformal_charge%3AInt32%3D0%2Cvalence%3AInt32%3F%3Dnil%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(name:String,top_spec:String,formal_charge:Int32=0,valence:Int32?=nil):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(name : String, top_spec : String, formal_charge : Int32 = <span class="n">0</span>, valence : Int32? = <span class="n">nil</span>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#new%28name%3AString%2Ctop_spec%3AString%2Cformal_charge%3AInt32%3D0%2Cvalence%3AInt32%3F%3Dnil%29%3Aself-class-method">#</a>
       </div>
       
       <br/>
@@ -1017,6 +1046,20 @@
 </a>
     Instance Method Detail
   </h2>
+  
+    <div class="entry-detail" id="bonded_elements:Array::View(Element)-instance-method">
+      <div class="signature">
+        
+        def <strong>bonded_elements</strong> : Array::View(<a href="../Chem/Element.html">Element</a>)
+
+        <a class="method-permalink" href="#bonded_elements%3AArray%3A%3AView%28Element%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
   
     <div class="entry-detail" id="element:Element-instance-method">
       <div class="signature">
@@ -1097,6 +1140,20 @@ which includes its class name and its object address.</p>
 
 <span class="t">Person</span>.new(<span class="s">&quot;John&quot;</span>, <span class="n">32</span>).to_s <span class="c"># =&gt; #&lt;Person:0x10a199f20&gt;</span></code></pre>
         </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="top_spec:String-instance-method">
+      <div class="signature">
+        
+        def <strong>top_spec</strong> : String
+
+        <a class="method-permalink" href="#top_spec%3AString-instance-method">#</a>
+      </div>
       
       <br/>
       <div>
