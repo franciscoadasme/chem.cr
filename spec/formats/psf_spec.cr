@@ -2,7 +2,7 @@ require "../spec_helper.cr"
 
 describe Chem::PSF::Reader do
   it "parses a PSF file" do
-    top = Chem::Topology.from_psf spec_file("5yok_initial.psf")
+    top = Chem::Structure.from_psf(spec_file("5yok_initial.psf")).topology
     top.atoms.size.should eq 819
     top.bonds.size.should eq 804
     top.angles.size.should eq 1416
@@ -32,7 +32,7 @@ describe Chem::PSF::Reader do
   end
 
   it "parses PSF with non-multiple number of records (#178)" do
-    top = Chem::Topology.from_psf spec_file("DTD.psf")
+    top = Chem::Structure.from_psf(spec_file("DTD.psf")).topology
     top.atoms.size.should eq 16
     top.bonds.size.should eq 16
     top.angles.size.should eq 28
@@ -41,7 +41,7 @@ describe Chem::PSF::Reader do
   end
 
   it "parses PSF with extended format (#190)" do
-    top = Chem::Topology.from_psf spec_file("N4I.psf")
+    top = Chem::Structure.from_psf(spec_file("N4I.psf")).topology
     top.atoms.size.should eq 67
     top.bonds.size.should eq 70
     top.angles.size.should eq 124

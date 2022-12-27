@@ -17,14 +17,14 @@ module Chem::PSF
   end
 
   class Reader
-    include FormatReader(Topology)
+    include FormatReader(Structure)
 
     def initialize(@io : IO, @sync_close : Bool = false)
       @pull = PullParser.new @io
       @atoms = [] of Atom
     end
 
-    protected def decode_entry : Topology
+    protected def decode_entry : Structure
       raise IO::EOFError.new if @pull.eof?
 
       @pull.error("Invalid PSF header") unless @pull.next_s? == "PSF"
@@ -39,7 +39,7 @@ module Chem::PSF
       @pull.skip_blank_lines
 
       n_atoms = parse_section_header "ATOM"
-      top = Structure.build do |builder|
+      structure = Structure.build do |builder|
         prev_seg = nil
         n_atoms.times do
           @pull.next_line || @pull.error("Expected ATOM line")
@@ -83,16 +83,16 @@ module Chem::PSF
 
           prev_seg = segment
         end
-      end.topology
+      end
 
       parse_connectivity(Bond, "BOND").each do |bond|
         bond.atoms[0].bonds << bond
       end
-      top.angles = parse_connectivity(Angle, "THETA")
-      top.dihedrals = parse_connectivity(Dihedral, "PHI")
-      top.impropers = parse_connectivity(Improper, "IMPHI")
+      structure.topology.angles = parse_connectivity(Angle, "THETA")
+      structure.topology.dihedrals = parse_connectivity(Dihedral, "PHI")
+      structure.topology.impropers = parse_connectivity(Improper, "IMPHI")
 
-      top
+      structure
     end
 
     private def parse_connectivity(type : T.class, title : String) : Array(T) forall T
