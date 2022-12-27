@@ -178,16 +178,15 @@ describe Chem::Format do
     it "fails for non-decoded types", tags: %w(codegen) do
       assert_error "Chem::Format::PDB.reader(Int32)",
         "expected argument #1 to 'Chem::Format#reader' to be \
-        Array(Chem::Structure).class, Chem::Spatial::Grid.class, \
-        Chem::Structure.class or Chem::Topology.class, not Int32.class"
+        Array(Chem::Structure).class, Chem::Spatial::Grid.class or \
+        Chem::Structure.class, not Int32.class"
     end
 
     it "fails with an array for a single-entry type", tags: %w(codegen) do
       assert_error "Chem::Format::DX.reader(Array(Chem::Spatial::Grid))",
         "expected argument #1 to 'Chem::Format#reader' to be \
-        Array(Chem::Structure).class, Chem::Spatial::Grid.class, \
-        Chem::Structure.class or Chem::Topology.class, not \
-        Array(Chem::Spatial::Grid).class"
+        Array(Chem::Structure).class, Chem::Spatial::Grid.class or \
+        Chem::Structure.class, not Array(Chem::Spatial::Grid).class"
     end
   end
 
