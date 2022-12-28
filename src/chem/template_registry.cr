@@ -356,6 +356,9 @@ class Chem::TemplateRegistry
     @table.each_value do |res_t|
       registry << res_t if !res_t.in?(registry) && yield res_t
     end
+    ters.each do |ter_t|
+      registry << ter_t
+    end
     registry
   end
 

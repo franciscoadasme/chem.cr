@@ -23,6 +23,7 @@ class Chem::Topology::Detector
     templates.to_a.sort_by(&.atoms.size.-).each do |res_t| # largest to smallest
       next unless (res_t.atoms.size <= @unmatched_atoms.size) &&
                   (root_atoms = @atoms_with_spec[res_t.root.top_spec]?)
+      ters = templates.ters.select &.type.==(res_t.type)
       i = 0
       while i < root_atoms.size
         root_atom = root_atoms.unsafe_fetch(i)
@@ -30,8 +31,7 @@ class Chem::Topology::Detector
 
         atom_map = {} of AtomTemplate => Atom
         search res_t, res_t.root, root_atom, atom_map
-        # TODO: use generic Ters
-        extend_search atom_map, self.class.protein_ters if res_t.type.protein?
+        extend_search atom_map, ters unless ters.empty?
         if atom_map.size >= res_t.atoms.size # may contain Ter atoms
           matches << MatchData.new(res_t, sort_match(atom_map, res_t.atoms))
           atom_map.each_value do |atom|
@@ -64,16 +64,6 @@ class Chem::Topology::Detector
         ter_map.clear
       end
     end
-  end
-
-  # TODO: refactor into Templates::Ter in TemplateRegistry
-  protected def self.protein_ters : Array(TerTemplate)
-    @@protein_ters ||= [
-      TerTemplate.build(&.name("CTER").spec("C{-C}(=O)-OXT").root("C")),
-      TerTemplate.build(&.name("CTER").spec("C{-C}(=O)-[OXT-]").root("C")),
-      TerTemplate.build(&.name("NTER").spec("N{-C}").root("N")),
-      TerTemplate.build(&.name("NTER").spec("[NH3+]{-C}").root("N")),
-    ]
   end
 
   # Use *visited* to ensure that it's matched once as multiple atoms may

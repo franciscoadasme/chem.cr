@@ -159,3 +159,24 @@ templates:
       - [["CG1", "CG2"]]
 aliases:
   backbone: "N(-H)-CA(-HA)(-C=O)"
+ters:
+  - description: Protonated C-terminus
+    name: CTP
+    type: protein
+    spec: "C{-C}(=O)-OXT"
+    root: C
+  - description: Standard (charged) C-terminus
+    name: CTER
+    type: protein
+    spec: "C{-C}(=O)-[OXT-]"
+    root: C
+  - description: Canonical N-terminus
+    name: NTC
+    type: protein
+    spec: "N{-C}"
+    root: N
+  - description: Standard (charged) N-terminus
+    name: NTER
+    type: protein
+    spec: "[NH3+]{-C}"
+    root: N
