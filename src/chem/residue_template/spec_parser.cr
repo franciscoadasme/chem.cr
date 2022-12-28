@@ -125,30 +125,33 @@ class Chem::ResidueTemplate::SpecParser
         if char = peek_char
           raise "Expected bond after a branch" unless char.in?("-=#(")
         end
-      when '{' # alias like "{backbone}"
-        next_char
-        name = consume_while &.ascii_lowercase?
-        raise "Expected alias" if name.empty?
-        spec = @aliases.try(&.[name]?) || raise "Unknown alias #{name}"
-        raise "Unclosed alias" unless next_char == '}'
-        raw_value = String.build do |io|
-          io << @reader.string[0, @reader.pos - name.size - 1] \
-            << spec \
-            << @reader.string[(@reader.pos + 1)..]
-        end
-        @reader = Char::Reader.new(raw_value, @reader.pos - name.size - 1)
-        advance_char = false # reader already consumes first char on creation
+      when '{'
       when '%'
         next_char
-        label_id = read_int
-        if bond_atom # after a bond so add bond
-          atom = label_map[label_id]? || raise "Unknown label %#{label_id}"
-          add_bond atom, bond_atom, bond_order
-          bond_atom = nil
-          label_map.delete label_id
-        else # label previous atom
-          raise "Duplicate label %#{label_id}" if label_map.has_key?(label_id)
-          label_map[label_id] = expect_atom("before label %#{label_id}")
+        if current_char == '{' # alias like "{backbone}"
+          next_char
+          name = consume_while &.ascii_lowercase?
+          raise "Expected alias" if name.empty?
+          spec = @aliases.try(&.[name]?) || raise "Unknown alias #{name}"
+          raise "Unclosed alias" unless next_char == '}'
+          raw_value = String.build do |io|
+            io << @reader.string[0, @reader.pos - name.size - 1] \
+              << spec \
+              << @reader.string[(@reader.pos + 1)..]
+          end
+          @reader = Char::Reader.new(raw_value, @reader.pos - name.size - 1)
+          advance_char = false # reader already consumes first char on creation
+        else                   # label
+          label_id = read_int
+          if bond_atom # after a bond so add bond
+            atom = label_map[label_id]? || raise "Unknown label %#{label_id}"
+            add_bond atom, bond_atom, bond_order
+            bond_atom = nil
+            label_map.delete label_id
+          else # label previous atom
+            raise "Duplicate label %#{label_id}" if label_map.has_key?(label_id)
+            label_map[label_id] = expect_atom("before label %#{label_id}")
+          end
         end
       when '*'
         raise "Expected bond before implicit atom '*'" unless bond_atom

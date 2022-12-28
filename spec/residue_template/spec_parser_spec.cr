@@ -3,7 +3,7 @@ require "../spec_helper"
 describe Chem::ResidueTemplate::SpecParser do
   it "parses aliases" do
     parser = Chem::ResidueTemplate::SpecParser.new(
-      "{foo}-CB-{bar}-CD2={baz}",
+      "%{foo}-CB-%{bar}-CD2=%{baz}",
       aliases: {
         "foo" => "C-CA",
         "bar" => "CG(=CD1)",

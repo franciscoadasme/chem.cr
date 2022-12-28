@@ -22,7 +22,7 @@ describe Chem::ResidueTemplate::Builder do
       name "ALA"
       code 'A'
       type :protein
-      spec "{backbone}-CB"
+      spec "%{backbone}-CB"
     end
     res_t.atoms.map(&.name).should eq bb_names + ["CB", "HB1", "HB2", "HB3"]
     res_t.bonds.size.should eq 9
@@ -35,7 +35,7 @@ describe Chem::ResidueTemplate::Builder do
       name "ILE"
       code 'I'
       type :protein
-      spec "{backbone}-CB(-CG1-CD1)-CG2"
+      spec "%{backbone}-CB(-CG1-CD1)-CG2"
     end
     names = bb_names + ["CB", "HB", "CG1", "HG11", "HG12", "CD1", "HD11", "HD12",
                         "HD13", "CG2", "HG21", "HG22", "HG23"]
@@ -50,7 +50,7 @@ describe Chem::ResidueTemplate::Builder do
       name "LYS"
       code 'K'
       type :protein
-      spec "{backbone}-CB-CG-CD-CE-[NZH3+]"
+      spec "%{backbone}-CB-CG-CD-CE-[NZH3+]"
     end
     names = bb_names + ["CB", "HB1", "HB2", "CG", "HG1", "HG2", "CD", "HD1", "HD2",
                         "CE", "HE1", "HE2", "NZ", "HZ1", "HZ2", "HZ3"]
@@ -65,7 +65,7 @@ describe Chem::ResidueTemplate::Builder do
       name "ASP"
       code 'D'
       type :protein
-      spec "{backbone}-CB-CG(=OE1)-[OE2-]"
+      spec "%{backbone}-CB-CG(=OE1)-[OE2-]"
     end
     res_t.atoms.map(&.name).should eq(bb_names + ["CB", "HB1", "HB2", "CG", "OE1", "OE2"])
     res_t.bonds.size.should eq 11
@@ -88,7 +88,7 @@ describe Chem::ResidueTemplate::Builder do
       name "ARG"
       code 'R'
       type :protein
-      spec "{backbone}-CB-CG-CD-NE-CZ(-NH1)=[NH2H2+]"
+      spec "%{backbone}-CB-CG-CD-NE-CZ(-NH1)=[NH2H2+]"
     end
 
     names = bb_names + ["CB", "HB1", "HB2", "CG", "HG1", "HG2", "CD", "HD1", "HD2",
@@ -105,7 +105,7 @@ describe Chem::ResidueTemplate::Builder do
       name "HIS"
       code 'H'
       type :protein
-      spec "{backbone}-CB-CG%1=CD2-NE2=CE1-ND1-%1"
+      spec "%{backbone}-CB-CG%1=CD2-NE2=CE1-ND1-%1"
     end
 
     names = bb_names + ["CB", "HB1", "HB2", "CG", "CD2", "HD2", "NE2", "CE1", "HE1",
@@ -121,7 +121,7 @@ describe Chem::ResidueTemplate::Builder do
       name "HIS"
       code 'H'
       type :protein
-      spec "{backbone}-CB-CG%1-ND1-CE1=NE2-CD2=%1"
+      spec "%{backbone}-CB-CG%1-ND1-CE1=NE2-CD2=%1"
     end
 
     names = bb_names + ["CB", "HB1", "HB2", "CG", "ND1", "HD1", "CE1", "HE1", "NE2",
@@ -137,7 +137,7 @@ describe Chem::ResidueTemplate::Builder do
       name "TRP"
       code 'W'
       type :protein
-      spec "{backbone}-CB-CG%1=CD1-NE1-CE2(=CD2%2-%1)-CZ2=CH2-CZ3=CE3-%2"
+      spec "%{backbone}-CB-CG%1=CD1-NE1-CE2(=CD2%2-%1)-CZ2=CH2-CZ3=CE3-%2"
     end
 
     names = bb_names + ["CB", "HB1", "HB2", "CG", "CD1", "HD1", "NE1", "HE1", "CE2",
@@ -217,7 +217,7 @@ describe Chem::ResidueTemplate::Builder do
         name "TRP"
         code 'W'
         type :protein
-        spec "{backbone}-CB-CG(=CD)(-CZ)-[OTX-]"
+        spec "%{backbone}-CB-CG(=CD)(-CZ)-[OTX-]"
       end
     end
   end
@@ -327,7 +327,7 @@ describe Chem::ResidueTemplate::Builder do
   it "guesses root to be the most complex atom" do
     res_t = build_template do
       name "TRP"
-      spec "{backbone}-CB-CG%1=CD1-NE1-CE2(-CZ2=CH2-CZ3=CE3-CD2%2)=%2-%1"
+      spec "%{backbone}-CB-CG%1=CD1-NE1-CE2(-CZ2=CH2-CZ3=CE3-CD2%2)=%2-%1"
     end
     res_t.root.should eq res_t["CE2"]
 

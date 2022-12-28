@@ -94,7 +94,7 @@ describe Chem::TemplateRegistry do
             type: protein
             link_bond: C-N
             root: CA
-            spec: '{backbone}-CB-CG%1=CD1-CE1=CZ-CE2=CD2-%1'
+            spec: '%{backbone}-CB-CG%1=CD1-CE1=CZ-CE2=CD2-%1'
             symmetry:
               - [[CD1, CD2], [CE1, CE2]]
         aliases:
@@ -146,7 +146,7 @@ describe Chem::TemplateRegistry do
       content = <<-YAML
         templates:
           - name: ASD
-            spec: '{asd}-CZ'
+            spec: '%{asd}-CZ'
         aliases:
           asd: 'CX=CY'
         YAML
@@ -188,7 +188,7 @@ describe Chem::TemplateRegistry do
     it "register an spec alias" do
       registry = Chem::TemplateRegistry.new
       registry.spec_alias "asd", "CX=CY"
-      registry.register &.name("ASD").spec("{asd}-CZ").root("CX")
+      registry.register &.name("ASD").spec("%{asd}-CZ").root("CX")
       registry["ASD"].atoms.count(&.element.carbon?).should eq 3
     end
   end
