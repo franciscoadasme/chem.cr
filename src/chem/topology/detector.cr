@@ -28,10 +28,13 @@ class Chem::Topology::Detector
         root_atom = root_atoms.unsafe_fetch(i)
         next unless root_atom.in?(@unmatched_atoms)
 
-        matched_atoms = search res_t, root_atom
-        if matched_atoms.size >= res_t.atoms.size # may contain Ter atoms
-          matches << MatchData.new(res_t, sort_match(matched_atoms, res_t.atoms))
-          matched_atoms.each_value do |atom|
+        atom_map = {} of AtomTemplate => Atom
+        search res_t, res_t.root, root_atom, atom_map
+        # TODO: use generic Ters
+        extend_search atom_map, self.class.protein_ters if res_t.type.protein?
+        if atom_map.size >= res_t.atoms.size # may contain Ter atoms
+          matches << MatchData.new(res_t, sort_match(atom_map, res_t.atoms))
+          atom_map.each_value do |atom|
             @unmatched_atoms.delete atom
             @atoms_with_spec[@atom_top_specs[atom]].delete atom
           end
@@ -43,42 +46,35 @@ class Chem::Topology::Detector
     {matches, AtomView.new(@unmatched_atoms.to_a.sort_by!(&.serial))}
   end
 
-  # TODO: drop root and use res_t's root
-  private def extend_match(res_t : ResidueTemplate,
-                           root_atom : Atom,
-                           atom_map : Hash(AtomTemplate, Atom))
+  private def extend_search(
+    atom_map : Hash(AtomTemplate, Atom),
+    ters : Enumerable(ResidueTemplate)
+  ) : Nil
+    visited = atom_map.values.to_set
+    unmatched_neighbors = visited.flat_map(&.bonded_atoms).reject!(&.in?(visited))
     ter_map = {} of AtomTemplate => Atom
-    self.class.protein_ters.each do |ter_t|
-      root_atom.each_bonded_atom do |other|
-        search ter_t, ter_t.root, other, ter_map
+    ters.each do |ter_t|
+      unmatched_neighbors.each do |atom|
+        next unless @atom_top_specs[atom] == ter_t.root.top_spec
+        search ter_t, ter_t.root, atom, ter_map, visited.dup
+        if ter_map.size == ter_t.atoms.size - 4 # FIXME: ter has an extra CH3
+          atom_map.merge! ter_map
+          return
+        end
+        ter_map.clear
       end
-
-      if ter_map.size == ter_t.atoms.size - 4 # ter has an extra CH3
-        atom_map.merge! ter_map
-        break
-      end
-      ter_map.clear
     end
   end
 
   # TODO: refactor into Templates::Ter in TemplateRegistry
   protected def self.protein_ters : Array(ResidueTemplate)
     @@protein_ters ||= [
+      # FIXME: use implicit bonds, otherwise it will add Hs
       ResidueTemplate.build(&.name("CTER").spec("CA-C(=O)-OXT").root("C")),
       ResidueTemplate.build(&.name("CTER").spec("CA-C(=O)-[OXT-]").root("C")),
       ResidueTemplate.build(&.name("NTER").spec("CA-N").root("N")),
       ResidueTemplate.build(&.name("NTER").spec("CA-[NH3+]").root("N")),
     ]
-  end
-
-  private def search(res_t : ResidueTemplate, root_atom : Atom) : Hash(AtomTemplate, Atom)
-    atom_map = {} of AtomTemplate => Atom
-    search res_t, res_t.root, root_atom, atom_map
-    # TODO: make extend_match use root info from template
-    if res_t.type.protein? && (root_atom = atom_map[res_t["CA"]]?)
-      extend_match res_t, root_atom, atom_map
-    end
-    atom_map
   end
 
   # Use *visited* to ensure that it's matched once as multiple atoms may
