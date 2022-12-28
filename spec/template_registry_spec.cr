@@ -153,6 +153,19 @@ describe Chem::TemplateRegistry do
       registry = Chem::TemplateRegistry.new.parse(content)
       registry["ASD"].atoms.count(&.element.carbon?).should eq 3
     end
+
+    it "parses ters" do
+      content = <<-YAML
+        ters:
+          - name: CTER
+            spec: 'C{-C}(=O)-OXT'
+            root: C
+        YAML
+      registry = Chem::TemplateRegistry.new.parse(content)
+      registry.ters.should_not be_empty
+      registry.ters[0].name.should eq "CTER"
+      registry.ters[0].atoms.count(&.element.heavy?).should eq 3
+    end
   end
 
   describe "#register" do

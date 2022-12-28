@@ -148,6 +148,7 @@ class Chem::TemplateRegistry
   def initialize
     @spec_aliases = {} of String => String
     @table = {} of String => ResidueTemplate
+    @ter_map = {} of String => TerTemplate
   end
 
   # Returns the global residue template registry.
@@ -195,6 +196,20 @@ class Chem::TemplateRegistry
       @table[name] = res_t
     end
     @size += 1
+    self
+  end
+
+  # Adds the termination template to the registry. The template is
+  # registered under every name.
+  #
+  # Raises `Error` if any of the names already exists.
+  def <<(ter_t : TerTemplate) : self
+    ter_t.names.each do |name|
+      if @ter_map.has_key?(name)
+        raise Error.new("#{name} termination template already exists")
+      end
+      @ter_map[name] = ter_t
+    end
     self
   end
 
@@ -248,18 +263,38 @@ class Chem::TemplateRegistry
   # `ResidueTemplate::Builder`, which may raise `Error`.
   def parse(io : IO) : self
     data = YAML.parse(io)
+    scoped = false
 
     # Parse spec aliases first
     data.dig?("aliases").try do |aliases|
+      scoped = true
       aliases.as_h.each do |name, spec|
         @spec_aliases[name.as_s] = spec.as_s
       end
     end
 
+    # Parse termination templates
+    data.dig?("ters").try do |ters|
+      scoped = true
+      ters.as_a.each do |hash|
+        self << TerTemplate.build do |builder|
+          hash["description"]?.try { |any| builder.description any.as_s }
+          if name = hash["name"]?
+            builder.name name.as_s
+          elsif names = hash["names"]
+            builder.names names.as_a.map(&.as_s)
+          end
+          hash["type"]?.try { |type| builder.type ResidueType.parse(type.as_s) }
+          hash["spec"]?.try { |spec| builder.spec spec.as_s }
+          hash["root"]?.try { |any| builder.root any.as_s }
+        end
+      end
+    end
+
     # Parse residue templates
     templates = data.dig?("templates").try(&.as_a)
-    templates ||= data.as_a? || [data]
-    templates.each do |hash|
+    templates ||= data.as_a? || [data] unless scoped
+    templates.try &.each do |hash|
       register do |builder|
         hash["description"]?.try { |any| builder.description any.as_s }
         if name = hash["name"]?
@@ -331,6 +366,11 @@ class Chem::TemplateRegistry
   def spec_alias(name : String, spec : String) : self
     @spec_aliases[name] = spec
     self
+  end
+
+  # Returns an array containing all the termination templates.
+  def ters : Array(TerTemplate)
+    @ter_map.values.uniq!
   end
 
   # Returns an array containing all the residue templates.
