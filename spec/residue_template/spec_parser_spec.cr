@@ -150,7 +150,7 @@ describe Chem::ResidueTemplate::SpecParser do
   end
 
   it "parses implicit bonds" do
-    parser = Chem::ResidueTemplate::SpecParser.new "O1=SG(=*)(-[O3-])-*"
+    parser = Chem::ResidueTemplate::SpecParser.new "O1=SG{=S}(-[O3-]){-C}"
     parser.parse
     parser.atoms.size.should eq 3
     parser.bonds.size.should eq 2
@@ -161,21 +161,21 @@ describe Chem::ResidueTemplate::SpecParser do
     parser.atoms.map(&.formal_charge).should eq [0, 0, -1]
   end
 
-  it "raises if an implicit bond is at the middle" do
+  it "raises if an implicit bond is after a bond" do
     expect_raises(
       Chem::ParseException,
-      "Implicit bonds must be at the end of a branch or string"
+      "Branching bond must be inside the implicit branch"
     ) do
-      Chem::ResidueTemplate::SpecParser.new("CB-SG-*-CD").parse
+      Chem::ResidueTemplate::SpecParser.new("CB-SG-{-C}-CD").parse
     end
   end
 
-  it "raises if wildcard is not preceded by a bond" do
+  it "raises if implicit branch is not started with a bond" do
     expect_raises(
       Chem::ParseException,
-      "Expected bond before implicit atom '*'"
+      "Expected bond at the beginning of an implicit branch, got 'C'"
     ) do
-      Chem::ResidueTemplate::SpecParser.new("CB-SG*-CD").parse
+      Chem::ResidueTemplate::SpecParser.new("CB-SG{C}-CD").parse
     end
   end
 

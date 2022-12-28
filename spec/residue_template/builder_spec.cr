@@ -316,12 +316,13 @@ describe Chem::ResidueTemplate::Builder do
     res_t = build_template do
       description "Cysteine"
       name "CYX"
-      spec "CB-SG-*"
+      spec "CB-SG{-S}"
     end
     res_t.atoms.size.should eq 5
     res_t.atoms.count(&.element.hydrogen?).should eq 3
     res_t.bonds.size.should eq 4
     res_t.bonds.count(&.includes?("SG")).should eq 1
+    res_t["SG"].bonded_elements.map(&.symbol).should eq %w(S C)
   end
 
   it "guesses root to be the most complex atom" do

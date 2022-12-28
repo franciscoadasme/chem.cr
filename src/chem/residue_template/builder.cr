@@ -24,25 +24,20 @@ class Chem::ResidueTemplate::Builder
                    when .protein? then {"C", "N", BondOrder::Single}
                    end
 
-    # Count total of implicit bonds per atom
-    implicit_bonds = Hash(String, Int32).new { 0 }
-    parser.implicit_bonds.each do |bond|
-      implicit_bonds[bond.lhs] += bond.order.to_i
-    end
-
     atom_t_map = {} of String => AtomTemplate
     bond_ts = [] of BondTemplate
     name_gen = HydrogenNameGenerator.new
     bonded_h_table = {} of String => Array(AtomTemplate)
     parser.atoms.sort_by(&.element.atomic_number.-).each do |atom|
       bonds = parser.bonds.select { |bond| atom.name.in?(bond.lhs, bond.rhs) }
+      implicit_bonds = parser.implicit_bonds.select { |bond| bond.lhs == atom.name }
 
       # Calculate effective valence
       effective_valence = atom.explicit_hydrogens || 0
       effective_valence += atom.formal_charge *
                            (atom.element.valence_electrons >= 4 ? -1 : 1)
       effective_valence += bonds.sum &.order.to_i
-      effective_valence += implicit_bonds[atom.name]? || 0
+      effective_valence += implicit_bonds.sum(&.order.to_i)
       if bond = @link_bond
         effective_valence += bond[2].to_i if atom.name.in?(bond)
       end
@@ -60,6 +55,7 @@ class Chem::ResidueTemplate::Builder
       bonded_elements = bonds.map do |bond|
         parser.atom_map[atom.name == bond.lhs ? bond.rhs : bond.lhs].element
       end
+      bonded_elements.concat implicit_bonds.map(&.rhs)
       @link_bond.try do |lhs, rhs, order|
         case atom.name
         when lhs then bonded_elements << parser.atom_map[rhs].element

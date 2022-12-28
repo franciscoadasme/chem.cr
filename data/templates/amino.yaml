@@ -33,7 +33,7 @@ templates:
     name: CYX
     code: C
     type: protein
-    spec: "%{backbone}-CB-SG-*"
+    spec: "%{backbone}-CB-SG{-S}"
   - description: Glutamate
     name: GLH
     code: E

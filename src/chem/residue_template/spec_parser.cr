@@ -4,12 +4,13 @@ class Chem::ResidueTemplate::SpecParser
     formal_charge : Int32,
     explicit_hydrogens : Int32?
   record BondRecord, lhs : String, rhs : String, order : BondOrder
+  record ImplicitBondRecord, lhs : String, rhs : Element, order : BondOrder
 
   def initialize(str, @aliases : Hash(String, String)? = nil)
     @reader = Char::Reader.new(str.strip)
     @atom_map = {} of String => AtomRecord
     @bond_map = {} of Tuple(String, String) => BondRecord
-    @implicit_bonds = [] of BondRecord
+    @implicit_bonds = [] of ImplicitBondRecord
   end
 
   private def add_bond(atom : AtomRecord, other : AtomRecord, order : BondOrder) : Nil
@@ -40,6 +41,8 @@ class Chem::ResidueTemplate::SpecParser
       raise "Unmatched bond"
     when '('
       raise "Branching bond must be inside the branch"
+    when '{'
+      raise "Branching bond must be inside the implicit branch"
     end
   end
 
@@ -73,8 +76,8 @@ class Chem::ResidueTemplate::SpecParser
     @atom_map.last_value? || raise("Expected atom #{msg}")
   end
 
-  def implicit_bonds : Array(BondRecord)
-    @implicit_bonds
+  def implicit_bonds : Array::View(ImplicitBondRecord)
+    @implicit_bonds.view
   end
 
   private def next_char : Char?
@@ -123,9 +126,23 @@ class Chem::ResidueTemplate::SpecParser
       when ')'
         bond_atom = root_stack.pop? || raise "Unmatched branch closing"
         if char = peek_char
-          raise "Expected bond after a branch" unless char.in?("-=#(")
+          raise "Expected bond after a branch" unless char.in?("-=#({")
         end
-      when '{'
+      when '{' # Implicit branch
+        atom = bond_atom || expect_atom("before implicit branch")
+        order = case char = next_char
+                when '-' then BondOrder::Single
+                when '=' then BondOrder::Double
+                when '#' then BondOrder::Triple
+                when Nil then raise "Unclosed implicit branch"
+                else          raise "Expected bond at the beginning of an implicit \
+                                     branch, got #{char.inspect}"
+                end
+        check_bond_succ
+        next_char
+        element = read_element
+        raise "Unclosed implicit bond" unless next_char == '}'
+        @implicit_bonds << ImplicitBondRecord.new(atom.name, element, order)
       when '%'
         next_char
         if current_char == '{' # alias like "{backbone}"
@@ -153,13 +170,6 @@ class Chem::ResidueTemplate::SpecParser
             label_map[label_id] = expect_atom("before label %#{label_id}")
           end
         end
-      when '*'
-        raise "Expected bond before implicit atom '*'" unless bond_atom
-        unless peek_char.in?(nil, ')')
-          raise "Implicit bonds must be at the end of a branch or string"
-        end
-        @implicit_bonds << BondRecord.new(bond_atom.name, "*", bond_order)
-        bond_atom = nil
       when '\0'
         break
       else
