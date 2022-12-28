@@ -57,7 +57,7 @@ class Chem::Topology::Detector
       unmatched_neighbors.each do |atom|
         next unless @atom_top_specs[atom] == ter_t.root.top_spec
         search ter_t, ter_t.root, atom, ter_map, visited.dup
-        if ter_map.size == ter_t.atoms.size - 4 # FIXME: ter has an extra CH3
+        if ter_map.size == ter_t.atoms.size
           atom_map.merge! ter_map
           return
         end
@@ -69,11 +69,10 @@ class Chem::Topology::Detector
   # TODO: refactor into Templates::Ter in TemplateRegistry
   protected def self.protein_ters : Array(ResidueTemplate)
     @@protein_ters ||= [
-      # FIXME: use implicit bonds, otherwise it will add Hs
-      ResidueTemplate.build(&.name("CTER").spec("CA-C(=O)-OXT").root("C")),
-      ResidueTemplate.build(&.name("CTER").spec("CA-C(=O)-[OXT-]").root("C")),
-      ResidueTemplate.build(&.name("NTER").spec("CA-N").root("N")),
-      ResidueTemplate.build(&.name("NTER").spec("CA-[NH3+]").root("N")),
+      ResidueTemplate.build(&.name("CTER").spec("C{-C}(=O)-OXT").root("C")),
+      ResidueTemplate.build(&.name("CTER").spec("C{-C}(=O)-[OXT-]").root("C")),
+      ResidueTemplate.build(&.name("NTER").spec("N{-C}").root("N")),
+      ResidueTemplate.build(&.name("NTER").spec("[NH3+]{-C}").root("N")),
     ]
   end
 
