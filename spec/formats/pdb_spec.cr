@@ -679,38 +679,38 @@ describe Chem::PDB::Writer do
     structure = load_file("AlaIle--unwrapped.poscar", guess_bonds: true, guess_names: true)
     pdb_content = structure.to_pdb(bonds: :standard)
     pdb_content.lines.select(/^CONECT/).join('\n').should eq <<-PDB.delete('|')
-      CONECT    1    2   10   11                                                      |
-      CONECT    2    1    3    4    6                                                 |
-      CONECT    3    2                                                                |
-      CONECT    4    2    5    5   12                                                 |
-      CONECT    5    4    4                                                           |
-      CONECT    6    2    7    8    9                                                 |
-      CONECT    7    6                                                                |
-      CONECT    8    6                                                                |
-      CONECT    9    6                                                                |
-      CONECT   10    1                                                                |
-      CONECT   11    1                                                                |
-      CONECT   12    4   13   14                                                      |
+      CONECT    1    2    3    4                                                      |
+      CONECT    2    1                                                                |
+      CONECT    3    1                                                                |
+      CONECT    4    1    5    6    8                                                 |
+      CONECT    5    4                                                                |
+      CONECT    6    4    7    7   12                                                 |
+      CONECT    7    6    6                                                           |
+      CONECT    8    4    9   10   11                                                 |
+      CONECT    9    8                                                                |
+      CONECT   10    8                                                                |
+      CONECT   11    8                                                                |
+      CONECT   12    6   13   14                                                      |
       CONECT   13   12                                                                |
-      CONECT   14   12   15   16   18                                                 |
+      CONECT   14   12   15   16   20                                                 |
       CONECT   15   14                                                                |
-      CONECT   16   14   17   17   31                                                 |
+      CONECT   16   14   17   17   18                                                 |
       CONECT   17   16   16                                                           |
-      CONECT   18   14   19   20   27                                                 |
+      CONECT   18   16   19                                                           |
       CONECT   19   18                                                                |
-      CONECT   20   18   21   22   23                                                 |
+      CONECT   20   14   21   22   29                                                 |
       CONECT   21   20                                                                |
-      CONECT   22   20                                                                |
-      CONECT   23   20   24   25   26                                                 |
-      CONECT   24   23                                                                |
-      CONECT   25   23                                                                |
-      CONECT   26   23                                                                |
-      CONECT   27   18   28   29   30                                                 |
-      CONECT   28   27                                                                |
-      CONECT   29   27                                                                |
-      CONECT   30   27                                                                |
-      CONECT   31   16   32                                                           |
-      CONECT   32   31                                                                |
+      CONECT   22   20   23   24   25                                                 |
+      CONECT   23   22                                                                |
+      CONECT   24   22                                                                |
+      CONECT   25   22   26   27   28                                                 |
+      CONECT   26   25                                                                |
+      CONECT   27   25                                                                |
+      CONECT   28   25                                                                |
+      CONECT   29   20   30   31   32                                                 |
+      CONECT   30   29                                                                |
+      CONECT   31   29                                                                |
+      CONECT   32   29                                                                |
       PDB
   end
 

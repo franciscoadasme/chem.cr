@@ -1,32 +1,13 @@
 struct Chem::Topology::MatchData
-  getter rtype : ResidueType
-  getter resname : String
+  getter template : ResidueTemplate
 
-  delegate :[], :[]?, size, to: @atom_map
-
-  # TODO: accept ResidueTemplate
-  def initialize(@resname : String,
-                 @rtype : ResidueType,
-                 @atom_map : Hash(String, Atom))
+  def initialize(
+    @template : ResidueTemplate,
+    @atom_map : Hash(AtomTemplate, Atom)
+  )
   end
 
-  def self.new(res_t : ResidueTemplate, atom_map : Hash(String, Atom)) : self
-    atom_names = res_t.atoms.map &.name
-    atom_map = atom_map.to_a.sort_by! { |(k, _)| atom_names.index(k) || 99 }.to_h
-    MatchData.new res_t.name, res_t.type, atom_map
-  end
-
-  def atom_names : Array(String)
-    @atom_map.keys
-  end
-
-  def each_atom(& : Atom, String ->) : Nil
-    @atom_map.each do |name, atom|
-      yield atom, name
-    end
-  end
-
-  def to_h : Hash(String, Atom)
-    @atom_map.dup
+  def atom_map : Hash::View(AtomTemplate, Atom)
+    @atom_map.view
   end
 end

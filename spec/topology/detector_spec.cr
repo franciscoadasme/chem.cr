@@ -11,8 +11,9 @@ macro it_detects(description, path, expected)
     %res_idxs = {} of String => Array(Hash(Int32, String))
     %matches, _ = %detector.detect(%templates)
     %matches.each do |m|
-      %res_idxs[m.resname] ||= [] of Hash(Int32, String)
-      %res_idxs[m.resname] << m.to_h.invert.transform_keys(&.serial)
+      %res_idxs[m.template.name] ||= [] of Hash(Int32, String)
+      %res_idxs[m.template.name] << m.atom_map.invert.transform_keys(&.serial)
+        .transform_values(&.name)
     end
     %res_idxs.should eq %expected
   end
@@ -92,7 +93,7 @@ describe Chem::Topology::Detector do
     detector = Chem::Topology::Detector.new structure.atoms
     matches, unmatched_atoms = detector.detect(templates)
     matches.size.should eq 1
-    matches[0].atom_names.size.should eq 109
+    matches[0].atom_map.size.should eq 109
     unmatched_atoms.should be_empty
   end
 
@@ -100,23 +101,17 @@ describe Chem::Topology::Detector do
     it "returns found matches" do
       structure = load_file "waters.xyz", guess_bonds: true
       matches, _ = Chem::Topology::Detector.new(structure.atoms).detect
-      matches.should eq [
-        Chem::Topology::MatchData.new(Chem::TemplateRegistry.default["HOH"], {
-          "O"  => structure.atoms[0],
-          "H1" => structure.atoms[1],
-          "H2" => structure.atoms[2],
-        }),
-        Chem::Topology::MatchData.new(Chem::TemplateRegistry.default["HOH"], {
-          "O"  => structure.atoms[3],
-          "H1" => structure.atoms[4],
-          "H2" => structure.atoms[5],
-        }),
-        Chem::Topology::MatchData.new(Chem::TemplateRegistry.default["HOH"], {
-          "O"  => structure.atoms[6],
-          "H1" => structure.atoms[7],
-          "H2" => structure.atoms[8],
-        }),
-      ]
+      matches.group_by(&.template.name)
+        .transform_values(&.map { |match|
+          match.atom_map.transform_keys(&.name).transform_values(&.serial)
+        })
+        .should eq({
+          "HOH" => [
+            {"O" => 1, "H1" => 2, "H2" => 3},
+            {"O" => 4, "H1" => 5, "H2" => 6},
+            {"O" => 7, "H1" => 8, "H2" => 9},
+          ],
+        })
     end
 
     it "returns atoms not matched by any template" do

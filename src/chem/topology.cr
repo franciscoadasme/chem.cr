@@ -462,52 +462,49 @@ class Chem::Topology
   # WARNING: Existing chains and residues are invalid after calling this
   # method so do not cache them.
   def guess_names : Nil
-    ele_index = Hash(Element, Int32).new(default_value: 0)
-    fragment_matches = [] of Array(MatchData)
-    each_fragment do |atoms|
-      matches, unmatched_atoms = Detector.new(atoms).detect
-      unmatched_atoms.each_fragment do |atoms|
-        atom_map = atoms.index_by { |atom|
-          "#{atom.element.symbol.upcase}#{ele_index[atom.element] += 1}"
-        }
-        matches << MatchData.new("UNK", :other, atom_map)
-        ele_index.clear
+    atoms = self.atoms.to_a
+    clear
+
+    matches, unmatched_atoms = Detector.new(atoms).detect
+
+    chain = Chain.new self, 'A'
+    resid = 0
+
+    # Create residues from template matches
+    matches.each do |match|
+      # TODO: avoid triggering reset_cache internally when setting residue.chain
+      residue = Residue.new(chain, (resid += 1), match.template.name)
+      residue.type = match.template.type
+      match.atom_map.each do |atom_t, atom|
+        atom.name = atom_t.name
+        # TODO: avoid triggering reset_cache internally when setting atom.residue
+        atom.residue = residue
       end
-      fragment_matches << matches
+    end
+
+    # Create residues from unmatched atoms. Split them by connectivity
+    # and assign a residue to each fragment.
+    ele_index = Hash(Element, Int32).new(default_value: 0)
+    unmatched_atoms.fragments.each do |atoms|
+      residue = Residue.new(chain, (resid += 1), "UNK")
+      atoms.each do |atom|
+        atom.name = "#{atom.element.symbol.upcase}#{ele_index[atom.element] += 1}"
+        # TODO: avoid triggering reset_cache internally when setting atom.residue
+        atom.residue = residue
+      end
+      ele_index.clear
     end
 
     # Create groups to be transformed into chains
-    # FIXME: do .sort_by!(&.size).reverse! before partition, otherwise it may fail
-    polymers, others = fragment_matches.partition &.size.>(1)
-    others = others.flatten.sort_by!(&.rtype).chunks(&.rtype).map(&.[1])
-    fragment_matches = if polymers.size + others.size <= MAX_CHAINS
-                         polymers + others
-                       else
-                         [fragment_matches.flatten] # TODO: split by residue's type
-                       end
-
-    # Create chains and residues according to the found matches
-    clear # reset chains
-    chain_id = 'A'
-    fragment_matches.each do |matches|
-      chain = Chain.new self, chain_id
-      resid = 0
-      matches.each do |match|
-        # TODO: avoid triggering reset_cache internally when setting residue.chain
-        residue = Residue.new(chain, (resid += 1), match.resname)
-        residue.type = match.rtype # TODO: set in the Residue constructor
-        match.each_atom do |atom, atom_name|
-          atom.name = atom_name
-          # TODO: avoid triggering reset_cache internally when setting atom.residue
-          atom.residue = residue
-        end
+    fragments = chain.residue_fragments
+    polymers, nonpolymers = fragments.partition &.size.>(1)
+    grouped_nonpolymers = nonpolymers.map(&.first).group_by(&.type).values
+    if polymers.size + grouped_nonpolymers.size <= MAX_CHAINS
+      clear
+      (polymers + grouped_nonpolymers).each do |residues|
+        chain = Chain.new self, next_chain_id(@chains.last?.try(&.id) || 'A'.pred)
+        residues.each &.chain=(chain)
       end
-      chain_id = case chain_id
-                 when 'A'..'Y', 'a'..'y', '0'..'8' then chain_id.succ
-                 when 'Z'                          then 'a'
-                 when 'z'                          then '0'
-                 else                                   raise "BUG: unreachable"
-                 end
     end
 
     renumber_residues_by_connectivity split_chains: false
@@ -626,6 +623,21 @@ class Chem::Topology
     @chains.each do |chain|
       @chain_table[chain.id] = chain
     end
+  end
+end
+
+private def next_chain_id(ch : Char) : Char
+  case ch
+  when 'A'.pred
+    'A'
+  when 'A'..'Y', 'a'..'y', '0'..'8'
+    ch.succ
+  when 'Z'
+    'a'
+  when 'z'
+    '0'
+  else
+    raise ArgumentError.new("No more chains available")
   end
 end
 

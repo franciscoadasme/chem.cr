@@ -473,9 +473,9 @@ describe Chem::Topology do
       top.residues.map(&.number).should eq [1, 2]
       top.residues.all?(&.protein?).should be_true
       top.residues[0].atoms.map(&.name).should eq %w(
-        N CA HA C O CB HB1 HB2 HB3 H1 H2)
+        N H1 H2 CA HA C O CB HB1 HB2 HB3)
       top.residues[1].atoms.map(&.name).should eq %w(
-        N H CA HA C O CB HB CG1 HG11 HG12 CD1 HD11 HD12 HD13 CG2 HG21 HG22 HG23 OXT HXT)
+        N H CA HA C O OXT HXT CB HB CG1 HG11 HG12 CD1 HD11 HD12 HD13 CG2 HG21 HG22 HG23)
     end
 
     it "guesses the topology of two peptide chains" do
@@ -489,11 +489,11 @@ describe Chem::Topology do
         chain.residues.map(&.number).should eq (1..7).to_a
         chain.residues.all?(&.protein?).should be_true
         chain.residues[0].atoms.map(&.name).should eq %w(
-          N CA HA C O CB HB1 HB2 CG CD1 HD1 CE1 HE1 CZ HZ CE2 HE2 CD2 HD2 H1 H2)
+          N H1 H2 CA HA C O CB HB1 HB2 CG CD1 HD1 CE1 HE1 CZ HZ CE2 HE2 CD2 HD2)
         chain.residues[5].atoms.map(&.name).should eq %w(
           N H CA HA C O CB HB1 HB2 OG HG)
         chain.residues[6].atoms.map(&.name).should eq %w(
-          N H CA HA C O CB HB1 HB2 OG HG OXT HXT)
+          N H CA HA C O OXT HXT CB HB1 HB2 OG HG)
       end
     end
 
