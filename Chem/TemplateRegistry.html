@@ -491,6 +491,11 @@
       
     </li>
   
+  <li class=" " data-id="chem.cr/Chem/ResidueTemplate/SpecParser/ImplicitBondRecord" data-name="chem::residuetemplate::specparser::implicitbondrecord">
+      <a href="../Chem/ResidueTemplate/SpecParser/ImplicitBondRecord.html">ImplicitBondRecord</a>
+      
+    </li>
+  
 </ul>
 
       
@@ -658,6 +663,11 @@
   
   <li class=" current" data-id="chem.cr/Chem/TemplateRegistry" data-name="chem::templateregistry">
       <a href="../Chem/TemplateRegistry.html">TemplateRegistry</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/TerTemplate" data-name="chem::tertemplate">
+      <a href="../Chem/TerTemplate.html">TerTemplate</a>
       
     </li>
   
@@ -1069,6 +1079,13 @@ syntax, e.g., '{backbone}-CB-OH'.</p>
       </li>
     
       <li class="entry-summary">
+        <a href="#%3C%3C%28ter_t%3ATerTemplate%29%3Aself-instance-method" class="signature"><strong>#<<</strong>(ter_t : TerTemplate) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Adds the termination template to the registry.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#%5B%5D%28name%3AString%29%3AResidueTemplate-instance-method" class="signature"><strong>#[]</strong>(name : String) : ResidueTemplate</a>
         
           <div class="summary"><p>Returns the residue template registered under <em>name</em>.</p></div>
@@ -1156,6 +1173,13 @@ syntax, e.g., '{backbone}-CB-OH'.</p>
         <a href="#spec_alias%28name%3AString%2Cspec%3AString%29%3Aself-instance-method" class="signature"><strong>#spec_alias</strong>(name : String, spec : String) : <span class="k">self</span></a>
         
           <div class="summary"><p>Registers an alias for a residue template specification.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#ters%3AArray%28TerTemplate%29-instance-method" class="signature"><strong>#ters</strong> : Array(TerTemplate)</a>
+        
+          <div class="summary"><p>Returns an array containing all the termination templates.</p></div>
         
       </li>
     
@@ -1312,6 +1336,27 @@ solvents such as water.</p>
           <p>Adds the residue template to the registry. The template is
 registered under every residue name.</p>
 <p>Raises <code><a href="../Chem/Error.html">Error</a></code> if any of the residue names already exists.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="&lt;&lt;(ter_t:TerTemplate):self-instance-method">
+      <div class="signature">
+        
+        def <strong><<</strong>(ter_t : <a href="../Chem/TerTemplate.html">TerTemplate</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#%3C%3C%28ter_t%3ATerTemplate%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Adds the termination template to the registry. The template is
+registered under every name.</p>
+<p>Raises <code><a href="../Chem/Error.html">Error</a></code> if any of the names already exists.</p>
         </div>
       
       <br/>
@@ -1585,6 +1630,25 @@ passed block is truthy.</p>
 <p>Registered aliases are passed to <code><a href="../Chem/ResidueTemplate/SpecParser.html">ResidueTemplate::SpecParser</a></code> such
 that they are expanded when parsing the specification of a residue
 template.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ters:Array(TerTemplate)-instance-method">
+      <div class="signature">
+        
+        def <strong>ters</strong> : <a href="../Array.html">Array</a>(<a href="../Chem/TerTemplate.html">TerTemplate</a>)
+
+        <a class="method-permalink" href="#ters%3AArray%28TerTemplate%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns an array containing all the termination templates.</p>
         </div>
       
       <br/>

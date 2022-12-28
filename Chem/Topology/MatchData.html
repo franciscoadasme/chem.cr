@@ -491,6 +491,11 @@
       
     </li>
   
+  <li class=" " data-id="chem.cr/Chem/ResidueTemplate/SpecParser/ImplicitBondRecord" data-name="chem::residuetemplate::specparser::implicitbondrecord">
+      <a href="../../Chem/ResidueTemplate/SpecParser/ImplicitBondRecord.html">ImplicitBondRecord</a>
+      
+    </li>
+  
 </ul>
 
       
@@ -658,6 +663,11 @@
   
   <li class=" " data-id="chem.cr/Chem/TemplateRegistry" data-name="chem::templateregistry">
       <a href="../../Chem/TemplateRegistry.html">TemplateRegistry</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/TerTemplate" data-name="chem::tertemplate">
+      <a href="../../Chem/TerTemplate.html">TerTemplate</a>
       
     </li>
   
@@ -898,14 +908,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28resname%3AString%2Crtype%3AResidueType%2Catom_map%3AHash%28String%2CAtom%29%29-class-method" class="signature"><strong>.new</strong>(resname : String, rtype : ResidueType, atom_map : Hash(String, Atom))</a>
-        
-          <div class="summary"><p><span class="flag orange">TODO</span>  accept ResidueTemplate</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#new%28res_t%3AResidueTemplate%2Catom_map%3AHash%28String%2CAtom%29%29%3Aself-class-method" class="signature"><strong>.new</strong>(res_t : ResidueTemplate, atom_map : Hash(String, Atom)) : <span class="k">self</span></a>
+        <a href="#new%28template%3AResidueTemplate%2Catom_map%3AHash%28AtomTemplate%2CAtom%29%29-class-method" class="signature"><strong>.new</strong>(template : ResidueTemplate, atom_map : Hash(AtomTemplate, Atom))</a>
         
       </li>
     
@@ -926,57 +929,12 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#%5B%5D%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#[]</strong>(*args, **options)</a>
+        <a href="#atom_map%3AHash%3A%3AView%28AtomTemplate%2CAtom%29-instance-method" class="signature"><strong>#atom_map</strong> : Hash::View(AtomTemplate, Atom)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#%5B%5D%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#[]</strong>(*args, **options, &)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#%5B%5D%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#[]?</strong>(*args, **options)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#%5B%5D%3F%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#[]?</strong>(*args, **options, &)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#atom_names%3AArray%28String%29-instance-method" class="signature"><strong>#atom_names</strong> : Array(String)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#each_atom%28%26%3AAtom%2CString-%3E%29%3ANil-instance-method" class="signature"><strong>#each_atom</strong>(& : Atom, String -> ) : Nil</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#resname%3AString-instance-method" class="signature"><strong>#resname</strong> : String</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#rtype%3AResidueType-instance-method" class="signature"><strong>#rtype</strong> : ResidueType</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#size%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#size</strong>(*args, **options)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#size%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#size</strong>(*args, **options, &)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#to_h%3AHash%28String%2CAtom%29-instance-method" class="signature"><strong>#to_h</strong> : Hash(String, Atom)</a>
+        <a href="#template%3AResidueTemplate-instance-method" class="signature"><strong>#template</strong> : ResidueTemplate</a>
         
       </li>
     
@@ -1030,31 +988,12 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(resname:String,rtype:ResidueType,atom_map:Hash(String,Atom))-class-method">
+    <div class="entry-detail" id="new(template:ResidueTemplate,atom_map:Hash(AtomTemplate,Atom))-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(resname : String, rtype : <a href="../../Chem/ResidueType.html">ResidueType</a>, atom_map : Hash(String, <a href="../../Chem/Atom.html">Atom</a>))
+        def self.<strong>new</strong>(template : <a href="../../Chem/ResidueTemplate.html">ResidueTemplate</a>, atom_map : Hash(<a href="../../Chem/AtomTemplate.html">AtomTemplate</a>, <a href="../../Chem/Atom.html">Atom</a>))
 
-        <a class="method-permalink" href="#new%28resname%3AString%2Crtype%3AResidueType%2Catom_map%3AHash%28String%2CAtom%29%29-class-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p><span class="flag orange">TODO</span>  accept ResidueTemplate</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="new(res_t:ResidueTemplate,atom_map:Hash(String,Atom)):self-class-method">
-      <div class="signature">
-        
-        def self.<strong>new</strong>(res_t : <a href="../../Chem/ResidueTemplate.html">ResidueTemplate</a>, atom_map : Hash(String, <a href="../../Chem/Atom.html">Atom</a>)) : <span class="k">self</span>
-
-        <a class="method-permalink" href="#new%28res_t%3AResidueTemplate%2Catom_map%3AHash%28String%2CAtom%29%29%3Aself-class-method">#</a>
+        <a class="method-permalink" href="#new%28template%3AResidueTemplate%2Catom_map%3AHash%28AtomTemplate%2CAtom%29%29-class-method">#</a>
       </div>
       
       <br/>
@@ -1077,12 +1016,12 @@
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="[](*args,**options)-instance-method">
+    <div class="entry-detail" id="atom_map:Hash::View(AtomTemplate,Atom)-instance-method">
       <div class="signature">
         
-        def <strong>[]</strong>(*args, **options)
+        def <strong>atom_map</strong> : Hash::View(<a href="../../Chem/AtomTemplate.html">AtomTemplate</a>, <a href="../../Chem/Atom.html">Atom</a>)
 
-        <a class="method-permalink" href="#%5B%5D%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+        <a class="method-permalink" href="#atom_map%3AHash%3A%3AView%28AtomTemplate%2CAtom%29-instance-method">#</a>
       </div>
       
       <br/>
@@ -1091,138 +1030,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="[](*args,**options,&amp;)-instance-method">
+    <div class="entry-detail" id="template:ResidueTemplate-instance-method">
       <div class="signature">
         
-        def <strong>[]</strong>(*args, **options, &)
+        def <strong>template</strong> : <a href="../../Chem/ResidueTemplate.html">ResidueTemplate</a>
 
-        <a class="method-permalink" href="#%5B%5D%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="[]?(*args,**options)-instance-method">
-      <div class="signature">
-        
-        def <strong>[]?</strong>(*args, **options)
-
-        <a class="method-permalink" href="#%5B%5D%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="[]?(*args,**options,&amp;)-instance-method">
-      <div class="signature">
-        
-        def <strong>[]?</strong>(*args, **options, &)
-
-        <a class="method-permalink" href="#%5B%5D%3F%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="atom_names:Array(String)-instance-method">
-      <div class="signature">
-        
-        def <strong>atom_names</strong> : <a href="../../Array.html">Array</a>(String)
-
-        <a class="method-permalink" href="#atom_names%3AArray%28String%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="each_atom(&amp;:Atom,String-&gt;):Nil-instance-method">
-      <div class="signature">
-        
-        def <strong>each_atom</strong>(& : <a href="../../Chem/Atom.html">Atom</a>, String -> ) : Nil
-
-        <a class="method-permalink" href="#each_atom%28%26%3AAtom%2CString-%3E%29%3ANil-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="resname:String-instance-method">
-      <div class="signature">
-        
-        def <strong>resname</strong> : String
-
-        <a class="method-permalink" href="#resname%3AString-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="rtype:ResidueType-instance-method">
-      <div class="signature">
-        
-        def <strong>rtype</strong> : <a href="../../Chem/ResidueType.html">ResidueType</a>
-
-        <a class="method-permalink" href="#rtype%3AResidueType-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="size(*args,**options)-instance-method">
-      <div class="signature">
-        
-        def <strong>size</strong>(*args, **options)
-
-        <a class="method-permalink" href="#size%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="size(*args,**options,&amp;)-instance-method">
-      <div class="signature">
-        
-        def <strong>size</strong>(*args, **options, &)
-
-        <a class="method-permalink" href="#size%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="to_h:Hash(String,Atom)-instance-method">
-      <div class="signature">
-        
-        def <strong>to_h</strong> : Hash(String, <a href="../../Chem/Atom.html">Atom</a>)
-
-        <a class="method-permalink" href="#to_h%3AHash%28String%2CAtom%29-instance-method">#</a>
+        <a class="method-permalink" href="#template%3AResidueTemplate-instance-method">#</a>
       </div>
       
       <br/>

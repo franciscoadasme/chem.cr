@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../js/doc.js"></script>
 
   <meta name="repository-name" content="chem.cr">
-  <title>Chem::FormatWriter(T) - chem.cr 0.5.6</title>
+  <title>Chem::TerTemplate - chem.cr 0.5.6</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
@@ -231,7 +231,7 @@
       
     </li>
   
-  <li class="parent open current" data-id="chem.cr/Chem/FormatWriter" data-name="chem::formatwriter(t)">
+  <li class="parent " data-id="chem.cr/Chem/FormatWriter" data-name="chem::formatwriter(t)">
       <a href="../Chem/FormatWriter.html">FormatWriter</a>
       
         <ul>
@@ -666,7 +666,7 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/TerTemplate" data-name="chem::tertemplate">
+  <li class=" current" data-id="chem.cr/Chem/TerTemplate" data-name="chem::tertemplate">
       <a href="../Chem/TerTemplate.html">TerTemplate</a>
       
     </li>
@@ -855,75 +855,12 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">module</span> Chem::FormatWriter(T)
+  <span class="kind">class</span> Chem::TerTemplate
 
 </h1>
 
 
-
-
-
-  <h2>
-    <a id="overview" class="anchor" href="#overview">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Overview
-  </h2>
-
-  <p>Declares a common interface for writing an object encoded in a file
-format.</p>
-<p>Including types must implement the <code>#encode_entry(T)</code> protected
-method, where the type variable <code>T</code> indicates the encoded type.</p>
-<p>Including types will behave like an IO wrapper via the <code><a href="../IO/Wrapper.html">IO::Wrapper</a></code>
-mixin, which provides convenience constructors. Initialization
-arguments are gathered from the designated <code>#initialize</code> method
-looked up on concrete types at compilation time. The underlying IO
-can be accessed through the <code>@io</code> instance variable.</p>
-<pre><code class="language-crystal"><span class="k">struct</span> <span class="t">Foo</span>
-  getter num : <span class="t">Int32</span>
-  getter str : <span class="t">String</span>
-
-  <span class="k">def</span> <span class="m">initialize</span>(@num : <span class="t">Int32</span>, @str : <span class="t">String</span>); <span class="k">end</span>
-<span class="k">end</span>
-
-<span class="k">class</span> <span class="t">Foo</span><span class="t">::</span><span class="t">Writer</span>
-  <span class="k">include</span> <span class="t">Chem</span><span class="t">::</span><span class="t">FormatWriter</span>(<span class="t">Foo</span>)
-
-  <span class="k">def</span> <span class="m">encode_entry</span>(foo : <span class="t">Foo</span>) : <span class="t">Nil</span>
-    @io.puts foo.num
-    @io.puts foo.str
-  <span class="k">end</span>
-<span class="k">end</span>
-
-io <span class="o">=</span> <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.new
-writer <span class="o">=</span> <span class="t">Foo</span><span class="t">::</span><span class="t">Writer</span>.new io
-writer.written? <span class="c"># =&gt; false</span>
-writer <span class="o">&lt;&lt;</span> <span class="t">Foo</span>.new(<span class="n">123</span>, <span class="s">&quot;bar&quot;</span>)
-io.to_s                       <span class="c"># =&gt; &quot;123\nbar\n&quot;</span>
-writer.written?               <span class="c"># =&gt; true</span>
-writer <span class="o">&lt;&lt;</span> <span class="t">Foo</span>.new(<span class="n">456</span>, <span class="s">&quot;baz&quot;</span>) <span class="c"># raises IO::Error (an entry was already written)</span>
-writer.close
-writer <span class="o">&lt;&lt;</span> <span class="t">Foo</span>.new(<span class="n">789</span>, <span class="s">&quot;foo&quot;</span>) <span class="c"># raises IO::Error (closed IO)</span></code></pre>
-
-
-
-
-
-  <h2>
-    <a id="included-modules" class="anchor" href="#included-modules">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Included Modules
-  </h2>
-  <ul class="other-types-list">
-    
-      <li class="other-type"><a href="../IO/Wrapper.html">IO::Wrapper</a></li>
-    
-  </ul>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Chem/TerTemplate.html">Chem::TerTemplate</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
@@ -931,41 +868,12 @@ writer <span class="o">&lt;&lt;</span> <span class="t">Foo</span>.new(<span clas
 
 
 
-  <h2>
-    <a id="direct-including-types" class="anchor" href="#direct-including-types">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Direct including types
-  </h2>
-  <ul class="other-types-list">
-    
-      <li class="other-type"><a href="../Chem/Cube/Writer.html">Chem::Cube::Writer</a></li>
-    
-      <li class="other-type"><a href="../Chem/DX/Writer.html">Chem::DX::Writer</a></li>
-    
-      <li class="other-type"><a href="../Chem/Gen/Writer.html">Chem::Gen::Writer</a></li>
-    
-      <li class="other-type"><a href="../Chem/Mol2/Writer.html">Chem::Mol2::Writer</a></li>
-    
-      <li class="other-type"><a href="../Chem/PDB/Writer.html">Chem::PDB::Writer</a></li>
-    
-      <li class="other-type"><a href="../Chem/Protein/Stride/Writer.html">Chem::Protein::Stride::Writer</a></li>
-    
-      <li class="other-type"><a href="../Chem/PyMOL/Writer.html">Chem::PyMOL::Writer</a></li>
-    
-      <li class="other-type"><a href="../Chem/VASP/Chgcar/Writer.html">Chem::VASP::Chgcar::Writer</a></li>
-    
-      <li class="other-type"><a href="../Chem/VASP/Locpot/Writer.html">Chem::VASP::Locpot::Writer</a></li>
-    
-      <li class="other-type"><a href="../Chem/VASP/Poscar/Writer.html">Chem::VASP::Poscar::Writer</a></li>
-    
-      <li class="other-type"><a href="../Chem/VMD/Writer.html">Chem::VMD::Writer</a></li>
-    
-      <li class="other-type"><a href="../Chem/XYZ/Writer.html">Chem::XYZ::Writer</a></li>
-    
-  </ul>
+
+
+
+
+
+
 
 
 
@@ -980,37 +888,36 @@ writer <span class="o">&lt;&lt;</span> <span class="t">Foo</span>.new(<span clas
   </h2>
   
     
-      chem/format_writer.cr
+      chem/ter_template.cr
     
     <br/>
   
 
 
 
-  
-    <h2>
-      <a id="constant-summary" class="anchor" href="#constant-summary">
+
+
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>
-      Constant Summary
-    </h2>
-  
-  <dl>
+    Constructors
+  </h2>
+  <ul class="list-summary">
     
-      <dt class="entry-const" id="FILE_MODE">
-        <strong>FILE_MODE</strong> = <code><span class="s">&quot;w&quot;</span></code>
-      </dt>
-      
-      <dd class="entry-const-doc">
-        <p>File open mode. May be overriden by including types.</p>
-      </dd>
-      
+      <li class="entry-summary">
+        <a href="#build%28%26%29%3Aself-class-method" class="signature"><strong>.build</strong>(&) : <span class="k">self</span></a>
+        
+      </li>
     
-  </dl>
-
-
+      <li class="entry-summary">
+        <a href="#new%28names%3AArray%28String%29%2Ctype%3AResidueType%2Cdescription%3AString%3F%2Catoms%3AArray%28AtomTemplate%29%2Cbonds%3AArray%28BondTemplate%29%2Crootroot_name%3AString%29-class-method" class="signature"><strong>.new</strong>(names : Array(String), type : ResidueType, description : String?, atoms : Array(AtomTemplate), bonds : Array(BondTemplate), root root_name : String)</a>
+        
+      </li>
+    
+  </ul>
 
 
 
@@ -1027,30 +934,56 @@ writer <span class="o">&lt;&lt;</span> <span class="t">Foo</span>.new(<span clas
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#%3C%3C%28obj%3AT%29%3ANil-instance-method" class="signature"><strong>#<<</strong>(obj : T) : Nil</a>
-        
-          <div class="summary"><p>Writes the given object into the <code>IO</code>.</p></div>
+        <a href="#%5B%5D%28name%3AString%29%3AAtomTemplate-instance-method" class="signature"><strong>#[]</strong>(name : String) : AtomTemplate</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#format%28str%3AString%2C%2Aargs%2C%2A%2Aoptions%29%3ANil-instance-method" class="signature"><strong>#format</strong>(str : String, *args, **options) : Nil</a>
-        
-          <div class="summary"><p>Writes a formatted string to the enclosed <code>IO</code>.</p></div>
+        <a href="#%5B%5D%3F%28name%3AString%29%3AAtomTemplate%3F-instance-method" class="signature"><strong>#[]?</strong>(name : String) : AtomTemplate?</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#formatl%28str%3AString%2C%2Aargs%2C%2A%2Aoptions%29%3ANil-instance-method" class="signature"><strong>#formatl</strong>(str : String, *args, **options) : Nil</a>
-        
-          <div class="summary"><p>Writes a formatted string followed by a newline to the enclosed <code>IO</code>.</p></div>
+        <a href="#atoms%3AArray%3A%3AView%28AtomTemplate%29-instance-method" class="signature"><strong>#atoms</strong> : Array::View(AtomTemplate)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#written%3F%3ABool-instance-method" class="signature"><strong>#written?</strong> : Bool</a>
+        <a href="#bonds%3AArray%3A%3AView%28BondTemplate%29-instance-method" class="signature"><strong>#bonds</strong> : Array::View(BondTemplate)</a>
         
-          <div class="summary"><p>Returns <code>true</code> if an object was already written.</p></div>
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#description%3AString%3F-instance-method" class="signature"><strong>#description</strong> : String?</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#name%3AString-instance-method" class="signature"><strong>#name</strong> : String</a>
+        
+          <div class="summary"><p>Returns the designated residue name.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#names%3AArray%28String%29-instance-method" class="signature"><strong>#names</strong> : Array(String)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#root%3AAtomTemplate-instance-method" class="signature"><strong>#root</strong> : AtomTemplate</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_s%28io%3AIO%29%3ANil-instance-method" class="signature"><strong>#to_s</strong>(io : IO) : Nil</a>
+        
+          <div class="summary"><p>Appends a short String representation of this object which includes its class name and its object address.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#type%3AResidueType-instance-method" class="signature"><strong>#type</strong> : ResidueType</a>
         
       </li>
     
@@ -1064,29 +997,15 @@ writer <span class="o">&lt;&lt;</span> <span class="t">Foo</span>.new(<span clas
   
     
 
-  <h3>Instance methods inherited from module <code><a href="../IO/Wrapper.html">IO::Wrapper</a></code></h3>
-  
-  
-    <a href="../IO/Wrapper.html#close-instance-method" class="tooltip">
-      <span>close</span>
-    close</a>, 
+
     
-  
-    <a href="../IO/Wrapper.html#closed%3F%3ABool-instance-method" class="tooltip">
-      <span>closed? : Bool</span>
-    closed?</a>, 
+
+
     
+
+
   
-    <a href="../IO/Wrapper.html#sync_close%3ABool-instance-method" class="tooltip">
-      <span>sync_close : Bool</span>
-    sync_close</a>, 
     
-  
-    <a href="../IO/Wrapper.html#sync_close%3D%28sync_close%3ABool%29-instance-method" class="tooltip">
-      <span>sync_close=(sync_close : Bool)</span>
-    sync_close=</a>
-    
-  
 
 
     
@@ -1098,6 +1017,44 @@ writer <span class="o">&lt;&lt;</span> <span class="t">Foo</span>.new(<span clas
   
 </div>
 
+
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="build(&amp;):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>build</strong>(&) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#build%28%26%29%3Aself-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(names:Array(String),type:ResidueType,description:String?,atoms:Array(AtomTemplate),bonds:Array(BondTemplate),rootroot_name:String)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(names : <a href="../Array.html">Array</a>(String), type : <a href="../Chem/ResidueType.html">ResidueType</a>, description : String?, atoms : <a href="../Array.html">Array</a>(<a href="../Chem/AtomTemplate.html">AtomTemplate</a>), bonds : <a href="../Array.html">Array</a>(<a href="../Chem/BondTemplate.html">BondTemplate</a>), root root_name : String)
+
+        <a class="method-permalink" href="#new%28names%3AArray%28String%29%2Ctype%3AResidueType%2Cdescription%3AString%3F%2Catoms%3AArray%28AtomTemplate%29%2Cbonds%3AArray%28BondTemplate%29%2Crootroot_name%3AString%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
 
 
 
@@ -1112,18 +1069,87 @@ writer <span class="o">&lt;&lt;</span> <span class="t">Foo</span>.new(<span clas
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="&lt;&lt;(obj:T):Nil-instance-method">
+    <div class="entry-detail" id="[](name:String):AtomTemplate-instance-method">
       <div class="signature">
         
-        def <strong><<</strong>(obj : T) : Nil
+        def <strong>[]</strong>(name : String) : <a href="../Chem/AtomTemplate.html">AtomTemplate</a>
 
-        <a class="method-permalink" href="#%3C%3C%28obj%3AT%29%3ANil-instance-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%28name%3AString%29%3AAtomTemplate-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[]?(name:String):AtomTemplate?-instance-method">
+      <div class="signature">
+        
+        def <strong>[]?</strong>(name : String) : <a href="../Chem/AtomTemplate.html">AtomTemplate</a>?
+
+        <a class="method-permalink" href="#%5B%5D%3F%28name%3AString%29%3AAtomTemplate%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="atoms:Array::View(AtomTemplate)-instance-method">
+      <div class="signature">
+        
+        def <strong>atoms</strong> : Array::View(<a href="../Chem/AtomTemplate.html">AtomTemplate</a>)
+
+        <a class="method-permalink" href="#atoms%3AArray%3A%3AView%28AtomTemplate%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bonds:Array::View(BondTemplate)-instance-method">
+      <div class="signature">
+        
+        def <strong>bonds</strong> : Array::View(<a href="../Chem/BondTemplate.html">BondTemplate</a>)
+
+        <a class="method-permalink" href="#bonds%3AArray%3A%3AView%28BondTemplate%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="description:String?-instance-method">
+      <div class="signature">
+        
+        def <strong>description</strong> : String?
+
+        <a class="method-permalink" href="#description%3AString%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="name:String-instance-method">
+      <div class="signature">
+        
+        def <strong>name</strong> : String
+
+        <a class="method-permalink" href="#name%3AString-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Writes the given object into the <code>IO</code>. Raises <code>IO::Error</code> if the
-<code>IO</code> is closed or if an entry was already written.</p>
+          <p>Returns the designated residue name.</p>
         </div>
       
       <br/>
@@ -1132,18 +1158,56 @@ writer <span class="o">&lt;&lt;</span> <span class="t">Foo</span>.new(<span clas
       </div>
     </div>
   
-    <div class="entry-detail" id="format(str:String,*args,**options):Nil-instance-method">
+    <div class="entry-detail" id="names:Array(String)-instance-method">
       <div class="signature">
         
-        def <strong>format</strong>(str : String, *args, **options) : Nil
+        def <strong>names</strong> : <a href="../Array.html">Array</a>(String)
 
-        <a class="method-permalink" href="#format%28str%3AString%2C%2Aargs%2C%2A%2Aoptions%29%3ANil-instance-method">#</a>
+        <a class="method-permalink" href="#names%3AArray%28String%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="root:AtomTemplate-instance-method">
+      <div class="signature">
+        
+        def <strong>root</strong> : <a href="../Chem/AtomTemplate.html">AtomTemplate</a>
+
+        <a class="method-permalink" href="#root%3AAtomTemplate-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_s(io:IO):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>to_s</strong>(io : IO) : Nil
+
+        <a class="method-permalink" href="#to_s%28io%3AIO%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Writes a formatted string to the enclosed <code>IO</code>. For details on the
-format string, see top-level <code>sprintf</code>.</p>
+            <div class="doc-inherited">
+              Description copied from class Reference
+            </div>
+          
+          <p>Appends a short String representation of this object
+which includes its class name and its object address.</p>
+<pre><code class="language-crystal"><span class="k">class</span> <span class="t">Person</span>
+  <span class="k">def</span> <span class="m">initialize</span>(@name : <span class="t">String</span>, @age : <span class="t">Int32</span>)
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="t">Person</span>.new(<span class="s">&quot;John&quot;</span>, <span class="n">32</span>).to_s <span class="c"># =&gt; #&lt;Person:0x10a199f20&gt;</span></code></pre>
         </div>
       
       <br/>
@@ -1152,38 +1216,13 @@ format string, see top-level <code>sprintf</code>.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="formatl(str:String,*args,**options):Nil-instance-method">
+    <div class="entry-detail" id="type:ResidueType-instance-method">
       <div class="signature">
         
-        def <strong>formatl</strong>(str : String, *args, **options) : Nil
+        def <strong>type</strong> : <a href="../Chem/ResidueType.html">ResidueType</a>
 
-        <a class="method-permalink" href="#formatl%28str%3AString%2C%2Aargs%2C%2A%2Aoptions%29%3ANil-instance-method">#</a>
+        <a class="method-permalink" href="#type%3AResidueType-instance-method">#</a>
       </div>
-      
-        <div class="doc">
-          
-          <p>Writes a formatted string followed by a newline to the enclosed
-<code>IO</code>. For details on the format string, see top-level <code>sprintf</code>.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="written?:Bool-instance-method">
-      <div class="signature">
-        
-        def <strong>written?</strong> : Bool
-
-        <a class="method-permalink" href="#written%3F%3ABool-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Returns <code>true</code> if an object was already written.</p>
-        </div>
       
       <br/>
       <div>
