@@ -19,11 +19,6 @@ class Chem::ResidueTemplate::Builder
       raise "Missing backbone atoms for #{@names.first}"
     end
 
-    # Set link bond if missing for known residue templates
-    @link_bond ||= case @type
-                   when .protein? then {"C", "N", BondOrder::Single}
-                   end
-
     atom_t_map = {} of String => AtomTemplate
     bond_ts = [] of BondTemplate
     name_gen = HydrogenNameGenerator.new

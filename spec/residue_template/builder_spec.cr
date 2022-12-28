@@ -10,6 +10,7 @@ describe Chem::ResidueTemplate::Builder do
       code 'G'
       type :protein
       spec "N(-H)-CA(-C=O)"
+      link_adjacent_by "C-N"
     end
     res_t.atoms.map(&.name).should eq ["N", "H", "CA", "HA1", "HA2", "C", "O"]
     res_t.bonds.size.should eq 6
@@ -23,6 +24,7 @@ describe Chem::ResidueTemplate::Builder do
       code 'A'
       type :protein
       spec "%{backbone}-CB"
+      link_adjacent_by "C-N"
     end
     res_t.atoms.map(&.name).should eq bb_names + ["CB", "HB1", "HB2", "HB3"]
     res_t.bonds.size.should eq 9
@@ -36,6 +38,7 @@ describe Chem::ResidueTemplate::Builder do
       code 'I'
       type :protein
       spec "%{backbone}-CB(-CG1-CD1)-CG2"
+      link_adjacent_by "C-N"
     end
     names = bb_names + ["CB", "HB", "CG1", "HG11", "HG12", "CD1", "HD11", "HD12",
                         "HD13", "CG2", "HG21", "HG22", "HG23"]
@@ -51,6 +54,7 @@ describe Chem::ResidueTemplate::Builder do
       code 'K'
       type :protein
       spec "%{backbone}-CB-CG-CD-CE-[NZH3+]"
+      link_adjacent_by "C-N"
     end
     names = bb_names + ["CB", "HB1", "HB2", "CG", "HG1", "HG2", "CD", "HD1", "HD2",
                         "CE", "HE1", "HE2", "NZ", "HZ1", "HZ2", "HZ3"]
@@ -66,6 +70,7 @@ describe Chem::ResidueTemplate::Builder do
       code 'D'
       type :protein
       spec "%{backbone}-CB-CG(=OE1)-[OE2-]"
+      link_adjacent_by "C-N"
     end
     res_t.atoms.map(&.name).should eq(bb_names + ["CB", "HB1", "HB2", "CG", "OE1", "OE2"])
     res_t.bonds.size.should eq 11
@@ -89,6 +94,7 @@ describe Chem::ResidueTemplate::Builder do
       code 'R'
       type :protein
       spec "%{backbone}-CB-CG-CD-NE-CZ(-NH1)=[NH2H2+]"
+      link_adjacent_by "C-N"
     end
 
     names = bb_names + ["CB", "HB1", "HB2", "CG", "HG1", "HG2", "CD", "HD1", "HD2",
@@ -106,6 +112,7 @@ describe Chem::ResidueTemplate::Builder do
       code 'H'
       type :protein
       spec "%{backbone}-CB-CG%1=CD2-NE2=CE1-ND1-%1"
+      link_adjacent_by "C-N"
     end
 
     names = bb_names + ["CB", "HB1", "HB2", "CG", "CD2", "HD2", "NE2", "CE1", "HE1",
@@ -122,6 +129,7 @@ describe Chem::ResidueTemplate::Builder do
       code 'H'
       type :protein
       spec "%{backbone}-CB-CG%1-ND1-CE1=NE2-CD2=%1"
+      link_adjacent_by "C-N"
     end
 
     names = bb_names + ["CB", "HB1", "HB2", "CG", "ND1", "HD1", "CE1", "HE1", "NE2",
@@ -138,6 +146,7 @@ describe Chem::ResidueTemplate::Builder do
       code 'W'
       type :protein
       spec "%{backbone}-CB-CG%1=CD1-NE1-CE2(=CD2%2-%1)-CZ2=CH2-CZ3=CE3-%2"
+      link_adjacent_by "C-N"
     end
 
     names = bb_names + ["CB", "HB1", "HB2", "CG", "CD1", "HD1", "NE1", "HE1", "CE2",
@@ -154,6 +163,7 @@ describe Chem::ResidueTemplate::Builder do
       code 'P'
       type :protein
       spec "N%1-CA(-C=O)-CB-CG-CD-%1"
+      link_adjacent_by "C-N"
     end
     res_t.atoms.map(&.name).should eq [
       "N", "CA", "HA", "C", "O", "CB", "HB1", "HB2", "CG", "HG1", "HG2", "CD",
@@ -218,6 +228,7 @@ describe Chem::ResidueTemplate::Builder do
         code 'W'
         type :protein
         spec "%{backbone}-CB-CG(=CD)(-CZ)-[OTX-]"
+        link_adjacent_by "C-N"
       end
     end
   end

@@ -306,6 +306,7 @@ class Chem::TemplateRegistry
         hash["type"]?.try { |type| builder.type ResidueType.parse(type.as_s) }
         hash["spec"]?.try { |spec| builder.spec spec.as_s }
         hash["root"]?.try { |any| builder.root any.as_s }
+        hash["link_bond"]?.try { |any| builder.link_adjacent_by any.as_s }
         hash["symmetry"]?.try do |symmetric_atom_groups|
           symmetric_atom_groups.as_a.each do |atom_pairs|
             builder.symmetry atom_pairs.as_a.map { |p| {p[0].as_s, p[1].as_s} }
