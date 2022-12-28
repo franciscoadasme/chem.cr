@@ -25,12 +25,9 @@ class Chem::ResidueTemplate
     @symmetric_atom_groups : Array(Array(Tuple(String, String)))? = nil
   )
     raise ArgumentError.new("Empty residue template names") if names.empty?
+
     @atom_table = @atoms.index_by &.name
-    if atom_t = @atom_table[root_name]?
-      @root = atom_t
-    else
-      unknown_atom(root_name)
-    end
+    @root = @atom_table.fetch(root_name) { unknown_atom(root_name) }
 
     if @atom_table.size < atoms.size # atom_table includes unique names only
       name, _ = @atoms.map(&.name).tally.max_by(&.[1])

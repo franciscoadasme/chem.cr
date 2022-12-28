@@ -48,7 +48,7 @@ class Chem::Topology::Detector
 
   private def extend_search(
     atom_map : Hash(AtomTemplate, Atom),
-    ters : Enumerable(ResidueTemplate)
+    ters : Enumerable(TerTemplate)
   ) : Nil
     visited = atom_map.values.to_set
     unmatched_neighbors = visited.flat_map(&.bonded_atoms).reject!(&.in?(visited))
@@ -67,18 +67,18 @@ class Chem::Topology::Detector
   end
 
   # TODO: refactor into Templates::Ter in TemplateRegistry
-  protected def self.protein_ters : Array(ResidueTemplate)
+  protected def self.protein_ters : Array(TerTemplate)
     @@protein_ters ||= [
-      ResidueTemplate.build(&.name("CTER").spec("C{-C}(=O)-OXT").root("C")),
-      ResidueTemplate.build(&.name("CTER").spec("C{-C}(=O)-[OXT-]").root("C")),
-      ResidueTemplate.build(&.name("NTER").spec("N{-C}").root("N")),
-      ResidueTemplate.build(&.name("NTER").spec("[NH3+]{-C}").root("N")),
+      TerTemplate.build(&.name("CTER").spec("C{-C}(=O)-OXT").root("C")),
+      TerTemplate.build(&.name("CTER").spec("C{-C}(=O)-[OXT-]").root("C")),
+      TerTemplate.build(&.name("NTER").spec("N{-C}").root("N")),
+      TerTemplate.build(&.name("NTER").spec("[NH3+]{-C}").root("N")),
     ]
   end
 
   # Use *visited* to ensure that it's matched once as multiple atoms may
   # match the same template
-  private def search(res_t : ResidueTemplate,
+  private def search(res_t : ResidueTemplate | TerTemplate,
                      atom_t : AtomTemplate,
                      atom : Atom,
                      atom_map : Hash(AtomTemplate, Atom),
