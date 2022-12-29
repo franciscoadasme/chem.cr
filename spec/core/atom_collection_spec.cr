@@ -1,6 +1,22 @@
 require "../spec_helper"
 
 describe Chem::AtomCollection do
+  describe "#coords" do
+    it "sets the coordinates from an enumerable" do
+      structure = Chem::Structure.from_xyz spec_file("waters.xyz")
+      expected = structure.coords.map(&.*(2))
+      structure.coords = expected
+      structure.coords.to_a.should eq expected
+    end
+
+    it "sets the coordinates from coords" do
+      structure = Chem::Structure.from_xyz spec_file("waters.xyz")
+      expected = structure.coords.map(&.*(0.5))
+      structure.coords = structure.clone.coords.map!(&.*(0.5))
+      structure.coords.to_a.should eq expected
+    end
+  end
+
   describe "#fragments" do
     it "returns the fragments (1)" do
       structure = load_file("5e61--unwrapped.poscar", guess_bonds: true)

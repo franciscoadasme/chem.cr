@@ -20,6 +20,14 @@ module Chem
       Spatial::CoordinatesProxy.new self
     end
 
+    # Sets the atom coordinates.
+    def coords=(coords : Enumerable(Spatial::Vec3)) : Enumerable(Spatial::Vec3)
+      each_atom.zip(coords) do |atom, vec|
+        atom.coords = vec
+      end
+      coords
+    end
+
     def each_fragment(& : AtomView ->) : Nil
       atoms = Set(Atom).new(n_atoms).concat each_atom
       each_atom do |atom|
