@@ -1,5 +1,5 @@
 # TODO: add docs (include checks)
-class Chem::ResidueTemplate::Builder
+class Chem::Templates::Builder
   @code : Char?
   @description : String?
   @type : ResidueType = :other
@@ -12,17 +12,17 @@ class Chem::ResidueTemplate::Builder
   def initialize(@spec_aliases : Hash(String, String)? = nil)
   end
 
-  def build : ResidueTemplate
+  def build : Residue
     raise "Missing residue name" if @names.empty?
     raise "Empty structure" unless parser = @spec_parser
     if @type.protein? && {"C", "N", "CA"}.none? { |name| parser.atom_map[name]? }
       raise "Missing backbone atoms for #{@names.first}"
     end
 
-    atom_t_map = {} of String => AtomTemplate
-    bond_ts = [] of BondTemplate
+    atom_t_map = {} of String => Atom
+    bond_ts = [] of Bond
     name_gen = HydrogenNameGenerator.new
-    bonded_h_table = {} of String => Array(AtomTemplate)
+    bonded_h_table = {} of String => Array(Atom)
     parser.atoms.sort_by(&.element.atomic_number.-).each do |atom|
       bonds = parser.bonds.select { |bond| atom.name.in?(bond.lhs, bond.rhs) }
       implicit_bonds = parser.implicit_bonds.select { |bond| bond.lhs == atom.name }
@@ -60,21 +60,21 @@ class Chem::ResidueTemplate::Builder
       h_count.times { bonded_elements << PeriodicTable::H }
 
       # Create and register atom template
-      atom_t = AtomTemplate.new(atom.name, atom.element, bonded_elements,
+      atom_t = Atom.new(atom.name, atom.element, bonded_elements,
         atom.formal_charge, target_valence)
       atom_t_map[atom_t.name] = atom_t
 
       # Add hydrogens (either explicit or implicit)
       h_count.times do |i|
         name = name_gen.next_for(atom_t, (i if h_count > 1))
-        h_atom = AtomTemplate.new(name, PeriodicTable::H, [atom_t.element])
-        (bonded_h_table[atom_t.name] ||= [] of AtomTemplate) << h_atom
-        bond_ts << BondTemplate.new(atom_t, h_atom)
+        h_atom = Atom.new(name, PeriodicTable::H, [atom_t.element])
+        (bonded_h_table[atom_t.name] ||= [] of Atom) << h_atom
+        bond_ts << Bond.new(atom_t, h_atom)
       end
     end
 
     # Adds the atoms in the original order
-    atoms = [] of AtomTemplate
+    atoms = [] of Atom
     parser.atoms.each do |atom_r|
       atoms << atom_t_map[atom_r.name]
       if h_atoms = bonded_h_table[atom_r.name]?
@@ -83,14 +83,14 @@ class Chem::ResidueTemplate::Builder
     end
 
     parser.bonds.each do |bond|
-      bond_ts << BondTemplate.new(
+      bond_ts << Bond.new(
         atom_t_map[bond.lhs],
         atom_t_map[bond.rhs],
         bond.order)
     end
 
     link_bond = @link_bond.try do |lhs, rhs, order|
-      BondTemplate.new(atom_t_map[lhs], atom_t_map[rhs], order)
+      Bond.new(atom_t_map[lhs], atom_t_map[rhs], order)
     end
 
     root_name = if atom_name = @root_name
@@ -101,7 +101,7 @@ class Chem::ResidueTemplate::Builder
                   self.class.guess_root(atoms, bond_ts, link_bond)
                 end
 
-    ResidueTemplate.new @names, @code, @type, @description,
+    Residue.new @names, @code, @type, @description,
       atoms, bond_ts, root_name, link_bond, @symmetric_atom_groups
   end
 
@@ -136,9 +136,9 @@ class Chem::ResidueTemplate::Builder
   # The total complexity of an atom is computed as the sum of its
   # complexity and the complexities of the bonded atoms.
   def self.guess_root(
-    atoms : Array(AtomTemplate),
-    bonds : Array(BondTemplate),
-    link_bond : BondTemplate?
+    atoms : Array(Atom),
+    bonds : Array(Bond),
+    link_bond : Bond?
   ) : String
     heavy_atoms = atoms.select &.element.heavy?
     return heavy_atoms[0].name unless heavy_atoms.size > 1
@@ -152,12 +152,12 @@ class Chem::ResidueTemplate::Builder
       {atom_t, complexity}
     end
 
-    bonded_table = {} of AtomTemplate => Array(AtomTemplate)
+    bonded_table = {} of Atom => Array(Atom)
     bonds = bonds + [link_bond] if link_bond
     bonds.each do |bond_t|
       next unless bond_t.atoms.all?(&.element.heavy?) # ignore bonds X-H
       bond_t.atoms.each do |atom_t|
-        (bonded_table[atom_t] ||= [] of AtomTemplate) << bond_t.other(atom_t)
+        (bonded_table[atom_t] ||= [] of Atom) << bond_t.other(atom_t)
         complexity_table[atom_t] += 1
       end
     end
@@ -257,7 +257,7 @@ private class HydrogenNameGenerator
   #
   # If *index* indicates the index of the current hydrogen. If `nil`, a
   # single hydrogen is being added.
-  def next_for(atom_t : Chem::AtomTemplate, index : Int32?) : String
+  def next_for(atom_t : Chem::Templates::Atom, index : Int32?) : String
     non_carbon = !atom_t.element.carbon?
     if suffix = atom_t.suffix
       suffix = "#{suffix}#{index.try(&.succ)}"

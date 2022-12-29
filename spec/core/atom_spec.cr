@@ -14,9 +14,9 @@ describe Chem::Atom do
     atom = Chem::Structure.build { atom "NG1", vec3(0, 0, 0) }.atoms[0]
 
     it "tells if atom matches template" do
-      (atom === Chem::AtomTemplate.new("NG1", "N")).should be_true
-      (atom === Chem::AtomTemplate.new("NG1", "O")).should be_false
-      (atom === Chem::AtomTemplate.new("CA", "C")).should be_false
+      (atom === Chem::Templates::Atom.new("NG1", "N")).should be_true
+      (atom === Chem::Templates::Atom.new("NG1", "O")).should be_false
+      (atom === Chem::Templates::Atom.new("CA", "C")).should be_false
     end
 
     it "tells if atom matches element" do
@@ -81,9 +81,9 @@ describe Chem::Atom do
   describe "#matches?" do
     it "tells if atom matches template" do
       atom = Chem::Structure.build { atom "CD2", vec3(0, 0, 0) }.atoms[0]
-      atom.should match Chem::AtomTemplate.new("CD2", "C")
-      atom.should_not match Chem::AtomTemplate.new("CD2", "N")
-      atom.should_not match Chem::AtomTemplate.new("ND2", "N")
+      atom.should match Chem::Templates::Atom.new("CD2", "C")
+      atom.should_not match Chem::Templates::Atom.new("CD2", "N")
+      atom.should_not match Chem::Templates::Atom.new("ND2", "N")
     end
   end
 

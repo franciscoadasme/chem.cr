@@ -609,7 +609,7 @@ describe Chem::Topology do
     end
 
     it "guesses the topology of a phospholipid" do
-      Chem.load_template spec_file("dmpe.mol2")
+      Chem::Templates.load spec_file("dmpe.mol2")
       structure = load_file "dmpe.xyz"
       structure.topology.guess_bonds
       structure.topology.guess_names

@@ -1,4 +1,4 @@
-class Chem::ResidueTemplate::SpecParser
+class Chem::Templates::SpecParser
   record AtomRecord, name : String,
     element : Element,
     formal_charge : Int32,

@@ -20,12 +20,7 @@ require "./chem/core/chain_view"
 require "./chem/core/structure"
 require "./chem/core/structure/*"
 
-require "./chem/atom_template"
-require "./chem/bond_template"
-require "./chem/residue_template"
-require "./chem/residue_template/*"
-require "./chem/ter_template"
-require "./chem/template_registry"
+require "./chem/templates"
 
 require "./chem/protein"
 require "./chem/topology"

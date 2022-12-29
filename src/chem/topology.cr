@@ -465,7 +465,7 @@ class Chem::Topology
     atoms = self.atoms.to_a
     clear
 
-    matches, unmatched_atoms = Detector.new(atoms).detect
+    matches, unmatched_atoms = Templates::Detector.new(atoms).detect
 
     chain = Chain.new self, 'A'
     resid = 0
@@ -640,5 +640,3 @@ private def next_chain_id(ch : Char) : Char
     raise ArgumentError.new("No more chains available")
   end
 end
-
-require "./topology/**"

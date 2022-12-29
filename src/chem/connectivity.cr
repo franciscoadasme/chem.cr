@@ -127,7 +127,7 @@ module Chem
     end
 
     # Case equality. This is equivalent to `#match?`.
-    def ===(bond_t : BondTemplate) : Bool
+    def ===(bond_t : Templates::Bond) : Bool
       matches? bond_t
     end
 
@@ -150,7 +150,7 @@ module Chem
     #
     # Check considers both atom matching (see `Atom#match?`) and bond
     # order.
-    def matches?(bond_t : BondTemplate) : Bool
+    def matches?(bond_t : Templates::Bond) : Bool
       (@atoms === bond_t.atoms || @atoms.reverse === bond_t.atoms) &&
         @order == bond_t.order
     end

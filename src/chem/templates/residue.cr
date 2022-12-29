@@ -1,15 +1,13 @@
-require "yaml"
-
-class Chem::ResidueTemplate
-  @atoms : Array(AtomTemplate)
-  @atom_table : Hash(String, AtomTemplate)
-  @bonds : Array(BondTemplate)
+class Chem::Templates::Residue
+  @atoms : Array(Atom)
+  @atom_table : Hash(String, Atom)
+  @bonds : Array(Bond)
 
   getter names : Array(String)
   getter type : ResidueType
-  getter link_bond : BondTemplate?
+  getter link_bond : Bond?
   getter description : String?
-  getter root : AtomTemplate
+  getter root : Atom
   getter code : Char?
   getter symmetric_atom_groups : Array(Array(Tuple(String, String)))?
 
@@ -18,10 +16,10 @@ class Chem::ResidueTemplate
     @code : Char?,
     @type : ResidueType,
     @description : String?,
-    @atoms : Array(AtomTemplate),
-    @bonds : Array(BondTemplate),
+    @atoms : Array(Atom),
+    @bonds : Array(Bond),
     root root_name : String,
-    @link_bond : BondTemplate? = nil,
+    @link_bond : Bond? = nil,
     @symmetric_atom_groups : Array(Array(Tuple(String, String)))? = nil
   )
     raise ArgumentError.new("Empty residue template names") if names.empty?
@@ -52,7 +50,7 @@ class Chem::ResidueTemplate
   end
 
   def self.build : self
-    builder = ResidueTemplate::Builder.new
+    builder = Builder.new
     with builder yield builder
     builder.build
   end
@@ -71,13 +69,13 @@ class Chem::ResidueTemplate
   #
   # Raises `Error` if there is missing connectivity (no bonds).
   def self.build(
-    residue : Residue,
+    residue : ::Chem::Residue,
     description : String? = nil,
-    link_bond : BondTemplate? = nil,
+    link_bond : Bond? = nil,
     symmetric_atom_groups : Array(Array(Tuple(String, String)))? = nil
   ) : self
     atoms = residue.atoms.map do |atom|
-      AtomTemplate.new(atom.name, atom.element, atom.bonded_atoms.map(&.element),
+      Atom.new(atom.name, atom.element, atom.bonded_atoms.map(&.element),
         atom.formal_charge, atom.valence)
     end
     atom_table = atoms.index_by &.name
@@ -87,7 +85,7 @@ class Chem::ResidueTemplate
     end
 
     bonds = residue.bonds.map do |bond|
-      BondTemplate.new *bond.atoms.map { |atom| atom_table[atom.name] }, bond.order
+      Bond.new *bond.atoms.map { |atom| atom_table[atom.name] }, bond.order
     end
     raise Error.new("Cannot create template from #{residue} due to \
                      missing connectivity") if bonds.empty?
@@ -95,7 +93,7 @@ class Chem::ResidueTemplate
     link_bond ||= residue.template.try(&.link_bond)
     if !link_bond && (bond = guess_link_bond(residue))
       atom_templates = bond.atoms.map { |atom| atom_table[atom.name] }
-      link_bond = BondTemplate.new *atom_templates, bond.order
+      link_bond = Bond.new *atom_templates, bond.order
     end
 
     new [residue.name],
@@ -111,42 +109,42 @@ class Chem::ResidueTemplate
 
   # Returns the bond template between the given atoms. Raises `KeyError`
   # if the bond does not exist.
-  def [](atom_t : AtomTemplate, other : AtomTemplate) : BondTemplate
+  def [](atom_t : Atom, other : Atom) : Bond
     self[name, other]? || unknown_bond(atom_t, other)
   end
 
   # :ditto:
-  def [](name : String, other : String) : BondTemplate
+  def [](name : String, other : String) : Bond
     self[name, other]? || unknown_bond(name, other)
   end
 
-  def [](name : String) : AtomTemplate
+  def [](name : String) : Atom
     self[name]? || unknown_atom(name)
   end
 
   # Returns the bond template between the given atoms if exists, else
   # `nil`.
-  def []?(atom_t : AtomTemplate, other : AtomTemplate) : BondTemplate?
+  def []?(atom_t : Atom, other : Atom) : Bond?
     @bonds.find do |bond_t|
       atom_t.in?(bond_t) && other.in?(bond_t)
     end
   end
 
   # :ditto:
-  def []?(name : String, other : String) : BondTemplate?
+  def []?(name : String, other : String) : Bond?
     return unless (atom_t = self[name]?) && (other_t = self[other]?)
     self[atom_t, other_t]?
   end
 
-  def []?(name : String) : AtomTemplate?
+  def []?(name : String) : Atom?
     @atom_table[name]?
   end
 
-  def atoms : Array::View(AtomTemplate)
+  def atoms : Array::View(Atom)
     @atoms.view
   end
 
-  def bonds : Array::View(BondTemplate)
+  def bonds : Array::View(Bond)
     @bonds.view
   end
 
@@ -164,7 +162,7 @@ class Chem::ResidueTemplate
   end
 
   def to_s(io : IO) : Nil
-    io << '<' << {{@type.name.split("::").last}} << ' ' << name
+    io << '<' << {{@type.name.split("::")[1..].join("::")}} << ' ' << name
     io << '(' << @code << ')' if @code
     io << ' ' << @type.to_s.downcase unless @type.other?
     io << '>'
@@ -179,7 +177,7 @@ class Chem::ResidueTemplate
                         not found in #{self}")
   end
 
-  private def unknown_bond(atom_t : AtomTemplate, other : AtomTemplate) : Nil
+  private def unknown_bond(atom_t : Atom, other : Atom) : Nil
     raise KeyError.new("Bond between #{atom_t} and #{other} not found in #{self}")
   end
 end

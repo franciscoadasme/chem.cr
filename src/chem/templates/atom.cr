@@ -1,4 +1,4 @@
-class Chem::AtomTemplate
+class Chem::Templates::Atom
   getter element : Element
   getter formal_charge : Int32
   getter name : String
@@ -39,7 +39,7 @@ class Chem::AtomTemplate
   end
 
   def to_s(io : IO)
-    io << '<' << {{@type.name.split("::").last}} << ' ' << @name
+    io << '<' << {{@type.name.split("::")[1..].join("::")}} << ' ' << @name
     io << (@formal_charge > 0 ? '+' : '-') unless @formal_charge == 0
     io << @formal_charge.abs if @formal_charge.abs > 1
     io << '>'

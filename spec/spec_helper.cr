@@ -133,7 +133,7 @@ module Spec
   struct MatchExpectation(T)
     def match(actual_value : Chem::Atom)
       case expected_value = @expected_value
-      when Chem::AtomTemplate
+      when Chem::Templates::Atom
         actual_value.matches? expected_value
       else
         actual_value =~ @expected_value
@@ -148,14 +148,14 @@ module Spec
       when Tuple(Tuple(String, String), Tuple(String, String), Symbol)
         name_and_element, other, order = expected_value
         order = Chem::BondOrder.parse order.to_s
-      when Chem::BondTemplate
+      when Chem::Templates::Bond
         return actual_value.matches? expected_value
       else
         return actual_value =~ @expected_value
       end
-      atom_t = Chem::AtomTemplate.new *name_and_element
-      other = Chem::AtomTemplate.new *other
-      actual_value.matches? Chem::BondTemplate.new atom_t, other, order
+      atom_t = Chem::Templates::Atom.new *name_and_element
+      other = Chem::Templates::Atom.new *other
+      actual_value.matches? Chem::Templates::Bond.new atom_t, other, order
     end
   end
 end

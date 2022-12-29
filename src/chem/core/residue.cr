@@ -92,11 +92,11 @@ class Chem::Residue
   #
   # ```
   # residue = Structure.read("peptide.pdb").residues[0]
-  # residue[AtomTemplate("CA")]               # => <Atom A:TRP1:CA(2)
-  # residue[AtomTemplate("CA", element: "N")] # raises IndexError
-  # residue[AtomTemplate("CX")]               # raises IndexError
+  # residue[Templates::Atom("CA")]               # => <Atom A:TRP1:CA(2)
+  # residue[Templates::Atom("CA", element: "N")] # raises IndexError
+  # residue[Templates::Atom("CX")]               # raises IndexError
   # ```
-  def [](atom_t : AtomTemplate) : Atom
+  def [](atom_t : Templates::Atom) : Atom
     self[atom_t]? || raise IndexError.new "Cannot find atom for template: #{atom_t}"
   end
 
@@ -107,11 +107,11 @@ class Chem::Residue
   #
   # ```
   # residue = Structure.read("peptide.pdb").residues[0]
-  # residue[AtomTemplate("CA")]               # => <Atom A:TRP1:CA(2)
-  # residue[AtomTemplate("CA", element: "N")] # => nil
-  # residue[AtomTemplate("CX")]               # => nil
+  # residue[Templates::Atom("CA")]               # => <Atom A:TRP1:CA(2)
+  # residue[Templates::Atom("CA", element: "N")] # => nil
+  # residue[Templates::Atom("CX")]               # => nil
   # ```
-  def []?(atom_t : AtomTemplate) : Atom?
+  def []?(atom_t : Templates::Atom) : Atom?
     if atom = self[atom_t.name]?
       atom if atom.matches?(atom_t)
     end
@@ -141,7 +141,7 @@ class Chem::Residue
   # ```
   # # Covalent ligand (JG7) is bonded to CYS sidechain
   # residues = Structure.read("ala-cys-thr-jg7.pdb").residues
-  # bond_t = BondTemplate.new "C", "N"
+  # bond_t = Templates::Bond.new "C", "N"
   # residues[0].bonded?(residues[1], bond_t) # => true
   # residues[1].bonded?(residues[2], bond_t) # => true
   # residues[2].bonded?(residues[3], bond_t) # => false
@@ -160,7 +160,7 @@ class Chem::Residue
   # Note that bond order is taken into account, e.g.:
   #
   # ```
-  # bond_t = BondTemplate.new "C", "N", order: 2
+  # bond_t = Templates::Bond.new "C", "N", order: 2
   # residues[0].bonded?(residues[1], bond_t) # => false
   # ```
   #
@@ -168,11 +168,11 @@ class Chem::Residue
   # bonded atoms, and bond order is ignored.
   #
   # ```
-  # bond_t = BondTemplate.new "C", "NX", order: 2
+  # bond_t = Templates::Bond.new "C", "NX", order: 2
   # residues[0].bonded?(residues[1], bond_t)                # => false
   # residues[0].bonded?(residues[1], bond_t, strict: false) # => true
   # ```
-  def bonded?(other : self, bond_t : BondTemplate, strict : Bool = true) : Bool
+  def bonded?(other : self, bond_t : Templates::Bond, strict : Bool = true) : Bool
     bonded?(other, *bond_t.atoms, bond_t.order) ||
       (!strict && bonded?(other, *bond_t.atoms.map(&.element)))
   end
@@ -188,7 +188,7 @@ class Chem::Residue
   # One can use atom names, atom template, or elements:
   #
   # ```
-  # a, b = AtomTemplate.new("C"), AtomTemplate.new("N")
+  # a, b = Templates::Atom.new("C"), Templates::Atom.new("N")
   # residues[0].bonded? residues[1], "C", "N"            # => true
   # residues[0].bonded? residues[1], a, b                # => true
   # residues[0].bonded? residues[1], a, PeriodicTable::N # => true
@@ -210,7 +210,7 @@ class Chem::Residue
   # returns false if missing:
   #
   # ```
-  # missing_atom_t = AtomTemplate.new("OZ5")
+  # missing_atom_t = Templates::Atom.new("OZ5")
   # residues[0].bonded? residues[1], "CX1", "N"             # => false
   # residues[0].bonded? residues[1], missing_atom_t, "N"    # => false
   # residues[0].bonded? residues[1], "C", PeriodicTable::Mg # => false
@@ -232,8 +232,8 @@ class Chem::Residue
   # residues[0].bonded? residues[1], "C", "N", 2 # => false
   # ```
   def bonded?(other : self,
-              lhs : AtomTemplate | String,
-              rhs : AtomTemplate | String,
+              lhs : Templates::Atom | String,
+              rhs : Templates::Atom | String,
               order : BondOrder? = nil) : Bool
     return false if other.same?(self)
     return false unless (a = self[lhs]?) && (b = other[rhs]?)
@@ -243,7 +243,7 @@ class Chem::Residue
 
   # :ditto:
   def bonded?(other : self,
-              lhs : AtomTemplate | String,
+              lhs : Templates::Atom | String,
               rhs : Element,
               order : BondOrder? = nil) : Bool
     return false if other.same?(self)
@@ -258,7 +258,7 @@ class Chem::Residue
   # :ditto:
   def bonded?(other : self,
               lhs : Element,
-              rhs : AtomTemplate | String,
+              rhs : Templates::Atom | String,
               order : BondOrder? = nil) : Bool
     return false if other.same?(self)
     return false unless b = other[rhs]?
@@ -307,7 +307,7 @@ class Chem::Residue
   # ```
   # # Covalent ligand (JG7) is bonded to CYS sidechain
   # residues = Structure.read("ala-cys-thr-jg7.pdb").residues
-  # bond_t = BondTemplate.new("C", "N")
+  # bond_t = Templates::Bond.new("C", "N")
   # residues[0].bonded_residues(bond_t).map(&.name) # => ["CYS"]
   # residues[1].bonded_residues(bond_t).map(&.name) # => ["THR"]
   # residues[2].bonded_residues(bond_t).map(&.name) # => []
@@ -329,13 +329,13 @@ class Chem::Residue
   # atom names or bond order:
   #
   # ```
-  # bond_t = BondTemplate.new "C", "NX", order: 2
+  # bond_t = Templates::Bond.new "C", "NX", order: 2
   # residues[0].bonded_residues(bond_t, strict: false).map(&.name) # => ["CYS"]
   # residues[1].bonded_residues(bond_t, strict: false).map(&.name) # => ["THR"]
   # residues[2].bonded_residues(bond_t, strict: false).map(&.name) # => []
   # residues[3].bonded_residues(bond_t, strict: false).map(&.name) # => []
   # ```
-  def bonded_residues(bond_t : BondTemplate,
+  def bonded_residues(bond_t : Templates::Bond,
                       forward_only : Bool = true,
                       strict : Bool = true) : Array(Residue)
     residues = [] of Residue
@@ -429,7 +429,7 @@ class Chem::Residue
   # order is ignored (fuzzy search).
   #
   # See `#bonded_residues(bond_t, forward_only, strict)` for examples.
-  def each_bonded_residue(bond_t : BondTemplate,
+  def each_bonded_residue(bond_t : Templates::Bond,
                           forward_only : Bool = true,
                           strict : Bool = true,
                           & : Residue ->) : Nil
@@ -671,8 +671,8 @@ class Chem::Residue
   # Returns associated residue template if registered, otherwise nil.
   #
   # The template is fetched by the residue name.
-  def template : ResidueTemplate?
-    TemplateRegistry.default[@name]?
+  def template : Templates::Residue?
+    Templates::Registry.default[@name]?
   end
 
   # Returns `true` if the residue is a water residue, else `false`.

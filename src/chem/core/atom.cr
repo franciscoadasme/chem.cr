@@ -47,17 +47,17 @@ module Chem
     # ```
     # structure = Structure.read "peptide.pdb"
     # desc = case structure.dig('A', 5, "CA")
-    #        when AtomTemplate("C")  then "carbonyl carbon"
-    #        when AtomTemplate("CA") then "alpha carbon"
-    #        when AtomTemplate("CB") then "beta carbon"
-    #        when AtomTemplate("CG") then "gamma carbon"
-    #        when AtomTemplate("CD") then "delta carbon"
+    #        when Templates::Atom("C")  then "carbonyl carbon"
+    #        when Templates::Atom("CA") then "alpha carbon"
+    #        when Templates::Atom("CB") then "beta carbon"
+    #        when Templates::Atom("CG") then "gamma carbon"
+    #        when Templates::Atom("CD") then "delta carbon"
     #        when PeriodicTable::C         then "carbon"
     #        else                               "non-carbon"
     #        end
     # desc # => "alpha carbon"
     # ```
-    def ===(atom_t : AtomTemplate) : Bool
+    def ===(atom_t : Templates::Atom) : Bool
       matches? atom_t
     end
 
@@ -67,11 +67,11 @@ module Chem
     # ```
     # structure = Structure.read "peptide.pdb"
     # desc = case structure.dig('A', 5, "CK")
-    #        when AtomTemplate("C")  then "carbonyl carbon"
-    #        when AtomTemplate("CA") then "alpha carbon"
-    #        when AtomTemplate("CB") then "beta carbon"
-    #        when AtomTemplate("CG") then "gamma carbon"
-    #        when AtomTemplate("CD") then "delta carbon"
+    #        when Templates::Atom("C")  then "carbonyl carbon"
+    #        when Templates::Atom("CA") then "alpha carbon"
+    #        when Templates::Atom("CB") then "beta carbon"
+    #        when Templates::Atom("CG") then "gamma carbon"
+    #        when Templates::Atom("CD") then "delta carbon"
     #        when PeriodicTable::C         then "carbon"
     #        else                               "non-carbon"
     #        end
@@ -134,12 +134,12 @@ module Chem
     #
     # ```
     # atom = Structure.read("peptide.pdb").dig 'A', 1, "CA"
-    # atom.match?(AtomTemplate.new("CA"))               # => true
-    # atom.match?(AtomTemplate.new("CA", element: "N")) # => false
-    # atom.match?(AtomTemplate.new("ND2"))              # => false
+    # atom.match?(Templates::Atom.new("CA"))               # => true
+    # atom.match?(Templates::Atom.new("CA", element: "N")) # => false
+    # atom.match?(Templates::Atom.new("ND2"))              # => false
     # ```
-    # TODO: compare topology via AtomTemplate#top_spec
-    def matches?(atom_t : AtomTemplate) : Bool
+    # TODO: compare topology via Templates::Atom#top_spec
+    def matches?(atom_t : Templates::Atom) : Bool
       @name == atom_t.name && @element == atom_t.element
     end
 

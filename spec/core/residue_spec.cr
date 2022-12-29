@@ -38,14 +38,14 @@ describe Chem::Residue do
     it "raises when no atom matches template" do
       residue = fake_structure.residues[0]
       expect_raises IndexError do
-        residue[Chem::AtomTemplate.new("CX9", "C")]
+        residue[Chem::Templates::Atom.new("CX9", "C")]
       end
     end
 
     it "raises when atom names match but elements don't" do
       residue = fake_structure.residues[0]
       expect_raises IndexError do
-        residue[Chem::AtomTemplate.new("CA", "N")]
+        residue[Chem::Templates::Atom.new("CA", "N")]
       end
     end
   end
@@ -53,18 +53,18 @@ describe Chem::Residue do
   describe "#[]?" do
     it "returns atom that matches template" do
       residue = fake_structure.residues[0]
-      residue[Chem::AtomTemplate.new("CA", "C")]?.should eq residue["CA"]
-      residue[Chem::AtomTemplate.new("OD1", "O")]?.should eq residue["OD1"]
+      residue[Chem::Templates::Atom.new("CA", "C")]?.should eq residue["CA"]
+      residue[Chem::Templates::Atom.new("OD1", "O")]?.should eq residue["OD1"]
     end
 
     it "returns nil when no atom matches template" do
       residue = fake_structure.residues[0]
-      residue[Chem::AtomTemplate.new("CX9", "C")]?.should be_nil
+      residue[Chem::Templates::Atom.new("CX9", "C")]?.should be_nil
     end
 
     it "returns nil when atom names match but elements don't" do
       residue = fake_structure.residues[0]
-      residue[Chem::AtomTemplate.new("CA", "N")]?.should be_nil
+      residue[Chem::Templates::Atom.new("CA", "N")]?.should be_nil
     end
   end
 
@@ -84,45 +84,45 @@ describe Chem::Residue do
 
     context "given a bond type" do
       it "tells if two residues are bonded" do
-        bond_t = Chem::BondTemplate.new Chem::AtomTemplate.new("C", "C"), Chem::AtomTemplate.new("N", "N")
+        bond_t = Chem::Templates::Bond.new Chem::Templates::Atom.new("C", "C"), Chem::Templates::Atom.new("N", "N")
         a1.bonded?(a2, bond_t).should be_true
         a2.bonded?(b1, bond_t).should be_false
       end
 
       it "tells if two residues are bonded by element-based search" do
-        bond_t = Chem::BondTemplate.new Chem::AtomTemplate.new("C", "C"), Chem::AtomTemplate.new("NX", "N")
+        bond_t = Chem::Templates::Bond.new Chem::Templates::Atom.new("C", "C"), Chem::Templates::Atom.new("NX", "N")
         a1.bonded?(a2, bond_t, strict: false).should be_true
         a2.bonded?(b1, bond_t, strict: false).should be_false
       end
 
       it "returns false if bond is inverted" do
-        bond_t = Chem::BondTemplate.new(
-          Chem::AtomTemplate.new("N", "N"),
-          Chem::AtomTemplate.new("C", "C"),
+        bond_t = Chem::Templates::Bond.new(
+          Chem::Templates::Atom.new("N", "N"),
+          Chem::Templates::Atom.new("C", "C"),
         )
         a1.bonded?(a2, bond_t).should be_false
       end
 
       it "returns false if an atom if missing" do
-        bond_t = Chem::BondTemplate.new(
-          Chem::AtomTemplate.new("C", "C"),
-          Chem::AtomTemplate.new("CX1", "C"),
+        bond_t = Chem::Templates::Bond.new(
+          Chem::Templates::Atom.new("C", "C"),
+          Chem::Templates::Atom.new("CX1", "C"),
         )
         a1.bonded?(a2, bond_t).should be_false
       end
 
       it "returns false when residue is itself" do
-        bond_t = Chem::BondTemplate.new(
-          Chem::AtomTemplate.new("C", "C"),
-          Chem::AtomTemplate.new("N", "N"),
+        bond_t = Chem::Templates::Bond.new(
+          Chem::Templates::Atom.new("C", "C"),
+          Chem::Templates::Atom.new("N", "N"),
         )
         a1.bonded?(a1, bond_t).should be_false
       end
 
       it "returns false when bond order is different" do
-        bond_t = Chem::BondTemplate.new(
-          Chem::AtomTemplate.new("C", "C"),
-          Chem::AtomTemplate.new("N", "N"),
+        bond_t = Chem::Templates::Bond.new(
+          Chem::Templates::Atom.new("C", "C"),
+          Chem::Templates::Atom.new("N", "N"),
           :double,
         )
         a1.bonded?(a2, bond_t).should be_false
@@ -154,66 +154,66 @@ describe Chem::Residue do
 
     context "given an atom template and element" do
       it "tells if two residues are bonded through atom template-element" do
-        atom_t = Chem::AtomTemplate.new "C", "C"
+        atom_t = Chem::Templates::Atom.new "C", "C"
         a1.bonded?(a2, atom_t, Chem::PeriodicTable::N).should be_true
         a2.bonded?(b1, atom_t, Chem::PeriodicTable::N).should be_false
       end
 
       it "returns false when bond is inverted" do
-        atom_t = Chem::AtomTemplate.new "N", "N"
+        atom_t = Chem::Templates::Atom.new "N", "N"
         a1.bonded?(a2, atom_t, Chem::PeriodicTable::C).should be_false
       end
 
       it "returns false when atom template is missing" do
-        atom_t = Chem::AtomTemplate.new "CY2", "C"
+        atom_t = Chem::Templates::Atom.new "CY2", "C"
         a1.bonded?(a2, atom_t, Chem::PeriodicTable::N).should be_false
       end
 
       it "returns false when element is missing" do
-        atom_t = Chem::AtomTemplate.new "C", "C"
+        atom_t = Chem::Templates::Atom.new "C", "C"
         a1.bonded?(a2, atom_t, Chem::PeriodicTable::Zn).should be_false
       end
 
       it "returns false when residue is itself" do
-        atom_t = Chem::AtomTemplate.new "C", "C"
+        atom_t = Chem::Templates::Atom.new "C", "C"
         a1.bonded?(a1, atom_t, Chem::PeriodicTable::N).should be_false
       end
 
       it "returns false when bond order is different" do
-        atom_t = Chem::AtomTemplate.new "C", "C"
+        atom_t = Chem::Templates::Atom.new "C", "C"
         a1.bonded?(a2, atom_t, Chem::PeriodicTable::N, :double).should be_false
       end
     end
 
     context "given an element and atom template" do
       it "tells if two residues are bonded through element-atom template" do
-        atom_t = Chem::AtomTemplate.new "N", "N"
+        atom_t = Chem::Templates::Atom.new "N", "N"
         a1.bonded?(a2, Chem::PeriodicTable::C, atom_t).should be_true
         a2.bonded?(b1, Chem::PeriodicTable::C, atom_t).should be_false
       end
 
       it "returns false when bond is inverted" do
-        atom_t = Chem::AtomTemplate.new "C", "C"
+        atom_t = Chem::Templates::Atom.new "C", "C"
         a1.bonded?(a2, Chem::PeriodicTable::N, atom_t).should be_false
       end
 
       it "returns false when atom template is missing" do
-        atom_t = Chem::AtomTemplate.new "NY2", "N"
+        atom_t = Chem::Templates::Atom.new "NY2", "N"
         a1.bonded?(a2, Chem::PeriodicTable::C, atom_t).should be_false
       end
 
       it "returns false when element is missing" do
-        atom_t = Chem::AtomTemplate.new "N", "N"
+        atom_t = Chem::Templates::Atom.new "N", "N"
         a1.bonded?(a2, Chem::PeriodicTable::Zn, atom_t).should be_false
       end
 
       it "returns false when residue is itself" do
-        atom_t = Chem::AtomTemplate.new "N", "N"
+        atom_t = Chem::Templates::Atom.new "N", "N"
         a1.bonded?(a1, Chem::PeriodicTable::C, atom_t).should be_false
       end
 
       it "returns false when bond order is different" do
-        atom_t = Chem::AtomTemplate.new "N", "N"
+        atom_t = Chem::Templates::Atom.new "N", "N"
         a1.bonded?(a2, Chem::PeriodicTable::C, atom_t, :double).should be_false
       end
     end
@@ -255,9 +255,9 @@ describe Chem::Residue do
     context "given a bond type" do
       it "returns residues bonded via X(i)-Y(j)" do
         residues = load_file("residue_type_unknown_covalent_ligand.pdb").residues
-        c = Chem::AtomTemplate.new("C", "C")
-        n = Chem::AtomTemplate.new("N", "N")
-        bond_t = Chem::BondTemplate.new(c, n)
+        c = Chem::Templates::Atom.new("C", "C")
+        n = Chem::Templates::Atom.new("N", "N")
+        bond_t = Chem::Templates::Bond.new(c, n)
         residues[0].bonded_residues(bond_t).map(&.name).should eq %w(ALA)
         residues[1].bonded_residues(bond_t).map(&.name).should eq %w(CYS)
         residues[2].bonded_residues(bond_t).map(&.name).should eq %w()
@@ -266,9 +266,9 @@ describe Chem::Residue do
 
       it "returns residues bonded via X(i)-Y(j) or X(j)-Y(i)" do
         residues = load_file("residue_type_unknown_covalent_ligand.pdb").residues
-        c = Chem::AtomTemplate.new("C", "C")
-        n = Chem::AtomTemplate.new("N", "N")
-        bond_t = Chem::BondTemplate.new(c, n)
+        c = Chem::Templates::Atom.new("C", "C")
+        n = Chem::Templates::Atom.new("N", "N")
+        bond_t = Chem::Templates::Bond.new(c, n)
         residues[0].bonded_residues(bond_t, forward_only: false).map(&.name).should eq %w(ALA)
         residues[1].bonded_residues(bond_t, forward_only: false).map(&.name).should eq %w(GLY CYS)
         residues[2].bonded_residues(bond_t, forward_only: false).map(&.name).should eq %w(ALA)
@@ -277,9 +277,9 @@ describe Chem::Residue do
 
       it "returns bonded residues using fuzzy search" do
         residues = load_file("residue_type_unknown_covalent_ligand.pdb").residues
-        c = Chem::AtomTemplate.new("C", "C")
-        n = Chem::AtomTemplate.new("NX", "N")
-        bond_t = Chem::BondTemplate.new(c, n)
+        c = Chem::Templates::Atom.new("C", "C")
+        n = Chem::Templates::Atom.new("NX", "N")
+        bond_t = Chem::Templates::Bond.new(c, n)
         residues[0].bonded_residues(bond_t, strict: false).map(&.name).should eq %w(ALA)
         residues[1].bonded_residues(bond_t, strict: false).map(&.name).should eq %w(CYS)
         residues[2].bonded_residues(bond_t, strict: false).map(&.name).should eq %w()

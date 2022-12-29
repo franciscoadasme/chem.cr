@@ -1,6 +1,6 @@
 require "../spec_helper"
 
-describe Chem::ResidueTemplate::Builder do
+describe Chem::Templates::Builder do
   bb_names = ["N", "H", "CA", "HA", "C", "O"]
 
   it "builds a residue without sidechain" do
@@ -363,9 +363,9 @@ describe Chem::ResidueTemplate::Builder do
   end
 end
 
-private def build_template(&) : Chem::ResidueTemplate
+private def build_template(&) : Chem::Templates::Residue
   spec_aliases = {"backbone" => "N(-H)-CA(-HA)(-C=O)"}
-  builder = Chem::ResidueTemplate::Builder.new spec_aliases
+  builder = Chem::Templates::Builder.new spec_aliases
   with builder yield builder
   builder.build
 end

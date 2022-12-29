@@ -1,13 +1,15 @@
-# Stores a map of residue templates (see `ResidueTemplate`).
+require "yaml"
+
+# Stores a map of residue templates (see `Residue`).
 #
 # It behaves as a hash, where residue templates are indexed (registered)
 # by the residue names.
 #
-# A _global registry_ can be accessed via the `TemplateRegistry.default`
-# method, which contains the default templates as well as other
-# templates that have been globally registered. For instance, the
-# topology detection mechanism (see `Topology::Detector`) uses the
-# global registry unless a registry is specified.
+# A _global registry_ can be accessed via the `Registry.default` method,
+# which contains the default templates as well as other templates that
+# have been globally registered. For instance, the topology detection
+# mechanism (see `Topology::Detector`) uses the global registry unless a
+# registry is specified.
 #
 # Local registries could be used to selectively detect a few templates,
 # which would speed up the process if existing residues are known
@@ -23,7 +25,7 @@
 # YAML content:
 #
 # ```
-# registry = Chem::TemplateRegistry.from_yaml <<-YAML
+# registry = Chem::Templates::Registry.from_yaml <<-YAML
 #   templates:
 #     - description: Phenylalanine
 #       names: [PHE, PHY]
@@ -44,7 +46,7 @@
 # either the `#load` or `#parse` methods.
 #
 # ```
-# registry = Chem::TemplateRegistry.new.parse <<-YAML
+# registry = Chem::Templates::Registry.new.parse <<-YAML
 #   ...
 #   YAML
 # ```
@@ -55,16 +57,16 @@
 # runtime.
 #
 # ```
-# registry = Chem::TemplateRegistry.from_yaml {{read_file("/path/to/yaml")}}
+# registry = Chem::Templates::Registry.from_yaml {{read_file("/path/to/yaml")}}
 # ```
 #
 # ### Registering a new residue template
 #
 # Residue templates can also be registered using the DSL provided by the
-# `ResidueTemplate::Builder` type using the `#register` method:
+# `Builder` type using the `#register` method:
 #
 # ```
-# registry = Chem::TemplateRegistry.new
+# registry = Chem::Templates::Registry.new
 # res_t = registry.register do
 #   description "Phenylalanine"
 #   names %w(PHE PHY)
@@ -83,7 +85,7 @@
 # accessed using the bracket methods much like a hash.
 #
 # ```
-# registry = Chem::TemplateRegistry.from_yaml <<-YAML
+# registry = Chem::Templates::Registry.from_yaml <<-YAML
 #   names: [CX1, CX2]
 #   description: "Fake residue"
 #   spec: CX
@@ -120,10 +122,10 @@
 # spec: '[N1H3+]-C2-C3-O4-C5(-C6)=O7'
 # ```
 #
-# The records are transformed into `ResidueTemplate` instances via the
-# `ResidueTemplate::Builder` type. Each allowed field correspond to a
-# specific method of the builder. The latter dictates the type of data
-# and also handles validation.
+# The records are transformed into `Residue` instances via the `Builder`
+# type. Each allowed field correspond to a specific method of the
+# builder. The latter dictates the type of data and also handles
+# validation.
 #
 # Aliases for common residue template specifications (spec aliases) can
 # be defined as a map under the `aliases` field at the top level:
@@ -134,11 +136,10 @@
 #   backbone: 'N(-H)-CA(-HA)(-C=O)'
 # ```
 #
-# Registered aliases are passed down to the
-# `ResidueTemplate::SpecParser` type such that they are expanded when
-# parsing the specification of a residue template via the bracket
-# syntax, e.g., '{backbone}-CB-OH'.
-class Chem::TemplateRegistry
+# Registered aliases are passed down to the `SpecParser` type such that
+# they are expanded when parsing the specification of a residue template
+# via the bracket syntax, e.g., `'%{backbone}-CB-OH'`.
+class Chem::Templates::Registry
   # Number of residue templates.
   getter size : Int32 = 0
 
@@ -147,8 +148,8 @@ class Chem::TemplateRegistry
   # Creates a new, empty residue template registry.
   def initialize
     @spec_aliases = {} of String => String
-    @table = {} of String => ResidueTemplate
-    @ter_map = {} of String => TerTemplate
+    @table = {} of String => Residue
+    @ter_map = {} of String => Ter
   end
 
   # Returns the global residue template registry.
@@ -159,8 +160,8 @@ class Chem::TemplateRegistry
   def self.default : self
     @@default_registry ||= new.tap do |registry|
       # bake default templates so it can be loaded from anywhere
-      registry.parse {{read_file("#{__DIR__}/../../data/templates/amino.yaml")}}
-      registry.parse {{read_file("#{__DIR__}/../../data/templates/solvent.yaml")}}
+      registry.parse {{read_file("#{__DIR__}/../../../data/templates/amino.yaml")}}
+      registry.parse {{read_file("#{__DIR__}/../../../data/templates/solvent.yaml")}}
     end
   end
 
@@ -176,13 +177,13 @@ class Chem::TemplateRegistry
 
   # Returns the residue template registered under *name*. Raises `Error`
   # if no template exist with the given name.
-  def [](name : String) : ResidueTemplate
+  def [](name : String) : Residue
     self[name]? || raise Error.new("Unknown residue template #{name}")
   end
 
   # Returns the residue template registered under *name*, or `nil` if no
   # template exist with the given name.
-  def []?(name : String) : ResidueTemplate?
+  def []?(name : String) : Residue?
     @table[name]?
   end
 
@@ -190,7 +191,7 @@ class Chem::TemplateRegistry
   # registered under every residue name.
   #
   # Raises `Error` if any of the residue names already exists.
-  def <<(res_t : ResidueTemplate) : self
+  def <<(res_t : Residue) : self
     res_t.names.each do |name|
       raise Error.new("#{name} residue template already exists") if @table.has_key?(name)
       @table[name] = res_t
@@ -203,7 +204,7 @@ class Chem::TemplateRegistry
   # registered under every name.
   #
   # Raises `Error` if any of the names already exists.
-  def <<(ter_t : TerTemplate) : self
+  def <<(ter_t : Ter) : self
     ter_t.names.each do |name|
       if @ter_map.has_key?(name)
         raise Error.new("#{name} termination template already exists")
@@ -227,7 +228,7 @@ class Chem::TemplateRegistry
   # Returns `true` if the registry contains the given residue template,
   # else `false`. Both template's name and content are checked for a
   # match.
-  def includes?(res_t : ResidueTemplate) : Bool
+  def includes?(res_t : Residue) : Bool
     # FIXME: Implement res_t.names
     res_t.names.any? do |name|
       self[name]? == res_t
@@ -239,14 +240,14 @@ class Chem::TemplateRegistry
   #
   # If a valid structure file (checked via `Format.from_filename?`) is
   # passed, it's read into a `Structure` instance, and the first residue
-  # is transformed into a template by calling `ResidueTemplate.build`.
+  # is transformed into a template by calling `Residue.build`.
   #
   # Otherwise, the content of the YAML file is parsed by calling
-  # `TemplateRegistry#parse`.
+  # `Registry#parse`.
   def load(filepath : Path | String) : self
     if Format.from_filename?(filepath) # valid structure file
       structure = Structure.read filepath
-      res_t = ResidueTemplate.build structure.residues[0]
+      res_t = Residue.build structure.residues[0]
       self << res_t
     else
       File.open(filepath) do |io|
@@ -260,7 +261,7 @@ class Chem::TemplateRegistry
   # specification](#format-specification) section above.
   #
   # Validation on template data is handled by
-  # `ResidueTemplate::Builder`, which may raise `Error`.
+  # `Builder`, which may raise `Error`.
   def parse(io : IO) : self
     data = YAML.parse(io)
     scoped = false
@@ -277,7 +278,7 @@ class Chem::TemplateRegistry
     data.dig?("ters").try do |ters|
       scoped = true
       ters.as_a.each do |hash|
-        self << TerTemplate.build do |builder|
+        self << Ter.build do |builder|
           hash["description"]?.try { |any| builder.description any.as_s }
           if name = hash["name"]?
             builder.name name.as_s
@@ -324,17 +325,17 @@ class Chem::TemplateRegistry
   end
 
   # Convenience method that creates and registers a new residue
-  # template from a structure. See `ResidueTemplate.build` and `#<<`.
-  def register(structure : Structure) : ResidueTemplate
-    res_t = ResidueTemplate.build structure.residues[0]
+  # template from a structure. See `Residue.build` and `#<<`.
+  def register(structure : Structure) : Residue
+    res_t = Residue.build structure.residues[0]
     self << res_t
     res_t
   end
 
   # Convenience method that creates and registers a new residue
-  # template. See `ResidueTemplate::Builder` and `#<<`.
-  def register(&) : ResidueTemplate
-    builder = ResidueTemplate::Builder.new @spec_aliases
+  # template. See `Builder` and `#<<`.
+  def register(&) : Residue
+    builder = Builder.new @spec_aliases
     with builder yield builder
     res_t = builder.build
     self << res_t
@@ -343,7 +344,7 @@ class Chem::TemplateRegistry
 
   # Returns a new registry with all the residue templates for which the
   # passed block is falsey.
-  def reject(& : ResidueTemplate -> _) : self
+  def reject(& : Residue -> _) : self
     self.select do |res_t|
       !(yield res_t)
     end
@@ -351,7 +352,7 @@ class Chem::TemplateRegistry
 
   # Returns a new registry with all the residue templates for which the
   # passed block is truthy.
-  def select(& : ResidueTemplate -> _) : self
+  def select(& : Residue -> _) : self
     registry = self.class.new
     @table.each_value do |res_t|
       registry << res_t if !res_t.in?(registry) && yield res_t
@@ -364,7 +365,7 @@ class Chem::TemplateRegistry
 
   # Registers an alias for a residue template specification.
   #
-  # Registered aliases are passed to `ResidueTemplate::SpecParser` such
+  # Registered aliases are passed to `SpecParser` such
   # that they are expanded when parsing the specification of a residue
   # template.
   def spec_alias(name : String, spec : String) : self
@@ -373,47 +374,12 @@ class Chem::TemplateRegistry
   end
 
   # Returns an array containing all the termination templates.
-  def ters : Array(TerTemplate)
+  def ters : Array(Ter)
     @ter_map.values.uniq!
   end
 
   # Returns an array containing all the residue templates.
-  def to_a : Array(ResidueTemplate)
+  def to_a : Array(Residue)
     @table.values.uniq!
   end
-end
-
-# Loads and registers the residue template(s) from a structure file or
-# YAML file into the _global registry_.
-#
-# Refer to the `TemplateRegistry` documentation and
-# `TemplateRegistry#load` for more information.
-def Chem.load_template(filepath : Path | String) : Nil
-  load_templates filepath
-end
-
-# :ditto:
-def Chem.load_templates(filepath : Path | String) : Nil
-  Chem::TemplateRegistry.default.load filepath
-end
-
-# Parses and registers the residue templates encoded in the given YAML
-# content into the _global registry_. Refer to the `TemplateRegistry`
-# documentation and `TemplateRegistry#parse` for details.
-def Chem.parse_templates(filepath : String) : Nil
-  Chem::TemplateRegistry.default.parse filepath
-end
-
-# Creates and registers a residue template from a structure into the
-# _global registry_. Refer to the `TemplateRegistry` documentation and
-# `TemplateRegistry#register` for details.
-def Chem.register_template(structure : Structure) : Nil
-  Chem::TemplateRegistry.default.register structure
-end
-
-# Registers an aliases to a known residue template into the _global
-# registry_. Refer to the `TemplateRegistry` documentation and
-# `TemplateRegistry#alias` for details.
-def Chem.template_alias(new_name : String, to existing_name : String) : Nil
-  Chem::TemplateRegistry.default.alias new_name, existing_name
 end

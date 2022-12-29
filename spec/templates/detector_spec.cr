@@ -5,8 +5,8 @@ macro it_detects(description, path, expected)
     %expected = {{expected}}
 
     %structure = load_file {{path}}, guess_bonds: true
-    %templates = Chem::TemplateRegistry.default.select &.name.in?(%expected.keys)
-    %detector = Chem::Topology::Detector.new %structure.atoms
+    %templates = Chem::Templates::Registry.default.select &.name.in?(%expected.keys)
+    %detector = Chem::Templates::Detector.new %structure.atoms
 
     %res_idxs = {} of String => Array(Hash(Int32, String))
     %matches, _ = %detector.detect(%templates)
@@ -19,7 +19,7 @@ macro it_detects(description, path, expected)
   end
 end
 
-describe Chem::Topology::Detector do
+describe Chem::Templates::Detector do
   it_detects "protein residues", "5e61--unwrapped.poscar", {
     "ALA" => [
       {12 => "CA", 13 => "CB", 14 => "C", 78 => "H", 79 => "HA", 80 => "HB2",
@@ -87,10 +87,10 @@ describe Chem::Topology::Detector do
   }
 
   it "detects a phospholipid" do
-    templates = Chem::TemplateRegistry.new
+    templates = Chem::Templates::Registry.new
     templates.load spec_file("dmpe.mol2")
     structure = load_file "dmpe.xyz", guess_bonds: true
-    detector = Chem::Topology::Detector.new structure.atoms
+    detector = Chem::Templates::Detector.new structure.atoms
     matches, unmatched_atoms = detector.detect(templates)
     matches.size.should eq 1
     matches[0].atom_map.size.should eq 109
@@ -100,7 +100,7 @@ describe Chem::Topology::Detector do
   describe "#detect" do
     it "returns found matches" do
       structure = load_file "waters.xyz", guess_bonds: true
-      matches, _ = Chem::Topology::Detector.new(structure.atoms).detect
+      matches, _ = Chem::Templates::Detector.new(structure.atoms).detect
       matches.group_by(&.template.name)
         .transform_values(&.map { |match|
           match.atom_map.transform_keys(&.name).transform_values(&.serial)
@@ -116,15 +116,15 @@ describe Chem::Topology::Detector do
 
     it "returns atoms not matched by any template" do
       structure = load_file "5e5v--unwrapped.poscar", guess_bonds: true
-      registry = Chem::TemplateRegistry.default.select &.name.==("HOH")
-      detector = Chem::Topology::Detector.new structure.atoms
+      registry = Chem::Templates::Registry.default.select &.name.==("HOH")
+      detector = Chem::Templates::Detector.new structure.atoms
       _, unmatched_atoms = detector.detect registry
       unmatched_atoms.size.should eq 206
     end
 
     it "returns an empty array when all atoms are matched" do
       structure = load_file "waters.xyz", guess_bonds: true
-      _, unmatched_atoms = Chem::Topology::Detector.new(structure.atoms).detect
+      _, unmatched_atoms = Chem::Templates::Detector.new(structure.atoms).detect
       unmatched_atoms.should be_empty
     end
   end

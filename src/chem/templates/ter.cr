@@ -1,19 +1,19 @@
-class Chem::TerTemplate
-  @atoms : Array(AtomTemplate)
-  @atom_table : Hash(String, AtomTemplate)
-  @bonds : Array(BondTemplate)
+class Chem::Templates::Ter
+  @atoms : Array(Atom)
+  @atom_table : Hash(String, Atom)
+  @bonds : Array(Bond)
 
   getter names : Array(String)
   getter type : ResidueType
   getter description : String?
-  getter root : AtomTemplate
+  getter root : Atom
 
   def initialize(
     @names : Array(String),
     @type : ResidueType,
     @description : String?,
-    @atoms : Array(AtomTemplate),
-    @bonds : Array(BondTemplate),
+    @atoms : Array(Atom),
+    @bonds : Array(Bond),
     root root_name : String
   )
     raise ArgumentError.new("Empty ter template names") if names.empty?
@@ -29,26 +29,26 @@ class Chem::TerTemplate
 
   def self.build : self
     # TODO: use an adhoc builder to avoid setting unneeded things like symmetry
-    builder = ResidueTemplate::Builder.new
+    builder = Builder.new
     with builder yield builder
     res_t = builder.build
     new res_t.names, res_t.type, res_t.description,
       res_t.atoms.to_a, res_t.bonds.to_a, res_t.root.name
   end
 
-  def [](name : String) : AtomTemplate
+  def [](name : String) : Atom
     self[name]? || unknown_atom(name)
   end
 
-  def []?(name : String) : AtomTemplate?
+  def []?(name : String) : Atom?
     @atom_table[name]?
   end
 
-  def atoms : Array::View(AtomTemplate)
+  def atoms : Array::View(Atom)
     @atoms.view
   end
 
-  def bonds : Array::View(BondTemplate)
+  def bonds : Array::View(Bond)
     @bonds.view
   end
 
