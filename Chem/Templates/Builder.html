@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../../js/doc.js"></script>
 
   <meta name="repository-name" content="chem.cr">
-  <title>Chem::VASP::Poscar - chem.cr 0.5.6</title>
+  <title>Chem::Templates::Builder - chem.cr 0.5.6</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -611,7 +611,7 @@
       
     </li>
   
-  <li class="parent " data-id="chem.cr/Chem/Templates" data-name="chem::templates">
+  <li class="parent open current" data-id="chem.cr/Chem/Templates" data-name="chem::templates">
       <a href="../../Chem/Templates.html">Templates</a>
       
         <ul>
@@ -626,7 +626,7 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Templates/Builder" data-name="chem::templates::builder">
+  <li class=" current" data-id="chem.cr/Chem/Templates/Builder" data-name="chem::templates::builder">
       <a href="../../Chem/Templates/Builder.html">Builder</a>
       
     </li>
@@ -691,7 +691,7 @@
       
     </li>
   
-  <li class="parent open current" data-id="chem.cr/Chem/VASP" data-name="chem::vasp">
+  <li class="parent " data-id="chem.cr/Chem/VASP" data-name="chem::vasp">
       <a href="../../Chem/VASP.html">VASP</a>
       
         <ul>
@@ -746,7 +746,7 @@
       
     </li>
   
-  <li class="parent open current" data-id="chem.cr/Chem/VASP/Poscar" data-name="chem::vasp::poscar">
+  <li class="parent " data-id="chem.cr/Chem/VASP/Poscar" data-name="chem::vasp::poscar">
       <a href="../../Chem/VASP/Poscar.html">Poscar</a>
       
         <ul>
@@ -855,13 +855,26 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">module</span> Chem::VASP::Poscar
+  <span class="kind">class</span> Chem::Templates::Builder
 
 </h1>
 
 
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Chem/Templates/Builder.html">Chem::Templates::Builder</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
+
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p><span class="flag orange">TODO</span>  add docs (include checks)</p>
 
 
 
@@ -886,12 +899,7 @@
   </h2>
   
     
-      chem/formats/vasp/poscar.cr
-    
-    <br/>
-  
-    
-      chem/register_format.cr
+      chem/templates/builder.cr
     
     <br/>
   
@@ -900,9 +908,117 @@
 
 
 
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new%28spec_aliases%3AHash%28String%2CString%29%3F%3Dnil%29-class-method" class="signature"><strong>.new</strong>(spec_aliases : Hash(String, String)? = <span class="n">nil</span>)</a>
+        
+      </li>
+    
+  </ul>
 
 
 
+  <h2>
+    <a id="class-method-summary" class="anchor" href="#class-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#guess_root%28atoms%3AArray%28Atom%29%2Cbonds%3AArray%28Bond%29%2Clink_bond%3ABond%3F%29%3AString-class-method" class="signature"><strong>.guess_root</strong>(atoms : Array(Atom), bonds : Array(Bond), link_bond : Bond?) : String</a>
+        
+          <div class="summary"><p>Returns the atom with the highest bonding complexity.</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#build%3AResidue-instance-method" class="signature"><strong>#build</strong> : Residue</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#code%28char%3AChar%29%3Aself-instance-method" class="signature"><strong>#code</strong>(char : Char) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#description%28name%3AString%29%3Aself-instance-method" class="signature"><strong>#description</strong>(name : String) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#link_adjacent_by%28bond_spec%3AString%29%3Aself-instance-method" class="signature"><strong>#link_adjacent_by</strong>(bond_spec : String) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#name%28%2Anames%3AString%29%3Aself-instance-method" class="signature"><strong>#name</strong>(*names : String) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#names%28names%3AEnumerable%28String%29%29%3Aself-instance-method" class="signature"><strong>#names</strong>(names : Enumerable(String)) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#names%28%2Anames%3AString%29%3Aself-instance-method" class="signature"><strong>#names</strong>(*names : String) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#root%28atom_name%3AString%29%3Aself-instance-method" class="signature"><strong>#root</strong>(atom_name : String) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#spec%28spec%3AString%29%3Aself-instance-method" class="signature"><strong>#spec</strong>(spec : String) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#symmetry%28pairs%3AEnumerable%28Tuple%28String%2CString%29%29%29%3Aself-instance-method" class="signature"><strong>#symmetry</strong>(pairs : Enumerable(Tuple(String, String))) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#symmetry%28%2Apairs%3ATuple%28String%2CString%29%29%3Aself-instance-method" class="signature"><strong>#symmetry</strong>(*pairs : Tuple(String, String)) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#type%28type%3AResidueType%29%3Aself-instance-method" class="signature"><strong>#type</strong>(type : ResidueType) : <span class="k">self</span></a>
+        
+      </li>
+    
+  </ul>
 
 
 
@@ -910,12 +1026,272 @@
 
 <div class="methods-inherited">
   
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
 </div>
 
 
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="new(spec_aliases:Hash(String,String)?=nil)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(spec_aliases : Hash(String, String)? = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#new%28spec_aliases%3AHash%28String%2CString%29%3F%3Dnil%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
 
 
 
+  <h2>
+    <a id="class-method-detail" class="anchor" href="#class-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="guess_root(atoms:Array(Atom),bonds:Array(Bond),link_bond:Bond?):String-class-method">
+      <div class="signature">
+        
+        def self.<strong>guess_root</strong>(atoms : <a href="../../Array.html">Array</a>(<a href="../../Chem/Templates/Atom.html">Atom</a>), bonds : <a href="../../Array.html">Array</a>(<a href="../../Chem/Templates/Bond.html">Bond</a>), link_bond : <a href="../../Chem/Templates/Bond.html">Bond</a>?) : String
+
+        <a class="method-permalink" href="#guess_root%28atoms%3AArray%28Atom%29%2Cbonds%3AArray%28Bond%29%2Clink_bond%3ABond%3F%29%3AString-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the atom with the highest bonding complexity.</p>
+<p>The bonding complexity of an atom depends on the nature of the atom,
+the bonds, and the bonds of its neighbors.</p>
+<p>First, carbon atoms are the most frequent so they have the lowest
+complexity (0), followed by non-carbon atoms (+1), and then
+non-organic (not CHON) atoms (+2). Hydrogen atoms are ignored.</p>
+<p>The complexity is further increased by the number of bonds with
+other heavy atoms, i.e., bonds X-H are ignored.</p>
+<p>The total complexity of an atom is computed as the sum of its
+complexity and the complexities of the bonded atoms.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
+
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="build:Residue-instance-method">
+      <div class="signature">
+        
+        def <strong>build</strong> : <a href="../../Chem/Templates/Residue.html">Residue</a>
+
+        <a class="method-permalink" href="#build%3AResidue-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="code(char:Char):self-instance-method">
+      <div class="signature">
+        
+        def <strong>code</strong>(char : <a href="../../Char.html">Char</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#code%28char%3AChar%29%3Aself-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="description(name:String):self-instance-method">
+      <div class="signature">
+        
+        def <strong>description</strong>(name : String) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#description%28name%3AString%29%3Aself-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="link_adjacent_by(bond_spec:String):self-instance-method">
+      <div class="signature">
+        
+        def <strong>link_adjacent_by</strong>(bond_spec : String) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#link_adjacent_by%28bond_spec%3AString%29%3Aself-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="name(*names:String):self-instance-method">
+      <div class="signature">
+        
+        def <strong>name</strong>(*names : String) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#name%28%2Anames%3AString%29%3Aself-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="names(names:Enumerable(String)):self-instance-method">
+      <div class="signature">
+        
+        def <strong>names</strong>(names : <a href="../../Enumerable.html">Enumerable</a>(String)) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#names%28names%3AEnumerable%28String%29%29%3Aself-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="names(*names:String):self-instance-method">
+      <div class="signature">
+        
+        def <strong>names</strong>(*names : String) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#names%28%2Anames%3AString%29%3Aself-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="root(atom_name:String):self-instance-method">
+      <div class="signature">
+        
+        def <strong>root</strong>(atom_name : String) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#root%28atom_name%3AString%29%3Aself-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="spec(spec:String):self-instance-method">
+      <div class="signature">
+        
+        def <strong>spec</strong>(spec : String) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#spec%28spec%3AString%29%3Aself-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="symmetry(pairs:Enumerable(Tuple(String,String))):self-instance-method">
+      <div class="signature">
+        
+        def <strong>symmetry</strong>(pairs : <a href="../../Enumerable.html">Enumerable</a>(Tuple(String, String))) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#symmetry%28pairs%3AEnumerable%28Tuple%28String%2CString%29%29%29%3Aself-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="symmetry(*pairs:Tuple(String,String)):self-instance-method">
+      <div class="signature">
+        
+        def <strong>symmetry</strong>(*pairs : Tuple(String, String)) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#symmetry%28%2Apairs%3ATuple%28String%2CString%29%29%3Aself-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="type(type:ResidueType):self-instance-method">
+      <div class="signature">
+        
+        def <strong>type</strong>(type : <a href="../../Chem/ResidueType.html">ResidueType</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#type%28type%3AResidueType%29%3Aself-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
 
 
 

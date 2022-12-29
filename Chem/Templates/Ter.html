@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../../js/doc.js"></script>
 
   <meta name="repository-name" content="chem.cr">
-  <title>Chem::VASP::Poscar - chem.cr 0.5.6</title>
+  <title>Chem::Templates::Ter - chem.cr 0.5.6</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -611,7 +611,7 @@
       
     </li>
   
-  <li class="parent " data-id="chem.cr/Chem/Templates" data-name="chem::templates">
+  <li class="parent open current" data-id="chem.cr/Chem/Templates" data-name="chem::templates">
       <a href="../../Chem/Templates.html">Templates</a>
       
         <ul>
@@ -676,7 +676,7 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Templates/Ter" data-name="chem::templates::ter">
+  <li class=" current" data-id="chem.cr/Chem/Templates/Ter" data-name="chem::templates::ter">
       <a href="../../Chem/Templates/Ter.html">Ter</a>
       
     </li>
@@ -691,7 +691,7 @@
       
     </li>
   
-  <li class="parent open current" data-id="chem.cr/Chem/VASP" data-name="chem::vasp">
+  <li class="parent " data-id="chem.cr/Chem/VASP" data-name="chem::vasp">
       <a href="../../Chem/VASP.html">VASP</a>
       
         <ul>
@@ -746,7 +746,7 @@
       
     </li>
   
-  <li class="parent open current" data-id="chem.cr/Chem/VASP/Poscar" data-name="chem::vasp::poscar">
+  <li class="parent " data-id="chem.cr/Chem/VASP/Poscar" data-name="chem::vasp::poscar">
       <a href="../../Chem/VASP/Poscar.html">Poscar</a>
       
         <ul>
@@ -855,10 +855,12 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">module</span> Chem::VASP::Poscar
+  <span class="kind">class</span> Chem::Templates::Ter
 
 </h1>
 
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Chem/Templates/Ter.html">Chem::Templates::Ter</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
@@ -886,12 +888,7 @@
   </h2>
   
     
-      chem/formats/vasp/poscar.cr
-    
-    <br/>
-  
-    
-      chem/register_format.cr
+      chem/templates/ter.cr
     
     <br/>
   
@@ -900,9 +897,97 @@
 
 
 
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#build%28%26%29%3Aself-class-method" class="signature"><strong>.build</strong>(&) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new%28names%3AArray%28String%29%2Ctype%3AResidueType%2Cdescription%3AString%3F%2Catoms%3AArray%28Atom%29%2Cbonds%3AArray%28Bond%29%2Crootroot_name%3AString%29-class-method" class="signature"><strong>.new</strong>(names : Array(String), type : ResidueType, description : String?, atoms : Array(Atom), bonds : Array(Bond), root root_name : String)</a>
+        
+      </li>
+    
+  </ul>
 
 
 
+
+
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#%5B%5D%28name%3AString%29%3AAtom-instance-method" class="signature"><strong>#[]</strong>(name : String) : Atom</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%5B%5D%3F%28name%3AString%29%3AAtom%3F-instance-method" class="signature"><strong>#[]?</strong>(name : String) : Atom?</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#atoms%3AArray%3A%3AView%28Atom%29-instance-method" class="signature"><strong>#atoms</strong> : Array::View(Atom)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bonds%3AArray%3A%3AView%28Bond%29-instance-method" class="signature"><strong>#bonds</strong> : Array::View(Bond)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#description%3AString%3F-instance-method" class="signature"><strong>#description</strong> : String?</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#name%3AString-instance-method" class="signature"><strong>#name</strong> : String</a>
+        
+          <div class="summary"><p>Returns the designated residue name.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#names%3AArray%28String%29-instance-method" class="signature"><strong>#names</strong> : Array(String)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#root%3AAtom-instance-method" class="signature"><strong>#root</strong> : Atom</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_s%28io%3AIO%29%3ANil-instance-method" class="signature"><strong>#to_s</strong>(io : IO) : Nil</a>
+        
+          <div class="summary"><p>Appends a short String representation of this object which includes its class name and its object address.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#type%3AResidueType-instance-method" class="signature"><strong>#type</strong> : ResidueType</a>
+        
+      </li>
+    
+  </ul>
 
 
 
@@ -910,12 +995,241 @@
 
 <div class="methods-inherited">
   
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
 </div>
 
 
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="build(&amp;):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>build</strong>(&) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#build%28%26%29%3Aself-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(names:Array(String),type:ResidueType,description:String?,atoms:Array(Atom),bonds:Array(Bond),rootroot_name:String)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(names : <a href="../../Array.html">Array</a>(String), type : <a href="../../Chem/ResidueType.html">ResidueType</a>, description : String?, atoms : <a href="../../Array.html">Array</a>(<a href="../../Chem/Templates/Atom.html">Atom</a>), bonds : <a href="../../Array.html">Array</a>(<a href="../../Chem/Templates/Bond.html">Bond</a>), root root_name : String)
+
+        <a class="method-permalink" href="#new%28names%3AArray%28String%29%2Ctype%3AResidueType%2Cdescription%3AString%3F%2Catoms%3AArray%28Atom%29%2Cbonds%3AArray%28Bond%29%2Crootroot_name%3AString%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
 
 
 
+
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="[](name:String):Atom-instance-method">
+      <div class="signature">
+        
+        def <strong>[]</strong>(name : String) : <a href="../../Chem/Templates/Atom.html">Atom</a>
+
+        <a class="method-permalink" href="#%5B%5D%28name%3AString%29%3AAtom-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[]?(name:String):Atom?-instance-method">
+      <div class="signature">
+        
+        def <strong>[]?</strong>(name : String) : <a href="../../Chem/Templates/Atom.html">Atom</a>?
+
+        <a class="method-permalink" href="#%5B%5D%3F%28name%3AString%29%3AAtom%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="atoms:Array::View(Atom)-instance-method">
+      <div class="signature">
+        
+        def <strong>atoms</strong> : Array::View(<a href="../../Chem/Templates/Atom.html">Atom</a>)
+
+        <a class="method-permalink" href="#atoms%3AArray%3A%3AView%28Atom%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bonds:Array::View(Bond)-instance-method">
+      <div class="signature">
+        
+        def <strong>bonds</strong> : Array::View(<a href="../../Chem/Templates/Bond.html">Bond</a>)
+
+        <a class="method-permalink" href="#bonds%3AArray%3A%3AView%28Bond%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="description:String?-instance-method">
+      <div class="signature">
+        
+        def <strong>description</strong> : String?
+
+        <a class="method-permalink" href="#description%3AString%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="name:String-instance-method">
+      <div class="signature">
+        
+        def <strong>name</strong> : String
+
+        <a class="method-permalink" href="#name%3AString-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the designated residue name.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="names:Array(String)-instance-method">
+      <div class="signature">
+        
+        def <strong>names</strong> : <a href="../../Array.html">Array</a>(String)
+
+        <a class="method-permalink" href="#names%3AArray%28String%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="root:Atom-instance-method">
+      <div class="signature">
+        
+        def <strong>root</strong> : <a href="../../Chem/Templates/Atom.html">Atom</a>
+
+        <a class="method-permalink" href="#root%3AAtom-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_s(io:IO):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>to_s</strong>(io : IO) : Nil
+
+        <a class="method-permalink" href="#to_s%28io%3AIO%29%3ANil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from class Reference
+            </div>
+          
+          <p>Appends a short String representation of this object
+which includes its class name and its object address.</p>
+<pre><code class="language-crystal"><span class="k">class</span> <span class="t">Person</span>
+  <span class="k">def</span> <span class="m">initialize</span>(@name : <span class="t">String</span>, @age : <span class="t">Int32</span>)
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="t">Person</span>.new(<span class="s">&quot;John&quot;</span>, <span class="n">32</span>).to_s <span class="c"># =&gt; #&lt;Person:0x10a199f20&gt;</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="type:ResidueType-instance-method">
+      <div class="signature">
+        
+        def <strong>type</strong> : <a href="../../Chem/ResidueType.html">ResidueType</a>
+
+        <a class="method-permalink" href="#type%3AResidueType-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
 
 
 
