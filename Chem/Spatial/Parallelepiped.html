@@ -1235,7 +1235,7 @@ fractional coordinates, and viceversa, by matrix multiplication (see
       </li>
     
       <li class="entry-summary">
-        <a href="#resize%28sx%3ANumber%2Csy%3ANumber%2Csz%3ANumber%29%3Aself-instance-method" class="signature"><strong>#resize</strong>(sx : Number, sy : Number, sz : Number) : <span class="k">self</span></a>
+        <a href="#resize%28si%3ANumber%3F%2Csj%3ANumber%3F%2Csk%3ANumber%3F%29%3Aself-instance-method" class="signature"><strong>#resize</strong>(si : Number?, sj : Number?, sk : Number?) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns a parallelepiped by resizing the basis vectors to the given values.</p></div>
         
@@ -1244,7 +1244,7 @@ fractional coordinates, and viceversa, by matrix multiplication (see
       <li class="entry-summary">
         <a href="#resize%28size%3AChem%3A%3ASpatial%3A%3ASize3%29%3Aself-instance-method" class="signature"><strong>#resize</strong>(size : Chem::Spatial::Size3) : <span class="k">self</span></a>
         
-          <div class="summary"><p>Returns a parallelepiped by resizing the basis vectors to the given values.</p></div>
+          <div class="summary"><p>Returns a parallelepiped by resizing the basis vectors to the given size.</p></div>
         
       </li>
     
@@ -2353,21 +2353,29 @@ other.center <span class="o">==</span> pld.center <span class="c"># =&gt; false<
       </div>
     </div>
   
-    <div class="entry-detail" id="resize(sx:Number,sy:Number,sz:Number):self-instance-method">
+    <div class="entry-detail" id="resize(si:Number?,sj:Number?,sk:Number?):self-instance-method">
       <div class="signature">
         
-        def <strong>resize</strong>(sx : <a href="../../Number.html">Number</a>, sy : <a href="../../Number.html">Number</a>, sz : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
+        def <strong>resize</strong>(si : <a href="../../Number.html">Number</a>?, sj : <a href="../../Number.html">Number</a>?, sk : <a href="../../Number.html">Number</a>?) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#resize%28sx%3ANumber%2Csy%3ANumber%2Csz%3ANumber%29%3Aself-instance-method">#</a>
+        <a class="method-permalink" href="#resize%28si%3ANumber%3F%2Csj%3ANumber%3F%2Csk%3ANumber%3F%29%3Aself-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns a parallelepiped by resizing the basis vectors to the
 given values.</p>
-<pre><code class="language-crystal">pld <span class="o">=</span> <span class="t">Parallelepiped</span>.hexagonal(<span class="n">1</span>, <span class="n">2</span>).resize(<span class="n">5</span>, <span class="n">5</span>, <span class="n">12</span>)
-pld.size   <span class="c"># =&gt; Size3[5, 5, 12]</span>
-pld.angles <span class="c"># =&gt; {90, 90, 120}</span></code></pre>
+<pre><code class="language-crystal">pld <span class="o">=</span> <span class="t">Parallelepiped</span>.hexagonal(<span class="n">1</span>, <span class="n">2</span>)
+pld.angles <span class="c"># =&gt; {90, 90, 120}</span>
+pld.size   <span class="c"># =&gt; Size3[1, 1, 12]</span>
+
+other <span class="o">=</span> pld.resize(<span class="n">5</span>, <span class="n">5</span>, <span class="n">12</span>)
+other.angles <span class="c"># =&gt; {90, 90, 120}</span>
+other.size   <span class="c"># =&gt; Size3[5, 5, 12]</span></code></pre>
+<p>Use <code>nil</code> to keep the current size:</p>
+<pre><code class="language-crystal">other <span class="o">=</span> pld.resize(<span class="n">nil</span>, <span class="n">5</span>, <span class="n">nil</span>)
+other.angles <span class="c"># =&gt; {90, 90, 120}</span>
+other.size   <span class="c"># =&gt; Size3[1, 5, 12]</span></code></pre>
         </div>
       
       <br/>
@@ -2387,10 +2395,14 @@ pld.angles <span class="c"># =&gt; {90, 90, 120}</span></code></pre>
         <div class="doc">
           
           <p>Returns a parallelepiped by resizing the basis vectors to the
-given values.</p>
-<pre><code class="language-crystal">pld <span class="o">=</span> <span class="t">Parallelepiped</span>.hexagonal(<span class="n">1</span>, <span class="n">2</span>).resize(<span class="n">5</span>, <span class="n">5</span>, <span class="n">12</span>)
-pld.size   <span class="c"># =&gt; Size3[5, 5, 12]</span>
-pld.angles <span class="c"># =&gt; {90, 90, 120}</span></code></pre>
+given size.</p>
+<pre><code class="language-crystal">pld <span class="o">=</span> <span class="t">Parallelepiped</span>.hexagonal(<span class="n">1</span>, <span class="n">2</span>)
+pld.angles <span class="c"># =&gt; {90, 90, 120}</span>
+pld.size   <span class="c"># =&gt; Size3[1, 1, 12]</span>
+
+other <span class="o">=</span> pld.resize(<span class="t">Size3</span>[<span class="n">5</span>, <span class="n">5</span>, <span class="n">12</span>])
+other.angles <span class="c"># =&gt; {90, 90, 120}</span>
+other.size   <span class="c"># =&gt; Size3[5, 5, 12]</span></code></pre>
         </div>
       
       <br/>
