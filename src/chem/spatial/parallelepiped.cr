@@ -413,12 +413,16 @@ module Chem::Spatial
     end
 
     # Returns a parallelepiped by resizing the basis vectors to the
-    # given values.
+    # given size.
     #
     # ```
-    # pld = Parallelepiped.hexagonal(1, 2).resize(5, 5, 12)
-    # pld.size   # => Size3[5, 5, 12]
+    # pld = Parallelepiped.hexagonal(1, 2)
     # pld.angles # => {90, 90, 120}
+    # pld.size   # => Size3[1, 1, 12]
+    #
+    # other = pld.resize(Size3[5, 5, 12])
+    # other.angles # => {90, 90, 120}
+    # other.size   # => Size3[5, 5, 12]
     # ```
     def resize(size : Chem::Spatial::Size3) : self
       transform do |bi, bj, bk|
@@ -426,9 +430,32 @@ module Chem::Spatial
       end
     end
 
-    # :ditto:
-    def resize(sx : Number, sy : Number, sz : Number) : self
-      resize Size3[sx, sy, sz]
+    # Returns a parallelepiped by resizing the basis vectors to the
+    # given values.
+    #
+    # ```
+    # pld = Parallelepiped.hexagonal(1, 2)
+    # pld.angles # => {90, 90, 120}
+    # pld.size   # => Size3[1, 1, 12]
+    #
+    # other = pld.resize(5, 5, 12)
+    # other.angles # => {90, 90, 120}
+    # other.size   # => Size3[5, 5, 12]
+    # ```
+    #
+    # Use `nil` to keep the current size:
+    #
+    # ```
+    # other = pld.resize(nil, 5, nil)
+    # other.angles # => {90, 90, 120}
+    # other.size   # => Size3[1, 5, 12]
+    # ```
+    def resize(si : Number?, sj : Number?, sk : Number?) : self
+      vi, vj, vk = basisvec
+      vi = vi.resize(si) if si
+      vj = vj.resize(sj) if sj
+      vk = vk.resize(sk) if sk
+      self.class.new vi, vj, vk
     end
 
     # Returns `true` if the parallelepiped is rhombohedral (*a* = *b* =
