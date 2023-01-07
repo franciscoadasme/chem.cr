@@ -1,9 +1,11 @@
 # chem.cr
 
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/franciscoadasme/chem.cr/Crystal%20CI.svg)](https://github.com/franciscoadasme/chem.cr/actions?query=workflow%3A%22Crystal+CI%22)
+[![Crystal CI](https://github.com/franciscoadasme/chem.cr/actions/workflows/crystal.yml/badge.svg)](https://github.com/franciscoadasme/chem.cr/actions/workflows/crystal.yml)
 [![Version](https://img.shields.io/github/v/release/franciscoadasme/chem.cr.svg?label=version)](https://github.com/franciscoadasme/chem.cr/releases/latest)
 [![License](https://img.shields.io/github/license/franciscoadasme/chem.cr.svg)](https://github.com/franciscoadasme/chem.cr/blob/master/LICENSE)
-****
+
+---
+
 A modern library written in [Crystal][1] primarily designed for
 manipulating molecular files created by computational chemistry
 programs. It aims to be both fast and easy to use.
@@ -13,9 +15,9 @@ programs. It aims to be both fast and easy to use.
 **IMPORTANT**: this library is in alpha stage, meaning that there is missing
 functionality, documentation, etc. and there will be breaking changes.
 
-[Features](#features) | 
-[Installation](#installation) | 
-[Usage](#usage) | 
+[Features](#features) |
+[Installation](#installation) |
+[Usage](#usage) |
 [Tools](https://github.com/franciscoadasme/chem.cr/wiki#tools) |
 [Benchmarks](#benchmarks) |
 [Roadmap](#roadmap) |
@@ -310,23 +312,23 @@ some C-powered packages.
 
 The benchmark is designed as follows:
 
-* The tests are implemented using the functionality documented by each library
+- The tests are implemented using the functionality documented by each library
   in tutorials, examples, etc. Optimized versions may be faster but require
   advanced (possibly undocumented) usage.
-* Tests are run ten times (except for 1HTQ, 3 times) and the elapsed time for
+- Tests are run ten times (except for 1HTQ, 3 times) and the elapsed time for
   each run is averaged.
-* Parsing PDB files
-  * [1CRN](http://www.rcsb.org/pdb/explore/explore.do?structureId=1crn) -
+- Parsing PDB files
+  - [1CRN](http://www.rcsb.org/pdb/explore/explore.do?structureId=1crn) -
     hydrophobic protein (327 atoms).
-  * [3JYV](http://www.rcsb.org/pdb/explore/explore.do?structureId=3jyv) - 80S
+  - [3JYV](http://www.rcsb.org/pdb/explore/explore.do?structureId=3jyv) - 80S
     rRNA (57,327 atoms).
-  * [1HTQ](http://www.rcsb.org/pdb/explore/explore.do?structureId=1htq) -
+  - [1HTQ](http://www.rcsb.org/pdb/explore/explore.do?structureId=1htq) -
     multicopy glutamine synthetase (10 models of 97,872 atoms).
-* Counting the number of alanine residues in adenylate kinase (1AKE, 3816
+- Counting the number of alanine residues in adenylate kinase (1AKE, 3816
   atoms).
-* Calculating the distance between residues 50 and 60 of chain A in adenylate
+- Calculating the distance between residues 50 and 60 of chain A in adenylate
   kinase (1AKE, 3816 atoms).
-* Calculating the Ramachandran phi/psi angles in adenylate kinase (1AKE, 3816
+- Calculating the Ramachandran phi/psi angles in adenylate kinase (1AKE, 3816
   atoms).
 
 **IMPORTANT**: direct comparison of parsing times should be taken with a grain
@@ -364,7 +366,7 @@ Scripts and details are provided at [pdb-bench](https://github.com/franciscoadas
 - [x] Residue templates (basic impl.)
   - [ ] Custom terminal groups
 - [x] Automatic topology assignment (chain, residue names, atom names) based on
-  residue templates
+      residue templates
 - [ ] Atom wildcards (`"C*"` will select `"C"`, `"CA"`, `"CB"`, etc.)
 - [ ] Atom selection language
 
@@ -392,9 +394,9 @@ Scripts and details are provided at [pdb-bench](https://github.com/franciscoadas
 
 - [x] Coordinates manipulation (via `CoordinatesProxy`)
 - [x] Spatial calculations (distance, angle, dihedral, quaternions, affine
-  transformations)
+      transformations)
 - [x] Periodic boundary conditions (PBC) support (topology-aware wrap and
-  unwrap)
+      unwrap)
 - [x] Secondary structure assignment
   - [x] DSSP (native implementation)
   - [x] STRIDE (uses external program for now)
