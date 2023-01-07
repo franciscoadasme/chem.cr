@@ -1095,12 +1095,19 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#cell%3ASpatial%3A%3AParallelepiped%3F-instance-method" class="signature"><strong>#cell</strong> : Spatial::Parallelepiped?</a>
+        <a href="#cell%3ASpatial%3A%3AParallelepiped-instance-method" class="signature"><strong>#cell</strong> : Spatial::Parallelepiped</a>
+        
+          <div class="summary"><p>Returns the unit cell.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#cell%3D%28cell%3ASpatial%3A%3AParallelepiped%3F%29-instance-method" class="signature"><strong>#cell=</strong>(cell : Spatial::Parallelepiped?)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#cell%3F%3ASpatial%3A%3AParallelepiped%7CNil%3F-instance-method" class="signature"><strong>#cell?</strong> : Spatial::Parallelepiped | Nil?</a>
         
       </li>
     
@@ -2114,13 +2121,19 @@ decoded in the corresponding file format if possible.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="cell:Spatial::Parallelepiped?-instance-method">
+    <div class="entry-detail" id="cell:Spatial::Parallelepiped-instance-method">
       <div class="signature">
         
-        def <strong>cell</strong> : <a href="../Chem/Spatial/Parallelepiped.html">Spatial::Parallelepiped</a>?
+        def <strong>cell</strong> : <a href="../Chem/Spatial/Parallelepiped.html">Spatial::Parallelepiped</a>
 
-        <a class="method-permalink" href="#cell%3ASpatial%3A%3AParallelepiped%3F-instance-method">#</a>
+        <a class="method-permalink" href="#cell%3ASpatial%3A%3AParallelepiped-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns the unit cell. Raises <code><a href="../Chem/Spatial/NotPeriodicError.html">Spatial::NotPeriodicError</a></code> if cell
+is <code>nil</code>.</p>
+        </div>
       
       <br/>
       <div>
@@ -2134,6 +2147,20 @@ decoded in the corresponding file format if possible.</p>
         def <strong>cell=</strong>(cell : <a href="../Chem/Spatial/Parallelepiped.html">Spatial::Parallelepiped</a>?)
 
         <a class="method-permalink" href="#cell%3D%28cell%3ASpatial%3A%3AParallelepiped%3F%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="cell?:Spatial::Parallelepiped|Nil?-instance-method">
+      <div class="signature">
+        
+        def <strong>cell?</strong> : <a href="../Chem/Spatial/Parallelepiped.html">Spatial::Parallelepiped</a> | Nil?
+
+        <a class="method-permalink" href="#cell%3F%3ASpatial%3A%3AParallelepiped%7CNil%3F-instance-method">#</a>
       </div>
       
       <br/>

@@ -1249,6 +1249,20 @@ fractional coordinates, and viceversa, by matrix multiplication (see
       </li>
     
       <li class="entry-summary">
+        <a href="#resize%28%26%3AFloat64%2CFloat64%2CFloat64-%3ETuple%28Float64%2CFloat64%2CFloat64%29%29%3Aself-instance-method" class="signature"><strong>#resize</strong>(& : Float64, Float64, Float64 -> Tuple(Float64, Float64, Float64)) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Yields the basis vectors' sizes to the given block, and returns a parallelepiped by resizing them to the returned values.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#resize_by%28a%3ANumber%2Cb%3ANumber%2Cc%3ANumber%29%3Aself-instance-method" class="signature"><strong>#resize_by</strong>(a : Number, b : Number, c : Number) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a parallelepiped by padding the basis vectors by the given values.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#rhombohedral%3F%3ABool-instance-method" class="signature"><strong>#rhombohedral?</strong> : Bool</a>
         
           <div class="summary"><p>Returns <code>true</code> if the parallelepiped is rhombohedral (<em>a</em> = <em>b</em> = <em>c</em> and <em>α</em> = <em>β</em> = <em>γ</em> ≠ 90°), else <code>false</code>.</p></div>
@@ -2367,7 +2381,7 @@ other.center <span class="o">==</span> pld.center <span class="c"># =&gt; false<
 given values.</p>
 <pre><code class="language-crystal">pld <span class="o">=</span> <span class="t">Parallelepiped</span>.hexagonal(<span class="n">1</span>, <span class="n">2</span>)
 pld.angles <span class="c"># =&gt; {90, 90, 120}</span>
-pld.size   <span class="c"># =&gt; Size3[1, 1, 12]</span>
+pld.size   <span class="c"># =&gt; Size3[1, 1, 2]</span>
 
 other <span class="o">=</span> pld.resize(<span class="n">5</span>, <span class="n">5</span>, <span class="n">12</span>)
 other.angles <span class="c"># =&gt; {90, 90, 120}</span>
@@ -2398,11 +2412,65 @@ other.size   <span class="c"># =&gt; Size3[1, 5, 12]</span></code></pre>
 given size.</p>
 <pre><code class="language-crystal">pld <span class="o">=</span> <span class="t">Parallelepiped</span>.hexagonal(<span class="n">1</span>, <span class="n">2</span>)
 pld.angles <span class="c"># =&gt; {90, 90, 120}</span>
-pld.size   <span class="c"># =&gt; Size3[1, 1, 12]</span>
+pld.size   <span class="c"># =&gt; Size3[1, 1, 2]</span>
 
 other <span class="o">=</span> pld.resize(<span class="t">Size3</span>[<span class="n">5</span>, <span class="n">5</span>, <span class="n">12</span>])
 other.angles <span class="c"># =&gt; {90, 90, 120}</span>
 other.size   <span class="c"># =&gt; Size3[5, 5, 12]</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="resize(&amp;:Float64,Float64,Float64-&gt;Tuple(Float64,Float64,Float64)):self-instance-method">
+      <div class="signature">
+        
+        def <strong>resize</strong>(& : Float64, Float64, Float64 -> Tuple(Float64, Float64, Float64)) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#resize%28%26%3AFloat64%2CFloat64%2CFloat64-%3ETuple%28Float64%2CFloat64%2CFloat64%29%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Yields the basis vectors' sizes to the given block, and returns a
+parallelepiped by resizing them to the returned values.</p>
+<pre><code class="language-crystal">pld <span class="o">=</span> <span class="t">Parallelepiped</span>.hexagonal(<span class="n">1</span>, <span class="n">2</span>)
+pld.angles <span class="c"># =&gt; {90, 90, 120}</span>
+pld.size   <span class="c"># =&gt; Size3[1, 1, 2]</span>
+
+other <span class="o">=</span> pld.resize { <span class="o">|</span>a, b, c<span class="o">|</span> {a <span class="o">*</span> <span class="n">2</span>, b <span class="o">/</span> <span class="n">10</span>, c} }
+other.angles <span class="c"># =&gt; {90, 90, 120}</span>
+other.size   <span class="c"># =&gt; Size3[2, 0.1, 2]</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="resize_by(a:Number,b:Number,c:Number):self-instance-method">
+      <div class="signature">
+        
+        def <strong>resize_by</strong>(a : <a href="../../Number.html">Number</a>, b : <a href="../../Number.html">Number</a>, c : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#resize_by%28a%3ANumber%2Cb%3ANumber%2Cc%3ANumber%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a parallelepiped by padding the basis vectors by the given
+values.</p>
+<pre><code class="language-crystal">pld <span class="o">=</span> <span class="t">Parallelepiped</span>.hexagonal(<span class="n">1</span>, <span class="n">2</span>)
+pld.angles <span class="c"># =&gt; {90, 90, 120}</span>
+pld.size   <span class="c"># =&gt; Size3[1, 1, 2]</span>
+
+other <span class="o">=</span> pld.resize_by(<span class="n">2</span>, <span class="n">3</span>, <span class="n">-0.5</span>)
+other.angles <span class="c"># =&gt; {90, 90, 120}</span>
+other.size   <span class="c"># =&gt; Size3[3, 4, 1.5]</span></code></pre>
         </div>
       
       <br/>
