@@ -418,7 +418,7 @@ module Chem::Spatial
     # ```
     # pld = Parallelepiped.hexagonal(1, 2)
     # pld.angles # => {90, 90, 120}
-    # pld.size   # => Size3[1, 1, 12]
+    # pld.size   # => Size3[1, 1, 2]
     #
     # other = pld.resize(Size3[5, 5, 12])
     # other.angles # => {90, 90, 120}
@@ -436,7 +436,7 @@ module Chem::Spatial
     # ```
     # pld = Parallelepiped.hexagonal(1, 2)
     # pld.angles # => {90, 90, 120}
-    # pld.size   # => Size3[1, 1, 12]
+    # pld.size   # => Size3[1, 1, 2]
     #
     # other = pld.resize(5, 5, 12)
     # other.angles # => {90, 90, 120}
@@ -456,6 +456,24 @@ module Chem::Spatial
       vj = vj.resize(sj) if sj
       vk = vk.resize(sk) if sk
       self.class.new vi, vj, vk
+    end
+
+    # Yields the basis vectors' sizes to the given block, and returns a
+    # parallelepiped by resizing them to the returned values.
+    #
+    # ```
+    # pld = Parallelepiped.hexagonal(1, 2)
+    # pld.angles # => {90, 90, 120}
+    # pld.size   # => Size3[1, 1, 2]
+    #
+    # other = pld.resize { |a, b, c| {a * 2, b / 10, c} }
+    # other.angles # => {90, 90, 120}
+    # other.size   # => Size3[2, 0.1, 2]
+    # ```
+    def resize(& : Float64, Float64, Float64 -> {Float64, Float64, Float64}) : self
+      vi, vj, vk = basisvec
+      a, b, c = yield vi.abs, vj.abs, vk.abs
+      self.class.new vi.resize(a), vj.resize(b), vk.resize(c)
     end
 
     # Returns `true` if the parallelepiped is rhombohedral (*a* = *b* =

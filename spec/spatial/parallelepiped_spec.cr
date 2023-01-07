@@ -366,6 +366,15 @@ describe Chem::Spatial::Parallelepiped do
       other.basisvec[1].should be_close pld.basisvec[1].resize(13.54), 1e-15
       other.basisvec[2].should be_close pld.basisvec[2], 1e-15
     end
+
+    it "resizes with block" do
+      pld = Chem::Spatial::Parallelepiped.hexagonal(1, 2)
+      other = pld.resize { |a, b, c| {a * 2, b / 10, c} }
+      other.basisvec[0].should be_close pld.basisvec[0] * 2, 1e-15
+      other.basisvec[1].should be_close pld.basisvec[1] / 10, 1e-15
+      other.basisvec[2].should be_close pld.basisvec[2], 1e-15
+    end
+  end
   end
 
   describe "#rhombohedral?" do
