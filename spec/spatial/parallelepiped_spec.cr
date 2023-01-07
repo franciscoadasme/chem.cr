@@ -375,6 +375,15 @@ describe Chem::Spatial::Parallelepiped do
       other.basisvec[2].should be_close pld.basisvec[2], 1e-15
     end
   end
+
+  describe "#resize_by" do
+    it "adds padding to a paralellepiped" do
+      pld = Chem::Spatial::Parallelepiped.hexagonal(1, 2)
+      other = pld.resize_by(2, 3, -0.5)
+      other.basisvec[0].should be_close pld.basisvec[0].resize(3), 1e-15
+      other.basisvec[1].should be_close pld.basisvec[1].resize(4), 1e-15
+      other.basisvec[2].should be_close pld.basisvec[2].resize(1.5), 1e-15
+    end
   end
 
   describe "#rhombohedral?" do

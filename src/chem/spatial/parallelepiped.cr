@@ -476,6 +476,23 @@ module Chem::Spatial
       self.class.new vi.resize(a), vj.resize(b), vk.resize(c)
     end
 
+    # Returns a parallelepiped by padding the basis vectors by the given
+    # values.
+    #
+    # ```
+    # pld = Parallelepiped.hexagonal(1, 2)
+    # pld.angles # => {90, 90, 120}
+    # pld.size   # => Size3[1, 1, 2]
+    #
+    # other = pld.resize_by(2, 3, -0.5)
+    # other.angles # => {90, 90, 120}
+    # other.size   # => Size3[3, 4, 1.5]
+    # ```
+    def resize_by(a : Number, b : Number, c : Number) : self
+      vi, vj, vk = basisvec
+      self.class.new vi.pad(a), vj.pad(b), vk.pad(c)
+    end
+
     # Returns `true` if the parallelepiped is rhombohedral (*a* = *b* =
     # *c* and *α* = *β* = *γ* ≠ 90°), else `false`.
     def rhombohedral? : Bool
