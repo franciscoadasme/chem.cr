@@ -69,9 +69,7 @@ describe Chem::Spatial::PeriodicKDTree do
   describe "#neighbors" do
     it "returns the points within the given radius" do
       structure = load_file "AlaIle--wrapped.poscar"
-      kdtree = Chem::Spatial::PeriodicKDTree.new(
-        structure.coords.to_a,
-        structure.cell.not_nil!)
+      kdtree = Chem::Spatial::PeriodicKDTree.new(structure.coords.to_a, structure.cell)
       kdtree.neighbors(structure.atoms[4].coords, within: 2.5).should eq [
         4, 27, 29, 3, 24, 16, 28, 31,
       ]
@@ -79,9 +77,7 @@ describe Chem::Spatial::PeriodicKDTree do
 
     it "returns the points within the given radius" do
       structure = load_file "5e61--wrapped.poscar"
-      kdtree = Chem::Spatial::PeriodicKDTree.new(
-        structure.coords.to_a,
-        structure.cell.not_nil!)
+      kdtree = Chem::Spatial::PeriodicKDTree.new(structure.coords.to_a, structure.cell)
       kdtree.neighbors(structure.atoms[16].coords, within: 2).should eq [
         16, 85, 86, 87, 15,
       ]
@@ -95,9 +91,7 @@ describe Chem::Spatial::PeriodicKDTree do
       h64 = structure.atoms["H64"] # 127
       h65 = structure.atoms["H65"] # 128
 
-      kdtree = Chem::Spatial::PeriodicKDTree.new(
-        structure.coords.to_a,
-        structure.cell.not_nil!)
+      kdtree = Chem::Spatial::PeriodicKDTree.new(structure.coords.to_a, structure.cell)
       kdtree.neighbors(c42.coords, within: 1.82).should eq [41, 127, 128, 174, 42]
       kdtree.neighbors(h64.coords, within: 1.82).should eq [127, 41, 128]
     end

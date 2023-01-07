@@ -46,7 +46,7 @@ module Chem::Spatial
                            bounds : Parallelepiped? = nil) : self
       grid = new dim, (bounds || structure.coords.bounds)
       coords = structure.coords.to_a
-      kdtree = KDTree.new(coords, structure.cell)
+      kdtree = KDTree.new(coords, structure.cell?)
       grid.map_with_coords! do |_, vec|
         Math.sqrt kdtree.nearest_with_distance(vec)[1]
       end
@@ -151,7 +151,7 @@ module Chem::Spatial
       grid = new dim, (bounds || structure.coords.bounds)
       delta = Math.min delta, grid.resolution.min / 2
       atoms = structure.atoms
-      kdtree = KDTree.new(atoms.map(&.coords), structure.cell)
+      kdtree = KDTree.new(atoms.map(&.coords), structure.cell?)
       vdw_cutoff = structure.each_atom.max_of &.vdw_radius
       # grid.map_with_coords! do |_, vec|
       #   value = 0

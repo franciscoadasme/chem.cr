@@ -120,9 +120,8 @@ describe Chem::PDB do
     end
 
     it "parses a PDB file with unit cell parameters" do
-      st = load_file "1crn.pdb"
-      st.cell.should_not be_nil
-      cell = st.cell.not_nil!
+      structure = load_file "1crn.pdb"
+      cell = structure.cell?.should_not be_nil
       cell.size.should eq [40.960, 18.650, 22.520]
       cell.angles.should eq({90, 90.77, 90})
     end
@@ -444,7 +443,7 @@ describe Chem::PDB do
         CRYST1    1.000    1.000    1.000  90.00  90.00  90.00 P 1 21 1
         ATOM      1  N   THR A   1      17.047  14.099   3.625  1.00 13.79           N
         PDB
-      Chem::Structure.from_pdb(io).cell.should be_nil
+      Chem::Structure.from_pdb(io).cell?.should be_nil
     end
 
     it "parses a truncated PDB without occupancy" do
@@ -458,7 +457,7 @@ describe Chem::PDB do
         CRYST1    0.000    0.000    0.000  90.00  90.00  90.00 P 1           1
         ATOM      1  N   SER A   0      14.353  62.634  39.550  1.00 48.24           N
         PDB
-      Chem::Structure.from_pdb(io).cell.should be_nil
+      Chem::Structure.from_pdb(io).cell?.should be_nil
     end
 
     it "parses one-sized cell as nil" do
@@ -466,7 +465,7 @@ describe Chem::PDB do
         CRYST1    1.000    1.000    1.000  90.00  90.00  90.00 P 1           1
         ATOM      1  N   SER A   0      14.353  62.634  39.550  1.00 48.24           N
         PDB
-      Chem::Structure.from_pdb(io).cell.should be_nil
+      Chem::Structure.from_pdb(io).cell?.should be_nil
     end
 
     it "raises on invalid cell parameters" do
@@ -475,7 +474,7 @@ describe Chem::PDB do
         ATOM      1  N   SER A   0      14.353  62.634  39.550  1.00 48.24           N
         PDB
       expect_raises(Chem::ParseException, "Invalid cell parameters") do
-        Chem::Structure.from_pdb(io).cell.should be_nil
+        Chem::Structure.from_pdb(io).cell?.should be_nil
       end
     end
   end

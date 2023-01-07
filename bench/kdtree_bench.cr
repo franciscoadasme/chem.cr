@@ -18,7 +18,7 @@ Benchmark.bm do |bm|
   end
 
   bm.report("initialization (periodic)") do
-    pkdtree = PeriodicKDTree.new coords, structure.cell.not_nil!
+    pkdtree = PeriodicKDTree.new coords, structure.cell
   end
 
   bm.report("query nearest neighbor") do

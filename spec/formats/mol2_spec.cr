@@ -79,7 +79,7 @@ describe Chem::Mol2::Reader do
 
   it "reads unit cell" do
     structure = load_file("water_in_box.mol2")
-    cell = structure.cell.should_not be_nil
+    cell = structure.cell?.should_not be_nil
     cell.size.should be_close [40.961, 18.65, 22.52], 1e-3
     cell.angles.should be_close({90, 90.77, 120}, 1e-2)
   end

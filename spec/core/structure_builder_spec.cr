@@ -86,12 +86,10 @@ describe Chem::Structure::Builder do
   end
 
   it "builds a structure with cell" do
-    st = Chem::Structure.build do
-      cell vec3(25, 32, 12), vec3(12, 34, 23), vec3(12, 68, 21)
+    structure = Chem::Structure.build do |builder|
+      builder.cell vec3(25, 32, 12), vec3(12, 34, 23), vec3(12, 68, 21)
     end
-
-    lat = st.cell.not_nil!
-    lat.basis.should eq Chem::Spatial::Mat3.basis(
+    structure.cell.basis.should eq Chem::Spatial::Mat3.basis(
       vec3(25, 32, 12),
       vec3(12, 34, 23),
       vec3(12, 68, 21),
@@ -99,12 +97,8 @@ describe Chem::Structure::Builder do
   end
 
   it "builds a structure with cell using numbers" do
-    st = Chem::Structure.build do
-      cell 25, 34, 21
-    end
-
-    lat = st.cell.not_nil!
-    lat.basis.should eq Chem::Spatial::Mat3.basis(
+    structure = Chem::Structure.build &.cell(25, 34, 21)
+    structure.cell.basis.should eq Chem::Spatial::Mat3.basis(
       vec3(25, 0, 0),
       vec3(0, 34, 0),
       vec3(0, 0, 21),
@@ -112,12 +106,8 @@ describe Chem::Structure::Builder do
   end
 
   it "builds a structure with cell using numbers (one-line)" do
-    st = Chem::Structure.build do
-      cell 25, 34, 21
-    end
-
-    lat = st.cell.not_nil!
-    lat.basis.should eq Chem::Spatial::Mat3.basis(
+    structure = Chem::Structure.build &.cell(25, 34, 21)
+    structure.cell.basis.should eq Chem::Spatial::Mat3.basis(
       vec3(25, 0, 0),
       vec3(0, 34, 0),
       vec3(0, 0, 21),

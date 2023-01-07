@@ -370,7 +370,7 @@ module Chem::PDB
 
       formatl "MODEL     %4d%66s", @entry_index + 1, ' ' if multi?
       if obj.is_a?(Structure)
-        if (cell = obj.cell) && (!cell.basisvec[0].x? || !cell.basisvec[1].xy?)
+        if (cell = obj.cell?) && (!cell.basisvec[0].x? || !cell.basisvec[1].xy?)
           # compute the unit cell aligned to the xy-plane
           ref = Spatial::Parallelepiped.new cell.size, cell.angles
           transform = Spatial::AffineTransform
@@ -508,7 +508,7 @@ module Chem::PDB
       end
       write_pdb_version structure.experiment.try(&.pdb_accession)
       write_sec structure
-      write structure.cell.not_nil! if structure.periodic?
+      structure.cell?.try { |cell| write cell }
     end
 
     private def write_pdb_version(pdb_accession : String? = nil) : Nil

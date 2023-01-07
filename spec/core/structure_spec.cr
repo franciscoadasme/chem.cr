@@ -34,7 +34,7 @@ describe Chem::Structure do
       other.dig('A', 32).sec.beta_strand?.should be_true
       other.dig('A', 32, "CA").coords.should eq [8.140, 11.694, 9.635]
 
-      other.cell.should eq structure.cell
+      other.cell?.should eq structure.cell?
       other.experiment.should eq structure.experiment
       other.title.should eq structure.title
     end
@@ -133,6 +133,14 @@ describe Chem::Structure do
     it "raises on invalid file format" do
       expect_raises ArgumentError do
         structure.write IO::Memory.new, "asd"
+      end
+    end
+  end
+
+  describe "#cell" do
+    it "raises if cell is nil" do
+      expect_raises(Chem::Spatial::NotPeriodicError, "sulbactam is not periodic") do
+        load_file("sulbactam.xyz").cell
       end
     end
   end

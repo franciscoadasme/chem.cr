@@ -24,7 +24,7 @@ module Chem::VASP::Chgcar
     include VASP::GridWriter
 
     protected def encode_entry(obj : Spatial::Grid) : Nil
-      incompatible_expcetion if (lat = @structure.cell) && lat.size != obj.bounds.size
+      incompatible_expcetion if (cell = @structure.cell?) && cell.size != obj.bounds.size
       write_header
       volume = obj.volume
       write_array obj, &.*(volume)

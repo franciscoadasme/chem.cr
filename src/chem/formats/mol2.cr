@@ -128,7 +128,7 @@ module Chem::Mol2
             residue.name[..2]                        # sub_type
         end
       end
-      if (structure = obj.as?(Structure)) && (cell = structure.cell)
+      if (structure = obj.as?(Structure)) && (cell = structure.cell?)
         section "crysin" do
           a, b, c = cell.size
           alpha, beta, gamma = cell.angles

@@ -73,7 +73,7 @@ module Chem::Gen
     end
 
     protected def encode_entry(obj : AtomCollection) : Nil
-      cell = obj.cell if obj.is_a?(Structure)
+      cell = obj.cell? if obj.is_a?(Structure)
       raise Spatial::NotPeriodicError.new if @fractional && cell.nil?
 
       ele_table = obj.each_atom.map(&.element).uniq.with_index.to_h

@@ -11,7 +11,7 @@ module Chem::VASP
 
     protected def decode_header : Spatial::Grid::Info
       @attached = decode_attached
-      raise "BUG: unit cell cannot be nil" unless cell = @attached.try(&.cell)
+      raise "BUG: unit cell cannot be nil" unless cell = @attached.try(&.cell?)
 
       @pull.next_line
       nx, ny, nz = @pull.next_i, @pull.next_i, @pull.next_i

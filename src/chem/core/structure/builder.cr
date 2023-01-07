@@ -152,11 +152,11 @@ module Chem
     end
 
     def cell : Spatial::Parallelepiped?
-      @structure.cell
+      @structure.cell?
     end
 
     def cell! : Spatial::Parallelepiped
-      @structure.cell || raise Spatial::NotPeriodicError.new
+      @structure.cell? || raise Spatial::NotPeriodicError.new
     end
 
     def cell(cell : Spatial::Parallelepiped?)

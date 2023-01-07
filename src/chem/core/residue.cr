@@ -547,7 +547,7 @@ class Chem::Residue
        (c = pred?.try(&.[]?("C"))) &&
        (n = self["N"]?) &&
        (ca2 = self["CA"]?)
-      if cell = structure.cell
+      if cell = structure.cell?
         Spatial.dihedral cell, ca1, c, n, ca2
       else
         Spatial.dihedral ca1, c, n, ca2
@@ -564,7 +564,7 @@ class Chem::Residue
        (n = self["N"]?) &&
        (ca2 = self["CA"]?) &&
        (c = self["C"]?)
-      if cell = structure.cell
+      if cell = structure.cell?
         Spatial.dihedral cell, ca1, n, ca2, c
       else
         Spatial.dihedral ca1, n, ca2, c
@@ -618,7 +618,7 @@ class Chem::Residue
        (ca = self["CA"]?) &&
        (c = self["C"]?) &&
        (n2 = succ?.try(&.[]?("N")))
-      if cell = structure.cell
+      if cell = structure.cell?
         Spatial.dihedral cell, n1, ca, c, n2
       else
         Spatial.dihedral n1, ca, c, n2

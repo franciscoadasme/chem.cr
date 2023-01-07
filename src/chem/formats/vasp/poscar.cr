@@ -123,7 +123,7 @@ module Chem::VASP::Poscar
     end
 
     protected def encode_entry(obj : Structure) : Nil
-      raise Spatial::NotPeriodicError.new unless cell = obj.cell
+      raise Spatial::NotPeriodicError.new unless cell = obj.cell?
 
       atoms = obj.atoms
       coordinate_system = @fractional ? "Direct" : "Cartesian"

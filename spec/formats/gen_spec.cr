@@ -4,7 +4,7 @@ describe Chem::Gen::Reader do
   it "parses a non-periodic Gen file" do
     structure = load_file "non_periodic.gen"
     structure.source_file.should eq Path[spec_file("non_periodic.gen")].expand
-    structure.cell.should be_nil
+    structure.cell?.should be_nil
 
     structure.n_atoms.should eq 5
     structure.atoms.map(&.element.symbol).should eq ["Cl", "Na", "O", "Na", "Cl"]
@@ -20,8 +20,8 @@ describe Chem::Gen::Reader do
   it "parses a periodic Gen file" do
     structure = load_file "periodic.gen"
     structure.source_file.should eq Path[spec_file("periodic.gen")].expand
-    structure.cell.should_not be_nil
-    structure.cell.not_nil!.basis.should eq Chem::Spatial::Mat3.basis(
+    cell = structure.cell?.should_not be_nil
+    cell.basis.should eq Chem::Spatial::Mat3.basis(
       vec3(40, 0, 0),
       vec3(0, 20, 0),
       vec3(0, 0, 10))
@@ -39,8 +39,8 @@ describe Chem::Gen::Reader do
   it "parses a Gen file having fractional coordinates" do
     structure = load_file "fractional.gen"
     structure.source_file.should eq Path[spec_file("fractional.gen")].expand
-    structure.cell.should_not be_nil
-    structure.cell.not_nil!.basis.should eq Chem::Spatial::Mat3.basis(
+    cell = structure.cell?.should_not be_nil
+    cell.not_nil!.basis.should eq Chem::Spatial::Mat3.basis(
       vec3(2.713546, 2.713546, 0),
       vec3(0, 2.713546, 2.713546),
       vec3(2.713546, 0, 2.713546)

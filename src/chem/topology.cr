@@ -248,7 +248,7 @@ class Chem::Topology
     end
 
     # Add initial bonds based on pairwise distances
-    kdtree = Spatial::KDTree.new(atoms.map(&.coords), @structure.cell)
+    kdtree = Spatial::KDTree.new(atoms.map(&.coords), @structure.cell?)
     atoms.each do |atom|
       cutoff = Math.sqrt(dcov2_map[{atom.element, largest_atom.element}])
       kdtree.each_neighbor(atom.coords, within: cutoff) do |index, dis2|
@@ -284,7 +284,7 @@ class Chem::Topology
     bond_table.each do |atom, bonded_atoms|
       max_bonds = atom.element.max_bonds
       if bonded_atoms.size > max_bonds
-        if cell = @structure.cell
+        if cell = @structure.cell?
           bonded_atoms.sort_by! { |other| Spatial.distance2(cell, atom, other) }
         else
           bonded_atoms.sort_by! { |other| Spatial.distance2(atom, other) }
@@ -532,7 +532,7 @@ class Chem::Topology
         end
       when 2..
         avg_bond_angle = atom.bonded_atoms.combinations(2).mean do |(b, c)|
-          if cell = @structure.cell
+          if cell = @structure.cell?
             Spatial.angle cell, b, atom, c
           else
             Spatial.angle b, atom, c

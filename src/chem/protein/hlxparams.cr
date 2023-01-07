@@ -19,7 +19,7 @@ module Chem::Protein
       n3 = next_res.dig("N").coords
       ca3 = next_res.dig("CA").coords
 
-      if cell = residue.structure.cell
+      if cell = residue.structure.cell?
         n2 = cell.wrap n2, around: ca2
         c2 = cell.wrap c2, around: ca2
         cb2 = cb2.try { |cb2| cell.wrap cb2, around: ca2 }

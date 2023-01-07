@@ -6,7 +6,7 @@ module Chem
 
     getter biases = [] of Chem::Bias
     property experiment : Structure::Experiment?
-    property cell : Spatial::Parallelepiped?
+    property! cell : Spatial::Parallelepiped?
     getter source_file : Path?
     property title : String = ""
     getter topology : Topology
@@ -28,6 +28,13 @@ module Chem
       builder = Structure::Builder.new *args, **options
       with builder yield builder
       builder.build
+    end
+
+    # Returns the unit cell. Raises `Spatial::NotPeriodicError` if cell
+    # is `nil`.
+    def cell : Spatial::Parallelepiped
+      @cell || raise Spatial::NotPeriodicError.new(
+        "#{title || "Structure"} is not periodic")
     end
 
     def clear : self
