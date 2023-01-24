@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.5.0">
+<meta name="generator" content="Crystal Docs 1.6.2">
 <meta name="crystal_docs.project_version" content="0.5.6">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -924,7 +924,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28atoms%3AAtomCollection%2Ccell%3AParallelepiped%3F%3Dnil%29-class-method" class="signature"><strong>.new</strong>(atoms : AtomCollection, cell : Parallelepiped? = <span class="n">nil</span>)</a>
+        <a href="#new%28atoms%3AAtomCollection%2Ccell%3AParallelepiped%7CNil%3Dnil%29-class-method" class="signature"><strong>.new</strong>(atoms : AtomCollection, cell : Parallelepiped | Nil = <span class="n">nil</span>)</a>
         
       </li>
     
@@ -1063,12 +1063,12 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#wrap%28aroundcenter%3AVec3%3F%3Dnil%29%3Aself-instance-method" class="signature"><strong>#wrap</strong>(around center : Vec3? = <span class="n">nil</span>) : <span class="k">self</span></a>
+        <a href="#wrap%28aroundcenter%3AVec3%7CNil%3Dnil%29%3Aself-instance-method" class="signature"><strong>#wrap</strong>(around center : Vec3 | Nil = <span class="n">nil</span>) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#wrap%28cell%3AParallelepiped%2Caroundcenter%3AVec3%3F%3Dnil%29%3Aself-instance-method" class="signature"><strong>#wrap</strong>(cell : Parallelepiped, around center : Vec3? = <span class="n">nil</span>) : <span class="k">self</span></a>
+        <a href="#wrap%28cell%3AParallelepiped%2Caroundcenter%3AVec3%7CNil%3Dnil%29%3Aself-instance-method" class="signature"><strong>#wrap</strong>(cell : Parallelepiped, around center : Vec3 | Nil = <span class="n">nil</span>) : <span class="k">self</span></a>
         
       </li>
     
@@ -1156,12 +1156,12 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(atoms:AtomCollection,cell:Parallelepiped?=nil)-class-method">
+    <div class="entry-detail" id="new(atoms:AtomCollection,cell:Parallelepiped|Nil=nil)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(atoms : <a href="../../Chem/AtomCollection.html">AtomCollection</a>, cell : <a href="../../Chem/Spatial/Parallelepiped.html">Parallelepiped</a>? = <span class="n">nil</span>)
+        def self.<strong>new</strong>(atoms : <a href="../../Chem/AtomCollection.html">AtomCollection</a>, cell : <a href="../../Chem/Spatial/Parallelepiped.html">Parallelepiped</a> | Nil = <span class="n">nil</span>)
 
-        <a class="method-permalink" href="#new%28atoms%3AAtomCollection%2Ccell%3AParallelepiped%3F%3Dnil%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28atoms%3AAtomCollection%2Ccell%3AParallelepiped%7CNil%3Dnil%29-class-method">#</a>
       </div>
       
       <br/>
@@ -1221,7 +1221,7 @@ pos.center <span class="o">==</span> ref_pos.center <span class="c"># =&gt; true
 <p>The transformation is obtained via the
 <code><a href="../../Chem/Spatial/AffineTransform.html#aligning%28u%3ATuple%28Vec3%2CVec3%29%2Ctov%3ATuple%28Vec3%2CVec3%29%29%3Aself-class-method">AffineTransform.aligning(pos, ref_pos)</a></code> method, which computes
 the optimal rotation matrix by minimizing the root mean square
-deviation (RMSD) using the QCP method (refer to <code><a href="../../Chem/Spatial.html#qcp%28pos%3AIndexable%28Vec3%29%2Cref_pos%3AIndexable%28Vec3%29%2Cweights%3AIndexable%28Float64%29%3F%3Dnil%2Cout_rotmat%3APointer%28Float64%29%3F%3Dnil%29%3AFloat64-class-method">Spatial.qcp</a></code> for
+deviation (RMSD) using the QCP method (refer to <code><a href="../../Chem/Spatial.html#qcp%28pos%3AIndexable%28Vec3%29%2Cref_pos%3AIndexable%28Vec3%29%2Cweights%3AIndexable%28Float64%29%7CNil%3Dnil%2Cout_rotmat%3APointer%28Float64%29%7CNil%3Dnil%29%3AFloat64-class-method">Spatial.qcp</a></code> for
 details).</p>
         </div>
       
@@ -1564,12 +1564,12 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
       </div>
     </div>
   
-    <div class="entry-detail" id="wrap(aroundcenter:Vec3?=nil):self-instance-method">
+    <div class="entry-detail" id="wrap(aroundcenter:Vec3|Nil=nil):self-instance-method">
       <div class="signature">
         
-        def <strong>wrap</strong>(around center : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>? = <span class="n">nil</span>) : <span class="k">self</span>
+        def <strong>wrap</strong>(around center : <a href="../../Chem/Spatial/Vec3.html">Vec3</a> | Nil = <span class="n">nil</span>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#wrap%28aroundcenter%3AVec3%3F%3Dnil%29%3Aself-instance-method">#</a>
+        <a class="method-permalink" href="#wrap%28aroundcenter%3AVec3%7CNil%3Dnil%29%3Aself-instance-method">#</a>
       </div>
       
       <br/>
@@ -1578,12 +1578,12 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
       </div>
     </div>
   
-    <div class="entry-detail" id="wrap(cell:Parallelepiped,aroundcenter:Vec3?=nil):self-instance-method">
+    <div class="entry-detail" id="wrap(cell:Parallelepiped,aroundcenter:Vec3|Nil=nil):self-instance-method">
       <div class="signature">
         
-        def <strong>wrap</strong>(cell : <a href="../../Chem/Spatial/Parallelepiped.html">Parallelepiped</a>, around center : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>? = <span class="n">nil</span>) : <span class="k">self</span>
+        def <strong>wrap</strong>(cell : <a href="../../Chem/Spatial/Parallelepiped.html">Parallelepiped</a>, around center : <a href="../../Chem/Spatial/Vec3.html">Vec3</a> | Nil = <span class="n">nil</span>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#wrap%28cell%3AParallelepiped%2Caroundcenter%3AVec3%3F%3Dnil%29%3Aself-instance-method">#</a>
+        <a class="method-permalink" href="#wrap%28cell%3AParallelepiped%2Caroundcenter%3AVec3%7CNil%3Dnil%29%3Aself-instance-method">#</a>
       </div>
       
       <br/>

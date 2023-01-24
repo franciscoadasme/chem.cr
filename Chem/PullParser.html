@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.5.0">
+<meta name="generator" content="Crystal Docs 1.6.2">
 <meta name="crystal_docs.project_version" content="0.5.6">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -878,26 +878,26 @@
 at a time.</p>
 <p>The parser reads line by line, which is set to an internal buffer.
 Subsequent tokens (consecutive non-whitespace characters) can be
-consumed via the <code><a href="../Chem/PullParser.html#next_token%3ABytes%3F-instance-method">#next_token</a></code> method (although only from the
+consumed via the <code><a href="../Chem/PullParser.html#next_token%3ABytes%7CNil-instance-method">#next_token</a></code> method (although only from the
 current line). The string representation of the current token can be
 obtained via the <code><a href="../Chem/PullParser.html#str%28message%3AString%3D%22Emptytoken%22%29%3AString-instance-method">#str</a></code> methods or it can be interpreted as a
 primitive type via the specialized  <code><a href="../Chem/PullParser.html#float%28message%3AString%3D%22Invalidrealnumber%22%29%3AFloat64-instance-method">#float</a></code> and <code><a href="../Chem/PullParser.html#int%28message%3AString%3D%22Invalidinteger%22%29%3AInt32-instance-method">#int</a></code> methods. It
-can be also interpreted as a custom type via the <code><a href="../Chem/PullParser.html#parse%28message%3AString%3D%22Couldnotparse%25%7Btoken%7Dat%25%7Bloc_with_file%7D%22%2C%26%3AString-%3ET%3F%29%3ATforallT-instance-method">#parse</a></code> method.
+can be also interpreted as a custom type via the <code><a href="../Chem/PullParser.html#parse%28message%3AString%3D%22Couldnotparse%25%7Btoken%7Dat%25%7Bloc_with_file%7D%22%2C%26%3AString-%3ET%7CNil%29%3ATforallT-instance-method">#parse</a></code> method.
 Upon parsing issues, these methods may return <code>nil</code> or raise a
 <code><a href="../Chem/ParseException.html">ParseException</a></code> exception.</p>
 <p>When creating an instance, the parser must be positioned in the
-first line before consuming a token by calling <code><a href="../Chem/PullParser.html#next_line%3AString%3F-instance-method">#next_line</a></code>, using
+first line before consuming a token by calling <code><a href="../Chem/PullParser.html#next_line%3AString%7CNil-instance-method">#next_line</a></code>, using
 the yielding method <code><a href="../Chem/PullParser.html#each_line%28%26%3AString-%3E%29%3ANil-instance-method">#each_line</a></code>, or checking for end of file via
 <code><a href="../Chem/PullParser.html#eof%3F%3ABool-instance-method">#eof?</a></code>. Upon reading a new line, the cursor is reset and the
-current token is set to <code>nil</code>, so <code><a href="../Chem/PullParser.html#next_token%3ABytes%3F-instance-method">#next_token</a></code> must be called
+current token is set to <code>nil</code>, so <code><a href="../Chem/PullParser.html#next_token%3ABytes%7CNil-instance-method">#next_token</a></code> must be called
 before parsing. If the current token is not set, the parsing methods
 may return <code>nil</code> or raise an exception. Alternatively, use the
 convenience <code><a href="../Chem/PullParser.html#next_f%3AFloat64-instance-method">#next_f</a></code>, <code><a href="../Chem/PullParser.html#next_i%3AInt32-instance-method">#next_i</a></code>, or <code><a href="../Chem/PullParser.html#next_s%3AString-instance-method">#next_s</a></code> methods that consume
 the next token and return the interpreted value.</p>
 <p>The <code>#next_*</code> methods always move forward into the IO or line, so
-care must be taken when calling them as invoking <code><a href="../Chem/PullParser.html#next_s%3F%3AString%3F-instance-method">#next_s?</a></code> twice
+care must be taken when calling them as invoking <code><a href="../Chem/PullParser.html#next_s%3F%3AString%7CNil-instance-method">#next_s?</a></code> twice
 will return the next two strings (if possible), not twice the same.
-For instance, calling <code><a href="../Chem/PullParser.html#next_i%3F%3AInt32%3F-instance-method">#next_i?</a></code> after <code><a href="../Chem/PullParser.html#next_f%3F%3AFloat64%3F-instance-method">#next_f?</a></code> returns <code>nil</code> will
+For instance, calling <code><a href="../Chem/PullParser.html#next_i%3F%3AInt32%7CNil-instance-method">#next_i?</a></code> after <code><a href="../Chem/PullParser.html#next_f%3F%3AFloat64%7CNil-instance-method">#next_f?</a></code> returns <code>nil</code> will
 read the next token instead of re-interpreting the current one as an
 integer. In such cases, consider using the non-advancing methods
 (<code><a href="../Chem/PullParser.html#int%28message%3AString%3D%22Invalidinteger%22%29%3AInt32-instance-method">#int</a></code> instead of <code><a href="../Chem/PullParser.html#next_i%3AInt32-instance-method">#next_i</a></code>).</p>
@@ -1049,14 +1049,14 @@ pull.at(<span class="n">100</span>, <span class="n">5</span>)   <span class="c">
       </li>
     
       <li class="entry-summary">
-        <a href="#char%3F%3AChar%3F-instance-method" class="signature"><strong>#char?</strong> : Char?</a>
+        <a href="#char%3F%3AChar%7CNil-instance-method" class="signature"><strong>#char?</strong> : Char | Nil</a>
         
           <div class="summary"><p>Returns the first character of the curren token, or <code>nil</code> if it is not set.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#current_line%3AString%3F-instance-method" class="signature"><strong>#current_line</strong> : String?</a>
+        <a href="#current_line%3AString%7CNil-instance-method" class="signature"><strong>#current_line</strong> : String | Nil</a>
         
           <div class="summary"><p>Returns the current line, or <code>nil</code> if it is not set.</p></div>
         
@@ -1098,7 +1098,7 @@ pull.at(<span class="n">100</span>, <span class="n">5</span>)   <span class="c">
       </li>
     
       <li class="entry-summary">
-        <a href="#float%3F%3AFloat64%3F-instance-method" class="signature"><strong>#float?</strong> : Float64?</a>
+        <a href="#float%3F%3AFloat64%7CNil-instance-method" class="signature"><strong>#float?</strong> : Float64 | Nil</a>
         
           <div class="summary"><p>Parses and returns the floating-point number represented by the current token, or <code>nil</code> if the token is not set or it is not a valid float representation.</p></div>
         
@@ -1119,14 +1119,14 @@ pull.at(<span class="n">100</span>, <span class="n">5</span>)   <span class="c">
       </li>
     
       <li class="entry-summary">
-        <a href="#int%3F%3AInt32%3F-instance-method" class="signature"><strong>#int?</strong> : Int32?</a>
+        <a href="#int%3F%3AInt32%7CNil-instance-method" class="signature"><strong>#int?</strong> : Int32 | Nil</a>
         
           <div class="summary"><p>Parses and returns the integer represented by the current token, or <code>nil</code> if the token is not set or it is not a valid number.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#internal_parse%28%26%3ABytes-%3ET%3F%29%3AT%3FforallT-instance-method" class="signature"><strong>#internal_parse</strong>(& : Bytes -> T?) : T? forall T</a>
+        <a href="#internal_parse%28%26%3ABytes-%3ET%7CNil%29%3AT%7CNilforallT-instance-method" class="signature"><strong>#internal_parse</strong>(& : Bytes -> T | Nil) : T | Nil forall T</a>
         
           <div class="summary"><p>Yields the current token if set and returns the parsed value.</p></div>
         
@@ -1161,9 +1161,9 @@ pull.at(<span class="n">100</span>, <span class="n">5</span>)   <span class="c">
       </li>
     
       <li class="entry-summary">
-        <a href="#next_f%3F%3AFloat64%3F-instance-method" class="signature"><strong>#next_f?</strong> : Float64?</a>
+        <a href="#next_f%3F%3AFloat64%7CNil-instance-method" class="signature"><strong>#next_f?</strong> : Float64 | Nil</a>
         
-          <div class="summary"><p>Reads the next token in the current line, and interprets it via <code><a href="../Chem/PullParser.html#float%3F%3AFloat64%3F-instance-method">#float?</a></code>, which returns <code>nil</code> at the end of line or if the token is an invalid representation.</p></div>
+          <div class="summary"><p>Reads the next token in the current line, and interprets it via <code><a href="../Chem/PullParser.html#float%3F%3AFloat64%7CNil-instance-method">#float?</a></code>, which returns <code>nil</code> at the end of line or if the token is an invalid representation.</p></div>
         
       </li>
     
@@ -1182,14 +1182,14 @@ pull.at(<span class="n">100</span>, <span class="n">5</span>)   <span class="c">
       </li>
     
       <li class="entry-summary">
-        <a href="#next_i%3F%3AInt32%3F-instance-method" class="signature"><strong>#next_i?</strong> : Int32?</a>
+        <a href="#next_i%3F%3AInt32%7CNil-instance-method" class="signature"><strong>#next_i?</strong> : Int32 | Nil</a>
         
-          <div class="summary"><p>Reads the next token in the current line, and interprets it via <code><a href="../Chem/PullParser.html#int%3F%3AInt32%3F-instance-method">#int?</a></code>, which returns <code>nil</code> at the end of line or if the token is an invalid representation.</p></div>
+          <div class="summary"><p>Reads the next token in the current line, and interprets it via <code><a href="../Chem/PullParser.html#int%3F%3AInt32%7CNil-instance-method">#int?</a></code>, which returns <code>nil</code> at the end of line or if the token is an invalid representation.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#next_line%3AString%3F-instance-method" class="signature"><strong>#next_line</strong> : String?</a>
+        <a href="#next_line%3AString%7CNil-instance-method" class="signature"><strong>#next_line</strong> : String | Nil</a>
         
           <div class="summary"><p>Reads and returns the next line from the enclosed IO, or <code>nil</code> if called at the end of the IO.</p></div>
         
@@ -1210,28 +1210,28 @@ pull.at(<span class="n">100</span>, <span class="n">5</span>)   <span class="c">
       </li>
     
       <li class="entry-summary">
-        <a href="#next_s%3F%3AString%3F-instance-method" class="signature"><strong>#next_s?</strong> : String?</a>
+        <a href="#next_s%3F%3AString%7CNil-instance-method" class="signature"><strong>#next_s?</strong> : String | Nil</a>
         
-          <div class="summary"><p>Reads the next token in the current line, and interprets it via <code><a href="../Chem/PullParser.html#str%3F%3AString%3F-instance-method">#str?</a></code>, which returns <code>nil</code> at the end of line or if the token is an invalid representation.</p></div>
+          <div class="summary"><p>Reads the next token in the current line, and interprets it via <code><a href="../Chem/PullParser.html#str%3F%3AString%7CNil-instance-method">#str?</a></code>, which returns <code>nil</code> at the end of line or if the token is an invalid representation.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#next_token%3ABytes%3F-instance-method" class="signature"><strong>#next_token</strong> : Bytes?</a>
+        <a href="#next_token%3ABytes%7CNil-instance-method" class="signature"><strong>#next_token</strong> : Bytes | Nil</a>
         
           <div class="summary"><p>Reads the next collection of consecutive non-whitespace characters in the current line and returns the corresponding bytes, or <code>nil</code> if called at the end of line.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#parse%28message%3AString%3D%22Couldnotparse%25%7Btoken%7Dat%25%7Bloc_with_file%7D%22%2C%26%3AString-%3ET%3F%29%3ATforallT-instance-method" class="signature"><strong>#parse</strong>(message : String = <span class="s">&quot;Could not parse %{token} at %{loc_with_file}&quot;</span>, & : String -> T?) : T forall T</a>
+        <a href="#parse%28message%3AString%3D%22Couldnotparse%25%7Btoken%7Dat%25%7Bloc_with_file%7D%22%2C%26%3AString-%3ET%7CNil%29%3ATforallT-instance-method" class="signature"><strong>#parse</strong>(message : String = <span class="s">&quot;Could not parse %{token} at %{loc_with_file}&quot;</span>, & : String -> T | Nil) : T forall T</a>
         
           <div class="summary"><p>Yields the current token and returns the parsed value.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#parse%3F%28%26%3AString-%3ET%3F%29%3AT%3FforallT-instance-method" class="signature"><strong>#parse?</strong>(& : String -> T?) : T? forall T</a>
+        <a href="#parse%3F%28%26%3AString-%3ET%7CNil%29%3AT%7CNilforallT-instance-method" class="signature"><strong>#parse?</strong>(& : String -> T | Nil) : T | Nil forall T</a>
         
           <div class="summary"><p>Yields the current token if set and returns the parsed value.</p></div>
         
@@ -1245,14 +1245,14 @@ pull.at(<span class="n">100</span>, <span class="n">5</span>)   <span class="c">
       </li>
     
       <li class="entry-summary">
-        <a href="#parse_next%28message%3AString%3D%22Couldnotparse%25%7Btoken%7Dat%25%7Bloc_with_file%7D%22%2C%26%3AString-%3ET%3F%29%3ATforallT-instance-method" class="signature"><strong>#parse_next</strong>(message : String = <span class="s">&quot;Could not parse %{token} at %{loc_with_file}&quot;</span>, & : String -> T?) : T forall T</a>
+        <a href="#parse_next%28message%3AString%3D%22Couldnotparse%25%7Btoken%7Dat%25%7Bloc_with_file%7D%22%2C%26%3AString-%3ET%7CNil%29%3ATforallT-instance-method" class="signature"><strong>#parse_next</strong>(message : String = <span class="s">&quot;Could not parse %{token} at %{loc_with_file}&quot;</span>, & : String -> T | Nil) : T forall T</a>
         
           <div class="summary"><p>Yields the next token if present and returns the parsed value.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#parse_next%3F%28%26%3AString-%3ET%3F%29%3AT%3FforallT-instance-method" class="signature"><strong>#parse_next?</strong>(& : String -> T?) : T? forall T</a>
+        <a href="#parse_next%3F%28%26%3AString-%3ET%7CNil%29%3AT%7CNilforallT-instance-method" class="signature"><strong>#parse_next?</strong>(& : String -> T | Nil) : T | Nil forall T</a>
         
           <div class="summary"><p>Yields the next token if present and returns the parsed value.</p></div>
         
@@ -1287,7 +1287,7 @@ pull.at(<span class="n">100</span>, <span class="n">5</span>)   <span class="c">
       </li>
     
       <li class="entry-summary">
-        <a href="#str%3F%3AString%3F-instance-method" class="signature"><strong>#str?</strong> : String?</a>
+        <a href="#str%3F%3AString%7CNil-instance-method" class="signature"><strong>#str?</strong> : String | Nil</a>
         
           <div class="summary"><p>Returns the current token as a string, or <code>nil</code> if it is not set.</p></div>
         
@@ -1512,12 +1512,12 @@ of bounds, the current token will be set to <code>nil</code>.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="char?:Char?-instance-method">
+    <div class="entry-detail" id="char?:Char|Nil-instance-method">
       <div class="signature">
         
-        def <strong>char?</strong> : <a href="../Char.html">Char</a>?
+        def <strong>char?</strong> : <a href="../Char.html">Char</a> | Nil
 
-        <a class="method-permalink" href="#char%3F%3AChar%3F-instance-method">#</a>
+        <a class="method-permalink" href="#char%3F%3AChar%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1532,12 +1532,12 @@ not set.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="current_line:String?-instance-method">
+    <div class="entry-detail" id="current_line:String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>current_line</strong> : String?
+        def <strong>current_line</strong> : String | Nil
 
-        <a class="method-permalink" href="#current_line%3AString%3F-instance-method">#</a>
+        <a class="method-permalink" href="#current_line%3AString%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1595,7 +1595,7 @@ pull.each_line { <span class="o">|</span>line<span class="o">|</span> puts line 
           
           <p>Returns <code>true</code> at the end of file, otherwise <code>false</code>.</p>
 <p><span class="flag purple">NOTE</span>  This method attempts to read a line from the enclosed IO if
-the current line is not set, so calling <code><a href="../Chem/PullParser.html#next_line%3AString%3F-instance-method">#next_line</a></code> after this
+the current line is not set, so calling <code><a href="../Chem/PullParser.html#next_line%3AString%7CNil-instance-method">#next_line</a></code> after this
 could inadvertently discard a line.</p>
         </div>
       
@@ -1670,12 +1670,12 @@ not a valid float representation.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="float?:Float64?-instance-method">
+    <div class="entry-detail" id="float?:Float64|Nil-instance-method">
       <div class="signature">
         
-        def <strong>float?</strong> : Float64?
+        def <strong>float?</strong> : Float64 | Nil
 
-        <a class="method-permalink" href="#float%3F%3AFloat64%3F-instance-method">#</a>
+        <a class="method-permalink" href="#float%3F%3AFloat64%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1734,12 +1734,12 @@ number.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="int?:Int32?-instance-method">
+    <div class="entry-detail" id="int?:Int32|Nil-instance-method">
       <div class="signature">
         
-        def <strong>int?</strong> : Int32?
+        def <strong>int?</strong> : Int32 | Nil
 
-        <a class="method-permalink" href="#int%3F%3AInt32%3F-instance-method">#</a>
+        <a class="method-permalink" href="#int%3F%3AInt32%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1754,12 +1754,12 @@ or <code>nil</code> if the token is not set or it is not a valid number.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="internal_parse(&amp;:Bytes-&gt;T?):T?forallT-instance-method">
+    <div class="entry-detail" id="internal_parse(&amp;:Bytes-&gt;T|Nil):T|NilforallT-instance-method">
       <div class="signature">
         
-        def <strong>internal_parse</strong>(& : Bytes -> T?) : T? forall T
+        def <strong>internal_parse</strong>(& : Bytes -> T | Nil) : T | Nil forall T
 
-        <a class="method-permalink" href="#internal_parse%28%26%3ABytes-%3ET%3F%29%3AT%3FforallT-instance-method">#</a>
+        <a class="method-permalink" href="#internal_parse%28%26%3ABytes-%3ET%7CNil%29%3AT%7CNilforallT-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1866,18 +1866,18 @@ line or if the token is an invalid representation.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="next_f?:Float64?-instance-method">
+    <div class="entry-detail" id="next_f?:Float64|Nil-instance-method">
       <div class="signature">
         
-        def <strong>next_f?</strong> : Float64?
+        def <strong>next_f?</strong> : Float64 | Nil
 
-        <a class="method-permalink" href="#next_f%3F%3AFloat64%3F-instance-method">#</a>
+        <a class="method-permalink" href="#next_f%3F%3AFloat64%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Reads the next token in the current line, and interprets it via
-<code><a href="../Chem/PullParser.html#float%3F%3AFloat64%3F-instance-method">#float?</a></code>, which returns <code>nil</code> at the end of line or if
+<code><a href="../Chem/PullParser.html#float%3F%3AFloat64%7CNil-instance-method">#float?</a></code>, which returns <code>nil</code> at the end of line or if
 the token is an invalid representation.</p>
         </div>
       
@@ -1930,18 +1930,18 @@ line or if the token is an invalid representation.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="next_i?:Int32?-instance-method">
+    <div class="entry-detail" id="next_i?:Int32|Nil-instance-method">
       <div class="signature">
         
-        def <strong>next_i?</strong> : Int32?
+        def <strong>next_i?</strong> : Int32 | Nil
 
-        <a class="method-permalink" href="#next_i%3F%3AInt32%3F-instance-method">#</a>
+        <a class="method-permalink" href="#next_i%3F%3AInt32%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Reads the next token in the current line, and interprets it via
-<code><a href="../Chem/PullParser.html#int%3F%3AInt32%3F-instance-method">#int?</a></code>, which returns <code>nil</code> at the end of line or if
+<code><a href="../Chem/PullParser.html#int%3F%3AInt32%7CNil-instance-method">#int?</a></code>, which returns <code>nil</code> at the end of line or if
 the token is an invalid representation.</p>
         </div>
       
@@ -1951,12 +1951,12 @@ the token is an invalid representation.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="next_line:String?-instance-method">
+    <div class="entry-detail" id="next_line:String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>next_line</strong> : String?
+        def <strong>next_line</strong> : String | Nil
 
-        <a class="method-permalink" href="#next_line%3AString%3F-instance-method">#</a>
+        <a class="method-permalink" href="#next_line%3AString%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2014,18 +2014,18 @@ line or if the token is an invalid representation.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="next_s?:String?-instance-method">
+    <div class="entry-detail" id="next_s?:String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>next_s?</strong> : String?
+        def <strong>next_s?</strong> : String | Nil
 
-        <a class="method-permalink" href="#next_s%3F%3AString%3F-instance-method">#</a>
+        <a class="method-permalink" href="#next_s%3F%3AString%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Reads the next token in the current line, and interprets it via
-<code><a href="../Chem/PullParser.html#str%3F%3AString%3F-instance-method">#str?</a></code>, which returns <code>nil</code> at the end of line or if
+<code><a href="../Chem/PullParser.html#str%3F%3AString%7CNil-instance-method">#str?</a></code>, which returns <code>nil</code> at the end of line or if
 the token is an invalid representation.</p>
         </div>
       
@@ -2035,12 +2035,12 @@ the token is an invalid representation.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="next_token:Bytes?-instance-method">
+    <div class="entry-detail" id="next_token:Bytes|Nil-instance-method">
       <div class="signature">
         
-        def <strong>next_token</strong> : Bytes?
+        def <strong>next_token</strong> : Bytes | Nil
 
-        <a class="method-permalink" href="#next_token%3ABytes%3F-instance-method">#</a>
+        <a class="method-permalink" href="#next_token%3ABytes%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2069,12 +2069,12 @@ pull.next_token             <span class="c"># =&gt; nil</span></code></pre>
       </div>
     </div>
   
-    <div class="entry-detail" id="parse(message:String=&quot;Couldnotparse%{token}at%{loc_with_file}&quot;,&amp;:String-&gt;T?):TforallT-instance-method">
+    <div class="entry-detail" id="parse(message:String=&quot;Couldnotparse%{token}at%{loc_with_file}&quot;,&amp;:String-&gt;T|Nil):TforallT-instance-method">
       <div class="signature">
         
-        def <strong>parse</strong>(message : String = <span class="s">&quot;Could not parse %{token} at %{loc_with_file}&quot;</span>, & : String -> T?) : T forall T
+        def <strong>parse</strong>(message : String = <span class="s">&quot;Could not parse %{token} at %{loc_with_file}&quot;</span>, & : String -> T | Nil) : T forall T
 
-        <a class="method-permalink" href="#parse%28message%3AString%3D%22Couldnotparse%25%7Btoken%7Dat%25%7Bloc_with_file%7D%22%2C%26%3AString-%3ET%3F%29%3ATforallT-instance-method">#</a>
+        <a class="method-permalink" href="#parse%28message%3AString%3D%22Couldnotparse%25%7Btoken%7Dat%25%7Bloc_with_file%7D%22%2C%26%3AString-%3ET%7CNil%29%3ATforallT-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2090,12 +2090,12 @@ block returns <code>nil</code>.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="parse?(&amp;:String-&gt;T?):T?forallT-instance-method">
+    <div class="entry-detail" id="parse?(&amp;:String-&gt;T|Nil):T|NilforallT-instance-method">
       <div class="signature">
         
-        def <strong>parse?</strong>(& : String -> T?) : T? forall T
+        def <strong>parse?</strong>(& : String -> T | Nil) : T | Nil forall T
 
-        <a class="method-permalink" href="#parse%3F%28%26%3AString-%3ET%3F%29%3AT%3FforallT-instance-method">#</a>
+        <a class="method-permalink" href="#parse%3F%28%26%3AString-%3ET%7CNil%29%3AT%7CNilforallT-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2130,12 +2130,12 @@ returns <code>nil</code>. If no token is set, returns <em>default</em>.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="parse_next(message:String=&quot;Couldnotparse%{token}at%{loc_with_file}&quot;,&amp;:String-&gt;T?):TforallT-instance-method">
+    <div class="entry-detail" id="parse_next(message:String=&quot;Couldnotparse%{token}at%{loc_with_file}&quot;,&amp;:String-&gt;T|Nil):TforallT-instance-method">
       <div class="signature">
         
-        def <strong>parse_next</strong>(message : String = <span class="s">&quot;Could not parse %{token} at %{loc_with_file}&quot;</span>, & : String -> T?) : T forall T
+        def <strong>parse_next</strong>(message : String = <span class="s">&quot;Could not parse %{token} at %{loc_with_file}&quot;</span>, & : String -> T | Nil) : T forall T
 
-        <a class="method-permalink" href="#parse_next%28message%3AString%3D%22Couldnotparse%25%7Btoken%7Dat%25%7Bloc_with_file%7D%22%2C%26%3AString-%3ET%3F%29%3ATforallT-instance-method">#</a>
+        <a class="method-permalink" href="#parse_next%28message%3AString%3D%22Couldnotparse%25%7Btoken%7Dat%25%7Bloc_with_file%7D%22%2C%26%3AString-%3ET%7CNil%29%3ATforallT-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2151,12 +2151,12 @@ found or the block returns <code>nil</code>.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="parse_next?(&amp;:String-&gt;T?):T?forallT-instance-method">
+    <div class="entry-detail" id="parse_next?(&amp;:String-&gt;T|Nil):T|NilforallT-instance-method">
       <div class="signature">
         
-        def <strong>parse_next?</strong>(& : String -> T?) : T? forall T
+        def <strong>parse_next?</strong>(& : String -> T | Nil) : T | Nil forall T
 
-        <a class="method-permalink" href="#parse_next%3F%28%26%3AString-%3ET%3F%29%3AT%3FforallT-instance-method">#</a>
+        <a class="method-permalink" href="#parse_next%3F%28%26%3AString-%3ET%7CNil%29%3AT%7CNilforallT-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2249,12 +2249,12 @@ with the given message if the token is not set.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="str?:String?-instance-method">
+    <div class="entry-detail" id="str?:String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>str?</strong> : String?
+        def <strong>str?</strong> : String | Nil
 
-        <a class="method-permalink" href="#str%3F%3AString%3F-instance-method">#</a>
+        <a class="method-permalink" href="#str%3F%3AString%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">

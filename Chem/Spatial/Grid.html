@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.5.0">
+<meta name="generator" content="Crystal Docs 1.6.2">
 <meta name="crystal_docs.project_version" content="0.5.6">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -946,7 +946,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#atom_distance%28structure%3AStructure%2Cdim%3ADimensions%2Cbounds%3AParallelepiped%3F%3Dnil%29%3Aself-class-method" class="signature"><strong>.atom_distance</strong>(structure : Structure, dim : Dimensions, bounds : Parallelepiped? = <span class="n">nil</span>) : <span class="k">self</span></a>
+        <a href="#atom_distance%28structure%3AStructure%2Cdim%3ADimensions%2Cbounds%3AParallelepiped%7CNil%3Dnil%29%3Aself-class-method" class="signature"><strong>.atom_distance</strong>(structure : Structure, dim : Dimensions, bounds : Parallelepiped | Nil = <span class="n">nil</span>) : <span class="k">self</span></a>
         
       </li>
     
@@ -1048,7 +1048,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#vdw_mask%28structure%3AStructure%2Cdim%3ADimensions%2Cbounds%3AParallelepiped%3F%3Dnil%2Cdelta%3AFloat64%3D0.02%29%3Aself-class-method" class="signature"><strong>.vdw_mask</strong>(structure : Structure, dim : Dimensions, bounds : Parallelepiped? = <span class="n">nil</span>, delta : Float64 = <span class="n">0.02</span>) : <span class="k">self</span></a>
+        <a href="#vdw_mask%28structure%3AStructure%2Cdim%3ADimensions%2Cbounds%3AParallelepiped%7CNil%3Dnil%2Cdelta%3AFloat64%3D0.02%29%3Aself-class-method" class="signature"><strong>.vdw_mask</strong>(structure : Structure, dim : Dimensions, bounds : Parallelepiped | Nil = <span class="n">nil</span>, delta : Float64 = <span class="n">0.02</span>) : <span class="k">self</span></a>
         
           <div class="summary"><p><span class="flag orange">TODO</span>  add more tests FIXME: check delta calculation (grid.resolution.min / 2 shouldn't be enough?)</p></div>
         
@@ -1145,17 +1145,17 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#%5B%5D%3F%28i%3AInt%2Cj%3AInt%2Ck%3AInt%29%3AFloat64%3F-instance-method" class="signature"><strong>#[]?</strong>(i : Int, j : Int, k : Int) : Float64?</a>
+        <a href="#%5B%5D%3F%28i%3AInt%2Cj%3AInt%2Ck%3AInt%29%3AFloat64%7CNil-instance-method" class="signature"><strong>#[]?</strong>(i : Int, j : Int, k : Int) : Float64 | Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#%5B%5D%3F%28loc%3ALocation%29%3AFloat64%3F-instance-method" class="signature"><strong>#[]?</strong>(loc : Location) : Float64?</a>
+        <a href="#%5B%5D%3F%28loc%3ALocation%29%3AFloat64%7CNil-instance-method" class="signature"><strong>#[]?</strong>(loc : Location) : Float64 | Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#%5B%5D%3F%28vec%3AVec3%29%3AFloat64%3F-instance-method" class="signature"><strong>#[]?</strong>(vec : Vec3) : Float64?</a>
+        <a href="#%5B%5D%3F%28vec%3AVec3%29%3AFloat64%7CNil-instance-method" class="signature"><strong>#[]?</strong>(vec : Vec3) : Float64 | Nil</a>
         
           <div class="summary"><p><span class="flag orange">TODO</span>  add interpolation (check ARBInterp)</p></div>
         
@@ -1172,17 +1172,17 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#coords_at%3F%28i%3AInt%2Cj%3AInt%2Ck%3AInt%29%3AVec3%3F-instance-method" class="signature"><strong>#coords_at?</strong>(i : Int, j : Int, k : Int) : Vec3?</a>
+        <a href="#coords_at%3F%28i%3AInt%2Cj%3AInt%2Ck%3AInt%29%3AVec3%7CNil-instance-method" class="signature"><strong>#coords_at?</strong>(i : Int, j : Int, k : Int) : Vec3 | Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#coords_at%3F%28i%3AInt%29%3AVec3%3F-instance-method" class="signature"><strong>#coords_at?</strong>(i : Int) : Vec3?</a>
+        <a href="#coords_at%3F%28i%3AInt%29%3AVec3%7CNil-instance-method" class="signature"><strong>#coords_at?</strong>(i : Int) : Vec3 | Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#coords_at%3F%28loc%3ALocation%29%3AVec3%3F-instance-method" class="signature"><strong>#coords_at?</strong>(loc : Location) : Vec3?</a>
+        <a href="#coords_at%3F%28loc%3ALocation%29%3AVec3%7CNil-instance-method" class="signature"><strong>#coords_at?</strong>(loc : Location) : Vec3 | Nil</a>
         
       </li>
     
@@ -1241,12 +1241,12 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#index%28loc%3ALocation%29%3AInt32%3F-instance-method" class="signature"><strong>#index</strong>(loc : Location) : Int32?</a>
+        <a href="#index%28loc%3ALocation%29%3AInt32%7CNil-instance-method" class="signature"><strong>#index</strong>(loc : Location) : Int32 | Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#index%28vec%3AVec3%29%3AInt32%3F-instance-method" class="signature"><strong>#index</strong>(vec : Vec3) : Int32?</a>
+        <a href="#index%28vec%3AVec3%29%3AInt32%7CNil-instance-method" class="signature"><strong>#index</strong>(vec : Vec3) : Int32 | Nil</a>
         
       </li>
     
@@ -1261,12 +1261,12 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#loc_at%3F%28i%3AInt%29%3ALocation%3F-instance-method" class="signature"><strong>#loc_at?</strong>(i : Int) : Location?</a>
+        <a href="#loc_at%3F%28i%3AInt%29%3ALocation%7CNil-instance-method" class="signature"><strong>#loc_at?</strong>(i : Int) : Location | Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#loc_at%3F%28vec%3AVec3%29%3ALocation%3F-instance-method" class="signature"><strong>#loc_at?</strong>(vec : Vec3) : Location?</a>
+        <a href="#loc_at%3F%28vec%3AVec3%29%3ALocation%7CNil-instance-method" class="signature"><strong>#loc_at?</strong>(vec : Vec3) : Location | Nil</a>
         
       </li>
     
@@ -1457,7 +1457,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#source_file%3APath%3F-instance-method" class="signature"><strong>#source_file</strong> : Path?</a>
+        <a href="#source_file%3APath%7CNil-instance-method" class="signature"><strong>#source_file</strong> : Path | Nil</a>
         
       </li>
     
@@ -1680,12 +1680,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="atom_distance(structure:Structure,dim:Dimensions,bounds:Parallelepiped?=nil):self-class-method">
+    <div class="entry-detail" id="atom_distance(structure:Structure,dim:Dimensions,bounds:Parallelepiped|Nil=nil):self-class-method">
       <div class="signature">
         
-        def self.<strong>atom_distance</strong>(structure : <a href="../../Chem/Structure.html">Structure</a>, dim : <a href="../../Chem/Spatial/Grid/Dimensions.html">Dimensions</a>, bounds : <a href="../../Chem/Spatial/Parallelepiped.html">Parallelepiped</a>? = <span class="n">nil</span>) : <span class="k">self</span>
+        def self.<strong>atom_distance</strong>(structure : <a href="../../Chem/Structure.html">Structure</a>, dim : <a href="../../Chem/Spatial/Grid/Dimensions.html">Dimensions</a>, bounds : <a href="../../Chem/Spatial/Parallelepiped.html">Parallelepiped</a> | Nil = <span class="n">nil</span>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#atom_distance%28structure%3AStructure%2Cdim%3ADimensions%2Cbounds%3AParallelepiped%3F%3Dnil%29%3Aself-class-method">#</a>
+        <a class="method-permalink" href="#atom_distance%28structure%3AStructure%2Cdim%3ADimensions%2Cbounds%3AParallelepiped%7CNil%3Dnil%29%3Aself-class-method">#</a>
       </div>
       
       <br/>
@@ -2007,12 +2007,12 @@ decoded in the corresponding file format if possible.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="vdw_mask(structure:Structure,dim:Dimensions,bounds:Parallelepiped?=nil,delta:Float64=0.02):self-class-method">
+    <div class="entry-detail" id="vdw_mask(structure:Structure,dim:Dimensions,bounds:Parallelepiped|Nil=nil,delta:Float64=0.02):self-class-method">
       <div class="signature">
         
-        def self.<strong>vdw_mask</strong>(structure : <a href="../../Chem/Structure.html">Structure</a>, dim : <a href="../../Chem/Spatial/Grid/Dimensions.html">Dimensions</a>, bounds : <a href="../../Chem/Spatial/Parallelepiped.html">Parallelepiped</a>? = <span class="n">nil</span>, delta : Float64 = <span class="n">0.02</span>) : <span class="k">self</span>
+        def self.<strong>vdw_mask</strong>(structure : <a href="../../Chem/Structure.html">Structure</a>, dim : <a href="../../Chem/Spatial/Grid/Dimensions.html">Dimensions</a>, bounds : <a href="../../Chem/Spatial/Parallelepiped.html">Parallelepiped</a> | Nil = <span class="n">nil</span>, delta : Float64 = <span class="n">0.02</span>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#vdw_mask%28structure%3AStructure%2Cdim%3ADimensions%2Cbounds%3AParallelepiped%3F%3Dnil%2Cdelta%3AFloat64%3D0.02%29%3Aself-class-method">#</a>
+        <a class="method-permalink" href="#vdw_mask%28structure%3AStructure%2Cdim%3ADimensions%2Cbounds%3AParallelepiped%7CNil%3Dnil%2Cdelta%3AFloat64%3D0.02%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -2256,12 +2256,12 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
       </div>
     </div>
   
-    <div class="entry-detail" id="[]?(i:Int,j:Int,k:Int):Float64?-instance-method">
+    <div class="entry-detail" id="[]?(i:Int,j:Int,k:Int):Float64|Nil-instance-method">
       <div class="signature">
         
-        def <strong>[]?</strong>(i : Int, j : Int, k : Int) : Float64?
+        def <strong>[]?</strong>(i : Int, j : Int, k : Int) : Float64 | Nil
 
-        <a class="method-permalink" href="#%5B%5D%3F%28i%3AInt%2Cj%3AInt%2Ck%3AInt%29%3AFloat64%3F-instance-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%3F%28i%3AInt%2Cj%3AInt%2Ck%3AInt%29%3AFloat64%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -2270,12 +2270,12 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
       </div>
     </div>
   
-    <div class="entry-detail" id="[]?(loc:Location):Float64?-instance-method">
+    <div class="entry-detail" id="[]?(loc:Location):Float64|Nil-instance-method">
       <div class="signature">
         
-        def <strong>[]?</strong>(loc : <a href="../../Chem/Spatial/Grid/Location.html">Location</a>) : Float64?
+        def <strong>[]?</strong>(loc : <a href="../../Chem/Spatial/Grid/Location.html">Location</a>) : Float64 | Nil
 
-        <a class="method-permalink" href="#%5B%5D%3F%28loc%3ALocation%29%3AFloat64%3F-instance-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%3F%28loc%3ALocation%29%3AFloat64%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -2284,12 +2284,12 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
       </div>
     </div>
   
-    <div class="entry-detail" id="[]?(vec:Vec3):Float64?-instance-method">
+    <div class="entry-detail" id="[]?(vec:Vec3):Float64|Nil-instance-method">
       <div class="signature">
         
-        def <strong>[]?</strong>(vec : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : Float64?
+        def <strong>[]?</strong>(vec : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : Float64 | Nil
 
-        <a class="method-permalink" href="#%5B%5D%3F%28vec%3AVec3%29%3AFloat64%3F-instance-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%3F%28vec%3AVec3%29%3AFloat64%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2331,12 +2331,12 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
       </div>
     </div>
   
-    <div class="entry-detail" id="coords_at?(i:Int,j:Int,k:Int):Vec3?-instance-method">
+    <div class="entry-detail" id="coords_at?(i:Int,j:Int,k:Int):Vec3|Nil-instance-method">
       <div class="signature">
         
-        def <strong>coords_at?</strong>(i : Int, j : Int, k : Int) : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>?
+        def <strong>coords_at?</strong>(i : Int, j : Int, k : Int) : <a href="../../Chem/Spatial/Vec3.html">Vec3</a> | Nil
 
-        <a class="method-permalink" href="#coords_at%3F%28i%3AInt%2Cj%3AInt%2Ck%3AInt%29%3AVec3%3F-instance-method">#</a>
+        <a class="method-permalink" href="#coords_at%3F%28i%3AInt%2Cj%3AInt%2Ck%3AInt%29%3AVec3%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -2345,12 +2345,12 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
       </div>
     </div>
   
-    <div class="entry-detail" id="coords_at?(i:Int):Vec3?-instance-method">
+    <div class="entry-detail" id="coords_at?(i:Int):Vec3|Nil-instance-method">
       <div class="signature">
         
-        def <strong>coords_at?</strong>(i : Int) : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>?
+        def <strong>coords_at?</strong>(i : Int) : <a href="../../Chem/Spatial/Vec3.html">Vec3</a> | Nil
 
-        <a class="method-permalink" href="#coords_at%3F%28i%3AInt%29%3AVec3%3F-instance-method">#</a>
+        <a class="method-permalink" href="#coords_at%3F%28i%3AInt%29%3AVec3%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -2359,12 +2359,12 @@ grid <span class="o">=</span> <span class="t">Grid</span>.vdw_mask structure, in
       </div>
     </div>
   
-    <div class="entry-detail" id="coords_at?(loc:Location):Vec3?-instance-method">
+    <div class="entry-detail" id="coords_at?(loc:Location):Vec3|Nil-instance-method">
       <div class="signature">
         
-        def <strong>coords_at?</strong>(loc : <a href="../../Chem/Spatial/Grid/Location.html">Location</a>) : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>?
+        def <strong>coords_at?</strong>(loc : <a href="../../Chem/Spatial/Grid/Location.html">Location</a>) : <a href="../../Chem/Spatial/Vec3.html">Vec3</a> | Nil
 
-        <a class="method-permalink" href="#coords_at%3F%28loc%3ALocation%29%3AVec3%3F-instance-method">#</a>
+        <a class="method-permalink" href="#coords_at%3F%28loc%3ALocation%29%3AVec3%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -2545,12 +2545,12 @@ yielded on each iteration.</li>
       </div>
     </div>
   
-    <div class="entry-detail" id="index(loc:Location):Int32?-instance-method">
+    <div class="entry-detail" id="index(loc:Location):Int32|Nil-instance-method">
       <div class="signature">
         
-        def <strong>index</strong>(loc : <a href="../../Chem/Spatial/Grid/Location.html">Location</a>) : Int32?
+        def <strong>index</strong>(loc : <a href="../../Chem/Spatial/Grid/Location.html">Location</a>) : Int32 | Nil
 
-        <a class="method-permalink" href="#index%28loc%3ALocation%29%3AInt32%3F-instance-method">#</a>
+        <a class="method-permalink" href="#index%28loc%3ALocation%29%3AInt32%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -2559,12 +2559,12 @@ yielded on each iteration.</li>
       </div>
     </div>
   
-    <div class="entry-detail" id="index(vec:Vec3):Int32?-instance-method">
+    <div class="entry-detail" id="index(vec:Vec3):Int32|Nil-instance-method">
       <div class="signature">
         
-        def <strong>index</strong>(vec : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : Int32?
+        def <strong>index</strong>(vec : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : Int32 | Nil
 
-        <a class="method-permalink" href="#index%28vec%3AVec3%29%3AInt32%3F-instance-method">#</a>
+        <a class="method-permalink" href="#index%28vec%3AVec3%29%3AInt32%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -2601,12 +2601,12 @@ yielded on each iteration.</li>
       </div>
     </div>
   
-    <div class="entry-detail" id="loc_at?(i:Int):Location?-instance-method">
+    <div class="entry-detail" id="loc_at?(i:Int):Location|Nil-instance-method">
       <div class="signature">
         
-        def <strong>loc_at?</strong>(i : Int) : <a href="../../Chem/Spatial/Grid/Location.html">Location</a>?
+        def <strong>loc_at?</strong>(i : Int) : <a href="../../Chem/Spatial/Grid/Location.html">Location</a> | Nil
 
-        <a class="method-permalink" href="#loc_at%3F%28i%3AInt%29%3ALocation%3F-instance-method">#</a>
+        <a class="method-permalink" href="#loc_at%3F%28i%3AInt%29%3ALocation%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -2615,12 +2615,12 @@ yielded on each iteration.</li>
       </div>
     </div>
   
-    <div class="entry-detail" id="loc_at?(vec:Vec3):Location?-instance-method">
+    <div class="entry-detail" id="loc_at?(vec:Vec3):Location|Nil-instance-method">
       <div class="signature">
         
-        def <strong>loc_at?</strong>(vec : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <a href="../../Chem/Spatial/Grid/Location.html">Location</a>?
+        def <strong>loc_at?</strong>(vec : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <a href="../../Chem/Spatial/Grid/Location.html">Location</a> | Nil
 
-        <a class="method-permalink" href="#loc_at%3F%28vec%3AVec3%29%3ALocation%3F-instance-method">#</a>
+        <a class="method-permalink" href="#loc_at%3F%28vec%3AVec3%29%3ALocation%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -3255,12 +3255,12 @@ grid.mean(axis: <span class="n">1</span>) <span class="c"># =&gt; [{9.5, 0.0}, {
       </div>
     </div>
   
-    <div class="entry-detail" id="source_file:Path?-instance-method">
+    <div class="entry-detail" id="source_file:Path|Nil-instance-method">
       <div class="signature">
         
-        def <strong>source_file</strong> : Path?
+        def <strong>source_file</strong> : Path | Nil
 
-        <a class="method-permalink" href="#source_file%3APath%3F-instance-method">#</a>
+        <a class="method-permalink" href="#source_file%3APath%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -3535,10 +3535,10 @@ the <code><a href="../../Chem/VASP/Locpot.html">Chem::VASP::Locpot</a></code> fi
             </div>
           
           <p>Returns the element at the given <em>index</em>, without doing any bounds check.</p>
-<p><code>Indexable</code> makes sure to invoke this method with <em>index</em> in <code>0..<a href="../../Chem/Spatial/Grid.html#size%3AInt32-instance-method">.size</a></code>,
+<p><code>Indexable</code> makes sure to invoke this method with <em>index</em> in <code>0...size</code>,
 so converting negative indices to positive ones is not needed here.</p>
 <p>Clients never invoke this method directly. Instead, they access
-elements with <code><a href="../../Chem/Spatial/Grid.html#%5B%5D%28%2Aargs%2C%2A%2Aoptions%29%3AFloat64-instance-method">#[](index)</a></code> and <code><a href="../../Chem/Spatial/Grid.html#%5B%5D%3F%28loc%3ALocation%29%3AFloat64%3F-instance-method">#[]?(index)</a></code>.</p>
+elements with <code><a href="../../Chem/Spatial/Grid.html#%5B%5D%28%2Aargs%2C%2A%2Aoptions%29%3AFloat64-instance-method">#[](index)</a></code> and <code><a href="../../Chem/Spatial/Grid.html#%5B%5D%3F%28loc%3ALocation%29%3AFloat64%7CNil-instance-method">#[]?(index)</a></code>.</p>
 <p>This method should only be directly invoked if you are absolutely
 sure the index is in bounds, to avoid a bounds check for a small boost
 of performance.</p>

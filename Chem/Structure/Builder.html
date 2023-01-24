@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.5.0">
+<meta name="generator" content="Crystal Docs 1.6.2">
 <meta name="crystal_docs.project_version" content="0.5.6">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -961,7 +961,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#atom%3F%28index%3AInt%29%3AAtom%3F-instance-method" class="signature"><strong>#atom?</strong>(index : Int) : Atom?</a>
+        <a href="#atom%3F%28index%3AInt%29%3AAtom%7CNil-instance-method" class="signature"><strong>#atom?</strong>(index : Int) : Atom | Nil</a>
         
       </li>
     
@@ -996,12 +996,12 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#cell%28cell%3ASpatial%3A%3AParallelepiped%3F%29-instance-method" class="signature"><strong>#cell</strong>(cell : Spatial::Parallelepiped?)</a>
+        <a href="#cell%28cell%3ASpatial%3A%3AParallelepiped%7CNil%29-instance-method" class="signature"><strong>#cell</strong>(cell : Spatial::Parallelepiped | Nil)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#cell%3ASpatial%3A%3AParallelepiped%3F-instance-method" class="signature"><strong>#cell</strong> : Spatial::Parallelepiped?</a>
+        <a href="#cell%3ASpatial%3A%3AParallelepiped%7CNil-instance-method" class="signature"><strong>#cell</strong> : Spatial::Parallelepiped | Nil</a>
         
       </li>
     
@@ -1031,22 +1031,22 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#current_chain%3AChain%3F-instance-method" class="signature"><strong>#current_chain</strong> : Chain?</a>
+        <a href="#current_chain%3AChain%7CNil-instance-method" class="signature"><strong>#current_chain</strong> : Chain | Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#current_residue%3AResidue%3F-instance-method" class="signature"><strong>#current_residue</strong> : Residue?</a>
+        <a href="#current_residue%3AResidue%7CNil-instance-method" class="signature"><strong>#current_residue</strong> : Residue | Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#expt%28expt%3AStructure%3A%3AExperiment%3F%29-instance-method" class="signature"><strong>#expt</strong>(expt : Structure::Experiment?)</a>
+        <a href="#expt%28expt%3AStructure%3A%3AExperiment%7CNil%29-instance-method" class="signature"><strong>#expt</strong>(expt : Structure::Experiment | Nil)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#residue%28name%3AString%2Cnumber%3AInt32%2Cinscode%3AChar%3F%3Dnil%29%3AResidue-instance-method" class="signature"><strong>#residue</strong>(name : String, number : Int32, inscode : Char? = <span class="n">nil</span>) : Residue</a>
+        <a href="#residue%28name%3AString%2Cnumber%3AInt32%2Cinscode%3AChar%7CNil%3Dnil%29%3AResidue-instance-method" class="signature"><strong>#residue</strong>(name : String, number : Int32, inscode : Char | Nil = <span class="n">nil</span>) : Residue</a>
         
       </li>
     
@@ -1061,7 +1061,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#residue%28name%3AString%2Cnumber%3AInt32%2Cinscode%3AChar%3F%3Dnil%2C%26%3Aself-%3E%29%3ANil-instance-method" class="signature"><strong>#residue</strong>(name : String, number : Int32, inscode : Char? = <span class="n">nil</span>, & : <span class="k">self</span> -> ) : Nil</a>
+        <a href="#residue%28name%3AString%2Cnumber%3AInt32%2Cinscode%3AChar%7CNil%3Dnil%2C%26%3Aself-%3E%29%3ANil-instance-method" class="signature"><strong>#residue</strong>(name : String, number : Int32, inscode : Char | Nil = <span class="n">nil</span>, & : <span class="k">self</span> -> ) : Nil</a>
         
       </li>
     
@@ -1071,7 +1071,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#secondary_structure%28i%3ATuple%28Char%2CInt32%2CChar%3F%29%2Cj%3ATuple%28Char%2CInt32%2CChar%3F%29%2Ctype%3AProtein%3A%3ASecondaryStructure%29%3ANil-instance-method" class="signature"><strong>#secondary_structure</strong>(i : Tuple(Char, Int32, Char?), j : Tuple(Char, Int32, Char?), type : Protein::SecondaryStructure) : Nil</a>
+        <a href="#secondary_structure%28i%3ATuple%28Char%2CInt32%2CChar%7CNil%29%2Cj%3ATuple%28Char%2CInt32%2CChar%7CNil%29%2Ctype%3AProtein%3A%3ASecondaryStructure%29%3ANil-instance-method" class="signature"><strong>#secondary_structure</strong>(i : Tuple(Char, Int32, Char | Nil), j : Tuple(Char, Int32, Char | Nil), type : Protein::SecondaryStructure) : Nil</a>
         
       </li>
     
@@ -1263,12 +1263,12 @@ names will be reset.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="atom?(index:Int):Atom?-instance-method">
+    <div class="entry-detail" id="atom?(index:Int):Atom|Nil-instance-method">
       <div class="signature">
         
-        def <strong>atom?</strong>(index : Int) : <a href="../../Chem/Atom.html">Atom</a>?
+        def <strong>atom?</strong>(index : Int) : <a href="../../Chem/Atom.html">Atom</a> | Nil
 
-        <a class="method-permalink" href="#atom%3F%28index%3AInt%29%3AAtom%3F-instance-method">#</a>
+        <a class="method-permalink" href="#atom%3F%28index%3AInt%29%3AAtom%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -1361,12 +1361,12 @@ names will be reset.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="cell(cell:Spatial::Parallelepiped?)-instance-method">
+    <div class="entry-detail" id="cell(cell:Spatial::Parallelepiped|Nil)-instance-method">
       <div class="signature">
         
-        def <strong>cell</strong>(cell : <a href="../../Chem/Spatial/Parallelepiped.html">Spatial::Parallelepiped</a>?)
+        def <strong>cell</strong>(cell : <a href="../../Chem/Spatial/Parallelepiped.html">Spatial::Parallelepiped</a> | Nil)
 
-        <a class="method-permalink" href="#cell%28cell%3ASpatial%3A%3AParallelepiped%3F%29-instance-method">#</a>
+        <a class="method-permalink" href="#cell%28cell%3ASpatial%3A%3AParallelepiped%7CNil%29-instance-method">#</a>
       </div>
       
       <br/>
@@ -1375,12 +1375,12 @@ names will be reset.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="cell:Spatial::Parallelepiped?-instance-method">
+    <div class="entry-detail" id="cell:Spatial::Parallelepiped|Nil-instance-method">
       <div class="signature">
         
-        def <strong>cell</strong> : <a href="../../Chem/Spatial/Parallelepiped.html">Spatial::Parallelepiped</a>?
+        def <strong>cell</strong> : <a href="../../Chem/Spatial/Parallelepiped.html">Spatial::Parallelepiped</a> | Nil
 
-        <a class="method-permalink" href="#cell%3ASpatial%3A%3AParallelepiped%3F-instance-method">#</a>
+        <a class="method-permalink" href="#cell%3ASpatial%3A%3AParallelepiped%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -1459,12 +1459,12 @@ names will be reset.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="current_chain:Chain?-instance-method">
+    <div class="entry-detail" id="current_chain:Chain|Nil-instance-method">
       <div class="signature">
         
-        def <strong>current_chain</strong> : <a href="../../Chem/Chain.html">Chain</a>?
+        def <strong>current_chain</strong> : <a href="../../Chem/Chain.html">Chain</a> | Nil
 
-        <a class="method-permalink" href="#current_chain%3AChain%3F-instance-method">#</a>
+        <a class="method-permalink" href="#current_chain%3AChain%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -1473,12 +1473,12 @@ names will be reset.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="current_residue:Residue?-instance-method">
+    <div class="entry-detail" id="current_residue:Residue|Nil-instance-method">
       <div class="signature">
         
-        def <strong>current_residue</strong> : <a href="../../Chem/Residue.html">Residue</a>?
+        def <strong>current_residue</strong> : <a href="../../Chem/Residue.html">Residue</a> | Nil
 
-        <a class="method-permalink" href="#current_residue%3AResidue%3F-instance-method">#</a>
+        <a class="method-permalink" href="#current_residue%3AResidue%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -1487,12 +1487,12 @@ names will be reset.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="expt(expt:Structure::Experiment?)-instance-method">
+    <div class="entry-detail" id="expt(expt:Structure::Experiment|Nil)-instance-method">
       <div class="signature">
         
-        def <strong>expt</strong>(expt : <a href="../../Chem/Structure/Experiment.html">Structure::Experiment</a>?)
+        def <strong>expt</strong>(expt : <a href="../../Chem/Structure/Experiment.html">Structure::Experiment</a> | Nil)
 
-        <a class="method-permalink" href="#expt%28expt%3AStructure%3A%3AExperiment%3F%29-instance-method">#</a>
+        <a class="method-permalink" href="#expt%28expt%3AStructure%3A%3AExperiment%7CNil%29-instance-method">#</a>
       </div>
       
       <br/>
@@ -1501,12 +1501,12 @@ names will be reset.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="residue(name:String,number:Int32,inscode:Char?=nil):Residue-instance-method">
+    <div class="entry-detail" id="residue(name:String,number:Int32,inscode:Char|Nil=nil):Residue-instance-method">
       <div class="signature">
         
-        def <strong>residue</strong>(name : String, number : Int32, inscode : <a href="../../Char.html">Char</a>? = <span class="n">nil</span>) : <a href="../../Chem/Residue.html">Residue</a>
+        def <strong>residue</strong>(name : String, number : Int32, inscode : <a href="../../Char.html">Char</a> | Nil = <span class="n">nil</span>) : <a href="../../Chem/Residue.html">Residue</a>
 
-        <a class="method-permalink" href="#residue%28name%3AString%2Cnumber%3AInt32%2Cinscode%3AChar%3F%3Dnil%29%3AResidue-instance-method">#</a>
+        <a class="method-permalink" href="#residue%28name%3AString%2Cnumber%3AInt32%2Cinscode%3AChar%7CNil%3Dnil%29%3AResidue-instance-method">#</a>
       </div>
       
       <br/>
@@ -1543,12 +1543,12 @@ names will be reset.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="residue(name:String,number:Int32,inscode:Char?=nil,&amp;:self-&gt;):Nil-instance-method">
+    <div class="entry-detail" id="residue(name:String,number:Int32,inscode:Char|Nil=nil,&amp;:self-&gt;):Nil-instance-method">
       <div class="signature">
         
-        def <strong>residue</strong>(name : String, number : Int32, inscode : <a href="../../Char.html">Char</a>? = <span class="n">nil</span>, & : <span class="k">self</span> -> ) : Nil
+        def <strong>residue</strong>(name : String, number : Int32, inscode : <a href="../../Char.html">Char</a> | Nil = <span class="n">nil</span>, & : <span class="k">self</span> -> ) : Nil
 
-        <a class="method-permalink" href="#residue%28name%3AString%2Cnumber%3AInt32%2Cinscode%3AChar%3F%3Dnil%2C%26%3Aself-%3E%29%3ANil-instance-method">#</a>
+        <a class="method-permalink" href="#residue%28name%3AString%2Cnumber%3AInt32%2Cinscode%3AChar%7CNil%3Dnil%2C%26%3Aself-%3E%29%3ANil-instance-method">#</a>
       </div>
       
       <br/>
@@ -1571,12 +1571,12 @@ names will be reset.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="secondary_structure(i:Tuple(Char,Int32,Char?),j:Tuple(Char,Int32,Char?),type:Protein::SecondaryStructure):Nil-instance-method">
+    <div class="entry-detail" id="secondary_structure(i:Tuple(Char,Int32,Char|Nil),j:Tuple(Char,Int32,Char|Nil),type:Protein::SecondaryStructure):Nil-instance-method">
       <div class="signature">
         
-        def <strong>secondary_structure</strong>(i : Tuple(<a href="../../Char.html">Char</a>, Int32, <a href="../../Char.html">Char</a>?), j : Tuple(<a href="../../Char.html">Char</a>, Int32, <a href="../../Char.html">Char</a>?), type : <a href="../../Chem/Protein/SecondaryStructure.html">Protein::SecondaryStructure</a>) : Nil
+        def <strong>secondary_structure</strong>(i : Tuple(<a href="../../Char.html">Char</a>, Int32, <a href="../../Char.html">Char</a> | Nil), j : Tuple(<a href="../../Char.html">Char</a>, Int32, <a href="../../Char.html">Char</a> | Nil), type : <a href="../../Chem/Protein/SecondaryStructure.html">Protein::SecondaryStructure</a>) : Nil
 
-        <a class="method-permalink" href="#secondary_structure%28i%3ATuple%28Char%2CInt32%2CChar%3F%29%2Cj%3ATuple%28Char%2CInt32%2CChar%3F%29%2Ctype%3AProtein%3A%3ASecondaryStructure%29%3ANil-instance-method">#</a>
+        <a class="method-permalink" href="#secondary_structure%28i%3ATuple%28Char%2CInt32%2CChar%7CNil%29%2Cj%3ATuple%28Char%2CInt32%2CChar%7CNil%29%2Ctype%3AProtein%3A%3ASecondaryStructure%29%3ANil-instance-method">#</a>
       </div>
       
       <br/>

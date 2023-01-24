@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.5.0">
+<meta name="generator" content="Crystal Docs 1.6.2">
 <meta name="crystal_docs.project_version" content="0.5.6">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -913,7 +913,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#new%28names%3AArray%28String%29%2Ctype%3AResidueType%2Cdescription%3AString%3F%2Catoms%3AArray%28Atom%29%2Cbonds%3AArray%28Bond%29%2Crootroot_name%3AString%29-class-method" class="signature"><strong>.new</strong>(names : Array(String), type : ResidueType, description : String?, atoms : Array(Atom), bonds : Array(Bond), root root_name : String)</a>
+        <a href="#new%28names%3AArray%28String%29%2Ctype%3AResidueType%2Cdescription%3AString%7CNil%2Catoms%3AArray%28Atom%29%2Cbonds%3AArray%28Bond%29%2Crootroot_name%3AString%29-class-method" class="signature"><strong>.new</strong>(names : Array(String), type : ResidueType, description : String | Nil, atoms : Array(Atom), bonds : Array(Bond), root root_name : String)</a>
         
       </li>
     
@@ -939,7 +939,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#%5B%5D%3F%28name%3AString%29%3AAtom%3F-instance-method" class="signature"><strong>#[]?</strong>(name : String) : Atom?</a>
+        <a href="#%5B%5D%3F%28name%3AString%29%3AAtom%7CNil-instance-method" class="signature"><strong>#[]?</strong>(name : String) : Atom | Nil</a>
         
       </li>
     
@@ -954,7 +954,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#description%3AString%3F-instance-method" class="signature"><strong>#description</strong> : String?</a>
+        <a href="#description%3AString%7CNil-instance-method" class="signature"><strong>#description</strong> : String | Nil</a>
         
       </li>
     
@@ -1041,12 +1041,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="new(names:Array(String),type:ResidueType,description:String?,atoms:Array(Atom),bonds:Array(Bond),rootroot_name:String)-class-method">
+    <div class="entry-detail" id="new(names:Array(String),type:ResidueType,description:String|Nil,atoms:Array(Atom),bonds:Array(Bond),rootroot_name:String)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(names : <a href="../../Array.html">Array</a>(String), type : <a href="../../Chem/ResidueType.html">ResidueType</a>, description : String?, atoms : <a href="../../Array.html">Array</a>(<a href="../../Chem/Templates/Atom.html">Atom</a>), bonds : <a href="../../Array.html">Array</a>(<a href="../../Chem/Templates/Bond.html">Bond</a>), root root_name : String)
+        def self.<strong>new</strong>(names : <a href="../../Array.html">Array</a>(String), type : <a href="../../Chem/ResidueType.html">ResidueType</a>, description : String | Nil, atoms : <a href="../../Array.html">Array</a>(<a href="../../Chem/Templates/Atom.html">Atom</a>), bonds : <a href="../../Array.html">Array</a>(<a href="../../Chem/Templates/Bond.html">Bond</a>), root root_name : String)
 
-        <a class="method-permalink" href="#new%28names%3AArray%28String%29%2Ctype%3AResidueType%2Cdescription%3AString%3F%2Catoms%3AArray%28Atom%29%2Cbonds%3AArray%28Bond%29%2Crootroot_name%3AString%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28names%3AArray%28String%29%2Ctype%3AResidueType%2Cdescription%3AString%7CNil%2Catoms%3AArray%28Atom%29%2Cbonds%3AArray%28Bond%29%2Crootroot_name%3AString%29-class-method">#</a>
       </div>
       
       <br/>
@@ -1083,12 +1083,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="[]?(name:String):Atom?-instance-method">
+    <div class="entry-detail" id="[]?(name:String):Atom|Nil-instance-method">
       <div class="signature">
         
-        def <strong>[]?</strong>(name : String) : <a href="../../Chem/Templates/Atom.html">Atom</a>?
+        def <strong>[]?</strong>(name : String) : <a href="../../Chem/Templates/Atom.html">Atom</a> | Nil
 
-        <a class="method-permalink" href="#%5B%5D%3F%28name%3AString%29%3AAtom%3F-instance-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%3F%28name%3AString%29%3AAtom%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -1125,12 +1125,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="description:String?-instance-method">
+    <div class="entry-detail" id="description:String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>description</strong> : String?
+        def <strong>description</strong> : String | Nil
 
-        <a class="method-permalink" href="#description%3AString%3F-instance-method">#</a>
+        <a class="method-permalink" href="#description%3AString%7CNil-instance-method">#</a>
       </div>
       
       <br/>

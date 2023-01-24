@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.5.0">
+<meta name="generator" content="Crystal Docs 1.6.2">
 <meta name="crystal_docs.project_version" content="0.5.6">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -954,7 +954,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#guess_element%3F%28atom_name%3AString%29%3AElement%3F-class-method" class="signature"><strong>.guess_element?</strong>(atom_name : String) : Element?</a>
+        <a href="#guess_element%3F%28atom_name%3AString%29%3AElement%7CNil-class-method" class="signature"><strong>.guess_element?</strong>(atom_name : String) : Element | Nil</a>
         
           <div class="summary"><p>Returns the element of an atom based on its name if possible, else <code>nil</code>.</p></div>
         
@@ -980,7 +980,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#%5B%5D%3F%28chain_id%3AChar%29%3AChain%3F-instance-method" class="signature"><strong>#[]?</strong>(chain_id : Char) : Chain?</a>
+        <a href="#%5B%5D%3F%28chain_id%3AChar%29%3AChain%7CNil-instance-method" class="signature"><strong>#[]?</strong>(chain_id : Char) : Chain | Nil</a>
         
       </li>
     
@@ -1023,7 +1023,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#delete%28ch%3AChain%29%3AChain%3F-instance-method" class="signature"><strong>#delete</strong>(ch : Chain) : Chain?</a>
+        <a href="#delete%28ch%3AChain%29%3AChain%7CNil-instance-method" class="signature"><strong>#delete</strong>(ch : Chain) : Chain | Nil</a>
         
       </li>
     
@@ -1038,7 +1038,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#dig%3F%28id%3AChar%29%3AChain%3F-instance-method" class="signature"><strong>#dig?</strong>(id : Char) : Chain?</a>
+        <a href="#dig%3F%28id%3AChar%29%3AChain%7CNil-instance-method" class="signature"><strong>#dig?</strong>(id : Char) : Chain | Nil</a>
         
       </li>
     
@@ -1221,8 +1221,8 @@
     each_secondary_structure</a>, 
     
   
-    <a href="../Chem/ResidueCollection.html#link_bond%3ATemplates%3A%3ABond%3F-instance-method" class="tooltip">
-      <span>link_bond : Templates::Bond?</span>
+    <a href="../Chem/ResidueCollection.html#link_bond%3ATemplates%3A%3ABond%7CNil-instance-method" class="tooltip">
+      <span>link_bond : Templates::Bond | Nil</span>
     link_bond</a>, 
     
   
@@ -1433,7 +1433,7 @@
         <div class="doc">
           
           <p>Returns the element of an atom based on its name. Raises <code><a href="../Chem/Error.html">Error</a></code> if
-the element could not be determined. Refer to <code><a href="../Chem/Topology.html#guess_element%3F%28atom_name%3AString%29%3AElement%3F-class-method">.guess_element?</a></code> for
+the element could not be determined. Refer to <code><a href="../Chem/Topology.html#guess_element%3F%28atom_name%3AString%29%3AElement%7CNil-class-method">.guess_element?</a></code> for
 details.</p>
         </div>
       
@@ -1443,12 +1443,12 @@ details.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="guess_element?(atom_name:String):Element?-class-method">
+    <div class="entry-detail" id="guess_element?(atom_name:String):Element|Nil-class-method">
       <div class="signature">
         
-        def self.<strong>guess_element?</strong>(atom_name : String) : <a href="../Chem/Element.html">Element</a>?
+        def self.<strong>guess_element?</strong>(atom_name : String) : <a href="../Chem/Element.html">Element</a> | Nil
 
-        <a class="method-permalink" href="#guess_element%3F%28atom_name%3AString%29%3AElement%3F-class-method">#</a>
+        <a class="method-permalink" href="#guess_element%3F%28atom_name%3AString%29%3AElement%7CNil-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1492,12 +1492,12 @@ stripped.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="[]?(chain_id:Char):Chain?-instance-method">
+    <div class="entry-detail" id="[]?(chain_id:Char):Chain|Nil-instance-method">
       <div class="signature">
         
-        def <strong>[]?</strong>(chain_id : <a href="../Char.html">Char</a>) : <a href="../Chem/Chain.html">Chain</a>?
+        def <strong>[]?</strong>(chain_id : <a href="../Char.html">Char</a>) : <a href="../Chem/Chain.html">Chain</a> | Nil
 
-        <a class="method-permalink" href="#%5B%5D%3F%28chain_id%3AChar%29%3AChain%3F-instance-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%3F%28chain_id%3AChar%29%3AChain%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -1611,12 +1611,12 @@ types.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="delete(ch:Chain):Chain?-instance-method">
+    <div class="entry-detail" id="delete(ch:Chain):Chain|Nil-instance-method">
       <div class="signature">
         
-        def <strong>delete</strong>(ch : <a href="../Chem/Chain.html">Chain</a>) : <a href="../Chem/Chain.html">Chain</a>?
+        def <strong>delete</strong>(ch : <a href="../Chem/Chain.html">Chain</a>) : <a href="../Chem/Chain.html">Chain</a> | Nil
 
-        <a class="method-permalink" href="#delete%28ch%3AChain%29%3AChain%3F-instance-method">#</a>
+        <a class="method-permalink" href="#delete%28ch%3AChain%29%3AChain%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -1653,12 +1653,12 @@ types.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="dig?(id:Char):Chain?-instance-method">
+    <div class="entry-detail" id="dig?(id:Char):Chain|Nil-instance-method">
       <div class="signature">
         
-        def <strong>dig?</strong>(id : <a href="../Char.html">Char</a>) : <a href="../Chem/Chain.html">Chain</a>?
+        def <strong>dig?</strong>(id : <a href="../Char.html">Char</a>) : <a href="../Chem/Chain.html">Chain</a> | Nil
 
-        <a class="method-permalink" href="#dig%3F%28id%3AChar%29%3AChain%3F-instance-method">#</a>
+        <a class="method-permalink" href="#dig%3F%28id%3AChar%29%3AChain%7CNil-instance-method">#</a>
       </div>
       
       <br/>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.5.0">
+<meta name="generator" content="Crystal Docs 1.6.2">
 <meta name="crystal_docs.project_version" content="0.5.6">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -908,12 +908,12 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28name%3AString%2Celement%3AElement%2Cbonded_elements%3AArray%28Element%29%2Cformal_charge%3AInt32%3D0%2Cvalence%3AInt32%3F%3Dnil%29-class-method" class="signature"><strong>.new</strong>(name : String, element : Element, bonded_elements : Array(Element), formal_charge : Int32 = <span class="n">0</span>, valence : Int32? = <span class="n">nil</span>)</a>
+        <a href="#new%28name%3AString%2Celement%3AElement%2Cbonded_elements%3AArray%28Element%29%2Cformal_charge%3AInt32%3D0%2Cvalence%3AInt32%7CNil%3Dnil%29-class-method" class="signature"><strong>.new</strong>(name : String, element : Element, bonded_elements : Array(Element), formal_charge : Int32 = <span class="n">0</span>, valence : Int32 | Nil = <span class="n">nil</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new%28name%3AString%2Ctop_spec%3AString%2Cformal_charge%3AInt32%3D0%2Cvalence%3AInt32%3F%3Dnil%29%3Aself-class-method" class="signature"><strong>.new</strong>(name : String, top_spec : String, formal_charge : Int32 = <span class="n">0</span>, valence : Int32? = <span class="n">nil</span>) : <span class="k">self</span></a>
+        <a href="#new%28name%3AString%2Ctop_spec%3AString%2Cformal_charge%3AInt32%3D0%2Cvalence%3AInt32%7CNil%3Dnil%29%3Aself-class-method" class="signature"><strong>.new</strong>(name : String, top_spec : String, formal_charge : Int32 = <span class="n">0</span>, valence : Int32 | Nil = <span class="n">nil</span>) : <span class="k">self</span></a>
         
       </li>
     
@@ -954,7 +954,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#suffix%3AString%3F-instance-method" class="signature"><strong>#suffix</strong> : String?</a>
+        <a href="#suffix%3AString%7CNil-instance-method" class="signature"><strong>#suffix</strong> : String | Nil</a>
         
       </li>
     
@@ -971,7 +971,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#valence%3AInt32%3F-instance-method" class="signature"><strong>#valence</strong> : Int32?</a>
+        <a href="#valence%3AInt32%7CNil-instance-method" class="signature"><strong>#valence</strong> : Int32 | Nil</a>
         
       </li>
     
@@ -1015,12 +1015,12 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(name:String,element:Element,bonded_elements:Array(Element),formal_charge:Int32=0,valence:Int32?=nil)-class-method">
+    <div class="entry-detail" id="new(name:String,element:Element,bonded_elements:Array(Element),formal_charge:Int32=0,valence:Int32|Nil=nil)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(name : String, element : <a href="../../Chem/Element.html">Element</a>, bonded_elements : <a href="../../Array.html">Array</a>(<a href="../../Chem/Element.html">Element</a>), formal_charge : Int32 = <span class="n">0</span>, valence : Int32? = <span class="n">nil</span>)
+        def self.<strong>new</strong>(name : String, element : <a href="../../Chem/Element.html">Element</a>, bonded_elements : <a href="../../Array.html">Array</a>(<a href="../../Chem/Element.html">Element</a>), formal_charge : Int32 = <span class="n">0</span>, valence : Int32 | Nil = <span class="n">nil</span>)
 
-        <a class="method-permalink" href="#new%28name%3AString%2Celement%3AElement%2Cbonded_elements%3AArray%28Element%29%2Cformal_charge%3AInt32%3D0%2Cvalence%3AInt32%3F%3Dnil%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28name%3AString%2Celement%3AElement%2Cbonded_elements%3AArray%28Element%29%2Cformal_charge%3AInt32%3D0%2Cvalence%3AInt32%7CNil%3Dnil%29-class-method">#</a>
       </div>
       
       <br/>
@@ -1029,12 +1029,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="new(name:String,top_spec:String,formal_charge:Int32=0,valence:Int32?=nil):self-class-method">
+    <div class="entry-detail" id="new(name:String,top_spec:String,formal_charge:Int32=0,valence:Int32|Nil=nil):self-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(name : String, top_spec : String, formal_charge : Int32 = <span class="n">0</span>, valence : Int32? = <span class="n">nil</span>) : <span class="k">self</span>
+        def self.<strong>new</strong>(name : String, top_spec : String, formal_charge : Int32 = <span class="n">0</span>, valence : Int32 | Nil = <span class="n">nil</span>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#new%28name%3AString%2Ctop_spec%3AString%2Cformal_charge%3AInt32%3D0%2Cvalence%3AInt32%3F%3Dnil%29%3Aself-class-method">#</a>
+        <a class="method-permalink" href="#new%28name%3AString%2Ctop_spec%3AString%2Cformal_charge%3AInt32%3D0%2Cvalence%3AInt32%7CNil%3Dnil%29%3Aself-class-method">#</a>
       </div>
       
       <br/>
@@ -1113,12 +1113,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="suffix:String?-instance-method">
+    <div class="entry-detail" id="suffix:String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>suffix</strong> : String?
+        def <strong>suffix</strong> : String | Nil
 
-        <a class="method-permalink" href="#suffix%3AString%3F-instance-method">#</a>
+        <a class="method-permalink" href="#suffix%3AString%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -1171,12 +1171,12 @@ which includes its class name and its object address.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="valence:Int32?-instance-method">
+    <div class="entry-detail" id="valence:Int32|Nil-instance-method">
       <div class="signature">
         
-        def <strong>valence</strong> : Int32?
+        def <strong>valence</strong> : Int32 | Nil
 
-        <a class="method-permalink" href="#valence%3AInt32%3F-instance-method">#</a>
+        <a class="method-permalink" href="#valence%3AInt32%7CNil-instance-method">#</a>
       </div>
       
       <br/>

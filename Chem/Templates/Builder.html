@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.5.0">
+<meta name="generator" content="Crystal Docs 1.6.2">
 <meta name="crystal_docs.project_version" content="0.5.6">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -919,7 +919,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28spec_aliases%3AHash%28String%2CString%29%3F%3Dnil%29-class-method" class="signature"><strong>.new</strong>(spec_aliases : Hash(String, String)? = <span class="n">nil</span>)</a>
+        <a href="#new%28spec_aliases%3AHash%28String%2CString%29%7CNil%3Dnil%29-class-method" class="signature"><strong>.new</strong>(spec_aliases : Hash(String, String) | Nil = <span class="n">nil</span>)</a>
         
       </li>
     
@@ -938,7 +938,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#guess_root%28atoms%3AArray%28Atom%29%2Cbonds%3AArray%28Bond%29%2Clink_bond%3ABond%3F%29%3AString-class-method" class="signature"><strong>.guess_root</strong>(atoms : Array(Atom), bonds : Array(Bond), link_bond : Bond?) : String</a>
+        <a href="#guess_root%28atoms%3AArray%28Atom%29%2Cbonds%3AArray%28Bond%29%2Clink_bond%3ABond%7CNil%29%3AString-class-method" class="signature"><strong>.guess_root</strong>(atoms : Array(Atom), bonds : Array(Bond), link_bond : Bond | Nil) : String</a>
         
           <div class="summary"><p>Returns the atom with the highest bonding complexity.</p></div>
         
@@ -1058,12 +1058,12 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(spec_aliases:Hash(String,String)?=nil)-class-method">
+    <div class="entry-detail" id="new(spec_aliases:Hash(String,String)|Nil=nil)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(spec_aliases : Hash(String, String)? = <span class="n">nil</span>)
+        def self.<strong>new</strong>(spec_aliases : Hash(String, String) | Nil = <span class="n">nil</span>)
 
-        <a class="method-permalink" href="#new%28spec_aliases%3AHash%28String%2CString%29%3F%3Dnil%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28spec_aliases%3AHash%28String%2CString%29%7CNil%3Dnil%29-class-method">#</a>
       </div>
       
       <br/>
@@ -1084,12 +1084,12 @@
     Class Method Detail
   </h2>
   
-    <div class="entry-detail" id="guess_root(atoms:Array(Atom),bonds:Array(Bond),link_bond:Bond?):String-class-method">
+    <div class="entry-detail" id="guess_root(atoms:Array(Atom),bonds:Array(Bond),link_bond:Bond|Nil):String-class-method">
       <div class="signature">
         
-        def self.<strong>guess_root</strong>(atoms : <a href="../../Array.html">Array</a>(<a href="../../Chem/Templates/Atom.html">Atom</a>), bonds : <a href="../../Array.html">Array</a>(<a href="../../Chem/Templates/Bond.html">Bond</a>), link_bond : <a href="../../Chem/Templates/Bond.html">Bond</a>?) : String
+        def self.<strong>guess_root</strong>(atoms : <a href="../../Array.html">Array</a>(<a href="../../Chem/Templates/Atom.html">Atom</a>), bonds : <a href="../../Array.html">Array</a>(<a href="../../Chem/Templates/Bond.html">Bond</a>), link_bond : <a href="../../Chem/Templates/Bond.html">Bond</a> | Nil) : String
 
-        <a class="method-permalink" href="#guess_root%28atoms%3AArray%28Atom%29%2Cbonds%3AArray%28Bond%29%2Clink_bond%3ABond%3F%29%3AString-class-method">#</a>
+        <a class="method-permalink" href="#guess_root%28atoms%3AArray%28Atom%29%2Cbonds%3AArray%28Bond%29%2Clink_bond%3ABond%7CNil%29%3AString-class-method">#</a>
       </div>
       
         <div class="doc">

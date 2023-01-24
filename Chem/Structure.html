@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.5.0">
+<meta name="generator" content="Crystal Docs 1.6.2">
 <meta name="crystal_docs.project_version" content="0.5.6">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -978,7 +978,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#from_pdb%28input%3AIO%7CPath%7CString%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%29%3Aself-class-method" class="signature"><strong>.from_pdb</strong>(input : IO | Path | String, alt_loc : Char? = <span class="n">nil</span>, chains : Enumerable(Char) | String | Nil = <span class="n">nil</span>, guess_bonds : Bool = <span class="n">false</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span></a>
+        <a href="#from_pdb%28input%3AIO%7CPath%7CString%2Calt_loc%3AChar%7CNil%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%29%3Aself-class-method" class="signature"><strong>.from_pdb</strong>(input : IO | Path | String, alt_loc : Char | Nil = <span class="n">nil</span>, chains : Enumerable(Char) | String | Nil = <span class="n">nil</span>, guess_bonds : Bool = <span class="n">false</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the structure encoded in <em>input</em> using the <code><a href="../Chem/PDB.html">Chem::PDB</a></code> file format.</p></div>
         
@@ -1102,12 +1102,12 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#cell%3D%28cell%3ASpatial%3A%3AParallelepiped%3F%29-instance-method" class="signature"><strong>#cell=</strong>(cell : Spatial::Parallelepiped?)</a>
+        <a href="#cell%3D%28cell%3ASpatial%3A%3AParallelepiped%7CNil%29-instance-method" class="signature"><strong>#cell=</strong>(cell : Spatial::Parallelepiped | Nil)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#cell%3F%3ASpatial%3A%3AParallelepiped%7CNil%3F-instance-method" class="signature"><strong>#cell?</strong> : Spatial::Parallelepiped | Nil?</a>
+        <a href="#cell%3F%3ASpatial%3A%3AParallelepiped%7CNil%7CNil-instance-method" class="signature"><strong>#cell?</strong> : Spatial::Parallelepiped | Nil | Nil</a>
         
       </li>
     
@@ -1215,12 +1215,19 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#experiment%3AStructure%3A%3AExperiment%3F-instance-method" class="signature"><strong>#experiment</strong> : Structure::Experiment?</a>
+        <a href="#experiment%3AStructure%3A%3AExperiment%7CNil-instance-method" class="signature"><strong>#experiment</strong> : Structure::Experiment | Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#experiment%3D%28experiment%3AStructure%3A%3AExperiment%3F%29-instance-method" class="signature"><strong>#experiment=</strong>(experiment : Structure::Experiment?)</a>
+        <a href="#experiment%3D%28experiment%3AStructure%3A%3AExperiment%7CNil%29-instance-method" class="signature"><strong>#experiment=</strong>(experiment : Structure::Experiment | Nil)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#extract%28copy_properties%3ABool%3Dtrue%2C%26%3AAtom-%3EBool%29%3Aself-instance-method" class="signature"><strong>#extract</strong>(copy_properties : Bool = <span class="n">true</span>, & : Atom -> Bool) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a new structure containing the selected atoms by the given block.</p></div>
         
       </li>
     
@@ -1259,7 +1266,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#source_file%3APath%3F-instance-method" class="signature"><strong>#source_file</strong> : Path?</a>
+        <a href="#source_file%3APath%7CNil-instance-method" class="signature"><strong>#source_file</strong> : Path | Nil</a>
         
       </li>
     
@@ -1439,8 +1446,8 @@
     each_secondary_structure</a>, 
     
   
-    <a href="../Chem/ResidueCollection.html#link_bond%3ATemplates%3A%3ABond%3F-instance-method" class="tooltip">
-      <span>link_bond : Templates::Bond?</span>
+    <a href="../Chem/ResidueCollection.html#link_bond%3ATemplates%3A%3ABond%7CNil-instance-method" class="tooltip">
+      <span>link_bond : Templates::Bond | Nil</span>
     link_bond</a>, 
     
   
@@ -1781,21 +1788,21 @@ the first one only. Use <code><a href="../Array.html#from_mol2%28input%3AIO%7CPa
       </div>
     </div>
   
-    <div class="entry-detail" id="from_pdb(input:IO|Path|String,alt_loc:Char?=nil,chains:Enumerable(Char)|String|Nil=nil,guess_bonds:Bool=false,het:Bool=true):self-class-method">
+    <div class="entry-detail" id="from_pdb(input:IO|Path|String,alt_loc:Char|Nil=nil,chains:Enumerable(Char)|String|Nil=nil,guess_bonds:Bool=false,het:Bool=true):self-class-method">
       <div class="signature">
         
-        def self.<strong>from_pdb</strong>(input : IO | Path | String, alt_loc : <a href="../Char.html">Char</a>? = <span class="n">nil</span>, chains : <a href="../Enumerable.html">Enumerable</a>(<a href="../Char.html">Char</a>) | String | Nil = <span class="n">nil</span>, guess_bonds : Bool = <span class="n">false</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span>
+        def self.<strong>from_pdb</strong>(input : IO | Path | String, alt_loc : <a href="../Char.html">Char</a> | Nil = <span class="n">nil</span>, chains : <a href="../Enumerable.html">Enumerable</a>(<a href="../Char.html">Char</a>) | String | Nil = <span class="n">nil</span>, guess_bonds : Bool = <span class="n">false</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#from_pdb%28input%3AIO%7CPath%7CString%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%29%3Aself-class-method">#</a>
+        <a class="method-permalink" href="#from_pdb%28input%3AIO%7CPath%7CString%2Calt_loc%3AChar%7CNil%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns the structure encoded in <em>input</em> using the
 <code><a href="../Chem/PDB.html">Chem::PDB</a></code> file format. Arguments are forwarded to
-<code><a href="../Chem/PDB/Reader.html#open%28io%3AIO%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::PDB::Reader.open</a></code>.</p>
+<code><a href="../Chem/PDB/Reader.html#open%28io%3AIO%2Calt_loc%3AChar%7CNil%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::PDB::Reader.open</a></code>.</p>
 <p>If <em>input</em> contains multiple entries, this method returns
-the first one only. Use <code><a href="../Array.html#from_pdb%28input%3AIO%7CPath%7CString%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%29%3Aself-class-method">Array#from_pdb</a></code> or
+the first one only. Use <code><a href="../Array.html#from_pdb%28input%3AIO%7CPath%7CString%2Calt_loc%3AChar%7CNil%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%29%3Aself-class-method">Array#from_pdb</a></code> or
 <code>Chem::PDB::Reader#each</code> to get multiple entries instead.</p>
         </div>
       
@@ -2141,12 +2148,12 @@ is <code>nil</code>.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="cell=(cell:Spatial::Parallelepiped?)-instance-method">
+    <div class="entry-detail" id="cell=(cell:Spatial::Parallelepiped|Nil)-instance-method">
       <div class="signature">
         
-        def <strong>cell=</strong>(cell : <a href="../Chem/Spatial/Parallelepiped.html">Spatial::Parallelepiped</a>?)
+        def <strong>cell=</strong>(cell : <a href="../Chem/Spatial/Parallelepiped.html">Spatial::Parallelepiped</a> | Nil)
 
-        <a class="method-permalink" href="#cell%3D%28cell%3ASpatial%3A%3AParallelepiped%3F%29-instance-method">#</a>
+        <a class="method-permalink" href="#cell%3D%28cell%3ASpatial%3A%3AParallelepiped%7CNil%29-instance-method">#</a>
       </div>
       
       <br/>
@@ -2155,12 +2162,12 @@ is <code>nil</code>.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="cell?:Spatial::Parallelepiped|Nil?-instance-method">
+    <div class="entry-detail" id="cell?:Spatial::Parallelepiped|Nil|Nil-instance-method">
       <div class="signature">
         
-        def <strong>cell?</strong> : <a href="../Chem/Spatial/Parallelepiped.html">Spatial::Parallelepiped</a> | Nil?
+        def <strong>cell?</strong> : <a href="../Chem/Spatial/Parallelepiped.html">Spatial::Parallelepiped</a> | Nil | Nil
 
-        <a class="method-permalink" href="#cell%3F%3ASpatial%3A%3AParallelepiped%7CNil%3F-instance-method">#</a>
+        <a class="method-permalink" href="#cell%3F%3ASpatial%3A%3AParallelepiped%7CNil%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -2462,12 +2469,12 @@ other.dig(<span class="s">&#39;A&#39;</span>, <span class="n">23</span>, <span c
       </div>
     </div>
   
-    <div class="entry-detail" id="experiment:Structure::Experiment?-instance-method">
+    <div class="entry-detail" id="experiment:Structure::Experiment|Nil-instance-method">
       <div class="signature">
         
-        def <strong>experiment</strong> : <a href="../Chem/Structure/Experiment.html">Structure::Experiment</a>?
+        def <strong>experiment</strong> : <a href="../Chem/Structure/Experiment.html">Structure::Experiment</a> | Nil
 
-        <a class="method-permalink" href="#experiment%3AStructure%3A%3AExperiment%3F-instance-method">#</a>
+        <a class="method-permalink" href="#experiment%3AStructure%3A%3AExperiment%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -2476,13 +2483,35 @@ other.dig(<span class="s">&#39;A&#39;</span>, <span class="n">23</span>, <span c
       </div>
     </div>
   
-    <div class="entry-detail" id="experiment=(experiment:Structure::Experiment?)-instance-method">
+    <div class="entry-detail" id="experiment=(experiment:Structure::Experiment|Nil)-instance-method">
       <div class="signature">
         
-        def <strong>experiment=</strong>(experiment : <a href="../Chem/Structure/Experiment.html">Structure::Experiment</a>?)
+        def <strong>experiment=</strong>(experiment : <a href="../Chem/Structure/Experiment.html">Structure::Experiment</a> | Nil)
 
-        <a class="method-permalink" href="#experiment%3D%28experiment%3AStructure%3A%3AExperiment%3F%29-instance-method">#</a>
+        <a class="method-permalink" href="#experiment%3D%28experiment%3AStructure%3A%3AExperiment%7CNil%29-instance-method">#</a>
       </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="extract(copy_properties:Bool=true,&amp;:Atom-&gt;Bool):self-instance-method">
+      <div class="signature">
+        
+        def <strong>extract</strong>(copy_properties : Bool = <span class="n">true</span>, & : <a href="../Chem/Atom.html">Atom</a> -> Bool) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#extract%28copy_properties%3ABool%3Dtrue%2C%26%3AAtom-%3EBool%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a new structure containing the selected atoms by the given
+block.</p>
+<p>Structure properties such as biases, unit cell, title, etc. are
+copied only if <em>copy_properties</em> is <code>true</code>.</p>
+        </div>
       
       <br/>
       <div>
@@ -2584,12 +2613,12 @@ other.dig(<span class="s">&#39;A&#39;</span>, <span class="n">23</span>, <span c
       </div>
     </div>
   
-    <div class="entry-detail" id="source_file:Path?-instance-method">
+    <div class="entry-detail" id="source_file:Path|Nil-instance-method">
       <div class="signature">
         
-        def <strong>source_file</strong> : Path?
+        def <strong>source_file</strong> : Path | Nil
 
-        <a class="method-permalink" href="#source_file%3APath%3F-instance-method">#</a>
+        <a class="method-permalink" href="#source_file%3APath%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -2678,7 +2707,7 @@ file format. Arguments are fowarded to <code><a href="../Chem/Gen/Writer.html#op
         <div class="doc">
           
           <p>Writes the structure to <em>output</em> using the <code><a href="../Chem/Mol2.html">Chem::Mol2</a></code>
-file format. Arguments are fowarded to <code><a href="../Chem/Mol2/Writer.html#open%28io%3AIO%2Ctotal_entries%3AInt32%3F%3Dnil%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::Mol2::Writer.open</a></code>.</p>
+file format. Arguments are fowarded to <code><a href="../Chem/Mol2/Writer.html#open%28io%3AIO%2Ctotal_entries%3AInt32%7CNil%3Dnil%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::Mol2::Writer.open</a></code>.</p>
         </div>
       
       <br/>
@@ -2699,7 +2728,7 @@ file format. Arguments are fowarded to <code><a href="../Chem/Mol2/Writer.html#o
           
           <p>Returns a string representation of the structure using
 the <code><a href="../Chem/Mol2.html">Chem::Mol2</a></code> file format. Arguments are fowarded to
-<code><a href="../Chem/Mol2/Writer.html#open%28io%3AIO%2Ctotal_entries%3AInt32%3F%3Dnil%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::Mol2::Writer.open</a></code>.</p>
+<code><a href="../Chem/Mol2/Writer.html#open%28io%3AIO%2Ctotal_entries%3AInt32%7CNil%3Dnil%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::Mol2::Writer.open</a></code>.</p>
         </div>
       
       <br/>
@@ -2720,7 +2749,7 @@ the <code><a href="../Chem/Mol2.html">Chem::Mol2</a></code> file format. Argumen
           
           <p>Returns a string representation of the structure using
 the <code><a href="../Chem/PDB.html">Chem::PDB</a></code> file format. Arguments are fowarded to
-<code><a href="../Chem/PDB/Writer.html#open%28io%3AIO%2Cbonds%3AChem%3A%3APDB%3A%3AWriter%3A%3ABondOptions%3DChem%3A%3APDB%3A%3AWriter%3A%3ABondOptions.flags%28Het%2CDisulfide%29%2Crenumber%3ABool%3Dtrue%2Cter_on_fragment%3ABool%3Dfalse%2Ctotal_entries%3AInt32%3F%3Dnil%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::PDB::Writer.open</a></code>.</p>
+<code><a href="../Chem/PDB/Writer.html#open%28io%3AIO%2Cbonds%3AChem%3A%3APDB%3A%3AWriter%3A%3ABondOptions%3DChem%3A%3APDB%3A%3AWriter%3A%3ABondOptions.flags%28Het%2CDisulfide%29%2Crenumber%3ABool%3Dtrue%2Cter_on_fragment%3ABool%3Dfalse%2Ctotal_entries%3AInt32%7CNil%3Dnil%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::PDB::Writer.open</a></code>.</p>
         </div>
       
       <br/>
@@ -2740,7 +2769,7 @@ the <code><a href="../Chem/PDB.html">Chem::PDB</a></code> file format. Arguments
         <div class="doc">
           
           <p>Writes the structure to <em>output</em> using the <code><a href="../Chem/PDB.html">Chem::PDB</a></code>
-file format. Arguments are fowarded to <code><a href="../Chem/PDB/Writer.html#open%28io%3AIO%2Cbonds%3AChem%3A%3APDB%3A%3AWriter%3A%3ABondOptions%3DChem%3A%3APDB%3A%3AWriter%3A%3ABondOptions.flags%28Het%2CDisulfide%29%2Crenumber%3ABool%3Dtrue%2Cter_on_fragment%3ABool%3Dfalse%2Ctotal_entries%3AInt32%3F%3Dnil%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::PDB::Writer.open</a></code>.</p>
+file format. Arguments are fowarded to <code><a href="../Chem/PDB/Writer.html#open%28io%3AIO%2Cbonds%3AChem%3A%3APDB%3A%3AWriter%3A%3ABondOptions%3DChem%3A%3APDB%3A%3AWriter%3A%3ABondOptions.flags%28Het%2CDisulfide%29%2Crenumber%3ABool%3Dtrue%2Cter_on_fragment%3ABool%3Dfalse%2Ctotal_entries%3AInt32%7CNil%3Dnil%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::PDB::Writer.open</a></code>.</p>
         </div>
       
       <br/>
@@ -2954,7 +2983,7 @@ the <code><a href="../Chem/VMD.html">Chem::VMD</a></code> file format. Arguments
         <div class="doc">
           
           <p>Writes the structure to <em>output</em> using the <code><a href="../Chem/XYZ.html">Chem::XYZ</a></code>
-file format. Arguments are fowarded to <code><a href="../Chem/XYZ/Writer.html#open%28io%3AIO%2Ctotal_entries%3AInt32%3F%3Dnil%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::XYZ::Writer.open</a></code>.</p>
+file format. Arguments are fowarded to <code><a href="../Chem/XYZ/Writer.html#open%28io%3AIO%2Ctotal_entries%3AInt32%7CNil%3Dnil%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::XYZ::Writer.open</a></code>.</p>
         </div>
       
       <br/>
@@ -2975,7 +3004,7 @@ file format. Arguments are fowarded to <code><a href="../Chem/XYZ/Writer.html#op
           
           <p>Returns a string representation of the structure using
 the <code><a href="../Chem/XYZ.html">Chem::XYZ</a></code> file format. Arguments are fowarded to
-<code><a href="../Chem/XYZ/Writer.html#open%28io%3AIO%2Ctotal_entries%3AInt32%3F%3Dnil%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::XYZ::Writer.open</a></code>.</p>
+<code><a href="../Chem/XYZ/Writer.html#open%28io%3AIO%2Ctotal_entries%3AInt32%7CNil%3Dnil%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::XYZ::Writer.open</a></code>.</p>
         </div>
       
       <br/>

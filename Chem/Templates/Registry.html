@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.5.0">
+<meta name="generator" content="Crystal Docs 1.6.2">
 <meta name="crystal_docs.project_version" content="0.5.6">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -1092,7 +1092,7 @@ via the bracket syntax, e.g., <code>'%{backbone}-CB-OH'</code>.</p>
       </li>
     
       <li class="entry-summary">
-        <a href="#%5B%5D%3F%28name%3AString%29%3AResidue%3F-instance-method" class="signature"><strong>#[]?</strong>(name : String) : Residue?</a>
+        <a href="#%5B%5D%3F%28name%3AString%29%3AResidue%7CNil-instance-method" class="signature"><strong>#[]?</strong>(name : String) : Residue | Nil</a>
         
           <div class="summary"><p>Returns the residue template registered under <em>name</em>, or <code>nil</code> if no template exist with the given name.</p></div>
         
@@ -1384,12 +1384,12 @@ if no template exist with the given name.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="[]?(name:String):Residue?-instance-method">
+    <div class="entry-detail" id="[]?(name:String):Residue|Nil-instance-method">
       <div class="signature">
         
-        def <strong>[]?</strong>(name : String) : <a href="../../Chem/Templates/Residue.html">Residue</a>?
+        def <strong>[]?</strong>(name : String) : <a href="../../Chem/Templates/Residue.html">Residue</a> | Nil
 
-        <a class="method-permalink" href="#%5B%5D%3F%28name%3AString%29%3AResidue%3F-instance-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%3F%28name%3AString%29%3AResidue%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1457,7 +1457,7 @@ match.</p>
           
           <p>Loads the residue template(s) encoded in the given YAML or structure
 file into the registry.</p>
-<p>If a valid structure file (checked via <code><a href="../../Chem/Format.html#from_filename%3F%28filename%3APath%7CString%29%3Aself%3F-class-method">Format.from_filename?</a></code>) is
+<p>If a valid structure file (checked via <code><a href="../../Chem/Format.html#from_filename%3F%28filename%3APath%7CString%29%3Aself%7CNil-class-method">Format.from_filename?</a></code>) is
 passed, it's read into a <code><a href="../../Chem/Structure.html">Structure</a></code> instance, and the first residue
 is transformed into a template by calling <code><a href="../../Chem/Templates/Residue.html#build%28%26%29%3Aself-class-method">Residue.build</a></code>.</p>
 <p>Otherwise, the content of the YAML file is parsed by calling

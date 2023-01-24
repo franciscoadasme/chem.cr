@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.5.0">
+<meta name="generator" content="Crystal Docs 1.6.2">
 <meta name="crystal_docs.project_version" content="0.5.6">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -913,14 +913,14 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#from_pdb%28input%3AIO%7CPath%7CString%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%29%3Aself-class-method" class="signature"><strong>.from_pdb</strong>(input : IO | Path | String, alt_loc : Char? = <span class="n">nil</span>, chains : Enumerable(Char) | String | Nil = <span class="n">nil</span>, guess_bonds : Bool = <span class="n">false</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span></a>
+        <a href="#from_pdb%28input%3AIO%7CPath%7CString%2Calt_loc%3AChar%7CNil%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%29%3Aself-class-method" class="signature"><strong>.from_pdb</strong>(input : IO | Path | String, alt_loc : Char | Nil = <span class="n">nil</span>, chains : Enumerable(Char) | String | Nil = <span class="n">nil</span>, guess_bonds : Bool = <span class="n">false</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the header encoded in <em>input</em> using the <code><a href="../../Chem/PDB.html">Chem::PDB</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new%28title%3AString%2Cmethod%3AMethod%2Cresolution%3AFloat64%3F%2Cpdb_accession%3AString%2Cdeposition_date%3ATime%2Cdoi%3AString%3F%29-class-method" class="signature"><strong>.new</strong>(title : String, method : Method, resolution : Float64?, pdb_accession : String, deposition_date : Time, doi : String?)</a>
+        <a href="#new%28title%3AString%2Cmethod%3AMethod%2Cresolution%3AFloat64%7CNil%2Cpdb_accession%3AString%2Cdeposition_date%3ATime%2Cdoi%3AString%7CNil%29-class-method" class="signature"><strong>.new</strong>(title : String, method : Method, resolution : Float64 | Nil, pdb_accession : String, deposition_date : Time, doi : String | Nil)</a>
         
       </li>
     
@@ -960,7 +960,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#doi%3AString%3F-instance-method" class="signature"><strong>#doi</strong> : String?</a>
+        <a href="#doi%3AString%7CNil-instance-method" class="signature"><strong>#doi</strong> : String | Nil</a>
         
       </li>
     
@@ -975,7 +975,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#resolution%3AFloat64%3F-instance-method" class="signature"><strong>#resolution</strong> : Float64?</a>
+        <a href="#resolution%3AFloat64%7CNil-instance-method" class="signature"><strong>#resolution</strong> : Float64 | Nil</a>
         
       </li>
     
@@ -1034,21 +1034,21 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="from_pdb(input:IO|Path|String,alt_loc:Char?=nil,chains:Enumerable(Char)|String|Nil=nil,guess_bonds:Bool=false,het:Bool=true):self-class-method">
+    <div class="entry-detail" id="from_pdb(input:IO|Path|String,alt_loc:Char|Nil=nil,chains:Enumerable(Char)|String|Nil=nil,guess_bonds:Bool=false,het:Bool=true):self-class-method">
       <div class="signature">
         
-        def self.<strong>from_pdb</strong>(input : IO | Path | String, alt_loc : <a href="../../Char.html">Char</a>? = <span class="n">nil</span>, chains : <a href="../../Enumerable.html">Enumerable</a>(<a href="../../Char.html">Char</a>) | String | Nil = <span class="n">nil</span>, guess_bonds : Bool = <span class="n">false</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span>
+        def self.<strong>from_pdb</strong>(input : IO | Path | String, alt_loc : <a href="../../Char.html">Char</a> | Nil = <span class="n">nil</span>, chains : <a href="../../Enumerable.html">Enumerable</a>(<a href="../../Char.html">Char</a>) | String | Nil = <span class="n">nil</span>, guess_bonds : Bool = <span class="n">false</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#from_pdb%28input%3AIO%7CPath%7CString%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%29%3Aself-class-method">#</a>
+        <a class="method-permalink" href="#from_pdb%28input%3AIO%7CPath%7CString%2Calt_loc%3AChar%7CNil%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns the header encoded in <em>input</em> using the
 <code><a href="../../Chem/PDB.html">Chem::PDB</a></code> file format. Arguments are forwarded to
-<code><a href="../../Chem/PDB/Reader.html#open%28io%3AIO%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::PDB::Reader.open</a></code>.</p>
+<code><a href="../../Chem/PDB/Reader.html#open%28io%3AIO%2Calt_loc%3AChar%7CNil%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::PDB::Reader.open</a></code>.</p>
 <p>If <em>input</em> contains multiple entries, this method returns
-the first one only. Use <code><a href="../../Array.html#from_pdb%28input%3AIO%7CPath%7CString%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%29%3Aself-class-method">Array#from_pdb</a></code> or
+the first one only. Use <code><a href="../../Array.html#from_pdb%28input%3AIO%7CPath%7CString%2Calt_loc%3AChar%7CNil%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%29%3Aself-class-method">Array#from_pdb</a></code> or
 <code>Chem::PDB::Reader#each</code> to get multiple entries instead.</p>
         </div>
       
@@ -1058,12 +1058,12 @@ the first one only. Use <code><a href="../../Array.html#from_pdb%28input%3AIO%7C
       </div>
     </div>
   
-    <div class="entry-detail" id="new(title:String,method:Method,resolution:Float64?,pdb_accession:String,deposition_date:Time,doi:String?)-class-method">
+    <div class="entry-detail" id="new(title:String,method:Method,resolution:Float64|Nil,pdb_accession:String,deposition_date:Time,doi:String|Nil)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(title : String, method : <a href="../../Chem/Structure/Experiment/Method.html">Method</a>, resolution : Float64?, pdb_accession : String, deposition_date : Time, doi : String?)
+        def self.<strong>new</strong>(title : String, method : <a href="../../Chem/Structure/Experiment/Method.html">Method</a>, resolution : Float64 | Nil, pdb_accession : String, deposition_date : Time, doi : String | Nil)
 
-        <a class="method-permalink" href="#new%28title%3AString%2Cmethod%3AMethod%2Cresolution%3AFloat64%3F%2Cpdb_accession%3AString%2Cdeposition_date%3ATime%2Cdoi%3AString%3F%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28title%3AString%2Cmethod%3AMethod%2Cresolution%3AFloat64%7CNil%2Cpdb_accession%3AString%2Cdeposition_date%3ATime%2Cdoi%3AString%7CNil%29-class-method">#</a>
       </div>
       
       <br/>
@@ -1152,12 +1152,12 @@ decoded in the corresponding file format if possible.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="doi:String?-instance-method">
+    <div class="entry-detail" id="doi:String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>doi</strong> : String?
+        def <strong>doi</strong> : String | Nil
 
-        <a class="method-permalink" href="#doi%3AString%3F-instance-method">#</a>
+        <a class="method-permalink" href="#doi%3AString%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -1194,12 +1194,12 @@ decoded in the corresponding file format if possible.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="resolution:Float64?-instance-method">
+    <div class="entry-detail" id="resolution:Float64|Nil-instance-method">
       <div class="signature">
         
-        def <strong>resolution</strong> : Float64?
+        def <strong>resolution</strong> : Float64 | Nil
 
-        <a class="method-permalink" href="#resolution%3AFloat64%3F-instance-method">#</a>
+        <a class="method-permalink" href="#resolution%3AFloat64%7CNil-instance-method">#</a>
       </div>
       
       <br/>

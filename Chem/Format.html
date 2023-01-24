@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.5.0">
+<meta name="generator" content="Crystal Docs 1.6.2">
 <meta name="crystal_docs.project_version" content="0.5.6">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -1092,23 +1092,9 @@ information declared in the annotations.</p>
       </li>
     
       <li class="entry-summary">
-        <a href="#from_ext%3F%28extname%3AString%29%3Aself%3F-class-method" class="signature"><strong>.from_ext?</strong>(extname : String) : <span class="k">self</span>?</a>
-        
-          <div class="summary"><p>Returns the file format registered to the file extension, or <code>nil</code> otherwise.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
         <a href="#from_filename%28filename%3APath%7CString%29%3Aself-class-method" class="signature"><strong>.from_filename</strong>(filename : Path | String) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the file format associated with <em>filename</em>, or raises <code>ArgumentError</code> otherwise.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#from_filename%3F%28filename%3APath%7CString%29%3Aself%3F-class-method" class="signature"><strong>.from_filename?</strong>(filename : Path | String) : <span class="k">self</span>?</a>
-        
-          <div class="summary"><p>Returns the file format associated with <em>filename</em>, or <code>nil</code> otherwise.</p></div>
         
       </li>
     
@@ -1119,16 +1105,42 @@ information declared in the annotations.</p>
         
       </li>
     
+  </ul>
+
+
+
+  <h2>
+    <a id="class-method-summary" class="anchor" href="#class-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Summary
+  </h2>
+  <ul class="list-summary">
+    
       <li class="entry-summary">
-        <a href="#from_stem%3F%28stem%3AString%29%3Aself%3F-class-method" class="signature"><strong>.from_stem?</strong>(stem : String) : <span class="k">self</span>?</a>
+        <a href="#from_ext%3F%28extname%3AString%29%3Aself%7CNil-class-method" class="signature"><strong>.from_ext?</strong>(extname : String) : <span class="k">self</span> | Nil</a>
+        
+          <div class="summary"><p>Returns the file format registered to the file extension, or <code>nil</code> otherwise.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#from_filename%3F%28filename%3APath%7CString%29%3Aself%7CNil-class-method" class="signature"><strong>.from_filename?</strong>(filename : Path | String) : <span class="k">self</span> | Nil</a>
+        
+          <div class="summary"><p>Returns the file format associated with <em>filename</em>, or <code>nil</code> otherwise.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#from_stem%3F%28stem%3AString%29%3Aself%7CNil-class-method" class="signature"><strong>.from_stem?</strong>(stem : String) : <span class="k">self</span> | Nil</a>
         
           <div class="summary"><p>Returns the file format that matches the file stem, or <code>nil</code> otherwise.</p></div>
         
       </li>
     
   </ul>
-
-
 
 
 
@@ -1419,36 +1431,6 @@ return the same.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="from_ext?(extname:String):self?-class-method">
-      <div class="signature">
-        
-        def self.<strong>from_ext?</strong>(extname : String) : <span class="k">self</span>?
-
-        <a class="method-permalink" href="#from_ext%3F%28extname%3AString%29%3Aself%3F-class-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Returns the file format registered to the file extension, or
-<code>nil</code> otherwise.</p>
-<pre><code class="language-crystal">@[<span class="t">Chem</span><span class="t">::</span><span class="t">RegisterFormat</span>(ext: <span class="s">%w(.jpg .jpeg .jpe)</span>)]
-<span class="k">module</span> <span class="t">JPEG</span>; <span class="k">end</span>
-
-<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_ext?(<span class="s">&quot;.jpg&quot;</span>)  <span class="c"># =&gt; JPEG</span>
-<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_ext?(<span class="s">&quot;.JPG&quot;</span>)  <span class="c"># =&gt; JPEG</span>
-<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_ext?(<span class="s">&quot;.jpeg&quot;</span>) <span class="c"># =&gt; JPEG</span>
-<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_ext?(<span class="s">&quot;.jpe&quot;</span>)  <span class="c"># =&gt; JPEG</span>
-<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_ext?(<span class="s">&quot;.txt&quot;</span>)  <span class="c"># =&gt; nil</span></code></pre>
-<p><span class="flag purple">NOTE</span>  It performs a case-insensitive search so .jpg and .JPG
-return the same.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
     <div class="entry-detail" id="from_filename(filename:Path|String):self-class-method">
       <div class="signature">
         
@@ -1462,9 +1444,9 @@ return the same.</p>
           <p>Returns the file format associated with <em>filename</em>, or raises
 <code>ArgumentError</code> otherwise.</p>
 <p>It first looks up the file format associated with the extension
-of <em>filename</em> via the <code><a href="../Chem/Format.html#from_ext%3F%28extname%3AString%29%3Aself%3F-class-method">.from_ext?</a></code> method. If the latter returns
+of <em>filename</em> via the <code><a href="../Chem/Format.html#from_ext%3F%28extname%3AString%29%3Aself%7CNil-class-method">.from_ext?</a></code> method. If the latter returns
 <code>nil</code>, then it executes a case-insensitive search with the stem
-of <em>filename</em> via <code><a href="../Chem/Format.html#from_stem%3F%28stem%3AString%29%3Aself%3F-class-method">.from_stem?</a></code>.</p>
+of <em>filename</em> via <code><a href="../Chem/Format.html#from_stem%3F%28stem%3AString%29%3Aself%7CNil-class-method">.from_stem?</a></code>.</p>
 <pre><code class="language-crystal">@[<span class="t">Chem</span><span class="t">::</span><span class="t">RegisterFormat</span>(ext: <span class="s">%w(.jpg .jpeg .jpe)</span>, names: <span class="s">%w(IMG*)</span>)]
 <span class="k">module</span> <span class="t">JPEG</span>; <span class="k">end</span>
 
@@ -1476,41 +1458,6 @@ of <em>filename</em> via <code><a href="../Chem/Format.html#from_stem%3F%28stem%
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_filename(<span class="s">&quot;img_2314&quot;</span>)     <span class="c"># =&gt; JPEG</span>
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_filename(<span class="s">&quot;img2314&quot;</span>)      <span class="c"># =&gt; JPEG</span>
 <span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_filename(<span class="s">&quot;foo&quot;</span>)          <span class="c"># raises ArgumentError</span></code></pre>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="from_filename?(filename:Path|String):self?-class-method">
-      <div class="signature">
-        
-        def self.<strong>from_filename?</strong>(filename : Path | String) : <span class="k">self</span>?
-
-        <a class="method-permalink" href="#from_filename%3F%28filename%3APath%7CString%29%3Aself%3F-class-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Returns the file format associated with <em>filename</em>, or <code>nil</code>
-otherwise.</p>
-<p>It first looks up the file format associated with the extension
-of <em>filename</em> via the <code><a href="../Chem/Format.html#from_ext%3F%28extname%3AString%29%3Aself%3F-class-method">.from_ext?</a></code> method. If the latter returns
-<code>nil</code>, then it executes a case-insensitive search with the stem
-of <em>filename</em> via <code><a href="../Chem/Format.html#from_stem%3F%28stem%3AString%29%3Aself%3F-class-method">.from_stem?</a></code>.</p>
-<pre><code class="language-crystal">@[<span class="t">Chem</span><span class="t">::</span><span class="t">RegisterFormat</span>(ext: <span class="s">%w(.jpg .jpeg .jpe)</span>, names: <span class="s">%w(IMG*)</span>)]
-<span class="k">module</span> <span class="t">JPEG</span>; <span class="k">end</span>
-
-<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_filename?(<span class="s">&quot;foo.jpg&quot;</span>)      <span class="c"># =&gt; JPEG</span>
-<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_filename?(<span class="s">&quot;foo.JPG&quot;</span>)      <span class="c"># =&gt; JPEG</span>
-<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_filename?(<span class="s">&quot;IMG_2314.jpg&quot;</span>) <span class="c"># =&gt; JPEG</span>
-<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_filename?(<span class="s">&quot;IMG_2314.png&quot;</span>) <span class="c"># =&gt; JPEG</span>
-<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_filename?(<span class="s">&quot;IMG_2314&quot;</span>)     <span class="c"># =&gt; JPEG</span>
-<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_filename?(<span class="s">&quot;img_2314&quot;</span>)     <span class="c"># =&gt; JPEG</span>
-<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_filename?(<span class="s">&quot;img2314&quot;</span>)      <span class="c"># =&gt; JPEG</span>
-<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_filename?(<span class="s">&quot;foo&quot;</span>)          <span class="c"># =&gt; nil</span></code></pre>
         </div>
       
       <br/>
@@ -1560,12 +1507,89 @@ the beginning or end).</li>
       </div>
     </div>
   
-    <div class="entry-detail" id="from_stem?(stem:String):self?-class-method">
+
+
+
+  <h2>
+    <a id="class-method-detail" class="anchor" href="#class-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="from_ext?(extname:String):self|Nil-class-method">
       <div class="signature">
         
-        def self.<strong>from_stem?</strong>(stem : String) : <span class="k">self</span>?
+        def self.<strong>from_ext?</strong>(extname : String) : <span class="k">self</span> | Nil
 
-        <a class="method-permalink" href="#from_stem%3F%28stem%3AString%29%3Aself%3F-class-method">#</a>
+        <a class="method-permalink" href="#from_ext%3F%28extname%3AString%29%3Aself%7CNil-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the file format registered to the file extension, or
+<code>nil</code> otherwise.</p>
+<pre><code class="language-crystal">@[<span class="t">Chem</span><span class="t">::</span><span class="t">RegisterFormat</span>(ext: <span class="s">%w(.jpg .jpeg .jpe)</span>)]
+<span class="k">module</span> <span class="t">JPEG</span>; <span class="k">end</span>
+
+<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_ext?(<span class="s">&quot;.jpg&quot;</span>)  <span class="c"># =&gt; JPEG</span>
+<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_ext?(<span class="s">&quot;.JPG&quot;</span>)  <span class="c"># =&gt; JPEG</span>
+<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_ext?(<span class="s">&quot;.jpeg&quot;</span>) <span class="c"># =&gt; JPEG</span>
+<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_ext?(<span class="s">&quot;.jpe&quot;</span>)  <span class="c"># =&gt; JPEG</span>
+<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_ext?(<span class="s">&quot;.txt&quot;</span>)  <span class="c"># =&gt; nil</span></code></pre>
+<p><span class="flag purple">NOTE</span>  It performs a case-insensitive search so .jpg and .JPG
+return the same.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="from_filename?(filename:Path|String):self|Nil-class-method">
+      <div class="signature">
+        
+        def self.<strong>from_filename?</strong>(filename : Path | String) : <span class="k">self</span> | Nil
+
+        <a class="method-permalink" href="#from_filename%3F%28filename%3APath%7CString%29%3Aself%7CNil-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the file format associated with <em>filename</em>, or <code>nil</code>
+otherwise.</p>
+<p>It first looks up the file format associated with the extension
+of <em>filename</em> via the <code><a href="../Chem/Format.html#from_ext%3F%28extname%3AString%29%3Aself%7CNil-class-method">.from_ext?</a></code> method. If the latter returns
+<code>nil</code>, then it executes a case-insensitive search with the stem
+of <em>filename</em> via <code><a href="../Chem/Format.html#from_stem%3F%28stem%3AString%29%3Aself%7CNil-class-method">.from_stem?</a></code>.</p>
+<pre><code class="language-crystal">@[<span class="t">Chem</span><span class="t">::</span><span class="t">RegisterFormat</span>(ext: <span class="s">%w(.jpg .jpeg .jpe)</span>, names: <span class="s">%w(IMG*)</span>)]
+<span class="k">module</span> <span class="t">JPEG</span>; <span class="k">end</span>
+
+<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_filename?(<span class="s">&quot;foo.jpg&quot;</span>)      <span class="c"># =&gt; JPEG</span>
+<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_filename?(<span class="s">&quot;foo.JPG&quot;</span>)      <span class="c"># =&gt; JPEG</span>
+<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_filename?(<span class="s">&quot;IMG_2314.jpg&quot;</span>) <span class="c"># =&gt; JPEG</span>
+<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_filename?(<span class="s">&quot;IMG_2314.png&quot;</span>) <span class="c"># =&gt; JPEG</span>
+<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_filename?(<span class="s">&quot;IMG_2314&quot;</span>)     <span class="c"># =&gt; JPEG</span>
+<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_filename?(<span class="s">&quot;img_2314&quot;</span>)     <span class="c"># =&gt; JPEG</span>
+<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_filename?(<span class="s">&quot;img2314&quot;</span>)      <span class="c"># =&gt; JPEG</span>
+<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span>.from_filename?(<span class="s">&quot;foo&quot;</span>)          <span class="c"># =&gt; nil</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="from_stem?(stem:String):self|Nil-class-method">
+      <div class="signature">
+        
+        def self.<strong>from_stem?</strong>(stem : String) : <span class="k">self</span> | Nil
+
+        <a class="method-permalink" href="#from_stem%3F%28stem%3AString%29%3Aself%7CNil-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1601,8 +1625,6 @@ the beginning or end).</li>
       </div>
     </div>
   
-
-
 
 
 

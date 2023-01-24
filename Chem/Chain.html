@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.5.0">
+<meta name="generator" content="Crystal Docs 1.6.2">
 <meta name="crystal_docs.project_version" content="0.5.6">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -952,12 +952,12 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#%5B%5D%28number%3AInt32%2Cinsertion_code%3AChar%3F%3Dnil%29%3AResidue-instance-method" class="signature"><strong>#[]</strong>(number : Int32, insertion_code : Char? = <span class="n">nil</span>) : Residue</a>
+        <a href="#%5B%5D%28number%3AInt32%2Cinsertion_code%3AChar%7CNil%3Dnil%29%3AResidue-instance-method" class="signature"><strong>#[]</strong>(number : Int32, insertion_code : Char | Nil = <span class="n">nil</span>) : Residue</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#%5B%5D%3F%28number%3AInt32%2Cinsertion_code%3AChar%3F%3Dnil%29%3AResidue%3F-instance-method" class="signature"><strong>#[]?</strong>(number : Int32, insertion_code : Char? = <span class="n">nil</span>) : Residue?</a>
+        <a href="#%5B%5D%3F%28number%3AInt32%2Cinsertion_code%3AChar%7CNil%3Dnil%29%3AResidue%7CNil-instance-method" class="signature"><strong>#[]?</strong>(number : Int32, insertion_code : Char | Nil = <span class="n">nil</span>) : Residue | Nil</a>
         
       </li>
     
@@ -967,17 +967,17 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#delete%28residue%3AResidue%29%3AResidue%3F-instance-method" class="signature"><strong>#delete</strong>(residue : Residue) : Residue?</a>
+        <a href="#delete%28residue%3AResidue%29%3AResidue%7CNil-instance-method" class="signature"><strong>#delete</strong>(residue : Residue) : Residue | Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#dig%28number%3AInt32%2Cinsertion_code%3AChar%3F%29%3AResidue-instance-method" class="signature"><strong>#dig</strong>(number : Int32, insertion_code : Char?) : Residue</a>
+        <a href="#dig%28number%3AInt32%2Cinsertion_code%3AChar%7CNil%29%3AResidue-instance-method" class="signature"><strong>#dig</strong>(number : Int32, insertion_code : Char | Nil) : Residue</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#dig%28number%3AInt32%2Cinsertion_code%3AChar%3F%2C%2Asubindexes%29-instance-method" class="signature"><strong>#dig</strong>(number : Int32, insertion_code : Char?, *subindexes)</a>
+        <a href="#dig%28number%3AInt32%2Cinsertion_code%3AChar%7CNil%2C%2Asubindexes%29-instance-method" class="signature"><strong>#dig</strong>(number : Int32, insertion_code : Char | Nil, *subindexes)</a>
         
       </li>
     
@@ -992,17 +992,17 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#dig%3F%28number%3AInt32%2Cinsertion_code%3AChar%3F%29%3AResidue%3F-instance-method" class="signature"><strong>#dig?</strong>(number : Int32, insertion_code : Char?) : Residue?</a>
+        <a href="#dig%3F%28number%3AInt32%2Cinsertion_code%3AChar%7CNil%29%3AResidue%7CNil-instance-method" class="signature"><strong>#dig?</strong>(number : Int32, insertion_code : Char | Nil) : Residue | Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#dig%3F%28number%3AInt32%2Cinsertion_code%3AChar%3F%2C%2Asubindexes%29-instance-method" class="signature"><strong>#dig?</strong>(number : Int32, insertion_code : Char?, *subindexes)</a>
+        <a href="#dig%3F%28number%3AInt32%2Cinsertion_code%3AChar%7CNil%2C%2Asubindexes%29-instance-method" class="signature"><strong>#dig?</strong>(number : Int32, insertion_code : Char | Nil, *subindexes)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#dig%3F%28number%3AInt32%29%3AResidue%3F-instance-method" class="signature"><strong>#dig?</strong>(number : Int32) : Residue?</a>
+        <a href="#dig%3F%28number%3AInt32%29%3AResidue%7CNil-instance-method" class="signature"><strong>#dig?</strong>(number : Int32) : Residue | Nil</a>
         
       </li>
     
@@ -1134,8 +1134,8 @@
     each_secondary_structure</a>, 
     
   
-    <a href="../Chem/ResidueCollection.html#link_bond%3ATemplates%3A%3ABond%3F-instance-method" class="tooltip">
-      <span>link_bond : Templates::Bond?</span>
+    <a href="../Chem/ResidueCollection.html#link_bond%3ATemplates%3A%3ABond%7CNil-instance-method" class="tooltip">
+      <span>link_bond : Templates::Bond | Nil</span>
     link_bond</a>, 
     
   
@@ -1359,12 +1359,12 @@ chains[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> chains[<span c
       </div>
     </div>
   
-    <div class="entry-detail" id="[](number:Int32,insertion_code:Char?=nil):Residue-instance-method">
+    <div class="entry-detail" id="[](number:Int32,insertion_code:Char|Nil=nil):Residue-instance-method">
       <div class="signature">
         
-        def <strong>[]</strong>(number : Int32, insertion_code : <a href="../Char.html">Char</a>? = <span class="n">nil</span>) : <a href="../Chem/Residue.html">Residue</a>
+        def <strong>[]</strong>(number : Int32, insertion_code : <a href="../Char.html">Char</a> | Nil = <span class="n">nil</span>) : <a href="../Chem/Residue.html">Residue</a>
 
-        <a class="method-permalink" href="#%5B%5D%28number%3AInt32%2Cinsertion_code%3AChar%3F%3Dnil%29%3AResidue-instance-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%28number%3AInt32%2Cinsertion_code%3AChar%7CNil%3Dnil%29%3AResidue-instance-method">#</a>
       </div>
       
       <br/>
@@ -1373,12 +1373,12 @@ chains[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> chains[<span c
       </div>
     </div>
   
-    <div class="entry-detail" id="[]?(number:Int32,insertion_code:Char?=nil):Residue?-instance-method">
+    <div class="entry-detail" id="[]?(number:Int32,insertion_code:Char|Nil=nil):Residue|Nil-instance-method">
       <div class="signature">
         
-        def <strong>[]?</strong>(number : Int32, insertion_code : <a href="../Char.html">Char</a>? = <span class="n">nil</span>) : <a href="../Chem/Residue.html">Residue</a>?
+        def <strong>[]?</strong>(number : Int32, insertion_code : <a href="../Char.html">Char</a> | Nil = <span class="n">nil</span>) : <a href="../Chem/Residue.html">Residue</a> | Nil
 
-        <a class="method-permalink" href="#%5B%5D%3F%28number%3AInt32%2Cinsertion_code%3AChar%3F%3Dnil%29%3AResidue%3F-instance-method">#</a>
+        <a class="method-permalink" href="#%5B%5D%3F%28number%3AInt32%2Cinsertion_code%3AChar%7CNil%3Dnil%29%3AResidue%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -1401,12 +1401,12 @@ chains[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> chains[<span c
       </div>
     </div>
   
-    <div class="entry-detail" id="delete(residue:Residue):Residue?-instance-method">
+    <div class="entry-detail" id="delete(residue:Residue):Residue|Nil-instance-method">
       <div class="signature">
         
-        def <strong>delete</strong>(residue : <a href="../Chem/Residue.html">Residue</a>) : <a href="../Chem/Residue.html">Residue</a>?
+        def <strong>delete</strong>(residue : <a href="../Chem/Residue.html">Residue</a>) : <a href="../Chem/Residue.html">Residue</a> | Nil
 
-        <a class="method-permalink" href="#delete%28residue%3AResidue%29%3AResidue%3F-instance-method">#</a>
+        <a class="method-permalink" href="#delete%28residue%3AResidue%29%3AResidue%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -1415,12 +1415,12 @@ chains[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> chains[<span c
       </div>
     </div>
   
-    <div class="entry-detail" id="dig(number:Int32,insertion_code:Char?):Residue-instance-method">
+    <div class="entry-detail" id="dig(number:Int32,insertion_code:Char|Nil):Residue-instance-method">
       <div class="signature">
         
-        def <strong>dig</strong>(number : Int32, insertion_code : <a href="../Char.html">Char</a>?) : <a href="../Chem/Residue.html">Residue</a>
+        def <strong>dig</strong>(number : Int32, insertion_code : <a href="../Char.html">Char</a> | Nil) : <a href="../Chem/Residue.html">Residue</a>
 
-        <a class="method-permalink" href="#dig%28number%3AInt32%2Cinsertion_code%3AChar%3F%29%3AResidue-instance-method">#</a>
+        <a class="method-permalink" href="#dig%28number%3AInt32%2Cinsertion_code%3AChar%7CNil%29%3AResidue-instance-method">#</a>
       </div>
       
       <br/>
@@ -1429,12 +1429,12 @@ chains[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> chains[<span c
       </div>
     </div>
   
-    <div class="entry-detail" id="dig(number:Int32,insertion_code:Char?,*subindexes)-instance-method">
+    <div class="entry-detail" id="dig(number:Int32,insertion_code:Char|Nil,*subindexes)-instance-method">
       <div class="signature">
         
-        def <strong>dig</strong>(number : Int32, insertion_code : <a href="../Char.html">Char</a>?, *subindexes)
+        def <strong>dig</strong>(number : Int32, insertion_code : <a href="../Char.html">Char</a> | Nil, *subindexes)
 
-        <a class="method-permalink" href="#dig%28number%3AInt32%2Cinsertion_code%3AChar%3F%2C%2Asubindexes%29-instance-method">#</a>
+        <a class="method-permalink" href="#dig%28number%3AInt32%2Cinsertion_code%3AChar%7CNil%2C%2Asubindexes%29-instance-method">#</a>
       </div>
       
       <br/>
@@ -1471,12 +1471,12 @@ chains[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> chains[<span c
       </div>
     </div>
   
-    <div class="entry-detail" id="dig?(number:Int32,insertion_code:Char?):Residue?-instance-method">
+    <div class="entry-detail" id="dig?(number:Int32,insertion_code:Char|Nil):Residue|Nil-instance-method">
       <div class="signature">
         
-        def <strong>dig?</strong>(number : Int32, insertion_code : <a href="../Char.html">Char</a>?) : <a href="../Chem/Residue.html">Residue</a>?
+        def <strong>dig?</strong>(number : Int32, insertion_code : <a href="../Char.html">Char</a> | Nil) : <a href="../Chem/Residue.html">Residue</a> | Nil
 
-        <a class="method-permalink" href="#dig%3F%28number%3AInt32%2Cinsertion_code%3AChar%3F%29%3AResidue%3F-instance-method">#</a>
+        <a class="method-permalink" href="#dig%3F%28number%3AInt32%2Cinsertion_code%3AChar%7CNil%29%3AResidue%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -1485,12 +1485,12 @@ chains[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> chains[<span c
       </div>
     </div>
   
-    <div class="entry-detail" id="dig?(number:Int32,insertion_code:Char?,*subindexes)-instance-method">
+    <div class="entry-detail" id="dig?(number:Int32,insertion_code:Char|Nil,*subindexes)-instance-method">
       <div class="signature">
         
-        def <strong>dig?</strong>(number : Int32, insertion_code : <a href="../Char.html">Char</a>?, *subindexes)
+        def <strong>dig?</strong>(number : Int32, insertion_code : <a href="../Char.html">Char</a> | Nil, *subindexes)
 
-        <a class="method-permalink" href="#dig%3F%28number%3AInt32%2Cinsertion_code%3AChar%3F%2C%2Asubindexes%29-instance-method">#</a>
+        <a class="method-permalink" href="#dig%3F%28number%3AInt32%2Cinsertion_code%3AChar%7CNil%2C%2Asubindexes%29-instance-method">#</a>
       </div>
       
       <br/>
@@ -1499,12 +1499,12 @@ chains[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> chains[<span c
       </div>
     </div>
   
-    <div class="entry-detail" id="dig?(number:Int32):Residue?-instance-method">
+    <div class="entry-detail" id="dig?(number:Int32):Residue|Nil-instance-method">
       <div class="signature">
         
-        def <strong>dig?</strong>(number : Int32) : <a href="../Chem/Residue.html">Residue</a>?
+        def <strong>dig?</strong>(number : Int32) : <a href="../Chem/Residue.html">Residue</a> | Nil
 
-        <a class="method-permalink" href="#dig%3F%28number%3AInt32%29%3AResidue%3F-instance-method">#</a>
+        <a class="method-permalink" href="#dig%3F%28number%3AInt32%29%3AResidue%7CNil-instance-method">#</a>
       </div>
       
       <br/>

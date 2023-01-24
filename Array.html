@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.5.0">
+<meta name="generator" content="Crystal Docs 1.6.2">
 <meta name="crystal_docs.project_version" content="0.5.6">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -985,14 +985,14 @@ set <span class="o">&lt;&lt;</span> <span class="n">3</span></code></pre>
       </li>
     
       <li class="entry-summary">
-        <a href="#from_pdb%28input%3AIO%7CPath%7CString%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%29%3Aself-class-method" class="signature"><strong>.from_pdb</strong>(input : IO | Path | String, alt_loc : Char? = <span class="n">nil</span>, chains : Enumerable(Char) | String | Nil = <span class="n">nil</span>, guess_bonds : Bool = <span class="n">false</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span></a>
+        <a href="#from_pdb%28input%3AIO%7CPath%7CString%2Calt_loc%3AChar%7CNil%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%29%3Aself-class-method" class="signature"><strong>.from_pdb</strong>(input : IO | Path | String, alt_loc : Char | Nil = <span class="n">nil</span>, chains : Enumerable(Char) | String | Nil = <span class="n">nil</span>, guess_bonds : Bool = <span class="n">false</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span></a>
         
           <div class="summary"><p>Creates a new array of <code><a href="Chem/Structure.html">Chem::Structure</a></code> with the entries encoded in <em>input</em> using the <code><a href="Chem/PDB.html">Chem::PDB</a></code> file format.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#from_pdb%28input%3AIO%7CPath%7CString%2Cindexes%3AArray%28Int%29%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%29%3Aself-class-method" class="signature"><strong>.from_pdb</strong>(input : IO | Path | String, indexes : Array(Int), alt_loc : Char? = <span class="n">nil</span>, chains : Enumerable(Char) | String | Nil = <span class="n">nil</span>, guess_bonds : Bool = <span class="n">false</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span></a>
+        <a href="#from_pdb%28input%3AIO%7CPath%7CString%2Cindexes%3AArray%28Int%29%2Calt_loc%3AChar%7CNil%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%29%3Aself-class-method" class="signature"><strong>.from_pdb</strong>(input : IO | Path | String, indexes : Array(Int), alt_loc : Char | Nil = <span class="n">nil</span>, chains : Enumerable(Char) | String | Nil = <span class="n">nil</span>, guess_bonds : Bool = <span class="n">false</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span></a>
         
           <div class="summary"><p>Creates a new array of <code><a href="Chem/Structure.html">Chem::Structure</a></code> with the entries at <em>indexes</em> encoded in <em>input</em> using the <code><a href="Chem/PDB.html">Chem::PDB</a></code> file format.</p></div>
         
@@ -1069,7 +1069,7 @@ set <span class="o">&lt;&lt;</span> <span class="n">3</span></code></pre>
       </li>
     
       <li class="entry-summary">
-        <a href="#sort%28range%3ARange%28Int%2CInt%29%2C%26block%3AT%2CT-%3EInt32%3F%29%3Aself-instance-method" class="signature"><strong>#sort</strong>(range : Range(Int, Int), &block : T, T -> Int32?) : <span class="k">self</span></a>
+        <a href="#sort%28range%3ARange%28Int%2CInt%29%2C%26block%3AT%2CT-%3EInt32%7CNil%29%3Aself-instance-method" class="signature"><strong>#sort</strong>(range : Range(Int, Int), &block : T, T -> Int32 | Nil) : <span class="k">self</span></a>
         
       </li>
     
@@ -1079,7 +1079,7 @@ set <span class="o">&lt;&lt;</span> <span class="n">3</span></code></pre>
       </li>
     
       <li class="entry-summary">
-        <a href="#sort%21%28range%3ARange%28Int%2CInt%29%2C%26block%3AT%2CT-%3EInt32%3F%29%3Aself-instance-method" class="signature"><strong>#sort!</strong>(range : Range(Int, Int), &block : T, T -> Int32?) : <span class="k">self</span></a>
+        <a href="#sort%21%28range%3ARange%28Int%2CInt%29%2C%26block%3AT%2CT-%3EInt32%7CNil%29%3Aself-instance-method" class="signature"><strong>#sort!</strong>(range : Range(Int, Int), &block : T, T -> Int32 | Nil) : <span class="k">self</span></a>
         
       </li>
     
@@ -1292,19 +1292,19 @@ Arguments are fowarded to <code><a href="Chem/Mol2/Reader.html#open%28io%3AIO%2C
       </div>
     </div>
   
-    <div class="entry-detail" id="from_pdb(input:IO|Path|String,alt_loc:Char?=nil,chains:Enumerable(Char)|String|Nil=nil,guess_bonds:Bool=false,het:Bool=true):self-class-method">
+    <div class="entry-detail" id="from_pdb(input:IO|Path|String,alt_loc:Char|Nil=nil,chains:Enumerable(Char)|String|Nil=nil,guess_bonds:Bool=false,het:Bool=true):self-class-method">
       <div class="signature">
         
-        def self.<strong>from_pdb</strong>(input : IO | Path | String, alt_loc : <a href="Char.html">Char</a>? = <span class="n">nil</span>, chains : <a href="Enumerable.html">Enumerable</a>(<a href="Char.html">Char</a>) | String | Nil = <span class="n">nil</span>, guess_bonds : Bool = <span class="n">false</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span>
+        def self.<strong>from_pdb</strong>(input : IO | Path | String, alt_loc : <a href="Char.html">Char</a> | Nil = <span class="n">nil</span>, chains : <a href="Enumerable.html">Enumerable</a>(<a href="Char.html">Char</a>) | String | Nil = <span class="n">nil</span>, guess_bonds : Bool = <span class="n">false</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#from_pdb%28input%3AIO%7CPath%7CString%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%29%3Aself-class-method">#</a>
+        <a class="method-permalink" href="#from_pdb%28input%3AIO%7CPath%7CString%2Calt_loc%3AChar%7CNil%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Creates a new array of <code><a href="Chem/Structure.html">Chem::Structure</a></code> with the entries
 encoded in <em>input</em> using the <code><a href="Chem/PDB.html">Chem::PDB</a></code> file format.
-Arguments are fowarded to <code><a href="Chem/PDB/Reader.html#open%28io%3AIO%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::PDB::Reader.open</a></code>.</p>
+Arguments are fowarded to <code><a href="Chem/PDB/Reader.html#open%28io%3AIO%2Calt_loc%3AChar%7CNil%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::PDB::Reader.open</a></code>.</p>
         </div>
       
       <br/>
@@ -1313,19 +1313,19 @@ Arguments are fowarded to <code><a href="Chem/PDB/Reader.html#open%28io%3AIO%2Ca
       </div>
     </div>
   
-    <div class="entry-detail" id="from_pdb(input:IO|Path|String,indexes:Array(Int),alt_loc:Char?=nil,chains:Enumerable(Char)|String|Nil=nil,guess_bonds:Bool=false,het:Bool=true):self-class-method">
+    <div class="entry-detail" id="from_pdb(input:IO|Path|String,indexes:Array(Int),alt_loc:Char|Nil=nil,chains:Enumerable(Char)|String|Nil=nil,guess_bonds:Bool=false,het:Bool=true):self-class-method">
       <div class="signature">
         
-        def self.<strong>from_pdb</strong>(input : IO | Path | String, indexes : <a href="Array.html">Array</a>(Int), alt_loc : <a href="Char.html">Char</a>? = <span class="n">nil</span>, chains : <a href="Enumerable.html">Enumerable</a>(<a href="Char.html">Char</a>) | String | Nil = <span class="n">nil</span>, guess_bonds : Bool = <span class="n">false</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span>
+        def self.<strong>from_pdb</strong>(input : IO | Path | String, indexes : <a href="Array.html">Array</a>(Int), alt_loc : <a href="Char.html">Char</a> | Nil = <span class="n">nil</span>, chains : <a href="Enumerable.html">Enumerable</a>(<a href="Char.html">Char</a>) | String | Nil = <span class="n">nil</span>, guess_bonds : Bool = <span class="n">false</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#from_pdb%28input%3AIO%7CPath%7CString%2Cindexes%3AArray%28Int%29%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%29%3Aself-class-method">#</a>
+        <a class="method-permalink" href="#from_pdb%28input%3AIO%7CPath%7CString%2Cindexes%3AArray%28Int%29%2Calt_loc%3AChar%7CNil%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Creates a new array of <code><a href="Chem/Structure.html">Chem::Structure</a></code> with the entries at
 <em>indexes</em> encoded in <em>input</em> using the <code><a href="Chem/PDB.html">Chem::PDB</a></code> file
-format. Arguments are fowarded to <code><a href="Chem/PDB/Reader.html#open%28io%3AIO%2Calt_loc%3AChar%3F%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::PDB::Reader.open</a></code>.</p>
+format. Arguments are fowarded to <code><a href="Chem/PDB/Reader.html#open%28io%3AIO%2Calt_loc%3AChar%7CNil%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::PDB::Reader.open</a></code>.</p>
         </div>
       
       <br/>
@@ -1508,12 +1508,12 @@ Raises <code>ArgumentError</code> if the file format cannot be determined.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="sort(range:Range(Int,Int),&amp;block:T,T-&gt;Int32?):self-instance-method">
+    <div class="entry-detail" id="sort(range:Range(Int,Int),&amp;block:T,T-&gt;Int32|Nil):self-instance-method">
       <div class="signature">
         
-        def <strong>sort</strong>(range : <a href="Range.html">Range</a>(Int, Int), &block : T, T -> Int32?) : <span class="k">self</span>
+        def <strong>sort</strong>(range : <a href="Range.html">Range</a>(Int, Int), &block : T, T -> Int32 | Nil) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#sort%28range%3ARange%28Int%2CInt%29%2C%26block%3AT%2CT-%3EInt32%3F%29%3Aself-instance-method">#</a>
+        <a class="method-permalink" href="#sort%28range%3ARange%28Int%2CInt%29%2C%26block%3AT%2CT-%3EInt32%7CNil%29%3Aself-instance-method">#</a>
       </div>
       
       <br/>
@@ -1536,12 +1536,12 @@ Raises <code>ArgumentError</code> if the file format cannot be determined.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="sort!(range:Range(Int,Int),&amp;block:T,T-&gt;Int32?):self-instance-method">
+    <div class="entry-detail" id="sort!(range:Range(Int,Int),&amp;block:T,T-&gt;Int32|Nil):self-instance-method">
       <div class="signature">
         
-        def <strong>sort!</strong>(range : <a href="Range.html">Range</a>(Int, Int), &block : T, T -> Int32?) : <span class="k">self</span>
+        def <strong>sort!</strong>(range : <a href="Range.html">Range</a>(Int, Int), &block : T, T -> Int32 | Nil) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#sort%21%28range%3ARange%28Int%2CInt%29%2C%26block%3AT%2CT-%3EInt32%3F%29%3Aself-instance-method">#</a>
+        <a class="method-permalink" href="#sort%21%28range%3ARange%28Int%2CInt%29%2C%26block%3AT%2CT-%3EInt32%7CNil%29%3Aself-instance-method">#</a>
       </div>
       
       <br/>
@@ -1561,7 +1561,7 @@ Raises <code>ArgumentError</code> if the file format cannot be determined.</p>
         <div class="doc">
           
           <p>Writes the elements to <em>output</em> using the <code><a href="Chem/Mol2.html">Chem::Mol2</a></code> file
-format. Arguments are fowarded to <code><a href="Chem/Mol2/Writer.html#open%28io%3AIO%2Ctotal_entries%3AInt32%3F%3Dnil%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::Mol2::Writer.open</a></code>.</p>
+format. Arguments are fowarded to <code><a href="Chem/Mol2/Writer.html#open%28io%3AIO%2Ctotal_entries%3AInt32%7CNil%3Dnil%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::Mol2::Writer.open</a></code>.</p>
         </div>
       
       <br/>
@@ -1582,7 +1582,7 @@ format. Arguments are fowarded to <code><a href="Chem/Mol2/Writer.html#open%28io
           
           <p>Returns a string representation of the elements encoded in
 the <code><a href="Chem/Mol2.html">Chem::Mol2</a></code> file format. Arguments are fowarded to
-<code><a href="Chem/Mol2/Writer.html#open%28io%3AIO%2Ctotal_entries%3AInt32%3F%3Dnil%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::Mol2::Writer.open</a></code>.</p>
+<code><a href="Chem/Mol2/Writer.html#open%28io%3AIO%2Ctotal_entries%3AInt32%7CNil%3Dnil%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::Mol2::Writer.open</a></code>.</p>
         </div>
       
       <br/>
@@ -1603,7 +1603,7 @@ the <code><a href="Chem/Mol2.html">Chem::Mol2</a></code> file format. Arguments 
           
           <p>Returns a string representation of the elements encoded in
 the <code><a href="Chem/PDB.html">Chem::PDB</a></code> file format. Arguments are fowarded to
-<code><a href="Chem/PDB/Writer.html#open%28io%3AIO%2Cbonds%3AChem%3A%3APDB%3A%3AWriter%3A%3ABondOptions%3DChem%3A%3APDB%3A%3AWriter%3A%3ABondOptions.flags%28Het%2CDisulfide%29%2Crenumber%3ABool%3Dtrue%2Cter_on_fragment%3ABool%3Dfalse%2Ctotal_entries%3AInt32%3F%3Dnil%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::PDB::Writer.open</a></code>.</p>
+<code><a href="Chem/PDB/Writer.html#open%28io%3AIO%2Cbonds%3AChem%3A%3APDB%3A%3AWriter%3A%3ABondOptions%3DChem%3A%3APDB%3A%3AWriter%3A%3ABondOptions.flags%28Het%2CDisulfide%29%2Crenumber%3ABool%3Dtrue%2Cter_on_fragment%3ABool%3Dfalse%2Ctotal_entries%3AInt32%7CNil%3Dnil%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::PDB::Writer.open</a></code>.</p>
         </div>
       
       <br/>
@@ -1623,7 +1623,7 @@ the <code><a href="Chem/PDB.html">Chem::PDB</a></code> file format. Arguments ar
         <div class="doc">
           
           <p>Writes the elements to <em>output</em> using the <code><a href="Chem/PDB.html">Chem::PDB</a></code> file
-format. Arguments are fowarded to <code><a href="Chem/PDB/Writer.html#open%28io%3AIO%2Cbonds%3AChem%3A%3APDB%3A%3AWriter%3A%3ABondOptions%3DChem%3A%3APDB%3A%3AWriter%3A%3ABondOptions.flags%28Het%2CDisulfide%29%2Crenumber%3ABool%3Dtrue%2Cter_on_fragment%3ABool%3Dfalse%2Ctotal_entries%3AInt32%3F%3Dnil%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::PDB::Writer.open</a></code>.</p>
+format. Arguments are fowarded to <code><a href="Chem/PDB/Writer.html#open%28io%3AIO%2Cbonds%3AChem%3A%3APDB%3A%3AWriter%3A%3ABondOptions%3DChem%3A%3APDB%3A%3AWriter%3A%3ABondOptions.flags%28Het%2CDisulfide%29%2Crenumber%3ABool%3Dtrue%2Cter_on_fragment%3ABool%3Dfalse%2Ctotal_entries%3AInt32%7CNil%3Dnil%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::PDB::Writer.open</a></code>.</p>
         </div>
       
       <br/>
@@ -1643,7 +1643,7 @@ format. Arguments are fowarded to <code><a href="Chem/PDB/Writer.html#open%28io%
         <div class="doc">
           
           <p>Writes the elements to <em>output</em> using the <code><a href="Chem/XYZ.html">Chem::XYZ</a></code> file
-format. Arguments are fowarded to <code><a href="Chem/XYZ/Writer.html#open%28io%3AIO%2Ctotal_entries%3AInt32%3F%3Dnil%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::XYZ::Writer.open</a></code>.</p>
+format. Arguments are fowarded to <code><a href="Chem/XYZ/Writer.html#open%28io%3AIO%2Ctotal_entries%3AInt32%7CNil%3Dnil%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::XYZ::Writer.open</a></code>.</p>
         </div>
       
       <br/>
@@ -1664,7 +1664,7 @@ format. Arguments are fowarded to <code><a href="Chem/XYZ/Writer.html#open%28io%
           
           <p>Returns a string representation of the elements encoded in
 the <code><a href="Chem/XYZ.html">Chem::XYZ</a></code> file format. Arguments are fowarded to
-<code><a href="Chem/XYZ/Writer.html#open%28io%3AIO%2Ctotal_entries%3AInt32%3F%3Dnil%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::XYZ::Writer.open</a></code>.</p>
+<code><a href="Chem/XYZ/Writer.html#open%28io%3AIO%2Ctotal_entries%3AInt32%7CNil%3Dnil%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::XYZ::Writer.open</a></code>.</p>
         </div>
       
       <br/>
