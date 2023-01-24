@@ -185,13 +185,13 @@ module Chem
       io << '>'
     end
 
-    # Copies `self` into *top*
-    # It calls `#copy_to` on each residue, which in turn calls `Atom#copy_to`.
+    # Copies `self` into *top*. It calls `#copy_to` on each residue,
+    # which in turn calls `Atom#copy_to`, if *recursive* is `true`.
     #
     # NOTE: bonds are not copied and must be set manually for the copy.
-    protected def copy_to(top : Topology) : self
+    protected def copy_to(top : Topology, recursive : Bool = true) : self
       chain = Chain.new top, @id
-      each_residue &.copy_to(chain)
+      each_residue &.copy_to(chain) if recursive
       chain
     end
 

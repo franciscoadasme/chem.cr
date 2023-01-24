@@ -695,15 +695,15 @@ class Chem::Residue
     @type = template.try(&.type) || ResidueType::Other
   end
 
-  # Copies `self` into *chain*
-  # It calls `#copy_to` on each atom.
+  # Copies `self` into *chain*. It calls `#copy_to` on each atom if
+  # *recursive* is `true`.
   #
   # NOTE: bonds are not copied and must be set manually for the copy.
-  protected def copy_to(chain : Chain) : self
+  protected def copy_to(chain : Chain, recursive : Bool = true) : self
     residue = Residue.new chain, @number, @insertion_code, @name
     residue.type = @type
     residue.sec = @sec
-    each_atom &.copy_to(residue)
+    each_atom &.copy_to(residue) if recursive
     residue
   end
 
