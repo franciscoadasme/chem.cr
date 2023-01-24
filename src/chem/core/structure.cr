@@ -110,6 +110,31 @@ module Chem
       end
     end
 
+    # Returns a new structure containing the selected atoms by the given
+    # block.
+    #
+    # Structure properties such as biases, unit cell, title, etc. are
+    # copied only if *copy_properties* is `true`.
+    def extract(copy_properties : Bool = true, & : Atom -> Bool) : self
+      top = Topology.new
+      atoms.each do |atom|
+        next unless yield atom
+        chain = top.dig?(atom.chain.id) || atom.chain.copy_to(top, recursive: false)
+        residue = chain.dig?(atom.residue.number, atom.residue.insertion_code) ||
+                  atom.residue.copy_to(chain, recursive: false)
+        atom.copy_to residue
+      end
+
+      structure = self.class.new top, (@source_file if copy_properties)
+      if copy_properties
+        structure.biases.concat @biases
+        structure.cell = @cell
+        structure.experiment = @experiment
+        structure.title = @title
+      end
+      structure
+    end
+
     def n_atoms : Int32
       @topology.n_atoms
     end

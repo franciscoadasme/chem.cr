@@ -144,4 +144,19 @@ describe Chem::Structure do
       end
     end
   end
+
+  describe "#extract" do
+    it "returns a new structure with the selected atoms" do
+      structure = Chem::Structure.read spec_file("1cbn.pdb")
+      other = structure.extract &.name.==("CA")
+      other.chains.map(&.spec).should eq structure.chains.map(&.spec)
+      other.residues.map(&.spec).should eq structure.residues.select(&.protein?).map(&.spec)
+      other.atoms.map(&.spec).should eq structure.atoms.select(&.name.==("CA")).map(&.spec)
+      other.biases.should eq structure.biases
+      other.cell.should eq structure.cell
+      other.experiment.should eq structure.experiment
+      other.source_file.should eq structure.source_file
+      other.title.should eq structure.title
+    end
+  end
 end
