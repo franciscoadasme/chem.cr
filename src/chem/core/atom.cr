@@ -29,7 +29,7 @@ module Chem
       @element : Element,
       @name : String,
       @coords : Spatial::Vec3,
-      type : String? = nil,
+      @typename : String? = nil,
       @formal_charge : Int32 = 0,
       @mass : Float64 = element.mass,
       @occupancy : Float64 = 1,
