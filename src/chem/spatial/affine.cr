@@ -94,7 +94,7 @@ module Chem::Spatial
       ref_center = ref_pos.mean
       ref_pos.map! &.-(ref_center)
       quat, _ = Spatial.qcp pos, ref_pos
-      (rotation(quat) * translation(-center)).translate(ref_center)
+      translation(-center).rotate(quat).translate(ref_center)
     end
 
     # Returns the identity transformation.
@@ -195,18 +195,22 @@ module Chem::Spatial
       AffineTransform.new inv_map, -inv_map * @offset
     end
 
-    # Returns a quaternion encoding the rotation by the Euler angles.
-    # Delegates to `Quat.euler` for computing the rotation.
+    # Returns the transformation encoding the rotation by the Euler
+    # angles. Delegates to `Quat.euler` for computing the rotation.
     def rotate(x : Number, y : Number, z : Number) : self
-      rotmat = Quat.euler(x, y, z).to_mat3
-      AffineTransform.new rotmat * @linear_map, rotmat * offset
+      rotate Quat.euler(x, y, z)
     end
 
     # Returns the transformation rotated about *rotaxis* by *angle*
     # degrees. Delegates to `Quat.rotation` for computing the rotation.
     def rotate(about rotaxis : Vec3, by angle : Number) : self
-      rotmat = Quat.rotation(rotaxis, angle).to_mat3
-      AffineTransform.new rotmat * @linear_map, rotmat * offset
+      rotate Quat.rotation(rotaxis, angle)
+    end
+
+    # Returns the transformation rotated by the given quaternion.
+    def rotate(quat : Quat) : self
+      rotmat = quat.to_mat3
+      self.class.new rotmat * @linear_map, rotmat * offset
     end
 
     # Returns the rotation component of the transformation.
