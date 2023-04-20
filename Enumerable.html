@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.6.2">
+<meta name="generator" content="Crystal Docs 1.7.3">
 <meta name="crystal_docs.project_version" content="0.5.6">
 <meta name="crystal_docs.project_name" content="chem.cr">
 
@@ -880,7 +880,7 @@ of the collection.</p>
 <pre><code class="language-crystal"><span class="k">class</span> <span class="t">Three</span>
   <span class="k">include</span> <span class="t">Enumerable</span>(<span class="t">Int32</span>)
 
-  <span class="k">def</span> <span class="m">each</span>
+  <span class="k">def</span> <span class="m">each</span>(<span class="o">&amp;</span>)
     <span class="k">yield</span> <span class="n">1</span>
     <span class="k">yield</span> <span class="n">2</span>
     <span class="k">yield</span> <span class="n">3</span>
