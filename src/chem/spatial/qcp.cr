@@ -178,35 +178,8 @@ module Chem::Spatial
     # Transform the eigenvector (quaternion) into the corresponding
     # rotation matrix.
     #
-    # TODO: could be refactored to `quat.to_mat3` or something like
-    # that?
-    qabs = Math.sqrt qabs2
-    q1 /= qabs
-    q2 /= qabs
-    q3 /= qabs
-    q4 /= qabs
-
-    w2 = q1**2
-    x2 = q2**2
-    y2 = q3**2
-    z2 = q4**2
-
-    wx = q1 * q2
-    wy = q1 * q3
-    wz = q1 * q4
-    xy = q2 * q3
-    xz = q4 * q2
-    yz = q3 * q4
-
-    out_rotmat[0] = w2 + x2 - y2 - z2
-    out_rotmat[1] = 2 * (xy + wz)
-    out_rotmat[2] = 2 * (xz - wy)
-    out_rotmat[3] = 2 * (xy - wz)
-    out_rotmat[4] = w2 - x2 + y2 - z2
-    out_rotmat[5] = 2 * (yz + wx)
-    out_rotmat[6] = 2 * (xz + wy)
-    out_rotmat[7] = 2 * (yz - wx)
-    out_rotmat[8] = w2 - x2 - y2 + z2
+    # TODO: avoid intermediate matrix
+    out_rotmat.copy_from Quat[-q1, q2, q3, q4].to_mat3.to_unsafe, 9
 
     rmsd
   end
