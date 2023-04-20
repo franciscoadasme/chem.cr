@@ -175,13 +175,7 @@ module Chem::Spatial
     end
 
     def transform!(transform : AffineTransform) : self
-      center = self.center # must be centered at origin to apply the rotation
-      # encode the translation to reverse the centering into the
-      # transformation itself for a small speed up
-      transform = transform.translate center
-      map! do |vec|
-        (vec - center).transform(transform)
-      end
+      map! { |vec| transform * vec }
     end
 
     def translate!(by offset : Vec3) : self

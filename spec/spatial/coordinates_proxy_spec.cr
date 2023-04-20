@@ -212,10 +212,33 @@ describe Chem::Spatial::CoordinatesProxy do
       end
       center = other.coords.center
       transform = Chem::Spatial::AffineTransform.euler(10, 50, 15).translate(vec3(1, 2, 3))
-      expected = other.coords.to_a.map do |vec|
-        (transform * (vec - center)) + center
-      end
+      expected = other.coords.to_a.map { |vec| transform * vec }
       other.coords.transform!(transform).should eq expected
+    end
+
+    it "aligns by a subset (#183)" do
+      actual = Chem::Structure.from_pdb spec_file("pr183_actual.pdb")
+      ref = Chem::Structure.from_pdb spec_file("pr183_ref.pdb")
+
+      atoms, ref_atoms = {actual, ref}.map do |s|
+        Chem::AtomView.new [52, 2, 12, 22, 32, 42].map { |i| s.atoms[i] }
+      end
+      tr = Chem::Spatial::AffineTransform.aligning(atoms, to: ref_atoms)
+      actual.coords.transform! tr
+      Chem::Spatial.rmsd(atoms.coords, ref_atoms.coords).should be_close 0.091, 1e-3
+    end
+
+    it "aligns to an axis (#183)" do
+      sf = Chem::Structure.from_pdb spec_file("pr183_7M2I_sf-helice--aligned.pdb")
+      ks = sf.atoms.select(&.potassium?)
+      sf.coords.translate! -ks.mean(&.coords)
+
+      # compute center of selected oxygens and set Y component to 0
+      os = (75..78).map { |i| sf.chains.first.dig(i, "O") }
+      oc = os.mean(&.coords).reject(Chem::Spatial::Vec3[0, 1, 0]).normalize
+      transform = Chem::Spatial::AffineTransform.aligning oc, to: Chem::Spatial::Vec3[1, 0, 0]
+      sf.coords.transform! transform
+      os.mean(&.coords).should be_close Chem::Spatial::Vec3[2.348, 1.756, 0], 1e-3
     end
   end
 

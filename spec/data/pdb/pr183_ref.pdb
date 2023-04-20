@@ -1,0 +1,246 @@
+REMARK   4                                                                      
+REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
+CRYST1   12.982   20.576   17.145  90.00  90.00  90.00 P 1           1          
+ATOM      1  N   ALA A   1       6.021   7.299   3.187  1.00  0.00           N  
+ATOM      2  H   ALA A   1       5.969   6.492   2.556  1.00  0.00           H  
+ATOM      3  CA  ALA A   1       5.108   7.370   4.328  1.00  0.00           C  
+ATOM      4  HA  ALA A   1       4.726   8.403   4.372  1.00  0.00           H  
+ATOM      5  C   ALA A   1       5.889   7.114   5.639  1.00  0.00           C  
+ATOM      6  O   ALA A   1       5.840   6.029   6.248  1.00  0.00           O  
+ATOM      7  CB  ALA A   1       3.960   6.387   4.152  1.00  0.00           C  
+ATOM      8  HB1 ALA A   1       3.256   6.471   4.989  1.00  0.00           H  
+ATOM      9  HB2 ALA A   1       4.328   5.354   4.135  1.00  0.00           H  
+ATOM     10  HB3 ALA A   1       3.423   6.593   3.217  1.00  0.00           H  
+ATOM     11  N   ALA A   2       6.644   8.160   6.044  1.00  0.00           N  
+ATOM     12  H   ALA A   2       6.565   9.059   5.559  1.00  0.00           H  
+ATOM     13  CA  ALA A   2       7.549   8.067   7.184  1.00  0.00           C  
+ATOM     14  HA  ALA A   2       7.888   7.020   7.226  1.00  0.00           H  
+ATOM     15  C   ALA A   2       6.768   8.349   8.485  1.00  0.00           C  
+ATOM     16  O   ALA A   2       6.812   9.441   9.079  1.00  0.00           O  
+ATOM     17  CB  ALA A   2       8.737   9.000   7.008  1.00  0.00           C  
+ATOM     18  HB1 ALA A   2       8.398  10.038   6.919  1.00  0.00           H  
+ATOM     19  HB2 ALA A   2       9.294   8.730   6.101  1.00  0.00           H  
+ATOM     20  HB3 ALA A   2       9.411   8.930   7.871  1.00  0.00           H  
+ATOM     21  N   ALA A   3       6.021   7.299   8.902  1.00  0.00           N  
+ATOM     22  H   ALA A   3       5.969   6.492   8.271  1.00  0.00           H  
+ATOM     23  CA  ALA A   3       5.108   7.370  10.043  1.00  0.00           C  
+ATOM     24  HA  ALA A   3       4.726   8.403  10.087  1.00  0.00           H  
+ATOM     25  C   ALA A   3       5.889   7.114  11.354  1.00  0.00           C  
+ATOM     26  O   ALA A   3       5.840   6.029  11.963  1.00  0.00           O  
+ATOM     27  CB  ALA A   3       3.960   6.387   9.867  1.00  0.00           C  
+ATOM     28  HB1 ALA A   3       3.256   6.471  10.704  1.00  0.00           H  
+ATOM     29  HB2 ALA A   3       4.328   5.354   9.850  1.00  0.00           H  
+ATOM     30  HB3 ALA A   3       3.423   6.593   8.932  1.00  0.00           H  
+ATOM     31  N   ALA A   4       6.644   8.160  11.759  1.00  0.00           N  
+ATOM     32  H   ALA A   4       6.565   9.059  11.274  1.00  0.00           H  
+ATOM     33  CA  ALA A   4       7.549   8.067  12.899  1.00  0.00           C  
+ATOM     34  HA  ALA A   4       7.888   7.020  12.941  1.00  0.00           H  
+ATOM     35  C   ALA A   4       6.768   8.349  14.200  1.00  0.00           C  
+ATOM     36  O   ALA A   4       6.812   9.441  14.794  1.00  0.00           O  
+ATOM     37  CB  ALA A   4       8.737   9.000  12.723  1.00  0.00           C  
+ATOM     38  HB1 ALA A   4       9.411   8.930  13.586  1.00  0.00           H  
+ATOM     39  HB2 ALA A   4       8.398  10.038  12.634  1.00  0.00           H  
+ATOM     40  HB3 ALA A   4       9.294   8.730  11.816  1.00  0.00           H  
+ATOM     41  N   ALA A   5       6.021   7.299  14.617  1.00  0.00           N  
+ATOM     42  H   ALA A   5       5.969   6.492  13.986  1.00  0.00           H  
+ATOM     43  CA  ALA A   5       5.108   7.370  15.758  1.00  0.00           C  
+ATOM     44  HA  ALA A   5       4.726   8.403  15.802  1.00  0.00           H  
+ATOM     45  C   ALA A   5       5.889   7.114  17.069  1.00  0.00           C  
+ATOM     46  O   ALA A   5       5.840   6.029   0.533  1.00  0.00           O  
+ATOM     47  CB  ALA A   5       3.960   6.387  15.582  1.00  0.00           C  
+ATOM     48  HB1 ALA A   5       3.256   6.471  16.419  1.00  0.00           H  
+ATOM     49  HB2 ALA A   5       4.328   5.354  15.565  1.00  0.00           H  
+ATOM     50  HB3 ALA A   5       3.423   6.593  14.647  1.00  0.00           H  
+ATOM     51  N   ALA A   6       6.644   8.160   0.329  1.00  0.00           N  
+ATOM     52  H   ALA A   6       6.565   9.059  16.989  1.00  0.00           H  
+ATOM     53  CA  ALA A   6       7.549   8.067   1.469  1.00  0.00           C  
+ATOM     54  HA  ALA A   6       7.888   7.020   1.511  1.00  0.00           H  
+ATOM     55  C   ALA A   6       6.768   8.349   2.770  1.00  0.00           C  
+ATOM     56  O   ALA A   6       6.812   9.441   3.364  1.00  0.00           O  
+ATOM     57  CB  ALA A   6       8.737   9.000   1.293  1.00  0.00           C  
+ATOM     58  HB1 ALA A   6       8.398  10.038   1.204  1.00  0.00           H  
+ATOM     59  HB2 ALA A   6       9.411   8.930   2.156  1.00  0.00           H  
+ATOM     60  HB3 ALA A   6       9.294   8.730   0.386  1.00  0.00           H  
+TER      61      ALA A   6                                                      
+ATOM     62  N   ALA B   1       6.338  12.417   3.186  1.00  0.00           N  
+ATOM     63  H   ALA B   1       6.416  11.517   2.701  1.00  0.00           H  
+ATOM     64  CA  ALA B   1       5.433  12.509   4.327  1.00  0.00           C  
+ATOM     65  HA  ALA B   1       5.094  13.557   4.369  1.00  0.00           H  
+ATOM     66  C   ALA B   1       6.214  12.227   5.628  1.00  0.00           C  
+ATOM     67  O   ALA B   1       6.170  11.135   6.222  1.00  0.00           O  
+ATOM     68  CB  ALA B   1       4.244  11.577   4.150  1.00  0.00           C  
+ATOM     69  HB1 ALA B   1       3.571  11.646   5.014  1.00  0.00           H  
+ATOM     70  HB2 ALA B   1       4.583  10.538   4.061  1.00  0.00           H  
+ATOM     71  HB3 ALA B   1       3.687  11.846   3.244  1.00  0.00           H  
+ATOM     72  N   ALA B   2       6.961  13.277   6.045  1.00  0.00           N  
+ATOM     73  H   ALA B   2       7.013  14.084   5.413  1.00  0.00           H  
+ATOM     74  CA  ALA B   2       7.874  13.206   7.186  1.00  0.00           C  
+ATOM     75  HA  ALA B   2       8.256  12.173   7.230  1.00  0.00           H  
+ATOM     76  C   ALA B   2       7.093  13.462   8.497  1.00  0.00           C  
+ATOM     77  O   ALA B   2       7.141  14.547   9.105  1.00  0.00           O  
+ATOM     78  CB  ALA B   2       9.021  14.189   7.010  1.00  0.00           C  
+ATOM     79  HB1 ALA B   2       8.653  15.223   6.993  1.00  0.00           H  
+ATOM     80  HB2 ALA B   2       9.559  13.983   6.075  1.00  0.00           H  
+ATOM     81  HB3 ALA B   2       9.726  14.106   7.846  1.00  0.00           H  
+ATOM     82  N   ALA B   3       6.338  12.417   8.901  1.00  0.00           N  
+ATOM     83  H   ALA B   3       6.416  11.517   8.416  1.00  0.00           H  
+ATOM     84  CA  ALA B   3       5.433  12.509  10.042  1.00  0.00           C  
+ATOM     85  HA  ALA B   3       5.094  13.557  10.084  1.00  0.00           H  
+ATOM     86  C   ALA B   3       6.214  12.227  11.343  1.00  0.00           C  
+ATOM     87  O   ALA B   3       6.170  11.135  11.937  1.00  0.00           O  
+ATOM     88  CB  ALA B   3       4.244  11.577   9.865  1.00  0.00           C  
+ATOM     89  HB1 ALA B   3       4.583  10.538   9.776  1.00  0.00           H  
+ATOM     90  HB2 ALA B   3       3.571  11.646  10.729  1.00  0.00           H  
+ATOM     91  HB3 ALA B   3       3.687  11.846   8.959  1.00  0.00           H  
+ATOM     92  N   ALA B   4       6.961  13.277  11.760  1.00  0.00           N  
+ATOM     93  H   ALA B   4       7.013  14.084  11.128  1.00  0.00           H  
+ATOM     94  CA  ALA B   4       7.874  13.206  12.901  1.00  0.00           C  
+ATOM     95  HA  ALA B   4       8.256  12.173  12.945  1.00  0.00           H  
+ATOM     96  C   ALA B   4       7.093  13.462  14.212  1.00  0.00           C  
+ATOM     97  O   ALA B   4       7.141  14.547  14.820  1.00  0.00           O  
+ATOM     98  CB  ALA B   4       9.021  14.189  12.725  1.00  0.00           C  
+ATOM     99  HB1 ALA B   4       9.726  14.106  13.561  1.00  0.00           H  
+ATOM    100  HB2 ALA B   4       8.653  15.223  12.708  1.00  0.00           H  
+ATOM    101  HB3 ALA B   4       9.559  13.983  11.790  1.00  0.00           H  
+ATOM    102  N   ALA B   5       6.338  12.417  14.616  1.00  0.00           N  
+ATOM    103  H   ALA B   5       6.416  11.517  14.131  1.00  0.00           H  
+ATOM    104  CA  ALA B   5       5.432  12.509  15.757  1.00  0.00           C  
+ATOM    105  HA  ALA B   5       5.094  13.557  15.799  1.00  0.00           H  
+ATOM    106  C   ALA B   5       6.214  12.227  17.058  1.00  0.00           C  
+ATOM    107  O   ALA B   5       6.170  11.135   0.507  1.00  0.00           O  
+ATOM    108  CB  ALA B   5       4.244  11.577  15.580  1.00  0.00           C  
+ATOM    109  HB1 ALA B   5       4.583  10.538  15.491  1.00  0.00           H  
+ATOM    110  HB2 ALA B   5       3.571  11.646  16.444  1.00  0.00           H  
+ATOM    111  HB3 ALA B   5       3.687  11.846  14.674  1.00  0.00           H  
+ATOM    112  N   ALA B   6       6.961  13.277   0.330  1.00  0.00           N  
+ATOM    113  H   ALA B   6       7.013  14.084  16.843  1.00  0.00           H  
+ATOM    114  CA  ALA B   6       7.874  13.206   1.471  1.00  0.00           C  
+ATOM    115  HA  ALA B   6       8.256  12.173   1.515  1.00  0.00           H  
+ATOM    116  C   ALA B   6       7.093  13.462   2.782  1.00  0.00           C  
+ATOM    117  O   ALA B   6       7.141  14.547   3.390  1.00  0.00           O  
+ATOM    118  CB  ALA B   6       9.021  14.189   1.295  1.00  0.00           C  
+ATOM    119  HB1 ALA B   6       8.653  15.223   1.278  1.00  0.00           H  
+ATOM    120  HB2 ALA B   6       9.726  14.106   2.131  1.00  0.00           H  
+ATOM    121  HB3 ALA B   6       9.559  13.983   0.360  1.00  0.00           H  
+TER     122      ALA B   6                                                      
+CONECT    1    2    3   55                                                      
+CONECT    2    1                                                                
+CONECT    3    1    4    5    7                                                 
+CONECT    4    3                                                                
+CONECT    5    3    6    6   11                                                 
+CONECT    6    5    5                                                           
+CONECT    7    3    8    9   10                                                 
+CONECT    8    7                                                                
+CONECT    9    7                                                                
+CONECT   10    7                                                                
+CONECT   11    5   12   13                                                      
+CONECT   12   11                                                                
+CONECT   13   11   14   15   17                                                 
+CONECT   14   13                                                                
+CONECT   15   13   16   16   21                                                 
+CONECT   16   15   15                                                           
+CONECT   17   13   18   19   20                                                 
+CONECT   18   17                                                                
+CONECT   19   17                                                                
+CONECT   20   17                                                                
+CONECT   21   15   22   23                                                      
+CONECT   22   21                                                                
+CONECT   23   21   24   25   27                                                 
+CONECT   24   23                                                                
+CONECT   25   23   26   26   31                                                 
+CONECT   26   25   25                                                           
+CONECT   27   23   28   29   30                                                 
+CONECT   28   27                                                                
+CONECT   29   27                                                                
+CONECT   30   27                                                                
+CONECT   31   25   32   33                                                      
+CONECT   32   31                                                                
+CONECT   33   31   34   35   37                                                 
+CONECT   34   33                                                                
+CONECT   35   33   36   36   41                                                 
+CONECT   36   35   35                                                           
+CONECT   37   33   38   39   40                                                 
+CONECT   38   37                                                                
+CONECT   39   37                                                                
+CONECT   40   37                                                                
+CONECT   41   35   42   43                                                      
+CONECT   42   41                                                                
+CONECT   43   41   44   45   47                                                 
+CONECT   44   43                                                                
+CONECT   45   43   46   46   51                                                 
+CONECT   46   45   45                                                           
+CONECT   47   43   48   49   50                                                 
+CONECT   48   47                                                                
+CONECT   49   47                                                                
+CONECT   50   47                                                                
+CONECT   51   45   52   53                                                      
+CONECT   52   51                                                                
+CONECT   53   51   54   55   57                                                 
+CONECT   54   53                                                                
+CONECT   55    1   53   56   56                                                 
+CONECT   56   55   55                                                           
+CONECT   57   53   58   59   60                                                 
+CONECT   58   57                                                                
+CONECT   59   57                                                                
+CONECT   60   57                                                                
+CONECT   62   63   64  116                                                      
+CONECT   63   62                                                                
+CONECT   64   62   65   66   68                                                 
+CONECT   65   64                                                                
+CONECT   66   64   67   67   72                                                 
+CONECT   67   66   66                                                           
+CONECT   68   64   69   70   71                                                 
+CONECT   69   68                                                                
+CONECT   70   68                                                                
+CONECT   71   68                                                                
+CONECT   72   66   73   74                                                      
+CONECT   73   72                                                                
+CONECT   74   72   75   76   78                                                 
+CONECT   75   74                                                                
+CONECT   76   74   77   77   82                                                 
+CONECT   77   76   76                                                           
+CONECT   78   74   79   80   81                                                 
+CONECT   79   78                                                                
+CONECT   80   78                                                                
+CONECT   81   78                                                                
+CONECT   82   76   83   84                                                      
+CONECT   83   82                                                                
+CONECT   84   82   85   86   88                                                 
+CONECT   85   84                                                                
+CONECT   86   84   87   87   92                                                 
+CONECT   87   86   86                                                           
+CONECT   88   84   89   90   91                                                 
+CONECT   89   88                                                                
+CONECT   90   88                                                                
+CONECT   91   88                                                                
+CONECT   92   86   93   94                                                      
+CONECT   93   92                                                                
+CONECT   94   92   95   96   98                                                 
+CONECT   95   94                                                                
+CONECT   96   94   97   97  102                                                 
+CONECT   97   96   96                                                           
+CONECT   98   94   99  100  101                                                 
+CONECT   99   98                                                                
+CONECT  100   98                                                                
+CONECT  101   98                                                                
+CONECT  102   96  103  104                                                      
+CONECT  103  102                                                                
+CONECT  104  102  105  106  108                                                 
+CONECT  105  104                                                                
+CONECT  106  104  107  107  112                                                 
+CONECT  107  106  106                                                           
+CONECT  108  104  109  110  111                                                 
+CONECT  109  108                                                                
+CONECT  110  108                                                                
+CONECT  111  108                                                                
+CONECT  112  106  113  114                                                      
+CONECT  113  112                                                                
+CONECT  114  112  115  116  118                                                 
+CONECT  115  114                                                                
+CONECT  116   62  114  117  117                                                 
+CONECT  117  116  116                                                           
+CONECT  118  114  119  120  121                                                 
+CONECT  119  118                                                                
+CONECT  120  118                                                                
+CONECT  121  118                                                                
+END                                                                             
