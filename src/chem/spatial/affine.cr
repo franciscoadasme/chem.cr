@@ -58,13 +58,13 @@ module Chem::Spatial
     getter offset : Vec3
 
     # Creates a new transformation with *linear_map* and *offset*.
-    def initialize(@linear_map : Mat3, @offset : Vec3)
+    def initialize(@linear_map : Mat3, @offset : Vec3 = Vec3.zero)
     end
 
     # Returns a transformation encoding the rotation operation to align
     # *u* to *v*.
     def self.aligning(u : Vec3, to v : Vec3) : self
-      new Quat.aligning(u, v).to_mat3, Vec3.zero
+      rotation Quat.aligning(u, v)
     end
 
     # Returns a transformation encoding the rotation to align *u[0]* to
@@ -74,7 +74,7 @@ module Chem::Spatial
     # alignment of the transformed *u[1]* to *v[1]* on the plane
     # perpendicular to *v[0]* by taking their projections.
     def self.aligning(u : Tuple(Vec3, Vec3), to v : Tuple(Vec3, Vec3)) : self
-      new Quat.aligning(u, v).to_mat3, Vec3.zero
+      rotation Quat.aligning(u, v)
     end
 
     # Returns the transformation encoding the rotation and traslation to
@@ -94,40 +94,46 @@ module Chem::Spatial
       ref_center = ref_pos.mean
       ref_pos.map! &.-(ref_center)
       rotmat, _ = Spatial.qcp pos, ref_pos
-      (new(rotmat, Vec3.zero) * translation(-center)).translate(ref_center)
+      (new(rotmat) * translation(-center)).translate(ref_center)
     end
 
     # Returns the identity transformation.
     def self.identity : self
-      AffineTransform.new Mat3.identity, Vec3.zero
+      new Mat3.identity
     end
 
     # Returns a transformation that rotates by the Euler angles in
     # degrees. Delegates to `Quat.euler` for computing the rotation.
     def self.euler(x : Number, y : Number, z : Number) : self
-      AffineTransform.new Quat.euler(x, y, z).to_mat3, Vec3.zero
+      rotation Quat.euler(x, y, z)
     end
 
     # Returns a transformation that rotates about the axis vector
     # *rotaxis* by *angle* degrees. Delegates to `Quat.rotation` for
     # computing the rotation.
     def self.rotation(about rotaxis : Vec3, by angle : Number) : self
-      AffineTransform.new Quat.rotation(rotaxis, angle).to_mat3, Vec3.zero
+      rotation Quat.rotation(rotaxis, angle)
+    end
+
+    # Returns a transformation that applies the rotation encoded by
+    # the given quaternion.
+    def self.rotation(quat : Quat) : self
+      new quat.to_mat3
     end
 
     # Returns a transformation that scales by *factor*.
     def self.scaling(factor : Number) : self
-      AffineTransform.new Mat3.diagonal(factor), Vec3.zero
+      new Mat3.diagonal(factor)
     end
 
     # Returns a transformation that scales by the given factors.
     def self.scaling(sx : Number, sy : Number, sz : Number) : self
-      AffineTransform.new Mat3.diagonal(sx, sy, sz), Vec3.zero
+      new Mat3.diagonal(sx, sy, sz)
     end
 
     # Returns a transformation that translates by *offset*.
     def self.translation(offset : Vec3) : self
-      AffineTransform.new Mat3.identity, offset
+      new Mat3.identity, offset
     end
 
     # Returns the multiplication of the transformation by *rhs*. It
@@ -205,7 +211,7 @@ module Chem::Spatial
 
     # Returns the rotation component of the transformation.
     def rotation : self
-      {{@type}}.new @linear_map, Vec3.zero
+      {{@type}}.new @linear_map
     end
 
     # Returns the transformation scaled by *factor*.
