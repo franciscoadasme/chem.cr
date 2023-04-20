@@ -1221,7 +1221,7 @@ pos.center <span class="o">==</span> ref_pos.center <span class="c"># =&gt; true
 <p>The transformation is obtained via the
 <code><a href="../../Chem/Spatial/AffineTransform.html#aligning%28u%3ATuple%28Vec3%2CVec3%29%2Ctov%3ATuple%28Vec3%2CVec3%29%29%3Aself-class-method">AffineTransform.aligning(pos, ref_pos)</a></code> method, which computes
 the optimal rotation matrix by minimizing the root mean square
-deviation (RMSD) using the QCP method (refer to <code><a href="../../Chem/Spatial.html#qcp%28pos%3AIndexable%28Vec3%29%2Cref_pos%3AIndexable%28Vec3%29%2Cweights%3AIndexable%28Float64%29%7CNil%3Dnil%2Cout_rotmat%3APointer%28Float64%29%7CNil%3Dnil%29%3AFloat64-class-method">Spatial.qcp</a></code> for
+deviation (RMSD) using the QCP method (refer to <code><a href="../../Chem/Spatial.html#qcp%28pos%3AIndexable%28Vec3%29%2Cref_pos%3AIndexable%28Vec3%29%2Cweights%3AIndexable%28Float64%29%7CNil%3Dnil%29%3ATuple%28Quat%2CFloat64%29-class-method">Spatial.qcp</a></code> for
 details).</p>
         </div>
       

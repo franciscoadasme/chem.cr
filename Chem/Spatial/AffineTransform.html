@@ -950,7 +950,7 @@ transform <span class="o">*</span> vec <span class="c"># =&gt; Vec3[3.0, 2.0, 5.
     <br/>
   
     
-      chem/spatial/affine.cr:261
+      chem/spatial/affine.cr:270
     
     <br/>
   
@@ -996,13 +996,6 @@ transform <span class="o">*</span> vec <span class="c"># =&gt; Vec3[3.0, 2.0, 5.
       </li>
     
       <li class="entry-summary">
-        <a href="#euler%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-class-method" class="signature"><strong>.euler</strong>(x : Number, y : Number, z : Number) : <span class="k">self</span></a>
-        
-          <div class="summary"><p>Returns a transformation that rotates by the Euler angles in degrees.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
         <a href="#identity%3Aself-class-method" class="signature"><strong>.identity</strong> : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the identity transformation.</p></div>
@@ -1010,9 +1003,16 @@ transform <span class="o">*</span> vec <span class="c"># =&gt; Vec3[3.0, 2.0, 5.
       </li>
     
       <li class="entry-summary">
-        <a href="#new%28linear_map%3AMat3%2Coffset%3AVec3%29-class-method" class="signature"><strong>.new</strong>(linear_map : Mat3, offset : Vec3)</a>
+        <a href="#new%28linear_map%3AMat3%2Coffset%3AVec3%3DVec3.zero%29-class-method" class="signature"><strong>.new</strong>(linear_map : Mat3, offset : Vec3 = <span class="t">Vec3</span>.zero)</a>
         
           <div class="summary"><p>Creates a new transformation with <em>linear_map</em> and <em>offset</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rotation%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-class-method" class="signature"><strong>.rotation</strong>(x : Number, y : Number, z : Number) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a transformation that rotates by the Euler angles in degrees.</p></div>
         
       </li>
     
@@ -1020,6 +1020,13 @@ transform <span class="o">*</span> vec <span class="c"># =&gt; Vec3[3.0, 2.0, 5.
         <a href="#rotation%28aboutrotaxis%3AVec3%2Cbyangle%3ANumber%29%3Aself-class-method" class="signature"><strong>.rotation</strong>(about rotaxis : Vec3, by angle : Number) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns a transformation that rotates about the axis vector <em>rotaxis</em> by <em>angle</em> degrees.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rotation%28quat%3AQuat%29%3Aself-class-method" class="signature"><strong>.rotation</strong>(quat : Quat) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a transformation that applies the rotation encoded by the given quaternion.</p></div>
         
       </li>
     
@@ -1110,7 +1117,7 @@ transform <span class="o">*</span> vec <span class="c"># =&gt; Vec3[3.0, 2.0, 5.
       <li class="entry-summary">
         <a href="#rotate%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-instance-method" class="signature"><strong>#rotate</strong>(x : Number, y : Number, z : Number) : <span class="k">self</span></a>
         
-          <div class="summary"><p>Returns a quaternion encoding the rotation by the Euler angles.</p></div>
+          <div class="summary"><p>Returns the transformation encoding the rotation by the Euler angles.</p></div>
         
       </li>
     
@@ -1118,6 +1125,13 @@ transform <span class="o">*</span> vec <span class="c"># =&gt; Vec3[3.0, 2.0, 5.
         <a href="#rotate%28aboutrotaxis%3AVec3%2Cbyangle%3ANumber%29%3Aself-instance-method" class="signature"><strong>#rotate</strong>(about rotaxis : Vec3, by angle : Number) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the transformation rotated about <em>rotaxis</em> by <em>angle</em> degrees.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rotate%28quat%3AQuat%29%3Aself-instance-method" class="signature"><strong>#rotate</strong>(quat : Quat) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the transformation rotated by the given quaternion.</p></div>
         
       </li>
     
@@ -1271,7 +1285,7 @@ align <em>pos</em> onto <em>ref_pos</em>. Raises <code>ArgumentError</code> if t
 coordinate sets are of different size.</p>
 <p>The optimal rotation matrix is computed by minimizing the root
 mean square deviation (RMSD) using the QCP method (refer to
-<code><a href="../../Chem/Spatial.html#qcp%28pos%3AIndexable%28Vec3%29%2Cref_pos%3AIndexable%28Vec3%29%2Cweights%3AIndexable%28Float64%29%7CNil%3Dnil%2Cout_rotmat%3APointer%28Float64%29%7CNil%3Dnil%29%3AFloat64-class-method">Spatial.qcp</a></code> for details).</p>
+<code><a href="../../Chem/Spatial.html#qcp%28pos%3AIndexable%28Vec3%29%2Cref_pos%3AIndexable%28Vec3%29%2Cweights%3AIndexable%28Float64%29%7CNil%3Dnil%29%3ATuple%28Quat%2CFloat64%29-class-method">Spatial.qcp</a></code> for details).</p>
         </div>
       
       <br/>
@@ -1287,26 +1301,6 @@ mean square deviation (RMSD) using the QCP method (refer to
 
         <a class="method-permalink" href="#aligning%28pos%3AAtomCollection%2Ctoref_pos%3AAtomCollection%29%3Aself-class-method">#</a>
       </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="euler(x:Number,y:Number,z:Number):self-class-method">
-      <div class="signature">
-        
-        def self.<strong>euler</strong>(x : <a href="../../Number.html">Number</a>, y : <a href="../../Number.html">Number</a>, z : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
-
-        <a class="method-permalink" href="#euler%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-class-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Returns a transformation that rotates by the Euler angles in
-degrees. Delegates to <code><a href="../../Chem/Spatial/Quat.html#euler%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-class-method">Quat.euler</a></code> for computing the rotation.</p>
-        </div>
       
       <br/>
       <div>
@@ -1333,17 +1327,37 @@ degrees. Delegates to <code><a href="../../Chem/Spatial/Quat.html#euler%28x%3ANu
       </div>
     </div>
   
-    <div class="entry-detail" id="new(linear_map:Mat3,offset:Vec3)-class-method">
+    <div class="entry-detail" id="new(linear_map:Mat3,offset:Vec3=Vec3.zero)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(linear_map : <a href="../../Chem/Spatial/Mat3.html">Mat3</a>, offset : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>)
+        def self.<strong>new</strong>(linear_map : <a href="../../Chem/Spatial/Mat3.html">Mat3</a>, offset : <a href="../../Chem/Spatial/Vec3.html">Vec3</a> = <span class="t">Vec3</span>.zero)
 
-        <a class="method-permalink" href="#new%28linear_map%3AMat3%2Coffset%3AVec3%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28linear_map%3AMat3%2Coffset%3AVec3%3DVec3.zero%29-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Creates a new transformation with <em>linear_map</em> and <em>offset</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rotation(x:Number,y:Number,z:Number):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>rotation</strong>(x : <a href="../../Number.html">Number</a>, y : <a href="../../Number.html">Number</a>, z : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#rotation%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a transformation that rotates by the Euler angles in
+degrees. Delegates to <code><a href="../../Chem/Spatial/Quat.html#rotation%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-class-method">Quat.rotation</a></code> for computing the rotation.</p>
         </div>
       
       <br/>
@@ -1363,8 +1377,28 @@ degrees. Delegates to <code><a href="../../Chem/Spatial/Quat.html#euler%28x%3ANu
         <div class="doc">
           
           <p>Returns a transformation that rotates about the axis vector
-<em>rotaxis</em> by <em>angle</em> degrees. Delegates to <code><a href="../../Chem/Spatial/Quat.html#rotation%28aboutrotaxis%3AVec3%2Cbytheta%3ANumber%29%3Aself-class-method">Quat.rotation</a></code> for
+<em>rotaxis</em> by <em>angle</em> degrees. Delegates to <code><a href="../../Chem/Spatial/Quat.html#rotation%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-class-method">Quat.rotation</a></code> for
 computing the rotation.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rotation(quat:Quat):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>rotation</strong>(quat : <a href="../../Chem/Spatial/Quat.html">Quat</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#rotation%28quat%3AQuat%29%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a transformation that applies the rotation encoded by
+the given quaternion.</p>
         </div>
       
       <br/>
@@ -1602,8 +1636,8 @@ Overflow.</p>
       
         <div class="doc">
           
-          <p>Returns a quaternion encoding the rotation by the Euler angles.
-Delegates to <code><a href="../../Chem/Spatial/Quat.html#euler%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-class-method">Quat.euler</a></code> for computing the rotation.</p>
+          <p>Returns the transformation encoding the rotation by the Euler
+angles. Delegates to <code><a href="../../Chem/Spatial/Quat.html#rotation%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-class-method">Quat.rotation</a></code> for computing the rotation.</p>
         </div>
       
       <br/>
@@ -1623,7 +1657,26 @@ Delegates to <code><a href="../../Chem/Spatial/Quat.html#euler%28x%3ANumber%2Cy%
         <div class="doc">
           
           <p>Returns the transformation rotated about <em>rotaxis</em> by <em>angle</em>
-degrees. Delegates to <code><a href="../../Chem/Spatial/Quat.html#rotation%28aboutrotaxis%3AVec3%2Cbytheta%3ANumber%29%3Aself-class-method">Quat.rotation</a></code> for computing the rotation.</p>
+degrees. Delegates to <code><a href="../../Chem/Spatial/Quat.html#rotation%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-class-method">Quat.rotation</a></code> for computing the rotation.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rotate(quat:Quat):self-instance-method">
+      <div class="signature">
+        
+        def <strong>rotate</strong>(quat : <a href="../../Chem/Spatial/Quat.html">Quat</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#rotate%28quat%3AQuat%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the transformation rotated by the given quaternion.</p>
         </div>
       
       <br/>

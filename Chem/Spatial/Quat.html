@@ -1000,9 +1000,9 @@ avoid the ambiguity.</p>
       </li>
     
       <li class="entry-summary">
-        <a href="#euler%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-class-method" class="signature"><strong>.euler</strong>(x : Number, y : Number, z : Number) : <span class="k">self</span></a>
+        <a href="#identity%3Aself-class-method" class="signature"><strong>.identity</strong> : <span class="k">self</span></a>
         
-          <div class="summary"><p>Returns a quaternion encoding the rotation by the Euler angles.</p></div>
+          <div class="summary"><p>Returns the identity quaternion (no rotation).</p></div>
         
       </li>
     
@@ -1010,6 +1010,13 @@ avoid the ambiguity.</p>
         <a href="#new%28w%3AFloat64%2Cx%3AFloat64%2Cy%3AFloat64%2Cz%3AFloat64%29-class-method" class="signature"><strong>.new</strong>(w : Float64, x : Float64, y : Float64, z : Float64)</a>
         
           <div class="summary"><p>Creates a new quaternion with <em>w</em> as the real (scalar) part and <em>x</em>, <em>y</em>, and <em>z</em> as the vector (imaginary) part.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rotation%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-class-method" class="signature"><strong>.rotation</strong>(x : Number, y : Number, z : Number) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a quaternion encoding the rotation by the Euler angles.</p></div>
         
       </li>
     
@@ -1317,20 +1324,17 @@ perpendicular to <em>v[0]</em> by taking their projections.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="euler(x:Number,y:Number,z:Number):self-class-method">
+    <div class="entry-detail" id="identity:self-class-method">
       <div class="signature">
         
-        def self.<strong>euler</strong>(x : <a href="../../Number.html">Number</a>, y : <a href="../../Number.html">Number</a>, z : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
+        def self.<strong>identity</strong> : <span class="k">self</span>
 
-        <a class="method-permalink" href="#euler%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-class-method">#</a>
+        <a class="method-permalink" href="#identity%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Returns a quaternion encoding the rotation by the Euler angles.</p>
-<p>The rotation rotates <em>x</em> degrees around the X axis, <em>y</em> degrees
-around the Y axis, and <em>z</em> degrees around the y axis; applied in
-that order (XYZ).</p>
+          <p>Returns the identity quaternion (no rotation).</p>
         </div>
       
       <br/>
@@ -1351,6 +1355,28 @@ that order (XYZ).</p>
           
           <p>Creates a new quaternion with <em>w</em> as the real (scalar) part and
 <em>x</em>, <em>y</em>, and <em>z</em> as the vector (imaginary) part.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rotation(x:Number,y:Number,z:Number):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>rotation</strong>(x : <a href="../../Number.html">Number</a>, y : <a href="../../Number.html">Number</a>, z : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#rotation%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a quaternion encoding the rotation by the Euler angles.</p>
+<p>The rotation rotates <em>x</em> degrees around the X axis, <em>y</em> degrees
+around the Y axis, and <em>z</em> degrees around the y axis; applied in
+that order (XYZ).</p>
         </div>
       
       <br/>

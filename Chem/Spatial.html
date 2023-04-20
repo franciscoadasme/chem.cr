@@ -891,7 +891,7 @@
     <br/>
   
     
-      chem/spatial.cr:214
+      chem/spatial.cr:216
     
     <br/>
   
@@ -1087,9 +1087,9 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#qcp%28pos%3AIndexable%28Vec3%29%2Cref_pos%3AIndexable%28Vec3%29%2Cweights%3AIndexable%28Float64%29%7CNil%3Dnil%2Cout_rotmat%3APointer%28Float64%29%7CNil%3Dnil%29%3AFloat64-class-method" class="signature"><strong>.qcp</strong>(pos : Indexable(Vec3), ref_pos : Indexable(Vec3), weights : Indexable(Float64) | Nil = <span class="n">nil</span>, out_rotmat : Pointer(Float64) | Nil = <span class="n">nil</span>) : Float64</a>
+        <a href="#qcp%28pos%3AIndexable%28Vec3%29%2Cref_pos%3AIndexable%28Vec3%29%2Cweights%3AIndexable%28Float64%29%7CNil%3Dnil%29%3ATuple%28Quat%2CFloat64%29-class-method" class="signature"><strong>.qcp</strong>(pos : Indexable(Vec3), ref_pos : Indexable(Vec3), weights : Indexable(Float64) | Nil = <span class="n">nil</span>) : Tuple(Quat, Float64)</a>
         
-          <div class="summary"><p>Returns the minimum root mean square deviation (RMSD) in Å between two sets of coordinates <em>pos</em> and <em>ref_pos</em> computed using the quaternion-based characteristic polynomial (QCP) method [Theobald2005].</p></div>
+          <div class="summary"><p>Computes the optimal rotation and minimum root mean square deviation (RMSD) in Å between two sets of coordinates <em>pos</em> and <em>ref_pos</em> using the quaternion-based characteristic polynomial (QCP) method [Theobald2005].</p></div>
         
       </li>
     
@@ -1489,19 +1489,19 @@ two quaternions. Taken from
       </div>
     </div>
   
-    <div class="entry-detail" id="qcp(pos:Indexable(Vec3),ref_pos:Indexable(Vec3),weights:Indexable(Float64)|Nil=nil,out_rotmat:Pointer(Float64)|Nil=nil):Float64-class-method">
+    <div class="entry-detail" id="qcp(pos:Indexable(Vec3),ref_pos:Indexable(Vec3),weights:Indexable(Float64)|Nil=nil):Tuple(Quat,Float64)-class-method">
       <div class="signature">
         
-        def self.<strong>qcp</strong>(pos : Indexable(<a href="../Chem/Spatial/Vec3.html">Vec3</a>), ref_pos : Indexable(<a href="../Chem/Spatial/Vec3.html">Vec3</a>), weights : Indexable(Float64) | Nil = <span class="n">nil</span>, out_rotmat : Pointer(Float64) | Nil = <span class="n">nil</span>) : Float64
+        def self.<strong>qcp</strong>(pos : Indexable(<a href="../Chem/Spatial/Vec3.html">Vec3</a>), ref_pos : Indexable(<a href="../Chem/Spatial/Vec3.html">Vec3</a>), weights : Indexable(Float64) | Nil = <span class="n">nil</span>) : Tuple(<a href="../Chem/Spatial/Quat.html">Quat</a>, Float64)
 
-        <a class="method-permalink" href="#qcp%28pos%3AIndexable%28Vec3%29%2Cref_pos%3AIndexable%28Vec3%29%2Cweights%3AIndexable%28Float64%29%7CNil%3Dnil%2Cout_rotmat%3APointer%28Float64%29%7CNil%3Dnil%29%3AFloat64-class-method">#</a>
+        <a class="method-permalink" href="#qcp%28pos%3AIndexable%28Vec3%29%2Cref_pos%3AIndexable%28Vec3%29%2Cweights%3AIndexable%28Float64%29%7CNil%3Dnil%29%3ATuple%28Quat%2CFloat64%29-class-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Returns the minimum root mean square deviation (RMSD) in Å between
-two sets of coordinates <em>pos</em> and <em>ref_pos</em> computed using the
-quaternion-based characteristic polynomial (QCP) method
+          <p>Computes the optimal rotation and minimum root mean square deviation
+(RMSD) in Å between two sets of coordinates <em>pos</em> and <em>ref_pos</em>
+using the quaternion-based characteristic polynomial (QCP) method
 [Theobald2005].</p>
 <p>The QCP method is among the fastest known methods to determine the
 optimal least-squares rotation matrix between the two coordinate
@@ -1516,14 +1516,9 @@ Newton-Raphson algorithm that quickly finds the largest root
 (eigenvalue) from the characteristic polynomial. The minimum RMSD is
 then easily calculated from the largest eigenvalue. If not <code>nil</code>,
 the <em>weights</em> determine the relative weights of each coordinate when
-calculating the intermediate inner products.</p>
-<p>If the optimal rotation matrix is also desired, then the best
-rotation is given by the corresponding eigenvector, which can be
-calculated from a column of the adjoint matrix [Liu2009]. In such
-case, the method expects a valid pointer (<em>out_rotmat</em>) pointing to
-a nine float memory chunk for representing a 3x3 matrix (e.g.,
-<code><a href="../Chem/Spatial/Mat3.html#identity%3Aself-class-method">Mat3.identity</a>.to_unsafe</code>). Otherwise, the operations to obtain such
-matrix would be skipped thus speeding up the RMSD calculation.</p>
+calculating the intermediate inner products. The optimal rotation is
+given by the corresponding eigenvector, which can be calculated from
+a column of the adjoint matrix [Liu2009].</p>
 <p>Reference C implementation found at
 <a href="">https://theobald.brandeis.edu/qcp</a>.</p>
 <p><span class="flag yellow">WARNING</span>  Coordinate sets must be centered at the origin.</p>
@@ -1571,7 +1566,7 @@ atom masses) determine the relative weights of each coordinate when
 calculating the RMSD.</p>
 <p>If the minimum RMSD is desired (<em>minimize</em> is <code>true</code>), the RMSD will
 be computed using the quaternion-based characteristic polynomial
-(QCP) method (refer to <code><a href="../Chem/Spatial.html#qcp%28pos%3AIndexable%28Vec3%29%2Cref_pos%3AIndexable%28Vec3%29%2Cweights%3AIndexable%28Float64%29%7CNil%3Dnil%2Cout_rotmat%3APointer%28Float64%29%7CNil%3Dnil%29%3AFloat64-class-method">.qcp</a></code>). This method superimpose <em>pos</em> onto
+(QCP) method (refer to <code><a href="../Chem/Spatial.html#qcp%28pos%3AIndexable%28Vec3%29%2Cref_pos%3AIndexable%28Vec3%29%2Cweights%3AIndexable%28Float64%29%7CNil%3Dnil%29%3ATuple%28Quat%2CFloat64%29-class-method">.qcp</a></code>). This method superimpose <em>pos</em> onto
 <em>ref_pos</em> by computing the optimal rotation between the two
 coordinate sets before calculating the RMSD.</p>
         </div>
@@ -1598,7 +1593,7 @@ of coordinates <em>pos</em> and <em>ref_pos</em>.</p>
 two coordinates sets <em>A</em> and <em>B</em>.</p>
 <p>If the minimum RMSD is desired (<em>minimize</em> is <code>true</code>), the RMSD will
 be computed using the quaternion-based characteristic polynomial
-(QCP) method (refer to <code><a href="../Chem/Spatial.html#qcp%28pos%3AIndexable%28Vec3%29%2Cref_pos%3AIndexable%28Vec3%29%2Cweights%3AIndexable%28Float64%29%7CNil%3Dnil%2Cout_rotmat%3APointer%28Float64%29%7CNil%3Dnil%29%3AFloat64-class-method">.qcp</a></code>). This method superimpose <em>pos</em> onto
+(QCP) method (refer to <code><a href="../Chem/Spatial.html#qcp%28pos%3AIndexable%28Vec3%29%2Cref_pos%3AIndexable%28Vec3%29%2Cweights%3AIndexable%28Float64%29%7CNil%3Dnil%29%3ATuple%28Quat%2CFloat64%29-class-method">.qcp</a></code>). This method superimpose <em>pos</em> onto
 <em>ref_pos</em> by computing the optimal rotation between the two
 coordinate sets before calculating the RMSD.</p>
         </div>
