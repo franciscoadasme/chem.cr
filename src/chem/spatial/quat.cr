@@ -122,7 +122,7 @@ module Chem::Spatial
     # The rotation rotates *x* degrees around the X axis, *y* degrees
     # around the Y axis, and *z* degrees around the y axis; applied in
     # that order (XYZ).
-    def self.euler(x : Number, y : Number, z : Number) : self
+    def self.rotation(x : Number, y : Number, z : Number) : self
       cx = Math.cos(x.radians * 0.5)
       sx = Math.sin(x.radians * 0.5)
       cy = Math.cos(y.radians * 0.5)

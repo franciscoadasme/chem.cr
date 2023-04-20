@@ -211,7 +211,7 @@ describe Chem::Spatial::CoordinatesProxy do
         atom Chem::PeriodicTable::H, vec3(7, 8, 9)
       end
       center = other.coords.center
-      transform = Chem::Spatial::AffineTransform.euler(10, 50, 15).translate(vec3(1, 2, 3))
+      transform = Chem::Spatial::AffineTransform.rotation(10, 50, 15).translate(vec3(1, 2, 3))
       expected = other.coords.to_a.map { |vec| transform * vec }
       other.coords.transform!(transform).should eq expected
     end

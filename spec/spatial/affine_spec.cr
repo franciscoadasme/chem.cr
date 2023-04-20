@@ -42,18 +42,6 @@ describe Chem::Spatial::AffineTransform do
     end
   end
 
-  describe ".euler" do
-    it "returns a rotation transformation" do
-      transform = Chem::Spatial::AffineTransform.euler(123, 4, 96)
-      transform.linear_map.should be_close Chem::Spatial::Mat3[
-        {-0.1042738, -0.9920993, 0.0697565},
-        {-0.5477706, -0.0012519, -0.8366276},
-        {0.8301050, -0.1254489, -0.5433123},
-      ], 1e-7
-      transform.offset.should eq [0, 0, 0]
-    end
-  end
-
   describe ".rotation" do
     it "returns a rotation transformation" do
       transform = Chem::Spatial::AffineTransform.rotation(vec3(1, 0, 0), 90)
@@ -81,6 +69,16 @@ describe Chem::Spatial::AffineTransform do
         {0.7239256, 0.2870673, 0.6273150},
         {-0.1152403, 0.9468561, -0.3003053},
         {-0.6801848, 0.1451067, 0.7185351},
+      ], 1e-7
+      transform.offset.should eq [0, 0, 0]
+    end
+
+    it "returns the rotation by Euler angles" do
+      transform = Chem::Spatial::AffineTransform.rotation(123, 4, 96)
+      transform.linear_map.should be_close Chem::Spatial::Mat3[
+        {-0.1042738, -0.9920993, 0.0697565},
+        {-0.5477706, -0.0012519, -0.8366276},
+        {0.8301050, -0.1254489, -0.5433123},
       ], 1e-7
       transform.offset.should eq [0, 0, 0]
     end
@@ -156,7 +154,7 @@ describe Chem::Spatial::AffineTransform do
 
   describe "#rotation" do
     it "returns the rotation component" do
-      transform = Chem::Spatial::AffineTransform.euler(50, 10, 5).translate(vec3(1, 2, 3))
+      transform = Chem::Spatial::AffineTransform.rotation(50, 10, 5).translate(vec3(1, 2, 3))
       rot = transform.rotation
       rot.should be_a Chem::Spatial::AffineTransform
       rot.linear_map.should eq transform.linear_map
@@ -206,7 +204,7 @@ describe Chem::Spatial::AffineTransform do
 
   describe "#translation" do
     it "returns the translation component" do
-      transform = Chem::Spatial::AffineTransform.euler(50, 10, 5).translate(vec3(1, 2, 3))
+      transform = Chem::Spatial::AffineTransform.rotation(50, 10, 5).translate(vec3(1, 2, 3))
       trans = transform.translation
       trans.should be_a Chem::Spatial::AffineTransform
       trans.linear_map.should eq Chem::Spatial::Mat3.identity

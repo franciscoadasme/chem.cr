@@ -404,7 +404,7 @@ describe Chem::Spatial::Parallelepiped do
       pld.rotate(vec3(1, 2, 3), 65).should eq \
         pld.transform(Chem::Spatial::AffineTransform.rotation(vec3(1, 2, 3), 65))
       pld.rotate(10, 6.4, 64.2).should eq \
-        pld.transform(Chem::Spatial::AffineTransform.euler(10, 6.4, 64.2))
+        pld.transform(Chem::Spatial::Quat.rotation(10, 6.4, 64.2))
     end
   end
 
@@ -430,7 +430,7 @@ describe Chem::Spatial::Parallelepiped do
 
   describe "#transform" do
     it "returns a transformed parallelepiped" do
-      transform = Chem::Spatial::AffineTransform.euler(45, 45, 68).translate(vec3(1, 2.5, -6.8))
+      transform = Chem::Spatial::AffineTransform.rotation(45, 45, 68).translate(vec3(1, 2.5, -6.8))
       pld = Chem::Spatial::Parallelepiped.cubic(10).transform(transform)
       pld.center.should be_close vec3(5, 5, 5) + vec3(1, 2.5, -6.8), 1e-15
       pld.vertices.should be_close [

@@ -103,9 +103,9 @@ module Chem::Spatial
     end
 
     # Returns a transformation that rotates by the Euler angles in
-    # degrees. Delegates to `Quat.euler` for computing the rotation.
-    def self.euler(x : Number, y : Number, z : Number) : self
-      rotation Quat.euler(x, y, z)
+    # degrees. Delegates to `Quat.rotation` for computing the rotation.
+    def self.rotation(x : Number, y : Number, z : Number) : self
+      rotation Quat.rotation(x, y, z)
     end
 
     # Returns a transformation that rotates about the axis vector
@@ -196,9 +196,9 @@ module Chem::Spatial
     end
 
     # Returns the transformation encoding the rotation by the Euler
-    # angles. Delegates to `Quat.euler` for computing the rotation.
+    # angles. Delegates to `Quat.rotation` for computing the rotation.
     def rotate(x : Number, y : Number, z : Number) : self
-      rotate Quat.euler(x, y, z)
+      rotate Quat.rotation(x, y, z)
     end
 
     # Returns the transformation rotated about *rotaxis* by *angle*

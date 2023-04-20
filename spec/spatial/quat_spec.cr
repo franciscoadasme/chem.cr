@@ -27,15 +27,6 @@ describe Chem::Spatial::Quat do
     end
   end
 
-  describe ".euler" do
-    it "returns a quaternion encoding the rotation by the Euler angles" do
-      Chem::Spatial::Quat.euler(65, 0, 0).should be_close Chem::Spatial::Quat[0.843, 0.537, 0, 0], 1e-3
-      Chem::Spatial::Quat.euler(0, 76, 0).should be_close Chem::Spatial::Quat[0.788, 0, 0.616, 0], 1e-3
-      Chem::Spatial::Quat.euler(0, 0, 81).should be_close Chem::Spatial::Quat[0.760, 0, 0, 0.649], 1e-3
-      Chem::Spatial::Quat.euler(-157, 17, -83).should be_close Chem::Spatial::Quat[0.052, -0.745, -0.62, -0.239], 1e-3
-    end
-  end
-
   describe ".rotation" do
     it "returns a quaternion encoding the given rotation" do
       Chem::Spatial::Quat.rotation(vec3(1, 0, 0), 90).should be_close Chem::Spatial::Quat[0.71, 0.71, 0, 0], 1e-2
@@ -45,6 +36,13 @@ describe Chem::Spatial::Quat do
       Chem::Spatial::Quat.rotation(vec3(0.67, 0.68, 0.3), -180).should be_close Chem::Spatial::Quat[0, -0.67, -0.68, -0.3], 1e-2
       Chem::Spatial::Quat.rotation(vec3(0.31, 0.91, -0.28), 46).should be_close Chem::Spatial::Quat[0.92, 0.12, 0.36, -0.11], 1e-2
       Chem::Spatial::Quat.rotation(vec3(1, 1, 1), 120).should be_close Chem::Spatial::Quat[0.5, 0.5, 0.5, 0.5], 1e-15
+    end
+
+    it "returns the rotation by Euler angles" do
+      Chem::Spatial::Quat.rotation(65, 0, 0).should be_close Chem::Spatial::Quat[0.843, 0.537, 0, 0], 1e-3
+      Chem::Spatial::Quat.rotation(0, 76, 0).should be_close Chem::Spatial::Quat[0.788, 0, 0.616, 0], 1e-3
+      Chem::Spatial::Quat.rotation(0, 0, 81).should be_close Chem::Spatial::Quat[0.760, 0, 0, 0.649], 1e-3
+      Chem::Spatial::Quat.rotation(-157, 17, -83).should be_close Chem::Spatial::Quat[0.052, -0.745, -0.62, -0.239], 1e-3
     end
   end
 
@@ -157,7 +155,7 @@ describe Chem::Spatial::Quat do
 
   describe "#to_mat3" do
     it "returns the 3x3 matrix" do
-      q = Chem::Spatial::Quat.euler(-157, 17, -83)
+      q = Chem::Spatial::Quat.rotation(-157, 17, -83)
       vec = vec3(1, 2, 3)
       (q.to_mat3 * vec).should be_close (q * vec), 1e-14
     end

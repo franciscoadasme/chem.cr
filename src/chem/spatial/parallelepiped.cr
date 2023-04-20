@@ -513,9 +513,9 @@ module Chem::Spatial
     end
 
     # Returns the parallelepiped rotated by the Euler angles in degrees.
-    # Delegates to `AffineTransform.euler` for computing the rotation.
+    # Delegates to `AffineTransform.rotation` for computing the rotation.
     def rotate(x : Number, y : Number, z : Number) : self
-      transform AffineTransform.euler(x, y, z)
+      transform Quat.rotation(x, y, z)
     end
 
     # Returns the lengths of the basis vectors.
