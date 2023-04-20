@@ -1,8 +1,8 @@
 module Chem::Spatial
-  # Returns the minimum root mean square deviation (RMSD) in Å between
-  # two sets of coordinates *pos* and *ref_pos* computed using the
-  # quaternion-based characteristic polynomial (QCP) method
-  # [Theobald2005].
+  # Computes the optimal rotation matrix and minimum root mean square
+  # deviation (RMSD) in Å between two sets of coordinates *pos* and
+  # *ref_pos* using the quaternion-based characteristic
+  # polynomial (QCP) method [Theobald2005].
   #
   # The QCP method is among the fastest known methods to determine the
   # optimal least-squares rotation matrix between the two coordinate
@@ -18,15 +18,9 @@ module Chem::Spatial
   # (eigenvalue) from the characteristic polynomial. The minimum RMSD is
   # then easily calculated from the largest eigenvalue. If not `nil`,
   # the *weights* determine the relative weights of each coordinate when
-  # calculating the intermediate inner products.
-  #
-  # If the optimal rotation matrix is also desired, then the best
-  # rotation is given by the corresponding eigenvector, which can be
-  # calculated from a column of the adjoint matrix [Liu2009]. In such
-  # case, the method expects a valid pointer (*out_rotmat*) pointing to
-  # a nine float memory chunk for representing a 3x3 matrix (e.g.,
-  # `Mat3.identity.to_unsafe`). Otherwise, the operations to obtain such
-  # matrix would be skipped thus speeding up the RMSD calculation.
+  # calculating the intermediate inner products. The optimal rotation
+  # matrix is given by the corresponding eigenvector, which can be
+  # calculated from a column of the adjoint matrix [Liu2009].
   #
   # Reference C implementation found at
   # [https://theobald.brandeis.edu/qcp]().
@@ -50,9 +44,8 @@ module Chem::Spatial
   def self.qcp(
     pos : Indexable(Vec3),
     ref_pos : Indexable(Vec3),
-    weights : Indexable(Float64)? = nil,
-    out_rotmat : Pointer(Float64)? = nil
-  ) : Float64
+    weights : Indexable(Float64)? = nil
+  ) : Tuple(Mat3, Float64)
     raise ArgumentError.new("Incompatible coordinates") if pos.size != ref_pos.size
     g1, g2, m = inner_products(pos, ref_pos, weights)
 
@@ -94,7 +87,6 @@ module Chem::Spatial
 
     l_max = find_largest_root((g1 + g2) * 0.5, c0, c1, c2)
     rmsd = Math.sqrt ((g1 + g2 - 2 * l_max) / pos.size).abs
-    return rmsd unless out_rotmat
 
     # Compute rotation matrix according to liu2009, where the rotation
     # matrix corresponds to the eigenvector associated with the largest
@@ -166,22 +158,14 @@ module Chem::Spatial
           q4 = -k31 * k1223_1322 + k32 * k1123_1321 - k33 * k1122_1221
           qabs2 = q1**2 + q2**2 + q3**2 + q4**2
 
-          if qabs2 < 1e-6 # no more columns so return the identity matrix
-            out_rotmat.clear 9
-            out_rotmat[0] = out_rotmat[4] = out_rotmat[8] = 1.0
-            return rmsd
-          end
+          # no more columns so return the identity matrix
+          return Mat3.identity, rmsd if qabs2 < 1e-6
         end
       end
     end
 
-    # Transform the eigenvector (quaternion) into the corresponding
-    # rotation matrix.
-    #
-    # TODO: avoid intermediate matrix
-    out_rotmat.copy_from Quat[-q1, q2, q3, q4].to_mat3.to_unsafe, 9
-
-    rmsd
+    rotmat = Quat[-q1, q2, q3, q4].to_mat3
+    {rotmat, rmsd}
   end
 
   # Returns the largest root (eigenvalue) of the characteristic

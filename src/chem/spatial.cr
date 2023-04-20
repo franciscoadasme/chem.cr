@@ -168,7 +168,8 @@ module Chem::Spatial
       weight_mean = weights.mean
       weights.map! &./(weight_mean)
 
-      Spatial.qcp(pos, ref_pos, weights)
+      _, rmsd = Spatial.qcp(pos, ref_pos, weights)
+      rmsd
     else
       Math.sqrt((0...pos.size).average(weights) do |i|
         Spatial.distance2 pos.unsafe_fetch(i), ref_pos.unsafe_fetch(i)
@@ -202,7 +203,8 @@ module Chem::Spatial
       pos.map! &.-(center)
       center = ref_pos.mean
       ref_pos.map! &.-(center)
-      Spatial.qcp pos, ref_pos
+      _, rmsd = Spatial.qcp pos, ref_pos
+      rmsd
     else
       Math.sqrt((0...pos.size).mean do |i|
         Spatial.distance2 pos.unsafe_fetch(i), ref_pos.unsafe_fetch(i)

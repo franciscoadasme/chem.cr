@@ -93,9 +93,8 @@ module Chem::Spatial
       pos.map! &.-(center)
       ref_center = ref_pos.mean
       ref_pos.map! &.-(ref_center)
-      transform = identity
-      Spatial.qcp pos, ref_pos, out_rotmat: transform.linear_map.to_unsafe
-      (transform * translation(-center)).translate(ref_center)
+      rotmat, _ = Spatial.qcp pos, ref_pos
+      (new(rotmat, Vec3.zero) * translation(-center)).translate(ref_center)
     end
 
     # Returns the identity transformation.
