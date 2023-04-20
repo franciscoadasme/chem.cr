@@ -1,8 +1,8 @@
 module Chem::Spatial
-  # Computes the optimal rotation matrix and minimum root mean square
-  # deviation (RMSD) in Å between two sets of coordinates *pos* and
-  # *ref_pos* using the quaternion-based characteristic
-  # polynomial (QCP) method [Theobald2005].
+  # Computes the optimal rotation and minimum root mean square deviation
+  # (RMSD) in Å between two sets of coordinates *pos* and *ref_pos*
+  # using the quaternion-based characteristic polynomial (QCP) method
+  # [Theobald2005].
   #
   # The QCP method is among the fastest known methods to determine the
   # optimal least-squares rotation matrix between the two coordinate
@@ -18,9 +18,9 @@ module Chem::Spatial
   # (eigenvalue) from the characteristic polynomial. The minimum RMSD is
   # then easily calculated from the largest eigenvalue. If not `nil`,
   # the *weights* determine the relative weights of each coordinate when
-  # calculating the intermediate inner products. The optimal rotation
-  # matrix is given by the corresponding eigenvector, which can be
-  # calculated from a column of the adjoint matrix [Liu2009].
+  # calculating the intermediate inner products. The optimal rotation is
+  # given by the corresponding eigenvector, which can be calculated from
+  # a column of the adjoint matrix [Liu2009].
   #
   # Reference C implementation found at
   # [https://theobald.brandeis.edu/qcp]().
@@ -45,7 +45,7 @@ module Chem::Spatial
     pos : Indexable(Vec3),
     ref_pos : Indexable(Vec3),
     weights : Indexable(Float64)? = nil
-  ) : Tuple(Mat3, Float64)
+  ) : Tuple(Quat, Float64)
     raise ArgumentError.new("Incompatible coordinates") if pos.size != ref_pos.size
     g1, g2, m = inner_products(pos, ref_pos, weights)
 
@@ -159,13 +159,12 @@ module Chem::Spatial
           qabs2 = q1**2 + q2**2 + q3**2 + q4**2
 
           # no more columns so return the identity matrix
-          return Mat3.identity, rmsd if qabs2 < 1e-6
+          return Quat.identity, rmsd if qabs2 < 1e-6
         end
       end
     end
 
-    rotmat = Quat[-q1, q2, q3, q4].to_mat3
-    {rotmat, rmsd}
+    {Quat[-q1, q2, q3, q4], rmsd}
   end
 
   # Returns the largest root (eigenvalue) of the characteristic

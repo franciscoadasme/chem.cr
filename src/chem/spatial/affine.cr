@@ -93,8 +93,8 @@ module Chem::Spatial
       pos.map! &.-(center)
       ref_center = ref_pos.mean
       ref_pos.map! &.-(ref_center)
-      rotmat, _ = Spatial.qcp pos, ref_pos
-      (new(rotmat) * translation(-center)).translate(ref_center)
+      quat, _ = Spatial.qcp pos, ref_pos
+      (rotation(quat) * translation(-center)).translate(ref_center)
     end
 
     # Returns the identity transformation.

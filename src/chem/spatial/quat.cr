@@ -137,6 +137,11 @@ module Chem::Spatial
       ]
     end
 
+    # Returns the identity quaternion (no rotation).
+    def self.identity : self
+      Quat[1, 0, 0, 0]
+    end
+
     # Returns a quaternion encoding the rotation about the axis vector
     # *rotaxis* by *theta* degrees.
     def self.rotation(about rotaxis : Vec3, by theta : Number) : self
