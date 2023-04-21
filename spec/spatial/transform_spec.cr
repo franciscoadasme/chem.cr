@@ -112,11 +112,6 @@ describe Chem::Spatial::Transform do
       (Chem::Spatial::Transform.scaling(4.5, 1, 2.3) * vec3(1, 2, 3)).should be_close [4.5, 2, 6.9], 1e-8
     end
 
-    it "transforms a vector (inverse)" do
-      transform = Chem::Spatial::Transform.scaling(4.5, 1, 2.3)
-      (vec3(1, 2, 3) * transform).should eq [1 / 4.5, 2, 3 / 2.3]
-    end
-
     it "combines two transformations" do
       a = Chem::Spatial::Transform.translation(vec3(1, 2, 3))
       b = Chem::Spatial::Transform.scaling(2)

@@ -267,14 +267,6 @@ module Chem::Spatial
       {{@type}}.new Mat3.identity, @offset
     end
   end
-
-  struct Vec3
-    # Returns the multiplication of the vector by *rhs*. It effectively
-    # applies the inverse transformation to the vector.
-    def *(rhs : Transform) : self
-      rhs.inv * self
-    end
-  end
 end
 
 struct Chem::Spatial::Transform
