@@ -1,6 +1,6 @@
 module Chem::Spatial
   # A 3x3 matrix in row-major order. This is useful for encoding linear
-  # maps such as scaling and rotation (see `AffineTransform`).
+  # maps such as scaling and rotation (see `Transform`).
   struct Mat3
     @buffer = uninitialized Float64[9]
 

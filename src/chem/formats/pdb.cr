@@ -373,7 +373,7 @@ module Chem::PDB
         if (cell = obj.cell?) && (!cell.basisvec[0].x? || !cell.basisvec[1].xy?)
           # compute the unit cell aligned to the xy-plane
           ref = Spatial::Parallelepiped.new cell.size, cell.angles
-          transform = Spatial::AffineTransform
+          transform = Spatial::Transform
             .aligning(cell.basisvec[..1], to: ref.basisvec[..1])
             .translate(cell.origin)
           Log.warn do
@@ -434,7 +434,7 @@ module Chem::PDB
       @record_index += 1
     end
 
-    private def write(atom : Atom, transform : Spatial::AffineTransform? = nil) : Nil
+    private def write(atom : Atom, transform : Spatial::Transform? = nil) : Nil
       vec = atom.coords
       vec = transform * vec if transform
       @io.printf "%-6s%5s %4s %-4s%s%4s%1s   %8.3f%8.3f%8.3f%6.2f%6.2f          %2s%2s\n",

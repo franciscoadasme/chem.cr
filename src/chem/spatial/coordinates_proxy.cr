@@ -26,12 +26,12 @@ module Chem::Spatial
     # ```
     #
     # The transformation is obtained via the
-    # `AffineTransform.aligning(pos, ref_pos)` method, which computes
+    # `Transform.aligning(pos, ref_pos)` method, which computes
     # the optimal rotation matrix by minimizing the root mean square
     # deviation (RMSD) using the QCP method (refer to `Spatial.qcp` for
     # details).
     def align_to(other : self) : self
-      transform! AffineTransform.aligning(self, other)
+      transform! Transform.aligning(self, other)
     end
 
     def bounds : Parallelepiped
@@ -174,7 +174,7 @@ module Chem::Spatial
       self
     end
 
-    def transform!(transform : AffineTransform) : self
+    def transform!(transform : Transform) : self
       map! { |vec| transform * vec }
     end
 

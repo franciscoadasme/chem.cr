@@ -506,14 +506,14 @@ module Chem::Spatial
     end
 
     # Returns the parallelepiped rotated about the axis vector *rotaxis*
-    # by *angle* degrees. Delegates to `AffineTransform.rotation` for
+    # by *angle* degrees. Delegates to `Transform.rotation` for
     # computing the rotation.
     def rotate(about rotaxis : Vec3, by angle : Number) : self
-      transform AffineTransform.rotation(rotaxis, angle)
+      transform Transform.rotation(rotaxis, angle)
     end
 
     # Returns the parallelepiped rotated by the Euler angles in degrees.
-    # Delegates to `AffineTransform.rotation` for computing the rotation.
+    # Delegates to `Transform.rotation` for computing the rotation.
     def rotate(x : Number, y : Number, z : Number) : self
       transform Quat.rotation(x, y, z)
     end
@@ -553,7 +553,7 @@ module Chem::Spatial
     #
     # NOTE: the rotation will be applied about the center of the
     # parallelepiped. Translation will be applied afterwards.
-    def transform(transformation : AffineTransform) : self
+    def transform(transformation : Transform) : self
       new_basisvec = basisvec.map &.transform(transformation.rotation)
       offset = new_basisvec.sum / 2 - basisvec.sum / 2
       origin = @origin + transformation.offset - offset

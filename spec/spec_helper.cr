@@ -56,8 +56,8 @@ module Spec
       actual_value.close_to? @expected_value, @delta
     end
 
-    def match(actual_value : Chem::Spatial::AffineTransform) : Bool
-      return false unless @expected_value.is_a?(Chem::Spatial::AffineTransform)
+    def match(actual_value : Chem::Spatial::Transform) : Bool
+      return false unless @expected_value.is_a?(Chem::Spatial::Transform)
       actual_value.close_to? @expected_value, @delta
     end
 

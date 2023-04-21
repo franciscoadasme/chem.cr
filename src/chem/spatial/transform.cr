@@ -1,33 +1,32 @@
 module Chem::Spatial
-  # An affine transformation is a geometric transformation in
-  # three-dimensional space such as translation, scaling, rotation,
-  # reflection, and more. An `AffineTransform` is composed of a linear
-  # transformation or map (encoded in a 3x3 matrix) and a translation (a
-  # vector).
+  # A `Transform` encodes an affine transformation in 3D space such as
+  # translation, scaling, rotation, reflection, and more.
   #
-  # An affine transformation is internally represented by the augmented
-  # matrix
+  # An affine transformation is the composition of a linear map *A* (3x3
+  # matrix) and a translation *b* (3x1 vector), which can be represented
+  # by the augmented 4x4 matrix:
   #
   # ```text
-  # A = [ M   b  ]
-  #     [ 0   1  ]
+  # [ A   b ]
+  # [ 0   1 ]
   # ```
   #
-  # where *A* is 4x4 (augmented matrix), *M* is 3x3 (linear map), *b* is
-  # 3x1 (translation vector), and the bottom row is [0, 0, 0, 1]. This
-  # representation encodes the linear map and translation in a single
-  # matrix, which allows to combine and apply transformations by matrix
-  # multiplication. Additionally, the affine transformation matrix has
-  # some properties that allows for efficient code (see multiplication
-  # operator with a vector). For further details, refer to the
-  # [Wikipedia
+  # where the bottom row is [0, 0, 0, 1]. This representation encodes
+  # the linear map and translation in a single matrix, which allows to
+  # combine and apply transformations by matrix multiplication.
+  # Additionally, the affine transformation matrix has some properties
+  # that allows for efficient code (see the multiplication operator with
+  # a vector). For further details, refer to the [Wikipedia
   # article](https://en.wikipedia.org/wiki/Affine_transformation).
+  #
+  # The transformation is internally represented by a `Mat3`
+  # (`#linear_map`) and `Vec3` (`#offset`) instances.
   #
   # ### Examples
   #
   # ```
-  # scaling = AffineTransform.scaling(2)
-  # translation = AffineTransform.translation(Vec3[1, 2, 3])
+  # scaling = Transform.scaling(2)
+  # translation = Transform.translation(Vec3[1, 2, 3])
   # vec = Vec3[1, 0, 1]
   #
   # # apply the transformation
@@ -48,10 +47,10 @@ module Chem::Spatial
   # scale_translate * vec                   # => Vec3[3.0, 2.0, 5.0]
   #
   # # chain methods for composing a transformation
-  # transform = AffineTransform.scaling(2).translate(Vec3[1, 2, 3])
+  # transform = Transform.scaling(2).translate(Vec3[1, 2, 3])
   # transform * vec # => Vec3[3.0, 2.0, 5.0]
   # ```
-  struct AffineTransform
+  struct Transform
     # Linear map encoded as a 3x3 matrix.
     getter linear_map : Mat3
     # Translation vector.
@@ -144,7 +143,7 @@ module Chem::Spatial
     def *(rhs : self) : self
       linear_map = @linear_map * rhs.linear_map
       offset = @offset + @linear_map * rhs.offset
-      AffineTransform.new linear_map, offset
+      Transform.new linear_map, offset
     end
 
     # Returns the multiplication of the transformation by *rhs*. It
@@ -166,24 +165,25 @@ module Chem::Spatial
 
     # Returns the inverse transformation.
     #
-    # The algorithm exploits the fact that when a matrix looks like this
+    # The algorithm exploits the fact that the affine transformation
+    # matrix is defined as
     #
     # ```text
-    # A = [ M   b  ]
-    #     [ 0   1  ]
+    # [ A   b ]
+    # [ 0   1 ]
     # ```
     #
-    # where *A* is 4x4 (augmented matrix), *M* is 3x3 (linear map), *b*
-    # is 3x1 (translation vector), and the bottom row is (0, 0, 0, 1),
-    # then
+    # where *A* is the linear map (3x3 matrix), *b* is the translation
+    # vector (3x1 vector), and the bottom row is [0, 0, 0, 1]. In such
+    # case, the inverse matrix can be computed as
     #
     # ```text
-    # inv(A) = [ inv(M)   -inv(M) * b ]
-    #          [   0            1     ]
+    # [ inv(A)   -inv(A) * b ]
+    # [   0            1     ]
     # ```
     #
-    # where `inv(M)` is computed following the standard procedure (see
-    # Wikipedia, Inversion of 3x3 matrices).
+    # where `inv(A)` is computed following the standard procedure (see
+    # [Inversion of 3x3 matrices](https://en.wikipedia.org/wiki/Invertible_matrix#Inversion_of_3_%C3%97_3_matrices) at Wikipedia).
     #
     # Refer to the [Affine
     # Transformation](https://en.wikipedia.org/wiki/Affine_transformation#Groups)
@@ -192,7 +192,7 @@ module Chem::Spatial
     # Overflow.
     def inv : self
       inv_map = @linear_map.inv
-      AffineTransform.new inv_map, -inv_map * @offset
+      Transform.new inv_map, -inv_map * @offset
     end
 
     # Returns the transformation encoding the rotation by the Euler
@@ -227,7 +227,7 @@ module Chem::Spatial
     def scale(sx : Number, sy : Number, sz : Number) : self
       linear_map = @linear_map * {sx, sy, sz}
       offset = @offset * Vec3[sx, sy, sz]
-      AffineTransform.new linear_map, offset
+      Transform.new linear_map, offset
     end
 
     def to_s(io : IO) : Nil
@@ -249,7 +249,7 @@ module Chem::Spatial
 
     # Returns the transformation translated by *offset*.
     def translate(by offset : Vec3) : self
-      AffineTransform.new linear_map, @offset + offset
+      Transform.new linear_map, @offset + offset
     end
 
     # Returns the translation component of the transformation.
@@ -261,13 +261,13 @@ module Chem::Spatial
   struct Vec3
     # Returns the multiplication of the vector by *rhs*. It effectively
     # applies the inverse transformation to the vector.
-    def *(rhs : AffineTransform) : self
+    def *(rhs : Transform) : self
       rhs.inv * self
     end
   end
 end
 
-struct Chem::Spatial::AffineTransform
+struct Chem::Spatial::Transform
   def self.aligning(pos : AtomCollection, to ref_pos : AtomCollection) : self
     aligning pos.coords, ref_pos.coords
   end

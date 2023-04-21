@@ -253,7 +253,7 @@ module Chem::Spatial
     end
 
     # Returns the vector resulting of applying the given transformation.
-    def transform(transformation : AffineTransform) : self
+    def transform(transformation : Transform) : self
       transformation * self
     end
 

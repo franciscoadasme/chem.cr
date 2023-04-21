@@ -200,7 +200,7 @@ describe Chem::Spatial::CoordinatesProxy do
         atom Chem::PeriodicTable::H, vec3(7, 8, 9)
       end
 
-      transform = Chem::Spatial::AffineTransform.translation vec3(-1, 0, 1)
+      transform = Chem::Spatial::Transform.translation vec3(-1, 0, 1)
       other.coords.transform!(transform).should eq [[0, 2, 4], [3, 5, 7], [6, 8, 10]]
     end
 
@@ -211,7 +211,7 @@ describe Chem::Spatial::CoordinatesProxy do
         atom Chem::PeriodicTable::H, vec3(7, 8, 9)
       end
       center = other.coords.center
-      transform = Chem::Spatial::AffineTransform.rotation(10, 50, 15).translate(vec3(1, 2, 3))
+      transform = Chem::Spatial::Transform.rotation(10, 50, 15).translate(vec3(1, 2, 3))
       expected = other.coords.to_a.map { |vec| transform * vec }
       other.coords.transform!(transform).should eq expected
     end
@@ -223,7 +223,7 @@ describe Chem::Spatial::CoordinatesProxy do
       atoms, ref_atoms = {actual, ref}.map do |s|
         Chem::AtomView.new [52, 2, 12, 22, 32, 42].map { |i| s.atoms[i] }
       end
-      tr = Chem::Spatial::AffineTransform.aligning(atoms, to: ref_atoms)
+      tr = Chem::Spatial::Transform.aligning(atoms, to: ref_atoms)
       actual.coords.transform! tr
       Chem::Spatial.rmsd(atoms.coords, ref_atoms.coords).should be_close 0.091, 1e-3
     end
@@ -236,7 +236,7 @@ describe Chem::Spatial::CoordinatesProxy do
       # compute center of selected oxygens and set Y component to 0
       os = (75..78).map { |i| sf.chains.first.dig(i, "O") }
       oc = os.mean(&.coords).reject(Chem::Spatial::Vec3[0, 1, 0]).normalize
-      transform = Chem::Spatial::AffineTransform.aligning oc, to: Chem::Spatial::Vec3[1, 0, 0]
+      transform = Chem::Spatial::Transform.aligning oc, to: Chem::Spatial::Vec3[1, 0, 0]
       sf.coords.transform! transform
       os.mean(&.coords).should be_close Chem::Spatial::Vec3[2.348, 1.756, 0], 1e-3
     end
