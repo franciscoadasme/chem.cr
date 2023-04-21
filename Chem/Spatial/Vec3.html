@@ -486,11 +486,6 @@
       
         <ul>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/AffineTransform" data-name="chem::spatial::affinetransform">
-      <a href="../../Chem/Spatial/AffineTransform.html">AffineTransform</a>
-      
-    </li>
-  
   <li class=" " data-id="chem.cr/Chem/Spatial/CoordinatesProxy" data-name="chem::spatial::coordinatesproxy">
       <a href="../../Chem/Spatial/CoordinatesProxy.html">CoordinatesProxy</a>
       
@@ -568,6 +563,11 @@
   
   <li class=" " data-id="chem.cr/Chem/Spatial/Size3" data-name="chem::spatial::size3">
       <a href="../../Chem/Spatial/Size3.html">Size3</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Transform" data-name="chem::spatial::transform">
+      <a href="../../Chem/Spatial/Transform.html">Transform</a>
       
     </li>
   
@@ -888,11 +888,6 @@
   </h2>
   
     
-      chem/spatial/affine.cr
-    
-    <br/>
-  
-    
       chem/spatial/quat.cr
     
     <br/>
@@ -974,13 +969,6 @@
     Instance Method Summary
   </h2>
   <ul class="list-summary">
-    
-      <li class="entry-summary">
-        <a href="#%2A%28rhs%3AAffineTransform%29%3Aself-instance-method" class="signature"><strong>#*</strong>(rhs : AffineTransform) : <span class="k">self</span></a>
-        
-          <div class="summary"><p>Returns the multiplication of the vector by <em>rhs</em>.</p></div>
-        
-      </li>
     
       <li class="entry-summary">
         <a href="#%2A%28rhs%3ANumber%29%3Aself-instance-method" class="signature"><strong>#*</strong>(rhs : Number) : <span class="k">self</span></a>
@@ -1172,9 +1160,23 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#rotate%28aboutrotaxis%3AVec3%2Cbytheta%3ANumber%29%3Aself-instance-method" class="signature"><strong>#rotate</strong>(about rotaxis : Vec3, by theta : Number) : <span class="k">self</span></a>
+        <a href="#rotate%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-instance-method" class="signature"><strong>#rotate</strong>(x : Number, y : Number, z : Number) : <span class="k">self</span></a>
         
-          <div class="summary"><p>Rotates the vector about <em>rotaxis</em> by <em>theta</em> degrees.</p></div>
+          <div class="summary"><p>Returns the vector rotated by the given Euler angles in degrees.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rotate%28aboutrotaxis%3AVec3%2Cbyangle%3ANumber%29%3Aself-instance-method" class="signature"><strong>#rotate</strong>(about rotaxis : Vec3, by angle : Number) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the vector rotated about <em>rotaxis</em> by <em>angle</em> degrees.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rotate%28quat%3AQuat%29%3Aself-instance-method" class="signature"><strong>#rotate</strong>(quat : Quat) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the vector rotated by the given quaternion.</p></div>
         
       </li>
     
@@ -1207,14 +1209,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#transform%28transformation%3AAffineTransform%29%3Aself-instance-method" class="signature"><strong>#transform</strong>(transformation : AffineTransform) : <span class="k">self</span></a>
-        
-          <div class="summary"><p>Returns the vector resulting of applying the given transformation.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#transform%28q%3AQuat%29%3Aself-instance-method" class="signature"><strong>#transform</strong>(q : Quat) : <span class="k">self</span></a>
+        <a href="#transform%28transformation%3ATransform%29%3Aself-instance-method" class="signature"><strong>#transform</strong>(transformation : Transform) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the vector resulting of applying the given transformation.</p></div>
         
@@ -1224,6 +1219,13 @@
         <a href="#transform%28%26%3AFloat64%2CFloat64%2CFloat64-%3EFloatTriple%29%3Aself-instance-method" class="signature"><strong>#transform</strong>(& : Float64, Float64, Float64 -> FloatTriple) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns a new vector with the return value of the given block, which is invoked with the X, Y, and Z components.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#translate%28byoffset%3AVec3%29%3Aself-instance-method" class="signature"><strong>#translate</strong>(by offset : Vec3) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the vector translated by the given offset.</p></div>
         
       </li>
     
@@ -1495,26 +1497,6 @@ vector.</p>
 </a>
     Instance Method Detail
   </h2>
-  
-    <div class="entry-detail" id="*(rhs:AffineTransform):self-instance-method">
-      <div class="signature">
-        
-        def <strong>*</strong>(rhs : <a href="../../Chem/Spatial/AffineTransform.html">AffineTransform</a>) : <span class="k">self</span>
-
-        <a class="method-permalink" href="#%2A%28rhs%3AAffineTransform%29%3Aself-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Returns the multiplication of the vector by <em>rhs</em>. It effectively
-applies the inverse transformation to the vector.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
   
     <div class="entry-detail" id="*(rhs:Number):self-instance-method">
       <div class="signature">
@@ -2074,17 +2056,57 @@ b.normalize.close_to?(a.normalize) <span class="c"># =&gt; true</span></code></p
       </div>
     </div>
   
-    <div class="entry-detail" id="rotate(aboutrotaxis:Vec3,bytheta:Number):self-instance-method">
+    <div class="entry-detail" id="rotate(x:Number,y:Number,z:Number):self-instance-method">
       <div class="signature">
         
-        def <strong>rotate</strong>(about rotaxis : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, by theta : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
+        def <strong>rotate</strong>(x : <a href="../../Number.html">Number</a>, y : <a href="../../Number.html">Number</a>, z : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#rotate%28aboutrotaxis%3AVec3%2Cbytheta%3ANumber%29%3Aself-instance-method">#</a>
+        <a class="method-permalink" href="#rotate%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Rotates the vector about <em>rotaxis</em> by <em>theta</em> degrees.</p>
+          <p>Returns the vector rotated by the given Euler angles in degrees.
+Delegates to <code><a href="../../Chem/Spatial/Quat.html#rotation%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-class-method">Quat.rotation</a></code> for computing the rotation.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rotate(aboutrotaxis:Vec3,byangle:Number):self-instance-method">
+      <div class="signature">
+        
+        def <strong>rotate</strong>(about rotaxis : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, by angle : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#rotate%28aboutrotaxis%3AVec3%2Cbyangle%3ANumber%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the vector rotated about <em>rotaxis</em> by <em>angle</em>
+degrees. Delegates to <code><a href="../../Chem/Spatial/Quat.html#rotation%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-class-method">Quat.rotation</a></code> for computing the rotation.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rotate(quat:Quat):self-instance-method">
+      <div class="signature">
+        
+        def <strong>rotate</strong>(quat : <a href="../../Chem/Spatial/Quat.html">Quat</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#rotate%28quat%3AQuat%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the vector rotated by the given quaternion.</p>
         </div>
       
       <br/>
@@ -2176,31 +2198,12 @@ given <em>format</em>. See also <code>IO#write_bytes</code>.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="transform(transformation:AffineTransform):self-instance-method">
+    <div class="entry-detail" id="transform(transformation:Transform):self-instance-method">
       <div class="signature">
         
-        def <strong>transform</strong>(transformation : <a href="../../Chem/Spatial/AffineTransform.html">AffineTransform</a>) : <span class="k">self</span>
+        def <strong>transform</strong>(transformation : <a href="../../Chem/Spatial/Transform.html">Transform</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#transform%28transformation%3AAffineTransform%29%3Aself-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Returns the vector resulting of applying the given transformation.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="transform(q:Quat):self-instance-method">
-      <div class="signature">
-        
-        def <strong>transform</strong>(q : <a href="../../Chem/Spatial/Quat.html">Quat</a>) : <span class="k">self</span>
-
-        <a class="method-permalink" href="#transform%28q%3AQuat%29%3Aself-instance-method">#</a>
+        <a class="method-permalink" href="#transform%28transformation%3ATransform%29%3Aself-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -2231,6 +2234,25 @@ which is invoked with the X, Y, and Z components.</p>
   z <span class="o">/=</span> <span class="n">0.5</span>
   {x, y, z}
 <span class="k">end</span> <span class="c"># =&gt; Vec3[6, 2, 2]</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="translate(byoffset:Vec3):self-instance-method">
+      <div class="signature">
+        
+        def <strong>translate</strong>(by offset : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#translate%28byoffset%3AVec3%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the vector translated by the given offset.</p>
         </div>
       
       <br/>

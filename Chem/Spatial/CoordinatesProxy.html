@@ -486,11 +486,6 @@
       
         <ul>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/AffineTransform" data-name="chem::spatial::affinetransform">
-      <a href="../../Chem/Spatial/AffineTransform.html">AffineTransform</a>
-      
-    </li>
-  
   <li class=" current" data-id="chem.cr/Chem/Spatial/CoordinatesProxy" data-name="chem::spatial::coordinatesproxy">
       <a href="../../Chem/Spatial/CoordinatesProxy.html">CoordinatesProxy</a>
       
@@ -568,6 +563,11 @@
   
   <li class=" " data-id="chem.cr/Chem/Spatial/Size3" data-name="chem::spatial::size3">
       <a href="../../Chem/Spatial/Size3.html">Size3</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Transform" data-name="chem::spatial::transform">
+      <a href="../../Chem/Spatial/Transform.html">Transform</a>
       
     </li>
   
@@ -1031,6 +1031,27 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#rotate%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-instance-method" class="signature"><strong>#rotate</strong>(x : Number, y : Number, z : Number) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Rotates the coordinates by the given Euler angles in degrees.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rotate%28aboutrotaxis%3AVec3%2Cbyangle%3ANumber%29%3Aself-instance-method" class="signature"><strong>#rotate</strong>(about rotaxis : Vec3, by angle : Number) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Rotates the coordinates about <em>rotaxis</em> by <em>angle</em> degrees.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rotate%28quat%3AQuat%29%3Aself-instance-method" class="signature"><strong>#rotate</strong>(quat : Quat) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Rotates the coordinates by the given quaternion.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#to_a%28fractional%3ABool%3Dfalse%29%3AArray%28Vec3%29-instance-method" class="signature"><strong>#to_a</strong>(fractional : Bool = <span class="n">false</span>) : Array(Vec3)</a>
         
           <div class="summary"><p>Returns an <code><a href="../../Array.html">Array</a></code> with all the elements in the collection.</p></div>
@@ -1048,12 +1069,16 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#transform%21%28transform%3AAffineTransform%29%3Aself-instance-method" class="signature"><strong>#transform!</strong>(transform : AffineTransform) : <span class="k">self</span></a>
+        <a href="#transform%28transform%3ATransform%29%3Aself-instance-method" class="signature"><strong>#transform</strong>(transform : Transform) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Transforms the coordinates by the given transformation.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#translate%21%28byoffset%3AVec3%29%3Aself-instance-method" class="signature"><strong>#translate!</strong>(by offset : Vec3) : <span class="k">self</span></a>
+        <a href="#translate%28byoffset%3AVec3%29%3Aself-instance-method" class="signature"><strong>#translate</strong>(by offset : Vec3) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Translates the coordinates by the given offset.</p></div>
         
       </li>
     
@@ -1219,7 +1244,7 @@ pos.align_to(res_pos)
 <span class="t">Spatial</span>.rmsd(pos, ref_pos)   <span class="c"># =&gt; 3.463298</span>
 pos.center <span class="o">==</span> ref_pos.center <span class="c"># =&gt; true</span></code></pre>
 <p>The transformation is obtained via the
-<code><a href="../../Chem/Spatial/AffineTransform.html#aligning%28u%3ATuple%28Vec3%2CVec3%29%2Ctov%3ATuple%28Vec3%2CVec3%29%29%3Aself-class-method">AffineTransform.aligning(pos, ref_pos)</a></code> method, which computes
+<code><a href="../../Chem/Spatial/Transform.html#aligning%28u%3ATuple%28Vec3%2CVec3%29%2Ctov%3ATuple%28Vec3%2CVec3%29%29%3Aself-class-method">Transform.aligning(pos, ref_pos)</a></code> method, which computes
 the optimal rotation matrix by minimizing the root mean square
 deviation (RMSD) using the QCP method (refer to <code><a href="../../Chem/Spatial.html#qcp%28pos%3AIndexable%28Vec3%29%2Cref_pos%3AIndexable%28Vec3%29%2Cweights%3AIndexable%28Float64%29%7CNil%3Dnil%29%3ATuple%28Quat%2CFloat64%29-class-method">Spatial.qcp</a></code> for
 details).</p>
@@ -1470,6 +1495,65 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
       </div>
     </div>
   
+    <div class="entry-detail" id="rotate(x:Number,y:Number,z:Number):self-instance-method">
+      <div class="signature">
+        
+        def <strong>rotate</strong>(x : <a href="../../Number.html">Number</a>, y : <a href="../../Number.html">Number</a>, z : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#rotate%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Rotates the coordinates by the given Euler angles in degrees.
+Delegates to <code><a href="../../Chem/Spatial/Quat.html#rotation%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-class-method">Quat.rotation</a></code> for computing the rotation.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rotate(aboutrotaxis:Vec3,byangle:Number):self-instance-method">
+      <div class="signature">
+        
+        def <strong>rotate</strong>(about rotaxis : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, by angle : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#rotate%28aboutrotaxis%3AVec3%2Cbyangle%3ANumber%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Rotates the coordinates about <em>rotaxis</em> by <em>angle</em> degrees.
+Delegates to <code><a href="../../Chem/Spatial/Quat.html#rotation%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-class-method">Quat.rotation</a></code> for computing the rotation.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rotate(quat:Quat):self-instance-method">
+      <div class="signature">
+        
+        def <strong>rotate</strong>(quat : <a href="../../Chem/Spatial/Quat.html">Quat</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#rotate%28quat%3AQuat%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Rotates the coordinates by the given quaternion.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="to_a(fractional:Bool=false):Array(Vec3)-instance-method">
       <div class="signature">
         
@@ -1522,13 +1606,18 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
       </div>
     </div>
   
-    <div class="entry-detail" id="transform!(transform:AffineTransform):self-instance-method">
+    <div class="entry-detail" id="transform(transform:Transform):self-instance-method">
       <div class="signature">
         
-        def <strong>transform!</strong>(transform : <a href="../../Chem/Spatial/AffineTransform.html">AffineTransform</a>) : <span class="k">self</span>
+        def <strong>transform</strong>(transform : <a href="../../Chem/Spatial/Transform.html">Transform</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#transform%21%28transform%3AAffineTransform%29%3Aself-instance-method">#</a>
+        <a class="method-permalink" href="#transform%28transform%3ATransform%29%3Aself-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Transforms the coordinates by the given transformation.</p>
+        </div>
       
       <br/>
       <div>
@@ -1536,13 +1625,18 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
       </div>
     </div>
   
-    <div class="entry-detail" id="translate!(byoffset:Vec3):self-instance-method">
+    <div class="entry-detail" id="translate(byoffset:Vec3):self-instance-method">
       <div class="signature">
         
-        def <strong>translate!</strong>(by offset : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <span class="k">self</span>
+        def <strong>translate</strong>(by offset : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#translate%21%28byoffset%3AVec3%29%3Aself-instance-method">#</a>
+        <a class="method-permalink" href="#translate%28byoffset%3AVec3%29%3Aself-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Translates the coordinates by the given offset.</p>
+        </div>
       
       <br/>
       <div>

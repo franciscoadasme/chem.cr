@@ -486,11 +486,6 @@
       
         <ul>
   
-  <li class=" " data-id="chem.cr/Chem/Spatial/AffineTransform" data-name="chem::spatial::affinetransform">
-      <a href="../../Chem/Spatial/AffineTransform.html">AffineTransform</a>
-      
-    </li>
-  
   <li class=" " data-id="chem.cr/Chem/Spatial/CoordinatesProxy" data-name="chem::spatial::coordinatesproxy">
       <a href="../../Chem/Spatial/CoordinatesProxy.html">CoordinatesProxy</a>
       
@@ -568,6 +563,11 @@
   
   <li class=" " data-id="chem.cr/Chem/Spatial/Size3" data-name="chem::spatial::size3">
       <a href="../../Chem/Spatial/Size3.html">Size3</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Transform" data-name="chem::spatial::transform">
+      <a href="../../Chem/Spatial/Transform.html">Transform</a>
       
     </li>
   
@@ -1272,7 +1272,7 @@ fractional coordinates, and viceversa, by matrix multiplication (see
       <li class="entry-summary">
         <a href="#rotate%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-instance-method" class="signature"><strong>#rotate</strong>(x : Number, y : Number, z : Number) : <span class="k">self</span></a>
         
-          <div class="summary"><p>Returns the parallelepiped rotated by the Euler angles in degrees.</p></div>
+          <div class="summary"><p>Returns the parallelepiped rotated by the given Euler angles in degrees.</p></div>
         
       </li>
     
@@ -1280,6 +1280,13 @@ fractional coordinates, and viceversa, by matrix multiplication (see
         <a href="#rotate%28aboutrotaxis%3AVec3%2Cbyangle%3ANumber%29%3Aself-instance-method" class="signature"><strong>#rotate</strong>(about rotaxis : Vec3, by angle : Number) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the parallelepiped rotated about the axis vector <em>rotaxis</em> by <em>angle</em> degrees.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rotate%28quat%3AQuat%29%3Aself-instance-method" class="signature"><strong>#rotate</strong>(quat : Quat) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the parallelepiped rotated by the given quaternion.</p></div>
         
       </li>
     
@@ -1305,14 +1312,7 @@ fractional coordinates, and viceversa, by matrix multiplication (see
       </li>
     
       <li class="entry-summary">
-        <a href="#transform%28transformation%3AAffineTransform%29%3Aself-instance-method" class="signature"><strong>#transform</strong>(transformation : AffineTransform) : <span class="k">self</span></a>
-        
-          <div class="summary"><p>Returns the parallelepiped resulting of applying the given transformation.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#transform%28q%3AQuat%29%3Aself-instance-method" class="signature"><strong>#transform</strong>(q : Quat) : <span class="k">self</span></a>
+        <a href="#transform%28transformation%3ATransform%29%3Aself-instance-method" class="signature"><strong>#transform</strong>(transformation : Transform) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the parallelepiped resulting of applying the given transformation.</p></div>
         
@@ -2509,8 +2509,8 @@ other.size   <span class="c"># =&gt; Size3[3, 4, 1.5]</span></code></pre>
       
         <div class="doc">
           
-          <p>Returns the parallelepiped rotated by the Euler angles in degrees.
-Delegates to <code><a href="../../Chem/Spatial/AffineTransform.html#rotation%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-class-method">AffineTransform.rotation</a></code> for computing the rotation.</p>
+          <p>Returns the parallelepiped rotated by the given Euler angles in
+degrees. Delegates to <code><a href="../../Chem/Spatial/Quat.html#rotation%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-class-method">Quat.rotation</a></code> for computing the rotation.</p>
         </div>
       
       <br/>
@@ -2530,8 +2530,27 @@ Delegates to <code><a href="../../Chem/Spatial/AffineTransform.html#rotation%28x
         <div class="doc">
           
           <p>Returns the parallelepiped rotated about the axis vector <em>rotaxis</em>
-by <em>angle</em> degrees. Delegates to <code><a href="../../Chem/Spatial/AffineTransform.html#rotation%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-class-method">AffineTransform.rotation</a></code> for
-computing the rotation.</p>
+by <em>angle</em> degrees. Delegates to <code><a href="../../Chem/Spatial/Quat.html#rotation%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-class-method">Quat.rotation</a></code> for computing the
+rotation.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rotate(quat:Quat):self-instance-method">
+      <div class="signature">
+        
+        def <strong>rotate</strong>(quat : <a href="../../Chem/Spatial/Quat.html">Quat</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#rotate%28quat%3AQuat%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the parallelepiped rotated by the given quaternion.</p>
         </div>
       
       <br/>
@@ -2599,34 +2618,12 @@ the given <em>format</em>. See also <code>IO#write_bytes</code>.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="transform(transformation:AffineTransform):self-instance-method">
+    <div class="entry-detail" id="transform(transformation:Transform):self-instance-method">
       <div class="signature">
         
-        def <strong>transform</strong>(transformation : <a href="../../Chem/Spatial/AffineTransform.html">AffineTransform</a>) : <span class="k">self</span>
+        def <strong>transform</strong>(transformation : <a href="../../Chem/Spatial/Transform.html">Transform</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#transform%28transformation%3AAffineTransform%29%3Aself-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Returns the parallelepiped resulting of applying the given
-transformation.</p>
-<p><span class="flag purple">NOTE</span>  the rotation will be applied about the center of the
-parallelepiped. Translation will be applied afterwards.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="transform(q:Quat):self-instance-method">
-      <div class="signature">
-        
-        def <strong>transform</strong>(q : <a href="../../Chem/Spatial/Quat.html">Quat</a>) : <span class="k">self</span>
-
-        <a class="method-permalink" href="#transform%28q%3AQuat%29%3Aself-instance-method">#</a>
+        <a class="method-permalink" href="#transform%28transformation%3ATransform%29%3Aself-instance-method">#</a>
       </div>
       
         <div class="doc">

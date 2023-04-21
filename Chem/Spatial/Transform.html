@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../../js/doc.js"></script>
 
   <meta name="repository-name" content="chem.cr">
-  <title>Chem::Spatial::AffineTransform - chem.cr 0.5.6</title>
+  <title>Chem::Spatial::Transform - chem.cr 0.5.6</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -486,11 +486,6 @@
       
         <ul>
   
-  <li class=" current" data-id="chem.cr/Chem/Spatial/AffineTransform" data-name="chem::spatial::affinetransform">
-      <a href="../../Chem/Spatial/AffineTransform.html">AffineTransform</a>
-      
-    </li>
-  
   <li class=" " data-id="chem.cr/Chem/Spatial/CoordinatesProxy" data-name="chem::spatial::coordinatesproxy">
       <a href="../../Chem/Spatial/CoordinatesProxy.html">CoordinatesProxy</a>
       
@@ -568,6 +563,11 @@
   
   <li class=" " data-id="chem.cr/Chem/Spatial/Size3" data-name="chem::spatial::size3">
       <a href="../../Chem/Spatial/Size3.html">Size3</a>
+      
+    </li>
+  
+  <li class=" current" data-id="chem.cr/Chem/Spatial/Transform" data-name="chem::spatial::transform">
+      <a href="../../Chem/Spatial/Transform.html">Transform</a>
       
     </li>
   
@@ -855,12 +855,12 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">struct</span> Chem::Spatial::AffineTransform
+  <span class="kind">struct</span> Chem::Spatial::Transform
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Chem/Spatial/AffineTransform.html">Chem::Spatial::AffineTransform</a></li><li class="superclass">Struct</li><li class="superclass">Value</li><li class="superclass">Object</li></ul>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Chem/Spatial/Transform.html">Chem::Spatial::Transform</a></li><li class="superclass">Struct</li><li class="superclass">Value</li><li class="superclass">Object</li></ul>
 
 
 
@@ -874,31 +874,29 @@
     Overview
   </h2>
 
-  <p>An affine transformation is a geometric transformation in
-three-dimensional space such as translation, scaling, rotation,
-reflection, and more. An <code><a href="../../Chem/Spatial/AffineTransform.html">AffineTransform</a></code> is composed of a linear
-transformation or map (encoded in a 3x3 matrix) and a translation (a
-vector).</p>
-<p>An affine transformation is internally represented by the augmented
-matrix</p>
-<pre><code class="language-text">A = [ M   b  ]
-    [ 0   1  ]</code></pre>
-<p>where <em>A</em> is 4x4 (augmented matrix), <em>M</em> is 3x3 (linear map), <em>b</em> is
-3x1 (translation vector), and the bottom row is [0, 0, 0, 1]. This
-representation encodes the linear map and translation in a single
-matrix, which allows to combine and apply transformations by matrix
-multiplication. Additionally, the affine transformation matrix has
-some properties that allows for efficient code (see multiplication
-operator with a vector). For further details, refer to the
-<a href="https://en.wikipedia.org/wiki/Affine_transformation">Wikipedia
+  <p>A <code><a href="../../Chem/Spatial/Transform.html">Transform</a></code> encodes an affine transformation in 3D space such as
+translation, scaling, rotation, reflection, and more.</p>
+<p>An affine transformation is the composition of a linear map <em>A</em> (3x3
+matrix) and a translation <em>b</em> (3x1 vector), which can be represented
+by the augmented 4x4 matrix:</p>
+<pre><code class="language-text">[ A   b ]
+[ 0   1 ]</code></pre>
+<p>where the bottom row is [0, 0, 0, 1]. This representation encodes
+the linear map and translation in a single matrix, which allows to
+combine and apply transformations by matrix multiplication.
+Additionally, the affine transformation matrix has some properties
+that allows for efficient code (see the multiplication operator with
+a vector). For further details, refer to the <a href="https://en.wikipedia.org/wiki/Affine_transformation">Wikipedia
 article</a>.</p>
+<p>The transformation is internally represented by a <code><a href="../../Chem/Spatial/Mat3.html">Mat3</a></code>
+(<code><a href="../../Chem/Spatial/Transform.html#linear_map%3AMat3-instance-method">#linear_map</a></code>) and <code><a href="../../Chem/Spatial/Vec3.html">Vec3</a></code> (<code><a href="../../Chem/Spatial/Transform.html#offset%3AVec3-instance-method">#offset</a></code>) instances.</p>
 <h3><a id="examples" class="anchor" href="#examples">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>Examples</h3>
-<pre><code class="language-crystal">scaling <span class="o">=</span> <span class="t">AffineTransform</span>.scaling(<span class="n">2</span>)
-translation <span class="o">=</span> <span class="t">AffineTransform</span>.translation(<span class="t">Vec3</span>[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>])
+<pre><code class="language-crystal">scaling <span class="o">=</span> <span class="t">Transform</span>.scaling(<span class="n">2</span>)
+translation <span class="o">=</span> <span class="t">Transform</span>.translation(<span class="t">Vec3</span>[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>])
 vec <span class="o">=</span> <span class="t">Vec3</span>[<span class="n">1</span>, <span class="n">0</span>, <span class="n">1</span>]
 
 <span class="c"># apply the transformation</span>
@@ -919,7 +917,7 @@ scale_translate <span class="o">=</span> translation <span class="o">*</span> sc
 scale_translate <span class="o">*</span> vec                   <span class="c"># =&gt; Vec3[3.0, 2.0, 5.0]</span>
 
 <span class="c"># chain methods for composing a transformation</span>
-transform <span class="o">=</span> <span class="t">AffineTransform</span>.scaling(<span class="n">2</span>).translate(<span class="t">Vec3</span>[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>])
+transform <span class="o">=</span> <span class="t">Transform</span>.scaling(<span class="n">2</span>).translate(<span class="t">Vec3</span>[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>])
 transform <span class="o">*</span> vec <span class="c"># =&gt; Vec3[3.0, 2.0, 5.0]</span></code></pre>
 
 
@@ -945,12 +943,12 @@ transform <span class="o">*</span> vec <span class="c"># =&gt; Vec3[3.0, 2.0, 5.
   </h2>
   
     
-      chem/spatial/affine.cr:54
+      chem/spatial/transform.cr:53
     
     <br/>
   
     
-      chem/spatial/affine.cr:270
+      chem/spatial/transform.cr:275
     
     <br/>
   
@@ -1117,7 +1115,7 @@ transform <span class="o">*</span> vec <span class="c"># =&gt; Vec3[3.0, 2.0, 5.
       <li class="entry-summary">
         <a href="#rotate%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-instance-method" class="signature"><strong>#rotate</strong>(x : Number, y : Number, z : Number) : <span class="k">self</span></a>
         
-          <div class="summary"><p>Returns the transformation encoding the rotation by the Euler angles.</p></div>
+          <div class="summary"><p>Returns the transformation rotated by the given Euler angles in degrees.</p></div>
         
       </li>
     
@@ -1164,9 +1162,16 @@ transform <span class="o">*</span> vec <span class="c"># =&gt; Vec3[3.0, 2.0, 5.
       </li>
     
       <li class="entry-summary">
+        <a href="#transform%28bytransform%3Aself%29%3Aself-instance-method" class="signature"><strong>#transform</strong>(by transform : <span class="k">self</span>) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the transformation transformed by <em>transform</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#translate%28byoffset%3AVec3%29%3Aself-instance-method" class="signature"><strong>#translate</strong>(by offset : Vec3) : <span class="k">self</span></a>
         
-          <div class="summary"><p>Returns the transformation translated by <em>offset</em>.</p></div>
+          <div class="summary"><p>Returns the transformation translated by the given offset.</p></div>
         
       </li>
     
@@ -1490,8 +1495,16 @@ the given quaternion.</p>
           
           <p>Returns the multiplication of the transformation by <em>rhs</em>. It
 effectively combines two transformation.</p>
-<p><span class="flag purple">NOTE</span>  Multiplication of affine transformations is not commutative,
-i.e., <code>a * b != b * a</code>.</p>
+<p><span class="flag purple">NOTE</span>  Multiplication of transformations is not commutative, i.e.,
+<code>a * b != b * a</code>.</p>
+<pre><code class="language-crystal">scaling <span class="o">=</span> <span class="t">Transform</span>.scaling(<span class="n">2</span>)
+translation <span class="o">=</span> <span class="t">Transform</span>.translation(<span class="t">Vec3</span>[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>])
+vec <span class="o">=</span> <span class="t">Vec3</span>[<span class="n">1</span>, <span class="n">0</span>, <span class="n">1</span>]
+
+translate_scale <span class="o">=</span> scaling <span class="o">*</span> translation <span class="c"># translates then scales</span>
+translate_scale <span class="o">*</span> vec                   <span class="c"># =&gt; Vec3[4.0, 4.0, 8.0]</span>
+scale_translate <span class="o">=</span> translation <span class="o">*</span> scaling <span class="c"># scales than translates</span>
+scale_translate <span class="o">*</span> vec                   <span class="c"># =&gt; Vec3[3.0, 2.0, 5.0]</span></code></pre>
         </div>
       
       <br/>
@@ -1565,16 +1578,17 @@ effectively applies the transformation to <em>rhs</em>.</p>
         <div class="doc">
           
           <p>Returns the inverse transformation.</p>
-<p>The algorithm exploits the fact that when a matrix looks like this</p>
-<pre><code class="language-text">A = [ M   b  ]
-    [ 0   1  ]</code></pre>
-<p>where <em>A</em> is 4x4 (augmented matrix), <em>M</em> is 3x3 (linear map), <em>b</em>
-is 3x1 (translation vector), and the bottom row is (0, 0, 0, 1),
-then</p>
-<pre><code class="language-text">inv(A) = [ inv(M)   -inv(M) * b ]
-         [   0            1     ]</code></pre>
-<p>where <code>inv(M)</code> is computed following the standard procedure (see
-Wikipedia, Inversion of 3x3 matrices).</p>
+<p>The algorithm exploits the fact that the affine transformation
+matrix is defined as</p>
+<pre><code class="language-text">[ A   b ]
+[ 0   1 ]</code></pre>
+<p>where <em>A</em> is the linear map (3x3 matrix), <em>b</em> is the translation
+vector (3x1 vector), and the bottom row is [0, 0, 0, 1]. In such
+case, the inverse matrix can be computed as</p>
+<pre><code class="language-text">[ inv(A)   -inv(A) * b ]
+[   0            1     ]</code></pre>
+<p>where <code>inv(A)</code> is computed following the standard procedure (see
+<a href="https://en.wikipedia.org/wiki/Invertible_matrix#Inversion_of_3_%C3%97_3_matrices">Inversion of 3x3 matrices</a> at Wikipedia).</p>
 <p>Refer to the <a href="https://en.wikipedia.org/wiki/Affine_transformation#Groups">Affine
 Transformation</a>
 Wikipedia article for a detailed explanation or <a href="https://stackoverflow.com/a/2625420/1089898">this
@@ -1636,8 +1650,8 @@ Overflow.</p>
       
         <div class="doc">
           
-          <p>Returns the transformation encoding the rotation by the Euler
-angles. Delegates to <code><a href="../../Chem/Spatial/Quat.html#rotation%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-class-method">Quat.rotation</a></code> for computing the rotation.</p>
+          <p>Returns the transformation rotated by the given Euler angles in
+degrees. Delegates to <code><a href="../../Chem/Spatial/Quat.html#rotation%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-class-method">Quat.rotation</a></code> for computing the rotation.</p>
         </div>
       
       <br/>
@@ -1765,6 +1779,26 @@ degrees. Delegates to <code><a href="../../Chem/Spatial/Quat.html#rotation%28x%3
       </div>
     </div>
   
+    <div class="entry-detail" id="transform(bytransform:self):self-instance-method">
+      <div class="signature">
+        
+        def <strong>transform</strong>(by transform : <span class="k">self</span>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#transform%28bytransform%3Aself%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the transformation transformed by <em>transform</em>. It
+effectively combines two transformations.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="translate(byoffset:Vec3):self-instance-method">
       <div class="signature">
         
@@ -1775,7 +1809,7 @@ degrees. Delegates to <code><a href="../../Chem/Spatial/Quat.html#rotation%28x%3
       
         <div class="doc">
           
-          <p>Returns the transformation translated by <em>offset</em>.</p>
+          <p>Returns the transformation translated by the given offset.</p>
         </div>
       
       <br/>
