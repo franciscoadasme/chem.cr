@@ -138,8 +138,18 @@ module Chem::Spatial
     # Returns the multiplication of the transformation by *rhs*. It
     # effectively combines two transformation.
     #
-    # NOTE: Multiplication of affine transformations is not commutative,
-    # i.e., `a * b != b * a`.
+    # NOTE: Multiplication of transformations is not commutative, i.e.,
+    # `a * b != b * a`.
+    #
+    # ```
+    # scaling = Transform.scaling(2)
+    # translation = Transform.translation(Vec3[1, 2, 3])
+    # vec = Vec3[1, 0, 1]
+    #
+    # translate_scale = scaling * translation # translates then scales
+    # translate_scale * vec                   # => Vec3[4.0, 4.0, 8.0]
+    # scale_translate = translation * scaling # scales than translates
+    # scale_translate * vec                   # => Vec3[3.0, 2.0, 5.0]
     def *(rhs : self) : self
       linear_map = @linear_map * rhs.linear_map
       offset = @offset + @linear_map * rhs.offset
