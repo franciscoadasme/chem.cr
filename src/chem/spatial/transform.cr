@@ -219,8 +219,7 @@ module Chem::Spatial
 
     # Returns the transformation rotated by the given quaternion.
     def rotate(quat : Quat) : self
-      rotmat = quat.to_mat3
-      self.class.new rotmat * @linear_map, rotmat * offset
+      transform {{@type}}.rotation(quat)
     end
 
     # Returns the rotation component of the transformation.
@@ -230,14 +229,12 @@ module Chem::Spatial
 
     # Returns the transformation scaled by *factor*.
     def scale(by factor : Number) : self
-      scale factor, factor, factor
+      transform {{@type}}.scaling(factor)
     end
 
     # Returns the transformation scaled by the given factors.
     def scale(sx : Number, sy : Number, sz : Number) : self
-      linear_map = @linear_map * {sx, sy, sz}
-      offset = @offset * Vec3[sx, sy, sz]
-      Transform.new linear_map, offset
+      transform {{@type}}.scaling(sx, sy, sz)
     end
 
     def to_s(io : IO) : Nil
@@ -257,9 +254,15 @@ module Chem::Spatial
       io << ", [0  0  0  1]]"
     end
 
+    # Returns the transformation transformed by *transform*. It
+    # effectively combines two transformations.
+    def transform(by transform : self) : self
+      transform * self
+    end
+
     # Returns the transformation translated by *offset*.
     def translate(by offset : Vec3) : self
-      Transform.new linear_map, @offset + offset
+      transform {{@type}}.translation(offset)
     end
 
     # Returns the translation component of the transformation.

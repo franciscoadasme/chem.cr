@@ -188,6 +188,14 @@ describe Chem::Spatial::Transform do
     end
   end
 
+  describe "#transform" do
+    it "combines two transformations" do
+      translation = Chem::Spatial::Transform.translation(vec3(1, 2, 3))
+      rotation = Chem::Spatial::Transform.rotation(10, 25, 90)
+      rotation.transform(translation).should eq(translation * rotation)
+    end
+  end
+
   describe "#translate" do
     it "translates the transformation" do
       offset = vec3(1, 2, 3)
