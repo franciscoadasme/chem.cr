@@ -219,9 +219,21 @@ module Chem::Spatial
       self * (length / abs)
     end
 
-    # Rotates the vector about *rotaxis* by *theta* degrees.
-    def rotate(about rotaxis : Vec3, by theta : Number) : self
-      Quat.rotation(rotaxis, theta) * self
+    # Returns the vector rotated by the given Euler angles in degrees.
+    # Delegates to `Quat.rotation` for computing the rotation.
+    def rotate(x : Number, y : Number, z : Number) : self
+      rotate Quat.rotation(x, y, z)
+    end
+
+    # Returns the vector rotated about *rotaxis* by *angle*
+    # degrees. Delegates to `Quat.rotation` for computing the rotation.
+    def rotate(about rotaxis : Vec3, by angle : Number) : self
+      rotate Quat.rotation(rotaxis, angle)
+    end
+
+    # Returns the vector rotated by the given quaternion.
+    def rotate(quat : Quat) : self
+      quat * self
     end
 
     # Returns an array with the components of the vector.
@@ -257,11 +269,6 @@ module Chem::Spatial
       transformation * self
     end
 
-    # :ditto:
-    def transform(q : Quat) : self
-      q * self
-    end
-
     # Returns a new vector with the return value of the given block,
     # which is invoked with the X, Y, and Z components.
     #
@@ -275,6 +282,11 @@ module Chem::Spatial
     def transform(& : Float64, Float64, Float64 -> FloatTriple) : self
       components = yield @x, @y, @z
       self.class.new *components
+    end
+
+    # Returns the vector translated by the given offset.
+    def translate(by offset : Vec3) : self
+      self + offset
     end
 
     def unsafe_fetch(index : Int) : Float64

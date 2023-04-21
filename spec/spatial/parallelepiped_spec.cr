@@ -401,10 +401,10 @@ describe Chem::Spatial::Parallelepiped do
   describe "#rotate" do
     it "returns a rotated parallelepiped" do
       pld = Chem::Spatial::Parallelepiped.hexagonal(2.3, 23.3)
-      pld.rotate(vec3(1, 2, 3), 65).should eq \
-        pld.transform(Chem::Spatial::Transform.rotation(vec3(1, 2, 3), 65))
-      pld.rotate(10, 6.4, 64.2).should eq \
-        pld.transform(Chem::Spatial::Quat.rotation(10, 6.4, 64.2))
+      pld.rotate(vec3(1, 2, 3), 65).should be_close \
+        pld.transform(Chem::Spatial::Transform.rotation(vec3(1, 2, 3), 65)), 1e-12
+      pld.rotate(10, 6.4, 64.2).should be_close \
+        pld.transform(Chem::Spatial::Transform.rotation(10, 6.4, 64.2)), 1e-12
     end
   end
 

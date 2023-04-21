@@ -205,8 +205,8 @@ module Chem::Spatial
       Transform.new inv_map, -inv_map * @offset
     end
 
-    # Returns the transformation encoding the rotation by the Euler
-    # angles. Delegates to `Quat.rotation` for computing the rotation.
+    # Returns the transformation rotated by the given Euler angles in
+    # degrees. Delegates to `Quat.rotation` for computing the rotation.
     def rotate(x : Number, y : Number, z : Number) : self
       rotate Quat.rotation(x, y, z)
     end
@@ -260,7 +260,7 @@ module Chem::Spatial
       transform * self
     end
 
-    # Returns the transformation translated by *offset*.
+    # Returns the transformation translated by the given offset.
     def translate(by offset : Vec3) : self
       transform {{@type}}.translation(offset)
     end

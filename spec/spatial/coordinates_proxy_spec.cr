@@ -192,7 +192,7 @@ describe Chem::Spatial::CoordinatesProxy do
     end
   end
 
-  describe "#transform!" do
+  describe "#transform" do
     it "transforms the atom coordinates" do
       other = Chem::Structure.build do
         atom Chem::PeriodicTable::O, vec3(1, 2, 3)
@@ -201,7 +201,7 @@ describe Chem::Spatial::CoordinatesProxy do
       end
 
       transform = Chem::Spatial::Transform.translation vec3(-1, 0, 1)
-      other.coords.transform!(transform).should eq [[0, 2, 4], [3, 5, 7], [6, 8, 10]]
+      other.coords.transform(transform).should eq [[0, 2, 4], [3, 5, 7], [6, 8, 10]]
     end
 
     it "rotates and translates atom coordinates" do
@@ -213,7 +213,7 @@ describe Chem::Spatial::CoordinatesProxy do
       center = other.coords.center
       transform = Chem::Spatial::Transform.rotation(10, 50, 15).translate(vec3(1, 2, 3))
       expected = other.coords.to_a.map { |vec| transform * vec }
-      other.coords.transform!(transform).should eq expected
+      other.coords.transform(transform).should eq expected
     end
 
     it "aligns by a subset (#183)" do
@@ -224,25 +224,25 @@ describe Chem::Spatial::CoordinatesProxy do
         Chem::AtomView.new [52, 2, 12, 22, 32, 42].map { |i| s.atoms[i] }
       end
       tr = Chem::Spatial::Transform.aligning(atoms, to: ref_atoms)
-      actual.coords.transform! tr
+      actual.coords.transform tr
       Chem::Spatial.rmsd(atoms.coords, ref_atoms.coords).should be_close 0.091, 1e-3
     end
 
     it "aligns to an axis (#183)" do
       sf = Chem::Structure.from_pdb spec_file("pr183_7M2I_sf-helice--aligned.pdb")
       ks = sf.atoms.select(&.potassium?)
-      sf.coords.translate! -ks.mean(&.coords)
+      sf.coords.translate -ks.mean(&.coords)
 
       # compute center of selected oxygens and set Y component to 0
       os = (75..78).map { |i| sf.chains.first.dig(i, "O") }
       oc = os.mean(&.coords).reject(Chem::Spatial::Vec3[0, 1, 0]).normalize
       transform = Chem::Spatial::Transform.aligning oc, to: Chem::Spatial::Vec3[1, 0, 0]
-      sf.coords.transform! transform
+      sf.coords.transform transform
       os.mean(&.coords).should be_close Chem::Spatial::Vec3[2.348, 1.756, 0], 1e-3
     end
   end
 
-  describe "#translate!" do
+  describe "#translate" do
     it "translates the atom coordinates" do
       other = Chem::Structure.build do
         atom Chem::PeriodicTable::O, vec3(1, 2, 3)
@@ -251,7 +251,7 @@ describe Chem::Spatial::CoordinatesProxy do
       end
 
       expected = [[-2, 0, 2], [1, 3, 5], [4, 6, 8]]
-      other.coords.translate!(by: vec3(-3, -2, -1)).should eq expected
+      other.coords.translate(by: vec3(-3, -2, -1)).should eq expected
     end
   end
 

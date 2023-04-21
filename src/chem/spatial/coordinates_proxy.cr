@@ -31,7 +31,7 @@ module Chem::Spatial
     # deviation (RMSD) using the QCP method (refer to `Spatial.qcp` for
     # details).
     def align_to(other : self) : self
-      transform! Transform.aligning(self, other)
+      transform Transform.aligning(self, other)
     end
 
     def bounds : Parallelepiped
@@ -60,7 +60,7 @@ module Chem::Spatial
     # ```
     def center_along(vec : Vec3) : self
       nvec = vec.normalize
-      translate! vec / 2 - center.dot(nvec) * nvec
+      translate vec / 2 - center.dot(nvec) * nvec
     end
 
     # Translates coordinates so that the center is at *vec*.
@@ -72,7 +72,7 @@ module Chem::Spatial
     # structure.coords.center # => [10 20 30]
     # ```
     def center_at(vec : Vec3) : self
-      translate! vec - center
+      translate vec - center
     end
 
     # Translates coordinates so that they are centered at the primary unit cell.
@@ -174,12 +174,31 @@ module Chem::Spatial
       self
     end
 
-    def transform!(transform : Transform) : self
-      map! { |vec| transform * vec }
+    # Rotates the coordinates by the given Euler angles in degrees.
+    # Delegates to `Quat.rotation` for computing the rotation.
+    def rotate(x : Number, y : Number, z : Number) : self
+      rotate Quat.rotation(x, y, z)
     end
 
-    def translate!(by offset : Vec3) : self
-      map! &.+(offset)
+    # Rotates the coordinates about *rotaxis* by *angle* degrees.
+    # Delegates to `Quat.rotation` for computing the rotation.
+    def rotate(about rotaxis : Vec3, by angle : Number) : self
+      rotate Quat.rotation(rotaxis, angle)
+    end
+
+    # Rotates the coordinates by the given quaternion.
+    def rotate(quat : Quat) : self
+      map! &.rotate(quat)
+    end
+
+    # Transforms the coordinates by the given transformation.
+    def transform(transform : Transform) : self
+      map! &.transform(transform)
+    end
+
+    # Translates the coordinates by the given offset.
+    def translate(by offset : Vec3) : self
+      map! &.translate(offset)
     end
 
     def to_a(fractional : Bool = false) : Array(Vec3)
@@ -204,7 +223,7 @@ module Chem::Spatial
       moved_atoms = Set(Atom).new
       @atoms.each_fragment do |fragment|
         assemble_fragment(fragment[0], fragment[0].coords, moved_atoms)
-        fragment.coords.translate!(-fragment.coords.center.map(&.floor))
+        fragment.coords.translate(-fragment.coords.center.map(&.floor))
         moved_atoms.clear
       end
       to_cart!

@@ -505,17 +505,24 @@ module Chem::Spatial
         !alpha.close_to?(90, 1e-8)
     end
 
-    # Returns the parallelepiped rotated about the axis vector *rotaxis*
-    # by *angle* degrees. Delegates to `Transform.rotation` for
-    # computing the rotation.
-    def rotate(about rotaxis : Vec3, by angle : Number) : self
-      transform Transform.rotation(rotaxis, angle)
+    # Returns the parallelepiped rotated by the given Euler angles in
+    # degrees. Delegates to `Quat.rotation` for computing the rotation.
+    def rotate(x : Number, y : Number, z : Number) : self
+      rotate Quat.rotation(x, y, z)
     end
 
-    # Returns the parallelepiped rotated by the Euler angles in degrees.
-    # Delegates to `Transform.rotation` for computing the rotation.
-    def rotate(x : Number, y : Number, z : Number) : self
-      transform Quat.rotation(x, y, z)
+    # Returns the parallelepiped rotated about the axis vector *rotaxis*
+    # by *angle* degrees. Delegates to `Quat.rotation` for computing the
+    # rotation.
+    def rotate(about rotaxis : Vec3, by angle : Number) : self
+      rotate Quat.rotation(rotaxis, angle)
+    end
+
+    # Returns the parallelepiped rotated by the given quaternion.
+    def rotate(quat : Quat) : self
+      new_basisvec = basisvec.map &.rotate(quat)
+      offset = new_basisvec.sum / 2 - basisvec.sum / 2
+      {{@type}}.new @origin - offset, *new_basisvec
     end
 
     # Returns the lengths of the basis vectors.
@@ -537,17 +544,6 @@ module Chem::Spatial
       io.write_bytes @basis, format
     end
 
-    # Returns a new parallelepiped translated by *offset*.
-    #
-    # ```
-    # pld = Parallelepiped.new(Vec3[-5, 1, 20], {10, 10, 10}, {90, 90, 120})
-    # pld.translate Vec3[1, 2, 10]
-    # pld.origin # => Vec3[-4.0, 3.0, 30.0]
-    # ```
-    def translate(offset : Vec3) : self
-      {{@type}}.new @origin + offset, @basis
-    end
-
     # Returns the parallelepiped resulting of applying the given
     # transformation.
     #
@@ -560,11 +556,15 @@ module Chem::Spatial
       {{@type}}.new origin, *new_basisvec
     end
 
-    # :ditto:
-    def transform(q : Quat) : self
-      new_basisvec = basisvec.map &.transform(q)
-      offset = new_basisvec.sum / 2 - basisvec.sum / 2
-      {{@type}}.new @origin - offset, *new_basisvec
+    # Returns a new parallelepiped translated by *offset*.
+    #
+    # ```
+    # pld = Parallelepiped.new(Vec3[-5, 1, 20], {10, 10, 10}, {90, 90, 120})
+    # pld.translate Vec3[1, 2, 10]
+    # pld.origin # => Vec3[-4.0, 3.0, 30.0]
+    # ```
+    def translate(offset : Vec3) : self
+      {{@type}}.new @origin + offset, @basis
     end
 
     # Returns a new parallelepiped with the return value of the given
