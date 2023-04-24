@@ -174,21 +174,35 @@ module Chem::Spatial
       self
     end
 
-    # Rotates the coordinates by the given Euler angles in degrees.
+    # Rotates the coordinates by the given Euler angles in degrees. The
+    # rotation will be centered at *pivot*, which defaults to the
+    # coordinates' center.
+    #
     # Delegates to `Quat.rotation` for computing the rotation.
-    def rotate(x : Number, y : Number, z : Number) : self
-      rotate Quat.rotation(x, y, z)
+    def rotate(x : Number, y : Number, z : Number, pivot : Vec3 = center) : self
+      rotate Quat.rotation(x, y, z), pivot
     end
 
-    # Rotates the coordinates about *rotaxis* by *angle* degrees.
+    # Rotates the coordinates about *rotaxis* by *angle* degrees. The
+    # rotation will be centered at *pivot*, which defaults to the
+    # coordinates' center.
+    #
     # Delegates to `Quat.rotation` for computing the rotation.
-    def rotate(about rotaxis : Vec3, by angle : Number) : self
-      rotate Quat.rotation(rotaxis, angle)
+    def rotate(about rotaxis : Vec3, by angle : Number, pivot : Vec3 = center) : self
+      rotate Quat.rotation(rotaxis, angle), pivot
     end
 
-    # Rotates the coordinates by the given quaternion.
-    def rotate(quat : Quat) : self
-      map! &.rotate(quat)
+    # Rotates the coordinates by the given quaternion. The
+    # rotation will be centered at *pivot*, which defaults to the
+    # coordinates' center.
+    def rotate(quat : Quat, pivot : Vec3 = center) : self
+      if pivot.zero?
+        map! &.rotate(quat)
+      else
+        offset = pivot - Vec3[0, 0, 0]
+        transform = Transform.translation(-offset).rotate(quat).translate(offset)
+        map! &.transform(transform)
+      end
     end
 
     # Transforms the coordinates by the given transformation.

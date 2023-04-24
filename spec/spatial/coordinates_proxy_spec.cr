@@ -192,6 +192,23 @@ describe Chem::Spatial::CoordinatesProxy do
     end
   end
 
+  describe "#rotate" do
+    it "rotates the coordinates" do
+      water = Chem::Structure.read spec_file("waters.xyz")
+      pos = water.coords.to_a
+      transform = Chem::Spatial::Transform.translation(-pos.mean)
+        .rotate(90, 150, 2).translate(pos.mean)
+      water.dup.coords.rotate(90, 150, 2).should eq pos.map(&.transform(transform))
+    end
+
+    it "rotates the coordinates centered at point" do
+      water = Chem::Structure.read spec_file("waters.xyz")
+      pos = water.coords.to_a
+      pivot = Chem::Spatial::Vec3.zero
+      water.dup.coords.rotate(78, 25, 10, pivot).should eq pos.map(&.rotate(78, 25, 10))
+    end
+  end
+
   describe "#transform" do
     it "transforms the atom coordinates" do
       other = Chem::Structure.build do
