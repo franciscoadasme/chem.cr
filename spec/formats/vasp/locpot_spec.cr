@@ -6,12 +6,9 @@ describe Chem::VASP::Locpot do
     grid.source_file.should eq Path[spec_file("vasp/LOCPOT")].expand
     grid.dim.should eq({32, 32, 32})
     grid.bounds.should be_close Chem::Spatial::Parallelepiped.new(
-      vec3(0, 0, 0),
-      Chem::Spatial::Mat3.basis(
-        vec3(2.969072, -0.000523, -0.000907),
-        vec3(-0.987305, 2.800110, 0.000907),
-        vec3(-0.987305, -1.402326, 2.423654)
-      ),
+      vec3(2.969072, -0.000523, -0.000907),
+      vec3(-0.987305, 2.800110, 0.000907),
+      vec3(-0.987305, -1.402326, 2.423654)
     ), 1e-6
     grid[0, 0, 0].should eq -46.16312251
     grid[0, 5, 11].should eq -8.1037443195
@@ -23,12 +20,9 @@ describe Chem::VASP::Locpot do
   it "parses a LOCPOT header" do
     info = Chem::Spatial::Grid::Info.from_locpot spec_file("vasp/LOCPOT")
     info.bounds.should be_close Chem::Spatial::Parallelepiped.new(
-      vec3(0, 0, 0),
-      Chem::Spatial::Mat3.basis(
-        vec3(2.969072, -0.000523, -0.000907),
-        vec3(-0.987305, 2.800110, 0.000907),
-        vec3(-0.987305, -1.402326, 2.423654),
-      ),
+      vec3(2.969072, -0.000523, -0.000907),
+      vec3(-0.987305, 2.800110, 0.000907),
+      vec3(-0.987305, -1.402326, 2.423654),
     ), 1e-6
     info.dim.should eq({32, 32, 32})
   end

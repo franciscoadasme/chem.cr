@@ -508,7 +508,7 @@ describe Chem::Spatial::Grid do
     end
 
     it "returns the location at the coordinates (non-orthogonal)" do
-      bounds = Chem::Spatial::Parallelepiped.new(vec3(4, 3, 2), {5, 5, 4}, {90, 100, 90})
+      bounds = Chem::Spatial::Parallelepiped.new({5, 5, 4}, {90, 100, 90}, vec3(4, 3, 2))
       grid = make_grid({11, 11, 11}, bounds)
       grid.loc_at?(vec3(4, 3, 2)).should eq({0, 0, 0})
       grid.loc_at?(vec3(8.305, 8, 5.939)).should eq({10, 10, 10})
@@ -787,7 +787,7 @@ describe Chem::Spatial::Grid do
     it "writes the binary representation of a grid" do
       origin = vec3(10.1, 20.2, 30.3)
       basis = Chem::Spatial::Mat3[{1, 2, 3}, {4, 5, 6}, {7, 8, 9}]
-      bounds = Chem::Spatial::Parallelepiped.new origin, basis
+      bounds = Chem::Spatial::Parallelepiped.new basis, origin
       grid = Chem::Spatial::Grid.new({2, 2, 2}, bounds, "foo.pdb")
         .map_with_index! { |_, i| i * 1.1 }
       bytesize = grid.source_file.not_nil!.to_s.bytesize
@@ -820,7 +820,7 @@ describe Chem::Spatial::Grid do
     it "reads a grid from IO" do
       origin = vec3(10.1, 20.2, 30.3)
       basis = Chem::Spatial::Mat3[{1, 2, 3}, {4, 5, 6}, {7, 8, 9}]
-      bounds = Chem::Spatial::Parallelepiped.new origin, basis
+      bounds = Chem::Spatial::Parallelepiped.new basis, origin
       grid = Chem::Spatial::Grid.new({2, 2, 2}, bounds, "foo.pdb")
         .map_with_index! { |_, i| i * 14.1 }
 

@@ -19,41 +19,19 @@ module Chem::Spatial
     @inv_basis : Mat3?
 
     # Creates a `Parallelepiped` with *basis* located at *origin*.
-    def initialize(@origin : Vec3, @basis : Mat3)
+    def initialize(@basis : Mat3, @origin : Vec3 = Vec3.zero)
     end
 
     # Reads a parallelepiped from *io* in the given *format*. See also:
     # `IO#read_bytes`.
     def self.from_io(io : IO, format : IO::ByteFormat) : self
-      new io.read_bytes(Vec3, format), io.read_bytes(Mat3, format)
-    end
-
-    # Creates a `Parallelepiped` with *basis* located at the origin.
-    def self.new(basis : Mat3) : self
-      new Vec3.zero, basis
-    end
-
-    # Creates a `Parallelepiped` with the given basis vectors located at
-    # the origin.
-    def self.new(i : Vec3, j : Vec3, k : Vec3) : self
-      new Vec3.zero, i, j, k
+      new io.read_bytes(Mat3, format), io.read_bytes(Vec3, format)
     end
 
     # Creates a `Parallelepiped` with the given basis vectors located at
     # *origin*.
-    def self.new(origin : Vec3, i : Vec3, j : Vec3, k : Vec3) : self
-      new origin, Mat3.basis(i, j, k)
-    end
-
-    # Creates a `Parallelepiped` with the given lengths (in angstroms)
-    # and angles (in degrees) located at the origin. Raises
-    # `ArgumentError` if any of the lengths or angles is negative.
-    #
-    # NOTE: The first basis vector will be aligned to the X axis and the
-    # second basis vector will lie in the XY plane.
-    def self.new(size : NumberTriple | Size3,
-                 angles : NumberTriple = {90, 90, 90}) : self
-      new Vec3.zero, size, angles
+    def self.new(i : Vec3, j : Vec3, k : Vec3, origin : Vec3 = Vec3.zero) : self
+      new Mat3.basis(i, j, k), origin
     end
 
     # Creates a `Parallelepiped` with the given lengths (in angstroms)
@@ -62,13 +40,13 @@ module Chem::Spatial
     #
     # NOTE: The first basis vector will be aligned to the X axis and the
     # second basis vector will lie in the XY plane.
-    def self.new(origin : Vec3,
-                 size : NumberTriple | Size3,
-                 angles : NumberTriple = {90, 90, 90}) : self
-      raise ArgumentError.new("Negative size") if !size.is_a?(Size3) && size.any?(&.negative?)
+    def self.new(size : NumberTriple | Size3,
+                 angles : NumberTriple = {90, 90, 90},
+                 origin : Vec3 = Vec3.zero) : self
+      size = Size3[*size] unless size.is_a?(Size3)
       raise ArgumentError.new("Negative angle") if angles.any?(&.negative?)
       if angles.all?(&.close_to?(90))
-        new origin, Mat3.diagonal(size[0], size[1], size[2])
+        new Mat3.diagonal(size[0], size[1], size[2]), origin
       else
         cos_alpha = Math.cos angles[0].radians
         cos_beta = Math.cos angles[1].radians
@@ -83,32 +61,31 @@ module Chem::Spatial
         bj = Vec3[size[1] * cos_gamma, size[1] * sin_gamma, 0]
         bk = Vec3[kx, ky, kz]
 
-        new origin, Mat3.basis(bi, bj, bk)
+        new bi, bj, bk, origin
       end
     end
 
     # Creates a `Parallelepiped` spanning from *vmin* to *vmax*.
     def self.new(vmin : Vec3, vmax : Vec3) : self
-      size = {vmax.x - vmin.x, vmax.y - vmin.y, vmax.z - vmin.z}
-      new(vmin, size)
+      new Size3[vmax.x - vmin.x, vmax.y - vmin.y, vmax.z - vmin.z], origin: vmin
     end
 
     # Creates a `Parallelepiped` with the given lengths placed at the
     # origin.
     def self.[](a : Number, b : Number, c : Number) : self
-      new({a, b, c})
+      new Size3[a, b, c]
     end
 
     # Creates a cubic parallelepiped (*a* = *b* = *c* and *α* = *β* =
     # *γ* = 90°).
     def self.cubic(a : Number) : self
-      new({a, a, a}, {90, 90, 90})
+      new Size3[a, a, a]
     end
 
     # Creates a hexagonal parallelepiped (*a* = *b*, *α* = *β* = 90°,
     # and *γ* = 120°).
     def self.hexagonal(a : Number, c : Number) : self
-      new({a, a, c}, {90, 90, 120})
+      new Size3[a, a, c], {90, 90, 120}
     end
 
     # Creates a monoclinic parallelepiped (*a* ≠ *c*, *α* = *γ* = 90°,
@@ -404,7 +381,7 @@ module Chem::Spatial
       end
       padding *= 2
       new_basis = Mat3.basis *basisvec.map_with_index { |bv, i| bv.pad(padding[i]) }
-      self.class.new new_origin, new_basis
+      self.class.new new_basis, new_origin
     end
 
     # :ditto:
@@ -520,9 +497,7 @@ module Chem::Spatial
 
     # Returns the parallelepiped rotated by the given quaternion.
     def rotate(quat : Quat) : self
-      new_basisvec = basisvec.map &.rotate(quat)
-      offset = new_basisvec.sum / 2 - basisvec.sum / 2
-      {{@type}}.new @origin - offset, *new_basisvec
+      transform Transform.rotation(quat)
     end
 
     # Returns the lengths of the basis vectors.
@@ -540,8 +515,8 @@ module Chem::Spatial
     # Writes the binary representation of the parallelepiped to *io* in
     # the given *format*. See also `IO#write_bytes`.
     def to_io(io : IO, format : IO::ByteFormat = :system_endian) : Nil
-      io.write_bytes @origin, format
       io.write_bytes @basis, format
+      io.write_bytes @origin, format
     end
 
     # Returns the parallelepiped resulting of applying the given
@@ -551,9 +526,9 @@ module Chem::Spatial
     # parallelepiped. Translation will be applied afterwards.
     def transform(transformation : Transform) : self
       new_basisvec = basisvec.map &.transform(transformation.rotation)
-      offset = new_basisvec.sum / 2 - basisvec.sum / 2
-      origin = @origin + transformation.offset - offset
-      {{@type}}.new origin, *new_basisvec
+      center_offset = (new_basisvec.sum - basisvec.sum) * 0.5
+      origin = @origin + transformation.offset - center_offset
+      {{@type}}.new Mat3.basis(*new_basisvec), origin
     end
 
     # Returns a new parallelepiped translated by *offset*.
@@ -564,7 +539,7 @@ module Chem::Spatial
     # pld.origin # => Vec3[-4.0, 3.0, 30.0]
     # ```
     def translate(offset : Vec3) : self
-      {{@type}}.new @origin + offset, @basis
+      {{@type}}.new @basis, @origin + offset
     end
 
     # Returns a new parallelepiped with the return value of the given

@@ -43,7 +43,7 @@ module Chem::DX
       end
       2.times { @pull.next_line }
 
-      bounds = Spatial::Parallelepiped.new origin, Spatial::Mat3.basis(vi, vj, vk)
+      bounds = Spatial::Parallelepiped.new vi, vj, vk, origin
       Spatial::Grid::Info.new bounds, {ni, nj, nk}
     end
   end

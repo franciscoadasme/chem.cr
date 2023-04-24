@@ -115,7 +115,7 @@ describe Chem::Spatial::Parallelepiped do
   describe "#center" do
     it "returns the center of the parallelepiped" do
       Chem::Spatial::Parallelepiped[10, 20, 30].center.should eq [5, 10, 15]
-      Chem::Spatial::Parallelepiped.new(vec3(1, 2, 3), {6, 3, 23}).center.should eq [4, 3.5, 14.5]
+      Chem::Spatial::Parallelepiped.new({6, 3, 23}, {90, 90, 90}, vec3(1, 2, 3)).center.should eq [4, 3.5, 14.5]
     end
   end
 
@@ -129,7 +129,7 @@ describe Chem::Spatial::Parallelepiped do
 
   describe "#center_at_origin" do
     it "centers the parallelepiped at the origin" do
-      pld = Chem::Spatial::Parallelepiped.new(vec3(2, 5, 23), {10, 20, 30})
+      pld = Chem::Spatial::Parallelepiped.new({10, 20, 30}, {90, 90, 90}, vec3(2, 5, 23))
       pld = pld.center_at_origin
       pld.center.should eq [0, 0, 0]
     end
@@ -230,7 +230,7 @@ describe Chem::Spatial::Parallelepiped do
       pld.includes?(vec3(1, 2, 3)).should be_true
       pld.includes?(vec3(-1, 2, 3)).should be_false
 
-      pld = Chem::Spatial::Parallelepiped.new(vec3(1, 2, 3), {6, 3, 23})
+      pld = Chem::Spatial::Parallelepiped.new({6, 3, 23}, {90, 90, 90}, vec3(1, 2, 3))
       pld.includes?(vec3(3, 2.1, 20)).should be_true
       pld.includes?(vec3(2.4, 1.8, 23.1)).should be_false
     end
@@ -248,17 +248,20 @@ describe Chem::Spatial::Parallelepiped do
       it "returns true when enclosed" do
         pld = Chem::Spatial::Parallelepiped.hexagonal(10, 10)
         pld.includes?(Chem::Spatial::Parallelepiped[5, 4, 6]).should be_true
-        pld.includes?(Chem::Spatial::Parallelepiped.new(vec3(1, 2, 3), {5, 4, 6})).should be_true
+        pld = Chem::Spatial::Parallelepiped.new({5, 4, 6}, origin: vec3(1, 2, 3))
+        pld.includes?(pld).should be_true
       end
 
       it "returns false when intersected" do
         pld = Chem::Spatial::Parallelepiped.hexagonal(10, 10)
-        pld.includes?(Chem::Spatial::Parallelepiped.new(vec3(-1, 2, -4.3), {5, 4, 6})).should be_false
+        other = Chem::Spatial::Parallelepiped.new({5, 4, 6}, origin: vec3(-1, 2, -4.3))
+        pld.includes?(other).should be_false
       end
 
       it "returns false when out of bounds" do
         pld = Chem::Spatial::Parallelepiped.hexagonal(10, 10)
-        pld.includes?(Chem::Spatial::Parallelepiped.new(vec3(-1, 2, -4.3), {5, 4, 6})).should be_false
+        other = Chem::Spatial::Parallelepiped.new({5, 4, 6}, origin: vec3(-1, 2, -4.3))
+        pld.includes?(other).should be_false
       end
     end
   end
@@ -533,7 +536,7 @@ describe Chem::Spatial::Parallelepiped do
       Chem::Spatial::Parallelepiped.hexagonal(5, 8).volume.should be_close 173.2050807569, 1e-10
       Chem::Spatial::Parallelepiped.hexagonal(10, 15).volume.should be_close 1299.038105676658, 1e-12
       Chem::Spatial::Parallelepiped.new({1, 2, 3}, {90, 101.2, 90}).volume.should be_close 5.8857309321, 1e-10
-      Chem::Spatial::Parallelepiped.new(vec3(1, 2, 3), {6, 3, 23}).volume.should eq 414
+      Chem::Spatial::Parallelepiped.new({6, 3, 23}, origin: vec3(1, 2, 3)).volume.should eq 414
     end
   end
 
@@ -581,13 +584,13 @@ describe Chem::Spatial::Parallelepiped do
     it "writes a binary representation of the parallelepiped" do
       origin = vec3(10.1, 20.2, 30.3)
       basis = Chem::Spatial::Mat3[{1, 2, 3}, {4, 5, 6}, {7, 8, 9}]
-      pld = Chem::Spatial::Parallelepiped.new origin, basis
+      pld = Chem::Spatial::Parallelepiped.new basis, origin
 
       io = IO::Memory.new
       io.write_bytes pld
       io.rewind
-      io.read_bytes(Chem::Spatial::Vec3).should eq origin
       io.read_bytes(Chem::Spatial::Mat3).should eq basis
+      io.read_bytes(Chem::Spatial::Vec3).should eq origin
       io.read_byte.should be_nil
     end
   end
@@ -596,7 +599,7 @@ describe Chem::Spatial::Parallelepiped do
     it "reads a parallelepiped from IO" do
       origin = vec3(10.1, 20.2, 30.3)
       basis = Chem::Spatial::Mat3[{1, 2, 3}, {4, 5, 6}, {7, 8, 9}]
-      pld = Chem::Spatial::Parallelepiped.new origin, basis
+      pld = Chem::Spatial::Parallelepiped.new basis, origin
 
       io = IO::Memory.new
       io.write_bytes pld

@@ -35,12 +35,10 @@ describe Chem::Cube::Reader do
     info = Chem::Spatial::Grid::Info.from_cube io
     info.dim.should eq({14, 20, 22})
     info.bounds.should be_close Chem::Spatial::Parallelepiped.new(
+      vec3(8.497002, 0.0, 0.0),
+      vec3(2.702550, 11.23965, 0.0),
+      vec3(5.816758, 2.222264, 41.171796),
       vec3(-3.826155, -4.114553, -6.64407),
-      Chem::Spatial::Mat3.basis(
-        vec3(8.497002, 0.0, 0.0),
-        vec3(2.702550, 11.23965, 0.0),
-        vec3(5.816758, 2.222264, 41.171796),
-      ),
     ), 1e-6
   end
 

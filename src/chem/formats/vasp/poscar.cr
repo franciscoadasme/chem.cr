@@ -27,7 +27,7 @@ module Chem::VASP::Poscar
       @pull.next_line
       vk = Spatial::Vec3.new @pull.next_f, @pull.next_f, @pull.next_f
       @pull.next_line
-      cell = Spatial::Parallelepiped.new(vi * scale_factor, vj * scale_factor, vk * scale_factor)
+      cell = Spatial::Parallelepiped.new Spatial::Mat3.basis(vi, vj, vk) * scale_factor
 
       # read species
       uniq_elements = [] of Element

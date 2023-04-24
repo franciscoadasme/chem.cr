@@ -65,7 +65,7 @@ module Chem::Cube
       @attached = decode_attached
 
       vi, vj, vk = dvi * ni, dvj * nj, dvk * nk
-      bounds = Spatial::Parallelepiped.new origin, Spatial::Mat3.basis(vi, vj, vk)
+      bounds = Spatial::Parallelepiped.new vi, vj, vk, origin
       Spatial::Grid::Info.new bounds, {ni, nj, nk}
     end
 
