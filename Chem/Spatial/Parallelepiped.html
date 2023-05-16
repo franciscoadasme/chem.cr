@@ -982,21 +982,14 @@ fractional coordinates, and viceversa, by matrix multiplication (see
       </li>
     
       <li class="entry-summary">
-        <a href="#new%28origin%3AVec3%2Ci%3AVec3%2Cj%3AVec3%2Ck%3AVec3%29%3Aself-class-method" class="signature"><strong>.new</strong>(origin : Vec3, i : Vec3, j : Vec3, k : Vec3) : <span class="k">self</span></a>
+        <a href="#new%28i%3AVec3%2Cj%3AVec3%2Ck%3AVec3%2Corigin%3AVec3%3DVec3.zero%29%3Aself-class-method" class="signature"><strong>.new</strong>(i : Vec3, j : Vec3, k : Vec3, origin : Vec3 = <span class="t">Vec3</span>.zero) : <span class="k">self</span></a>
         
           <div class="summary"><p>Creates a <code><a href="../../Chem/Spatial/Parallelepiped.html">Parallelepiped</a></code> with the given basis vectors located at <em>origin</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new%28i%3AVec3%2Cj%3AVec3%2Ck%3AVec3%29%3Aself-class-method" class="signature"><strong>.new</strong>(i : Vec3, j : Vec3, k : Vec3) : <span class="k">self</span></a>
-        
-          <div class="summary"><p>Creates a <code><a href="../../Chem/Spatial/Parallelepiped.html">Parallelepiped</a></code> with the given basis vectors located at the origin.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#new%28origin%3AVec3%2Cbasis%3AMat3%29-class-method" class="signature"><strong>.new</strong>(origin : Vec3, basis : Mat3)</a>
+        <a href="#new%28basis%3AMat3%2Corigin%3AVec3%3DVec3.zero%29-class-method" class="signature"><strong>.new</strong>(basis : Mat3, origin : Vec3 = <span class="t">Vec3</span>.zero)</a>
         
           <div class="summary"><p>Creates a <code><a href="../../Chem/Spatial/Parallelepiped.html">Parallelepiped</a></code> with <em>basis</em> located at <em>origin</em>.</p></div>
         
@@ -1010,23 +1003,9 @@ fractional coordinates, and viceversa, by matrix multiplication (see
       </li>
     
       <li class="entry-summary">
-        <a href="#new%28origin%3AVec3%2Csize%3ANumberTriple%7CSize3%2Cangles%3ANumberTriple%3D%7B90%2C90%2C90%7D%29%3Aself-class-method" class="signature"><strong>.new</strong>(origin : Vec3, size : NumberTriple | Size3, angles : NumberTriple = {<span class="n">90</span>, <span class="n">90</span>, <span class="n">90</span>}) : <span class="k">self</span></a>
+        <a href="#new%28size%3ANumberTriple%7CSize3%2Cangles%3ANumberTriple%3D%7B90%2C90%2C90%7D%2Corigin%3AVec3%3DVec3.zero%29%3Aself-class-method" class="signature"><strong>.new</strong>(size : NumberTriple | Size3, angles : NumberTriple = {<span class="n">90</span>, <span class="n">90</span>, <span class="n">90</span>}, origin : Vec3 = <span class="t">Vec3</span>.zero) : <span class="k">self</span></a>
         
           <div class="summary"><p>Creates a <code><a href="../../Chem/Spatial/Parallelepiped.html">Parallelepiped</a></code> with the given lengths (in angstroms) and angles (in degrees) located at <em>origin</em>.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#new%28basis%3AMat3%29%3Aself-class-method" class="signature"><strong>.new</strong>(basis : Mat3) : <span class="k">self</span></a>
-        
-          <div class="summary"><p>Creates a <code><a href="../../Chem/Spatial/Parallelepiped.html">Parallelepiped</a></code> with <em>basis</em> located at the origin.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#new%28size%3ANumberTriple%7CSize3%2Cangles%3ANumberTriple%3D%7B90%2C90%2C90%7D%29%3Aself-class-method" class="signature"><strong>.new</strong>(size : NumberTriple | Size3, angles : NumberTriple = {<span class="n">90</span>, <span class="n">90</span>, <span class="n">90</span>}) : <span class="k">self</span></a>
-        
-          <div class="summary"><p>Creates a <code><a href="../../Chem/Spatial/Parallelepiped.html">Parallelepiped</a></code> with the given lengths (in angstroms) and angles (in degrees) located at the origin.</p></div>
         
       </li>
     
@@ -1558,12 +1537,12 @@ and <em>β</em> ≠ 90°).</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="new(origin:Vec3,i:Vec3,j:Vec3,k:Vec3):self-class-method">
+    <div class="entry-detail" id="new(i:Vec3,j:Vec3,k:Vec3,origin:Vec3=Vec3.zero):self-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(origin : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, i : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, j : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, k : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <span class="k">self</span>
+        def self.<strong>new</strong>(i : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, j : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, k : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, origin : <a href="../../Chem/Spatial/Vec3.html">Vec3</a> = <span class="t">Vec3</span>.zero) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#new%28origin%3AVec3%2Ci%3AVec3%2Cj%3AVec3%2Ck%3AVec3%29%3Aself-class-method">#</a>
+        <a class="method-permalink" href="#new%28i%3AVec3%2Cj%3AVec3%2Ck%3AVec3%2Corigin%3AVec3%3DVec3.zero%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1578,32 +1557,12 @@ and <em>β</em> ≠ 90°).</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="new(i:Vec3,j:Vec3,k:Vec3):self-class-method">
+    <div class="entry-detail" id="new(basis:Mat3,origin:Vec3=Vec3.zero)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(i : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, j : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, k : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>) : <span class="k">self</span>
+        def self.<strong>new</strong>(basis : <a href="../../Chem/Spatial/Mat3.html">Mat3</a>, origin : <a href="../../Chem/Spatial/Vec3.html">Vec3</a> = <span class="t">Vec3</span>.zero)
 
-        <a class="method-permalink" href="#new%28i%3AVec3%2Cj%3AVec3%2Ck%3AVec3%29%3Aself-class-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Creates a <code><a href="../../Chem/Spatial/Parallelepiped.html">Parallelepiped</a></code> with the given basis vectors located at
-the origin.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="new(origin:Vec3,basis:Mat3)-class-method">
-      <div class="signature">
-        
-        def self.<strong>new</strong>(origin : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, basis : <a href="../../Chem/Spatial/Mat3.html">Mat3</a>)
-
-        <a class="method-permalink" href="#new%28origin%3AVec3%2Cbasis%3AMat3%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28basis%3AMat3%2Corigin%3AVec3%3DVec3.zero%29-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1636,60 +1595,18 @@ the origin.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="new(origin:Vec3,size:NumberTriple|Size3,angles:NumberTriple={90,90,90}):self-class-method">
+    <div class="entry-detail" id="new(size:NumberTriple|Size3,angles:NumberTriple={90,90,90},origin:Vec3=Vec3.zero):self-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(origin : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, size : <a href="../../Chem/Spatial/NumberTriple.html">NumberTriple</a> | <a href="../../Chem/Spatial/Size3.html">Size3</a>, angles : <a href="../../Chem/Spatial/NumberTriple.html">NumberTriple</a> = {<span class="n">90</span>, <span class="n">90</span>, <span class="n">90</span>}) : <span class="k">self</span>
+        def self.<strong>new</strong>(size : <a href="../../Chem/Spatial/NumberTriple.html">NumberTriple</a> | <a href="../../Chem/Spatial/Size3.html">Size3</a>, angles : <a href="../../Chem/Spatial/NumberTriple.html">NumberTriple</a> = {<span class="n">90</span>, <span class="n">90</span>, <span class="n">90</span>}, origin : <a href="../../Chem/Spatial/Vec3.html">Vec3</a> = <span class="t">Vec3</span>.zero) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#new%28origin%3AVec3%2Csize%3ANumberTriple%7CSize3%2Cangles%3ANumberTriple%3D%7B90%2C90%2C90%7D%29%3Aself-class-method">#</a>
+        <a class="method-permalink" href="#new%28size%3ANumberTriple%7CSize3%2Cangles%3ANumberTriple%3D%7B90%2C90%2C90%7D%2Corigin%3AVec3%3DVec3.zero%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Creates a <code><a href="../../Chem/Spatial/Parallelepiped.html">Parallelepiped</a></code> with the given lengths (in angstroms)
 and angles (in degrees) located at <em>origin</em>. Raises
-<code>ArgumentError</code> if any of the lengths or angles is negative.</p>
-<p><span class="flag purple">NOTE</span>  The first basis vector will be aligned to the X axis and the
-second basis vector will lie in the XY plane.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="new(basis:Mat3):self-class-method">
-      <div class="signature">
-        
-        def self.<strong>new</strong>(basis : <a href="../../Chem/Spatial/Mat3.html">Mat3</a>) : <span class="k">self</span>
-
-        <a class="method-permalink" href="#new%28basis%3AMat3%29%3Aself-class-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Creates a <code><a href="../../Chem/Spatial/Parallelepiped.html">Parallelepiped</a></code> with <em>basis</em> located at the origin.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="new(size:NumberTriple|Size3,angles:NumberTriple={90,90,90}):self-class-method">
-      <div class="signature">
-        
-        def self.<strong>new</strong>(size : <a href="../../Chem/Spatial/NumberTriple.html">NumberTriple</a> | <a href="../../Chem/Spatial/Size3.html">Size3</a>, angles : <a href="../../Chem/Spatial/NumberTriple.html">NumberTriple</a> = {<span class="n">90</span>, <span class="n">90</span>, <span class="n">90</span>}) : <span class="k">self</span>
-
-        <a class="method-permalink" href="#new%28size%3ANumberTriple%7CSize3%2Cangles%3ANumberTriple%3D%7B90%2C90%2C90%7D%29%3Aself-class-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Creates a <code><a href="../../Chem/Spatial/Parallelepiped.html">Parallelepiped</a></code> with the given lengths (in angstroms)
-and angles (in degrees) located at the origin. Raises
 <code>ArgumentError</code> if any of the lengths or angles is negative.</p>
 <p><span class="flag purple">NOTE</span>  The first basis vector will be aligned to the X axis and the
 second basis vector will lie in the XY plane.</p>

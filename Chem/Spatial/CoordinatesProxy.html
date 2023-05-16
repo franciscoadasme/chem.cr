@@ -1051,21 +1051,21 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#rotate%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-instance-method" class="signature"><strong>#rotate</strong>(x : Number, y : Number, z : Number) : <span class="k">self</span></a>
+        <a href="#rotate%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%2Cpivot%3AVec3%3Dcenter%29%3Aself-instance-method" class="signature"><strong>#rotate</strong>(x : Number, y : Number, z : Number, pivot : Vec3 = center) : <span class="k">self</span></a>
         
           <div class="summary"><p>Rotates the coordinates by the given Euler angles in degrees.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#rotate%28aboutrotaxis%3AVec3%2Cbyangle%3ANumber%29%3Aself-instance-method" class="signature"><strong>#rotate</strong>(about rotaxis : Vec3, by angle : Number) : <span class="k">self</span></a>
+        <a href="#rotate%28aboutrotaxis%3AVec3%2Cbyangle%3ANumber%2Cpivot%3AVec3%3Dcenter%29%3Aself-instance-method" class="signature"><strong>#rotate</strong>(about rotaxis : Vec3, by angle : Number, pivot : Vec3 = center) : <span class="k">self</span></a>
         
           <div class="summary"><p>Rotates the coordinates about <em>rotaxis</em> by <em>angle</em> degrees.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#rotate%28quat%3AQuat%29%3Aself-instance-method" class="signature"><strong>#rotate</strong>(quat : Quat) : <span class="k">self</span></a>
+        <a href="#rotate%28quat%3AQuat%2Cpivot%3AVec3%3Dcenter%29%3Aself-instance-method" class="signature"><strong>#rotate</strong>(quat : Quat, pivot : Vec3 = center) : <span class="k">self</span></a>
         
           <div class="summary"><p>Rotates the coordinates by the given quaternion.</p></div>
         
@@ -1515,18 +1515,20 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
       </div>
     </div>
   
-    <div class="entry-detail" id="rotate(x:Number,y:Number,z:Number):self-instance-method">
+    <div class="entry-detail" id="rotate(x:Number,y:Number,z:Number,pivot:Vec3=center):self-instance-method">
       <div class="signature">
         
-        def <strong>rotate</strong>(x : <a href="../../Number.html">Number</a>, y : <a href="../../Number.html">Number</a>, z : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
+        def <strong>rotate</strong>(x : <a href="../../Number.html">Number</a>, y : <a href="../../Number.html">Number</a>, z : <a href="../../Number.html">Number</a>, pivot : <a href="../../Chem/Spatial/Vec3.html">Vec3</a> = center) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#rotate%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-instance-method">#</a>
+        <a class="method-permalink" href="#rotate%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%2Cpivot%3AVec3%3Dcenter%29%3Aself-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Rotates the coordinates by the given Euler angles in degrees.
-Delegates to <code><a href="../../Chem/Spatial/Quat.html#rotation%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-class-method">Quat.rotation</a></code> for computing the rotation.</p>
+          <p>Rotates the coordinates by the given Euler angles in degrees. The
+rotation will be centered at <em>pivot</em>, which defaults to the
+coordinates' center.</p>
+<p>Delegates to <code><a href="../../Chem/Spatial/Quat.html#rotation%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-class-method">Quat.rotation</a></code> for computing the rotation.</p>
         </div>
       
       <br/>
@@ -1535,18 +1537,20 @@ Delegates to <code><a href="../../Chem/Spatial/Quat.html#rotation%28x%3ANumber%2
       </div>
     </div>
   
-    <div class="entry-detail" id="rotate(aboutrotaxis:Vec3,byangle:Number):self-instance-method">
+    <div class="entry-detail" id="rotate(aboutrotaxis:Vec3,byangle:Number,pivot:Vec3=center):self-instance-method">
       <div class="signature">
         
-        def <strong>rotate</strong>(about rotaxis : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, by angle : <a href="../../Number.html">Number</a>) : <span class="k">self</span>
+        def <strong>rotate</strong>(about rotaxis : <a href="../../Chem/Spatial/Vec3.html">Vec3</a>, by angle : <a href="../../Number.html">Number</a>, pivot : <a href="../../Chem/Spatial/Vec3.html">Vec3</a> = center) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#rotate%28aboutrotaxis%3AVec3%2Cbyangle%3ANumber%29%3Aself-instance-method">#</a>
+        <a class="method-permalink" href="#rotate%28aboutrotaxis%3AVec3%2Cbyangle%3ANumber%2Cpivot%3AVec3%3Dcenter%29%3Aself-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Rotates the coordinates about <em>rotaxis</em> by <em>angle</em> degrees.
-Delegates to <code><a href="../../Chem/Spatial/Quat.html#rotation%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-class-method">Quat.rotation</a></code> for computing the rotation.</p>
+          <p>Rotates the coordinates about <em>rotaxis</em> by <em>angle</em> degrees. The
+rotation will be centered at <em>pivot</em>, which defaults to the
+coordinates' center.</p>
+<p>Delegates to <code><a href="../../Chem/Spatial/Quat.html#rotation%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%29%3Aself-class-method">Quat.rotation</a></code> for computing the rotation.</p>
         </div>
       
       <br/>
@@ -1555,17 +1559,19 @@ Delegates to <code><a href="../../Chem/Spatial/Quat.html#rotation%28x%3ANumber%2
       </div>
     </div>
   
-    <div class="entry-detail" id="rotate(quat:Quat):self-instance-method">
+    <div class="entry-detail" id="rotate(quat:Quat,pivot:Vec3=center):self-instance-method">
       <div class="signature">
         
-        def <strong>rotate</strong>(quat : <a href="../../Chem/Spatial/Quat.html">Quat</a>) : <span class="k">self</span>
+        def <strong>rotate</strong>(quat : <a href="../../Chem/Spatial/Quat.html">Quat</a>, pivot : <a href="../../Chem/Spatial/Vec3.html">Vec3</a> = center) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#rotate%28quat%3AQuat%29%3Aself-instance-method">#</a>
+        <a class="method-permalink" href="#rotate%28quat%3AQuat%2Cpivot%3AVec3%3Dcenter%29%3Aself-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Rotates the coordinates by the given quaternion.</p>
+          <p>Rotates the coordinates by the given quaternion. The
+rotation will be centered at <em>pivot</em>, which defaults to the
+coordinates' center.</p>
         </div>
       
       <br/>
