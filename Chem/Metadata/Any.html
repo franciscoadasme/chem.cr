@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../../js/doc.js"></script>
 
   <meta name="repository-name" content="chem.cr">
-  <title>Chem::Structure::Experiment - chem.cr 0.5.6</title>
+  <title>Chem::Metadata::Any - chem.cr 0.5.6</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -261,12 +261,12 @@
       
     </li>
   
-  <li class="parent " data-id="chem.cr/Chem/Metadata" data-name="chem::metadata">
+  <li class="parent open current" data-id="chem.cr/Chem/Metadata" data-name="chem::metadata">
       <a href="../../Chem/Metadata.html">Metadata</a>
       
         <ul>
   
-  <li class=" " data-id="chem.cr/Chem/Metadata/Any" data-name="chem::metadata::any">
+  <li class=" current" data-id="chem.cr/Chem/Metadata/Any" data-name="chem::metadata::any">
       <a href="../../Chem/Metadata/Any.html">Any</a>
       
     </li>
@@ -601,7 +601,7 @@
       
     </li>
   
-  <li class="parent open current" data-id="chem.cr/Chem/Structure" data-name="chem::structure">
+  <li class="parent " data-id="chem.cr/Chem/Structure" data-name="chem::structure">
       <a href="../../Chem/Structure.html">Structure</a>
       
         <ul>
@@ -611,7 +611,7 @@
       
     </li>
   
-  <li class="parent open current" data-id="chem.cr/Chem/Structure/Experiment" data-name="chem::structure::experiment">
+  <li class="parent " data-id="chem.cr/Chem/Structure/Experiment" data-name="chem::structure::experiment">
       <a href="../../Chem/Structure/Experiment.html">Experiment</a>
       
         <ul>
@@ -875,15 +875,27 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">struct</span> Chem::Structure::Experiment
+  <span class="kind">struct</span> Chem::Metadata::Any
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Chem/Structure/Experiment.html">Chem::Structure::Experiment</a></li><li class="superclass">Struct</li><li class="superclass">Value</li><li class="superclass">Object</li></ul>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Chem/Metadata/Any.html">Chem::Metadata::Any</a></li><li class="superclass">Struct</li><li class="superclass">Value</li><li class="superclass">Object</li></ul>
 
 
 
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p><code><a href="../../Chem/Metadata/Any.html">Any</a></code> is a value wrapper to encapsulate all possible metadata
+types (<code><a href="../../Chem/Metadata/ValueType.html">ValueType</a></code>). It provides convenient <code>#as_*</code> cast methods.</p>
 
 
 
@@ -908,12 +920,7 @@
   </h2>
   
     
-      chem/core/structure/experiment.cr
-    
-    <br/>
-  
-    
-      chem/register_format.cr
+      chem.cr
     
     <br/>
   
@@ -933,28 +940,9 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#from_pdb%28input%3AIO%7CPath%7CString%2Calt_loc%3AChar%7CNil%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%29%3Aself-class-method" class="signature"><strong>.from_pdb</strong>(input : IO | Path | String, alt_loc : Char | Nil = <span class="n">nil</span>, chains : Enumerable(Char) | String | Nil = <span class="n">nil</span>, guess_bonds : Bool = <span class="n">false</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span></a>
+        <a href="#new%28raw%3AValueType%29-class-method" class="signature"><strong>.new</strong>(raw : ValueType)</a>
         
-          <div class="summary"><p>Returns the header encoded in <em>input</em> using the <code><a href="../../Chem/PDB.html">Chem::PDB</a></code> file format.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#new%28title%3AString%2Cmethod%3AMethod%2Cresolution%3AFloat64%7CNil%2Cpdb_accession%3AString%2Cdeposition_date%3ATime%2Cdoi%3AString%7CNil%29-class-method" class="signature"><strong>.new</strong>(title : String, method : Method, resolution : Float64 | Nil, pdb_accession : String, deposition_date : Time, doi : String | Nil)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#read%28input%3AIO%7CPath%7CString%2Cformat%3AChem%3A%3AFormat%7CString%29%3Aself-class-method" class="signature"><strong>.read</strong>(input : IO | Path | String, format : Chem::Format | String) : <span class="k">self</span></a>
-        
-          <div class="summary"><p>Returns the header encoded in the specified file using <em>format</em>.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#read%28path%3APath%7CString%29%3Aself-class-method" class="signature"><strong>.read</strong>(path : Path | String) : <span class="k">self</span></a>
-        
-          <div class="summary"><p>Returns the header encoded in the specified file.</p></div>
+          <div class="summary"><p>Creates a new <code><a href="../../Chem/Metadata/Any.html">Any</a></code> instance by enclosing the given value.</p></div>
         
       </li>
     
@@ -975,32 +963,89 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#deposition_date%3ATime-instance-method" class="signature"><strong>#deposition_date</strong> : Time</a>
+        <a href="#%3D%3D%28rhs%3Aself%29%3ABool-instance-method" class="signature"><strong>#==</strong>(rhs : <span class="k">self</span>) : Bool</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#doi%3AString%7CNil-instance-method" class="signature"><strong>#doi</strong> : String | Nil</a>
+        <a href="#%3D%3D%28rhs%29%3ABool-instance-method" class="signature"><strong>#==</strong>(rhs) : Bool</a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this struct is equal to <em>other</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#method%3AMethod-instance-method" class="signature"><strong>#method</strong> : Method</a>
+        <a href="#as_bool%3ABool-instance-method" class="signature"><strong>#as_bool</strong> : Bool</a>
+        
+          <div class="summary"><p>Returns the enclosed value as a bool.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#pdb_accession%3AString-instance-method" class="signature"><strong>#pdb_accession</strong> : String</a>
+        <a href="#as_bool%3F%3ABool%7CNil-instance-method" class="signature"><strong>#as_bool?</strong> : Bool | Nil</a>
+        
+          <div class="summary"><p>Returns the enclosed value as a bool.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#resolution%3AFloat64%7CNil-instance-method" class="signature"><strong>#resolution</strong> : Float64 | Nil</a>
+        <a href="#as_f%3AFloat64-instance-method" class="signature"><strong>#as_f</strong> : Float64</a>
+        
+          <div class="summary"><p>Returns the enclosed value as a float.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#title%3AString-instance-method" class="signature"><strong>#title</strong> : String</a>
+        <a href="#as_f%3F%3AFloat64%7CNil-instance-method" class="signature"><strong>#as_f?</strong> : Float64 | Nil</a>
+        
+          <div class="summary"><p>Returns the enclosed value as float.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#as_i%3AInt32-instance-method" class="signature"><strong>#as_i</strong> : Int32</a>
+        
+          <div class="summary"><p>Returns the enclosed value as an integer.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#as_i%3F%3AInt32%7CNil-instance-method" class="signature"><strong>#as_i?</strong> : Int32 | Nil</a>
+        
+          <div class="summary"><p>Returns the enclosed value as an integer.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#as_s%3AString-instance-method" class="signature"><strong>#as_s</strong> : String</a>
+        
+          <div class="summary"><p>Returns the enclosed value as a string.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#as_s%3F%3AString%7CNil-instance-method" class="signature"><strong>#as_s?</strong> : String | Nil</a>
+        
+          <div class="summary"><p>Returns the enclosed value as a string.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#inspect%28io%3AIO%29%3ANil-instance-method" class="signature"><strong>#inspect</strong>(io : IO) : Nil</a>
+        
+          <div class="summary"><p>Appends this struct's name and instance variables names and values to the given IO.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#raw%3AValueType-instance-method" class="signature"><strong>#raw</strong> : ValueType</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_s%28io%3AIO%29%3ANil-instance-method" class="signature"><strong>#to_s</strong>(io : IO) : Nil</a>
+        
+          <div class="summary"><p>Same as <code><a href="../../Chem/Metadata/Any.html#inspect%28io%3AIO%29%3ANil-instance-method">#inspect(io)</a></code>.</p></div>
         
       </li>
     
@@ -1054,88 +1099,17 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="from_pdb(input:IO|Path|String,alt_loc:Char|Nil=nil,chains:Enumerable(Char)|String|Nil=nil,guess_bonds:Bool=false,het:Bool=true):self-class-method">
+    <div class="entry-detail" id="new(raw:ValueType)-class-method">
       <div class="signature">
         
-        def self.<strong>from_pdb</strong>(input : IO | Path | String, alt_loc : <a href="../../Char.html">Char</a> | Nil = <span class="n">nil</span>, chains : <a href="../../Enumerable.html">Enumerable</a>(<a href="../../Char.html">Char</a>) | String | Nil = <span class="n">nil</span>, guess_bonds : Bool = <span class="n">false</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span>
+        def self.<strong>new</strong>(raw : <a href="../../Chem/Metadata/ValueType.html">ValueType</a>)
 
-        <a class="method-permalink" href="#from_pdb%28input%3AIO%7CPath%7CString%2Calt_loc%3AChar%7CNil%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%29%3Aself-class-method">#</a>
+        <a class="method-permalink" href="#new%28raw%3AValueType%29-class-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Returns the header encoded in <em>input</em> using the
-<code><a href="../../Chem/PDB.html">Chem::PDB</a></code> file format. Arguments are forwarded to
-<code><a href="../../Chem/PDB/Reader.html#open%28io%3AIO%2Calt_loc%3AChar%7CNil%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::PDB::Reader.open</a></code>.</p>
-<p>If <em>input</em> contains multiple entries, this method returns
-the first one only. Use <code><a href="../../Array.html#from_pdb%28input%3AIO%7CPath%7CString%2Calt_loc%3AChar%7CNil%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%29%3Aself-class-method">Array#from_pdb</a></code> or
-<code>Chem::PDB::Reader#each</code> to get multiple entries instead.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="new(title:String,method:Method,resolution:Float64|Nil,pdb_accession:String,deposition_date:Time,doi:String|Nil)-class-method">
-      <div class="signature">
-        
-        def self.<strong>new</strong>(title : String, method : <a href="../../Chem/Structure/Experiment/Method.html">Method</a>, resolution : Float64 | Nil, pdb_accession : String, deposition_date : Time, doi : String | Nil)
-
-        <a class="method-permalink" href="#new%28title%3AString%2Cmethod%3AMethod%2Cresolution%3AFloat64%7CNil%2Cpdb_accession%3AString%2Cdeposition_date%3ATime%2Cdoi%3AString%7CNil%29-class-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="read(input:IO|Path|String,format:Chem::Format|String):self-class-method">
-      <div class="signature">
-        
-        def self.<strong>read</strong>(input : IO | Path | String, format : <a href="../../Chem/Format.html">Chem::Format</a> | String) : <span class="k">self</span>
-
-        <a class="method-permalink" href="#read%28input%3AIO%7CPath%7CString%2Cformat%3AChem%3A%3AFormat%7CString%29%3Aself-class-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Returns the header encoded in the specified file
-using <em>format</em>. Raises <code>ArgumentError</code> if <em>format</em> has
-required arguments or cannot read <code><a href="../../Chem/Structure/Experiment.html">Chem::Structure::Experiment</a></code>.</p>
-<p>The supported file formats are <code><a href="../../Chem/PDB.html">Chem::PDB</a></code>. Use the
-<code>.from_*</code> methods to customize how the object is decoded in
-the corresponding file format if possible.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="read(path:Path|String):self-class-method">
-      <div class="signature">
-        
-        def self.<strong>read</strong>(path : Path | String) : <span class="k">self</span>
-
-        <a class="method-permalink" href="#read%28path%3APath%7CString%29%3Aself-class-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Returns the header encoded in the specified file.
-The file format is chosen based on the filename (see
-<code><a href="../../Chem/Format.html#from_filename%28filename%3APath%7CString%29%3Aself-class-method">Chem::Format#from_filename</a></code>). Raises <code>ArgumentError</code> if the
-file format cannot be determined.</p>
-<p>The supported file formats are the following:</p>
-<ul>
-<li><code><a href="../../Chem/PDB.html">Chem::PDB</a></code> (.ent, .pdb)</li>
-</ul>
-<p>Use the <code>.from_*</code> methods to customize how the object is
-decoded in the corresponding file format if possible.</p>
+          <p>Creates a new <code><a href="../../Chem/Metadata/Any.html">Any</a></code> instance by enclosing the given value.</p>
         </div>
       
       <br/>
@@ -1158,12 +1132,12 @@ decoded in the corresponding file format if possible.</p>
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="deposition_date:Time-instance-method">
+    <div class="entry-detail" id="==(rhs:self):Bool-instance-method">
       <div class="signature">
         
-        def <strong>deposition_date</strong> : Time
+        def <strong>==</strong>(rhs : <span class="k">self</span>) : Bool
 
-        <a class="method-permalink" href="#deposition_date%3ATime-instance-method">#</a>
+        <a class="method-permalink" href="#%3D%3D%28rhs%3Aself%29%3ABool-instance-method">#</a>
       </div>
       
       <br/>
@@ -1172,12 +1146,242 @@ decoded in the corresponding file format if possible.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="doi:String|Nil-instance-method">
+    <div class="entry-detail" id="==(rhs):Bool-instance-method">
       <div class="signature">
         
-        def <strong>doi</strong> : String | Nil
+        def <strong>==</strong>(rhs) : Bool
 
-        <a class="method-permalink" href="#doi%3AString%7CNil-instance-method">#</a>
+        <a class="method-permalink" href="#%3D%3D%28rhs%29%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from struct Struct
+            </div>
+          
+          <p>Returns <code>true</code> if this struct is equal to <em>other</em>.</p>
+<p>Both structs' instance vars are compared to each other. Thus, two
+structs are considered equal if each of their instance variables are
+equal. Subclasses should override this method to provide specific
+equality semantics.</p>
+<pre><code class="language-crystal"><span class="k">struct</span> <span class="t">Point</span>
+  <span class="k">def</span> <span class="m">initialize</span>(@x : <span class="t">Int32</span>, @y : <span class="t">Int32</span>)
+  <span class="k">end</span>
+<span class="k">end</span>
+
+p1 <span class="o">=</span> <span class="t">Point</span>.new <span class="n">1</span>, <span class="n">2</span>
+p2 <span class="o">=</span> <span class="t">Point</span>.new <span class="n">1</span>, <span class="n">2</span>
+p3 <span class="o">=</span> <span class="t">Point</span>.new <span class="n">3</span>, <span class="n">4</span>
+
+p1 <span class="o">==</span> p2 <span class="c"># =&gt; true</span>
+p1 <span class="o">==</span> p3 <span class="c"># =&gt; false</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="as_bool:Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>as_bool</strong> : Bool
+
+        <a class="method-permalink" href="#as_bool%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the enclosed value as a bool. Raises <code>TypeCastError</code> if
+it's not a bool.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="as_bool?:Bool|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>as_bool?</strong> : Bool | Nil
+
+        <a class="method-permalink" href="#as_bool%3F%3ABool%7CNil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the enclosed value as a bool. Returns <code>nil</code> if it's not a
+bool.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="as_f:Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>as_f</strong> : Float64
+
+        <a class="method-permalink" href="#as_f%3AFloat64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the enclosed value as a float. Raises <code>TypeCastError</code> if
+it's not a float.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="as_f?:Float64|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>as_f?</strong> : Float64 | Nil
+
+        <a class="method-permalink" href="#as_f%3F%3AFloat64%7CNil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the enclosed value as float. Returns <code>nil</code> if it's not a
+float.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="as_i:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>as_i</strong> : Int32
+
+        <a class="method-permalink" href="#as_i%3AInt32-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the enclosed value as an integer. Raises <code>TypeCastError</code>
+if it's not an integer.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="as_i?:Int32|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>as_i?</strong> : Int32 | Nil
+
+        <a class="method-permalink" href="#as_i%3F%3AInt32%7CNil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the enclosed value as an integer. Returns <code>nil</code> if it's
+not an integer.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="as_s:String-instance-method">
+      <div class="signature">
+        
+        def <strong>as_s</strong> : String
+
+        <a class="method-permalink" href="#as_s%3AString-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the enclosed value as a string. Raises <code>TypeCastError</code> if
+it's not a string.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="as_s?:String|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>as_s?</strong> : String | Nil
+
+        <a class="method-permalink" href="#as_s%3F%3AString%7CNil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the enclosed value as a string. Returns <code>nil</code> if it's not
+a string.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="inspect(io:IO):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>inspect</strong>(io : IO) : Nil
+
+        <a class="method-permalink" href="#inspect%28io%3AIO%29%3ANil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from struct Struct
+            </div>
+          
+          <p>Appends this struct's name and instance variables names and values
+to the given IO.</p>
+<pre><code class="language-crystal"><span class="k">struct</span> <span class="t">Point</span>
+  <span class="k">def</span> <span class="m">initialize</span>(@x : <span class="t">Int32</span>, @y : <span class="t">Int32</span>)
+  <span class="k">end</span>
+<span class="k">end</span>
+
+p1 <span class="o">=</span> <span class="t">Point</span>.new <span class="n">1</span>, <span class="n">2</span>
+p1.to_s    <span class="c"># &quot;Point(@x=1, @y=2)&quot;</span>
+p1.inspect <span class="c"># &quot;Point(@x=1, @y=2)&quot;</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="raw:ValueType-instance-method">
+      <div class="signature">
+        
+        def <strong>raw</strong> : <a href="../../Chem/Metadata/ValueType.html">ValueType</a>
+
+        <a class="method-permalink" href="#raw%3AValueType-instance-method">#</a>
       </div>
       
       <br/>
@@ -1186,55 +1390,22 @@ decoded in the corresponding file format if possible.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="method:Method-instance-method">
+    <div class="entry-detail" id="to_s(io:IO):Nil-instance-method">
       <div class="signature">
         
-        def <strong>method</strong> : <a href="../../Chem/Structure/Experiment/Method.html">Method</a>
+        def <strong>to_s</strong>(io : IO) : Nil
 
-        <a class="method-permalink" href="#method%3AMethod-instance-method">#</a>
+        <a class="method-permalink" href="#to_s%28io%3AIO%29%3ANil-instance-method">#</a>
       </div>
       
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="pdb_accession:String-instance-method">
-      <div class="signature">
-        
-        def <strong>pdb_accession</strong> : String
-
-        <a class="method-permalink" href="#pdb_accession%3AString-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="resolution:Float64|Nil-instance-method">
-      <div class="signature">
-        
-        def <strong>resolution</strong> : Float64 | Nil
-
-        <a class="method-permalink" href="#resolution%3AFloat64%7CNil-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="title:String-instance-method">
-      <div class="signature">
-        
-        def <strong>title</strong> : String
-
-        <a class="method-permalink" href="#title%3AString-instance-method">#</a>
-      </div>
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from struct Struct
+            </div>
+          
+          <p>Same as <code><a href="../../Chem/Metadata/Any.html#inspect%28io%3AIO%29%3ANil-instance-method">#inspect(io)</a></code>.</p>
+        </div>
       
       <br/>
       <div>
