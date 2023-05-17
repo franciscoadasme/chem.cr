@@ -10,6 +10,20 @@ module Chem
     getter source_file : Path?
     property title : String = ""
     getter topology : Topology
+    # Hash-like container that stores the structure's properties as key
+    # (string)-value pairs. A property's value can be any of the
+    # primitive types (string, integer, float, or bool), and so it's
+    # internally stored as `Metadata::Any`. Use the cast methods
+    # (`#as_*`) to convert to the desired type.
+    #
+    # ```
+    # structure.metadata["foo"] = 123
+    # structure.metadata["foo"]      # => Metadata::Any(123)
+    # structure.metadata["foo"].as_i # => 123
+    # structure.metadata["foo"].as_f # => 123.0
+    # structure.metadata["foo"].as_s # raises TypeCastError
+    # ```
+    getter metadata = Metadata.new
 
     # TODO: remove this delegates... directly use the topology class
     delegate :[], :[]?,
