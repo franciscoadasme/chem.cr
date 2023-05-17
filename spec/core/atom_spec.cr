@@ -87,6 +87,16 @@ describe Chem::Atom do
     end
   end
 
+  describe "#metadata" do
+    it "returns the atom's metadata" do
+      atom = fake_structure.dig('A', 1, "CA")
+      atom.metadata.should be_empty
+      atom.metadata["foo"] = Math::PI
+      atom.metadata["foo"].should eq Math::PI
+      atom.metadata.keys.should eq %w(foo)
+    end
+  end
+
   describe "#missing_valence" do
     it "returns number of bonds to reach closest target valence (no bonds)" do
       structure = Chem::Structure.build do

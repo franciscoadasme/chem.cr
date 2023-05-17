@@ -18,6 +18,20 @@ module Chem
     # to this atom within a given force field.
     property typename : String?
     property vdw_radius : Float64
+    # Hash-like container that stores the atom's additional properties
+    # as key (string)-value pairs. A property's value can be any of the
+    # primitive types (string, integer, float, or bool), and so it's
+    # internally stored as `Metadata::Any`. Use the cast methods
+    # (`#as_*`) to convert to the desired type.
+    #
+    # ```
+    # atom.metadata["foo"] = 123
+    # atom.metadata["foo"]      # => Metadata::Any(123)
+    # atom.metadata["foo"].as_i # => 123
+    # atom.metadata["foo"].as_f # => 123.0
+    # atom.metadata["foo"].as_s # raises TypeCastError
+    # ```
+    getter metadata : Metadata { Metadata.new }
 
     delegate x, y, z, to: @coords
     delegate chain, to: @residue
