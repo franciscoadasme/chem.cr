@@ -680,6 +680,25 @@ module Chem
       self
     end
 
+    # Skips whitespace characters.
+    #
+    # The cursor is placed at the first non-whitespace character, but it
+    # is not consumed.
+    #
+    # ```
+    # pull = PullParser.new IO::Memory.new("  123 456\n789\n")
+    # pull.next_line
+    # pull.skip_whitespace
+    # pull.str? # => nil # token size is zero
+    # pull.line # => "123 456"
+    # ```
+    def skip_whitespace
+      consume &.ascii_whitespace?
+      @buffer += @token_size
+      @token_size = 0
+      self
+    end
+
     # Returns the current token as a string. Raises `ParseException`
     # with the given message if the token is not set.
     def str(message : String = "Empty token") : String

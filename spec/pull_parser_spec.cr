@@ -924,6 +924,16 @@ describe Chem::PullParser do
     end
   end
 
+  describe "#skip_whitespace" do
+    it "skips whitespace" do
+      pull = parser_for("  123 456\n789\n")
+      pull.next_line
+      pull.skip_whitespace
+      pull.str?.should be_nil # token size is zero
+      pull.line.should eq "123 456"
+    end
+  end
+
   describe "#str" do
     it "raises if current token is not set" do
       expect_raises(Chem::ParseException, "Empty token") do
