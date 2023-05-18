@@ -223,6 +223,140 @@ module Chem
       raise ParseException.new(message % replacements, filepath, @line || "", loc)
     end
 
+    # Returns the current token if equals *expected*, else raises
+    # `ParseException`.
+    #
+    # If *message* is given, it is used as the parse error. Use
+    # `"%{expected}"` and `"%{actual}"` as placeholders for the expected
+    # and actual values.
+    #
+    # ```
+    # pull = PullParser.new IO::Memory.new("123 456\n789\n")
+    # pull.next_line
+    # pull.next_token
+    # pull.expect "123" # => "123"
+    # pull.expect "abc" # raises ParseException (123 != abc)
+    # pull.next_line
+    # pull.expect "456" # raises ParseException (empty token)
+    # ```
+    def expect(
+      expected : String,
+      message : String = "Expected %{expected}, got %{actual}"
+    ) : String
+      actual = str? || ""
+      if actual == expected
+        actual
+      else
+        error message % {expected: expected.inspect, actual: actual.inspect}
+      end
+    end
+
+    # Returns the current token if matches *pattern*, else raises
+    # `ParseException`.
+    #
+    # If *message* is given, it is used as the parse error. Use
+    # `"%{expected}"` and `"%{actual}"` as placeholders for the expected
+    # and actual values.
+    #
+    # ```
+    # pull = PullParser.new IO::Memory.new("123 456\n789\n")
+    # pull.next_line
+    # pull.next_token
+    # pull.expect /[0-9]+/ # => "123"
+    # pull.expect /[a-z]+/ # raises ParseException (123 does not match [a-z]+)
+    # pull.next_line
+    # pull.expect /[0-9]+/ # raises ParseException (empty token)
+    # ```
+    #
+    # NOTE: The entire token is returned even if the match is partial.
+    #
+    # ```
+    # pull = PullParser.new IO::Memory.new("123abc\n789\n")
+    # pull.next_line
+    # pull.next_token
+    # pull.expect /[a-z]+/ # => "123abc"
+    # pull.expect /[0-9]+/ # => "123abc"
+    # ```
+    #
+    # Use anchors to ensure full match.
+    #
+    # ```
+    # pull = PullParser.new IO::Memory.new("123abc\n789\n")
+    # pull.next_line
+    # pull.next_token
+    # pull.expect /^[a-z]+$/ # raises ParseException
+    # ```
+    def expect(
+      pattern : Regex,
+      message : String = "Expected %{actual} to match %{expected}"
+    ) : String
+      actual = str? || ""
+      if actual.matches?(pattern)
+        actual
+      else
+        error message % {expected: pattern.inspect, actual: actual.inspect}
+      end
+    end
+
+    # Returns the current token if equals any of *expected*, else raises
+    # `ParseException`.
+    #
+    # If *message* is given, it is used as the parse error. Use
+    # `"%{expected}"` and `"%{actual}"` as placeholders for the expected
+    # and actual values.
+    #
+    # ```
+    # pull = PullParser.new IO::Memory.new("123 456\n789\n")
+    # pull.next_line
+    # pull.next_token
+    # pull.expect ["123", "456"] # => "123"
+    # pull.next_token
+    # pull.expect ["123", "456"] # => "456"
+    # pull.expect ["abc", "def"] # raises ParseException ("456" != "abc" or "def")
+    # pull.next_token
+    # pull.expect ["123", "456"] # raises ParseException (empty token)
+    # ```
+    def expect(
+      expected : Enumerable(String),
+      message : String = "Expected %{expected}, got %{actual}"
+    ) : String
+      actual = str? || ""
+      if actual.in?(expected)
+        actual
+      else
+        expected = expected.sentence(
+          pair_separator: " or ", tail_separator: ", or ", &.inspect)
+        error message % {expected: expected, actual: actual.inspect}
+      end
+    end
+
+    # Same as `expect` but advances to the next token first.
+    def expect_next(
+      expected : String,
+      message : String = "Expected %{expected}, got %{actual}"
+    ) : String
+      next_token
+      expect expected, message
+    end
+
+    # :ditto:
+    def expect_next(
+      pattern : Regex,
+      message : String = "Expected %{actual} to match %{expected}"
+    ) : String
+      next_token
+      expect pattern, message
+    end
+
+    # :ditto:
+    def expect_next(
+      expected : Enumerable(String),
+      message : String = "Expected %{expected}, got %{actual}"
+    ) : String
+      next_token
+      expect expected, message
+    end
+
     # Parses and returns the floating-point number represented by the
     # current token. Raises `ParseException` with the given message if
     # the token is not set or it is not a valid float representation.

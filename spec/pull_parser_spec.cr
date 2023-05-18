@@ -261,6 +261,87 @@ describe Chem::PullParser do
     end
   end
 
+  describe "#expect" do
+    it "matches a string" do
+      pull = parser_for "abc def"
+      pull.next_line
+      pull.next_token
+      pull.expect("abc").should eq "abc"
+      pull.next_token
+      pull.expect("def").should eq "def"
+    end
+
+    it "matches multiple strings" do
+      pull = parser_for "abc def"
+      pull.next_line
+      pull.next_token
+      pull.expect({"abc", "def"}).should eq "abc"
+      pull.next_token
+      pull.expect({"abc", "def"}).should eq "def"
+    end
+
+    it "matches a regexp" do
+      pull = parser_for "abc def"
+      pull.next_line
+      pull.next_token
+      pull.expect(/[a-z]+/).should eq "abc"
+    end
+
+    it "matches a regexp (partial match)" do
+      pull = parser_for "123abc\n789\n"
+      pull.next_line
+      pull.next_token
+      pull.expect(/[a-z]/).should eq "123abc"
+      pull.expect(/[a-z]+/).should eq "123abc"
+      pull.expect(/[0-9]+/).should eq "123abc"
+    end
+
+    it "raises at end of line" do
+      expect_raises(Chem::ParseException, %(Expected "abc", got "")) do
+        pull = parser_for ""
+        pull.next_line
+        pull.next_token
+        pull.expect("abc")
+      end
+    end
+
+    it "raises if not match a string" do
+      expect_raises(Chem::ParseException, %(Expected "def", got "abc")) do
+        pull = parser_for "abc def"
+        pull.next_line
+        pull.next_token
+        pull.expect("def")
+      end
+    end
+
+    it "raises if not match strings" do
+      expect_raises(Chem::ParseException, %(Expected "123" or "456", got "abc")) do
+        pull = parser_for "abc def"
+        pull.next_line
+        pull.next_token
+        pull.expect({"123", "456"})
+      end
+    end
+
+    it "raises if not match regex" do
+      expect_raises(Chem::ParseException, %(Expected "abc" to match /[A-Z]+/)) do
+        pull = parser_for "abc def"
+        pull.next_line
+        pull.next_token
+        pull.expect(/[A-Z]+/)
+      end
+    end
+
+    it "raises if not match regex with anchors" do
+      expect_raises(Chem::ParseException, %(Expected "123abc" to match /^[0-9]+$/)) do
+        pull = parser_for "123abc\n789\n"
+        pull.next_line
+        pull.next_token
+        pull.expect(/^[0-9]+$/)
+      end
+    end
+  end
+
   describe "#float" do
     it "raises if blank" do
       expect_raises(Chem::ParseException, "Invalid real number") do
