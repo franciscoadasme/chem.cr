@@ -499,10 +499,7 @@ module Chem
     # ```
     def line(message : String = "End of file") : String
       if @line
-        line = String.new(@buffer)
-        @buffer = Bytes.empty
-        @token_size = 0
-        line
+        String.new(@buffer)
       else
         error(message)
       end

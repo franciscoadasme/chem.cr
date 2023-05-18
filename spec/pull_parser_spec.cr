@@ -563,6 +563,16 @@ describe Chem::PullParser do
       pull.line.should eq "456"
     end
 
+    it "does not consume" do
+      pull = parser_for "123 456\n789\n"
+      pull.next_line
+      pull.line.should eq "123 456"
+      pull.next_token
+      pull.line.should eq "123 456"
+      pull.next_token
+      pull.line.should eq "456"
+    end
+
     it "returns an empty string at end of line" do
       pull = parser_for("123 456\n789\n")
       pull.next_line
@@ -747,7 +757,7 @@ describe Chem::PullParser do
     it "raises with message" do
       pull = parser_for "abc def\n"
       pull.next_line
-      pull.line
+      while pull.next_s?; end
       expect_raises(Chem::ParseException, "Missing type format") do
         pull.next_s "Missing type format"
       end
