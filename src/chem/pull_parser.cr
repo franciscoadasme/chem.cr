@@ -156,7 +156,7 @@ module Chem
     # line for which the given block is truthy.
     #
     # ```
-    # pull = parser_for "abc def\n1234 56 789\n"
+    # pull = PullParser.new IO::Memory.new("abc def\n1234 56 789\n")
     # pull.next_line
     # pull.consume(&.alphanumeric?).str? # => "123"
     # pull.consume(&.alphanumeric?).str? # => nil
@@ -175,6 +175,38 @@ module Chem
         @token_size = (ptr - @buffer.to_unsafe).to_i
       end
       self
+    end
+
+    # Reads the next characters in the current line until the first
+    # occurrence of *char* or end of line is reached. Returns `nil` at
+    # end of line.
+    #
+    # ```
+    # pull = PullParser.new IO::Memory.new("123 456\n789\n")
+    # pull.next_line
+    # pull.consume_until(' ').str? # => "123"
+    # pull.consume_until('4').str? # => " "
+    # pull.consume_until('x').str? # => "456"
+    # pull.consume_until('x').str? # => nil
+    # ```
+    def consume_until(char : Char) : self
+      consume &.!=(char)
+    end
+
+    # Reads the next characters in the current line until the given
+    # block is truthy or end of line is reached. Returns `nil` at end of
+    # line.
+    #
+    # ```
+    # pull = PullParser.new IO::Memory.new("123 456\n789\n")
+    # pull.next_line
+    # pull.consume_until(&.whitespace?).str?    # => "123"
+    # pull.consume_until(&.in_set?("0-9")).str? # => " "
+    # pull.consume_until(&.whitespace?).str?    # => "456"
+    # pull.consume_until(&.alphanumeric?).str?  # => nil
+    # ```
+    def consume_until(& : Char -> Bool) : self
+      consume { |char| (yield char).! }
     end
 
     # Returns the current line, or `nil` if it is not set.

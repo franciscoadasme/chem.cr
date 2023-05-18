@@ -123,6 +123,26 @@ describe Chem::PullParser do
     end
   end
 
+  describe "#consume_until" do
+    it "consumes characters until sentinel" do
+      pull = parser_for("123 456\n789\n")
+      pull.next_line
+      pull.consume_until(' ').str?.should eq "123"
+      pull.consume_until('4').str?.should eq " "
+      pull.consume_until('x').str?.should eq "456"
+      pull.consume_until('x').str?.should be_nil
+    end
+
+    it "consumes characters until block is truthy" do
+      pull = parser_for("123 456\n789\n")
+      pull.next_line
+      pull.consume_until(&.whitespace?).str?.should eq "123"
+      pull.consume_until(&.in_set?("0-9")).str?.should eq " "
+      pull.consume_until(&.whitespace?).str?.should eq "456"
+      pull.consume_until(&.alphanumeric?).str?.should be_nil
+    end
+  end
+
   describe "#current_line" do
     it "returns current line" do
       pull = parser_for "123\n456\n"
