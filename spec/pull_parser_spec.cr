@@ -882,6 +882,48 @@ describe Chem::PullParser do
     end
   end
 
+  describe "#rest_of_line" do
+    it "returns entire line" do
+      pull = parser_for("123 456\n789\n")
+      pull.next_line
+      pull.rest_of_line.should eq "123 456"
+      pull.str?.should eq "123 456"
+      pull.next_s?.should be_nil
+    end
+
+    it "returns rest of line" do
+      pull = parser_for("123 456\n789\n")
+      pull.next_line
+      pull.next_token
+      pull.rest_of_line.should eq " 456"
+      pull.str?.should eq " 456"
+      pull.next_s?.should be_nil
+    end
+
+    it "returns nil at end of line" do
+      pull = parser_for("123 456\n789\n")
+      pull.next_line
+      while pull.next_token; end
+      pull.rest_of_line.should be_nil
+    end
+
+    it "raises at end of file" do
+      pull = parser_for("123 456\n789\n")
+      while pull.next_line; end
+      expect_raises(Chem::ParseException, "End of file") do
+        pull.rest_of_line
+      end
+    end
+
+    it "raises with message" do
+      pull = parser_for "abc def\n"
+      while pull.next_line; end
+      expect_raises(Chem::ParseException, "Expected config line") do
+        pull.rest_of_line "Expected config line"
+      end
+    end
+  end
+
   describe "#str" do
     it "raises if current token is not set" do
       expect_raises(Chem::ParseException, "Empty token") do
