@@ -111,6 +111,18 @@ describe Chem::PullParser do
     end
   end
 
+  describe "#consume" do
+    it "consumes characters" do
+      pull = parser_for("123 456\n789\n")
+      pull.next_line
+      pull.consume(&.alphanumeric?).str?.should eq "123"
+      pull.consume(&.alphanumeric?).str?.should be_nil
+      pull.consume(&.whitespace?).str?.should eq " "
+      pull.consume(&.alphanumeric?).str?.should eq "456"
+      pull.consume(&.alphanumeric?).str?.should be_nil
+    end
+  end
+
   describe "#current_line" do
     it "returns current line" do
       pull = parser_for "123\n456\n"

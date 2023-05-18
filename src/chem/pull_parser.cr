@@ -152,6 +152,31 @@ module Chem
       end
     end
 
+    # Reads the next collection of consecutive characters in the current
+    # line for which the given block is truthy.
+    #
+    # ```
+    # pull = parser_for "abc def\n1234 56 789\n"
+    # pull.next_line
+    # pull.consume(&.alphanumeric?).str? # => "123"
+    # pull.consume(&.alphanumeric?).str? # => nil
+    # pull.consume(&.whitespace?).str?   # => " "
+    # pull.consume(&.alphanumeric?).str? # => "456"
+    # pull.consume(&.alphanumeric?).str? # => nil
+    # ```
+    def consume(& : Char -> Bool) : self
+      unless @buffer.empty?
+        @buffer += @token_size
+        @token_size = 0
+        ptr = @buffer.to_unsafe
+        while ptr.value != 0 && yield ptr.value.unsafe_chr
+          ptr += 1
+        end
+        @token_size = (ptr - @buffer.to_unsafe).to_i
+      end
+      self
+    end
+
     # Returns the current line, or `nil` if it is not set.
     def current_line : String?
       @line
