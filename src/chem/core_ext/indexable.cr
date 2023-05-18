@@ -99,15 +99,15 @@ module Indexable(T)
   # - If the collection is empty, an empty string is returned.
   #
   # ```
-  # [1, 2, 3].sentence { |e, io| io << "(#{e})" }                              # => "(1), (2), and (3)"
-  # [1, 2, 3].sentence("-", tail_separator: "-or-") { |e, io| io << "(#{e})" } # => "(1)-(2)-or-(3)"
+  # [1, 2, 3].sentence { |e| "(#{e})" }                              # => "(1), (2), and (3)"
+  # [1, 2, 3].sentence("-", tail_separator: "-or-") { |e| "(#{e})" } # => "(1)-(2)-or-(3)"
   # ```
   def sentence(
     separator : String = ", ",
     *,
     pair_separator : String = " and ",
     tail_separator : String = ", and ",
-    & : T, IO ->
+    & : T ->
   ) : String
     String.build do |io|
       sentence(

@@ -11,5 +11,9 @@ describe Indexable do
       %w(one two).sentence(pair_separator: "-").should eq "one-two"
       %w(one two three).sentence("-", tail_separator: "--").should eq "one-two--three"
     end
+
+    it "joins elements as a sentence with block" do
+      %w(one two three).sentence(&.upcase).should eq "ONE, TWO, and THREE"
+    end
   end
 end
