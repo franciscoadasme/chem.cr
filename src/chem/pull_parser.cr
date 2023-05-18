@@ -567,20 +567,8 @@ module Chem
     # pull.next_token             # => nil
     # ```
     def next_token : Bytes?
-      return if @buffer.empty?
-
-      @buffer += @token_size
-      @token_size = 0
-      ptr = @buffer.to_unsafe
-      while ptr.value.unsafe_chr.ascii_whitespace?
-        ptr += 1
-      end
-      @buffer += ptr - @buffer.to_unsafe
-      until ptr.value == 0 || ptr.value.unsafe_chr.ascii_whitespace?
-        ptr += 1
-      end
-      @token_size = (ptr - @buffer.to_unsafe).to_i
-
+      skip_whitespace
+      consume &.ascii_whitespace?.!
       current_token
     end
 
