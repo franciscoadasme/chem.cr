@@ -856,6 +856,11 @@
       
     </li>
   
+  <li class=" " data-id="chem.cr/Indexable" data-name="indexable(t)">
+      <a href="../Indexable.html">Indexable</a>
+      
+    </li>
+  
   <li class=" " data-id="chem.cr/Number" data-name="number">
       <a href="../Number.html">Number</a>
       
@@ -1574,6 +1579,13 @@
         <a href="#mercury%3F-instance-method" class="signature"><strong>#mercury?</strong></a>
         
           <div class="summary"><p>Returns <code>true</code> if the atom's element is &quot;Mercury&quot;, else <code>false</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#metadata%3AMetadata-instance-method" class="signature"><strong>#metadata</strong> : Metadata</a>
+        
+          <div class="summary"><p>Hash-like container that stores the atom's additional properties as key (string)-value pairs.</p></div>
         
       </li>
     
@@ -4026,6 +4038,34 @@ residue, else <code>false</code>.</p>
           
           <p>Returns <code>true</code> if the atom's element is &quot;Mercury&quot;, else
 <code>false</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="metadata:Metadata-instance-method">
+      <div class="signature">
+        
+        def <strong>metadata</strong> : <a href="../Chem/Metadata.html">Metadata</a>
+
+        <a class="method-permalink" href="#metadata%3AMetadata-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Hash-like container that stores the atom's additional properties
+as key (string)-value pairs. A property's value can be any of the
+primitive types (string, integer, float, or bool), and so it's
+internally stored as <code><a href="../Chem/Metadata/Any.html">Metadata::Any</a></code>. Use the cast methods
+(<code>#as_*</code>) to convert to the desired type.</p>
+<pre><code class="language-crystal">atom.metadata[<span class="s">&quot;foo&quot;</span>] <span class="o">=</span> <span class="n">123</span>
+atom.metadata[<span class="s">&quot;foo&quot;</span>]      <span class="c"># =&gt; Metadata::Any(123)</span>
+atom.metadata[<span class="s">&quot;foo&quot;</span>].as_i <span class="c"># =&gt; 123</span>
+atom.metadata[<span class="s">&quot;foo&quot;</span>].as_f <span class="c"># =&gt; 123.0</span>
+atom.metadata[<span class="s">&quot;foo&quot;</span>].as_s <span class="c"># raises TypeCastError</span></code></pre>
         </div>
       
       <br/>

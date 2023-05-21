@@ -856,6 +856,11 @@
       
     </li>
   
+  <li class=" " data-id="chem.cr/Indexable" data-name="indexable(t)">
+      <a href="../Indexable.html">Indexable</a>
+      
+    </li>
+  
   <li class=" " data-id="chem.cr/Number" data-name="number">
       <a href="../Number.html">Number</a>
       
@@ -884,6 +889,43 @@
 
 
 
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>A <code><a href="../Chem/Metadata.html">Metadata</a></code> is a hash-like container that holds metadata about an
+object. It maps a property name (as string) to a primitive value
+(integer, float, string, or bool). Most of the functionality mirrors
+that of a <code>Hash</code>, where some specific methods like <code>Hash#dig</code> or
+default values are excluded.</p>
+<p>Values are stored as <code><a href="../Chem/Metadata/Any.html">Any</a></code> instances, which a thin wrapper for a
+dynamically-typed primitive value and it offers convenient <code>#as_*</code>
+cast methods.</p>
+<h3><a id="examples" class="anchor" href="#examples">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Examples</h3>
+<pre><code class="language-crystal">metadata <span class="o">=</span> <span class="t">Chem</span><span class="t">::</span><span class="t">Metadata</span>.new
+
+<span class="c"># only four data types are supported</span>
+metadata[<span class="s">&quot;str&quot;</span>] <span class="o">=</span> <span class="s">&quot;Foo&quot;</span>
+metadata[<span class="s">&quot;int&quot;</span>] <span class="o">=</span> <span class="n">123</span>
+metadata[<span class="s">&quot;float&quot;</span>] <span class="o">=</span> <span class="n">1.234</span>
+metadata[<span class="s">&quot;bool&quot;</span>] <span class="o">=</span> <span class="n">true</span>
+<span class="c"># metadata[&quot;x&quot;] = /[a-z]/ # fails to compile</span>
+
+<span class="c"># values are stored as `Any` instances</span>
+metadata[<span class="s">&quot;str&quot;</span>]             <span class="c"># =&gt; Chem::Metadata::Type(&quot;Foo&quot;)</span>
+metadata[<span class="s">&quot;str&quot;</span>].as_s.upcase <span class="c"># =&gt; &quot;FOO&quot;</span>
+metadata[<span class="s">&quot;str&quot;</span>].as_i?       <span class="c"># =&gt; nil</span>
+metadata[<span class="s">&quot;str&quot;</span>].as_i        <span class="c"># raises TypeCastError</span></code></pre>
 
 
 
@@ -1004,21 +1046,21 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#delete%28key%3AString%2C%26%3AString-%3E%29%3AAny%7CNil-instance-method" class="signature"><strong>#delete</strong>(key : String, & : String -> ) : Any | Nil</a>
+        <a href="#delete%28key%3AString%2C%26%3AString-%3E%7BString%2CBool%7CFloat64%7CInt32%7CString%7D%29%3AAny%7C%7BString%2CBool%7CFloat64%7CInt32%7CString%7DforallT-instance-method" class="signature"><strong>#delete</strong>(key : String, & : String -> {String, Bool | Float64 | Int32 | String}) : Any | {String, Bool | Float64 | Int32 | String} forall T</a>
         
           <div class="summary"><p>Deletes the key-value pair and returns the value.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#each%28%26%3ATuple%28String%2CType%29-%3E%29%3ANil-instance-method" class="signature"><strong>#each</strong>(& : Tuple(String, Type) -> ) : Nil</a>
+        <a href="#each%28%26%3ATuple%28String%2CAny%29-%3E%29%3ANil-instance-method" class="signature"><strong>#each</strong>(& : Tuple(String, Any) -> ) : Nil</a>
         
           <div class="summary"><p>Must yield this collection's elements to the block.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#each%3AIterator%28Tuple%28String%2CType%29%29-instance-method" class="signature"><strong>#each</strong> : Iterator(Tuple(String, Type))</a>
+        <a href="#each%3AIterator%28Tuple%28String%2CAny%29%29-instance-method" class="signature"><strong>#each</strong> : Iterator(Tuple(String, Any))</a>
         
           <div class="summary"><p>Must return an <code>Iterator</code> over the elements in this collection.</p></div>
         
@@ -1060,9 +1102,177 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#fetch%3F%3ABool-instance-method" class="signature"><strong>#fetch?</strong> : Bool</a>
+        <a href="#fetch%28key%3AString%2Cdefault%3A%7BString%2CBool%7CFloat64%7CInt32%7CString%7D%29%3AAny%7C%7BString%2CBool%7CFloat64%7CInt32%7CString%7DforallT-instance-method" class="signature"><strong>#fetch</strong>(key : String, default : {String, Bool | Float64 | Int32 | String}) : Any | {String, Bool | Float64 | Int32 | String} forall T</a>
         
-          <div class="summary"><p>Returns <code>true</code> when the metadata contains no key-value pairs, else <code>false</code>.</p></div>
+          <div class="summary"><p>Returns the value if the given key exists, else <em>default</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#fetch%28key%3AString%2C%26%3AString-%3E%7BString%2CBool%7CFloat64%7CInt32%7CString%7D%29%3AAny%7C%7BString%2CBool%7CFloat64%7CInt32%7CString%7DforallT-instance-method" class="signature"><strong>#fetch</strong>(key : String, & : String -> {String, Bool | Float64 | Int32 | String}) : Any | {String, Bool | Float64 | Int32 | String} forall T</a>
+        
+          <div class="summary"><p>Returns the value if the given key exists, else the value returned by the given block invoked with <em>key</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#has_key%3F%28key%3AString%29%3ABool-instance-method" class="signature"><strong>#has_key?</strong>(key : String) : Bool</a>
+        
+          <div class="summary"><p>Returns <code>true</code> if <em>key</em> exists, else <code>false</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#has_value%3F%28value%3AValueType%29%3ABool-instance-method" class="signature"><strong>#has_value?</strong>(value : ValueType) : Bool</a>
+        
+          <div class="summary"><p>Returns <code>true</code> if any key is associated with <em>value</em>, else <code>false</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#inspect%28io%3AIO%29%3ANil-instance-method" class="signature"><strong>#inspect</strong>(io : IO) : Nil</a>
+        
+          <div class="summary"><p>Appends a String representation of this object which includes its class name, its object address and the values of all instance variables.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#key_for%28value%3AValueType%29%3AString-instance-method" class="signature"><strong>#key_for</strong>(value : ValueType) : String</a>
+        
+          <div class="summary"><p>Returns a key with the given value.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#key_for%28value%3ABool%2C%26%3ABool-%3E%7BString%2CBool%7CFloat64%7CInt32%7CString%7D%29%3AString%7C%7BString%2CBool%7CFloat64%7CInt32%7CString%7DforallT-instance-method" class="signature"><strong>#key_for</strong>(value : Bool, & : Bool -> {String, Bool | Float64 | Int32 | String}) : String | {String, Bool | Float64 | Int32 | String} forall T</a>
+        
+          <div class="summary"><p>Returns a key with the given value.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#key_for%28value%3AFloat64%2C%26%3AFloat64-%3E%7BString%2CBool%7CFloat64%7CInt32%7CString%7D%29%3AString%7C%7BString%2CBool%7CFloat64%7CInt32%7CString%7DforallT-instance-method" class="signature"><strong>#key_for</strong>(value : Float64, & : Float64 -> {String, Bool | Float64 | Int32 | String}) : String | {String, Bool | Float64 | Int32 | String} forall T</a>
+        
+          <div class="summary"><p>Returns a key with the given value.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#key_for%28value%3AInt32%2C%26%3AInt32-%3E%7BString%2CBool%7CFloat64%7CInt32%7CString%7D%29%3AString%7C%7BString%2CBool%7CFloat64%7CInt32%7CString%7DforallT-instance-method" class="signature"><strong>#key_for</strong>(value : Int32, & : Int32 -> {String, Bool | Float64 | Int32 | String}) : String | {String, Bool | Float64 | Int32 | String} forall T</a>
+        
+          <div class="summary"><p>Returns a key with the given value.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#key_for%28value%3AString%2C%26%3AString-%3E%7BString%2CBool%7CFloat64%7CInt32%7CString%7D%29%3AString%7C%7BString%2CBool%7CFloat64%7CInt32%7CString%7DforallT-instance-method" class="signature"><strong>#key_for</strong>(value : String, & : String -> {String, Bool | Float64 | Int32 | String}) : String | {String, Bool | Float64 | Int32 | String} forall T</a>
+        
+          <div class="summary"><p>Returns a key with the given value.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#key_for%3F%28value%3AValueType%29%3AString%7CNil-instance-method" class="signature"><strong>#key_for?</strong>(value : ValueType) : String | Nil</a>
+        
+          <div class="summary"><p>Returns a key with the given value, or <code>nil</code> if no key is associated with <em>value</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#keys%3AArray%28String%29-instance-method" class="signature"><strong>#keys</strong> : Array(String)</a>
+        
+          <div class="summary"><p>Returns a new <code><a href="../Array.html">Array</a></code> with all the keys.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#reject%21%28%26%3AString%2CAny-%3E%29%3Aself-instance-method" class="signature"><strong>#reject!</strong>(& : String, Any -> ) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Deletes the entries for which the given block is truthy.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#reject%21%28keys%3AEnumerable%28String%29%29%3Aself-instance-method" class="signature"><strong>#reject!</strong>(keys : Enumerable(String)) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Deletes the entries for the given keys.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#reject%21%28%2Akeys%3AString%29%3Aself-instance-method" class="signature"><strong>#reject!</strong>(*keys : String) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Deletes the entries for the given keys.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#select%21%28%26%3AString%2CAny-%3E%29%3Aself-instance-method" class="signature"><strong>#select!</strong>(& : String, Any -> ) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Deletes every entry except for which the given block is falsey.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#select%21%28keys%3AEnumerable%28String%29%29%3Aself-instance-method" class="signature"><strong>#select!</strong>(keys : Enumerable(String)) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Deletes every entry except for the given keys.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#select%21%28%2Akeys%3AString%29%3Aself-instance-method" class="signature"><strong>#select!</strong>(*keys : String) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Deletes every entry except for the given keys.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#size%3AInt32-instance-method" class="signature"><strong>#size</strong> : Int32</a>
+        
+          <div class="summary"><p>Returns the number of key-value pairs.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_a%3AArray%28Tuple%28String%2CAny%29%29-instance-method" class="signature"><strong>#to_a</strong> : Array(Tuple(String, Any))</a>
+        
+          <div class="summary"><p>Returns an array containing key-value pairs as tuples.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_s%28io%3AIO%29%3ANil-instance-method" class="signature"><strong>#to_s</strong>(io : IO) : Nil</a>
+        
+          <div class="summary"><p>Appends a short String representation of this object which includes its class name and its object address.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#update%28key%3AString%2C%26%3AAny-%3EValueType%29%3AAny-instance-method" class="signature"><strong>#update</strong>(key : String, & : Any -> ValueType) : Any</a>
+        
+          <div class="summary"><p>Yields the value for the given key and updates it with the value returned by the given block.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#values%3AArray%28Any%29-instance-method" class="signature"><strong>#values</strong> : Array(Any)</a>
+        
+          <div class="summary"><p>Returns an array containing the values.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#values_at%28keys%3AEnumerable%28String%29%29%3AArray%28Any%29-instance-method" class="signature"><strong>#values_at</strong>(keys : Enumerable(String)) : Array(Any)</a>
+        
+          <div class="summary"><p>Returns the values for the given keys.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#values_at%28%2Akeys%3AString%29-instance-method" class="signature"><strong>#values_at</strong>(*keys : String)</a>
+        
+          <div class="summary"><p>Returns the values for the given keys.</p></div>
         
       </li>
     
@@ -1298,12 +1508,12 @@ found.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="delete(key:String,&amp;:String-&gt;):Any|Nil-instance-method">
+    <div class="entry-detail" id="delete(key:String,&amp;:String-&gt;{String,Bool|Float64|Int32|String}):Any|{String,Bool|Float64|Int32|String}forallT-instance-method">
       <div class="signature">
         
-        def <strong>delete</strong>(key : String, & : String -> ) : <a href="../Chem/Metadata/Any.html">Any</a> | Nil
+        def <strong>delete</strong>(key : String, & : String -> {String, Bool | Float64 | Int32 | String}) : <a href="../Chem/Metadata/Any.html">Any</a> | {String, Bool | Float64 | Int32 | String} forall T
 
-        <a class="method-permalink" href="#delete%28key%3AString%2C%26%3AString-%3E%29%3AAny%7CNil-instance-method">#</a>
+        <a class="method-permalink" href="#delete%28key%3AString%2C%26%3AString-%3E%7BString%2CBool%7CFloat64%7CInt32%7CString%7D%29%3AAny%7C%7BString%2CBool%7CFloat64%7CInt32%7CString%7DforallT-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1319,12 +1529,12 @@ exist.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="each(&amp;:Tuple(String,Type)-&gt;):Nil-instance-method">
+    <div class="entry-detail" id="each(&amp;:Tuple(String,Any)-&gt;):Nil-instance-method">
       <div class="signature">
         
-        def <strong>each</strong>(& : Tuple(String, Type) -> ) : Nil
+        def <strong>each</strong>(& : Tuple(String, <a href="../Chem/Metadata/Any.html">Any</a>) -> ) : Nil
 
-        <a class="method-permalink" href="#each%28%26%3ATuple%28String%2CType%29-%3E%29%3ANil-instance-method">#</a>
+        <a class="method-permalink" href="#each%28%26%3ATuple%28String%2CAny%29-%3E%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1342,12 +1552,12 @@ exist.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="each:Iterator(Tuple(String,Type))-instance-method">
+    <div class="entry-detail" id="each:Iterator(Tuple(String,Any))-instance-method">
       <div class="signature">
         
-        def <strong>each</strong> : Iterator(Tuple(String, Type))
+        def <strong>each</strong> : Iterator(Tuple(String, <a href="../Chem/Metadata/Any.html">Any</a>))
 
-        <a class="method-permalink" href="#each%3AIterator%28Tuple%28String%2CType%29%29-instance-method">#</a>
+        <a class="method-permalink" href="#each%3AIterator%28Tuple%28String%2CAny%29%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1463,18 +1673,516 @@ exist.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="fetch?:Bool-instance-method">
+    <div class="entry-detail" id="fetch(key:String,default:{String,Bool|Float64|Int32|String}):Any|{String,Bool|Float64|Int32|String}forallT-instance-method">
       <div class="signature">
         
-        def <strong>fetch?</strong> : Bool
+        def <strong>fetch</strong>(key : String, default : {String, Bool | Float64 | Int32 | String}) : <a href="../Chem/Metadata/Any.html">Any</a> | {String, Bool | Float64 | Int32 | String} forall T
 
-        <a class="method-permalink" href="#fetch%3F%3ABool-instance-method">#</a>
+        <a class="method-permalink" href="#fetch%28key%3AString%2Cdefault%3A%7BString%2CBool%7CFloat64%7CInt32%7CString%7D%29%3AAny%7C%7BString%2CBool%7CFloat64%7CInt32%7CString%7DforallT-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Returns <code>true</code> when the metadata contains no key-value pairs, else
+          <p>Returns the value if the given key exists, else <em>default</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="fetch(key:String,&amp;:String-&gt;{String,Bool|Float64|Int32|String}):Any|{String,Bool|Float64|Int32|String}forallT-instance-method">
+      <div class="signature">
+        
+        def <strong>fetch</strong>(key : String, & : String -> {String, Bool | Float64 | Int32 | String}) : <a href="../Chem/Metadata/Any.html">Any</a> | {String, Bool | Float64 | Int32 | String} forall T
+
+        <a class="method-permalink" href="#fetch%28key%3AString%2C%26%3AString-%3E%7BString%2CBool%7CFloat64%7CInt32%7CString%7D%29%3AAny%7C%7BString%2CBool%7CFloat64%7CInt32%7CString%7DforallT-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the value if the given key exists, else the value returned
+by the given block invoked with <em>key</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="has_key?(key:String):Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>has_key?</strong>(key : String) : Bool
+
+        <a class="method-permalink" href="#has_key%3F%28key%3AString%29%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if <em>key</em> exists, else <code>false</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="has_value?(value:ValueType):Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>has_value?</strong>(value : <a href="../Chem/Metadata/ValueType.html">ValueType</a>) : Bool
+
+        <a class="method-permalink" href="#has_value%3F%28value%3AValueType%29%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if any key is associated with <em>value</em>, else
 <code>false</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="inspect(io:IO):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>inspect</strong>(io : IO) : Nil
+
+        <a class="method-permalink" href="#inspect%28io%3AIO%29%3ANil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from class Reference
+            </div>
+          
+          <p>Appends a String representation of this object
+which includes its class name, its object address
+and the values of all instance variables.</p>
+<pre><code class="language-crystal"><span class="k">class</span> <span class="t">Person</span>
+  <span class="k">def</span> <span class="m">initialize</span>(@name : <span class="t">String</span>, @age : <span class="t">Int32</span>)
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="t">Person</span>.new(<span class="s">&quot;John&quot;</span>, <span class="n">32</span>).inspect <span class="c"># =&gt; #&lt;Person:0x10fd31f20 @name=&quot;John&quot;, @age=32&gt;</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="key_for(value:ValueType):String-instance-method">
+      <div class="signature">
+        
+        def <strong>key_for</strong>(value : <a href="../Chem/Metadata/ValueType.html">ValueType</a>) : String
+
+        <a class="method-permalink" href="#key_for%28value%3AValueType%29%3AString-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a key with the given value. Raises <code>KeyError</code> if no key is
+associated with <em>value</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="key_for(value:Bool,&amp;:Bool-&gt;{String,Bool|Float64|Int32|String}):String|{String,Bool|Float64|Int32|String}forallT-instance-method">
+      <div class="signature">
+        
+        def <strong>key_for</strong>(value : Bool, & : Bool -> {String, Bool | Float64 | Int32 | String}) : String | {String, Bool | Float64 | Int32 | String} forall T
+
+        <a class="method-permalink" href="#key_for%28value%3ABool%2C%26%3ABool-%3E%7BString%2CBool%7CFloat64%7CInt32%7CString%7D%29%3AString%7C%7BString%2CBool%7CFloat64%7CInt32%7CString%7DforallT-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a key with the given value. Yields <em>value</em> to the given
+block and returns the returned value if no key is associated with
+<em>value</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="key_for(value:Float64,&amp;:Float64-&gt;{String,Bool|Float64|Int32|String}):String|{String,Bool|Float64|Int32|String}forallT-instance-method">
+      <div class="signature">
+        
+        def <strong>key_for</strong>(value : Float64, & : Float64 -> {String, Bool | Float64 | Int32 | String}) : String | {String, Bool | Float64 | Int32 | String} forall T
+
+        <a class="method-permalink" href="#key_for%28value%3AFloat64%2C%26%3AFloat64-%3E%7BString%2CBool%7CFloat64%7CInt32%7CString%7D%29%3AString%7C%7BString%2CBool%7CFloat64%7CInt32%7CString%7DforallT-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a key with the given value. Yields <em>value</em> to the given
+block and returns the returned value if no key is associated with
+<em>value</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="key_for(value:Int32,&amp;:Int32-&gt;{String,Bool|Float64|Int32|String}):String|{String,Bool|Float64|Int32|String}forallT-instance-method">
+      <div class="signature">
+        
+        def <strong>key_for</strong>(value : Int32, & : Int32 -> {String, Bool | Float64 | Int32 | String}) : String | {String, Bool | Float64 | Int32 | String} forall T
+
+        <a class="method-permalink" href="#key_for%28value%3AInt32%2C%26%3AInt32-%3E%7BString%2CBool%7CFloat64%7CInt32%7CString%7D%29%3AString%7C%7BString%2CBool%7CFloat64%7CInt32%7CString%7DforallT-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a key with the given value. Yields <em>value</em> to the given
+block and returns the returned value if no key is associated with
+<em>value</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="key_for(value:String,&amp;:String-&gt;{String,Bool|Float64|Int32|String}):String|{String,Bool|Float64|Int32|String}forallT-instance-method">
+      <div class="signature">
+        
+        def <strong>key_for</strong>(value : String, & : String -> {String, Bool | Float64 | Int32 | String}) : String | {String, Bool | Float64 | Int32 | String} forall T
+
+        <a class="method-permalink" href="#key_for%28value%3AString%2C%26%3AString-%3E%7BString%2CBool%7CFloat64%7CInt32%7CString%7D%29%3AString%7C%7BString%2CBool%7CFloat64%7CInt32%7CString%7DforallT-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a key with the given value. Yields <em>value</em> to the given
+block and returns the returned value if no key is associated with
+<em>value</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="key_for?(value:ValueType):String|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>key_for?</strong>(value : <a href="../Chem/Metadata/ValueType.html">ValueType</a>) : String | Nil
+
+        <a class="method-permalink" href="#key_for%3F%28value%3AValueType%29%3AString%7CNil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a key with the given value, or <code>nil</code> if no key is
+associated with <em>value</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="keys:Array(String)-instance-method">
+      <div class="signature">
+        
+        def <strong>keys</strong> : <a href="../Array.html">Array</a>(String)
+
+        <a class="method-permalink" href="#keys%3AArray%28String%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a new <code><a href="../Array.html">Array</a></code> with all the keys.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="reject!(&amp;:String,Any-&gt;):self-instance-method">
+      <div class="signature">
+        
+        def <strong>reject!</strong>(& : String, <a href="../Chem/Metadata/Any.html">Any</a> -> ) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#reject%21%28%26%3AString%2CAny-%3E%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Deletes the entries for which the given block is truthy.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="reject!(keys:Enumerable(String)):self-instance-method">
+      <div class="signature">
+        
+        def <strong>reject!</strong>(keys : <a href="../Enumerable.html">Enumerable</a>(String)) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#reject%21%28keys%3AEnumerable%28String%29%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Deletes the entries for the given keys.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="reject!(*keys:String):self-instance-method">
+      <div class="signature">
+        
+        def <strong>reject!</strong>(*keys : String) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#reject%21%28%2Akeys%3AString%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Deletes the entries for the given keys.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="select!(&amp;:String,Any-&gt;):self-instance-method">
+      <div class="signature">
+        
+        def <strong>select!</strong>(& : String, <a href="../Chem/Metadata/Any.html">Any</a> -> ) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#select%21%28%26%3AString%2CAny-%3E%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Deletes every entry except for which the given block is falsey.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="select!(keys:Enumerable(String)):self-instance-method">
+      <div class="signature">
+        
+        def <strong>select!</strong>(keys : <a href="../Enumerable.html">Enumerable</a>(String)) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#select%21%28keys%3AEnumerable%28String%29%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Deletes every entry except for the given keys.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="select!(*keys:String):self-instance-method">
+      <div class="signature">
+        
+        def <strong>select!</strong>(*keys : String) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#select%21%28%2Akeys%3AString%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Deletes every entry except for the given keys.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="size:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>size</strong> : Int32
+
+        <a class="method-permalink" href="#size%3AInt32-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the number of key-value pairs.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_a:Array(Tuple(String,Any))-instance-method">
+      <div class="signature">
+        
+        def <strong>to_a</strong> : <a href="../Array.html">Array</a>(Tuple(String, <a href="../Chem/Metadata/Any.html">Any</a>))
+
+        <a class="method-permalink" href="#to_a%3AArray%28Tuple%28String%2CAny%29%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns an array containing key-value pairs as tuples.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_s(io:IO):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>to_s</strong>(io : IO) : Nil
+
+        <a class="method-permalink" href="#to_s%28io%3AIO%29%3ANil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from class Reference
+            </div>
+          
+          <p>Appends a short String representation of this object
+which includes its class name and its object address.</p>
+<pre><code class="language-crystal"><span class="k">class</span> <span class="t">Person</span>
+  <span class="k">def</span> <span class="m">initialize</span>(@name : <span class="t">String</span>, @age : <span class="t">Int32</span>)
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="t">Person</span>.new(<span class="s">&quot;John&quot;</span>, <span class="n">32</span>).to_s <span class="c"># =&gt; #&lt;Person:0x10a199f20&gt;</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="update(key:String,&amp;:Any-&gt;ValueType):Any-instance-method">
+      <div class="signature">
+        
+        def <strong>update</strong>(key : String, & : <a href="../Chem/Metadata/Any.html">Any</a> -> <a href="../Chem/Metadata/ValueType.html">ValueType</a>) : <a href="../Chem/Metadata/Any.html">Any</a>
+
+        <a class="method-permalink" href="#update%28key%3AString%2C%26%3AAny-%3EValueType%29%3AAny-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Yields the value for the given key and updates it with the value
+returned by the given block. Raises <code>KeyError</code> if <em>key</em> does not
+exist.</p>
+<p>It returns the value used as input for the given block (i.e., the
+old value).</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="values:Array(Any)-instance-method">
+      <div class="signature">
+        
+        def <strong>values</strong> : <a href="../Array.html">Array</a>(<a href="../Chem/Metadata/Any.html">Any</a>)
+
+        <a class="method-permalink" href="#values%3AArray%28Any%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns an array containing the values.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="values_at(keys:Enumerable(String)):Array(Any)-instance-method">
+      <div class="signature">
+        
+        def <strong>values_at</strong>(keys : <a href="../Enumerable.html">Enumerable</a>(String)) : <a href="../Array.html">Array</a>(<a href="../Chem/Metadata/Any.html">Any</a>)
+
+        <a class="method-permalink" href="#values_at%28keys%3AEnumerable%28String%29%29%3AArray%28Any%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the values for the given keys. Raises <code>KeyError</code> if a key
+does not exist.</p>
+<p>Values are returned in the same order of the keys.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="values_at(*keys:String)-instance-method">
+      <div class="signature">
+        
+        def <strong>values_at</strong>(*keys : String)
+
+        <a class="method-permalink" href="#values_at%28%2Akeys%3AString%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the values for the given keys. Raises <code>KeyError</code> if a key
+does not exist.</p>
+<p>Values are returned in the same order of the keys.</p>
         </div>
       
       <br/>

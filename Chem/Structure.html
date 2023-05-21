@@ -856,6 +856,11 @@
       
     </li>
   
+  <li class=" " data-id="chem.cr/Indexable" data-name="indexable(t)">
+      <a href="../Indexable.html">Indexable</a>
+      
+    </li>
+  
   <li class=" " data-id="chem.cr/Number" data-name="number">
       <a href="../Number.html">Number</a>
       
@@ -1248,6 +1253,13 @@
         <a href="#extract%28copy_properties%3ABool%3Dtrue%2C%26%3AAtom-%3EBool%29%3Aself-instance-method" class="signature"><strong>#extract</strong>(copy_properties : Bool = <span class="n">true</span>, & : Atom -> Bool) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns a new structure containing the selected atoms by the given block.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#metadata%3AChem%3A%3AMetadata-instance-method" class="signature"><strong>#metadata</strong> : Chem::Metadata</a>
+        
+          <div class="summary"><p>Hash-like container that stores the structure's properties as key (string)-value pairs.</p></div>
         
       </li>
     
@@ -2531,6 +2543,34 @@ other.dig(<span class="s">&#39;A&#39;</span>, <span class="n">23</span>, <span c
 block.</p>
 <p>Structure properties such as biases, unit cell, title, etc. are
 copied only if <em>copy_properties</em> is <code>true</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="metadata:Chem::Metadata-instance-method">
+      <div class="signature">
+        
+        def <strong>metadata</strong> : <a href="../Chem/Metadata.html">Chem::Metadata</a>
+
+        <a class="method-permalink" href="#metadata%3AChem%3A%3AMetadata-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Hash-like container that stores the structure's properties as key
+(string)-value pairs. A property's value can be any of the
+primitive types (string, integer, float, or bool), and so it's
+internally stored as <code><a href="../Chem/Metadata/Any.html">Metadata::Any</a></code>. Use the cast methods
+(<code>#as_*</code>) to convert to the desired type.</p>
+<pre><code class="language-crystal">structure.metadata[<span class="s">&quot;foo&quot;</span>] <span class="o">=</span> <span class="n">123</span>
+structure.metadata[<span class="s">&quot;foo&quot;</span>]      <span class="c"># =&gt; Metadata::Any(123)</span>
+structure.metadata[<span class="s">&quot;foo&quot;</span>].as_i <span class="c"># =&gt; 123</span>
+structure.metadata[<span class="s">&quot;foo&quot;</span>].as_f <span class="c"># =&gt; 123.0</span>
+structure.metadata[<span class="s">&quot;foo&quot;</span>].as_s <span class="c"># raises TypeCastError</span></code></pre>
         </div>
       
       <br/>

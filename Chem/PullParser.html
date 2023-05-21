@@ -856,6 +856,11 @@
       
     </li>
   
+  <li class=" " data-id="chem.cr/Indexable" data-name="indexable(t)">
+      <a href="../Indexable.html">Indexable</a>
+      
+    </li>
+  
   <li class=" " data-id="chem.cr/Number" data-name="number">
       <a href="../Number.html">Number</a>
       
@@ -1076,6 +1081,27 @@ pull.at(<span class="n">100</span>, <span class="n">5</span>)   <span class="c">
       </li>
     
       <li class="entry-summary">
+        <a href="#consume%28%26%3AChar-%3EBool%29%3Aself-instance-method" class="signature"><strong>#consume</strong>(& : Char -> Bool) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Reads the next collection of consecutive characters in the current line for which the given block is truthy.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#consume_until%28char%3AChar%29%3Aself-instance-method" class="signature"><strong>#consume_until</strong>(char : Char) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Reads the next characters in the current line until the first occurrence of <em>char</em> or end of line is reached.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#consume_until%28%26%3AChar-%3EBool%29%3Aself-instance-method" class="signature"><strong>#consume_until</strong>(& : Char -> Bool) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Reads the next characters in the current line until the given block is truthy or end of line is reached.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#current_line%3AString%7CNil-instance-method" class="signature"><strong>#current_line</strong> : String | Nil</a>
         
           <div class="summary"><p>Returns the current line, or <code>nil</code> if it is not set.</p></div>
@@ -1100,6 +1126,48 @@ pull.at(<span class="n">100</span>, <span class="n">5</span>)   <span class="c">
         <a href="#error%28message%3AString%29%3ANoReturn-instance-method" class="signature"><strong>#error</strong>(message : String) : NoReturn</a>
         
           <div class="summary"><p>Raises <code><a href="../Chem/ParseException.html">ParseException</a></code> with the given message.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#expect%28expected%3AString%2Cmessage%3AString%3D%22Expected%25%7Bexpected%7D%2Cgot%25%7Bactual%7D%22%29%3AString-instance-method" class="signature"><strong>#expect</strong>(expected : String, message : String = <span class="s">&quot;Expected %{expected}, got %{actual}&quot;</span>) : String</a>
+        
+          <div class="summary"><p>Returns the current token if equals <em>expected</em>, else raises <code><a href="../Chem/ParseException.html">ParseException</a></code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#expect%28pattern%3ARegex%2Cmessage%3AString%3D%22Expected%25%7Bactual%7Dtomatch%25%7Bexpected%7D%22%29%3AString-instance-method" class="signature"><strong>#expect</strong>(pattern : Regex, message : String = <span class="s">&quot;Expected %{actual} to match %{expected}&quot;</span>) : String</a>
+        
+          <div class="summary"><p>Returns the current token if matches <em>pattern</em>, else raises <code><a href="../Chem/ParseException.html">ParseException</a></code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#expect%28expected%3AEnumerable%28String%29%2Cmessage%3AString%3D%22Expected%25%7Bexpected%7D%2Cgot%25%7Bactual%7D%22%29%3AString-instance-method" class="signature"><strong>#expect</strong>(expected : Enumerable(String), message : String = <span class="s">&quot;Expected %{expected}, got %{actual}&quot;</span>) : String</a>
+        
+          <div class="summary"><p>Returns the current token if equals any of <em>expected</em>, else raises <code><a href="../Chem/ParseException.html">ParseException</a></code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#expect_next%28expected%3AString%2Cmessage%3AString%3D%22Expected%25%7Bexpected%7D%2Cgot%25%7Bactual%7D%22%29%3AString-instance-method" class="signature"><strong>#expect_next</strong>(expected : String, message : String = <span class="s">&quot;Expected %{expected}, got %{actual}&quot;</span>) : String</a>
+        
+          <div class="summary"><p>Same as <code><a href="../Chem/PullParser.html#expect%28expected%3AString%2Cmessage%3AString%3D%22Expected%25%7Bexpected%7D%2Cgot%25%7Bactual%7D%22%29%3AString-instance-method">#expect</a></code> but advances to the next token first.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#expect_next%28pattern%3ARegex%2Cmessage%3AString%3D%22Expected%25%7Bactual%7Dtomatch%25%7Bexpected%7D%22%29%3AString-instance-method" class="signature"><strong>#expect_next</strong>(pattern : Regex, message : String = <span class="s">&quot;Expected %{actual} to match %{expected}&quot;</span>) : String</a>
+        
+          <div class="summary"><p>Same as <code><a href="../Chem/PullParser.html#expect%28expected%3AString%2Cmessage%3AString%3D%22Expected%25%7Bexpected%7D%2Cgot%25%7Bactual%7D%22%29%3AString-instance-method">#expect</a></code> but advances to the next token first.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#expect_next%28expected%3AEnumerable%28String%29%2Cmessage%3AString%3D%22Expected%25%7Bexpected%7D%2Cgot%25%7Bactual%7D%22%29%3AString-instance-method" class="signature"><strong>#expect_next</strong>(expected : Enumerable(String), message : String = <span class="s">&quot;Expected %{expected}, got %{actual}&quot;</span>) : String</a>
+        
+          <div class="summary"><p>Same as <code><a href="../Chem/PullParser.html#expect%28expected%3AString%2Cmessage%3AString%3D%22Expected%25%7Bexpected%7D%2Cgot%25%7Bactual%7D%22%29%3AString-instance-method">#expect</a></code> but advances to the next token first.</p></div>
         
       </li>
     
@@ -1286,6 +1354,13 @@ pull.at(<span class="n">100</span>, <span class="n">5</span>)   <span class="c">
       </li>
     
       <li class="entry-summary">
+        <a href="#rest_of_line%28message%3AString%3D%22Endoffile%22%29%3AString%7CNil-instance-method" class="signature"><strong>#rest_of_line</strong>(message : String = <span class="s">&quot;End of file&quot;</span>) : String | Nil</a>
+        
+          <div class="summary"><p>Returns the rest of the line (after the current token), or <code>nil</code> if the cursor is at end of line.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#rewind_line%3Aself-instance-method" class="signature"><strong>#rewind_line</strong> : <span class="k">self</span></a>
         
           <div class="summary"><p>Sets the cursor at the beginning of the current line if set.</p></div>
@@ -1296,6 +1371,13 @@ pull.at(<span class="n">100</span>, <span class="n">5</span>)   <span class="c">
         <a href="#skip_blank_lines%3Aself-instance-method" class="signature"><strong>#skip_blank_lines</strong> : <span class="k">self</span></a>
         
           <div class="summary"><p>Discards blank lines.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#skip_whitespace-instance-method" class="signature"><strong>#skip_whitespace</strong></a>
+        
+          <div class="summary"><p>Skips whitespace characters.</p></div>
         
       </li>
     
@@ -1552,6 +1634,87 @@ not set.</p>
       </div>
     </div>
   
+    <div class="entry-detail" id="consume(&amp;:Char-&gt;Bool):self-instance-method">
+      <div class="signature">
+        
+        def <strong>consume</strong>(& : <a href="../Char.html">Char</a> -> Bool) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#consume%28%26%3AChar-%3EBool%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Reads the next collection of consecutive characters in the current
+line for which the given block is truthy.</p>
+<pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.new <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.new(<span class="s">&quot;abc def\n1234 56 789\n&quot;</span>)
+pull.next_line
+pull.consume(<span class="o">&amp;</span>.alphanumeric?).str? <span class="c"># =&gt; &quot;123&quot;</span>
+pull.consume(<span class="o">&amp;</span>.alphanumeric?).str? <span class="c"># =&gt; nil</span>
+pull.consume(<span class="o">&amp;</span>.whitespace?).str?   <span class="c"># =&gt; &quot; &quot;</span>
+pull.consume(<span class="o">&amp;</span>.alphanumeric?).str? <span class="c"># =&gt; &quot;456&quot;</span>
+pull.consume(<span class="o">&amp;</span>.alphanumeric?).str? <span class="c"># =&gt; nil</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="consume_until(char:Char):self-instance-method">
+      <div class="signature">
+        
+        def <strong>consume_until</strong>(char : <a href="../Char.html">Char</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#consume_until%28char%3AChar%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Reads the next characters in the current line until the first
+occurrence of <em>char</em> or end of line is reached. Returns <code>nil</code> at
+end of line.</p>
+<pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.new <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.new(<span class="s">&quot;123 456\n789\n&quot;</span>)
+pull.next_line
+pull.consume_until(<span class="s">&#39; &#39;</span>).str? <span class="c"># =&gt; &quot;123&quot;</span>
+pull.consume_until(<span class="s">&#39;4&#39;</span>).str? <span class="c"># =&gt; &quot; &quot;</span>
+pull.consume_until(<span class="s">&#39;x&#39;</span>).str? <span class="c"># =&gt; &quot;456&quot;</span>
+pull.consume_until(<span class="s">&#39;x&#39;</span>).str? <span class="c"># =&gt; nil</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="consume_until(&amp;:Char-&gt;Bool):self-instance-method">
+      <div class="signature">
+        
+        def <strong>consume_until</strong>(& : <a href="../Char.html">Char</a> -> Bool) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#consume_until%28%26%3AChar-%3EBool%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Reads the next characters in the current line until the given
+block is truthy or end of line is reached. Returns <code>nil</code> at end of
+line.</p>
+<pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.new <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.new(<span class="s">&quot;123 456\n789\n&quot;</span>)
+pull.next_line
+pull.consume_until(<span class="o">&amp;</span>.whitespace?).str?    <span class="c"># =&gt; &quot;123&quot;</span>
+pull.consume_until(<span class="o">&amp;</span>.in_set?(<span class="s">&quot;0-9&quot;</span>)).str? <span class="c"># =&gt; &quot; &quot;</span>
+pull.consume_until(<span class="o">&amp;</span>.whitespace?).str?    <span class="c"># =&gt; &quot;456&quot;</span>
+pull.consume_until(<span class="o">&amp;</span>.alphanumeric?).str?  <span class="c"># =&gt; nil</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="current_line:String|Nil-instance-method">
       <div class="signature">
         
@@ -1639,6 +1802,166 @@ could inadvertently discard a line.</p>
 hold the location of the current line and token if set.</p>
 <p>The current token is accessible via the named substitution
 <code>%{token}</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="expect(expected:String,message:String=&quot;Expected%{expected},got%{actual}&quot;):String-instance-method">
+      <div class="signature">
+        
+        def <strong>expect</strong>(expected : String, message : String = <span class="s">&quot;Expected %{expected}, got %{actual}&quot;</span>) : String
+
+        <a class="method-permalink" href="#expect%28expected%3AString%2Cmessage%3AString%3D%22Expected%25%7Bexpected%7D%2Cgot%25%7Bactual%7D%22%29%3AString-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the current token if equals <em>expected</em>, else raises
+<code><a href="../Chem/ParseException.html">ParseException</a></code>.</p>
+<p>If <em>message</em> is given, it is used as the parse error. Use
+<code>&quot;%{expected}&quot;</code> and <code>&quot;%{actual}&quot;</code> as placeholders for the expected
+and actual values.</p>
+<pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.new <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.new(<span class="s">&quot;123 456\n789\n&quot;</span>)
+pull.next_line
+pull.next_token
+pull.expect <span class="s">&quot;123&quot;</span> <span class="c"># =&gt; &quot;123&quot;</span>
+pull.expect <span class="s">&quot;abc&quot;</span> <span class="c"># raises ParseException (123 != abc)</span>
+pull.next_line
+pull.expect <span class="s">&quot;456&quot;</span> <span class="c"># raises ParseException (empty token)</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="expect(pattern:Regex,message:String=&quot;Expected%{actual}tomatch%{expected}&quot;):String-instance-method">
+      <div class="signature">
+        
+        def <strong>expect</strong>(pattern : Regex, message : String = <span class="s">&quot;Expected %{actual} to match %{expected}&quot;</span>) : String
+
+        <a class="method-permalink" href="#expect%28pattern%3ARegex%2Cmessage%3AString%3D%22Expected%25%7Bactual%7Dtomatch%25%7Bexpected%7D%22%29%3AString-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the current token if matches <em>pattern</em>, else raises
+<code><a href="../Chem/ParseException.html">ParseException</a></code>.</p>
+<p>If <em>message</em> is given, it is used as the parse error. Use
+<code>&quot;%{expected}&quot;</code> and <code>&quot;%{actual}&quot;</code> as placeholders for the expected
+and actual values.</p>
+<pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.new <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.new(<span class="s">&quot;123 456\n789\n&quot;</span>)
+pull.next_line
+pull.next_token
+pull.expect <span class="s">/[0-9]+/</span> <span class="c"># =&gt; &quot;123&quot;</span>
+pull.expect <span class="s">/[a-z]+/</span> <span class="c"># raises ParseException (123 does not match [a-z]+)</span>
+pull.next_line
+pull.expect <span class="s">/[0-9]+/</span> <span class="c"># raises ParseException (empty token)</span></code></pre>
+<p><span class="flag purple">NOTE</span>  The entire token is returned even if the match is partial.</p>
+<pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.new <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.new(<span class="s">&quot;123abc\n789\n&quot;</span>)
+pull.next_line
+pull.next_token
+pull.expect <span class="s">/[a-z]+/</span> <span class="c"># =&gt; &quot;123abc&quot;</span>
+pull.expect <span class="s">/[0-9]+/</span> <span class="c"># =&gt; &quot;123abc&quot;</span></code></pre>
+<p>Use anchors to ensure full match.</p>
+<pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.new <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.new(<span class="s">&quot;123abc\n789\n&quot;</span>)
+pull.next_line
+pull.next_token
+pull.expect <span class="s">/^[a-z]+$/</span> <span class="c"># raises ParseException</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="expect(expected:Enumerable(String),message:String=&quot;Expected%{expected},got%{actual}&quot;):String-instance-method">
+      <div class="signature">
+        
+        def <strong>expect</strong>(expected : <a href="../Enumerable.html">Enumerable</a>(String), message : String = <span class="s">&quot;Expected %{expected}, got %{actual}&quot;</span>) : String
+
+        <a class="method-permalink" href="#expect%28expected%3AEnumerable%28String%29%2Cmessage%3AString%3D%22Expected%25%7Bexpected%7D%2Cgot%25%7Bactual%7D%22%29%3AString-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the current token if equals any of <em>expected</em>, else raises
+<code><a href="../Chem/ParseException.html">ParseException</a></code>.</p>
+<p>If <em>message</em> is given, it is used as the parse error. Use
+<code>&quot;%{expected}&quot;</code> and <code>&quot;%{actual}&quot;</code> as placeholders for the expected
+and actual values.</p>
+<pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.new <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.new(<span class="s">&quot;123 456\n789\n&quot;</span>)
+pull.next_line
+pull.next_token
+pull.expect [<span class="s">&quot;123&quot;</span>, <span class="s">&quot;456&quot;</span>] <span class="c"># =&gt; &quot;123&quot;</span>
+pull.next_token
+pull.expect [<span class="s">&quot;123&quot;</span>, <span class="s">&quot;456&quot;</span>] <span class="c"># =&gt; &quot;456&quot;</span>
+pull.expect [<span class="s">&quot;abc&quot;</span>, <span class="s">&quot;def&quot;</span>] <span class="c"># raises ParseException (&quot;456&quot; != &quot;abc&quot; or &quot;def&quot;)</span>
+pull.next_token
+pull.expect [<span class="s">&quot;123&quot;</span>, <span class="s">&quot;456&quot;</span>] <span class="c"># raises ParseException (empty token)</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="expect_next(expected:String,message:String=&quot;Expected%{expected},got%{actual}&quot;):String-instance-method">
+      <div class="signature">
+        
+        def <strong>expect_next</strong>(expected : String, message : String = <span class="s">&quot;Expected %{expected}, got %{actual}&quot;</span>) : String
+
+        <a class="method-permalink" href="#expect_next%28expected%3AString%2Cmessage%3AString%3D%22Expected%25%7Bexpected%7D%2Cgot%25%7Bactual%7D%22%29%3AString-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Same as <code><a href="../Chem/PullParser.html#expect%28expected%3AString%2Cmessage%3AString%3D%22Expected%25%7Bexpected%7D%2Cgot%25%7Bactual%7D%22%29%3AString-instance-method">#expect</a></code> but advances to the next token first.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="expect_next(pattern:Regex,message:String=&quot;Expected%{actual}tomatch%{expected}&quot;):String-instance-method">
+      <div class="signature">
+        
+        def <strong>expect_next</strong>(pattern : Regex, message : String = <span class="s">&quot;Expected %{actual} to match %{expected}&quot;</span>) : String
+
+        <a class="method-permalink" href="#expect_next%28pattern%3ARegex%2Cmessage%3AString%3D%22Expected%25%7Bactual%7Dtomatch%25%7Bexpected%7D%22%29%3AString-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Same as <code><a href="../Chem/PullParser.html#expect%28expected%3AString%2Cmessage%3AString%3D%22Expected%25%7Bexpected%7D%2Cgot%25%7Bactual%7D%22%29%3AString-instance-method">#expect</a></code> but advances to the next token first.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="expect_next(expected:Enumerable(String),message:String=&quot;Expected%{expected},got%{actual}&quot;):String-instance-method">
+      <div class="signature">
+        
+        def <strong>expect_next</strong>(expected : <a href="../Enumerable.html">Enumerable</a>(String), message : String = <span class="s">&quot;Expected %{expected}, got %{actual}&quot;</span>) : String
+
+        <a class="method-permalink" href="#expect_next%28expected%3AEnumerable%28String%29%2Cmessage%3AString%3D%22Expected%25%7Bexpected%7D%2Cgot%25%7Bactual%7D%22%29%3AString-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Same as <code><a href="../Chem/PullParser.html#expect%28expected%3AString%2Cmessage%3AString%3D%22Expected%25%7Bexpected%7D%2Cgot%25%7Bactual%7D%22%29%3AString-instance-method">#expect</a></code> but advances to the next token first.</p>
         </div>
       
       <br/>
@@ -1825,6 +2148,7 @@ or <code>nil</code> if the token is not set or it is not a valid number.</p>
           <p>Returns the current line starting at the current token if set. An
 empty string is returned at the end of line. Raises
 <code><a href="../Chem/ParseException.html">ParseException</a></code> with the given message at end of file.</p>
+<p><span class="flag purple">NOTE</span>  This method does not change the cursor.</p>
 <pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.new <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.new(<span class="s">&quot;123 456\n789\n&quot;</span>)
 pull.next_line
 <span class="c"># token is not set, returns entire line</span>
@@ -2211,6 +2535,34 @@ returns <code>nil</code>. If no token is found, returns <em>default</em>.</p>
       </div>
     </div>
   
+    <div class="entry-detail" id="rest_of_line(message:String=&quot;Endoffile&quot;):String|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>rest_of_line</strong>(message : String = <span class="s">&quot;End of file&quot;</span>) : String | Nil
+
+        <a class="method-permalink" href="#rest_of_line%28message%3AString%3D%22Endoffile%22%29%3AString%7CNil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the rest of the line (after the current token), or <code>nil</code>
+if the cursor is at end of line. Raises <code><a href="../Chem/ParseException.html">ParseException</a></code> with the
+given message at end of file.</p>
+<p><span class="flag purple">NOTE</span>  The cursor will span the entire returned string.</p>
+<pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.new <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.new(<span class="s">&quot;123 456\n789\n&quot;</span>)
+pull.next_line
+pull.next_s?      <span class="c"># =&gt; &quot;123&quot;</span>
+pull.rest_of_line <span class="c"># =&gt; &quot; 456&quot;</span>
+pull.str?         <span class="c"># =&gt; &quot; 456&quot;</span>
+pull.next_s?      <span class="c"># =&gt; nil</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="rewind_line:self-instance-method">
       <div class="signature">
         
@@ -2241,6 +2593,32 @@ returns <code>nil</code>. If no token is found, returns <em>default</em>.</p>
         <div class="doc">
           
           <p>Discards blank lines.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="skip_whitespace-instance-method">
+      <div class="signature">
+        
+        def <strong>skip_whitespace</strong>
+
+        <a class="method-permalink" href="#skip_whitespace-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Skips whitespace characters.</p>
+<p>The cursor is placed at the first non-whitespace character, but it
+is not consumed.</p>
+<pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.new <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.new(<span class="s">&quot;  123 456\n789\n&quot;</span>)
+pull.next_line
+pull.skip_whitespace
+pull.str? <span class="c"># =&gt; nil # token size is zero</span>
+pull.line <span class="c"># =&gt; &quot;123 456&quot;</span></code></pre>
         </div>
       
       <br/>

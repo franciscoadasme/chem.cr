@@ -856,6 +856,11 @@
       
     </li>
   
+  <li class=" " data-id="chem.cr/Indexable" data-name="indexable(t)">
+      <a href="../../Indexable.html">Indexable</a>
+      
+    </li>
+  
   <li class=" " data-id="chem.cr/Number" data-name="number">
       <a href="../../Number.html">Number</a>
       
@@ -913,7 +918,7 @@
   </h2>
   <ul class="other-types-list">
     
-      <li class="other-type">Indexable(Float64)</li>
+      <li class="other-type"><a href="../../Indexable.html">Indexable(Float64)</a></li>
     
   </ul>
 
@@ -1611,6 +1616,15 @@
 <div class="methods-inherited">
   
     
+
+  <h3>Instance methods inherited from module <code><a href="../../Indexable.html">Indexable(Float64)</a></code></h3>
+  
+  
+    <a href="../../Indexable.html#sentence%28io%3AIO%2Cseparator%3AString%3D%22%2C%22%2C%2A%2Cpair_separator%3AString%3D%22and%22%2Ctail_separator%3AString%3D%22%2Cand%22%2C%26%3AT%2CIO-%3E%29%3ANil-instance-method" class="tooltip">
+      <span>sentence(io : IO, separator : String = <span class="s">&quot;, &quot;</span>, *, pair_separator : String = <span class="s">&quot; and &quot;</span>, tail_separator : String = <span class="s">&quot;, and &quot;</span>, & : T, IO -> ) : Nil<br/>sentence(io : IO, separator : String = <span class="s">&quot;, &quot;</span>, *, pair_separator : String = <span class="s">&quot; and &quot;</span>, tail_separator : String = <span class="s">&quot;, and &quot;</span>) : Nil<br/>sentence(separator : String = <span class="s">&quot;, &quot;</span>, *, pair_separator : String = <span class="s">&quot; and &quot;</span>, tail_separator : String = <span class="s">&quot;, and &quot;</span>, & : T -> ) : String<br/>sentence(separator : String = <span class="s">&quot;, &quot;</span>, *, pair_separator : String = <span class="s">&quot; and &quot;</span>, tail_separator : String = <span class="s">&quot;, and &quot;</span>) : String</span>
+    sentence</a>
+    
+  
 
 
     
@@ -3263,7 +3277,7 @@ grid.mean(axis: <span class="n">1</span>) <span class="c"># =&gt; [{9.5, 0.0}, {
         <div class="doc">
           
             <div class="doc-inherited">
-              Description copied from module Indexable(Float64)
+              Description copied from module <a href="../../Indexable.html">Indexable(Float64)</a>
             </div>
           
           <p>Returns the number of elements in this container.</p>
@@ -3328,7 +3342,7 @@ grid.mean(axis: <span class="n">1</span>) <span class="c"># =&gt; [{9.5, 0.0}, {
         <div class="doc">
           
             <div class="doc-inherited">
-              Description copied from module Indexable(Float64)
+              Description copied from module <a href="../../Indexable.html">Indexable(Float64)</a>
             </div>
           
           <p>Returns an <code><a href="../../Array.html">Array</a></code> with all the elements in the collection.</p>
@@ -3551,11 +3565,11 @@ the <code><a href="../../Chem/VASP/Locpot.html">Chem::VASP::Locpot</a></code> fi
         <div class="doc">
           
             <div class="doc-inherited">
-              Description copied from module Indexable(Float64)
+              Description copied from module <a href="../../Indexable.html">Indexable(Float64)</a>
             </div>
           
           <p>Returns the element at the given <em>index</em>, without doing any bounds check.</p>
-<p><code>Indexable</code> makes sure to invoke this method with <em>index</em> in <code>0...size</code>,
+<p><code><a href="../../Indexable.html">Indexable</a></code> makes sure to invoke this method with <em>index</em> in <code>0...size</code>,
 so converting negative indices to positive ones is not needed here.</p>
 <p>Clients never invoke this method directly. Instead, they access
 elements with <code><a href="../../Chem/Spatial/Grid.html#%5B%5D%28%2Aargs%2C%2A%2Aoptions%29%3AFloat64-instance-method">#[](index)</a></code> and <code><a href="../../Chem/Spatial/Grid.html#%5B%5D%3F%28loc%3ALocation%29%3AFloat64%7CNil-instance-method">#[]?(index)</a></code>.</p>

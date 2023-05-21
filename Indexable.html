@@ -13,7 +13,7 @@
 <script type="text/javascript" src="js/doc.js"></script>
 
   <meta name="repository-name" content="chem.cr">
-  <title>Float - chem.cr 0.5.6</title>
+  <title>Indexable(T) - chem.cr 0.5.6</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "";
   </script>
@@ -851,12 +851,12 @@
       
     </li>
   
-  <li class=" current" data-id="chem.cr/Float" data-name="float">
+  <li class=" " data-id="chem.cr/Float" data-name="float">
       <a href="Float.html">Float</a>
       
     </li>
   
-  <li class=" " data-id="chem.cr/Indexable" data-name="indexable(t)">
+  <li class=" current" data-id="chem.cr/Indexable" data-name="indexable(t)">
       <a href="Indexable.html">Indexable</a>
       
     </li>
@@ -880,12 +880,10 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">abstract struct</span> Float
+  <span class="kind">module</span> Indexable(T)
 
 </h1>
 
-
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="Float.html">Float</a></li><li class="superclass"><a href="Number.html">Number</a></li><li class="superclass">Value</li><li class="superclass">Object</li></ul>
 
 
 
@@ -899,39 +897,71 @@
     Overview
   </h2>
 
-  <p>Float is the base type of all floating point numbers.</p>
-<p>There are two floating point types, <code>Float32</code> and <code>Float64</code>,
-which correspond to the <a href="http://en.wikipedia.org/wiki/Single_precision_floating-point_format">binary32</a>
-and <a href="http://en.wikipedia.org/wiki/Double_precision_floating-point_format">binary64</a>
-types defined by IEEE.</p>
-<p>A floating point literal is an optional <code>+</code> or <code>-</code> sign, followed by
-a sequence of numbers or underscores, followed by a dot,
-followed by numbers or underscores, followed by an optional exponent suffix,
-followed by an optional type suffix. If no suffix is present, the literal's type is <code>Float64</code>.</p>
-<pre><code class="language-crystal"><span class="n">1.0</span>     <span class="c"># Float64</span>
-<span class="n">1.0_f32</span> <span class="c"># Float32</span>
-<span class="n">1_f32</span>   <span class="c"># Float32</span>
-
-<span class="n">1e10</span>   <span class="c"># Float64</span>
-<span class="n">1.5e10</span> <span class="c"># Float64</span>
-<span class="n">1.5e-7</span> <span class="c"># Float64</span>
-
-<span class="n">+1.3</span> <span class="c"># Float64</span>
-<span class="n">-0.5</span> <span class="c"># Float64</span></code></pre>
-<p>The underscore <code>_</code> before the suffix is optional.</p>
-<p>Underscores can be used to make some numbers more readable:</p>
-<pre><code class="language-crystal"><span class="n">1_000_000.111_111</span> <span class="c"># better than 1000000.111111</span></code></pre>
-<p>See <a href="https://crystal-lang.org/reference/syntax_and_semantics/literals/floats.html"><code>Float</code> literals</a> in the language reference.</p>
-
-
+  <p>A container that allows accessing elements via a numeric index.</p>
+<p>Indexing starts at <code>0</code>. A negative index is assumed to be
+relative to the end of the container: <code>-1</code> indicates the last element,
+<code>-2</code> is the next to last element, and so on.</p>
+<p>Types including this module are typically <code><a href="Array.html">Array</a></code>-like types.</p>
+<h2><a id="stability-guarantees" class="anchor" href="#stability-guarantees">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Stability guarantees</h2>
+<p>Several methods in <code><a href="Indexable.html">Indexable</a></code>, such as <code>#bsearch</code> and <code>#cartesian_product</code>,
+require the collection to be <em>stable</em>; that is, calling <code>#each(&amp;)</code> over and
+over again should always yield the same elements, provided the collection is
+not mutated between the calls. In particular, <code>#each(&amp;)</code> itself should not
+mutate the collection throughout the loop. Stability of an <code><a href="Indexable.html">Indexable</a></code> is
+guaranteed if the following criteria are met:</p>
+<ul>
+<li><code>#unsafe_fetch</code> and <code>#size</code> do not mutate the collection</li>
+<li><code>#each(&amp;)</code> and <code>#each_index(&amp;)</code> are not overridden</li>
+</ul>
+<p>The standard library assumes that all including types of <code><a href="Indexable.html">Indexable</a></code> are
+always stable. It is undefined behavior to implement an <code><a href="Indexable.html">Indexable</a></code> that is
+not stable or only conditionally stable.</p>
 
 
 
 
 
+  <h2>
+    <a id="included-modules" class="anchor" href="#included-modules">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Included Modules
+  </h2>
+  <ul class="other-types-list">
+    
+      <li class="other-type"><a href="Enumerable.html">Enumerable(T)</a></li>
+    
+      <li class="other-type">Iterable(T)</li>
+    
+  </ul>
 
 
 
+
+
+
+
+  <h2>
+    <a id="direct-including-types" class="anchor" href="#direct-including-types">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Direct including types
+  </h2>
+  <ul class="other-types-list">
+    
+      <li class="other-type"><a href="Chem/BondArray.html">Chem::BondArray</a></li>
+    
+      <li class="other-type"><a href="Chem/Spatial/Grid.html">Chem::Spatial::Grid</a></li>
+    
+  </ul>
 
 
 
@@ -946,7 +976,12 @@ followed by an optional type suffix. If no suffix is present, the literal's type
   </h2>
   
     
-      chem/core_ext/float.cr
+      lib/views/src/views/indexable_view.cr
+    
+    <br/>
+  
+    
+      chem/core_ext/indexable.cr
     
     <br/>
   
@@ -970,9 +1005,30 @@ followed by an optional type suffix. If no suffix is present, the literal's type
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#close_to%3F%28other%3ANumber%2Cdelta%3ANumber%3D%7B%7B%40type.constant%28%22EPSILON%22%29%7D%7D%29%3ABool-instance-method" class="signature"><strong>#close_to?</strong>(other : Number, delta : Number = <span class="o">{{</span> @type.constant(<span class="s">&quot;EPSILON&quot;</span>) }}) : Bool</a>
+        <a href="#sentence%28io%3AIO%2Cseparator%3AString%3D%22%2C%22%2C%2A%2Cpair_separator%3AString%3D%22and%22%2Ctail_separator%3AString%3D%22%2Cand%22%2C%26%3AT%2CIO-%3E%29%3ANil-instance-method" class="signature"><strong>#sentence</strong>(io : IO, separator : String = <span class="s">&quot;, &quot;</span>, *, pair_separator : String = <span class="s">&quot; and &quot;</span>, tail_separator : String = <span class="s">&quot;, and &quot;</span>, & : T, IO -> ) : Nil</a>
         
-          <div class="summary"><p>Returns <code>true</code> if numbers are within <em>delta</em> from each other, else <code>false</code>.</p></div>
+          <div class="summary"><p>Prints the elements in the collection as a sentence to <em>io</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#sentence%28io%3AIO%2Cseparator%3AString%3D%22%2C%22%2C%2A%2Cpair_separator%3AString%3D%22and%22%2Ctail_separator%3AString%3D%22%2Cand%22%29%3ANil-instance-method" class="signature"><strong>#sentence</strong>(io : IO, separator : String = <span class="s">&quot;, &quot;</span>, *, pair_separator : String = <span class="s">&quot; and &quot;</span>, tail_separator : String = <span class="s">&quot;, and &quot;</span>) : Nil</a>
+        
+          <div class="summary"><p>Prints the elements in the collection as a sentence to <em>io</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#sentence%28separator%3AString%3D%22%2C%22%2C%2A%2Cpair_separator%3AString%3D%22and%22%2Ctail_separator%3AString%3D%22%2Cand%22%2C%26%3AT-%3E%29%3AString-instance-method" class="signature"><strong>#sentence</strong>(separator : String = <span class="s">&quot;, &quot;</span>, *, pair_separator : String = <span class="s">&quot; and &quot;</span>, tail_separator : String = <span class="s">&quot;, and &quot;</span>, & : T -> ) : String</a>
+        
+          <div class="summary"><p>Returns a <code>String</code> by concatenating the elements in the collection as a sentence.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#sentence%28separator%3AString%3D%22%2C%22%2C%2A%2Cpair_separator%3AString%3D%22and%22%2Ctail_separator%3AString%3D%22%2Cand%22%29%3AString-instance-method" class="signature"><strong>#sentence</strong>(separator : String = <span class="s">&quot;, &quot;</span>, *, pair_separator : String = <span class="s">&quot; and &quot;</span>, tail_separator : String = <span class="s">&quot;, and &quot;</span>) : String</a>
+        
+          <div class="summary"><p>Returns a <code>String</code> by concatenating the elements in the collection as a sentence.</p></div>
         
       </li>
     
@@ -986,79 +1042,19 @@ followed by an optional type suffix. If no suffix is present, the literal's type
   
     
 
-  <h3>Instance methods inherited from struct <code><a href="Number.html">Number</a></code></h3>
+  <h3>Instance methods inherited from module <code><a href="Enumerable.html">Enumerable(T)</a></code></h3>
   
   
-    <a href="Number.html#%2A%28other%3AChem%3A%3ASpatial%3A%3AVec3%29%3AChem%3A%3ASpatial%3A%3AVec3-instance-method" class="tooltip">
-      <span>*(other : Chem::Spatial::Vec3) : Chem::Spatial::Vec3</span>
-    *</a>, 
+    <a href="Enumerable.html#average%28weights%3AIndexable%28Number%29%29-instance-method" class="tooltip">
+      <span>average(weights : Indexable(Number))<br/>average(weights : Indexable(Number), & : T -> _)</span>
+    average</a>, 
     
   
-    <a href="Number.html#close_to%3F%28rhs%3ANumber%2Cdelta%3ANumber%3D0%29%3ABool-instance-method" class="tooltip">
-      <span>close_to?(rhs : Number, delta : Number = <span class="n">0</span>) : Bool</span>
-    close_to?</a>, 
+    <a href="Enumerable.html#mean-instance-method" class="tooltip">
+      <span>mean<br/>mean(& : T -> _)</span>
+    mean</a>
     
   
-    <a href="Number.html#degree-instance-method" class="tooltip">
-      <span>degree</span>
-    degree</a>, 
-    
-  
-    <a href="Number.html#degrees-instance-method" class="tooltip">
-      <span>degrees</span>
-    degrees</a>, 
-    
-  
-    <a href="Number.html#radian-instance-method" class="tooltip">
-      <span>radian</span>
-    radian</a>, 
-    
-  
-    <a href="Number.html#radians-instance-method" class="tooltip">
-      <span>radians</span>
-    radians</a>, 
-    
-  
-    <a href="Number.html#scale%28min%3ANumber%2Cmax%3ANumber%29%3AFloat64-instance-method" class="tooltip">
-      <span>scale(min : Number, max : Number) : Float64<br/>scale(range : Range(Number, Number)) : Float64</span>
-    scale</a>, 
-    
-  
-    <a href="Number.html#unscale%28min%3ANumber%2Cmax%3ANumber%29%3AFloat64-instance-method" class="tooltip">
-      <span>unscale(min : Number, max : Number) : Float64<br/>unscale(range : Range(Number, Number)) : Float64</span>
-    unscale</a>
-    
-  
-
-
-    
-
-
-    
-
-
-  
-    
-
-
-    
-
-
-    
-
-
-  
-    
-
-
-    
-
-
-    
-
-
-  
-    
 
 
     
@@ -1094,25 +1090,132 @@ followed by an optional type suffix. If no suffix is present, the literal's type
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="close_to?(other:Number,delta:Number={{@type.constant(&quot;EPSILON&quot;)}}):Bool-instance-method">
+    <div class="entry-detail" id="sentence(io:IO,separator:String=&quot;,&quot;,*,pair_separator:String=&quot;and&quot;,tail_separator:String=&quot;,and&quot;,&amp;:T,IO-&gt;):Nil-instance-method">
       <div class="signature">
         
-        def <strong>close_to?</strong>(other : <a href="Number.html">Number</a>, delta : <a href="Number.html">Number</a> = <span class="o">{{</span> @type.constant(<span class="s">&quot;EPSILON&quot;</span>) }}) : Bool
+        def <strong>sentence</strong>(io : IO, separator : String = <span class="s">&quot;, &quot;</span>, *, pair_separator : String = <span class="s">&quot; and &quot;</span>, tail_separator : String = <span class="s">&quot;, and &quot;</span>, & : T, IO -> ) : Nil
 
-        <a class="method-permalink" href="#close_to%3F%28other%3ANumber%2Cdelta%3ANumber%3D%7B%7B%40type.constant%28%22EPSILON%22%29%7D%7D%29%3ABool-instance-method">#</a>
+        <a class="method-permalink" href="#sentence%28io%3AIO%2Cseparator%3AString%3D%22%2C%22%2C%2A%2Cpair_separator%3AString%3D%22and%22%2Ctail_separator%3AString%3D%22%2Cand%22%2C%26%3AT%2CIO-%3E%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Returns <code>true</code> if numbers are within <em>delta</em> from each other, else <code>false</code>.</p>
-<pre><code class="language-crystal"><span class="n">1.0</span>.close_to?(<span class="n">1.0</span>)                          <span class="c"># =&gt; true</span>
-<span class="n">1.0_f32</span>.close_to?(<span class="n">1.0</span>)                      <span class="c"># =&gt; true</span>
-<span class="n">1.0</span>.close_to?(<span class="n">1.0</span> <span class="o">+</span> <span class="t">Float64</span><span class="t">::</span><span class="t">EPSILON</span>)       <span class="c"># =&gt; true</span>
-<span class="n">1.0_f32</span>.close_to?(<span class="n">1.0</span> <span class="o">+</span> <span class="t">Float32</span><span class="t">::</span><span class="t">EPSILON</span>)   <span class="c"># =&gt; true</span>
-<span class="n">1.0</span>.close_to?(<span class="n">1.0005</span>, <span class="n">1e-3</span>)                 <span class="c"># =&gt; true</span>
-<span class="n">1.0</span>.close_to?(<span class="n">1.0</span> <span class="o">+</span> <span class="t">Float64</span><span class="t">::</span><span class="t">EPSILON</span><span class="o">*</span><span class="n">2</span>)     <span class="c"># =&gt; false</span>
-<span class="n">1.0_f32</span>.close_to?(<span class="n">1.0</span> <span class="o">+</span> <span class="t">Float32</span><span class="t">::</span><span class="t">EPSILON</span><span class="o">*</span><span class="n">2</span>) <span class="c"># =&gt; false</span>
-<span class="n">1.0</span>.close_to?(<span class="n">1.01</span>, <span class="n">1e-3</span>)                   <span class="c"># =&gt; false</span></code></pre>
+          <p>Prints the elements in the collection as a sentence to <em>io</em>. How
+each element is printed is controlled by the given block.</p>
+<p>The output depends on the number of elements in the collection:</p>
+<ul>
+<li>If there are three or more elements, all but the tail element in
+the collection are joined by <em>separator</em>, and the tail element is
+joined by <em>tail_separator</em>.</li>
+<li>If there are two elements, these are joined by <em>pair_separator</em>.</li>
+<li>If there is one element, it is printed to <em>io</em> without any
+separator.</li>
+<li>If the collection is empty, nothing is printed.</li>
+</ul>
+<pre><code class="language-crystal">[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>].sentence(<span class="t">STDOUT</span>, <span class="s">&quot;-&quot;</span>, tail_separator: <span class="s">&quot;-or-&quot;</span>) { <span class="o">|</span>e, io<span class="o">|</span> io <span class="o">&lt;&lt;</span> <span class="s">&quot;(</span><span class="i">#{</span>e<span class="i">}</span><span class="s">)&quot;</span> }</code></pre>
+<p>Prints:</p>
+<pre><code class="language-text">(1)-(2)-or-(3)</code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="sentence(io:IO,separator:String=&quot;,&quot;,*,pair_separator:String=&quot;and&quot;,tail_separator:String=&quot;,and&quot;):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>sentence</strong>(io : IO, separator : String = <span class="s">&quot;, &quot;</span>, *, pair_separator : String = <span class="s">&quot; and &quot;</span>, tail_separator : String = <span class="s">&quot;, and &quot;</span>) : Nil
+
+        <a class="method-permalink" href="#sentence%28io%3AIO%2Cseparator%3AString%3D%22%2C%22%2C%2A%2Cpair_separator%3AString%3D%22and%22%2Ctail_separator%3AString%3D%22%2Cand%22%29%3ANil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Prints the elements in the collection as a sentence to <em>io</em>.</p>
+<p>The output depends on the number of elements in the collection:</p>
+<ul>
+<li>If there are three or more elements, all but the tail element in
+the collection are joined by <em>separator</em>, and the tail element is
+joined by <em>tail_separator</em>.</li>
+<li>If there are two elements, these are joined by <em>pair_separator</em>.</li>
+<li>If there is one element, it is printed to <em>io</em> without any
+separator.</li>
+<li>If the collection is empty, nothing is printed.</li>
+</ul>
+<pre><code class="language-crystal">[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>].sentence(<span class="t">STDOUT</span>, <span class="s">&quot;-&quot;</span>, tail_separator: <span class="s">&quot;-or-&quot;</span>)</code></pre>
+<p>Prints:</p>
+<pre><code class="language-text">1-2-or-3</code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="sentence(separator:String=&quot;,&quot;,*,pair_separator:String=&quot;and&quot;,tail_separator:String=&quot;,and&quot;,&amp;:T-&gt;):String-instance-method">
+      <div class="signature">
+        
+        def <strong>sentence</strong>(separator : String = <span class="s">&quot;, &quot;</span>, *, pair_separator : String = <span class="s">&quot; and &quot;</span>, tail_separator : String = <span class="s">&quot;, and &quot;</span>, & : T -> ) : String
+
+        <a class="method-permalink" href="#sentence%28separator%3AString%3D%22%2C%22%2C%2A%2Cpair_separator%3AString%3D%22and%22%2Ctail_separator%3AString%3D%22%2Cand%22%2C%26%3AT-%3E%29%3AString-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a <code>String</code> by concatenating the elements in the collection
+as a sentence. How each element is printed is controlled by the
+given block.</p>
+<p>The string representation depends on the number of elements in the
+collection:</p>
+<ul>
+<li>If there are three or more elements, all but the tail element in
+the collection are joined by <em>separator</em>, and the tail element is
+joined by <em>tail_separator</em>.</li>
+<li>If there are two elements, these are joined by <em>pair_separator</em>.</li>
+<li>If there is one element, it is returned as is.</li>
+<li>If the collection is empty, an empty string is returned.</li>
+</ul>
+<pre><code class="language-crystal">[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>].sentence { <span class="o">|</span>e<span class="o">|</span> <span class="s">&quot;(</span><span class="i">#{</span>e<span class="i">}</span><span class="s">)&quot;</span> }                              <span class="c"># =&gt; &quot;(1), (2), and (3)&quot;</span>
+[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>].sentence(<span class="s">&quot;-&quot;</span>, tail_separator: <span class="s">&quot;-or-&quot;</span>) { <span class="o">|</span>e<span class="o">|</span> <span class="s">&quot;(</span><span class="i">#{</span>e<span class="i">}</span><span class="s">)&quot;</span> } <span class="c"># =&gt; &quot;(1)-(2)-or-(3)&quot;</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="sentence(separator:String=&quot;,&quot;,*,pair_separator:String=&quot;and&quot;,tail_separator:String=&quot;,and&quot;):String-instance-method">
+      <div class="signature">
+        
+        def <strong>sentence</strong>(separator : String = <span class="s">&quot;, &quot;</span>, *, pair_separator : String = <span class="s">&quot; and &quot;</span>, tail_separator : String = <span class="s">&quot;, and &quot;</span>) : String
+
+        <a class="method-permalink" href="#sentence%28separator%3AString%3D%22%2C%22%2C%2A%2Cpair_separator%3AString%3D%22and%22%2Ctail_separator%3AString%3D%22%2Cand%22%29%3AString-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a <code>String</code> by concatenating the elements in the collection
+as a sentence.</p>
+<p>The string representation depends on the number of elements in the
+collection:</p>
+<ul>
+<li>If there are three or more elements, all but the tail element in
+the collection are joined by <em>separator</em>, and the tail element is
+joined by <em>tail_separator</em>.</li>
+<li>If there are two elements, these are joined by <em>pair_separator</em>.</li>
+<li>If there is one element, it is returned as is.</li>
+<li>If the collection is empty, an empty string is returned.</li>
+</ul>
+<pre><code class="language-crystal">(<span class="o">[]</span> <span class="k">of</span> <span class="t">Int32</span>).sentence                          <span class="c"># =&gt; &quot;&quot;</span>
+[<span class="n">1</span>].sentence                                    <span class="c"># =&gt; &quot;1&quot;</span>
+[<span class="n">1</span>, <span class="n">2</span>].sentence                                 <span class="c"># =&gt; &quot;1 and 2&quot;</span>
+[<span class="n">1</span>, <span class="n">2</span>].sentence(pair_separator: <span class="s">&quot;-or-&quot;</span>)         <span class="c"># =&gt; &quot;1-or-2&quot;</span>
+[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>].sentence                              <span class="c"># =&gt; &quot;1, 2, and 3&quot;</span>
+[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>].sentence(<span class="s">&quot;-&quot;</span>, tail_separator: <span class="s">&quot;-or-&quot;</span>) <span class="c"># =&gt; &quot;1-2-or-3&quot;</span></code></pre>
         </div>
       
       <br/>
