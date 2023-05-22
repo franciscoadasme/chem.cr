@@ -280,6 +280,95 @@ module Chem
       raise ParseException.new(message % replacements, filepath, @line || "", loc)
     end
 
+    # Checks if the current token is one character long and equals
+    # *expected*, else raises `ParseException`.
+    #
+    # If *message* is given, it is used as the parse error. Use
+    # `"%{expected}"` and `"%{actual}"` as placeholders for the expected
+    # and actual values.
+    #
+    # ```
+    # pull = PullParser.new IO::Memory.new("1 2 3 4 5 6\n789\n")
+    # pull.next_line
+    # pull.next_token
+    # pull.expect('1').char? # => '1'
+    # pull.expect 'a'        # raises ParseException (123 != 'a')
+    # pull.next_line
+    # pull.expect 'a' # raises ParseException (empty token)
+    # ```
+    def expect(
+      expected : Char,
+      message : String = "Expected %{expected}, got %{actual}"
+    ) : self
+      actual = char?
+      return self if actual == expected && @token_size == 1
+
+      actual = str? if @token_size > 1
+      error message % {expected: expected.inspect, actual: actual.inspect}
+    end
+
+    # Checks if the current token is one character long and it is within
+    # the given range of characters, else raises `ParseException`.
+    #
+    # If *message* is given, it is used as the parse error. Use
+    # `"%{expected}"` and `"%{actual}"` as placeholders for the expected
+    # and actual values.
+    #
+    # ```
+    # pull = PullParser.new IO::Memory.new("a b c d e f")
+    # pull.next_line
+    # pull.next_token
+    # pull.expect('a'..'c').char? # => 'a'
+    # pull.next_token
+    # pull.expect('a'..'c').char? # => 'b'
+    # pull.next_token
+    # pull.expect('a'..'c').char? # => 'c'
+    # pull.next_token
+    # pull.expect 'a'..'c' # raises ParseException ('d' not in 'a'..'c')
+    # pull.next_line
+    # pull.expect 'a'..'c' # raises ParseException (empty token)
+    # ```
+    def expect(
+      expected : Range(Char?, Char?),
+      message : String = "Expected %{actual} to be within %{expected}"
+    ) : self
+      actual = char?
+      return self if actual && actual.in?(expected) && @token_size == 1
+
+      actual = str? if @token_size > 1
+      error message % {expected: expected, actual: actual.inspect}
+    end
+
+    # Checks if the current token is one character long and equals
+    # to any *expected*, else raises `ParseException`.
+    #
+    # If *message* is given, it is used as the parse error. Use
+    # `"%{expected}"` and `"%{actual}"` as placeholders for the expected
+    # and actual values.
+    #
+    # ```
+    # pull = PullParser.new IO::Memory.new("1 a 2 b 3 c\n789\n")
+    # pull.next_line
+    # pull.next_token
+    # pull.expect({'1', '2', '3'}).char? # => '1'
+    # pull.next_token
+    # pull.expect({'1', '2', '3'}) # raises ParseException ('a' != 1, 2, and 3)
+    # pull.next_line
+    # pull.expect({'1', '2', '3'}) # raises ParseException (empty token)
+    # ```
+    def expect(
+      expected : Enumerable(Char),
+      message : String = "Expected %{expected}, got %{actual}"
+    ) : self
+      actual = char?
+      return self if actual.in?(expected) && @token_size == 1
+
+      expected = expected.sentence(
+        pair_separator: " or ", tail_separator: ", or ", &.inspect)
+      actual = str? if @token_size > 1
+      error message % {expected: expected, actual: actual.inspect}
+    end
+
     # Checks if the current token equals *expected*, else raises
     # `ParseException`.
     #

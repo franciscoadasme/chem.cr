@@ -372,6 +372,73 @@ describe Chem::PullParser do
         pull.expect(/^[0-9]+$/)
       end
     end
+
+    it "matches a char" do
+      pull = parser_for "a b c"
+      pull.next_line
+      pull.next_token
+      pull.expect('a').char?.should eq 'a'
+      pull.next_token
+      pull.expect('b').char?.should eq 'b'
+    end
+
+    it "matches multiple characters" do
+      pull = parser_for "a b c d e f"
+      pull.next_line
+      pull.next_token
+      pull.expect({'a', 'b'}).char?.should eq 'a'
+      pull.next_token
+      pull.expect({'a', 'b'}).char?.should eq 'b'
+    end
+
+    it "matches multiple in range" do
+      pull = parser_for "a b c d e f"
+      pull.next_line
+      pull.next_token
+      pull.expect('a'..'c').char?.should eq 'a'
+      pull.next_token
+      pull.expect('a'..'c').char?.should eq 'b'
+      pull.next_token
+      pull.expect('a'..'c').char?.should eq 'c'
+      pull.expect(..'c').char?.should eq 'c'
+      pull.expect('a'..).char?.should eq 'c'
+    end
+
+    it "raises if not match char" do
+      expect_raises(Chem::ParseException, %(Expected 'b', got 'a')) do
+        pull = parser_for "a b c"
+        pull.next_line
+        pull.next_token
+        pull.expect('b')
+      end
+    end
+
+    it "raises if two or more characters" do
+      expect_raises(Chem::ParseException, %(Expected 'a', got "abc")) do
+        pull = parser_for "abc def"
+        pull.next_line
+        pull.next_token
+        pull.expect('a')
+      end
+    end
+
+    it "raises if not match characters" do
+      expect_raises(Chem::ParseException, %(Expected 'a' or 'b', got 'd')) do
+        pull = parser_for "d e f"
+        pull.next_line
+        pull.next_token
+        pull.expect({'a', 'b'})
+      end
+    end
+
+    it "raises if not character range" do
+      expect_raises(Chem::ParseException, %(Expected 'd' to be within 'a'..'c')) do
+        pull = parser_for "d e f"
+        pull.next_line
+        pull.next_token
+        pull.expect('a'..'c')
+      end
+    end
   end
 
   describe "#float" do
