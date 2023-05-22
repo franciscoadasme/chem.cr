@@ -121,6 +121,15 @@ describe Chem::PullParser do
       pull.consume(&.alphanumeric?).str?.should eq "456"
       pull.consume(&.alphanumeric?).str?.should be_nil
     end
+
+    it "consumes N characters" do
+      pull = parser_for("123 456\n789\n")
+      pull.next_line
+      pull.consume(4).str?.should eq "123 "
+      pull.consume(2).str?.should eq "45"
+      pull.consume(20).str?.should eq "6"
+      pull.consume(10).str?.should be_nil
+    end
   end
 
   describe "#consume_until" do

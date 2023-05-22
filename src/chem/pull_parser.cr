@@ -152,8 +152,29 @@ module Chem
       end
     end
 
-    # Reads the next collection of consecutive characters in the current
-    # line for which the given block is truthy.
+    # Sets the current token to the next *count* characters in the
+    # current line. If there are no more characters, the token will be
+    # empty.
+    #
+    # ```
+    # pull = PullParser.new IO::Memory.new("123 456\n789\n")
+    # pull.next_line
+    # pull.consume(4).str?  # => "123 "
+    # pull.consume(2).str?  # => "45"
+    # pull.consume(20).str? # => "6"
+    # pull.consume(10).str? # => nil
+    # ```
+    def consume(count : Int) : self
+      unless @buffer.empty?
+        @buffer += @token_size
+        @token_size = Math.min @buffer.size, count
+      end
+      self
+    end
+
+    # Sets the current token to the next characters in the current line
+    # for which the given block is truthy. If the block is always
+    # falsey, the token will be empty.
     #
     # ```
     # pull = PullParser.new IO::Memory.new("abc def\n1234 56 789\n")
