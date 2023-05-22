@@ -15,7 +15,7 @@ module Chem::DX
       ) do |buffer, size|
         i = 0
         @pull.each_line do
-          while i < size && @pull.next_token
+          while i < size && !@pull.next_token.eol?
             buffer[i] = @pull.float
             i += 1
           end
@@ -25,8 +25,7 @@ module Chem::DX
 
     protected def decode_header : Spatial::Grid::Info
       @pull.each_line do
-        @pull.next_token
-        break unless @pull.char == '#'
+        break unless @pull.next_token.char == '#'
       end
 
       4.times { @pull.next_token }

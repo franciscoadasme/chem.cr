@@ -100,7 +100,7 @@ describe Chem::PullParser do
     it "returns nil at end of line" do
       pull = parser_for "123\n456\n789\n"
       pull.next_line
-      while pull.next_token; end
+      until pull.next_token.eol?; end
       pull.char?.should be_nil
     end
 
@@ -206,6 +206,7 @@ describe Chem::PullParser do
       pull.eol?.should be_true
     end
   end
+
   describe "#eof?" do
     it "returns true at end of file" do
       pull = parser_for "123\n456\n"
@@ -272,7 +273,7 @@ describe Chem::PullParser do
       ex = expect_raises(Chem::ParseException, "Custom message") do
         pull = parser_for "abc def\nABC DEF GHI\n123456789\n"
         pull.next_line
-        while pull.next_token; end # end of line
+        until pull.next_token.eol?; end # end of line
         pull.error "Custom message"
       end
       ex.source_file.should be_nil
@@ -492,7 +493,7 @@ describe Chem::PullParser do
       expect_raises(Chem::ParseException, "Invalid real number") do
         pull = parser_for("123.45\n")
         pull.next_line
-        while pull.next_token; end
+        until pull.next_token.eol?; end
         pull.float
       end
     end
@@ -528,7 +529,7 @@ describe Chem::PullParser do
       it "returns default at the end of line" do
         pull = parser_for("123.45\n")
         pull.next_line
-        while pull.next_token; end
+        until pull.next_token.eol?; end
         pull.float(if_blank: Math::PI).should eq Math::PI
       end
     end
@@ -554,7 +555,7 @@ describe Chem::PullParser do
     it "returns nil at the end of line" do
       pull = parser_for("123.45\n")
       pull.next_line
-      while pull.next_token; end
+      until pull.next_token.eol?; end
       pull.float?.should be_nil
     end
   end
@@ -587,7 +588,7 @@ describe Chem::PullParser do
       expect_raises(Chem::ParseException, "Invalid integer") do
         pull = parser_for("12345\n")
         pull.next_line
-        while pull.next_token; end
+        until pull.next_token.eol?; end
         pull.int
       end
     end
@@ -624,7 +625,7 @@ describe Chem::PullParser do
       it "returns default at the end of line" do
         pull = parser_for("12345\n")
         pull.next_line
-        while pull.next_token; end
+        until pull.next_token.eol?; end
         pull.int(if_blank: 789).should eq 789
       end
     end
@@ -653,7 +654,7 @@ describe Chem::PullParser do
     it "returns nil at the end of line" do
       pull = parser_for("123456\n")
       pull.next_line
-      while pull.next_token; end
+      until pull.next_token.eol?; end
       pull.int?.should be_nil
     end
   end
@@ -686,7 +687,7 @@ describe Chem::PullParser do
     it "returns an empty string at end of line" do
       pull = parser_for("123 456\n789\n")
       pull.next_line
-      while pull.next_token; end
+      until pull.next_token.eol?; end
       pull.line.should eq ""
     end
 
@@ -897,25 +898,25 @@ describe Chem::PullParser do
   end
 
   describe "#next_token" do
-    it "reads and returns the bytes of the next token" do
+    it "sets the next token" do
       pull = parser_for("123 456\n789\n")
       pull.next_line
-      pull.next_token.should eq "123".to_slice
-      pull.next_token.should eq "456".to_slice
+      pull.next_token.str?.should eq "123"
+      pull.next_token.str?.should eq "456"
     end
 
-    it "returns nil at end of line" do
+    it "sets an empty token at end of line" do
       pull = parser_for("123 456\n789\n")
       pull.next_line
-      pull.next_token.should eq "123".to_slice
-      pull.next_token.should eq "456".to_slice
-      pull.next_token.should be_nil
+      pull.next_token.str?.should eq "123"
+      pull.next_token.str?.should eq "456"
+      pull.next_token.str?.should be_nil
     end
 
-    it "returns nil at empty line" do
+    it "sets an empty token at empty line" do
       pull = parser_for("\n789\n")
       pull.next_line
-      pull.next_token.should be_nil
+      pull.next_token.str?.should be_nil
     end
   end
 
@@ -933,7 +934,7 @@ describe Chem::PullParser do
 
     it "returns nil at end of line" do
       pull = parser_for("123 456\n789\n")
-      while pull.next_token; end
+      until pull.next_token.eol?; end
       pull.parse? { Math::PI }.should be_nil
     end
   end
@@ -1005,7 +1006,7 @@ describe Chem::PullParser do
     it "returns nil at end of line" do
       pull = parser_for("123 456\n789\n")
       pull.next_line
-      while pull.next_token; end
+      until pull.next_token.eol?; end
       pull.peek.should be_nil
     end
   end
@@ -1031,7 +1032,7 @@ describe Chem::PullParser do
     it "returns nil at end of line" do
       pull = parser_for("123 456\n789\n")
       pull.next_line
-      while pull.next_token; end
+      until pull.next_token.eol?; end
       pull.rest_of_line.should be_nil
     end
 
@@ -1158,7 +1159,7 @@ describe Chem::PullParser do
     it "returns nil at end of line" do
       pull = parser_for("123 456\n789\n")
       pull.next_line
-      while pull.next_token; end
+      until pull.next_token.eol?; end
       pull.parse?(&.to_i?).should be_nil
     end
   end

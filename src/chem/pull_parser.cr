@@ -34,7 +34,7 @@ module Chem
   #
   # ```
   # pull = PullParser.new IO::Memory.new("abc def\n1234 5.6 abc\n")
-  # pull.next_token                # => nil (line not read)
+  # pull.next_token.str?           # => nil (line not read)
   # pull.next_line                 # place the parser at the first line
   # pull.str?                      # => nil (current token is nil)
   # pull.next_s?                   # => "abc"
@@ -45,13 +45,13 @@ module Chem
   # pull.next_line                 # place the parser at the second line
   # pull.next_i                    # => 1234
   # pull.next_f                    # => 5.6
-  # pull.next_token                # => Bytes[55, 56, 57] (current token is "abc")
+  # pull.next_token.str?           # => "abc"
   # pull.int?                      # => nil
   # pull.float?                    # => nil
   # pull.parse &.sum(&.+('a'.ord)) # => 3
-  # pull.next_token                # => nil (end of line)
+  # pull.next_token.str?           # => nil (end of line)
   # pull.next_line                 # => nil (place the parser at the end of IO)
-  # pull.next_token                # => nil (current line is nil)
+  # pull.next_token.str?           # => nil (current line is nil)
   # ```
   #
   # Additionally, the cursor can be manually placed on the current line
@@ -360,14 +360,10 @@ module Chem
     # ```
     # pull = PullParser.new IO::Memory.new("a b c d e f")
     # pull.next_line
-    # pull.next_token
-    # pull.expect('a'..'c').char? # => 'a'
-    # pull.next_token
-    # pull.expect('a'..'c').char? # => 'b'
-    # pull.next_token
-    # pull.expect('a'..'c').char? # => 'c'
-    # pull.next_token
-    # pull.expect 'a'..'c' # raises ParseException ('d' not in 'a'..'c')
+    # pull.next_token.expect('a'..'c').char? # => 'a'
+    # pull.next_token.expect('a'..'c').char? # => 'b'
+    # pull.next_token.expect('a'..'c').char? # => 'c'
+    # pull.next_token.expect 'a'..'c'        # raises ParseException ('d' not in 'a'..'c')
     # pull.next_line
     # pull.expect 'a'..'c' # raises ParseException (empty token)
     # ```
@@ -392,10 +388,8 @@ module Chem
     # ```
     # pull = PullParser.new IO::Memory.new("1 a 2 b 3 c\n789\n")
     # pull.next_line
-    # pull.next_token
-    # pull.expect({'1', '2', '3'}).char? # => '1'
-    # pull.next_token
-    # pull.expect({'1', '2', '3'}) # raises ParseException ('a' != 1, 2, and 3)
+    # pull.next_token.expect({'1', '2', '3'}).char? # => '1'
+    # pull.next_token.expect({'1', '2', '3'})       # raises ParseException ('a' != 1, 2, and 3)
     # pull.next_line
     # pull.expect({'1', '2', '3'}) # raises ParseException (empty token)
     # ```
@@ -471,8 +465,7 @@ module Chem
     # ```
     # pull = PullParser.new IO::Memory.new("123abc\n789\n")
     # pull.next_line
-    # pull.next_token
-    # pull.expect /^[a-z]+$/ # raises ParseException
+    # pull.next_token.expect /^[a-z]+$/ # raises ParseException
     # ```
     def expect(
       pattern : Regex,
@@ -521,8 +514,7 @@ module Chem
       expected : String,
       message : String = "Expected %{expected}, got %{actual}"
     ) : self
-      next_token
-      expect expected, message
+      next_token.expect expected, message
     end
 
     # :ditto:
@@ -530,8 +522,7 @@ module Chem
       pattern : Regex,
       message : String = "Expected %{actual} to match %{expected}"
     ) : self
-      next_token
-      expect pattern, message
+      next_token.expect pattern, message
     end
 
     # :ditto:
@@ -539,8 +530,7 @@ module Chem
       expected : Enumerable(String),
       message : String = "Expected %{expected}, got %{actual}"
     ) : self
-      next_token
-      expect expected, message
+      next_token.expect expected, message
     end
 
     # Parses and returns the floating-point number represented by the
@@ -708,29 +698,26 @@ module Chem
       end
     {% end %}
 
-    # Reads the next collection of consecutive non-whitespace characters
-    # in the current line and returns the corresponding bytes, or `nil`
-    # if called at the end of line.
+    # Sets the current token to the next consecutive non-whitespace
+    # characters in the current line.
     #
     # ```
     # pull = PullParser.new IO::Memory.new("abc def\n1234 56 789\n")
-    # pull.next_token             # => nil
-    # pull.next_line              # place the parser at the first line
-    # String.new(pull.next_token) # => "abc"
-    # String.new(pull.next_token) # => "def"
-    # pull.next_token             # => nil
-    # pull.next_line              # place the parser at the second line
-    # String.new(pull.next_token) # => "1234"
-    # String.new(pull.next_token) # => "56"
-    # String.new(pull.next_token) # => "789"
-    # pull.next_token             # => nil
-    # pull.next_line              # place the parser at the end of IO
-    # pull.next_token             # => nil
+    # pull.next_token.str? # => nil
+    # pull.next_line       # place the parser at the first line
+    # pull.next_token.str? # => "abc"
+    # pull.next_token.str? # => "def"
+    # pull.next_token.str? # => nil
+    # pull.next_line       # place the parser at the second line
+    # pull.next_token.str? # => "1234"
+    # pull.next_token.str? # => "56"
+    # pull.next_token.str? # => "789"
+    # pull.next_token.str? # => nil
+    # pull.next_line       # place the parser at the end of IO
+    # pull.next_token.str? # => nil
     # ```
-    def next_token : Bytes?
-      skip_whitespace
-      consume &.ascii_whitespace?.!
-      current_token
+    def next_token : self
+      skip_whitespace.consume(&.ascii_whitespace?.!)
     end
 
     # Yields the current token and returns the parsed value. Raises
@@ -788,7 +775,8 @@ module Chem
 
     # Yields the next token if present and returns the parsed value.
     def parse_next?(& : String -> T?) : T? forall T
-      if bytes = next_token
+      next_token
+      if bytes = current_token
         yield String.new(bytes)
       end
     end
@@ -798,14 +786,12 @@ module Chem
     # ```
     # pull = PullParser.new IO::Memory.new("123 456\n789\n")
     # pull.next_line
-    # pull.peek # => '1' (first character at the beginning of line)
-    # pull.peek # => '1' (`#peek` does not consume characters)
-    # pull.next_token
-    # pull.str? # => "123"
-    # pull.peek # => ' ' (after the current token)
-    # pull.next_token
-    # pull.str? # => "456"
-    # pull.peek # => nil (end of line)
+    # pull.peek            # => '1' (first character at the beginning of line)
+    # pull.peek            # => '1' (`#peek` does not consume characters)
+    # pull.next_token.str? # => "123"
+    # pull.peek            # => ' ' (after the current token)
+    # pull.next_token.str? # => "456"
+    # pull.peek            # => nil (end of line)
     #
     def peek : Char?
       (@buffer + @token_size).first?.try(&.unsafe_chr)

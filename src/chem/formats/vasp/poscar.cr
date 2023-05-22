@@ -51,8 +51,7 @@ module Chem::VASP::Poscar
 
       # read selective dynamics flag
       constrained = false
-      @pull.next_token
-      if @pull.char.in?('s', 'S')
+      if @pull.next_token.char.in?('s', 'S')
         constrained = true
         @pull.next_line
         @pull.next_token
@@ -99,8 +98,7 @@ module Chem::VASP::Poscar
     end
 
     private def read_flag : Bool
-      @pull.next_token
-      case @pull.char
+      case @pull.next_token.char
       when 'T' then true
       when 'F' then false
       else          @pull.error "Invalid boolean flag (expected either T or F)"

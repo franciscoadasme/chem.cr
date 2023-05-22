@@ -45,7 +45,7 @@ module Chem::Mol2
               atom_t = @pull.next_s
               symbol = atom_t[...atom_t.index('.')] # ignore sybyl type
               element = PeriodicTable[symbol]? || @pull.error("Unknown element")
-              if @pull.next_token
+              unless @pull.next_token.eol?
                 resid = @pull.int
                 resname = @pull.next_s
                 # TODO: respect name or truncate at 4 characters?

@@ -29,7 +29,7 @@ module Chem::VASP
         nz.times do |k|
           ny.times do |j|
             nx.times do |i|
-              @pull.next_token || (@pull.next_line && @pull.next_token)
+              !@pull.next_token.eol? || (@pull.next_line && @pull.next_token)
               buffer[i * nyz + j * nz + k] = yield @pull.float
             end
           end
