@@ -192,6 +192,20 @@ describe Chem::PullParser do
     end
   end
 
+  describe "#eol?" do
+    it "tells end of line" do
+      pull = parser_for "123 456\n789\n"
+      pull.eol?.should be_true # no current line
+      pull.next_line
+      pull.eol?.should be_false
+      pull.next_token.str?.should eq "123"
+      pull.eol?.should be_false
+      pull.next_token.str?.should eq "456"
+      pull.eol?.should be_false
+      pull.next_token.str?.should be_nil
+      pull.eol?.should be_true
+    end
+  end
   describe "#eof?" do
     it "returns true at end of file" do
       pull = parser_for "123\n456\n"

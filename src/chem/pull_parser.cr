@@ -282,6 +282,28 @@ module Chem
       @line.nil? && next_line.nil?
     end
 
+    # Returns `true` if the current token is at the end of line,
+    # otherwise `false`.
+    #
+    # If no current line is set (at the beginning or end of file), it
+    # returns `true` as well.
+    #
+    # ```
+    # pull = PullParser.new IO::Memory.new("123 456\n789\n")
+    # pull.eol? # => true (no current line)
+    # pull.next_line
+    # pull.eol?            # => false (beginning of line)
+    # pull.next_token.str? # => "123"
+    # pull.eol?            # => false
+    # pull.next_token.str? # => "456"
+    # pull.eol?            # => false
+    # pull.next_token.str? # => nil
+    # pull.eol?            # => true
+    # ```
+    def eol? : Bool
+      @buffer.empty?
+    end
+
     # Raises `ParseException` with the given message. The exception will
     # hold the location of the current line and token if set.
     #
