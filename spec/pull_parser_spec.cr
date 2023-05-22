@@ -1211,6 +1211,17 @@ describe Chem::PullParser do
       pull.parse_next_if_present(default: 'K', &.to_i?).should eq 'K'
     end
   end
+
+  describe "#token" do
+    it "returns the current token" do
+      pull = parser_for "123 456\n"
+      pull.next_line
+      pull.token.should be_nil
+      pull.next_token.token.should eq "123".to_slice
+      pull.next_token.token.should eq "456".to_slice
+      pull.next_token.token.should be_nil
+    end
+  end
 end
 
 private def it_parses(str : String, expected, &block : Chem::PullParser -> _) : Nil

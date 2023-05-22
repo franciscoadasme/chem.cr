@@ -147,9 +147,7 @@ module Chem
     # Returns the first character of the curren token, or `nil` if it is
     # not set.
     def char? : Char?
-      if token = current_token
-        token[0].unsafe_chr
-      end
+      token.try &.[0].unsafe_chr
     end
 
     # Sets the current token to the next *count* characters in the
@@ -545,7 +543,7 @@ module Chem
     # blank. Raises `ParseException` if the token is not set or it is
     # not a valid float representation.
     def float(if_blank default : Float64) : Float64
-      if !(token = current_token) || token.all?(&.unsafe_chr.ascii_whitespace?)
+      if !(bytes = token) || bytes.all?(&.unsafe_chr.ascii_whitespace?)
         default
       else
         float
@@ -584,7 +582,7 @@ module Chem
     # `ParseException` if the token is not set or it is not a valid
     # number.
     def int(if_blank default : Int32) : Int32
-      if !(token = current_token) || token.all?(&.unsafe_chr.ascii_whitespace?)
+      if !(bytes = token) || bytes.all?(&.unsafe_chr.ascii_whitespace?)
         default
       else
         int
@@ -776,7 +774,7 @@ module Chem
     # Yields the next token if present and returns the parsed value.
     def parse_next?(& : String -> T?) : T? forall T
       next_token
-      if bytes = current_token
+      if bytes = token
         yield String.new(bytes)
       end
     end
@@ -833,6 +831,11 @@ module Chem
       self
     end
 
+    # Returns the bytes of the current token if it is set.
+    def token : Bytes?
+      @buffer[0, @token_size] if @token_size > 0
+    end
+
     # Skips whitespace characters.
     #
     # The cursor is placed at the first non-whitespace character, but it
@@ -865,11 +868,6 @@ module Chem
       end
     end
 
-    # Returns the bytes of the current token if it is set.
-    private def current_token : Bytes?
-      @buffer[0, @token_size] if @token_size > 0
-    end
-
     # Returns a tuple of line number, column number and cursor size.
     private def location : Tuple(Int32, Int32, Int32)
       return {@line_number, 0, 0} unless line = @line
@@ -879,8 +877,8 @@ module Chem
 
     # Yields the current token if set and returns the parsed value.
     def internal_parse(& : Bytes -> T?) : T? forall T
-      if token = current_token
-        yield token
+      if bytes = token
+        yield bytes
       end
     end
 
