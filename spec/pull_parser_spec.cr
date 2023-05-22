@@ -298,34 +298,34 @@ describe Chem::PullParser do
       pull = parser_for "abc def"
       pull.next_line
       pull.next_token
-      pull.expect("abc").should eq "abc"
+      pull.expect("abc").str?.should eq "abc"
       pull.next_token
-      pull.expect("def").should eq "def"
+      pull.expect("def").str?.should eq "def"
     end
 
     it "matches multiple strings" do
       pull = parser_for "abc def"
       pull.next_line
       pull.next_token
-      pull.expect({"abc", "def"}).should eq "abc"
+      pull.expect({"abc", "def"}).str?.should eq "abc"
       pull.next_token
-      pull.expect({"abc", "def"}).should eq "def"
+      pull.expect({"abc", "def"}).str?.should eq "def"
     end
 
     it "matches a regexp" do
       pull = parser_for "abc def"
       pull.next_line
       pull.next_token
-      pull.expect(/[a-z]+/).should eq "abc"
+      pull.expect(/[a-z]+/).str?.should eq "abc"
     end
 
     it "matches a regexp (partial match)" do
       pull = parser_for "123abc\n789\n"
       pull.next_line
       pull.next_token
-      pull.expect(/[a-z]/).should eq "123abc"
-      pull.expect(/[a-z]+/).should eq "123abc"
-      pull.expect(/[0-9]+/).should eq "123abc"
+      pull.expect(/[a-z]/).str?.should eq "123abc"
+      pull.expect(/[a-z]+/).str?.should eq "123abc"
+      pull.expect(/[0-9]+/).str?.should eq "123abc"
     end
 
     it "raises at end of line" do
