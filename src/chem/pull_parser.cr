@@ -771,6 +771,24 @@ module Chem
       end
     end
 
+    # Returns the character after the current token, or `nil` if empty.
+    #
+    # ```
+    # pull = PullParser.new IO::Memory.new("123 456\n789\n")
+    # pull.next_line
+    # pull.peek # => '1' (first character at the beginning of line)
+    # pull.peek # => '1' (`#peek` does not consume characters)
+    # pull.next_token
+    # pull.str? # => "123"
+    # pull.peek # => ' ' (after the current token)
+    # pull.next_token
+    # pull.str? # => "456"
+    # pull.peek # => nil (end of line)
+    #
+    def peek : Char?
+      (@buffer + @token_size).first?.try(&.unsafe_chr)
+    end
+
     # Returns the rest of the line (after the current token), or `nil`
     # if the cursor is at end of line. Raises `ParseException` with the
     # given message at end of file.

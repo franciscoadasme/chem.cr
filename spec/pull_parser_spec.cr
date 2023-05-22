@@ -978,6 +978,24 @@ describe Chem::PullParser do
     end
   end
 
+  describe "#peek" do
+    it "returns the next character" do
+      pull = parser_for("123 456\n789\n")
+      pull.next_line
+      pull.peek.should eq '1'
+      pull.peek.should eq '1'
+      pull.next_token
+      pull.peek.should eq ' '
+    end
+
+    it "returns nil at end of line" do
+      pull = parser_for("123 456\n789\n")
+      pull.next_line
+      while pull.next_token; end
+      pull.peek.should be_nil
+    end
+  end
+
   describe "#rest_of_line" do
     it "returns entire line" do
       pull = parser_for("123 456\n789\n")
