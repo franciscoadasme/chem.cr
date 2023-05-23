@@ -794,9 +794,8 @@ module Chem
       (@buffer + @token_size).first?.try(&.unsafe_chr)
     end
 
-    # Returns the rest of the line (after the current token), or `nil`
-    # if the cursor is at end of line. Raises `ParseException` with the
-    # given message at end of file.
+    # Returns the rest of the line (after the current token), or an
+    # empty string if cursor is at the end of line/file.
     #
     # NOTE: The cursor will span the entire returned string.
     #
@@ -807,14 +806,15 @@ module Chem
     # pull.rest_of_line # => " 456"
     # pull.str?         # => " 456"
     # pull.next_s?      # => nil
+    # pull.rest_of_line # => ""
     # ```
-    def rest_of_line(message : String = "End of file") : String?
+    def rest_of_line : String
       if @line
         @buffer += @token_size
         @token_size = @buffer.size
-        String.new(@buffer) unless @buffer.empty?
+        String.new(@buffer)
       else
-        error(message)
+        ""
       end
     end
 

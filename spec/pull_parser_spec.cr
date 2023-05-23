@@ -1029,27 +1029,17 @@ describe Chem::PullParser do
       pull.next_s?.should be_nil
     end
 
-    it "returns nil at end of line" do
+    it "returns empty string at end of line" do
       pull = parser_for("123 456\n789\n")
       pull.next_line
       until pull.consume_token.eol?; end
-      pull.rest_of_line.should be_nil
+      pull.rest_of_line.should eq ""
     end
 
-    it "raises at end of file" do
+    it "returns empty string at end of file" do
       pull = parser_for("123 456\n789\n")
-      while pull.next_line; end
-      expect_raises(Chem::ParseException, "End of file") do
-        pull.rest_of_line
-      end
-    end
-
-    it "raises with message" do
-      pull = parser_for "abc def\n"
-      while pull.next_line; end
-      expect_raises(Chem::ParseException, "Expected config line") do
-        pull.rest_of_line "Expected config line"
-      end
+      until pull.next_line.eof?; end
+      pull.rest_of_line.should eq ""
     end
   end
 
