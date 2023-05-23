@@ -903,7 +903,7 @@
 at a time.</p>
 <p>The parser reads line by line, which is set to an internal buffer.
 Subsequent tokens (consecutive non-whitespace characters) can be
-consumed via the <code><a href="../Chem/PullParser.html#next_token%3Aself-instance-method">#next_token</a></code> method (although only from the
+consumed via the <code><a href="../Chem/PullParser.html#consume_token%3Aself-instance-method">#consume_token</a></code> method (although only from the
 current line). The string representation of the current token can be
 obtained via the <code><a href="../Chem/PullParser.html#str%28message%3AString%3D%22Emptytoken%22%29%3AString-instance-method">#str</a></code> methods or it can be interpreted as a
 primitive type via the specialized  <code><a href="../Chem/PullParser.html#float%28message%3AString%3D%22Invalidrealnumber%22%29%3AFloat64-instance-method">#float</a></code> and <code><a href="../Chem/PullParser.html#int%28message%3AString%3D%22Invalidinteger%22%29%3AInt32-instance-method">#int</a></code> methods. It
@@ -911,47 +911,51 @@ can be also interpreted as a custom type via the <code><a href="../Chem/PullPars
 Upon parsing issues, these methods may return <code>nil</code> or raise a
 <code><a href="../Chem/ParseException.html">ParseException</a></code> exception.</p>
 <p>When creating an instance, the parser must be positioned in the
-first line before consuming a token by calling <code><a href="../Chem/PullParser.html#next_line%3AString%7CNil-instance-method">#next_line</a></code>, using
+first line before consuming a token by calling <code><a href="../Chem/PullParser.html#consume_line%3Aself-instance-method">#consume_line</a></code>, using
 the yielding method <code><a href="../Chem/PullParser.html#each_line%28%26%3AString-%3E%29%3ANil-instance-method">#each_line</a></code>, or checking for end of file via
 <code><a href="../Chem/PullParser.html#eof%3F%3ABool-instance-method">#eof?</a></code>. Upon reading a new line, the cursor is reset and the
-current token is set to <code>nil</code>, so <code><a href="../Chem/PullParser.html#next_token%3Aself-instance-method">#next_token</a></code> must be called
+current token is set to <code>nil</code>, so <code><a href="../Chem/PullParser.html#consume_token%3Aself-instance-method">#consume_token</a></code> must be called
 before parsing. If the current token is not set, the parsing methods
 may return <code>nil</code> or raise an exception. Alternatively, use the
 convenience <code><a href="../Chem/PullParser.html#next_f%3AFloat64-instance-method">#next_f</a></code>, <code><a href="../Chem/PullParser.html#next_i%3AInt32-instance-method">#next_i</a></code>, or <code><a href="../Chem/PullParser.html#next_s%3AString-instance-method">#next_s</a></code> methods that consume
 the next token and return the interpreted value.</p>
 <p>The <code>#next_*</code> methods always move forward into the IO or line, so
 care must be taken when calling them as invoking <code><a href="../Chem/PullParser.html#next_s%3F%3AString%7CNil-instance-method">#next_s?</a></code> twice
-will return the next two strings (if possible), not twice the same.
-For instance, calling <code><a href="../Chem/PullParser.html#next_i%3F%3AInt32%7CNil-instance-method">#next_i?</a></code> after <code><a href="../Chem/PullParser.html#next_f%3F%3AFloat64%7CNil-instance-method">#next_f?</a></code> returns <code>nil</code> will
-read the next token instead of re-interpreting the current one as an
+will return the next two strings (if possible), not twice the same
+value. For instance, calling <code><a href="../Chem/PullParser.html#next_i%3F%3AInt32%7CNil-instance-method">#next_i?</a></code> after <code><a href="../Chem/PullParser.html#next_f%3F%3AFloat64%7CNil-instance-method">#next_f?</a></code> will read
+the next token instead of re-interpreting the current one as an
 integer. In such cases, consider using the non-advancing methods
 (<code><a href="../Chem/PullParser.html#int%28message%3AString%3D%22Invalidinteger%22%29%3AInt32-instance-method">#int</a></code> instead of <code><a href="../Chem/PullParser.html#next_i%3AInt32-instance-method">#next_i</a></code>).</p>
-<p>Example:</p>
+<h3><a id="examples" class="anchor" href="#examples">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Examples</h3>
 <pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.new <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.new(<span class="s">&quot;abc def\n1234 5.6 abc\n&quot;</span>)
-pull.next_token.str?           <span class="c"># =&gt; nil (line not read)</span>
-pull.next_line                 <span class="c"># place the parser at the first line</span>
+pull.consume_token.str?        <span class="c"># =&gt; nil (line not read)</span>
+pull.consume_line              <span class="c"># place the parser at the first line</span>
 pull.str?                      <span class="c"># =&gt; nil (current token is nil)</span>
 pull.next_s?                   <span class="c"># =&gt; &quot;abc&quot;</span>
 pull.str?                      <span class="c"># =&gt; &quot;abc&quot; (current token was set by #next_s?)</span>
 pull.next_s?                   <span class="c"># =&gt; &quot;def&quot;</span>
 pull.next_s?                   <span class="c"># =&gt; nil (end of line)</span>
 pull.next_s                    <span class="c"># raises ParseException (no token can be consumed)</span>
-pull.next_line                 <span class="c"># place the parser at the second line</span>
+pull.consume_line              <span class="c"># place the parser at the second line</span>
 pull.next_i                    <span class="c"># =&gt; 1234</span>
 pull.next_f                    <span class="c"># =&gt; 5.6</span>
-pull.next_token.str?           <span class="c"># =&gt; &quot;abc&quot;</span>
+pull.consume_token.str?        <span class="c"># =&gt; &quot;abc&quot;</span>
 pull.int?                      <span class="c"># =&gt; nil</span>
 pull.float?                    <span class="c"># =&gt; nil</span>
 pull.parse <span class="o">&amp;</span>.sum(<span class="o">&amp;</span>.<span class="o">+</span>(<span class="s">&#39;a&#39;</span>.ord)) <span class="c"># =&gt; 3</span>
-pull.next_token.str?           <span class="c"># =&gt; nil (end of line)</span>
-pull.next_line                 <span class="c"># =&gt; nil (place the parser at the end of IO)</span>
-pull.next_token.str?           <span class="c"># =&gt; nil (current line is nil)</span></code></pre>
+pull.consume_token.str?        <span class="c"># =&gt; nil (end of line)</span>
+pull.consume_line              <span class="c"># =&gt; nil (place the parser at the end of IO)</span>
+pull.consume_token.str?        <span class="c"># =&gt; nil (current line is nil)</span></code></pre>
 <p>Additionally, the cursor can be manually placed on the current line
 via the <code><a href="../Chem/PullParser.html#at%28index%3AInt%2Cmessage%3AString%3D%22Cursoroutofcurrentline%22%29%3Aself-instance-method">#at</a></code> methods. This is useful for parsing fixed-column
-formats such as <code>#PDB</code>. The non-question variants will raise if the
+formats such as <code><a href="../Chem/PDB.html">PDB</a></code>. The non-question variants will raise if the
 cursor is out of bounds.</p>
 <pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.new <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.new(<span class="s">&quot;abc123.45def\nABCDEF 5.16\n&quot;</span>)
-pull.next_line
+pull.consume_line
 pull.at(<span class="n">3</span>, <span class="n">6</span>)     <span class="c"># returns the parser itself</span>
 pull.str          <span class="c"># =&gt; &quot;123.45&quot;</span>
 pull.float        <span class="c"># =&gt; 123.45</span>
@@ -1095,9 +1099,23 @@ pull.at(<span class="n">100</span>, <span class="n">5</span>)   <span class="c">
       </li>
     
       <li class="entry-summary">
+        <a href="#consume_line%3Aself-instance-method" class="signature"><strong>#consume_line</strong> : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Sets the line to the next line from the enclosed IO.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#consume_token%3Aself-instance-method" class="signature"><strong>#consume_token</strong> : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Sets the current token to the next consecutive non-whitespace characters in the current line.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#consume_until%28char%3AChar%29%3Aself-instance-method" class="signature"><strong>#consume_until</strong>(char : Char) : <span class="k">self</span></a>
         
-          <div class="summary"><p>Reads the next characters in the current line until the first occurrence of <em>char</em> or end of line is reached.</p></div>
+          <div class="summary"><p>Sets the current token to the next characters up to the first occurrence of <em>char</em> or end of line in the current line.</p></div>
         
       </li>
     
@@ -1263,9 +1281,16 @@ pull.at(<span class="n">100</span>, <span class="n">5</span>)   <span class="c">
       </li>
     
       <li class="entry-summary">
-        <a href="#line%28message%3AString%3D%22Endoffile%22%29%3AString-instance-method" class="signature"><strong>#line</strong>(message : String = <span class="s">&quot;End of file&quot;</span>) : String</a>
+        <a href="#line%3AString%7CNil-instance-method" class="signature"><strong>#line</strong> : String | Nil</a>
         
-          <div class="summary"><p>Returns the current line starting at the current token if set.</p></div>
+          <div class="summary"><p>Returns the current line if set, else <code>nil</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#line%21%28message%3AString%3D%22Expectedaline%22%29%3AString-instance-method" class="signature"><strong>#line!</strong>(message : String = <span class="s">&quot;Expected a line&quot;</span>) : String</a>
+        
+          <div class="summary"><p>Returns the current line.</p></div>
         
       </li>
     
@@ -1312,13 +1337,6 @@ pull.at(<span class="n">100</span>, <span class="n">5</span>)   <span class="c">
       </li>
     
       <li class="entry-summary">
-        <a href="#next_line%3AString%7CNil-instance-method" class="signature"><strong>#next_line</strong> : String | Nil</a>
-        
-          <div class="summary"><p>Reads and returns the next line from the enclosed IO, or <code>nil</code> if called at the end of the IO.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
         <a href="#next_s%28message%3AString%29%3AString-instance-method" class="signature"><strong>#next_s</strong>(message : String) : String</a>
         
           <div class="summary"><p>Reads the next token in the current line, and interprets it via <code><a href="../Chem/PullParser.html#str%28message%3AString%3D%22Emptytoken%22%29%3AString-instance-method">#str</a></code>, which raises <code><a href="../Chem/ParseException.html">ParseException</a></code> with the given message at the end of line or if the token is an invalid representation.</p></div>
@@ -1336,13 +1354,6 @@ pull.at(<span class="n">100</span>, <span class="n">5</span>)   <span class="c">
         <a href="#next_s%3F%3AString%7CNil-instance-method" class="signature"><strong>#next_s?</strong> : String | Nil</a>
         
           <div class="summary"><p>Reads the next token in the current line, and interprets it via <code><a href="../Chem/PullParser.html#str%3F%3AString%7CNil-instance-method">#str?</a></code>, which returns <code>nil</code> at the end of line or if the token is an invalid representation.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#next_token%3Aself-instance-method" class="signature"><strong>#next_token</strong> : <span class="k">self</span></a>
-        
-          <div class="summary"><p>Sets the current token to the next consecutive non-whitespace characters in the current line.</p></div>
         
       </li>
     
@@ -1396,9 +1407,9 @@ pull.at(<span class="n">100</span>, <span class="n">5</span>)   <span class="c">
       </li>
     
       <li class="entry-summary">
-        <a href="#rest_of_line%28message%3AString%3D%22Endoffile%22%29%3AString%7CNil-instance-method" class="signature"><strong>#rest_of_line</strong>(message : String = <span class="s">&quot;End of file&quot;</span>) : String | Nil</a>
+        <a href="#rest_of_line%3AString-instance-method" class="signature"><strong>#rest_of_line</strong> : String</a>
         
-          <div class="summary"><p>Returns the rest of the line (after the current token), or <code>nil</code> if the cursor is at end of line.</p></div>
+          <div class="summary"><p>Returns the rest of the line (after the current token), or an empty string if cursor is at the end of line/file.</p></div>
         
       </li>
     
@@ -1697,7 +1708,7 @@ not set.</p>
 current line. If there are no more characters, the token will be
 empty.</p>
 <pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.new <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.new(<span class="s">&quot;123 456\n789\n&quot;</span>)
-pull.next_line
+pull.consume_line
 pull.consume(<span class="n">4</span>).str?  <span class="c"># =&gt; &quot;123 &quot;</span>
 pull.consume(<span class="n">2</span>).str?  <span class="c"># =&gt; &quot;45&quot;</span>
 pull.consume(<span class="n">20</span>).str? <span class="c"># =&gt; &quot;6&quot;</span>
@@ -1724,12 +1735,64 @@ pull.consume(<span class="n">10</span>).str? <span class="c"># =&gt; nil</span><
 for which the given block is truthy. If the block is always
 falsey, the token will be empty.</p>
 <pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.new <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.new(<span class="s">&quot;abc def\n1234 56 789\n&quot;</span>)
-pull.next_line
+pull.consume_line
 pull.consume(<span class="o">&amp;</span>.alphanumeric?).str? <span class="c"># =&gt; &quot;123&quot;</span>
 pull.consume(<span class="o">&amp;</span>.alphanumeric?).str? <span class="c"># =&gt; nil</span>
 pull.consume(<span class="o">&amp;</span>.whitespace?).str?   <span class="c"># =&gt; &quot; &quot;</span>
 pull.consume(<span class="o">&amp;</span>.alphanumeric?).str? <span class="c"># =&gt; &quot;456&quot;</span>
 pull.consume(<span class="o">&amp;</span>.alphanumeric?).str? <span class="c"># =&gt; nil</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="consume_line:self-instance-method">
+      <div class="signature">
+        
+        def <strong>consume_line</strong> : <span class="k">self</span>
+
+        <a class="method-permalink" href="#consume_line%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Sets the line to the next line from the enclosed IO.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="consume_token:self-instance-method">
+      <div class="signature">
+        
+        def <strong>consume_token</strong> : <span class="k">self</span>
+
+        <a class="method-permalink" href="#consume_token%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Sets the current token to the next consecutive non-whitespace
+characters in the current line.</p>
+<pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.new <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.new(<span class="s">&quot;abc def\n1234 56 789\n&quot;</span>)
+pull.consume_token.str? <span class="c"># =&gt; nil</span>
+pull.consume_line       <span class="c"># place the parser at the first line</span>
+pull.consume_token.str? <span class="c"># =&gt; &quot;abc&quot;</span>
+pull.consume_token.str? <span class="c"># =&gt; &quot;def&quot;</span>
+pull.consume_token.str? <span class="c"># =&gt; nil</span>
+pull.consume_line       <span class="c"># place the parser at the second line</span>
+pull.consume_token.str? <span class="c"># =&gt; &quot;1234&quot;</span>
+pull.consume_token.str? <span class="c"># =&gt; &quot;56&quot;</span>
+pull.consume_token.str? <span class="c"># =&gt; &quot;789&quot;</span>
+pull.consume_token.str? <span class="c"># =&gt; nil</span>
+pull.consume_line       <span class="c"># place the parser at the end of IO</span>
+pull.consume_token.str? <span class="c"># =&gt; nil</span></code></pre>
         </div>
       
       <br/>
@@ -1748,11 +1811,10 @@ pull.consume(<span class="o">&amp;</span>.alphanumeric?).str? <span class="c"># 
       
         <div class="doc">
           
-          <p>Reads the next characters in the current line until the first
-occurrence of <em>char</em> or end of line is reached. Returns <code>nil</code> at
-end of line.</p>
+          <p>Sets the current token to the next characters up to the first
+occurrence of <em>char</em> or end of line in the current line.</p>
 <pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.new <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.new(<span class="s">&quot;123 456\n789\n&quot;</span>)
-pull.next_line
+pull.consume_line
 pull.consume_until(<span class="s">&#39; &#39;</span>).str? <span class="c"># =&gt; &quot;123&quot;</span>
 pull.consume_until(<span class="s">&#39;4&#39;</span>).str? <span class="c"># =&gt; &quot; &quot;</span>
 pull.consume_until(<span class="s">&#39;x&#39;</span>).str? <span class="c"># =&gt; &quot;456&quot;</span>
@@ -1779,7 +1841,7 @@ pull.consume_until(<span class="s">&#39;x&#39;</span>).str? <span class="c"># =&
 block is truthy or end of line is reached. Returns <code>nil</code> at end of
 line.</p>
 <pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.new <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.new(<span class="s">&quot;123 456\n789\n&quot;</span>)
-pull.next_line
+pull.consume_line
 pull.consume_until(<span class="o">&amp;</span>.whitespace?).str?    <span class="c"># =&gt; &quot;123&quot;</span>
 pull.consume_until(<span class="o">&amp;</span>.in_set?(<span class="s">&quot;0-9&quot;</span>)).str? <span class="c"># =&gt; &quot; &quot;</span>
 pull.consume_until(<span class="o">&amp;</span>.whitespace?).str?    <span class="c"># =&gt; &quot;456&quot;</span>
@@ -1829,7 +1891,7 @@ pull.each_line { <span class="o">|</span>line<span class="o">|</span> puts line 
 789</code></pre>
 <p>Note that the current line will be also yielded if it is set.</p>
 <pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.new <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.new(<span class="s">&quot;123 456\n789\n&quot;</span>)
-pull.next_line    <span class="c"># reads and sets the current line</span>
+pull.consume_line <span class="c"># reads and sets the current line</span>
 pull.current_line <span class="c"># =&gt; &quot;123 456&quot;</span>
 pull.each_line { <span class="o">|</span>line<span class="o">|</span> puts line }</code></pre>
 <p>Prints out:</p>
@@ -1855,7 +1917,7 @@ pull.each_line { <span class="o">|</span>line<span class="o">|</span> puts line 
           
           <p>Returns <code>true</code> at the end of file, otherwise <code>false</code>.</p>
 <p><span class="flag purple">NOTE</span>  This method attempts to read a line from the enclosed IO if
-the current line is not set, so calling <code><a href="../Chem/PullParser.html#next_line%3AString%7CNil-instance-method">#next_line</a></code> after this
+the current line is not set, so calling <code><a href="../Chem/PullParser.html#consume_line%3Aself-instance-method">#consume_line</a></code> after this
 could inadvertently discard a line.</p>
         </div>
       
@@ -1881,14 +1943,14 @@ otherwise <code>false</code>.</p>
 returns <code>true</code> as well.</p>
 <pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.new <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.new(<span class="s">&quot;123 456\n789\n&quot;</span>)
 pull.eol? <span class="c"># =&gt; true (no current line)</span>
-pull.next_line
-pull.eol?            <span class="c"># =&gt; false (beginning of line)</span>
-pull.next_token.str? <span class="c"># =&gt; &quot;123&quot;</span>
-pull.eol?            <span class="c"># =&gt; false</span>
-pull.next_token.str? <span class="c"># =&gt; &quot;456&quot;</span>
-pull.eol?            <span class="c"># =&gt; false</span>
-pull.next_token.str? <span class="c"># =&gt; nil</span>
-pull.eol?            <span class="c"># =&gt; true</span></code></pre>
+pull.consume_line
+pull.eol?               <span class="c"># =&gt; false (beginning of line)</span>
+pull.consume_token.str? <span class="c"># =&gt; &quot;123&quot;</span>
+pull.eol?               <span class="c"># =&gt; false</span>
+pull.consume_token.str? <span class="c"># =&gt; &quot;456&quot;</span>
+pull.eol?               <span class="c"># =&gt; false</span>
+pull.consume_token.str? <span class="c"># =&gt; nil</span>
+pull.eol?               <span class="c"># =&gt; true</span></code></pre>
         </div>
       
       <br/>
@@ -1935,11 +1997,11 @@ hold the location of the current line and token if set.</p>
 <code>&quot;%{expected}&quot;</code> and <code>&quot;%{actual}&quot;</code> as placeholders for the expected
 and actual values.</p>
 <pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.new <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.new(<span class="s">&quot;1 2 3 4 5 6\n789\n&quot;</span>)
-pull.next_line
-pull.next_token
+pull.consume_line
+pull.consume_token
 pull.expect(<span class="s">&#39;1&#39;</span>).char? <span class="c"># =&gt; &#39;1&#39;</span>
 pull.expect <span class="s">&#39;a&#39;</span>        <span class="c"># raises ParseException (123 != &#39;a&#39;)</span>
-pull.next_line
+pull.consume_line
 pull.expect <span class="s">&#39;a&#39;</span> <span class="c"># raises ParseException (empty token)</span></code></pre>
         </div>
       
@@ -1965,12 +2027,12 @@ the given range of characters, else raises <code><a href="../Chem/ParseException
 <code>&quot;%{expected}&quot;</code> and <code>&quot;%{actual}&quot;</code> as placeholders for the expected
 and actual values.</p>
 <pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.new <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.new(<span class="s">&quot;a b c d e f&quot;</span>)
-pull.next_line
-pull.next_token.expect(<span class="s">&#39;a&#39;</span>..<span class="s">&#39;c&#39;</span>).char? <span class="c"># =&gt; &#39;a&#39;</span>
-pull.next_token.expect(<span class="s">&#39;a&#39;</span>..<span class="s">&#39;c&#39;</span>).char? <span class="c"># =&gt; &#39;b&#39;</span>
-pull.next_token.expect(<span class="s">&#39;a&#39;</span>..<span class="s">&#39;c&#39;</span>).char? <span class="c"># =&gt; &#39;c&#39;</span>
-pull.next_token.expect <span class="s">&#39;a&#39;</span>..<span class="s">&#39;c&#39;</span>        <span class="c"># raises ParseException (&#39;d&#39; not in &#39;a&#39;..&#39;c&#39;)</span>
-pull.next_line
+pull.consume_line
+pull.consume_token.expect(<span class="s">&#39;a&#39;</span>..<span class="s">&#39;c&#39;</span>).char? <span class="c"># =&gt; &#39;a&#39;</span>
+pull.consume_token.expect(<span class="s">&#39;a&#39;</span>..<span class="s">&#39;c&#39;</span>).char? <span class="c"># =&gt; &#39;b&#39;</span>
+pull.consume_token.expect(<span class="s">&#39;a&#39;</span>..<span class="s">&#39;c&#39;</span>).char? <span class="c"># =&gt; &#39;c&#39;</span>
+pull.consume_token.expect <span class="s">&#39;a&#39;</span>..<span class="s">&#39;c&#39;</span>        <span class="c"># raises ParseException (&#39;d&#39; not in &#39;a&#39;..&#39;c&#39;)</span>
+pull.consume_line
 pull.expect <span class="s">&#39;a&#39;</span>..<span class="s">&#39;c&#39;</span> <span class="c"># raises ParseException (empty token)</span></code></pre>
         </div>
       
@@ -1996,10 +2058,10 @@ to any <em>expected</em>, else raises <code><a href="../Chem/ParseException.html
 <code>&quot;%{expected}&quot;</code> and <code>&quot;%{actual}&quot;</code> as placeholders for the expected
 and actual values.</p>
 <pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.new <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.new(<span class="s">&quot;1 a 2 b 3 c\n789\n&quot;</span>)
-pull.next_line
-pull.next_token.expect({<span class="s">&#39;1&#39;</span>, <span class="s">&#39;2&#39;</span>, <span class="s">&#39;3&#39;</span>}).char? <span class="c"># =&gt; &#39;1&#39;</span>
-pull.next_token.expect({<span class="s">&#39;1&#39;</span>, <span class="s">&#39;2&#39;</span>, <span class="s">&#39;3&#39;</span>})       <span class="c"># raises ParseException (&#39;a&#39; != 1, 2, and 3)</span>
-pull.next_line
+pull.consume_line
+pull.consume_token.expect({<span class="s">&#39;1&#39;</span>, <span class="s">&#39;2&#39;</span>, <span class="s">&#39;3&#39;</span>}).char? <span class="c"># =&gt; &#39;1&#39;</span>
+pull.consume_token.expect({<span class="s">&#39;1&#39;</span>, <span class="s">&#39;2&#39;</span>, <span class="s">&#39;3&#39;</span>})       <span class="c"># raises ParseException (&#39;a&#39; != 1, 2, and 3)</span>
+pull.consume_line
 pull.expect({<span class="s">&#39;1&#39;</span>, <span class="s">&#39;2&#39;</span>, <span class="s">&#39;3&#39;</span>}) <span class="c"># raises ParseException (empty token)</span></code></pre>
         </div>
       
@@ -2025,11 +2087,11 @@ pull.expect({<span class="s">&#39;1&#39;</span>, <span class="s">&#39;2&#39;</sp
 <code>&quot;%{expected}&quot;</code> and <code>&quot;%{actual}&quot;</code> as placeholders for the expected
 and actual values.</p>
 <pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.new <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.new(<span class="s">&quot;123 456\n789\n&quot;</span>)
-pull.next_line
-pull.next_token
+pull.consume_line
+pull.consume_token
 pull.expect(<span class="s">&quot;123&quot;</span>).str? <span class="c"># =&gt; &quot;123&quot;</span>
 pull.expect <span class="s">&quot;abc&quot;</span>       <span class="c"># raises ParseException (123 != abc)</span>
-pull.next_line
+pull.consume_line
 pull.expect <span class="s">&quot;456&quot;</span> <span class="c"># raises ParseException (empty token)</span></code></pre>
         </div>
       
@@ -2055,22 +2117,22 @@ pull.expect <span class="s">&quot;456&quot;</span> <span class="c"># raises Pars
 <code>&quot;%{expected}&quot;</code> and <code>&quot;%{actual}&quot;</code> as placeholders for the expected
 and actual values.</p>
 <pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.new <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.new(<span class="s">&quot;123 456\n789\n&quot;</span>)
-pull.next_line
-pull.next_token
+pull.consume_line
+pull.consume_token
 pull.expect(<span class="o">/</span>[<span class="n">0</span><span class="n">-9</span>]<span class="o">+</span><span class="o">/</span>).str? <span class="c"># =&gt; &quot;123&quot;</span>
 pull.expect <span class="s">/[a-z]+/</span>       <span class="c"># raises ParseException (123 does not match [a-z]+)</span>
-pull.next_line
+pull.consume_line
 pull.expect <span class="s">/[0-9]+/</span> <span class="c"># raises ParseException (empty token)</span></code></pre>
 <p><span class="flag purple">NOTE</span>  The entire token is returned even if the match is partial.</p>
 <pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.new <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.new(<span class="s">&quot;123abc\n789\n&quot;</span>)
-pull.next_line
-pull.next_token
+pull.consume_line
+pull.consume_token
 pull.expect(<span class="o">/</span>[a<span class="o">-</span>z]<span class="o">+</span><span class="o">/</span>).str? <span class="c"># =&gt; &quot;123abc&quot;</span>
 pull.expect(<span class="o">/</span>[<span class="n">0</span><span class="n">-9</span>]<span class="o">+</span><span class="o">/</span>).str? <span class="c"># =&gt; &quot;123abc&quot;</span></code></pre>
 <p>Use anchors to ensure full match.</p>
 <pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.new <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.new(<span class="s">&quot;123abc\n789\n&quot;</span>)
-pull.next_line
-pull.next_token.expect <span class="s">/^[a-z]+$/</span> <span class="c"># raises ParseException</span></code></pre>
+pull.consume_line
+pull.consume_token.expect <span class="s">/^[a-z]+$/</span> <span class="c"># raises ParseException</span></code></pre>
         </div>
       
       <br/>
@@ -2095,13 +2157,13 @@ pull.next_token.expect <span class="s">/^[a-z]+$/</span> <span class="c"># raise
 <code>&quot;%{expected}&quot;</code> and <code>&quot;%{actual}&quot;</code> as placeholders for the expected
 and actual values.</p>
 <pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.new <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.new(<span class="s">&quot;123 456\n789\n&quot;</span>)
-pull.next_line
-pull.next_token
+pull.consume_line
+pull.consume_token
 pull.expect([<span class="s">&quot;123&quot;</span>, <span class="s">&quot;456&quot;</span>]).str? <span class="c"># =&gt; &quot;123&quot;</span>
-pull.next_token
+pull.consume_token
 pull.expect([<span class="s">&quot;123&quot;</span>, <span class="s">&quot;456&quot;</span>]).str? <span class="c"># =&gt; &quot;456&quot;</span>
 pull.expect([<span class="s">&quot;abc&quot;</span>, <span class="s">&quot;def&quot;</span>])      <span class="c"># raises ParseException (&quot;456&quot; != &quot;abc&quot; or &quot;def&quot;)</span>
-pull.next_token
+pull.consume_token
 pull.expect([<span class="s">&quot;123&quot;</span>, <span class="s">&quot;456&quot;</span>]) <span class="c"># raises ParseException (empty token)</span></code></pre>
         </div>
       
@@ -2333,30 +2395,55 @@ or <code>nil</code> if the token is not set or it is not a valid number.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="line(message:String=&quot;Endoffile&quot;):String-instance-method">
+    <div class="entry-detail" id="line:String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>line</strong>(message : String = <span class="s">&quot;End of file&quot;</span>) : String
+        def <strong>line</strong> : String | Nil
 
-        <a class="method-permalink" href="#line%28message%3AString%3D%22Endoffile%22%29%3AString-instance-method">#</a>
+        <a class="method-permalink" href="#line%3AString%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Returns the current line starting at the current token if set. An
-empty string is returned at the end of line. Raises
-<code><a href="../Chem/ParseException.html">ParseException</a></code> with the given message at end of file.</p>
-<p><span class="flag purple">NOTE</span>  This method does not change the cursor.</p>
-<pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.new <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.new(<span class="s">&quot;123 456\n789\n&quot;</span>)
-pull.next_line
-<span class="c"># token is not set, returns entire line</span>
+          <p>Returns the current line if set, else <code>nil</code>.</p>
+<pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.new <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.new(<span class="s">&quot;123 456\n&quot;</span>)
+pull.consume_line
 pull.line <span class="c"># =&gt; &quot;123 456&quot;</span>
-pull.next_token
-<span class="c"># token is &quot;123&quot;, returns line starting at &quot;123&quot;</span>
+pull.consume_token
 pull.line <span class="c"># =&gt; &quot;123 456&quot;</span>
-pull.next_token
-<span class="c"># token is &quot;456&quot;, returns line starting at &quot;456&quot;</span>
-pull.line <span class="c"># =&gt; &quot;456&quot;</span></code></pre>
+pull.consume_token
+pull.line <span class="c"># =&gt; &quot;123 456&quot;</span>
+pull.consume_line
+pull.line <span class="c"># =&gt; nil</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="line!(message:String=&quot;Expectedaline&quot;):String-instance-method">
+      <div class="signature">
+        
+        def <strong>line!</strong>(message : String = <span class="s">&quot;Expected a line&quot;</span>) : String
+
+        <a class="method-permalink" href="#line%21%28message%3AString%3D%22Expectedaline%22%29%3AString-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the current line. Raises <code><a href="../Chem/ParseException.html">ParseException</a></code> with the given
+message at the start or end of file.</p>
+<pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.new <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.new(<span class="s">&quot;123 456\n&quot;</span>)
+pull.consume_line
+pull.line! <span class="c"># =&gt; &quot;123 456&quot;</span>
+pull.consume_token
+pull.line! <span class="c"># =&gt; &quot;123 456&quot;</span>
+pull.consume_token
+pull.line! <span class="c"># =&gt; &quot;123 456&quot;</span>
+pull.consume_line
+pull.line! <span class="c"># raises ParseException</span></code></pre>
         </div>
       
       <br/>
@@ -2493,26 +2580,6 @@ the token is an invalid representation.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="next_line:String|Nil-instance-method">
-      <div class="signature">
-        
-        def <strong>next_line</strong> : String | Nil
-
-        <a class="method-permalink" href="#next_line%3AString%7CNil-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Reads and returns the next line from the enclosed IO, or <code>nil</code> if
-called at the end of the IO.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
     <div class="entry-detail" id="next_s(message:String):String-instance-method">
       <div class="signature">
         
@@ -2569,39 +2636,6 @@ line or if the token is an invalid representation.</p>
           <p>Reads the next token in the current line, and interprets it via
 <code><a href="../Chem/PullParser.html#str%3F%3AString%7CNil-instance-method">#str?</a></code>, which returns <code>nil</code> at the end of line or if
 the token is an invalid representation.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="next_token:self-instance-method">
-      <div class="signature">
-        
-        def <strong>next_token</strong> : <span class="k">self</span>
-
-        <a class="method-permalink" href="#next_token%3Aself-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Sets the current token to the next consecutive non-whitespace
-characters in the current line.</p>
-<pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.new <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.new(<span class="s">&quot;abc def\n1234 56 789\n&quot;</span>)
-pull.next_token.str? <span class="c"># =&gt; nil</span>
-pull.next_line       <span class="c"># place the parser at the first line</span>
-pull.next_token.str? <span class="c"># =&gt; &quot;abc&quot;</span>
-pull.next_token.str? <span class="c"># =&gt; &quot;def&quot;</span>
-pull.next_token.str? <span class="c"># =&gt; nil</span>
-pull.next_line       <span class="c"># place the parser at the second line</span>
-pull.next_token.str? <span class="c"># =&gt; &quot;1234&quot;</span>
-pull.next_token.str? <span class="c"># =&gt; &quot;56&quot;</span>
-pull.next_token.str? <span class="c"># =&gt; &quot;789&quot;</span>
-pull.next_token.str? <span class="c"># =&gt; nil</span>
-pull.next_line       <span class="c"># place the parser at the end of IO</span>
-pull.next_token.str? <span class="c"># =&gt; nil</span></code></pre>
         </div>
       
       <br/>
@@ -2744,13 +2778,13 @@ returns <code>nil</code>. If no token is found, returns <em>default</em>.</p>
           
           <p>Returns the character after the current token, or <code>nil</code> if empty.</p>
 <pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.new <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.new(<span class="s">&quot;123 456\n789\n&quot;</span>)
-pull.next_line
-pull.peek            <span class="c"># =&gt; &#39;1&#39; (first character at the beginning of line)</span>
-pull.peek            <span class="c"># =&gt; &#39;1&#39; (`#peek` does not consume characters)</span>
-pull.next_token.str? <span class="c"># =&gt; &quot;123&quot;</span>
-pull.peek            <span class="c"># =&gt; &#39; &#39; (after the current token)</span>
-pull.next_token.str? <span class="c"># =&gt; &quot;456&quot;</span>
-pull.peek            <span class="c"># =&gt; nil (end of line)</span></code></pre>
+pull.consume_line
+pull.peek               <span class="c"># =&gt; &#39;1&#39; (first character at the beginning of line)</span>
+pull.peek               <span class="c"># =&gt; &#39;1&#39; (`#peek` does not consume characters)</span>
+pull.consume_token.str? <span class="c"># =&gt; &quot;123&quot;</span>
+pull.peek               <span class="c"># =&gt; &#39; &#39; (after the current token)</span>
+pull.consume_token.str? <span class="c"># =&gt; &quot;456&quot;</span>
+pull.peek               <span class="c"># =&gt; nil (end of line)</span></code></pre>
         </div>
       
       <br/>
@@ -2759,26 +2793,26 @@ pull.peek            <span class="c"># =&gt; nil (end of line)</span></code></pr
       </div>
     </div>
   
-    <div class="entry-detail" id="rest_of_line(message:String=&quot;Endoffile&quot;):String|Nil-instance-method">
+    <div class="entry-detail" id="rest_of_line:String-instance-method">
       <div class="signature">
         
-        def <strong>rest_of_line</strong>(message : String = <span class="s">&quot;End of file&quot;</span>) : String | Nil
+        def <strong>rest_of_line</strong> : String
 
-        <a class="method-permalink" href="#rest_of_line%28message%3AString%3D%22Endoffile%22%29%3AString%7CNil-instance-method">#</a>
+        <a class="method-permalink" href="#rest_of_line%3AString-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Returns the rest of the line (after the current token), or <code>nil</code>
-if the cursor is at end of line. Raises <code><a href="../Chem/ParseException.html">ParseException</a></code> with the
-given message at end of file.</p>
+          <p>Returns the rest of the line (after the current token), or an
+empty string if cursor is at the end of line/file.</p>
 <p><span class="flag purple">NOTE</span>  The cursor will span the entire returned string.</p>
 <pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.new <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.new(<span class="s">&quot;123 456\n789\n&quot;</span>)
-pull.next_line
+pull.consume_line
 pull.next_s?      <span class="c"># =&gt; &quot;123&quot;</span>
 pull.rest_of_line <span class="c"># =&gt; &quot; 456&quot;</span>
 pull.str?         <span class="c"># =&gt; &quot; 456&quot;</span>
-pull.next_s?      <span class="c"># =&gt; nil</span></code></pre>
+pull.next_s?      <span class="c"># =&gt; nil</span>
+pull.rest_of_line <span class="c"># =&gt; &quot;&quot;</span></code></pre>
         </div>
       
       <br/>
@@ -2839,7 +2873,7 @@ pull.next_s?      <span class="c"># =&gt; nil</span></code></pre>
 <p>The cursor is placed at the first non-whitespace character, but it
 is not consumed.</p>
 <pre><code class="language-crystal">pull <span class="o">=</span> <span class="t">PullParser</span>.new <span class="t">IO</span><span class="t">::</span><span class="t">Memory</span>.new(<span class="s">&quot;  123 456\n789\n&quot;</span>)
-pull.next_line
+pull.consume_line
 pull.skip_whitespace
 pull.str? <span class="c"># =&gt; nil # token size is zero</span>
 pull.line <span class="c"># =&gt; &quot;123 456&quot;</span></code></pre>
