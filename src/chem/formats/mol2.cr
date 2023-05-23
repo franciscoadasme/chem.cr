@@ -45,7 +45,7 @@ module Chem::Mol2
               atom_t = @pull.next_s
               symbol = atom_t[...atom_t.index('.')] # ignore sybyl type
               element = PeriodicTable[symbol]? || @pull.error("Unknown element")
-              unless @pull.next_token.eol?
+              unless @pull.consume_token.eol?
                 resid = @pull.int
                 resname = @pull.next_s
                 # TODO: respect name or truncate at 4 characters?
@@ -57,7 +57,7 @@ module Chem::Mol2
           when "@<TRIPOS>BOND"
             n_bonds.times do
               @pull.next_line
-              @pull.next_token # skip bond index
+              @pull.consume_token # skip bond index
               i = @pull.next_i
               j = @pull.next_i
               case bond_t = @pull.next_s

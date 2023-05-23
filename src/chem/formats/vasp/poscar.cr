@@ -51,10 +51,10 @@ module Chem::VASP::Poscar
 
       # read selective dynamics flag
       constrained = false
-      if @pull.next_token.char.in?('s', 'S')
+      if @pull.consume_token.char.in?('s', 'S')
         constrained = true
         @pull.next_line
-        @pull.next_token
+        @pull.consume_token
       end
 
       # read coordinate system (cartesian or direct)
@@ -98,7 +98,7 @@ module Chem::VASP::Poscar
     end
 
     private def read_flag : Bool
-      case @pull.next_token.char
+      case @pull.consume_token.char
       when 'T' then true
       when 'F' then false
       else          @pull.error "Invalid boolean flag (expected either T or F)"

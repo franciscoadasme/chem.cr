@@ -15,7 +15,7 @@ module Chem::DX
       ) do |buffer, size|
         i = 0
         @pull.each_line do
-          while i < size && !@pull.next_token.eol?
+          while i < size && !@pull.consume_token.eol?
             buffer[i] = @pull.float
             i += 1
           end
@@ -25,17 +25,17 @@ module Chem::DX
 
     protected def decode_header : Spatial::Grid::Info
       @pull.each_line do
-        break unless @pull.next_token.char == '#'
+        break unless @pull.consume_token.char == '#'
       end
 
-      4.times { @pull.next_token }
+      4.times { @pull.consume_token }
       ni, nj, nk = @pull.next_i, @pull.next_i, @pull.next_i
       @pull.next_line
-      @pull.next_token # skip origin word
+      @pull.consume_token # skip origin word
       origin = Spatial::Vec3[@pull.next_f, @pull.next_f, @pull.next_f]
       @pull.next_line
       vi, vj, vk = {ni, nj, nk}.map do |n|
-        @pull.next_token # skip delta word
+        @pull.consume_token # skip delta word
         delta = Spatial::Vec3[@pull.next_f, @pull.next_f, @pull.next_f]
         @pull.next_line
         delta * (n - 1)

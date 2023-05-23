@@ -219,7 +219,7 @@ module Chem::Mol
       y = pull.next_f "Invalid Y coordinate %{token}"
       z = pull.next_f "Invalid Z coordinate %{token}"
       pos = Spatial::Vec3.new(x, y, z)
-      pull.next_token # skip aamap
+      pull.consume_token # skip aamap
 
       chg = 0
       mass = ele.mass
@@ -239,7 +239,7 @@ module Chem::Mol
 
     def self.parse_bond(pull : PullParser, builder : Structure::Builder) : Nil
       check_entry_tag(pull)
-      pull.next_token # ignore index
+      pull.consume_token # ignore index
 
       aromatic = false
       bond_order = pull.parse_next("Invalid bond type %{token}") do |str|

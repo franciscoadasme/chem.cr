@@ -39,7 +39,7 @@ module Chem::Cube
       ) do |buffer, size|
         i = 0
         @pull.each_line do
-          while i < size && !@pull.next_token.eol?
+          while i < size && !@pull.consume_token.eol?
             buffer[i] = @pull.float
             i += 1
           end

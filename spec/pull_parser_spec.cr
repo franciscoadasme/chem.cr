@@ -87,9 +87,9 @@ describe Chem::PullParser do
     it "returns the first char of the current token" do
       pull = parser_for "123 456\n789\n"
       pull.next_line
-      pull.next_token
+      pull.consume_token
       pull.char?.should eq '1'
-      pull.next_token
+      pull.consume_token
       pull.char?.should eq '4'
     end
 
@@ -100,7 +100,7 @@ describe Chem::PullParser do
     it "returns nil at end of line" do
       pull = parser_for "123\n456\n789\n"
       pull.next_line
-      until pull.next_token.eol?; end
+      until pull.consume_token.eol?; end
       pull.char?.should be_nil
     end
 
@@ -198,11 +198,11 @@ describe Chem::PullParser do
       pull.eol?.should be_true # no current line
       pull.next_line
       pull.eol?.should be_false
-      pull.next_token.str?.should eq "123"
+      pull.consume_token.str?.should eq "123"
       pull.eol?.should be_false
-      pull.next_token.str?.should eq "456"
+      pull.consume_token.str?.should eq "456"
       pull.eol?.should be_false
-      pull.next_token.str?.should be_nil
+      pull.consume_token.str?.should be_nil
       pull.eol?.should be_true
     end
   end
@@ -246,7 +246,7 @@ describe Chem::PullParser do
       ex = expect_raises(Chem::ParseException, "Custom message") do
         pull = Chem::PullParser.new file
         pull.next_line
-        pull.next_token
+        pull.consume_token
         pull.error("Custom message")
       end
       ex.source_file.should eq file.path
@@ -273,7 +273,7 @@ describe Chem::PullParser do
       ex = expect_raises(Chem::ParseException, "Custom message") do
         pull = parser_for "abc def\nABC DEF GHI\n123456789\n"
         pull.next_line
-        until pull.next_token.eol?; end # end of line
+        until pull.consume_token.eol?; end # end of line
         pull.error "Custom message"
       end
       ex.source_file.should be_nil
@@ -307,8 +307,8 @@ describe Chem::PullParser do
         pull = Chem::PullParser.new tempfile
         pull.next_line
         pull.next_line
-        pull.next_token
-        pull.next_token
+        pull.consume_token
+        pull.consume_token
         pull.error("Found invalid token %{token} at %{loc_with_file}")
       end
     ensure
@@ -321,32 +321,32 @@ describe Chem::PullParser do
     it "matches a string" do
       pull = parser_for "abc def"
       pull.next_line
-      pull.next_token
+      pull.consume_token
       pull.expect("abc").str?.should eq "abc"
-      pull.next_token
+      pull.consume_token
       pull.expect("def").str?.should eq "def"
     end
 
     it "matches multiple strings" do
       pull = parser_for "abc def"
       pull.next_line
-      pull.next_token
+      pull.consume_token
       pull.expect({"abc", "def"}).str?.should eq "abc"
-      pull.next_token
+      pull.consume_token
       pull.expect({"abc", "def"}).str?.should eq "def"
     end
 
     it "matches a regexp" do
       pull = parser_for "abc def"
       pull.next_line
-      pull.next_token
+      pull.consume_token
       pull.expect(/[a-z]+/).str?.should eq "abc"
     end
 
     it "matches a regexp (partial match)" do
       pull = parser_for "123abc\n789\n"
       pull.next_line
-      pull.next_token
+      pull.consume_token
       pull.expect(/[a-z]/).str?.should eq "123abc"
       pull.expect(/[a-z]+/).str?.should eq "123abc"
       pull.expect(/[0-9]+/).str?.should eq "123abc"
@@ -356,7 +356,7 @@ describe Chem::PullParser do
       expect_raises(Chem::ParseException, %(Expected "abc", got "")) do
         pull = parser_for ""
         pull.next_line
-        pull.next_token
+        pull.consume_token
         pull.expect("abc")
       end
     end
@@ -365,7 +365,7 @@ describe Chem::PullParser do
       expect_raises(Chem::ParseException, %(Expected "def", got "abc")) do
         pull = parser_for "abc def"
         pull.next_line
-        pull.next_token
+        pull.consume_token
         pull.expect("def")
       end
     end
@@ -374,7 +374,7 @@ describe Chem::PullParser do
       expect_raises(Chem::ParseException, %(Expected "123" or "456", got "abc")) do
         pull = parser_for "abc def"
         pull.next_line
-        pull.next_token
+        pull.consume_token
         pull.expect({"123", "456"})
       end
     end
@@ -383,7 +383,7 @@ describe Chem::PullParser do
       expect_raises(Chem::ParseException, %(Expected "abc" to match /[A-Z]+/)) do
         pull = parser_for "abc def"
         pull.next_line
-        pull.next_token
+        pull.consume_token
         pull.expect(/[A-Z]+/)
       end
     end
@@ -392,7 +392,7 @@ describe Chem::PullParser do
       expect_raises(Chem::ParseException, %(Expected "123abc" to match /^[0-9]+$/)) do
         pull = parser_for "123abc\n789\n"
         pull.next_line
-        pull.next_token
+        pull.consume_token
         pull.expect(/^[0-9]+$/)
       end
     end
@@ -400,29 +400,29 @@ describe Chem::PullParser do
     it "matches a char" do
       pull = parser_for "a b c"
       pull.next_line
-      pull.next_token
+      pull.consume_token
       pull.expect('a').char?.should eq 'a'
-      pull.next_token
+      pull.consume_token
       pull.expect('b').char?.should eq 'b'
     end
 
     it "matches multiple characters" do
       pull = parser_for "a b c d e f"
       pull.next_line
-      pull.next_token
+      pull.consume_token
       pull.expect({'a', 'b'}).char?.should eq 'a'
-      pull.next_token
+      pull.consume_token
       pull.expect({'a', 'b'}).char?.should eq 'b'
     end
 
     it "matches multiple in range" do
       pull = parser_for "a b c d e f"
       pull.next_line
-      pull.next_token
+      pull.consume_token
       pull.expect('a'..'c').char?.should eq 'a'
-      pull.next_token
+      pull.consume_token
       pull.expect('a'..'c').char?.should eq 'b'
-      pull.next_token
+      pull.consume_token
       pull.expect('a'..'c').char?.should eq 'c'
       pull.expect(..'c').char?.should eq 'c'
       pull.expect('a'..).char?.should eq 'c'
@@ -432,7 +432,7 @@ describe Chem::PullParser do
       expect_raises(Chem::ParseException, %(Expected 'b', got 'a')) do
         pull = parser_for "a b c"
         pull.next_line
-        pull.next_token
+        pull.consume_token
         pull.expect('b')
       end
     end
@@ -441,7 +441,7 @@ describe Chem::PullParser do
       expect_raises(Chem::ParseException, %(Expected 'a', got "abc")) do
         pull = parser_for "abc def"
         pull.next_line
-        pull.next_token
+        pull.consume_token
         pull.expect('a')
       end
     end
@@ -450,7 +450,7 @@ describe Chem::PullParser do
       expect_raises(Chem::ParseException, %(Expected 'a' or 'b', got 'd')) do
         pull = parser_for "d e f"
         pull.next_line
-        pull.next_token
+        pull.consume_token
         pull.expect({'a', 'b'})
       end
     end
@@ -459,7 +459,7 @@ describe Chem::PullParser do
       expect_raises(Chem::ParseException, %(Expected 'd' to be within 'a'..'c')) do
         pull = parser_for "d e f"
         pull.next_line
-        pull.next_token
+        pull.consume_token
         pull.expect('a'..'c')
       end
     end
@@ -478,7 +478,7 @@ describe Chem::PullParser do
       expect_raises(Chem::ParseException, "Invalid real number") do
         pull = parser_for "abc"
         pull.next_line
-        pull.next_token
+        pull.consume_token
         pull.float
       end
     end
@@ -493,7 +493,7 @@ describe Chem::PullParser do
       expect_raises(Chem::ParseException, "Invalid real number") do
         pull = parser_for("123.45\n")
         pull.next_line
-        until pull.next_token.eol?; end
+        until pull.consume_token.eol?; end
         pull.float
       end
     end
@@ -517,7 +517,7 @@ describe Chem::PullParser do
         expect_raises(Chem::ParseException, "Invalid real number") do
           pull = parser_for "abc"
           pull.next_line
-          pull.next_token
+          pull.consume_token
           pull.float(if_blank: Math::PI)
         end
       end
@@ -529,7 +529,7 @@ describe Chem::PullParser do
       it "returns default at the end of line" do
         pull = parser_for("123.45\n")
         pull.next_line
-        until pull.next_token.eol?; end
+        until pull.consume_token.eol?; end
         pull.float(if_blank: Math::PI).should eq Math::PI
       end
     end
@@ -555,7 +555,7 @@ describe Chem::PullParser do
     it "returns nil at the end of line" do
       pull = parser_for("123.45\n")
       pull.next_line
-      until pull.next_token.eol?; end
+      until pull.consume_token.eol?; end
       pull.float?.should be_nil
     end
   end
@@ -573,7 +573,7 @@ describe Chem::PullParser do
       expect_raises(Chem::ParseException, "Invalid integer") do
         pull = parser_for "abc\n"
         pull.next_line
-        pull.next_token
+        pull.consume_token
         pull.int
       end
     end
@@ -588,7 +588,7 @@ describe Chem::PullParser do
       expect_raises(Chem::ParseException, "Invalid integer") do
         pull = parser_for("12345\n")
         pull.next_line
-        until pull.next_token.eol?; end
+        until pull.consume_token.eol?; end
         pull.int
       end
     end
@@ -596,7 +596,7 @@ describe Chem::PullParser do
     it "raises with message" do
       pull = parser_for "2.3451"
       pull.next_line
-      pull.next_token
+      pull.consume_token
       expect_raises(Chem::ParseException, %q{Expected an integer, got "2.3451"}) do
         pull.int("Expected an integer, got %{token}")
       end
@@ -613,7 +613,7 @@ describe Chem::PullParser do
         expect_raises(Chem::ParseException, "Invalid integer") do
           pull = parser_for "abc\n"
           pull.next_line
-          pull.next_token
+          pull.consume_token
           pull.int(if_blank: 12345)
         end
       end
@@ -625,7 +625,7 @@ describe Chem::PullParser do
       it "returns default at the end of line" do
         pull = parser_for("12345\n")
         pull.next_line
-        until pull.next_token.eol?; end
+        until pull.consume_token.eol?; end
         pull.int(if_blank: 789).should eq 789
       end
     end
@@ -654,7 +654,7 @@ describe Chem::PullParser do
     it "returns nil at the end of line" do
       pull = parser_for("123456\n")
       pull.next_line
-      until pull.next_token.eol?; end
+      until pull.consume_token.eol?; end
       pull.int?.should be_nil
     end
   end
@@ -669,8 +669,8 @@ describe Chem::PullParser do
     it "returns rest of current line" do
       pull = parser_for("123 456\n789\n")
       pull.next_line
-      pull.next_token
-      pull.next_token
+      pull.consume_token
+      pull.consume_token
       pull.line.should eq "456"
     end
 
@@ -678,16 +678,16 @@ describe Chem::PullParser do
       pull = parser_for "123 456\n789\n"
       pull.next_line
       pull.line.should eq "123 456"
-      pull.next_token
+      pull.consume_token
       pull.line.should eq "123 456"
-      pull.next_token
+      pull.consume_token
       pull.line.should eq "456"
     end
 
     it "returns an empty string at end of line" do
       pull = parser_for("123 456\n789\n")
       pull.next_line
-      until pull.next_token.eol?; end
+      until pull.consume_token.eol?; end
       pull.line.should eq ""
     end
 
@@ -723,11 +723,11 @@ describe Chem::PullParser do
       pull.str?.should be_nil
       pull.next_line
       pull.str?.should be_nil
-      pull.next_token
+      pull.consume_token
       pull.str?.should eq "123"
       pull.next_line
       pull.str?.should be_nil
-      pull.next_token
+      pull.consume_token
       pull.str?.should eq "789"
     end
 
@@ -897,26 +897,26 @@ describe Chem::PullParser do
     end
   end
 
-  describe "#next_token" do
+  describe "#consume_token" do
     it "sets the next token" do
       pull = parser_for("123 456\n789\n")
       pull.next_line
-      pull.next_token.str?.should eq "123"
-      pull.next_token.str?.should eq "456"
+      pull.consume_token.str?.should eq "123"
+      pull.consume_token.str?.should eq "456"
     end
 
     it "sets an empty token at end of line" do
       pull = parser_for("123 456\n789\n")
       pull.next_line
-      pull.next_token.str?.should eq "123"
-      pull.next_token.str?.should eq "456"
-      pull.next_token.str?.should be_nil
+      pull.consume_token.str?.should eq "123"
+      pull.consume_token.str?.should eq "456"
+      pull.consume_token.str?.should be_nil
     end
 
     it "sets an empty token at empty line" do
       pull = parser_for("\n789\n")
       pull.next_line
-      pull.next_token.str?.should be_nil
+      pull.consume_token.str?.should be_nil
     end
   end
 
@@ -924,7 +924,7 @@ describe Chem::PullParser do
     it "yields the current token and returns the parsed value" do
       pull = parser_for("123 456\n789\n")
       pull.next_line
-      pull.next_token
+      pull.consume_token
       pull.parse? { |str| str.chars.sum(&.to_i) }.should eq 6
     end
 
@@ -934,7 +934,7 @@ describe Chem::PullParser do
 
     it "returns nil at end of line" do
       pull = parser_for("123 456\n789\n")
-      until pull.next_token.eol?; end
+      until pull.consume_token.eol?; end
       pull.parse? { Math::PI }.should be_nil
     end
   end
@@ -943,7 +943,7 @@ describe Chem::PullParser do
     it "yields the current token and returns the parsed value" do
       pull = parser_for("x = baz")
       pull.next_line
-      pull.next_token
+      pull.consume_token
       expect_raises(Chem::ParseException, %q(Invalid option "x")) do
         pull.parse("Invalid option %{token}") do |str|
           %w(foo bar).find &.==(str)
@@ -999,14 +999,14 @@ describe Chem::PullParser do
       pull.next_line
       pull.peek.should eq '1'
       pull.peek.should eq '1'
-      pull.next_token
+      pull.consume_token
       pull.peek.should eq ' '
     end
 
     it "returns nil at end of line" do
       pull = parser_for("123 456\n789\n")
       pull.next_line
-      until pull.next_token.eol?; end
+      until pull.consume_token.eol?; end
       pull.peek.should be_nil
     end
   end
@@ -1023,7 +1023,7 @@ describe Chem::PullParser do
     it "returns rest of line" do
       pull = parser_for("123 456\n789\n")
       pull.next_line
-      pull.next_token
+      pull.consume_token
       pull.rest_of_line.should eq " 456"
       pull.str?.should eq " 456"
       pull.next_s?.should be_nil
@@ -1032,7 +1032,7 @@ describe Chem::PullParser do
     it "returns nil at end of line" do
       pull = parser_for("123 456\n789\n")
       pull.next_line
-      until pull.next_token.eol?; end
+      until pull.consume_token.eol?; end
       pull.rest_of_line.should be_nil
     end
 
@@ -1089,9 +1089,9 @@ describe Chem::PullParser do
     it "returns the current token" do
       pull = parser_for("123 456\n789\n")
       pull.next_line
-      pull.next_token
+      pull.consume_token
       pull.str?.should eq "123"
-      pull.next_token
+      pull.consume_token
       pull.str?.should eq "456"
       pull.at(2, 5).str?.should eq "3 456"
     end
@@ -1101,7 +1101,7 @@ describe Chem::PullParser do
       pull.str?.should be_nil
       pull.next_line
       pull.str?.should be_nil
-      pull.next_token
+      pull.consume_token
       pull.next_line
       pull.str?.should be_nil
     end
@@ -1111,7 +1111,7 @@ describe Chem::PullParser do
     it "discards blank lines" do
       pull = parser_for("  \t \n \t \r\n\n\n123 456")
       pull.skip_blank_lines
-      pull.next_token
+      pull.consume_token
       pull.str?.should eq "123"
     end
   end
@@ -1120,7 +1120,7 @@ describe Chem::PullParser do
     it "sets cursor to the beginning of line" do
       pull = parser_for("123 456 789\n123")
       pull.next_line
-      pull.next_token
+      pull.consume_token
       pull.next_s?.should eq "456"
       pull.rewind_line
       pull.str?.should be_nil
@@ -1146,7 +1146,7 @@ describe Chem::PullParser do
     it "yields the next token and returns the parsed value" do
       pull = parser_for("123 456\n789\n")
       pull.next_line
-      pull.next_token
+      pull.consume_token
       pull.parse_next?(&.to_i?).should eq 456
     end
 
@@ -1159,7 +1159,7 @@ describe Chem::PullParser do
     it "returns nil at end of line" do
       pull = parser_for("123 456\n789\n")
       pull.next_line
-      until pull.next_token.eol?; end
+      until pull.consume_token.eol?; end
       pull.parse?(&.to_i?).should be_nil
     end
   end
@@ -1217,9 +1217,9 @@ describe Chem::PullParser do
       pull = parser_for "123 456\n"
       pull.next_line
       pull.token.should be_nil
-      pull.next_token.token.should eq "123".to_slice
-      pull.next_token.token.should eq "456".to_slice
-      pull.next_token.token.should be_nil
+      pull.consume_token.token.should eq "123".to_slice
+      pull.consume_token.token.should eq "456".to_slice
+      pull.consume_token.token.should be_nil
     end
   end
 end
