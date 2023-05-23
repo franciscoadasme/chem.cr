@@ -20,9 +20,9 @@ module Chem::SDF
 
     private def skip_after_delimiter
       until @pull.eof? || @pull.next_s? == "$$$$"
-        @pull.next_line
+        @pull.consume_line
       end
-      @pull.next_line
+      @pull.consume_line
     end
   end
 end

@@ -30,10 +30,10 @@ module Chem::Mol
     private def decode_entry : Structure
       raise IO::EOFError.new if @pull.eof?
       title = @pull.line!.strip
-      @pull.next_line # skip software
-      comment = @pull.next_line.line!.strip.presence
+      @pull.consume_line # skip software
+      comment = @pull.consume_line.line!.strip.presence
 
-      @pull.next_line
+      @pull.consume_line
       variant = @pull.at(33, 6).parse("Invalid Mol variant %{token}") do |str|
         case str.strip
         when "V2000" then V2000
@@ -69,7 +69,7 @@ module Chem::Mol
     def self.parse(pull : PullParser, builder : Structure::Builder) : Nil
       n_atoms = pull.at(0, 3).int "Invalid number of atoms %{token}"
       n_bonds = pull.at(3, 3).int "Invalid number of bonds %{token}"
-      pull.next_line
+      pull.consume_line
 
       n_atoms.times { parse_atom(pull, builder) }
       n_bonds.times { parse_bond(pull, builder) }
@@ -91,7 +91,7 @@ module Chem::Mol
           parse_formal_charge str
         end
       builder.atom ele, pos, formal_charge: chg, mass: mass
-      pull.next_line
+      pull.consume_line
     end
 
     def self.parse_bond(pull : PullParser, builder : Structure::Builder) : Nil
@@ -105,7 +105,7 @@ module Chem::Mol
           builder.bond i, j, aromatic: true
         end
       end
-      pull.next_line
+      pull.consume_line
     end
 
     def self.parse_formal_charge(str) : Int32?
@@ -149,7 +149,7 @@ module Chem::Mol
   private module V3000
     def self.check_block_close(pull : PullParser, name : String) : Nil
       check_entry pull, {"END", name}, "Expected END #{name} to close #{name} block"
-      pull.next_line
+      pull.consume_line
     end
 
     def self.check_entry(
@@ -178,9 +178,9 @@ module Chem::Mol
       pull.each_line do
         case {pull.next_s?, pull.next_s?}
         when {"M", "V30"}
-          return pull.next_s.tap { pull.next_line } if pull.next_s == "BEGIN"
+          return pull.next_s.tap { pull.consume_line } if pull.next_s == "BEGIN"
         when {"M", "END"}
-          pull.next_line
+          pull.consume_line
           break
         else # line should not be consumed
           pull.rewind_line
@@ -190,7 +190,7 @@ module Chem::Mol
     end
 
     def self.parse(pull : PullParser, builder : Structure::Builder) : Nil
-      pull.next_line # skips V2000 compatibility line
+      pull.consume_line # skips V2000 compatibility line
       n_atoms = n_bonds = 0
       while name = next_block(pull)
         case name
@@ -198,7 +198,7 @@ module Chem::Mol
           check_entry(pull, {"COUNTS"}, "Expected COUNTS entry after BEGIN CTAB")
           n_atoms = pull.next_i "Invalid number of atoms %{token}"
           n_bonds = pull.next_i "Invalid number of bonds %{token}"
-          pull.next_line
+          pull.consume_line
         when "ATOM"
           n_atoms.times { parse_atom(pull, builder) }
           check_block_close pull, "ATOM"
@@ -234,7 +234,7 @@ module Chem::Mol
       end
 
       builder.atom(ele, pos, formal_charge: chg, mass: mass)
-      pull.next_line
+      pull.consume_line
     end
 
     def self.parse_bond(pull : PullParser, builder : Structure::Builder) : Nil
@@ -255,7 +255,7 @@ module Chem::Mol
       i = pull.next_i("Invalid atom index %{token}")
       j = pull.next_i("Invalid atom index %{token}")
       builder.bond i, j, bond_order, aromatic: aromatic
-      pull.next_line
+      pull.consume_line
     end
   end
 end

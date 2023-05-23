@@ -51,11 +51,11 @@ module Chem::PDB
 
     def skip_entry : Nil
       decode_header unless @header_decoded
-      @pull.next_line if @pull.at(0, 6).str == "MODEL "
+      @pull.consume_line if @pull.at(0, 6).str == "MODEL "
       @pull.each_line do
         case @pull.at(0, 6).str
         when "ENDMDL"
-          @pull.next_line
+          @pull.consume_line
           break
         when "MODEL ", "END   ", "MASTER"
           break
@@ -234,7 +234,7 @@ module Chem::PDB
     end
 
     private def decode_entry : Structure
-      @pull.next_line if @pull.at(0, 6).str == "MODEL "
+      @pull.consume_line if @pull.at(0, 6).str == "MODEL "
 
       @builder = Structure::Builder.new(
         guess_bonds: @guess_bonds,
@@ -257,7 +257,7 @@ module Chem::PDB
         when "CONECT"
           read_bonds
         when "ENDMDL"
-          @pull.next_line
+          @pull.consume_line
           break
         when "END", "END   ", "MODEL ", "MASTER"
           break

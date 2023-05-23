@@ -24,7 +24,7 @@
 #   def initialize(@io : IO, @chomp = false, @sync_close : Bool = false)
 #   end
 #
-#   def next_line : String?
+#   def consume_line : String?
 #     check_open
 #     @io.gets chomp: chomp?
 #   end
@@ -35,9 +35,9 @@
 # line_io.closed?    # => false
 # line_io.sync_close # => false
 #
-# line_io.next_line # => "abc"
-# line_io.next_line # => "def"
-# line_io.next_line # => nil
+# line_io.consume_line # => "abc"
+# line_io.consume_line # => "def"
+# line_io.consume_line # => nil
 #
 # line_io.sync_close = true
 # line_io.close
@@ -49,8 +49,8 @@
 #
 # ```
 # line = LineIO.open(io, chomp: true) do |line_io|
-#   line_io.next_line
-#   line_io.next_line
+#   line_io.consume_line
+#   line_io.consume_line
 # end
 # line # => "def"
 # ```

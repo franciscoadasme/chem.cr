@@ -13,7 +13,7 @@ module Chem::VASP
       @attached = decode_attached
       raise "BUG: unit cell cannot be nil" unless cell = @attached.try(&.cell?)
 
-      @pull.next_line
+      @pull.consume_line
       nx, ny, nz = @pull.next_i, @pull.next_i, @pull.next_i
       Spatial::Grid::Info.new cell, {nx, ny, nz}
     end
@@ -29,7 +29,7 @@ module Chem::VASP
         nz.times do |k|
           ny.times do |j|
             nx.times do |i|
-              !@pull.consume_token.eol? || @pull.next_line.consume_token
+              !@pull.consume_token.eol? || @pull.consume_line.consume_token
               buffer[i * nyz + j * nz + k] = yield @pull.float
             end
           end

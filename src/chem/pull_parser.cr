@@ -13,7 +13,7 @@ module Chem
   # `ParseException` exception.
   #
   # When creating an instance, the parser must be positioned in the
-  # first line before consuming a token by calling `#next_line`, using
+  # first line before consuming a token by calling `#consume_line`, using
   # the yielding method `#each_line`, or checking for end of file via
   # `#eof?`. Upon reading a new line, the cursor is reset and the
   # current token is set to `nil`, so `#consume_token` must be called
@@ -35,14 +35,14 @@ module Chem
   # ```
   # pull = PullParser.new IO::Memory.new("abc def\n1234 5.6 abc\n")
   # pull.consume_token.str?        # => nil (line not read)
-  # pull.next_line                 # place the parser at the first line
+  # pull.consume_line              # place the parser at the first line
   # pull.str?                      # => nil (current token is nil)
   # pull.next_s?                   # => "abc"
   # pull.str?                      # => "abc" (current token was set by #next_s?)
   # pull.next_s?                   # => "def"
   # pull.next_s?                   # => nil (end of line)
   # pull.next_s                    # raises ParseException (no token can be consumed)
-  # pull.next_line                 # place the parser at the second line
+  # pull.consume_line              # place the parser at the second line
   # pull.next_i                    # => 1234
   # pull.next_f                    # => 5.6
   # pull.consume_token.str?        # => "abc"
@@ -50,7 +50,7 @@ module Chem
   # pull.float?                    # => nil
   # pull.parse &.sum(&.+('a'.ord)) # => 3
   # pull.consume_token.str?        # => nil (end of line)
-  # pull.next_line                 # => nil (place the parser at the end of IO)
+  # pull.consume_line              # => nil (place the parser at the end of IO)
   # pull.consume_token.str?        # => nil (current line is nil)
   # ```
   #
@@ -61,7 +61,7 @@ module Chem
   #
   # ```
   # pull = PullParser.new IO::Memory.new("abc123.45def\nABCDEF 5.16\n")
-  # pull.next_line
+  # pull.consume_line
   # pull.at(3, 6)     # returns the parser itself
   # pull.str          # => "123.45"
   # pull.float        # => 123.45
@@ -156,7 +156,7 @@ module Chem
     #
     # ```
     # pull = PullParser.new IO::Memory.new("123 456\n789\n")
-    # pull.next_line
+    # pull.consume_line
     # pull.consume(4).str?  # => "123 "
     # pull.consume(2).str?  # => "45"
     # pull.consume(20).str? # => "6"
@@ -176,7 +176,7 @@ module Chem
     #
     # ```
     # pull = PullParser.new IO::Memory.new("abc def\n1234 56 789\n")
-    # pull.next_line
+    # pull.consume_line
     # pull.consume(&.alphanumeric?).str? # => "123"
     # pull.consume(&.alphanumeric?).str? # => nil
     # pull.consume(&.whitespace?).str?   # => " "
@@ -196,22 +196,31 @@ module Chem
       self
     end
 
+    # Sets the line to the next line from the enclosed IO.
+    def consume_line : self
+      @line = @io.gets
+      @buffer = @line.try(&.to_slice) || Bytes.empty
+      @token_size = 0
+      @line_number += 1
+      self
+    end
+
     # Sets the current token to the next consecutive non-whitespace
     # characters in the current line.
     #
     # ```
     # pull = PullParser.new IO::Memory.new("abc def\n1234 56 789\n")
     # pull.consume_token.str? # => nil
-    # pull.next_line          # place the parser at the first line
+    # pull.consume_line       # place the parser at the first line
     # pull.consume_token.str? # => "abc"
     # pull.consume_token.str? # => "def"
     # pull.consume_token.str? # => nil
-    # pull.next_line          # place the parser at the second line
+    # pull.consume_line       # place the parser at the second line
     # pull.consume_token.str? # => "1234"
     # pull.consume_token.str? # => "56"
     # pull.consume_token.str? # => "789"
     # pull.consume_token.str? # => nil
-    # pull.next_line          # place the parser at the end of IO
+    # pull.consume_line       # place the parser at the end of IO
     # pull.consume_token.str? # => nil
     # ```
     def consume_token : self
@@ -223,7 +232,7 @@ module Chem
     #
     # ```
     # pull = PullParser.new IO::Memory.new("123 456\n789\n")
-    # pull.next_line
+    # pull.consume_line
     # pull.consume_until(' ').str? # => "123"
     # pull.consume_until('4').str? # => " "
     # pull.consume_until('x').str? # => "456"
@@ -239,7 +248,7 @@ module Chem
     #
     # ```
     # pull = PullParser.new IO::Memory.new("123 456\n789\n")
-    # pull.next_line
+    # pull.consume_line
     # pull.consume_until(&.whitespace?).str?    # => "123"
     # pull.consume_until(&.in_set?("0-9")).str? # => " "
     # pull.consume_until(&.whitespace?).str?    # => "456"
@@ -272,7 +281,7 @@ module Chem
     #
     # ```
     # pull = PullParser.new IO::Memory.new("123 456\n789\n")
-    # pull.next_line    # reads and sets the current line
+    # pull.consume_line # reads and sets the current line
     # pull.current_line # => "123 456"
     # pull.each_line { |line| puts line }
     # ```
@@ -288,17 +297,17 @@ module Chem
         if line = @line
           yield line
         end
-        next_line
+        consume_line
       end
     end
 
     # Returns `true` at the end of file, otherwise `false`.
     #
     # NOTE: This method attempts to read a line from the enclosed IO if
-    # the current line is not set, so calling `#next_line` after this
+    # the current line is not set, so calling `#consume_line` after this
     # could inadvertently discard a line.
     def eof? : Bool
-      @line.nil? && next_line && @line.nil?
+      @line.nil? && consume_line && @line.nil?
     end
 
     # Returns `true` if the current token is at the end of line,
@@ -310,7 +319,7 @@ module Chem
     # ```
     # pull = PullParser.new IO::Memory.new("123 456\n789\n")
     # pull.eol? # => true (no current line)
-    # pull.next_line
+    # pull.consume_line
     # pull.eol?               # => false (beginning of line)
     # pull.consume_token.str? # => "123"
     # pull.eol?               # => false
@@ -351,11 +360,11 @@ module Chem
     #
     # ```
     # pull = PullParser.new IO::Memory.new("1 2 3 4 5 6\n789\n")
-    # pull.next_line
+    # pull.consume_line
     # pull.consume_token
     # pull.expect('1').char? # => '1'
     # pull.expect 'a'        # raises ParseException (123 != 'a')
-    # pull.next_line
+    # pull.consume_line
     # pull.expect 'a' # raises ParseException (empty token)
     # ```
     def expect(
@@ -378,12 +387,12 @@ module Chem
     #
     # ```
     # pull = PullParser.new IO::Memory.new("a b c d e f")
-    # pull.next_line
+    # pull.consume_line
     # pull.consume_token.expect('a'..'c').char? # => 'a'
     # pull.consume_token.expect('a'..'c').char? # => 'b'
     # pull.consume_token.expect('a'..'c').char? # => 'c'
     # pull.consume_token.expect 'a'..'c'        # raises ParseException ('d' not in 'a'..'c')
-    # pull.next_line
+    # pull.consume_line
     # pull.expect 'a'..'c' # raises ParseException (empty token)
     # ```
     def expect(
@@ -406,10 +415,10 @@ module Chem
     #
     # ```
     # pull = PullParser.new IO::Memory.new("1 a 2 b 3 c\n789\n")
-    # pull.next_line
+    # pull.consume_line
     # pull.consume_token.expect({'1', '2', '3'}).char? # => '1'
     # pull.consume_token.expect({'1', '2', '3'})       # raises ParseException ('a' != 1, 2, and 3)
-    # pull.next_line
+    # pull.consume_line
     # pull.expect({'1', '2', '3'}) # raises ParseException (empty token)
     # ```
     def expect(
@@ -434,11 +443,11 @@ module Chem
     #
     # ```
     # pull = PullParser.new IO::Memory.new("123 456\n789\n")
-    # pull.next_line
+    # pull.consume_line
     # pull.consume_token
     # pull.expect("123").str? # => "123"
     # pull.expect "abc"       # raises ParseException (123 != abc)
-    # pull.next_line
+    # pull.consume_line
     # pull.expect "456" # raises ParseException (empty token)
     # ```
     def expect(
@@ -461,11 +470,11 @@ module Chem
     #
     # ```
     # pull = PullParser.new IO::Memory.new("123 456\n789\n")
-    # pull.next_line
+    # pull.consume_line
     # pull.consume_token
     # pull.expect(/[0-9]+/).str? # => "123"
     # pull.expect /[a-z]+/       # raises ParseException (123 does not match [a-z]+)
-    # pull.next_line
+    # pull.consume_line
     # pull.expect /[0-9]+/ # raises ParseException (empty token)
     # ```
     #
@@ -473,7 +482,7 @@ module Chem
     #
     # ```
     # pull = PullParser.new IO::Memory.new("123abc\n789\n")
-    # pull.next_line
+    # pull.consume_line
     # pull.consume_token
     # pull.expect(/[a-z]+/).str? # => "123abc"
     # pull.expect(/[0-9]+/).str? # => "123abc"
@@ -483,7 +492,7 @@ module Chem
     #
     # ```
     # pull = PullParser.new IO::Memory.new("123abc\n789\n")
-    # pull.next_line
+    # pull.consume_line
     # pull.consume_token.expect /^[a-z]+$/ # raises ParseException
     # ```
     def expect(
@@ -506,7 +515,7 @@ module Chem
     #
     # ```
     # pull = PullParser.new IO::Memory.new("123 456\n789\n")
-    # pull.next_line
+    # pull.consume_line
     # pull.consume_token
     # pull.expect(["123", "456"]).str? # => "123"
     # pull.consume_token
@@ -655,13 +664,13 @@ module Chem
     #
     # ```
     # pull = PullParser.new IO::Memory.new("123 456\n")
-    # pull.next_line
+    # pull.consume_line
     # pull.line # => "123 456"
     # pull.consume_token
     # pull.line # => "123 456"
     # pull.consume_token
     # pull.line # => "123 456"
-    # pull.next_line
+    # pull.consume_line
     # pull.line # => nil
     # ```
     def line : String?
@@ -673,27 +682,17 @@ module Chem
     #
     # ```
     # pull = PullParser.new IO::Memory.new("123 456\n")
-    # pull.next_line
+    # pull.consume_line
     # pull.line! # => "123 456"
     # pull.consume_token
     # pull.line! # => "123 456"
     # pull.consume_token
     # pull.line! # => "123 456"
-    # pull.next_line
+    # pull.consume_line
     # pull.line! # raises ParseException
     # ```
     def line!(message : String = "Expected a line") : String
       line || error(message)
-    end
-
-    # Reads and returns the next line from the enclosed IO, or `nil` if
-    # called at the end of the IO.
-    def next_line : self
-      @line = @io.gets
-      @buffer = @line.try(&.to_slice) || Bytes.empty
-      @token_size = 0
-      @line_number += 1
-      self
     end
 
     {% for type in [Float64, Int32, String] %}
@@ -791,7 +790,7 @@ module Chem
     #
     # ```
     # pull = PullParser.new IO::Memory.new("123 456\n789\n")
-    # pull.next_line
+    # pull.consume_line
     # pull.peek               # => '1' (first character at the beginning of line)
     # pull.peek               # => '1' (`#peek` does not consume characters)
     # pull.consume_token.str? # => "123"
@@ -810,7 +809,7 @@ module Chem
     #
     # ```
     # pull = PullParser.new IO::Memory.new("123 456\n789\n")
-    # pull.next_line
+    # pull.consume_line
     # pull.next_s?      # => "123"
     # pull.rest_of_line # => " 456"
     # pull.str?         # => " 456"
@@ -836,7 +835,7 @@ module Chem
     # Discards blank lines.
     def skip_blank_lines : self
       until eof? || !@line.try(&.blank?)
-        next_line
+        consume_line
       end
       self
     end
@@ -853,7 +852,7 @@ module Chem
     #
     # ```
     # pull = PullParser.new IO::Memory.new("  123 456\n789\n")
-    # pull.next_line
+    # pull.consume_line
     # pull.skip_whitespace
     # pull.str? # => nil # token size is zero
     # pull.line # => "123 456"

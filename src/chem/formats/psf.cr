@@ -30,13 +30,13 @@ module Chem::PSF
       @pull.error("Invalid PSF header") unless @pull.next_s? == "PSF"
       flags = @pull.rest_of_line.split
       variant = flags.compact_map { |f| Variant.parse?(f) }.first? || Variant::Standard
-      @pull.next_line # skip empty line
-      @pull.next_line
+      @pull.consume_line # skip empty line
+      @pull.consume_line
 
       n_remarks = @pull.next_i? || @pull.error("Invalid PSF header")
       @pull.error("Invalid PSF header") unless @pull.next_s? == "!NTITLE"
-      @pull.next_line
-      n_remarks.times { @pull.next_line } # skip REMARKS lines
+      @pull.consume_line
+      n_remarks.times { @pull.consume_line } # skip REMARKS lines
 
       @pull.skip_blank_lines
 
@@ -83,7 +83,7 @@ module Chem::PSF
           @atoms << atom
 
           prev_seg = segment
-          @pull.next_line
+          @pull.consume_line
         end
       end
 
@@ -129,7 +129,7 @@ module Chem::PSF
             records << T.new(*tuple.map { @atoms[@pull.next_i - 1] })
             size -= 1
           end
-          @pull.next_line
+          @pull.consume_line
         end
       end
     end
@@ -139,7 +139,7 @@ module Chem::PSF
       unless @pull.next_s?.try(&.starts_with?("!N#{title}"))
         @pull.error("Invalid #{title} section header")
       end
-      @pull.next_line
+      @pull.consume_line
       n_records
     end
   end

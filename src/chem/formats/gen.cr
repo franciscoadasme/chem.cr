@@ -23,14 +23,14 @@ module Chem::Gen
       when "C" then fractional = periodic = false
       else          @pull.error("Invalid geometry type")
       end
-      @pull.next_line
+      @pull.consume_line
 
       ele_map = [] of Element
       while str = @pull.next_s?
         element = PeriodicTable[str]? || @pull.error("Unknown element")
         ele_map << element
       end
-      @pull.next_line
+      @pull.consume_line
 
       structure = Structure.build(
         guess_bonds: @guess_bonds,
@@ -43,19 +43,19 @@ module Chem::Gen
           ele = ele_map[@pull.next_i - 1]?
           @pull.error "Invalid element index (expected 1 to #{ele_map.size})" unless ele
           vec = Spatial::Vec3.new @pull.next_f, @pull.next_f, @pull.next_f
-          @pull.next_line
+          @pull.consume_line
           builder.atom ele, vec
         end
       end
 
       if periodic
-        @pull.next_line # skip first unit cell line
+        @pull.consume_line # skip first unit cell line
         vi = Spatial::Vec3.new @pull.next_f, @pull.next_f, @pull.next_f
-        @pull.next_line
+        @pull.consume_line
         vj = Spatial::Vec3.new @pull.next_f, @pull.next_f, @pull.next_f
-        @pull.next_line
+        @pull.consume_line
         vk = Spatial::Vec3.new @pull.next_f, @pull.next_f, @pull.next_f
-        @pull.next_line
+        @pull.consume_line
         structure.cell = Spatial::Parallelepiped.new vi, vj, vk
         structure.coords.to_cart! if fractional
       end

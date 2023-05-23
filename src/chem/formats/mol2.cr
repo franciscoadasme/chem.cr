@@ -9,23 +9,23 @@ module Chem::Mol2
     end
 
     def skip_entry : Nil
-      @pull.next_line if @pull.next_s == "@<TRIPOS>MOLECULE"
+      @pull.consume_line if @pull.next_s == "@<TRIPOS>MOLECULE"
       skip_to_tag "@<TRIPOS>MOLECULE"
     end
 
     private def decode_entry : Structure
       skip_to_tag "@<TRIPOS>MOLECULE"
-      @pull.next_line
+      @pull.consume_line
       raise IO::EOFError.new if @pull.eof?
 
       title = @pull.line!.strip
-      @pull.next_line
+      @pull.consume_line
       n_atoms = @pull.next_i
       n_bonds = @pull.next_i
-      @pull.next_line
-      @pull.next_line
+      @pull.consume_line
+      @pull.consume_line
       include_charges = @pull.next_s != "NO_CHARGES"
-      @pull.next_line
+      @pull.consume_line
 
       Structure.build(
         guess_bonds: false,
@@ -38,7 +38,7 @@ module Chem::Mol2
           case @pull.str? || @pull.next_s?
           when "@<TRIPOS>ATOM"
             n_atoms.times do
-              @pull.next_line
+              @pull.consume_line
               serial = @pull.next_i
               name = @pull.next_s
               coords = Spatial::Vec3[@pull.next_f, @pull.next_f, @pull.next_f]
@@ -56,7 +56,7 @@ module Chem::Mol2
             end
           when "@<TRIPOS>BOND"
             n_bonds.times do
-              @pull.next_line
+              @pull.consume_line
               @pull.consume_token # skip bond index
               i = @pull.next_i
               j = @pull.next_i
@@ -70,7 +70,7 @@ module Chem::Mol2
               end
             end
           when "@<TRIPOS>CRYSIN"
-            @pull.next_line
+            @pull.consume_line
             x = @pull.next_f
             @pull.error "Invalid size" unless x > 0
             y = @pull.next_f

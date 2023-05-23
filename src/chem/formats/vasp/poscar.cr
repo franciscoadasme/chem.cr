@@ -16,17 +16,17 @@ module Chem::VASP::Poscar
       raise IO::EOFError.new if @pull.eof?
 
       title = @pull.line!.strip
-      @pull.next_line
+      @pull.consume_line
       scale_factor = @pull.next_f
-      @pull.next_line
+      @pull.consume_line
 
       # read unit cell
       vi = Spatial::Vec3.new @pull.next_f, @pull.next_f, @pull.next_f
-      @pull.next_line
+      @pull.consume_line
       vj = Spatial::Vec3.new @pull.next_f, @pull.next_f, @pull.next_f
-      @pull.next_line
+      @pull.consume_line
       vk = Spatial::Vec3.new @pull.next_f, @pull.next_f, @pull.next_f
-      @pull.next_line
+      @pull.consume_line
       cell = Spatial::Parallelepiped.new Spatial::Mat3.basis(vi, vj, vk) * scale_factor
 
       # read species
@@ -36,7 +36,7 @@ module Chem::VASP::Poscar
         uniq_elements << ele
       end
       @pull.error("Missing atom species") if uniq_elements.empty?
-      @pull.next_line
+      @pull.consume_line
 
       # read atom count
       elements = [] of Element
@@ -47,13 +47,13 @@ module Chem::VASP::Poscar
           @pull.error "Couldn't read number of atoms for #{ele.symbol}"
         end
       end
-      @pull.next_line
+      @pull.consume_line
 
       # read selective dynamics flag
       constrained = false
       if @pull.consume_token.char.in?('s', 'S')
         constrained = true
-        @pull.next_line
+        @pull.consume_line
         @pull.consume_token
       end
 
@@ -67,7 +67,7 @@ module Chem::VASP::Poscar
       else
         @pull.error "Invalid coordinate system"
       end
-      @pull.next_line
+      @pull.consume_line
 
       Structure.build(
         guess_bonds: @guess_bonds,
@@ -92,7 +92,7 @@ module Chem::VASP::Poscar
             when {false, false, false} then atom.constraint = :xyz
             end
           end
-          @pull.next_line
+          @pull.consume_line
         end
       end
     end

@@ -27,7 +27,7 @@ module Chem::Cube
             element: (PeriodicTable[@pull.next_i]? || @pull.error("Unknown element")),
             partial_charge: @pull.next_f,
             coords: read_vector
-          @pull.next_line
+          @pull.consume_line
         end
       end
     end
@@ -48,19 +48,19 @@ module Chem::Cube
     end
 
     private def decode_header : Spatial::Grid::Info
-      2.times { @pull.next_line }
+      2.times { @pull.consume_line }
 
-      @pull.next_line
+      @pull.consume_line
       @n_atoms = @pull.next_i
       @pull.error "Cube with multiple densities not supported" if @n_atoms < 0
       origin = read_vector * BOHR_TO_ANGS
-      @pull.next_line
+      @pull.consume_line
       ni, dvi = @pull.next_i, read_vector * BOHR_TO_ANGS
-      @pull.next_line
+      @pull.consume_line
       nj, dvj = @pull.next_i, read_vector * BOHR_TO_ANGS
-      @pull.next_line
+      @pull.consume_line
       nk, dvk = @pull.next_i, read_vector * BOHR_TO_ANGS
-      @pull.next_line
+      @pull.consume_line
 
       @attached = decode_attached
 

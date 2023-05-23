@@ -30,17 +30,17 @@ module Chem::DX
 
       4.times { @pull.consume_token }
       ni, nj, nk = @pull.next_i, @pull.next_i, @pull.next_i
-      @pull.next_line
+      @pull.consume_line
       @pull.consume_token # skip origin word
       origin = Spatial::Vec3[@pull.next_f, @pull.next_f, @pull.next_f]
-      @pull.next_line
+      @pull.consume_line
       vi, vj, vk = {ni, nj, nk}.map do |n|
         @pull.consume_token # skip delta word
         delta = Spatial::Vec3[@pull.next_f, @pull.next_f, @pull.next_f]
-        @pull.next_line
+        @pull.consume_line
         delta * (n - 1)
       end
-      2.times { @pull.next_line }
+      2.times { @pull.consume_line }
 
       bounds = Spatial::Parallelepiped.new vi, vj, vk, origin
       Spatial::Grid::Info.new bounds, {ni, nj, nk}

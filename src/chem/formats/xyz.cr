@@ -22,16 +22,16 @@ module Chem::XYZ
         use_templates: false,
       ) do |builder|
         n_atoms = @pull.next_i
-        @pull.next_line
+        @pull.consume_line
         metadata, columns = ExtendedParser.new(@pull).parse
         builder.title columns.empty? ? @pull.line.strip : (metadata["title"].as_s || "")
-        @pull.next_line
+        @pull.consume_line
         n_atoms.times do
           @pull.consume_token
           ele = PeriodicTable[@pull.int? || @pull.str]? || @pull.error("Unknown element")
           vec = Spatial::Vec3.new @pull.next_f, @pull.next_f, @pull.next_f
           builder.atom ele, vec
-          @pull.next_line
+          @pull.consume_line
         end
       end
     end
@@ -39,7 +39,7 @@ module Chem::XYZ
     def skip_entry : Nil
       return if @pull.eof?
       n_atoms = @pull.next_i
-      (n_atoms + 2).times { @pull.next_line }
+      (n_atoms + 2).times { @pull.consume_line }
     end
   end
 
