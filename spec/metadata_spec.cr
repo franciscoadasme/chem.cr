@@ -14,6 +14,102 @@ describe Chem::Metadata::Any do
     end
   end
 
+  describe "#as_a" do
+    it "returns an array of any" do
+      Chem::Metadata::Any.new([1, 2, 3]).as_a.should be_a Array(Chem::Metadata::Any)
+      Chem::Metadata::Any.new([1, 2, 3]).as_a.should eq [1, 2, 3]
+      Chem::Metadata::Any.new(%w(1 2 3)).as_a.should eq %w(1 2 3)
+      Chem::Metadata::Any.new(%w(1 2 3)).as_a.should_not eq [1, 2, 3]
+      Chem::Metadata::Any.new([1, 2, 3]).as_a.sum(&.as_i).should eq 6
+      Chem::Metadata::Any.new([1, 2, 3]).as_a[2].as_i.should eq 3
+    end
+
+    it "returns a typed array" do
+      any = Chem::Metadata::Any.new([1, 2, 3])
+      any.as_a(Int32).should be_a Array(Int32)
+      any.as_a(Int32).should eq [1, 2, 3]
+      any.as_a(Int32).should_not eq %w(1 2 3)
+      any.as_a(Int32).sum.should eq 6
+    end
+
+    it "raises if invalid" do
+      expect_raises(TypeCastError) { Chem::Metadata::Any.new("1").as_a }
+    end
+
+    it "raises if invalid array type" do
+      expect_raises(TypeCastError) do
+        Chem::Metadata::Any.new([1, 2, 3]).as_a(String)
+      end
+    end
+  end
+
+  describe "#as_a?" do
+    it "returns an array of any" do
+      Chem::Metadata::Any.new([1, 2, 3]).as_a?.should be_a Array(Chem::Metadata::Any)
+      Chem::Metadata::Any.new([1, 2, 3]).as_a?.should eq [1, 2, 3]
+      Chem::Metadata::Any.new(%w(1 2 3)).as_a?.should eq %w(1 2 3)
+      Chem::Metadata::Any.new(%w(1 2 3)).as_a?.should_not eq [1, 2, 3]
+      Chem::Metadata::Any.new([1, 2, 3]).as_a?.try(&.sum(&.as_i)).should eq 6
+      Chem::Metadata::Any.new([1, 2, 3]).as_a?.try(&.[2].as_i).should eq 3
+    end
+
+    it "returns a typed array" do
+      any = Chem::Metadata::Any.new([1, 2, 3])
+      any.as_a?(Int32).should be_a Array(Int32)
+      any.as_a?(Int32).should eq [1, 2, 3]
+      any.as_a?(Int32).should_not eq %w(1 2 3)
+      any.as_a?(Int32).try(&.sum).should eq 6
+    end
+
+    it "returns nil if invalid" do
+      Chem::Metadata::Any.new("1").as_a?.should be_nil
+    end
+
+    it "returns nil if invalid array type" do
+      Chem::Metadata::Any.new([1, 2, 3]).as_a?(String).should be_nil
+    end
+  end
+
+  describe "#as_2a" do
+    it "returns a nested typed array" do
+      any = Chem::Metadata::Any.new([[1, 2], [3]])
+      any.as_2a(Int32).should be_a Array(Array(Int32))
+      any.as_2a(Int32).should eq [[1, 2], [3]]
+      any.as_2a(Int32).should_not eq %w(1 2 3)
+      any.as_2a(Int32).sum(&.sum).should eq 6
+    end
+
+    it "raises if invalid" do
+      expect_raises(TypeCastError) { Chem::Metadata::Any.new("1").as_2a(String) }
+      expect_raises(TypeCastError) { Chem::Metadata::Any.new([1]).as_2a(Int32) }
+    end
+
+    it "raises if invalid array type" do
+      expect_raises(TypeCastError) do
+        Chem::Metadata::Any.new([[1, 2], [3]]).as_2a(String)
+      end
+    end
+  end
+
+  describe "#as_2a?" do
+    it "returns a nested typed array" do
+      any = Chem::Metadata::Any.new([[1, 2], [3]])
+      any.as_2a?(Int32).should be_a Array(Array(Int32))
+      any.as_2a?(Int32).should eq [[1, 2], [3]]
+      any.as_2a?(Int32).should_not eq %w(1 2 3)
+      any.as_2a?(Int32).try(&.sum(&.sum)).should eq 6
+    end
+
+    it "returns nil if invalid" do
+      Chem::Metadata::Any.new("1").as_2a?(String).should be_nil
+      Chem::Metadata::Any.new([1]).as_2a?(Int32).should be_nil
+    end
+
+    it "returns nil if invalid array type" do
+      Chem::Metadata::Any.new([[1, 2], [3]]).as_2a?(String).should be_nil
+    end
+  end
+
   describe "#as_bool" do
     it "returns a bool" do
       Chem::Metadata::Any.new(true).as_bool.should eq true

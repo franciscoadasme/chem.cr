@@ -1,8 +1,8 @@
 # A `Metadata` is a hash-like container that holds metadata about an
 # object. It maps a property name (as string) to a primitive value
-# (integer, float, string, or bool). Most of the functionality mirrors
-# that of a `Hash`, where some specific methods like `Hash#dig` or
-# default values are excluded.
+# (integer, float, string, or bool) or an array of them. Most of the
+# functionality mirrors that of a `Hash`, where some specific methods
+# like `Hash#dig` or default values are excluded.
 #
 # Values are stored as `Any` instances, which a thin wrapper for a
 # dynamically-typed primitive value and it offers convenient `#as_*`
@@ -13,26 +13,41 @@
 # ```
 # metadata = Chem::Metadata.new
 #
-# # only four data types are supported
+# # four data types are supported
 # metadata["str"] = "Foo"
 # metadata["int"] = 123
 # metadata["float"] = 1.234
 # metadata["bool"] = true
 # # metadata["x"] = /[a-z]/ # fails to compile
 #
-# # values are stored as `Any` instances
-# metadata["str"]             # => Chem::Metadata::Type("Foo")
+# # (base type) arrays are also supported
+# metadata["array_of_int"] = [1, 2, 3]
+# metadata["array_of_string"] = %w(1 2 3)
+# metadata["nested_array"] = [[1, 2], [3]]
+# # metadata["mixed_array"] = [1, "2", true] # does not compile
+# ```
+#
+# Values are stored as `Any` instances. Use `#as_*` cast methods get the
+#  actual value.
+#
+# ```
+# metadata["str"]             # => Chem::Metadata::Any("Foo")
 # metadata["str"].as_s.upcase # => "FOO"
 # metadata["str"].as_i?       # => nil
 # metadata["str"].as_i        # raises TypeCastError
+# metadata["str"].as_a        # raises TypeCastError
+# ```
+#
+# Arrays are returned as `Array(Any)`. Use `Array#map(&.as_*)` or
+# `#as_a(type)` to get a typed array.
+#
+# ```
+# metadata["array_of_int"].as_a             # => [Chem::Metadata::Any(1), ...]
+# metadata["array_of_int"].as_a.map(&.as_i) # => [1, 2, 3]
+# metadata["array_of_int"].as_a(Int32)      # => [1, 2, 3]
+# metadata["nested_array"].as_2a(Int32)     # => [[1, 2], [3]]
 # ```
 class Chem::Metadata
-  # Union of possible metadata value types.
-  alias ValueType = Int32 | Float64 | String | Bool
-
-  include Enumerable({String, ValueType})
-  include Iterable({String, ValueType})
-
   # `Any` wraps a value that can be any of the possible metadata
   # types (`ValueType`). It provides convenient `#as_*` cast methods.
   struct Any
@@ -62,6 +77,44 @@ class Chem::Metadata
     def ==(rhs) : Bool
       @raw == rhs
     end
+
+    # Returns the enclosed value as an array of `Any`. Raises
+    # `TypeCastError` if it's not an array.
+    def as_a : Array(Any)
+      @raw.as(Array).map { |ele| Any.new(ele) }
+    end
+
+    # Returns the enclosed value as an array of `Any`, or `nil` if it's
+    # not an array.
+    def as_a? : Array(Any)?
+      @raw.as?(Array).try &.map { |ele| Any.new(ele) }
+    end
+
+    {% for type in [Int32, Float64, String, Bool] %}
+      # Returns the enclosed value as a nested array of {{type}}. Raises
+      # `TypeCastError` if it's not a nested array of {{type}}.
+      def as_2a(type : {{type}}.class) : Array(Array({{type}}))
+        @raw.as(Array(Array({{type}})))
+      end
+
+      # Returns the enclosed value as an nested array of {{type}}, or
+      # `nil` if it's not an nested array of {{type}}.
+      def as_2a?(type : {{type}}.class) : Array(Array({{type}}))?
+        @raw.as?(Array(Array({{type}})))
+      end
+
+      # Returns the enclosed value as an array of {{type}}. Raises
+      # `TypeCastError` if it's not an array of {{type}}.
+      def as_a(type : {{type}}.class) : Array({{type}})
+        @raw.as(Array({{type}}))
+      end
+
+      # Returns the enclosed value as an array of {{type}}, or `nil` if
+      # it's not an array of {{type}}.
+      def as_a?(type : {{type}}.class) : Array({{type}})?
+        @raw.as?(Array({{type}}))
+      end
+    {% end %}
 
     # Returns the enclosed value as a bool. Raises `TypeCastError` if
     # it's not a bool.
@@ -131,6 +184,15 @@ class Chem::Metadata
       @raw.to_s io
     end
   end
+
+  # Union of possible metadata value types.
+  alias ValueType = Int32 | Float64 | String | Bool |
+                    Array(Int32) | Array(Float64) | Array(String) | Array(Bool) |
+                    Array(Array(Int32)) | Array(Array(Float64)) |
+                    Array(Array(String)) | Array(Array(Bool))
+
+  include Enumerable({String, ValueType})
+  include Iterable({String, ValueType})
 
   @data = Hash(String, Any).new
 
