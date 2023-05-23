@@ -18,7 +18,7 @@ module Chem::Mol2
       @pull.next_line
       raise IO::EOFError.new if @pull.eof?
 
-      title = @pull.line.strip
+      title = @pull.line!.strip
       @pull.next_line
       n_atoms = @pull.next_i
       n_bonds = @pull.next_i

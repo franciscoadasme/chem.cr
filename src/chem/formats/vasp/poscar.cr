@@ -15,7 +15,7 @@ module Chem::VASP::Poscar
     private def decode_entry : Structure
       raise IO::EOFError.new if @pull.eof?
 
-      title = @pull.line.strip
+      title = @pull.line!.strip
       @pull.next_line
       scale_factor = @pull.next_f
       @pull.next_line

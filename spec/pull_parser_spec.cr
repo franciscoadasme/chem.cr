@@ -25,7 +25,7 @@ describe Chem::PullParser do
 
     it "raises at end of file" do
       pull = parser_for "123\n456\n"
-      while pull.next_line; end
+      until pull.next_line.eof?; end
       expect_raises(Chem::ParseException, "Cursor out of current line") do
         pull.at(0, 2)
       end
@@ -106,7 +106,7 @@ describe Chem::PullParser do
 
     it "returns nil at end of file" do
       pull = parser_for "123\n456\n789\n"
-      while pull.next_line; end
+      until pull.next_line.eof?; end
       pull.char?.should be_nil
     end
   end
@@ -167,7 +167,7 @@ describe Chem::PullParser do
 
     it "returns nil at the beginning" do
       pull = parser_for "123\n456\n"
-      while pull.next_line; end
+      until pull.next_line.eof?; end
       pull.current_line.should be_nil
     end
   end
@@ -210,7 +210,7 @@ describe Chem::PullParser do
   describe "#eof?" do
     it "returns true at end of file" do
       pull = parser_for "123\n456\n"
-      while pull.next_line; end
+      until pull.next_line.eof?; end
       pull.eof?.should be_true
     end
 
@@ -666,14 +666,6 @@ describe Chem::PullParser do
       pull.line.should eq "123 456"
     end
 
-    it "returns rest of current line" do
-      pull = parser_for("123 456\n789\n")
-      pull.next_line
-      pull.consume_token
-      pull.consume_token
-      pull.line.should eq "456"
-    end
-
     it "does not consume" do
       pull = parser_for "123 456\n789\n"
       pull.next_line
@@ -681,41 +673,38 @@ describe Chem::PullParser do
       pull.consume_token
       pull.line.should eq "123 456"
       pull.consume_token
-      pull.line.should eq "456"
+      pull.line.should eq "123 456"
     end
 
-    it "returns an empty string at end of line" do
+    it "returns nil at end of file" do
+      pull = parser_for("123 456\n789\n")
+      until pull.next_line.eof?; end
+      pull.line.should be_nil
+    end
+  end
+
+  describe "#line!" do
+    it "returns current line" do
       pull = parser_for("123 456\n789\n")
       pull.next_line
-      until pull.consume_token.eol?; end
-      pull.line.should eq ""
+      pull.line!.should eq "123 456"
     end
 
-    it "raises at end of file" do
+    it "raises at start/end of file" do
       pull = parser_for("123 456\n789\n")
-      while pull.next_line; end
-      expect_raises(Chem::ParseException, "End of file") do
-        pull.line
-      end
-    end
-
-    it "raises with message" do
-      pull = parser_for "abc def\n"
-      pull.next_line
-      pull.next_line
-      expect_raises(Chem::ParseException, "Expected config line") do
-        pull.line("Expected config line")
-      end
+      expect_raises(Chem::ParseException, "Expected a line") { pull.line! }
+      until pull.next_line.eof?; end
+      expect_raises(Chem::ParseException, "Expected a line") { pull.line! }
     end
   end
 
   describe "#next_line" do
     it "loads and returns the next line in the IO" do
       pull = parser_for("123 456\n789\nABC\tDEF\nabc def ghi\n")
-      pull.next_line.should eq "123 456"
-      pull.next_line.should eq "789"
-      pull.next_line.should eq "ABC\tDEF"
-      pull.next_line.should eq "abc def ghi"
+      pull.next_line.line.should eq "123 456"
+      pull.next_line.line.should eq "789"
+      pull.next_line.line.should eq "ABC\tDEF"
+      pull.next_line.line.should eq "abc def ghi"
     end
 
     it "resets current token" do
@@ -729,13 +718,6 @@ describe Chem::PullParser do
       pull.str?.should be_nil
       pull.consume_token
       pull.str?.should eq "789"
-    end
-
-    it "returns nil at end of file" do
-      pull = parser_for("123 456\n789\n")
-      pull.next_line.should eq "123 456"
-      pull.next_line.should eq "789"
-      pull.next_line.should be_nil
     end
   end
 
@@ -753,7 +735,7 @@ describe Chem::PullParser do
       expect_raises(Chem::ParseException, "Invalid real number") do
         pull.next_f
       end
-      while pull.next_line; end
+      until pull.next_line.eof?; end
       expect_raises(Chem::ParseException, "Invalid real number") do
         pull.next_f
       end
@@ -787,7 +769,7 @@ describe Chem::PullParser do
     it "returns nil if line is not set" do
       pull = parser_for("12.3 4.56\n789\n")
       pull.next_f?.should be_nil
-      while pull.next_line; end
+      until pull.next_line.eof?; end
       pull.next_f?.should be_nil
     end
   end
@@ -806,7 +788,7 @@ describe Chem::PullParser do
       expect_raises(Chem::ParseException, "Invalid integer") do
         pull.next_i
       end
-      while pull.next_line; end
+      until pull.next_line.eof?; end
       expect_raises(Chem::ParseException, "Invalid integer") do
         pull.next_i
       end
@@ -840,7 +822,7 @@ describe Chem::PullParser do
     it "returns nil if line is not set" do
       pull = parser_for("123 456\n789\n")
       pull.next_i?.should be_nil
-      while pull.next_line; end
+      until pull.next_line.eof?; end
       pull.next_i?.should be_nil
     end
   end
@@ -859,7 +841,7 @@ describe Chem::PullParser do
       expect_raises(Chem::ParseException, "Empty token") do
         pull.next_s
       end
-      while pull.next_line; end
+      until pull.next_line.eof?; end
       expect_raises(Chem::ParseException, "Empty token") do
         pull.next_s
       end
@@ -892,7 +874,7 @@ describe Chem::PullParser do
     it "returns nil if line is not set" do
       pull = parser_for("123 456\n789\n")
       pull.next_s?.should be_nil
-      while pull.next_line; end
+      until pull.next_line.eof?; end
       pull.next_s?.should be_nil
     end
   end
@@ -1049,7 +1031,7 @@ describe Chem::PullParser do
       pull.next_line
       pull.skip_whitespace
       pull.str?.should be_nil # token size is zero
-      pull.line.should eq "123 456"
+      pull.rest_of_line.should eq "123 456"
     end
   end
 
@@ -1101,8 +1083,7 @@ describe Chem::PullParser do
     it "discards blank lines" do
       pull = parser_for("  \t \n \t \r\n\n\n123 456")
       pull.skip_blank_lines
-      pull.consume_token
-      pull.str?.should eq "123"
+      pull.consume_token.str?.should eq "123"
     end
   end
 

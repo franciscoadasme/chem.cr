@@ -28,12 +28,14 @@ module Chem::PSF
       raise IO::EOFError.new if @pull.eof?
 
       @pull.error("Invalid PSF header") unless @pull.next_s? == "PSF"
-      flags = @pull.line.split
+      flags = @pull.rest_of_line.split
       variant = flags.compact_map { |f| Variant.parse?(f) }.first? || Variant::Standard
       @pull.next_line # skip empty line
       @pull.next_line
+
       n_remarks = @pull.next_i? || @pull.error("Invalid PSF header")
       @pull.error("Invalid PSF header") unless @pull.next_s? == "!NTITLE"
+      @pull.next_line
       n_remarks.times { @pull.next_line } # skip REMARKS lines
 
       @pull.skip_blank_lines
@@ -42,7 +44,6 @@ module Chem::PSF
       structure = Structure.build do |builder|
         prev_seg = nil
         n_atoms.times do
-          @pull.next_line || @pull.error("Expected ATOM line")
           case variant
           in .standard?
             serial = @pull.at(0..7).int
@@ -82,6 +83,7 @@ module Chem::PSF
           @atoms << atom
 
           prev_seg = segment
+          @pull.next_line
         end
       end
 
@@ -122,12 +124,12 @@ module Chem::PSF
       n_lines = (size / records_per_line).ceil.to_i
       Array(T).new(size).tap do |records|
         n_lines.times do
-          @pull.next_line
           records_per_line.times do
             break unless size > 0
             records << T.new(*tuple.map { @atoms[@pull.next_i - 1] })
             size -= 1
           end
+          @pull.next_line
         end
       end
     end
@@ -137,6 +139,7 @@ module Chem::PSF
       unless @pull.next_s?.try(&.starts_with?("!N#{title}"))
         @pull.error("Invalid #{title} section header")
       end
+      @pull.next_line
       n_records
     end
   end

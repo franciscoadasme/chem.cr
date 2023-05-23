@@ -284,11 +284,11 @@ module Chem
     # 789
     # ```
     def each_line(& : String ->) : Nil
-      if line = @line
-        yield line
-      end
-      while line = next_line
-        yield line
+      until eof?
+        if line = @line
+          yield line
+        end
+        next_line
       end
     end
 
@@ -298,7 +298,7 @@ module Chem
     # the current line is not set, so calling `#next_line` after this
     # could inadvertently discard a line.
     def eof? : Bool
-      @line.nil? && next_line.nil?
+      @line.nil? && next_line && @line.nil?
     end
 
     # Returns `true` if the current token is at the end of line,
@@ -651,40 +651,49 @@ module Chem
       end
     end
 
-    # Returns the current line starting at the current token if set. An
-    # empty string is returned at the end of line. Raises
-    # `ParseException` with the given message at end of file.
-    #
-    # NOTE: This method does not change the cursor.
+    # Returns the current line if set, else `nil`.
     #
     # ```
-    # pull = PullParser.new IO::Memory.new("123 456\n789\n")
+    # pull = PullParser.new IO::Memory.new("123 456\n")
     # pull.next_line
-    # # token is not set, returns entire line
     # pull.line # => "123 456"
     # pull.consume_token
-    # # token is "123", returns line starting at "123"
     # pull.line # => "123 456"
     # pull.consume_token
-    # # token is "456", returns line starting at "456"
-    # pull.line # => "456"
+    # pull.line # => "123 456"
+    # pull.next_line
+    # pull.line # => nil
     # ```
-    def line(message : String = "End of file") : String
-      if @line
-        String.new(@buffer)
-      else
-        error(message)
-      end
+    def line : String?
+      @line
+    end
+
+    # Returns the current line. Raises `ParseException` with the given
+    # message at the start or end of file.
+    #
+    # ```
+    # pull = PullParser.new IO::Memory.new("123 456\n")
+    # pull.next_line
+    # pull.line! # => "123 456"
+    # pull.consume_token
+    # pull.line! # => "123 456"
+    # pull.consume_token
+    # pull.line! # => "123 456"
+    # pull.next_line
+    # pull.line! # raises ParseException
+    # ```
+    def line!(message : String = "Expected a line") : String
+      line || error(message)
     end
 
     # Reads and returns the next line from the enclosed IO, or `nil` if
     # called at the end of the IO.
-    def next_line : String?
+    def next_line : self
       @line = @io.gets
       @buffer = @line.try(&.to_slice) || Bytes.empty
       @token_size = 0
       @line_number += 1
-      @line
+      self
     end
 
     {% for type in [Float64, Int32, String] %}
@@ -826,7 +835,9 @@ module Chem
 
     # Discards blank lines.
     def skip_blank_lines : self
-      while next_line.presence.nil?; end
+      until eof? || !@line.try(&.blank?)
+        next_line
+      end
       self
     end
 

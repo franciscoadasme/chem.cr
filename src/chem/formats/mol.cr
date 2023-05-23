@@ -29,9 +29,9 @@ module Chem::Mol
 
     private def decode_entry : Structure
       raise IO::EOFError.new if @pull.eof?
-      title = @pull.line.strip
+      title = @pull.line!.strip
       @pull.next_line # skip software
-      comment = @pull.next_line.try(&.strip.presence)
+      comment = @pull.next_line.line!.strip.presence
 
       @pull.next_line
       variant = @pull.at(33, 6).parse("Invalid Mol variant %{token}") do |str|
