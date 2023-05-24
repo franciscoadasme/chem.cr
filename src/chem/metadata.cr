@@ -48,14 +48,32 @@
 # metadata["nested_array"].as_2a(Int32)     # => [[1, 2], [3]]
 # ```
 class Chem::Metadata
+  # Union of possible metadata value types.
+  alias ValueType = Bool | Int32 | Float64 | String
+
+  include Enumerable({String, ValueType})
+  include Iterable({String, ValueType})
+
   # `Any` wraps a value that can be any of the possible metadata
   # types (`ValueType`). It provides convenient `#as_*` cast methods.
   struct Any
     # Returns the enclosed value.
-    getter raw : ValueType
+    getter raw : ValueType | Array(ValueType) | Array(Array(ValueType))
 
     # Creates a new `Any` instance by enclosing the given value.
     def initialize(@raw : ValueType)
+    end
+
+    # :ditto:
+    def initialize(arr : Array(Array))
+      @raw = arr.map do |ele|
+        ele.as(Array).map &.as(Int32 | Float64 | Bool | String)
+      end
+    end
+
+    # :ditto:
+    def initialize(arr : Array)
+      @raw = arr.map &.as(Int32 | Float64 | Bool | String)
     end
 
     # Returns `true` if the enclosed values are equal, else `false`.
@@ -94,25 +112,32 @@ class Chem::Metadata
       # Returns the enclosed value as a nested array of {{type}}. Raises
       # `TypeCastError` if it's not a nested array of {{type}}.
       def as_2a(type : {{type}}.class) : Array(Array({{type}}))
-        @raw.as(Array(Array({{type}})))
+        @raw.as(Array).map { |ele| ele.as(Array).map &.as({{type}}) }
       end
 
       # Returns the enclosed value as an nested array of {{type}}, or
       # `nil` if it's not an nested array of {{type}}.
       def as_2a?(type : {{type}}.class) : Array(Array({{type}}))?
-        @raw.as?(Array(Array({{type}})))
+        @raw.as?(Array).try do |arr|
+          arr.map do |ele|
+            nested_arr = ele.as?(Array) || return
+            nested_arr.map do |nested_ele|
+              nested_ele.as?({{type}}) || return
+            end
+          end
+        end
       end
 
       # Returns the enclosed value as an array of {{type}}. Raises
       # `TypeCastError` if it's not an array of {{type}}.
       def as_a(type : {{type}}.class) : Array({{type}})
-        @raw.as(Array({{type}}))
+        @raw.as(Array).map &.as({{type}})
       end
 
       # Returns the enclosed value as an array of {{type}}, or `nil` if
       # it's not an array of {{type}}.
       def as_a?(type : {{type}}.class) : Array({{type}})?
-        @raw.as?(Array({{type}}))
+        @raw.as?(Array).try &.map { |ele| ele.as?({{type}}) || return }
       end
     {% end %}
 
@@ -185,15 +210,6 @@ class Chem::Metadata
     end
   end
 
-  # Union of possible metadata value types.
-  alias ValueType = Int32 | Float64 | String | Bool |
-                    Array(Int32) | Array(Float64) | Array(String) | Array(Bool) |
-                    Array(Array(Int32)) | Array(Array(Float64)) |
-                    Array(Array(String)) | Array(Array(Bool))
-
-  include Enumerable({String, ValueType})
-  include Iterable({String, ValueType})
-
   @data = Hash(String, Any).new
 
   # Returns the value for the given key. Raises `KeyError` if not
@@ -209,6 +225,12 @@ class Chem::Metadata
       value
     end
   {% end %}
+
+  # :ditto:
+  def []=(key : String, value : Array) : Array
+    @data[key] = Any.new(value)
+    value
+  end
 
   # Returns the value for the given key. Returns `nil` if not found.
   def []?(key : String) : Any?
