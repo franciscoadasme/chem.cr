@@ -69,6 +69,101 @@ describe Chem::PullParser do
     end
   end
 
+  describe "#bool" do
+    it "raises if blank" do
+      expect_raises(Chem::ParseException, "Invalid boolean") do
+        parser_for("abc   def\n").consume_line.at(3, 3).bool
+      end
+    end
+
+    it "raises if invalid" do
+      expect_raises(Chem::ParseException, "Invalid boolean") do
+        parser_for("abc\n").consume_line.consume_token.bool
+      end
+    end
+
+    it "raises at the beginning of line" do
+      expect_raises(Chem::ParseException, "Invalid boolean") do
+        parser_for("12345\n").bool
+      end
+    end
+
+    it "raises at the end of line" do
+      expect_raises(Chem::ParseException, "Invalid boolean") do
+        pull = parser_for("12345\n")
+        pull.consume_line
+        until pull.consume_token.eol?; end
+        pull.bool
+      end
+    end
+
+    it "raises with message" do
+      expect_raises(Chem::ParseException, %q{Expected a boolean, got "2.3451"}) do
+        parser_for("2.3451")
+          .consume_line
+          .consume_token
+          .int("Expected a boolean, got %{token}")
+      end
+    end
+
+    describe "with default" do
+      it "returns it if blank" do
+        actual = parser_for("abc   def\n").consume_line.at(3, 3).bool(if_blank: false)
+        actual.should be_false
+      end
+
+      it "raises if invalid" do
+        expect_raises(Chem::ParseException, "Invalid boolean") do
+          parser_for("abc\n").consume_line.consume_token.bool(if_blank: true)
+        end
+      end
+
+      it "returns default at the beginning of line" do
+        parser_for("12345\n").bool(if_blank: true).should be_true
+      end
+
+      it "returns default at the end of line" do
+        pull = parser_for("12345\n").consume_line
+        until pull.consume_token.eol?; end
+        pull.bool(if_blank: false).should be_false
+      end
+    end
+  end
+
+  describe "#bool?" do
+    it_parses "   ", nil, &.bool?
+    it_parses "true", true, &.bool?
+    it_parses "True", true, &.bool?
+    it_parses "TRUE", true, &.bool?
+    it_parses "t", true, &.bool?
+    it_parses "T", true, &.bool?
+    it_parses "false", false, &.bool?
+    it_parses "False", false, &.bool?
+    it_parses "FALSE", false, &.bool?
+    it_parses "f", false, &.bool?
+    it_parses "F", false, &.bool?
+    it_parses "false   \n", false, &.bool?
+    it_parses "foo", nil, &.bool?
+    it_parses "truefoo", nil, &.bool?
+    it_parses "tr", nil, &.bool?
+    it_parses "tru", nil, &.bool?
+    it_parses "fa", nil, &.bool?
+    it_parses "fal", nil, &.bool?
+    it_parses "fals", nil, &.bool?
+    it_parses "xtrue", nil, &.bool?
+
+    it "returns nil at the beginning of line" do
+      parser_for("true\n").bool?.should be_nil
+    end
+
+    it "returns nil at the end of line" do
+      pull = parser_for("false\n")
+      pull.consume_line
+      until pull.consume_token.eol?; end
+      pull.bool?.should be_nil
+    end
+  end
+
   describe "#char" do
     it "raises on missing char" do
       expect_raises(Chem::ParseException, "Empty token") do

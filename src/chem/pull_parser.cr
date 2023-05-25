@@ -138,6 +138,51 @@ module Chem
       self
     end
 
+    # Parses and returns the boolean represented by the current token.
+    # Raises `ParseException` with the given message if the token is not
+    # set or it is not a valid boolean.
+    #
+    # Valid boolean values include "true", "t", "false", and "f".
+    # Parsing is case insensitive so "true", "True", and "TRUE" are
+    # valid.
+    def bool(message : String = "Invalid boolean") : Bool
+      case value = bool?
+      in Bool then value
+      in Nil  then error(message)
+      end
+    end
+
+    # Parses and returns the boolean represented by the current token.
+    # Returns the given default value if the token is blank. Raises
+    # `ParseException` if the token is not set or it is not a valid
+    # boolean.
+    #
+    # Valid boolean values include "true", "t", "false", and "f".
+    # Parsing is case insensitive so "true", "True", and "TRUE" are
+    # valid.
+    def bool(if_blank default : Bool) : Bool
+      if !(bytes = token) || bytes.all?(&.unsafe_chr.ascii_whitespace?)
+        default
+      else
+        bool
+      end
+    end
+
+    # Parses and returns the boolean represented by the current token,
+    # or `nil` if the token is not set or it is not a valid boolean.
+    #
+    # Valid boolean values include "true", "t", "false", and "f".
+    # Parsing is case insensitive so "true", "True", and "TRUE" are
+    # valid.
+    def bool? : Bool?
+      case str?.try(&.camelcase.downcase.strip)
+      when "t", "true"
+        true
+      when "f", "false"
+        false
+      end
+    end
+
     # Returns the first character of the curren token. Raises
     # `ParseException` with the message if the token is not set.
     def char(message : String = "Empty token") : Char
@@ -695,9 +740,9 @@ module Chem
       line || error(message)
     end
 
-    {% for type in [Float64, Int32, String] %}
+    {% for type in [Bool, Float64, Int32, String] %}
       {% method = type == String ? "str" : type.stringify.downcase.gsub(/\d/, "") %}
-      {% suffix = type.name.stringify.downcase.chars[0] %}
+      {% suffix = type == Bool ? "bool" : type.name.stringify.downcase.chars[0] %}
 
       # Reads the next token in the current line, and interprets it via
       # `#{{method.id}}`, which raises `ParseException` at the end of
