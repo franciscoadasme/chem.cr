@@ -744,6 +744,18 @@ module Chem
       {% method = type == String ? "str" : type.stringify.downcase.gsub(/\d/, "") %}
       {% suffix = type == Bool ? "bool" : type.name.stringify.downcase.chars[0] %}
 
+      # Parses and returns the current token as `{{type}}` by calling
+      # `#{{method.id}}`. Raises `ParseException` if parsing fails.
+      def parse(type : {{type}}.class) : {{type}}
+        {{method.id}}
+      end
+
+      # Parses and returns the current token as `{{type}}` by calling
+      # `#{{method.id}}?`, or `nil` if parsing fails.
+      def parse?(type : {{type}}.class) : {{type}}?
+        {{method.id}}?
+      end
+
       # Reads the next token in the current line, and interprets it via
       # `#{{method.id}}`, which raises `ParseException` at the end of
       # line or if the token is an invalid representation.
