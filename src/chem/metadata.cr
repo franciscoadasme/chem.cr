@@ -349,6 +349,29 @@ class Chem::Metadata
     @data.keys
   end
 
+  # Adds the contents of *other* to this metadata. Existing entries will
+  # be replaced with those in *other*¨.
+  def merge!(other : self) : self
+    other.each do |key, value|
+      @data[key] = value
+    end
+    self
+  end
+
+  # Adds the contents of *other* to this metadata. If a key exists in
+  # both hashes, the given block is called with the key, the value in
+  # `self` and the value in *other*, and the returned value will be set.
+  def merge!(other : self, & : String, Any, Any -> _) : self
+    other.each do |key, value|
+      if current_value = self[key]?
+        self[key] = yield key, current_value, value
+      else
+        @data[key] = value
+      end
+    end
+    self
+  end
+
   # Deletes the entries for which the given block is truthy.
   def reject!(& : String, Any ->) : self
     @data.reject! { |key, value| yield key, value }
