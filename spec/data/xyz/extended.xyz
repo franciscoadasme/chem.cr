@@ -1,0 +1,10 @@
+8
+Title="Cubic Si" Properties=species:S:1:pos:R:3:constraint:L:3:chain:S:1:resid:I:1:resname:S:1:charge:I:1:dd:R:3:label:S:1 Lattice=[[5.44, 0.0, 0.0], [0.0, 5.44, 0.0], [0.0, 0.0, 5.44]] Energy=-123.5e-3 Dipole={0.234 1.234 10.234} Pressure=[1.23, 1.254, 0.923]   Time=1030.1 Step=515050 Converged Wrap=False
+Si  0.00  0.00  0.00  T  F  F  A   1  SIL 0  0.1 0.2 0.3 si1
+Si  1.36  1.36  1.36  T  F  F  A   2  SIL 0  0.1 0.2 0.3 si2
+Si  2.72  2.72  0.00  T  F  F  A   3  SIL 0  0.1 0.2 0.3 si3
+Si  4.08  4.08  1.36  T  F  F  A   4  SIL 2  0.1 0.2 0.3 si4
+Si  2.72  0.00  2.72  T  F  F  B   1  SIL 0  0.1 0.2 0.3 si5
+Si  4.08  1.36  4.08  T  F  F  B   2  SIL 0  0.1 0.2 0.3 si6
+Si  0.00  2.72  2.72  T  T  T  B   3  SIL 1  0.1 0.2 0.3 si7
+Si  1.36  4.08  4.08  T  T  T  C   1  SIL 0  0.1 0.2 0.3 si8
