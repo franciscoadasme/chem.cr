@@ -901,9 +901,9 @@
 
   <p>A <code><a href="../Chem/Metadata.html">Metadata</a></code> is a hash-like container that holds metadata about an
 object. It maps a property name (as string) to a primitive value
-(integer, float, string, or bool). Most of the functionality mirrors
-that of a <code>Hash</code>, where some specific methods like <code>Hash#dig</code> or
-default values are excluded.</p>
+(integer, float, string, or bool) or an array of them. Most of the
+functionality mirrors that of a <code>Hash</code>, where some specific methods
+like <code>Hash#dig</code> or default values are excluded.</p>
 <p>Values are stored as <code><a href="../Chem/Metadata/Any.html">Any</a></code> instances, which a thin wrapper for a
 dynamically-typed primitive value and it offers convenient <code>#as_*</code>
 cast methods.</p>
@@ -914,18 +914,31 @@ cast methods.</p>
 </a>Examples</h3>
 <pre><code class="language-crystal">metadata <span class="o">=</span> <span class="t">Chem</span><span class="t">::</span><span class="t">Metadata</span>.new
 
-<span class="c"># only four data types are supported</span>
+<span class="c"># four data types are supported</span>
 metadata[<span class="s">&quot;str&quot;</span>] <span class="o">=</span> <span class="s">&quot;Foo&quot;</span>
 metadata[<span class="s">&quot;int&quot;</span>] <span class="o">=</span> <span class="n">123</span>
 metadata[<span class="s">&quot;float&quot;</span>] <span class="o">=</span> <span class="n">1.234</span>
 metadata[<span class="s">&quot;bool&quot;</span>] <span class="o">=</span> <span class="n">true</span>
 <span class="c"># metadata[&quot;x&quot;] = /[a-z]/ # fails to compile</span>
 
-<span class="c"># values are stored as `Any` instances</span>
-metadata[<span class="s">&quot;str&quot;</span>]             <span class="c"># =&gt; Chem::Metadata::Type(&quot;Foo&quot;)</span>
+<span class="c"># (base type) arrays are also supported</span>
+metadata[<span class="s">&quot;array_of_int&quot;</span>] <span class="o">=</span> [<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>]
+metadata[<span class="s">&quot;array_of_string&quot;</span>] <span class="o">=</span> <span class="s">%w(1 2 3)</span>
+metadata[<span class="s">&quot;nested_array&quot;</span>] <span class="o">=</span> [[<span class="n">1</span>, <span class="n">2</span>], [<span class="n">3</span>]]
+<span class="c"># metadata[&quot;mixed_array&quot;] = [1, &quot;2&quot;, true] # does not compile</span></code></pre>
+<p>Values are stored as <code><a href="../Chem/Metadata/Any.html">Any</a></code> instances. Use <code>#as_*</code> cast methods get the
+actual value.</p>
+<pre><code class="language-crystal">metadata[<span class="s">&quot;str&quot;</span>]             <span class="c"># =&gt; Chem::Metadata::Any(&quot;Foo&quot;)</span>
 metadata[<span class="s">&quot;str&quot;</span>].as_s.upcase <span class="c"># =&gt; &quot;FOO&quot;</span>
 metadata[<span class="s">&quot;str&quot;</span>].as_i?       <span class="c"># =&gt; nil</span>
-metadata[<span class="s">&quot;str&quot;</span>].as_i        <span class="c"># raises TypeCastError</span></code></pre>
+metadata[<span class="s">&quot;str&quot;</span>].as_i        <span class="c"># raises TypeCastError</span>
+metadata[<span class="s">&quot;str&quot;</span>].as_a        <span class="c"># raises TypeCastError</span></code></pre>
+<p>Arrays are returned as <code><a href="../Array.html">Array</a>(<a href="../Chem/Metadata/Any.html">Any</a>)</code>. Use <code>Array#map(&amp;.as_*)</code> or
+<code>#as_a(type)</code> to get a typed array.</p>
+<pre><code class="language-crystal">metadata[<span class="s">&quot;array_of_int&quot;</span>].as_a             <span class="c"># =&gt; [Chem::Metadata::Any(1), ...]</span>
+metadata[<span class="s">&quot;array_of_int&quot;</span>].as_a.map(<span class="o">&amp;</span>.as_i) <span class="c"># =&gt; [1, 2, 3]</span>
+metadata[<span class="s">&quot;array_of_int&quot;</span>].as_a(<span class="t">Int32</span>)      <span class="c"># =&gt; [1, 2, 3]</span>
+metadata[<span class="s">&quot;nested_array&quot;</span>].as_2a(<span class="t">Int32</span>)     <span class="c"># =&gt; [[1, 2], [3]]</span></code></pre>
 
 
 
@@ -1019,6 +1032,13 @@ metadata[<span class="s">&quot;str&quot;</span>].as_i        <span class="c"># r
     
       <li class="entry-summary">
         <a href="#%5B%5D%3D%28key%3AString%2Cvalue%3AString%29%3AString-instance-method" class="signature"><strong>#[]=</strong>(key : String, value : String) : String</a>
+        
+          <div class="summary"><p>Sets the value of <em>key</em> to the given value.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%5B%5D%3D%28key%3AString%2Cvalue%3AArray%29%3AArray-instance-method" class="signature"><strong>#[]=</strong>(key : String, value : Array) : Array</a>
         
           <div class="summary"><p>Sets the value of <em>key</em> to the given value.</p></div>
         
@@ -1182,6 +1202,20 @@ metadata[<span class="s">&quot;str&quot;</span>].as_i        <span class="c"># r
         <a href="#keys%3AArray%28String%29-instance-method" class="signature"><strong>#keys</strong> : Array(String)</a>
         
           <div class="summary"><p>Returns a new <code><a href="../Array.html">Array</a></code> with all the keys.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#merge%21%28other%3Aself%29%3Aself-instance-method" class="signature"><strong>#merge!</strong>(other : <span class="k">self</span>) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Adds the contents of <em>other</em> to this metadata.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#merge%21%28other%3Aself%2C%26%3AString%2CAny%2CAny-%3E_%29%3Aself-instance-method" class="signature"><strong>#merge!</strong>(other : <span class="k">self</span>, & : String, Any, Any -> _) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Adds the contents of <em>other</em> to this metadata.</p></div>
         
       </li>
     
@@ -1437,6 +1471,25 @@ found.</p>
         def <strong>[]=</strong>(key : String, value : String) : String
 
         <a class="method-permalink" href="#%5B%5D%3D%28key%3AString%2Cvalue%3AString%29%3AString-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Sets the value of <em>key</em> to the given value.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[]=(key:String,value:Array):Array-instance-method">
+      <div class="signature">
+        
+        def <strong>[]=</strong>(key : String, value : <a href="../Array.html">Array</a>) : <a href="../Array.html">Array</a>
+
+        <a class="method-permalink" href="#%5B%5D%3D%28key%3AString%2Cvalue%3AArray%29%3AArray-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1917,6 +1970,47 @@ associated with <em>value</em>.</p>
         <div class="doc">
           
           <p>Returns a new <code><a href="../Array.html">Array</a></code> with all the keys.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="merge!(other:self):self-instance-method">
+      <div class="signature">
+        
+        def <strong>merge!</strong>(other : <span class="k">self</span>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#merge%21%28other%3Aself%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Adds the contents of <em>other</em> to this metadata. Existing entries will
+be replaced with those in <em>other</em>¨.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="merge!(other:self,&amp;:String,Any,Any-&gt;_):self-instance-method">
+      <div class="signature">
+        
+        def <strong>merge!</strong>(other : <span class="k">self</span>, & : String, <a href="../Chem/Metadata/Any.html">Any</a>, <a href="../Chem/Metadata/Any.html">Any</a> -> _) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#merge%21%28other%3Aself%2C%26%3AString%2CAny%2CAny-%3E_%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Adds the contents of <em>other</em> to this metadata. If a key exists in
+both hashes, the given block is called with the key, the value in
+<code>self</code> and the value in <em>other</em>, and the returned value will be set.</p>
         </div>
       
       <br/>

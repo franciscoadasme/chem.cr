@@ -907,7 +907,7 @@ consumed via the <code><a href="../Chem/PullParser.html#consume_token%3Aself-ins
 current line). The string representation of the current token can be
 obtained via the <code><a href="../Chem/PullParser.html#str%28message%3AString%3D%22Emptytoken%22%29%3AString-instance-method">#str</a></code> methods or it can be interpreted as a
 primitive type via the specialized  <code><a href="../Chem/PullParser.html#float%28message%3AString%3D%22Invalidrealnumber%22%29%3AFloat64-instance-method">#float</a></code> and <code><a href="../Chem/PullParser.html#int%28message%3AString%3D%22Invalidinteger%22%29%3AInt32-instance-method">#int</a></code> methods. It
-can be also interpreted as a custom type via the <code><a href="../Chem/PullParser.html#parse%28message%3AString%3D%22Couldnotparse%25%7Btoken%7Dat%25%7Bloc_with_file%7D%22%2C%26%3AString-%3ET%7CNil%29%3ATforallT-instance-method">#parse</a></code> method.
+can be also interpreted as a custom type via the <code><a href="../Chem/PullParser.html#parse%28type%3ABool.class%29%3ABool-instance-method">#parse</a></code> method.
 Upon parsing issues, these methods may return <code>nil</code> or raise a
 <code><a href="../Chem/ParseException.html">ParseException</a></code> exception.</p>
 <p>When creating an instance, the parser must be positioned in the
@@ -1067,6 +1067,27 @@ pull.at(<span class="n">100</span>, <span class="n">5</span>)   <span class="c">
         <a href="#at%3F%28range%3ARange%29%3Aself-instance-method" class="signature"><strong>#at?</strong>(range : Range) : <span class="k">self</span></a>
         
           <div class="summary"><p>Sets the cursor at <em>range</em> in the current line.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bool%28message%3AString%3D%22Invalidboolean%22%29%3ABool-instance-method" class="signature"><strong>#bool</strong>(message : String = <span class="s">&quot;Invalid boolean&quot;</span>) : Bool</a>
+        
+          <div class="summary"><p>Parses and returns the boolean represented by the current token.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bool%28if_blankdefault%3ABool%29%3ABool-instance-method" class="signature"><strong>#bool</strong>(if_blank default : Bool) : Bool</a>
+        
+          <div class="summary"><p>Parses and returns the boolean represented by the current token.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bool%3F%3ABool%7CNil-instance-method" class="signature"><strong>#bool?</strong> : Bool | Nil</a>
+        
+          <div class="summary"><p>Parses and returns the boolean represented by the current token, or <code>nil</code> if the token is not set or it is not a valid boolean.</p></div>
         
       </li>
     
@@ -1295,6 +1316,27 @@ pull.at(<span class="n">100</span>, <span class="n">5</span>)   <span class="c">
       </li>
     
       <li class="entry-summary">
+        <a href="#next_bool%28message%3AString%29%3ABool-instance-method" class="signature"><strong>#next_bool</strong>(message : String) : Bool</a>
+        
+          <div class="summary"><p>Reads the next token in the current line, and interprets it via <code><a href="../Chem/PullParser.html#bool%28message%3AString%3D%22Invalidboolean%22%29%3ABool-instance-method">#bool</a></code>, which raises <code><a href="../Chem/ParseException.html">ParseException</a></code> with the given message at the end of line or if the token is an invalid representation.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#next_bool%3ABool-instance-method" class="signature"><strong>#next_bool</strong> : Bool</a>
+        
+          <div class="summary"><p>Reads the next token in the current line, and interprets it via <code><a href="../Chem/PullParser.html#bool%28message%3AString%3D%22Invalidboolean%22%29%3ABool-instance-method">#bool</a></code>, which raises <code><a href="../Chem/ParseException.html">ParseException</a></code> at the end of line or if the token is an invalid representation.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#next_bool%3F%3ABool%7CNil-instance-method" class="signature"><strong>#next_bool?</strong> : Bool | Nil</a>
+        
+          <div class="summary"><p>Reads the next token in the current line, and interprets it via <code><a href="../Chem/PullParser.html#bool%3F%3ABool%7CNil-instance-method">#bool?</a></code>, which returns <code>nil</code> at the end of line or if the token is an invalid representation.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#next_f%28message%3AString%29%3AFloat64-instance-method" class="signature"><strong>#next_f</strong>(message : String) : Float64</a>
         
           <div class="summary"><p>Reads the next token in the current line, and interprets it via <code><a href="../Chem/PullParser.html#float%28message%3AString%3D%22Invalidrealnumber%22%29%3AFloat64-instance-method">#float</a></code>, which raises <code><a href="../Chem/ParseException.html">ParseException</a></code> with the given message at the end of line or if the token is an invalid representation.</p></div>
@@ -1358,9 +1400,65 @@ pull.at(<span class="n">100</span>, <span class="n">5</span>)   <span class="c">
       </li>
     
       <li class="entry-summary">
+        <a href="#parse%28type%3ABool.class%29%3ABool-instance-method" class="signature"><strong>#parse</strong>(type : <span class="t">Bool</span>.<span class="k">class</span>) : Bool</a>
+        
+          <div class="summary"><p>Parses and returns the current token as <code>Bool</code> by calling <code><a href="../Chem/PullParser.html#bool%28message%3AString%3D%22Invalidboolean%22%29%3ABool-instance-method">#bool</a></code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#parse%28type%3AFloat64.class%29%3AFloat64-instance-method" class="signature"><strong>#parse</strong>(type : <span class="t">Float64</span>.<span class="k">class</span>) : Float64</a>
+        
+          <div class="summary"><p>Parses and returns the current token as <code>Float64</code> by calling <code><a href="../Chem/PullParser.html#float%28message%3AString%3D%22Invalidrealnumber%22%29%3AFloat64-instance-method">#float</a></code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#parse%28type%3AInt32.class%29%3AInt32-instance-method" class="signature"><strong>#parse</strong>(type : <span class="t">Int32</span>.<span class="k">class</span>) : Int32</a>
+        
+          <div class="summary"><p>Parses and returns the current token as <code>Int32</code> by calling <code><a href="../Chem/PullParser.html#int%28message%3AString%3D%22Invalidinteger%22%29%3AInt32-instance-method">#int</a></code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#parse%28type%3AString.class%29%3AString-instance-method" class="signature"><strong>#parse</strong>(type : <span class="t">String</span>.<span class="k">class</span>) : String</a>
+        
+          <div class="summary"><p>Parses and returns the current token as <code>String</code> by calling <code><a href="../Chem/PullParser.html#str%28message%3AString%3D%22Emptytoken%22%29%3AString-instance-method">#str</a></code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#parse%28message%3AString%3D%22Couldnotparse%25%7Btoken%7Dat%25%7Bloc_with_file%7D%22%2C%26%3AString-%3ET%7CNil%29%3ATforallT-instance-method" class="signature"><strong>#parse</strong>(message : String = <span class="s">&quot;Could not parse %{token} at %{loc_with_file}&quot;</span>, & : String -> T | Nil) : T forall T</a>
         
           <div class="summary"><p>Yields the current token and returns the parsed value.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#parse%3F%28type%3ABool.class%29%3ABool%7CNil-instance-method" class="signature"><strong>#parse?</strong>(type : <span class="t">Bool</span>.<span class="k">class</span>) : Bool | Nil</a>
+        
+          <div class="summary"><p>Parses and returns the current token as <code>Bool</code> by calling <code><a href="../Chem/PullParser.html#bool%3F%3ABool%7CNil-instance-method">#bool?</a></code>, or <code>nil</code> if parsing fails.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#parse%3F%28type%3AFloat64.class%29%3AFloat64%7CNil-instance-method" class="signature"><strong>#parse?</strong>(type : <span class="t">Float64</span>.<span class="k">class</span>) : Float64 | Nil</a>
+        
+          <div class="summary"><p>Parses and returns the current token as <code>Float64</code> by calling <code><a href="../Chem/PullParser.html#float%3F%3AFloat64%7CNil-instance-method">#float?</a></code>, or <code>nil</code> if parsing fails.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#parse%3F%28type%3AInt32.class%29%3AInt32%7CNil-instance-method" class="signature"><strong>#parse?</strong>(type : <span class="t">Int32</span>.<span class="k">class</span>) : Int32 | Nil</a>
+        
+          <div class="summary"><p>Parses and returns the current token as <code>Int32</code> by calling <code><a href="../Chem/PullParser.html#int%3F%3AInt32%7CNil-instance-method">#int?</a></code>, or <code>nil</code> if parsing fails.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#parse%3F%28type%3AString.class%29%3AString%7CNil-instance-method" class="signature"><strong>#parse?</strong>(type : <span class="t">String</span>.<span class="k">class</span>) : String | Nil</a>
+        
+          <div class="summary"><p>Parses and returns the current token as <code>String</code> by calling <code><a href="../Chem/PullParser.html#str%3F%3AString%7CNil-instance-method">#str?</a></code>, or <code>nil</code> if parsing fails.</p></div>
         
       </li>
     
@@ -1646,6 +1744,78 @@ If <em>index</em> is out of bounds, the current token will be set to
           
           <p>Sets the cursor at <em>range</em> in the current line. If <em>range</em> is out
 of bounds, the current token will be set to <code>nil</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bool(message:String=&quot;Invalidboolean&quot;):Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>bool</strong>(message : String = <span class="s">&quot;Invalid boolean&quot;</span>) : Bool
+
+        <a class="method-permalink" href="#bool%28message%3AString%3D%22Invalidboolean%22%29%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Parses and returns the boolean represented by the current token.
+Raises <code><a href="../Chem/ParseException.html">ParseException</a></code> with the given message if the token is not
+set or it is not a valid boolean.</p>
+<p>Valid boolean values include &quot;true&quot;, &quot;t&quot;, &quot;false&quot;, and &quot;f&quot;.
+Parsing is case insensitive so &quot;true&quot;, &quot;True&quot;, and &quot;TRUE&quot; are
+valid.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bool(if_blankdefault:Bool):Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>bool</strong>(if_blank default : Bool) : Bool
+
+        <a class="method-permalink" href="#bool%28if_blankdefault%3ABool%29%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Parses and returns the boolean represented by the current token.
+Returns the given default value if the token is blank. Raises
+<code><a href="../Chem/ParseException.html">ParseException</a></code> if the token is not set or it is not a valid
+boolean.</p>
+<p>Valid boolean values include &quot;true&quot;, &quot;t&quot;, &quot;false&quot;, and &quot;f&quot;.
+Parsing is case insensitive so &quot;true&quot;, &quot;True&quot;, and &quot;TRUE&quot; are
+valid.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bool?:Bool|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>bool?</strong> : Bool | Nil
+
+        <a class="method-permalink" href="#bool%3F%3ABool%7CNil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Parses and returns the boolean represented by the current token,
+or <code>nil</code> if the token is not set or it is not a valid boolean.</p>
+<p>Valid boolean values include &quot;true&quot;, &quot;t&quot;, &quot;false&quot;, and &quot;f&quot;.
+Parsing is case insensitive so &quot;true&quot;, &quot;True&quot;, and &quot;TRUE&quot; are
+valid.</p>
         </div>
       
       <br/>
@@ -2452,6 +2622,70 @@ pull.line! <span class="c"># raises ParseException</span></code></pre>
       </div>
     </div>
   
+    <div class="entry-detail" id="next_bool(message:String):Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>next_bool</strong>(message : String) : Bool
+
+        <a class="method-permalink" href="#next_bool%28message%3AString%29%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Reads the next token in the current line, and interprets it via
+<code><a href="../Chem/PullParser.html#bool%28message%3AString%3D%22Invalidboolean%22%29%3ABool-instance-method">#bool</a></code>, which raises <code><a href="../Chem/ParseException.html">ParseException</a></code> with the given
+message at the end of line or if the token is an invalid
+representation.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="next_bool:Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>next_bool</strong> : Bool
+
+        <a class="method-permalink" href="#next_bool%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Reads the next token in the current line, and interprets it via
+<code><a href="../Chem/PullParser.html#bool%28message%3AString%3D%22Invalidboolean%22%29%3ABool-instance-method">#bool</a></code>, which raises <code><a href="../Chem/ParseException.html">ParseException</a></code> at the end of
+line or if the token is an invalid representation.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="next_bool?:Bool|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>next_bool?</strong> : Bool | Nil
+
+        <a class="method-permalink" href="#next_bool%3F%3ABool%7CNil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Reads the next token in the current line, and interprets it via
+<code><a href="../Chem/PullParser.html#bool%3F%3ABool%7CNil-instance-method">#bool?</a></code>, which returns <code>nil</code> at the end of line or if
+the token is an invalid representation.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="next_f(message:String):Float64-instance-method">
       <div class="signature">
         
@@ -2644,6 +2878,86 @@ the token is an invalid representation.</p>
       </div>
     </div>
   
+    <div class="entry-detail" id="parse(type:Bool.class):Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>parse</strong>(type : <span class="t">Bool</span>.<span class="k">class</span>) : Bool
+
+        <a class="method-permalink" href="#parse%28type%3ABool.class%29%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Parses and returns the current token as <code>Bool</code> by calling
+<code><a href="../Chem/PullParser.html#bool%28message%3AString%3D%22Invalidboolean%22%29%3ABool-instance-method">#bool</a></code>. Raises <code><a href="../Chem/ParseException.html">ParseException</a></code> if parsing fails.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="parse(type:Float64.class):Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>parse</strong>(type : <span class="t">Float64</span>.<span class="k">class</span>) : Float64
+
+        <a class="method-permalink" href="#parse%28type%3AFloat64.class%29%3AFloat64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Parses and returns the current token as <code>Float64</code> by calling
+<code><a href="../Chem/PullParser.html#float%28message%3AString%3D%22Invalidrealnumber%22%29%3AFloat64-instance-method">#float</a></code>. Raises <code><a href="../Chem/ParseException.html">ParseException</a></code> if parsing fails.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="parse(type:Int32.class):Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>parse</strong>(type : <span class="t">Int32</span>.<span class="k">class</span>) : Int32
+
+        <a class="method-permalink" href="#parse%28type%3AInt32.class%29%3AInt32-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Parses and returns the current token as <code>Int32</code> by calling
+<code><a href="../Chem/PullParser.html#int%28message%3AString%3D%22Invalidinteger%22%29%3AInt32-instance-method">#int</a></code>. Raises <code><a href="../Chem/ParseException.html">ParseException</a></code> if parsing fails.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="parse(type:String.class):String-instance-method">
+      <div class="signature">
+        
+        def <strong>parse</strong>(type : <span class="t">String</span>.<span class="k">class</span>) : String
+
+        <a class="method-permalink" href="#parse%28type%3AString.class%29%3AString-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Parses and returns the current token as <code>String</code> by calling
+<code><a href="../Chem/PullParser.html#str%28message%3AString%3D%22Emptytoken%22%29%3AString-instance-method">#str</a></code>. Raises <code><a href="../Chem/ParseException.html">ParseException</a></code> if parsing fails.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="parse(message:String=&quot;Couldnotparse%{token}at%{loc_with_file}&quot;,&amp;:String-&gt;T|Nil):TforallT-instance-method">
       <div class="signature">
         
@@ -2657,6 +2971,86 @@ the token is an invalid representation.</p>
           <p>Yields the current token and returns the parsed value. Raises
 <code><a href="../Chem/ParseException.html">ParseException</a></code> with the given message if no token is set or the
 block returns <code>nil</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="parse?(type:Bool.class):Bool|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>parse?</strong>(type : <span class="t">Bool</span>.<span class="k">class</span>) : Bool | Nil
+
+        <a class="method-permalink" href="#parse%3F%28type%3ABool.class%29%3ABool%7CNil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Parses and returns the current token as <code>Bool</code> by calling
+<code><a href="../Chem/PullParser.html#bool%3F%3ABool%7CNil-instance-method">#bool?</a></code>, or <code>nil</code> if parsing fails.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="parse?(type:Float64.class):Float64|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>parse?</strong>(type : <span class="t">Float64</span>.<span class="k">class</span>) : Float64 | Nil
+
+        <a class="method-permalink" href="#parse%3F%28type%3AFloat64.class%29%3AFloat64%7CNil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Parses and returns the current token as <code>Float64</code> by calling
+<code><a href="../Chem/PullParser.html#float%3F%3AFloat64%7CNil-instance-method">#float?</a></code>, or <code>nil</code> if parsing fails.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="parse?(type:Int32.class):Int32|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>parse?</strong>(type : <span class="t">Int32</span>.<span class="k">class</span>) : Int32 | Nil
+
+        <a class="method-permalink" href="#parse%3F%28type%3AInt32.class%29%3AInt32%7CNil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Parses and returns the current token as <code>Int32</code> by calling
+<code><a href="../Chem/PullParser.html#int%3F%3AInt32%7CNil-instance-method">#int?</a></code>, or <code>nil</code> if parsing fails.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="parse?(type:String.class):String|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>parse?</strong>(type : <span class="t">String</span>.<span class="k">class</span>) : String | Nil
+
+        <a class="method-permalink" href="#parse%3F%28type%3AString.class%29%3AString%7CNil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Parses and returns the current token as <code>String</code> by calling
+<code><a href="../Chem/PullParser.html#str%3F%3AString%7CNil-instance-method">#str?</a></code>, or <code>nil</code> if parsing fails.</p>
         </div>
       
       <br/>
