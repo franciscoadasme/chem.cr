@@ -135,8 +135,8 @@ module Chem
     end
   end
 
-  # Declares a common interface for reading a variable number of objects
-  # encoded in a file format.
+  # Declares a common interface for reading an indeterminate number of
+  # objects encoded in a file format.
   #
   # Including types must implement the `#skip_entry` method to discard
   # the next entry in the IO.
@@ -179,6 +179,34 @@ module Chem
     # are no more entries.
     def read_entry : T
       next_entry || parse_exception(@read ? "No more entries" : "Empty content")
+    end
+  end
+
+  # Declares a common interface for indexed reading of a finite number
+  # of objects encoded in a file format.
+  #
+  # Including types must implement methods to track and set the current
+  # object in the IO.
+  module FormatReader::Indexable(T)
+    include FormatReader::MultiEntry(T)
+
+    # Returns the index of the current entry.
+    abstract def entry_index : Int32
+    # Returns the number of entries in the IO.
+    abstract def n_entries : Int32
+    # Discards the entries (without parsing) up until the given index.
+    # Raises `IndexError` if the index is invalid.
+    abstract def skip_to_entry(index : Int) : Nil
+
+    # Returns the entry at the given index. Raises `IndexError` if the
+    # index is invalid.
+    def read_entry(index : Int) : T
+      skip_to_entry index
+      read_entry
+    end
+
+    def skip_entry : Nil
+      skip_to_entry @entry_index + 1
     end
   end
 end
