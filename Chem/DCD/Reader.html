@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../../js/doc.js"></script>
 
   <meta name="repository-name" content="chem.cr">
-  <title>Chem::VASP::GridReader - chem.cr 0.5.6</title>
+  <title>Chem::DCD::Reader - chem.cr 0.5.6</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -156,12 +156,12 @@
       
     </li>
   
-  <li class="parent " data-id="chem.cr/Chem/DCD" data-name="chem::dcd">
+  <li class="parent open current" data-id="chem.cr/Chem/DCD" data-name="chem::dcd">
       <a href="../../Chem/DCD.html">DCD</a>
       
         <ul>
   
-  <li class="parent " data-id="chem.cr/Chem/DCD/Reader" data-name="chem::dcd::reader">
+  <li class="parent open current" data-id="chem.cr/Chem/DCD/Reader" data-name="chem::dcd::reader">
       <a href="../../Chem/DCD/Reader.html">Reader</a>
       
         <ul>
@@ -741,7 +741,7 @@
       
     </li>
   
-  <li class="parent open current" data-id="chem.cr/Chem/VASP" data-name="chem::vasp">
+  <li class="parent " data-id="chem.cr/Chem/VASP" data-name="chem::vasp">
       <a href="../../Chem/VASP.html">VASP</a>
       
         <ul>
@@ -766,7 +766,7 @@
       
     </li>
   
-  <li class=" current" data-id="chem.cr/Chem/VASP/GridReader" data-name="chem::vasp::gridreader">
+  <li class=" " data-id="chem.cr/Chem/VASP/GridReader" data-name="chem::vasp::gridreader">
       <a href="../../Chem/VASP/GridReader.html">GridReader</a>
       
     </li>
@@ -910,39 +910,52 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">module</span> Chem::VASP::GridReader
+  <span class="kind">class</span> Chem::DCD::Reader
 
 </h1>
 
 
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Chem/DCD/Reader.html">Chem::DCD::Reader</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
 
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
 
-
-
-
+  <p>Implementation based on <a href="https://github.com/chemfiles/chemfiles/blob/master/src/formats/DCD.cpp">Chemfiles</a> C++ library.</p>
 
 
 
 
 
   <h2>
-    <a id="direct-including-types" class="anchor" href="#direct-including-types">
+    <a id="included-modules" class="anchor" href="#included-modules">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>
-    Direct including types
+    Included Modules
   </h2>
   <ul class="other-types-list">
     
-      <li class="other-type"><a href="../../Chem/VASP/Chgcar/Reader.html">Chem::VASP::Chgcar::Reader</a></li>
+      <li class="other-type"><a href="../../Chem/FormatReader.html">Chem::FormatReader</a>(<a href="../../Chem/Structure.html">Chem::Structure</a>)</li>
     
-      <li class="other-type"><a href="../../Chem/VASP/Locpot/Reader.html">Chem::VASP::Locpot::Reader</a></li>
+      <li class="other-type"><a href="../../Chem/FormatReader/Indexable.html">Chem::FormatReader::Indexable</a>(<a href="../../Chem/Structure.html">Chem::Structure</a>)</li>
     
   </ul>
+
+
+
+
+
+
 
 
 
@@ -957,7 +970,7 @@
   </h2>
   
     
-      chem/formats/vasp/utils.cr
+      chem/formats/dcd.cr
     
     <br/>
   
@@ -966,7 +979,57 @@
 
 
 
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new%28io%3AIO%2Cstructure%3AStructure%2Csync_close%3ABool%3Dfalse%29-class-method" class="signature"><strong>.new</strong>(io : IO, structure : Structure, sync_close : Bool = <span class="n">false</span>)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new%28path%3APath%7CString%2Cstructure%3AStructure%29%3Aself-class-method" class="signature"><strong>.new</strong>(path : Path | String, structure : Structure) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Creates a new object from the given <em>path</em>.</p></div>
+        
+      </li>
+    
+  </ul>
 
+
+
+  <h2>
+    <a id="class-method-summary" class="anchor" href="#class-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#open%28io%3AIO%2Cstructure%3AStructure%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method" class="signature"><strong>.open</strong>(io : IO, structure : Structure, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )</a>
+        
+          <div class="summary"><p>Creates a new object from the given <em>io</em>, yields it to the given block, and closes it at the end.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#open%28path%3APath%7CString%2Cstructure%3AStructure%2C%26%3Aself-%3E%29-class-method" class="signature"><strong>.open</strong>(path : Path | String, structure : Structure, & : <span class="k">self</span> -> )</a>
+        
+          <div class="summary"><p>Creates a new object from the given <em>path</em> yields it to the given block, and closes it at the end.</p></div>
+        
+      </li>
+    
+  </ul>
 
 
 
@@ -981,7 +1044,23 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#read_attached%3AStructure-instance-method" class="signature"><strong>#read_attached</strong> : Structure</a>
+        <a href="#entry_index%3AInt32-instance-method" class="signature"><strong>#entry_index</strong> : Int32</a>
+        
+          <div class="summary"><p>Returns the index of the current entry.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#n_entries%3AInt32-instance-method" class="signature"><strong>#n_entries</strong> : Int32</a>
+        
+          <div class="summary"><p>Returns the number of entries in the IO.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#skip_to_entry%28index%3AInt%29%3ANil-instance-method" class="signature"><strong>#skip_to_entry</strong>(index : Int) : Nil</a>
+        
+          <div class="summary"><p>Discards the entries (without parsing) up until the given index.</p></div>
         
       </li>
     
@@ -993,10 +1072,263 @@
 
 <div class="methods-inherited">
   
+    
+
+  <h3>Instance methods inherited from module <code><a href="../../Chem/FormatReader/Indexable.html">Chem::FormatReader::Indexable</a>(<a href="../../Chem/Structure.html">Chem::Structure</a>)</code></h3>
+  
+  
+    <a href="../../Chem/FormatReader/Indexable.html#entry_index%3AInt32-instance-method" class="tooltip">
+      <span>entry_index : Int32</span>
+    entry_index</a>, 
+    
+  
+    <a href="../../Chem/FormatReader/Indexable.html#n_entries%3AInt32-instance-method" class="tooltip">
+      <span>n_entries : Int32</span>
+    n_entries</a>, 
+    
+  
+    <a href="../../Chem/FormatReader/Indexable.html#read_entry%28index%3AInt%29%3AT-instance-method" class="tooltip">
+      <span>read_entry(index : Int) : T</span>
+    read_entry</a>, 
+    
+  
+    <a href="../../Chem/FormatReader/Indexable.html#skip_entry%3ANil-instance-method" class="tooltip">
+      <span>skip_entry : Nil</span>
+    skip_entry</a>, 
+    
+  
+    <a href="../../Chem/FormatReader/Indexable.html#skip_to_entry%28index%3AInt%29%3ANil-instance-method" class="tooltip">
+      <span>skip_to_entry(index : Int) : Nil</span>
+    skip_to_entry</a>
+    
+  
+
+
+    
+
+
+    
+
+
+  
+    
+
+  <h3>Instance methods inherited from module <code><a href="../../Chem/FormatReader/MultiEntry.html">Chem::FormatReader::MultiEntry</a>(<a href="../../Chem/Structure.html">Chem::Structure</a>)</code></h3>
+  
+  
+    <a href="../../Chem/FormatReader/MultiEntry.html#each%28indexes%3AEnumerable%28Int%29%2C%26%3AT-%3E%29-instance-method" class="tooltip">
+      <span>each(indexes : Enumerable(Int), & : T -> )<br/>each(& : T -> ) : Nil</span>
+    each</a>, 
+    
+  
+    <a href="../../Chem/FormatReader/MultiEntry.html#next_entry%3AT%7CNil-instance-method" class="tooltip">
+      <span>next_entry : T | Nil</span>
+    next_entry</a>, 
+    
+  
+    <a href="../../Chem/FormatReader/MultiEntry.html#read_entry%3AT-instance-method" class="tooltip">
+      <span>read_entry : T</span>
+    read_entry</a>, 
+    
+  
+    <a href="../../Chem/FormatReader/MultiEntry.html#skip_entry%3ANil-instance-method" class="tooltip">
+      <span>skip_entry : Nil</span>
+    skip_entry</a>
+    
+  
+
+
+    
+
+
+    
+
+
+  
+    
+
+  <h3>Instance methods inherited from module <code><a href="../../Chem/FormatReader.html">Chem::FormatReader</a>(<a href="../../Chem/Structure.html">Chem::Structure</a>)</code></h3>
+  
+  
+    <a href="../../Chem/FormatReader.html#read%3F%3ABool-instance-method" class="tooltip">
+      <span>read? : Bool</span>
+    read?</a>, 
+    
+  
+    <a href="../../Chem/FormatReader.html#read_entry%3AT-instance-method" class="tooltip">
+      <span>read_entry : T</span>
+    read_entry</a>
+    
+  
+
+
+    
+
+
+    
+
+
+  
+    
+
+  <h3>Instance methods inherited from module <code><a href="../../IO/Wrapper.html">IO::Wrapper</a></code></h3>
+  
+  
+    <a href="../../IO/Wrapper.html#close-instance-method" class="tooltip">
+      <span>close</span>
+    close</a>, 
+    
+  
+    <a href="../../IO/Wrapper.html#closed%3F%3ABool-instance-method" class="tooltip">
+      <span>closed? : Bool</span>
+    closed?</a>, 
+    
+  
+    <a href="../../IO/Wrapper.html#sync_close%3ABool-instance-method" class="tooltip">
+      <span>sync_close : Bool</span>
+    sync_close</a>, 
+    
+  
+    <a href="../../IO/Wrapper.html#sync_close%3D%28sync_close%3ABool%29-instance-method" class="tooltip">
+      <span>sync_close=(sync_close : Bool)</span>
+    sync_close=</a>
+    
+  
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
 </div>
 
 
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="new(io:IO,structure:Structure,sync_close:Bool=false)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(io : IO, structure : <a href="../../Chem/Structure.html">Structure</a>, sync_close : Bool = <span class="n">false</span>)
 
+        <a class="method-permalink" href="#new%28io%3AIO%2Cstructure%3AStructure%2Csync_close%3ABool%3Dfalse%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(path:Path|String,structure:Structure):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(path : Path | String, structure : <a href="../../Chem/Structure.html">Structure</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#new%28path%3APath%7CString%2Cstructure%3AStructure%29%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Creates a new object from the given <em>path</em>. Positional and named
+arguments are forwarded to the designated constructor.</p>
+<p>An <code>IO</code> object will be created and open from the given <em>path</em>,
+which will be closed when closing this object (<code>sync_close = true</code>). The file open mode is specified by the <code><a href="../../IO/Wrapper.html#FILE_MODE">FILE_MODE</a></code>
+constant.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
+
+
+  <h2>
+    <a id="class-method-detail" class="anchor" href="#class-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="open(io:IO,structure:Structure,sync_close:Bool=false,&amp;:self-&gt;)-class-method">
+      <div class="signature">
+        
+        def self.<strong>open</strong>(io : IO, structure : <a href="../../Chem/Structure.html">Structure</a>, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )
+
+        <a class="method-permalink" href="#open%28io%3AIO%2Cstructure%3AStructure%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Creates a new object from the given <em>io</em>, yields it to the given
+block, and closes it at the end. Positional and named arguments
+are forwarded to the constructor.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="open(path:Path|String,structure:Structure,&amp;:self-&gt;)-class-method">
+      <div class="signature">
+        
+        def self.<strong>open</strong>(path : Path | String, structure : <a href="../../Chem/Structure.html">Structure</a>, & : <span class="k">self</span> -> )
+
+        <a class="method-permalink" href="#open%28path%3APath%7CString%2Cstructure%3AStructure%2C%26%3Aself-%3E%29-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Creates a new object from the given <em>path</em> yields it to the
+given block, and closes it at the end. Positional and named
+arguments are forwarded to the constructor.</p>
+<p>An <code>IO</code> object will be created and open from the given <em>path</em>,
+which will be closed when closing this object (<code>sync_close = true</code>). The file open mode is specified by the <code><a href="../../IO/Wrapper.html#FILE_MODE">FILE_MODE</a></code>
+constant.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
 
 
 
@@ -1009,13 +1341,69 @@
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="read_attached:Structure-instance-method">
+    <div class="entry-detail" id="entry_index:Int32-instance-method">
       <div class="signature">
         
-        def <strong>read_attached</strong> : <a href="../../Chem/Structure.html">Structure</a>
+        def <strong>entry_index</strong> : Int32
 
-        <a class="method-permalink" href="#read_attached%3AStructure-instance-method">#</a>
+        <a class="method-permalink" href="#entry_index%3AInt32-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from module <a href="../../Chem/FormatReader/Indexable.html">Chem::FormatReader::Indexable</a>(<a href="../../Chem/Structure.html">Chem::Structure</a>)
+            </div>
+          
+          <p>Returns the index of the current entry.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="n_entries:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>n_entries</strong> : Int32
+
+        <a class="method-permalink" href="#n_entries%3AInt32-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from module <a href="../../Chem/FormatReader/Indexable.html">Chem::FormatReader::Indexable</a>(<a href="../../Chem/Structure.html">Chem::Structure</a>)
+            </div>
+          
+          <p>Returns the number of entries in the IO.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="skip_to_entry(index:Int):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>skip_to_entry</strong>(index : Int) : Nil
+
+        <a class="method-permalink" href="#skip_to_entry%28index%3AInt%29%3ANil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from module <a href="../../Chem/FormatReader/Indexable.html">Chem::FormatReader::Indexable</a>(<a href="../../Chem/Structure.html">Chem::Structure</a>)
+            </div>
+          
+          <p>Discards the entries (without parsing) up until the given index.
+Raises <code>IndexError</code> if the index is invalid.</p>
+        </div>
       
       <br/>
       <div>
