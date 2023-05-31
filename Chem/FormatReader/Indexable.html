@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../../js/doc.js"></script>
 
   <meta name="repository-name" content="chem.cr">
-  <title>Chem::Templates::Detector - chem.cr 0.5.6</title>
+  <title>Chem::FormatReader::Indexable(T) - chem.cr 0.5.6</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -196,7 +196,7 @@
       
     </li>
   
-  <li class="parent " data-id="chem.cr/Chem/FormatReader" data-name="chem::formatreader(t)">
+  <li class="parent open current" data-id="chem.cr/Chem/FormatReader" data-name="chem::formatreader(t)">
       <a href="../../Chem/FormatReader.html">FormatReader</a>
       
         <ul>
@@ -211,7 +211,7 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/FormatReader/Indexable" data-name="chem::formatreader::indexable(t)">
+  <li class=" current" data-id="chem.cr/Chem/FormatReader/Indexable" data-name="chem::formatreader::indexable(t)">
       <a href="../../Chem/FormatReader/Indexable.html">Indexable</a>
       
     </li>
@@ -636,7 +636,7 @@
       
     </li>
   
-  <li class="parent open current" data-id="chem.cr/Chem/Templates" data-name="chem::templates">
+  <li class="parent " data-id="chem.cr/Chem/Templates" data-name="chem::templates">
       <a href="../../Chem/Templates.html">Templates</a>
       
         <ul>
@@ -656,7 +656,7 @@
       
     </li>
   
-  <li class=" current" data-id="chem.cr/Chem/Templates/Detector" data-name="chem::templates::detector">
+  <li class=" " data-id="chem.cr/Chem/Templates/Detector" data-name="chem::templates::detector">
       <a href="../../Chem/Templates/Detector.html">Detector</a>
       
     </li>
@@ -885,19 +885,45 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">class</span> Chem::Templates::Detector
+  <span class="kind">module</span> Chem::FormatReader::Indexable(T)
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Chem/Templates/Detector.html">Chem::Templates::Detector</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+
+
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>Declares a common interface for indexed reading of a finite number
+of objects encoded in a file format.</p>
+<p>Including types must implement methods to track and set the current
+object in the IO.</p>
 
 
 
 
 
-
-
+  <h2>
+    <a id="included-modules" class="anchor" href="#included-modules">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Included Modules
+  </h2>
+  <ul class="other-types-list">
+    
+      <li class="other-type"><a href="../../Chem/FormatReader/MultiEntry.html">Chem::FormatReader::MultiEntry(T)</a></li>
+    
+  </ul>
 
 
 
@@ -918,7 +944,7 @@
   </h2>
   
     
-      chem/templates/detector.cr
+      chem/format_reader.cr
     
     <br/>
   
@@ -926,23 +952,6 @@
 
 
 
-
-  <h2>
-    <a id="constructors" class="anchor" href="#constructors">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Constructors
-  </h2>
-  <ul class="list-summary">
-    
-      <li class="entry-summary">
-        <a href="#new%28atoms%3AEnumerable%28Chem%3A%3AAtom%29%29-class-method" class="signature"><strong>.new</strong>(atoms : Enumerable(Chem::Atom))</a>
-        
-      </li>
-    
-  </ul>
 
 
 
@@ -959,7 +968,37 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#detect%28templates%3ARegistry%3DRegistry.default%29%3ATuple%28Array%28MatchData%29%2CAtomView%29-instance-method" class="signature"><strong>#detect</strong>(templates : Registry = <span class="t">Registry</span>.default) : Tuple(Array(MatchData), AtomView)</a>
+        <a href="#entry_index%3AInt32-instance-method" class="signature"><strong>#entry_index</strong> : Int32</a>
+        
+          <div class="summary"><p>Returns the index of the current entry.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#n_entries%3AInt32-instance-method" class="signature"><strong>#n_entries</strong> : Int32</a>
+        
+          <div class="summary"><p>Returns the number of entries in the IO.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#read_entry%28index%3AInt%29%3AT-instance-method" class="signature"><strong>#read_entry</strong>(index : Int) : T</a>
+        
+          <div class="summary"><p>Returns the entry at the given index.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#skip_entry%3ANil-instance-method" class="signature"><strong>#skip_entry</strong> : Nil</a>
+        
+          <div class="summary"><p>Discards the next entry in the IO without fully parsing it.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#skip_to_entry%28index%3AInt%29%3ANil-instance-method" class="signature"><strong>#skip_to_entry</strong>(index : Int) : Nil</a>
+        
+          <div class="summary"><p>Discards the entries (without parsing) up until the given index.</p></div>
         
       </li>
     
@@ -973,15 +1012,29 @@
   
     
 
-
-    
-
-
-    
-
-
+  <h3>Instance methods inherited from module <code><a href="../../Chem/FormatReader/MultiEntry.html">Chem::FormatReader::MultiEntry(T)</a></code></h3>
   
+  
+    <a href="../../Chem/FormatReader/MultiEntry.html#each%28indexes%3AEnumerable%28Int%29%2C%26%3AT-%3E%29-instance-method" class="tooltip">
+      <span>each(indexes : Enumerable(Int), & : T -> )<br/>each(& : T -> ) : Nil</span>
+    each</a>, 
     
+  
+    <a href="../../Chem/FormatReader/MultiEntry.html#next_entry%3AT%7CNil-instance-method" class="tooltip">
+      <span>next_entry : T | Nil</span>
+    next_entry</a>, 
+    
+  
+    <a href="../../Chem/FormatReader/MultiEntry.html#read_entry%3AT-instance-method" class="tooltip">
+      <span>read_entry : T</span>
+    read_entry</a>, 
+    
+  
+    <a href="../../Chem/FormatReader/MultiEntry.html#skip_entry%3ANil-instance-method" class="tooltip">
+      <span>skip_entry : Nil</span>
+    skip_entry</a>
+    
+  
 
 
     
@@ -993,30 +1046,6 @@
   
 </div>
 
-
-  <h2>
-    <a id="constructor-detail" class="anchor" href="#constructor-detail">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Constructor Detail
-  </h2>
-  
-    <div class="entry-detail" id="new(atoms:Enumerable(Chem::Atom))-class-method">
-      <div class="signature">
-        
-        def self.<strong>new</strong>(atoms : <a href="../../Enumerable.html">Enumerable</a>(<a href="../../Chem/Atom.html">Chem::Atom</a>))
-
-        <a class="method-permalink" href="#new%28atoms%3AEnumerable%28Chem%3A%3AAtom%29%29-class-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
 
 
 
@@ -1031,13 +1060,100 @@
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="detect(templates:Registry=Registry.default):Tuple(Array(MatchData),AtomView)-instance-method">
+    <div class="entry-detail" id="entry_index:Int32-instance-method">
+      <div class="signature">
+        abstract 
+        def <strong>entry_index</strong> : Int32
+
+        <a class="method-permalink" href="#entry_index%3AInt32-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the index of the current entry.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="n_entries:Int32-instance-method">
+      <div class="signature">
+        abstract 
+        def <strong>n_entries</strong> : Int32
+
+        <a class="method-permalink" href="#n_entries%3AInt32-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the number of entries in the IO.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="read_entry(index:Int):T-instance-method">
       <div class="signature">
         
-        def <strong>detect</strong>(templates : <a href="../../Chem/Templates/Registry.html">Registry</a> = <span class="t">Registry</span>.default) : Tuple(<a href="../../Array.html">Array</a>(<a href="../../Chem/Templates/MatchData.html">MatchData</a>), <a href="../../Chem/AtomView.html">AtomView</a>)
+        def <strong>read_entry</strong>(index : Int) : T
 
-        <a class="method-permalink" href="#detect%28templates%3ARegistry%3DRegistry.default%29%3ATuple%28Array%28MatchData%29%2CAtomView%29-instance-method">#</a>
+        <a class="method-permalink" href="#read_entry%28index%3AInt%29%3AT-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns the entry at the given index. Raises <code>IndexError</code> if the
+index is invalid.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="skip_entry:Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>skip_entry</strong> : Nil
+
+        <a class="method-permalink" href="#skip_entry%3ANil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from module <a href="../../Chem/FormatReader/MultiEntry.html">Chem::FormatReader::MultiEntry(T)</a>
+            </div>
+          
+          <p>Discards the next entry in the IO without fully parsing it.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="skip_to_entry(index:Int):Nil-instance-method">
+      <div class="signature">
+        abstract 
+        def <strong>skip_to_entry</strong>(index : Int) : Nil
+
+        <a class="method-permalink" href="#skip_to_entry%28index%3AInt%29%3ANil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Discards the entries (without parsing) up until the given index.
+Raises <code>IndexError</code> if the index is invalid.</p>
+        </div>
       
       <br/>
       <div>
