@@ -80,7 +80,7 @@ class Chem::Topology
     # TODO: use sorted set
     bonds = Set(Bond).new
     each_atom do |atom|
-      atoms.bonds.each do |bond|
+      atom.bonds.each do |bond|
         bonds << bond
       end
     end
