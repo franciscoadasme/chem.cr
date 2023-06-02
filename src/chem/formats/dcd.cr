@@ -17,7 +17,7 @@ class Chem::DCD::Reader
   @first_frame_size = 0
   @fixed_atoms = [] of AtomInfo
   @frame_size = 0
-  @has_4d_data = false
+  @dim = 3
   @header_size = 0
   @marker_type : Int32.class | Int64.class = Int32
   @n_atoms = 0
@@ -94,11 +94,7 @@ class Chem::DCD::Reader
       end
     end
 
-    if @has_4d_data
-      read_block("4d", bytesize) { @io.pos += bytesize }
-    end
-
-    @entry_index += 1
+    read_block("4d", bytesize) { @io.pos += bytesize } if @dim > 3
 
     structure
   end
@@ -158,8 +154,7 @@ class Chem::DCD::Reader
 
   private def compute_frame_size(n_atoms : Int32) : Int32
     coord_block_bytesize = marker_bytesize * 2 + n_atoms * sizeof(Float32)
-    size = 3 * coord_block_bytesize
-    size += coord_block_bytesize if @has_4d_data
+    size = @dim * coord_block_bytesize
     size += cell_block_bytesize if @charmm_format && @charmm_unitcell
     size
   end
@@ -240,7 +235,7 @@ class Chem::DCD::Reader
       @timestep = read_f32.to_f
 
       @charmm_unitcell = read_int != 0
-      @has_4d_data = read_int == 1
+      @dim = 4 if read_int == 1
     else
       @timestep = read_float
     end
@@ -290,7 +285,7 @@ class Chem::DCD::Reader
       x = read_block("x", bytesize) { Array(Float32).new(@n_atoms) { read_f32 } }
       y = read_block("y", bytesize) { Array(Float32).new(@n_atoms) { read_f32 } }
       z = read_block("z", bytesize) { Array(Float32).new(@n_atoms) { read_f32 } }
-      read_block("4d", bytesize) { @io.pos += bytesize } if @has_4d_data
+      read_block("4d", bytesize) { @io.pos += bytesize } if @dim > 3
 
       @fixed_atoms.each_with_index do |info, i|
         if info.fixed
@@ -338,6 +333,5 @@ class Chem::DCD::Reader
       end
       title
     end
-  end
   end
 end
