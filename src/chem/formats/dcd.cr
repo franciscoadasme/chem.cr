@@ -56,46 +56,46 @@ class Chem::DCD::Reader
       end
     end
 
-    expect_marker sizeof(Float32) * n_atoms
-    if n_atoms == @n_atoms
-      atoms.each do |atom|
-        atom.coords = Spatial::Vec3[read_f32, 0, 0]
-      end
-    else
-      @fixed_atoms.each_with_index do |info, i|
-        atoms[i].coords = Spatial::Vec3[read_f32, 0, 0] unless info.fixed
-      end
-    end
-    expect_marker sizeof(Float32) * n_atoms
 
-    expect_marker sizeof(Float32) * n_atoms
-    if n_atoms == @n_atoms
-      atoms.each do |atom|
-        atom.coords = Spatial::Vec3[atom.coords.x, read_f32, 0]
-      end
-    else
-      @fixed_atoms.each_with_index do |info, i|
-        atoms[i].coords = Spatial::Vec3[atoms[i].x, read_f32, 0] unless info.fixed
+    bytesize = sizeof(Float32) * n_atoms
+    read_block("x", bytesize) do
+      if n_atoms == @n_atoms
+        atoms.each do |atom|
+          atom.coords = Spatial::Vec3[read_f32, 0, 0]
+        end
+      else
+        @fixed_atoms.each_with_index do |info, i|
+          atoms[i].coords = Spatial::Vec3[read_f32, 0, 0] unless info.fixed
+        end
       end
     end
-    expect_marker sizeof(Float32) * n_atoms
 
-    expect_marker sizeof(Float32) * n_atoms
-    if n_atoms == @n_atoms
-      atoms.each do |atom|
-        atom.coords = Spatial::Vec3[atom.x, atom.y, read_f32]
-      end
-    else
-      @fixed_atoms.each_with_index do |info, i|
-        atoms[i].coords = Spatial::Vec3[atoms[i].x, atoms[i].y, read_f32] unless info.fixed
+    read_block("y", bytesize) do
+      if n_atoms == @n_atoms
+        atoms.each do |atom|
+          atom.coords = Spatial::Vec3[atom.coords.x, read_f32, 0]
+        end
+      else
+        @fixed_atoms.each_with_index do |info, i|
+          atoms[i].coords = Spatial::Vec3[atoms[i].x, read_f32, 0] unless info.fixed
+        end
       end
     end
-    expect_marker sizeof(Float32) * n_atoms
+
+    read_block("z", bytesize) do
+      if n_atoms == @n_atoms
+        atoms.each do |atom|
+          atom.coords = Spatial::Vec3[atom.x, atom.y, read_f32]
+        end
+      else
+        @fixed_atoms.each_with_index do |info, i|
+          atoms[i].coords = Spatial::Vec3[atoms[i].x, atoms[i].y, read_f32] unless info.fixed
+        end
+      end
+    end
 
     if @has_4d_data
-      expect_marker sizeof(Float32) * n_atoms
-      @io.pos += sizeof(Float32) * n_atoms
-      expect_marker sizeof(Float32) * n_atoms
+      read_block("4d", bytesize) { @io.pos += bytesize }
     end
 
     @entry_index += 1
@@ -171,19 +171,33 @@ class Chem::DCD::Reader
     end
   end
 
+  private def read_block(name : String, & : Int32 | Int64 -> T) : T forall T
+    marker = read_marker
+    value = yield marker
+    expect_marker marker, "Invalid end of #{name}"
+    value
+  end
+
+  private def read_block(name : String, marker : Int, & : -> T) : T forall T
+    expect_marker marker, "Invalid start of #{name}"
+    value = yield
+    expect_marker marker, "Invalid end of #{name}"
+    value
+  end
+
   private def read_cell : Spatial::Parallelepiped
-    expect_marker 6 * sizeof(Float64)
-    buffer = Array(Float64).new(6) { read_float }
-    expect_marker 6 * sizeof(Float64)
+    arr = read_block("unit cell", 6 * sizeof(Float64)) do
+      Array(Float64).new(6) { read_float }
+    end
 
     if @charmm_format && @charmm_version > 25
-      i = Spatial::Vec3[buffer[0], buffer[1], buffer[3]]
-      j = Spatial::Vec3[buffer[1], buffer[2], buffer[4]]
-      k = Spatial::Vec3[buffer[3], buffer[4], buffer[5]]
+      i = Spatial::Vec3[arr[0], arr[1], arr[3]]
+      j = Spatial::Vec3[arr[1], arr[2], arr[4]]
+      k = Spatial::Vec3[arr[3], arr[4], arr[5]]
       Spatial::Parallelepiped.new i, j, k
     else
-      size = Spatial::Size3[buffer[0], buffer[2], buffer[5]]
-      angles = {buffer[4], buffer[3], buffer[1]}
+      size = Spatial::Size3[arr[0], arr[2], arr[5]]
+      angles = {arr[4], arr[3], arr[1]}
       if angles.all?(&.abs.<=(1)) # possibly saved as cos(angle)
         angles = angles.map do |cosangle|
           90 - Math.asin(cosangle).degrees
@@ -229,22 +243,18 @@ class Chem::DCD::Reader
     expect_marker 84, "Invalid end of header"
 
     @title = read_title
-
-    expect_marker sizeof(Int32), "Invalid start of number of atoms"
-    @n_atoms = read_int
-    expect_marker sizeof(Int32), "Invalid end of number of atoms"
+    @n_atoms = read_block("number of atoms", sizeof(Int32)) { read_int }
 
     @n_free_atoms = @n_atoms
     if n_fixed_atoms > 0
       @n_free_atoms = @n_atoms - n_fixed_atoms
-      marker = sizeof(Int32) * @n_free_atoms
-      expect_marker marker, "Invalid start of free atoms"
-      free_atom_idxs = Array(Int32).new(@n_free_atoms) do
-        i = read_int
-        raise "Invalid atom index #{i}" unless 1 <= i <= @n_atoms
-        i - 1
-      end.sort!
-      expect_marker marker, "Invalid end of free atoms"
+      free_atom_idxs = read_block("free atoms", sizeof(Int32) * @n_free_atoms) do
+        Array(Int32).new(@n_free_atoms) do
+          i = read_int
+          raise "Invalid atom index #{i}" unless 1 <= i <= @n_atoms
+          i - 1
+        end.sort!
+      end
 
       @fixed_atoms = Array(AtomInfo).new(@n_atoms) do |i|
         if (value = free_atom_idxs.bsearch(&.>=(i))) && value == i
@@ -275,20 +285,11 @@ class Chem::DCD::Reader
         expect_marker 6 * sizeof(Float64)
       end
 
-      expect_marker sizeof(Float32) * @n_atoms
-      x = Array(Float32).new(@n_atoms) { read_f32 }
-      expect_marker sizeof(Float32) * @n_atoms
-      expect_marker sizeof(Float32) * @n_atoms
-      y = Array(Float32).new(@n_atoms) { read_f32 }
-      expect_marker sizeof(Float32) * @n_atoms
-      expect_marker sizeof(Float32) * @n_atoms
-      z = Array(Float32).new(@n_atoms) { read_f32 }
-      expect_marker sizeof(Float32) * @n_atoms
-      if @has_4d_data
-        expect_marker sizeof(Float32) * @n_atoms
-        @io.pos += sizeof(Float32) * @n_atoms
-        expect_marker sizeof(Float32) * @n_atoms
-      end
+      bytesize = sizeof(Float32) * @n_atoms
+      x = read_block("x", bytesize) { Array(Float32).new(@n_atoms) { read_f32 } }
+      y = read_block("y", bytesize) { Array(Float32).new(@n_atoms) { read_f32 } }
+      z = read_block("z", bytesize) { Array(Float32).new(@n_atoms) { read_f32 } }
+      read_block("4d", bytesize) { @io.pos += bytesize } if @has_4d_data
 
       @fixed_atoms.each_with_index do |info, i|
         if info.fixed
@@ -310,31 +311,32 @@ class Chem::DCD::Reader
   end
 
   private def read_title : String?
-    title_size = read_marker
-    title = nil
-    if title_size < 4 || (title_size - 4) % 80 != 0
-      if title_size != 0
-        Log.warn { "Skipping title section due to invalid size" }
-        @io.seek title_size, IO::Seek::Current
-      end
-    else
-      n_lines = @io.read_bytes(Int32, @byte_format)
-      if n_lines != (title_size - 4) // 80
-        Log.warn { "Skipping title section due to size mismatch" }
-        @io.seek title_size - 4, IO::Seek::Current
+    read_block("title") do |title_size|
+      title = nil
+      if title_size < 4 || (title_size - 4) % 80 != 0
+        if title_size != 0
+          Log.warn { "Skipping title section due to invalid size" }
+          @io.seek title_size, IO::Seek::Current
+        end
       else
-        line_bytes = Bytes.new 80
-        title = String.build do |str|
-          n_lines.times do
-            line_bytes.fill 0
-            @io.read(line_bytes)
-            str.write line_bytes[0...line_bytes.index(0)]
-            str << '\n'
+        n_lines = @io.read_bytes(Int32, @byte_format)
+        if n_lines != (title_size - 4) // 80
+          Log.warn { "Skipping title section due to size mismatch" }
+          @io.seek title_size - 4, IO::Seek::Current
+        else
+          line_bytes = Bytes.new 80
+          title = String.build do |str|
+            n_lines.times do
+              line_bytes.fill 0
+              @io.read(line_bytes)
+              str.write line_bytes[0...line_bytes.index(0)]
+              str << '\n'
+            end
           end
         end
       end
+      title
     end
-    expect_marker title_size, "Invalid end of title section"
-    title
+  end
   end
 end
