@@ -94,7 +94,7 @@ class Chem::DCD::Reader
       end
     end
 
-    read_block("4d", bytesize) { @io.pos += bytesize } if @dim > 3
+    skip_block "4d", bytesize if @dim > 3
 
     structure
   end
@@ -148,14 +148,13 @@ class Chem::DCD::Reader
     end
   end
 
-  private def cell_block_bytesize : Int32
-    marker_bytesize * 2 + 6 * sizeof(Float64)
-  end
-
   private def compute_frame_size(n_atoms : Int32) : Int32
     coord_block_bytesize = marker_bytesize * 2 + n_atoms * sizeof(Float32)
     size = @dim * coord_block_bytesize
-    size += cell_block_bytesize if @charmm_format && @charmm_unitcell
+    if @charmm_format && @charmm_unitcell
+      cell_block_size = marker_bytesize * 2 + 6 * sizeof(Float64)
+      size += cell_block_size
+    end
     size
   end
 
@@ -279,13 +278,13 @@ class Chem::DCD::Reader
     end
 
     if @fixed_atoms.size > 0
-      @io.pos += cell_block_bytesize if @charmm_format && @charmm_unitcell
+      skip_block("unit cell", 6 * sizeof(Float64)) if @charmm_format && @charmm_unitcell
 
       bytesize = sizeof(Float32) * @n_atoms
       x = read_block("x", bytesize) { Array(Float32).new(@n_atoms) { read_f32 } }
       y = read_block("y", bytesize) { Array(Float32).new(@n_atoms) { read_f32 } }
       z = read_block("z", bytesize) { Array(Float32).new(@n_atoms) { read_f32 } }
-      read_block("4d", bytesize) { @io.pos += bytesize } if @dim > 3
+      skip_block("4d", bytesize) if @dim > 3
 
       @fixed_atoms.each_with_index do |info, i|
         if info.fixed
@@ -332,6 +331,12 @@ class Chem::DCD::Reader
         end
       end
       title
+    end
+  end
+
+  private def skip_block(name : String, bytesize : Int) : Nil
+    read_block("4d", bytesize) do
+      @io.pos += bytesize
     end
   end
 end
