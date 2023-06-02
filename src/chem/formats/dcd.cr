@@ -152,13 +152,15 @@ class Chem::DCD::Reader
     end
   end
 
-  private def compute_frame_size(n_atoms : Int32) : Int32
-    marker_size = @marker_type == Int32 ? sizeof(Int32) : sizeof(Int64)
-    marker_size *= 2
+  private def cell_block_bytesize : Int32
+    marker_bytesize * 2 + 6 * sizeof(Float64)
+  end
 
-    size = 3 * (marker_size + n_atoms * sizeof(Float32))
-    size += marker_size + 6 * sizeof(Float64) if @charmm_format && @charmm_unitcell
-    size += marker_size + n_atoms * sizeof(Float32) if @has_4d_data
+  private def compute_frame_size(n_atoms : Int32) : Int32
+    coord_block_bytesize = marker_bytesize * 2 + n_atoms * sizeof(Float32)
+    size = 3 * coord_block_bytesize
+    size += coord_block_bytesize if @has_4d_data
+    size += cell_block_bytesize if @charmm_format && @charmm_unitcell
     size
   end
 
@@ -169,6 +171,10 @@ class Chem::DCD::Reader
     unless (actual = read_marker) == expected
       raise message % {expected: expected.inspect, actual: actual.inspect}
     end
+  end
+
+  private def marker_bytesize : Int32
+    @marker_type == Int32 ? sizeof(Int32) : sizeof(Int64)
   end
 
   private def read_block(name : String, & : Int32 | Int64 -> T) : T forall T
@@ -278,12 +284,7 @@ class Chem::DCD::Reader
     end
 
     if @fixed_atoms.size > 0
-      # skip cell information
-      if @charmm_format && @charmm_unitcell
-        expect_marker 6 * sizeof(Float64)
-        6.times { read_float }
-        expect_marker 6 * sizeof(Float64)
-      end
+      @io.pos += cell_block_bytesize if @charmm_format && @charmm_unitcell
 
       bytesize = sizeof(Float32) * @n_atoms
       x = read_block("x", bytesize) { Array(Float32).new(@n_atoms) { read_f32 } }
