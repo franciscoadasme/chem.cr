@@ -126,6 +126,10 @@ class Chem::DCD::Reader
     @marker_type == Int32 ? sizeof(Int32) : sizeof(Int64)
   end
 
+  private def read(type : T.class) : T forall T
+    @io.read_bytes type, @byte_format
+  end
+
   private def read_block(name : String, & : Int32 | Int64 -> T) : T forall T
     marker = read_marker
     value = yield marker
@@ -142,7 +146,7 @@ class Chem::DCD::Reader
 
   private def read_cell : Spatial::Parallelepiped
     arr = read_block("unit cell", 6 * sizeof(Float64)) do
-      Array(Float64).new(6) { read_float }
+      StaticArray(Float64, 6).new { read Float64 }
     end
 
     if @charmm_format && @charmm_version > 25
@@ -162,54 +166,46 @@ class Chem::DCD::Reader
     end
   end
 
-  private def read_f32 : Float32
-    @io.read_bytes Float32, @byte_format
-  end
-
-  private def read_float : Float64
-    @io.read_bytes Float64, @byte_format
-  end
-
   private def read_header : Nil
     header_start = @io.pos
 
     @io.pos += 80
-    @charmm_version = read_int
+    @charmm_version = read(Int32)
     @charmm_format = @charmm_version != 0
 
     @io.pos = header_start + 4
-    @n_entries = read_int
-    @start_frame = read_int
-    @frame_step = read_int
+    @n_entries = read(Int32)
+    @start_frame = read(Int32)
+    @frame_step = read(Int32)
 
     @io.pos += 20 # skip 20 unused bytes
-    n_fixed_atoms = read_int
+    n_fixed_atoms = read(Int32)
 
     if @charmm_format
-      @timestep = read_f32.to_f
+      @timestep = read(Float32).to_f
 
-      @charmm_unitcell = read_int != 0
-      @dim = 4 if read_int == 1
+      @charmm_unitcell = read(Int32) != 0
+      @dim = 4 if read(Int32) == 1
     else
-      @timestep = read_float
+      @timestep = read(Float64)
     end
 
     @io.pos = header_start + 84
     expect_marker 84, "Invalid end of header"
 
     @title = read_title
-    @n_atoms = read_block("number of atoms", sizeof(Int32)) { read_int }
+    @n_atoms = read_block("number of atoms", sizeof(Int32)) { read(Int32) }
     @buffer = Bytes.new sizeof(Float32) * @n_atoms * 3
 
     @header_size = @io.pos
 
     @n_free_atoms = @n_atoms
     if n_fixed_atoms > 0
-      @n_free_atoms = @n_atoms - n_fixed_atoms
+      @n_free_atoms -= n_fixed_atoms
       @fixed_positions = Array(Spatial::Vec3?).new(@n_atoms) { Spatial::Vec3.zero }
       read_block("free atoms", sizeof(Int32) * @n_free_atoms) do
         @n_free_atoms.times do
-          i = read_int
+          i = read(Int32)
           raise "Invalid atom index #{i}" unless 1 <= i <= @n_atoms
           @fixed_positions.unsafe_put i - 1, nil
         end
@@ -243,10 +239,6 @@ class Chem::DCD::Reader
         @n_entries = actual_n_frames.to_i32
       end
     end
-  end
-
-  private def read_int : Int32
-    @io.read_bytes Int32, @byte_format
   end
 
   private def read_marker : Int32 | Int64
@@ -305,7 +297,7 @@ class Chem::DCD::Reader
   end
 
   private def skip_block(name : String, bytesize : Int) : Nil
-    read_block("4d", bytesize) do
+    read_block(name, bytesize) do
       @io.pos += bytesize
     end
   end
