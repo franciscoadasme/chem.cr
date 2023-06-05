@@ -6,6 +6,7 @@ class Chem::DCD::Reader
   include FormatReader::Indexable(Structure)
 
   @byte_format : IO::ByteFormat = IO::ByteFormat::SystemEndian
+  @buffer = Bytes.empty
   @charmm_format = false
   @charmm_unitcell = false
   @charmm_version = 0
@@ -48,53 +49,17 @@ class Chem::DCD::Reader
 
     atoms = structure.atoms
 
-    n_atoms = @n_atoms
-    if !@fixed_positions.empty? && @entry_index > 0
-      n_atoms = @n_free_atoms
-      atoms.zip(@fixed_positions) do |atom, pos|
-        atom.coords = pos if pos
+    x, y, z = read_positions
+    if @fixed_positions.size > 0 && @entry_index > 0
+      i = -1
+      atoms.zip(@fixed_positions) do |atom, fixed_pos|
+        atom.coords = fixed_pos || Spatial::Vec3[x[(i += 1)], y[i], z[i]]
+      end
+    else
+      atoms.each_with_index do |atom, i|
+        atom.coords = Spatial::Vec3[x[i], y[i], z[i]]
       end
     end
-
-
-    bytesize = sizeof(Float32) * n_atoms
-    read_block("x", bytesize) do
-      if n_atoms == @n_atoms
-        atoms.each do |atom|
-          atom.coords = Spatial::Vec3[read_f32, 0, 0]
-        end
-      else
-        atoms.zip(@fixed_positions) do |atom, fixed_pos|
-          atom.coords = fixed_pos || Spatial::Vec3[read_f32, 0, 0]
-        end
-      end
-    end
-
-    read_block("y", bytesize) do
-      if n_atoms == @n_atoms
-        atoms.each do |atom|
-          atom.coords = Spatial::Vec3[atom.coords.x, read_f32, 0]
-        end
-      else
-        atoms.zip(@fixed_positions) do |atom, fixed_pos|
-          atom.coords = fixed_pos || Spatial::Vec3[atom.x, read_f32, 0]
-        end
-      end
-    end
-
-    read_block("z", bytesize) do
-      if n_atoms == @n_atoms
-        atoms.each do |atom|
-          atom.coords = Spatial::Vec3[atom.x, atom.y, read_f32]
-        end
-      else
-        atoms.zip(@fixed_positions) do |atom, fixed_pos|
-          atom.coords = fixed_pos || Spatial::Vec3[atom.x, atom.y, read_f32]
-        end
-      end
-    end
-
-    skip_block "4d", bytesize if @dim > 3
 
     structure
   end
@@ -244,6 +209,7 @@ class Chem::DCD::Reader
 
     @title = read_title
     @n_atoms = read_block("number of atoms", sizeof(Int32)) { read_int }
+    @buffer = Bytes.new sizeof(Float32) * @n_atoms * 3
 
     @header_size = @io.pos
 
@@ -262,14 +228,9 @@ class Chem::DCD::Reader
 
       skip_block("unit cell", 6 * sizeof(Float64)) if @charmm_format && @charmm_unitcell
 
-      bytesize = sizeof(Float32) * @n_atoms
-      x = read_block("x", bytesize) { Array(Float32).new(@n_atoms) { read_f32 } }
-      y = read_block("y", bytesize) { Array(Float32).new(@n_atoms) { read_f32 } }
-      z = read_block("z", bytesize) { Array(Float32).new(@n_atoms) { read_f32 } }
-      skip_block("4d", bytesize) if @dim > 3
-
+      x, y, z = read_positions
       @fixed_positions.map_with_index! do |pos, i|
-        Spatial::Vec3[x.unsafe_fetch(i), y.unsafe_fetch(i), z.unsafe_fetch(i)] if pos
+        Spatial::Vec3[x[i], y[i], z[i]] if pos
       end
 
       @io.pos = @header_size
@@ -293,6 +254,28 @@ class Chem::DCD::Reader
 
   private def read_marker : Int32 | Int64
     @io.read_bytes(@marker_type, @byte_format)
+  end
+
+  private def read_positions : StaticArray(Slice(Float32), 3)
+    # frame may include only positions for free atoms (n) instead of all
+    # atoms (N) after the first frame
+    size = @fixed_positions.size > 0 && @entry_index > 0 ? @n_free_atoms : @n_atoms
+    bytesize = size * sizeof(Float32)
+    # X, Y, and Z coordinates are saved as contiguous blocks (3*n), so
+    # split the buffer into three n-sized slices.
+    slices = StaticArray(Bytes, 3).new { |i| @buffer[i * bytesize, bytesize] }
+    read_block("x", bytesize) { @io.read_fully slices[0] }
+    read_block("y", bytesize) { @io.read_fully slices[1] }
+    read_block("z", bytesize) { @io.read_fully slices[2] }
+    skip_block("4d", bytesize) if @dim > 3
+    unless @byte_format == IO::ByteFormat::SystemEndian
+      slices.each do |slice|
+        size.times do |i|
+          slice[i * sizeof(Float32), sizeof(Float32)].reverse!
+        end
+      end
+    end
+    slices.map &.unsafe_slice_of(Float32)
   end
 
   private def read_title : String?
