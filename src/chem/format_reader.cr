@@ -190,13 +190,20 @@ module Chem
   module FormatReader::Indexable(T)
     include FormatReader::MultiEntry(T)
 
-    # Returns the index of the current entry.
-    abstract def entry_index : Int32
     # Returns the number of entries in the IO.
     abstract def n_entries : Int32
     # Discards the entries (without parsing) up until the given index.
     # Raises `IndexError` if the index is invalid.
     abstract def skip_to_entry(index : Int) : Nil
+
+    # Returns the index of the current entry.
+    getter entry_index : Int32 = 0
+
+    # Returns the next entry in the IO, or `nil` if there are no more
+    # entries.
+    def next_entry : T?
+      super.tap { @entry_index += 1 }
+    end
 
     # Returns the entry at the given index. Raises `IndexError` if the
     # index is invalid.
