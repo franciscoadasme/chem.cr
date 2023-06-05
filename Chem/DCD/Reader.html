@@ -161,18 +161,8 @@
       
         <ul>
   
-  <li class="parent open current" data-id="chem.cr/Chem/DCD/Reader" data-name="chem::dcd::reader">
+  <li class=" current" data-id="chem.cr/Chem/DCD/Reader" data-name="chem::dcd::reader">
       <a href="../../Chem/DCD/Reader.html">Reader</a>
-      
-        <ul>
-  
-  <li class=" " data-id="chem.cr/Chem/DCD/Reader/AtomInfo" data-name="chem::dcd::reader::atominfo">
-      <a href="../../Chem/DCD/Reader/AtomInfo.html">AtomInfo</a>
-      
-    </li>
-  
-</ul>
-
       
     </li>
   
@@ -990,12 +980,12 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28io%3AIO%2Cstructure%3AStructure%2Csync_close%3ABool%3Dfalse%29-class-method" class="signature"><strong>.new</strong>(io : IO, structure : Structure, sync_close : Bool = <span class="n">false</span>)</a>
+        <a href="#new%28io%3AIO%2Cstructure%3AStructure%2Creuse%3ABool%3Dfalse%2Csync_close%3ABool%3Dfalse%29-class-method" class="signature"><strong>.new</strong>(io : IO, structure : Structure, reuse : Bool = <span class="n">false</span>, sync_close : Bool = <span class="n">false</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new%28path%3APath%7CString%2Cstructure%3AStructure%29%3Aself-class-method" class="signature"><strong>.new</strong>(path : Path | String, structure : Structure) : <span class="k">self</span></a>
+        <a href="#new%28path%3APath%7CString%2Cstructure%3AStructure%2Creuse%3ABool%3Dfalse%29%3Aself-class-method" class="signature"><strong>.new</strong>(path : Path | String, structure : Structure, reuse : Bool = <span class="n">false</span>) : <span class="k">self</span></a>
         
           <div class="summary"><p>Creates a new object from the given <em>path</em>.</p></div>
         
@@ -1016,14 +1006,14 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#open%28io%3AIO%2Cstructure%3AStructure%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method" class="signature"><strong>.open</strong>(io : IO, structure : Structure, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )</a>
+        <a href="#open%28io%3AIO%2Cstructure%3AStructure%2Creuse%3ABool%3Dfalse%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method" class="signature"><strong>.open</strong>(io : IO, structure : Structure, reuse : Bool = <span class="n">false</span>, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )</a>
         
           <div class="summary"><p>Creates a new object from the given <em>io</em>, yields it to the given block, and closes it at the end.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#open%28path%3APath%7CString%2Cstructure%3AStructure%2C%26%3Aself-%3E%29-class-method" class="signature"><strong>.open</strong>(path : Path | String, structure : Structure, & : <span class="k">self</span> -> )</a>
+        <a href="#open%28path%3APath%7CString%2Cstructure%3AStructure%2Creuse%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method" class="signature"><strong>.open</strong>(path : Path | String, structure : Structure, reuse : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )</a>
         
           <div class="summary"><p>Creates a new object from the given <em>path</em> yields it to the given block, and closes it at the end.</p></div>
         
@@ -1085,6 +1075,11 @@
     <a href="../../Chem/FormatReader/Indexable.html#n_entries%3AInt32-instance-method" class="tooltip">
       <span>n_entries : Int32</span>
     n_entries</a>, 
+    
+  
+    <a href="../../Chem/FormatReader/Indexable.html#next_entry%3AT%7CNil-instance-method" class="tooltip">
+      <span>next_entry : T | Nil</span>
+    next_entry</a>, 
     
   
     <a href="../../Chem/FormatReader/Indexable.html#read_entry%28index%3AInt%29%3AT-instance-method" class="tooltip">
@@ -1235,12 +1230,12 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(io:IO,structure:Structure,sync_close:Bool=false)-class-method">
+    <div class="entry-detail" id="new(io:IO,structure:Structure,reuse:Bool=false,sync_close:Bool=false)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(io : IO, structure : <a href="../../Chem/Structure.html">Structure</a>, sync_close : Bool = <span class="n">false</span>)
+        def self.<strong>new</strong>(io : IO, structure : <a href="../../Chem/Structure.html">Structure</a>, reuse : Bool = <span class="n">false</span>, sync_close : Bool = <span class="n">false</span>)
 
-        <a class="method-permalink" href="#new%28io%3AIO%2Cstructure%3AStructure%2Csync_close%3ABool%3Dfalse%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28io%3AIO%2Cstructure%3AStructure%2Creuse%3ABool%3Dfalse%2Csync_close%3ABool%3Dfalse%29-class-method">#</a>
       </div>
       
       <br/>
@@ -1249,12 +1244,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="new(path:Path|String,structure:Structure):self-class-method">
+    <div class="entry-detail" id="new(path:Path|String,structure:Structure,reuse:Bool=false):self-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(path : Path | String, structure : <a href="../../Chem/Structure.html">Structure</a>) : <span class="k">self</span>
+        def self.<strong>new</strong>(path : Path | String, structure : <a href="../../Chem/Structure.html">Structure</a>, reuse : Bool = <span class="n">false</span>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#new%28path%3APath%7CString%2Cstructure%3AStructure%29%3Aself-class-method">#</a>
+        <a class="method-permalink" href="#new%28path%3APath%7CString%2Cstructure%3AStructure%2Creuse%3ABool%3Dfalse%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1284,12 +1279,12 @@ constant.</p>
     Class Method Detail
   </h2>
   
-    <div class="entry-detail" id="open(io:IO,structure:Structure,sync_close:Bool=false,&amp;:self-&gt;)-class-method">
+    <div class="entry-detail" id="open(io:IO,structure:Structure,reuse:Bool=false,sync_close:Bool=false,&amp;:self-&gt;)-class-method">
       <div class="signature">
         
-        def self.<strong>open</strong>(io : IO, structure : <a href="../../Chem/Structure.html">Structure</a>, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )
+        def self.<strong>open</strong>(io : IO, structure : <a href="../../Chem/Structure.html">Structure</a>, reuse : Bool = <span class="n">false</span>, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )
 
-        <a class="method-permalink" href="#open%28io%3AIO%2Cstructure%3AStructure%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">#</a>
+        <a class="method-permalink" href="#open%28io%3AIO%2Cstructure%3AStructure%2Creuse%3ABool%3Dfalse%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1305,12 +1300,12 @@ are forwarded to the constructor.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="open(path:Path|String,structure:Structure,&amp;:self-&gt;)-class-method">
+    <div class="entry-detail" id="open(path:Path|String,structure:Structure,reuse:Bool=false,&amp;:self-&gt;)-class-method">
       <div class="signature">
         
-        def self.<strong>open</strong>(path : Path | String, structure : <a href="../../Chem/Structure.html">Structure</a>, & : <span class="k">self</span> -> )
+        def self.<strong>open</strong>(path : Path | String, structure : <a href="../../Chem/Structure.html">Structure</a>, reuse : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )
 
-        <a class="method-permalink" href="#open%28path%3APath%7CString%2Cstructure%3AStructure%2C%26%3Aself-%3E%29-class-method">#</a>
+        <a class="method-permalink" href="#open%28path%3APath%7CString%2Cstructure%3AStructure%2Creuse%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">#</a>
       </div>
       
         <div class="doc">
