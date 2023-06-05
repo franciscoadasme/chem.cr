@@ -10,9 +10,9 @@ class Chem::DCD::Reader
   @charmm_format = false
   @charmm_unitcell = false
   @charmm_version = 0
-  @first_frame_size = 0
+  @first_frame_bytesize = 0
   @fixed_positions = [] of Spatial::Vec3?
-  @frame_size = 0
+  @frame_bytesize = 0
   @dim = 3
   @header_size = 0
   @marker_type : Int32.class | Int64.class = Int32
@@ -68,7 +68,7 @@ class Chem::DCD::Reader
     check_open
     raise IndexError.new unless 0 <= index < @n_entries
     new_pos = @header_size
-    new_pos += @first_frame_size + (index - 1) * @frame_size
+    new_pos += @first_frame_bytesize + (index - 1) * @frame_bytesize
     @io.pos = new_pos
     @entry_index = index
   end
@@ -111,16 +111,6 @@ class Chem::DCD::Reader
     else
       raise "Invalid DCD (0x#{bytes[..3].join { |x| "%x" % x }} 0x#{bytes[4..].join { |x| "%x" % x }})"
     end
-  end
-
-  private def compute_frame_size(n_atoms : Int32) : Int32
-    coord_block_bytesize = marker_bytesize * 2 + n_atoms * sizeof(Float32)
-    size = @dim * coord_block_bytesize
-    if @charmm_format && @charmm_unitcell
-      cell_block_size = marker_bytesize * 2 + 6 * sizeof(Float64)
-      size += cell_block_size
-    end
-    size
   end
 
   private def expect_marker(
@@ -236,11 +226,18 @@ class Chem::DCD::Reader
       @io.pos = @header_size
     end
 
-    @first_frame_size = compute_frame_size(@n_atoms)
-    @frame_size = compute_frame_size(@n_free_atoms)
+    @first_frame_bytesize, @frame_bytesize = {@n_atoms, @n_free_atoms}.map do |size|
+      coord_block_bytesize = marker_bytesize * 2 + size * sizeof(Float32)
+      bytesize = @dim * coord_block_bytesize
+      if @charmm_format && @charmm_unitcell
+        cell_block_size = marker_bytesize * 2 + 6 * sizeof(Float64)
+        bytesize += cell_block_size
+      end
+      bytesize
+    end
     if file = @io.as?(File)
-      body_size = file.info.size - @header_size
-      actual_n_frames = (body_size - @first_frame_size) // @frame_size + 1
+      body_bytesize = file.info.size - @header_size
+      actual_n_frames = (body_bytesize - @first_frame_bytesize) // @frame_bytesize + 1
       unless actual_n_frames == @n_entries
         Log.warn { "Frame count mistmatch (expected #{@n_entries}, got #{actual_n_frames})" }
         @n_entries = actual_n_frames.to_i32
