@@ -25,7 +25,12 @@ class Chem::DCD::Reader
   getter entry_index : Int32 = 0
   getter n_entries : Int32 = 0
 
-  def initialize(@io : IO, @structure : Structure, @sync_close : Bool = false)
+  def initialize(
+    @io : IO,
+    @structure : Structure,
+    @reuse : Bool = false,
+    @sync_close : Bool = false
+  )
     detect_encoding
     read_header
     unless @n_atoms == @structure.atoms.size
@@ -34,7 +39,7 @@ class Chem::DCD::Reader
   end
 
   protected def decode_entry : Structure
-    structure = @structure.clone
+    structure = @reuse ? @structure : @structure.clone
     if @timestep > 0 && @frame_step > 0
       structure.metadata["time"] = (@start_frame + @entry_index * @frame_step) * @timestep
     end
