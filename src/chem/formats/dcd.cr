@@ -44,7 +44,7 @@ class Chem::DCD::Reader
       structure.metadata["time"] = (@start_frame + @entry_index * @frame_step) * @timestep
     end
     structure.title = @title || ""
-    structure.cell = read_cell if @charmm_format && @charmm_unitcell
+    structure.cell = (read_cell if @charmm_format && @charmm_unitcell)
 
     atoms = structure.atoms
 
