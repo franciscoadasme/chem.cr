@@ -4,17 +4,6 @@ describe Chem::Spatial do
   v1 = vec3(3.0, 4.0, 0.0)
   v2 = vec3(1.0, 2.0, 3.0)
 
-  describe ".align" do
-    it "aligns two sets of coordinates" do
-      s = Array(Chem::Structure).read spec_file("E20_conformers.mol2")
-      s[1..].each { |other| Chem::Spatial.align(other, s[0]) }
-      Chem::Spatial.rmsd(s[1], s[0]).should be_close 3.463298, 1e-6
-      Chem::Spatial.rmsd(s[2], s[0]).should be_close 1.818679, 1e-6
-      Chem::Spatial.rmsd(s[3], s[0]).should be_close 3.845655, 1e-6
-      Chem::Spatial.rmsd(s[4], s[0]).should be_close 1.475276, 1e-6
-    end
-  end
-
   describe ".angle" do
     it "returns the angle between two vectors" do
       Chem::Spatial.angle(vec3(1, 0, 0), vec3(-1, -1, 0)).should eq 135

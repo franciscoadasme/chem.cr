@@ -133,17 +133,3 @@ module Chem::Spatial
     dihedral cell, b, a, c, d
   end
 end
-
-module Chem::Spatial
-  # Superimposes *atoms* onto *other*. Delegates to
-  # `CoordinatesProxy.align_to`.
-  def self.align(
-    atoms : AtomCollection | CoordinatesProxy,
-    ref_pos : AtomCollection | CoordinatesProxy
-  )
-    # TODO: add option to ensure to atom equivalence
-    atoms = atoms.coords unless atoms.is_a?(CoordinatesProxy)
-    ref_pos = ref_pos.coords unless ref_pos.is_a?(CoordinatesProxy)
-    atoms.align_to ref_pos
-  end
-end
