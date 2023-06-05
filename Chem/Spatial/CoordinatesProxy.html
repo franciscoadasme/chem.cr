@@ -1076,6 +1076,20 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#rmsd%28other%3Aself%2Cweights%3AIndexable%28Float64%29%2Cminimize%3ABool%3Dfalse%29%3AFloat64-instance-method" class="signature"><strong>#rmsd</strong>(other : <span class="k">self</span>, weights : Indexable(Float64), minimize : Bool = <span class="n">false</span>) : Float64</a>
+        
+          <div class="summary"><p>Returns the weighted root mean square deviation (RMSD) in Å between the coordinates and <em>other</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rmsd%28other%3ACoordinatesProxy%2Cminimize%3ABool%3Dfalse%29%3AFloat64-instance-method" class="signature"><strong>#rmsd</strong>(other : CoordinatesProxy, minimize : Bool = <span class="n">false</span>) : Float64</a>
+        
+          <div class="summary"><p>Returns the root mean square deviation (RMSD) in Å between the coordinates and <em>other</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#rotate%28x%3ANumber%2Cy%3ANumber%2Cz%3ANumber%2Cpivot%3AVec3%3Dcenter%29%3Aself-instance-method" class="signature"><strong>#rotate</strong>(x : Number, y : Number, z : Number, pivot : Vec3 = center) : <span class="k">self</span></a>
         
           <div class="summary"><p>Rotates the coordinates by the given Euler angles in degrees.</p></div>
@@ -1533,6 +1547,62 @@ structure.coords.com    <span class="c"># =&gt; [1.5035248 2.5035248 3.5035248]<
 
         <a class="method-permalink" href="#map_with_atom%21%28fractional%3ABool%3Dfalse%2C%26block%3AVec3%2CAtom-%3EVec3%29%3Aself-instance-method">#</a>
       </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rmsd(other:self,weights:Indexable(Float64),minimize:Bool=false):Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>rmsd</strong>(other : <span class="k">self</span>, weights : <a href="../../Indexable.html">Indexable</a>(Float64), minimize : Bool = <span class="n">false</span>) : Float64
+
+        <a class="method-permalink" href="#rmsd%28other%3Aself%2Cweights%3AIndexable%28Float64%29%2Cminimize%3ABool%3Dfalse%29%3AFloat64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the weighted root mean square deviation (RMSD) in Å
+between the coordinates and <em>other</em>.</p>
+<p>The RMSD is defined as the weighted average Euclidean distance
+between the two coordinates sets <em>A</em> and <em>B</em>. The <em>weights</em> (e.g.,
+atom masses) determine the relative weights of each coordinate
+when calculating the RMSD.</p>
+<p>If the minimum RMSD is desired (<em>minimize</em> is <code>true</code>), the RMSD
+will be computed using the quaternion-based characteristic
+polynomial (QCP) method (refer to <code>.qcp</code>). This method superimpose
+the coordinates onto <em>other</em> by computing the optimal rotation
+between the two coordinate sets before calculating the RMSD.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rmsd(other:CoordinatesProxy,minimize:Bool=false):Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>rmsd</strong>(other : <a href="../../Chem/Spatial/CoordinatesProxy.html">CoordinatesProxy</a>, minimize : Bool = <span class="n">false</span>) : Float64
+
+        <a class="method-permalink" href="#rmsd%28other%3ACoordinatesProxy%2Cminimize%3ABool%3Dfalse%29%3AFloat64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the root mean square deviation (RMSD) in Å between the
+coordinates and <em>other</em>.</p>
+<p>The RMSD is defined as the average Euclidean distance between the
+two coordinates sets <em>A</em> and <em>B</em>.</p>
+<p>If the minimum RMSD is desired (<em>minimize</em> is <code>true</code>), the RMSD
+will be computed using the quaternion-based characteristic
+polynomial (QCP) method (refer to <code>.qcp</code>). This method superimpose
+the coordinates onto <em>other</em> by computing the optimal rotation
+between the two coordinate sets before calculating the RMSD.</p>
+        </div>
       
       <br/>
       <div>

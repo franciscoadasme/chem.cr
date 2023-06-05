@@ -931,12 +931,7 @@
   </h2>
   
     
-      chem/spatial.cr:14
-    
-    <br/>
-  
-    
-      chem/spatial.cr:216
+      chem/spatial.cr
     
     <br/>
   
@@ -1006,13 +1001,6 @@
     Class Method Summary
   </h2>
   <ul class="list-summary">
-    
-      <li class="entry-summary">
-        <a href="#align%28atoms%3AAtomCollection%7CCoordinatesProxy%2Cref_pos%3AAtomCollection%7CCoordinatesProxy%29-class-method" class="signature"><strong>.align</strong>(atoms : AtomCollection | CoordinatesProxy, ref_pos : AtomCollection | CoordinatesProxy)</a>
-        
-          <div class="summary"><p>Superimposes <em>atoms</em> onto <em>other</em>.</p></div>
-        
-      </li>
     
       <li class="entry-summary">
         <a href="#angle%28cell%3AParallelepiped%2Ca%3AVec3%2Cb%3AVec3%2Cc%3AVec3%29%3AFloat64-class-method" class="signature"><strong>.angle</strong>(cell : Parallelepiped, a : Vec3, b : Vec3, c : Vec3) : Float64</a>
@@ -1138,27 +1126,6 @@
         
       </li>
     
-      <li class="entry-summary">
-        <a href="#rmsd%28pos%3ACoordinatesProxy%2Cref_pos%3ACoordinatesProxy%2Cweights%3AIndexable%28Float64%29%2Cminimize%3ABool%3Dfalse%29%3AFloat64-class-method" class="signature"><strong>.rmsd</strong>(pos : CoordinatesProxy, ref_pos : CoordinatesProxy, weights : Indexable(Float64), minimize : Bool = <span class="n">false</span>) : Float64</a>
-        
-          <div class="summary"><p>Returns the weighted root mean square deviation (RMSD) in Å between two sets of coordinates <em>pos</em> and <em>ref_pos</em>.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#rmsd%28pos%3ACoordinatesProxy%2Cref_pos%3ACoordinatesProxy%2Cminimize%3ABool%3Dfalse%29%3AFloat64-class-method" class="signature"><strong>.rmsd</strong>(pos : CoordinatesProxy, ref_pos : CoordinatesProxy, minimize : Bool = <span class="n">false</span>) : Float64</a>
-        
-          <div class="summary"><p>Returns the root mean square deviation (RMSD) in Å between two sets of coordinates <em>pos</em> and <em>ref_pos</em>.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#rmsd%28atoms%3AAtomCollection%7CCoordinatesProxy%2Cother%3AAtomCollection%7CCoordinatesProxy%2C%2Aargs%2C%2A%2Aoptions%29-class-method" class="signature"><strong>.rmsd</strong>(atoms : AtomCollection | CoordinatesProxy, other : AtomCollection | CoordinatesProxy, *args, **options)</a>
-        
-          <div class="summary"><p>Returns the root mean square deviation (RMSD) in Å between two atom collections.</p></div>
-        
-      </li>
-    
   </ul>
 
 
@@ -1182,26 +1149,6 @@
 </a>
     Class Method Detail
   </h2>
-  
-    <div class="entry-detail" id="align(atoms:AtomCollection|CoordinatesProxy,ref_pos:AtomCollection|CoordinatesProxy)-class-method">
-      <div class="signature">
-        
-        def self.<strong>align</strong>(atoms : <a href="../Chem/AtomCollection.html">AtomCollection</a> | <a href="../Chem/Spatial/CoordinatesProxy.html">CoordinatesProxy</a>, ref_pos : <a href="../Chem/AtomCollection.html">AtomCollection</a> | <a href="../Chem/Spatial/CoordinatesProxy.html">CoordinatesProxy</a>)
-
-        <a class="method-permalink" href="#align%28atoms%3AAtomCollection%7CCoordinatesProxy%2Cref_pos%3AAtomCollection%7CCoordinatesProxy%29-class-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Superimposes <em>atoms</em> onto <em>other</em>. Delegates to
-<code><a href="../Chem/Spatial/CoordinatesProxy.html#align_to%28other%3Aself%29%3Aself-instance-method">CoordinatesProxy.align_to</a></code>.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
   
     <div class="entry-detail" id="angle(cell:Parallelepiped,a:Vec3,b:Vec3,c:Vec3):Float64-class-method">
       <div class="signature">
@@ -1567,7 +1514,7 @@ a column of the adjoint matrix [Liu2009].</p>
 <p>Reference C implementation found at
 <a href="">https://theobald.brandeis.edu/qcp</a>.</p>
 <p><span class="flag yellow">WARNING</span>  Coordinate sets must be centered at the origin.</p>
-<p><span class="flag purple">NOTE</span>  Prefer using the <code><a href="../Chem/Spatial.html#rmsd%28pos%3ACoordinatesProxy%2Cref_pos%3ACoordinatesProxy%2Cweights%3AIndexable%28Float64%29%2Cminimize%3ABool%3Dfalse%29%3AFloat64-class-method">Spatial.rmsd</a></code> methods, which takes care of
+<p><span class="flag purple">NOTE</span>  Prefer using the <code>Spatial.rmsd</code> methods, which takes care of
 centering the coordinates and whether or not the coordinate sets
 should be superimposed first.</p>
 <h3><a id="references" class="anchor" href="#references">
@@ -1585,83 +1532,6 @@ Agrafiotis, D. K., &amp; Theobald, D. L. Fast determination of the
 optimal rotational matrix for macromolecular superpositions. <em>J.
 Comput. Chem.</em>, <strong>2010</strong>, <em>31</em> (7), 1561–1563.</li>
 </ul>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="rmsd(pos:CoordinatesProxy,ref_pos:CoordinatesProxy,weights:Indexable(Float64),minimize:Bool=false):Float64-class-method">
-      <div class="signature">
-        
-        def self.<strong>rmsd</strong>(pos : <a href="../Chem/Spatial/CoordinatesProxy.html">CoordinatesProxy</a>, ref_pos : <a href="../Chem/Spatial/CoordinatesProxy.html">CoordinatesProxy</a>, weights : <a href="../Indexable.html">Indexable</a>(Float64), minimize : Bool = <span class="n">false</span>) : Float64
-
-        <a class="method-permalink" href="#rmsd%28pos%3ACoordinatesProxy%2Cref_pos%3ACoordinatesProxy%2Cweights%3AIndexable%28Float64%29%2Cminimize%3ABool%3Dfalse%29%3AFloat64-class-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Returns the weighted root mean square deviation (RMSD) in Å between
-two sets of coordinates <em>pos</em> and <em>ref_pos</em>.</p>
-<p>The RMSD is defined as the weighted average Euclidean distance
-between the two coordinates sets <em>A</em> and <em>B</em>. The <em>weights</em> (e.g.,
-atom masses) determine the relative weights of each coordinate when
-calculating the RMSD.</p>
-<p>If the minimum RMSD is desired (<em>minimize</em> is <code>true</code>), the RMSD will
-be computed using the quaternion-based characteristic polynomial
-(QCP) method (refer to <code><a href="../Chem/Spatial.html#qcp%28pos%3AIndexable%28Vec3%29%2Cref_pos%3AIndexable%28Vec3%29%2Cweights%3AIndexable%28Float64%29%7CNil%3Dnil%29%3ATuple%28Quat%2CFloat64%29-class-method">.qcp</a></code>). This method superimpose <em>pos</em> onto
-<em>ref_pos</em> by computing the optimal rotation between the two
-coordinate sets before calculating the RMSD.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="rmsd(pos:CoordinatesProxy,ref_pos:CoordinatesProxy,minimize:Bool=false):Float64-class-method">
-      <div class="signature">
-        
-        def self.<strong>rmsd</strong>(pos : <a href="../Chem/Spatial/CoordinatesProxy.html">CoordinatesProxy</a>, ref_pos : <a href="../Chem/Spatial/CoordinatesProxy.html">CoordinatesProxy</a>, minimize : Bool = <span class="n">false</span>) : Float64
-
-        <a class="method-permalink" href="#rmsd%28pos%3ACoordinatesProxy%2Cref_pos%3ACoordinatesProxy%2Cminimize%3ABool%3Dfalse%29%3AFloat64-class-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Returns the root mean square deviation (RMSD) in Å between two sets
-of coordinates <em>pos</em> and <em>ref_pos</em>.</p>
-<p>The RMSD is defined as the average Euclidean distance between the
-two coordinates sets <em>A</em> and <em>B</em>.</p>
-<p>If the minimum RMSD is desired (<em>minimize</em> is <code>true</code>), the RMSD will
-be computed using the quaternion-based characteristic polynomial
-(QCP) method (refer to <code><a href="../Chem/Spatial.html#qcp%28pos%3AIndexable%28Vec3%29%2Cref_pos%3AIndexable%28Vec3%29%2Cweights%3AIndexable%28Float64%29%7CNil%3Dnil%29%3ATuple%28Quat%2CFloat64%29-class-method">.qcp</a></code>). This method superimpose <em>pos</em> onto
-<em>ref_pos</em> by computing the optimal rotation between the two
-coordinate sets before calculating the RMSD.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="rmsd(atoms:AtomCollection|CoordinatesProxy,other:AtomCollection|CoordinatesProxy,*args,**options)-class-method">
-      <div class="signature">
-        
-        def self.<strong>rmsd</strong>(atoms : <a href="../Chem/AtomCollection.html">AtomCollection</a> | <a href="../Chem/Spatial/CoordinatesProxy.html">CoordinatesProxy</a>, other : <a href="../Chem/AtomCollection.html">AtomCollection</a> | <a href="../Chem/Spatial/CoordinatesProxy.html">CoordinatesProxy</a>, *args, **options)
-
-        <a class="method-permalink" href="#rmsd%28atoms%3AAtomCollection%7CCoordinatesProxy%2Cother%3AAtomCollection%7CCoordinatesProxy%2C%2Aargs%2C%2A%2Aoptions%29-class-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Returns the root mean square deviation (RMSD) in Å between two atom
-collections. This is a convenience overload so arguments are
-forwarded to specific <code><a href="../Chem/Spatial.html#rmsd%28pos%3ACoordinatesProxy%2Cref_pos%3ACoordinatesProxy%2Cweights%3AIndexable%28Float64%29%2Cminimize%3ABool%3Dfalse%29%3AFloat64-class-method">.rmsd</a></code> methods.</p>
         </div>
       
       <br/>
