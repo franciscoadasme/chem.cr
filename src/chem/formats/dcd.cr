@@ -5,17 +5,12 @@ class Chem::DCD::Reader
   include FormatReader(Structure)
   include FormatReader::Indexable(Structure)
 
-  record AtomInfo,
-    fixed : Bool,
-    free_index : Int32 = -1,
-    fixed_pos : Spatial::Vec3 = Spatial::Vec3.new(0, 0, 0)
-
   @byte_format : IO::ByteFormat = IO::ByteFormat::SystemEndian
   @charmm_format = false
   @charmm_unitcell = false
   @charmm_version = 0
   @first_frame_size = 0
-  @fixed_atoms = [] of AtomInfo
+  @fixed_positions = [] of Spatial::Vec3?
   @frame_size = 0
   @dim = 3
   @header_size = 0
@@ -49,10 +44,10 @@ class Chem::DCD::Reader
     atoms = structure.atoms
 
     n_atoms = @n_atoms
-    if !@fixed_atoms.empty? && @entry_index > 0
+    if !@fixed_positions.empty? && @entry_index > 0
       n_atoms = @n_free_atoms
-      @fixed_atoms.each_with_index do |info, i|
-        atoms[i].coords = info.fixed_pos if info.fixed
+      atoms.zip(@fixed_positions) do |atom, pos|
+        atom.coords = pos if pos
       end
     end
 
@@ -64,8 +59,8 @@ class Chem::DCD::Reader
           atom.coords = Spatial::Vec3[read_f32, 0, 0]
         end
       else
-        @fixed_atoms.each_with_index do |info, i|
-          atoms[i].coords = Spatial::Vec3[read_f32, 0, 0] unless info.fixed
+        atoms.zip(@fixed_positions) do |atom, fixed_pos|
+          atom.coords = fixed_pos || Spatial::Vec3[read_f32, 0, 0]
         end
       end
     end
@@ -76,8 +71,8 @@ class Chem::DCD::Reader
           atom.coords = Spatial::Vec3[atom.coords.x, read_f32, 0]
         end
       else
-        @fixed_atoms.each_with_index do |info, i|
-          atoms[i].coords = Spatial::Vec3[atoms[i].x, read_f32, 0] unless info.fixed
+        atoms.zip(@fixed_positions) do |atom, fixed_pos|
+          atom.coords = fixed_pos || Spatial::Vec3[atom.x, read_f32, 0]
         end
       end
     end
@@ -88,8 +83,8 @@ class Chem::DCD::Reader
           atom.coords = Spatial::Vec3[atom.x, atom.y, read_f32]
         end
       else
-        @fixed_atoms.each_with_index do |info, i|
-          atoms[i].coords = Spatial::Vec3[atoms[i].x, atoms[i].y, read_f32] unless info.fixed
+        atoms.zip(@fixed_positions) do |atom, fixed_pos|
+          atom.coords = fixed_pos || Spatial::Vec3[atom.x, atom.y, read_f32]
         end
       end
     end
@@ -250,19 +245,12 @@ class Chem::DCD::Reader
     @n_free_atoms = @n_atoms
     if n_fixed_atoms > 0
       @n_free_atoms = @n_atoms - n_fixed_atoms
-      free_atom_idxs = read_block("free atoms", sizeof(Int32) * @n_free_atoms) do
-        Array(Int32).new(@n_free_atoms) do
+      @fixed_positions = Array(Spatial::Vec3?).new(@n_atoms) { Spatial::Vec3.zero }
+      read_block("free atoms", sizeof(Int32) * @n_free_atoms) do
+        @n_free_atoms.times do
           i = read_int
           raise "Invalid atom index #{i}" unless 1 <= i <= @n_atoms
-          i - 1
-        end.sort!
-      end
-
-      @fixed_atoms = Array(AtomInfo).new(@n_atoms) do |i|
-        if (value = free_atom_idxs.bsearch(&.>=(i))) && value == i
-          AtomInfo.new fixed: false, free_index: i - free_atom_idxs.first
-        else
-          AtomInfo.new fixed: true
+          @fixed_positions.unsafe_put i - 1, nil
         end
       end
       @header_size = @io.pos
@@ -275,11 +263,8 @@ class Chem::DCD::Reader
       z = read_block("z", bytesize) { Array(Float32).new(@n_atoms) { read_f32 } }
       skip_block("4d", bytesize) if @dim > 3
 
-      @fixed_atoms.each_with_index do |info, i|
-        if info.fixed
-          vec = Spatial::Vec3[x[i], y[i], z[i]]
-          @fixed_atoms[i] = AtomInfo.new true, fixed_pos: vec
-        end
+      @fixed_positions.map_with_index! do |pos, i|
+        Spatial::Vec3[x.unsafe_fetch(i), y.unsafe_fetch(i), z.unsafe_fetch(i)] if pos
       end
 
       @io.pos = @header_size
