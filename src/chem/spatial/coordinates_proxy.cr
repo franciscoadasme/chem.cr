@@ -174,6 +174,83 @@ module Chem::Spatial
       self
     end
 
+    # Returns the weighted root mean square deviation (RMSD) in Å
+    # between the coordinates and *other*.
+    #
+    # The RMSD is defined as the weighted average Euclidean distance
+    # between the two coordinates sets *A* and *B*. The *weights* (e.g.,
+    # atom masses) determine the relative weights of each coordinate
+    # when calculating the RMSD.
+    #
+    # If the minimum RMSD is desired (*minimize* is `true`), the RMSD
+    # will be computed using the quaternion-based characteristic
+    # polynomial (QCP) method (refer to `.qcp`). This method superimpose
+    # the coordinates onto *other* by computing the optimal rotation
+    # between the two coordinate sets before calculating the RMSD.
+    def rmsd(
+      other : self,
+      weights : Indexable(Float64),
+      minimize : Bool = false
+    ) : Float64
+      pos = to_a           # FIXME: avoid copying coordinates
+      ref_pos = other.to_a # FIXME: avoid copying coordinates
+      raise ArgumentError.new("Incompatible coordinates") if pos.size != ref_pos.size
+
+      if minimize
+        # requires that the coordinates are centered at origin
+        # FIXME: replace by pos.dup.center_at_origin(weights)
+        center = pos.average(weights)
+        pos.map! &.-(center)
+        center = ref_pos.average(weights)
+        ref_pos.map! &.-(center)
+
+        # weights should be relative to the mean
+        weight_mean = weights.mean
+        weights.map! &./(weight_mean)
+
+        _, rmsd = Spatial.qcp(pos, ref_pos, weights)
+        rmsd
+      else
+        Math.sqrt((0...pos.size).average(weights) do |i|
+          Spatial.distance2 pos.unsafe_fetch(i), ref_pos.unsafe_fetch(i)
+        end)
+      end
+    end
+
+    # Returns the root mean square deviation (RMSD) in Å between the
+    # coordinates and *other*.
+    #
+    # The RMSD is defined as the average Euclidean distance between the
+    # two coordinates sets *A* and *B*.
+    #
+    # If the minimum RMSD is desired (*minimize* is `true`), the RMSD
+    # will be computed using the quaternion-based characteristic
+    # polynomial (QCP) method (refer to `.qcp`). This method superimpose
+    # the coordinates onto *other* by computing the optimal rotation
+    # between the two coordinate sets before calculating the RMSD.
+    def rmsd(
+      other : CoordinatesProxy,
+      minimize : Bool = false
+    ) : Float64
+      pos = to_a           # FIXME: avoid copying coordinates
+      ref_pos = other.to_a # FIXME: avoid copying coordinates
+
+      if minimize
+        # requires that the coordinates are centered at origin
+        # FIXME: replace by pos.dup.center_at_origin
+        center = pos.mean
+        pos.map! &.-(center)
+        center = ref_pos.mean
+        ref_pos.map! &.-(center)
+        _, rmsd = Spatial.qcp pos, ref_pos
+        rmsd
+      else
+        Math.sqrt((0...pos.size).mean do |i|
+          Spatial.distance2 pos.unsafe_fetch(i), ref_pos.unsafe_fetch(i)
+        end)
+      end
+    end
+
     # Rotates the coordinates by the given Euler angles in degrees. The
     # rotation will be centered at *pivot*, which defaults to the
     # coordinates' center.
