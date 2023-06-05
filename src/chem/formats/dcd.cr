@@ -245,6 +245,8 @@ class Chem::DCD::Reader
     @title = read_title
     @n_atoms = read_block("number of atoms", sizeof(Int32)) { read_int }
 
+    @header_size = @io.pos
+
     @n_free_atoms = @n_atoms
     if n_fixed_atoms > 0
       @n_free_atoms = @n_atoms - n_fixed_atoms
@@ -263,21 +265,8 @@ class Chem::DCD::Reader
           AtomInfo.new fixed: true
         end
       end
-    end
+      @header_size = @io.pos
 
-    @first_frame_size = compute_frame_size(@n_atoms)
-    @frame_size = compute_frame_size(@n_free_atoms)
-    @header_size = @io.pos
-    if file = @io.as?(File)
-      body_size = file.info.size - @header_size
-      actual_n_frames = (body_size - @first_frame_size) // @frame_size + 1
-      unless actual_n_frames == @n_entries
-        Log.warn { "Frame count mistmatch (expected #{@n_entries}, got #{actual_n_frames})" }
-        @n_entries = actual_n_frames.to_i32
-      end
-    end
-
-    if @fixed_atoms.size > 0
       skip_block("unit cell", 6 * sizeof(Float64)) if @charmm_format && @charmm_unitcell
 
       bytesize = sizeof(Float32) * @n_atoms
@@ -294,6 +283,17 @@ class Chem::DCD::Reader
       end
 
       @io.pos = @header_size
+    end
+
+    @first_frame_size = compute_frame_size(@n_atoms)
+    @frame_size = compute_frame_size(@n_free_atoms)
+    if file = @io.as?(File)
+      body_size = file.info.size - @header_size
+      actual_n_frames = (body_size - @first_frame_size) // @frame_size + 1
+      unless actual_n_frames == @n_entries
+        Log.warn { "Frame count mistmatch (expected #{@n_entries}, got #{actual_n_frames})" }
+        @n_entries = actual_n_frames.to_i32
+      end
     end
   end
 
