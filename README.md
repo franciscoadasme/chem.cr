@@ -115,22 +115,17 @@ named `chem.cr-X.Y.Z`, where `X.Y.Z` stands for the current version.
 
 ## Usage
 
-First require the `chem` module. If you used Shards to installed the
+First require the `chem` module. You must have used the `shards` command to install the
 dependencies:
 
 ```crystal
 require "chem"
 ```
 
-Or if you download a copy named `chem.cr-X.Y.Z` and it is placed at the
-parent directory:
-
-```crystal
-require "../chem.cr-X.Y.Z/src/chem"
-```
-
 Refer to the [Crystal guides][6] for more information about how to
-require other files. Either way, write the following to avoid typing the
+require other files.
+
+Either way, write the following to avoid typing the
 `Chem::` prefix:
 
 ```crystal
@@ -140,8 +135,8 @@ include Chem
 Let's first read a structure:
 
 ```crystal
-st = Structure.read "/path/to/file.pdb"
-st # => <Structure "1cbn": 644 atoms, 47 residues, periodic>
+structure = Structure.read "/path/to/file.pdb"
+structure # => <Structure "1cbn": 644 atoms, 47 residues, periodic>
 ```
 
 You can also use a custom read method that accepts specific options:
@@ -156,10 +151,10 @@ Structure.from_pdb "/path/to/file.pdb", alt_loc: 'A' # select alternate location
 You can access PDB header information via the `#experiment` property:
 
 ```crystal
-if expt = st.experiment # check if experiment data is present
-  expt.title # => "ATOMIC RESOLUTION (0.83 ANGSTROMS) CRYSTAL STRUCTURE..."
-  expt.kind # => XRayDiffraction
-  expt.resolution # => 0.83
+if expt = structure.experiment # checks if experiment data is present
+  expt.title           # => "ATOMIC RESOLUTION (0.83 ANGSTROMS) CRYSTAL STRUCTURE..."
+  expt.kind            # => XRayDiffraction
+  expt.resolution      # => 0.83
   expt.deposition_date # => 1991-10-11
   ...
 end
@@ -177,8 +172,8 @@ Array(Structure).from_pdb "/path/to/file.pdb", indexes: [1, 4]
 Alternatively, you could use an IO iterator to read one by one:
 
 ```crystal
-PDB::Parser.new("/path/to/file.pdb").each { |st| ... }
-PDB::Parser.new("/path/to/file.pdb").each(indexes: [1, 4]) { |st| ... }
+PDB::Reader.new("/path/to/file.pdb").each { |s| ... }
+PDB::Reader.new("/path/to/file.pdb").each(indexes: [1, 4]) { |s| ... }
 ```
 
 ### Topology access
@@ -187,27 +182,27 @@ You can access topology objects using the bracket syntax (like a hash or
 associative array or dictionary):
 
 ```crystal
-st['A'] # => <Chain A>
-st['A'][10] # => <Residue A:ARG10>
-st['A'][10]["CA"] # => <Atom A:ARG10:CA(146)>
+structure['A'] # => <Chain A>
+structure['A'][10] # => <Residue A:ARG10>
+structure['A'][10]["CA"] # => <Atom A:ARG10:CA(146)>
 ```
 
 Alternatively, you can use the `#dig` and `#dig?` methods:
 
 ```crystal
-st.dig 'A' # => <Chain A>
-st.dig 'A', 10 # => <Residue A:ARG10>
-st.dig 'A', 10, "CA" # => <Atom A:ARG10:CA(146)>
+structure.dig 'A' # => <Chain A>
+structure.dig 'A', 10 # => <Residue A:ARG10>
+structure.dig 'A', 10, "CA" # => <Atom A:ARG10:CA(146)>
 
-st.dig 'A', 10, "CJ" # causes an error because "CJ" doesn't exist
-st.dig? 'A', 10, "CJ" # => nil
+structure.dig 'A', 10, "CJ" # causes an error because "CJ" doesn't exist
+structure.dig? 'A', 10, "CJ" # => nil
 ```
 
 Each topology object have several modifiable properties:
 
 ```crystal
-atom = st.dig 'A', 10, "CA"
-atom.element.name # => Carbon
+atom = structure.dig 'A', 10, "CA"
+atom.element.name # => "Carbon"
 atom.coords # => [8.47 4.577 8.764]
 atom.occupancy # => 1.0
 atom.bonded_atoms.map &.name # => ["N", "C", "HA", "CB"]
@@ -218,15 +213,15 @@ very easy:
 
 ```crystal
 # ramachandran angles
-st.residues.map { |r| {r.phi, r.psi} } # => [{129.5, 90.1}, ...]
+structure.residues.map { |r| {r.phi, r.psi} } # => [{129.5, 90.1}, ...]
 # renumber residues starting from 1
-st.residues.each_with_index { |res, i| res.number = i + 1 }
+structure.residues.each_with_index { |res, i| res.number = i + 1 }
 # constrain Z-axis
-st.atoms.each { |atom| atom.constraint = :z }
+structure.atoms.each &.constraint=(:z)
 # total charge
-st.atoms.sum_of &.partial_charge
+structure.atoms.sum_of &.partial_charge
 # iterate over secondary structure elements
-st.residues.chunk(&.sec).each do |sec, residues|
+structure.residues.chunk(&.sec).each do |sec, residues|
   sec # => HelixAlpha
   residues # => [<Residue A:ARG1>, <Residue A:LEU2>, ...]
 end
@@ -237,8 +232,8 @@ respectively. Collections also provide iterator-based access, e.g.,
 `#each_atom`, that avoids expensive memory allocations:
 
 ```crystal
-st.atoms.any? &.constraint # array allocation to just check a condition
-st.each_atom.any? &.constraint # faster!
+structure.atoms.any? &.constraint # array allocation to just check a condition
+structure.each_atom.any? &.constraint # faster!
 ```
 
 ### Atom selection
@@ -247,16 +242,16 @@ Right now, there is no custom language to select a subset of atoms. However,
 thanks to Crystal, one can achieve a similar result with an intuitive syntax:
 
 ```crystal
-st.atoms.select { |atom| atom.partial_charge > 0 }
+structure.atoms.select { |atom| atom.partial_charge > 0 }
 # or
-st.atoms.select &.partial_charge.>(0)
+structure.atoms.select &.partial_charge.>(0)
 # compared to a custom language
-st.atoms.select "partial_charge > 0"
+structure.atoms.select "partial_charge > 0"
 
 # select atoms within a cylinder of radius = 4 A and centered at the origin
-st.atoms.select { |atom| atom.x**2 + atom.y**2 < 4 }
+structure.atoms.select { |atom| atom.x**2 + atom.y**2 < 4 }
 # compared to a custom language
-st.atoms.select "sqrt(x) + sqrt(y) < 4" # or "x**2 + y**2 < 4"
+structure.atoms.select "sqrt(x) + sqrt(y) < 4" # or "x**2 + y**2 < 4"
 ```
 
 One advantage to using Crystal itself is that it provides type-safety: doing
@@ -271,17 +266,17 @@ Finally, the above also works for chain and residue collections:
 
 ```crystal
 # select protein chains
-st.chains.select &.each_residue.any?(&.protein?)
+structure.chains.select &.each_residue.any?(&.protein?)
 # select only solvent residues
-st.residues.select &.solvent?
+structure.residues.select &.solvent?
 # select residues with any atom within 5 A of the first CA atom
 # (this is equivalent to "same residue as" or "fillres" in other libraries)
-ca = st.dig 'A', 1, "CA"
-st.residues.select do |res|
+ca = structure.dig 'A', 1, "CA"
+structure.residues.select do |res|
   res.each_atom.any? { |atom| Spatial.distance(atom, ca) < 5 }
 end
 # or
-st.atoms.select { |atom| Spatial.distance(atom, ca) < 5 }.residues
+structure.atoms.select { |atom| Spatial.distance(atom, ca) < 5 }.residues
 ```
 
 ### Coordinates manipulation
@@ -292,11 +287,11 @@ available for any atom collection (i.e., structure, chain or residue) via
 
 ```crystal
 # geometric center
-st.coords.center
+structure.coords.center
 # center at origin
-st.coords.translate! -st.coords.center
+structure.coords.translate! -structure.coords.center
 # wraps atoms into the primary unit cell
-st.coords.wrap
+structure.coords.wrap
 ...
 ```
 
