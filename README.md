@@ -359,7 +359,7 @@ Scripts and details are provided at [pdb-bench](https://github.com/franciscoadas
 - [x] Automatic connectivity detection (includes periodic systems)
 - [x] Automatic bond order assignment
 - [x] Residue templates (basic impl.)
-  - [ ] Custom terminal groups
+  - [x] Custom terminal groups
 - [x] Automatic topology assignment (chain, residue names, atom names) based on
       residue templates
 - [ ] Atom wildcards (`"C*"` will select `"C"`, `"CA"`, `"CB"`, etc.)
@@ -372,7 +372,7 @@ Scripts and details are provided at [pdb-bench](https://github.com/franciscoadas
 - [x] Friendly errors (message with error location)
 - [x] Iterator-based IO
 - [ ] Compressed files (.gz and .xz)
-- [ ] Trajectory support
+- [x] Trajectory support
 
 #### File formats
 
@@ -396,10 +396,10 @@ Scripts and details are provided at [pdb-bench](https://github.com/franciscoadas
   - [x] DSSP (native implementation)
   - [x] STRIDE (uses external program for now)
 - [x] Nearest neighbor search (via native k-d tree impl.)
-- [ ] RMSD
-- [ ] Structure superposition
+- [x] RMSD
+- [x] Structure superposition
 - [ ] Intermolecular interactions (H-bonds, etc.)
-- [ ] Volumetric data
+- [x] Volumetric data
 - [ ] Parallel processing
 
 ### Other
