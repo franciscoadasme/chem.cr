@@ -10,7 +10,7 @@ A modern library written in [Crystal][1] primarily designed for
 manipulating molecular files created by computational chemistry
 programs. It aims to be both fast and easy to use.
 
-**NOTE**: PSIQUE can be found [here](https://github.com/franciscoadasme/chem.cr/wiki/PSIQUE)
+**NOTE**: PSIQUE documentation can be found [here](https://github.com/franciscoadasme/psique)
 
 **IMPORTANT**: this library is in alpha stage, meaning that there is missing
 functionality, documentation, etc. and there will be breaking changes.
@@ -40,11 +40,6 @@ functionality, documentation, etc. and there will be breaking changes.
 - Fast performance (see Benchmarks below)
 
 ## Installation
-
-**NOTE** Tools such as `psique` may be download separately from the
-[releases][7] page or built from source if required. Refer to the
-[Wiki](https://github.com/franciscoadasme/chem.cr/wiki) for more
-information.
 
 First check that the Crystal compiler is installed correctly:
 
