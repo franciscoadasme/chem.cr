@@ -43,7 +43,7 @@ class Chem::Protein::Stride < Chem::Protein::SecondaryStructureCalculator
       remark "of QUaternions and Electronic structure calculations"
       spacer
       remark "Please cite:"
-      remark "F. Adasme-Carreño, et al., XXXXXX, XXXX, X (XX), XXX-XXX"
+      remark "Adasme-Carreño, F., et al., J. Chem. Inf. Model., 61(4), 1789-1800"
     end
 
     private def info(expt : Structure::Experiment)
