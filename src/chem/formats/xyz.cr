@@ -31,7 +31,7 @@ module Chem::XYZ
         ext_parser.cell.try { |cell| builder.cell cell }
 
         n_atoms.times do
-          constraint = Constraint::None
+          constraint = nil
           chain = resname = resid = name = serial = typename = mass = vdw_radius = nil
           ele = PeriodicTable::C
           pos = Spatial::Vec3.zero
@@ -60,7 +60,7 @@ module Chem::XYZ
               when {false, false, true}  then constraint = Constraint::Z
               when {false, true, false}  then constraint = Constraint::Y
               when {true, false, false}  then constraint = Constraint::X
-              when {false, false, false} then constraint = Constraint::None
+              when {false, false, false} then constraint = nil
               end
             when "charge"
               if field.type == Int32

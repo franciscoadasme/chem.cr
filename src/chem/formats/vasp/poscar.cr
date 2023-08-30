@@ -145,7 +145,7 @@ module Chem::VASP::Poscar
           end
 
           @io.printf "%22.16f%22.16f%22.16f", vec.x, vec.y, vec.z
-          write atom.constraint || Constraint::None if has_constraints
+          write_constraint atom.constraint if has_constraints
           @io.puts
         end
       end
@@ -161,9 +161,9 @@ module Chem::VASP::Poscar
       ele_tally
     end
 
-    private def write(constraint : Constraint) : Nil
+    private def write_constraint(constraint : Constraint?) : Nil
       {:x, :y, :z}.each do |axis|
-        @io.printf "%4s", axis.in?(constraint) ? 'F' : 'T'
+        @io.printf "%4s", constraint.try(&.includes?(axis)) ? 'F' : 'T'
       end
     end
 

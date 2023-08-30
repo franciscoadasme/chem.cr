@@ -2,7 +2,6 @@ module Chem
   abstract struct Bias; end
 
   enum Constraint
-    None
     X
     Y
     Z
