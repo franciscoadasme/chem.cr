@@ -32,7 +32,7 @@ module Chem::Spatial
     end
 
     # Returns a random vector with the elements within 0 and 1.
-    def self.rand(random = Random::DEFAULT) : self
+    def self.rand(random : Random = Random::DEFAULT) : self
       Vec3[random.rand, random.rand, random.rand]
     end
 
