@@ -25,7 +25,7 @@ module Chem::Spatial
 
     # Reads a vector from *io* in the given *format*. See also:
     # `IO#read_bytes`.
-    def self.from_io(io : IO, format : IO::ByteFormat) : self
+    def self.from_io(io : IO, format : IO::ByteFormat = IO::ByteFormat::SystemEndian) : self
       new io.read_bytes(Float64, format),
         io.read_bytes(Float64, format),
         io.read_bytes(Float64, format)
