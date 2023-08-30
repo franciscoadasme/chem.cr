@@ -10,16 +10,15 @@ module Chem
     YZ
     XYZ
 
-    def includes?(axis : Symbol) : Bool
+    def includes?(axis : Constraint) : Bool
       case axis
-      when :x
-        xyz? || x? || xy? || xz?
-      when :y
-        xyz? || y? || xy? || yz?
-      when :z
-        xyz? || z? || xz? || yz?
-      else
-        false
+      in .x?   then x? || xy? || xz? || xyz?
+      in .y?   then y? || xy? || yz? || xyz?
+      in .z?   then z? || xz? || yz? || xyz?
+      in .xy?  then xy? || xyz?
+      in .xz?  then xz? || xyz?
+      in .yz?  then yz? || xyz?
+      in .xyz? then xyz?
       end
     end
   end

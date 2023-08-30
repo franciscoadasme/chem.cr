@@ -165,7 +165,7 @@ module Chem::XYZ
           when "chain"
             @io << atom.chain.id
           when "constraint"
-            {:x, :y, :z}.each_with_index do |axis, i|
+            {Constraint::X, Constraint::Y, Constraint::Z}.each_with_index do |axis, i|
               flag = atom.constraint.try(&.includes?(axis)) || false
               @io << ' ' if i > 0
               @io << (flag ? 'T' : 'F')
