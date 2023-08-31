@@ -189,6 +189,27 @@ describe Chem::Spatial::Vec3 do
     end
   end
 
+  describe "#orthogonal?" do
+    it "returns true if vectors are orthogonal" do
+      vec3(1, 0, 0).orthogonal?(vec3(0, 1, 0)).should be_true
+      vec3(1, 0, 0).orthogonal?(vec3(0, 0, 1)).should be_true
+      vec3(1, 0, 0).orthogonal?(vec3(0, 0, 5)).should be_true
+      vec3(1, 0, 0).orthogonal?(vec3(0, 1, 1)).should be_true
+    end
+
+    it "returns true if vector is orthogonal to direction" do
+      vec3(1, 0, 0).orthogonal?(:y).should be_true
+      vec3(1, 0, 0).orthogonal?(:z).should be_true
+      vec3(1, 0, 0).orthogonal?(:yz).should be_true
+    end
+
+    it "returns false if vector is not orthogonal to direction" do
+      vec3(1, 0, 0).orthogonal?(:x).should be_false
+      vec3(1, 0, 0).orthogonal?(:xy).should be_false
+      vec3(1, 0, 0).orthogonal?(:xyz).should be_false
+    end
+  end
+
   describe "#pad" do
     it "pads a vector by the given amount" do
       vec3(1, 0, 0).pad(2).should eq [3, 0, 0]

@@ -225,6 +225,18 @@ module Chem::Spatial
       resize 1
     end
 
+    # Returns `true` if the vector is orthogonal to *other*, else
+    # `false`.
+    def orthogonal?(to other : self) : Bool
+      dot(other) =~ 0
+    end
+
+    # Returns `true` if the vector is orthogonal to the given direction,
+    # else `false`.
+    def orthogonal?(to direction : Direction) : Bool
+      orthogonal? direction.to_vector
+    end
+
     # Returns a vector by increasing the length by *padding*.
     #
     # ```
