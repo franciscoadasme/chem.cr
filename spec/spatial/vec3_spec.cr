@@ -184,6 +184,28 @@ describe Chem::Spatial::Vec3 do
     end
   end
 
+  describe "#parallel?" do
+    it "returns true if two vectors are parallel" do
+      vec3(1, 0, 0).parallel?(vec3(1, 0, 0)).should be_true
+      vec3(1, 0, 0).parallel?(vec3(2.351, 0, 0)).should be_true
+    end
+
+    it "returns true if is parallel to a direction" do
+      vec3(1, 0, 0).parallel?(:x).should be_true
+    end
+
+    it "returns false if two vectors are not parallel" do
+      vec3(1, 0, 0).parallel?(vec3(0, 1, 0)).should be_false
+      vec3(1, 0, 0).parallel?(vec3(1, 1, 0)).should be_false
+      vec3(1, 0, 0).parallel?(vec3(1, 2, 3)).should be_false
+    end
+
+    it "returns false if is not parallel to a direction" do
+      vec3(1, 0, 0).parallel?(:y).should be_false
+      vec3(1, 0, 0).parallel?(:xy).should be_false
+    end
+  end
+
   describe "#project" do
     it "returns the projection on the vector" do
       vec3(1, 2, 3).project(vec3(1, 0, 1)).should be_close [2, 0, 2], 1e-15

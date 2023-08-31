@@ -233,6 +233,17 @@ module Chem::Spatial
       resize abs + padding
     end
 
+    # Returns `true` if the vector is parallel to *other*, else `false`.
+    def parallel?(to other : self) : Bool
+      dot(other)**2 =~ abs2 * other.abs2
+    end
+
+    # Returns `true` if the vector is parallel to the given direction,
+    # else `false`.
+    def parallel?(to direction : Direction) : Bool
+      parallel? direction.to_vector
+    end
+
     # Returns the projection of the vector on *vec*.
     def project(vec : self) : self
       vec = vec.normalize
