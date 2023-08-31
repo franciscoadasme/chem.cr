@@ -1,5 +1,27 @@
 module Chem::Spatial
   struct Vec3
+    # The unit vector pointing towards the X axis. Shorthand for
+    # `Vec3[1, 0, 0]`.
+    X = Vec3[1, 0, 0]
+    # The unit vector pointing towards the Y axis. Shorthand for
+    # `Vec3[0, 1, 0]`.
+    Y = Vec3[0, 1, 0]
+    # The unit vector pointing towards the Z axis. Shorthand for
+    # `Vec3[0, 0, 1]`.
+    Z = Vec3[0, 0, 1]
+    # The unit vector pointing towards the XY direction. Shorthand for
+    # `Vec3[1, 1, 0].normalize`.
+    XY = Vec3[1, 1, 0].normalize
+    # The unit vector pointing towards the XZ direction. Shorthand for
+    # `Vec3[1, 0, 1].normalize`.
+    XZ = Vec3[1, 0, 1].normalize
+    # The unit vector pointing towards the YZ direction. Shorthand for
+    # `Vec3[0, 1, 1].normalize`.
+    YZ = Vec3[0, 1, 1].normalize
+    # The unit vector pointing towards the XYZ direction. Shorthand for
+    # `Vec3[1, 1, 1].normalize`.
+    XYZ = Vec3[1, 1, 1].normalize
+
     # X component of the vector.
     getter x : Float64
     # Y component of the vector.
