@@ -132,11 +132,6 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Constraint" data-name="chem::constraint">
-      <a href="../../Chem/Constraint.html">Constraint</a>
-      
-    </li>
-  
   <li class="parent " data-id="chem.cr/Chem/Cube" data-name="chem::cube">
       <a href="../../Chem/Cube.html">Cube</a>
       
@@ -529,6 +524,11 @@
   
   <li class=" " data-id="chem.cr/Chem/Spatial/CoordinatesProxy" data-name="chem::spatial::coordinatesproxy">
       <a href="../../Chem/Spatial/CoordinatesProxy.html">CoordinatesProxy</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Direction" data-name="chem::spatial::direction">
+      <a href="../../Chem/Spatial/Direction.html">Direction</a>
       
     </li>
   
@@ -1045,6 +1045,13 @@ space.</p>
       </li>
     
       <li class="entry-summary">
+        <a href="#%3D~%28other%3Aself%29%3ABool-instance-method" class="signature"><strong>#=~</strong>(other : <span class="k">self</span>) : Bool</a>
+        
+          <div class="summary"><p>Returns <code>true</code> if the elements of the sizes are close to each other, else <code>false</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#%5B%5D%28index%3AInt%29%3AFloat64-instance-method" class="signature"><strong>#[]</strong>(index : Int) : Float64</a>
         
           <div class="summary"><p>Returns the element at <em>index</em> in the XYZ order.</p></div>
@@ -1064,7 +1071,7 @@ space.</p>
       <li class="entry-summary">
         <a href="#close_to%3F%28rhs%3Aself%2Cdelta%3ANumber%3DFloat64%3A%3AEPSILON%29%3ABool-instance-method" class="signature"><strong>#close_to?</strong>(rhs : <span class="k">self</span>, delta : Number = <span class="t">Float64</span><span class="t">::</span><span class="t">EPSILON</span>) : Bool</a>
         
-          <div class="summary"><p>Returns <code>true</code> if the elements of the size are within <em>delta</em> from each other, else <code>false</code>.</p></div>
+          <div class="summary"><p>Returns <code>true</code> if the elements of the sizes are within <em>delta</em> from each other, else <code>false</code>.</p></div>
         
       </li>
     
@@ -1343,6 +1350,26 @@ space.</p>
       </div>
     </div>
   
+    <div class="entry-detail" id="=~(other:self):Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>=~</strong>(other : <span class="k">self</span>) : Bool
+
+        <a class="method-permalink" href="#%3D~%28other%3Aself%29%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if the elements of the sizes are close to each
+other, else <code>false</code>. See the <code><a href="../../Chem/Spatial/Size3.html#close_to%3F%28rhs%3Aself%2Cdelta%3ANumber%3DFloat64%3A%3AEPSILON%29%3ABool-instance-method">#close_to?</a></code> method.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="[](index:Int):Float64-instance-method">
       <div class="signature">
         
@@ -1407,7 +1434,7 @@ size[<span class="n">-1</span>] <span class="c"># raises IndexError</span></code
       
         <div class="doc">
           
-          <p>Returns <code>true</code> if the elements of the size are within <em>delta</em>
+          <p>Returns <code>true</code> if the elements of the sizes are within <em>delta</em>
 from each other, else <code>false</code>.</p>
 <pre><code class="language-crystal"><span class="t">Size3</span>[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>].close_to?(<span class="t">Size3</span>[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>])                     <span class="c"># =&gt; true</span>
 <span class="t">Size3</span>[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>].close_to?(<span class="t">Size3</span>[<span class="n">1.001</span>, <span class="n">1.999</span>, <span class="n">3.00004</span>], <span class="n">1e-3</span>) <span class="c"># =&gt; true</span>

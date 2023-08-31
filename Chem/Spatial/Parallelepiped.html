@@ -132,11 +132,6 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Constraint" data-name="chem::constraint">
-      <a href="../../Chem/Constraint.html">Constraint</a>
-      
-    </li>
-  
   <li class="parent " data-id="chem.cr/Chem/Cube" data-name="chem::cube">
       <a href="../../Chem/Cube.html">Cube</a>
       
@@ -529,6 +524,11 @@
   
   <li class=" " data-id="chem.cr/Chem/Spatial/CoordinatesProxy" data-name="chem::spatial::coordinatesproxy">
       <a href="../../Chem/Spatial/CoordinatesProxy.html">CoordinatesProxy</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Direction" data-name="chem::spatial::direction">
+      <a href="../../Chem/Spatial/Direction.html">Direction</a>
       
     </li>
   
@@ -1081,6 +1081,13 @@ fractional coordinates, and viceversa, by matrix multiplication (see
     
       <li class="entry-summary">
         <a href="#%3D%3D%28rhs%3Aself%29%3ABool-instance-method" class="signature"><strong>#==</strong>(rhs : <span class="k">self</span>) : Bool</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%3D~%28other%3Aself%29%3ABool-instance-method" class="signature"><strong>#=~</strong>(other : <span class="k">self</span>) : Bool</a>
+        
+          <div class="summary"><p>Returns <code>true</code> if the elements of the parallelepipeds are close to each other, else <code>false</code>.</p></div>
         
       </li>
     
@@ -1745,6 +1752,26 @@ second basis vector will lie in the XY plane.</p>
 
         <a class="method-permalink" href="#%3D%3D%28rhs%3Aself%29%3ABool-instance-method">#</a>
       </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="=~(other:self):Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>=~</strong>(other : <span class="k">self</span>) : Bool
+
+        <a class="method-permalink" href="#%3D~%28other%3Aself%29%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if the elements of the parallelepipeds are close to
+each other, else <code>false</code>. See the <code><a href="../../Chem/Spatial/Parallelepiped.html#close_to%3F%28rhs%3Aself%2Cdelta%3ANumber%3DFloat64%3A%3AEPSILON%29%3ABool-instance-method">#close_to?</a></code> method.</p>
+        </div>
       
       <br/>
       <div>

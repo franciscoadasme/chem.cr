@@ -132,11 +132,6 @@
       
     </li>
   
-  <li class=" " data-id="chem.cr/Chem/Constraint" data-name="chem::constraint">
-      <a href="../../Chem/Constraint.html">Constraint</a>
-      
-    </li>
-  
   <li class="parent " data-id="chem.cr/Chem/Cube" data-name="chem::cube">
       <a href="../../Chem/Cube.html">Cube</a>
       
@@ -529,6 +524,11 @@
   
   <li class=" " data-id="chem.cr/Chem/Spatial/CoordinatesProxy" data-name="chem::spatial::coordinatesproxy">
       <a href="../../Chem/Spatial/CoordinatesProxy.html">CoordinatesProxy</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem.cr/Chem/Spatial/Direction" data-name="chem::spatial::direction">
+      <a href="../../Chem/Spatial/Direction.html">Direction</a>
       
     </li>
   
@@ -1113,6 +1113,13 @@ maps such as scaling and rotation (see <code><a href="../../Chem/Spatial/Transfo
       </li>
     
       <li class="entry-summary">
+        <a href="#%3D~%28other%3Aself%29%3ABool-instance-method" class="signature"><strong>#=~</strong>(other : <span class="k">self</span>) : Bool</a>
+        
+          <div class="summary"><p>Returns <code>true</code> if the elements of the matrices are close to each other, else <code>false</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#%5B%5D%28row%3AInt%2Ccols%3ARange%28Nil%2CNil%29%29%3AFloatTriple-instance-method" class="signature"><strong>#[]</strong>(row : Int, cols : Range(Nil, Nil)) : FloatTriple</a>
         
           <div class="summary"><p>Returns the row at <em>row</em>.</p></div>
@@ -1618,6 +1625,26 @@ defined by the basis vectors.</p>
         <div class="doc">
           
           <p>Returns the element-wise division of the matrix by <em>rhs</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="=~(other:self):Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>=~</strong>(other : <span class="k">self</span>) : Bool
+
+        <a class="method-permalink" href="#%3D~%28other%3Aself%29%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if the elements of the matrices are close to each
+other, else <code>false</code>. See the <code><a href="../../Chem/Spatial/Mat3.html#close_to%3F%28rhs%3Aself%2Cdelta%3AFloat64%3DFloat64%3A%3AEPSILON%29%3ABool-instance-method">#close_to?</a></code> method.</p>
         </div>
       
       <br/>
