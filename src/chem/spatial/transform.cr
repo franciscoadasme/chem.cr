@@ -166,7 +166,13 @@ module Chem::Spatial
       @linear_map == rhs.linear_map && @offset == rhs.offset
     end
 
-    # Returns `true` if the elements of the quaternions are within
+    # Returns `true` if the elements of the transformations are close to
+    # each other, else `false`. See the `#close_to?` method.
+    def =~(other : self) : Bool
+      close_to?(other)
+    end
+
+    # Returns `true` if the elements of the transformations are within
     # *delta* from each other, else `false`.
     def close_to?(rhs : self, delta : Float64 = Float64::EPSILON) : Bool
       @linear_map.close_to?(rhs.linear_map, delta) &&

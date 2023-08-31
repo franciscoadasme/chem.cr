@@ -58,6 +58,18 @@ describe Chem::Spatial::Vec3 do
     end
   end
 
+  describe "#=~" do
+    it "returns true if vectors are within delta" do
+      (vec3(1, 2, 3) =~ vec3(1, 2, 3)).should be_true
+      (vec3(1, 2, 3) =~ vec3(1, 2, 3).map(&.+(Float64::EPSILON))).should be_true
+    end
+
+    it "returns false if vectors aren't within delta" do
+      (vec3(1, 2, 3) =~ vec3(3, 2, 1)).should be_false
+      (vec3(1, 2, 3) =~ vec3(1.001, 1.999, 3.00004)).should be_false
+    end
+  end
+
   describe "#+" do
     it "returns the element-wise arithmetic addition with a number" do
       (vec3(1, 2, 3) + 5).should eq [6, 7, 8]

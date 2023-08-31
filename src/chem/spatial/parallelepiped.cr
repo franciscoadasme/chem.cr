@@ -122,6 +122,12 @@ module Chem::Spatial
       @origin == rhs.origin && @basis == rhs.basis
     end
 
+    # Returns `true` if the elements of the parallelepipeds are close to
+    # each other, else `false`. See the `#close_to?` method.
+    def =~(other : self) : Bool
+      close_to?(other)
+    end
+
     # Returns the parallelepiped angles (alpha, beta, gamma) in degrees.
     def angles : NumberTriple
       bi, bj, bk = basisvec

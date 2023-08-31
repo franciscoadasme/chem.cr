@@ -127,6 +127,12 @@ module Chem::Spatial
       Vec3[-@x, -@y, -@z]
     end
 
+    # Returns `true` if the elements of the vectors are close to each
+    # other, else `false`. See the `#close_to` method.
+    def =~(other : self) : Bool
+      close_to?(other)
+    end
+
     # Returns the absolute value (norm or length) of the vector.
     def abs : Float64
       Math.sqrt abs2
@@ -224,10 +230,10 @@ module Chem::Spatial
     # ```
     # Vec3[1, 0, 0].pad(2) # => Vec3[3, 0, 0]
     # a = Vec3[1, 2, 3]
-    # a.abs                             # => 3.7416573867739413
-    # b = a.pad(2)                      # => Vec3[1.535, 3.069, 4.604]
-    # b.abs                             # => 5.741657386773941
-    # a.normalize.close_to? b.normalize # => true
+    # a.abs                      # => 3.7416573867739413
+    # b = a.pad(2)               # => Vec3[1.535, 3.069, 4.604]
+    # b.abs                      # => 5.741657386773941
+    # a.normalize =~ b.normalize # => true
     # ```
     def pad(padding : Number) : self
       resize abs + padding
@@ -280,10 +286,10 @@ module Chem::Spatial
     #
     # ```
     # a = Vec3[1, 2, 3]
-    # a.abs                              # => 3.7416573867739413
-    # b = a.resize 0.5                   # => Vec3[0.134, 0.267, 0.401]
-    # b.abs                              # => 0.5
-    # b.normalize.close_to?(a.normalize) # => true
+    # a.abs                      # => 3.7416573867739413
+    # b = a.resize 0.5           # => Vec3[0.134, 0.267, 0.401]
+    # b.abs                      # => 0.5
+    # b.normalize =~ a.normalize # => true
     # ```
     def resize(length : Number) : self
       return dup if zero?
@@ -391,7 +397,7 @@ module Chem::Spatial
 
     # Returns `true` if the vector is zero, else `false`.
     def zero? : Bool
-      @x.close_to?(0) && @y.close_to?(0) && @z.close_to?(0)
+      @x =~ 0 && @y =~ 0 && @z =~ 0
     end
   end
 end

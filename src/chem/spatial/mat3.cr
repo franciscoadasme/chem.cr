@@ -188,6 +188,12 @@ module Chem::Spatial
       map &./(rhs)
     end
 
+    # Returns `true` if the elements of the matrices are close to each
+    # other, else `false`. See the `#close_to?` method.
+    def =~(other : self) : Bool
+      close_to?(other)
+    end
+
     # Returns `true` if the elements of the matrices are within *delta*
     # from each other, else `false`.
     def close_to?(rhs : self, delta : Float64 = Float64::EPSILON) : Bool

@@ -2,6 +2,12 @@ abstract struct Number
   RADIAN_TO_DEGREE = 180 / Math::PI
   DEGREE_TO_RADIAN = Math::PI / 180
 
+  # Returns `true` if the numbers are close to each other, else `false`.
+  # See the `#close_to?` method.
+  def =~(other : Number)
+    close_to? other
+  end
+
   def *(other : Chem::Spatial::Vec3) : Chem::Spatial::Vec3
     other * self
   end

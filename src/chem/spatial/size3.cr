@@ -59,6 +59,12 @@ module Chem::Spatial
       {% end %}
     {% end %}
 
+    # Returns `true` if the elements of the sizes are close to each
+    # other, else `false`. See the `#close_to?` method.
+    def =~(other : self) : Bool
+      close_to?(other)
+    end
+
     # Returns the element at *index* in the XYZ order. Raises
     # `IndexError` if *index* is out of bounds.
     #
@@ -88,7 +94,7 @@ module Chem::Spatial
       map &.clamp(min, max)
     end
 
-    # Returns `true` if the elements of the size are within *delta*
+    # Returns `true` if the elements of the sizes are within *delta*
     # from each other, else `false`.
     #
     # ```

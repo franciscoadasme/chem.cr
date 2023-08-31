@@ -200,6 +200,12 @@ module Chem::Spatial
       Quat[@w / rhs, @x / rhs, @y / rhs, @z / rhs]
     end
 
+    # Returns `true` if the elements of the quaternions are close to
+    # each other, else `false`. See the `#close_to?` method.
+    def =~(other : self) : Bool
+      close_to?(other)
+    end
+
     # Returns the absolute value (norm) using the Pythagorean theorem.
     def abs : Float64
       Math.sqrt abs2
