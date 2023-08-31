@@ -13,4 +13,10 @@ describe Chem::Spatial::Direction do
     Chem::Spatial::Direction::XZ.includes?(:xy).should eq false
     Chem::Spatial::Direction::XYZ.includes?(:xy).should eq true
   end
+
+  describe "#to_vector" do
+    Chem::Spatial::Direction::Y.to_vector.should eq vec3(0, 1, 0)
+    Chem::Spatial::Direction::XY.to_vector.should eq vec3(1, 1, 0).normalize
+    Chem::Spatial::Direction::XYZ.to_vector.should eq vec3(1, 1, 1).normalize
+  end
 end

@@ -41,4 +41,15 @@ enum Chem::Spatial::Direction
     in .xyz? then xyz?
     end
   end
+
+  # Returns the unit vector pointing towards this direction.
+  #
+  # ```
+  # Direction::X.to_vector  # => Vec3[ 1  0  0 ]
+  # Direction::Y.to_vector  # => Vec3[ 0  1  0 ]
+  # Direction::XY.to_vector # => Vec3[ 0.7071068  0.7071068  0 ]
+  # ```
+  def to_vector : Vec3
+    Vec3.new self
+  end
 end
