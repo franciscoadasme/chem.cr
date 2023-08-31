@@ -188,12 +188,22 @@ describe Chem::Spatial::Vec3 do
     it "returns the projection on the vector" do
       vec3(1, 2, 3).project(vec3(1, 0, 1)).should be_close [2, 0, 2], 1e-15
     end
+
+    it "returns the projection onto the direction" do
+      vec3(1, 2, 3).project(:y).should be_close vec3(0, 2, 0), 1e-15
+      vec3(1, 2, 3).project(:xz).should be_close vec3(2, 0, 2), 1e-15
+    end
   end
 
   describe "#reject" do
     it "returns the rejection on the vector" do
       vec3(5, 5, 0).reject(vec3(0, 10, 0)).should be_close [5, 0, 0], 1e-15
       vec3(1, 2, 3).reject(vec3(1, 0, 1)).should be_close [-1, 2, 1], 1e-15
+    end
+
+    it "returns the projection onto the direction" do
+      vec3(1, 2, 3).reject(:y).should be_close vec3(1, 0, 3), 1e-15
+      vec3(1, 2, 3).reject(:xz).should be_close vec3(-1, 2, 1), 1e-15
     end
   end
 
@@ -209,6 +219,11 @@ describe Chem::Spatial::Vec3 do
       vec3(1, 0, 0).rotate(about: vec3(0, 0, 1), by: 90).should be_close [0, 1, 0], 1e-15
       vec3(1, 2, 0).rotate(about: vec3(0, 0, -1), by: 60).should be_close [2.23, 0.13, 0], 1e-2
       vec3(0, 1, 0).rotate(about: vec3(1, 1, 1), by: 120).should be_close [0, 0, 1], 1e-15
+    end
+
+    it "rotates about a direction" do
+      vec3(1, 0, 0).rotate(about: :z, by: 90).should be_close [0, 1, 0], 1e-15
+      vec3(0, 1, 0).rotate(about: :xyz, by: 120).should be_close [0, 0, 1], 1e-15
     end
   end
 

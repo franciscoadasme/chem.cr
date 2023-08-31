@@ -239,9 +239,29 @@ module Chem::Spatial
       dot(vec) * vec
     end
 
+    # Returns the projection of the vector onto the given direction.
+    #
+    # ```
+    # Vec3[1, 2, 3].project(:y)  # => Vec3[ 0  2  0 ]
+    # Vec3[1, 2, 3].project(:xz) # => Vec3[ 2  0  2 ]
+    # ```
+    def project(direction : Direction) : self
+      project direction.to_vector
+    end
+
     # Returns the rejection of the vector on *vec*.
     def reject(vec : self) : self
       self - project(vec)
+    end
+
+    # Returns the rejection of the vector onto the given direction.
+    #
+    # ```
+    # Vec3[1, 2, 3].reject(:y)  # => Vec3[ 1  0  3 ]
+    # Vec3[1, 2, 3].reject(:xz) # => Vec3[-1  2  1 ]
+    # ```
+    def reject(direction : Direction) : self
+      reject direction.to_vector
     end
 
     # Returns a vector pointing in the same direction with the given
@@ -269,6 +289,12 @@ module Chem::Spatial
     # degrees. Delegates to `Quat.rotation` for computing the rotation.
     def rotate(about rotaxis : Vec3, by angle : Number) : self
       rotate Quat.rotation(rotaxis, angle)
+    end
+
+    # Returns the vector rotated about the given direction by *angle*
+    # degrees. Delegates to `Quat.rotation` for computing the rotation.
+    def rotate(about direction : Direction, by angle : Number) : self
+      rotate direction.to_vector, angle
     end
 
     # Returns the vector rotated by the given quaternion.
