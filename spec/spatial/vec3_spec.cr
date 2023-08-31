@@ -156,6 +156,32 @@ describe Chem::Spatial::Vec3 do
     end
   end
 
+  describe "#faces?" do
+    it "returns true if vector points towards the direction" do
+      vec3(1, 0, 0).faces?(vec3(1, 0, 0)).should be_true
+      vec3(1, 2, 0).faces?(vec3(1, 0, 0)).should be_true
+      vec3(1, 2, 3).faces?(vec3(1, 0, 0)).should be_true
+      vec3(1, -2, -3).faces?(vec3(1, 0, 0)).should be_true
+
+      vec3(1, 0, 0).faces?(:x).should be_true
+      vec3(1, 2, 0).faces?(:x).should be_true
+      vec3(1, 2, 3).faces?(:x).should be_true
+      vec3(1, -2, -3).faces?(:x).should be_true
+    end
+
+    it "returns false if vector does not point towards the direction" do
+      vec3(-1, 0, 0).faces?(vec3(1, 0, 0)).should be_false
+      vec3(-1, 2, 0).faces?(vec3(1, 0, 0)).should be_false
+      vec3(-1, 2, 3).faces?(vec3(1, 0, 0)).should be_false
+      vec3(-1, -2, -3).faces?(vec3(1, 0, 0)).should be_false
+
+      vec3(-1, 0, 0).faces?(:x).should be_false
+      vec3(-1, 2, 0).faces?(:x).should be_false
+      vec3(-1, 2, 3).faces?(:x).should be_false
+      vec3(-1, -2, -3).faces?(:x).should be_false
+    end
+  end
+
   describe "#image" do
     it "returns vector's pbc image" do
       vec = vec3(0.456, 0.1, 0.8)

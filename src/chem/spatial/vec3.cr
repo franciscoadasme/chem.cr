@@ -172,6 +172,40 @@ module Chem::Spatial
       @x * rhs.x + @y * rhs.y + @z * rhs.z
     end
 
+    # Returns `true` if the vector points towards the direction of
+    # *other*, else `false`.
+    #
+    # ```
+    # Vec3[1, 0, 0].faces?(Vec3[1, 0, 0])    # => true
+    # Vec3[1, 2, 0].faces?(Vec3[1, 0, 0])    # => true
+    # Vec3[1, 2, 3].faces?(Vec3[1, 0, 0])    # => true
+    # Vec3[1, -2, -3].faces?(Vec3[1, 0, 0])  # => true
+    # Vec3[-1, 0, 0].faces?(Vec3[1, 0, 0])   # => false
+    # Vec3[-1, 2, 0].faces?(Vec3[1, 0, 0])   # => false
+    # Vec3[-1, 2, 3].faces?(Vec3[1, 0, 0])   # => false
+    # Vec3[-1, -2, -3].faces?(Vec3[1, 0, 0]) # => false
+    # ```
+    def faces?(other : self) : Bool
+      dot(other).positive?
+    end
+
+    # Returns `true` if the vector points towards the given direction,
+    # else `false`.
+    #
+    # ```
+    # Vec3[1, 0, 0].faces?(:x)    # => true
+    # Vec3[1, 2, 0].faces?(:x)    # => true
+    # Vec3[1, 2, 3].faces?(:x)    # => true
+    # Vec3[1, -2, -3].faces?(:x)  # => true
+    # Vec3[-1, 0, 0].faces?(:x)   # => false
+    # Vec3[-1, 2, 0].faces?(:x)   # => false
+    # Vec3[-1, 2, 3].faces?(:x)   # => false
+    # Vec3[-1, -2, -3].faces?(:x) # => false
+    # ```
+    def faces?(direction : Direction) : Bool
+      faces? direction.to_vector
+    end
+
     # Returns vector's PBC image in fractional coordinates
     #
     # ```
