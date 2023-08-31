@@ -389,36 +389,6 @@ module Chem::Spatial
       self - offset.map { |ele| ele == 1 ? 0 : ele.floor }
     end
 
-    # Returns `true` if the vector lies along X axis, else `false`.
-    def x? : Bool
-      !@x.close_to?(0) && @y.close_to?(0) && @z.close_to?(0)
-    end
-
-    # Returns `true` if the vector lies in the XY-plane, else `false`.
-    def xy? : Bool
-      (!@x.close_to?(0) || !@y.close_to?(0)) && @z.close_to?(0)
-    end
-
-    # Returns `true` if the vector lies in the XZ-plane, else `false`.
-    def xz? : Bool
-      (!@x.close_to?(0) || !@z.close_to?(0)) && @y.close_to?(0)
-    end
-
-    # Returns `true` if the vector lies along Y axis, else `false`.
-    def y? : Bool
-      @x.close_to?(0) && !@y.close_to?(0) && @z.close_to?(0)
-    end
-
-    # Returns `true` if the vector lies in the YZ-plane, else `false`.
-    def yz? : Bool
-      @x.close_to?(0) && (!@y.close_to?(0) || !@z.close_to?(0))
-    end
-
-    # Returns `true` if the vector lies along Z axis, else `false`.
-    def z? : Bool
-      @x.close_to?(0) && @y.close_to?(0) && !@z.close_to?(0)
-    end
-
     # Returns `true` if the vector is zero, else `false`.
     def zero? : Bool
       @x.close_to?(0) && @y.close_to?(0) && @z.close_to?(0)

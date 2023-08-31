@@ -296,7 +296,7 @@ module Chem::Spatial
       bi, bj, bk = basisvec
       # TODO: replace by an internal enum (xyz and triclinic) that is
       # updated on new basis to avoid doing this each time
-      if bi.x? && bj.y? && bk.z?
+      if xyz?
         0 <= vec.x <= bi.x && 0 <= vec.y <= bj.y && 0 <= vec.z <= bk.z
       else
         vec = fract(vec).map &.round(Float64::DIGITS)
@@ -620,7 +620,7 @@ module Chem::Spatial
 
     # Whether the parallelepiped is aligned to the X, Y, and Z axes.
     def xyz? : Bool
-      orthogonal? && basisvec[0].x?
+      orthogonal? && basisvec[0].parallel?(:x)
     end
   end
 end

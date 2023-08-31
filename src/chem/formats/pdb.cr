@@ -370,7 +370,8 @@ module Chem::PDB
 
       formatl "MODEL     %4d%66s", @entry_index + 1, ' ' if multi?
       if obj.is_a?(Structure)
-        if (cell = obj.cell?) && (!cell.basisvec[0].x? || !cell.basisvec[1].xy?)
+        if (cell = obj.cell?) &&
+           !(cell.basisvec[0].parallel?(:x) && cell.basisvec[1].z.zero?)
           # compute the unit cell aligned to the xy-plane
           ref = Spatial::Parallelepiped.new cell.size, cell.angles
           transform = Spatial::Transform
