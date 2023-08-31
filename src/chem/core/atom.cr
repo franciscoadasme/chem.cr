@@ -3,7 +3,7 @@ module Chem
     include Comparable(Atom)
 
     getter bonds : BondArray { BondArray.new self }
-    property constraint : Constraint?
+    property constraint : Spatial::Direction?
     property coords : Spatial::Vec3
     property element : Element
     property formal_charge : Int32 = 0

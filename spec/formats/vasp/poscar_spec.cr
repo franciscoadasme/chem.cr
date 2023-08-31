@@ -46,9 +46,9 @@ describe Chem::VASP::Poscar do
     it "parses a file with selective dynamics" do
       st = load_file "selective_dynamics.poscar"
       st.source_file.should eq Path[spec_file("selective_dynamics.poscar")].expand
-      st.atoms[0].constraint.should eq Chem::Constraint::Z
-      st.atoms[1].constraint.should eq Chem::Constraint::XYZ
-      st.atoms[2].constraint.should eq Chem::Constraint::Z
+      st.atoms[0].constraint.should eq Chem::Spatial::Direction::Z
+      st.atoms[1].constraint.should eq Chem::Spatial::Direction::XYZ
+      st.atoms[2].constraint.should eq Chem::Spatial::Direction::Z
     end
 
     it "fails when element symbols are missing" do
@@ -190,8 +190,8 @@ describe Chem::VASP::Poscar::Writer do
 
   it "writes a structure having constraints" do
     other = structure.clone
-    other.atoms[0].constraint = Chem::Constraint::XYZ
-    other.atoms[3].constraint = Chem::Constraint::XZ
+    other.atoms[0].constraint = Chem::Spatial::Direction::XYZ
+    other.atoms[3].constraint = Chem::Spatial::Direction::XZ
     other.to_poscar.should eq <<-EOS
       NaCl-O-NaCl
          1.00000000000000

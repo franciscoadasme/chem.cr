@@ -161,10 +161,11 @@ module Chem::VASP::Poscar
       ele_tally
     end
 
-    private def write_constraint(constraint : Constraint?) : Nil
-      {Constraint::X, Constraint::Y, Constraint::Z}.each do |axis|
-        @io.printf "%4s", constraint.try(&.includes?(axis)) ? 'F' : 'T'
-      end
+    private def write_constraint(constraint : Spatial::Direction?) : Nil
+      {Spatial::Direction::X, Spatial::Direction::Y, Spatial::Direction::Z}
+        .each do |axis|
+          @io.printf "%4s", constraint.try(&.includes?(axis)) ? 'F' : 'T'
+        end
     end
 
     private def write(cell : Spatial::Parallelepiped) : Nil

@@ -53,13 +53,13 @@ module Chem::XYZ
               chain = @pull.consume_token.expect(/^[a-zA-Z0-9]$/).char
             when "constraint"
               case {@pull.next_bool, @pull.next_bool, @pull.next_bool}
-              when {true, true, true}    then constraint = Constraint::XYZ
-              when {false, true, true}   then constraint = Constraint::YZ
-              when {true, false, true}   then constraint = Constraint::XZ
-              when {true, true, false}   then constraint = Constraint::XY
-              when {false, false, true}  then constraint = Constraint::Z
-              when {false, true, false}  then constraint = Constraint::Y
-              when {true, false, false}  then constraint = Constraint::X
+              when {true, true, true}    then constraint = Spatial::Direction::XYZ
+              when {false, true, true}   then constraint = Spatial::Direction::YZ
+              when {true, false, true}   then constraint = Spatial::Direction::XZ
+              when {true, true, false}   then constraint = Spatial::Direction::XY
+              when {false, false, true}  then constraint = Spatial::Direction::Z
+              when {false, true, false}  then constraint = Spatial::Direction::Y
+              when {true, false, false}  then constraint = Spatial::Direction::X
               when {false, false, false} then constraint = nil
               end
             when "charge"
@@ -165,11 +165,12 @@ module Chem::XYZ
           when "chain"
             @io << atom.chain.id
           when "constraint"
-            {Constraint::X, Constraint::Y, Constraint::Z}.each_with_index do |axis, i|
-              flag = atom.constraint.try(&.includes?(axis)) || false
-              @io << ' ' if i > 0
-              @io << (flag ? 'T' : 'F')
-            end
+            {Spatial::Direction::X, Spatial::Direction::Y, Spatial::Direction::Z}
+              .each_with_index do |axis, i|
+                flag = atom.constraint.try(&.includes?(axis)) || false
+                @io << ' ' if i > 0
+                @io << (flag ? 'T' : 'F')
+              end
           when "formal_charge", "charge"
             @io.printf "%2d", atom.formal_charge
           when "mass"
