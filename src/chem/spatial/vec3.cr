@@ -39,6 +39,11 @@ module Chem::Spatial
       new x.to_f, y.to_f, z.to_f
     end
 
+    # Returns the unit vector pointing towards the given direction.
+    def self.[](direction : Direction) : self
+      new direction
+    end
+
     # Returns the additive identity of this type. This is the zero
     # vector.
     def self.additive_identity : self
@@ -51,6 +56,19 @@ module Chem::Spatial
       new io.read_bytes(Float64, format),
         io.read_bytes(Float64, format),
         io.read_bytes(Float64, format)
+    end
+
+    # Returns the unit vector pointing towards the given direction.
+    def self.new(direction : Direction) : self
+      case direction
+      in .x?   then X
+      in .y?   then Y
+      in .z?   then Z
+      in .xy?  then XY
+      in .xz?  then XZ
+      in .yz?  then YZ
+      in .xyz? then XYZ
+      end
     end
 
     # Returns a random vector with the elements within 0 and 1.

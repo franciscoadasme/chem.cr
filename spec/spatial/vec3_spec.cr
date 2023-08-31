@@ -6,7 +6,21 @@ describe Chem::Spatial::Vec3 do
 
   describe ".[]" do
     it "returns a vector with the given components" do
-      vec3(1, 2, 3).should eq [1, 2, 3]
+      Chem::Spatial::Vec3[1, 2, 3].should eq [1, 2, 3]
+    end
+
+    it "returns a vector given a direction" do
+      Chem::Spatial::Vec3[:z].should eq vec3(0, 0, 1)
+      Chem::Spatial::Vec3[:yz].should eq vec3(0, 1, 1).normalize
+      Chem::Spatial::Vec3[:xyz].should eq vec3(1, 1, 1).normalize
+    end
+  end
+
+  describe ".new" do
+    it "returns a vector given a direction" do
+      Chem::Spatial::Vec3.new(:y).should eq vec3(0, 1, 0)
+      Chem::Spatial::Vec3.new(:xy).should eq vec3(1, 1, 0).normalize
+      Chem::Spatial::Vec3.new(:xyz).should eq vec3(1, 1, 1).normalize
     end
   end
 
