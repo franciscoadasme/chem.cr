@@ -131,6 +131,20 @@ describe Chem::Spatial::Vec3 do
     end
   end
 
+  describe "#backward?" do
+    it "returns true if the vector faces backward" do
+      vec3(0, 0, -1).backward?.should be_true
+      vec3(0, 0, -5).backward?.should be_true
+      vec3(1, 2, -3).backward?.should be_true
+    end
+
+    it "returns false if the vector faces backward" do
+      vec3(0, 0, 1).backward?.should be_false
+      vec3(0, 0, 5).backward?.should be_false
+      vec3(1, 2, 3).backward?.should be_false
+    end
+  end
+
   describe "#cross" do
     it "returns the cross product between two vectors" do
       vec3(1, 0, 0).cross(vec3(0, 1, 0)).should eq [0, 0, 1]
@@ -153,6 +167,20 @@ describe Chem::Spatial::Vec3 do
   describe "#dot" do
     it "returns the dot product between two vectors" do
       vec3(3, 4, 0).dot(vec3(4, 4, 2)).should eq 28
+    end
+  end
+
+  describe "#downward?" do
+    it "returns true if the vector faces downward" do
+      vec3(0, -1, 0).downward?.should be_true
+      vec3(0, -5, 0).downward?.should be_true
+      vec3(1, -2, 3).downward?.should be_true
+    end
+
+    it "returns false if the vector faces downward" do
+      vec3(0, 1, 0).downward?.should be_false
+      vec3(0, 5, 0).downward?.should be_false
+      vec3(1, 2, 3).downward?.should be_false
     end
   end
 
@@ -182,6 +210,20 @@ describe Chem::Spatial::Vec3 do
     end
   end
 
+  describe "#forward?" do
+    it "returns true if the vector faces forward" do
+      vec3(0, 0, 1).forward?.should be_true
+      vec3(0, 0, 5).forward?.should be_true
+      vec3(1, 2, 3).forward?.should be_true
+    end
+
+    it "returns false if the vector faces forward" do
+      vec3(0, 0, -1).forward?.should be_false
+      vec3(0, 0, -5).forward?.should be_false
+      vec3(1, 2, -3).forward?.should be_false
+    end
+  end
+
   describe "#image" do
     it "returns vector's pbc image" do
       vec = vec3(0.456, 0.1, 0.8)
@@ -194,6 +236,20 @@ describe Chem::Spatial::Vec3 do
   describe "#inv" do
     it "returns the inverse vector" do
       v1.inv.should eq [-3, -4, 0]
+    end
+  end
+
+  describe "#leftward?" do
+    it "returns true if the vector faces leftward" do
+      vec3(-1, 0, 0).leftward?.should be_true
+      vec3(-5, 0, 0).leftward?.should be_true
+      vec3(-1, 2, 3).leftward?.should be_true
+    end
+
+    it "returns false if the vector faces leftward" do
+      vec3(1, 0, 0).leftward?.should be_false
+      vec3(5, 0, 0).leftward?.should be_false
+      vec3(1, 2, 3).leftward?.should be_false
     end
   end
 
@@ -295,6 +351,20 @@ describe Chem::Spatial::Vec3 do
     end
   end
 
+  describe "#rightward?" do
+    it "returns true if the vector faces rightward" do
+      vec3(1, 0, 0).rightward?.should be_true
+      vec3(5, 0, 0).rightward?.should be_true
+      vec3(1, 2, 3).rightward?.should be_true
+    end
+
+    it "returns false if the vector faces rightward" do
+      vec3(-1, 0, 0).rightward?.should be_false
+      vec3(-5, 0, 0).rightward?.should be_false
+      vec3(-1, 2, 3).rightward?.should be_false
+    end
+  end
+
   describe "#rotate" do
     it "rotates a vector" do
       vec3(1, 0, 0).rotate(about: vec3(0, 0, 1), by: 90).should be_close [0, 1, 0], 1e-15
@@ -332,6 +402,20 @@ describe Chem::Spatial::Vec3 do
       vec3(0, 0, 0).zero?.should be_true
       v1.zero?.should be_false
       v1.inv.zero?.should be_false
+    end
+  end
+
+  describe "#upward?" do
+    it "returns true if the vector faces upward" do
+      vec3(0, 1, 0).upward?.should be_true
+      vec3(0, 5, 0).upward?.should be_true
+      vec3(1, 2, 3).upward?.should be_true
+    end
+
+    it "returns false if the vector faces upward" do
+      vec3(0, -1, 0).upward?.should be_false
+      vec3(0, -5, 0).upward?.should be_false
+      vec3(1, -2, 3).upward?.should be_false
     end
   end
 

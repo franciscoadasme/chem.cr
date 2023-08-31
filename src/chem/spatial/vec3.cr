@@ -22,6 +22,19 @@ module Chem::Spatial
     # `Vec3[1, 1, 1].normalize`.
     XYZ = Vec3[1, 1, 1].normalize
 
+    # The backward unit vector. Shorthand for `Vec3[0, 0, -1]` or `-Vec3::Z`.
+    BACK = -Z
+    # The downward unit vector. Shorthand for `Vec3[0, -1, 0]` or `-Vec3::Y`.
+    DOWN = -Y
+    # The forward unit vector. Shorthand for `Vec3[0, 0, 1]` or `Vec3::Z`.
+    FORWARD = Z
+    # The left unit vector. Shorthand for `Vec3[-1, 0, 0]` or `-Vec3::X`.
+    LEFT = -X
+    # The right unit vector. Shorthand for `Vec3[1, 0, 0]` or `Vec3::X`.
+    RIGHT = X
+    # The upward unit vector. Shorthand for `Vec3[0, 1, 0]` or `Vec3::Y`.
+    UP = Y
+
     # X component of the vector.
     getter x : Float64
     # Y component of the vector.
@@ -143,6 +156,12 @@ module Chem::Spatial
       @x**2 + @y**2 + @z**2
     end
 
+    # Returns `true` if the vector faces backward (-Z), else `false`.
+    # See the `#faces?` method.
+    def backward? : Bool
+      faces? BACK
+    end
+
     # Returns `true` if the elements of the vectors are within *delta*
     # from each other, else `false`.
     #
@@ -170,6 +189,12 @@ module Chem::Spatial
     # Returns the dot product of the vector and *rhs*.
     def dot(rhs : Vec3) : Float64
       @x * rhs.x + @y * rhs.y + @z * rhs.z
+    end
+
+    # Returns `true` if the vector faces downward (-Y), else `false`.
+    # See the `#faces?` method.
+    def downward? : Bool
+      faces? DOWN
     end
 
     # Returns `true` if the vector points towards the direction of
@@ -206,6 +231,12 @@ module Chem::Spatial
       faces? direction.to_vector
     end
 
+    # Returns `true` if the vector faces forward (Z), else `false`. See
+    # the `#faces?` method.
+    def forward? : Bool
+      faces? FORWARD
+    end
+
     # Returns vector's PBC image in fractional coordinates
     #
     # ```
@@ -222,6 +253,12 @@ module Chem::Spatial
     # negation operator.
     def inv : self
       -self
+    end
+
+    # Returns `true` if the vector faces left (-X), else `false`. See
+    # the `#faces?` method.
+    def leftward? : Bool
+      faces? LEFT
     end
 
     # Returns a vector with the results of the component-wise mapping by
@@ -342,6 +379,12 @@ module Chem::Spatial
       self * (length / abs)
     end
 
+    # Returns `true` if the vector faces right (X), else `false`. See
+    # the `#faces?` method.
+    def rightward? : Bool
+      faces? RIGHT
+    end
+
     # Returns the vector rotated by the given Euler angles in degrees.
     # Delegates to `Quat.rotation` for computing the rotation.
     def rotate(x : Number, y : Number, z : Number) : self
@@ -425,6 +468,12 @@ module Chem::Spatial
       when 2 then @z
       else        Float64::NAN
       end
+    end
+
+    # Returns `true` if the vector faces upward (Y), else `false`. See
+    # the `#faces?` method.
+    def upward? : Bool
+      faces? UP
     end
 
     # Returns the vector by wrapping into the primary unit cell. The
