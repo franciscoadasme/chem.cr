@@ -28,10 +28,6 @@ module Chem::Spatial
     end
   end
 
-  def self.angle(a : Vec3, b : Vec3) : Float64
-    Math.atan2(a.cross(b).abs, a.dot(b)).degrees
-  end
-
   def self.angle(a : Atom, b : Atom, c : Atom) : Float64
     angle a.coords, b.coords, c.coords
   end
@@ -74,11 +70,6 @@ module Chem::Spatial
   end
 
   def self.distance(a : Atom, b : Atom) : Float64
-  end
-
-  @[AlwaysInline]
-  def self.distance(a : Vec3, b : Vec3) : Float64
-    Math.sqrt distance2(a, b)
     a.coords.distance(b.coords)
   end
 
@@ -102,11 +93,6 @@ module Chem::Spatial
   end
 
   def self.distance2(a : Atom, b : Atom) : Float64
-  end
-
-  @[AlwaysInline]
-  def self.distance2(a : Vec3, b : Vec3) : Float64
-    (a.x - b.x)**2 + (a.y - b.y)**2 + (a.z - b.z)**2
     a.coords.distance2 b.coords
   end
 

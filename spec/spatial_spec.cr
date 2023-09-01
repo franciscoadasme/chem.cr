@@ -5,20 +5,6 @@ describe Chem::Spatial do
   v2 = vec3(1.0, 2.0, 3.0)
 
   describe ".angle" do
-    it "returns the angle between two vectors" do
-      Chem::Spatial.angle(vec3(1, 0, 0), vec3(-1, -1, 0)).should eq 135
-      Chem::Spatial.angle(vec3(3, 4, 0), vec3(4, 4, 2)).should eq 21.039469781317237
-      Chem::Spatial.angle(vec3(1, 0, 3), vec3(5, 5, 0)).should eq 77.07903361841643
-    end
-
-    it "returns zero when vectors are parallel" do
-      Chem::Spatial.angle(vec3(1, 0, 0), vec3(2, 0, 0)).should eq 0
-    end
-
-    it "returns 90 degrees when vectors are perpendicular to each other" do
-      Chem::Spatial.angle(vec3(1, 0, 0), vec3(0, 1, 0)).should eq 90
-    end
-
     it "returns the angle between three vectors" do
       a = vec3(9.792, 7.316, 11.31)
       b = vec3(9.021, 7.918, 12.368)
@@ -51,11 +37,6 @@ describe Chem::Spatial do
   end
 
   describe ".distance" do
-    it "returns the distance between two vectors" do
-      Chem::Spatial.distance(v1, v2).should eq Math.sqrt(17)
-      Chem::Spatial.distance(-v1, v2).should eq Math.sqrt(61)
-    end
-
     it "returns the distance between two quaternions" do
       q1 = Chem::Spatial::Quat[1, 0, 0, 0]
       q2 = Chem::Spatial::Quat[0.5, 0.5, 0.5, 0.5]
@@ -128,11 +109,6 @@ describe Chem::Spatial do
   end
 
   describe ".distance2" do
-    it "returns the squared distance between two vectors" do
-      Chem::Spatial.distance2(v1, v2).should eq 17
-      Chem::Spatial.distance2(-v1, v2).should eq 61
-    end
-
     context "given a orthogonal cell" do
       it "returns minimum image convention's distance" do
         cell = Chem::Spatial::Parallelepiped.new({10, 20, 30})
