@@ -459,4 +459,22 @@ describe Chem::Spatial::Vec3 do
       io.read_bytes(Chem::Spatial::Vec3).should eq vec
     end
   end
+
+  describe "#xy" do
+    it "returns the XY components" do
+      vec3(1, 2, 3).xy.should eq vec3(1, 2, 0)
+    end
+  end
+
+  describe "#xz" do
+    it "returns the XZ components" do
+      vec3(1, 2, 3).xz.should eq vec3(1, 0, 3)
+    end
+  end
+
+  describe "#yz" do
+    it "returns the YZ components" do
+      vec3(1, 2, 3).yz.should eq vec3(0, 2, 3)
+    end
+  end
 end

@@ -490,6 +490,21 @@ module Chem::Spatial
       self - offset.map { |ele| ele == 1 ? 0 : ele.floor }
     end
 
+    # Returns the XY components (Z set to zero) of the vector.
+    def xy : self
+      self.class.new @x, @y, 0
+    end
+
+    # Returns the XZ components (Y set to zero) of the vector.
+    def xz : self
+      self.class.new @x, 0, @z
+    end
+
+    # Returns the YZ components (X set to zero) of the vector.
+    def yz : self
+      self.class.new 0, @y, @z
+    end
+
     # Returns `true` if the vector is zero, else `false`.
     def zero? : Bool
       @x =~ 0 && @y =~ 0 && @z =~ 0
