@@ -53,7 +53,7 @@ describe Chem::Spatial do
   describe ".distance" do
     it "returns the distance between two vectors" do
       Chem::Spatial.distance(v1, v2).should eq Math.sqrt(17)
-      Chem::Spatial.distance(v1.inv, v2).should eq Math.sqrt(61)
+      Chem::Spatial.distance(-v1, v2).should eq Math.sqrt(61)
     end
 
     it "returns the distance between two quaternions" do
@@ -130,7 +130,7 @@ describe Chem::Spatial do
   describe ".distance2" do
     it "returns the squared distance between two vectors" do
       Chem::Spatial.distance2(v1, v2).should eq 17
-      Chem::Spatial.distance2(v1.inv, v2).should eq 61
+      Chem::Spatial.distance2(-v1, v2).should eq 61
     end
 
     context "given a orthogonal cell" do

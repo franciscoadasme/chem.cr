@@ -126,7 +126,7 @@ describe Chem::Spatial::Vec3 do
     it "returns the length of the vector" do
       vec3(0, 0, 0).abs.should eq 0
       v1.abs.should eq 5
-      v1.inv.abs.should eq 5
+      v1.-.abs.should eq 5
       vec3(0.6, 0.8, 0).abs.should eq 1
     end
   end
@@ -230,12 +230,6 @@ describe Chem::Spatial::Vec3 do
       vec.image(1, 0, 0).should eq [1.456, 0.1, 0.8]
       vec.image(-1, 0, 0).should eq [-0.544, 0.1, 0.8]
       vec.image(-1, 1, -5).should eq [-0.544, 1.1, -4.2]
-    end
-  end
-
-  describe "#inv" do
-    it "returns the inverse vector" do
-      v1.inv.should eq [-3, -4, 0]
     end
   end
 
@@ -401,7 +395,7 @@ describe Chem::Spatial::Vec3 do
     it "returns whether the vector is zero" do
       vec3(0, 0, 0).zero?.should be_true
       v1.zero?.should be_false
-      v1.inv.zero?.should be_false
+      v1.-.zero?.should be_false
     end
   end
 

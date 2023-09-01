@@ -249,12 +249,6 @@ module Chem::Spatial
       self + Vec3[i, j, k]
     end
 
-    # Returns the inverse of the vector. It is equivalent to the unary
-    # negation operator.
-    def inv : self
-      -self
-    end
-
     # Returns `true` if the vector faces left (-X), else `false`. See
     # the `#faces?` method.
     def leftward? : Bool
