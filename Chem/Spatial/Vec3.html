@@ -1281,9 +1281,37 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#angle%28toother%3Aself%29%3AFloat64-instance-method" class="signature"><strong>#angle</strong>(to other : <span class="k">self</span>) : Float64</a>
+        
+          <div class="summary"><p>Returns the angle (in radians) to the given vector.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#backward%3F%3ABool-instance-method" class="signature"><strong>#backward?</strong> : Bool</a>
         
           <div class="summary"><p>Returns <code>true</code> if the vector faces backward (-Z), else <code>false</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#ceil%3Aself-instance-method" class="signature"><strong>#ceil</strong> : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a new vector with all components rounded towards positive infinity.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#clamp%28min%3Aself%7CNil%2Cmax%3Aself%7CNil%29%3Aself-instance-method" class="signature"><strong>#clamp</strong>(min : <span class="k">self</span> | Nil, max : <span class="k">self</span> | Nil) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Clamps (component-wise) the vector between <em>min</em> and <em>max</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#clamp%28min%3AFloat64%7CNil%2Cmax%3AFloat64%7CNil%29%3Aself-instance-method" class="signature"><strong>#clamp</strong>(min : Float64 | Nil, max : Float64 | Nil) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Clamps the absolute value (norm or length) of the vector between <em>min</em> and <em>max</em>.</p></div>
         
       </li>
     
@@ -1298,6 +1326,20 @@
         <a href="#cross%28rhs%3AVec3%29%3Aself-instance-method" class="signature"><strong>#cross</strong>(rhs : Vec3) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the cross product of the vector and <em>rhs</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#distance%28toother%3Aself%29%3AFloat64-instance-method" class="signature"><strong>#distance</strong>(to other : <span class="k">self</span>) : Float64</a>
+        
+          <div class="summary"><p>Returns the distance between the vector and <em>other</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#distance2%28toother%3Aself%29%3AFloat64-instance-method" class="signature"><strong>#distance2</strong>(to other : <span class="k">self</span>) : Float64</a>
+        
+          <div class="summary"><p>Returns the squared distance between the vector and <em>other</em>.</p></div>
         
       </li>
     
@@ -1330,6 +1372,13 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#floor%3Aself-instance-method" class="signature"><strong>#floor</strong> : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a new vector with all components rounded towards negative infinity.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#forward%3F%3ABool-instance-method" class="signature"><strong>#forward?</strong> : Bool</a>
         
           <div class="summary"><p>Returns <code>true</code> if the vector faces forward (Z), else <code>false</code>.</p></div>
@@ -1340,13 +1389,6 @@
         <a href="#image%28i%3AInt%2Cj%3AInt%2Ck%3AInt%29%3Aself-instance-method" class="signature"><strong>#image</strong>(i : Int, j : Int, k : Int) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns vector's PBC image in fractional coordinates</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#inv%3Aself-instance-method" class="signature"><strong>#inv</strong> : <span class="k">self</span></a>
-        
-          <div class="summary"><p>Returns the inverse of the vector.</p></div>
         
       </li>
     
@@ -1375,6 +1417,13 @@
         <a href="#normalize%3Aself-instance-method" class="signature"><strong>#normalize</strong> : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the unit vector pointing in the same direction of the vector.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#normalized%3F%3ABool-instance-method" class="signature"><strong>#normalized?</strong> : Bool</a>
+        
+          <div class="summary"><p>Returns <code>true</code> if the vector is normalized, else <code>false</code>.</p></div>
         
       </li>
     
@@ -1484,6 +1533,27 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#round%28mode%3ANumber%3A%3ARoundingMode%3D%3Aties_even%29%3Aself-instance-method" class="signature"><strong>#round</strong>(mode : Number::RoundingMode = <span class="n">:ties_even</span>) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Rounds the vector to integer values using rounding <em>mode</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#round%28digits%3ANumber%2Cmode%3ANumber%3A%3ARoundingMode%3D%3Aties_even%29%3Aself-instance-method" class="signature"><strong>#round</strong>(digits : Number, mode : Number::RoundingMode = <span class="n">:ties_even</span>) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Rounds the vector to the given precision using rounding <em>mode</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#signed_angle%28toother%3Aself%2Caxis%3Aself%29%3AFloat64-instance-method" class="signature"><strong>#signed_angle</strong>(to other : <span class="k">self</span>, axis : <span class="k">self</span>) : Float64</a>
+        
+          <div class="summary"><p>Returns the signed angle (in radians) to the given vector.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#to_a%3AArray%28Float64%29-instance-method" class="signature"><strong>#to_a</strong> : Array(Float64)</a>
         
           <div class="summary"><p>Returns an array with the components of the vector.</p></div>
@@ -1566,9 +1636,30 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#xy%3Aself-instance-method" class="signature"><strong>#xy</strong> : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the XY components (Z set to zero) of the vector.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#xz%3Aself-instance-method" class="signature"><strong>#xz</strong> : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the XZ components (Y set to zero) of the vector.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#y%3AFloat64-instance-method" class="signature"><strong>#y</strong> : Float64</a>
         
           <div class="summary"><p>Y component of the vector.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#yz%3Aself-instance-method" class="signature"><strong>#yz</strong> : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the YZ components (X set to zero) of the vector.</p></div>
         
       </li>
     
@@ -2121,6 +2212,25 @@ other, else <code>false</code>. See the <code>#close_to</code> method.</p>
       </div>
     </div>
   
+    <div class="entry-detail" id="angle(toother:self):Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>angle</strong>(to other : <span class="k">self</span>) : Float64
+
+        <a class="method-permalink" href="#angle%28toother%3Aself%29%3AFloat64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the angle (in radians) to the given vector.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="backward?:Bool-instance-method">
       <div class="signature">
         
@@ -2133,6 +2243,65 @@ other, else <code>false</code>. See the <code>#close_to</code> method.</p>
           
           <p>Returns <code>true</code> if the vector faces backward (-Z), else <code>false</code>.
 See the <code><a href="../../Chem/Spatial/Vec3.html#faces%3F%28other%3Aself%29%3ABool-instance-method">#faces?</a></code> method.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ceil:self-instance-method">
+      <div class="signature">
+        
+        def <strong>ceil</strong> : <span class="k">self</span>
+
+        <a class="method-permalink" href="#ceil%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a new vector with all components rounded towards positive
+infinity.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="clamp(min:self|Nil,max:self|Nil):self-instance-method">
+      <div class="signature">
+        
+        def <strong>clamp</strong>(min : <span class="k">self</span> | Nil, max : <span class="k">self</span> | Nil) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#clamp%28min%3Aself%7CNil%2Cmax%3Aself%7CNil%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Clamps (component-wise) the vector between <em>min</em> and <em>max</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="clamp(min:Float64|Nil,max:Float64|Nil):self-instance-method">
+      <div class="signature">
+        
+        def <strong>clamp</strong>(min : Float64 | Nil, max : Float64 | Nil) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#clamp%28min%3AFloat64%7CNil%2Cmax%3AFloat64%7CNil%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Clamps the absolute value (norm or length) of the vector between
+<em>min</em> and <em>max</em>.</p>
         </div>
       
       <br/>
@@ -2176,6 +2345,46 @@ from each other, else <code>false</code>.</p>
         <div class="doc">
           
           <p>Returns the cross product of the vector and <em>rhs</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="distance(toother:self):Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>distance</strong>(to other : <span class="k">self</span>) : Float64
+
+        <a class="method-permalink" href="#distance%28toother%3Aself%29%3AFloat64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the distance between the vector and <em>other</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="distance2(toother:self):Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>distance2</strong>(to other : <span class="k">self</span>) : Float64
+
+        <a class="method-permalink" href="#distance2%28toother%3Aself%29%3AFloat64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the squared distance between the vector and <em>other</em>.</p>
+<p>Prefer this method instead of <code><a href="../../Chem/Spatial/Vec3.html#distance%28toother%3Aself%29%3AFloat64-instance-method">#distance</a></code> when comparing or
+sorting vectors as it runs faster.</p>
         </div>
       
       <br/>
@@ -2279,6 +2488,26 @@ else <code>false</code>.</p>
       </div>
     </div>
   
+    <div class="entry-detail" id="floor:self-instance-method">
+      <div class="signature">
+        
+        def <strong>floor</strong> : <span class="k">self</span>
+
+        <a class="method-permalink" href="#floor%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a new vector with all components rounded towards negative
+infinity.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="forward?:Bool-instance-method">
       <div class="signature">
         
@@ -2314,26 +2543,6 @@ the <code><a href="../../Chem/Spatial/Vec3.html#faces%3F%28other%3Aself%29%3ABoo
 vec.image <span class="n">1</span>, <span class="n">0</span>, <span class="n">0</span>   <span class="c"># =&gt; Vec3[1.456, 0.1, 0.8]</span>
 vec.image <span class="n">-1</span>, <span class="n">0</span>, <span class="n">0</span>  <span class="c"># =&gt; Vec3[-0.544, 0.1, 0.8]</span>
 vec.image <span class="n">-1</span>, <span class="n">1</span>, <span class="n">-5</span> <span class="c"># =&gt; Vec3[-0.544, 1.1, -4.2]</span></code></pre>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="inv:self-instance-method">
-      <div class="signature">
-        
-        def <strong>inv</strong> : <span class="k">self</span>
-
-        <a class="method-permalink" href="#inv%3Aself-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Returns the inverse of the vector. It is equivalent to the unary
-negation operator.</p>
         </div>
       
       <br/>
@@ -2418,10 +2627,33 @@ to perform non-standard transformations.</p>
           
           <p>Returns the unit vector pointing in the same direction of the
 vector.</p>
+<p>A normalized or &quot;unit&quot; vector maintains its direction but its
+length becomes 1.</p>
 <pre><code class="language-crystal">v <span class="o">=</span> <span class="t">Vec3</span>[<span class="n">2.5</span>, <span class="n">0</span>, <span class="n">0</span>].normalize <span class="c"># =&gt; Vec[1.0, 0.0, 0.0]</span>
 v.abs                         <span class="c"># =&gt; 1.0</span>
 v <span class="o">=</span> <span class="t">Vec3</span>[<span class="n">1</span>, <span class="n">1</span>, <span class="n">1</span>].normalize   <span class="c"># =&gt; Vec[0.577, 0.577, 0.577]</span>
 v.abs                         <span class="c"># =&gt; 1.0</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="normalized?:Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>normalized?</strong> : Bool
+
+        <a class="method-permalink" href="#normalized%3F%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if the vector is normalized, else <code>false</code>.</p>
+<p>A normalized or &quot;unit&quot; vector is a vector with the length equal
+(close) to 1.</p>
         </div>
       
       <br/>
@@ -2738,6 +2970,67 @@ degrees. Delegates to <code><a href="../../Chem/Spatial/Quat.html#rotation%28x%3
       </div>
     </div>
   
+    <div class="entry-detail" id="round(mode:Number::RoundingMode=:ties_even):self-instance-method">
+      <div class="signature">
+        
+        def <strong>round</strong>(mode : Number::RoundingMode = <span class="n">:ties_even</span>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#round%28mode%3ANumber%3A%3ARoundingMode%3D%3Aties_even%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Rounds the vector to integer values using rounding <em>mode</em>. See the
+<code>Number#round</code> method for details.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="round(digits:Number,mode:Number::RoundingMode=:ties_even):self-instance-method">
+      <div class="signature">
+        
+        def <strong>round</strong>(digits : <a href="../../Number.html">Number</a>, mode : Number::RoundingMode = <span class="n">:ties_even</span>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#round%28digits%3ANumber%2Cmode%3ANumber%3A%3ARoundingMode%3D%3Aties_even%29%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Rounds the vector to the given precision using rounding <em>mode</em>.
+See the <code>Number#round</code> method for details.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="signed_angle(toother:self,axis:self):Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>signed_angle</strong>(to other : <span class="k">self</span>, axis : <span class="k">self</span>) : Float64
+
+        <a class="method-permalink" href="#signed_angle%28toother%3Aself%2Caxis%3Aself%29%3AFloat64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the signed angle (in radians) to the given vector.</p>
+<p>The sign of the angle is positive if the motion is
+counterclockwise with respect to <em>axis</em>, else negative.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="to_a:Array(Float64)-instance-method">
       <div class="signature">
         
@@ -2978,6 +3271,44 @@ vector is assumed to be expressed in fractional coordinates.</p>
       </div>
     </div>
   
+    <div class="entry-detail" id="xy:self-instance-method">
+      <div class="signature">
+        
+        def <strong>xy</strong> : <span class="k">self</span>
+
+        <a class="method-permalink" href="#xy%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the XY components (Z set to zero) of the vector.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="xz:self-instance-method">
+      <div class="signature">
+        
+        def <strong>xz</strong> : <span class="k">self</span>
+
+        <a class="method-permalink" href="#xz%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the XZ components (Y set to zero) of the vector.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="y:Float64-instance-method">
       <div class="signature">
         
@@ -2989,6 +3320,25 @@ vector is assumed to be expressed in fractional coordinates.</p>
         <div class="doc">
           
           <p>Y component of the vector.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="yz:self-instance-method">
+      <div class="signature">
+        
+        def <strong>yz</strong> : <span class="k">self</span>
+
+        <a class="method-permalink" href="#yz%3Aself-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the YZ components (X set to zero) of the vector.</p>
         </div>
       
       <br/>
