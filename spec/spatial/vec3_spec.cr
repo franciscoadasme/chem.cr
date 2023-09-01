@@ -131,6 +131,22 @@ describe Chem::Spatial::Vec3 do
     end
   end
 
+  describe "#angle" do
+    it "returns the angle to a vector" do
+      vec3(1, 0, 0).angle(vec3(-1, -1, 0)).should eq Math::PI * 3/4
+      vec3(3, 4, 0).angle(vec3(4, 4, 2)).should be_close 0.367208020557837, 1e-15
+      vec3(1, 0, 3).angle(vec3(5, 5, 0)).should be_close 1.345282920896765, 1e-15
+    end
+
+    it "returns zero if vectors are parallel" do
+      vec3(1, 0, 0).angle(vec3(2, 0, 0)).should eq 0
+    end
+
+    it "returns one if vectors are perpendicular" do
+      vec3(1, 0, 0).angle(vec3(0, 1, 0)).should eq Math::PI / 2
+    end
+  end
+
   describe "#backward?" do
     it "returns true if the vector faces backward" do
       vec3(0, 0, -1).backward?.should be_true
@@ -142,6 +158,39 @@ describe Chem::Spatial::Vec3 do
       vec3(0, 0, 1).backward?.should be_false
       vec3(0, 0, 5).backward?.should be_false
       vec3(1, 2, 3).backward?.should be_false
+    end
+  end
+
+  describe "#ceil" do
+    it "returns a vector rounded up" do
+      vec3(1.2, 2.31, 3).ceil.should eq vec3(2, 3, 3)
+      vec3(-1.2, -2.31, -3).ceil.should eq vec3(-1, -2, -3)
+    end
+  end
+
+  describe "#clamp" do
+    it "clamps a vector" do
+      vec3(10, 10, 10).clamp(vec3(0, 10, 15), vec3(5, 10, 20)).should eq vec3(5, 10, 15)
+      vec3(-5, 5, 15).clamp(vec3(0, 0, 0), vec3(10, 10, 10)).should eq vec3(0, 5, 10)
+    end
+
+    it "clamps a vector without lower limit" do
+      vec3(10, 10, 10).clamp(nil, vec3(5, 10, 20)).should eq vec3(5, 10, 10)
+    end
+
+    it "clamps a vector without upper limit" do
+      vec3(10, 10, 10).clamp(vec3(0, 10, 15), nil).should eq vec3(10, 10, 15)
+    end
+
+    it "returns the vector if minmax is nil" do
+      vec3(10, 10, 10).clamp(nil, nil).should eq vec3(10, 10, 10)
+    end
+
+    it "clamps the length of a vector" do
+      vec3(1, 0, 0).clamp(0, 1).should eq vec3(1, 0, 0)
+      vec3(10, 10, 10).clamp(0, 1).should eq vec3(1, 1, 1).normalize
+      vec3(1, 2, 3).clamp(nil, 0.5).should eq vec3(1, 2, 3).resize(0.5)
+      vec3(1, 2, 3).clamp(5, nil).should eq vec3(1, 2, 3).resize(5)
     end
   end
 
@@ -161,6 +210,20 @@ describe Chem::Spatial::Vec3 do
     it "returns false if vectors aren't within delta" do
       vec3(1, 2, 3).close_to?(vec3(3, 2, 1)).should be_false
       vec3(1, 2, 3).close_to?(vec3(1.001, 1.999, 3.00004), 1e-8).should be_false
+    end
+  end
+
+  describe "#distance" do
+    it "returns the distance to the vector" do
+      vec3(3, 4, 0).distance(vec3(1, 2, 3)).should eq Math.sqrt(17)
+      vec3(3, 4, 0).-.distance(vec3(1, 2, 3)).should eq Math.sqrt(61)
+    end
+  end
+
+  describe "#distance2" do
+    it "returns the squared distance to the vector" do
+      vec3(3, 4, 0).distance2(vec3(1, 2, 3)).should eq 17
+      vec3(3, 4, 0).-.distance2(vec3(1, 2, 3)).should eq 61
     end
   end
 
@@ -224,6 +287,13 @@ describe Chem::Spatial::Vec3 do
     end
   end
 
+  describe "#floor" do
+    it "returns a vector rounded down" do
+      vec3(1.2, 2.31, 3).floor.should eq vec3(1, 2, 3)
+      vec3(-1.2, -2.31, -3).floor.should eq vec3(-2, -3, -3)
+    end
+  end
+
   describe "#image" do
     it "returns vector's pbc image" do
       vec = vec3(0.456, 0.1, 0.8)
@@ -262,6 +332,18 @@ describe Chem::Spatial::Vec3 do
   describe "#normalize" do
     it "returns the unit vector" do
       v1.normalize.should be_close [0.6, 0.8, 0], 1e-15
+    end
+  end
+
+  describe "#normalized?" do
+    it "returns true if vector is normalized" do
+      vec3(1, 0, 0).normalized?.should be_true
+      vec3(1, 2, 3).normalize.normalized?.should be_true
+    end
+
+    it "returns false if vector is not normalized" do
+      vec3(5, 0, 0).normalized?.should be_false
+      vec3(1, 2, 3).normalized?.should be_false
     end
   end
 
@@ -369,6 +451,21 @@ describe Chem::Spatial::Vec3 do
     it "rotates about a direction" do
       vec3(1, 0, 0).rotate(about: :z, by: 90).should be_close [0, 1, 0], 1e-15
       vec3(0, 1, 0).rotate(about: :xyz, by: 120).should be_close [0, 0, 1], 1e-15
+    end
+  end
+
+  describe "#round" do
+    it "rounds a vector" do
+      vec3(1.2, 3.4, 5.6).round.should eq vec3(1, 3, 6)
+      vec3(1.2, -3.4, -5.6).round.should eq vec3(1, -3, -6)
+    end
+  end
+
+  describe "#signed_angle" do
+    it "returns the signed angle to a vector" do
+      vec3(1, 0, 0).signed_angle(vec3(0, 1, 0), vec3(0, 1, 0)).should eq Math::PI / 2
+      vec3(1, 0, 0).signed_angle(vec3(0, 1, 1), vec3(0, 1, 0)).should eq -Math::PI / 2
+      vec3(0, 1, 1).signed_angle(vec3(1, 0, 0), vec3(0, 1, 0))
     end
   end
 

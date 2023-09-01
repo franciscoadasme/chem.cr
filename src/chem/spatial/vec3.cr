@@ -156,10 +156,34 @@ module Chem::Spatial
       @x**2 + @y**2 + @z**2
     end
 
+    # Returns the angle (in radians) to the given vector.
+    def angle(to other : self) : Float64
+      Math.atan2 cross(other).abs, dot(other)
+    end
+
     # Returns `true` if the vector faces backward (-Z), else `false`.
     # See the `#faces?` method.
     def backward? : Bool
       faces? BACK
+    end
+
+    # Returns a new vector with all components rounded towards positive
+    # infinity.
+    def ceil : self
+      map &.ceil
+    end
+
+    # Clamps (component-wise) the vector between *min* and *max*.
+    def clamp(min : self?, max : self?) : self
+      map_with_index do |ele, i|
+        ele.clamp min.try(&.[i]), max.try(&.[i])
+      end
+    end
+
+    # Clamps the absolute value (norm or length) of the vector between
+    # *min* and *max*.
+    def clamp(min : Float64?, max : Float64?) : self
+      resize abs.clamp(min, max)
     end
 
     # Returns `true` if the elements of the vectors are within *delta*
@@ -184,6 +208,19 @@ module Chem::Spatial
         @z * rhs.x - @x * rhs.z,
         @x * rhs.y - @y * rhs.x,
       ]
+    end
+
+    # Returns the distance between the vector and *other*.
+    def distance(to other : self) : Float64
+      Math.sqrt distance2(other)
+    end
+
+    # Returns the squared distance between the vector and *other*.
+    #
+    # Prefer this method instead of `#distance` when comparing or
+    # sorting vectors as it runs faster.
+    def distance2(to other : self) : Float64
+      (@x - other.x)**2 + (@y - other.y)**2 + (@z - other.z)**2
     end
 
     # Returns the dot product of the vector and *rhs*.
@@ -229,6 +266,12 @@ module Chem::Spatial
     # ```
     def faces?(direction : Direction) : Bool
       faces? direction.to_vector
+    end
+
+    # Returns a new vector with all components rounded towards negative
+    # infinity.
+    def floor : self
+      map &.floor
     end
 
     # Returns `true` if the vector faces forward (Z), else `false`. See
@@ -280,6 +323,9 @@ module Chem::Spatial
     # Returns the unit vector pointing in the same direction of the
     # vector.
     #
+    # A normalized or "unit" vector maintains its direction but its
+    # length becomes 1.
+    #
     # ```
     # v = Vec3[2.5, 0, 0].normalize # => Vec[1.0, 0.0, 0.0]
     # v.abs                         # => 1.0
@@ -288,6 +334,14 @@ module Chem::Spatial
     # ```
     def normalize : self
       resize 1
+    end
+
+    # Returns `true` if the vector is normalized, else `false`.
+    #
+    # A normalized or "unit" vector is a vector with the length equal
+    # (close) to 1.
+    def normalized? : Bool
+      abs =~ 1
     end
 
     # Returns `true` if the vector is orthogonal to *other*, else
@@ -400,6 +454,27 @@ module Chem::Spatial
     # Returns the vector rotated by the given quaternion.
     def rotate(quat : Quat) : self
       quat * self
+    end
+
+    # Rounds the vector to integer values using rounding *mode*. See the
+    # `Number#round` method for details.
+    def round(mode : Number::RoundingMode = :ties_even) : self
+      map &.round(mode)
+    end
+
+    # Rounds the vector to the given precision using rounding *mode*.
+    # See the `Number#round` method for details.
+    def round(digits : Number, mode : Number::RoundingMode = :ties_even) : self
+      map &.round(digits, mode: mode)
+    end
+
+    # Returns the signed angle (in radians) to the given vector.
+    #
+    # The sign of the angle is positive if the motion is
+    # counterclockwise with respect to *axis*, else negative.
+    def signed_angle(to other : self, axis : self) : Float64
+      uangle = angle(other)
+      cross(other).dot(axis) < 0 ? -uangle : uangle
     end
 
     # Returns an array with the components of the vector.
