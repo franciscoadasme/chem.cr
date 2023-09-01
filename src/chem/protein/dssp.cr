@@ -197,7 +197,7 @@ module Chem::Protein
       (0...@residues.size).each do |i|
         (i + 1).upto(@residues.size - 1) do |j|
           ci, cj = coords(i), coords(j)
-          next unless Spatial.distance2(ci.ca, cj.ca) < MIN_CA_SQUARED_DIST
+          next unless ci.ca.distance2(cj.ca) < MIN_CA_SQUARED_DIST
           energy = calculate_hbond_energy donor: ci, acceptor: cj
           @hbonds[{i, j}] = energy if energy < HBOND_ENERGY_CUTOFF
           if i + 1 != j
@@ -209,10 +209,10 @@ module Chem::Protein
     end
 
     private def calculate_hbond_energy(donor : Coords, acceptor : Coords) : Float64
-      rd_ho = 1 / Spatial.distance(donor.h, acceptor.o)
-      rd_hc = 1 / Spatial.distance(donor.h, acceptor.c)
-      rd_nc = 1 / Spatial.distance(donor.n, acceptor.c)
-      rd_no = 1 / Spatial.distance(donor.n, acceptor.o)
+      rd_ho = 1 / donor.h.distance(acceptor.o)
+      rd_hc = 1 / donor.h.distance(acceptor.c)
+      rd_nc = 1 / donor.n.distance(acceptor.c)
+      rd_no = 1 / donor.n.distance(acceptor.o)
 
       energy = HBOND_COUPLING_FACTOR * (rd_ho - rd_hc + rd_nc - rd_no)
       energy = (energy * 1000).round / 1000 # xssp compatibility mode

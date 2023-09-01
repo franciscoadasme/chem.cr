@@ -131,7 +131,7 @@ module Chem::Spatial
     # Returns the parallelepiped angles (alpha, beta, gamma) in degrees.
     def angles : NumberTriple
       bi, bj, bk = basisvec
-      {Spatial.angle(bj, bk), Spatial.angle(bi, bk), Spatial.angle(bi, bj)}
+      {bj.angle(bk), bi.angle(bk), bi.angle(bj)}.map(&.degrees)
     end
 
     # Returns the basis vectors.

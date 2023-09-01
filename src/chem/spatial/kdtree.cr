@@ -97,7 +97,7 @@ module Chem::Spatial
       end
 
       # update neighbors
-      dis2 = Spatial.distance2(node.pos, pos)
+      dis2 = node.pos.distance2(pos)
       if neighbors.size < count || dis2 < neighbors.last[1]
         neighbors.pop if neighbors.size >= count
         if i = neighbors.bsearch_index { |a| a[1] > dis2 }
@@ -112,7 +112,7 @@ module Chem::Spatial
                        pos : Vec3,
                        radius : Number,
                        &block : Int32, Float64 -> Nil) : Nil
-      dis2 = Spatial.distance2(node.pos, pos)
+      dis2 = node.pos.distance2(pos)
       yield node.index, dis2 if dis2 <= radius
 
       left, right = node.succ(pos)

@@ -381,7 +381,7 @@ describe Chem::Spatial::Grid do
 
       expected = [] of Chem::Spatial::Grid::Location
       grid.each_loc do |i, j, k|
-        d = Chem::Spatial.distance2 grid.coords_at(i, j, k), vec
+        d = grid.coords_at(i, j, k).distance2 vec
         expected << {i, j, k} if d < cutoff**2
       end
 

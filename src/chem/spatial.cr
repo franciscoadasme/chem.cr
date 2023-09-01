@@ -37,7 +37,7 @@ module Chem::Spatial
   end
 
   def self.angle(a : Vec3, b : Vec3, c : Vec3) : Float64
-    angle a - b, c - b
+    (a - b).angle(c - b).degrees
   end
 
   def self.angle(cell : Parallelepiped, a : Atom, b : Atom, c : Atom) : Float64
@@ -50,7 +50,7 @@ module Chem::Spatial
 
   def self.dihedral(a : Vec3, b : Vec3, c : Vec3) : Float64
     ab = a.cross b
-    angle = angle ab, b.cross(c)
+    angle = ab.angle(b.cross(c)).degrees
     ab.dot(c) < 0 ? -angle : angle
   end
 
@@ -74,12 +74,12 @@ module Chem::Spatial
   end
 
   def self.distance(a : Atom, b : Atom) : Float64
-    distance a.coords, b.coords
   end
 
   @[AlwaysInline]
   def self.distance(a : Vec3, b : Vec3) : Float64
     Math.sqrt distance2(a, b)
+    a.coords.distance(b.coords)
   end
 
   def self.distance(cell : Parallelepiped, a : Atom, b : Atom) : Float64
@@ -102,12 +102,12 @@ module Chem::Spatial
   end
 
   def self.distance2(a : Atom, b : Atom) : Float64
-    distance2 a.coords, b.coords
   end
 
   @[AlwaysInline]
   def self.distance2(a : Vec3, b : Vec3) : Float64
     (a.x - b.x)**2 + (a.y - b.y)**2 + (a.z - b.z)**2
+    a.coords.distance2 b.coords
   end
 
   def self.distance2(cell : Parallelepiped, a : Atom, b : Atom) : Float64
@@ -115,7 +115,7 @@ module Chem::Spatial
   end
 
   def self.distance2(cell : Parallelepiped, a : Vec3, b : Vec3) : Float64
-    distance2 a, cell.wrap(b, around: a)
+    a.distance2 cell.wrap(b, around: a)
   end
 
   def self.improper(a : Atom, b : Atom, c : Atom, d : Atom) : Float64

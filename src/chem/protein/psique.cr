@@ -271,7 +271,7 @@ module Chem::Protein
              acceptor.name == "O" &&
              (residue.chain != acceptor.chain ||
              (residue.number - acceptor.residue.number).abs >= MIN_RESIDUE_DISTANCE) &&
-             Spatial.distance(h, acceptor.coords).in?(HBOND_DISTANCE) &&
+             h.distance(acceptor.coords).in?(HBOND_DISTANCE) &&
              Spatial.angle(donor.coords, h, acceptor.coords) >= HBOND_MIN_ANGLE
             @bridged_residues << residue << acceptor.residue
           end

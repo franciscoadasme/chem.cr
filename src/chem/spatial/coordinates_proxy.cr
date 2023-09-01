@@ -212,7 +212,7 @@ module Chem::Spatial
         rmsd
       else
         Math.sqrt((0...pos.size).average(weights) do |i|
-          Spatial.distance2 pos.unsafe_fetch(i), ref_pos.unsafe_fetch(i)
+          pos.unsafe_fetch(i).distance2 ref_pos.unsafe_fetch(i)
         end)
       end
     end
@@ -246,7 +246,7 @@ module Chem::Spatial
         rmsd
       else
         Math.sqrt((0...pos.size).mean do |i|
-          Spatial.distance2 pos.unsafe_fetch(i), ref_pos.unsafe_fetch(i)
+          pos.unsafe_fetch(i).distance2 ref_pos.unsafe_fetch(i)
         end)
       end
     end

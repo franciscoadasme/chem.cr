@@ -77,7 +77,7 @@ module Chem::Protein
         v4 = (d4.dot(v1) * v1 + d4.dot(v2) * v2).normalize
         v5 = v1.cross(v4)
 
-        flipped = d1.dot(v5) > 0 && Spatial.angle(v1, v4) <= Spatial.angle(v1, v3)
+        flipped = d1.dot(v5) > 0 && v1.angle(v4) <= v1.angle(v3)
       else
         phi = Spatial.dihedral c1, n2, ca2, c2
         flipped = phi > 0
