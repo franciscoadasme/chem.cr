@@ -460,6 +460,17 @@ describe Chem::Topology do
         .to_h { |atom| {atom.name, atom.formal_charge} }
         .should eq({"N1" => 1, "O2" => -1})
     end
+
+    it "guesses bonds of arginine" do
+      structure = Chem::Structure.read spec_file("arginine.xyz")
+      structure.topology.guess_bonds
+      structure.topology.guess_formal_charges
+      structure.formal_charge.should eq 1
+      structure.atoms.count(&.formal_charge.!=(0)).should eq 1
+      structure.bonds.select(&.double?)
+        .map(&.atoms.map(&.element.symbol).to_a.sort!.join('='))
+        .tally.should eq({"C=N" => 1, "C=O" => 2})
+    end
   end
 
   describe "#guess_names" do

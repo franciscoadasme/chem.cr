@@ -318,7 +318,7 @@ class Chem::Topology
           atom.bonded_atoms
             .select! do |other|
               hybridization_map[other]? == hybridization_map[atom]? &&
-                other.missing_valence > 0
+                other.valence < other.element.max_bonds
             end
             .sort_by! do |other|
               {
