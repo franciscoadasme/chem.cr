@@ -655,6 +655,17 @@ class Chem::Topology
       @chain_table[chain.id] = chain
     end
   end
+
+  # Deletes all bonds and resets formal charges to zero.
+  def reset_connectivity : Nil
+    # TODO: find a better way to reset bonds
+    each_atom do |atom|
+      atom.bonds.each do |bond|
+        atom.bonds.delete bond
+      end
+      atom.formal_charge = 0
+    end
+  end
 end
 
 private def next_chain_id(ch : Char) : Char

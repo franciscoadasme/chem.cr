@@ -1227,4 +1227,16 @@ describe Chem::Topology do
       Chem::Topology.guess_element?("X1").should be_nil
     end
   end
+
+  describe "#reset_connectivity" do
+    it "deletes bonds and formal charges" do
+      structure = Chem::Structure.read spec_file("5my.mol")
+      structure.bonds.should_not be_empty
+      structure.formal_charge.should eq -10
+      structure.topology.reset_connectivity
+      structure.bonds.should be_empty
+      structure.formal_charge.should eq 0
+      structure.atoms.count(&.formal_charge.!=(0)).should eq 0
+    end
+  end
 end
