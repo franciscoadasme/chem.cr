@@ -343,6 +343,29 @@ class Chem::Topology
               break if missing_valence == 0
             end
         end
+
+      # Increase valence of central atoms by increasing bond order to
+      # bonded atoms only if it would lead to a complete valence (avoid
+      # charged central atoms), e.g., SO4 would be S(-O)(-O)(-O)-O
+      # without this (valence = 4), but it adds two double bonds to
+      # achieve valence = 6. Adding a single double bond would not work
+      # since it leads to an invalid valence = 5 (sulfur have valence of
+      # 2, 4, or 6).
+      conn_map = Hash(Atom, Array(Atom)).new { |hash, key| hash[key] = [] of Atom }
+      atoms.reject(&.missing_valence.zero?).each do |atom|
+        atom.bonded_atoms.each do |other|
+          conn_map[other] << atom
+        end
+      end
+      conn_map.each do |atom, bonded_atoms|
+        new_valence = atom.valence + bonded_atoms.size
+        target_valence = atom.element.target_valence new_valence
+        next unless new_valence == target_valence &&
+                    bonded_atoms.all? do |other|
+                      hybridization_map[other]? == hybridization_map[atom]?
+                    end
+        bonded_atoms.each &.bonds[atom].order=(BondOrder::Double)
+      end
     end
   end
 
