@@ -274,7 +274,7 @@ describe Chem::Structure::Builder do
     structure.formal_charge.should eq 0
     structure.atoms.count(&.formal_charge.zero?.!).should eq 0
     structure.bonds.size.should eq 59
-    structure.bonds.count(&.single?.!).should eq 3 # backbone C=O
+    structure.bonds.count(&.single?.!).should eq 0
   end
 
   it "assigns bond orders for a structure without hydrogens" do

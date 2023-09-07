@@ -217,6 +217,8 @@ class Chem::Topology
   def guess_bonds(perceive_order : Bool = true) : Nil
     return if (atoms = self.atoms).empty?
 
+    reset_connectivity
+
     # Setup existing bonds and cache some values
     bond_table = Hash(Atom, Array(Atom)).new
     dcov2_map = Hash({Element, Element}, Float64).new
@@ -226,9 +228,6 @@ class Chem::Topology
     atoms.each do |atom|
       # Add existing bonds
       bond_table[atom] = Array(Atom).new(atom.element.max_bonds)
-      atom.each_bonded_atom do |other|
-        bond_table[atom] << other
-      end
 
       largest_atom = atom if atom.covalent_radius > largest_atom.covalent_radius
 

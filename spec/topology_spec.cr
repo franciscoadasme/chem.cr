@@ -482,6 +482,17 @@ describe Chem::Topology do
         .map(&.atoms.map(&.element.symbol).to_a.sort!.join('='))
         .tally.should eq({"C=N" => 1, "C=O" => 2, "C=C" => 1})
     end
+
+    it "works on a structure with bonds" do
+      structure = Chem::Structure.read spec_file("5my.mol")
+      structure.topology.guess_bonds
+      structure.topology.guess_formal_charges
+      structure.formal_charge.should eq -10
+      structure.atoms
+        .reject(&.formal_charge.zero?)
+        .count { |atom| atom.oxygen? && atom.bonded_atoms[-1].phosphorus? }
+        .should eq 10
+    end
   end
 
   describe "#guess_names" do
@@ -522,6 +533,7 @@ describe Chem::Topology do
     it "guesses the topology of two peptides off-center (issue #3)" do
       top = load_file("5e61--off-center.poscar").topology
       top.guess_bonds
+      top.guess_formal_charges
       top.guess_names
 
       top.chains.map(&.id).should eq ['A', 'B']
@@ -535,6 +547,7 @@ describe Chem::Topology do
     it "guesses the topology of a broken peptide with waters" do
       top = load_file("5e5v--unwrapped.poscar").topology
       top.guess_bonds
+      top.guess_formal_charges
       top.guess_names
 
       top.chains.map(&.id).should eq ['A', 'B', 'C', 'D']
@@ -566,6 +579,7 @@ describe Chem::Topology do
     it "guesses the topology of many fragments (beyond max chain id)" do
       top = load_file("many_fragments.poscar").topology
       top.guess_bonds
+      top.guess_formal_charges
       top.guess_names
 
       top.n_chains.should eq 1
@@ -580,6 +594,7 @@ describe Chem::Topology do
     it "detects multiple residues for unmatched atoms (#16)" do
       top = load_file("peptide_unknown_residues.xyz").topology
       top.guess_bonds
+      top.guess_formal_charges
       top.guess_names
 
       top.n_residues.should eq 9
@@ -592,6 +607,7 @@ describe Chem::Topology do
     it "renames unmatched atoms" do
       top = load_file("peptide_unknown_residues.xyz").topology
       top.guess_bonds
+      top.guess_formal_charges
       top.guess_names
 
       top.dig('A', 3).name.should eq "UNK"
@@ -626,6 +642,7 @@ describe Chem::Topology do
 
       structure = Chem::Structure.from_xyz IO::Memory.new(structure.to_xyz)
       structure.topology.guess_bonds
+      structure.topology.guess_formal_charges
       structure.topology.guess_names
       structure.residues.join(&.code).should eq expected
     end
@@ -634,6 +651,7 @@ describe Chem::Topology do
       Chem::Templates.load spec_file("dmpe.mol2")
       structure = load_file "dmpe.xyz"
       structure.topology.guess_bonds
+      structure.topology.guess_formal_charges
       structure.topology.guess_names
       structure.residues.size.should eq 1
       structure.residues[0].name.should eq "DMP"
