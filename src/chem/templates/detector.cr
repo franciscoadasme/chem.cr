@@ -74,6 +74,7 @@ class Chem::Templates::Detector
     return unless atom.in?(@unmatched_atoms) &&
                   !atom_map.has_key?(atom_t) &&
                   !atom.in?(visited) &&
+                  atom.formal_charge == atom_t.formal_charge &&
                   @atom_top_specs[atom] == atom_t.top_spec
     atom_map[atom_t] = atom
     visited << atom
