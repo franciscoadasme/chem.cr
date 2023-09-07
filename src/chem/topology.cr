@@ -325,6 +325,9 @@ class Chem::Topology
               {-other.missing_valence, Spatial.distance2(atom, other)}
             end
             .each do |other|
+              # prefer leave unsatisfied valence on terminal atoms
+              next if !other.terminal? && other.missing_valence == 0
+
               case hybridization_map[other]
               when 2
                 atom.bonds[other].order = :double
