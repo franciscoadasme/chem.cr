@@ -471,6 +471,17 @@ describe Chem::Topology do
         .map(&.atoms.map(&.element.symbol).to_a.sort!.join('='))
         .tally.should eq({"C=N" => 1, "C=O" => 2})
     end
+
+    it "guesses bonds of histidine" do
+      structure = Chem::Structure.read spec_file("histidine.xyz")
+      structure.topology.guess_bonds
+      structure.topology.guess_formal_charges
+      structure.formal_charge.should eq 0
+      structure.atoms.count(&.formal_charge.!=(0)).should eq 0
+      structure.bonds.select(&.double?)
+        .map(&.atoms.map(&.element.symbol).to_a.sort!.join('='))
+        .tally.should eq({"C=N" => 1, "C=O" => 2, "C=C" => 1})
+    end
   end
 
   describe "#guess_names" do
