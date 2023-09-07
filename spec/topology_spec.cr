@@ -501,9 +501,20 @@ describe Chem::Topology do
       structure.topology.guess_formal_charges
       structure.formal_charge.should eq expected.formal_charge
       structure.atoms.map(&.formal_charge).should eq expected.atoms.map(&.formal_charge)
-      structure.bonds.size.should eq expected.bonds.size
+      structure.bonds.tally_by(&.order).should eq expected.bonds.tally_by(&.order)
       structure.bonds.reject(&.single?).map(&.atoms.map(&.serial)).sort!.should eq \
         expected.bonds.reject(&.single?).map(&.atoms.map(&.serial)).sort!
+    end
+
+    it "guesses 0CB (#95)" do
+      expected = Chem::Structure.read spec_file("0cb.mol2")
+      structure = Chem::Structure.read spec_file("0cb.xyz")
+      structure.topology.guess_bonds
+      structure.topology.guess_formal_charges
+      structure.formal_charge.should eq expected.formal_charge
+      structure.atoms.map(&.formal_charge).should eq expected.atoms.map(&.formal_charge)
+      structure.bonds.size.should eq expected.bonds.size
+      structure.bonds.tally_by(&.order).should eq expected.bonds.tally_by(&.order)
     end
   end
 
