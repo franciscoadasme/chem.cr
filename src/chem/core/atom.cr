@@ -192,6 +192,13 @@ module Chem
       @element.target_valence(valence)
     end
 
+    # Returns `true` if the atom is connected to one heavy atom
+    # (hydrogens are ignored), else `false`. This is useful to detect
+    # terminal functional groups such as -CH₃, -NH₂, etc.
+    def terminal? : Bool
+      bonds.count(&.other(self).heavy?) == 1
+    end
+
     def to_s(io : IO)
       io << '<' << {{@type.name.split("::").last}} << ' '
       spec io
