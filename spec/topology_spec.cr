@@ -493,6 +493,18 @@ describe Chem::Topology do
         .count { |atom| atom.oxygen? && atom.bonded_atoms[-1].phosphorus? }
         .should eq 10
     end
+
+    it "guesses aromatic 5-member N-heteroring" do
+      expected = Chem::Structure.read spec_file("0f9.mol")
+      structure = Chem::Structure.read spec_file("0f9.xyz")
+      structure.topology.guess_bonds
+      structure.topology.guess_formal_charges
+      structure.formal_charge.should eq expected.formal_charge
+      structure.atoms.map(&.formal_charge).should eq expected.atoms.map(&.formal_charge)
+      structure.bonds.size.should eq expected.bonds.size
+      structure.bonds.reject(&.single?).map(&.atoms.map(&.serial)).sort!.should eq \
+        expected.bonds.reject(&.single?).map(&.atoms.map(&.serial)).sort!
+    end
   end
 
   describe "#guess_names" do
