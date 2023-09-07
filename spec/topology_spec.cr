@@ -351,10 +351,10 @@ describe Chem::Topology do
       top.atoms[324].formal_charge.should eq 1
 
       # c-ter
-      top.atoms[364].valence.should eq 1
-      top.atoms[364].formal_charge.should eq -1
-      top.atoms[365].valence.should eq 2
-      top.atoms[365].formal_charge.should eq 0
+      top.atoms[364].valence.should eq 2
+      top.atoms[364].formal_charge.should eq 0
+      top.atoms[365].valence.should eq 1
+      top.atoms[365].formal_charge.should eq -1
 
       top.atoms[149].bonded_atoms.map(&.serial).should eq [145] # H near two Os
 

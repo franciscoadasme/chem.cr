@@ -312,17 +312,21 @@ class Chem::Topology
         atom.valence < (atom.max_valence || Int32::MAX) && hybridization_map[atom]?
       }
         .to_a
-        .sort_by! { |atom| {-atom.degree, -atom.missing_valence, atom.serial} }
+        .sort_by! { |atom| {atom.missing_valence, atom.degree, atom.serial} }
         .each do |atom|
-          next unless atom.valence < (atom.max_valence || Int32::MAX)
-          missing_valence = atom.missing_valence
+          next unless (missing_valence = atom.missing_valence) > 0
           atom.bonded_atoms
             .select! do |other|
               hybridization_map[other]? == hybridization_map[atom]? &&
                 other.missing_valence > 0
             end
             .sort_by! do |other|
-              {-other.missing_valence, Spatial.distance2(atom, other)}
+              {
+                other.missing_valence,
+                other.degree,
+                other.bonded_atoms.count(&.heavy?),
+                atom.coords.distance2(other.coords),
+              }
             end
             .each do |other|
               # prefer leave unsatisfied valence on terminal atoms
