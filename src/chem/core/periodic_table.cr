@@ -31,7 +31,7 @@ module Chem::PeriodicTable
        12  Mg  Magnesium         24.305     1.41    2.51     2        2       2
        13  Al  Aluminum          26.9815    1.21    2.25     3      3,6       6
        14  Si  Silicon           28.0855    1.11    2.19     4      4,6       6
-       15  P   Phosphorus        30.9738    1.07    1.90     5    3,5,7       6
+       15  P   Phosphorus        30.9738    1.07    1.90     5      3,5       6
        16  S   Sulfur            32.065     1.05    1.89     6    2,4,6       6
        17  Cl  Chlorine          35.453     1.02    1.82     7        1       1
        18  Ar  Argon             39.948     1.06    1.83     8        0       0

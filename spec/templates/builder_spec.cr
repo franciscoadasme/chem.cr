@@ -347,7 +347,7 @@ describe Chem::Templates::Builder do
       name "DMPE"
       spec "C1-C2-C3-C4-C5-C6-C7-C8-C9-C10-C11-C12-C13-C14(-O1)-O2-C15\
             (-C16-O3-C17(-O4)-C18-C19-C20-C21-C22-C23-C24-C25-C26-C27\
-            -C28-C29-C30)-C31-O5-P1(=O6)(=O7)-O8-C32-C33-N1"
+            -C28-C29-C30)-C31-O5-P1(=O6)(-[O7-])-O8-C32-C33-N1"
     end
     res_t.root.should eq res_t["P1"]
   end
@@ -357,7 +357,7 @@ describe Chem::Templates::Builder do
       name "DMPE"
       spec "C1-C2-C3-C4-C5-C6-C7-C8-C9-C10-C11-C12-C13-C14(-O1)-O2-C15\
             (-C16-O3-C17(-O4)-C18-C19-C20-C21-C22-C23-C24-C25-C26-C27\
-            -C28-C29-C30)-C31-O5-P1(=O6)(=O7)-O8-C32-C33-N1"
+            -C28-C29-C30)-C31-O5-P1(=O6)(-[O7-])-O8-C32-C33-N1"
     end
     res_t.atoms.tally_by(&.name).max_of(&.[1]).should eq 1
   end
