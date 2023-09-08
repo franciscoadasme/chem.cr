@@ -2,22 +2,22 @@ name: Deploy docs
 
 on:
   push:
-    branches:
-      - master
+    branches: [master]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    container:
-      image: crystallang/crystal
     steps:
       - uses: actions/checkout@v2
         with:
           persist-credentials: false
+      - uses: crystal-lang/install-crystal@v1
+        with:
+          crystal: latest
       - name: "Install shards"
         run: shards install
       - name: "Generate docs"
-        run: crystal docs --project-name=chem.cr --source-url-pattern=https://github.com/franciscoadasme/chem.cr/blob/%{refname}/%{path}/%{filename}#L%{line}
+        run: crystal docs
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
