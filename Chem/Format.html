@@ -999,8 +999,17 @@ information declared in the annotations.</p>
       </dd>
       
     
+      <dt class="entry-const" id="DCD">
+        <strong>DCD</strong> = <code><span class="n">2</span></code>
+      </dt>
+      
+      <dd class="entry-const-doc">
+        <p>The DCD format implemented by <code><a href="../Chem/DCD.html">Chem::DCD</a></code>.</p>
+      </dd>
+      
+    
       <dt class="entry-const" id="DX">
-        <strong>DX</strong> = <code><span class="n">2</span></code>
+        <strong>DX</strong> = <code><span class="n">3</span></code>
       </dt>
       
       <dd class="entry-const-doc">
@@ -1009,7 +1018,7 @@ information declared in the annotations.</p>
       
     
       <dt class="entry-const" id="Gen">
-        <strong>Gen</strong> = <code><span class="n">3</span></code>
+        <strong>Gen</strong> = <code><span class="n">4</span></code>
       </dt>
       
       <dd class="entry-const-doc">
@@ -1018,7 +1027,7 @@ information declared in the annotations.</p>
       
     
       <dt class="entry-const" id="Locpot">
-        <strong>Locpot</strong> = <code><span class="n">4</span></code>
+        <strong>Locpot</strong> = <code><span class="n">5</span></code>
       </dt>
       
       <dd class="entry-const-doc">
@@ -1027,7 +1036,7 @@ information declared in the annotations.</p>
       
     
       <dt class="entry-const" id="Mol">
-        <strong>Mol</strong> = <code><span class="n">5</span></code>
+        <strong>Mol</strong> = <code><span class="n">6</span></code>
       </dt>
       
       <dd class="entry-const-doc">
@@ -1036,7 +1045,7 @@ information declared in the annotations.</p>
       
     
       <dt class="entry-const" id="Mol2">
-        <strong>Mol2</strong> = <code><span class="n">6</span></code>
+        <strong>Mol2</strong> = <code><span class="n">7</span></code>
       </dt>
       
       <dd class="entry-const-doc">
@@ -1045,7 +1054,7 @@ information declared in the annotations.</p>
       
     
       <dt class="entry-const" id="PDB">
-        <strong>PDB</strong> = <code><span class="n">7</span></code>
+        <strong>PDB</strong> = <code><span class="n">8</span></code>
       </dt>
       
       <dd class="entry-const-doc">
@@ -1054,7 +1063,7 @@ information declared in the annotations.</p>
       
     
       <dt class="entry-const" id="PSF">
-        <strong>PSF</strong> = <code><span class="n">8</span></code>
+        <strong>PSF</strong> = <code><span class="n">9</span></code>
       </dt>
       
       <dd class="entry-const-doc">
@@ -1063,7 +1072,7 @@ information declared in the annotations.</p>
       
     
       <dt class="entry-const" id="Poscar">
-        <strong>Poscar</strong> = <code><span class="n">9</span></code>
+        <strong>Poscar</strong> = <code><span class="n">10</span></code>
       </dt>
       
       <dd class="entry-const-doc">
@@ -1072,7 +1081,7 @@ information declared in the annotations.</p>
       
     
       <dt class="entry-const" id="PyMOL">
-        <strong>PyMOL</strong> = <code><span class="n">10</span></code>
+        <strong>PyMOL</strong> = <code><span class="n">11</span></code>
       </dt>
       
       <dd class="entry-const-doc">
@@ -1081,7 +1090,7 @@ information declared in the annotations.</p>
       
     
       <dt class="entry-const" id="SDF">
-        <strong>SDF</strong> = <code><span class="n">11</span></code>
+        <strong>SDF</strong> = <code><span class="n">12</span></code>
       </dt>
       
       <dd class="entry-const-doc">
@@ -1090,7 +1099,7 @@ information declared in the annotations.</p>
       
     
       <dt class="entry-const" id="Stride">
-        <strong>Stride</strong> = <code><span class="n">12</span></code>
+        <strong>Stride</strong> = <code><span class="n">13</span></code>
       </dt>
       
       <dd class="entry-const-doc">
@@ -1099,7 +1108,7 @@ information declared in the annotations.</p>
       
     
       <dt class="entry-const" id="VMD">
-        <strong>VMD</strong> = <code><span class="n">13</span></code>
+        <strong>VMD</strong> = <code><span class="n">14</span></code>
       </dt>
       
       <dd class="entry-const-doc">
@@ -1108,7 +1117,7 @@ information declared in the annotations.</p>
       
     
       <dt class="entry-const" id="XYZ">
-        <strong>XYZ</strong> = <code><span class="n">14</span></code>
+        <strong>XYZ</strong> = <code><span class="n">15</span></code>
       </dt>
       
       <dd class="entry-const-doc">
@@ -1211,6 +1220,13 @@ information declared in the annotations.</p>
         <a href="#cube%3F%3ABool-instance-method" class="signature"><strong>#cube?</strong> : Bool</a>
         
           <div class="summary"><p>Returns <code>true</code> if the member is the <code><a href="../Chem/Format.html#Cube">Cube</a></code> format.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dcd%3F%3ABool-instance-method" class="signature"><strong>#dcd?</strong> : Bool</a>
+        
+          <div class="summary"><p>Returns <code>true</code> if the member is the <code><a href="../Chem/Format.html#DCD">DCD</a></code> format.</p></div>
         
       </li>
     
@@ -1713,6 +1729,25 @@ the beginning or end).</li>
         <div class="doc">
           
           <p>Returns <code>true</code> if the member is the <code><a href="../Chem/Format.html#Cube">Cube</a></code> format.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dcd?:Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>dcd?</strong> : Bool
+
+        <a class="method-permalink" href="#dcd%3F%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if the member is the <code><a href="../Chem/Format.html#DCD">DCD</a></code> format.</p>
         </div>
       
       <br/>

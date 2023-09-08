@@ -1017,6 +1017,20 @@ set <span class="o">&lt;&lt;</span> <span class="n">3</span></code></pre>
   <ul class="list-summary">
     
       <li class="entry-summary">
+        <a href="#from_dcd%28input%3AIO%7CPath%7CString%2Cstructure%3AStructure%2Creuse%3ABool%3Dfalse%29%3Aself-class-method" class="signature"><strong>.from_dcd</strong>(input : IO | Path | String, structure : Structure, reuse : Bool = <span class="n">false</span>) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Creates a new array of <code><a href="Chem/Structure.html">Chem::Structure</a></code> with the entries encoded in <em>input</em> using the <code><a href="Chem/DCD.html">Chem::DCD</a></code> file format.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#from_dcd%28input%3AIO%7CPath%7CString%2Cindexes%3AArray%28Int%29%2Cstructure%3AStructure%2Creuse%3ABool%3Dfalse%29%3Aself-class-method" class="signature"><strong>.from_dcd</strong>(input : IO | Path | String, indexes : Array(Int), structure : Structure, reuse : Bool = <span class="n">false</span>) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Creates a new array of <code><a href="Chem/Structure.html">Chem::Structure</a></code> with the entries at <em>indexes</em> encoded in <em>input</em> using the <code><a href="Chem/DCD.html">Chem::DCD</a></code> file format.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#from_mol2%28input%3AIO%7CPath%7CString%2Cindexes%3AArray%28Int%29%29%3Aself-class-method" class="signature"><strong>.from_mol2</strong>(input : IO | Path | String, indexes : Array(Int)) : <span class="k">self</span></a>
         
           <div class="summary"><p>Creates a new array of <code><a href="Chem/Structure.html">Chem::Structure</a></code> with the entries at <em>indexes</em> encoded in <em>input</em> using the <code><a href="Chem/Mol2.html">Chem::Mol2</a></code> file format.</p></div>
@@ -1304,6 +1318,48 @@ set <span class="o">&lt;&lt;</span> <span class="n">3</span></code></pre>
 </a>
     Constructor Detail
   </h2>
+  
+    <div class="entry-detail" id="from_dcd(input:IO|Path|String,structure:Structure,reuse:Bool=false):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>from_dcd</strong>(input : IO | Path | String, structure : Structure, reuse : Bool = <span class="n">false</span>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#from_dcd%28input%3AIO%7CPath%7CString%2Cstructure%3AStructure%2Creuse%3ABool%3Dfalse%29%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Creates a new array of <code><a href="Chem/Structure.html">Chem::Structure</a></code> with the entries
+encoded in <em>input</em> using the <code><a href="Chem/DCD.html">Chem::DCD</a></code> file format.
+Arguments are fowarded to <code><a href="Chem/DCD/Reader.html#open%28io%3AIO%2Cstructure%3AStructure%2Creuse%3ABool%3Dfalse%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::DCD::Reader.open</a></code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="from_dcd(input:IO|Path|String,indexes:Array(Int),structure:Structure,reuse:Bool=false):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>from_dcd</strong>(input : IO | Path | String, indexes : <a href="Array.html">Array</a>(Int), structure : Structure, reuse : Bool = <span class="n">false</span>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#from_dcd%28input%3AIO%7CPath%7CString%2Cindexes%3AArray%28Int%29%2Cstructure%3AStructure%2Creuse%3ABool%3Dfalse%29%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Creates a new array of <code><a href="Chem/Structure.html">Chem::Structure</a></code> with the entries at
+<em>indexes</em> encoded in <em>input</em> using the <code><a href="Chem/DCD.html">Chem::DCD</a></code> file
+format. Arguments are fowarded to <code><a href="Chem/DCD/Reader.html#open%28io%3AIO%2Cstructure%3AStructure%2Creuse%3ABool%3Dfalse%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::DCD::Reader.open</a></code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
   
     <div class="entry-detail" id="from_mol2(input:IO|Path|String,indexes:Array(Int)):self-class-method">
       <div class="signature">

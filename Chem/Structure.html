@@ -996,6 +996,13 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#from_dcd%28input%3AIO%7CPath%7CString%2Cstructure%3AStructure%2Creuse%3ABool%3Dfalse%29%3Aself-class-method" class="signature"><strong>.from_dcd</strong>(input : IO | Path | String, structure : Structure, reuse : Bool = <span class="n">false</span>) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the structure encoded in <em>input</em> using the <code><a href="../Chem/DCD.html">Chem::DCD</a></code> file format.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#from_gen%28input%3AIO%7CPath%7CString%2Cguess_bonds%3ABool%3Dfalse%2Cguess_names%3ABool%3Dfalse%29%3Aself-class-method" class="signature"><strong>.from_gen</strong>(input : IO | Path | String, guess_bonds : Bool = <span class="n">false</span>, guess_names : Bool = <span class="n">false</span>) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the structure encoded in <em>input</em> using the <code><a href="../Chem/Gen.html">Chem::Gen</a></code> file format.</p></div>
@@ -1746,6 +1753,30 @@
           <p>Returns the structure encoded in <em>input</em> using the
 <code><a href="../Chem/Cube.html">Chem::Cube</a></code> file format. Arguments are forwarded to
 <code><a href="../Chem/Cube/Reader.html#open%28io%3AIO%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::Cube::Reader.open</a></code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="from_dcd(input:IO|Path|String,structure:Structure,reuse:Bool=false):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>from_dcd</strong>(input : IO | Path | String, structure : <a href="../Chem/Structure.html">Structure</a>, reuse : Bool = <span class="n">false</span>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#from_dcd%28input%3AIO%7CPath%7CString%2Cstructure%3AStructure%2Creuse%3ABool%3Dfalse%29%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the structure encoded in <em>input</em> using the
+<code><a href="../Chem/DCD.html">Chem::DCD</a></code> file format. Arguments are forwarded to
+<code><a href="../Chem/DCD/Reader.html#open%28io%3AIO%2Cstructure%3AStructure%2Creuse%3ABool%3Dfalse%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::DCD::Reader.open</a></code>.</p>
+<p>If <em>input</em> contains multiple entries, this method returns
+the first one only. Use <code><a href="../Array.html#from_dcd%28input%3AIO%7CPath%7CString%2Cstructure%3AStructure%2Creuse%3ABool%3Dfalse%29%3Aself-class-method">Array#from_dcd</a></code> or
+<code>Chem::DCD::Reader#each</code> to get multiple entries instead.</p>
         </div>
       
       <br/>
