@@ -1,3 +1,6 @@
+@[Chem::RegisterFormat(ext: %w(.dcd))]
+module Chem::DCD; end
+
 # Implementation based on [Chemfiles] C++ library.
 #
 # [Chemfiles]: https://github.com/chemfiles/chemfiles/blob/master/src/formats/DCD.cpp
