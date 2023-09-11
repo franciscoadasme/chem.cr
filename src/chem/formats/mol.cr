@@ -1,8 +1,8 @@
 # This module provides support for reading and writing MDL Mol files,
 # including the connection table (CTAB) formats V2000 and V3000.
 #
-# Format specification found in the [CTFile
-# Formats](http://bit.ly/3WiuePn) document published by BIOVIA.
+# Format specification can be found in the [CTFile Formats][ctfile]
+# document published by BIOVIA.
 #
 # NOTE: The title in the MOL file will be used as residue name if it
 # contains 3-4 uppercase letters and numbers only. In such case, the
@@ -13,6 +13,9 @@
 # (e.g., chirality, 3D), advanced properties like Sgroup, reaction data,
 # etc. are unsupported/ignored. Therefore, **hydrogens are expected to
 # be defined explicitly**.
+#
+# [ctfile]:
+#     https://discover.3ds.com/sites/default/files/2020-08/biovia_ctfileformats_2020.pdf
 @[Chem::RegisterFormat(ext: %w(.mol))]
 module Chem::Mol
   # Connection table (CTAB) format.
