@@ -66,6 +66,8 @@ module Chem::Mol
   end
 
   private module V2000
+    FORMAL_CHARGE_MAP = {0 => 0, 3 => 1, 2 => 2, 1 => 3, 5 => -1, 6 => -2, 7 => -3}
+
     def self.parse(pull : PullParser, builder : Structure::Builder) : Nil
       n_atoms = pull.at(0, 3).int "Invalid number of atoms %{token}"
       n_bonds = pull.at(3, 3).int "Invalid number of bonds %{token}"
@@ -88,7 +90,7 @@ module Chem::Mol
         .parse_if_present("Invalid mass difference %{token}", default: 0, &.to_i?)
       chg = pull.at?(36, 3)
         .parse_if_present("Invalid formal charge %{token}", default: 0) do |str|
-          parse_formal_charge str
+          str.to_i?.try { |chg_index| FORMAL_CHARGE_MAP[chg_index]? }
         end
       builder.atom ele, pos, formal_charge: chg, mass: mass
       pull.consume_line
@@ -106,18 +108,6 @@ module Chem::Mol
         end
       end
       pull.consume_line
-    end
-
-    def self.parse_formal_charge(str) : Int32?
-      case str.strip
-      when "0" then 0
-      when "3" then 1
-      when "2" then 2
-      when "1" then 3
-      when "5" then -1
-      when "6" then -2
-      when "7" then -3
-      end
     end
 
     def self.parse_property_block(pull : PullParser, builder : Structure::Builder) : Nil
