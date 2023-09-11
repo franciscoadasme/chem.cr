@@ -307,6 +307,16 @@
       
     </li>
   
+  <li class=" " data-id="chem/Chem/Mol/Variant" data-name="chem::mol::variant">
+      <a href="../Chem/Mol/Variant.html">Variant</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem/Chem/Mol/Writer" data-name="chem::mol::writer">
+      <a href="../Chem/Mol/Writer.html">Writer</a>
+      
+    </li>
+  
 </ul>
 
       
@@ -958,14 +968,14 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/2ec5874fc624de3906afb7e82f52c39948f5fe5f/src/chem/core/atom_collection.cr#L2" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/f244c7263fd36e63e8c7de296ad6f117a929a1ba/src/chem/core/atom_collection.cr#L2" target="_blank">
         chem/core/atom_collection.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/2ec5874fc624de3906afb7e82f52c39948f5fe5f/src/chem/register_format.cr#L270" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/f244c7263fd36e63e8c7de296ad6f117a929a1ba/src/chem/register_format.cr#L270" target="_blank">
         chem/register_format.cr
       </a>
     
@@ -1067,6 +1077,20 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#to_mol%28variant%3AChem%3A%3AMol%3A%3AVariant%3D%3Av2000%29%3AString-instance-method" class="signature"><strong>#to_mol</strong>(variant : Chem::Mol::Variant = <span class="n">:v2000</span>) : String</a>
+        
+          <div class="summary"><p>Returns a string representation of the atom collection using the <code><a href="../Chem/Mol.html">Chem::Mol</a></code> file format.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_mol%28output%3AIO%7CPath%7CString%2Cvariant%3AChem%3A%3AMol%3A%3AVariant%3D%3Av2000%29%3ANil-instance-method" class="signature"><strong>#to_mol</strong>(output : IO | Path | String, variant : Chem::Mol::Variant = <span class="n">:v2000</span>) : Nil</a>
+        
+          <div class="summary"><p>Writes the atom collection to <em>output</em> using the <code><a href="../Chem/Mol.html">Chem::Mol</a></code> file format.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#to_mol2%28output%3AIO%7CPath%7CString%29%3ANil-instance-method" class="signature"><strong>#to_mol2</strong>(output : IO | Path | String) : Nil</a>
         
           <div class="summary"><p>Writes the atom collection to <em>output</em> using the <code><a href="../Chem/Mol2.html">Chem::Mol2</a></code> file format.</p></div>
@@ -1157,7 +1181,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ec5874fc624de3906afb7e82f52c39948f5fe5f/src/chem/core/atom_collection.cr#L7" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f244c7263fd36e63e8c7de296ad6f117a929a1ba/src/chem/core/atom_collection.cr#L7" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1173,7 +1197,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ec5874fc624de3906afb7e82f52c39948f5fe5f/src/chem/core/atom_collection.cr#L13" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f244c7263fd36e63e8c7de296ad6f117a929a1ba/src/chem/core/atom_collection.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1189,7 +1213,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ec5874fc624de3906afb7e82f52c39948f5fe5f/src/chem/core/atom_collection.cr#L19" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f244c7263fd36e63e8c7de296ad6f117a929a1ba/src/chem/core/atom_collection.cr#L19" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1210,7 +1234,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ec5874fc624de3906afb7e82f52c39948f5fe5f/src/chem/core/atom_collection.cr#L24" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f244c7263fd36e63e8c7de296ad6f117a929a1ba/src/chem/core/atom_collection.cr#L24" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1226,7 +1250,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ec5874fc624de3906afb7e82f52c39948f5fe5f/src/chem/core/atom_collection.cr#L3" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f244c7263fd36e63e8c7de296ad6f117a929a1ba/src/chem/core/atom_collection.cr#L3" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1242,7 +1266,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ec5874fc624de3906afb7e82f52c39948f5fe5f/src/chem/core/atom_collection.cr#L4" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f244c7263fd36e63e8c7de296ad6f117a929a1ba/src/chem/core/atom_collection.cr#L4" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1258,7 +1282,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ec5874fc624de3906afb7e82f52c39948f5fe5f/src/chem/core/atom_collection.cr#L31" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f244c7263fd36e63e8c7de296ad6f117a929a1ba/src/chem/core/atom_collection.cr#L31" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1274,7 +1298,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ec5874fc624de3906afb7e82f52c39948f5fe5f/src/chem/core/atom_collection.cr#L48" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f244c7263fd36e63e8c7de296ad6f117a929a1ba/src/chem/core/atom_collection.cr#L48" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1290,7 +1314,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ec5874fc624de3906afb7e82f52c39948f5fe5f/src/chem/core/atom_collection.cr#L52" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f244c7263fd36e63e8c7de296ad6f117a929a1ba/src/chem/core/atom_collection.cr#L52" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1306,7 +1330,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ec5874fc624de3906afb7e82f52c39948f5fe5f/src/chem/core/atom_collection.cr#L56" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f244c7263fd36e63e8c7de296ad6f117a929a1ba/src/chem/core/atom_collection.cr#L56" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1322,7 +1346,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ec5874fc624de3906afb7e82f52c39948f5fe5f/src/chem/core/atom_collection.cr#L62" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f244c7263fd36e63e8c7de296ad6f117a929a1ba/src/chem/core/atom_collection.cr#L62" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1338,7 +1362,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ec5874fc624de3906afb7e82f52c39948f5fe5f/src/chem/core/atom_collection.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f244c7263fd36e63e8c7de296ad6f117a929a1ba/src/chem/core/atom_collection.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1361,7 +1385,7 @@ the <code><a href="../Chem/Gen.html">Chem::Gen</a></code> file format. Arguments
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ec5874fc624de3906afb7e82f52c39948f5fe5f/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f244c7263fd36e63e8c7de296ad6f117a929a1ba/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1383,7 +1407,52 @@ file format. Arguments are fowarded to <code><a href="../Chem/Gen/Writer.html#op
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ec5874fc624de3906afb7e82f52c39948f5fe5f/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f244c7263fd36e63e8c7de296ad6f117a929a1ba/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_mol(variant:Chem::Mol::Variant=:v2000):String-instance-method">
+      <div class="signature">
+        
+        def <strong>to_mol</strong>(variant : <a href="../Chem/Mol/Variant.html">Chem::Mol::Variant</a> = <span class="n">:v2000</span>) : String
+
+        <a class="method-permalink" href="#to_mol%28variant%3AChem%3A%3AMol%3A%3AVariant%3D%3Av2000%29%3AString-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a string representation of the atom collection using
+the <code><a href="../Chem/Mol.html">Chem::Mol</a></code> file format. Arguments are fowarded to
+<code><a href="../Chem/Mol/Writer.html#open%28io%3AIO%2Cvariant%3AChem%3A%3AMol%3A%3AVariant%3D%3Av2000%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::Mol::Writer.open</a></code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f244c7263fd36e63e8c7de296ad6f117a929a1ba/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_mol(output:IO|Path|String,variant:Chem::Mol::Variant=:v2000):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>to_mol</strong>(output : IO | Path | String, variant : <a href="../Chem/Mol/Variant.html">Chem::Mol::Variant</a> = <span class="n">:v2000</span>) : Nil
+
+        <a class="method-permalink" href="#to_mol%28output%3AIO%7CPath%7CString%2Cvariant%3AChem%3A%3AMol%3A%3AVariant%3D%3Av2000%29%3ANil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Writes the atom collection to <em>output</em> using the <code><a href="../Chem/Mol.html">Chem::Mol</a></code>
+file format. Arguments are fowarded to <code><a href="../Chem/Mol/Writer.html#open%28io%3AIO%2Cvariant%3AChem%3A%3AMol%3A%3AVariant%3D%3Av2000%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::Mol::Writer.open</a></code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f244c7263fd36e63e8c7de296ad6f117a929a1ba/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1405,7 +1474,7 @@ file format. Arguments are fowarded to <code><a href="../Chem/Mol2/Writer.html#o
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ec5874fc624de3906afb7e82f52c39948f5fe5f/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f244c7263fd36e63e8c7de296ad6f117a929a1ba/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1428,7 +1497,7 @@ the <code><a href="../Chem/Mol2.html">Chem::Mol2</a></code> file format. Argumen
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ec5874fc624de3906afb7e82f52c39948f5fe5f/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f244c7263fd36e63e8c7de296ad6f117a929a1ba/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1451,7 +1520,7 @@ the <code><a href="../Chem/PDB.html">Chem::PDB</a></code> file format. Arguments
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ec5874fc624de3906afb7e82f52c39948f5fe5f/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f244c7263fd36e63e8c7de296ad6f117a929a1ba/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1473,7 +1542,7 @@ file format. Arguments are fowarded to <code><a href="../Chem/PDB/Writer.html#op
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ec5874fc624de3906afb7e82f52c39948f5fe5f/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f244c7263fd36e63e8c7de296ad6f117a929a1ba/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1496,7 +1565,7 @@ the <code><a href="../Chem/XYZ.html">Chem::XYZ</a></code> file format. Arguments
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ec5874fc624de3906afb7e82f52c39948f5fe5f/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f244c7263fd36e63e8c7de296ad6f117a929a1ba/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1518,7 +1587,7 @@ file format. Arguments are fowarded to <code><a href="../Chem/XYZ/Writer.html#op
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ec5874fc624de3906afb7e82f52c39948f5fe5f/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f244c7263fd36e63e8c7de296ad6f117a929a1ba/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1536,7 +1605,7 @@ file format. Arguments are fowarded to <code><a href="../Chem/XYZ/Writer.html#op
           <p>Writes the atom collection to <em>output</em> using <em>format</em>. Raises
 <code>ArgumentError</code> if <em>format</em> has required arguments or cannot
 write <code><a href="../Chem/AtomCollection.html">Chem::AtomCollection</a></code>.</p>
-<p>The supported file formats are <code><a href="../Chem/Gen.html">Chem::Gen</a></code>, <code><a href="../Chem/Mol2.html">Chem::Mol2</a></code>, <code><a href="../Chem/PDB.html">Chem::PDB</a></code>, <code><a href="../Chem/XYZ.html">Chem::XYZ</a></code>. Use the
+<p>The supported file formats are <code><a href="../Chem/Gen.html">Chem::Gen</a></code>, <code><a href="../Chem/Mol2.html">Chem::Mol2</a></code>, <code><a href="../Chem/Mol.html">Chem::Mol</a></code>, <code><a href="../Chem/PDB.html">Chem::PDB</a></code>, <code><a href="../Chem/XYZ.html">Chem::XYZ</a></code>. Use the
 <code>#to_*</code> methods to customize how the object is written in the
 corresponding file format if possible.</p>
         </div>
@@ -1544,7 +1613,7 @@ corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ec5874fc624de3906afb7e82f52c39948f5fe5f/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f244c7263fd36e63e8c7de296ad6f117a929a1ba/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1566,6 +1635,7 @@ file format cannot be determined.</p>
 <p>The supported file formats are the following:</p>
 <ul>
 <li><code><a href="../Chem/Gen.html">Chem::Gen</a></code> (.gen)</li>
+<li><code><a href="../Chem/Mol.html">Chem::Mol</a></code> (.mol)</li>
 <li><code><a href="../Chem/Mol2.html">Chem::Mol2</a></code> (.mol2)</li>
 <li><code><a href="../Chem/PDB.html">Chem::PDB</a></code> (.ent, .pdb)</li>
 <li><code><a href="../Chem/XYZ.html">Chem::XYZ</a></code> (.xyz)</li>
@@ -1577,7 +1647,7 @@ in the corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/2ec5874fc624de3906afb7e82f52c39948f5fe5f/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/f244c7263fd36e63e8c7de296ad6f117a929a1ba/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
