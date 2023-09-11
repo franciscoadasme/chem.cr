@@ -1,5 +1,5 @@
-# This module provides support for reading MDL Mol files, including the
-# variants V2000 and V3000.
+# This module provides support for reading and writing MDL Mol files,
+# including the connection table (CTAB) formats V2000 and V3000.
 #
 # Format specification found in the [CTFile
 # Formats](http://bit.ly/3WiuePn) document published by BIOVIA.
@@ -73,8 +73,106 @@ module Chem::Mol
     end
   end
 
+  class Writer
+    include FormatWriter(AtomCollection)
+
+    def initialize(
+      @io : IO,
+      @variant : Chem::Mol::Variant = :v2000,
+      @sync_close : Bool = false
+    )
+    end
+
+    def encode_entry(obj : AtomCollection) : Nil
+      write_header_block obj
+      case @variant
+      in .v2000? then V2000.encode(@io, obj)
+      in .v3000? then V3000.encode(@io, obj)
+      end
+    end
+
+    private def write_header_block(atoms : AtomCollection) : Nil
+      single_residue = atoms.n_residues == 1
+      title = atoms.title.presence.try(&.gsub(/ *\n */, ' ')) if atoms.is_a?(Structure)
+
+      # title line
+      @io.puts single_residue ? atoms.residues[0].name : title
+
+      # program timestamp line
+      @io.printf "%2s", nil        # user's initials
+      @io.printf "%-8s", "chem.cr" # program name
+      Time.local.to_s @io, "%m%d%y%H%M"
+      @io.puts atoms.each_atom.all?(&.z.zero?) ? "2D" : "3D"
+
+      # comment line
+      @io.puts single_residue ? title : nil
+
+      # counts line
+      @io.printf "%3d", (@variant.v2000? ? atoms.n_atoms : 0)
+      @io.printf "%3d", (@variant.v2000? ? atoms.bonds.size : 0)
+      @io.printf "%3d", 0   # number of atom list
+      @io.printf "%3d", 0   # obsolete
+      @io.printf "%3d", 0   # chiral flag
+      @io.printf "%3d", 0   # obsolete
+      @io.printf "%3d", 0   # obsolete
+      @io.printf "%3d", 0   # obsolete
+      @io.printf "%3d", 0   # obsolete
+      @io.printf "%3d", 0   # obsolete
+      @io.printf "%3d", 999 # number of lines of additional properties (obsolete)
+      @io.printf "%6s", @variant
+      @io.puts
+    end
+  end
+
   private module V2000
     FORMAL_CHARGE_MAP = {0 => 0, 3 => 1, 2 => 2, 1 => 3, 5 => -1, 6 => -2, 7 => -3}
+
+    def self.encode(io : IO, atoms : AtomCollection) : Nil
+      atom_index_map = atoms.each_atom.with_index.to_h.transform_values(&.succ)
+
+      atoms.each_atom do |atom|
+        io.printf "%10.4f", atom.x
+        io.printf "%10.4f", atom.y
+        io.printf "%10.4f", atom.z
+        atom.element.symbol.center io, 4
+        io.printf "%2d", 0 # isotope
+        io.printf "%3d", FORMAL_CHARGE_MAP.key_for(atom.formal_charge)
+        io.printf "%3d", 0 # stereo parity
+        io.printf "%3d", 0 # implicit hydrogen count
+        io.printf "%3d", 0 # stereo care box
+        io.printf "%3d", 0 # valence
+        io.printf "%3d", 0 # H0 designator
+        io.printf "%3d", 0 # obsolete
+        io.printf "%3d", 0 # obsolete
+        io.printf "%3d", 0 # atom-atom mapping number
+        io.printf "%3d", 0 # inversion/retention flag
+        io.printf "%3d", 0 # exact change flag
+        io.puts
+      end
+
+      atoms.bonds.each do |bond|
+        io.printf "%3d", atom_index_map[bond.atoms[0]]
+        io.printf "%3d", atom_index_map[bond.atoms[1]]
+        io.printf "%3d", bond.order.to_i
+        io.printf "%3d", 0 # stereo parity
+        io.printf "%3d", 0 # obsolete
+        io.printf "%3d", 0 # bond topology
+        io.printf "%3d", 0 # reacting center status
+        io.puts
+      end
+
+      atoms.each_atom.reject(&.formal_charge.zero?)
+        .each_slice(8, reuse: true) do |slice|
+          io.printf "M  CHG%3d", slice.size
+          slice.each do |atom|
+            io.printf "%4d", atom_index_map[atom]
+            io.printf "%4d", atom.formal_charge
+          end
+          io.puts
+        end
+
+      io.puts "M  END"
+    end
 
     def self.parse(pull : PullParser, builder : Structure::Builder) : Nil
       n_atoms = pull.at(0, 3).int "Invalid number of atoms %{token}"
@@ -170,6 +268,38 @@ module Chem::Mol
         pull.rewind_line
         pull.error(message)
       end
+    end
+
+    def self.encode(io : IO, atoms : AtomCollection) : Nil
+      atom_index_map = atoms.each_atom.with_index.to_h.transform_values(&.succ)
+
+      io.puts "M  V30 BEGIN CTAB"
+      io.puts "M  V30 COUNTS #{atoms.n_atoms} #{atoms.bonds.size} 0 0 0"
+      io.puts "M  V30 BEGIN ATOM"
+      atoms.each_atom.with_index(offset: 1) do |atom, i|
+        io << "M  V30 "
+        io.printf "%-4d", i
+        atom.element.symbol.center io, 4
+        io.printf "%10.4f", atom.x
+        io.printf "%10.4f", atom.y
+        io.printf "%10.4f", atom.z
+        io.printf "%2d", 0 # atom-atom mapping
+        io << " CHG=" << atom.formal_charge unless atom.formal_charge == 0
+        io.puts
+      end
+      io.puts "M  V30 END ATOM"
+      io.puts "M  V30 BEGIN BOND"
+      atoms.bonds.each_with_index(offset: 1) do |bond, i|
+        io << "M  V30 "
+        io.printf "%-4d", i
+        io.printf "%3d", bond.order.to_i
+        io.printf "%3d", atom_index_map[bond.atoms[0]]
+        io.printf "%3d", atom_index_map[bond.atoms[1]]
+        io.puts
+      end
+      io.puts "M  V30 END BOND"
+      io.puts "M  V30 END CTAB"
+      io.puts "M END"
     end
 
     def self.next_block(pull : PullParser) : String?
