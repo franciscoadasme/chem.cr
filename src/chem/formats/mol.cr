@@ -15,6 +15,14 @@
 # be defined explicitly**.
 @[Chem::RegisterFormat(ext: %w(.mol))]
 module Chem::Mol
+  # Connection table (CTAB) format.
+  enum Variant
+    # The V2000 (legacy) format.
+    V2000
+    # The V3000 (current) format.
+    V3000
+  end
+
   class Reader
     include FormatReader(Structure)
 
