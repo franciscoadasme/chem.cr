@@ -251,14 +251,18 @@ module Chem::Spatial
       end
     end
 
-    # Returns the radius of gyration of a structure (RDGYR) in Å.
+    # Returns the radius of gyration in Å.
     #
-    # The RDGYR is the root-mean-square distance of the atoms of the 
-    # molecule from the axis of rotation. The RDGYR is a measure of the 
-    # distribution of its atoms around its center of mass.
-    # RDGYR =  √(1/N * Σ(ri²))
-    # N = number of atoms in the molecule
-    # ri is the distance of each atom from the center of mass of the molecule
+    # The radius of gyration is a measure of the distribution of the
+    # atoms around the center of mass of a molecule. The radius of
+    # gyration is defined as the root-mean-square distance of the
+    # atoms from the axis of rotation:
+    #
+    # RDGYR =  √ 1 / N * Σ(r - c)²
+    #
+    # where *N* is the number of atoms in the molecule, $r$ is the
+    # coordinates of each atom, and $c$ is the center of mass of the 
+    # molecule.
     def rdgyr() : Float64
       center = self.com
       pos = to_a           # FIXME: avoid copying coordinates
