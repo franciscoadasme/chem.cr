@@ -195,7 +195,7 @@ describe Chem::Spatial::CoordinatesProxy do
   describe ".rdgyr" do 
     it "computes the rdgyr in-place" do 
       s = Chem::Structure.read spec_file("FAD_can_prep.pdb")
-      s.coords.rdgyr().should be_close 6.339020, 1e-6
+      s.coords.rdgyr.should be_close 6.339020, 1e-6
     end
   end
 
