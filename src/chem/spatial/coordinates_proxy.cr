@@ -262,11 +262,7 @@ module Chem::Spatial
     def rdgyr() : Float64
       center = self.com
       pos = to_a           # FIXME: avoid copying coordinates
-      square_sum = pos.sum do |i|
-        d = center.distance(i)
-        d.abs2
-      end
-      Math.sqrt(square_sum/pos.size)
+      Math.sqrt pos.mean(&.distance2(center))
     end
 
     # Rotates the coordinates by the given Euler angles in degrees. The
