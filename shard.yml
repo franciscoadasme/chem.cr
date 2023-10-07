@@ -11,4 +11,8 @@ dependencies:
     github: franciscoadasme/views
     branch: master
 
+targets:
+  test_rdgyr:
+    main: src/test_rdgyr.cr
+
 license: MIT
