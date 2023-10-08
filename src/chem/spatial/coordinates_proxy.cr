@@ -260,8 +260,8 @@ module Chem::Spatial
     #
     # RDGYR =  √ 1 / N * Σ(r - c)²
     #
-    # where *N* is the number of atoms in the molecule, $r$ is the
-    # coordinates of each atom, and $c$ is the center of mass of the 
+    # where *N* is the number of atoms in the molecule, *r* is the
+    # coordinates of each atom, and *c* is the center of mass of the 
     # molecule.
     def rdgyr() : Float64
       center = self.com
