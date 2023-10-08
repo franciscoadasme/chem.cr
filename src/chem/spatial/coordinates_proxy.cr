@@ -251,6 +251,23 @@ module Chem::Spatial
       end
     end
 
+    # Returns the radius of gyration in Å.
+    #
+    # The radius of gyration is a measure of the distribution of the
+    # atoms around the center of mass of a molecule. The radius of
+    # gyration is defined as the root-mean-square distance of the
+    # atoms from the axis of rotation:
+    #
+    # RDGYR =  √ 1 / N * Σ(r - c)²
+    #
+    # where *N* is the number of atoms in the molecule, *r* is the
+    # coordinates of each atom, and *c* is the center of mass of the
+    # molecule.
+    def rdgyr : Float64
+      center = self.com
+      Math.sqrt mean(&.distance2(center))
+    end
+
     # Rotates the coordinates by the given Euler angles in degrees. The
     # rotation will be centered at *pivot*, which defaults to the
     # coordinates' center.
