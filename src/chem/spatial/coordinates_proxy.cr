@@ -265,8 +265,7 @@ module Chem::Spatial
     # molecule.
     def rdgyr : Float64
       center = self.com
-      pos = to_a           # FIXME: avoid copying coordinates
-      Math.sqrt pos.mean(&.distance2(center))
+      Math.sqrt mean(&.distance2(center))
     end
 
     # Rotates the coordinates by the given Euler angles in degrees. The
