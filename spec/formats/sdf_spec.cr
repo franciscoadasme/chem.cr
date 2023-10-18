@@ -24,3 +24,12 @@ describe Chem::SDF::Reader do
     structures[86].metadata["energy"].should eq -66.80468478035203
   end
 end
+
+describe Chem::SDF::Writer do
+  it "writes a SDF file" do
+    structures = Array(Chem::Structure).read spec_file("0B1.sdf")
+    expected = File.read(spec_file("0B1_3-4_chem.sdf"))
+      .gsub "1018231427", Time.local.to_s("%m%d%y%H%M") # update datetime record
+    structures[2..3].to_sdf.should eq expected
+  end
+end

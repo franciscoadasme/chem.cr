@@ -43,4 +43,33 @@ module Chem::SDF
       @pull.consume_line
     end
   end
+
+  class Writer
+    include FormatWriter(Structure)
+    include FormatWriter::MultiEntry(Structure)
+
+    def initialize(
+      @io : IO,
+      @variant : Chem::Mol::Variant = :v2000,
+      @total_entries : Int32? = nil,
+      @sync_close : Bool = false
+    )
+    end
+
+    private def encode_entry(obj : Structure) : Nil
+      obj.to_mol @io, @variant
+      obj.metadata.each do |key, value|
+        @io.puts "> <#{key.underscore.upcase}>  (#{@entry_index + 1})"
+        if str = value.as_s?
+          str.scan(/.{1,200}( |$)/).each do |match|
+            @io.puts match[0]
+          end
+        else
+          @io.puts value
+        end
+        @io.puts
+      end
+      @io.puts "$$$$"
+    end
+  end
 end
