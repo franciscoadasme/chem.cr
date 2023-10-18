@@ -228,16 +228,17 @@ describe Chem::Format do
     it "fails for non-encoded types", tags: %w(codegen) do
       assert_error "Chem::Format::PDB.writer(Int32)",
         "expected argument #1 to 'Chem::Format#writer' to be \
-        Array(Chem::AtomCollection).class, Chem::AtomCollection:Module, \
-        Chem::Spatial::Grid.class or Chem::Structure.class, not Int32.class"
+        Array(Chem::AtomCollection).class, Array(Chem::Structure).class, \
+        Chem::AtomCollection:Module, Chem::Spatial::Grid.class or \
+        Chem::Structure.class, not Int32.class"
     end
 
     it "fails with an array for a single-entry type", tags: %w(codegen) do
       assert_error "Chem::Format::DX.writer(Array(Chem::Spatial::Grid))",
         "expected argument #1 to 'Chem::Format#writer' to be \
-        Array(Chem::AtomCollection).class, Chem::AtomCollection:Module, \
-        Chem::Spatial::Grid.class or Chem::Structure.class, not \
-        Array(Chem::Spatial::Grid).class"
+        Array(Chem::AtomCollection).class, Array(Chem::Structure).class, \
+        Chem::AtomCollection:Module, Chem::Spatial::Grid.class or \
+        Chem::Structure.class, not Array(Chem::Spatial::Grid).class"
     end
   end
 
