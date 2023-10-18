@@ -266,7 +266,7 @@ def assert_error(code : String, message : String, file = __FILE__, line = __LINE
   success, output = compile_code code
   if success
     fail "Expected an error but the code compiled successfully", file, line
-  elsif actual_message = output.lines.select(/^Error: /).first?
+  elsif actual_message = output.lines.select(/^Error: /).last?
     actual_message = actual_message.gsub("Error: ", "")
     if actual_message != message
       fail "Expected: #{message}\n     got: #{actual_message}", file, line
@@ -285,7 +285,7 @@ private def compile_code(code : String) : {Bool, String}
     f.puts code
   end
   buffer = IO::Memory.new
-  args = ["run", "--no-color", "--no-codegen", tempfile.path]
+  args = ["run", "--no-color", "--no-codegen", "--error-trace", tempfile.path]
   result = Process.run("crystal", args, error: buffer)
   {result.success?, buffer.to_s.strip}
 ensure
