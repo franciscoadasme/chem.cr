@@ -91,7 +91,7 @@ describe Chem::Spatial::Mat3 do
       (-a).should eq Chem::Spatial::Mat3[{-1, -2, -3}, {-4, -5, -6}, {-7, -8, -9}]
     end
 
-    it "substracts two matrices" do
+    it "subtracts two matrices" do
       a = Chem::Spatial::Mat3[{1, 2, 3}, {4, 5, 6}, {7, 8, 9}]
       b = Chem::Spatial::Mat3[{6, 1, 2}, {25.3, 36, 5}, {0.1, 0.357, 1002.3}]
       c = Chem::Spatial::Mat3[{-5, 1, 1}, {-21.3, -31, 1}, {6.9, 7.643, -993.3}]

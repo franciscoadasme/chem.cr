@@ -53,7 +53,7 @@ require "yaml"
 #
 # NOTE: A YAML file can be baked into the executable using the
 # `read_file` macro at compilation time so it's can be executed
-# anywhere. Otherwise, the hardcoded filepath may be unaccesible at
+# anywhere. Otherwise, the hardcoded filepath may be inaccessible at
 # runtime.
 #
 # ```

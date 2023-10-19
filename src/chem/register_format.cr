@@ -21,7 +21,7 @@ module Chem
   # The ability to read or write is determined by the declaration of
   # reader and writer classes, respectively, which must include the
   # `FormatReader`, `FormatWriter` and other related mixins when
-  # appropiate. The *encoded type* is dictated by the type variable of
+  # appropriate. The *encoded type* is dictated by the type variable of
   # the included mixins. The `FormatReader::Headed` and
   # `FormatReader::Attached` provides interfaces to read additional
   # information into custom objects.
@@ -350,7 +350,7 @@ macro finished
         class Array(T)
           # Creates a new array of `{{etype}}` with the entries
           # encoded in *input* using the `{{ftype}}` file format.
-          # Arguments are fowarded to `{{reader}}.open`.
+          # Arguments are forwarded to `{{reader}}.open`.
           def self.from_{{method_name}}(
             input : IO | Path | String,
             {% for arg in args %}
@@ -374,7 +374,7 @@ macro finished
 
           # Creates a new array of `{{etype}}` with the entries at
           # *indexes* encoded in *input* using the `{{ftype}}` file
-          # format. Arguments are fowarded to `{{reader}}.open`.
+          # format. Arguments are forwarded to `{{reader}}.open`.
           def self.from_{{method_name}}(
             input : IO | Path | String,
             indexes : Array(Int),
@@ -496,7 +496,7 @@ macro finished
 
       {{keyword.id}} {{etype}}
         # Returns a string representation of the {{type_name.id}} using
-        # the `{{ftype}}` file format. Arguments are fowarded to
+        # the `{{ftype}}` file format. Arguments are forwarded to
         # `{{writer}}.open`.
         def to_{{method_name}}(
           {% for arg in args %}
@@ -514,7 +514,7 @@ macro finished
         end
 
         # Writes the {{type_name.id}} to *output* using the `{{ftype}}`
-        # file format. Arguments are fowarded to `{{writer}}.open`.
+        # file format. Arguments are forwarded to `{{writer}}.open`.
         def to_{{method_name}}(
           output : IO | Path | String,
           {% for arg in args %}
@@ -538,7 +538,7 @@ macro finished
       {% if ftype.constant("WRITE_MULTI") %}
         class Array(T)
           # Returns a string representation of the elements encoded in
-          # the `{{ftype}}` file format. Arguments are fowarded to
+          # the `{{ftype}}` file format. Arguments are forwarded to
           # `{{writer}}.open`.
           def to_{{method_name}}(
             {% for arg in args %}
@@ -556,7 +556,7 @@ macro finished
           end
 
           # Writes the elements to *output* using the `{{ftype}}` file
-          # format. Arguments are fowarded to `{{writer}}.open`.
+          # format. Arguments are forwarded to `{{writer}}.open`.
           def to_{{method_name}}(
             output : IO | Path | String,
             {% for arg in args %}

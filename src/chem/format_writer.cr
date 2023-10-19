@@ -44,7 +44,7 @@ module Chem
     # Returns `true` if an object was already written.
     getter? written : Bool = false
 
-    # File open mode. May be overriden by including types.
+    # File open mode. May be overridden by including types.
     FILE_MODE = "w"
 
     # Writes the given object into the `IO`.

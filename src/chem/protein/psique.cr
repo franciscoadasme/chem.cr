@@ -426,7 +426,7 @@ module Chem::Protein
             @patches[i] = sec if score == max_score
           end
         end
-        # aviods a swap (XY -> YX) by removing the substitution at the
+        # avoids a swap (XY -> YX) by removing the substitution at the
         # left-most position
         @patches.reject! { |i, sec| @patches[i + 1]? == self[i] && sec == self[i + 1] }
         @patches

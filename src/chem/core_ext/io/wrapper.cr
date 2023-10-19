@@ -1,7 +1,7 @@
 # Defines a common interface for types enclosing an `IO`.
 #
 # A default constructor is defined by this module, which may be
-# overriden by the including type. The latter must initialize the `@io`
+# overridden by the including type. The latter must initialize the `@io`
 # (stores the enclosed IO) and `@sync_close` instance variables.
 #
 # Additionally, the following convenience methods are the generated on
@@ -55,7 +55,7 @@
 # line # => "def"
 # ```
 module ::IO::Wrapper
-  # File open mode. May be overriden by including types.
+  # File open mode. May be overridden by including types.
   FILE_MODE = "r"
 
   # Returns `true` if this object is closed.

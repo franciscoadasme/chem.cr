@@ -238,7 +238,7 @@ class Chem::DCD::Reader
       body_bytesize = file.info.size - @header_size
       actual_n_frames = (body_bytesize - @first_frame_bytesize) // @frame_bytesize + 1
       unless actual_n_frames == @n_entries
-        Log.warn { "Frame count mistmatch (expected #{@n_entries}, got #{actual_n_frames})" }
+        Log.warn { "Frame count mismatch (expected #{@n_entries}, got #{actual_n_frames})" }
         @n_entries = actual_n_frames.to_i32
       end
     end

@@ -26,7 +26,7 @@ module Chem::Spatial
       Size3[0, 0, 0]
     end
 
-    # Returns the element-wise substraction of the size by *rhs*.
+    # Returns the element-wise subtraction of the size by *rhs*.
     #
     # WARNING: This will clamp negative values to zero.
     def -(rhs : self) : self
@@ -39,7 +39,7 @@ module Chem::Spatial
 
     {% begin %}
       {% op_name_map = {"+" => "addition",
-                        "-" => "substraction",
+                        "-" => "subtraction",
                         "*" => "multiplication",
                         "/" => "division"} %}
       {% for op in %w(* /) %}

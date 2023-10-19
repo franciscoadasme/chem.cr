@@ -65,7 +65,7 @@ class Chem::Templates::Residue
   # residue template if exists. Otherwise, it will be guessed from the
   # connectivity. If the residue is connected to two other residues by
   # equivalent bonds, one of them will be chosen. The sense of the link
-  # bond will be infered from the residue numbering.
+  # bond will be inferred from the residue numbering.
   #
   # Raises `Error` if there is missing connectivity (no bonds).
   def self.build(

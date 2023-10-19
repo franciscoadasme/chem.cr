@@ -62,7 +62,7 @@ describe Chem::Gen::Writer do
     atom Chem::PeriodicTable::Cl, vec3(20, 10, 10)
   end
 
-  it "writes a structure in Cartesian coordinats without unit cell" do
+  it "writes a structure in Cartesian coordinates without unit cell" do
     structure.to_gen.should eq <<-EOS
           5  C
        Cl Na  O

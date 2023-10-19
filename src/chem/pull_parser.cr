@@ -183,13 +183,13 @@ module Chem
       end
     end
 
-    # Returns the first character of the curren token. Raises
+    # Returns the first character of the current token. Raises
     # `ParseException` with the message if the token is not set.
     def char(message : String = "Empty token") : Char
       char? || error(message)
     end
 
-    # Returns the first character of the curren token, or `nil` if it is
+    # Returns the first character of the current token, or `nil` if it is
     # not set.
     def char? : Char?
       token.try &.[0].unsafe_chr

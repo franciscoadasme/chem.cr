@@ -76,7 +76,7 @@ module Chem::Spatial
       rotation Quat.aligning(u, v)
     end
 
-    # Returns the transformation encoding the rotation and traslation to
+    # Returns the transformation encoding the rotation and translation to
     # align *pos* onto *ref_pos*. Raises `ArgumentError` if the two
     # coordinate sets are of different size.
     #

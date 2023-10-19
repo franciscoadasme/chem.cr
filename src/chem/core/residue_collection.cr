@@ -7,7 +7,7 @@ module Chem
     # Iterates over residue-wise fragments.
     #
     # A fragment is an array of inter-connected residues. Fragments are
-    # dinamically computed by iterating over `Residue#bonded_residues`
+    # dynamically computed by iterating over `Residue#bonded_residues`
     # of the selected residues.
     #
     # NOTE: fragments are scoped to the current list of residues such

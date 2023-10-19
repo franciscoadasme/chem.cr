@@ -17,7 +17,7 @@ class Chem::Topology
   setter impropers = [] of Improper
 
   # TODO: This hack is only needed to give access atom, residue, etc. to
-  # the encompasing structure that currently holds the cell and
+  # the encompassing structure that currently holds the cell and
   # coordinates.
   @structure = uninitialized Structure
   property structure : Structure
@@ -631,7 +631,7 @@ class Chem::Topology
   # *split_chains* is `false`, which keeps existing chains intact.
   # Residue ordering is computed based on the link bond if available.
   #
-  # NOTE: existing chains are reused to re-arrang the residues among
+  # NOTE: existing chains are reused to re-arrange the residues among
   # them, so avoid caching them before calling this.
   def renumber_residues_by_connectivity(split_chains : Bool = true) : Nil
     if split_chains
