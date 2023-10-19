@@ -3,6 +3,12 @@ name: Crystal CI
 on: [push]
 
 jobs:
+  check_spelling:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Check Spelling
+        uses: crate-ci/typos@v1.16.1
   check_format:
     runs-on: ubuntu-latest
     container:
