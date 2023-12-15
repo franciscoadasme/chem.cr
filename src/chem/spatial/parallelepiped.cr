@@ -506,6 +506,26 @@ module Chem::Spatial
       transform Transform.rotation(quat)
     end
 
+    # Returns the parallelepiped with the basis vectors scaled by the
+    # given amount.
+    #
+    # ```
+    # pld = Chem::Spatial::Parallelepiped.hexagonal(1, 3)
+    # pld.scale(10).size              # => Size3[10, 10, 30]
+    # pld.scale(10).angles            # => {90, 90, 120}
+    # pld.scale(10, 100, 1000).size   # => Size3[10, 100, 3000]
+    # pld.scale(10, 100, 1000).angles # => {90, 90, 120}
+    # ```
+    def scale(factor : Number) : self
+      scale factor, factor, factor
+    end
+
+    # :ditto:
+    def scale(si : Number, sj : Number, sk : Number) : self
+      vi, vj, vk = basisvec
+      self.class.new vi * si, vj * sj, vk * sk
+    end
+
     # Returns the lengths of the basis vectors.
     def size : Size3
       Size3[*basisvec.map(&.abs)]

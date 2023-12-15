@@ -607,4 +607,14 @@ describe Chem::Spatial::Parallelepiped do
       io.read_bytes(Chem::Spatial::Parallelepiped).should eq pld
     end
   end
+
+  describe "#scale" do
+    it "scales the size of the parallelepiped" do
+      pld = Chem::Spatial::Parallelepiped.hexagonal(1, 3)
+      pld.scale(10).size.should be_close [10, 10, 30], 1e-3
+      pld.scale(10).angles.should be_close [90, 90, 120], 1e-3
+      pld.scale(10, 100, 1000).size.should be_close [10, 100, 3000], 1e-3
+      pld.scale(10, 100, 1000).angles.should be_close [90, 90, 120], 1e-3
+    end
+  end
 end
