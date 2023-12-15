@@ -1,4 +1,40 @@
 module Indexable(T)
+  # Returns a tuple with the elements at the given indexes. Raises
+  # `IndexError` is any index is out of bounds.
+  #
+  # ```
+  # arr = (0..9).map(&.**(2)) # => [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+  # arr[{2, 5, 9}]            # => {4, 25, 81}
+  # arr[{2, 15, 9}]           # raises IndexError
+  # ```
+  def [](idxs : Tuple) : Tuple
+    idxs.map { |i| self[i] }
+  end
+
+  # Returns a tuple with the elements at the given indexes. Raises
+  # `IndexError` is any index is out of bounds.
+  #
+  # ```
+  # arr = (0..9).map(&.**(2)) # => [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+  # arr[2, 5, 9]              # => {4, 25, 81}
+  # arr[2, 15, 9]             # raises IndexError
+  # ```
+  def [](*idxs : Int) : Tuple
+    idxs.map { |i| self[i] }
+  end
+
+  # Returns an array with the elements at the given indexes. Raises
+  # `IndexError` is any index is out of bounds.
+  #
+  # ```
+  # arr = (0..9).map(&.**(2)) # => [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+  # arr[[2, 5, 9]]            # => [4, 25, 8]
+  # arr[[2, 15, 9]]           # raises IndexError
+  # ```
+  def [](idxs : Enumerable(Int)) : Array(T)
+    idxs.map { |i| self[i] }
+  end
+
   # Prints the elements in the collection as a sentence to *io*. How
   # each element is printed is controlled by the given block.
   #

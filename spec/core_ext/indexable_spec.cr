@@ -1,6 +1,22 @@
 require "../spec_helper"
 
 describe Indexable do
+  describe "#[]" do
+    it "returns a tuple of elements" do
+      (0..9).map(&.**(2))[{2, 5, 9}].should eq({4, 25, 81})
+      (0..9).map(&.**(2))[2, 5, 9].should eq({4, 25, 81})
+    end
+
+    it "returns an array of elements" do
+      (0..9).map(&.**(2))[[2, 5, 9]].should eq([4, 25, 81])
+    end
+
+    it "raises if out of bounds" do
+      expect_raises(IndexError) { (0..9).to_a[{2, 15, 9}] }
+      expect_raises(IndexError) { (0..19).to_a[[21, 15, 9]] }
+    end
+  end
+
   describe "#sentence" do
     it "joins elements as a sentence" do
       ([] of String).sentence.should eq ""
