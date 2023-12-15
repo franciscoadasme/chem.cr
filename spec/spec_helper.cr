@@ -220,8 +220,8 @@ end
 # Returns the path for a spec file
 def spec_file(filename : String) : String
   path = filename
-  ext = File.extname(filename)
-  path = File.join ext[1..], path unless ext.blank?
+  format = Chem::Format.from_filename? filename
+  path = File.join format.to_s.downcase, path if format
   path = File.join "spec", "data", path
   return path if File.exists?(path)
   path = File.join "spec", "data", filename.downcase, filename
