@@ -12,6 +12,16 @@ abstract struct Number
     other * self
   end
 
+  # Returns the length in angstroms from bohrs.
+  def bohr : Float64
+    self * 0.529177
+  end
+
+  # :ditto:
+  def bohrs : Float64
+    self * 0.529177
+  end
+
   # Returns `true` if numbers are within *delta* from each other, else
   # `false`.
   #
@@ -60,6 +70,11 @@ abstract struct Number
   # :ditto:
   def scale(range : Range(Number, Number)) : Float64
     scale range.begin, range.end
+  end
+
+  # Returns the length in bohrs from angstroms.
+  def to_bohrs : Float64
+    self * 1.88973
   end
 
   # Reverts the scaling in the given range.
