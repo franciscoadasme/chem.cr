@@ -277,6 +277,26 @@
       
     </li>
   
+  <li class="parent " data-id="chem/Chem/JDFTx" data-name="chem::jdftx">
+      <a href="Chem/JDFTx.html">JDFTx</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem/Chem/JDFTx/Reader" data-name="chem::jdftx::reader">
+      <a href="Chem/JDFTx/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem/Chem/JDFTx/Writer" data-name="chem::jdftx::writer">
+      <a href="Chem/JDFTx/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
   <li class="parent " data-id="chem/Chem/Metadata" data-name="chem::metadata">
       <a href="Chem/Metadata.html">Metadata</a>
       
@@ -902,6 +922,11 @@
       
     </li>
   
+  <li class=" " data-id="chem/Path" data-name="path">
+      <a href="Path.html">Path</a>
+      
+    </li>
+  
   <li class=" " data-id="chem/Range" data-name="range(b, e)">
       <a href="Range.html">Range</a>
       
@@ -1002,21 +1027,21 @@ set <span class="o">&lt;&lt;</span> <span class="n">3</span></code></pre>
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/bca73e483f3c107ce2f82a17313963d36ebf0d88/lib/views/src/views/array_view.cr#L41" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/lib/views/src/views/array_view.cr#L41" target="_blank">
         lib/views/src/views/array_view.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/bca73e483f3c107ce2f82a17313963d36ebf0d88/src/chem/core_ext/array.cr#L1" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/core_ext/array.cr#L1" target="_blank">
         chem/core_ext/array.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/bca73e483f3c107ce2f82a17313963d36ebf0d88/src/chem/register_format.cr#L270" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/register_format.cr#L270" target="_blank">
         chem/register_format.cr
       </a>
     
@@ -1274,6 +1299,11 @@ set <span class="o">&lt;&lt;</span> <span class="n">3</span></code></pre>
   <h3>Instance methods inherited from module <code><a href="Indexable.html">Indexable(T)</a></code></h3>
   
   
+    <a href="Indexable.html#%5B%5D%28idxs%3ATuple%29%3ATuple-instance-method" class="tooltip">
+      <span>[](idxs : Tuple) : Tuple<br/>[](idxs : Enumerable(Int)) : Array(T)<br/>[](*idxs : Int) : Tuple</span>
+    []</a>, 
+    
+  
     <a href="Indexable.html#sentence%28io%3AIO%2Cseparator%3AString%3D%22%2C%22%2C%2A%2Cpair_separator%3AString%3D%22and%22%2Ctail_separator%3AString%3D%22%2Cand%22%2C%26%3AT%2CIO-%3E%29%3ANil-instance-method" class="tooltip">
       <span>sentence(io : IO, separator : String = <span class="s">&quot;, &quot;</span>, *, pair_separator : String = <span class="s">&quot; and &quot;</span>, tail_separator : String = <span class="s">&quot;, and &quot;</span>, & : T, IO -> ) : Nil<br/>sentence(io : IO, separator : String = <span class="s">&quot;, &quot;</span>, *, pair_separator : String = <span class="s">&quot; and &quot;</span>, tail_separator : String = <span class="s">&quot;, and &quot;</span>) : Nil<br/>sentence(separator : String = <span class="s">&quot;, &quot;</span>, *, pair_separator : String = <span class="s">&quot; and &quot;</span>, tail_separator : String = <span class="s">&quot;, and &quot;</span>, & : T -> ) : String<br/>sentence(separator : String = <span class="s">&quot;, &quot;</span>, *, pair_separator : String = <span class="s">&quot; and &quot;</span>, tail_separator : String = <span class="s">&quot;, and &quot;</span>) : String</span>
     sentence</a>
@@ -1357,7 +1387,7 @@ set <span class="o">&lt;&lt;</span> <span class="n">3</span></code></pre>
     <div class="entry-detail" id="from_dcd(input:IO|Path|String,structure:Structure,reuse:Bool=false):self-class-method">
       <div class="signature">
         
-        def self.<strong>from_dcd</strong>(input : IO | Path | String, structure : Structure, reuse : Bool = <span class="n">false</span>) : <span class="k">self</span>
+        def self.<strong>from_dcd</strong>(input : IO | <a href="Path.html">Path</a> | String, structure : Structure, reuse : Bool = <span class="n">false</span>) : <span class="k">self</span>
 
         <a class="method-permalink" href="#from_dcd%28input%3AIO%7CPath%7CString%2Cstructure%3AStructure%2Creuse%3ABool%3Dfalse%29%3Aself-class-method">#</a>
       </div>
@@ -1372,7 +1402,7 @@ Arguments are forwarded to <code><a href="Chem/DCD/Reader.html#open%28io%3AIO%2C
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/bca73e483f3c107ce2f82a17313963d36ebf0d88/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1380,7 +1410,7 @@ Arguments are forwarded to <code><a href="Chem/DCD/Reader.html#open%28io%3AIO%2C
     <div class="entry-detail" id="from_dcd(input:IO|Path|String,indexes:Array(Int),structure:Structure,reuse:Bool=false):self-class-method">
       <div class="signature">
         
-        def self.<strong>from_dcd</strong>(input : IO | Path | String, indexes : <a href="Array.html">Array</a>(Int), structure : Structure, reuse : Bool = <span class="n">false</span>) : <span class="k">self</span>
+        def self.<strong>from_dcd</strong>(input : IO | <a href="Path.html">Path</a> | String, indexes : <a href="Array.html">Array</a>(Int), structure : Structure, reuse : Bool = <span class="n">false</span>) : <span class="k">self</span>
 
         <a class="method-permalink" href="#from_dcd%28input%3AIO%7CPath%7CString%2Cindexes%3AArray%28Int%29%2Cstructure%3AStructure%2Creuse%3ABool%3Dfalse%29%3Aself-class-method">#</a>
       </div>
@@ -1395,7 +1425,7 @@ format. Arguments are forwarded to <code><a href="Chem/DCD/Reader.html#open%28io
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/bca73e483f3c107ce2f82a17313963d36ebf0d88/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1403,7 +1433,7 @@ format. Arguments are forwarded to <code><a href="Chem/DCD/Reader.html#open%28io
     <div class="entry-detail" id="from_mol2(input:IO|Path|String,indexes:Array(Int)):self-class-method">
       <div class="signature">
         
-        def self.<strong>from_mol2</strong>(input : IO | Path | String, indexes : <a href="Array.html">Array</a>(Int)) : <span class="k">self</span>
+        def self.<strong>from_mol2</strong>(input : IO | <a href="Path.html">Path</a> | String, indexes : <a href="Array.html">Array</a>(Int)) : <span class="k">self</span>
 
         <a class="method-permalink" href="#from_mol2%28input%3AIO%7CPath%7CString%2Cindexes%3AArray%28Int%29%29%3Aself-class-method">#</a>
       </div>
@@ -1418,7 +1448,7 @@ format. Arguments are forwarded to <code><a href="Chem/Mol2/Reader.html#open%28i
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/bca73e483f3c107ce2f82a17313963d36ebf0d88/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1426,7 +1456,7 @@ format. Arguments are forwarded to <code><a href="Chem/Mol2/Reader.html#open%28i
     <div class="entry-detail" id="from_mol2(input:IO|Path|String):self-class-method">
       <div class="signature">
         
-        def self.<strong>from_mol2</strong>(input : IO | Path | String) : <span class="k">self</span>
+        def self.<strong>from_mol2</strong>(input : IO | <a href="Path.html">Path</a> | String) : <span class="k">self</span>
 
         <a class="method-permalink" href="#from_mol2%28input%3AIO%7CPath%7CString%29%3Aself-class-method">#</a>
       </div>
@@ -1441,7 +1471,7 @@ Arguments are forwarded to <code><a href="Chem/Mol2/Reader.html#open%28io%3AIO%2
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/bca73e483f3c107ce2f82a17313963d36ebf0d88/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1449,7 +1479,7 @@ Arguments are forwarded to <code><a href="Chem/Mol2/Reader.html#open%28io%3AIO%2
     <div class="entry-detail" id="from_pdb(input:IO|Path|String,alt_loc:Char|Nil=nil,chains:Enumerable(Char)|String|Nil=nil,guess_bonds:Bool=false,het:Bool=true):self-class-method">
       <div class="signature">
         
-        def self.<strong>from_pdb</strong>(input : IO | Path | String, alt_loc : <a href="Char.html">Char</a> | Nil = <span class="n">nil</span>, chains : <a href="Enumerable.html">Enumerable</a>(<a href="Char.html">Char</a>) | String | Nil = <span class="n">nil</span>, guess_bonds : Bool = <span class="n">false</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span>
+        def self.<strong>from_pdb</strong>(input : IO | <a href="Path.html">Path</a> | String, alt_loc : <a href="Char.html">Char</a> | Nil = <span class="n">nil</span>, chains : <a href="Enumerable.html">Enumerable</a>(<a href="Char.html">Char</a>) | String | Nil = <span class="n">nil</span>, guess_bonds : Bool = <span class="n">false</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span>
 
         <a class="method-permalink" href="#from_pdb%28input%3AIO%7CPath%7CString%2Calt_loc%3AChar%7CNil%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%29%3Aself-class-method">#</a>
       </div>
@@ -1464,7 +1494,7 @@ Arguments are forwarded to <code><a href="Chem/PDB/Reader.html#open%28io%3AIO%2C
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/bca73e483f3c107ce2f82a17313963d36ebf0d88/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1472,7 +1502,7 @@ Arguments are forwarded to <code><a href="Chem/PDB/Reader.html#open%28io%3AIO%2C
     <div class="entry-detail" id="from_pdb(input:IO|Path|String,indexes:Array(Int),alt_loc:Char|Nil=nil,chains:Enumerable(Char)|String|Nil=nil,guess_bonds:Bool=false,het:Bool=true):self-class-method">
       <div class="signature">
         
-        def self.<strong>from_pdb</strong>(input : IO | Path | String, indexes : <a href="Array.html">Array</a>(Int), alt_loc : <a href="Char.html">Char</a> | Nil = <span class="n">nil</span>, chains : <a href="Enumerable.html">Enumerable</a>(<a href="Char.html">Char</a>) | String | Nil = <span class="n">nil</span>, guess_bonds : Bool = <span class="n">false</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span>
+        def self.<strong>from_pdb</strong>(input : IO | <a href="Path.html">Path</a> | String, indexes : <a href="Array.html">Array</a>(Int), alt_loc : <a href="Char.html">Char</a> | Nil = <span class="n">nil</span>, chains : <a href="Enumerable.html">Enumerable</a>(<a href="Char.html">Char</a>) | String | Nil = <span class="n">nil</span>, guess_bonds : Bool = <span class="n">false</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span>
 
         <a class="method-permalink" href="#from_pdb%28input%3AIO%7CPath%7CString%2Cindexes%3AArray%28Int%29%2Calt_loc%3AChar%7CNil%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%29%3Aself-class-method">#</a>
       </div>
@@ -1487,7 +1517,7 @@ format. Arguments are forwarded to <code><a href="Chem/PDB/Reader.html#open%28io
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/bca73e483f3c107ce2f82a17313963d36ebf0d88/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1495,7 +1525,7 @@ format. Arguments are forwarded to <code><a href="Chem/PDB/Reader.html#open%28io
     <div class="entry-detail" id="from_sdf(input:IO|Path|String,indexes:Array(Int)):self-class-method">
       <div class="signature">
         
-        def self.<strong>from_sdf</strong>(input : IO | Path | String, indexes : <a href="Array.html">Array</a>(Int)) : <span class="k">self</span>
+        def self.<strong>from_sdf</strong>(input : IO | <a href="Path.html">Path</a> | String, indexes : <a href="Array.html">Array</a>(Int)) : <span class="k">self</span>
 
         <a class="method-permalink" href="#from_sdf%28input%3AIO%7CPath%7CString%2Cindexes%3AArray%28Int%29%29%3Aself-class-method">#</a>
       </div>
@@ -1510,7 +1540,7 @@ format. Arguments are forwarded to <code><a href="Chem/SDF/Reader.html#open%28io
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/bca73e483f3c107ce2f82a17313963d36ebf0d88/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1518,7 +1548,7 @@ format. Arguments are forwarded to <code><a href="Chem/SDF/Reader.html#open%28io
     <div class="entry-detail" id="from_sdf(input:IO|Path|String):self-class-method">
       <div class="signature">
         
-        def self.<strong>from_sdf</strong>(input : IO | Path | String) : <span class="k">self</span>
+        def self.<strong>from_sdf</strong>(input : IO | <a href="Path.html">Path</a> | String) : <span class="k">self</span>
 
         <a class="method-permalink" href="#from_sdf%28input%3AIO%7CPath%7CString%29%3Aself-class-method">#</a>
       </div>
@@ -1533,7 +1563,7 @@ Arguments are forwarded to <code><a href="Chem/SDF/Reader.html#open%28io%3AIO%2C
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/bca73e483f3c107ce2f82a17313963d36ebf0d88/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1541,7 +1571,7 @@ Arguments are forwarded to <code><a href="Chem/SDF/Reader.html#open%28io%3AIO%2C
     <div class="entry-detail" id="from_xyz(input:IO|Path|String,guess_bonds:Bool=false,guess_names:Bool=false):self-class-method">
       <div class="signature">
         
-        def self.<strong>from_xyz</strong>(input : IO | Path | String, guess_bonds : Bool = <span class="n">false</span>, guess_names : Bool = <span class="n">false</span>) : <span class="k">self</span>
+        def self.<strong>from_xyz</strong>(input : IO | <a href="Path.html">Path</a> | String, guess_bonds : Bool = <span class="n">false</span>, guess_names : Bool = <span class="n">false</span>) : <span class="k">self</span>
 
         <a class="method-permalink" href="#from_xyz%28input%3AIO%7CPath%7CString%2Cguess_bonds%3ABool%3Dfalse%2Cguess_names%3ABool%3Dfalse%29%3Aself-class-method">#</a>
       </div>
@@ -1556,7 +1586,7 @@ Arguments are forwarded to <code><a href="Chem/XYZ/Reader.html#open%28io%3AIO%2C
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/bca73e483f3c107ce2f82a17313963d36ebf0d88/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1564,7 +1594,7 @@ Arguments are forwarded to <code><a href="Chem/XYZ/Reader.html#open%28io%3AIO%2C
     <div class="entry-detail" id="from_xyz(input:IO|Path|String,indexes:Array(Int),guess_bonds:Bool=false,guess_names:Bool=false):self-class-method">
       <div class="signature">
         
-        def self.<strong>from_xyz</strong>(input : IO | Path | String, indexes : <a href="Array.html">Array</a>(Int), guess_bonds : Bool = <span class="n">false</span>, guess_names : Bool = <span class="n">false</span>) : <span class="k">self</span>
+        def self.<strong>from_xyz</strong>(input : IO | <a href="Path.html">Path</a> | String, indexes : <a href="Array.html">Array</a>(Int), guess_bonds : Bool = <span class="n">false</span>, guess_names : Bool = <span class="n">false</span>) : <span class="k">self</span>
 
         <a class="method-permalink" href="#from_xyz%28input%3AIO%7CPath%7CString%2Cindexes%3AArray%28Int%29%2Cguess_bonds%3ABool%3Dfalse%2Cguess_names%3ABool%3Dfalse%29%3Aself-class-method">#</a>
       </div>
@@ -1579,7 +1609,7 @@ format. Arguments are forwarded to <code><a href="Chem/XYZ/Reader.html#open%28io
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/bca73e483f3c107ce2f82a17313963d36ebf0d88/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1587,7 +1617,7 @@ format. Arguments are forwarded to <code><a href="Chem/XYZ/Reader.html#open%28io
     <div class="entry-detail" id="read(input:IO|Path|String,format:String):self-class-method">
       <div class="signature">
         
-        def self.<strong>read</strong>(input : IO | Path | String, format : String) : <span class="k">self</span>
+        def self.<strong>read</strong>(input : IO | <a href="Path.html">Path</a> | String, format : String) : <span class="k">self</span>
 
         <a class="method-permalink" href="#read%28input%3AIO%7CPath%7CString%2Cformat%3AString%29%3Aself-class-method">#</a>
       </div>
@@ -1601,7 +1631,7 @@ Raises <code>ArgumentError</code> if <em>format</em> is invalid.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/bca73e483f3c107ce2f82a17313963d36ebf0d88/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1609,7 +1639,7 @@ Raises <code>ArgumentError</code> if <em>format</em> is invalid.</p>
     <div class="entry-detail" id="read(input:IO|Path|String,format:Chem::Format):self-class-method">
       <div class="signature">
         
-        def self.<strong>read</strong>(input : IO | Path | String, format : <a href="Chem/Format.html">Chem::Format</a>) : <span class="k">self</span>
+        def self.<strong>read</strong>(input : IO | <a href="Path.html">Path</a> | String, format : <a href="Chem/Format.html">Chem::Format</a>) : <span class="k">self</span>
 
         <a class="method-permalink" href="#read%28input%3AIO%7CPath%7CString%2Cformat%3AChem%3A%3AFormat%29%3Aself-class-method">#</a>
       </div>
@@ -1624,7 +1654,7 @@ it is write only.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/bca73e483f3c107ce2f82a17313963d36ebf0d88/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1632,7 +1662,7 @@ it is write only.</p>
     <div class="entry-detail" id="read(path:Path|String):self-class-method">
       <div class="signature">
         
-        def self.<strong>read</strong>(path : Path | String) : <span class="k">self</span>
+        def self.<strong>read</strong>(path : <a href="Path.html">Path</a> | String) : <span class="k">self</span>
 
         <a class="method-permalink" href="#read%28path%3APath%7CString%29%3Aself-class-method">#</a>
       </div>
@@ -1647,7 +1677,7 @@ Raises <code>ArgumentError</code> if the file format cannot be determined.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/bca73e483f3c107ce2f82a17313963d36ebf0d88/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1677,7 +1707,7 @@ Raises <code>ArgumentError</code> if the file format cannot be determined.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/bca73e483f3c107ce2f82a17313963d36ebf0d88/src/chem/core_ext/array.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/core_ext/array.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1693,7 +1723,7 @@ Raises <code>ArgumentError</code> if the file format cannot be determined.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/bca73e483f3c107ce2f82a17313963d36ebf0d88/src/chem/core_ext/array.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/core_ext/array.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1709,7 +1739,7 @@ Raises <code>ArgumentError</code> if the file format cannot be determined.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/bca73e483f3c107ce2f82a17313963d36ebf0d88/src/chem/core_ext/array.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/core_ext/array.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1725,7 +1755,7 @@ Raises <code>ArgumentError</code> if the file format cannot be determined.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/bca73e483f3c107ce2f82a17313963d36ebf0d88/src/chem/core_ext/array.cr#L18" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/core_ext/array.cr#L18" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1733,7 +1763,7 @@ Raises <code>ArgumentError</code> if the file format cannot be determined.</p>
     <div class="entry-detail" id="to_mol2(output:IO|Path|String):Nil-instance-method">
       <div class="signature">
         
-        def <strong>to_mol2</strong>(output : IO | Path | String) : Nil
+        def <strong>to_mol2</strong>(output : IO | <a href="Path.html">Path</a> | String) : Nil
 
         <a class="method-permalink" href="#to_mol2%28output%3AIO%7CPath%7CString%29%3ANil-instance-method">#</a>
       </div>
@@ -1747,7 +1777,7 @@ format. Arguments are forwarded to <code><a href="Chem/Mol2/Writer.html#open%28i
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/bca73e483f3c107ce2f82a17313963d36ebf0d88/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1770,7 +1800,7 @@ the <code><a href="Chem/Mol2.html">Chem::Mol2</a></code> file format. Arguments 
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/bca73e483f3c107ce2f82a17313963d36ebf0d88/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1793,7 +1823,7 @@ the <code><a href="Chem/PDB.html">Chem::PDB</a></code> file format. Arguments ar
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/bca73e483f3c107ce2f82a17313963d36ebf0d88/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1801,7 +1831,7 @@ the <code><a href="Chem/PDB.html">Chem::PDB</a></code> file format. Arguments ar
     <div class="entry-detail" id="to_pdb(output:IO|Path|String,bonds:Chem::PDB::Writer::BondOptions=Chem::PDB::Writer::BondOptions.flags(Het,Disulfide),renumber:Bool=true,ter_on_fragment:Bool=false):Nil-instance-method">
       <div class="signature">
         
-        def <strong>to_pdb</strong>(output : IO | Path | String, bonds : <a href="Chem/PDB/Writer/BondOptions.html">Chem::PDB::Writer::BondOptions</a> = <span class="t">Chem</span><span class="t">::</span><span class="t">PDB</span><span class="t">::</span><span class="t">Writer</span><span class="t">::</span><span class="t">BondOptions</span>.flags(<span class="t">Het</span>, <span class="t">Disulfide</span>), renumber : Bool = <span class="n">true</span>, ter_on_fragment : Bool = <span class="n">false</span>) : Nil
+        def <strong>to_pdb</strong>(output : IO | <a href="Path.html">Path</a> | String, bonds : <a href="Chem/PDB/Writer/BondOptions.html">Chem::PDB::Writer::BondOptions</a> = <span class="t">Chem</span><span class="t">::</span><span class="t">PDB</span><span class="t">::</span><span class="t">Writer</span><span class="t">::</span><span class="t">BondOptions</span>.flags(<span class="t">Het</span>, <span class="t">Disulfide</span>), renumber : Bool = <span class="n">true</span>, ter_on_fragment : Bool = <span class="n">false</span>) : Nil
 
         <a class="method-permalink" href="#to_pdb%28output%3AIO%7CPath%7CString%2Cbonds%3AChem%3A%3APDB%3A%3AWriter%3A%3ABondOptions%3DChem%3A%3APDB%3A%3AWriter%3A%3ABondOptions.flags%28Het%2CDisulfide%29%2Crenumber%3ABool%3Dtrue%2Cter_on_fragment%3ABool%3Dfalse%29%3ANil-instance-method">#</a>
       </div>
@@ -1815,7 +1845,7 @@ format. Arguments are forwarded to <code><a href="Chem/PDB/Writer.html#open%28io
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/bca73e483f3c107ce2f82a17313963d36ebf0d88/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1838,7 +1868,7 @@ the <code><a href="Chem/SDF.html">Chem::SDF</a></code> file format. Arguments ar
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/bca73e483f3c107ce2f82a17313963d36ebf0d88/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1846,7 +1876,7 @@ the <code><a href="Chem/SDF.html">Chem::SDF</a></code> file format. Arguments ar
     <div class="entry-detail" id="to_sdf(output:IO|Path|String,variant:Chem::Mol::Variant=:v2000):Nil-instance-method">
       <div class="signature">
         
-        def <strong>to_sdf</strong>(output : IO | Path | String, variant : <a href="Chem/Mol/Variant.html">Chem::Mol::Variant</a> = <span class="n">:v2000</span>) : Nil
+        def <strong>to_sdf</strong>(output : IO | <a href="Path.html">Path</a> | String, variant : <a href="Chem/Mol/Variant.html">Chem::Mol::Variant</a> = <span class="n">:v2000</span>) : Nil
 
         <a class="method-permalink" href="#to_sdf%28output%3AIO%7CPath%7CString%2Cvariant%3AChem%3A%3AMol%3A%3AVariant%3D%3Av2000%29%3ANil-instance-method">#</a>
       </div>
@@ -1860,7 +1890,7 @@ format. Arguments are forwarded to <code><a href="Chem/SDF/Writer.html#open%28io
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/bca73e483f3c107ce2f82a17313963d36ebf0d88/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1883,7 +1913,7 @@ the <code><a href="Chem/XYZ.html">Chem::XYZ</a></code> file format. Arguments ar
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/bca73e483f3c107ce2f82a17313963d36ebf0d88/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1891,7 +1921,7 @@ the <code><a href="Chem/XYZ.html">Chem::XYZ</a></code> file format. Arguments ar
     <div class="entry-detail" id="to_xyz(output:IO|Path|String,extended:Bool=false,fields:Array(String)=[]ofString):Nil-instance-method">
       <div class="signature">
         
-        def <strong>to_xyz</strong>(output : IO | Path | String, extended : Bool = <span class="n">false</span>, fields : <a href="Array.html">Array</a>(String) = <span class="o">[]</span> <span class="k">of</span> <span class="t">String</span>) : Nil
+        def <strong>to_xyz</strong>(output : IO | <a href="Path.html">Path</a> | String, extended : Bool = <span class="n">false</span>, fields : <a href="Array.html">Array</a>(String) = <span class="o">[]</span> <span class="k">of</span> <span class="t">String</span>) : Nil
 
         <a class="method-permalink" href="#to_xyz%28output%3AIO%7CPath%7CString%2Cextended%3ABool%3Dfalse%2Cfields%3AArray%28String%29%3D%5B%5DofString%29%3ANil-instance-method">#</a>
       </div>
@@ -1905,7 +1935,7 @@ format. Arguments are forwarded to <code><a href="Chem/XYZ/Writer.html#open%28io
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/bca73e483f3c107ce2f82a17313963d36ebf0d88/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1913,7 +1943,7 @@ format. Arguments are forwarded to <code><a href="Chem/XYZ/Writer.html#open%28io
     <div class="entry-detail" id="write(output:IO|Path|String,format:String):Nil-instance-method">
       <div class="signature">
         
-        def <strong>write</strong>(output : IO | Path | String, format : String) : Nil
+        def <strong>write</strong>(output : IO | <a href="Path.html">Path</a> | String, format : String) : Nil
 
         <a class="method-permalink" href="#write%28output%3AIO%7CPath%7CString%2Cformat%3AString%29%3ANil-instance-method">#</a>
       </div>
@@ -1927,7 +1957,7 @@ format. Arguments are forwarded to <code><a href="Chem/XYZ/Writer.html#open%28io
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/bca73e483f3c107ce2f82a17313963d36ebf0d88/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1935,7 +1965,7 @@ format. Arguments are forwarded to <code><a href="Chem/XYZ/Writer.html#open%28io
     <div class="entry-detail" id="write(output:IO|Path|String,format:Chem::Format):Nil-instance-method">
       <div class="signature">
         
-        def <strong>write</strong>(output : IO | Path | String, format : <a href="Chem/Format.html">Chem::Format</a>) : Nil
+        def <strong>write</strong>(output : IO | <a href="Path.html">Path</a> | String, format : <a href="Chem/Format.html">Chem::Format</a>) : Nil
 
         <a class="method-permalink" href="#write%28output%3AIO%7CPath%7CString%2Cformat%3AChem%3A%3AFormat%29%3ANil-instance-method">#</a>
       </div>
@@ -1950,7 +1980,7 @@ read only.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/bca73e483f3c107ce2f82a17313963d36ebf0d88/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1958,7 +1988,7 @@ read only.</p>
     <div class="entry-detail" id="write(path:Path|String):Nil-instance-method">
       <div class="signature">
         
-        def <strong>write</strong>(path : Path | String) : Nil
+        def <strong>write</strong>(path : <a href="Path.html">Path</a> | String) : Nil
 
         <a class="method-permalink" href="#write%28path%3APath%7CString%29%3ANil-instance-method">#</a>
       </div>
@@ -1973,7 +2003,7 @@ based on the filename (see <code><a href="Chem/Format.html#from_filename%28filen
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/bca73e483f3c107ce2f82a17313963d36ebf0d88/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>

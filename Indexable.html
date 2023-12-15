@@ -277,6 +277,26 @@
       
     </li>
   
+  <li class="parent " data-id="chem/Chem/JDFTx" data-name="chem::jdftx">
+      <a href="Chem/JDFTx.html">JDFTx</a>
+      
+        <ul>
+  
+  <li class=" " data-id="chem/Chem/JDFTx/Reader" data-name="chem::jdftx::reader">
+      <a href="Chem/JDFTx/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem/Chem/JDFTx/Writer" data-name="chem::jdftx::writer">
+      <a href="Chem/JDFTx/Writer.html">Writer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
   <li class="parent " data-id="chem/Chem/Metadata" data-name="chem::metadata">
       <a href="Chem/Metadata.html">Metadata</a>
       
@@ -902,6 +922,11 @@
       
     </li>
   
+  <li class=" " data-id="chem/Path" data-name="path">
+      <a href="Path.html">Path</a>
+      
+    </li>
+  
   <li class=" " data-id="chem/Range" data-name="range(b, e)">
       <a href="Range.html">Range</a>
       
@@ -1012,14 +1037,14 @@ not stable or only conditionally stable.</p>
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/bca73e483f3c107ce2f82a17313963d36ebf0d88/lib/views/src/views/indexable_view.cr#L61" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/lib/views/src/views/indexable_view.cr#L61" target="_blank">
         lib/views/src/views/indexable_view.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/bca73e483f3c107ce2f82a17313963d36ebf0d88/src/chem/core_ext/indexable.cr#L1" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/core_ext/indexable.cr#L1" target="_blank">
         chem/core_ext/indexable.cr
       </a>
     
@@ -1043,6 +1068,27 @@ not stable or only conditionally stable.</p>
     Instance Method Summary
   </h2>
   <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#%5B%5D%28idxs%3ATuple%29%3ATuple-instance-method" class="signature"><strong>#[]</strong>(idxs : Tuple) : Tuple</a>
+        
+          <div class="summary"><p>Returns a tuple with the elements at the given indexes.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%5B%5D%28idxs%3AEnumerable%28Int%29%29%3AArray%28T%29-instance-method" class="signature"><strong>#[]</strong>(idxs : Enumerable(Int)) : Array(T)</a>
+        
+          <div class="summary"><p>Returns an array with the elements at the given indexes.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%5B%5D%28%2Aidxs%3AInt%29%3ATuple-instance-method" class="signature"><strong>#[]</strong>(*idxs : Int) : Tuple</a>
+        
+          <div class="summary"><p>Returns a tuple with the elements at the given indexes.</p></div>
+        
+      </li>
     
       <li class="entry-summary">
         <a href="#sentence%28io%3AIO%2Cseparator%3AString%3D%22%2C%22%2C%2A%2Cpair_separator%3AString%3D%22and%22%2Ctail_separator%3AString%3D%22%2Cand%22%2C%26%3AT%2CIO-%3E%29%3ANil-instance-method" class="signature"><strong>#sentence</strong>(io : IO, separator : String = <span class="s">&quot;, &quot;</span>, *, pair_separator : String = <span class="s">&quot; and &quot;</span>, tail_separator : String = <span class="s">&quot;, and &quot;</span>, & : T, IO -> ) : Nil</a>
@@ -1130,6 +1176,81 @@ not stable or only conditionally stable.</p>
     Instance Method Detail
   </h2>
   
+    <div class="entry-detail" id="[](idxs:Tuple):Tuple-instance-method">
+      <div class="signature">
+        
+        def <strong>[]</strong>(idxs : Tuple) : Tuple
+
+        <a class="method-permalink" href="#%5B%5D%28idxs%3ATuple%29%3ATuple-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a tuple with the elements at the given indexes. Raises
+<code>IndexError</code> is any index is out of bounds.</p>
+<pre><code class="language-crystal">arr <span class="o">=</span> (<span class="n">0</span>..<span class="n">9</span>).map(<span class="o">&amp;</span>.<span class="o">**</span>(<span class="n">2</span>)) <span class="c"># =&gt; [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]</span>
+arr[{<span class="n">2</span>, <span class="n">5</span>, <span class="n">9</span>}]            <span class="c"># =&gt; {4, 25, 81}</span>
+arr[{<span class="n">2</span>, <span class="n">15</span>, <span class="n">9</span>}]           <span class="c"># raises IndexError</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/core_ext/indexable.cr#L10" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[](idxs:Enumerable(Int)):Array(T)-instance-method">
+      <div class="signature">
+        
+        def <strong>[]</strong>(idxs : <a href="Enumerable.html">Enumerable</a>(Int)) : <a href="Array.html">Array</a>(T)
+
+        <a class="method-permalink" href="#%5B%5D%28idxs%3AEnumerable%28Int%29%29%3AArray%28T%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns an array with the elements at the given indexes. Raises
+<code>IndexError</code> is any index is out of bounds.</p>
+<pre><code class="language-crystal">arr <span class="o">=</span> (<span class="n">0</span>..<span class="n">9</span>).map(<span class="o">&amp;</span>.<span class="o">**</span>(<span class="n">2</span>)) <span class="c"># =&gt; [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]</span>
+arr[[<span class="n">2</span>, <span class="n">5</span>, <span class="n">9</span>]]            <span class="c"># =&gt; [4, 25, 8]</span>
+arr[[<span class="n">2</span>, <span class="n">15</span>, <span class="n">9</span>]]           <span class="c"># raises IndexError</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/core_ext/indexable.cr#L34" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[](*idxs:Int):Tuple-instance-method">
+      <div class="signature">
+        
+        def <strong>[]</strong>(*idxs : Int) : Tuple
+
+        <a class="method-permalink" href="#%5B%5D%28%2Aidxs%3AInt%29%3ATuple-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a tuple with the elements at the given indexes. Raises
+<code>IndexError</code> is any index is out of bounds.</p>
+<pre><code class="language-crystal">arr <span class="o">=</span> (<span class="n">0</span>..<span class="n">9</span>).map(<span class="o">&amp;</span>.<span class="o">**</span>(<span class="n">2</span>)) <span class="c"># =&gt; [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]</span>
+arr[<span class="n">2</span>, <span class="n">5</span>, <span class="n">9</span>]              <span class="c"># =&gt; {4, 25, 81}</span>
+arr[<span class="n">2</span>, <span class="n">15</span>, <span class="n">9</span>]             <span class="c"># raises IndexError</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/core_ext/indexable.cr#L22" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="sentence(io:IO,separator:String=&quot;,&quot;,*,pair_separator:String=&quot;and&quot;,tail_separator:String=&quot;,and&quot;,&amp;:T,IO-&gt;):Nil-instance-method">
       <div class="signature">
         
@@ -1160,7 +1281,7 @@ separator.</li>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/bca73e483f3c107ce2f82a17313963d36ebf0d88/src/chem/core_ext/indexable.cr#L24" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/core_ext/indexable.cr#L60" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1194,7 +1315,7 @@ separator.</li>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/bca73e483f3c107ce2f82a17313963d36ebf0d88/src/chem/core_ext/indexable.cr#L71" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/core_ext/indexable.cr#L107" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1229,7 +1350,7 @@ joined by <em>tail_separator</em>.</li>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/bca73e483f3c107ce2f82a17313963d36ebf0d88/src/chem/core_ext/indexable.cr#L105" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/core_ext/indexable.cr#L141" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1267,7 +1388,7 @@ joined by <em>tail_separator</em>.</li>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/bca73e483f3c107ce2f82a17313963d36ebf0d88/src/chem/core_ext/indexable.cr#L144" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/core_ext/indexable.cr#L180" target="_blank">View source</a>]
         
       </div>
     </div>

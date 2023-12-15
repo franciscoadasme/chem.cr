@@ -14,7 +14,7 @@
 <script type="text/javascript" src="../../js/doc.js"></script>
 
   <meta name="repository-name" content="chem">
-  <title>Chem::Mol::Reader - chem master</title>
+  <title>Chem::JDFTx::Writer - chem master</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -277,7 +277,7 @@
       
     </li>
   
-  <li class="parent " data-id="chem/Chem/JDFTx" data-name="chem::jdftx">
+  <li class="parent open current" data-id="chem/Chem/JDFTx" data-name="chem::jdftx">
       <a href="../../Chem/JDFTx.html">JDFTx</a>
       
         <ul>
@@ -287,7 +287,7 @@
       
     </li>
   
-  <li class=" " data-id="chem/Chem/JDFTx/Writer" data-name="chem::jdftx::writer">
+  <li class=" current" data-id="chem/Chem/JDFTx/Writer" data-name="chem::jdftx::writer">
       <a href="../../Chem/JDFTx/Writer.html">Writer</a>
       
     </li>
@@ -317,12 +317,12 @@
       
     </li>
   
-  <li class="parent open current" data-id="chem/Chem/Mol" data-name="chem::mol">
+  <li class="parent " data-id="chem/Chem/Mol" data-name="chem::mol">
       <a href="../../Chem/Mol.html">Mol</a>
       
         <ul>
   
-  <li class=" current" data-id="chem/Chem/Mol/Reader" data-name="chem::mol::reader">
+  <li class=" " data-id="chem/Chem/Mol/Reader" data-name="chem::mol::reader">
       <a href="../../Chem/Mol/Reader.html">Reader</a>
       
     </li>
@@ -941,12 +941,12 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">class</span> Chem::<wbr>Mol::<wbr>Reader
+  <span class="kind">class</span> Chem::<wbr>JDFTx::<wbr>Writer
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Chem/Mol/Reader.html">Chem::Mol::Reader</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Chem/JDFTx/Writer.html">Chem::JDFTx::Writer</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
@@ -965,7 +965,7 @@
   </h2>
   <ul class="other-types-list">
     
-      <li class="other-type"><a href="../../Chem/FormatReader.html">Chem::FormatReader</a>(<a href="../../Chem/Structure.html">Chem::Structure</a>)</li>
+      <li class="other-type"><a href="../../Chem/FormatWriter.html">Chem::FormatWriter</a>(<a href="../../Chem/Structure.html">Chem::Structure</a>)</li>
     
   </ul>
 
@@ -988,8 +988,8 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/formats/mol.cr#L29" target="_blank">
-        chem/formats/mol.cr
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/formats/jdftx.cr#L102" target="_blank">
+        chem/formats/jdftx.cr
       </a>
     
     <br/>
@@ -1010,12 +1010,12 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28io%3AIO%2Csync_close%3ABool%3Dfalse%29-class-method" class="signature"><strong>.new</strong>(io : IO, sync_close : Bool = <span class="n">false</span>)</a>
+        <a href="#new%28io%3AIO%2Csingle_file%3ABool%3Dtrue%2Csync_close%3ABool%3Dfalse%29-class-method" class="signature"><strong>.new</strong>(io : IO, single_file : Bool = <span class="n">true</span>, sync_close : Bool = <span class="n">false</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new%28path%3APath%7CString%29%3Aself-class-method" class="signature"><strong>.new</strong>(path : Path | String) : <span class="k">self</span></a>
+        <a href="#new%28path%3APath%7CString%2Csingle_file%3ABool%3Dtrue%29%3Aself-class-method" class="signature"><strong>.new</strong>(path : Path | String, single_file : Bool = <span class="n">true</span>) : <span class="k">self</span></a>
         
           <div class="summary"><p>Creates a new object from the given <em>path</em>.</p></div>
         
@@ -1036,14 +1036,14 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#open%28io%3AIO%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method" class="signature"><strong>.open</strong>(io : IO, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )</a>
+        <a href="#open%28io%3AIO%2Csingle_file%3ABool%3Dtrue%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method" class="signature"><strong>.open</strong>(io : IO, single_file : Bool = <span class="n">true</span>, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )</a>
         
           <div class="summary"><p>Creates a new object from the given <em>io</em>, yields it to the given block, and closes it at the end.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#open%28path%3APath%7CString%2C%26%3Aself-%3E%29-class-method" class="signature"><strong>.open</strong>(path : Path | String, & : <span class="k">self</span> -> )</a>
+        <a href="#open%28path%3APath%7CString%2Csingle_file%3ABool%3Dtrue%2C%26%3Aself-%3E%29-class-method" class="signature"><strong>.open</strong>(path : Path | String, single_file : Bool = <span class="n">true</span>, & : <span class="k">self</span> -> )</a>
         
           <div class="summary"><p>Creates a new object from the given <em>path</em> yields it to the given block, and closes it at the end.</p></div>
         
@@ -1053,6 +1053,25 @@
 
 
 
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#encode_entry%28obj%3AChem%3A%3AStructure%29%3ANil-instance-method" class="signature"><strong>#encode_entry</strong>(obj : Chem::Structure) : Nil</a>
+        
+          <div class="summary"><p>Writes the given object into the <code>IO</code>.</p></div>
+        
+      </li>
+    
+  </ul>
+
 
 
 
@@ -1061,17 +1080,27 @@
   
     
 
-  <h3>Instance methods inherited from module <code><a href="../../Chem/FormatReader.html">Chem::FormatReader</a>(<a href="../../Chem/Structure.html">Chem::Structure</a>)</code></h3>
+  <h3>Instance methods inherited from module <code><a href="../../Chem/FormatWriter.html">Chem::FormatWriter</a>(<a href="../../Chem/Structure.html">Chem::Structure</a>)</code></h3>
   
   
-    <a href="../../Chem/FormatReader.html#read%3F%3ABool-instance-method" class="tooltip">
-      <span>read? : Bool</span>
-    read?</a>, 
+    <a href="../../Chem/FormatWriter.html#%3C%3C%28obj%3AT%29%3ANil-instance-method" class="tooltip">
+      <span><<(obj : T) : Nil</span>
+    <<</a>, 
     
   
-    <a href="../../Chem/FormatReader.html#read_entry%3AT-instance-method" class="tooltip">
-      <span>read_entry : T</span>
-    read_entry</a>
+    <a href="../../Chem/FormatWriter.html#format%28str%3AString%2C%2Aargs%2C%2A%2Aoptions%29%3ANil-instance-method" class="tooltip">
+      <span>format(str : String, *args, **options) : Nil</span>
+    format</a>, 
+    
+  
+    <a href="../../Chem/FormatWriter.html#formatl%28str%3AString%2C%2Aargs%2C%2A%2Aoptions%29%3ANil-instance-method" class="tooltip">
+      <span>formatl(str : String, *args, **options) : Nil</span>
+    formatl</a>, 
+    
+  
+    <a href="../../Chem/FormatWriter.html#written%3F%3ABool-instance-method" class="tooltip">
+      <span>written? : Bool</span>
+    written?</a>
     
   
 
@@ -1149,28 +1178,28 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(io:IO,sync_close:Bool=false)-class-method">
+    <div class="entry-detail" id="new(io:IO,single_file:Bool=true,sync_close:Bool=false)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(io : IO, sync_close : Bool = <span class="n">false</span>)
+        def self.<strong>new</strong>(io : IO, single_file : Bool = <span class="n">true</span>, sync_close : Bool = <span class="n">false</span>)
 
-        <a class="method-permalink" href="#new%28io%3AIO%2Csync_close%3ABool%3Dfalse%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28io%3AIO%2Csingle_file%3ABool%3Dtrue%2Csync_close%3ABool%3Dfalse%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/formats/mol.cr#L32" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/formats/jdftx.cr#L105" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="new(path:Path|String):self-class-method">
+    <div class="entry-detail" id="new(path:Path|String,single_file:Bool=true):self-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(path : <a href="../../Path.html">Path</a> | String) : <span class="k">self</span>
+        def self.<strong>new</strong>(path : <a href="../../Path.html">Path</a> | String, single_file : Bool = <span class="n">true</span>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#new%28path%3APath%7CString%29%3Aself-class-method">#</a>
+        <a class="method-permalink" href="#new%28path%3APath%7CString%2Csingle_file%3ABool%3Dtrue%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1178,7 +1207,7 @@
           <p>Creates a new object from the given <em>path</em>. Positional and named
 arguments are forwarded to the designated constructor.</p>
 <p>An <code>IO</code> object will be created and open from the given <em>path</em>,
-which will be closed when closing this object (<code>sync_close = true</code>). The file open mode is specified by the <code><a href="../../IO/Wrapper.html#FILE_MODE">FILE_MODE</a></code>
+which will be closed when closing this object (<code>sync_close = true</code>). The file open mode is specified by the <code><a href="../../Chem/FormatWriter.html#FILE_MODE">FILE_MODE</a></code>
 constant.</p>
         </div>
       
@@ -1200,12 +1229,12 @@ constant.</p>
     Class Method Detail
   </h2>
   
-    <div class="entry-detail" id="open(io:IO,sync_close:Bool=false,&amp;:self-&gt;)-class-method">
+    <div class="entry-detail" id="open(io:IO,single_file:Bool=true,sync_close:Bool=false,&amp;:self-&gt;)-class-method">
       <div class="signature">
         
-        def self.<strong>open</strong>(io : IO, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )
+        def self.<strong>open</strong>(io : IO, single_file : Bool = <span class="n">true</span>, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )
 
-        <a class="method-permalink" href="#open%28io%3AIO%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">#</a>
+        <a class="method-permalink" href="#open%28io%3AIO%2Csingle_file%3ABool%3Dtrue%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1221,12 +1250,12 @@ are forwarded to the constructor.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="open(path:Path|String,&amp;:self-&gt;)-class-method">
+    <div class="entry-detail" id="open(path:Path|String,single_file:Bool=true,&amp;:self-&gt;)-class-method">
       <div class="signature">
         
-        def self.<strong>open</strong>(path : <a href="../../Path.html">Path</a> | String, & : <span class="k">self</span> -> )
+        def self.<strong>open</strong>(path : <a href="../../Path.html">Path</a> | String, single_file : Bool = <span class="n">true</span>, & : <span class="k">self</span> -> )
 
-        <a class="method-permalink" href="#open%28path%3APath%7CString%2C%26%3Aself-%3E%29-class-method">#</a>
+        <a class="method-permalink" href="#open%28path%3APath%7CString%2Csingle_file%3ABool%3Dtrue%2C%26%3Aself-%3E%29-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1235,7 +1264,7 @@ are forwarded to the constructor.</p>
 given block, and closes it at the end. Positional and named
 arguments are forwarded to the constructor.</p>
 <p>An <code>IO</code> object will be created and open from the given <em>path</em>,
-which will be closed when closing this object (<code>sync_close = true</code>). The file open mode is specified by the <code><a href="../../IO/Wrapper.html#FILE_MODE">FILE_MODE</a></code>
+which will be closed when closing this object (<code>sync_close = true</code>). The file open mode is specified by the <code><a href="../../Chem/FormatWriter.html#FILE_MODE">FILE_MODE</a></code>
 constant.</p>
         </div>
       
@@ -1247,6 +1276,42 @@ constant.</p>
   
 
 
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="encode_entry(obj:Chem::Structure):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>encode_entry</strong>(obj : <a href="../../Chem/Structure.html">Chem::Structure</a>) : Nil
+
+        <a class="method-permalink" href="#encode_entry%28obj%3AChem%3A%3AStructure%29%3ANil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from module <a href="../../Chem/FormatWriter.html">Chem::FormatWriter</a>(<a href="../../Chem/Structure.html">Chem::Structure</a>)
+            </div>
+          
+          <p>Writes the given object into the <code>IO</code>.</p>
+<p><span class="flag purple">NOTE</span>  never invoke this method directly, use <code>#&lt;&lt;</code> instead.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/formats/jdftx.cr#L112" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
 
 
 

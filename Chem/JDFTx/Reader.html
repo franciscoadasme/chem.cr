@@ -14,7 +14,7 @@
 <script type="text/javascript" src="../../js/doc.js"></script>
 
   <meta name="repository-name" content="chem">
-  <title>Chem::Mol::Reader - chem master</title>
+  <title>Chem::JDFTx::Reader - chem master</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -277,12 +277,12 @@
       
     </li>
   
-  <li class="parent " data-id="chem/Chem/JDFTx" data-name="chem::jdftx">
+  <li class="parent open current" data-id="chem/Chem/JDFTx" data-name="chem::jdftx">
       <a href="../../Chem/JDFTx.html">JDFTx</a>
       
         <ul>
   
-  <li class=" " data-id="chem/Chem/JDFTx/Reader" data-name="chem::jdftx::reader">
+  <li class=" current" data-id="chem/Chem/JDFTx/Reader" data-name="chem::jdftx::reader">
       <a href="../../Chem/JDFTx/Reader.html">Reader</a>
       
     </li>
@@ -317,12 +317,12 @@
       
     </li>
   
-  <li class="parent open current" data-id="chem/Chem/Mol" data-name="chem::mol">
+  <li class="parent " data-id="chem/Chem/Mol" data-name="chem::mol">
       <a href="../../Chem/Mol.html">Mol</a>
       
         <ul>
   
-  <li class=" current" data-id="chem/Chem/Mol/Reader" data-name="chem::mol::reader">
+  <li class=" " data-id="chem/Chem/Mol/Reader" data-name="chem::mol::reader">
       <a href="../../Chem/Mol/Reader.html">Reader</a>
       
     </li>
@@ -941,12 +941,12 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">class</span> Chem::<wbr>Mol::<wbr>Reader
+  <span class="kind">class</span> Chem::<wbr>JDFTx::<wbr>Reader
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Chem/Mol/Reader.html">Chem::Mol::Reader</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Chem/JDFTx/Reader.html">Chem::JDFTx::Reader</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
@@ -988,8 +988,8 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/formats/mol.cr#L29" target="_blank">
-        chem/formats/mol.cr
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/formats/jdftx.cr#L3" target="_blank">
+        chem/formats/jdftx.cr
       </a>
     
     <br/>
@@ -1010,12 +1010,12 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28io%3AIO%2Csync_close%3ABool%3Dfalse%29-class-method" class="signature"><strong>.new</strong>(io : IO, sync_close : Bool = <span class="n">false</span>)</a>
+        <a href="#new%28io%3AIO%2Cguess_bonds%3ABool%3Dfalse%2Cguess_names%3ABool%3Dfalse%2Csync_close%3ABool%3Dfalse%29-class-method" class="signature"><strong>.new</strong>(io : IO, guess_bonds : Bool = <span class="n">false</span>, guess_names : Bool = <span class="n">false</span>, sync_close : Bool = <span class="n">false</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new%28path%3APath%7CString%29%3Aself-class-method" class="signature"><strong>.new</strong>(path : Path | String) : <span class="k">self</span></a>
+        <a href="#new%28path%3APath%7CString%2Cguess_bonds%3ABool%3Dfalse%2Cguess_names%3ABool%3Dfalse%29%3Aself-class-method" class="signature"><strong>.new</strong>(path : Path | String, guess_bonds : Bool = <span class="n">false</span>, guess_names : Bool = <span class="n">false</span>) : <span class="k">self</span></a>
         
           <div class="summary"><p>Creates a new object from the given <em>path</em>.</p></div>
         
@@ -1036,14 +1036,14 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#open%28io%3AIO%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method" class="signature"><strong>.open</strong>(io : IO, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )</a>
+        <a href="#open%28io%3AIO%2Cguess_bonds%3ABool%3Dfalse%2Cguess_names%3ABool%3Dfalse%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method" class="signature"><strong>.open</strong>(io : IO, guess_bonds : Bool = <span class="n">false</span>, guess_names : Bool = <span class="n">false</span>, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )</a>
         
           <div class="summary"><p>Creates a new object from the given <em>io</em>, yields it to the given block, and closes it at the end.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#open%28path%3APath%7CString%2C%26%3Aself-%3E%29-class-method" class="signature"><strong>.open</strong>(path : Path | String, & : <span class="k">self</span> -> )</a>
+        <a href="#open%28path%3APath%7CString%2Cguess_bonds%3ABool%3Dfalse%2Cguess_names%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method" class="signature"><strong>.open</strong>(path : Path | String, guess_bonds : Bool = <span class="n">false</span>, guess_names : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )</a>
         
           <div class="summary"><p>Creates a new object from the given <em>path</em> yields it to the given block, and closes it at the end.</p></div>
         
@@ -1149,28 +1149,28 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(io:IO,sync_close:Bool=false)-class-method">
+    <div class="entry-detail" id="new(io:IO,guess_bonds:Bool=false,guess_names:Bool=false,sync_close:Bool=false)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(io : IO, sync_close : Bool = <span class="n">false</span>)
+        def self.<strong>new</strong>(io : IO, guess_bonds : Bool = <span class="n">false</span>, guess_names : Bool = <span class="n">false</span>, sync_close : Bool = <span class="n">false</span>)
 
-        <a class="method-permalink" href="#new%28io%3AIO%2Csync_close%3ABool%3Dfalse%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28io%3AIO%2Cguess_bonds%3ABool%3Dfalse%2Cguess_names%3ABool%3Dfalse%2Csync_close%3ABool%3Dfalse%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/formats/mol.cr#L32" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/formats/jdftx.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="new(path:Path|String):self-class-method">
+    <div class="entry-detail" id="new(path:Path|String,guess_bonds:Bool=false,guess_names:Bool=false):self-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(path : <a href="../../Path.html">Path</a> | String) : <span class="k">self</span>
+        def self.<strong>new</strong>(path : <a href="../../Path.html">Path</a> | String, guess_bonds : Bool = <span class="n">false</span>, guess_names : Bool = <span class="n">false</span>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#new%28path%3APath%7CString%29%3Aself-class-method">#</a>
+        <a class="method-permalink" href="#new%28path%3APath%7CString%2Cguess_bonds%3ABool%3Dfalse%2Cguess_names%3ABool%3Dfalse%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1200,12 +1200,12 @@ constant.</p>
     Class Method Detail
   </h2>
   
-    <div class="entry-detail" id="open(io:IO,sync_close:Bool=false,&amp;:self-&gt;)-class-method">
+    <div class="entry-detail" id="open(io:IO,guess_bonds:Bool=false,guess_names:Bool=false,sync_close:Bool=false,&amp;:self-&gt;)-class-method">
       <div class="signature">
         
-        def self.<strong>open</strong>(io : IO, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )
+        def self.<strong>open</strong>(io : IO, guess_bonds : Bool = <span class="n">false</span>, guess_names : Bool = <span class="n">false</span>, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )
 
-        <a class="method-permalink" href="#open%28io%3AIO%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">#</a>
+        <a class="method-permalink" href="#open%28io%3AIO%2Cguess_bonds%3ABool%3Dfalse%2Cguess_names%3ABool%3Dfalse%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1221,12 +1221,12 @@ are forwarded to the constructor.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="open(path:Path|String,&amp;:self-&gt;)-class-method">
+    <div class="entry-detail" id="open(path:Path|String,guess_bonds:Bool=false,guess_names:Bool=false,&amp;:self-&gt;)-class-method">
       <div class="signature">
         
-        def self.<strong>open</strong>(path : <a href="../../Path.html">Path</a> | String, & : <span class="k">self</span> -> )
+        def self.<strong>open</strong>(path : <a href="../../Path.html">Path</a> | String, guess_bonds : Bool = <span class="n">false</span>, guess_names : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )
 
-        <a class="method-permalink" href="#open%28path%3APath%7CString%2C%26%3Aself-%3E%29-class-method">#</a>
+        <a class="method-permalink" href="#open%28path%3APath%7CString%2Cguess_bonds%3ABool%3Dfalse%2Cguess_names%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">#</a>
       </div>
       
         <div class="doc">
