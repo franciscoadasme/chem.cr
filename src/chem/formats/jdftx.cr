@@ -104,6 +104,8 @@ module Chem::JDFTx
 
     def initialize(
       @io : IO,
+      @fractional : Bool = false,
+      @wrap : Bool = false,
       @single_file : Bool = true,
       @sync_close : Bool = false
     )
@@ -129,13 +131,24 @@ module Chem::JDFTx
 
       io.close if close_file
 
-      @io.puts "coords-type Cartesian"
+      @io.print "coords-type "
+      @io.puts @fractional ? "Lattice" : "Cartesian"
       obj.atoms.each do |atom|
-        @io.printf "ion%4s%8.3f%8.3f%8.3f%2d\n",
+        vec = atom.coords
+        if @fractional
+          format = "%22.16f"
+          vec = obj.cell.fract vec
+          vec = vec.wrap if @wrap
+        else
+          format = "%8.3f"
+          vec = vec.map &.to_bohrs
+          vec = obj.cell.wrap vec if @wrap
+        end
+        @io.printf "ion%4s#{format}#{format}#{format}%2d\n",
           atom.element.symbol,
-          atom.x.to_bohrs,
-          atom.y.to_bohrs,
-          atom.z.to_bohrs,
+          vec.x,
+          vec.y,
+          vec.z,
           atom.constraint.try(&.xyz?) ? 0 : 1
       end
     end

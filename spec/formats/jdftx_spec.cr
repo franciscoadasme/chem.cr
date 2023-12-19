@@ -37,30 +37,34 @@ end
 
 describe Chem::JDFTx::Writer do
   it "writes a JDFTx file" do
-    reduced_cell_prec = ->(str : String) {
-      str.gsub(/\.(\d{3})\d{12}/, ".\\1000000000000")
-    }
     path = spec_file("polyala-val.ionpos")
-    expected = reduced_cell_prec.call File.read(path)
-    actual = reduced_cell_prec.call Chem::Structure.read(path).to_jdftx
+    expected = reduced_cell_prec File.read(path)
+    actual = reduced_cell_prec Chem::Structure.read(path).to_jdftx
     actual.should eq expected
   end
 
   it "writes a split JDFTx file" do
-    reduced_cell_prec = ->(str : String) {
-      str.gsub(/\.(\d{3})\d{12}/, ".\\1000000000000")
-    }
-
     path = Path[spec_file("ff2d.ionpos")]
     tmp = File.tempfile(".ionpos") do |io|
       Chem::Structure.read(path).to_jdftx io, single_file: false
     end
 
     File.read(tmp.path).should eq File.read(path)
-    expected = reduced_cell_prec.call File.read(path.with_ext(".lattice"))
-    actual = reduced_cell_prec.call File.read(Path[tmp.path].with_ext(".lattice"))
+    expected = reduced_cell_prec File.read(path.with_ext(".lattice"))
+    actual = reduced_cell_prec File.read(Path[tmp.path].with_ext(".lattice"))
     actual.should eq expected
   ensure
     tmp.try &.delete
   end
+
+  it "writes fractional coordinates" do
+    expected = File.read spec_file("polyala-val_f.ionpos")
+    path = spec_file("polyala-val.ionpos")
+    actual = Chem::Structure.read(path).to_jdftx fractional: true
+    reduced_cell_prec(actual).should eq reduced_cell_prec(expected)
+  end
+end
+
+private def reduced_cell_prec(str : String)
+  str.gsub(/\.(\d{3})\d{12}/, ".\\1000000000000")
 end
