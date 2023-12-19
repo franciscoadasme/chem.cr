@@ -988,7 +988,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/formats/jdftx.cr#L102" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/664331d7d9c10a0e1fca7cb7a04427a3a257bbef/src/chem/formats/jdftx.cr#L102" target="_blank">
         chem/formats/jdftx.cr
       </a>
     
@@ -1010,12 +1010,12 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28io%3AIO%2Csingle_file%3ABool%3Dtrue%2Csync_close%3ABool%3Dfalse%29-class-method" class="signature"><strong>.new</strong>(io : IO, single_file : Bool = <span class="n">true</span>, sync_close : Bool = <span class="n">false</span>)</a>
+        <a href="#new%28io%3AIO%2Cfractional%3ABool%3Dfalse%2Cwrap%3ABool%3Dfalse%2Csingle_file%3ABool%3Dtrue%2Csync_close%3ABool%3Dfalse%29-class-method" class="signature"><strong>.new</strong>(io : IO, fractional : Bool = <span class="n">false</span>, wrap : Bool = <span class="n">false</span>, single_file : Bool = <span class="n">true</span>, sync_close : Bool = <span class="n">false</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new%28path%3APath%7CString%2Csingle_file%3ABool%3Dtrue%29%3Aself-class-method" class="signature"><strong>.new</strong>(path : Path | String, single_file : Bool = <span class="n">true</span>) : <span class="k">self</span></a>
+        <a href="#new%28path%3APath%7CString%2Cfractional%3ABool%3Dfalse%2Cwrap%3ABool%3Dfalse%2Csingle_file%3ABool%3Dtrue%29%3Aself-class-method" class="signature"><strong>.new</strong>(path : Path | String, fractional : Bool = <span class="n">false</span>, wrap : Bool = <span class="n">false</span>, single_file : Bool = <span class="n">true</span>) : <span class="k">self</span></a>
         
           <div class="summary"><p>Creates a new object from the given <em>path</em>.</p></div>
         
@@ -1036,14 +1036,14 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#open%28io%3AIO%2Csingle_file%3ABool%3Dtrue%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method" class="signature"><strong>.open</strong>(io : IO, single_file : Bool = <span class="n">true</span>, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )</a>
+        <a href="#open%28io%3AIO%2Cfractional%3ABool%3Dfalse%2Cwrap%3ABool%3Dfalse%2Csingle_file%3ABool%3Dtrue%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method" class="signature"><strong>.open</strong>(io : IO, fractional : Bool = <span class="n">false</span>, wrap : Bool = <span class="n">false</span>, single_file : Bool = <span class="n">true</span>, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )</a>
         
           <div class="summary"><p>Creates a new object from the given <em>io</em>, yields it to the given block, and closes it at the end.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#open%28path%3APath%7CString%2Csingle_file%3ABool%3Dtrue%2C%26%3Aself-%3E%29-class-method" class="signature"><strong>.open</strong>(path : Path | String, single_file : Bool = <span class="n">true</span>, & : <span class="k">self</span> -> )</a>
+        <a href="#open%28path%3APath%7CString%2Cfractional%3ABool%3Dfalse%2Cwrap%3ABool%3Dfalse%2Csingle_file%3ABool%3Dtrue%2C%26%3Aself-%3E%29-class-method" class="signature"><strong>.open</strong>(path : Path | String, fractional : Bool = <span class="n">false</span>, wrap : Bool = <span class="n">false</span>, single_file : Bool = <span class="n">true</span>, & : <span class="k">self</span> -> )</a>
         
           <div class="summary"><p>Creates a new object from the given <em>path</em> yields it to the given block, and closes it at the end.</p></div>
         
@@ -1178,28 +1178,28 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(io:IO,single_file:Bool=true,sync_close:Bool=false)-class-method">
+    <div class="entry-detail" id="new(io:IO,fractional:Bool=false,wrap:Bool=false,single_file:Bool=true,sync_close:Bool=false)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(io : IO, single_file : Bool = <span class="n">true</span>, sync_close : Bool = <span class="n">false</span>)
+        def self.<strong>new</strong>(io : IO, fractional : Bool = <span class="n">false</span>, wrap : Bool = <span class="n">false</span>, single_file : Bool = <span class="n">true</span>, sync_close : Bool = <span class="n">false</span>)
 
-        <a class="method-permalink" href="#new%28io%3AIO%2Csingle_file%3ABool%3Dtrue%2Csync_close%3ABool%3Dfalse%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28io%3AIO%2Cfractional%3ABool%3Dfalse%2Cwrap%3ABool%3Dfalse%2Csingle_file%3ABool%3Dtrue%2Csync_close%3ABool%3Dfalse%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/formats/jdftx.cr#L105" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/664331d7d9c10a0e1fca7cb7a04427a3a257bbef/src/chem/formats/jdftx.cr#L105" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="new(path:Path|String,single_file:Bool=true):self-class-method">
+    <div class="entry-detail" id="new(path:Path|String,fractional:Bool=false,wrap:Bool=false,single_file:Bool=true):self-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(path : <a href="../../Path.html">Path</a> | String, single_file : Bool = <span class="n">true</span>) : <span class="k">self</span>
+        def self.<strong>new</strong>(path : <a href="../../Path.html">Path</a> | String, fractional : Bool = <span class="n">false</span>, wrap : Bool = <span class="n">false</span>, single_file : Bool = <span class="n">true</span>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#new%28path%3APath%7CString%2Csingle_file%3ABool%3Dtrue%29%3Aself-class-method">#</a>
+        <a class="method-permalink" href="#new%28path%3APath%7CString%2Cfractional%3ABool%3Dfalse%2Cwrap%3ABool%3Dfalse%2Csingle_file%3ABool%3Dtrue%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1229,12 +1229,12 @@ constant.</p>
     Class Method Detail
   </h2>
   
-    <div class="entry-detail" id="open(io:IO,single_file:Bool=true,sync_close:Bool=false,&amp;:self-&gt;)-class-method">
+    <div class="entry-detail" id="open(io:IO,fractional:Bool=false,wrap:Bool=false,single_file:Bool=true,sync_close:Bool=false,&amp;:self-&gt;)-class-method">
       <div class="signature">
         
-        def self.<strong>open</strong>(io : IO, single_file : Bool = <span class="n">true</span>, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )
+        def self.<strong>open</strong>(io : IO, fractional : Bool = <span class="n">false</span>, wrap : Bool = <span class="n">false</span>, single_file : Bool = <span class="n">true</span>, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )
 
-        <a class="method-permalink" href="#open%28io%3AIO%2Csingle_file%3ABool%3Dtrue%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">#</a>
+        <a class="method-permalink" href="#open%28io%3AIO%2Cfractional%3ABool%3Dfalse%2Cwrap%3ABool%3Dfalse%2Csingle_file%3ABool%3Dtrue%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1250,12 +1250,12 @@ are forwarded to the constructor.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="open(path:Path|String,single_file:Bool=true,&amp;:self-&gt;)-class-method">
+    <div class="entry-detail" id="open(path:Path|String,fractional:Bool=false,wrap:Bool=false,single_file:Bool=true,&amp;:self-&gt;)-class-method">
       <div class="signature">
         
-        def self.<strong>open</strong>(path : <a href="../../Path.html">Path</a> | String, single_file : Bool = <span class="n">true</span>, & : <span class="k">self</span> -> )
+        def self.<strong>open</strong>(path : <a href="../../Path.html">Path</a> | String, fractional : Bool = <span class="n">false</span>, wrap : Bool = <span class="n">false</span>, single_file : Bool = <span class="n">true</span>, & : <span class="k">self</span> -> )
 
-        <a class="method-permalink" href="#open%28path%3APath%7CString%2Csingle_file%3ABool%3Dtrue%2C%26%3Aself-%3E%29-class-method">#</a>
+        <a class="method-permalink" href="#open%28path%3APath%7CString%2Cfractional%3ABool%3Dfalse%2Cwrap%3ABool%3Dfalse%2Csingle_file%3ABool%3Dtrue%2C%26%3Aself-%3E%29-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1307,7 +1307,7 @@ constant.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/4cc8fb79c5d9487718fdd19be07cbc341d0b845d/src/chem/formats/jdftx.cr#L112" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/664331d7d9c10a0e1fca7cb7a04427a3a257bbef/src/chem/formats/jdftx.cr#L114" target="_blank">View source</a>]
         
       </div>
     </div>
