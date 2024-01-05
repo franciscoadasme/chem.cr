@@ -581,7 +581,7 @@ class Chem::Topology
             Spatial.angle b, atom, c
           end
         end
-        case {atom.element, avg_bond_angle}
+        case {atom.element, avg_bond_angle.round}
         when {_, 155..}                then hybridation_map[atom] = 1
         when {_, 115..}                then hybridation_map[atom] = 2
         when {PeriodicTable::N, 100..} then hybridation_map[atom] = 2 # 5-member aromatic ring

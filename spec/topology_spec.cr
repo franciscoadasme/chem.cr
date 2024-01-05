@@ -522,6 +522,13 @@ describe Chem::Topology do
       structure.topology.guess_bonds
       structure.bonds.size.should eq 91
     end
+
+    it "guesses conjugated aromatic 5-member N-heteroring" do
+      structure = Chem::Structure.read spec_file("FAD_strain.pdb")
+      structure.topology.guess_bonds
+      structure.bonds.tally_by(&.order.to_i).should eq({1 => 78, 2 => 13})
+      structure.dig('A', 1, "N6").bonds[structure.dig('A', 1, "C23")].double?.should be_true
+    end
   end
 
   describe "#guess_names" do
