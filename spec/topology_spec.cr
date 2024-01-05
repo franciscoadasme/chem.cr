@@ -516,6 +516,12 @@ describe Chem::Topology do
       structure.bonds.size.should eq expected.bonds.size
       structure.bonds.tally_by(&.order).should eq expected.bonds.tally_by(&.order)
     end
+
+    it "avoids strain rings in compressed FAD" do
+      structure = Chem::Structure.read spec_file("FAD_strain.pdb")
+      structure.topology.guess_bonds
+      structure.bonds.size.should eq 91
+    end
   end
 
   describe "#guess_names" do

@@ -3,7 +3,8 @@ class Chem::Topology
   include ChainCollection
   include ResidueCollection
 
-  MAX_CHAINS = 62 # chain id is alphanumeric: A-Z, a-z or 0-9
+  MAX_CHAINS     = 62 # chain id is alphanumeric: A-Z, a-z or 0-9
+  MIN_RING_ANGLE = 50 # angle cutoff to detect high ring strain
 
   @chain_table = {} of Char => Chain
   @chains = [] of Chain
@@ -276,6 +277,19 @@ class Chem::Topology
           bond_table[other].reject! &.==(atom)
         end
         over_valence || can_increase_bond_order
+      end
+    end
+
+    # Remove bonds that produce high ring strain (<50°) in distored structures
+    bond_table.each do |atom, bonded_atoms|
+      pb = atom.coords
+      bonded_atoms.combinations(2).each do |(a, b)|
+        pa = @structure.cell?.try(&.wrap(a.coords, around: pb)) || a.coords
+        pc = @structure.cell?.try(&.wrap(b.coords, around: pb)) || b.coords
+        next unless (pc - pb).angle(pa - pb).degrees < MIN_RING_ANGLE
+        farther_atom = pa.distance(pb) > pc.distance(pb) ? a : b
+        bonded_atoms.delete farther_atom
+        bond_table[farther_atom].delete atom
       end
     end
 
