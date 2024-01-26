@@ -7,12 +7,12 @@ module Chem
     @residues = [] of Residue
 
     getter id : Char
-    getter top : Topology
-    delegate structure, to: @top
+    getter structure : Structure
+    delegate structure, to: @structure
 
-    def initialize(@top : Topology, @id : Char)
+    def initialize(@structure : Structure, @id : Char)
       raise ArgumentError.new("Non-alphanumeric chain id") unless @id.ascii_alphanumeric?
-      @top << self
+      @structure << self
     end
 
     protected def <<(residue : Residue) : self
@@ -185,12 +185,12 @@ module Chem
       io << '>'
     end
 
-    # Copies `self` into *top*. It calls `#copy_to` on each residue,
+    # Copies `self` into *structure*. It calls `#copy_to` on each residue,
     # which in turn calls `Atom#copy_to`, if *recursive* is `true`.
     #
     # NOTE: bonds are not copied and must be set manually for the copy.
-    protected def copy_to(top : Topology, recursive : Bool = true) : self
-      chain = Chain.new top, @id
+    protected def copy_to(structure : Structure, recursive : Bool = true) : self
+      chain = Chain.new structure, @id
       each_residue &.copy_to(chain) if recursive
       chain
     end

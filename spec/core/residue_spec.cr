@@ -3,8 +3,8 @@ require "../spec_helper"
 describe Chem::Residue do
   describe ".new" do
     it "sets type from templates" do
-      top = Chem::Topology.new
-      chain = Chem::Chain.new top, 'A'
+      structure = Chem::Structure.new
+      chain = Chem::Chain.new structure, 'A'
       Chem::Residue.new(chain, 1, "TYR").type.protein?.should be_true
       Chem::Residue.new(chain, 2, "HOH").type.solvent?.should be_true
       Chem::Residue.new(chain, 2, "ULK").type.other?.should be_true
@@ -374,11 +374,11 @@ describe Chem::Residue do
 
   describe "#to_s" do
     it "returns a delimited string representation" do
-      top = Chem::Topology.new
-      chain = Chem::Chain.new top, 'A'
+      structure = Chem::Structure.new
+      chain = Chem::Chain.new structure, 'A'
       Chem::Residue.new(chain, 1, "TYR").to_s.should eq "<Residue A:TYR1>"
       Chem::Residue.new(chain, 234, "ARG").to_s.should eq "<Residue A:ARG234>"
-      chain = Chem::Chain.new top, 'B'
+      chain = Chem::Chain.new structure, 'B'
       Chem::Residue.new(chain, 7453, "ALA").to_s.should eq "<Residue B:ALA7453>"
     end
 
@@ -401,8 +401,8 @@ describe Chem::Residue do
 
   describe "#name=" do
     it "sets type from templates" do
-      top = Chem::Topology.new
-      chain = Chem::Chain.new top, 'A'
+      structure = Chem::Structure.new
+      chain = Chem::Chain.new structure, 'A'
       residue = Chem::Residue.new(chain, 1, "TYR")
       residue.type.protein?.should be_true
       residue.name = "HOH"

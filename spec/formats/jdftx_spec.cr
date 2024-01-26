@@ -21,9 +21,9 @@ describe Chem::JDFTx::Reader do
     structure = Chem::Structure.from_jdftx path
     structure.atoms[5].coords.should be_close vec3(-9.997, -3.330, 3.142), 1e-3
 
-    structure.topology.guess_bonds
-    structure.topology.guess_formal_charges
-    structure.topology.guess_names
+    structure.guess_bonds
+    structure.guess_formal_charges
+    structure.guess_names
     structure.residues.size.should eq 36
     structure.residues.map(&.name).uniq.should eq %w(PHE)
 

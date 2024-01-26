@@ -90,9 +90,9 @@ module Chem::PSF
       parse_connectivity(Bond, "BOND").each do |bond|
         bond.atoms[0].bonds << bond
       end
-      structure.topology.angles = parse_connectivity(Angle, "THETA")
-      structure.topology.dihedrals = parse_connectivity(Dihedral, "PHI")
-      structure.topology.impropers = parse_connectivity(Improper, "IMPHI")
+      structure.angles = parse_connectivity(Angle, "THETA")
+      structure.dihedrals = parse_connectivity(Dihedral, "PHI")
+      structure.impropers = parse_connectivity(Improper, "IMPHI")
 
       structure
     end

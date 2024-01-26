@@ -260,7 +260,7 @@ class Chem::Templates::SpecParser
     end
 
     raise "Duplicate atom #{atom_name}" if @atom_map.has_key?(atom_name)
-    element ||= Topology.guess_element(atom_name)
+    element ||= Structure.guess_element(atom_name)
     atom = AtomRecord.new(atom_name, element, formal_charge, explicit_hydrogens)
     @atom_map[atom.name] = atom
   end

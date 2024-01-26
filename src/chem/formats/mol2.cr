@@ -89,7 +89,7 @@ module Chem::Mol2
           end
         end
       end
-        .tap &.topology.guess_formal_charges
+        .tap &.guess_formal_charges
     end
 
     private def skip_to_tag(tag : String) : Nil

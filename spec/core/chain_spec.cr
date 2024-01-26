@@ -4,7 +4,7 @@ describe Chem::Chain do
   describe "#new" do
     it "fails with non-alphanumeric id" do
       expect_raises ArgumentError, "Non-alphanumeric chain id" do
-        Chem::Chain.new Chem::Topology.new, '['
+        Chem::Chain.new Chem::Structure.new, '['
       end
     end
   end
@@ -24,7 +24,7 @@ describe Chem::Chain do
 
   describe "#to_s" do
     it "returns a string representation" do
-      Chem::Chain.new(Chem::Topology.new, 'K').to_s.should eq "<Chain K>"
+      Chem::Chain.new(Chem::Structure.new, 'K').to_s.should eq "<Chain K>"
     end
   end
 

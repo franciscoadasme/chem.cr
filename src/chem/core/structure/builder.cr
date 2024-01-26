@@ -60,7 +60,7 @@ module Chem
     end
 
     def atom(name : String, serial : Int32, coords : Spatial::Vec3, **options) : Atom
-      atom name, serial, coords, Topology.guess_element(name), **options
+      atom name, serial, coords, Structure.guess_element(name), **options
     end
 
     def atom(name : String, serial : Int32, coords : Spatial::Vec3, element : Element, **options) : Atom
@@ -103,19 +103,19 @@ module Chem
 
     def build : Structure
       kekulize
-      @structure.topology.apply_templates if @use_templates
+      @structure.apply_templates if @use_templates
 
       if @guess_bonds
         # skip bond order and formal charge assignment if a protein chain
         # has missing hydrogens (very common in PDB)
         include_h = !@structure.each_residue.any? { |r| r.protein? && !r.has_hydrogens? }
-        @structure.topology.guess_bonds perceive_order: include_h
-        @structure.topology.guess_formal_charges if include_h
+        @structure.guess_bonds perceive_order: include_h
+        @structure.guess_formal_charges if include_h
       end
 
-      @structure.topology.guess_names if @guess_names
+      @structure.guess_names if @guess_names
       if @guess_bonds || @guess_names || @use_templates
-        @structure.topology.guess_unknown_residue_types
+        @structure.guess_unknown_residue_types
       end
 
       @structure
@@ -131,7 +131,7 @@ module Chem
     end
 
     def chain(id : Char) : Chain
-      @chain = @structure[id]? || Chain.new(@structure.topology, id)
+      @chain = @structure[id]? || Chain.new(@structure, id)
     end
 
     def chain(id : Char, & : self ->) : Nil
