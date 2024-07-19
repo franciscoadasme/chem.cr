@@ -82,8 +82,8 @@
       
     </li>
   
-  <li class=" " data-id="chem/Chem/AtomCollection" data-name="chem::atomcollection">
-      <a href="../../Chem/AtomCollection.html">AtomCollection</a>
+  <li class=" " data-id="chem/Chem/AtomContainer" data-name="chem::atomcontainer">
+      <a href="../../Chem/AtomContainer.html">AtomContainer</a>
       
     </li>
   
@@ -114,11 +114,6 @@
   
   <li class=" " data-id="chem/Chem/Chain" data-name="chem::chain">
       <a href="../../Chem/Chain.html">Chain</a>
-      
-    </li>
-  
-  <li class=" " data-id="chem/Chem/ChainCollection" data-name="chem::chaincollection">
-      <a href="../../Chem/ChainCollection.html">ChainCollection</a>
       
     </li>
   
@@ -514,11 +509,6 @@
   
   <li class=" " data-id="chem/Chem/Residue" data-name="chem::residue">
       <a href="../../Chem/Residue.html">Residue</a>
-      
-    </li>
-  
-  <li class=" " data-id="chem/Chem/ResidueCollection" data-name="chem::residuecollection">
-      <a href="../../Chem/ResidueCollection.html">ResidueCollection</a>
       
     </li>
   
@@ -960,7 +950,7 @@
   </h2>
   <ul class="other-types-list">
     
-      <li class="other-type"><a href="../../Chem/FormatWriter.html">Chem::FormatWriter</a>(<a href="../../Chem/AtomCollection.html">Chem::AtomCollection</a>)</li>
+      <li class="other-type"><a href="../../Chem/FormatWriter.html">Chem::FormatWriter</a>(<a href="../../Chem/AtomView.html">Chem::AtomView</a> | <a href="../../Chem/Chain.html">Chem::Chain</a> | <a href="../../Chem/ChainView.html">Chem::ChainView</a> | <a href="../../Chem/Residue.html">Chem::Residue</a> | <a href="../../Chem/ResidueView.html">Chem::ResidueView</a> | <a href="../../Chem/Structure.html">Chem::Structure</a>)</li>
     
   </ul>
 
@@ -983,7 +973,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/e0937a18461d3e6c3ac47195979254e163851b1f/src/chem/formats/mol.cr#L79" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/8f2bebcc6de154e6ec0653ce6403831896a49493/src/chem/formats/mol.cr#L79" target="_blank">
         chem/formats/mol.cr
       </a>
     
@@ -1061,7 +1051,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#encode_entry%28obj%3AAtomCollection%29%3ANil-instance-method" class="signature"><strong>#encode_entry</strong>(obj : AtomCollection) : Nil</a>
+        <a href="#encode_entry%28obj%3AAtomContainer%29%3ANil-instance-method" class="signature"><strong>#encode_entry</strong>(obj : AtomContainer) : Nil</a>
         
           <div class="summary"><p>Writes the given object into the <code>IO</code>.</p></div>
         
@@ -1075,11 +1065,11 @@
   
     
 
-  <h3>Instance methods inherited from module <code><a href="../../Chem/FormatWriter.html">Chem::FormatWriter</a>(<a href="../../Chem/AtomCollection.html">Chem::AtomCollection</a>)</code></h3>
+  <h3>Instance methods inherited from module <code><a href="../../Chem/FormatWriter.html">Chem::FormatWriter</a>(<a href="../../Chem/AtomView.html">Chem::AtomView</a> | <a href="../../Chem/Chain.html">Chem::Chain</a> | <a href="../../Chem/ChainView.html">Chem::ChainView</a> | <a href="../../Chem/Residue.html">Chem::Residue</a> | <a href="../../Chem/ResidueView.html">Chem::ResidueView</a> | <a href="../../Chem/Structure.html">Chem::Structure</a>)</code></h3>
   
   
-    <a href="../../Chem/FormatWriter.html#%3C%3C%28obj%3AT%29%3ANil-instance-method" class="tooltip">
-      <span><<(obj : T) : Nil</span>
+    <a href="../../Chem/FormatWriter.html#%3C%3C%28obj%3AT%7CT%7CT%7CT%7CT%7CT%29%3ANil-instance-method" class="tooltip">
+      <span><<(obj : T | T | T | T | T | T) : Nil</span>
     <<</a>, 
     
   
@@ -1196,7 +1186,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/e0937a18461d3e6c3ac47195979254e163851b1f/src/chem/formats/mol.cr#L82" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8f2bebcc6de154e6ec0653ce6403831896a49493/src/chem/formats/mol.cr#L82" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1295,18 +1285,18 @@ constant.</p>
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="encode_entry(obj:AtomCollection):Nil-instance-method">
+    <div class="entry-detail" id="encode_entry(obj:AtomContainer):Nil-instance-method">
       <div class="signature">
         
-        def <strong>encode_entry</strong>(obj : <a href="../../Chem/AtomCollection.html">AtomCollection</a>) : Nil
+        def <strong>encode_entry</strong>(obj : <a href="../../Chem/AtomContainer.html">AtomContainer</a>) : Nil
 
-        <a class="method-permalink" href="#encode_entry%28obj%3AAtomCollection%29%3ANil-instance-method">#</a>
+        <a class="method-permalink" href="#encode_entry%28obj%3AAtomContainer%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
           
             <div class="doc-inherited">
-              Description copied from module <a href="../../Chem/FormatWriter.html">Chem::FormatWriter</a>(<a href="../../Chem/AtomCollection.html">Chem::AtomCollection</a>)
+              Description copied from module <a href="../../Chem/FormatWriter.html">Chem::FormatWriter</a>(<a href="../../Chem/AtomView.html">Chem::AtomView</a> | <a href="../../Chem/Chain.html">Chem::Chain</a> | <a href="../../Chem/ChainView.html">Chem::ChainView</a> | <a href="../../Chem/Residue.html">Chem::Residue</a> | <a href="../../Chem/ResidueView.html">Chem::ResidueView</a> | <a href="../../Chem/Structure.html">Chem::Structure</a>)
             </div>
           
           <p>Writes the given object into the <code>IO</code>.</p>
@@ -1316,7 +1306,7 @@ constant.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/e0937a18461d3e6c3ac47195979254e163851b1f/src/chem/formats/mol.cr#L89" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8f2bebcc6de154e6ec0653ce6403831896a49493/src/chem/formats/mol.cr#L89" target="_blank">View source</a>]
         
       </div>
     </div>

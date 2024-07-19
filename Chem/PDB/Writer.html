@@ -82,8 +82,8 @@
       
     </li>
   
-  <li class=" " data-id="chem/Chem/AtomCollection" data-name="chem::atomcollection">
-      <a href="../../Chem/AtomCollection.html">AtomCollection</a>
+  <li class=" " data-id="chem/Chem/AtomContainer" data-name="chem::atomcontainer">
+      <a href="../../Chem/AtomContainer.html">AtomContainer</a>
       
     </li>
   
@@ -114,11 +114,6 @@
   
   <li class=" " data-id="chem/Chem/Chain" data-name="chem::chain">
       <a href="../../Chem/Chain.html">Chain</a>
-      
-    </li>
-  
-  <li class=" " data-id="chem/Chem/ChainCollection" data-name="chem::chaincollection">
-      <a href="../../Chem/ChainCollection.html">ChainCollection</a>
       
     </li>
   
@@ -514,11 +509,6 @@
   
   <li class=" " data-id="chem/Chem/Residue" data-name="chem::residue">
       <a href="../../Chem/Residue.html">Residue</a>
-      
-    </li>
-  
-  <li class=" " data-id="chem/Chem/ResidueCollection" data-name="chem::residuecollection">
-      <a href="../../Chem/ResidueCollection.html">ResidueCollection</a>
       
     </li>
   
@@ -960,9 +950,9 @@
   </h2>
   <ul class="other-types-list">
     
-      <li class="other-type"><a href="../../Chem/FormatWriter.html">Chem::FormatWriter</a>(<a href="../../Chem/AtomCollection.html">Chem::AtomCollection</a>)</li>
+      <li class="other-type"><a href="../../Chem/FormatWriter.html">Chem::FormatWriter</a>(<a href="../../Chem/AtomView.html">Chem::AtomView</a> | <a href="../../Chem/Chain.html">Chem::Chain</a> | <a href="../../Chem/ChainView.html">Chem::ChainView</a> | <a href="../../Chem/Residue.html">Chem::Residue</a> | <a href="../../Chem/ResidueView.html">Chem::ResidueView</a> | <a href="../../Chem/Structure.html">Chem::Structure</a>)</li>
     
-      <li class="other-type"><a href="../../Chem/FormatWriter/MultiEntry.html">Chem::FormatWriter::MultiEntry</a>(<a href="../../Chem/AtomCollection.html">Chem::AtomCollection</a>)</li>
+      <li class="other-type"><a href="../../Chem/FormatWriter/MultiEntry.html">Chem::FormatWriter::MultiEntry</a>(<a href="../../Chem/AtomView.html">Chem::AtomView</a> | <a href="../../Chem/Chain.html">Chem::Chain</a> | <a href="../../Chem/ChainView.html">Chem::ChainView</a> | <a href="../../Chem/Residue.html">Chem::Residue</a> | <a href="../../Chem/ResidueView.html">Chem::ResidueView</a> | <a href="../../Chem/Structure.html">Chem::Structure</a>)</li>
     
   </ul>
 
@@ -985,7 +975,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/e0937a18461d3e6c3ac47195979254e163851b1f/src/chem/formats/pdb.cr#L322" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/8f2bebcc6de154e6ec0653ce6403831896a49493/src/chem/formats/pdb.cr#L322" target="_blank">
         chem/formats/pdb.cr
       </a>
     
@@ -1111,11 +1101,11 @@
   
     
 
-  <h3>Instance methods inherited from module <code><a href="../../Chem/FormatWriter/MultiEntry.html">Chem::FormatWriter::MultiEntry</a>(<a href="../../Chem/AtomCollection.html">Chem::AtomCollection</a>)</code></h3>
+  <h3>Instance methods inherited from module <code><a href="../../Chem/FormatWriter/MultiEntry.html">Chem::FormatWriter::MultiEntry</a>(<a href="../../Chem/AtomView.html">Chem::AtomView</a> | <a href="../../Chem/Chain.html">Chem::Chain</a> | <a href="../../Chem/ChainView.html">Chem::ChainView</a> | <a href="../../Chem/Residue.html">Chem::Residue</a> | <a href="../../Chem/ResidueView.html">Chem::ResidueView</a> | <a href="../../Chem/Structure.html">Chem::Structure</a>)</code></h3>
   
   
-    <a href="../../Chem/FormatWriter/MultiEntry.html#%3C%3C%28obj%3AT%29%3Aself-instance-method" class="tooltip">
-      <span><<(obj : T) : <span class="k">self</span></span>
+    <a href="../../Chem/FormatWriter/MultiEntry.html#%3C%3C%28obj%3AT%7CT%7CT%7CT%7CT%7CT%29%3Aself-instance-method" class="tooltip">
+      <span><<(obj : T | T | T | T | T | T) : <span class="k">self</span></span>
     <<</a>, 
     
   
@@ -1128,7 +1118,7 @@
 
     
 
-  <h3>Constructor methods inherited from module <code><a href="../../Chem/FormatWriter/MultiEntry.html">Chem::FormatWriter::MultiEntry</a>(<a href="../../Chem/AtomCollection.html">Chem::AtomCollection</a>)</code></h3>
+  <h3>Constructor methods inherited from module <code><a href="../../Chem/FormatWriter/MultiEntry.html">Chem::FormatWriter::MultiEntry</a>(<a href="../../Chem/AtomView.html">Chem::AtomView</a> | <a href="../../Chem/Chain.html">Chem::Chain</a> | <a href="../../Chem/ChainView.html">Chem::ChainView</a> | <a href="../../Chem/Residue.html">Chem::Residue</a> | <a href="../../Chem/ResidueView.html">Chem::ResidueView</a> | <a href="../../Chem/Structure.html">Chem::Structure</a>)</code></h3>
   
   
     <a href="../../Chem/FormatWriter/MultiEntry.html#new%28io%3AIO%2Ctotal_entries%3AInt32%7CNil%3Dnil%2Csync_close%3ABool%3Dfalse%29-class-method" class="tooltip">
@@ -1147,11 +1137,11 @@
   
     
 
-  <h3>Instance methods inherited from module <code><a href="../../Chem/FormatWriter.html">Chem::FormatWriter</a>(<a href="../../Chem/AtomCollection.html">Chem::AtomCollection</a>)</code></h3>
+  <h3>Instance methods inherited from module <code><a href="../../Chem/FormatWriter.html">Chem::FormatWriter</a>(<a href="../../Chem/AtomView.html">Chem::AtomView</a> | <a href="../../Chem/Chain.html">Chem::Chain</a> | <a href="../../Chem/ChainView.html">Chem::ChainView</a> | <a href="../../Chem/Residue.html">Chem::Residue</a> | <a href="../../Chem/ResidueView.html">Chem::ResidueView</a> | <a href="../../Chem/Structure.html">Chem::Structure</a>)</code></h3>
   
   
-    <a href="../../Chem/FormatWriter.html#%3C%3C%28obj%3AT%29%3ANil-instance-method" class="tooltip">
-      <span><<(obj : T) : Nil</span>
+    <a href="../../Chem/FormatWriter.html#%3C%3C%28obj%3AT%7CT%7CT%7CT%7CT%7CT%29%3ANil-instance-method" class="tooltip">
+      <span><<(obj : T | T | T | T | T | T) : Nil</span>
     <<</a>, 
     
   
@@ -1268,7 +1258,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/e0937a18461d3e6c3ac47195979254e163851b1f/src/chem/formats/pdb.cr#L346" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8f2bebcc6de154e6ec0653ce6403831896a49493/src/chem/formats/pdb.cr#L346" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1388,7 +1378,7 @@ enclosed <code>IO</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/e0937a18461d3e6c3ac47195979254e163851b1f/src/chem/formats/pdb.cr#L358" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8f2bebcc6de154e6ec0653ce6403831896a49493/src/chem/formats/pdb.cr#L358" target="_blank">View source</a>]
         
       </div>
     </div>

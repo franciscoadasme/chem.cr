@@ -82,8 +82,8 @@
       
     </li>
   
-  <li class=" " data-id="chem/Chem/AtomCollection" data-name="chem::atomcollection">
-      <a href="../../Chem/AtomCollection.html">AtomCollection</a>
+  <li class=" " data-id="chem/Chem/AtomContainer" data-name="chem::atomcontainer">
+      <a href="../../Chem/AtomContainer.html">AtomContainer</a>
       
     </li>
   
@@ -114,11 +114,6 @@
   
   <li class=" " data-id="chem/Chem/Chain" data-name="chem::chain">
       <a href="../../Chem/Chain.html">Chain</a>
-      
-    </li>
-  
-  <li class=" " data-id="chem/Chem/ChainCollection" data-name="chem::chaincollection">
-      <a href="../../Chem/ChainCollection.html">ChainCollection</a>
       
     </li>
   
@@ -514,11 +509,6 @@
   
   <li class=" " data-id="chem/Chem/Residue" data-name="chem::residue">
       <a href="../../Chem/Residue.html">Residue</a>
-      
-    </li>
-  
-  <li class=" " data-id="chem/Chem/ResidueCollection" data-name="chem::residuecollection">
-      <a href="../../Chem/ResidueCollection.html">ResidueCollection</a>
       
     </li>
   
@@ -983,7 +973,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/e0937a18461d3e6c3ac47195979254e163851b1f/src/chem/formats/cube.cr#L77" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/8f2bebcc6de154e6ec0653ce6403831896a49493/src/chem/formats/cube.cr#L77" target="_blank">
         chem/formats/cube.cr
       </a>
     
@@ -1024,12 +1014,12 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28io%3AIO%2Catoms%3AAtomCollection%2Csync_close%3ABool%3Dfalse%29-class-method" class="signature"><strong>.new</strong>(io : IO, atoms : AtomCollection, sync_close : Bool = <span class="n">false</span>)</a>
+        <a href="#new%28io%3AIO%2Catoms%3AAtomContainer%2Csync_close%3ABool%3Dfalse%29-class-method" class="signature"><strong>.new</strong>(io : IO, atoms : AtomContainer, sync_close : Bool = <span class="n">false</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new%28path%3APath%7CString%2Catoms%3AAtomCollection%29%3Aself-class-method" class="signature"><strong>.new</strong>(path : Path | String, atoms : AtomCollection) : <span class="k">self</span></a>
+        <a href="#new%28path%3APath%7CString%2Catoms%3AAtomContainer%29%3Aself-class-method" class="signature"><strong>.new</strong>(path : Path | String, atoms : AtomContainer) : <span class="k">self</span></a>
         
           <div class="summary"><p>Creates a new object from the given <em>path</em>.</p></div>
         
@@ -1050,14 +1040,14 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#open%28io%3AIO%2Catoms%3AAtomCollection%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method" class="signature"><strong>.open</strong>(io : IO, atoms : AtomCollection, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )</a>
+        <a href="#open%28io%3AIO%2Catoms%3AAtomContainer%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method" class="signature"><strong>.open</strong>(io : IO, atoms : AtomContainer, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )</a>
         
           <div class="summary"><p>Creates a new object from the given <em>io</em>, yields it to the given block, and closes it at the end.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#open%28path%3APath%7CString%2Catoms%3AAtomCollection%2C%26%3Aself-%3E%29-class-method" class="signature"><strong>.open</strong>(path : Path | String, atoms : AtomCollection, & : <span class="k">self</span> -> )</a>
+        <a href="#open%28path%3APath%7CString%2Catoms%3AAtomContainer%2C%26%3Aself-%3E%29-class-method" class="signature"><strong>.open</strong>(path : Path | String, atoms : AtomContainer, & : <span class="k">self</span> -> )</a>
         
           <div class="summary"><p>Creates a new object from the given <em>path</em> yields it to the given block, and closes it at the end.</p></div>
         
@@ -1185,28 +1175,28 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(io:IO,atoms:AtomCollection,sync_close:Bool=false)-class-method">
+    <div class="entry-detail" id="new(io:IO,atoms:AtomContainer,sync_close:Bool=false)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(io : IO, atoms : <a href="../../Chem/AtomCollection.html">AtomCollection</a>, sync_close : Bool = <span class="n">false</span>)
+        def self.<strong>new</strong>(io : IO, atoms : <a href="../../Chem/AtomContainer.html">AtomContainer</a>, sync_close : Bool = <span class="n">false</span>)
 
-        <a class="method-permalink" href="#new%28io%3AIO%2Catoms%3AAtomCollection%2Csync_close%3ABool%3Dfalse%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28io%3AIO%2Catoms%3AAtomContainer%2Csync_close%3ABool%3Dfalse%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/e0937a18461d3e6c3ac47195979254e163851b1f/src/chem/formats/cube.cr#L82" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/8f2bebcc6de154e6ec0653ce6403831896a49493/src/chem/formats/cube.cr#L84" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="new(path:Path|String,atoms:AtomCollection):self-class-method">
+    <div class="entry-detail" id="new(path:Path|String,atoms:AtomContainer):self-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(path : <a href="../../Path.html">Path</a> | String, atoms : <a href="../../Chem/AtomCollection.html">AtomCollection</a>) : <span class="k">self</span>
+        def self.<strong>new</strong>(path : <a href="../../Path.html">Path</a> | String, atoms : <a href="../../Chem/AtomContainer.html">AtomContainer</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#new%28path%3APath%7CString%2Catoms%3AAtomCollection%29%3Aself-class-method">#</a>
+        <a class="method-permalink" href="#new%28path%3APath%7CString%2Catoms%3AAtomContainer%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1236,12 +1226,12 @@ constant.</p>
     Class Method Detail
   </h2>
   
-    <div class="entry-detail" id="open(io:IO,atoms:AtomCollection,sync_close:Bool=false,&amp;:self-&gt;)-class-method">
+    <div class="entry-detail" id="open(io:IO,atoms:AtomContainer,sync_close:Bool=false,&amp;:self-&gt;)-class-method">
       <div class="signature">
         
-        def self.<strong>open</strong>(io : IO, atoms : <a href="../../Chem/AtomCollection.html">AtomCollection</a>, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )
+        def self.<strong>open</strong>(io : IO, atoms : <a href="../../Chem/AtomContainer.html">AtomContainer</a>, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )
 
-        <a class="method-permalink" href="#open%28io%3AIO%2Catoms%3AAtomCollection%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">#</a>
+        <a class="method-permalink" href="#open%28io%3AIO%2Catoms%3AAtomContainer%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1257,12 +1247,12 @@ are forwarded to the constructor.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="open(path:Path|String,atoms:AtomCollection,&amp;:self-&gt;)-class-method">
+    <div class="entry-detail" id="open(path:Path|String,atoms:AtomContainer,&amp;:self-&gt;)-class-method">
       <div class="signature">
         
-        def self.<strong>open</strong>(path : <a href="../../Path.html">Path</a> | String, atoms : <a href="../../Chem/AtomCollection.html">AtomCollection</a>, & : <span class="k">self</span> -> )
+        def self.<strong>open</strong>(path : <a href="../../Path.html">Path</a> | String, atoms : <a href="../../Chem/AtomContainer.html">AtomContainer</a>, & : <span class="k">self</span> -> )
 
-        <a class="method-permalink" href="#open%28path%3APath%7CString%2Catoms%3AAtomCollection%2C%26%3Aself-%3E%29-class-method">#</a>
+        <a class="method-permalink" href="#open%28path%3APath%7CString%2Catoms%3AAtomContainer%2C%26%3Aself-%3E%29-class-method">#</a>
       </div>
       
         <div class="doc">
