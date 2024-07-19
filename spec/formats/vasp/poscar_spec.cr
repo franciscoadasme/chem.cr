@@ -5,7 +5,7 @@ describe Chem::VASP::Poscar do
     it "parses a basic file" do
       st = load_file "basic.poscar", guess_bonds: true, guess_names: true
       st.source_file.should eq Path[spec_file("basic.poscar")].expand
-      st.n_atoms.should eq 49
+      st.atoms.size.should eq 49
 
       st.atoms.count(&.element.symbol.==("C")).should eq 14
       st.atoms.count(&.element.symbol.==("H")).should eq 21

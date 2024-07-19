@@ -6,7 +6,7 @@ module Chem::VMD
     protected def encode_entry(obj : Structure) : Nil
       check_open
       header obj.source_file
-      obj.each_secondary_structure do |residues, sec|
+      obj.residues.each_secondary_structure do |residues, sec|
         ch = residues[0].chain.id
         first = residues[0].number
         last = residues[-1].number

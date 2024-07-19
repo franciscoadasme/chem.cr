@@ -1,13 +1,11 @@
 module Chem
   class Chain
-    include AtomCollection
-    include ResidueCollection
-
     @residue_table = {} of Tuple(Int32, Char?) => Residue
     @residues = [] of Residue
 
     getter id : Char
     getter structure : Structure
+    # TODO: remove this nonsensical line
     delegate structure, to: @structure
 
     def initialize(@structure : Structure, @id : Char)
@@ -44,6 +42,15 @@ module Chem
 
     def []?(number : Int32, insertion_code : Char? = nil) : Residue?
       @residue_table[{number, insertion_code}]?
+    end
+
+    def atoms : AtomView
+      atoms = [] of Atom
+      @residues.each do |residue|
+        # #concat(Array) copies memory instead of appending one by one
+        atoms.concat residue.atoms.to_a
+      end
+      AtomView.new atoms
     end
 
     def clear : self
@@ -97,38 +104,8 @@ module Chem
       end
     end
 
-    def each_atom : Iterator(Atom)
-      Iterator.chain each_residue.map(&.each_atom).to_a
-    end
-
-    def each_atom(&block : Atom ->)
-      each_residue do |residue|
-        residue.each_atom do |atom|
-          yield atom
-        end
-      end
-    end
-
-    def each_residue : Iterator(Residue)
-      @residues.each
-    end
-
-    def each_residue(&block : Residue ->)
-      @residues.each do |residue|
-        yield residue
-      end
-    end
-
     def polymer? : Bool
       @residues.any? &.polymer?
-    end
-
-    def n_atoms : Int32
-      each_residue.map(&.n_atoms).sum
-    end
-
-    def n_residues : Int32
-      @residues.size
     end
 
     # Renumber residues based on the order by the output value of the
@@ -161,6 +138,10 @@ module Chem
       reset_cache
     end
 
+    def residues : ResidueView
+      ResidueView.new @residues
+    end
+
     # Returns the chain specification.
     #
     # Chain specification is a short string representation encoding
@@ -191,7 +172,7 @@ module Chem
     # NOTE: bonds are not copied and must be set manually for the copy.
     protected def copy_to(structure : Structure, recursive : Bool = true) : self
       chain = Chain.new structure, @id
-      each_residue &.copy_to(chain) if recursive
+      @residues.each &.copy_to(chain) if recursive
       chain
     end
 

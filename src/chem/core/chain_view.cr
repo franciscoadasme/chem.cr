@@ -1,9 +1,6 @@
 module Chem
   struct ChainView
     include Array::Wrapper(Chain)
-    include AtomCollection
-    include ChainCollection
-    include ResidueCollection
 
     def [](id : Char) : Chain
       self[id]? || raise IndexError.new
@@ -13,60 +10,24 @@ module Chem
       find &.id.==(id)
     end
 
-    def chains : self
-      self
-    end
-
-    def each_atom : Iterator(Atom)
-      iterators = [] of Iterator(Atom)
+    def atoms : AtomView
+      atoms = [] of Atom
       each do |chain|
-        chain.each_residue do |residue|
-          iterators << residue.each_atom
+        chain.residues.each do |residue|
+          # #concat(Array) copies memory instead of appending one by one
+          atoms.concat residue.atoms.to_a
         end
       end
-      Iterator.chain iterators
+      AtomView.new atoms
     end
 
-    def each_atom(&block : Atom ->)
+    def residues : ResidueView
+      residues = [] of Residue
       each do |chain|
-        chain.each_atom do |atom|
-          yield atom
-        end
+        # #concat(Array) copies memory instead of appending one by one
+        residues.concat chain.residues.to_a
       end
-    end
-
-    def each_chain : Iterator(Chain)
-      each
-    end
-
-    def each_chain(&block : Chain ->)
-      each do |chain|
-        yield chain
-      end
-    end
-
-    def each_residue : Iterator(Residue)
-      Iterator.chain each.map(&.each_residue).to_a
-    end
-
-    def each_residue(&block : Residue ->)
-      each do |chain|
-        chain.each_residue do |residue|
-          yield residue
-        end
-      end
-    end
-
-    def n_atoms : Int32
-      sum &.n_atoms
-    end
-
-    def n_chains : Int32
-      size
-    end
-
-    def n_residues : Int32
-      sum &.n_residues
+      ResidueView.new residues
     end
   end
 end

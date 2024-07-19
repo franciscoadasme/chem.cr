@@ -115,17 +115,17 @@ describe Chem::Format do
   describe "#encodes?" do
     it "tells if the format encodes a given type" do
       Chem::Format::XYZ.encodes?(Chem::Structure).should be_true
-      Chem::Format::XYZ.encodes?(Chem::AtomCollection).should be_true
+      Chem::Format::XYZ.encodes?(Chem::AtomView).should be_true
       Chem::Format::Poscar.encodes?(Chem::Structure).should be_true
-      Chem::Format::Poscar.encodes?(Chem::AtomCollection).should be_false
+      Chem::Format::Poscar.encodes?(Chem::AtomView).should be_false
       Chem::Format::XYZ.encodes?(Int32).should be_false
     end
 
     it "tells if the format encodes an array of a given type" do
       Chem::Format::XYZ.encodes?(Array(Chem::Structure)).should be_true
-      Chem::Format::XYZ.encodes?(Array(Chem::AtomCollection)).should be_true
+      Chem::Format::XYZ.encodes?(Array(Chem::AtomView)).should be_true
       Chem::Format::Poscar.encodes?(Array(Chem::Structure)).should be_false
-      Chem::Format::Poscar.encodes?(Array(Chem::AtomCollection)).should be_false
+      Chem::Format::Poscar.encodes?(Array(Chem::AtomView)).should be_false
       Chem::Format::XYZ.encodes?(Array(Int32)).should be_false
     end
   end
@@ -193,12 +193,12 @@ describe Chem::Format do
   describe "#writer" do
     it "returns the format's writer class" do
       Chem::Format::XYZ.writer(Chem::Structure).should eq Chem::XYZ::Writer
-      Chem::Format::XYZ.writer(Chem::AtomCollection).should eq Chem::XYZ::Writer
+      Chem::Format::XYZ.writer(Chem::AtomView).should eq Chem::XYZ::Writer
       Chem::Format::Poscar.writer(Chem::Structure).should eq Chem::VASP::Poscar::Writer
       Chem::Format::DX.writer(Chem::Spatial::Grid).should eq Chem::DX::Writer
 
       Chem::Format::XYZ.writer(Array(Chem::Structure)).should eq Chem::XYZ::Writer
-      Chem::Format::XYZ.writer(Array(Chem::AtomCollection)).should eq Chem::XYZ::Writer
+      Chem::Format::XYZ.writer(Array(Chem::AtomView)).should eq Chem::XYZ::Writer
     end
 
     it "raises if format is read only" do
@@ -228,17 +228,23 @@ describe Chem::Format do
     it "fails for non-encoded types", tags: %w(codegen) do
       assert_error "Chem::Format::PDB.writer(Int32)",
         "expected argument #1 to 'Chem::Format#writer' to be \
-        Array(Chem::AtomCollection).class, Array(Chem::Structure).class, \
-        Chem::AtomCollection:Module, Chem::Spatial::Grid.class or \
-        Chem::Structure.class, not Int32.class"
+        Array(Chem::AtomView).class, Array(Chem::Chain).class, \
+        Array(Chem::ChainView).class, Array(Chem::Residue).class, \
+        Array(Chem::ResidueView).class, Array(Chem::Structure).class, \
+        Chem::AtomView.class, Chem::Chain.class, Chem::ChainView.class, \
+        Chem::Residue.class, Chem::ResidueView.class, Chem::Spatial::Grid.class \
+        or Chem::Structure.class, not Int32.class"
     end
 
     it "fails with an array for a single-entry type", tags: %w(codegen) do
       assert_error "Chem::Format::DX.writer(Array(Chem::Spatial::Grid))",
         "expected argument #1 to 'Chem::Format#writer' to be \
-        Array(Chem::AtomCollection).class, Array(Chem::Structure).class, \
-        Chem::AtomCollection:Module, Chem::Spatial::Grid.class or \
-        Chem::Structure.class, not Array(Chem::Spatial::Grid).class"
+        Array(Chem::AtomView).class, Array(Chem::Chain).class, \
+        Array(Chem::ChainView).class, Array(Chem::Residue).class, \
+        Array(Chem::ResidueView).class, Array(Chem::Structure).class, \
+        Chem::AtomView.class, Chem::Chain.class, Chem::ChainView.class, \
+        Chem::Residue.class, Chem::ResidueView.class, Chem::Spatial::Grid.class \
+        or Chem::Structure.class, not Array(Chem::Spatial::Grid).class"
     end
   end
 

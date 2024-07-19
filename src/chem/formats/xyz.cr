@@ -132,8 +132,8 @@ module Chem::XYZ
   end
 
   class Writer
-    include FormatWriter(AtomCollection)
-    include FormatWriter::MultiEntry(AtomCollection)
+    include FormatWriter(AtomContainer)
+    include FormatWriter::MultiEntry(AtomContainer)
 
     private TYPE_CHAR_MAP = {Bool => 'L', Int32 => 'I', Float64 => 'R', String => 'S'}
 
@@ -144,11 +144,13 @@ module Chem::XYZ
                    @sync_close : Bool = false)
     end
 
-    protected def encode_entry(obj : AtomCollection) : Nil
-      @io.puts obj.n_atoms
+    protected def encode_entry(obj : AtomContainer) : Nil
+      atoms = obj.is_a?(AtomView) ? obj : obj.atoms
+
+      @io.puts atoms.size
       if obj.is_a?(Structure)
         if @extended
-          @fields = obj.atoms.first.metadata.keys if @fields.empty?
+          @fields = atoms.first.metadata.keys if @fields.empty?
           write_extended_config(obj)
         else
           @io.puts obj.title.gsub(/ *\n */, ' ')
@@ -157,7 +159,7 @@ module Chem::XYZ
         @io.puts
       end
 
-      obj.each_atom do |atom|
+      atoms.each do |atom|
         @io.printf "%-2s %8.3f %8.3f %8.3f", atom.element.symbol, atom.x, atom.y, atom.z
         @fields.each do |name|
           @io << ' '

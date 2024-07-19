@@ -236,6 +236,29 @@ describe Chem::RegisterFormat, tags: %w(register_format codegen) do
       Array(Int32).from_foo(IO::Memory.new)
       EOS
   end
+
+  it "works on union types (write only)" do
+    assert_code <<-EOS
+      struct A; end
+      struct B; end
+
+      @[Chem::RegisterFormat]
+      module Foo
+        class Writer
+          include Chem::FormatWriter(A | B)
+
+          protected def encode_entry(obj : A | B) : Nil; end
+        end
+      end
+
+      A.new.to_foo.as(String)
+      B.new.to_foo.as(String)
+      Chem::Format::Foo.writer(A)
+      Chem::Format::Foo.writer(B)
+      raise "" unless Chem::Format::Foo.encodes?(A)
+      raise "" unless Chem::Format::Foo.encodes?(B)
+      EOS
+  end
 end
 
 describe Array do

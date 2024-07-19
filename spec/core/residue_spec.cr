@@ -290,7 +290,7 @@ describe Chem::Residue do
     context "given a periodic peptide chain" do
       it "returns two residues for every residue" do
         structure = load_file("hlx_gly.poscar", guess_bonds: true, guess_names: true)
-        structure.each_residue do |residue|
+        structure.residues.each do |residue|
           residue.bonded_residues.map(&.name).should eq %w(GLY GLY)
         end
       end
@@ -298,7 +298,7 @@ describe Chem::Residue do
 
     context "given water molecules" do
       it "returns an empty array" do
-        load_file("waters.xyz").each_residue do |residue|
+        load_file("waters.xyz").residues.each do |residue|
           residue.bonded_residues.empty?.should be_true
         end
       end
@@ -460,7 +460,7 @@ describe Chem::Residue do
     context "given a periodic peptide" do
       it "returns omega using minimum-image convention" do
         structure = load_file "hlx_gly.poscar", guess_bonds: true, guess_names: true
-        structure.each_residue do |residue|
+        structure.residues.each do |residue|
           residue.omega.should be_close -171.64, 1e-2
         end
       end
@@ -496,7 +496,7 @@ describe Chem::Residue do
     context "given a periodic peptide" do
       it "returns phi using minimum-image convention" do
         structure = load_file "hlx_gly.poscar", guess_bonds: true, guess_names: true
-        structure.each_residue do |residue|
+        structure.residues.each do |residue|
           residue.phi.should be_close -80.33, 1e-2
         end
       end
@@ -553,7 +553,7 @@ describe Chem::Residue do
     context "given a periodic peptide" do
       it "returns psi using minimum-image convention" do
         structure = load_file "hlx_gly.poscar", guess_bonds: true, guess_names: true
-        structure.each_residue do |residue|
+        structure.residues.each do |residue|
           residue.psi.should be_close 58.2, 1e-2
         end
       end

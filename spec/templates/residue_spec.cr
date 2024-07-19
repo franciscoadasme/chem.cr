@@ -31,8 +31,8 @@ describe Chem::Templates::Residue do
         atom.should match template # uses Atom#matches? internally
       end
 
-      res_t.bonds.size.should eq residue.bonds.size
-      res_t.bonds.zip(residue.bonds) do |template, bond|
+      res_t.bonds.size.should eq residue.atoms.bonds.size
+      res_t.bonds.zip(residue.atoms.bonds) do |template, bond|
         bond.should match template # uses Bond#matches? internally
       end
     end

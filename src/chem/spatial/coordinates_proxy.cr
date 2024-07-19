@@ -3,7 +3,7 @@ module Chem::Spatial
     include Enumerable(Vec3)
     include Iterable(Vec3)
 
-    def initialize(@atoms : AtomCollection, @cell : Parallelepiped? = nil)
+    def initialize(@atoms : AtomView, @cell : Parallelepiped? = nil)
     end
 
     def ==(rhs : Enumerable(Vec3)) : Bool
@@ -47,7 +47,7 @@ module Chem::Spatial
     end
 
     def center : Vec3
-      sum / @atoms.n_atoms
+      sum / @atoms.size
     end
 
     # Translates coordinates so that the center is at the middle of *vec*.
@@ -120,8 +120,8 @@ module Chem::Spatial
     def com : Vec3
       center = Vec3[0, 0, 0]
       total_mass = 0.0
-      each_with_atom do |vec, atom|
-        center += atom.mass * vec
+      @atoms.each do |atom|
+        center += atom.mass * atom.coords
         total_mass += atom.mass
       end
       center / total_mass
@@ -132,21 +132,21 @@ module Chem::Spatial
         raise NotPeriodicError.new unless cell = @cell
         FractionalCoordinatesIterator.new @atoms, cell
       else
-        @atoms.each_atom.map &.coords
+        @atoms.each.map &.coords
       end
     end
 
     def each(fractional : Bool = false, &block : Vec3 ->)
       if fractional
         raise NotPeriodicError.new unless cell = @cell
-        @atoms.each_atom { |atom| yield cell.fract(atom.coords) }
+        @atoms.each { |atom| yield cell.fract(atom.coords) }
       else
-        @atoms.each_atom { |atom| yield atom.coords }
+        @atoms.each { |atom| yield atom.coords }
       end
     end
 
     def each_with_atom(fractional : Bool = false, &block : Vec3, Atom ->)
-      iter = @atoms.each_atom
+      iter = @atoms.each
       each(fractional) do |vec|
         break unless (atom = iter.next).is_a?(Atom)
         yield vec, atom
@@ -156,17 +156,17 @@ module Chem::Spatial
     def map!(fractional : Bool = false, &block : Vec3 -> Vec3) : self
       if fractional
         raise NotPeriodicError.new unless cell = @cell
-        @atoms.each_atom do |atom|
+        @atoms.each do |atom|
           atom.coords = cell.cart(yield cell.fract(atom.coords))
         end
       else
-        @atoms.each_atom { |atom| atom.coords = yield atom.coords }
+        @atoms.each { |atom| atom.coords = yield atom.coords }
       end
       self
     end
 
     def map_with_atom!(fractional : Bool = false, &block : Vec3, Atom -> Vec3) : self
-      iter = @atoms.each_atom
+      iter = @atoms.each
       map!(fractional) do |vec|
         break unless (atom = iter.next).is_a?(Atom)
         yield vec, atom
@@ -384,8 +384,8 @@ module Chem::Spatial
 
       @iterator : Iterator(Atom)
 
-      def initialize(atoms : AtomCollection, @cell : Parallelepiped)
-        @iterator = atoms.each_atom
+      def initialize(atoms : AtomView, @cell : Parallelepiped)
+        @iterator = atoms.each
       end
 
       def next : Vec3 | Iterator::Stop

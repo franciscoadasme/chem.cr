@@ -100,23 +100,25 @@ module Chem::Mol2
   end
 
   class Writer
-    include FormatWriter(AtomCollection)
-    include FormatWriter::MultiEntry(AtomCollection)
+    include FormatWriter(AtomContainer)
+    include FormatWriter::MultiEntry(AtomContainer)
 
     @atom_table = {} of Atom => Int32
     @res_table = {} of Residue => Int32
 
-    protected def encode_entry(obj : AtomCollection) : Nil
+    protected def encode_entry(obj : AtomContainer) : Nil
+      atoms = obj.is_a?(AtomView) ? obj : obj.atoms
+
       reset_index
       raise Error.new("Structure has no bonds") if obj.bonds.empty?
       write_header obj.is_a?(Structure) ? obj.title : "",
-        obj.n_atoms,
+        atoms.size,
         obj.bonds.size,
-        obj.is_a?(Structure) ? obj.n_residues : obj.each_atom.map(&.residue).uniq.sum { 1 }
-      section "atom" { obj.each_atom { |atom| write atom } }
+        obj.is_a?(Structure) ? obj.residues.size : atoms.map(&.residue).uniq.size
+      section "atom" { atoms.each { |atom| write atom } }
       section "bond" { obj.bonds.each_with_index { |bond, i| write bond, i + 1 } }
       section "substructure" do
-        obj.each_residue do |residue|
+        obj.residues.each do |residue|
           root_atom = residue.protein? ? residue.dig("CA") : residue.atoms[0]
           @io.printf "%4d %-8s %5d %-8s %1s %1s %3s\n",
             residue_index(residue),

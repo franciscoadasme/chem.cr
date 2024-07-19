@@ -25,9 +25,9 @@ describe Chem::Structure do
       other.dig('A', 32).should_not be structure.dig('A', 32)
       other.dig('A', 13, "CA").should_not be structure.dig('A', 13, "CA")
 
-      other.n_chains.should eq 1
-      other.n_residues.should eq 46
-      other.n_atoms.should eq 327
+      other.chains.size.should eq 1
+      other.residues.size.should eq 46
+      other.atoms.size.should eq 327
       other.bonds.size.should eq 337
       other.chains.map(&.id).should eq ['A']
       other.dig('A', 32).name.should eq "CYS"
@@ -169,11 +169,11 @@ describe Chem::Structure do
       structure = Chem::Structure.build do
         3.times { chain { } }
       end
-      structure.n_chains.should eq 3
+      structure.chains.size.should eq 3
       structure.chains.map(&.id).should eq "ABC".chars
 
       structure.delete structure.chains[1]
-      structure.n_chains.should eq 2
+      structure.chains.size.should eq 2
       structure.chains.map(&.id).should eq "AC".chars
       structure.dig?('B').should be_nil
     end
@@ -184,12 +184,12 @@ describe Chem::Structure do
       Chem::Chain.new structure, 'B'
       Chem::Chain.new structure, 'A'
 
-      structure.n_chains.should eq 3
+      structure.chains.size.should eq 3
       structure.chains.map(&.id).should eq "ABA".chars
 
       structure.delete structure.chains[0]
 
-      structure.n_chains.should eq 2
+      structure.chains.size.should eq 2
       structure.chains.map(&.id).should eq "BA".chars
       structure.dig('A').should be structure.chains[1]
     end
@@ -351,7 +351,7 @@ describe Chem::Structure do
       structure = load_file("polyala--theta-240.000--c-24.70.pdb")
       structure.guess_bonds
 
-      structure.each_residue do |residue|
+      structure.residues.each do |residue|
         residue.pred?.should_not be_nil
         residue.succ?.should_not be_nil
       end
@@ -473,7 +473,7 @@ describe Chem::Structure do
       structure.guess_names
 
       structure.chains.map(&.id).should eq ['A', 'B']
-      structure.each_chain do |chain|
+      structure.chains.each do |chain|
         chain.residues.map(&.name).should eq %w(PHE GLY ALA ILE LEU SER SER)
         chain.residues.map(&.number).should eq (1..7).to_a
         chain.residues.all?(&.protein?).should be_true
@@ -538,9 +538,9 @@ describe Chem::Structure do
       structure.guess_formal_charges
       structure.guess_names
 
-      structure.n_chains.should eq 1
-      structure.n_residues.should eq 144
-      structure.fragments.size.should eq 72
+      structure.chains.size.should eq 1
+      structure.residues.size.should eq 144
+      structure.atoms.fragments.size.should eq 72
       structure.chains.map(&.id).should eq ['A']
       structure.residues.map(&.name).should eq ["PHE"] * 144
       structure.residues.map(&.number).should eq (1..144).to_a
@@ -553,10 +553,10 @@ describe Chem::Structure do
       structure.guess_formal_charges
       structure.guess_names
 
-      structure.n_residues.should eq 9
+      structure.residues.size.should eq 9
       structure.residues.map(&.name).should eq %w(ALA LEU UNK VAL THR LEU SER UNK ALA)
-      structure.residues[2].n_atoms.should eq 14
-      structure.residues[7].n_atoms.should eq 8
+      structure.residues[2].atoms.size.should eq 14
+      structure.residues[7].atoms.size.should eq 8
       structure.residues.all?(&.protein?).should be_true
     end
 
@@ -673,7 +673,7 @@ describe Chem::Structure do
       r1, r2, r3 = structure.residues
 
       [r1, r2, r3].all?(&.protein?).should be_true
-      [r1, r2, r3].map(&.formal_charge).should eq [-1, 0, 0]
+      [r1, r2, r3].map(&.atoms.sum(&.formal_charge)).should eq [-1, 0, 0]
 
       r1.bonded?(r2).should be_true
       r1.bonded?(r3).should be_false
@@ -1026,7 +1026,7 @@ describe Chem::Structure do
 
     it "renumbers residues of a periodic peptide" do
       structure = load_file("hlx_gly.poscar")
-      structure.each_residue.cons(2, reuse: true).each do |(a, b)|
+      structure.residues.each_cons_pair do |a, b|
         a["C"].bonded?(b["N"]).should be_true
         a.succ?.should eq b
         b.pred?.should eq a
@@ -1055,7 +1055,7 @@ describe Chem::Structure do
       structure = load_file("cylindrin--size-09.pdb")
       structure.renumber_residues_by_connectivity split_chains: false
       structure.chains.map(&.id).should eq "ABC".chars
-      structure.chains.map(&.n_residues).should eq [18] * 3
+      structure.chains.map(&.residues.size).should eq [18] * 3
       structure.chains.map(&.residues.map(&.number)).should eq [(1..18).to_a] * 3
       structure.chains.map(&.residues.map(&.name)).should eq [
         %w(LEU LYS VAL LEU GLY ASP VAL ILE GLU LEU LYS VAL LEU GLY ASP VAL ILE GLU),
@@ -1066,7 +1066,7 @@ describe Chem::Structure do
       structure = load_file("cylindrin--size-09.pdb")
       structure.renumber_residues_by_connectivity split_chains: true
       structure.chains.map(&.id).should eq "ABCDEF".chars
-      structure.chains.map(&.n_residues).should eq [9] * 6
+      structure.chains.map(&.residues.size).should eq [9] * 6
       structure.chains.map(&.residues.map(&.number)).should eq [(1..9).to_a] * 6
       structure.chains.map(&.residues.map(&.name)).should eq [
         %w(LEU LYS VAL LEU GLY ASP VAL ILE GLU),
@@ -1212,32 +1212,20 @@ describe Chem::Structure do
       structure.atoms.count(&.formal_charge.!=(0)).should eq 0
     end
   end
-end
 
-describe Chem::AtomCollection do
-  st = fake_structure
-
-  describe "#atoms" do
-    it "returns an atom view" do
-      st.atoms.should be_a Chem::AtomView
-    end
-  end
-
-  describe "#each_atom" do
-    it "iterates over each atom when called with block" do
-      ary = [] of Int32
-      st.each_atom { |atom| ary << atom.serial }
-      ary.should eq (1..25).to_a
+  describe "#coords" do
+    it "sets the coordinates from an enumerable" do
+      struc = Chem::Structure.from_xyz spec_file("waters.xyz")
+      expected = struc.coords.map(&.*(2))
+      struc.coords = expected
+      struc.coords.to_a.should eq expected
     end
 
-    it "returns an iterator when called without block" do
-      st.each_atom.should be_a Iterator(Chem::Atom)
-    end
-  end
-
-  describe "#n_atoms" do
-    it "returns the number of atoms" do
-      st.n_atoms.should eq 25
+    it "sets the coordinates from coords" do
+      struc = Chem::Structure.from_xyz spec_file("waters.xyz")
+      expected = struc.coords.map(&.*(0.5))
+      struc.coords = struc.clone.coords.map!(&.*(0.5))
+      struc.coords.to_a.should eq expected
     end
   end
 end
@@ -1409,34 +1397,6 @@ describe Chem::BondArray do
   end
 end
 
-describe Chem::ChainCollection do
-  st = fake_structure
-
-  describe "#chains" do
-    it "returns a chain view" do
-      st.chains.should be_a Chem::ChainView
-    end
-  end
-
-  describe "#each_chain" do
-    it "iterates over each chain when called with block" do
-      ary = [] of Char?
-      st.each_chain { |chain| ary << chain.id }
-      ary.should eq ['A', 'B']
-    end
-
-    it "returns an iterator when called without block" do
-      st.each_chain.should be_a Iterator(Chem::Chain)
-    end
-  end
-
-  describe "#n_chains" do
-    it "returns the number of chains" do
-      st.n_chains.should eq 2
-    end
-  end
-end
-
 describe Chem::ChainView do
   chains = fake_structure.chains
 
@@ -1450,9 +1410,10 @@ describe Chem::ChainView do
     end
   end
 
-  describe "#size" do
-    it "returns the number of chains" do
-      chains.size.should eq 2
+  describe "#residues" do
+    it "returns the residues" do
+      fake_structure.chains.residues.size.should eq 3
+      fake_structure.chains.residues.map(&.name).should eq %w(ASP PHE SER)
     end
   end
 end

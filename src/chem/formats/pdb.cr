@@ -320,8 +320,8 @@ module Chem::PDB
   end
 
   class Writer
-    include FormatWriter(AtomCollection)
-    include FormatWriter::MultiEntry(AtomCollection)
+    include FormatWriter(AtomContainer)
+    include FormatWriter::MultiEntry(AtomContainer)
 
     LINE_WIDTH       = 80
     PDB_VERSION      = "3.30"
@@ -360,7 +360,7 @@ module Chem::PDB
       super
     end
 
-    protected def encode_entry(obj : AtomCollection) : Nil
+    protected def encode_entry(obj : AtomContainer) : Nil
       @record_index = 0
 
       if @entry_index == 0
@@ -383,32 +383,34 @@ module Chem::PDB
           end
         end
 
-        obj.each_chain do |chain|
+        obj.chains.each do |chain|
           p_res = nil
-          chain.each_residue do |residue|
+          chain.residues.each do |residue|
             # assume residues are ordered by connectivity, so a chain
             # break (new fragment) can be detected if residue i and i+1
             # are not bonded
             write_ter p_res if @ter_on_fragment && p_res && !p_res.bonded?(residue)
-            residue.each_atom { |atom| write atom, transform }
+            residue.atoms.each { |atom| write atom, transform }
             p_res = residue
           end
           # assume that a chain is one or multiple (chain breaks) fragments
           write_ter p_res if p_res && (p_res.polymer? || @ter_on_fragment)
         end
       elsif @ter_on_fragment
-        obj.each_fragment do |atoms|
-          atoms.each_atom do |atom|
+        atoms = obj.is_a?(AtomView) ? obj : obj.atoms
+        atoms.each_fragment do |atoms|
+          atoms.each do |atom|
             write atom
           end
           write_ter atoms[-1].residue
         end
       else
-        obj.each_atom { |atom| write atom }
+        atoms = obj.is_a?(AtomView) ? obj : obj.atoms
+        atoms.each { |atom| write atom }
       end
 
       unless @bonds.none?
-        bonds = obj.bonds
+        bonds = obj.responds_to?(:bonds) ? obj.bonds : obj.atoms.bonds
         if @bonds != BondOptions::All
           bonds.select! do |bond|
             a, b = bond.atoms
@@ -523,7 +525,7 @@ module Chem::PDB
 
     private def write_sec(structure : Structure) : Nil
       helix_id = sheet_id = 0
-      structure.secondary_structures
+      structure.residues.secondary_structures
         .select!(&.[0].sec.regular?)
         .sort_by! do |residues|
           {residues[0].sec.beta_strand? ? 1 : -1, residues[0]}

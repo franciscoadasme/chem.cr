@@ -79,7 +79,10 @@ module Chem::Cube
 
     ANGS_TO_BOHR = 1.88972612478289694072
 
-    def initialize(@io : IO, @atoms : AtomCollection, @sync_close : Bool = false)
+    @atoms : AtomView
+
+    def initialize(@io : IO, atoms : AtomContainer, @sync_close : Bool = false)
+      @atoms = atoms.is_a?(AtomView) ? atoms : atoms.atoms
     end
 
     protected def encode_entry(obj : Spatial::Grid) : Nil
@@ -98,7 +101,7 @@ module Chem::Cube
     end
 
     private def write_atoms : Nil
-      @atoms.each_atom do |atom|
+      @atoms.each do |atom|
         formatl "%5d%12.6f%12.6f%12.6f%12.6f",
           atom.atomic_number,
           atom.partial_charge,
@@ -112,7 +115,7 @@ module Chem::Cube
       @io.puts "CUBE FILE GENERATED WITH CHEM.CR"
       @io.puts "OUTER LOOP: X, MIDDLE LOOP: Y, INNER LOOP: Z"
       origin = grid.origin * ANGS_TO_BOHR
-      formatl "%5d%12.6f%12.6f%12.6f", @atoms.n_atoms, origin.x, origin.y, origin.z
+      formatl "%5d%12.6f%12.6f%12.6f", @atoms.size, origin.x, origin.y, origin.z
       grid.bounds.basisvec.each_with_index do |vec, i|
         vec *= ANGS_TO_BOHR / grid.dim[i]
         formatl "%5d%12.6f%12.6f%12.6f", grid.dim[i], vec.x, vec.y, vec.z

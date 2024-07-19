@@ -77,7 +77,7 @@ module Chem::Mol
   end
 
   class Writer
-    include FormatWriter(AtomCollection)
+    include FormatWriter(AtomContainer)
 
     def initialize(
       @io : IO,
@@ -86,16 +86,18 @@ module Chem::Mol
     )
     end
 
-    def encode_entry(obj : AtomCollection) : Nil
+    def encode_entry(obj : AtomContainer) : Nil
+      atoms = obj.is_a?(AtomView) ? obj : obj.atoms
       write_header_block obj
       case @variant
-      in .v2000? then V2000.encode(@io, obj)
-      in .v3000? then V3000.encode(@io, obj)
+      in .v2000? then V2000.encode(@io, atoms)
+      in .v3000? then V3000.encode(@io, atoms)
       end
     end
 
-    private def write_header_block(atoms : AtomCollection) : Nil
-      single_residue = atoms.n_residues == 1
+    private def write_header_block(atoms : AtomContainer) : Nil
+      n_residues = atoms.is_a?(Structure) ? atoms.residues.size : atoms.n_residues
+      single_residue = n_residues == 1
       title = atoms.title.presence.try(&.gsub(/ *\n */, ' ')) if atoms.is_a?(Structure)
 
       # title line
@@ -105,13 +107,13 @@ module Chem::Mol
       @io.printf "%2s", nil        # user's initials
       @io.printf "%-8s", "chem.cr" # program name
       Time.local.to_s @io, "%m%d%y%H%M"
-      @io.puts atoms.each_atom.all?(&.z.zero?) ? "2D" : "3D"
+      @io.puts atoms.atoms.all?(&.z.zero?) ? "2D" : "3D"
 
       # comment line
       @io.puts single_residue ? title : nil
 
       # counts line
-      @io.printf "%3d", (@variant.v2000? ? atoms.n_atoms : 0)
+      @io.printf "%3d", (@variant.v2000? ? atoms.atoms.size : 0)
       @io.printf "%3d", (@variant.v2000? ? atoms.bonds.size : 0)
       @io.printf "%3d", 0   # number of atom list
       @io.printf "%3d", 0   # obsolete
@@ -130,10 +132,10 @@ module Chem::Mol
   private module V2000
     FORMAL_CHARGE_MAP = {0 => 0, 3 => 1, 2 => 2, 1 => 3, 5 => -1, 6 => -2, 7 => -3}
 
-    def self.encode(io : IO, atoms : AtomCollection) : Nil
-      atom_index_map = atoms.each_atom.with_index.to_h.transform_values(&.succ)
+    def self.encode(io : IO, atoms : AtomView) : Nil
+      atom_index_map = atoms.each.with_index.to_h.transform_values(&.succ)
 
-      atoms.each_atom do |atom|
+      atoms.each do |atom|
         io.printf "%10.4f", atom.x
         io.printf "%10.4f", atom.y
         io.printf "%10.4f", atom.z
@@ -164,7 +166,7 @@ module Chem::Mol
         io.puts
       end
 
-      atoms.each_atom.reject(&.formal_charge.zero?)
+      atoms.reject(&.formal_charge.zero?)
         .each_slice(8, reuse: true) do |slice|
           io.printf "M  CHG%3d", slice.size
           slice.each do |atom|
@@ -273,13 +275,13 @@ module Chem::Mol
       end
     end
 
-    def self.encode(io : IO, atoms : AtomCollection) : Nil
-      atom_index_map = atoms.each_atom.with_index.to_h.transform_values(&.succ)
+    def self.encode(io : IO, atoms : AtomView) : Nil
+      atom_index_map = atoms.each.with_index.to_h.transform_values(&.succ)
 
       io.puts "M  V30 BEGIN CTAB"
-      io.puts "M  V30 COUNTS #{atoms.n_atoms} #{atoms.bonds.size} 0 0 0"
+      io.puts "M  V30 COUNTS #{atoms.size} #{atoms.bonds.size} 0 0 0"
       io.puts "M  V30 BEGIN ATOM"
-      atoms.each_atom.with_index(offset: 1) do |atom, i|
+      atoms.each_with_index(offset: 1) do |atom, i|
         io << "M  V30 "
         io.printf "%-4d", i
         atom.element.symbol.center io, 4

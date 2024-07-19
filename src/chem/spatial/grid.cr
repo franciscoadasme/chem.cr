@@ -152,7 +152,7 @@ module Chem::Spatial
       delta = Math.min delta, grid.resolution.min / 2
       atoms = structure.atoms
       kdtree = KDTree.new(atoms.map(&.coords), structure.cell?)
-      vdw_cutoff = structure.each_atom.max_of &.vdw_radius
+      vdw_cutoff = structure.atoms.max_of &.vdw_radius
       # grid.map_with_coords! do |_, vec|
       #   value = 0
       #   kdtree.each_neighbor(vec, within: vdw_cutoff) do |atom, d|
@@ -166,7 +166,7 @@ module Chem::Spatial
       #   end
       #   value.clamp(0, 1)
       # end
-      structure.each_atom do |atom|
+      structure.atoms.each do |atom|
         grid.each_loc(atom.coords, atom.vdw_radius + delta) do |loc, d|
           too_close = false
           kdtree.each_neighbor(grid.coords_at(loc), within: vdw_cutoff) do |index, od|

@@ -1,9 +1,5 @@
 module Chem
   class Structure
-    include AtomCollection
-    include ChainCollection
-    include ResidueCollection
-
     MAX_CHAINS     = 62 # chain id is alphanumeric: A-Z, a-z or 0-9
     MIN_RING_ANGLE = 50 # angle cutoff to detect high ring strain
 
@@ -73,10 +69,10 @@ module Chem
     # types.
     def apply_templates : Nil
       prev_res = nil
-      each_residue do |residue|
+      residues.each do |residue|
         if template = residue.template
           residue.type = template.type
-          residue.each_atom do |atom|
+          residue.atoms.each do |atom|
             if atom_t = template[atom.name]?
               atom.formal_charge = atom_t.formal_charge
             end
@@ -102,15 +98,22 @@ module Chem
       end
     end
 
+    def atoms : AtomView
+      atoms = [] of Atom
+      @chains.each do |chain|
+        chain.residues.each do |residue|
+          # #concat(Array) copies memory instead of appending one by one
+          atoms.concat residue.atoms.to_a
+        end
+      end
+      AtomView.new atoms
+    end
+
     # Returns the bonds between all atoms.
     def bonds : Array(Bond)
       # TODO: use sorted set
       bonds = Set(Bond).new
-      each_atom do |atom|
-        atom.bonds.each do |bond|
-          bonds << bond
-        end
-      end
+      atoms.each { |atom| bonds.concat atom.bonds }
       bonds.to_a
     end
 
@@ -119,6 +122,10 @@ module Chem
     def cell : Spatial::Parallelepiped
       @cell || raise Spatial::NotPeriodicError.new(
         "#{title || "Structure"} is not periodic")
+    end
+
+    def chains : ChainView
+      ChainView.new @chains
     end
 
     def clear : self
@@ -160,7 +167,12 @@ module Chem
     end
 
     def coords : Spatial::CoordinatesProxy
-      Spatial::CoordinatesProxy.new self, @cell
+      Spatial::CoordinatesProxy.new atoms, @cell
+    end
+
+    # Sets the atom coordinates.
+    def coords=(coords : Enumerable(Spatial::Vec3)) : Enumerable(Spatial::Vec3)
+      atoms.coords = coords
     end
 
     def delete(ch : Chain) : Chain?
@@ -194,46 +206,6 @@ module Chem
       @dihedrals.view
     end
 
-    def each_atom : Iterator(Atom)
-      iterators = [] of Iterator(Atom)
-      each_chain do |chain|
-        chain.each_residue do |residue|
-          iterators << residue.each_atom
-        end
-      end
-      Iterator.chain iterators
-    end
-
-    def each_atom(& : Atom ->)
-      each_chain do |chain|
-        chain.each_atom do |atom|
-          yield atom
-        end
-      end
-    end
-
-    def each_chain : Iterator(Chain)
-      @chains.each
-    end
-
-    def each_chain(& : Chain ->)
-      @chains.each do |chain|
-        yield chain
-      end
-    end
-
-    def each_residue : Iterator(Residue)
-      Iterator.chain each_chain.map(&.each_residue).to_a
-    end
-
-    def each_residue(& : Residue ->)
-      each_chain do |chain|
-        chain.each_residue do |residue|
-          yield residue
-        end
-      end
-    end
-
     # Returns a new structure containing the selected atoms by the given
     # block.
     #
@@ -258,13 +230,18 @@ module Chem
       structure
     end
 
+    # TODO: implement compound accessors in a global module
+    def formal_charge : Int32
+      atoms.sum &.formal_charge
+    end
+
     # Determines the angles based on connectivity. See `Angle` for
     # definition.
     #
     # NOTE: It deletes existing angles.
     def guess_angles : Nil
       @angles.clear
-      each_atom do |a2|
+      atoms.each do |a2|
         a2.bonded_atoms.each_combination(2, reuse: true) do |(a1, a3)|
           @angles << Angle.new(a1, a2, a3)
         end
@@ -488,6 +465,8 @@ module Chem
     # Returns the element of an atom based on its name. Raises `Error` if
     # the element could not be determined. Refer to `guess_element?` for
     # details.
+    #
+    # TODO: Move to `Chem` namespace
     def self.guess_element(atom_name : String) : Element
       guess_element?(atom_name) || raise Error.new("Could not guess element of #{atom_name}")
     end
@@ -498,6 +477,8 @@ module Chem
     # This is a naive approach, where the first letter of *atom_name* is
     # tested first to get the element, then the name with trailing digits
     # stripped.
+    #
+    # TODO: Move to `Chem` namespace
     def self.guess_element?(atom_name : String) : Element?
       atom_name = atom_name.lstrip("123456789").capitalize
       PeriodicTable[atom_name[0]]? || PeriodicTable[atom_name]?
@@ -524,7 +505,7 @@ module Chem
     # WARNING: Elements that have no valence determined such as transition
     # metals are ignored.
     def guess_formal_charges : Nil
-      each_atom do |atom|
+      atoms.each do |atom|
         valence = atom.valence
         if valence == 0
           if atom.element.valence_electrons < 4 # monoatomic cations
@@ -620,7 +601,7 @@ module Chem
       end
 
       # Create groups to be transformed into chains
-      fragments = chain.residue_fragments
+      fragments = chain.residues.residue_fragments
       polymers, nonpolymers = fragments.partition &.size.>(1)
       grouped_nonpolymers = nonpolymers.map(&.first).group_by(&.type).values
       if polymers.size + grouped_nonpolymers.size <= MAX_CHAINS
@@ -677,8 +658,8 @@ module Chem
     # Determines the type of unknown residues based on their neighbors.
     def guess_unknown_residue_types : Nil
       # TODO: bond_t should be computed from bonded_residues
-      return unless bond_t = each_residue.compact_map(&.template.try(&.link_bond)).first?
-      each_residue do |residue|
+      return unless bond_t = residues.compact_map(&.template.try(&.link_bond)).first?
+      residues.each do |residue|
         next if residue.template
         types = residue
           .bonded_residues(bond_t, forward_only: false, strict: false)
@@ -694,18 +675,6 @@ module Chem
     def impropers : Array::View(Improper)
       guess_impropers if @impropers.empty?
       @impropers.view
-    end
-
-    def n_atoms : Int32
-      @chains.sum &.n_atoms
-    end
-
-    def n_chains : Int32
-      @chains.size
-    end
-
-    def n_residues : Int32
-      @chains.sum &.n_residues
     end
 
     def periodic? : Bool
@@ -757,7 +726,7 @@ module Chem
     # Deletes all bonds and resets formal charges to zero.
     def reset_connectivity : Nil
       # TODO: find a better way to reset bonds
-      each_atom do |atom|
+      atoms.each do |atom|
         atom.bonds.each do |bond|
           atom.bonds.delete bond
         end
@@ -765,12 +734,21 @@ module Chem
       end
     end
 
+    def residues : ResidueView
+      residues = [] of Residue
+      @chains.each do |chain|
+        # #concat(Array) copies memory instead of appending one by one
+        residues.concat chain.residues.to_a
+      end
+      ResidueView.new residues
+    end
+
     def to_s(io : IO)
       io << "<Structure"
       io << " " << title.inspect unless title.blank?
       io << ": "
-      io << n_atoms << " atoms"
-      io << ", " << n_residues << " residues" if n_residues > 1
+      io << atoms.size << " atoms"
+      io << ", " << residues.size << " residues" if residues.size > 1
       io << ", "
       io << "non-" unless @cell
       io << "periodic>"

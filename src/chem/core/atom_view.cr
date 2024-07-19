@@ -1,74 +1,80 @@
 module Chem
   struct AtomView
     include Array::Wrapper(Atom)
-    include AtomCollection
-    include ChainCollection
-    include ResidueCollection
 
+    # TODO: change to #find!(Int)
     def [](*, serial : Int) : Atom
       self[serial: serial]? || raise IndexError.new
     end
 
+    # TODO: change to #find!(name : String)
     def [](name : String) : Atom?
       self[name: name]? || raise KeyError.new
     end
 
+    # TODO: change to #find(Int)
     def []?(*, serial : Int) : Atom?
       find &.serial.==(serial)
     end
 
+    # TODO: change to #find(name : String)
     def []?(name : String) : Atom?
       find &.name.==(name)
     end
 
-    def atoms : self
-      self
+    def bonds : Array(Bond)
+      # TODO: use sorted set
+      # FIXME: return bonds only to the atoms within this view
+      bonds = Set(Bond).new
+      each { |atom| bonds.concat atom.bonds }
+      bonds.to_a
     end
 
-    def each_atom : Iterator(Atom)
-      each
-    end
-
-    def each_atom(&block : Atom ->)
-      each do |atom|
-        yield atom
-      end
-    end
-
-    def each_chain : Iterator(Chain)
-      each.map(&.chain).uniq
-    end
-
-    def each_chain(&block : Chain ->)
+    def chains : ChainView
       chains = Set(Chain).new
+      each { |atom| chains << atom.chain }
+      ChainView.new chains.to_a
+    end
+
+    def coords : Spatial::CoordinatesProxy
+      Spatial::CoordinatesProxy.new self
+    end
+
+    # Sets the atom coordinates.
+    def coords=(coords : Enumerable(Spatial::Vec3)) : Enumerable(Spatial::Vec3)
+      zip(coords) do |atom, vec|
+        atom.coords = vec
+      end
+      coords
+    end
+
+    def each_fragment(& : self ->) : Nil
+      atoms = to_set
       each do |atom|
-        yield atom.chain unless atom.chain.in?(chains)
-        chains << atom.chain
+        next unless atom.in?(atoms)
+        atoms.delete atom
+        fragment = [atom]
+        fragment.each do |a|
+          a.each_bonded_atom do |b|
+            next unless b.in?(atoms)
+            fragment << b
+            atoms.delete b
+          end
+        end
+        yield self.class.new(fragment).sort_by(&.serial)
       end
     end
 
-    def each_residue : Iterator(Residue)
-      each.map(&.residue).uniq
+    def fragments : Array(self)
+      fragments = [] of self
+      each_fragment { |fragment| fragments << fragment }
+      fragments
     end
 
-    def each_residue(&block : Residue ->)
+    def residues : ResidueView
       residues = Set(Residue).new
-      each do |atom|
-        yield atom.residue unless atom.residue.in?(residues)
-        residues << atom.residue
-      end
-    end
-
-    def n_atoms : Int32
-      size
-    end
-
-    def n_chains : Int32
-      each_chain.sum { 1 }
-    end
-
-    def n_residues : Int32
-      each_residue.sum { 1 }
+      each { |atom| residues << atom.residue }
+      ResidueView.new residues.to_a
     end
   end
 end

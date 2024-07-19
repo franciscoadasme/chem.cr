@@ -1,10 +1,13 @@
 require "views"
 require "./chem/core_ext/**"
 
+module Chem
+  alias AtomContainer = AtomView | Residue | ResidueView | Chain | ChainView | Structure
+end
+
 require "./chem/metadata"
 require "./chem/spatial"
 
-require "./chem/core/atom_collection"
 require "./chem/core/residue"
 require "./chem/core/atom"
 require "./chem/connectivity"
@@ -12,9 +15,7 @@ require "./chem/core/bias"
 require "./chem/core/bond_array"
 require "./chem/core/element"
 require "./chem/core/periodic_table"
-require "./chem/core/residue_collection"
 require "./chem/core/chain"
-require "./chem/core/chain_collection"
 require "./chem/core/atom_view"
 require "./chem/core/residue_view"
 require "./chem/core/chain_view"

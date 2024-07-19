@@ -11,7 +11,7 @@ describe Chem::XYZ::Reader do
     structure = load_file "acama.xyz"
     structure.source_file.should eq Path[spec_file("acama.xyz")].expand
     structure.title.should eq "Ala-Cys-Ala-Met-Ala"
-    structure.n_atoms.should eq 61
+    structure.atoms.size.should eq 61
     structure.atoms.map(&.element.symbol).should eq symbols
     structure.atoms[11].coords.should eq [4.76610, 0.49650, 5.29840]
     structure.atoms[-1].coords.should eq [0.72200, 0.70700, 7.66970]
@@ -22,7 +22,7 @@ describe Chem::XYZ::Reader do
 
     structures.size.should eq 4
     structures.map(&.title).should eq ["0", "1", "2", "3"]
-    structures.map(&.n_atoms).should eq [3, 3, 3, 3]
+    structures.map(&.atoms.size).should eq [3, 3, 3, 3]
     structures.map(&.atoms[1].z).should eq [1.159076, 1.2, 1.3, 1.4]
     structures.each do |structure|
       structure.source_file.should eq Path[spec_file("coo.trj.xyz")].expand
@@ -36,7 +36,7 @@ describe Chem::XYZ::Reader do
 
     structures.size.should eq 2
     structures.map(&.title).should eq ["1", "3"]
-    structures.map(&.n_atoms).should eq [3, 3]
+    structures.map(&.atoms.size).should eq [3, 3]
     structures.map(&.atoms[1].z).should eq [1.2, 1.4]
   end
 
@@ -104,7 +104,7 @@ describe Chem::XYZ::Writer do
       atom :o, vec3(0, 0, -1.159076)
     end
 
-    structure.chains[0].to_xyz.should eq <<-EOS
+    structure.chains[0].atoms.to_xyz.should eq <<-EOS
       3
 
       C     0.000    0.000    0.000

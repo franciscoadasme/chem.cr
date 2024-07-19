@@ -225,10 +225,10 @@ module Chem
       # Returns `true` if the format can write an instance of *type*.
       #
       # ```
-      # Chem::Format::XYZ.encodes?(Chem::AtomCollection)      # => true
+      # Chem::Format::XYZ.encodes?(Chem::AtomView)            # => true
       # Chem::Format::XYZ.encodes?(Chem::Structure)           # => true
       # Chem::Format::XYZ.encodes?(Array(Chem::Structure))    # => true
-      # Chem::Format::Poscar.encodes?(Chem::AtomCollection)   # => false
+      # Chem::Format::Poscar.encodes?(Chem::AtomView)         # => false
       # Chem::Format::Poscar.encodes?(Chem::Structure)        # => true
       # Chem::Format::Poscar.encodes?(Array(Chem::Structure)) # => false
       # Chem::Format::XYZ.encodes?(Int32)                     # => false
@@ -239,8 +239,8 @@ module Chem
           case self
           {% for ftype in FORMAT_TYPES %}
             in {{ftype.constant("FORMAT_NAME").id}}
-              {% if (etype = ftype.constant("WRITE_TYPE")) %}
-                T <= {{etype}} && {{ftype.constant("WRITE_MULTI")}}
+              {% if (etypes = ftype.constant("WRITE_TYPES")) %}
+                {{etypes}}.any? { |type| type >= T } && {{ftype.constant("WRITE_MULTI")}}
               {% else %}
                 false
               {% end %}
@@ -255,8 +255,8 @@ module Chem
           case self
           {% for ftype in FORMAT_TYPES %}
             in {{ftype.constant("FORMAT_NAME").id}}
-              {% if etype = ftype.constant("WRITE_TYPE") %}
-                type <= {{etype}}
+              {% if etypes = ftype.constant("WRITE_TYPES") %}
+                {{etypes}}.any? { |etype| etype >= type }
               {% else %}
                 false
               {% end %}
@@ -366,8 +366,13 @@ module Chem
         end
       {% end %}
 
-      {% format_types = FORMAT_TYPES.select(&.constant("WRITE_TYPE")) %}
-      {% for etype in format_types.map(&.constant("WRITE_TYPE").resolve).uniq %}
+      {% encoded_types = [] of Nil %}
+      {% format_types = FORMAT_TYPES.select(&.constant("WRITE_TYPES")) %}
+      {% format_types.each do |ftype|
+           (wtypes = ftype.constant("WRITE_TYPES")) &&
+             wtypes.each { |wtype| encoded_types << wtype.resolve }
+         end %}
+      {% for etype in encoded_types.uniq %}
         # Returns the writer associated with the format. Raises
         # `ArgumentError` if the format does not encode *type* or it is
         # read only.
@@ -384,7 +389,7 @@ module Chem
             case self
             {% for ftype in format_types %}
               when {{ftype.constant("FORMAT_NAME").id}}
-                {% if ftype.constant("WRITE_TYPE").resolve >= etype %}
+                {% if (wtypes = ftype.constant("WRITE_TYPES")) && wtypes.any?(&.resolve.>=(etype)) %}
                   ::{{ftype.constant("WRITER")}}
                 {% else %}
                   raise ArgumentError.new("#{self} format cannot write #{type}")
@@ -397,16 +402,20 @@ module Chem
         end
       {% end %}
 
-      {% for etype in format_types
-                        .select(&.constant("WRITE_MULTI"))
-                        .map(&.constant("WRITE_TYPE").resolve).uniq %}
+      {% encoded_types = [] of Nil %}
+      {% format_types.select(&.constant("WRITE_MULTI")).each do |ftype|
+           (wtypes = ftype.constant("WRITE_TYPES")) &&
+             wtypes.each { |wtype| encoded_types << wtype.resolve }
+         end %}
+      {% for etype in encoded_types.uniq %}
         # :ditto:
         def writer(type : Array({{etype}}).class)
           {% begin %}
             case self
             {% for ftype in format_types %}
               when {{ftype.constant("FORMAT_NAME").id}}
-                {% if ftype.constant("WRITE_TYPE").resolve >= etype &&
+                {% if (wtypes = ftype.constant("WRITE_TYPES")) &&
+                        wtypes.any?(&.resolve.>=(etype)) &&
                         ftype.constant("WRITE_MULTI") %}
                   ::{{ftype.constant("WRITER")}}
                 {% else %}

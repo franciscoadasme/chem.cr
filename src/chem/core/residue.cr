@@ -8,7 +8,6 @@ enum Chem::ResidueType
 end
 
 class Chem::Residue
-  include AtomCollection
   include Comparable(Residue)
 
   @atom_table = {} of String => Atom
@@ -21,8 +20,12 @@ class Chem::Residue
   property number : Int32
   property sec : Protein::SecondaryStructure = :none
 
+  # TODO: Remove this delegate. Use #dig methods
   delegate :[], :[]?, to: @atom_table
   delegate structure, to: @chain
+
+  # TODO: Implement `#bonds`
+  # TODO: Implement `#formal_charge`
 
   def initialize(
     @chain : Chain,
@@ -96,6 +99,8 @@ class Chem::Residue
   # residue[Templates::Atom("CA", element: "N")] # raises IndexError
   # residue[Templates::Atom("CX")]               # raises IndexError
   # ```
+  #
+  # TODO: Move to Templates or other namespace
   def [](atom_t : Templates::Atom) : Atom
     self[atom_t]? || raise IndexError.new "Cannot find atom for template: #{atom_t}"
   end
@@ -111,10 +116,16 @@ class Chem::Residue
   # residue[Templates::Atom("CA", element: "N")] # => nil
   # residue[Templates::Atom("CX")]               # => nil
   # ```
+  #
+  # TODO: Move to Templates or other namespace
   def []?(atom_t : Templates::Atom) : Atom?
     if atom = self[atom_t.name]?
       atom if atom.matches?(atom_t)
     end
+  end
+
+  def atoms : AtomView
+    AtomView.new @atoms
   end
 
   # Returns true if `self` is bonded to *other*, otherwise false.
@@ -130,8 +141,8 @@ class Chem::Residue
   # ```
   def bonded?(other : self) : Bool
     return false if other.same?(self)
-    each_atom.any? do |a1|
-      other.each_atom.any? { |a2| a1.bonded? to: a2 }
+    atoms.any? do |a1|
+      other.atoms.any? { |a2| a1.bonded? to: a2 }
     end
   end
 
@@ -248,7 +259,7 @@ class Chem::Residue
               order : BondOrder? = nil) : Bool
     return false if other.same?(self)
     return false unless a = self[lhs]?
-    other.each_atom.any? do |b|
+    other.atoms.any? do |b|
       if b === rhs && (bond = a.bonds[b]?)
         bond.order == (order || bond.order)
       end
@@ -274,7 +285,7 @@ class Chem::Residue
     return false if other.same?(self)
     @atoms.any? do |a|
       next unless a === lhs
-      other.each_atom.any? do |b|
+      other.atoms.any? do |b|
         if b === rhs && (bond = a.bonds[b]?)
           bond.order == (order || bond.order)
         end
@@ -396,16 +407,6 @@ class Chem::Residue
     self[name]?
   end
 
-  def each_atom : Iterator(Atom)
-    @atoms.each
-  end
-
-  def each_atom(&block : Atom ->)
-    @atoms.each do |atom|
-      yield atom
-    end
-  end
-
   # Yields each bonded residue. Residues may be bonded through any
   # atom.
   #
@@ -483,10 +484,6 @@ class Chem::Residue
     else
       false
     end
-  end
-
-  def n_atoms : Int32
-    @atoms.size
   end
 
   def name=(str : String) : String
@@ -703,7 +700,7 @@ class Chem::Residue
     residue = Residue.new chain, @number, @insertion_code, @name
     residue.type = @type
     residue.sec = @sec
-    each_atom &.copy_to(residue) if recursive
+    atoms.each &.copy_to(residue) if recursive
     residue
   end
 

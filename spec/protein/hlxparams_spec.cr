@@ -14,7 +14,7 @@ describe Chem::Protein::HlxParams do
       end
       i = 0
       structure = load_file "4wfe.pdb"
-      structure.each_residue do |residue|
+      structure.residues.each do |residue|
         params = Chem::Protein::HlxParams.new(residue) rescue next
         params.pitch.should be_close data[:pitch][i], 1e-1
         params.twist.degrees.should be_close data[:twist][i], 2e-1
@@ -63,7 +63,7 @@ describe Chem::Protein::HlxParams do
     context "given a periodic peptide" do
       it "returns helical parameters" do
         structure = load_file "hlx_gly.poscar", guess_bonds: true, guess_names: true
-        structure.each_residue do |residue|
+        structure.residues.each do |residue|
           params = Chem::Protein::HlxParams.new residue
           params.twist.degrees.should be_close 166.15, 1e-2
           params.pitch.should be_close 2.91, 1e-3
@@ -73,7 +73,7 @@ describe Chem::Protein::HlxParams do
 
       it "computes pitch for a 2-residue peptide (#97)" do
         structure = load_file "polyala--theta-180.000--c-10.00.pdb"
-        structure.each_residue do |residue|
+        structure.residues.each do |residue|
           params = Chem::Protein::HlxParams.new residue
           params.pitch.should be_close 2.65, 1e-2
           params.twist.degrees.should be_close 180, 1e-2

@@ -6,7 +6,7 @@ describe Chem::Gen::Reader do
     structure.source_file.should eq Path[spec_file("non_periodic.gen")].expand
     structure.cell?.should be_nil
 
-    structure.n_atoms.should eq 5
+    structure.atoms.size.should eq 5
     structure.atoms.map(&.element.symbol).should eq ["Cl", "Na", "O", "Na", "Cl"]
     structure.coords.should eq [
       [30, 15, 10],
@@ -26,7 +26,7 @@ describe Chem::Gen::Reader do
       vec3(0, 20, 0),
       vec3(0, 0, 10))
 
-    structure.n_atoms.should eq 4
+    structure.atoms.size.should eq 4
     structure.atoms.map(&.element.symbol).should eq ["Cl", "O", "O", "Na"]
     structure.coords.should eq [
       [30, 15, 10],
@@ -46,7 +46,7 @@ describe Chem::Gen::Reader do
       vec3(2.713546, 0, 2.713546)
     )
 
-    structure.n_atoms.should eq 2
+    structure.atoms.size.should eq 2
     structure.atoms.map(&.element.symbol).should eq ["Ga", "As"]
     structure.coords.should eq [[0, 0, 0], [1.356773, 1.356773, 1.356773]]
   end
@@ -108,8 +108,8 @@ describe Chem::Gen::Writer do
       EOS
   end
 
-  it "writes an atom collection" do
-    structure.chains[0].to_gen.should eq <<-EOS
+  it "writes atoms" do
+    structure.chains[0].atoms.to_gen.should eq <<-EOS
           5  C
        Cl Na  O
           1 1    3.0000000000E+01    1.5000000000E+01    1.0000000000E+01

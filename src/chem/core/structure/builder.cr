@@ -91,7 +91,7 @@ module Chem
       atom_table = {} of Int32 => Atom
       atom_serials = Set(Int32).new bond_table.size * 2
       bond_table.each_key { |(i, j)| atom_serials << i << j }
-      @structure.each_atom do |atom|
+      @structure.atoms.each do |atom|
         atom_table[atom.serial] = atom if atom.serial.in?(atom_serials)
       end
       bond_table.each do |(i, j), order|
@@ -108,7 +108,9 @@ module Chem
       if @guess_bonds
         # skip bond order and formal charge assignment if a protein chain
         # has missing hydrogens (very common in PDB)
-        include_h = !@structure.each_residue.any? { |r| r.protein? && !r.has_hydrogens? }
+        include_h = !@structure.residues.any? do |residue|
+          residue.protein? && !residue.atoms.any?(&.hydrogen?)
+        end
         @structure.guess_bonds perceive_order: include_h
         @structure.guess_formal_charges if include_h
       end
@@ -206,7 +208,7 @@ module Chem
     end
 
     def secondary_structure(ri : Residue, rj : Residue, type : Protein::SecondaryStructure)
-      @structure.each_residue do |residue|
+      @structure.residues.each do |residue|
         if ri <= residue <= rj
           residue.sec = type
         end
@@ -223,7 +225,7 @@ module Chem
 
     private def atom!(name : String) : Atom
       if residue = @residue
-        residue.each_atom do |atom|
+        residue.atoms.each do |atom|
           return atom if atom.name == name
         end
       end
@@ -245,7 +247,7 @@ module Chem
     end
 
     private def next_residue(name : String = "UNK") : Residue
-      residue name, (chain.each_residue.max_of?(&.number) || 0) + 1
+      residue name, (chain.residues.max_of?(&.number) || 0) + 1
     end
 
     # Kekulizes bonds marked as aromatic. Raises an exception when bonds

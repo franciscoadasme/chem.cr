@@ -31,7 +31,7 @@ class Chem::Protein::Stride < Chem::Protein::SecondaryStructureCalculator
     private def detail(structure : Structure)
       title "Detailed secondary structure assignment"
       remark "|---Residue---|    |--Structure--|   |-Phi-|   |-Psi-|  |-Area-|"
-      structure.each_residue do |residue|
+      structure.residues.each do |residue|
         detail residue if residue.protein?
       end
     end
@@ -131,12 +131,12 @@ class Chem::Protein::Stride < Chem::Protein::SecondaryStructureCalculator
 
     private def summary(structure : Structure)
       title "Secondary structure summary"
-      structure.each_chain do |chain|
+      structure.chains.each do |chain|
         record "CHN", "%s %c", structure.source_file.try(&.basename), chain.id
         seq chain.residues
       end
       2.times { spacer }
-      structure.secondary_structures
+      structure.residues.secondary_structures
         .select!(&.[0].sec.regular?)
         .sort_by { |residues| {secorder(residues[0].sec), residues[0].number} }
         .each do |residues|

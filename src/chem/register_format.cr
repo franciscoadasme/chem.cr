@@ -259,7 +259,7 @@ macro finished
         # :nodoc:
         WRITER = {{writer}}
         # :nodoc:
-        WRITE_TYPE = {{write_type.type_vars[0]}}
+        WRITE_TYPES = {{write_type.type_vars[0].union_types}}
         # :nodoc:
         WRITE_MULTI = {{writer <= Chem::FormatWriter::MultiEntry}}
       {% end %}
@@ -272,10 +272,13 @@ macro finished
 
   {% encoded_types = [] of TypeNode %}
   {% for ftype in Chem::FORMAT_TYPES %}
-    {% for cname in %w(READ_TYPE HEAD_TYPE ATTACHED_TYPE WRITE_TYPE) %}
-      {% if type = ftype.constant(cname) %}
-        {% type = type.resolve %}
-        {% encoded_types << type unless encoded_types.includes?(type) %}
+    {% for cname in %w(READ_TYPE HEAD_TYPE ATTACHED_TYPE WRITE_TYPES) %}
+      {% if types = ftype.constant(cname) %}
+        {% types = [types] unless types.is_a?(ArrayLiteral) %}
+        {% for type in types %}
+          {% type = type.resolve %}
+          {% encoded_types << type unless encoded_types.includes?(type) %}
+        {% end %}
       {% end %}
     {% end %}
   {% end %}
@@ -472,7 +475,8 @@ macro finished
     {% end %}
 
     {% encoding_types = Chem::FORMAT_TYPES.select do |t|
-         (write_type = t.constant("WRITE_TYPE")) && etype <= write_type.resolve
+         (write_types = t.constant("WRITE_TYPES")) &&
+           write_types.any? { |type| etype <= type.resolve }
        end %}
     {% argless_types = [] of TypeNode %}
     {% for ftype in encoding_types %}
@@ -711,7 +715,9 @@ macro finished
     # read only.
     def write(output : IO | Path | String, format : Chem::Format) : Nil
       {% format_types = Chem::FORMAT_TYPES.select &.constant("WRITE_MULTI") %}
-      {% encoded_types = format_types.map(&.constant("WRITE_TYPE")).uniq %}
+      {% encoded_types = [] of Nil %}
+      {% format_types.each { |ftype| encoded_types += ftype.constant("WRITE_TYPES") } %}
+      {% encoded_types = encoded_types.uniq %}
       \{% if !{{encoded_types}}.any? { |etype| @type.type_vars[0] <= etype } %}
         \{% raise "undefined method 'write' for #{@type}" %}
       \{% end %}
@@ -726,7 +732,7 @@ macro finished
                 raise ArgumentError.new("#{format} format has required arguments. \
                                          Use #to_{{method_name}} instead.")
               {% else %}
-                \{% if @type.type_vars[0] <= {{ftype.constant("WRITE_TYPE")}}.resolve %}
+                \{% if {{ftype.constant("WRITE_TYPES")}}.any? { |wtype| @type.type_vars[0] <= wtype.resolve } %}
                   {{ftype.constant("WRITER")}}.open(output, total_entries: size) do |writer|
                     each do |obj|
                       writer << obj

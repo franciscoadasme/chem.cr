@@ -65,25 +65,26 @@ module Chem::Gen
   end
 
   class Writer
-    include FormatWriter(AtomCollection)
+    include FormatWriter(AtomContainer)
 
     def initialize(@io : IO,
                    @fractional : Bool = false,
                    @sync_close : Bool = false)
     end
 
-    protected def encode_entry(obj : AtomCollection) : Nil
+    protected def encode_entry(obj : AtomContainer) : Nil
       cell = obj.cell? if obj.is_a?(Structure)
       raise Spatial::NotPeriodicError.new if @fractional && cell.nil?
 
-      ele_table = obj.each_atom.map(&.element).uniq.with_index.to_h
+      atoms = obj.is_a?(AtomView) ? obj : obj.atoms
+      ele_table = atoms.each.map(&.element).uniq.with_index.to_h
       geometry_type = @fractional ? 'F' : (cell ? 'S' : 'C')
 
-      @io.printf "%5d%3s\n", obj.n_atoms, geometry_type
+      @io.printf "%5d%3s\n", atoms.size, geometry_type
       ele_table.each_key { |ele| @io.printf "%3s", ele.symbol }
       @io.puts
 
-      obj.each_atom.with_index do |atom, i|
+      atoms.each_with_index do |atom, i|
         ele = ele_table[atom.element] + 1
         vec = atom.coords
         vec = cell.not_nil!.fract vec if @fractional

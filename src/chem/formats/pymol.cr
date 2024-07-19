@@ -31,7 +31,7 @@ module Chem::PyMOL
     protected def encode_entry(obj : Structure) : Nil
       check_open
       header obj.source_file
-      obj.each_secondary_structure do |residues, sec|
+      obj.residues.each_secondary_structure do |residues, sec|
         next unless code = CODES[sec]?
         ch = residues[0].chain.id
         first = residues[0].number

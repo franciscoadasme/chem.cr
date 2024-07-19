@@ -279,7 +279,7 @@ module Chem::Spatial
 end
 
 struct Chem::Spatial::Transform
-  def self.aligning(pos : AtomCollection, to ref_pos : AtomCollection) : self
-    aligning pos.coords, ref_pos.coords
+  def self.aligning(atoms : AtomContainer, to ref_atoms : AtomContainer) : self
+    aligning atoms.coords, ref_atoms.coords
   end
 end

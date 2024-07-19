@@ -84,7 +84,7 @@ class Chem::Templates::Residue
       raise Error.new("Duplicate atom name #{name.inspect} found in #{residue}")
     end
 
-    bonds = residue.bonds.map do |bond|
+    bonds = residue.atoms.bonds.map do |bond|
       Bond.new *bond.atoms.map { |atom| atom_table[atom.name] }, bond.order
     end
     raise Error.new("Cannot create template from #{residue} due to \
@@ -200,7 +200,7 @@ private def guess_link_bond(residue : Chem::Residue) : Chem::Bond?
   pred, succ = succ, pred if pred.number > residue.number # periodic chain?
 
   pred_bond = succ_bond = nil
-  residue.bonds.each do |bond|
+  residue.atoms.bonds.each do |bond|
     pred_bond ||= bond if bond.atoms.any?(&.in?(pred))
     succ_bond ||= bond if bond.atoms.any?(&.in?(succ))
   end

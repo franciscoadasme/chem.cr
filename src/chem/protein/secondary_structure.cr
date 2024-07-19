@@ -276,7 +276,7 @@ module Chem::Protein
     end
 
     protected def reset_secondary_structure : Nil
-      @structure.reset_secondary_structure
+      @structure.residues.reset_secondary_structure
     end
   end
 end

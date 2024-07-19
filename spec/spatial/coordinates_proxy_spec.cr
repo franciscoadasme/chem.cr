@@ -89,7 +89,7 @@ describe Chem::Spatial::CoordinatesProxy do
       ], 1e-15
     end
 
-    it "fails for a non-periodic atom collection" do
+    it "fails for a non-periodic structure" do
       expect_raises Chem::Spatial::NotPeriodicError do
         fake_structure.coords.each(fractional: true) { }
       end
@@ -121,7 +121,7 @@ describe Chem::Spatial::CoordinatesProxy do
       elements.should eq ["O", "H", "H"]
     end
 
-    it "fails for a non-periodic atom collection" do
+    it "fails for a non-periodic structure" do
       expect_raises Chem::Spatial::NotPeriodicError do
         fake_structure.coords.each(fractional: true) { }
       end
@@ -151,7 +151,7 @@ describe Chem::Spatial::CoordinatesProxy do
       other.coords.map!(fractional: true, &.+(1)).should be_close expected, 1e-12
     end
 
-    it "fails for a non-periodic atom collection" do
+    it "fails for a non-periodic structure" do
       expect_raises Chem::Spatial::NotPeriodicError do
         fake_structure.coords.map! fractional: true, &.itself
       end
@@ -185,7 +185,7 @@ describe Chem::Spatial::CoordinatesProxy do
       other.coords.should be_close expected, 1e-12
     end
 
-    it "fails for a non-periodic atom collection" do
+    it "fails for a non-periodic structure" do
       expect_raises Chem::Spatial::NotPeriodicError do
         fake_structure.coords.map_with_atom! fractional: true, &.itself
       end
@@ -325,7 +325,7 @@ describe Chem::Spatial::CoordinatesProxy do
       structure.coords.to_a(fractional: true).should be_close expected, 1e-15
     end
 
-    it "fails for a non-periodic atom collection" do
+    it "fails for a non-periodic structure" do
       expect_raises Chem::Spatial::NotPeriodicError do
         fake_structure.coords.to_a fractional: true
       end

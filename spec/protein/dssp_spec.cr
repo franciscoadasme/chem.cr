@@ -4,7 +4,7 @@ describe Chem::Protein::DSSP do
   it "assigns secondary structure (1cbn)" do
     st = load_file "1cbn.pdb"
     Chem::Protein::DSSP.assign st
-    actual = st.each_residue.select(&.has_backbone?).map(&.sec.code).join
+    actual = st.residues.select(&.has_backbone?).map(&.sec.code).join
     actual.should eq "0EE0SSHHHHHHHHHHHTTT00HHHHHHHHS0EE0SSS000TTS00"
   end
 
@@ -15,14 +15,14 @@ describe Chem::Protein::DSSP do
                 E0TT00TTT0TT00EEEEESS0000BTTB000B00SS000TT0EEEEEESS000SSS0000SB0EEEEEEB\
                 00HHHHHHHSTTT00TTEEEES0TT0S0B00TT0TT0EEEETTEEEEEEEE0SSSS0TT00EEEEEGGG0H\
                 HHHHHHHHH0"
-    actual = st.each_residue.select(&.has_backbone?).map(&.sec.code).join
+    actual = st.residues.select(&.has_backbone?).map(&.sec.code).join
     actual.should eq expected
   end
 
   it "assigns secondary structure (1etl)" do
     st = load_file "1etl.pdb"
     Chem::Protein::DSSP.assign st
-    actual = st.each_residue.select(&.has_backbone?).map(&.sec.code).join
+    actual = st.residues.select(&.has_backbone?).map(&.sec.code).join
     actual.should eq "0TT00STTSTT0"
   end
 
@@ -36,7 +36,7 @@ describe Chem::Protein::DSSP do
                 HHHHHHHHTT0HHHHHHHHHHHHHHHHHHSS00SEEETTTTEES0S000000HHHHHHHHHHHHH00HHHH\
                 HHHHHHHHHHHHHSEETTEE00EEESSSSS0EE0S000HHHHHTHHHHHHHHHH00TTB0TTT0EE0TT00\
                 EEE0B000"
-    actual = st.each_residue.select(&.has_backbone?).map(&.sec.code).join
+    actual = st.residues.select(&.has_backbone?).map(&.sec.code).join
     actual.should eq expected
   end
 
@@ -46,14 +46,14 @@ describe Chem::Protein::DSSP do
     expected = "00EEEE000EEE0TT00EEEEEEEESS0GGGS0EEEEEE0TTS0EEEEEEE0TTT00EEE0GGGTTTEEEE\
                 EETTTTEEEEEE0S00GGG0EEEEEEE0SSS00EE000EEEEE00000B00EEEEE0000EEEEEEEEEEE\
                 BSS00EEEEgggT00TTEEE000EEETTEEEEEEEEEEETTTTTTS00EEEEEEGGGTEEEEEE0000"
-    actual = st['G'].each_residue.select(&.has_backbone?).map(&.sec.code).join
+    actual = st['G'].residues.select(&.has_backbone?).map(&.sec.code).join
     actual.should eq expected
   end
 
   it "assigns secondary structure (5jqf)" do
     st = load_file "5jqf.pdb"
     Chem::Protein::DSSP.assign st
-    actual = st.each_residue.select(&.has_backbone?).map(&.sec.code).join
+    actual = st.residues.select(&.has_backbone?).map(&.sec.code).join
     actual.should eq "00EEEEEE0TTTSSE0SEEE000EEEEEE0TTTSSE0SEEE0"
   end
 end
