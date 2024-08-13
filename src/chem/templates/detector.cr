@@ -29,9 +29,9 @@ class Chem::Templates::Detector
 
         atom_map = {} of Atom => ::Chem::Atom
         search res_t, res_t.root, root_atom, atom_map
-        extend_search atom_map, ters unless ters.empty?
         if atom_map.size >= res_t.atoms.size # may contain Ter atoms
           matches << MatchData.new(res_t, sort_match(atom_map, res_t.atoms))
+        extend_search(res_t, atom_map, ters) unless ters.empty?
           atom_map.each_value do |atom|
             @unmatched_atoms.delete atom
             @atoms_with_spec[@atom_top_specs[atom]].delete atom
@@ -44,23 +44,36 @@ class Chem::Templates::Detector
     {matches, AtomView.new(@unmatched_atoms.to_a.sort_by!(&.serial))}
   end
 
+  # Extend a residue template match by adding atoms based on Ter
+  # templates.
+  #
+  # It first obtains the atom names bonded to the Ter's root (matched by
+  # name) in the residue template. These are searched in the given match
+  # (*atom_map*) to get their bonded atoms, which will be tested as
+  # possible roots. Already visited/matched atoms are ignored.
   private def extend_search(
+    res_t : Residue,
     atom_map : Hash(Atom, ::Chem::Atom),
     ters : Enumerable(Ter)
   ) : Nil
     visited = atom_map.values.to_set
-    unmatched_neighbors = visited.flat_map(&.bonded_atoms).reject!(&.in?(visited))
     ter_map = {} of Atom => ::Chem::Atom
     ters.each do |ter_t|
-      unmatched_neighbors.each do |atom|
-        next unless @atom_top_specs[atom] == ter_t.root.top_spec
-        search ter_t, ter_t.root, atom, ter_map, visited.dup
-        if ter_map.size == ter_t.atoms.size
-          atom_map.merge! ter_map
-          return
+      res_t.bonds
+        .compact_map(&.other?(ter_t.root.name))     # atoms (by name) bonded to ter root
+        .select(&.element.heavy?)                   # ignore hydrogens
+        .compact_map { |atom_t| atom_map[atom_t]? } # get matched atoms
+        .flat_map(&.bonded_atoms)                   # get possible root atoms
+        .reject!(&.in?(visited))                    # skip already matched/visited
+        .each do |atom|
+          next unless @atom_top_specs[atom] == ter_t.root.top_spec
+          search ter_t, ter_t.root, atom, ter_map, visited.dup
+          if ter_map.size == ter_t.atoms.size
+            atom_map.merge! ter_map
+            return
+          end
+          ter_map.clear
         end
-        ter_map.clear
-      end
     end
   end
 
