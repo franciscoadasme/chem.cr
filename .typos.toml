@@ -5,9 +5,7 @@ extend-ignore-words-re = ["[0-9A-Z]{2,4}", "[A-Z][a-z]"]
 conect = "conect"
 ser = "ser"
 namd = "namd"
+struc = "struc"
 
 [files]
-extend-exclude = [
-    "bench/data/**",
-    "spec/data/**"
-]
+extend-exclude = ["bench/data/**", "spec/data/**"]
