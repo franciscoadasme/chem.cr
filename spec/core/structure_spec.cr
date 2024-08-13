@@ -612,6 +612,42 @@ describe Chem::Structure do
       structure.residues.size.should eq 1
       structure.residues[0].name.should eq "DMP"
     end
+
+    it "sorts atoms with ter" do
+      registry = Chem::Templates::Registry.new
+      registry.parse <<-YAML
+        templates:
+          - description: cis-1,4-isoprene
+            name: IPZ
+            spec: C1-C2=C3(-C4)-C5
+            link_bond: "C5-C1"
+        ters:
+          - description: 1-4-isoprene begin
+            name: IPL
+            spec: C1{-C}
+            root: C1
+          - description: 1-4-isoprene end
+            name: IPR
+            spec: C5{-C}
+            root: C5
+        YAML
+
+      struc = Chem::Structure.read spec_file("isoprene-5.xyz")
+      struc.guess_bonds
+      struc.guess_formal_charges
+      struc.guess_names registry
+
+      struc.residues.map(&.name).should eq %w(IPZ) * 5
+      struc.bonds.count(&.double?).should eq 5
+      struc.bonds.select(&.double?).map(&.atoms.map(&.name)).uniq.should eq [{"C2", "C3"}]
+      struc.residues[0].atoms.map(&.name).should eq %w(
+        C1 H11 H12 H13 C2 H2 C3 C4 H41 H42 H43 C5 H51 H52)
+      struc.residues[1...-1].each do |res|
+        res.atoms.map(&.name).should eq %w(C1 H11 H12 C2 H2 C3 C4 H41 H42 H43 C5 H51 H52)
+      end
+      struc.residues[-1].atoms.map(&.name).should eq %w(
+        C1 H11 H12 C2 H2 C3 C4 H41 H42 H43 C5 H51 H52 H53)
+    end
   end
 
   describe "#guess_unknown_residue_types" do

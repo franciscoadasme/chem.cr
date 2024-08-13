@@ -1,3 +1,4 @@
+# TODO: Change signature to Detector.new(registry).detect atoms
 class Chem::Templates::Detector
   @atom_top_specs : Hash(::Chem::Atom, String)
   @atoms_with_spec : Hash(String, Array(::Chem::Atom))
@@ -29,9 +30,11 @@ class Chem::Templates::Detector
 
         atom_map = {} of Atom => ::Chem::Atom
         search res_t, res_t.root, root_atom, atom_map
-        if atom_map.size >= res_t.atoms.size # may contain Ter atoms
-          matches << MatchData.new(res_t, sort_match(atom_map, res_t.atoms))
-        extend_search(res_t, atom_map, ters) unless ters.empty?
+        ter_map = extend_search(res_t, atom_map, ters) unless ters.empty?
+        if atom_map.size + (ter_map.try(&.size) || 0) >= res_t.atoms.size
+          atom_map = sort_match(res_t, atom_map)
+          atom_map = merge_ter(res_t, atom_map, ter_map) if ter_map
+          matches << MatchData.new(res_t, atom_map)
           atom_map.each_value do |atom|
             @unmatched_atoms.delete atom
             @atoms_with_spec[@atom_top_specs[atom]].delete atom
@@ -55,7 +58,7 @@ class Chem::Templates::Detector
     res_t : Residue,
     atom_map : Hash(Atom, ::Chem::Atom),
     ters : Enumerable(Ter)
-  ) : Nil
+  ) : Hash(Atom, ::Chem::Atom)?
     visited = atom_map.values.to_set
     ter_map = {} of Atom => ::Chem::Atom
     ters.each do |ter_t|
@@ -68,10 +71,7 @@ class Chem::Templates::Detector
         .each do |atom|
           next unless @atom_top_specs[atom] == ter_t.root.top_spec
           search ter_t, ter_t.root, atom, ter_map, visited.dup
-          if ter_map.size == ter_t.atoms.size
-            atom_map.merge! ter_map
-            return
-          end
+          return ter_map if ter_map.size == ter_t.atoms.size
           ter_map.clear
         end
     end
@@ -99,23 +99,46 @@ class Chem::Templates::Detector
   end
 end
 
-# Returns a new atom map that preserves the order of the atom templates.
-# If Ter (extra) atoms are found, they are placed after the ter's root.
+# Returns a new residue template match that preserves the atom order.
 private def sort_match(
+  res_t : Chem::Templates::Residue,
   atom_map : Hash(Chem::Templates::Atom, Chem::Atom),
-  sorted_atoms : Indexable(Chem::Templates::Atom)
 ) : Hash(Chem::Templates::Atom, Chem::Atom)
-  atoms = atom_map.keys
-    .sort_by! { |atom_t| sorted_atoms.index(atom_t) || Int32::MAX }
+  atom_map.to_a
+    .sort_by! do |atom_t, _|
+      res_t.atoms.index(&.name.==(atom_t.name)) ||
+        raise Chem::Error.new("Could not find atom #{atom_t.name} in \
+                             residue template #{res_t.name}")
+    end
+    .to_h
+end
 
-  # Place Ter atoms at the ter's root original position
-  if atoms.size > sorted_atoms.size
-    ter_i = atoms.index!(sorted_atoms.last)
-    atoms, ter_atoms = atoms[..ter_i], atoms[(ter_i + 1)..]
-
-    ter_i = sorted_atoms.index! &.name.==(ter_atoms[0].name)
-    atoms = atoms[...ter_i] + ter_atoms + atoms[ter_i..]
+# Returns a new residue template match by merging the ter match into the
+# given match. The ter's atoms are placed after the ter's root if
+# present, else at the end of the match.
+private def merge_ter(
+  res_t : Chem::Templates::Residue,
+  atom_map : Hash(Chem::Templates::Atom, Chem::Atom),
+  ter_map : Hash(Chem::Templates::Atom, Chem::Atom)
+) : Hash(Chem::Templates::Atom, Chem::Atom)
+  sorted_matches = atom_map.to_a
+  ter_matches = ter_map.to_a
+  if index = res_t.atoms.index(&.name.==(ter_map.first_key.name))
+    if index > 0
+      prev_name = res_t.atoms[index - 1].name
+      index = sorted_matches.index(&.[0].name.==(prev_name)) ||
+              raise Chem::Error.new(
+                "Could not find preceding atom #{prev_name} to ter \
+                 root in atom matches")
+      while sorted_matches[index + 1]?.try(&.[0].element.hydrogen?)
+        index += 1
+      end
+      sorted_matches.insert_all index + 1, ter_matches
+    else
+      sorted_matches = ter_matches + sorted_matches
+    end
+  else
+    sorted_matches.concat ter_matches
   end
-
-  atoms.to_h { |atom_t| {atom_t, atom_map[atom_t]} }
+  sorted_matches.to_h
 end
