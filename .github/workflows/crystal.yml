@@ -42,7 +42,7 @@ jobs:
           - macos-latest
           # - windows-latest
         crystal:
-          - 1.6.2
+          - 1.13.1
           - latest
           - nightly
     runs-on: ${{ matrix.os }}
