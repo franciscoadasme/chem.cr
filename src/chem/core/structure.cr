@@ -565,12 +565,11 @@ module Chem
     #
     # WARNING: Existing chains and residues are invalid after calling this
     # method so do not cache them.
-    def guess_names : Nil
+    def guess_names(registry : Templates::Registry = Templates::Registry.default) : Nil
       atoms = self.atoms.to_a
       clear
 
-      matches, unmatched_atoms = Templates::Detector.new(atoms).detect
-      # puts matches
+      matches, unmatched_atoms = Templates::Detector.new(atoms).detect registry
 
       chain = Chain.new self, 'A'
       resid = 0
