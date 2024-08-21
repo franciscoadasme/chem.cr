@@ -31,7 +31,7 @@ class Chem::DCD::Reader
 
   def initialize(
     @io : IO,
-    @structure : Structure,
+    @structure : Chem::Structure,
     @reuse : Bool = false,
     @sync_close : Bool = false
   )
