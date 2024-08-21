@@ -69,6 +69,10 @@ module Chem::Spatial
     dihedral a, b, c, d
   end
 
+  def self.distance(a : Vec3, b : Vec3) : Float64
+    a.distance(b)
+  end
+
   def self.distance(a : Atom, b : Atom) : Float64
     a.coords.distance(b.coords)
   end
@@ -90,6 +94,10 @@ module Chem::Spatial
   def self.distance(q1 : Quat, q2 : Quat) : Float64
     # 2 * Math.acos q1.dot(q2)
     Math.acos 2 * q1.dot(q2)**2 - 1
+  end
+
+  def self.distance2(a : Vec3, b : Vec3) : Float64
+    a.distance2(b)
   end
 
   def self.distance2(a : Atom, b : Atom) : Float64
