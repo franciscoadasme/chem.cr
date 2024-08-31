@@ -195,10 +195,14 @@ module Chem::PDB
             end
 
       @builder.chain chid if chid.alphanumeric?
-      resname = @pull.at(17, 4).str.strip
       resnum = seqnum_at(22, 4)
       inscode = @pull.at(26).char.presence
-      @builder.residue resname, resnum, inscode
+      resname = @pull.at(17, 4).str.strip
+      residue = @builder.residue resname, resnum, inscode
+
+      if alt_loc.nil? && resname != residue.name
+        @pull.error "Found different name #{resname.inspect} for #{residue}"
+      end
 
       x = @pull.at(30, 8).float
       y = @pull.at(38, 8).float

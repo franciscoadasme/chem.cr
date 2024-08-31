@@ -494,6 +494,40 @@ describe Chem::PDB do
       struc.experiment.should be_nil
       struc.atoms.map(&.name).should eq %w(C1 C2 C3)
     end
+
+    it "raises when name changes within a residue" do
+      content = <<-PDB
+        HEADER 
+        TITLE     Built with Packmol                                             
+        REMARK   Packmol generated pdb file 
+        REMARK   Home-Page: http://m3g.iqm.unicamp.br/packmol
+        HETATM    1  C1  LIG A   1      -0.463  -1.344   0.002  0.00  1.00           C  
+        HETATM    2  C2  LIG A   1      -1.369  -0.309   0.001  0.00  1.00           C  
+        HETATM    3  C3  LIG A   1      -0.895   1.105  -0.002  0.00  1.00           C  
+        HETATM    4  O1  LIG A   1      -1.602   2.090  -0.003  0.00  1.00           O  
+        HETATM    5  N1  LIG A   1       0.459   1.241  -0.001  0.00  1.00           N  
+        HETATM    6  C4  LIG A   1       1.382   0.253  -0.000  0.00  1.00           C  
+        HETATM    7  O2  LIG A   1       2.565   0.477  -0.000  0.00  1.00           O  
+        HETATM    8  N2  LIG A   1       0.889  -1.022   0.002  0.00  1.00           N  
+        HETATM    9  F1  LIG A   1      -2.694  -0.545   0.001  0.00  1.00           F  
+        HETATM   10  H1  LIG A   1      -0.692  -2.404   0.004  0.00  1.00           H  
+        HETATM   11  H2  LIG A   1       0.811   2.178  -0.003  0.00  1.00           H  
+        HETATM   12  H3  LIG A   1       1.614  -1.724   0.003  0.00  1.00           H  
+        ATOM     13  OH2 TIP3A   1       4.531   0.382  -0.339  1.00  0.00      TIP3    
+        ATOM     14  H1  TIP3A   1       5.166  -0.316  -0.170  1.00  0.00      TIP3    
+        ATOM     15  H2  TIP3A   1       4.996   1.188  -0.116  1.00  0.00      TIP3
+        PDB
+      ex = expect_raises(Chem::ParseException) do
+        Chem::Structure.from_pdb IO::Memory.new(content)
+      end
+      ex.inspect_with_location.should eq <<-EOS
+        Found a parsing issue:
+
+         17 | ATOM     13  OH2 TIP3A   1       4.531   0.382  -0.339  1.00  0.00      TIP3    
+                               ^^^^
+        Error: Found different name "TIP3" for <Residue A:LIG1>
+        EOS
+    end
   end
 end
 
