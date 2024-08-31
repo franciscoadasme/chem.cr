@@ -477,6 +477,23 @@ describe Chem::PDB do
         Chem::Structure.from_pdb(io).cell?.should be_nil
       end
     end
+
+    it "ignores empty REMARK (#222)" do
+      content = <<-PDB
+        HEADER 
+        TITLE     Built with Packmol                                             
+        REMARK   Packmol generated pdb file 
+        REMARK   Home-Page: http://m3g.iqm.unicamp.br/packmol
+        REMARK
+        HETATM    1  C1  LIG A   1      -0.463  -1.344   0.002  0.00  1.00           C  
+        HETATM    2  C2  LIG A   1      -1.369  -0.309   0.001  0.00  1.00           C  
+        HETATM    3  C3  LIG A   1      -0.895   1.105  -0.002  0.00  1.00           C
+        PDB
+      struc = Chem::Structure.from_pdb IO::Memory.new(content)
+      struc.title.should eq "Built with Packmol"
+      struc.experiment.should be_nil
+      struc.atoms.map(&.name).should eq %w(C1 C2 C3)
+    end
   end
 end
 
