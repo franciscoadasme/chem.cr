@@ -47,13 +47,21 @@ class Chem::Templates::Detector
     {matches, AtomView.new(@unmatched_atoms.to_a.sort_by!(&.serial))}
   end
 
-  # Extend a residue template match by adding atoms based on Ter
+  # Extends a residue template match by adding atoms based on Ter
   # templates.
   #
-  # It first obtains the atom names bonded to the Ter's root (matched by
-  # name) in the residue template. These are searched in the given match
-  # (*atom_map*) to get their bonded atoms, which will be tested as
-  # possible roots. Already visited/matched atoms are ignored.
+  # It detects root candidates in two ways:
+  #
+  # 1. Checks for an atom with the same name as the Ter's root in the
+  # given match, and if exists, starts the search from it. The matched
+  # atoms having names equal to the Ter's atoms are rematched. This
+  # allows for a Ter to overwrite residue atoms with the same
+  # name/topology.
+  # 2. Atoms bonded to the Ter's root in the residue template are looked
+  # for in the given match to get their bonded atoms. Atoms already
+  # visited/matched are ignored.
+  #
+  # The candidate root atoms are tested by calling the `#search` method.
   private def extend_search(
     res_t : Residue,
     atom_map : Hash(Atom, ::Chem::Atom),
@@ -62,18 +70,29 @@ class Chem::Templates::Detector
     visited = atom_map.values.to_set
     ter_map = {} of Atom => ::Chem::Atom
     ters.each do |ter_t|
-      res_t.bonds
-        .compact_map(&.other?(ter_t.root.name))     # atoms (by name) bonded to ter root
-        .select(&.element.heavy?)                   # ignore hydrogens
-        .compact_map { |atom_t| atom_map[atom_t]? } # get matched atoms
-        .flat_map(&.bonded_atoms)                   # get possible root atoms
-        .reject!(&.in?(visited))                    # skip already matched/visited
-        .each do |atom|
-          next unless @atom_top_specs[atom] == ter_t.root.top_spec
-          search ter_t, ter_t.root, atom, ter_map, visited.dup
-          return ter_map if ter_map.size == ter_t.atoms.size
-          ter_map.clear
+      if root_match = atom_map.find(&.[0].name.==(ter_t.root.name))
+        # if the template match has an atom named as the root, then
+        # start the search at the matched atom
+        ter_names = ter_t.atoms.map(&.name)
+        ter_visited = visited.dup
+        atom_map.each do |atom_t, atom|
+          ter_visited.delete atom if atom_t.name.in? ter_names
         end
+        search ter_t, ter_t.root, root_match[1], ter_map.clear, ter_visited
+        return ter_map if ter_map.size == ter_t.atoms.size
+      else # search all root candidates
+        res_t.bonds
+          .compact_map(&.other?(ter_t.root.name))     # atoms (by name) bonded to ter root
+          .select(&.element.heavy?)                   # ignore hydrogens
+          .compact_map { |atom_t| atom_map[atom_t]? } # get matched atoms
+          .flat_map(&.bonded_atoms)                   # get possible root atoms
+          .reject!(&.in?(visited))                    # skip already matched/visited
+          .each do |root_atom|
+            next unless @atom_top_specs[root_atom] == ter_t.root.top_spec
+            search ter_t, ter_t.root, root_atom, ter_map.clear, visited.dup
+            return ter_map if ter_map.size == ter_t.atoms.size
+          end
+      end
     end
   end
 

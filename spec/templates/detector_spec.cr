@@ -127,5 +127,62 @@ describe Chem::Templates::Detector do
       _, unmatched_atoms = Chem::Templates::Detector.new(structure.atoms).detect
       unmatched_atoms.should be_empty
     end
+
+    it "rematches atoms when extending search with ter" do
+      registry = Chem::Templates::Registry.from_yaml <<-YAML
+        templates:
+          - description: cis-1,4-isoprene
+            name: IPZ
+            spec: C1-C2=C3(-C4)-C5
+            link_bond: "C5-C1"
+        ters:
+          - description: 1-4-isoprene begin
+            name: IPL
+            spec: C1{-C}
+            root: C1
+          - description: 1-4-isoprene end
+            name: IPR
+            spec: C5{-C}
+            root: C5
+          - description: 1-4-isoprenoid begin
+            name: IPN
+            spec: CX3-CX2(=OXT)-CX1-C1{-C}
+            root: C1
+          - description: 1-4-isopreneoid end
+            name: IPC
+            spec: C5{-C}-C6-C7=OXT
+            root: C5
+        YAML
+
+      struc = Chem::Structure.from_xyz spec_file("isoprenoid-5.xyz")
+      struc.guess_bonds
+      struc.guess_formal_charges
+
+      matches, unmatched_atoms = Chem::Templates::Detector.new(struc.atoms).detect registry
+      matches.size.should eq 5
+      unmatched_atoms.size.should eq 0
+      matches.map(&.template.name).uniq.should eq %w(IPZ)
+      matches[0].atom_map.transform_keys(&.name).transform_values(&.serial).should eq({
+        "C1" => 1, "H11" => 26, "H12" => 28,
+        "CX1" => 27, "HX11" => 69, "HX12" => 68,
+        "CX2" => 70,
+        "CX3" => 72, "HX31" => 73, "HX32" => 75, "HX33" => 74,
+        "OXT" => 71,
+        "C2" => 2, "H2" => 29,
+        "C3" => 3,
+        "C4" => 4, "H41" => 31, "H42" => 32, "H43" => 30,
+        "C5" => 5, "H51" => 34, "H52" => 33,
+      })
+      matches[-1].atom_map.transform_keys(&.name).transform_values(&.serial).should eq({
+        "C1" => 21, "H11" => 60, "H12" => 59,
+        "C2" => 22, "H2" => 61,
+        "C3" => 23,
+        "C4" => 24, "H41" => 63, "H42" => 64, "H43" => 62,
+        "C5" => 25, "H51" => 67, "H52" => 66,
+        "C6" => 65, "H61" => 78, "H62" => 76,
+        "C7" => 77, "H7" => 80,
+        "OXT" => 79,
+      })
+    end
   end
 end
