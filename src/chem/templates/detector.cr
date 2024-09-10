@@ -22,7 +22,7 @@ class Chem::Templates::Detector
     templates.to_a.sort_by(&.atoms.size.-).each do |res_t| # largest to smallest
       next unless (res_t.atoms.size <= @unmatched_atoms.size) &&
                   (root_atoms = @atoms_with_spec[res_t.root.top_spec]?)
-      ters = templates.ters.select &.type.==(res_t.type)
+      ters = templates.ters.select(&.type.==(res_t.type)).sort_by(&.atoms.size.-)
       i = 0
       while i < root_atoms.size
         root_atom = root_atoms.unsafe_fetch(i)
