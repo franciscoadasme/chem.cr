@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Crystal Docs 1.12.2">
+<meta name="generator" content="Crystal Docs 1.13.3">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem">
 
@@ -902,6 +902,11 @@
       
     </li>
   
+  <li class=" " data-id="chem/Int" data-name="int">
+      <a href="Int.html">Int</a>
+      
+    </li>
+  
   <li class=" " data-id="chem/Number" data-name="number">
       <a href="Number.html">Number</a>
       
@@ -914,6 +919,16 @@
   
   <li class=" " data-id="chem/Range" data-name="range(b, e)">
       <a href="Range.html">Range</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem/Regex" data-name="regex">
+      <a href="Regex.html">Regex</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem/String" data-name="string">
+      <a href="String.html">String</a>
       
     </li>
   
@@ -1009,7 +1024,7 @@ the <code>Iterator</code> and <code>Iterable</code> modules.</p>
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/core_ext/enumerable.cr#L1" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/core_ext/enumerable.cr#L1" target="_blank">
         chem/core_ext/enumerable.cr
       </a>
     
@@ -1035,6 +1050,27 @@ the <code>Iterator</code> and <code>Iterable</code> modules.</p>
     Instance Method Summary
   </h2>
   <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#%3D%3D%3D%28atom%3AChem%3A%3AAtom%29%3ABool-instance-method" class="signature"><strong>#===</strong>(atom : Chem::Atom) : Bool</a>
+        
+          <div class="summary"><p>Case equality.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%3D%3D%3D%28chain%3AChem%3A%3AChain%29%3ABool-instance-method" class="signature"><strong>#===</strong>(chain : Chem::Chain) : Bool</a>
+        
+          <div class="summary"><p>Case equality.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%3D%3D%3D%28residue%3AChem%3A%3AResidue%29%3ABool-instance-method" class="signature"><strong>#===</strong>(residue : Chem::Residue) : Bool</a>
+        
+          <div class="summary"><p>Case equality.</p></div>
+        
+      </li>
     
       <li class="entry-summary">
         <a href="#average%28weights%3AIndexable%28Number%29%29-instance-method" class="signature"><strong>#average</strong>(weights : Indexable(Number))</a>
@@ -1088,6 +1124,69 @@ the <code>Iterator</code> and <code>Iterable</code> modules.</p>
     Instance Method Detail
   </h2>
   
+    <div class="entry-detail" id="===(atom:Chem::Atom):Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>===</strong>(atom : <a href="Chem/Atom.html">Chem::Atom</a>) : Bool
+
+        <a class="method-permalink" href="#%3D%3D%3D%28atom%3AChem%3A%3AAtom%29%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Case equality. Delegates to <code><a href="Chem/Atom.html#matches%3F%28number%3AInt%29%3ABool-instance-method">Chem::Atom#matches?</a></code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/core_ext/enumerable.cr#L3" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="===(chain:Chem::Chain):Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>===</strong>(chain : <a href="Chem/Chain.html">Chem::Chain</a>) : Bool
+
+        <a class="method-permalink" href="#%3D%3D%3D%28chain%3AChem%3A%3AChain%29%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Case equality. Delegates to <code><a href="Chem/Chain.html#matches%3F%28id%3AChar%29%3ABool-instance-method">Chem::Chain#matches?</a></code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/core_ext/enumerable.cr#L8" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="===(residue:Chem::Residue):Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>===</strong>(residue : <a href="Chem/Residue.html">Chem::Residue</a>) : Bool
+
+        <a class="method-permalink" href="#%3D%3D%3D%28residue%3AChem%3A%3AResidue%29%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Case equality. Delegates to <code><a href="Chem/Residue.html#matches%3F%28number%3AInt%29%3ABool-instance-method">Chem::Residue#matches?</a></code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/core_ext/enumerable.cr#L13" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="average(weights:Indexable(Number))-instance-method">
       <div class="signature">
         
@@ -1114,7 +1213,7 @@ sum values.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/core_ext/enumerable.cr#L18" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/core_ext/enumerable.cr#L33" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1146,7 +1245,7 @@ sum values.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/core_ext/enumerable.cr#L39" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/core_ext/enumerable.cr#L54" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1174,7 +1273,7 @@ determine the type of the intermediate sum.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/core_ext/enumerable.cr#L78" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/core_ext/enumerable.cr#L93" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1203,7 +1302,7 @@ determine the type of the intermediate sum.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/core_ext/enumerable.cr#L96" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/core_ext/enumerable.cr#L111" target="_blank">View source</a>]
         
       </div>
     </div>

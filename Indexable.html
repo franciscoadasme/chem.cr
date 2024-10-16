@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Crystal Docs 1.12.2">
+<meta name="generator" content="Crystal Docs 1.13.3">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem">
 
@@ -902,6 +902,11 @@
       
     </li>
   
+  <li class=" " data-id="chem/Int" data-name="int">
+      <a href="Int.html">Int</a>
+      
+    </li>
+  
   <li class=" " data-id="chem/Number" data-name="number">
       <a href="Number.html">Number</a>
       
@@ -914,6 +919,16 @@
   
   <li class=" " data-id="chem/Range" data-name="range(b, e)">
       <a href="Range.html">Range</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem/Regex" data-name="regex">
+      <a href="Regex.html">Regex</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem/String" data-name="string">
+      <a href="String.html">String</a>
       
     </li>
   
@@ -1022,14 +1037,14 @@ not stable or only conditionally stable.</p>
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/lib/views/src/views/indexable_view.cr#L61" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/lib/views/src/views/indexable_view.cr#L61" target="_blank">
         lib/views/src/views/indexable_view.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/core_ext/indexable.cr#L1" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/core_ext/indexable.cr#L1" target="_blank">
         chem/core_ext/indexable.cr
       </a>
     
@@ -1094,14 +1109,14 @@ not stable or only conditionally stable.</p>
       <li class="entry-summary">
         <a href="#sentence%28separator%3AString%3D%22%2C%22%2C%2A%2Cpair_separator%3AString%3D%22and%22%2Ctail_separator%3AString%3D%22%2Cand%22%2C%26%3AT-%3E%29%3AString-instance-method" class="signature"><strong>#sentence</strong>(separator : String = <span class="s">&quot;, &quot;</span>, *, pair_separator : String = <span class="s">&quot; and &quot;</span>, tail_separator : String = <span class="s">&quot;, and &quot;</span>, & : T -> ) : String</a>
         
-          <div class="summary"><p>Returns a <code>String</code> by concatenating the elements in the collection as a sentence.</p></div>
+          <div class="summary"><p>Returns a <code><a href="String.html">String</a></code> by concatenating the elements in the collection as a sentence.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#sentence%28separator%3AString%3D%22%2C%22%2C%2A%2Cpair_separator%3AString%3D%22and%22%2Ctail_separator%3AString%3D%22%2Cand%22%29%3AString-instance-method" class="signature"><strong>#sentence</strong>(separator : String = <span class="s">&quot;, &quot;</span>, *, pair_separator : String = <span class="s">&quot; and &quot;</span>, tail_separator : String = <span class="s">&quot;, and &quot;</span>) : String</a>
         
-          <div class="summary"><p>Returns a <code>String</code> by concatenating the elements in the collection as a sentence.</p></div>
+          <div class="summary"><p>Returns a <code><a href="String.html">String</a></code> by concatenating the elements in the collection as a sentence.</p></div>
         
       </li>
     
@@ -1115,6 +1130,11 @@ not stable or only conditionally stable.</p>
 
   <h3>Instance methods inherited from module <code><a href="Enumerable.html">Enumerable(T)</a></code></h3>
   
+  
+    <a href="Enumerable.html#%3D%3D%3D%28atom%3AChem%3A%3AAtom%29%3ABool-instance-method" class="tooltip">
+      <span>===(atom : Chem::Atom) : Bool<br/>===(chain : Chem::Chain) : Bool<br/>===(residue : Chem::Residue) : Bool</span>
+    ===</a>, 
+    
   
     <a href="Enumerable.html#average%28weights%3AIndexable%28Number%29%29-instance-method" class="tooltip">
       <span>average(weights : Indexable(Number))<br/>average(weights : Indexable(Number), & : T -> _)</span>
@@ -1189,7 +1209,7 @@ arr[{<span class="n">2</span>, <span class="n">15</span>, <span class="n">9</spa
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/core_ext/indexable.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/core_ext/indexable.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1197,7 +1217,7 @@ arr[{<span class="n">2</span>, <span class="n">15</span>, <span class="n">9</spa
     <div class="entry-detail" id="[](idxs:Enumerable(Int)):Array(T)-instance-method">
       <div class="signature">
         
-        def <strong>[]</strong>(idxs : <a href="Enumerable.html">Enumerable</a>(Int)) : <a href="Array.html">Array</a>(T)
+        def <strong>[]</strong>(idxs : <a href="Enumerable.html">Enumerable</a>(<a href="Int.html">Int</a>)) : <a href="Array.html">Array</a>(T)
 
         <a class="method-permalink" href="#%5B%5D%28idxs%3AEnumerable%28Int%29%29%3AArray%28T%29-instance-method">#</a>
       </div>
@@ -1207,14 +1227,14 @@ arr[{<span class="n">2</span>, <span class="n">15</span>, <span class="n">9</spa
           <p>Returns an array with the elements at the given indexes. Raises
 <code>IndexError</code> is any index is out of bounds.</p>
 <pre><code class="language-crystal">arr <span class="o">=</span> (<span class="n">0</span>..<span class="n">9</span>).map(<span class="o">&amp;</span>.<span class="o">**</span>(<span class="n">2</span>)) <span class="c"># =&gt; [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]</span>
-arr[[<span class="n">2</span>, <span class="n">5</span>, <span class="n">9</span>]]            <span class="c"># =&gt; [4, 25, 8]</span>
+arr[[<span class="n">2</span>, <span class="n">5</span>, <span class="n">9</span>]]            <span class="c"># =&gt; [4, 25, 81]</span>
 arr[[<span class="n">2</span>, <span class="n">15</span>, <span class="n">9</span>]]           <span class="c"># raises IndexError</span></code></pre>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/core_ext/indexable.cr#L34" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/core_ext/indexable.cr#L34" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1222,7 +1242,7 @@ arr[[<span class="n">2</span>, <span class="n">15</span>, <span class="n">9</spa
     <div class="entry-detail" id="[](*idxs:Int):Tuple-instance-method">
       <div class="signature">
         
-        def <strong>[]</strong>(*idxs : Int) : Tuple
+        def <strong>[]</strong>(*idxs : <a href="Int.html">Int</a>) : Tuple
 
         <a class="method-permalink" href="#%5B%5D%28%2Aidxs%3AInt%29%3ATuple-instance-method">#</a>
       </div>
@@ -1239,7 +1259,7 @@ arr[<span class="n">2</span>, <span class="n">15</span>, <span class="n">9</span
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/core_ext/indexable.cr#L22" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/core_ext/indexable.cr#L22" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1247,7 +1267,7 @@ arr[<span class="n">2</span>, <span class="n">15</span>, <span class="n">9</span
     <div class="entry-detail" id="sentence(io:IO,separator:String=&quot;,&quot;,*,pair_separator:String=&quot;and&quot;,tail_separator:String=&quot;,and&quot;,&amp;:T,IO-&gt;):Nil-instance-method">
       <div class="signature">
         
-        def <strong>sentence</strong>(io : IO, separator : String = <span class="s">&quot;, &quot;</span>, *, pair_separator : String = <span class="s">&quot; and &quot;</span>, tail_separator : String = <span class="s">&quot;, and &quot;</span>, & : T, IO -> ) : Nil
+        def <strong>sentence</strong>(io : IO, separator : <a href="String.html">String</a> = <span class="s">&quot;, &quot;</span>, *, pair_separator : <a href="String.html">String</a> = <span class="s">&quot; and &quot;</span>, tail_separator : <a href="String.html">String</a> = <span class="s">&quot;, and &quot;</span>, & : T, IO -> ) : Nil
 
         <a class="method-permalink" href="#sentence%28io%3AIO%2Cseparator%3AString%3D%22%2C%22%2C%2A%2Cpair_separator%3AString%3D%22and%22%2Ctail_separator%3AString%3D%22%2Cand%22%2C%26%3AT%2CIO-%3E%29%3ANil-instance-method">#</a>
       </div>
@@ -1274,7 +1294,7 @@ separator.</li>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/core_ext/indexable.cr#L60" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/core_ext/indexable.cr#L60" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1282,7 +1302,7 @@ separator.</li>
     <div class="entry-detail" id="sentence(io:IO,separator:String=&quot;,&quot;,*,pair_separator:String=&quot;and&quot;,tail_separator:String=&quot;,and&quot;):Nil-instance-method">
       <div class="signature">
         
-        def <strong>sentence</strong>(io : IO, separator : String = <span class="s">&quot;, &quot;</span>, *, pair_separator : String = <span class="s">&quot; and &quot;</span>, tail_separator : String = <span class="s">&quot;, and &quot;</span>) : Nil
+        def <strong>sentence</strong>(io : IO, separator : <a href="String.html">String</a> = <span class="s">&quot;, &quot;</span>, *, pair_separator : <a href="String.html">String</a> = <span class="s">&quot; and &quot;</span>, tail_separator : <a href="String.html">String</a> = <span class="s">&quot;, and &quot;</span>) : Nil
 
         <a class="method-permalink" href="#sentence%28io%3AIO%2Cseparator%3AString%3D%22%2C%22%2C%2A%2Cpair_separator%3AString%3D%22and%22%2Ctail_separator%3AString%3D%22%2Cand%22%29%3ANil-instance-method">#</a>
       </div>
@@ -1308,7 +1328,7 @@ separator.</li>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/core_ext/indexable.cr#L107" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/core_ext/indexable.cr#L107" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1316,14 +1336,14 @@ separator.</li>
     <div class="entry-detail" id="sentence(separator:String=&quot;,&quot;,*,pair_separator:String=&quot;and&quot;,tail_separator:String=&quot;,and&quot;,&amp;:T-&gt;):String-instance-method">
       <div class="signature">
         
-        def <strong>sentence</strong>(separator : String = <span class="s">&quot;, &quot;</span>, *, pair_separator : String = <span class="s">&quot; and &quot;</span>, tail_separator : String = <span class="s">&quot;, and &quot;</span>, & : T -> ) : String
+        def <strong>sentence</strong>(separator : <a href="String.html">String</a> = <span class="s">&quot;, &quot;</span>, *, pair_separator : <a href="String.html">String</a> = <span class="s">&quot; and &quot;</span>, tail_separator : <a href="String.html">String</a> = <span class="s">&quot;, and &quot;</span>, & : T -> ) : <a href="String.html">String</a>
 
         <a class="method-permalink" href="#sentence%28separator%3AString%3D%22%2C%22%2C%2A%2Cpair_separator%3AString%3D%22and%22%2Ctail_separator%3AString%3D%22%2Cand%22%2C%26%3AT-%3E%29%3AString-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Returns a <code>String</code> by concatenating the elements in the collection
+          <p>Returns a <code><a href="String.html">String</a></code> by concatenating the elements in the collection
 as a sentence. How each element is printed is controlled by the
 given block.</p>
 <p>The string representation depends on the number of elements in the
@@ -1343,7 +1363,7 @@ joined by <em>tail_separator</em>.</li>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/core_ext/indexable.cr#L141" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/core_ext/indexable.cr#L141" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1351,14 +1371,14 @@ joined by <em>tail_separator</em>.</li>
     <div class="entry-detail" id="sentence(separator:String=&quot;,&quot;,*,pair_separator:String=&quot;and&quot;,tail_separator:String=&quot;,and&quot;):String-instance-method">
       <div class="signature">
         
-        def <strong>sentence</strong>(separator : String = <span class="s">&quot;, &quot;</span>, *, pair_separator : String = <span class="s">&quot; and &quot;</span>, tail_separator : String = <span class="s">&quot;, and &quot;</span>) : String
+        def <strong>sentence</strong>(separator : <a href="String.html">String</a> = <span class="s">&quot;, &quot;</span>, *, pair_separator : <a href="String.html">String</a> = <span class="s">&quot; and &quot;</span>, tail_separator : <a href="String.html">String</a> = <span class="s">&quot;, and &quot;</span>) : <a href="String.html">String</a>
 
         <a class="method-permalink" href="#sentence%28separator%3AString%3D%22%2C%22%2C%2A%2Cpair_separator%3AString%3D%22and%22%2Ctail_separator%3AString%3D%22%2Cand%22%29%3AString-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Returns a <code>String</code> by concatenating the elements in the collection
+          <p>Returns a <code><a href="String.html">String</a></code> by concatenating the elements in the collection
 as a sentence.</p>
 <p>The string representation depends on the number of elements in the
 collection:</p>
@@ -1381,7 +1401,7 @@ joined by <em>tail_separator</em>.</li>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/core_ext/indexable.cr#L180" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/core_ext/indexable.cr#L180" target="_blank">View source</a>]
         
       </div>
     </div>

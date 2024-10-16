@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Crystal Docs 1.12.2">
+<meta name="generator" content="Crystal Docs 1.13.3">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem">
 
@@ -902,6 +902,11 @@
       
     </li>
   
+  <li class=" " data-id="chem/Int" data-name="int">
+      <a href="../Int.html">Int</a>
+      
+    </li>
+  
   <li class=" " data-id="chem/Number" data-name="number">
       <a href="../Number.html">Number</a>
       
@@ -914,6 +919,16 @@
   
   <li class=" " data-id="chem/Range" data-name="range(b, e)">
       <a href="../Range.html">Range</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem/Regex" data-name="regex">
+      <a href="../Regex.html">Regex</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem/String" data-name="string">
+      <a href="../String.html">String</a>
       
     </li>
   
@@ -1032,7 +1047,7 @@ pull.at(<span class="n">100</span>, <span class="n">5</span>)   <span class="c">
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L72" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L72" target="_blank">
         chem/pull_parser.cr
       </a>
     
@@ -1473,7 +1488,7 @@ pull.at(<span class="n">100</span>, <span class="n">5</span>)   <span class="c">
       <li class="entry-summary">
         <a href="#parse%28type%3AString.class%29%3AString-instance-method" class="signature"><strong>#parse</strong>(type : <span class="t">String</span>.<span class="k">class</span>) : String</a>
         
-          <div class="summary"><p>Parses and returns the current token as <code>String</code> by calling <code><a href="../Chem/PullParser.html#str%28message%3AString%3D%22Emptytoken%22%29%3AString-instance-method">#str</a></code>.</p></div>
+          <div class="summary"><p>Parses and returns the current token as <code><a href="../String.html">String</a></code> by calling <code><a href="../Chem/PullParser.html#str%28message%3AString%3D%22Emptytoken%22%29%3AString-instance-method">#str</a></code>.</p></div>
         
       </li>
     
@@ -1508,7 +1523,7 @@ pull.at(<span class="n">100</span>, <span class="n">5</span>)   <span class="c">
       <li class="entry-summary">
         <a href="#parse%3F%28type%3AString.class%29%3AString%7CNil-instance-method" class="signature"><strong>#parse?</strong>(type : <span class="t">String</span>.<span class="k">class</span>) : String | Nil</a>
         
-          <div class="summary"><p>Parses and returns the current token as <code>String</code> by calling <code><a href="../Chem/PullParser.html#str%3F%3AString%7CNil-instance-method">#str?</a></code>, or <code>nil</code> if parsing fails.</p></div>
+          <div class="summary"><p>Parses and returns the current token as <code><a href="../String.html">String</a></code> by calling <code><a href="../Chem/PullParser.html#str%3F%3AString%7CNil-instance-method">#str?</a></code>, or <code>nil</code> if parsing fails.</p></div>
         
       </li>
     
@@ -1663,7 +1678,7 @@ pull.at(<span class="n">100</span>, <span class="n">5</span>)   <span class="c">
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L82" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L82" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1687,7 +1702,7 @@ pull.at(<span class="n">100</span>, <span class="n">5</span>)   <span class="c">
     <div class="entry-detail" id="at(index:Int,message:String=&quot;Cursoroutofcurrentline&quot;):self-instance-method">
       <div class="signature">
         
-        def <strong>at</strong>(index : Int, message : String = <span class="s">&quot;Cursor out of current line&quot;</span>) : <span class="k">self</span>
+        def <strong>at</strong>(index : <a href="../Int.html">Int</a>, message : <a href="../String.html">String</a> = <span class="s">&quot;Cursor out of current line&quot;</span>) : <span class="k">self</span>
 
         <a class="method-permalink" href="#at%28index%3AInt%2Cmessage%3AString%3D%22Cursoroutofcurrentline%22%29%3Aself-instance-method">#</a>
       </div>
@@ -1702,7 +1717,7 @@ of bounds.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L87" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L87" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1710,7 +1725,7 @@ of bounds.</p>
     <div class="entry-detail" id="at(start:Int,count:Int,message:String=&quot;Cursoroutofcurrentline&quot;):self-instance-method">
       <div class="signature">
         
-        def <strong>at</strong>(start : Int, count : Int, message : String = <span class="s">&quot;Cursor out of current line&quot;</span>) : <span class="k">self</span>
+        def <strong>at</strong>(start : <a href="../Int.html">Int</a>, count : <a href="../Int.html">Int</a>, message : <a href="../String.html">String</a> = <span class="s">&quot;Cursor out of current line&quot;</span>) : <span class="k">self</span>
 
         <a class="method-permalink" href="#at%28start%3AInt%2Ccount%3AInt%2Cmessage%3AString%3D%22Cursoroutofcurrentline%22%29%3Aself-instance-method">#</a>
       </div>
@@ -1726,7 +1741,7 @@ bounds.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L96" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L96" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1734,7 +1749,7 @@ bounds.</p>
     <div class="entry-detail" id="at(range:Range,message:String=&quot;Cursoroutofcurrentline&quot;):self-instance-method">
       <div class="signature">
         
-        def <strong>at</strong>(range : <a href="../Range.html">Range</a>, message : String = <span class="s">&quot;Cursor out of current line&quot;</span>) : <span class="k">self</span>
+        def <strong>at</strong>(range : <a href="../Range.html">Range</a>, message : <a href="../String.html">String</a> = <span class="s">&quot;Cursor out of current line&quot;</span>) : <span class="k">self</span>
 
         <a class="method-permalink" href="#at%28range%3ARange%2Cmessage%3AString%3D%22Cursoroutofcurrentline%22%29%3Aself-instance-method">#</a>
       </div>
@@ -1749,7 +1764,7 @@ bounds.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L106" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L106" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1757,7 +1772,7 @@ bounds.</p>
     <div class="entry-detail" id="at?(start:Int,count:Int):self-instance-method">
       <div class="signature">
         
-        def <strong>at?</strong>(start : Int, count : Int) : <span class="k">self</span>
+        def <strong>at?</strong>(start : <a href="../Int.html">Int</a>, count : <a href="../Int.html">Int</a>) : <span class="k">self</span>
 
         <a class="method-permalink" href="#at%3F%28start%3AInt%2Ccount%3AInt%29%3Aself-instance-method">#</a>
       </div>
@@ -1772,7 +1787,7 @@ of bounds, the current token will be set to <code>nil</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L126" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L126" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1780,7 +1795,7 @@ of bounds, the current token will be set to <code>nil</code>.</p>
     <div class="entry-detail" id="at?(index:Int):self-instance-method">
       <div class="signature">
         
-        def <strong>at?</strong>(index : Int) : <span class="k">self</span>
+        def <strong>at?</strong>(index : <a href="../Int.html">Int</a>) : <span class="k">self</span>
 
         <a class="method-permalink" href="#at%3F%28index%3AInt%29%3Aself-instance-method">#</a>
       </div>
@@ -1795,7 +1810,7 @@ If <em>index</em> is out of bounds, the current token will be set to
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L119" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L119" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1817,7 +1832,7 @@ of bounds, the current token will be set to <code>nil</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L133" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L133" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1825,7 +1840,7 @@ of bounds, the current token will be set to <code>nil</code>.</p>
     <div class="entry-detail" id="bool(message:String=&quot;Invalidboolean&quot;):Bool-instance-method">
       <div class="signature">
         
-        def <strong>bool</strong>(message : String = <span class="s">&quot;Invalid boolean&quot;</span>) : Bool
+        def <strong>bool</strong>(message : <a href="../String.html">String</a> = <span class="s">&quot;Invalid boolean&quot;</span>) : Bool
 
         <a class="method-permalink" href="#bool%28message%3AString%3D%22Invalidboolean%22%29%3ABool-instance-method">#</a>
       </div>
@@ -1843,7 +1858,7 @@ valid.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L148" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L148" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1870,7 +1885,7 @@ valid.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L163" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L163" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1895,7 +1910,7 @@ valid.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L177" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L177" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1903,7 +1918,7 @@ valid.</p>
     <div class="entry-detail" id="char(message:String=&quot;Emptytoken&quot;):Char-instance-method">
       <div class="signature">
         
-        def <strong>char</strong>(message : String = <span class="s">&quot;Empty token&quot;</span>) : <a href="../Char.html">Char</a>
+        def <strong>char</strong>(message : <a href="../String.html">String</a> = <span class="s">&quot;Empty token&quot;</span>) : <a href="../Char.html">Char</a>
 
         <a class="method-permalink" href="#char%28message%3AString%3D%22Emptytoken%22%29%3AChar-instance-method">#</a>
       </div>
@@ -1917,7 +1932,7 @@ valid.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L188" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L188" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1939,7 +1954,7 @@ not set.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L194" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L194" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1947,7 +1962,7 @@ not set.</p>
     <div class="entry-detail" id="consume(count:Int):self-instance-method">
       <div class="signature">
         
-        def <strong>consume</strong>(count : Int) : <span class="k">self</span>
+        def <strong>consume</strong>(count : <a href="../Int.html">Int</a>) : <span class="k">self</span>
 
         <a class="method-permalink" href="#consume%28count%3AInt%29%3Aself-instance-method">#</a>
       </div>
@@ -1968,7 +1983,7 @@ pull.consume(<span class="n">10</span>).str? <span class="c"># =&gt; nil</span><
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L210" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L210" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1998,7 +2013,7 @@ pull.consume(<span class="o">&amp;</span>.alphanumeric?).str? <span class="c"># 
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L231" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L231" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2019,7 +2034,7 @@ pull.consume(<span class="o">&amp;</span>.alphanumeric?).str? <span class="c"># 
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L245" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L245" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2054,7 +2069,7 @@ pull.consume_token.str? <span class="c"># =&gt; nil</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L271" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L271" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2082,7 +2097,7 @@ pull.consume_until(<span class="s">&#39;x&#39;</span>).str? <span class="c"># =&
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L286" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L286" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2111,7 +2126,7 @@ pull.consume_until(<span class="o">&amp;</span>.alphanumeric?).str?  <span class
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L302" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L302" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2119,7 +2134,7 @@ pull.consume_until(<span class="o">&amp;</span>.alphanumeric?).str?  <span class
     <div class="entry-detail" id="current_line:String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>current_line</strong> : String | Nil
+        def <strong>current_line</strong> : <a href="../String.html">String</a> | Nil
 
         <a class="method-permalink" href="#current_line%3AString%7CNil-instance-method">#</a>
       </div>
@@ -2132,7 +2147,7 @@ pull.consume_until(<span class="o">&amp;</span>.alphanumeric?).str?  <span class
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L307" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L307" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2140,7 +2155,7 @@ pull.consume_until(<span class="o">&amp;</span>.alphanumeric?).str?  <span class
     <div class="entry-detail" id="each_line(&amp;:String-&gt;):Nil-instance-method">
       <div class="signature">
         
-        def <strong>each_line</strong>(& : String -> ) : Nil
+        def <strong>each_line</strong>(& : <a href="../String.html">String</a> -> ) : Nil
 
         <a class="method-permalink" href="#each_line%28%26%3AString-%3E%29%3ANil-instance-method">#</a>
       </div>
@@ -2166,7 +2181,7 @@ pull.each_line { <span class="o">|</span>line<span class="o">|</span> puts line 
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L340" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L340" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2190,7 +2205,7 @@ could inadvertently discard a line.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L354" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L354" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2224,7 +2239,7 @@ pull.eol?               <span class="c"># =&gt; true</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L376" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L376" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2232,7 +2247,7 @@ pull.eol?               <span class="c"># =&gt; true</span></code></pre>
     <div class="entry-detail" id="error(message:String):NoReturn-instance-method">
       <div class="signature">
         
-        def <strong>error</strong>(message : String) : NoReturn
+        def <strong>error</strong>(message : <a href="../String.html">String</a>) : NoReturn
 
         <a class="method-permalink" href="#error%28message%3AString%29%3ANoReturn-instance-method">#</a>
       </div>
@@ -2248,7 +2263,7 @@ hold the location of the current line and token if set.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L385" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L385" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2256,7 +2271,7 @@ hold the location of the current line and token if set.</p>
     <div class="entry-detail" id="expect(expected:Char,message:String=&quot;Expected%{expected},got%{actual}&quot;):self-instance-method">
       <div class="signature">
         
-        def <strong>expect</strong>(expected : <a href="../Char.html">Char</a>, message : String = <span class="s">&quot;Expected %{expected}, got %{actual}&quot;</span>) : <span class="k">self</span>
+        def <strong>expect</strong>(expected : <a href="../Char.html">Char</a>, message : <a href="../String.html">String</a> = <span class="s">&quot;Expected %{expected}, got %{actual}&quot;</span>) : <span class="k">self</span>
 
         <a class="method-permalink" href="#expect%28expected%3AChar%2Cmessage%3AString%3D%22Expected%25%7Bexpected%7D%2Cgot%25%7Bactual%7D%22%29%3Aself-instance-method">#</a>
       </div>
@@ -2280,7 +2295,7 @@ pull.expect <span class="s">&#39;a&#39;</span> <span class="c"># raises ParseExc
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L415" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L415" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2288,7 +2303,7 @@ pull.expect <span class="s">&#39;a&#39;</span> <span class="c"># raises ParseExc
     <div class="entry-detail" id="expect(expected:Range(Char|Nil,Char|Nil),message:String=&quot;Expected%{actual}tobewithin%{expected}&quot;):self-instance-method">
       <div class="signature">
         
-        def <strong>expect</strong>(expected : <a href="../Range.html">Range</a>(<a href="../Char.html">Char</a> | Nil, <a href="../Char.html">Char</a> | Nil), message : String = <span class="s">&quot;Expected %{actual} to be within %{expected}&quot;</span>) : <span class="k">self</span>
+        def <strong>expect</strong>(expected : <a href="../Range.html">Range</a>(<a href="../Char.html">Char</a> | Nil, <a href="../Char.html">Char</a> | Nil), message : <a href="../String.html">String</a> = <span class="s">&quot;Expected %{actual} to be within %{expected}&quot;</span>) : <span class="k">self</span>
 
         <a class="method-permalink" href="#expect%28expected%3ARange%28Char%7CNil%2CChar%7CNil%29%2Cmessage%3AString%3D%22Expected%25%7Bactual%7Dtobewithin%25%7Bexpected%7D%22%29%3Aself-instance-method">#</a>
       </div>
@@ -2313,7 +2328,7 @@ pull.expect <span class="s">&#39;a&#39;</span>..<span class="s">&#39;c&#39;</spa
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L443" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L443" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2321,7 +2336,7 @@ pull.expect <span class="s">&#39;a&#39;</span>..<span class="s">&#39;c&#39;</spa
     <div class="entry-detail" id="expect(expected:Enumerable(Char),message:String=&quot;Expected%{expected},got%{actual}&quot;):self-instance-method">
       <div class="signature">
         
-        def <strong>expect</strong>(expected : <a href="../Enumerable.html">Enumerable</a>(<a href="../Char.html">Char</a>), message : String = <span class="s">&quot;Expected %{expected}, got %{actual}&quot;</span>) : <span class="k">self</span>
+        def <strong>expect</strong>(expected : <a href="../Enumerable.html">Enumerable</a>(<a href="../Char.html">Char</a>), message : <a href="../String.html">String</a> = <span class="s">&quot;Expected %{expected}, got %{actual}&quot;</span>) : <span class="k">self</span>
 
         <a class="method-permalink" href="#expect%28expected%3AEnumerable%28Char%29%2Cmessage%3AString%3D%22Expected%25%7Bexpected%7D%2Cgot%25%7Bactual%7D%22%29%3Aself-instance-method">#</a>
       </div>
@@ -2344,7 +2359,7 @@ pull.expect({<span class="s">&#39;1&#39;</span>, <span class="s">&#39;2&#39;</sp
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L469" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L469" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2352,7 +2367,7 @@ pull.expect({<span class="s">&#39;1&#39;</span>, <span class="s">&#39;2&#39;</sp
     <div class="entry-detail" id="expect(expected:String,message:String=&quot;Expected%{expected},got%{actual}&quot;):self-instance-method">
       <div class="signature">
         
-        def <strong>expect</strong>(expected : String, message : String = <span class="s">&quot;Expected %{expected}, got %{actual}&quot;</span>) : <span class="k">self</span>
+        def <strong>expect</strong>(expected : <a href="../String.html">String</a>, message : <a href="../String.html">String</a> = <span class="s">&quot;Expected %{expected}, got %{actual}&quot;</span>) : <span class="k">self</span>
 
         <a class="method-permalink" href="#expect%28expected%3AString%2Cmessage%3AString%3D%22Expected%25%7Bexpected%7D%2Cgot%25%7Bactual%7D%22%29%3Aself-instance-method">#</a>
       </div>
@@ -2376,7 +2391,7 @@ pull.expect <span class="s">&quot;456&quot;</span> <span class="c"># raises Pars
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L498" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L498" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2384,7 +2399,7 @@ pull.expect <span class="s">&quot;456&quot;</span> <span class="c"># raises Pars
     <div class="entry-detail" id="expect(pattern:Regex,message:String=&quot;Expected%{actual}tomatch%{expected}&quot;):self-instance-method">
       <div class="signature">
         
-        def <strong>expect</strong>(pattern : Regex, message : String = <span class="s">&quot;Expected %{actual} to match %{expected}&quot;</span>) : <span class="k">self</span>
+        def <strong>expect</strong>(pattern : <a href="../Regex.html">Regex</a>, message : <a href="../String.html">String</a> = <span class="s">&quot;Expected %{actual} to match %{expected}&quot;</span>) : <span class="k">self</span>
 
         <a class="method-permalink" href="#expect%28pattern%3ARegex%2Cmessage%3AString%3D%22Expected%25%7Bactual%7Dtomatch%25%7Bexpected%7D%22%29%3Aself-instance-method">#</a>
       </div>
@@ -2418,7 +2433,7 @@ pull.consume_token.expect <span class="s">/^[a-z]+$/</span> <span class="c"># ra
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L543" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L543" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2426,7 +2441,7 @@ pull.consume_token.expect <span class="s">/^[a-z]+$/</span> <span class="c"># ra
     <div class="entry-detail" id="expect(expected:Enumerable(String),message:String=&quot;Expected%{expected},got%{actual}&quot;):self-instance-method">
       <div class="signature">
         
-        def <strong>expect</strong>(expected : <a href="../Enumerable.html">Enumerable</a>(String), message : String = <span class="s">&quot;Expected %{expected}, got %{actual}&quot;</span>) : <span class="k">self</span>
+        def <strong>expect</strong>(expected : <a href="../Enumerable.html">Enumerable</a>(<a href="../String.html">String</a>), message : <a href="../String.html">String</a> = <span class="s">&quot;Expected %{expected}, got %{actual}&quot;</span>) : <span class="k">self</span>
 
         <a class="method-permalink" href="#expect%28expected%3AEnumerable%28String%29%2Cmessage%3AString%3D%22Expected%25%7Bexpected%7D%2Cgot%25%7Bactual%7D%22%29%3Aself-instance-method">#</a>
       </div>
@@ -2452,7 +2467,7 @@ pull.expect([<span class="s">&quot;123&quot;</span>, <span class="s">&quot;456&q
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L572" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L572" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2460,7 +2475,7 @@ pull.expect([<span class="s">&quot;123&quot;</span>, <span class="s">&quot;456&q
     <div class="entry-detail" id="expect_next(expected:String,message:String=&quot;Expected%{expected},got%{actual}&quot;):self-instance-method">
       <div class="signature">
         
-        def <strong>expect_next</strong>(expected : String, message : String = <span class="s">&quot;Expected %{expected}, got %{actual}&quot;</span>) : <span class="k">self</span>
+        def <strong>expect_next</strong>(expected : <a href="../String.html">String</a>, message : <a href="../String.html">String</a> = <span class="s">&quot;Expected %{expected}, got %{actual}&quot;</span>) : <span class="k">self</span>
 
         <a class="method-permalink" href="#expect_next%28expected%3AString%2Cmessage%3AString%3D%22Expected%25%7Bexpected%7D%2Cgot%25%7Bactual%7D%22%29%3Aself-instance-method">#</a>
       </div>
@@ -2473,7 +2488,7 @@ pull.expect([<span class="s">&quot;123&quot;</span>, <span class="s">&quot;456&q
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L586" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L586" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2481,7 +2496,7 @@ pull.expect([<span class="s">&quot;123&quot;</span>, <span class="s">&quot;456&q
     <div class="entry-detail" id="expect_next(pattern:Regex,message:String=&quot;Expected%{actual}tomatch%{expected}&quot;):self-instance-method">
       <div class="signature">
         
-        def <strong>expect_next</strong>(pattern : Regex, message : String = <span class="s">&quot;Expected %{actual} to match %{expected}&quot;</span>) : <span class="k">self</span>
+        def <strong>expect_next</strong>(pattern : <a href="../Regex.html">Regex</a>, message : <a href="../String.html">String</a> = <span class="s">&quot;Expected %{actual} to match %{expected}&quot;</span>) : <span class="k">self</span>
 
         <a class="method-permalink" href="#expect_next%28pattern%3ARegex%2Cmessage%3AString%3D%22Expected%25%7Bactual%7Dtomatch%25%7Bexpected%7D%22%29%3Aself-instance-method">#</a>
       </div>
@@ -2494,7 +2509,7 @@ pull.expect([<span class="s">&quot;123&quot;</span>, <span class="s">&quot;456&q
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L594" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L594" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2502,7 +2517,7 @@ pull.expect([<span class="s">&quot;123&quot;</span>, <span class="s">&quot;456&q
     <div class="entry-detail" id="expect_next(expected:Enumerable(String),message:String=&quot;Expected%{expected},got%{actual}&quot;):self-instance-method">
       <div class="signature">
         
-        def <strong>expect_next</strong>(expected : <a href="../Enumerable.html">Enumerable</a>(String), message : String = <span class="s">&quot;Expected %{expected}, got %{actual}&quot;</span>) : <span class="k">self</span>
+        def <strong>expect_next</strong>(expected : <a href="../Enumerable.html">Enumerable</a>(<a href="../String.html">String</a>), message : <a href="../String.html">String</a> = <span class="s">&quot;Expected %{expected}, got %{actual}&quot;</span>) : <span class="k">self</span>
 
         <a class="method-permalink" href="#expect_next%28expected%3AEnumerable%28String%29%2Cmessage%3AString%3D%22Expected%25%7Bexpected%7D%2Cgot%25%7Bactual%7D%22%29%3Aself-instance-method">#</a>
       </div>
@@ -2515,7 +2530,7 @@ pull.expect([<span class="s">&quot;123&quot;</span>, <span class="s">&quot;456&q
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L602" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L602" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2523,7 +2538,7 @@ pull.expect([<span class="s">&quot;123&quot;</span>, <span class="s">&quot;456&q
     <div class="entry-detail" id="float(message:String=&quot;Invalidrealnumber&quot;):Float64-instance-method">
       <div class="signature">
         
-        def <strong>float</strong>(message : String = <span class="s">&quot;Invalid real number&quot;</span>) : Float64
+        def <strong>float</strong>(message : <a href="../String.html">String</a> = <span class="s">&quot;Invalid real number&quot;</span>) : Float64
 
         <a class="method-permalink" href="#float%28message%3AString%3D%22Invalidrealnumber%22%29%3AFloat64-instance-method">#</a>
       </div>
@@ -2538,7 +2553,7 @@ the token is not set or it is not a valid float representation.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L612" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L612" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2562,7 +2577,7 @@ not a valid float representation.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L620" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L620" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2585,7 +2600,7 @@ valid float representation.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L631" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L631" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2593,7 +2608,7 @@ valid float representation.</p>
     <div class="entry-detail" id="int(message:String=&quot;Invalidinteger&quot;):Int32-instance-method">
       <div class="signature">
         
-        def <strong>int</strong>(message : String = <span class="s">&quot;Invalid integer&quot;</span>) : Int32
+        def <strong>int</strong>(message : <a href="../String.html">String</a> = <span class="s">&quot;Invalid integer&quot;</span>) : Int32
 
         <a class="method-permalink" href="#int%28message%3AString%3D%22Invalidinteger%22%29%3AInt32-instance-method">#</a>
       </div>
@@ -2608,7 +2623,7 @@ set or it is not a valid number.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L651" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L651" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2632,7 +2647,7 @@ number.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L659" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L659" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2654,7 +2669,7 @@ or <code>nil</code> if the token is not set or it is not a valid number.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L669" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L669" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2675,7 +2690,7 @@ or <code>nil</code> if the token is not set or it is not a valid number.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L945" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L945" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2696,7 +2711,7 @@ or <code>nil</code> if the token is not set or it is not a valid number.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L79" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L79" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2704,7 +2719,7 @@ or <code>nil</code> if the token is not set or it is not a valid number.</p>
     <div class="entry-detail" id="line:String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>line</strong> : String | Nil
+        def <strong>line</strong> : <a href="../String.html">String</a> | Nil
 
         <a class="method-permalink" href="#line%3AString%7CNil-instance-method">#</a>
       </div>
@@ -2726,7 +2741,7 @@ pull.line <span class="c"># =&gt; nil</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L721" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L721" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2734,7 +2749,7 @@ pull.line <span class="c"># =&gt; nil</span></code></pre>
     <div class="entry-detail" id="line!(message:String=&quot;Expectedaline&quot;):String-instance-method">
       <div class="signature">
         
-        def <strong>line!</strong>(message : String = <span class="s">&quot;Expected a line&quot;</span>) : String
+        def <strong>line!</strong>(message : <a href="../String.html">String</a> = <span class="s">&quot;Expected a line&quot;</span>) : <a href="../String.html">String</a>
 
         <a class="method-permalink" href="#line%21%28message%3AString%3D%22Expectedaline%22%29%3AString-instance-method">#</a>
       </div>
@@ -2757,7 +2772,7 @@ pull.line! <span class="c"># raises ParseException</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L739" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L739" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2765,7 +2780,7 @@ pull.line! <span class="c"># raises ParseException</span></code></pre>
     <div class="entry-detail" id="next_bool(message:String):Bool-instance-method">
       <div class="signature">
         
-        def <strong>next_bool</strong>(message : String) : Bool
+        def <strong>next_bool</strong>(message : <a href="../String.html">String</a>) : Bool
 
         <a class="method-permalink" href="#next_bool%28message%3AString%29%3ABool-instance-method">#</a>
       </div>
@@ -2781,7 +2796,7 @@ representation.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2804,7 +2819,7 @@ line or if the token is an invalid representation.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2827,7 +2842,7 @@ the token is an invalid representation.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2835,7 +2850,7 @@ the token is an invalid representation.</p>
     <div class="entry-detail" id="next_f(message:String):Float64-instance-method">
       <div class="signature">
         
-        def <strong>next_f</strong>(message : String) : Float64
+        def <strong>next_f</strong>(message : <a href="../String.html">String</a>) : Float64
 
         <a class="method-permalink" href="#next_f%28message%3AString%29%3AFloat64-instance-method">#</a>
       </div>
@@ -2851,7 +2866,7 @@ representation.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2874,7 +2889,7 @@ line or if the token is an invalid representation.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2897,7 +2912,7 @@ the token is an invalid representation.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2905,7 +2920,7 @@ the token is an invalid representation.</p>
     <div class="entry-detail" id="next_i(message:String):Int32-instance-method">
       <div class="signature">
         
-        def <strong>next_i</strong>(message : String) : Int32
+        def <strong>next_i</strong>(message : <a href="../String.html">String</a>) : Int32
 
         <a class="method-permalink" href="#next_i%28message%3AString%29%3AInt32-instance-method">#</a>
       </div>
@@ -2921,7 +2936,7 @@ representation.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2944,7 +2959,7 @@ line or if the token is an invalid representation.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2967,7 +2982,7 @@ the token is an invalid representation.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2975,7 +2990,7 @@ the token is an invalid representation.</p>
     <div class="entry-detail" id="next_s(message:String):String-instance-method">
       <div class="signature">
         
-        def <strong>next_s</strong>(message : String) : String
+        def <strong>next_s</strong>(message : <a href="../String.html">String</a>) : <a href="../String.html">String</a>
 
         <a class="method-permalink" href="#next_s%28message%3AString%29%3AString-instance-method">#</a>
       </div>
@@ -2991,7 +3006,7 @@ representation.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2999,7 +3014,7 @@ representation.</p>
     <div class="entry-detail" id="next_s:String-instance-method">
       <div class="signature">
         
-        def <strong>next_s</strong> : String
+        def <strong>next_s</strong> : <a href="../String.html">String</a>
 
         <a class="method-permalink" href="#next_s%3AString-instance-method">#</a>
       </div>
@@ -3014,7 +3029,7 @@ line or if the token is an invalid representation.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3022,7 +3037,7 @@ line or if the token is an invalid representation.</p>
     <div class="entry-detail" id="next_s?:String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>next_s?</strong> : String | Nil
+        def <strong>next_s?</strong> : <a href="../String.html">String</a> | Nil
 
         <a class="method-permalink" href="#next_s%3F%3AString%7CNil-instance-method">#</a>
       </div>
@@ -3037,7 +3052,7 @@ the token is an invalid representation.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3059,7 +3074,7 @@ the token is an invalid representation.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3081,7 +3096,7 @@ the token is an invalid representation.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3103,7 +3118,7 @@ the token is an invalid representation.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3111,21 +3126,21 @@ the token is an invalid representation.</p>
     <div class="entry-detail" id="parse(type:String.class):String-instance-method">
       <div class="signature">
         
-        def <strong>parse</strong>(type : <span class="t">String</span>.<span class="k">class</span>) : String
+        def <strong>parse</strong>(type : <span class="t">String</span>.<span class="k">class</span>) : <a href="../String.html">String</a>
 
         <a class="method-permalink" href="#parse%28type%3AString.class%29%3AString-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Parses and returns the current token as <code>String</code> by calling
+          <p>Parses and returns the current token as <code><a href="../String.html">String</a></code> by calling
 <code><a href="../Chem/PullParser.html#str%28message%3AString%3D%22Emptytoken%22%29%3AString-instance-method">#str</a></code>. Raises <code><a href="../Chem/ParseException.html">ParseException</a></code> if parsing fails.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3133,7 +3148,7 @@ the token is an invalid representation.</p>
     <div class="entry-detail" id="parse(message:String=&quot;Couldnotparse%{token}at%{loc_with_file}&quot;,&amp;:String-&gt;T|Nil):TforallT-instance-method">
       <div class="signature">
         
-        def <strong>parse</strong>(message : String = <span class="s">&quot;Could not parse %{token} at %{loc_with_file}&quot;</span>, & : String -> T | Nil) : T forall T
+        def <strong>parse</strong>(message : <a href="../String.html">String</a> = <span class="s">&quot;Could not parse %{token} at %{loc_with_file}&quot;</span>, & : <a href="../String.html">String</a> -> T | Nil) : T forall T
 
         <a class="method-permalink" href="#parse%28message%3AString%3D%22Couldnotparse%25%7Btoken%7Dat%25%7Bloc_with_file%7D%22%2C%26%3AString-%3ET%7CNil%29%3ATforallT-instance-method">#</a>
       </div>
@@ -3148,7 +3163,7 @@ block returns <code>nil</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L788" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L788" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3170,7 +3185,7 @@ block returns <code>nil</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3192,7 +3207,7 @@ block returns <code>nil</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3214,7 +3229,7 @@ block returns <code>nil</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3222,21 +3237,21 @@ block returns <code>nil</code>.</p>
     <div class="entry-detail" id="parse?(type:String.class):String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>parse?</strong>(type : <span class="t">String</span>.<span class="k">class</span>) : String | Nil
+        def <strong>parse?</strong>(type : <span class="t">String</span>.<span class="k">class</span>) : <a href="../String.html">String</a> | Nil
 
         <a class="method-permalink" href="#parse%3F%28type%3AString.class%29%3AString%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Parses and returns the current token as <code>String</code> by calling
+          <p>Parses and returns the current token as <code><a href="../String.html">String</a></code> by calling
 <code><a href="../Chem/PullParser.html#str%3F%3AString%7CNil-instance-method">#str?</a></code>, or <code>nil</code> if parsing fails.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L743" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3244,7 +3259,7 @@ block returns <code>nil</code>.</p>
     <div class="entry-detail" id="parse?(&amp;:String-&gt;T|Nil):T|NilforallT-instance-method">
       <div class="signature">
         
-        def <strong>parse?</strong>(& : String -> T | Nil) : T | Nil forall T
+        def <strong>parse?</strong>(& : <a href="../String.html">String</a> -> T | Nil) : T | Nil forall T
 
         <a class="method-permalink" href="#parse%3F%28%26%3AString-%3ET%7CNil%29%3AT%7CNilforallT-instance-method">#</a>
       </div>
@@ -3257,7 +3272,7 @@ block returns <code>nil</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L809" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L809" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3265,7 +3280,7 @@ block returns <code>nil</code>.</p>
     <div class="entry-detail" id="parse_if_present(message:String=&quot;Couldnotparse%{token}at%{loc_with_file}&quot;,default:_=nil,&amp;:String-&gt;_)-instance-method">
       <div class="signature">
         
-        def <strong>parse_if_present</strong>(message : String = <span class="s">&quot;Could not parse %{token} at %{loc_with_file}&quot;</span>, default : _ = <span class="n">nil</span>, & : String -> _)
+        def <strong>parse_if_present</strong>(message : <a href="../String.html">String</a> = <span class="s">&quot;Could not parse %{token} at %{loc_with_file}&quot;</span>, default : _ = <span class="n">nil</span>, & : <a href="../String.html">String</a> -> _)
 
         <a class="method-permalink" href="#parse_if_present%28message%3AString%3D%22Couldnotparse%25%7Btoken%7Dat%25%7Bloc_with_file%7D%22%2Cdefault%3A_%3Dnil%2C%26%3AString-%3E_%29-instance-method">#</a>
       </div>
@@ -3280,7 +3295,7 @@ returns <code>nil</code>. If no token is set, returns <em>default</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L798" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L798" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3288,7 +3303,7 @@ returns <code>nil</code>. If no token is set, returns <em>default</em>.</p>
     <div class="entry-detail" id="parse_next(message:String=&quot;Couldnotparse%{token}at%{loc_with_file}&quot;,&amp;:String-&gt;T|Nil):TforallT-instance-method">
       <div class="signature">
         
-        def <strong>parse_next</strong>(message : String = <span class="s">&quot;Could not parse %{token} at %{loc_with_file}&quot;</span>, & : String -> T | Nil) : T forall T
+        def <strong>parse_next</strong>(message : <a href="../String.html">String</a> = <span class="s">&quot;Could not parse %{token} at %{loc_with_file}&quot;</span>, & : <a href="../String.html">String</a> -> T | Nil) : T forall T
 
         <a class="method-permalink" href="#parse_next%28message%3AString%3D%22Couldnotparse%25%7Btoken%7Dat%25%7Bloc_with_file%7D%22%2C%26%3AString-%3ET%7CNil%29%3ATforallT-instance-method">#</a>
       </div>
@@ -3303,7 +3318,7 @@ found or the block returns <code>nil</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L818" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L818" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3311,7 +3326,7 @@ found or the block returns <code>nil</code>.</p>
     <div class="entry-detail" id="parse_next?(&amp;:String-&gt;T|Nil):T|NilforallT-instance-method">
       <div class="signature">
         
-        def <strong>parse_next?</strong>(& : String -> T | Nil) : T | Nil forall T
+        def <strong>parse_next?</strong>(& : <a href="../String.html">String</a> -> T | Nil) : T | Nil forall T
 
         <a class="method-permalink" href="#parse_next%3F%28%26%3AString-%3ET%7CNil%29%3AT%7CNilforallT-instance-method">#</a>
       </div>
@@ -3324,7 +3339,7 @@ found or the block returns <code>nil</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L839" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L839" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3332,7 +3347,7 @@ found or the block returns <code>nil</code>.</p>
     <div class="entry-detail" id="parse_next_if_present(message:String=&quot;Couldnotparse%{token}at%{loc_with_file}&quot;,default:_=nil,&amp;:String-&gt;_)-instance-method">
       <div class="signature">
         
-        def <strong>parse_next_if_present</strong>(message : String = <span class="s">&quot;Could not parse %{token} at %{loc_with_file}&quot;</span>, default : _ = <span class="n">nil</span>, & : String -> _)
+        def <strong>parse_next_if_present</strong>(message : <a href="../String.html">String</a> = <span class="s">&quot;Could not parse %{token} at %{loc_with_file}&quot;</span>, default : _ = <span class="n">nil</span>, & : <a href="../String.html">String</a> -> _)
 
         <a class="method-permalink" href="#parse_next_if_present%28message%3AString%3D%22Couldnotparse%25%7Btoken%7Dat%25%7Bloc_with_file%7D%22%2Cdefault%3A_%3Dnil%2C%26%3AString-%3E_%29-instance-method">#</a>
       </div>
@@ -3347,7 +3362,7 @@ returns <code>nil</code>. If no token is found, returns <em>default</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L828" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L828" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3376,7 +3391,7 @@ pull.peek               <span class="c"># =&gt; nil (end of line)</span></code><
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L858" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L858" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3384,7 +3399,7 @@ pull.peek               <span class="c"># =&gt; nil (end of line)</span></code><
     <div class="entry-detail" id="rest_of_line:String-instance-method">
       <div class="signature">
         
-        def <strong>rest_of_line</strong> : String
+        def <strong>rest_of_line</strong> : <a href="../String.html">String</a>
 
         <a class="method-permalink" href="#rest_of_line%3AString-instance-method">#</a>
       </div>
@@ -3406,7 +3421,7 @@ pull.rest_of_line <span class="c"># =&gt; &quot;&quot;</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L876" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L876" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3427,7 +3442,7 @@ pull.rest_of_line <span class="c"># =&gt; &quot;&quot;</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L887" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L887" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3448,7 +3463,7 @@ pull.rest_of_line <span class="c"># =&gt; &quot;&quot;</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L893" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L893" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3476,7 +3491,7 @@ pull.line <span class="c"># =&gt; &quot;123 456&quot;</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L917" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L917" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3484,7 +3499,7 @@ pull.line <span class="c"># =&gt; &quot;123 456&quot;</span></code></pre>
     <div class="entry-detail" id="str(message:String=&quot;Emptytoken&quot;):String-instance-method">
       <div class="signature">
         
-        def <strong>str</strong>(message : String = <span class="s">&quot;Empty token&quot;</span>) : String
+        def <strong>str</strong>(message : <a href="../String.html">String</a> = <span class="s">&quot;Empty token&quot;</span>) : <a href="../String.html">String</a>
 
         <a class="method-permalink" href="#str%28message%3AString%3D%22Emptytoken%22%29%3AString-instance-method">#</a>
       </div>
@@ -3498,7 +3513,7 @@ with the given message if the token is not set.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L926" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L926" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3506,7 +3521,7 @@ with the given message if the token is not set.</p>
     <div class="entry-detail" id="str?:String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>str?</strong> : String | Nil
+        def <strong>str?</strong> : <a href="../String.html">String</a> | Nil
 
         <a class="method-permalink" href="#str%3F%3AString%7CNil-instance-method">#</a>
       </div>
@@ -3519,7 +3534,7 @@ with the given message if the token is not set.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L931" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L931" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3540,7 +3555,7 @@ with the given message if the token is not set.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/pull_parser.cr#L901" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/pull_parser.cr#L901" target="_blank">View source</a>]
         
       </div>
     </div>

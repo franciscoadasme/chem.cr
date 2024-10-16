@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Crystal Docs 1.12.2">
+<meta name="generator" content="Crystal Docs 1.13.3">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem">
 
@@ -902,6 +902,11 @@
       
     </li>
   
+  <li class=" " data-id="chem/Int" data-name="int">
+      <a href="../../Int.html">Int</a>
+      
+    </li>
+  
   <li class=" " data-id="chem/Number" data-name="number">
       <a href="../../Number.html">Number</a>
       
@@ -914,6 +919,16 @@
   
   <li class=" " data-id="chem/Range" data-name="range(b, e)">
       <a href="../../Range.html">Range</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem/Regex" data-name="regex">
+      <a href="../../Regex.html">Regex</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem/String" data-name="string">
+      <a href="../../String.html">String</a>
       
     </li>
   
@@ -959,14 +974,14 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/core/structure/experiment.cr#L1" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/core/structure/experiment.cr#L1" target="_blank">
         chem/core/structure/experiment.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/register_format.cr#L270" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/register_format.cr#L270" target="_blank">
         chem/register_format.cr
       </a>
     
@@ -1121,7 +1136,7 @@
     <div class="entry-detail" id="from_pdb(input:IO|Path|String,alt_loc:Char|Nil=nil,chains:Enumerable(Char)|String|Nil=nil,guess_bonds:Bool=false,het:Bool=true):self-class-method">
       <div class="signature">
         
-        def self.<strong>from_pdb</strong>(input : IO | <a href="../../Path.html">Path</a> | String, alt_loc : <a href="../../Char.html">Char</a> | Nil = <span class="n">nil</span>, chains : <a href="../../Enumerable.html">Enumerable</a>(<a href="../../Char.html">Char</a>) | String | Nil = <span class="n">nil</span>, guess_bonds : Bool = <span class="n">false</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span>
+        def self.<strong>from_pdb</strong>(input : IO | <a href="../../Path.html">Path</a> | <a href="../../String.html">String</a>, alt_loc : <a href="../../Char.html">Char</a> | Nil = <span class="n">nil</span>, chains : <a href="../../Enumerable.html">Enumerable</a>(<a href="../../Char.html">Char</a>) | <a href="../../String.html">String</a> | Nil = <span class="n">nil</span>, guess_bonds : Bool = <span class="n">false</span>, het : Bool = <span class="n">true</span>) : <span class="k">self</span>
 
         <a class="method-permalink" href="#from_pdb%28input%3AIO%7CPath%7CString%2Calt_loc%3AChar%7CNil%3Dnil%2Cchains%3AEnumerable%28Char%29%7CString%7CNil%3Dnil%2Cguess_bonds%3ABool%3Dfalse%2Chet%3ABool%3Dtrue%29%3Aself-class-method">#</a>
       </div>
@@ -1139,7 +1154,7 @@ the first one only. Use <code><a href="../../Array.html#from_pdb%28input%3AIO%7C
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1147,7 +1162,7 @@ the first one only. Use <code><a href="../../Array.html#from_pdb%28input%3AIO%7C
     <div class="entry-detail" id="new(title:String,method:Method,resolution:Float64|Nil,pdb_accession:String,deposition_date:Time,doi:String|Nil)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(title : String, method : <a href="../../Chem/Structure/Experiment/Method.html">Method</a>, resolution : Float64 | Nil, pdb_accession : String, deposition_date : Time, doi : String | Nil)
+        def self.<strong>new</strong>(title : <a href="../../String.html">String</a>, method : <a href="../../Chem/Structure/Experiment/Method.html">Method</a>, resolution : Float64 | Nil, pdb_accession : <a href="../../String.html">String</a>, deposition_date : Time, doi : <a href="../../String.html">String</a> | Nil)
 
         <a class="method-permalink" href="#new%28title%3AString%2Cmethod%3AMethod%2Cresolution%3AFloat64%7CNil%2Cpdb_accession%3AString%2Cdeposition_date%3ATime%2Cdoi%3AString%7CNil%29-class-method">#</a>
       </div>
@@ -1155,7 +1170,7 @@ the first one only. Use <code><a href="../../Array.html#from_pdb%28input%3AIO%7C
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/core/structure/experiment.cr#L20" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/core/structure/experiment.cr#L20" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1163,7 +1178,7 @@ the first one only. Use <code><a href="../../Array.html#from_pdb%28input%3AIO%7C
     <div class="entry-detail" id="read(input:IO|Path|String,format:Chem::Format|String):self-class-method">
       <div class="signature">
         
-        def self.<strong>read</strong>(input : IO | <a href="../../Path.html">Path</a> | String, format : <a href="../../Chem/Format.html">Chem::Format</a> | String) : <span class="k">self</span>
+        def self.<strong>read</strong>(input : IO | <a href="../../Path.html">Path</a> | <a href="../../String.html">String</a>, format : <a href="../../Chem/Format.html">Chem::Format</a> | <a href="../../String.html">String</a>) : <span class="k">self</span>
 
         <a class="method-permalink" href="#read%28input%3AIO%7CPath%7CString%2Cformat%3AChem%3A%3AFormat%7CString%29%3Aself-class-method">#</a>
       </div>
@@ -1181,7 +1196,7 @@ the corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1189,7 +1204,7 @@ the corresponding file format if possible.</p>
     <div class="entry-detail" id="read(path:Path|String):self-class-method">
       <div class="signature">
         
-        def self.<strong>read</strong>(path : <a href="../../Path.html">Path</a> | String) : <span class="k">self</span>
+        def self.<strong>read</strong>(path : <a href="../../Path.html">Path</a> | <a href="../../String.html">String</a>) : <span class="k">self</span>
 
         <a class="method-permalink" href="#read%28path%3APath%7CString%29%3Aself-class-method">#</a>
       </div>
@@ -1211,7 +1226,7 @@ decoded in the corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1243,7 +1258,7 @@ decoded in the corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/core/structure/experiment.cr#L13" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/core/structure/experiment.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1251,7 +1266,7 @@ decoded in the corresponding file format if possible.</p>
     <div class="entry-detail" id="doi:String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>doi</strong> : String | Nil
+        def <strong>doi</strong> : <a href="../../String.html">String</a> | Nil
 
         <a class="method-permalink" href="#doi%3AString%7CNil-instance-method">#</a>
       </div>
@@ -1259,7 +1274,7 @@ decoded in the corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/core/structure/experiment.cr#L14" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/core/structure/experiment.cr#L14" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1275,7 +1290,7 @@ decoded in the corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/core/structure/experiment.cr#L15" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/core/structure/experiment.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1283,7 +1298,7 @@ decoded in the corresponding file format if possible.</p>
     <div class="entry-detail" id="pdb_accession:String-instance-method">
       <div class="signature">
         
-        def <strong>pdb_accession</strong> : String
+        def <strong>pdb_accession</strong> : <a href="../../String.html">String</a>
 
         <a class="method-permalink" href="#pdb_accession%3AString-instance-method">#</a>
       </div>
@@ -1291,7 +1306,7 @@ decoded in the corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/core/structure/experiment.cr#L16" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/core/structure/experiment.cr#L16" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1307,7 +1322,7 @@ decoded in the corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/core/structure/experiment.cr#L17" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/core/structure/experiment.cr#L17" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1315,7 +1330,7 @@ decoded in the corresponding file format if possible.</p>
     <div class="entry-detail" id="title:String-instance-method">
       <div class="signature">
         
-        def <strong>title</strong> : String
+        def <strong>title</strong> : <a href="../../String.html">String</a>
 
         <a class="method-permalink" href="#title%3AString-instance-method">#</a>
       </div>
@@ -1323,7 +1338,7 @@ decoded in the corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/core/structure/experiment.cr#L18" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/core/structure/experiment.cr#L18" target="_blank">View source</a>]
         
       </div>
     </div>

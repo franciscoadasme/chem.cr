@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Crystal Docs 1.12.2">
+<meta name="generator" content="Crystal Docs 1.13.3">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem">
 
@@ -902,6 +902,11 @@
       
     </li>
   
+  <li class=" " data-id="chem/Int" data-name="int">
+      <a href="../../Int.html">Int</a>
+      
+    </li>
+  
   <li class=" " data-id="chem/Number" data-name="number">
       <a href="../../Number.html">Number</a>
       
@@ -914,6 +919,16 @@
   
   <li class=" " data-id="chem/Range" data-name="range(b, e)">
       <a href="../../Range.html">Range</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem/Regex" data-name="regex">
+      <a href="../../Regex.html">Regex</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem/String" data-name="string">
+      <a href="../../String.html">String</a>
       
     </li>
   
@@ -975,7 +990,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/formats/pdb.cr#L323" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/formats/pdb.cr#L323" target="_blank">
         chem/formats/pdb.cr
       </a>
     
@@ -1258,7 +1273,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/formats/pdb.cr#L347" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/formats/pdb.cr#L347" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1266,7 +1281,7 @@
     <div class="entry-detail" id="new(path:Path|String,bonds:Chem::PDB::Writer::BondOptions=Chem::PDB::Writer::BondOptions.flags(Het,Disulfide),renumber:Bool=true,ter_on_fragment:Bool=false,total_entries:Int32|Nil=nil):self-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(path : <a href="../../Path.html">Path</a> | String, bonds : <a href="../../Chem/PDB/Writer/BondOptions.html">Chem::PDB::Writer::BondOptions</a> = <span class="t">Chem</span><span class="t">::</span><span class="t">PDB</span><span class="t">::</span><span class="t">Writer</span><span class="t">::</span><span class="t">BondOptions</span>.flags(<span class="t">Het</span>, <span class="t">Disulfide</span>), renumber : Bool = <span class="n">true</span>, ter_on_fragment : Bool = <span class="n">false</span>, total_entries : Int32 | Nil = <span class="n">nil</span>) : <span class="k">self</span>
+        def self.<strong>new</strong>(path : <a href="../../Path.html">Path</a> | <a href="../../String.html">String</a>, bonds : <a href="../../Chem/PDB/Writer/BondOptions.html">Chem::PDB::Writer::BondOptions</a> = <span class="t">Chem</span><span class="t">::</span><span class="t">PDB</span><span class="t">::</span><span class="t">Writer</span><span class="t">::</span><span class="t">BondOptions</span>.flags(<span class="t">Het</span>, <span class="t">Disulfide</span>), renumber : Bool = <span class="n">true</span>, ter_on_fragment : Bool = <span class="n">false</span>, total_entries : Int32 | Nil = <span class="n">nil</span>) : <span class="k">self</span>
 
         <a class="method-permalink" href="#new%28path%3APath%7CString%2Cbonds%3AChem%3A%3APDB%3A%3AWriter%3A%3ABondOptions%3DChem%3A%3APDB%3A%3AWriter%3A%3ABondOptions.flags%28Het%2CDisulfide%29%2Crenumber%3ABool%3Dtrue%2Cter_on_fragment%3ABool%3Dfalse%2Ctotal_entries%3AInt32%7CNil%3Dnil%29%3Aself-class-method">#</a>
       </div>
@@ -1322,7 +1337,7 @@ are forwarded to the constructor.</p>
     <div class="entry-detail" id="open(path:Path|String,bonds:Chem::PDB::Writer::BondOptions=Chem::PDB::Writer::BondOptions.flags(Het,Disulfide),renumber:Bool=true,ter_on_fragment:Bool=false,total_entries:Int32|Nil=nil,&amp;:self-&gt;)-class-method">
       <div class="signature">
         
-        def self.<strong>open</strong>(path : <a href="../../Path.html">Path</a> | String, bonds : <a href="../../Chem/PDB/Writer/BondOptions.html">Chem::PDB::Writer::BondOptions</a> = <span class="t">Chem</span><span class="t">::</span><span class="t">PDB</span><span class="t">::</span><span class="t">Writer</span><span class="t">::</span><span class="t">BondOptions</span>.flags(<span class="t">Het</span>, <span class="t">Disulfide</span>), renumber : Bool = <span class="n">true</span>, ter_on_fragment : Bool = <span class="n">false</span>, total_entries : Int32 | Nil = <span class="n">nil</span>, & : <span class="k">self</span> -> )
+        def self.<strong>open</strong>(path : <a href="../../Path.html">Path</a> | <a href="../../String.html">String</a>, bonds : <a href="../../Chem/PDB/Writer/BondOptions.html">Chem::PDB::Writer::BondOptions</a> = <span class="t">Chem</span><span class="t">::</span><span class="t">PDB</span><span class="t">::</span><span class="t">Writer</span><span class="t">::</span><span class="t">BondOptions</span>.flags(<span class="t">Het</span>, <span class="t">Disulfide</span>), renumber : Bool = <span class="n">true</span>, ter_on_fragment : Bool = <span class="n">false</span>, total_entries : Int32 | Nil = <span class="n">nil</span>, & : <span class="k">self</span> -> )
 
         <a class="method-permalink" href="#open%28path%3APath%7CString%2Cbonds%3AChem%3A%3APDB%3A%3AWriter%3A%3ABondOptions%3DChem%3A%3APDB%3A%3AWriter%3A%3ABondOptions.flags%28Het%2CDisulfide%29%2Crenumber%3ABool%3Dtrue%2Cter_on_fragment%3ABool%3Dfalse%2Ctotal_entries%3AInt32%7CNil%3Dnil%2C%26%3Aself-%3E%29-class-method">#</a>
       </div>
@@ -1378,7 +1393,7 @@ enclosed <code>IO</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/formats/pdb.cr#L359" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/formats/pdb.cr#L359" target="_blank">View source</a>]
         
       </div>
     </div>

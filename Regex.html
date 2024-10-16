@@ -14,7 +14,7 @@
 <script type="text/javascript" src="js/doc.js"></script>
 
   <meta name="repository-name" content="chem">
-  <title>Range(B, E) - chem master</title>
+  <title>Regex - chem master</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "";
   </script>
@@ -917,12 +917,12 @@
       
     </li>
   
-  <li class=" current" data-id="chem/Range" data-name="range(b, e)">
+  <li class=" " data-id="chem/Range" data-name="range(b, e)">
       <a href="Range.html">Range</a>
       
     </li>
   
-  <li class=" " data-id="chem/Regex" data-name="regex">
+  <li class=" current" data-id="chem/Regex" data-name="regex">
       <a href="Regex.html">Regex</a>
       
     </li>
@@ -941,12 +941,12 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">struct</span> Range(B, E)
+  <span class="kind">class</span> Regex
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="Range.html">Range(B, E)</a></li><li class="superclass">Struct</li><li class="superclass">Value</li><li class="superclass">Object</li></ul>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="Regex.html">Regex</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
@@ -960,50 +960,159 @@
     Overview
   </h2>
 
-  <p>A <code><a href="Range.html">Range</a></code> represents an interval: a set of values with a beginning and an end.</p>
-<p>Ranges may be constructed using the usual <code>new</code> method or with literals:</p>
-<pre><code class="language-crystal">x..y  <span class="c"># an inclusive range, in mathematics: [x, y]</span>
-x...y <span class="c"># an exclusive range, in mathematics: [x, y)</span>
-(x..) <span class="c"># an endless range, in mathematics: &gt;= x</span>
-..y   <span class="c"># a beginless inclusive range, in mathematics: &lt;= y</span>
-...y  <span class="c"># a beginless exclusive range, in mathematics: &lt; y</span></code></pre>
-<p>See <a href="https://crystal-lang.org/reference/syntax_and_semantics/literals/range.html"><code>Range</code> literals</a> in the language reference.</p>
-<p>An easy way to remember which one is inclusive and which one is exclusive it
-to think of the extra dot as if it pushes <em>y</em> further away, thus leaving it outside of the range.</p>
-<p>Ranges typically involve integers, but can be created using arbitrary objects
-as long as they define <code>succ</code> (or <code>pred</code> for <code>reverse_each</code>), to get the
-next element in the range, and <code>&lt;</code> and <code>==</code>, to know when the range reached the end:</p>
-<pre><code class="language-crystal"><span class="c"># Represents a string of &#39;x&#39;s.</span>
-<span class="k">struct</span> <span class="t">Xs</span>
-  <span class="k">include</span> <span class="t">Comparable</span>(<span class="t">Xs</span>)
-
-  getter size
-
-  <span class="k">def</span> <span class="m">initialize</span>(@size : <span class="t">Int32</span>)
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="m">succ</span>
-    <span class="t">Xs</span>.new(@size <span class="o">+</span> <span class="n">1</span>)
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="m">&lt;=&gt;</span>(other)
-    @size <span class="o">&lt;=&gt;</span> other.size
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="m">inspect</span>(io)
-    @size.times { io <span class="o">&lt;&lt;</span> <span class="s">&#39;x&#39;</span> }
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="m">to_s</span>(io)
-    io <span class="o">&lt;&lt;</span> @size <span class="o">&lt;&lt;</span> <span class="s">&#39; &#39;</span>
-    inspect(io)
-  <span class="k">end</span>
-<span class="k">end</span></code></pre>
-<p>An example of using <code>Xs</code> to construct a range:</p>
-<pre><code class="language-crystal">r <span class="o">=</span> <span class="t">Xs</span>.new(<span class="n">3</span>)..<span class="t">Xs</span>.new(<span class="n">6</span>)
-r.to_s                 <span class="c"># =&gt; &quot;xxx..xxxxxx&quot;</span>
-r.to_a                 <span class="c"># =&gt; [Xs.new(3), Xs.new(4), Xs.new(5), Xs.new(6)]</span>
-r.includes?(<span class="t">Xs</span>.new(<span class="n">5</span>)) <span class="c"># =&gt; true</span></code></pre>
+  <p>A <code><a href="Regex.html">Regex</a></code> represents a regular expression, a pattern that describes the
+contents of strings. A <code><a href="Regex.html">Regex</a></code> can determine whether or not a string matches
+its description, and extract the parts of the string that match.</p>
+<p>A <code><a href="Regex.html">Regex</a></code> can be created using the literal syntax, in which it is delimited by
+forward slashes (<code>/</code>):</p>
+<pre><code class="language-crystal"><span class="s">/hay/</span> <span class="o">=~</span> <span class="s">&quot;haystack&quot;</span>   <span class="c"># =&gt; 0</span>
+<span class="o">/</span>y<span class="o">/</span>.match(<span class="s">&quot;haystack&quot;</span>) <span class="c"># =&gt; Regex::MatchData(&quot;y&quot;)</span></code></pre>
+<p>See <a href="https://crystal-lang.org/reference/syntax_and_semantics/literals/regex.html"><code>Regex</code> literals</a> in the language reference.</p>
+<p>Interpolation works in regular expression literals just as it does in string
+literals. Be aware that using this feature will cause an exception to be
+raised at runtime, if the resulting string would not be a valid regular
+expression.</p>
+<pre><code class="language-crystal">x <span class="o">=</span> <span class="s">&quot;a&quot;</span>
+<span class="o">/</span><span class="c">#{x}/.match(&quot;asdf&quot;) # =&gt; Regex::MatchData(&quot;a&quot;)</span>
+x <span class="o">=</span> <span class="s">&quot;(&quot;</span>
+<span class="o">/</span><span class="c">#{x}/ # raises ArgumentError</span></code></pre>
+<p>When we check to see if a particular regular expression describes a string,
+we can say that we are performing a match or matching one against the other.
+If we find that a regular expression does describe a string, we say that it
+matches, and we can refer to a part of the string that was described as
+a match.</p>
+<p>Here <code>&quot;haystack&quot;</code> does not contain the pattern <code>/needle/</code>, so it doesn't match:</p>
+<pre><code class="language-crystal"><span class="s">/needle/</span>.match(<span class="s">&quot;haystack&quot;</span>) <span class="c"># =&gt; nil</span></code></pre>
+<p>Here <code>&quot;haystack&quot;</code> contains the pattern <code>/hay/</code>, so it matches:</p>
+<pre><code class="language-crystal"><span class="s">/hay/</span>.match(<span class="s">&quot;haystack&quot;</span>) <span class="c"># =&gt; Regex::MatchData(&quot;hay&quot;)</span></code></pre>
+<p>Regex methods that perform a match usually return a truthy value if there was
+a match and <code>nil</code> if there was no match. After performing a match, the
+special variable <code>$~</code> will be an instance of <code>Regex::MatchData</code> if it matched, <code>nil</code>
+otherwise.</p>
+<p>When matching a regular expression using <code>=~</code> (either <code>String#=~</code> or
+<code>Regex#=~</code>), the returned value will be the index of the first match in the
+string if the expression matched, <code>nil</code> otherwise.</p>
+<pre><code class="language-crystal"><span class="s">/stack/</span> <span class="o">=~</span> <span class="s">&quot;haystack&quot;</span>  <span class="c"># =&gt; 3</span>
+<span class="s">&quot;haystack&quot;</span> <span class="o">=~</span> <span class="s">/stack/</span>  <span class="c"># =&gt; 3</span>
+$~                     <span class="c"># =&gt; Regex::MatchData(&quot;stack&quot;)</span>
+<span class="o">/</span>needle<span class="o">/</span> <span class="o">=~</span> <span class="s">&quot;haystack&quot;</span> <span class="c"># =&gt; nil</span>
+<span class="s">&quot;haystack&quot;</span> <span class="o">=~</span> <span class="s">/needle/</span> <span class="c"># =&gt; nil</span>
+$~                     <span class="c"># raises Exception</span></code></pre>
+<p>When matching a regular expression using <code>#match</code> (either <code>String#match</code> or
+<code>Regex#match</code>), the returned value will be a <code>Regex::MatchData</code> if the expression
+matched, <code>nil</code> otherwise.</p>
+<pre><code class="language-crystal"><span class="s">/hay/</span>.match(<span class="s">&quot;haystack&quot;</span>)    <span class="c"># =&gt; Regex::MatchData(&quot;hay&quot;)</span>
+<span class="s">&quot;haystack&quot;</span>.match(<span class="o">/</span>hay<span class="o">/</span>)    <span class="c"># =&gt; Regex::MatchData(&quot;hay&quot;)</span>
+$~                         <span class="c"># =&gt; Regex::MatchData(&quot;hay&quot;)</span>
+<span class="o">/</span>needle<span class="o">/</span>.match(<span class="s">&quot;haystack&quot;</span>) <span class="c"># =&gt; nil</span>
+<span class="s">&quot;haystack&quot;</span>.match(<span class="o">/</span>needle<span class="o">/</span>) <span class="c"># =&gt; nil</span>
+$~                         <span class="c"># raises Exception</span></code></pre>
+<p><a href="https://en.wikipedia.org/wiki/Regular_expression">Regular expressions</a>
+have their own language for describing strings.</p>
+<p>Many programming languages and tools implement their own regular expression
+language, but Crystal uses <a href="http://www.pcre.org/">PCRE2</a>, a popular C library, with
+<a href="http://www.pcre.org/current/doc/html/pcre2jit.html">JIT compilation</a> enabled
+for providing regular expressions. Here give a brief summary of the most
+basic features of regular expressions - grouping, repetition, and
+alternation - but the feature set of PCRE2 extends far beyond these, and we
+don't attempt to describe it in full here. For more information, refer to
+the PCRE2 documentation, especially the
+<a href="http://www.pcre.org/current/doc/html/pcre2pattern.html">full pattern syntax</a>
+or
+<a href="http://www.pcre.org/current/doc/html/pcre2syntax.html">syntax quick reference</a>.</p>
+<p><span class="flag purple">NOTE</span>  Prior to Crystal 1.8 the compiler expected regex literals to follow the
+original <a href="https://www.pcre.org/original/doc/html/pcrepattern.html">PCRE pattern syntax</a>.
+The following summary applies to both PCRE and PCRE2.</p>
+<p>The regular expression language can be used to match much more than just the
+static substrings in the above examples. Certain characters, called
+<a href="http://www.pcre.org/current/doc/html/pcre2pattern.html#SEC4">metacharacters</a>,
+are given special treatment in regular expressions, and can be used to
+describe more complex patterns. To match metacharacters literally in a
+regular expression, they must be escaped by being preceded with a backslash
+(<code>\</code>). <code>escape</code> will do this automatically for a given String.</p>
+<p>A group of characters (often called a capture group or
+<a href="http://www.pcre.org/current/doc/html/pcre2pattern.html#SEC14">subpattern</a>)
+can be identified by enclosing it in parentheses (<code>()</code>). The contents of
+each capture group can be extracted on a successful match:</p>
+<pre><code class="language-crystal"><span class="s">/a(sd)f/</span>.match(<span class="s">&quot;_asdf_&quot;</span>)                     <span class="c"># =&gt; Regex::MatchData(&quot;asdf&quot; 1:&quot;sd&quot;)</span>
+<span class="o">/</span>a(sd)f<span class="o">/</span>.match(<span class="s">&quot;_asdf_&quot;</span>).try <span class="o">&amp;</span>.[<span class="n">1</span>]           <span class="c"># =&gt; &quot;sd&quot;</span>
+<span class="o">/</span>a(?<span class="o">&lt;</span>grp<span class="o">&gt;</span>sd)f<span class="o">/</span>.match(<span class="s">&quot;_asdf_&quot;</span>)               <span class="c"># =&gt; Regex::MatchData(&quot;asdf&quot; grp:&quot;sd&quot;)</span>
+<span class="o">/</span>a(?<span class="o">&lt;</span>grp<span class="o">&gt;</span>sd)f<span class="o">/</span>.match(<span class="s">&quot;_asdf_&quot;</span>).try <span class="o">&amp;</span>.[<span class="s">&quot;grp&quot;</span>] <span class="c"># =&gt; &quot;sd&quot;</span></code></pre>
+<p>Capture groups are indexed starting from 1. Methods that accept a capture
+group index will usually also accept 0 to refer to the full match. Capture
+groups can also be given names, using the <code>(?&amp;lt;name&amp;gt;...)</code> syntax, as in the
+previous example.</p>
+<p>Following a match, the special variables $N (e.g., $1, $2, $3, ...) can be used
+to access a capture group. Trying to access an invalid capture group will raise an
+exception. Note that it is possible to have a successful match with a nil capture:</p>
+<pre><code class="language-crystal"><span class="s">/(spice)(s)?/</span>.match(<span class="s">&quot;spice&quot;</span>) <span class="c"># =&gt; Regex::MatchData(&quot;spice&quot; 1:&quot;spice&quot; 2:nil)</span>
+$1                           <span class="c"># =&gt; &quot;spice&quot;</span>
+$2                           <span class="c"># =&gt; raises Exception</span></code></pre>
+<p>This can be mitigated by using the nilable version of the above: $N?,
+(e.g., $1? $2?, $3?, ...). Changing the above to use <code>$2?</code> instead of <code>$2</code>
+would return <code>nil</code>. <code>$2?.nil?</code> would return <code>true</code>.</p>
+<p>A character or group can be
+<a href="http://www.pcre.org/current/doc/html/pcre2pattern.html#SEC17">repeated</a>
+or made optional using an asterisk (<code>*</code> - zero or more), a plus sign
+(<code>+</code> - one or more), integer bounds in curly braces
+(<code>{n,m}</code>) (at least <code>n</code>, no more than <code>m</code>), or a question mark
+(<code>?</code>) (zero or one).</p>
+<pre><code class="language-crystal"><span class="s">/fo*/</span>.match(<span class="s">&quot;_f_&quot;</span>)         <span class="c"># =&gt; Regex::MatchData(&quot;f&quot;)</span>
+<span class="o">/</span>fo<span class="o">+</span><span class="o">/</span>.match(<span class="s">&quot;_f_&quot;</span>)         <span class="c"># =&gt; nil</span>
+<span class="o">/</span>fo<span class="o">*</span><span class="o">/</span>.match(<span class="s">&quot;_foo_&quot;</span>)       <span class="c"># =&gt; Regex::MatchData(&quot;foo&quot;)</span>
+<span class="o">/</span>fo{<span class="n">3</span>,}<span class="o">/</span>.match(<span class="s">&quot;_foo_&quot;</span>)    <span class="c"># =&gt; nil</span>
+<span class="o">/</span>fo{<span class="n">1</span>,<span class="n">3</span>}<span class="o">/</span>.match(<span class="s">&quot;_foo_&quot;</span>)   <span class="c"># =&gt; Regex::MatchData(&quot;foo&quot;)</span>
+<span class="o">/</span>fo<span class="o">*</span><span class="o">/</span>.match(<span class="s">&quot;_foo_&quot;</span>)       <span class="c"># =&gt; Regex::MatchData(&quot;foo&quot;)</span>
+<span class="o">/</span>fo<span class="o">*</span><span class="o">/</span>.match(<span class="s">&quot;_foooooooo_&quot;</span>) <span class="c"># =&gt; Regex::MatchData(&quot;foooooooo&quot;)</span>
+<span class="o">/</span>fo{,<span class="n">3</span>}<span class="o">/</span>.match(<span class="s">&quot;_foooo_&quot;</span>)  <span class="c"># =&gt; nil</span>
+<span class="o">/</span>f(op)<span class="o">*</span><span class="o">/</span>.match(<span class="s">&quot;fopopo&quot;</span>)   <span class="c"># =&gt; Regex::MatchData(&quot;fopop&quot; 1:&quot;op&quot;)</span>
+<span class="o">/</span>foo?bar<span class="o">/</span>.match(<span class="s">&quot;foobar&quot;</span>)  <span class="c"># =&gt; Regex::MatchData(&quot;foobar&quot;)</span>
+<span class="o">/</span>foo?bar<span class="o">/</span>.match(<span class="s">&quot;fobar&quot;</span>)   <span class="c"># =&gt; Regex::MatchData(&quot;fobar&quot;)</span></code></pre>
+<p>Alternatives can be separated using a
+<a href="http://www.pcre.org/current/doc/html/pcre2pattern.html#SEC12">vertical bar</a>
+(<code>|</code>). Any single character can be represented by
+<a href="http://www.pcre.org/current/doc/html/pcre2pattern.html#SEC7">dot</a>
+(<code>.</code>). When matching only one character, specific
+alternatives can be expressed as a
+<a href="http://www.pcre.org/current/doc/html/pcre2pattern.html#SEC9">character class</a>,
+enclosed in square brackets (<code>[]</code>):</p>
+<pre><code class="language-crystal"><span class="s">/foo|bar/</span>.match(<span class="s">&quot;foo&quot;</span>)     <span class="c"># =&gt; Regex::MatchData(&quot;foo&quot;)</span>
+<span class="o">/</span>foo<span class="o">|</span>bar<span class="o">/</span>.match(<span class="s">&quot;bar&quot;</span>)     <span class="c"># =&gt; Regex::MatchData(&quot;bar&quot;)</span>
+<span class="o">/</span>_(x<span class="o">|</span>y)_<span class="o">/</span>.match(<span class="s">&quot;_x_&quot;</span>)     <span class="c"># =&gt; Regex::MatchData(&quot;_x_&quot; 1:&quot;x&quot;)</span>
+<span class="o">/</span>_(x<span class="o">|</span>y)_<span class="o">/</span>.match(<span class="s">&quot;_y_&quot;</span>)     <span class="c"># =&gt; Regex::MatchData(&quot;_y_&quot; 1:&quot;y&quot;)</span>
+<span class="o">/</span>_(x<span class="o">|</span>y)_<span class="o">/</span>.match(<span class="s">&quot;_(x|y)_&quot;</span>) <span class="c"># =&gt; nil</span>
+<span class="o">/</span>_(x<span class="o">|</span>y)_<span class="o">/</span>.match(<span class="s">&quot;_(x|y)_&quot;</span>) <span class="c"># =&gt; nil</span>
+<span class="o">/</span>_._<span class="o">/</span>.match(<span class="s">&quot;_x_&quot;</span>)         <span class="c"># =&gt; Regex::MatchData(&quot;_x_&quot;)</span>
+<span class="o">/</span>_[xyz]_<span class="o">/</span>.match(<span class="s">&quot;_x_&quot;</span>)     <span class="c"># =&gt; Regex::MatchData(&quot;_x_&quot;)</span>
+<span class="o">/</span>_[a<span class="o">-</span>z]_<span class="o">/</span>.match(<span class="s">&quot;_x_&quot;</span>)     <span class="c"># =&gt; Regex::MatchData(&quot;_x_&quot;)</span>
+<span class="o">/</span>_[<span class="o">^</span>a<span class="o">-</span>z]_<span class="o">/</span>.match(<span class="s">&quot;_x_&quot;</span>)    <span class="c"># =&gt; nil</span>
+<span class="o">/</span>_[<span class="o">^</span>a<span class="o">-</span>wy<span class="o">-</span>z]_<span class="o">/</span>.match(<span class="s">&quot;_x_&quot;</span>) <span class="c"># =&gt; Regex::MatchData(&quot;_x_&quot;)</span></code></pre>
+<p>Regular expressions can be defined with these 3
+<a href="http://www.pcre.org/current/doc/html/pcre2pattern.html#SEC13">optional flags</a>:</p>
+<ul>
+<li><code>i</code>: ignore case (<code>Regex::Options::IGNORE_CASE</code>)</li>
+<li><code>m</code>: multiline (<code>Regex::Options::MULTILINE</code>)</li>
+<li><code>x</code>: extended (<code>Regex::Options::EXTENDED</code>)</li>
+</ul>
+<pre><code class="language-crystal"><span class="s">/asdf/</span> <span class="o">=~</span> <span class="s">&quot;ASDF&quot;</span>    <span class="c"># =&gt; nil</span>
+<span class="o">/</span>asdf<span class="o">/</span>i <span class="o">=~</span> <span class="s">&quot;ASDF&quot;</span>   <span class="c"># =&gt; 0</span>
+<span class="o">/</span><span class="o">^</span>z<span class="o">/</span>i <span class="o">=~</span> <span class="s">&quot;ASDF\nZ&quot;</span>  <span class="c"># =&gt; nil</span>
+<span class="o">/</span><span class="o">^</span>z<span class="o">/</span>im <span class="o">=~</span> <span class="s">&quot;ASDF\nZ&quot;</span> <span class="c"># =&gt; 5</span></code></pre>
+<p>PCRE2 supports other encodings, but Crystal strings are UTF-8 only, so Crystal
+regular expressions are also UTF-8 only (by default).
+Crystal strings are expected to contain only valid UTF-8 encodings, but that's
+not guaranteed. There's a chance that a string <em>can</em> contain invalid bytes.
+Especially data read from external sources must not be trusted to be valid encoding.
+The regex engine demands valid UTF-8, so it checks the encoding for every
+match. This can be unnecessary if the string is already validated (for example
+via <code>String#valid_encoding?</code> or because it has already been used in a previous
+regex match).
+If that's the case, it's profitable to skip UTF-8 validation via <code>MatchOptions::NO_UTF_CHECK</code>
+(or <code>CompileOptions::NO_UTF_CHECK</code> for the pattern).</p>
+<p>PCRE2 optionally permits named capture groups (named subpatterns) to not be
+unique. Crystal exposes the name table of a <code><a href="Regex.html">Regex</a></code> as a
+<code>Hash</code> of <code><a href="String.html">String</a></code> =&gt; <code>Int32</code>, and therefore requires named capture groups to have
+unique names within a single <code><a href="Regex.html">Regex</a></code>.</p>
 
 
 
@@ -1019,9 +1128,7 @@ r.includes?(<span class="t">Xs</span>.new(<span class="n">5</span>)) <span class
   </h2>
   <ul class="other-types-list">
     
-      <li class="other-type"><a href="Enumerable.html">Enumerable(B)</a></li>
-    
-      <li class="other-type">Iterable(B)</li>
+      <li class="other-type">Regex::PCRE2</li>
     
   </ul>
 
@@ -1044,8 +1151,8 @@ r.includes?(<span class="t">Xs</span>.new(<span class="n">5</span>)) <span class
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/core_ext/range.cr#L1" target="_blank">
-        chem/core_ext/range.cr
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/core_ext/regex.cr#L1" target="_blank">
+        chem/core_ext/regex.cr
       </a>
     
     <br/>
@@ -1079,26 +1186,9 @@ r.includes?(<span class="t">Xs</span>.new(<span class="n">5</span>)) <span class
       </li>
     
       <li class="entry-summary">
-        <a href="#%3D%3D%3D%28chain%3AChem%3A%3AChain%29%3ABool-instance-method" class="signature"><strong>#===</strong>(chain : Chem::Chain) : Bool</a>
-        
-          <div class="summary"><p>Case equality.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
         <a href="#%3D%3D%3D%28residue%3AChem%3A%3AResidue%29%3ABool-instance-method" class="signature"><strong>#===</strong>(residue : Chem::Residue) : Bool</a>
         
           <div class="summary"><p>Case equality.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#clamp%28min%2Cmax%29%3ARange-instance-method" class="signature"><strong>#clamp</strong>(min, max) : Range</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#clamp%28range%3ARange%29%3ARange-instance-method" class="signature"><strong>#clamp</strong>(range : Range) : Range</a>
         
       </li>
     
@@ -1107,51 +1197,6 @@ r.includes?(<span class="t">Xs</span>.new(<span class="n">5</span>)) <span class
 
 
 <div class="methods-inherited">
-  
-    
-
-
-    
-
-
-    
-
-
-    
-
-
-  
-    
-
-  <h3>Instance methods inherited from module <code><a href="Enumerable.html">Enumerable(B)</a></code></h3>
-  
-  
-    <a href="Enumerable.html#%3D%3D%3D%28atom%3AChem%3A%3AAtom%29%3ABool-instance-method" class="tooltip">
-      <span>===(atom : Chem::Atom) : Bool<br/>===(chain : Chem::Chain) : Bool<br/>===(residue : Chem::Residue) : Bool</span>
-    ===</a>, 
-    
-  
-    <a href="Enumerable.html#average%28weights%3AIndexable%28Number%29%29-instance-method" class="tooltip">
-      <span>average(weights : Indexable(Number))<br/>average(weights : Indexable(Number), & : T -> _)</span>
-    average</a>, 
-    
-  
-    <a href="Enumerable.html#mean-instance-method" class="tooltip">
-      <span>mean<br/>mean(& : T -> _)</span>
-    mean</a>
-    
-  
-
-
-    
-
-
-    
-
-
-    
-
-
   
     
 
@@ -1226,28 +1271,7 @@ r.includes?(<span class="t">Xs</span>.new(<span class="n">5</span>)) <span class
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/core_ext/range.cr#L3" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="===(chain:Chem::Chain):Bool-instance-method">
-      <div class="signature">
-        
-        def <strong>===</strong>(chain : <a href="Chem/Chain.html">Chem::Chain</a>) : Bool
-
-        <a class="method-permalink" href="#%3D%3D%3D%28chain%3AChem%3A%3AChain%29%3ABool-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Case equality. Delegates to <code><a href="Chem/Chain.html#matches%3F%28id%3AChar%29%3ABool-instance-method">Chem::Chain#matches?</a></code>.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/core_ext/range.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/core_ext/regex.cr#L3" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1268,39 +1292,7 @@ r.includes?(<span class="t">Xs</span>.new(<span class="n">5</span>)) <span class
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/core_ext/range.cr#L13" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="clamp(min,max):Range-instance-method">
-      <div class="signature">
-        
-        def <strong>clamp</strong>(min, max) : <a href="Range.html">Range</a>
-
-        <a class="method-permalink" href="#clamp%28min%2Cmax%29%3ARange-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/core_ext/range.cr#L17" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="clamp(range:Range):Range-instance-method">
-      <div class="signature">
-        
-        def <strong>clamp</strong>(range : <a href="Range.html">Range</a>) : <a href="Range.html">Range</a>
-
-        <a class="method-permalink" href="#clamp%28range%3ARange%29%3ARange-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/core_ext/range.cr#L30" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/core_ext/regex.cr#L8" target="_blank">View source</a>]
         
       </div>
     </div>

@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Crystal Docs 1.12.2">
+<meta name="generator" content="Crystal Docs 1.13.3">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem">
 
@@ -902,6 +902,11 @@
       
     </li>
   
+  <li class=" " data-id="chem/Int" data-name="int">
+      <a href="../Int.html">Int</a>
+      
+    </li>
+  
   <li class=" " data-id="chem/Number" data-name="number">
       <a href="../Number.html">Number</a>
       
@@ -914,6 +919,16 @@
   
   <li class=" " data-id="chem/Range" data-name="range(b, e)">
       <a href="../Range.html">Range</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem/Regex" data-name="regex">
+      <a href="../Regex.html">Regex</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem/String" data-name="string">
+      <a href="../String.html">String</a>
       
     </li>
   
@@ -1000,9 +1015,9 @@ metadata[<span class="s">&quot;nested_array&quot;</span>].as_2a(<span class="t">
   </h2>
   <ul class="other-types-list">
     
-      <li class="other-type"><a href="../Enumerable.html">Enumerable({String, Bool | Float64 | Int32 | String})</a></li>
+      <li class="other-type"><a href="../Enumerable.html">Enumerable</a>({<a href="../String.html">String</a>, Bool | Float64 | Int32 | <a href="../String.html">String</a>})</li>
     
-      <li class="other-type">Iterable({String, Bool | Float64 | Int32 | String})</li>
+      <li class="other-type">Iterable({<a href="../String.html">String</a>, Bool | Float64 | Int32 | <a href="../String.html">String</a>})</li>
     
   </ul>
 
@@ -1025,7 +1040,7 @@ metadata[<span class="s">&quot;nested_array&quot;</span>].as_2a(<span class="t">
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L50" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L50" target="_blank">
         chem/metadata.cr
       </a>
     
@@ -1381,8 +1396,13 @@ metadata[<span class="s">&quot;nested_array&quot;</span>].as_2a(<span class="t">
   
     
 
-  <h3>Instance methods inherited from module <code><a href="../Enumerable.html">Enumerable({String, Bool | Float64 | Int32 | String})</a></code></h3>
+  <h3>Instance methods inherited from module <code><a href="../Enumerable.html">Enumerable</a>({<a href="../String.html">String</a>, Bool | Float64 | Int32 | <a href="../String.html">String</a>})</code></h3>
   
+  
+    <a href="../Enumerable.html#%3D%3D%3D%28atom%3AChem%3A%3AAtom%29%3ABool-instance-method" class="tooltip">
+      <span>===(atom : Chem::Atom) : Bool<br/>===(chain : Chem::Chain) : Bool<br/>===(residue : Chem::Residue) : Bool</span>
+    ===</a>, 
+    
   
     <a href="../Enumerable.html#average%28weights%3AIndexable%28Number%29%29-instance-method" class="tooltip">
       <span>average(weights : Indexable(Number))<br/>average(weights : Indexable(Number), & : {String, Bool | Float64 | Int32 | String} -> _)</span>
@@ -1453,7 +1473,7 @@ metadata[<span class="s">&quot;nested_array&quot;</span>].as_2a(<span class="t">
     <div class="entry-detail" id="[](key:String):Any-instance-method">
       <div class="signature">
         
-        def <strong>[]</strong>(key : String) : <a href="../Chem/Metadata/Any.html">Any</a>
+        def <strong>[]</strong>(key : <a href="../String.html">String</a>) : <a href="../Chem/Metadata/Any.html">Any</a>
 
         <a class="method-permalink" href="#%5B%5D%28key%3AString%29%3AAny-instance-method">#</a>
       </div>
@@ -1467,7 +1487,7 @@ found.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L217" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L217" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1475,7 +1495,7 @@ found.</p>
     <div class="entry-detail" id="[]=(key:String,value:Bool):Bool-instance-method">
       <div class="signature">
         
-        def <strong>[]=</strong>(key : String, value : Bool) : Bool
+        def <strong>[]=</strong>(key : <a href="../String.html">String</a>, value : Bool) : Bool
 
         <a class="method-permalink" href="#%5B%5D%3D%28key%3AString%2Cvalue%3ABool%29%3ABool-instance-method">#</a>
       </div>
@@ -1488,7 +1508,7 @@ found.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L221" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L221" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1496,7 +1516,7 @@ found.</p>
     <div class="entry-detail" id="[]=(key:String,value:Float64):Float64-instance-method">
       <div class="signature">
         
-        def <strong>[]=</strong>(key : String, value : Float64) : Float64
+        def <strong>[]=</strong>(key : <a href="../String.html">String</a>, value : Float64) : Float64
 
         <a class="method-permalink" href="#%5B%5D%3D%28key%3AString%2Cvalue%3AFloat64%29%3AFloat64-instance-method">#</a>
       </div>
@@ -1509,7 +1529,7 @@ found.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L221" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L221" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1517,7 +1537,7 @@ found.</p>
     <div class="entry-detail" id="[]=(key:String,value:Int32):Int32-instance-method">
       <div class="signature">
         
-        def <strong>[]=</strong>(key : String, value : Int32) : Int32
+        def <strong>[]=</strong>(key : <a href="../String.html">String</a>, value : Int32) : Int32
 
         <a class="method-permalink" href="#%5B%5D%3D%28key%3AString%2Cvalue%3AInt32%29%3AInt32-instance-method">#</a>
       </div>
@@ -1530,7 +1550,7 @@ found.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L221" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L221" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1538,7 +1558,7 @@ found.</p>
     <div class="entry-detail" id="[]=(key:String,value:String):String-instance-method">
       <div class="signature">
         
-        def <strong>[]=</strong>(key : String, value : String) : String
+        def <strong>[]=</strong>(key : <a href="../String.html">String</a>, value : <a href="../String.html">String</a>) : <a href="../String.html">String</a>
 
         <a class="method-permalink" href="#%5B%5D%3D%28key%3AString%2Cvalue%3AString%29%3AString-instance-method">#</a>
       </div>
@@ -1551,7 +1571,7 @@ found.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L221" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L221" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1559,7 +1579,7 @@ found.</p>
     <div class="entry-detail" id="[]=(key:String,value:Array):Array-instance-method">
       <div class="signature">
         
-        def <strong>[]=</strong>(key : String, value : <a href="../Array.html">Array</a>) : <a href="../Array.html">Array</a>
+        def <strong>[]=</strong>(key : <a href="../String.html">String</a>, value : <a href="../Array.html">Array</a>) : <a href="../Array.html">Array</a>
 
         <a class="method-permalink" href="#%5B%5D%3D%28key%3AString%2Cvalue%3AArray%29%3AArray-instance-method">#</a>
       </div>
@@ -1572,7 +1592,7 @@ found.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L230" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L230" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1580,7 +1600,7 @@ found.</p>
     <div class="entry-detail" id="[]?(key:String):Any|Nil-instance-method">
       <div class="signature">
         
-        def <strong>[]?</strong>(key : String) : <a href="../Chem/Metadata/Any.html">Any</a> | Nil
+        def <strong>[]?</strong>(key : <a href="../String.html">String</a>) : <a href="../Chem/Metadata/Any.html">Any</a> | Nil
 
         <a class="method-permalink" href="#%5B%5D%3F%28key%3AString%29%3AAny%7CNil-instance-method">#</a>
       </div>
@@ -1593,7 +1613,7 @@ found.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L236" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L236" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1614,7 +1634,7 @@ found.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L241" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L241" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1622,7 +1642,7 @@ found.</p>
     <div class="entry-detail" id="delete(key:String):Any|Nil-instance-method">
       <div class="signature">
         
-        def <strong>delete</strong>(key : String) : <a href="../Chem/Metadata/Any.html">Any</a> | Nil
+        def <strong>delete</strong>(key : <a href="../String.html">String</a>) : <a href="../Chem/Metadata/Any.html">Any</a> | Nil
 
         <a class="method-permalink" href="#delete%28key%3AString%29%3AAny%7CNil-instance-method">#</a>
       </div>
@@ -1636,7 +1656,7 @@ found.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L248" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L248" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1644,7 +1664,7 @@ found.</p>
     <div class="entry-detail" id="delete(key:String,&amp;:String-&gt;{String,Bool|Float64|Int32|String}):Any|{String,Bool|Float64|Int32|String}forallT-instance-method">
       <div class="signature">
         
-        def <strong>delete</strong>(key : String, & : String -> {String, Bool | Float64 | Int32 | String}) : <a href="../Chem/Metadata/Any.html">Any</a> | {String, Bool | Float64 | Int32 | String} forall T
+        def <strong>delete</strong>(key : <a href="../String.html">String</a>, & : <a href="../String.html">String</a> -> {<a href="../String.html">String</a>, Bool | Float64 | Int32 | <a href="../String.html">String</a>}) : <a href="../Chem/Metadata/Any.html">Any</a> | {<a href="../String.html">String</a>, Bool | Float64 | Int32 | <a href="../String.html">String</a>} forall T
 
         <a class="method-permalink" href="#delete%28key%3AString%2C%26%3AString-%3E%7BString%2CBool%7CFloat64%7CInt32%7CString%7D%29%3AAny%7C%7BString%2CBool%7CFloat64%7CInt32%7CString%7DforallT-instance-method">#</a>
       </div>
@@ -1659,7 +1679,7 @@ exist.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L255" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L255" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1667,7 +1687,7 @@ exist.</p>
     <div class="entry-detail" id="each(&amp;:Tuple(String,Any)-&gt;):Nil-instance-method">
       <div class="signature">
         
-        def <strong>each</strong>(& : Tuple(String, <a href="../Chem/Metadata/Any.html">Any</a>) -> ) : Nil
+        def <strong>each</strong>(& : Tuple(<a href="../String.html">String</a>, <a href="../Chem/Metadata/Any.html">Any</a>) -> ) : Nil
 
         <a class="method-permalink" href="#each%28%26%3ATuple%28String%2CAny%29-%3E%29%3ANil-instance-method">#</a>
       </div>
@@ -1675,7 +1695,7 @@ exist.</p>
         <div class="doc">
           
             <div class="doc-inherited">
-              Description copied from module <a href="../Enumerable.html">Enumerable({String, Bool | Float64 | Int32 | String})</a>
+              Description copied from module <a href="../Enumerable.html">Enumerable</a>({<a href="../String.html">String</a>, Bool | Float64 | Int32 | <a href="../String.html">String</a>})
             </div>
           
           <p>Must yield this collection's elements to the block.</p>
@@ -1684,7 +1704,7 @@ exist.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L259" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L259" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1692,7 +1712,7 @@ exist.</p>
     <div class="entry-detail" id="each:Iterator(Tuple(String,Any))-instance-method">
       <div class="signature">
         
-        def <strong>each</strong> : Iterator(Tuple(String, <a href="../Chem/Metadata/Any.html">Any</a>))
+        def <strong>each</strong> : Iterator(Tuple(<a href="../String.html">String</a>, <a href="../Chem/Metadata/Any.html">Any</a>))
 
         <a class="method-permalink" href="#each%3AIterator%28Tuple%28String%2CAny%29%29-instance-method">#</a>
       </div>
@@ -1700,7 +1720,7 @@ exist.</p>
         <div class="doc">
           
             <div class="doc-inherited">
-              Description copied from module Iterable({String, Bool | Float64 | Int32 | String})
+              Description copied from module Iterable({<a href="../String.html">String</a>, Bool | Float64 | Int32 | <a href="../String.html">String</a>})
             </div>
           
           <p>Must return an <code>Iterator</code> over the elements in this collection.</p>
@@ -1709,7 +1729,7 @@ exist.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L265" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L265" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1717,7 +1737,7 @@ exist.</p>
     <div class="entry-detail" id="each_key(&amp;:String-&gt;):Nil-instance-method">
       <div class="signature">
         
-        def <strong>each_key</strong>(& : String -> ) : Nil
+        def <strong>each_key</strong>(& : <a href="../String.html">String</a> -> ) : Nil
 
         <a class="method-permalink" href="#each_key%28%26%3AString-%3E%29%3ANil-instance-method">#</a>
       </div>
@@ -1731,7 +1751,7 @@ exist.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L272" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L272" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1739,7 +1759,7 @@ exist.</p>
     <div class="entry-detail" id="each_key:Iterator(String)-instance-method">
       <div class="signature">
         
-        def <strong>each_key</strong> : Iterator(String)
+        def <strong>each_key</strong> : Iterator(<a href="../String.html">String</a>)
 
         <a class="method-permalink" href="#each_key%3AIterator%28String%29-instance-method">#</a>
       </div>
@@ -1752,7 +1772,7 @@ exist.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L277" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L277" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1774,7 +1794,7 @@ exist.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L284" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L284" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1795,7 +1815,7 @@ exist.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L289" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L289" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1817,7 +1837,7 @@ exist.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L295" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L295" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1825,7 +1845,7 @@ exist.</p>
     <div class="entry-detail" id="fetch(key:String,default:{String,Bool|Float64|Int32|String}):Any|{String,Bool|Float64|Int32|String}forallT-instance-method">
       <div class="signature">
         
-        def <strong>fetch</strong>(key : String, default : {String, Bool | Float64 | Int32 | String}) : <a href="../Chem/Metadata/Any.html">Any</a> | {String, Bool | Float64 | Int32 | String} forall T
+        def <strong>fetch</strong>(key : <a href="../String.html">String</a>, default : {<a href="../String.html">String</a>, Bool | Float64 | Int32 | <a href="../String.html">String</a>}) : <a href="../Chem/Metadata/Any.html">Any</a> | {<a href="../String.html">String</a>, Bool | Float64 | Int32 | <a href="../String.html">String</a>} forall T
 
         <a class="method-permalink" href="#fetch%28key%3AString%2Cdefault%3A%7BString%2CBool%7CFloat64%7CInt32%7CString%7D%29%3AAny%7C%7BString%2CBool%7CFloat64%7CInt32%7CString%7DforallT-instance-method">#</a>
       </div>
@@ -1838,7 +1858,7 @@ exist.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L300" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L300" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1846,7 +1866,7 @@ exist.</p>
     <div class="entry-detail" id="fetch(key:String,&amp;:String-&gt;{String,Bool|Float64|Int32|String}):Any|{String,Bool|Float64|Int32|String}forallT-instance-method">
       <div class="signature">
         
-        def <strong>fetch</strong>(key : String, & : String -> {String, Bool | Float64 | Int32 | String}) : <a href="../Chem/Metadata/Any.html">Any</a> | {String, Bool | Float64 | Int32 | String} forall T
+        def <strong>fetch</strong>(key : <a href="../String.html">String</a>, & : <a href="../String.html">String</a> -> {<a href="../String.html">String</a>, Bool | Float64 | Int32 | <a href="../String.html">String</a>}) : <a href="../Chem/Metadata/Any.html">Any</a> | {<a href="../String.html">String</a>, Bool | Float64 | Int32 | <a href="../String.html">String</a>} forall T
 
         <a class="method-permalink" href="#fetch%28key%3AString%2C%26%3AString-%3E%7BString%2CBool%7CFloat64%7CInt32%7CString%7D%29%3AAny%7C%7BString%2CBool%7CFloat64%7CInt32%7CString%7DforallT-instance-method">#</a>
       </div>
@@ -1860,7 +1880,7 @@ by the given block invoked with <em>key</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L306" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L306" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1868,7 +1888,7 @@ by the given block invoked with <em>key</em>.</p>
     <div class="entry-detail" id="has_key?(key:String):Bool-instance-method">
       <div class="signature">
         
-        def <strong>has_key?</strong>(key : String) : Bool
+        def <strong>has_key?</strong>(key : <a href="../String.html">String</a>) : Bool
 
         <a class="method-permalink" href="#has_key%3F%28key%3AString%29%3ABool-instance-method">#</a>
       </div>
@@ -1881,7 +1901,7 @@ by the given block invoked with <em>key</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L311" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L311" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1903,7 +1923,7 @@ by the given block invoked with <em>key</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L317" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L317" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1936,7 +1956,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L321" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L321" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1944,7 +1964,7 @@ and the values of all instance variables.</p>
     <div class="entry-detail" id="key_for(value:ValueType):String-instance-method">
       <div class="signature">
         
-        def <strong>key_for</strong>(value : <a href="../Chem/Metadata/ValueType.html">ValueType</a>) : String
+        def <strong>key_for</strong>(value : <a href="../Chem/Metadata/ValueType.html">ValueType</a>) : <a href="../String.html">String</a>
 
         <a class="method-permalink" href="#key_for%28value%3AValueType%29%3AString-instance-method">#</a>
       </div>
@@ -1958,7 +1978,7 @@ associated with <em>value</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L328" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L328" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1966,7 +1986,7 @@ associated with <em>value</em>.</p>
     <div class="entry-detail" id="key_for(value:Bool,&amp;:Bool-&gt;{String,Bool|Float64|Int32|String}):String|{String,Bool|Float64|Int32|String}forallT-instance-method">
       <div class="signature">
         
-        def <strong>key_for</strong>(value : Bool, & : Bool -> {String, Bool | Float64 | Int32 | String}) : String | {String, Bool | Float64 | Int32 | String} forall T
+        def <strong>key_for</strong>(value : Bool, & : Bool -> {<a href="../String.html">String</a>, Bool | Float64 | Int32 | <a href="../String.html">String</a>}) : <a href="../String.html">String</a> | {<a href="../String.html">String</a>, Bool | Float64 | Int32 | <a href="../String.html">String</a>} forall T
 
         <a class="method-permalink" href="#key_for%28value%3ABool%2C%26%3ABool-%3E%7BString%2CBool%7CFloat64%7CInt32%7CString%7D%29%3AString%7C%7BString%2CBool%7CFloat64%7CInt32%7CString%7DforallT-instance-method">#</a>
       </div>
@@ -1981,7 +2001,7 @@ block and returns the returned value if no key is associated with
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L332" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L332" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1989,7 +2009,7 @@ block and returns the returned value if no key is associated with
     <div class="entry-detail" id="key_for(value:Float64,&amp;:Float64-&gt;{String,Bool|Float64|Int32|String}):String|{String,Bool|Float64|Int32|String}forallT-instance-method">
       <div class="signature">
         
-        def <strong>key_for</strong>(value : Float64, & : Float64 -> {String, Bool | Float64 | Int32 | String}) : String | {String, Bool | Float64 | Int32 | String} forall T
+        def <strong>key_for</strong>(value : Float64, & : Float64 -> {<a href="../String.html">String</a>, Bool | Float64 | Int32 | <a href="../String.html">String</a>}) : <a href="../String.html">String</a> | {<a href="../String.html">String</a>, Bool | Float64 | Int32 | <a href="../String.html">String</a>} forall T
 
         <a class="method-permalink" href="#key_for%28value%3AFloat64%2C%26%3AFloat64-%3E%7BString%2CBool%7CFloat64%7CInt32%7CString%7D%29%3AString%7C%7BString%2CBool%7CFloat64%7CInt32%7CString%7DforallT-instance-method">#</a>
       </div>
@@ -2004,7 +2024,7 @@ block and returns the returned value if no key is associated with
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L332" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L332" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2012,7 +2032,7 @@ block and returns the returned value if no key is associated with
     <div class="entry-detail" id="key_for(value:Int32,&amp;:Int32-&gt;{String,Bool|Float64|Int32|String}):String|{String,Bool|Float64|Int32|String}forallT-instance-method">
       <div class="signature">
         
-        def <strong>key_for</strong>(value : Int32, & : Int32 -> {String, Bool | Float64 | Int32 | String}) : String | {String, Bool | Float64 | Int32 | String} forall T
+        def <strong>key_for</strong>(value : Int32, & : Int32 -> {<a href="../String.html">String</a>, Bool | Float64 | Int32 | <a href="../String.html">String</a>}) : <a href="../String.html">String</a> | {<a href="../String.html">String</a>, Bool | Float64 | Int32 | <a href="../String.html">String</a>} forall T
 
         <a class="method-permalink" href="#key_for%28value%3AInt32%2C%26%3AInt32-%3E%7BString%2CBool%7CFloat64%7CInt32%7CString%7D%29%3AString%7C%7BString%2CBool%7CFloat64%7CInt32%7CString%7DforallT-instance-method">#</a>
       </div>
@@ -2027,7 +2047,7 @@ block and returns the returned value if no key is associated with
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L332" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L332" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2035,7 +2055,7 @@ block and returns the returned value if no key is associated with
     <div class="entry-detail" id="key_for(value:String,&amp;:String-&gt;{String,Bool|Float64|Int32|String}):String|{String,Bool|Float64|Int32|String}forallT-instance-method">
       <div class="signature">
         
-        def <strong>key_for</strong>(value : String, & : String -> {String, Bool | Float64 | Int32 | String}) : String | {String, Bool | Float64 | Int32 | String} forall T
+        def <strong>key_for</strong>(value : <a href="../String.html">String</a>, & : <a href="../String.html">String</a> -> {<a href="../String.html">String</a>, Bool | Float64 | Int32 | <a href="../String.html">String</a>}) : <a href="../String.html">String</a> | {<a href="../String.html">String</a>, Bool | Float64 | Int32 | <a href="../String.html">String</a>} forall T
 
         <a class="method-permalink" href="#key_for%28value%3AString%2C%26%3AString-%3E%7BString%2CBool%7CFloat64%7CInt32%7CString%7D%29%3AString%7C%7BString%2CBool%7CFloat64%7CInt32%7CString%7DforallT-instance-method">#</a>
       </div>
@@ -2050,7 +2070,7 @@ block and returns the returned value if no key is associated with
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L332" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L332" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2058,7 +2078,7 @@ block and returns the returned value if no key is associated with
     <div class="entry-detail" id="key_for?(value:ValueType):String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>key_for?</strong>(value : <a href="../Chem/Metadata/ValueType.html">ValueType</a>) : String | Nil
+        def <strong>key_for?</strong>(value : <a href="../Chem/Metadata/ValueType.html">ValueType</a>) : <a href="../String.html">String</a> | Nil
 
         <a class="method-permalink" href="#key_for%3F%28value%3AValueType%29%3AString%7CNil-instance-method">#</a>
       </div>
@@ -2072,7 +2092,7 @@ associated with <em>value</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L343" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L343" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2080,7 +2100,7 @@ associated with <em>value</em>.</p>
     <div class="entry-detail" id="keys:Array(String)-instance-method">
       <div class="signature">
         
-        def <strong>keys</strong> : <a href="../Array.html">Array</a>(String)
+        def <strong>keys</strong> : <a href="../Array.html">Array</a>(<a href="../String.html">String</a>)
 
         <a class="method-permalink" href="#keys%3AArray%28String%29-instance-method">#</a>
       </div>
@@ -2093,7 +2113,7 @@ associated with <em>value</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L348" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L348" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2115,7 +2135,7 @@ be replaced with those in <em>other</em>¨.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L354" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L354" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2123,7 +2143,7 @@ be replaced with those in <em>other</em>¨.</p>
     <div class="entry-detail" id="merge!(other:self,&amp;:String,Any,Any-&gt;_):self-instance-method">
       <div class="signature">
         
-        def <strong>merge!</strong>(other : <span class="k">self</span>, & : String, <a href="../Chem/Metadata/Any.html">Any</a>, <a href="../Chem/Metadata/Any.html">Any</a> -> _) : <span class="k">self</span>
+        def <strong>merge!</strong>(other : <span class="k">self</span>, & : <a href="../String.html">String</a>, <a href="../Chem/Metadata/Any.html">Any</a>, <a href="../Chem/Metadata/Any.html">Any</a> -> _) : <span class="k">self</span>
 
         <a class="method-permalink" href="#merge%21%28other%3Aself%2C%26%3AString%2CAny%2CAny-%3E_%29%3Aself-instance-method">#</a>
       </div>
@@ -2138,7 +2158,7 @@ both hashes, the given block is called with the key, the value in
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L364" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L364" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2146,7 +2166,7 @@ both hashes, the given block is called with the key, the value in
     <div class="entry-detail" id="reject!(&amp;:String,Any-&gt;):self-instance-method">
       <div class="signature">
         
-        def <strong>reject!</strong>(& : String, <a href="../Chem/Metadata/Any.html">Any</a> -> ) : <span class="k">self</span>
+        def <strong>reject!</strong>(& : <a href="../String.html">String</a>, <a href="../Chem/Metadata/Any.html">Any</a> -> ) : <span class="k">self</span>
 
         <a class="method-permalink" href="#reject%21%28%26%3AString%2CAny-%3E%29%3Aself-instance-method">#</a>
       </div>
@@ -2159,7 +2179,7 @@ both hashes, the given block is called with the key, the value in
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L376" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L376" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2167,7 +2187,7 @@ both hashes, the given block is called with the key, the value in
     <div class="entry-detail" id="reject!(keys:Enumerable(String)):self-instance-method">
       <div class="signature">
         
-        def <strong>reject!</strong>(keys : <a href="../Enumerable.html">Enumerable</a>(String)) : <span class="k">self</span>
+        def <strong>reject!</strong>(keys : <a href="../Enumerable.html">Enumerable</a>(<a href="../String.html">String</a>)) : <span class="k">self</span>
 
         <a class="method-permalink" href="#reject%21%28keys%3AEnumerable%28String%29%29%3Aself-instance-method">#</a>
       </div>
@@ -2180,7 +2200,7 @@ both hashes, the given block is called with the key, the value in
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L382" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L382" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2188,7 +2208,7 @@ both hashes, the given block is called with the key, the value in
     <div class="entry-detail" id="reject!(*keys:String):self-instance-method">
       <div class="signature">
         
-        def <strong>reject!</strong>(*keys : String) : <span class="k">self</span>
+        def <strong>reject!</strong>(*keys : <a href="../String.html">String</a>) : <span class="k">self</span>
 
         <a class="method-permalink" href="#reject%21%28%2Akeys%3AString%29%3Aself-instance-method">#</a>
       </div>
@@ -2201,7 +2221,7 @@ both hashes, the given block is called with the key, the value in
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L388" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L388" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2209,7 +2229,7 @@ both hashes, the given block is called with the key, the value in
     <div class="entry-detail" id="select!(&amp;:String,Any-&gt;):self-instance-method">
       <div class="signature">
         
-        def <strong>select!</strong>(& : String, <a href="../Chem/Metadata/Any.html">Any</a> -> ) : <span class="k">self</span>
+        def <strong>select!</strong>(& : <a href="../String.html">String</a>, <a href="../Chem/Metadata/Any.html">Any</a> -> ) : <span class="k">self</span>
 
         <a class="method-permalink" href="#select%21%28%26%3AString%2CAny-%3E%29%3Aself-instance-method">#</a>
       </div>
@@ -2222,7 +2242,7 @@ both hashes, the given block is called with the key, the value in
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L394" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L394" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2230,7 +2250,7 @@ both hashes, the given block is called with the key, the value in
     <div class="entry-detail" id="select!(keys:Enumerable(String)):self-instance-method">
       <div class="signature">
         
-        def <strong>select!</strong>(keys : <a href="../Enumerable.html">Enumerable</a>(String)) : <span class="k">self</span>
+        def <strong>select!</strong>(keys : <a href="../Enumerable.html">Enumerable</a>(<a href="../String.html">String</a>)) : <span class="k">self</span>
 
         <a class="method-permalink" href="#select%21%28keys%3AEnumerable%28String%29%29%3Aself-instance-method">#</a>
       </div>
@@ -2243,7 +2263,7 @@ both hashes, the given block is called with the key, the value in
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L400" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L400" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2251,7 +2271,7 @@ both hashes, the given block is called with the key, the value in
     <div class="entry-detail" id="select!(*keys:String):self-instance-method">
       <div class="signature">
         
-        def <strong>select!</strong>(*keys : String) : <span class="k">self</span>
+        def <strong>select!</strong>(*keys : <a href="../String.html">String</a>) : <span class="k">self</span>
 
         <a class="method-permalink" href="#select%21%28%2Akeys%3AString%29%3Aself-instance-method">#</a>
       </div>
@@ -2264,7 +2284,7 @@ both hashes, the given block is called with the key, the value in
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L406" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L406" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2285,7 +2305,7 @@ both hashes, the given block is called with the key, the value in
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L412" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L412" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2293,7 +2313,7 @@ both hashes, the given block is called with the key, the value in
     <div class="entry-detail" id="to_a:Array(Tuple(String,Any))-instance-method">
       <div class="signature">
         
-        def <strong>to_a</strong> : <a href="../Array.html">Array</a>(Tuple(String, <a href="../Chem/Metadata/Any.html">Any</a>))
+        def <strong>to_a</strong> : <a href="../Array.html">Array</a>(Tuple(<a href="../String.html">String</a>, <a href="../Chem/Metadata/Any.html">Any</a>))
 
         <a class="method-permalink" href="#to_a%3AArray%28Tuple%28String%2CAny%29%29-instance-method">#</a>
       </div>
@@ -2306,7 +2326,7 @@ both hashes, the given block is called with the key, the value in
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L417" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L417" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2338,7 +2358,7 @@ which includes its class name and its object address.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L421" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L421" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2346,7 +2366,7 @@ which includes its class name and its object address.</p>
     <div class="entry-detail" id="update(key:String,&amp;:Any-&gt;ValueType):Any-instance-method">
       <div class="signature">
         
-        def <strong>update</strong>(key : String, & : <a href="../Chem/Metadata/Any.html">Any</a> -> <a href="../Chem/Metadata/ValueType.html">ValueType</a>) : <a href="../Chem/Metadata/Any.html">Any</a>
+        def <strong>update</strong>(key : <a href="../String.html">String</a>, & : <a href="../Chem/Metadata/Any.html">Any</a> -> <a href="../Chem/Metadata/ValueType.html">ValueType</a>) : <a href="../Chem/Metadata/Any.html">Any</a>
 
         <a class="method-permalink" href="#update%28key%3AString%2C%26%3AAny-%3EValueType%29%3AAny-instance-method">#</a>
       </div>
@@ -2363,7 +2383,7 @@ old value).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L438" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L438" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2384,7 +2404,7 @@ old value).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L443" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L443" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2392,7 +2412,7 @@ old value).</p>
     <div class="entry-detail" id="values_at(keys:Enumerable(String)):Array(Any)-instance-method">
       <div class="signature">
         
-        def <strong>values_at</strong>(keys : <a href="../Enumerable.html">Enumerable</a>(String)) : <a href="../Array.html">Array</a>(<a href="../Chem/Metadata/Any.html">Any</a>)
+        def <strong>values_at</strong>(keys : <a href="../Enumerable.html">Enumerable</a>(<a href="../String.html">String</a>)) : <a href="../Array.html">Array</a>(<a href="../Chem/Metadata/Any.html">Any</a>)
 
         <a class="method-permalink" href="#values_at%28keys%3AEnumerable%28String%29%29%3AArray%28Any%29-instance-method">#</a>
       </div>
@@ -2407,7 +2427,7 @@ does not exist.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L451" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L451" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2415,7 +2435,7 @@ does not exist.</p>
     <div class="entry-detail" id="values_at(*keys:String)-instance-method">
       <div class="signature">
         
-        def <strong>values_at</strong>(*keys : String)
+        def <strong>values_at</strong>(*keys : <a href="../String.html">String</a>)
 
         <a class="method-permalink" href="#values_at%28%2Akeys%3AString%29-instance-method">#</a>
       </div>
@@ -2430,7 +2450,7 @@ does not exist.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/37f33c577533671a391198c1ea009480c66d7bd0/src/chem/metadata.cr#L456" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/metadata.cr#L456" target="_blank">View source</a>]
         
       </div>
     </div>
