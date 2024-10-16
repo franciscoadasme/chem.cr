@@ -18,10 +18,10 @@ describe Chem::PDB do
       st.dig('D', 175).atoms.sum(&.formal_charge).should eq 0
 
       st.chains.map(&.id).should eq ['A', 'B', 'C', 'D']
-      st.chains['A'].residues.size.should eq 569
-      st.chains['B'].residues.size.should eq 440
-      st.chains['C'].residues.size.should eq 436
-      st.chains['D'].residues.size.should eq 370
+      st.dig('A').residues.size.should eq 569
+      st.dig('B').residues.size.should eq 440
+      st.dig('C').residues.size.should eq 436
+      st.dig('D').residues.size.should eq 370
 
       st['A'][290].type.protein?.should be_true
       st['A'][1298].type.other?.should be_true
@@ -178,7 +178,7 @@ describe Chem::PDB do
     it "parses a PDB file with SIG* records" do
       st = load_file "1etl.pdb"
       st.atoms.size.should eq 160
-      st.residues[number: 6]["SG"].bonded?(st.residues[number: 14]["SG"]).should be_true
+      st.residues.find!(6)["SG"].bonded?(st.residues.find!(14)["SG"]).should be_true
     end
 
     it "parses secondary structure information" do

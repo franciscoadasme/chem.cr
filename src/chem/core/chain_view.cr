@@ -2,14 +2,6 @@ module Chem
   struct ChainView
     include Array::Wrapper(Chain)
 
-    def [](id : Char) : Chain
-      self[id]? || raise IndexError.new
-    end
-
-    def []?(id : Char) : Chain?
-      find &.id.==(id)
-    end
-
     def atoms : AtomView
       atoms = [] of Atom
       each do |chain|

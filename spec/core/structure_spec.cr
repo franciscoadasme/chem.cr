@@ -1440,10 +1440,6 @@ describe Chem::ChainView do
     it "gets chain by zero-based index" do
       chains[0].id.should eq 'A'
     end
-
-    it "gets chain by identifier" do
-      chains['A'].id.should eq 'A'
-    end
   end
 
   describe "#residues" do

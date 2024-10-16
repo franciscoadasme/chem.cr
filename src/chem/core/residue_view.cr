@@ -2,26 +2,6 @@ module Chem
   struct ResidueView
     include Array::Wrapper(Residue)
 
-    # TODO: change to find!(Int, Char)
-    def [](number : Int, ins_code : Char) : Residue?
-      self[number, ins_code]? || raise IndexError.new
-    end
-
-    # TODO: change to find!(Int)
-    def [](*, number : Int) : Residue
-      self[number: number]? || raise IndexError.new
-    end
-
-    # TODO: change to find(Int, Char)
-    def []?(number : Int, ins_code : Char) : Residue?
-      find { |res| res.number == number && res.insertion_code == ins_code }
-    end
-
-    # TODO: change to find(Int)
-    def []?(*, number : Int) : Residue?
-      find &.number.==(number)
-    end
-
     def atoms : AtomView
       atoms = [] of Atom
       each do |residue|

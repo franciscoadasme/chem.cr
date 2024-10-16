@@ -2,26 +2,6 @@ module Chem
   struct AtomView
     include Array::Wrapper(Atom)
 
-    # TODO: change to #find!(Int)
-    def [](*, number : Int) : Atom
-      self[number: number]? || raise IndexError.new
-    end
-
-    # TODO: change to #find!(name : String)
-    def [](name : String) : Atom?
-      self[name: name]? || raise KeyError.new
-    end
-
-    # TODO: change to #find(Int)
-    def []?(*, number : Int) : Atom?
-      find &.number.==(number)
-    end
-
-    # TODO: change to #find(name : String)
-    def []?(name : String) : Atom?
-      find &.name.==(name)
-    end
-
     def bonds : Array(Bond)
       # TODO: use sorted set
       # FIXME: return bonds only to the atoms within this view

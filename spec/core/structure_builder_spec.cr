@@ -58,7 +58,7 @@ describe Chem::Structure::Builder do
     st.atoms[0..6].map(&.name).should eq ["N", "CA", "C", "O", "CB", "OG", "N"]
     st.atoms.map(&.residue.name).uniq.should eq ["SER", "THR", "GLY", "VAL"]
     st.atoms.map(&.chain.id).should eq ("F" * 17 + "G" * 7).chars
-    st.atoms[number: 13].x.should eq 7.681
+    st.atoms.find!(13).x.should eq 7.681
   end
 
   it "builds a structure (no DSL)" do
@@ -82,7 +82,7 @@ describe Chem::Structure::Builder do
     st.residues.map(&.name).should eq ["SER", "THR", "GLY", "VAL"]
     st.residues.map(&.number).should eq [1, 2, 3, 1]
     st.atoms.map(&.residue.name).uniq.should eq ["SER", "THR", "GLY", "VAL"]
-    st.atoms[number: 4].x.should eq 18.066
+    st.atoms.find!(4).x.should eq 18.066
   end
 
   it "builds a structure with cell" do

@@ -8,10 +8,6 @@ describe Chem::AtomView do
     it "gets atom by zero-based index" do
       atoms[4].name.should eq "CB"
     end
-
-    it "gets atom by number" do
-      atoms[number: 5].name.should eq "CB"
-    end
   end
 
   describe "#chains" do
