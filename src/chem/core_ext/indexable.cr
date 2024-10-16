@@ -28,7 +28,7 @@ module Indexable(T)
   #
   # ```
   # arr = (0..9).map(&.**(2)) # => [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
-  # arr[[2, 5, 9]]            # => [4, 25, 8]
+  # arr[[2, 5, 9]]            # => [4, 25, 81]
   # arr[[2, 15, 9]]           # raises IndexError
   # ```
   def [](idxs : Enumerable(Int)) : Array(T)
