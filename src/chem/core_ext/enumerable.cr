@@ -77,6 +77,30 @@ module Enumerable(T)
     memo / total
   end
 
+  # Returns the first element in the collection for which `pattern ===
+  # element`.
+  #
+  # ```
+  # [1, 3, 2, 5, 4, 6].find(3..5) # => 3
+  # ["Alice", "Bob"].find(/^A/)   # => "Alice"
+  # [1, 2, 3, 4].find(8..)        # => nil
+  # ```
+  def find(pattern, if_none default = nil)
+    find(default) { |elem| pattern === elem }
+  end
+
+  # Returns the first element in the collection for which `pattern ===
+  # element`.
+  #
+  # ```
+  # [1, 3, 2, 5, 4, 6].find!(3..5) # => 3
+  # ["Alice", "Bob"].find!(/^A/)   # => "Alice"
+  # [1, 2, 3, 4].find(8..)         # raises Enumerable::NotFoundError
+  # ```
+  def find!(pattern)
+    find! { |elem| pattern === elem }
+  end
+
   # Returns the arithmetic mean of the elements in the collection.
   # Raises `EmptyError` if the collection is empty.
   #

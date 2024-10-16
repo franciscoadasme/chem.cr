@@ -24,6 +24,24 @@ describe Enumerable do
     end
   end
 
+  describe "#find" do
+    it "searches by pattern" do
+      [1, 3, 2, 5, 4, 6].find(3..5).should eq 3
+      ["Alice", "Bob"].find(/^A/).should eq "Alice"
+      [1, 2, 3, 4].find(8..).should be_nil
+    end
+  end
+
+  describe "#find!" do
+    it "searches by pattern" do
+      [1, 3, 2, 5, 4, 6].find!(3..5).should eq 3
+      ["Alice", "Bob"].find!(/^A/).should eq "Alice"
+      expect_raises(Enumerable::NotFoundError) do
+        [1, 2, 3, 4].find!(8..)
+      end
+    end
+  end
+
   describe "#mean" do
     it "returns the mean" do
       (1..40).mean.should eq 20.5
