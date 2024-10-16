@@ -44,7 +44,7 @@ class Chem::Templates::Detector
         i += 1
       end
     end
-    {matches, AtomView.new(@unmatched_atoms.to_a.sort_by!(&.serial))}
+    {matches, AtomView.new(@unmatched_atoms.to_a.sort_by!(&.number))}
   end
 
   # Extends a residue template match by adding atoms based on Ter

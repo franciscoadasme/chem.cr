@@ -2,7 +2,7 @@ require "../spec_helper"
 
 describe Chem::Atom do
   describe "#<=>" do
-    it "compares based on serial" do
+    it "compares based on number" do
       atoms = load_file("5e5v.pdb").atoms
       (atoms[0] <=> atoms[1]).<(0).should be_true
       (atoms[1] <=> atoms[1]).should eq 0

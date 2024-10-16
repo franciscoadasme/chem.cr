@@ -248,7 +248,7 @@ module Chem::PDB
       @builder.expt @header
 
       @pdb_bonds.clear
-      @serial = 0
+      @number = 0
       @pull.each_line do
         case @pull.at?(0, 6).str?
         when "ATOM  "
@@ -430,7 +430,7 @@ module Chem::PDB
 
     private def index(atom : Atom) : Int32
       idx = next_index
-      @atom_index_table[atom.serial] = idx if @bonds
+      @atom_index_table[atom.number] = idx if @bonds
       idx
     end
 
@@ -443,7 +443,7 @@ module Chem::PDB
       vec = transform * vec if transform
       @io.printf "%-6s%5s %4s %-4s%s%4s%1s   %8.3f%8.3f%8.3f%6.2f%6.2f          %2s%2s\n",
         (atom.residue.protein? ? "ATOM" : "HETATM"),
-        PDB::Hybrid36.encode(@renumber ? index(atom) : atom.serial, width: 5),
+        PDB::Hybrid36.encode(@renumber ? index(atom) : atom.number, width: 5),
         atom.name[..3].ljust(3),
         atom.residue.name[..3],
         atom.chain.id,
@@ -487,7 +487,7 @@ module Chem::PDB
     private def write_bonds(bonds : Array(Bond)) : Nil
       idx_pairs = Array(Tuple(Int32, Int32)).new bonds.size
       bonds.each do |bond|
-        i, j = bond.atoms.map(&.serial)
+        i, j = bond.atoms.map(&.number)
         i, j = @atom_index_table[i], @atom_index_table[j] if @renumber
         bond.order.to_i.times do
           idx_pairs << {i, j} << {j, i}

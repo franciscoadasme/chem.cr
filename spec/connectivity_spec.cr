@@ -4,8 +4,8 @@ describe Chem::Angle do
   describe ".new" do
     it "creates an angle with sorted atoms" do
       a, b, c = fake_structure.atoms
-      Chem::Angle.new(a, b, c).atoms.map(&.serial).should eq({1, 2, 3})
-      Chem::Angle.new(c, b, a).atoms.map(&.serial).should eq({1, 2, 3})
+      Chem::Angle.new(a, b, c).atoms.map(&.number).should eq({1, 2, 3})
+      Chem::Angle.new(c, b, a).atoms.map(&.number).should eq({1, 2, 3})
     end
 
     it "raises if duplicate atom" do
@@ -74,8 +74,8 @@ describe Chem::Dihedral do
   describe ".new" do
     it "creates a dihedral angle with sorted atoms" do
       a, b, c, d = fake_structure.atoms
-      Chem::Dihedral.new(a, b, c, d).atoms.map(&.serial).should eq({1, 2, 3, 4})
-      Chem::Dihedral.new(d, c, b, a).atoms.map(&.serial).should eq({1, 2, 3, 4})
+      Chem::Dihedral.new(a, b, c, d).atoms.map(&.number).should eq({1, 2, 3, 4})
+      Chem::Dihedral.new(d, c, b, a).atoms.map(&.number).should eq({1, 2, 3, 4})
     end
 
     it "raises if duplicate atom" do
@@ -145,8 +145,8 @@ describe Chem::Improper do
   describe ".new" do
     it "creates a improper dihedral angle with sorted atoms" do
       a, b, c, d = fake_structure.atoms
-      Chem::Improper.new(a, b, c, d).atoms.map(&.serial).should eq({1, 2, 3, 4})
-      Chem::Improper.new(c, b, a, d).atoms.map(&.serial).should eq({1, 2, 3, 4})
+      Chem::Improper.new(a, b, c, d).atoms.map(&.number).should eq({1, 2, 3, 4})
+      Chem::Improper.new(c, b, a, d).atoms.map(&.number).should eq({1, 2, 3, 4})
     end
 
     it "raises if duplicate atom" do

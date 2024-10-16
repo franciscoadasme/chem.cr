@@ -54,11 +54,11 @@ describe Chem::Structure::Builder do
     st.residues.map(&.atoms.size).should eq [6, 7, 4, 7]
 
     st.atoms.size.should eq 24
-    st.atoms.map(&.serial).should eq (1..24).to_a
+    st.atoms.map(&.number).should eq (1..24).to_a
     st.atoms[0..6].map(&.name).should eq ["N", "CA", "C", "O", "CB", "OG", "N"]
     st.atoms.map(&.residue.name).uniq.should eq ["SER", "THR", "GLY", "VAL"]
     st.atoms.map(&.chain.id).should eq ("F" * 17 + "G" * 7).chars
-    st.atoms[serial: 13].x.should eq 7.681
+    st.atoms[number: 13].x.should eq 7.681
   end
 
   it "builds a structure (no DSL)" do
@@ -82,7 +82,7 @@ describe Chem::Structure::Builder do
     st.residues.map(&.name).should eq ["SER", "THR", "GLY", "VAL"]
     st.residues.map(&.number).should eq [1, 2, 3, 1]
     st.atoms.map(&.residue.name).uniq.should eq ["SER", "THR", "GLY", "VAL"]
-    st.atoms[serial: 4].x.should eq 18.066
+    st.atoms[number: 4].x.should eq 18.066
   end
 
   it "builds a structure with cell" do
@@ -244,7 +244,7 @@ describe Chem::Structure::Builder do
     atom.temperature_factor.should eq 43.24
   end
 
-  it "adds bonds by atom serial" do
+  it "adds bonds by atom number" do
     structure = Chem::Structure.build do
       atom :O, vec3(0, 0, 0)
       atom :H, vec3(-1, 0, 0)

@@ -12,7 +12,7 @@ macro it_detects(description, path, expected)
     %matches, _ = %detector.detect(%templates)
     %matches.each do |m|
       %res_idxs[m.template.name] ||= [] of Hash(Int32, String)
-      %res_idxs[m.template.name] << m.atom_map.invert.transform_keys(&.serial)
+      %res_idxs[m.template.name] << m.atom_map.invert.transform_keys(&.number)
         .transform_values(&.name)
     end
     %res_idxs.should eq %expected
@@ -103,7 +103,7 @@ describe Chem::Templates::Detector do
       matches, _ = Chem::Templates::Detector.new(structure.atoms).detect
       matches.group_by(&.template.name)
         .transform_values(&.map { |match|
-          match.atom_map.transform_keys(&.name).transform_values(&.serial)
+          match.atom_map.transform_keys(&.name).transform_values(&.number)
         })
         .should eq({
           "HOH" => [
@@ -162,7 +162,7 @@ describe Chem::Templates::Detector do
       matches.size.should eq 5
       unmatched_atoms.size.should eq 0
       matches.map(&.template.name).uniq.should eq %w(IPZ)
-      matches[0].atom_map.transform_keys(&.name).transform_values(&.serial).should eq({
+      matches[0].atom_map.transform_keys(&.name).transform_values(&.number).should eq({
         "C1" => 1, "H11" => 26, "H12" => 28,
         "CX1" => 27, "HX11" => 69, "HX12" => 68,
         "CX2" => 70,
@@ -173,7 +173,7 @@ describe Chem::Templates::Detector do
         "C4" => 4, "H41" => 31, "H42" => 32, "H43" => 30,
         "C5" => 5, "H51" => 34, "H52" => 33,
       })
-      matches[-1].atom_map.transform_keys(&.name).transform_values(&.serial).should eq({
+      matches[-1].atom_map.transform_keys(&.name).transform_values(&.number).should eq({
         "C1" => 21, "H11" => 60, "H12" => 59,
         "C2" => 22, "H2" => 61,
         "C3" => 23,

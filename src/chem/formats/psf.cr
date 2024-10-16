@@ -46,7 +46,7 @@ module Chem::PSF
         n_atoms.times do
           case variant
           in .standard?
-            serial = @pull.at(0..7).int
+            number = @pull.at(0..7).int
             segment = @pull.at(9..12).str.strip
             resid = @pull.at(14..17).int
             resname = @pull.at(19..22).str.strip
@@ -55,7 +55,7 @@ module Chem::PSF
             charge = @pull.at(34..47).float
             mass = @pull.at(48..61).float
           in .extended? # longer (wider columns) numbers and names
-            serial = @pull.at(0..9).int
+            number = @pull.at(0..9).int
             segment = @pull.at(11..18).str.strip
             resid = @pull.at(20..27).int
             resname = @pull.at(29..36).str.strip
@@ -64,7 +64,7 @@ module Chem::PSF
             charge = @pull.at(52..65).float
             mass = @pull.at(66..79).float
           in .namd? # whitespace separated
-            serial = @pull.next_i
+            number = @pull.next_i
             segment = @pull.next_s
             resid = @pull.next_i
             resname = @pull.next_s
@@ -76,7 +76,7 @@ module Chem::PSF
 
           builder.chain { } unless segment == prev_seg # force new chain
           builder.residue resname, resid
-          atom = builder.atom name, serial, Spatial::Vec3.zero
+          atom = builder.atom name, number, Spatial::Vec3.zero
           atom.typename = typename
           atom.partial_charge = charge
           atom.mass = mass

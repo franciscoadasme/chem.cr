@@ -3,23 +3,23 @@ module Chem
     include Array::Wrapper(Residue)
 
     # TODO: change to find!(Int, Char)
-    def [](serial : Int, ins_code : Char) : Residue?
-      self[serial, ins_code]? || raise IndexError.new
+    def [](number : Int, ins_code : Char) : Residue?
+      self[number, ins_code]? || raise IndexError.new
     end
 
     # TODO: change to find!(Int)
-    def [](*, serial : Int) : Residue
-      self[serial: serial]? || raise IndexError.new
+    def [](*, number : Int) : Residue
+      self[number: number]? || raise IndexError.new
     end
 
     # TODO: change to find(Int, Char)
-    def []?(serial : Int, ins_code : Char) : Residue?
-      find { |res| res.number == serial && res.insertion_code == ins_code }
+    def []?(number : Int, ins_code : Char) : Residue?
+      find { |res| res.number == number && res.insertion_code == ins_code }
     end
 
     # TODO: change to find(Int)
-    def []?(*, serial : Int) : Residue?
-      find &.number.==(serial)
+    def []?(*, number : Int) : Residue?
+      find &.number.==(number)
     end
 
     def atoms : AtomView

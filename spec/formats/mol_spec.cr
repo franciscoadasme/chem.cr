@@ -9,10 +9,10 @@ describe Chem::Mol::Reader do
     structure.atoms.size.should eq 9
     structure.bonds.size.should eq 8
     structure.atoms.reject(&.formal_charge.zero?)
-      .to_h { |atom| {atom.serial, atom.formal_charge} }
+      .to_h { |atom| {atom.number, atom.formal_charge} }
       .should eq({1 => -2, 4 => 1, 6 => -1})
     structure.bonds.reject(&.single?)
-      .to_h { |bond| {bond.atoms.map(&.serial), bond.order.to_i} }
+      .to_h { |bond| {bond.atoms.map(&.number), bond.order.to_i} }
       .should eq({ {1, 2} => 2 })
     structure.atoms[2].mass.should eq 14
     structure.residues.map(&.name).should eq ["702"]
@@ -26,10 +26,10 @@ describe Chem::Mol::Reader do
     structure.atoms.size.should eq 9
     structure.bonds.size.should eq 8
     structure.atoms.reject(&.formal_charge.zero?)
-      .to_h { |atom| {atom.serial, atom.formal_charge} }
+      .to_h { |atom| {atom.number, atom.formal_charge} }
       .should eq({1 => -2, 4 => 1, 6 => -1})
     structure.bonds.reject(&.single?)
-      .to_h { |bond| {bond.atoms.map(&.serial), bond.order.to_i} }
+      .to_h { |bond| {bond.atoms.map(&.number), bond.order.to_i} }
       .should eq({ {1, 2} => 2 })
     structure.atoms[2].mass.should eq 14
     structure.residues.map(&.name).should eq ["702"]

@@ -12,8 +12,8 @@ module Chem
     end
 
     def [](atom : Atom) : Bond
-      self[atom]? || raise Error.new "Atom #{@atom.serial} is not bonded to atom " \
-                                     "#{atom.serial}"
+      self[atom]? || raise Error.new "Atom #{@atom.number} is not bonded to atom " \
+                                     "#{atom.number}"
     end
 
     def []?(atom : Atom) : Bond?

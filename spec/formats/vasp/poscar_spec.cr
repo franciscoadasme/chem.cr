@@ -16,12 +16,12 @@ describe Chem::VASP::Poscar do
       atom.chain.id.should eq 'A'
       atom.coords.should eq [1.25020645, 3.42088266, 4.92610368]
       atom.element.oxygen?.should be_true
-      atom.serial.should eq 49
+      atom.number.should eq 49
       atom.name.should eq "O"
       atom.occupancy.should eq 1
       atom.residue.name.should eq "GLY"
       atom.residue.number.should eq 7
-      atom.serial.should eq 49
+      atom.number.should eq 49
       atom.temperature_factor.should eq 0
 
       st.atoms[0].element.nitrogen?.should be_true

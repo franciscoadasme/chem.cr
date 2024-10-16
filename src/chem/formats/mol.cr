@@ -344,7 +344,7 @@ module Chem::Mol
 
     def self.parse_atom(pull : PullParser, builder : Structure::Builder) : Nil
       check_entry_tag(pull)
-      serial = pull.next_i "Invalid atom serial %{token}"
+      number = pull.next_i "Invalid atom number %{token}"
       ele = pull.parse_next("Invalid element %{token}") do |str|
         PeriodicTable[str]?
       end

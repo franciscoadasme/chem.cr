@@ -3,8 +3,8 @@ module Chem
     include Array::Wrapper(Atom)
 
     # TODO: change to #find!(Int)
-    def [](*, serial : Int) : Atom
-      self[serial: serial]? || raise IndexError.new
+    def [](*, number : Int) : Atom
+      self[number: number]? || raise IndexError.new
     end
 
     # TODO: change to #find!(name : String)
@@ -13,8 +13,8 @@ module Chem
     end
 
     # TODO: change to #find(Int)
-    def []?(*, serial : Int) : Atom?
-      find &.serial.==(serial)
+    def []?(*, number : Int) : Atom?
+      find &.number.==(number)
     end
 
     # TODO: change to #find(name : String)
@@ -61,7 +61,7 @@ module Chem
             atoms.delete b
           end
         end
-        yield self.class.new(fragment).sort_by(&.serial)
+        yield self.class.new(fragment).sort_by(&.number)
       end
     end
 

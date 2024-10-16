@@ -310,7 +310,7 @@ module Chem
         cutoff = Math.sqrt(dcov2_map[{atom.element, largest_atom.element}])
         kdtree.each_neighbor(atom.coords, within: cutoff) do |index, dis2|
           other = atoms.unsafe_fetch(index)
-          if atom.serial < other.serial &&                            # check bond once
+          if atom.number < other.number &&                            # check bond once
              other.element.max_bonds > 0 &&                           # skip non-bonding
              !other.in?(bond_table[atom]) &&                          # avoid duplication
              0.16 <= dis2 <= dcov2_map[{atom.element, other.element}] # avoid too short
@@ -369,7 +369,7 @@ module Chem
       # Add detected bonds
       bond_table.each do |atom, bonds|
         bonds.each do |other|
-          atom.bonds.add other if atom.serial < other.serial # avoid duplication
+          atom.bonds.add other if atom.number < other.number # avoid duplication
         end
       end
 
@@ -382,7 +382,7 @@ module Chem
           atom.valence < (atom.max_valence || Int32::MAX) && hybridization_map[atom]?
         }
           .to_a
-          .sort_by! { |atom| {atom.missing_valence, atom.degree, atom.serial} }
+          .sort_by! { |atom| {atom.missing_valence, atom.degree, atom.number} }
           .each do |atom|
             next unless (missing_valence = atom.missing_valence) > 0
             atom.bonded_atoms

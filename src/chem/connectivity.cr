@@ -46,7 +46,7 @@ module Chem
       io << '}'
     end
 
-    # Sorts the atoms according to their serial numbers.
+    # Sorts the atoms according to their numbers.
     private def sort! : Nil
       @atoms = @atoms.reverse if @atoms.first > @atoms.last
     end

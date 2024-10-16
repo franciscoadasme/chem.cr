@@ -9,8 +9,8 @@ describe Chem::AtomView do
       atoms[4].name.should eq "CB"
     end
 
-    it "gets atom by serial number" do
-      atoms[serial: 5].name.should eq "CB"
+    it "gets atom by number" do
+      atoms[number: 5].name.should eq "CB"
     end
   end
 

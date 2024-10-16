@@ -30,7 +30,7 @@ describe Chem::PDB do
       st['D'][2080].type.solvent?.should be_true
 
       atom = st.atoms[-1]
-      atom.serial.should eq 9705
+      atom.number.should eq 9705
       atom.name.should eq "O"
       atom.residue.name.should eq "HOH"
       atom.chain.id.should eq 'D'
@@ -58,7 +58,7 @@ describe Chem::PDB do
       st.atoms.map(&.formal_charge).should eq [0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, -1, 1]
 
       atom = st.atoms[11]
-      atom.serial.should eq 12
+      atom.number.should eq 12
       atom.name.should eq "OE2"
       atom.residue.name.should eq "GLU"
       atom.chain.id.should eq 'A'
@@ -115,7 +115,7 @@ describe Chem::PDB do
     it "parses a PDB file with numbers in hexadecimal representation" do
       st = load_file "big_numbers.pdb"
       st.atoms.size.should eq 6
-      st.atoms.map(&.serial).should eq (99995..100000).to_a
+      st.atoms.map(&.number).should eq (99995..100000).to_a
       st.residues.map(&.number).should eq [9999, 10000]
     end
 
@@ -178,7 +178,7 @@ describe Chem::PDB do
     it "parses a PDB file with SIG* records" do
       st = load_file "1etl.pdb"
       st.atoms.size.should eq 160
-      st.residues[serial: 6]["SG"].bonded?(st.residues[serial: 14]["SG"]).should be_true
+      st.residues[number: 6]["SG"].bonded?(st.residues[number: 14]["SG"]).should be_true
     end
 
     it "parses secondary structure information" do
@@ -274,7 +274,7 @@ describe Chem::PDB do
       st_list.zip(xs) do |st, x|
         st.source_file.should eq Path[spec_file("models.pdb")].expand
         st.atoms.size.should eq 5
-        st.atoms.map(&.serial).should eq (1..5).to_a
+        st.atoms.map(&.number).should eq (1..5).to_a
         st.atoms.map(&.name).should eq ["N", "CA", "C", "O", "CB"]
         st.atoms[0].x.should eq x
       end
@@ -287,7 +287,7 @@ describe Chem::PDB do
       xs = {7.212, 22.055}
       st_list.zip(xs) do |st, x|
         st.atoms.size.should eq 5
-        st.atoms.map(&.serial).should eq (1..5).to_a
+        st.atoms.map(&.number).should eq (1..5).to_a
         st.atoms.map(&.name).should eq ["N", "CA", "C", "O", "CB"]
         st.atoms[0].x.should eq x
       end
@@ -435,7 +435,7 @@ describe Chem::PDB do
     it "ignores alternate conformation if occupancy is one" do
       structure = Chem::Structure.from_pdb spec_file("3h31.pdb"), alt_loc: 'A'
       # N is in alternate conformation B only but it has occupancy = 1
-      structure.dig('A', 33, "N").serial.should eq 285
+      structure.dig('A', 33, "N").number.should eq 285
     end
 
     it "sets cell to nil if default values (#161)" do
@@ -646,9 +646,9 @@ describe Chem::PDB::Writer do
         bond "C1", "N1", :triple
       end
     end
-    structure.atoms[0].serial = 99_999
-    structure.atoms[1].serial = 100_000
-    structure.atoms[2].serial = 235_123
+    structure.atoms[0].number = 99_999
+    structure.atoms[1].number = 100_000
+    structure.atoms[2].number = 235_123
     structure.residues[0].number = 10_231
 
     structure.to_pdb(bonds: :all, renumber: false).should eq <<-PDB.delete('|')

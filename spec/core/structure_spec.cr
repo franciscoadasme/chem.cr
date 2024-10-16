@@ -239,8 +239,8 @@ describe Chem::Structure do
       structure.atoms.zip(n_bonds) do |atom, bonds|
         atom.bonds.size.should eq bonds
       end
-      structure.atoms[0].bonded_atoms.map(&.serial).sort!.should eq [2, 14, 15, 16]
-      structure.atoms[4].bonded_atoms.map(&.serial).sort!.should eq [4, 28, 30]
+      structure.atoms[0].bonded_atoms.map(&.number).sort!.should eq [2, 14, 15, 16]
+      structure.atoms[4].bonded_atoms.map(&.number).sort!.should eq [4, 28, 30]
       structure.atoms[4].bonds[structure.atoms[27]].order.should eq 2
       structure.atoms[4].bonds[structure.atoms[29]].order.should eq 1
     end
@@ -276,7 +276,7 @@ describe Chem::Structure do
       structure.atoms[365].valence.should eq 1
       structure.atoms[365].formal_charge.should eq -1
 
-      structure.atoms[149].bonded_atoms.map(&.serial).should eq [145] # H near two Os
+      structure.atoms[149].bonded_atoms.map(&.number).should eq [145] # H near two Os
 
       # aromatic ring
       structure.atoms[427].bonds[structure.atoms[428]].order.should eq 1
@@ -301,13 +301,13 @@ describe Chem::Structure do
       structure.atoms.count(&.formal_charge.!=(0)).should eq 0
 
       structure.atoms[13].valence.should eq 2
-      structure.atoms[13].bonded_atoms.map(&.serial).sort!.should eq [13, 26]
+      structure.atoms[13].bonded_atoms.map(&.number).sort!.should eq [13, 26]
       structure.atoms[14].valence.should eq 2
-      structure.atoms[14].bonded_atoms.map(&.serial).should eq [13]
+      structure.atoms[14].bonded_atoms.map(&.number).should eq [13]
 
       # sulfate ion
       structure.atoms[3].valence.should eq 6
-      structure.atoms[3].bonded_atoms.map(&.serial).sort!.should eq [2, 5, 6, 7]
+      structure.atoms[3].bonded_atoms.map(&.number).sort!.should eq [2, 5, 6, 7]
       structure.atoms[3].bonds[structure.atoms[1]].single?.should be_true
       structure.atoms[3].bonds[structure.atoms[4]].double?.should be_true
       structure.atoms[3].bonds[structure.atoms[5]].double?.should be_true
@@ -328,12 +328,12 @@ describe Chem::Structure do
       structure.atoms.count(&.formal_charge.!=(0)).should eq 0
 
       structure.atoms[15].valence.should eq 2
-      structure.atoms[15].bonded_atoms.map(&.serial).should eq [15, 21]
+      structure.atoms[15].bonded_atoms.map(&.number).should eq [15, 21]
       structure.atoms[15].bonds[structure.atoms[14]].single?.should be_true
       structure.atoms[15].bonds[structure.atoms[20]].single?.should be_true
 
       structure.atoms[37].valence.should eq 2
-      structure.atoms[37].bonded_atoms.map(&.serial).should eq [37, 39]
+      structure.atoms[37].bonded_atoms.map(&.number).should eq [37, 39]
       structure.atoms[37].bonds[structure.atoms[36]].single?.should be_true
       structure.atoms[37].bonds[structure.atoms[38]].single?.should be_true
     end
@@ -422,8 +422,8 @@ describe Chem::Structure do
       structure.formal_charge.should eq expected.formal_charge
       structure.atoms.map(&.formal_charge).should eq expected.atoms.map(&.formal_charge)
       structure.bonds.tally_by(&.order).should eq expected.bonds.tally_by(&.order)
-      structure.bonds.reject(&.single?).map(&.atoms.map(&.serial)).sort!.should eq \
-        expected.bonds.reject(&.single?).map(&.atoms.map(&.serial)).sort!
+      structure.bonds.reject(&.single?).map(&.atoms.map(&.number)).sort!.should eq \
+        expected.bonds.reject(&.single?).map(&.atoms.map(&.number)).sort!
     end
 
     it "guesses 0CB (#95)" do
@@ -1113,7 +1113,7 @@ describe Chem::Structure do
   describe "#bonds" do
     it "returns the bonds" do
       structure = load_file("benzene.mol2")
-      structure.bonds.map(&.atoms.map(&.serial)).sort!.should eq [
+      structure.bonds.map(&.atoms.map(&.number)).sort!.should eq [
         {1, 2}, {1, 6}, {1, 7}, {2, 3}, {2, 8}, {3, 4}, {3, 9}, {4, 5},
         {4, 10}, {5, 6}, {5, 11}, {6, 12},
       ]
@@ -1124,7 +1124,7 @@ describe Chem::Structure do
     it "computes the angles" do
       structure = load_file("8FX.mol2")
       structure.guess_angles
-      structure.angles.map(&.atoms.map(&.serial)).sort!.should eq [
+      structure.angles.map(&.atoms.map(&.number)).sort!.should eq [
         {1, 2, 3}, {1, 2, 23}, {1, 28, 27}, {1, 28, 29}, {2, 1, 28}, {2, 1, 30},
         {2, 3, 4}, {2, 3, 31}, {3, 2, 23}, {3, 4, 29}, {3, 4, 32}, {4, 3, 31},
         {4, 29, 24}, {4, 29, 28}, {5, 6, 7}, {5, 6, 33}, {5, 15, 27},
@@ -1153,7 +1153,7 @@ describe Chem::Structure do
     it "computes the dihedrals" do
       structure = load_file("8FX.mol2")
       structure.guess_dihedrals
-      structure.dihedrals.map(&.atoms.map(&.serial)).sort!.should eq [
+      structure.dihedrals.map(&.atoms.map(&.number)).sort!.should eq [
         {1, 2, 3, 4}, {1, 2, 3, 31}, {1, 28, 29, 4}, {1, 28, 29, 24},
         {2, 1, 28, 27}, {2, 1, 28, 29}, {2, 3, 4, 29}, {2, 3, 4, 32},
         {3, 2, 1, 28}, {3, 2, 1, 30}, {3, 4, 29, 24}, {3, 4, 29, 28},
@@ -1200,7 +1200,7 @@ describe Chem::Structure do
     it "returns the impropers" do
       structure = load_file("8FX.mol2")
       structure.guess_impropers
-      structure.impropers.map(&.atoms.map(&.serial)).sort!.should eq [
+      structure.impropers.map(&.atoms.map(&.number)).sort!.should eq [
         {1, 2, 3, 23}, {1, 28, 27, 29}, {2, 1, 28, 30}, {2, 3, 4, 31},
         {3, 4, 29, 32}, {4, 29, 24, 28}, {5, 6, 7, 33}, {5, 15, 27, 45},
         {6, 5, 15, 17}, {6, 7, 8, 16}, {7, 8, 21, 22}, {7, 8, 21, 34},

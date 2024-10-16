@@ -16,7 +16,7 @@ describe Chem::PSF::Reader do
       R L DTGADDTV K IGGIGGF L TPV I G R L DTGADDTV K IGGIGGF L TPV I G X)
 
     atom = structure.atoms[753]?.should_not be_nil
-    atom.serial.should eq 754
+    atom.number.should eq 754
     atom.name.should eq "CG"
     atom.typename.should eq "C136"
     atom.residue.number.should eq 81
@@ -24,11 +24,11 @@ describe Chem::PSF::Reader do
     atom.chain.id.should eq 'P'
     atom.partial_charge.should eq -0.12
     atom.mass.should eq 12.011
-    atom.bonded_atoms.map(&.serial).should eq [751, 746, 755, 756]
+    atom.bonded_atoms.map(&.number).should eq [751, 746, 755, 756]
 
-    structure.angles[2].atoms.map(&.serial).should eq({2, 1, 4})
-    structure.dihedrals[6].atoms.map(&.serial).should eq({4, 1, 5, 7})
-    structure.impropers[15].atoms.map(&.serial).should eq({80, 90, 91, 92})
+    structure.angles[2].atoms.map(&.number).should eq({2, 1, 4})
+    structure.dihedrals[6].atoms.map(&.number).should eq({4, 1, 5, 7})
+    structure.impropers[15].atoms.map(&.number).should eq({80, 90, 91, 92})
   end
 
   it "parses PSF with non-multiple number of records (#178)" do
@@ -49,7 +49,7 @@ describe Chem::PSF::Reader do
     structure.impropers.size.should eq 20
 
     atom = structure.atoms[-1]
-    atom.serial.should eq 67
+    atom.number.should eq 67
     atom.residue.number.should eq 1
     atom.residue.name.should eq "N4I"
     atom.name.should eq "H28"

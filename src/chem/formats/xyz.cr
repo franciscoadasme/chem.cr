@@ -32,7 +32,7 @@ module Chem::XYZ
 
         n_atoms.times do
           constraint = nil
-          chain = resname = resid = name = serial = typename = mass = vdw_radius = nil
+          chain = resname = resid = name = number = typename = mass = vdw_radius = nil
           ele = PeriodicTable::C
           pos = Spatial::Vec3.zero
           formal_charge = 0
@@ -82,8 +82,8 @@ module Chem::XYZ
               resid = @pull.next_i
             when "resname"
               resname = @pull.next_s
-            when "serial"
-              serial = @pull.next_i
+            when "number"
+              number = @pull.next_i
             when "temperature_factor", "bfactor"
               temperature_factor = @pull.next_f
             when "typename"
@@ -109,7 +109,7 @@ module Chem::XYZ
 
           atom = builder.atom ele, pos
           {% for name in %w(constraint formal_charge mass name occupancy
-                           partial_charge serial temperature_factor typename
+                           partial_charge number temperature_factor typename
                            vdw_radius) %}
             atom.{{name.id}} = {{name.id}} if {{name.id}}
           {% end %}
@@ -187,8 +187,8 @@ module Chem::XYZ
             @io.printf "%4d", atom.residue.number
           when "resname"
             @io.printf "%-4s", atom.residue.name
-          when "serial"
-            @io.printf "%5d", atom.serial
+          when "number"
+            @io.printf "%5d", atom.number
           when "temperature_factor", "bfactor"
             @io.printf "%6.2f", atom.temperature_factor
           when "typename"
@@ -232,7 +232,7 @@ module Chem::XYZ
         when "partial_charge"                then @io << "F:1"
         when "resid"                         then @io << "I:1"
         when "resname"                       then @io << "S:1"
-        when "serial"                        then @io << "I:1"
+        when "number"                        then @io << "I:1"
         when "temperature_factor", "bfactor" then @io << "F:1"
         when "typename"                      then @io << "S:1"
         when "vdw_radius"                    then @io << "F:1"

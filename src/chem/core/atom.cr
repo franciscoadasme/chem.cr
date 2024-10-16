@@ -12,7 +12,7 @@ module Chem
     property occupancy : Float64 = 1
     property partial_charge : Float64 = 0.0
     property residue : Residue
-    property serial : Int32
+    property number : Int32
     property temperature_factor : Float64 = 0
     # Atom typename. Usually specifies the atomic parameter set assigned
     # to this atom within a given force field.
@@ -39,7 +39,7 @@ module Chem
 
     def initialize(
       @residue : Residue,
-      @serial : Int32,
+      @number : Int32,
       @element : Element,
       @name : String,
       @coords : Spatial::Vec3,
@@ -99,7 +99,7 @@ module Chem
     #
     # Returns `-1`, `0` or `1` depending on whether `self` precedes
     # *rhs*, equals to *rhs* or comes after *rhs*. The comparison is
-    # done based on atom serial.
+    # done based on atom number.
     #
     # ```
     # atoms = Structure.read("peptide.pdb").atoms
@@ -109,7 +109,7 @@ module Chem
     # atoms[2] <=> atoms[1] # => 1
     # ```
     def <=>(other : self) : Int32
-      @serial <=> other.serial
+      @number <=> other.number
     end
 
     def bonded?(to other : self) : Bool
@@ -145,10 +145,10 @@ module Chem
       to_s io
     end
 
-    # Returns `true` if the atom serial equals the given number, else
+    # Returns `true` if the atom number equals the given number, else
     # `false`.
     def matches?(number : Int) : Bool
-      @serial == number
+      @number == number
     end
 
     # Returns `true` if the atom name equals the given name, else
@@ -163,16 +163,16 @@ module Chem
       @name.matches? pattern
     end
 
-    # Returns `true` if the atom serial is included in the given range,
+    # Returns `true` if the atom number is included in the given range,
     # else `false`.
     def matches?(numbers : Range(Int, Int) | Range(Nil, Int) | Range(Int, Nil) | Range(Nil, Nil)) : Bool
-      @serial.in? numbers
+      @number.in? numbers
     end
 
-    # Returns `true` if the atom serial is included in the given
+    # Returns `true` if the atom number is included in the given
     # numbers, else `false`.
     def matches?(numbers : Enumerable(Int)) : Bool
-      @serial.in? numbers
+      @number.in? numbers
     end
 
     # Returns `true` if the atom name is included in the given
@@ -223,7 +223,7 @@ module Chem
     # information including chain, residue, atom name, and atom number.
     def spec(io : IO) : Nil
       @residue.spec io
-      io << ':' << @name << '(' << @serial << ')'
+      io << ':' << @name << '(' << @number << ')'
     end
 
     # Returns the target valence based on the effective valence. This is
@@ -287,7 +287,7 @@ module Chem
     #
     # NOTE: bonds are not copied and must be set manually for the copy.
     protected def copy_to(residue : Residue) : self
-      atom = Atom.new residue, @serial, @element, @name, @coords, @typename,
+      atom = Atom.new residue, @number, @element, @name, @coords, @typename,
         @formal_charge, @occupancy, @partial_charge, @temperature_factor
       atom.constraint = @constraint
       atom

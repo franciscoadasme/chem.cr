@@ -758,7 +758,7 @@ class Chem::Residue
 
   protected def reset_cache : Nil
     @atom_table.clear
-    @atoms.sort_by! &.serial
+    @atoms.sort_by! &.number
     @atoms.each do |atom|
       @atom_table[atom.name] = atom
     end

@@ -45,7 +45,7 @@ describe Chem::Mol2::Reader do
     atoms[2].coords.should eq [-0.2043, -0.1565, -0.4766]
     atoms[14].coords.should eq [-0.7202, -1.1105, -0.3899]
 
-    atoms[3].bonded_atoms.map(&.serial).should eq [2, 5, 12]
+    atoms[3].bonded_atoms.map(&.number).should eq [2, 5, 12]
     atoms[3].bonds[atoms[4]].order.should eq 2
     atoms[3].bonds[atoms[11]].order.should eq 1
     atoms[8].bonds[atoms[9]].order.should eq 2

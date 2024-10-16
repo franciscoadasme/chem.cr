@@ -39,7 +39,7 @@ module Chem::Mol2
           when "@<TRIPOS>ATOM"
             n_atoms.times do
               @pull.consume_line
-              serial = @pull.next_i
+              number = @pull.next_i
               name = @pull.next_s
               coords = Spatial::Vec3[@pull.next_f, @pull.next_f, @pull.next_f]
               atom_t = @pull.next_s

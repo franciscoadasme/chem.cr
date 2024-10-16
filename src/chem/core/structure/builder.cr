@@ -1,7 +1,7 @@
 module Chem
   class Structure::Builder
     @aromatic_bonds : Array(Bond)?
-    @atom_serial = 0
+    @atom_number = 0
     @atom_map = {} of Int32 => Atom
     @chain : Chain?
     @residue : Residue?
@@ -56,17 +56,17 @@ module Chem
     end
 
     def atom(name : String, coords : Spatial::Vec3, **options) : Atom
-      atom name, @atom_serial + 1, coords, **options
+      atom name, @atom_number + 1, coords, **options
     end
 
-    def atom(name : String, serial : Int32, coords : Spatial::Vec3, **options) : Atom
-      atom name, serial, coords, Structure.guess_element(name), **options
+    def atom(name : String, number : Int32, coords : Spatial::Vec3, **options) : Atom
+      atom name, number, coords, Structure.guess_element(name), **options
     end
 
-    def atom(name : String, serial : Int32, coords : Spatial::Vec3, element : Element, **options) : Atom
-      @atom_serial = serial
-      Atom.new(residue, @atom_serial, element, name, coords, **options)
-        .tap { |atom| @atom_map[atom.serial] = atom }
+    def atom(name : String, number : Int32, coords : Spatial::Vec3, element : Element, **options) : Atom
+      @atom_number = number
+      Atom.new(residue, @atom_number, element, name, coords, **options)
+        .tap { |atom| @atom_map[atom.number] = atom }
     end
 
     def atom(index : Int) : Atom
@@ -89,10 +89,10 @@ module Chem
 
     def bonds(bond_table : Hash(Tuple(Int32, Int32), BondOrder)) : Nil
       atom_table = {} of Int32 => Atom
-      atom_serials = Set(Int32).new bond_table.size * 2
-      bond_table.each_key { |(i, j)| atom_serials << i << j }
+      atom_numbers = Set(Int32).new bond_table.size * 2
+      bond_table.each_key { |(i, j)| atom_numbers << i << j }
       @structure.atoms.each do |atom|
-        atom_table[atom.serial] = atom if atom.serial.in?(atom_serials)
+        atom_table[atom.number] = atom if atom.number.in?(atom_numbers)
       end
       bond_table.each do |(i, j), order|
         if (lhs = atom_table[i]?) && (rhs = atom_table[j]?)
