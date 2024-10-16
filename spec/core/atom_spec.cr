@@ -18,11 +18,6 @@ describe Chem::Atom do
       (atom === Chem::Templates::Atom.new("NG1", "O")).should be_false
       (atom === Chem::Templates::Atom.new("CA", "C")).should be_false
     end
-
-    it "tells if atom matches element" do
-      (atom === Chem::PeriodicTable::N).should be_true
-      (atom === Chem::PeriodicTable::O).should be_false
-    end
   end
 
   describe "#bonded?" do

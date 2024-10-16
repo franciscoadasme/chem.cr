@@ -22,6 +22,11 @@ class Chem::Element
   )
   end
 
+  # Case equality. Delegates to `Atom#matches?`.
+  def ===(atom : Atom) : Bool
+    atom.matches?(self)
+  end
+
   def heavy? : Bool
     !hydrogen?
   end

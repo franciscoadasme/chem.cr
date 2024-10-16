@@ -13,6 +13,15 @@ describe Chem::Element do
     ele.valence.should eq 4
   end
 
+  describe "#===" do
+    it "tells if atom matches element" do
+      atom = Chem::Structure.build { atom "NG1", vec3(0, 0, 0) }.atoms[0]
+
+      (Chem::PeriodicTable::N === atom).should be_true
+      (Chem::PeriodicTable::O === atom).should be_false
+    end
+  end
+
   describe "#to_s" do
     it "returns a string representation" do
       Chem::PeriodicTable::Br.to_s.should eq "<Element Br>"

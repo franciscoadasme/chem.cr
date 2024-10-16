@@ -260,7 +260,7 @@ class Chem::Residue
     return false if other.same?(self)
     return false unless a = self[lhs]?
     other.atoms.any? do |b|
-      if b === rhs && (bond = a.bonds[b]?)
+      if b.element == rhs && (bond = a.bonds[b]?)
         bond.order == (order || bond.order)
       end
     end
@@ -274,7 +274,7 @@ class Chem::Residue
     return false if other.same?(self)
     return false unless b = other[rhs]?
     @atoms.any? do |a|
-      if a === lhs && (bond = a.bonds[b]?)
+      if a.element == lhs && (bond = a.bonds[b]?)
         bond.order == (order || bond.order)
       end
     end
@@ -284,9 +284,9 @@ class Chem::Residue
   def bonded?(other : self, lhs : Element, rhs : Element, order : BondOrder? = nil) : Bool
     return false if other.same?(self)
     @atoms.any? do |a|
-      next unless a === lhs
+      next unless a.element == lhs
       other.atoms.any? do |b|
-        if b === rhs && (bond = a.bonds[b]?)
+        if b.element == rhs && (bond = a.bonds[b]?)
           bond.order == (order || bond.order)
         end
       end

@@ -75,26 +75,6 @@ module Chem
       matches? atom_t
     end
 
-    # Case equality. Returns true if atom's element is *element*,
-    # otherwise false.
-    #
-    # ```
-    # structure = Structure.read "peptide.pdb"
-    # desc = case structure.dig('A', 5, "CK")
-    #        when Templates::Atom("C")  then "carbonyl carbon"
-    #        when Templates::Atom("CA") then "alpha carbon"
-    #        when Templates::Atom("CB") then "beta carbon"
-    #        when Templates::Atom("CG") then "gamma carbon"
-    #        when Templates::Atom("CD") then "delta carbon"
-    #        when PeriodicTable::C         then "carbon"
-    #        else                               "non-carbon"
-    #        end
-    # desc # => "non-carbon"
-    # ```
-    def ===(element : Element) : Bool
-      @element == element
-    end
-
     # The comparison operator.
     #
     # Returns `-1`, `0` or `1` depending on whether `self` precedes
@@ -161,6 +141,12 @@ module Chem
     # `false`.
     def matches?(pattern : Regex) : Bool
       @name.matches? pattern
+    end
+
+    # Returns `true` if the atom's element equals the given element,
+    # else `false`.
+    def matches?(element : Element) : Bool
+      @element == element
     end
 
     # Returns `true` if the atom number is included in the given range,
