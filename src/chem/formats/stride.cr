@@ -1,5 +1,5 @@
 @[Chem::RegisterFormat(ext: %w(.stride))]
-class Chem::Protein::Stride < Chem::Protein::SecondaryStructureCalculator
+module Chem::Protein::Stride
   class Writer
     include FormatWriter(Structure)
 

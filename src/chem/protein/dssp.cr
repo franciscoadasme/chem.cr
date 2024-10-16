@@ -1,37 +1,43 @@
-module Chem::Protein
-  # Pure Crystal implementation of the Dictionary of Protein Secondary Structure (DSSP)
-  # algorithm (Kabsch, W.; Sander, C. *Biopolymers* **1983**, *22* (12), 2577–2637.
-  # [doi:10.1002/bip.360221211][1]).
-  #
-  # This implementation is based on the `mkdssp` program, version 3.0.5, written by
-  # Maarten L. Hekkelman, currently maintained by Coos Baakman, Jon Black, and Wouter
-  # Touw, and distributed under the Boost Software license at the
-  # [github.com/cmbi/xssp][2] repository.
-  #
-  # Consider that, according to the algorithm, residues that do not contain backbone
-  # atoms, namely, "N", "CA", "C", and "O", are ignored. Therefore, non-standard amino
-  # acids are considered during the assignment as long as they contain such atoms.
-  # Otherwise, they will be considered as protein gaps, which may alter the secondary
-  # structure of surrounding residues.
-  #
-  # Note that some differences may be expected with the output of `mkdssp` due to:
-  #
-  # - `mkdssp` does not handle well alternate conformations in PDB files, sometimes
-  #   discarding entire aminoacids.
-  # - `mkdssp` detects chain breaks by checking non-consecutive numbers of neighboring
-  #   residues. This may fail when residues *i* and *i + 1* are not actually bonded, or
-  #   when residue numbers are not consecutive. This implementation instead uses atom
-  #   connectivity to check whether C(*i*)–N(*i*+1) are bonded.
-  #
-  # FIXME: it does not work correctly for periodic structures that have
-  # bonds between atoms at opposite ends.
-  #
-  # NOTE: This implementation of DSSP is currently 50% slower than pure C++ solutions, so
-  # keep this in mind when assigning the secondary structure of many structures.
-  #
-  # [1]: http://dx.doi.org/10.1002/bip.360221211
-  # [2]: http://github.com/cmbi/xssp
-  class DSSP < SecondaryStructureCalculator
+# Pure Crystal implementation of the Dictionary of Protein Secondary Structure (DSSP)
+# algorithm (Kabsch, W.; Sander, C. *Biopolymers* **1983**, *22* (12), 2577–2637.
+# [doi:10.1002/bip.360221211][1]).
+#
+# This implementation is based on the `mkdssp` program, version 3.0.5, written by
+# Maarten L. Hekkelman, currently maintained by Coos Baakman, Jon Black, and Wouter
+# Touw, and distributed under the Boost Software license at the
+# [github.com/cmbi/xssp][2] repository.
+#
+# Consider that, according to the algorithm, residues that do not contain backbone
+# atoms, namely, "N", "CA", "C", and "O", are ignored. Therefore, non-standard amino
+# acids are considered during the assignment as long as they contain such atoms.
+# Otherwise, they will be considered as protein gaps, which may alter the secondary
+# structure of surrounding residues.
+#
+# Note that some differences may be expected with the output of `mkdssp` due to:
+#
+# - `mkdssp` does not handle well alternate conformations in PDB files, sometimes
+#   discarding entire aminoacids.
+# - `mkdssp` detects chain breaks by checking non-consecutive numbers of neighboring
+#   residues. This may fail when residues *i* and *i + 1* are not actually bonded, or
+#   when residue numbers are not consecutive. This implementation instead uses atom
+#   connectivity to check whether C(*i*)–N(*i*+1) are bonded.
+#
+# FIXME: it does not work correctly for periodic structures that have
+# bonds between atoms at opposite ends.
+#
+# NOTE: This implementation of DSSP is currently 50% slower than pure C++ solutions, so
+# keep this in mind when assigning the secondary structure of many structures.
+#
+# [1]: http://dx.doi.org/10.1002/bip.360221211
+# [2]: http://github.com/cmbi/xssp
+module Chem::Protein::DSSP
+  def self.assign(struc : Structure) : Nil
+    struc.residues.sec = :none
+    Calculator.new(struc).assign
+  end
+
+  # TODO: refactor to simple methods
+  private class Calculator
     MIN_CA_SQUARED_DIST   =      81
     HBOND_COUPLING_FACTOR = -27.888
     HBOND_ENERGY_CUTOFF   =    -0.5
@@ -49,7 +55,6 @@ module Chem::Protein
     end
 
     def assign : Nil
-      reset_secondary_structure
       calculate_hbonds
       assign_beta_sheets if @residues.size > 4
       assign_helices
@@ -329,86 +334,86 @@ module Chem::Protein
         end
       end
     end
+  end
 
-    private struct Bridge
-      include Comparable(Bridge)
+  private struct Bridge
+    include Comparable(Bridge)
 
-      enum Type
-        None
-        Parallel
-        AntiParallel
-      end
+    enum Type
+      None
+      Parallel
+      AntiParallel
+    end
 
-      getter i = Deque(Int32).new
-      getter index : Int32
-      getter j = Deque(Int32).new
-      getter type : Type
+    getter i = Deque(Int32).new
+    getter index : Int32
+    getter j = Deque(Int32).new
+    getter type : Type
 
-      delegate antiparallel?, parallel?, to: @type
+    delegate antiparallel?, parallel?, to: @type
 
-      def initialize(@index : Int32, @type : Type, i : Int32, j : Int32)
-        @i << i
-        @j << j
-      end
+    def initialize(@index : Int32, @type : Type, i : Int32, j : Int32)
+      @i << i
+      @j << j
+    end
 
-      def <=>(other : self) : Int32
-        i.first <=> other.i.first
-      end
+    def <=>(other : self) : Int32
+      i.first <=> other.i.first
+    end
 
-      def merge!(other : self)
-        @i.concat other.i
-        if parallel?
-          @j.concat other.j
-        else
-          other.j.reverse_each { |k| @j.unshift k }
-        end
-      end
-
-      def to_s(io : IO)
-        io << @index << ':' << (parallel? ? 'p' : 'a') << ":[" << @i.size << ":"
-        @i.join ',', io
-        io << '/' << @j.size << ":"
-        @j.join ',', io
-        io << ']'
+    def merge!(other : self)
+      @i.concat other.i
+      if parallel?
+        @j.concat other.j
+      else
+        other.j.reverse_each { |k| @j.unshift k }
       end
     end
 
-    private struct Coords
-      getter c : Spatial::Vec3
-      getter ca : Spatial::Vec3
-      getter h : Spatial::Vec3
-      getter n : Spatial::Vec3
-      getter o : Spatial::Vec3
+    def to_s(io : IO)
+      io << @index << ':' << (parallel? ? 'p' : 'a') << ":[" << @i.size << ":"
+      @i.join ',', io
+      io << '/' << @j.size << ":"
+      @j.join ',', io
+      io << ']'
+    end
+  end
 
-      def initialize(residue : Residue)
-        @n = residue["N"]?.as(Atom).coords
-        @h = Coords.guess_hydrogen residue
-        @c = residue["C"]?.as(Atom).coords
-        @o = residue["O"]?.as(Atom).coords
-        @ca = residue["CA"]?.as(Atom).coords
-      end
+  private struct Coords
+    getter c : Spatial::Vec3
+    getter ca : Spatial::Vec3
+    getter h : Spatial::Vec3
+    getter n : Spatial::Vec3
+    getter o : Spatial::Vec3
 
-      def self.guess_hydrogen(residue : Residue) : Spatial::Vec3
-        r_n = residue["N"]?.as(Atom).coords
-        return r_n if residue.name == "PRO"
-        return r_n unless prev_res = residue.pred?
-        return r_n unless carbon = prev_res["C"]?
-        return r_n unless oxygen = prev_res["O"]?
-        r_n + ((carbon.coords - oxygen.coords) / Spatial.distance(carbon, oxygen))
-      end
+    def initialize(residue : Residue)
+      @n = residue["N"]?.as(Atom).coords
+      @h = Coords.guess_hydrogen residue
+      @c = residue["C"]?.as(Atom).coords
+      @o = residue["O"]?.as(Atom).coords
+      @ca = residue["CA"]?.as(Atom).coords
     end
 
-    private struct Helix
-      enum Type
-        None
-        Start
-        End
-        StartEnd
-        Middle
+    def self.guess_hydrogen(residue : Residue) : Spatial::Vec3
+      r_n = residue["N"]?.as(Atom).coords
+      return r_n if residue.name == "PRO"
+      return r_n unless prev_res = residue.pred?
+      return r_n unless carbon = prev_res["C"]?
+      return r_n unless oxygen = prev_res["O"]?
+      r_n + ((carbon.coords - oxygen.coords) / Spatial.distance(carbon, oxygen))
+    end
+  end
 
-        def start? : Bool
-          self == Start || self == StartEnd
-        end
+  private struct Helix
+    enum Type
+      None
+      Start
+      End
+      StartEnd
+      Middle
+
+      def start? : Bool
+        self == Start || self == StartEnd
       end
     end
   end
