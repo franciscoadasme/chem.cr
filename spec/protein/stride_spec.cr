@@ -6,14 +6,14 @@ require "../spec_helper"
       structure = load_file "1cbn.pdb"
       Chem::Protein::Stride.assign structure
       expected = "0EE000HHHHHHHHHHHH0000HHHHHHHH00EE000000TTTTT0"
-      structure.each_residue.select(&.protein?).map(&.sec.code).join.should eq expected
+      structure.residues.select(&.protein?).map(&.sec.code).join.should eq expected
     end
 
     it "assigns secondary structure (5jqf)" do
       structure = load_file "5jqf.pdb"
       Chem::Protein::Stride.assign structure
       expected = "00B0000BTTTTT0BTTEEE000B0000BTTTTT0B00EEE0"
-      structure.each_residue.select(&.protein?).map(&.sec.code).join.should eq expected
+      structure.residues.select(&.protein?).map(&.sec.code).join.should eq expected
     end
 
     it "assigns secondary structure (1dpo, insertion codes)" do
