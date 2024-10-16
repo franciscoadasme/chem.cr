@@ -56,25 +56,6 @@ module Chem
       @residue << self
     end
 
-    # Case equality. This is equivalent to `#matches?`.
-    #
-    # ```
-    # structure = Structure.read "peptide.pdb"
-    # desc = case structure.dig('A', 5, "CA")
-    #        when Templates::Atom("C")  then "carbonyl carbon"
-    #        when Templates::Atom("CA") then "alpha carbon"
-    #        when Templates::Atom("CB") then "beta carbon"
-    #        when Templates::Atom("CG") then "gamma carbon"
-    #        when Templates::Atom("CD") then "delta carbon"
-    #        when PeriodicTable::C         then "carbon"
-    #        else                               "non-carbon"
-    #        end
-    # desc # => "alpha carbon"
-    # ```
-    def ===(atom_t : Templates::Atom) : Bool
-      matches? atom_t
-    end
-
     # The comparison operator.
     #
     # Returns `-1`, `0` or `1` depending on whether `self` precedes

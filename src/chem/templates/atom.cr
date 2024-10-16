@@ -30,6 +30,11 @@ class Chem::Templates::Atom
     new name, elements[0], elements[1..], formal_charge, valence
   end
 
+  # Case equality. Delegates to `Chem::Atom#matches?`.
+  def ===(atom : ::Chem::Atom) : Bool
+    atom.matches? self
+  end
+
   def bonded_elements : Array::View(Element)
     @bonded_elements.view
   end

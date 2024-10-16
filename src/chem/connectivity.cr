@@ -151,7 +151,7 @@ module Chem
     # Check considers both atom matching (see `Atom#match?`) and bond
     # order.
     def matches?(bond_t : Templates::Bond) : Bool
-      (@atoms === bond_t.atoms || @atoms.reverse === bond_t.atoms) &&
+      (bond_t.atoms === @atoms || bond_t.atoms === @atoms.reverse) &&
         @order == bond_t.order
     end
 

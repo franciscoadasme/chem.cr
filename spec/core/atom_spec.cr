@@ -10,16 +10,6 @@ describe Chem::Atom do
     end
   end
 
-  describe "#===" do
-    atom = Chem::Structure.build { atom "NG1", vec3(0, 0, 0) }.atoms[0]
-
-    it "tells if atom matches template" do
-      (atom === Chem::Templates::Atom.new("NG1", "N")).should be_true
-      (atom === Chem::Templates::Atom.new("NG1", "O")).should be_false
-      (atom === Chem::Templates::Atom.new("CA", "C")).should be_false
-    end
-  end
-
   describe "#bonded?" do
     it "tells if two atoms are bonded" do
       structure = Chem::Structure.build(guess_bonds: true) do
