@@ -399,6 +399,36 @@ describe Chem::Residue do
     end
   end
 
+  describe "#matches?" do
+    it "matches by code" do
+      struc = fake_structure
+      struc.residues[0].matches?('D').should be_true
+      struc.residues[0].matches?('A').should be_false
+      struc.residues[0].matches?("DF".chars).should be_true
+      struc.residues[0].matches?("FY".chars).should be_false
+    end
+
+    it "matches by name" do
+      struc = fake_structure
+      struc.residues[0].matches?("ASP").should be_true
+      struc.residues[0].matches?("PHE").should be_false
+      struc.residues[0].matches?(/ASP|GLU/).should be_true
+      struc.residues[1].matches?(/ASP|GLU/).should be_false
+      struc.residues[0].matches?(%w(ASP GLU)).should be_true
+      struc.residues[1].matches?(%w(ASP GLU)).should be_false
+    end
+
+    it "matches by number" do
+      struc = fake_structure
+      struc.residues[0].matches?(1).should be_true
+      struc.residues[0].matches?(2).should be_false
+      struc.residues[0].matches?([1, 3, 5, 7]).should be_true
+      struc.residues[0].matches?([2, 4, 6, 8]).should be_false
+      struc.residues[0].matches?(1..2).should be_true
+      struc.residues[-1].matches?(3..5).should be_false
+    end
+  end
+
   describe "#name=" do
     it "sets type from templates" do
       structure = Chem::Structure.new

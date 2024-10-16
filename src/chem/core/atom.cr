@@ -141,6 +141,42 @@ module Chem
       @residue.het?
     end
 
+    # Returns `true` if the atom serial equals the given number, else
+    # `false`.
+    def matches?(number : Int) : Bool
+      @serial == number
+    end
+
+    # Returns `true` if the atom name equals the given name, else
+    # `false`.
+    def matches?(str : String) : Bool
+      @name == str
+    end
+
+    # Returns `true` if the atom name matches the given pattern, else
+    # `false`.
+    def matches?(pattern : Regex) : Bool
+      @name.matches? pattern
+    end
+
+    # Returns `true` if the atom serial is included in the given range,
+    # else `false`.
+    def matches?(numbers : Range(Int, Int) | Range(Nil, Int) | Range(Int, Nil) | Range(Nil, Nil)) : Bool
+      @serial.in? numbers
+    end
+
+    # Returns `true` if the atom serial is included in the given
+    # numbers, else `false`.
+    def matches?(numbers : Enumerable(Int)) : Bool
+      @serial.in? numbers
+    end
+
+    # Returns `true` if the atom name is included in the given
+    # names, else `false`.
+    def matches?(names : Enumerable(String)) : Bool
+      @name.in? names
+    end
+
     # Returns `true` if the atom matches the given template, else
     # `false`.
     #

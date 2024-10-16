@@ -157,6 +157,8 @@ class Chem::Templates::Registry
   # NOTE: It loads the default templates including proteinogenic
   # aminoacids and their variants (e.g., HIS, HSE, and HSP), and
   # solvents such as water.
+  #
+  # TODO: Move to a constant under Templates module
   def self.default : self
     @@default_registry ||= new.tap do |registry|
       # bake default templates so it can be loaded from anywhere

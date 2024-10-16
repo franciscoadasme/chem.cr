@@ -486,6 +486,54 @@ class Chem::Residue
     end
   end
 
+  # Returns `true` if the residue number equals the given number, else
+  # `false`.
+  def matches?(number : Int) : Bool
+    @number == number
+  end
+
+  # Returns `true` if the residue name equals the given name, else
+  # `false`.
+  def matches?(str : String) : Bool
+    @name == str
+  end
+
+  # Returns `true` if the residue code equals the given character, else
+  # `false`.
+  def matches?(code : Char) : Bool
+    self.code == code
+  end
+
+  # Returns `true` if the residue name matches the given pattern, else
+  # `false`.
+  def matches?(pattern : Regex) : Bool
+    @name.matches? pattern
+  end
+
+  # Returns `true` if the residue number is included in the given range,
+  # else `false`.
+  def matches?(numbers : Range(Int, Int) | Range(Nil, Int) | Range(Int, Nil) | Range(Nil, Nil)) : Bool
+    @number.in? numbers
+  end
+
+  # Returns `true` if the residue number is included in the given
+  # numbers, else `false`.
+  def matches?(numbers : Enumerable(Int)) : Bool
+    @number.in? numbers
+  end
+
+  # Returns `true` if the residue name is included in the given
+  # names, else `false`.
+  def matches?(names : Enumerable(String)) : Bool
+    @name.in? names
+  end
+
+  # Returns `true` if the residue code is included in the given
+  # characters, else `false`.
+  def matches?(codes : Enumerable(Char)) : Bool
+    code.in? codes
+  end
+
   def name=(str : String) : String
     @name = str
     assign_type_from_templates

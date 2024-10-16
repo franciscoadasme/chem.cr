@@ -39,4 +39,29 @@ describe Enumerable do
       expect_raises(Enumerable::EmptyError) { ([] of Int32).mean }
     end
   end
+
+  describe "#select" do
+    it "selects by number" do
+      struc = fake_structure
+      struc.atoms.select(1).should eq struc.atoms[[0]]
+      struc.atoms.select([1, 3, 5, 7]).should eq struc.atoms[[0, 2, 4, 6]]
+      struc.atoms.select(1..3).should eq struc.atoms[0..2]
+
+      struc.residues.select(..2).should eq struc.residues
+    end
+
+    it "selects by name" do
+      struc = fake_structure
+      struc.atoms.select("N").size.should eq 3
+      struc.atoms.select("CA").size.should eq 3
+      struc.atoms.select(/C[ABGDEZ]\d*/).size.should eq 13
+      struc.atoms.select(%w(N CA C)).size.should eq 9
+
+      struc.residues.select(/AS[PH]/).should eq struc.residues[...1]
+      struc.residues.select('F').should eq struc.residues[1, 1]
+      struc.residues.select("FD".chars).should eq struc.residues[0, 2]
+
+      struc.chains.select('A').should eq [struc.chains[0]]
+    end
+  end
 end

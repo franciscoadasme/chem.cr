@@ -28,6 +28,18 @@ describe Chem::Chain do
     end
   end
 
+  describe "#matches?" do
+    it "matches by id" do
+      struc = fake_structure
+      struc.chains[0].matches?('A').should be_true
+      struc.chains[0].matches?('B').should be_false
+      struc.chains[0].matches?("AB".chars).should be_true
+      struc.chains[0].matches?("BDY".chars).should be_false
+      struc.chains[0].matches?('A'..'F').should be_true
+      struc.chains[0].matches?('F'..'U').should be_false
+    end
+  end
+
   describe "#renumber_residues_by" do
     it "renumbers residues by the given order" do
       chain = load_file("3sgr.pdb").dig('A')

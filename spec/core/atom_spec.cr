@@ -79,11 +79,31 @@ describe Chem::Atom do
   end
 
   describe "#matches?" do
-    it "tells if atom matches template" do
+    it "matches by template" do
       atom = Chem::Structure.build { atom "CD2", vec3(0, 0, 0) }.atoms[0]
       atom.should match Chem::Templates::Atom.new("CD2", "C")
       atom.should_not match Chem::Templates::Atom.new("CD2", "N")
       atom.should_not match Chem::Templates::Atom.new("ND2", "N")
+    end
+
+    it "matches by name" do
+      struc = fake_structure
+      struc.atoms[0].matches?("N").should be_true
+      struc.atoms[0].matches?("CA").should be_false
+      struc.atoms[0].matches?(/C[ABGD]?/).should be_false
+      struc.atoms[1].matches?(/C[ABGD]?/).should be_true
+      struc.atoms[0].matches?(%w(N CA C)).should be_true
+      struc.atoms[3].matches?(%w(N CA C)).should be_false
+    end
+
+    it "matches by number" do
+      struc = fake_structure
+      struc.atoms[0].matches?(1).should be_true
+      struc.atoms[0].matches?(2).should be_false
+      struc.atoms[0].matches?([1, 3, 5, 7]).should be_true
+      struc.atoms[0].matches?([2, 4, 6, 8]).should be_false
+      struc.atoms[0].matches?(1..3).should be_true
+      struc.atoms[-1].matches?(1..3).should be_false
     end
   end
 

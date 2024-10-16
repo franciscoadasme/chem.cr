@@ -1,4 +1,19 @@
 module Enumerable(T)
+  # Case equality. Delegates to `Chem::Atom#matches?`.
+  def ===(atom : Chem::Atom) : Bool
+    atom.matches?(self)
+  end
+
+  # Case equality. Delegates to `Chem::Chain#matches?`.
+  def ===(chain : Chem::Chain) : Bool
+    chain.matches?(self)
+  end
+
+  # Case equality. Delegates to `Chem::Residue#matches?`.
+  def ===(residue : Chem::Residue) : Bool
+    residue.matches?(self)
+  end
+
   # Returns the weighted average of the elements in the collection.
   # Raises `EmptyError` if the collection is empty or `ArgumentError` if
   # *weights* has a different number of elements.

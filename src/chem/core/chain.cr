@@ -104,6 +104,18 @@ module Chem
       end
     end
 
+    # Returns `true` if the chain id equals the given character, else
+    # `false`.
+    def matches?(id : Char) : Bool
+      @id == id
+    end
+
+    # Returns `true` if the chain id is included in the given
+    # characters, else `false`.
+    def matches?(ids : Enumerable(Char)) : Bool
+      @id.in? ids
+    end
+
     def polymer? : Bool
       @residues.any? &.polymer?
     end
