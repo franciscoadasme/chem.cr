@@ -676,6 +676,10 @@ module Chem
       @impropers.view
     end
 
+    def inspect(io : IO) : Nil
+      to_s io
+    end
+
     def periodic? : Bool
       !!@cell
     end

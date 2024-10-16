@@ -470,6 +470,10 @@ class Chem::Residue
     @insertion_code
   end
 
+  def inspect(io : IO) : Nil
+    to_s io
+  end
+
   # Returns `true` is residue is levorotatory, otherwise `false`.
   #
   # A residue is considered to be levorotatory if the improper angle

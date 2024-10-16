@@ -141,6 +141,10 @@ module Chem
       @residue.het?
     end
 
+    def inspect(io : IO) : Nil
+      to_s io
+    end
+
     # Returns `true` if the atom serial equals the given number, else
     # `false`.
     def matches?(number : Int) : Bool

@@ -104,6 +104,10 @@ module Chem
       end
     end
 
+    def inspect(io : IO) : Nil
+      to_s io
+    end
+
     # Returns `true` if the chain id equals the given character, else
     # `false`.
     def matches?(id : Char) : Bool
