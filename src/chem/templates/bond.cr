@@ -13,6 +13,11 @@ class Chem::Templates::Bond
     @atoms == rhs.atoms || @atoms.reverse == rhs.atoms
   end
 
+  # Case equality. Delegates to `Chem::Bond#matches?`.
+  def ===(bond : ::Chem::Bond) : Bool
+    bond.matches? self
+  end
+
   def includes?(atom_t : Atom) : Bool
     @atoms.includes? atom_t
   end

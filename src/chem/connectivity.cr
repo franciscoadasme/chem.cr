@@ -126,11 +126,6 @@ module Chem
       sort!
     end
 
-    # Case equality. This is equivalent to `#match?`.
-    def ===(bond_t : Templates::Bond) : Bool
-      matches? bond_t
-    end
-
     # Returns `true` if the bond shares an atom with *other*, else
     # `false`.
     def bonded?(other : self) : Bool
