@@ -417,28 +417,13 @@
       
     </li>
   
-  <li class="parent " data-id="chem/Chem/Protein/PSIQUE" data-name="chem::protein::psique">
+  <li class=" " data-id="chem/Chem/Protein/PSIQUE" data-name="chem::protein::psique">
       <a href="../../Chem/Protein/PSIQUE.html">PSIQUE</a>
-      
-        <ul>
-  
-  <li class=" " data-id="chem/Chem/Protein/PSIQUE/SecondaryStructureBlender" data-name="chem::protein::psique::secondarystructureblender">
-      <a href="../../Chem/Protein/PSIQUE/SecondaryStructureBlender.html">SecondaryStructureBlender</a>
-      
-    </li>
-  
-</ul>
-
       
     </li>
   
   <li class=" " data-id="chem/Chem/Protein/SecondaryStructure" data-name="chem::protein::secondarystructure">
       <a href="../../Chem/Protein/SecondaryStructure.html">SecondaryStructure</a>
-      
-    </li>
-  
-  <li class=" " data-id="chem/Chem/Protein/SecondaryStructureCalculator" data-name="chem::protein::secondarystructurecalculator">
-      <a href="../../Chem/Protein/SecondaryStructureCalculator.html">SecondaryStructureCalculator</a>
       
     </li>
   
@@ -974,7 +959,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/templates/bond.cr#L1" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/1fa180a2d7cd5368dd904595c9e22e097484287e/src/chem/templates/bond.cr#L1" target="_blank">
         chem/templates/bond.cr
       </a>
     
@@ -1022,6 +1007,13 @@
         <a href="#%3D%3D%28rhs%3Aself%29%3ABool-instance-method" class="signature"><strong>#==</strong>(rhs : <span class="k">self</span>) : Bool</a>
         
           <div class="summary"><p>Returns <code>true</code> if this reference is the same as <em>other</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%3D%3D%3D%28bond%3AChem%3A%3ABond%29%3ABool-instance-method" class="signature"><strong>#===</strong>(bond : Chem::Bond) : Bool</a>
+        
+          <div class="summary"><p>Case equality.</p></div>
         
       </li>
     
@@ -1172,7 +1164,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/templates/bond.cr#L7" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/1fa180a2d7cd5368dd904595c9e22e097484287e/src/chem/templates/bond.cr#L7" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1213,7 +1205,28 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/templates/bond.cr#L11" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/1fa180a2d7cd5368dd904595c9e22e097484287e/src/chem/templates/bond.cr#L11" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="===(bond:Chem::Bond):Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>===</strong>(bond : <a href="../../Chem/Bond.html">Chem::Bond</a>) : Bool
+
+        <a class="method-permalink" href="#%3D%3D%3D%28bond%3AChem%3A%3ABond%29%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Case equality. Delegates to <code><a href="../../Chem/Bond.html#matches%3F%28bond_t%3ATemplates%3A%3ABond%29%3ABool-instance-method">Chem::Bond#matches?</a></code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/1fa180a2d7cd5368dd904595c9e22e097484287e/src/chem/templates/bond.cr#L17" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1229,7 +1242,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/templates/bond.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/1fa180a2d7cd5368dd904595c9e22e097484287e/src/chem/templates/bond.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1245,7 +1258,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/templates/bond.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/1fa180a2d7cd5368dd904595c9e22e097484287e/src/chem/templates/bond.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1261,7 +1274,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/templates/bond.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/1fa180a2d7cd5368dd904595c9e22e097484287e/src/chem/templates/bond.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1277,7 +1290,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/templates/bond.cr#L16" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/1fa180a2d7cd5368dd904595c9e22e097484287e/src/chem/templates/bond.cr#L21" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1293,7 +1306,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/templates/bond.cr#L20" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/1fa180a2d7cd5368dd904595c9e22e097484287e/src/chem/templates/bond.cr#L25" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1309,7 +1322,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/templates/bond.cr#L3" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/1fa180a2d7cd5368dd904595c9e22e097484287e/src/chem/templates/bond.cr#L3" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1325,7 +1338,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/templates/bond.cr#L24" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/1fa180a2d7cd5368dd904595c9e22e097484287e/src/chem/templates/bond.cr#L29" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1341,7 +1354,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/templates/bond.cr#L28" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/1fa180a2d7cd5368dd904595c9e22e097484287e/src/chem/templates/bond.cr#L33" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1357,7 +1370,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/templates/bond.cr#L32" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/1fa180a2d7cd5368dd904595c9e22e097484287e/src/chem/templates/bond.cr#L37" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1373,7 +1386,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/templates/bond.cr#L41" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/1fa180a2d7cd5368dd904595c9e22e097484287e/src/chem/templates/bond.cr#L46" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1389,7 +1402,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/templates/bond.cr#L50" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/1fa180a2d7cd5368dd904595c9e22e097484287e/src/chem/templates/bond.cr#L55" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1405,7 +1418,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/templates/bond.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/1fa180a2d7cd5368dd904595c9e22e097484287e/src/chem/templates/bond.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1421,7 +1434,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/templates/bond.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/1fa180a2d7cd5368dd904595c9e22e097484287e/src/chem/templates/bond.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1453,7 +1466,7 @@ which includes its class name and its object address.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/templates/bond.cr#L54" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/1fa180a2d7cd5368dd904595c9e22e097484287e/src/chem/templates/bond.cr#L59" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1469,7 +1482,7 @@ which includes its class name and its object address.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/templates/bond.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/1fa180a2d7cd5368dd904595c9e22e097484287e/src/chem/templates/bond.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1485,7 +1498,7 @@ which includes its class name and its object address.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/templates/bond.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/1fa180a2d7cd5368dd904595c9e22e097484287e/src/chem/templates/bond.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1501,7 +1514,7 @@ which includes its class name and its object address.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/templates/bond.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/1fa180a2d7cd5368dd904595c9e22e097484287e/src/chem/templates/bond.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1517,7 +1530,7 @@ which includes its class name and its object address.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/72575f73c52b5d54a629c3cfb0d77be2beb60924/src/chem/templates/bond.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/1fa180a2d7cd5368dd904595c9e22e097484287e/src/chem/templates/bond.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
