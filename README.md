@@ -4,62 +4,57 @@
 [![Version](https://img.shields.io/github/v/release/franciscoadasme/chem.cr.svg?label=version)](https://github.com/franciscoadasme/chem.cr/releases/latest)
 [![License](https://img.shields.io/github/license/franciscoadasme/chem.cr.svg)](https://github.com/franciscoadasme/chem.cr/blob/master/LICENSE)
 
----
-
-A modern library written in [Crystal][1] primarily designed for
-manipulating molecular files created by computational chemistry
-programs. It aims to be both fast and easy to use.
-
-**NOTE**: PSIQUE documentation can be found [here](https://github.com/franciscoadasme/psique)
-
-**IMPORTANT**: this library is in alpha stage, meaning that there is missing
-functionality, documentation, etc. and there will be breaking changes.
-
 [Features](#features) |
 [Installation](#installation) |
 [Usage](#usage) |
-[Tools](https://github.com/franciscoadasme/chem.cr/wiki#tools) |
-[Benchmarks](#benchmarks) |
+[Benchmark](#benchmark) |
 [Roadmap](#roadmap) |
-[Testing](#testing) |
 [Similar software](#similar-software) |
+[Testing](#testing) |
 [Contributing](#contributing) |
 [Contributors](#contributors) |
 [License](#license)
 
+A modern library written in [Crystal][1] for manipulating molecular files used in computational chemistry and biology.
+It aims to be both fast and easy to use.
+
+> [!NOTE]
+> PSIQUE was moved to the [psique](https://github.com/franciscoadasme/psique) repository.
+
 ## Features
 
-- Object-oriented API for accessing and manipulating molecules. It
-  follows the topology commonly used in [Protein Data Bank][2] (PDB)
-  file format: Structure (or model) → Chain → Residue → Atom.
-- Type safety (assigning a number to the atom's name will result in a
-  compilation error)
-- Support for periodic molecular structures
-- Support for several file formats (and many more to come...)
-- Iterator-based file reading (avoids reading all data into memory)
-- Fast performance (see Benchmarks below)
+- Object-oriented API for accessing and manipulating molecules.
+  It follows the topology commonly used in [Protein Data Bank][2] (PDB) file format: Structure (or model) → Chain → Residue → Atom.
+- Type safety (assigning a number as the atom's name will result in an error at compilation time).
+- Support for periodic molecular structures.
+- Support for common molecular file formats (PDB, SDF, etc.).
+- Spatial measurements (distance, RMSD, alignment).
+- Template-based topology reconstruction.
+- Volumetric data.
+- Fast performance (see [Benchmark](#benchmark) below).
+
+> [!IMPORTANT]
+> This library is in alpha stage, meaning that there is missing functionality, documentation, etc. and there will be breaking changes.
 
 ## Installation
 
-First check that the Crystal compiler is installed correctly:
+Ensure the Crystal compiler is installed:
 
-```sh
-$ crystal --version
-Crystal 0.35.1 [5999ae29b] (2020-06-19)
+```console
+$ crystal -v
+Crystal 1.13.1 [0cef61e51] (2024-07-12)
 
-LLVM: 8.0.0
+LLVM: 18.1.6
 Default target: x86_64-unknown-linux-gnu
 ```
 
 If the command fails, you need to install the crystal compiler by
 following [these steps][3].
 
-### Using Shards
+Crystal requires listing the dependencies in the `shard.yml` file.
+Let's create a new project:
 
-Crystal handles dependencies by listing the packages on a `shard.yml`
-file in a Crystal project. First, create a new project:
-
-```sh
+```console
 $ crystal init app myapp
     create  myapp/.gitignore
     create  myapp/.editorconfig
@@ -75,38 +70,22 @@ Initialized empty Git repository in /home/crystal/myapp/.git/
 $ cd myapp
 ```
 
-Read more about projects at the [Crystal guides][4]. Add this to your
-application's `shard.yml`:
+Add the following to the application's `shard.yml`:
 
 ```yaml
 dependencies:
   chem:
     github: franciscoadasme/chem.cr
-    version: ~> 0.1
 ```
 
 Then, resolve and install missing dependencies:
 
-```sh
-shards install
+```console
+$ shards install
 ```
 
-Dependencies are installed into the `lib` folder. More about
-dependencies at the [Shards guides][5].
-
-### Manual download
-
-Either clone the repository or download a copy of the `chem` module to
-your local machine:
-
-```sh
-tag=$(curl -s https://api.github.com/repos/franciscoadasme/chem.cr/releases/latest | grep "tag_name" | cut -d\" -f4)
-wget https://github.com/franciscoadasme/chem.cr/archive/$tag.tar.gz -O chem.cr-${tag#v}.tar.gz
-tar xvf chem.cr-${tag#v}.tar.gz
-```
-
-This will download the latest version of the `chem` module to a folder
-named `chem.cr-X.Y.Z`, where `X.Y.Z` stands for the current version.
+Dependencies are installed into the `lib` folder.
+More about dependencies at the [Shards guides][5].
 
 ### Requirements
 
@@ -115,48 +94,36 @@ named `chem.cr-X.Y.Z`, where `X.Y.Z` stands for the current version.
 
 ## Usage
 
-First require the `chem` module. You must have used the `shards` command to install the
-dependencies:
+First require the `chem` module (refer to the [Crystal guides][6] for more information):
 
 ```crystal
 require "chem"
 ```
 
-Refer to the [Crystal guides][6] for more information about how to
-require other files.
-
-Either way, write the following to avoid typing the
-`Chem::` prefix:
-
-```crystal
-include Chem
-```
-
 Let's first read a structure:
 
 ```crystal
-structure = Structure.read "/path/to/file.pdb"
-structure # => <Structure "1cbn": 644 atoms, 47 residues, periodic>
+struc = Chem::Structure.read "file.pdb"
+struc # => <Structure "1cbn": 644 atoms, 47 residues, periodic>
 ```
 
-You can also use a custom read method that accepts specific options:
+You can also use a custom `.from_*` method to specify reading options when available:
 
 ```crystal
-Structure.from_pdb "/path/to/file.pdb"
-Structure.from_pdb "/path/to/file.pdb", chains: ['A'] # read only chain A
-Structure.from_pdb "/path/to/file.pdb", het: false # skip HET atoms
-Structure.from_pdb "/path/to/file.pdb", alt_loc: 'A' # select alternate location A
+Chem::Structure.from_pdb "/path/to/file.pdb"
+Chem::Structure.from_pdb "/path/to/file.pdb", chains: ['A'] # reads only chain A
+Chem::Structure.from_pdb "/path/to/file.pdb", het: false    # skips HET atoms
+Chem::Structure.from_pdb "/path/to/file.pdb", alt_loc: 'A'  # selects alternate location A
 ```
 
 You can access PDB header information via the `#experiment` property:
 
 ```crystal
-if expt = structure.experiment # checks if experiment data is present
+if expt = struc.experiment # checks if experiment data is present
   expt.title           # => "ATOMIC RESOLUTION (0.83 ANGSTROMS) CRYSTAL STRUCTURE..."
   expt.kind            # => XRayDiffraction
   expt.resolution      # => 0.83
   expt.deposition_date # => 1991-10-11
-  ...
 end
 ```
 
@@ -164,274 +131,234 @@ You can also read many structures at once:
 
 ```crystal
 # read all models
-Array(Structure).from_pdb "/path/to/file.pdb"
+Array(Chem::Structure).from_pdb "/path/to/file.pdb"
 # read 2th and 5th models
-Array(Structure).from_pdb "/path/to/file.pdb", indexes: [1, 4]
+Array(Chem::Structure).from_pdb "/path/to/file.pdb", indexes: [1, 4]
 ```
 
-Alternatively, you could use an IO iterator to read one by one:
+Alternatively, you could use the reader class directly to read one by one via the `#each` method:
 
 ```crystal
-PDB::Reader.new("/path/to/file.pdb").each { |s| ... }
-PDB::Reader.new("/path/to/file.pdb").each(indexes: [1, 4]) { |s| ... }
+Chem::PDB::Reader.new("/path/to/file.pdb").each { |struc| ... }
+Chem::PDB::Reader.new("/path/to/file.pdb").each(indexes: [1, 4]) { |struc| ... }
 ```
 
 ### Topology access
 
-You can access topology objects using the bracket syntax (like a hash or
-associative array or dictionary):
+You can access topology objects using the `#dig` methods:
 
 ```crystal
-structure['A'] # => <Chain A>
-structure['A'][10] # => <Residue A:ARG10>
-structure['A'][10]["CA"] # => <Atom A:ARG10:CA(146)>
-```
+struc.dig('A')           # => <Chain A>
+struc.dig('A', 10)       # => <Residue A:ARG10>
+struc.dig('A', 10, "CA") # => <Atom A:ARG10:CA(146)>
 
-Alternatively, you can use the `#dig` and `#dig?` methods:
-
-```crystal
-structure.dig 'A' # => <Chain A>
-structure.dig 'A', 10 # => <Residue A:ARG10>
-structure.dig 'A', 10, "CA" # => <Atom A:ARG10:CA(146)>
-
-structure.dig 'A', 10, "CJ" # causes an error because "CJ" doesn't exist
-structure.dig? 'A', 10, "CJ" # => nil
+struc.dig 'A', 10, "CJ"  # raises a KeyError because "CJ" doesn't exist
+struc.dig? 'A', 10, "CJ" # => nil
 ```
 
 Each topology object have several modifiable properties:
 
 ```crystal
-atom = structure.dig 'A', 10, "CA"
-atom.element.name # => "Carbon"
-atom.coords # => [8.47 4.577 8.764]
-atom.occupancy # => 1.0
+atom = struc.dig 'A', 10, "CA"
+atom.element.name            # => "Carbon"
+atom.coords                  # => [8.47 4.577 8.764]
+atom.occupancy               # => 1.0
 atom.bonded_atoms.map &.name # => ["N", "C", "HA", "CB"]
+
+atom.residue.number   # => 10
+atom.residue.protein? # => true
+atom.residue.pred     # => <Residue A:PHE9>
+
+atom.chain.id            # => 'A'
+atom.chain.residues.size # => 152
 ```
 
-Thanks to Crystal's powerful standard library, manipulating topology objects is
-very easy:
+Thanks to Crystal's powerful standard library, manipulating topology objects is very easy:
 
 ```crystal
+# select chains longer than 50 residues
+struc.chains.select { |chain| chain.residues.size > 50 }
 # ramachandran angles
-structure.residues.map { |r| {r.phi, r.psi} } # => [{129.5, 90.1}, ...]
+struc.residues.map { |residue| {residue.phi, residue.psi} } # => [{129.5, 90.1}, ...]
 # renumber residues starting from 1
-structure.residues.each_with_index { |res, i| res.number = i + 1 }
+struc.residues.each_with_index { |residue, i| residue.number = i + 1 }
 # constrain Z-axis
-structure.atoms.each &.constraint=(:z)
-# total charge
-structure.atoms.sum_of &.partial_charge
+struc.atoms.each &.constraint=(:z)
+# total partial charge
+struc.atoms.sum_of &.partial_charge
 # iterate over secondary structure elements
-structure.residues.chunk(&.sec).each do |sec, residues|
-  sec # => HelixAlpha
+struc.residues.chunk(&.sec).each do |sec, residues|
+  sec      # => HelixAlpha
   residues # => [<Residue A:ARG1>, <Residue A:LEU2>, ...]
 end
 ```
 
-Here `#residues` and `#atoms` return an array of `Residue` and `Atom` instances,
-respectively. Collections also provide iterator-based access, e.g.,
-`#each_atom`, that avoids expensive memory allocations:
-
-```crystal
-structure.atoms.any? &.constraint # array allocation to just check a condition
-structure.each_atom.any? &.constraint # faster!
-```
+The `#chains`, `#residues`, and `#atoms` methods return an array view of `Chain`, `Residue` and `Atom` instances, respectively.
 
 ### Atom selection
 
-Right now, there is no custom language to select a subset of atoms. However,
-thanks to Crystal, one can achieve a similar result with an intuitive syntax:
+Unlike most other libraries for computational chemistry, there is no text-based language to select a subset of atoms.
+However, one can achieve a rather similar experience using Crystal's own syntax:
 
 ```crystal
-structure.atoms.select { |atom| atom.partial_charge > 0 }
-# or
-structure.atoms.select &.partial_charge.>(0)
+struc.atoms.select { |atom| atom.partial_charge > 0 }
+# or (Crystal's short block syntax)
+struc.atoms.select &.partial_charge.>(0)
 # compared to a custom language
-structure.atoms.select "partial_charge > 0"
+struc.atoms.select "partial_charge > 0"
 
-# select atoms within a cylinder of radius = 4 A and centered at the origin
-structure.atoms.select { |atom| atom.x**2 + atom.y**2 < 4 }
+# select atoms within a cylinder of radius = 4 A along the Z axis and centered at the origin
+struc.atoms.select { |atom| atom.x**2 + atom.y**2 < 4 }
 # compared to a custom language
-structure.atoms.select "sqrt(x) + sqrt(y) < 4" # or "x**2 + y**2 < 4"
+struc.atoms.select "sqrt(x) + sqrt(y) < 4" # or "x**2 + y**2 < 4"
 ```
 
-One advantage to using Crystal itself is that it provides type-safety: doing
-something like `atom.name**2` will result in a compilation error, whereas using
-a custom language will probably produce a confusing error during runtime.
-Additionally, the code block can be as big and complex as necessary with
-multiple intermediary computations. Furthermore, a negative condition may be
-confusing and not be trivial to write, but in Crystal you would simply use
-`#reject` instead.
+Using Crystal itself for selection provides one big advantage: type-safety.
+Doing something like `atom.name**2` will result in an error during _compilation_, pointing exactly the error's location.
+Instead, using a custom language will produce an error during _runtime_ at some point during execution, where the message may be useful or not depending on the type of error.
 
-Finally, the above also works for chain and residue collections:
+Additionally, the code block can be as big and complex as necessary with multiple intermediary computations.
+Furthermore, a negative condition may be confusing and not be trivial to write, but in Crystal you would simply use the `#reject` method instead.
+The same syntax can also be used for counting, grouping, etc. via the standard library (see [Enumerable](https://crystal-lang.org/api/latest/Enumerable.html) module).
+
+Thanks to the topology hierarchical access, the above also works for chains and residues:
 
 ```crystal
 # select protein chains
-structure.chains.select &.each_residue.any?(&.protein?)
+struc.chains.select &.residue.any?(&.protein?)
 # select only solvent residues
-structure.residues.select &.solvent?
-# select residues with any atom within 5 A of the first CA atom
-# (this is equivalent to "same residue as" or "fillres" in other libraries)
-ca = structure.dig 'A', 1, "CA"
-structure.residues.select do |res|
-  res.each_atom.any? { |atom| Spatial.distance(atom, ca) < 5 }
-end
-# or
-structure.atoms.select { |atom| Spatial.distance(atom, ca) < 5 }.residues
+struc.residues.select &.solvent?
+# select residues with its CA atom within 5 A of the first CA atom (this is equivalent to "same residue as" or "fillres" in other libraries)
+ca = struc.dig('A', 1, "CA")
+struc.residues.select { |residue| residue.dig("CA").coords.distance ca.coords < 5 }
 ```
+
+This may improve performance drastically when selecting chains/residues as it only requires traversing the chains/residues, which will be significantly smaller than the number of atoms.
+Most libraries do not offer such functionality, and one often needs to resort to select unique atoms within the desired residues.
 
 ### Coordinates manipulation
 
-All coordinates manipulation is done using a `CoordinatesProxy` instance,
-available for any atom collection (i.e., structure, chain or residue) via
-`#coords`:
+All coordinates manipulation is done using a `CoordinatesProxy` instance, available for topology object containing atoms (_i.e._, structure, chain, and residue) via the `#coords` method:
 
 ```crystal
 # geometric center
-structure.coords.center
+struc.coords.center
 # center at origin
-structure.coords.translate! -structure.coords.center
+struc.coords.center_at_origin
 # wraps atoms into the primary unit cell
-structure.coords.wrap
-...
+struc.coords.wrap
+# rotate about an axis
+struc.coords.rotate Chem::Spatial::Vec3[1, 2, 3], 90.degrees
+# align coordinates to a reference structure
+struc.coords.align_to ref_struc
 ```
 
-## Benchmarks
+## Benchmark
 
 `chem.cr` is implemented in pure Crystal, making it as fast or even faster than
 some C-powered packages.
 
-The benchmark is designed as follows:
+There is a benchmark at the [pdb-bench](https://github.com/franciscoadasme/pdb-bench) repository that compares `chem.cr` with popular software for computational chemistry.
+The benchmark includes the following tests:
 
-- The tests are implemented using the functionality documented by each library
-  in tutorials, examples, etc. Optimized versions may be faster but require
-  advanced (possibly undocumented) usage.
-- Tests are run ten times (except for 1HTQ, 3 times) and the elapsed time for
-  each run is averaged.
-- Parsing PDB files
-  - [1CRN](http://www.rcsb.org/pdb/explore/explore.do?structureId=1crn) -
-    hydrophobic protein (327 atoms).
-  - [3JYV](http://www.rcsb.org/pdb/explore/explore.do?structureId=3jyv) - 80S
-    rRNA (57,327 atoms).
-  - [1HTQ](http://www.rcsb.org/pdb/explore/explore.do?structureId=1htq) -
-    multicopy glutamine synthetase (10 models of 97,872 atoms).
-- Counting the number of alanine residues in adenylate kinase (1AKE, 3816
-  atoms).
-- Calculating the distance between residues 50 and 60 of chain A in adenylate
-  kinase (1AKE, 3816 atoms).
-- Calculating the Ramachandran phi/psi angles in adenylate kinase (1AKE, 3816
-  atoms).
+- Read and parse PDB files.
+- Counting residues matching a condition.
+- Calculating distances.
+- Calculating the Ramachandran angles.
+- Aligning two structures.
 
-**IMPORTANT**: direct comparison of parsing times should be taken with a grain
-of salt because each library does something slightly different, e.g., error
-checking. Some of this functionality is listed below. Nonetheless, these results
-gives an overall picture in terms of the expected performance.
+Overall, `chem.cr` (orange) comes first in most tests, sometimes over two orders of magnitude faster than the tested software.
+Otherwise, it is slightly slower than the faster software, even compared to C/C++ code.
 
-|                      | Biopython | chem.cr | Chemfiles | MDAnalysis | MDTraj | schrodinger |   VMD |
-| -------------------- | --------: | ------: | --------: | ---------: | -----: | ----------: | ----: |
-| Parse 1CRN [ms]      |     6.521 |   1.028 |     1.668 |      5.059 | 11.923 |      45.497 | 2.285 |
-| Parse 3JYV [s]       |     0.837 |   0.086 |     0.199 |      0.404 |  1.490 |       0.766 | 0.162 |
-| Parse 1HTQ [s]       |    16.146 |   1.673 |     2.540 |      1.387 | 18.969 |      11.997 | 0.236 |
-| Count [ms]           |     0.210 |   0.009 |     0.322 |      0.041 |  0.079 |      25.997 | 0.165 |
-| Distance [ms]        |     0.172 |   0.000 |     1.016 |      0.382 |  0.990 |      43.101 | 0.379 |
-| Ramachandran [ms]    |   110.450 |   0.607 |         - |    690.201 |  4.947 |      68.758 | 1.814 |
-|                      |           |         |           |            |        |             |       |
-| License              | Biopython |     MIT |       BSD |      GPLv2 |   LGPL | Proprietary |   VMD |
-| Parse Header         |       yes |     yes |       yes |         no |     no |          no |    no |
-| Parse CONECT         |        no |     yes |       yes |         no |    yes |         yes |   yes |
-| Guess bonds          |        no |      no |       yes |         no |    yes |         yes |   yes |
-| Hybrid36             |        no |     yes |        no |        yes |     no |          no |    no |
-| Hierarchical parsing |       yes |     yes |        no |         no |     no |          no |    no |
-| Supports disorder    |       yes |     yes |        no |         no |    yes |         yes |    no |
+Parsing a large PDB file like `1HTQ` seems to be slow in `chem.cr`, but the implementation may drastically differ between softwares (e.g. error checking, implicit bond guessing).
+Please refer to the table at the [benchmark results](https://github.com/franciscoadasme/pdb-bench#results) for a detailed comparison.
 
-Latest update: 2019-11-10
-
-Scripts and details are provided at [pdb-bench](https://github.com/franciscoadasme/pdb-bench).
+![](https://github.com/franciscoadasme/pdb-bench/raw/master/assets/bench.png)
 
 ## Roadmap
 
 ### Topology manipulation
 
-- [x] Automatic connectivity detection (includes periodic systems)
-- [x] Automatic bond order assignment
-- [x] Residue templates (basic impl.)
-  - [x] Custom terminal groups
-- [x] Automatic topology assignment (chain, residue names, atom names) based on
-      residue templates
-- [ ] Atom wildcards (`"C*"` will select `"C"`, `"CA"`, `"CB"`, etc.)
-- [ ] Atom selection language
+- [x] Automatic connectivity detection (includes periodic systems).
+- [x] Automatic bond order assignment.
+- [x] Residue templates.
+  - [x] Custom terminal groups.
+- [x] Automatic topology reconstruction based on residue templates.
+- [x] Atom wildcards (`"C*"` will select `"C"`, `"CA"`, `"CB"`, etc.).
+- [ ] Atom selection language.
 
 ### Input and Output
 
-- [x] Automatic file format detection
-- [x] Support for per-file format options (e.g., select PDB chain)
-- [x] Friendly errors (message with error location)
-- [x] Iterator-based IO
-- [ ] Compressed files (.gz and .xz)
-- [x] Trajectory support
+- [x] Automatic file format detection.
+- [x] Support for per-file format options (_e.g._ select PDB chain).
+- [x] Friendly errors (message with error location).
+- [x] Iterator-based IO.
+- [ ] Compressed files (.gz and .xz).
+- [x] Trajectory support (basic implementation).
 
 #### File formats
 
-- [x] DFTB+'s Gen format
-- [ ] Macromolecular Crystallographic Information Framework (CIF)
-- [ ] MacroMolecular Transmission Format (MMTF)
-- [x] PDB
-- [x] Tripos Mol2
-- [x] VASP's Poscar
-- [x] XYZ
-- [ ] and many more
+- [x] PDB (.pdb, .ent).
+- [ ] Macromolecular Crystallographic Information Framework (CIF).
+- [ ] MacroMolecular Transmission Format (MMTF).
+- [x] Extended XYZ (.xyz).
+- [x] Mol/SDF (.mol, .sdf).
+- [x] Tripos Mol2 (.mol2).
+- [x] PSF (.psf).
+- [ ] Maestro (.mae).
+- [x] DCD trajectory format (.dcd).
+- [x] JDFTx (.ionpos and .lattice).
+- [x] VASP's Poscar (POSCAR, CONTCAR).
+- [x] DFTB+'s Gen format (.gen).
 
 ### Analysis
 
-- [x] Coordinates manipulation (via `CoordinatesProxy`)
-- [x] Spatial calculations (distance, angle, dihedral, quaternions, affine
-      transformations)
-- [x] Periodic boundary conditions (PBC) support (topology-aware wrap and
-      unwrap)
-- [x] Secondary structure assignment
-  - [x] DSSP (native implementation)
-  - [x] STRIDE (uses external program for now)
-- [x] Nearest neighbor search (via native k-d tree impl.)
-- [x] RMSD
-- [x] Structure superposition
-- [ ] Intermolecular interactions (H-bonds, etc.)
-- [x] Volumetric data
-- [ ] Parallel processing
+- [x] Coordinates manipulation.
+- [x] Spatial calculations (distance, angle, dihedral, quaternions, affine transformations).
+- [x] Periodic boundary conditions (PBC) support (topology-aware wrap and unwrap).
+- [x] Secondary structure assignment.
+  - [x] DSSP (native implementation).
+  - [x] STRIDE (uses external program for now).
+  - [x] PSIQUE (own method).
+- [x] Nearest neighbor search (via native k-d tree).
+- [x] RMSD.
+- [x] Structure superposition.
+- [ ] Intermolecular interactions (H-bonds, etc.).
+- [x] Volumetric data.
+- [ ] Parallel processing.
 
 ### Other
 
-- [ ] Documentation
-- [ ] Guides
-- [ ] Workflows (handle calculation pipelines)
-- [ ] More tests
-
-## Testing
-
-Run the tests with `crystal spec`.
+- [ ] Documentation.
+- [ ] Guides.
+- [ ] Workflows (handle calculation pipelines).
+- [ ] More tests.
 
 ## Similar software
 
-There are several libraries providing similar functionality. Here we list some
-of them and provide one or more reasons for why we didn't use them. However,
-each one of them is good in their own right so please do check them out if
-`chem.cr` does not work for you.
+There are several libraries providing similar functionality.
+Here we list some of them and provide one or more reasons for why we didn't use them. However, each one of them is good in their own right, so please do check them out if `chem.cr` does not work for you.
 
-- [Chemfiles](http://chemfiles.org/) is a library for reading and writing
-  chemistry files written in C++, but can also be used from other languages such
-  as Python. It is mainly focused on simulation trajectories and does not
-  provide an object-oriented topology access.
-- [OpenBabel](https://openbabel.org/wiki/Main_Page) is a massive C++ library
-  providing support for more than 110 formats. Its API is very complex to use.
-- [MDTraj](http://mdtraj.org/latest/), [MDAnalysis](http://www.mdanalysis.org/),
-  [cclib](https://cclib.github.io), [pymatgen](https://pymatgen.org),
-  [prody](http://prody.csb.pitt.edu), [Biopython](https://biopython.org) and
-  more are written in Python, which usually means two things: (1) no type safety
-  makes them sometimes difficult to use if there is not enough documentation
-  (more common than one may think), (2) one usually have to deal with C for
-  performance critical code.
-- [VMD](http://www.ks.uiuc.edu/Research/vmd/) and
-  [Schrodinger](https://schrodinger.com/) are very popular software for
-  molecular visualization that provide an API in Tcl and/or Python to manipulate
-  molecules. However, these usually suffer from poor documentation.
+- [Chemfiles](http://chemfiles.org/) is a library for reading and writing chemistry files written in C++, but can also be used from other languages such as Python.
+  It is mainly focused on simulation trajectories and does not provide an object-oriented topology access.
+  Also, it does not provide functionality beyond parsing and writing files.
+- [OpenBabel](https://openbabel.org/wiki/Main_Page) is a massive C++ library providing support for more than 110 formats.
+  Its API is very complex to use.
+- [MDTraj](http://mdtraj.org/latest/), [MDAnalysis](http://www.mdanalysis.org/), [cclib](https://cclib.github.io), [pymatgen](https://pymatgen.org), [prody](http://prody.csb.pitt.edu), [Biopython](https://biopython.org) and more are written in Python, which usually means two things.
+  First, no type safety makes them sometimes difficult to use if there is not enough documentation (more common than one may think).
+  Second, need to deal with C for performance critical code.
+- [VMD](http://www.ks.uiuc.edu/Research/vmd/) and [Schrodinger](https://schrodinger.com/) are very popular software for molecular visualization that provide an API in Tcl and/or Python to manipulate molecules.
+  However, these usually suffer from poor documentation, and they are difficult to extend functionality.
+
+## Testing
+
+Run the tests with the `crystal spec` command.
+Some tests work by compiling small programs, which may be slower to run.
+These may be skipped by running:
+
+```console
+$ crystal spec --tag='~codegen'
+```
 
 ## Contributing
 
@@ -453,7 +380,3 @@ Licensed under the MIT license, see the separate LICENSE file.
 [1]: https://crystal-lang.org
 [2]: https://en.wikipedia.org/wiki/Protein_Data_Bank_(file_format)
 [3]: https://crystal-lang.org/install
-[4]: https://crystal-lang.org/reference/using_the_compiler/#creating-a-crystal-project
-[5]: https://crystal-lang.org/reference/the_shards_command/
-[6]: https://crystal-lang.org/reference/syntax_and_semantics/requiring_files.html
-[7]: https://github.com/franciscoadasme/chem.cr/releases/latest
