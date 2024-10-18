@@ -931,61 +931,58 @@
 <p><a href="https://github.com/franciscoadasme/chem.cr/actions/workflows/crystal.yml"><img src="https://github.com/franciscoadasme/chem.cr/actions/workflows/crystal.yml/badge.svg" alt="Crystal CI" /></a>
 <a href="https://github.com/franciscoadasme/chem.cr/releases/latest"><img src="https://img.shields.io/github/v/release/franciscoadasme/chem.cr.svg?label=version" alt="Version" /></a>
 <a href="https://github.com/franciscoadasme/chem.cr/blob/master/LICENSE"><img src="https://img.shields.io/github/license/franciscoadasme/chem.cr.svg" alt="License" /></a></p>
-<hr />
-<p>A modern library written in [Crystal]<a href="https://crystal-lang.org">1</a> primarily designed for
-manipulating molecular files created by computational chemistry
-programs. It aims to be both fast and easy to use.</p>
-<p><strong>NOTE</strong>: PSIQUE documentation can be found <a href="https://github.com/franciscoadasme/psique">here</a></p>
-<p><strong>IMPORTANT</strong>: this library is in alpha stage, meaning that there is missing
-functionality, documentation, etc. and there will be breaking changes.</p>
 <p><a href="#features">Features</a> |
 <a href="#installation">Installation</a> |
 <a href="#usage">Usage</a> |
-<a href="https://github.com/franciscoadasme/chem.cr/wiki#tools">Tools</a> |
-<a href="#benchmarks">Benchmarks</a> |
+<a href="#benchmark">Benchmark</a> |
 <a href="#roadmap">Roadmap</a> |
-<a href="#testing">Testing</a> |
 <a href="#similar-software">Similar software</a> |
+<a href="#testing">Testing</a> |
 <a href="#contributing">Contributing</a> |
 <a href="#contributors">Contributors</a> |
 <a href="#license">License</a></p>
+<p>A modern library written in [Crystal]<a href="https://crystal-lang.org">1</a> for manipulating molecular files used in computational chemistry and biology.
+It aims to be both fast and easy to use.</p>
+<blockquote>
+<p>[!NOTE]
+PSIQUE was moved to the <a href="https://github.com/franciscoadasme/psique">psique</a> repository.</p>
+</blockquote>
 <h2><a id="features" class="anchor" href="#features">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>Features</h2>
 <ul>
-<li>Object-oriented API for accessing and manipulating molecules. It
-follows the topology commonly used in [Protein Data Bank]<a href="https://en.wikipedia.org/wiki/Protein_Data_Bank_(file_format)">2</a> (PDB)
-file format: Structure (or model) → Chain → Residue → Atom.</li>
-<li>Type safety (assigning a number to the atom's name will result in a
-compilation error)</li>
-<li>Support for periodic molecular structures</li>
-<li>Support for several file formats (and many more to come...)</li>
-<li>Iterator-based file reading (avoids reading all data into memory)</li>
-<li>Fast performance (see Benchmarks below)</li>
+<li>Object-oriented API for accessing and manipulating molecules.
+It follows the topology commonly used in [Protein Data Bank]<a href="https://en.wikipedia.org/wiki/Protein_Data_Bank_(file_format)">2</a> (PDB) file format: Structure (or model) → Chain → Residue → Atom.</li>
+<li>Type safety (assigning a number as the atom's name will result in an error at compilation time).</li>
+<li>Support for periodic molecular structures.</li>
+<li>Support for common molecular file formats (PDB, SDF, etc.).</li>
+<li>Spatial measurements (distance, RMSD, alignment).</li>
+<li>Template-based topology reconstruction.</li>
+<li>Volumetric data.</li>
+<li>Fast performance (see <a href="#benchmark">Benchmark</a> below).</li>
 </ul>
+<blockquote>
+<p>[!IMPORTANT]
+This library is in alpha stage, meaning that there is missing functionality, documentation, etc. and there will be breaking changes.</p>
+</blockquote>
 <h2><a id="installation" class="anchor" href="#installation">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>Installation</h2>
-<p>First check that the Crystal compiler is installed correctly:</p>
-<pre><code class="language-sh">$ crystal --version
-Crystal 0.35.1 [5999ae29b] (2020-06-19)
+<p>Ensure the Crystal compiler is installed:</p>
+<pre><code class="language-console">$ crystal -v
+Crystal 1.13.1 [0cef61e51] (2024-07-12)
 
-LLVM: 8.0.0
+LLVM: 18.1.6
 Default target: x86_64-unknown-linux-gnu</code></pre>
 <p>If the command fails, you need to install the crystal compiler by
 following [these steps]<a href="https://crystal-lang.org/install">3</a>.</p>
-<h3><a id="using-shards" class="anchor" href="#using-shards">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>Using Shards</h3>
-<p>Crystal handles dependencies by listing the packages on a <code>shard.yml</code>
-file in a Crystal project. First, create a new project:</p>
-<pre><code class="language-sh">$ crystal init app myapp
+<p>Crystal requires listing the dependencies in the <code>shard.yml</code> file.
+Let's create a new project:</p>
+<pre><code class="language-console">$ crystal init app myapp
     create  myapp/.gitignore
     create  myapp/.editorconfig
     create  myapp/LICENSE
@@ -998,28 +995,14 @@ file in a Crystal project. First, create a new project:</p>
     create  myapp/spec/myapp_spec.cr
 Initialized empty Git repository in /home/crystal/myapp/.git/
 $ cd myapp</code></pre>
-<p>Read more about projects at the [Crystal guides]<a href="https://crystal-lang.org/reference/using_the_compiler/#creating-a-crystal-project">4</a>. Add this to your
-application's <code>shard.yml</code>:</p>
+<p>Add the following to the application's <code>shard.yml</code>:</p>
 <pre><code class="language-yaml">dependencies:
   chem:
-    github: franciscoadasme/chem.cr
-    version: ~&gt; 0.1</code></pre>
+    github: franciscoadasme/chem.cr</code></pre>
 <p>Then, resolve and install missing dependencies:</p>
-<pre><code class="language-sh">shards install</code></pre>
-<p>Dependencies are installed into the <code>lib</code> folder. More about
-dependencies at the [Shards guides]<a href="https://crystal-lang.org/reference/the_shards_command/">5</a>.</p>
-<h3><a id="manual-download" class="anchor" href="#manual-download">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>Manual download</h3>
-<p>Either clone the repository or download a copy of the <code>chem</code> module to
-your local machine:</p>
-<pre><code class="language-sh">tag=$(curl -s https://api.github.com/repos/franciscoadasme/chem.cr/releases/latest | grep &quot;tag_name&quot; | cut -d\&quot; -f4)
-wget https://github.com/franciscoadasme/chem.cr/archive/$tag.tar.gz -O chem.cr-${tag#v}.tar.gz
-tar xvf chem.cr-${tag#v}.tar.gz</code></pre>
-<p>This will download the latest version of the <code>chem</code> module to a folder
-named <code>chem.cr-X.Y.Z</code>, where <code>X.Y.Z</code> stands for the current version.</p>
+<pre><code class="language-console">$ shards install</code></pre>
+<p>Dependencies are installed into the <code>lib</code> folder.
+More about dependencies at the [Shards guides][5].</p>
 <h3><a id="requirements" class="anchor" href="#requirements">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
@@ -1034,186 +1017,143 @@ executable path.</li>
     <use href="#octicon-link"/>
   </svg>
 </a>Usage</h2>
-<p>First require the <code>chem</code> module. You must have used the <code>shards</code> command to install the
-dependencies:</p>
+<p>First require the <code>chem</code> module (refer to the [Crystal guides][6] for more information):</p>
 <pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;chem&quot;</span></code></pre>
-<p>Refer to the [Crystal guides]<a href="https://crystal-lang.org/reference/syntax_and_semantics/requiring_files.html">6</a> for more information about how to
-require other files.</p>
-<p>Either way, write the following to avoid typing the
-<code><a href="Chem.html">Chem</a>::</code> prefix:</p>
-<pre><code class="language-crystal"><span class="k">include</span> <span class="t">Chem</span></code></pre>
 <p>Let's first read a structure:</p>
-<pre><code class="language-crystal">structure <span class="o">=</span> <span class="t">Structure</span>.read <span class="s">&quot;/path/to/file.pdb&quot;</span>
-structure <span class="c"># =&gt; &lt;Structure &quot;1cbn&quot;: 644 atoms, 47 residues, periodic&gt;</span></code></pre>
-<p>You can also use a custom read method that accepts specific options:</p>
-<pre><code class="language-crystal"><span class="t">Structure</span>.from_pdb <span class="s">&quot;/path/to/file.pdb&quot;</span>
-<span class="t">Structure</span>.from_pdb <span class="s">&quot;/path/to/file.pdb&quot;</span>, chains: [<span class="s">&#39;A&#39;</span>] <span class="c"># read only chain A</span>
-<span class="t">Structure</span>.from_pdb <span class="s">&quot;/path/to/file.pdb&quot;</span>, het: <span class="n">false</span> <span class="c"># skip HET atoms</span>
-<span class="t">Structure</span>.from_pdb <span class="s">&quot;/path/to/file.pdb&quot;</span>, alt_loc: <span class="s">&#39;A&#39;</span> <span class="c"># select alternate location A</span></code></pre>
+<pre><code class="language-crystal">struc <span class="o">=</span> <span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>.read <span class="s">&quot;file.pdb&quot;</span>
+struc <span class="c"># =&gt; &lt;Structure &quot;1cbn&quot;: 644 atoms, 47 residues, periodic&gt;</span></code></pre>
+<p>You can also use a custom <code>.from_*</code> method to specify reading options when available:</p>
+<pre><code class="language-crystal"><span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>.from_pdb <span class="s">&quot;/path/to/file.pdb&quot;</span>
+<span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>.from_pdb <span class="s">&quot;/path/to/file.pdb&quot;</span>, chains: [<span class="s">&#39;A&#39;</span>] <span class="c"># reads only chain A</span>
+<span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>.from_pdb <span class="s">&quot;/path/to/file.pdb&quot;</span>, het: <span class="n">false</span>    <span class="c"># skips HET atoms</span>
+<span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>.from_pdb <span class="s">&quot;/path/to/file.pdb&quot;</span>, alt_loc: <span class="s">&#39;A&#39;</span>  <span class="c"># selects alternate location A</span></code></pre>
 <p>You can access PDB header information via the <code>#experiment</code> property:</p>
-<pre><code class="language-crystal"><span class="k">if</span> expt <span class="o">=</span> structure.experiment <span class="c"># checks if experiment data is present</span>
+<pre><code class="language-crystal"><span class="k">if</span> expt <span class="o">=</span> struc.experiment <span class="c"># checks if experiment data is present</span>
   expt.title           <span class="c"># =&gt; &quot;ATOMIC RESOLUTION (0.83 ANGSTROMS) CRYSTAL STRUCTURE...&quot;</span>
   expt.kind            <span class="c"># =&gt; XRayDiffraction</span>
   expt.resolution      <span class="c"># =&gt; 0.83</span>
   expt.deposition_date <span class="c"># =&gt; 1991-10-11</span>
-  ...
 <span class="k">end</span></code></pre>
 <p>You can also read many structures at once:</p>
 <pre><code class="language-crystal"><span class="c"># read all models</span>
-<span class="t">Array</span>(<span class="t">Structure</span>).from_pdb <span class="s">&quot;/path/to/file.pdb&quot;</span>
+<span class="t">Array</span>(<span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>).from_pdb <span class="s">&quot;/path/to/file.pdb&quot;</span>
 <span class="c"># read 2th and 5th models</span>
-<span class="t">Array</span>(<span class="t">Structure</span>).from_pdb <span class="s">&quot;/path/to/file.pdb&quot;</span>, indexes: [<span class="n">1</span>, <span class="n">4</span>]</code></pre>
-<p>Alternatively, you could use an IO iterator to read one by one:</p>
-<pre><code class="language-crystal"><span class="t">PDB</span><span class="t">::</span><span class="t">Reader</span>.new(<span class="s">&quot;/path/to/file.pdb&quot;</span>).each { <span class="o">|</span>s<span class="o">|</span> ... }
-<span class="t">PDB</span><span class="t">::</span><span class="t">Reader</span>.new(<span class="s">&quot;/path/to/file.pdb&quot;</span>).each(indexes: [<span class="n">1</span>, <span class="n">4</span>]) { <span class="o">|</span>s<span class="o">|</span> ... }</code></pre>
+<span class="t">Array</span>(<span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>).from_pdb <span class="s">&quot;/path/to/file.pdb&quot;</span>, indexes: [<span class="n">1</span>, <span class="n">4</span>]</code></pre>
+<p>Alternatively, you could use the reader class directly to read one by one via the <code>#each</code> method:</p>
+<pre><code class="language-crystal"><span class="t">Chem</span><span class="t">::</span><span class="t">PDB</span><span class="t">::</span><span class="t">Reader</span>.new(<span class="s">&quot;/path/to/file.pdb&quot;</span>).each { <span class="o">|</span>struc<span class="o">|</span> ... }
+<span class="t">Chem</span><span class="t">::</span><span class="t">PDB</span><span class="t">::</span><span class="t">Reader</span>.new(<span class="s">&quot;/path/to/file.pdb&quot;</span>).each(indexes: [<span class="n">1</span>, <span class="n">4</span>]) { <span class="o">|</span>struc<span class="o">|</span> ... }</code></pre>
 <h3><a id="topology-access" class="anchor" href="#topology-access">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>Topology access</h3>
-<p>You can access topology objects using the bracket syntax (like a hash or
-associative array or dictionary):</p>
-<pre><code class="language-crystal">structure[<span class="s">&#39;A&#39;</span>] <span class="c"># =&gt; &lt;Chain A&gt;</span>
-structure[<span class="s">&#39;A&#39;</span>][<span class="n">10</span>] <span class="c"># =&gt; &lt;Residue A:ARG10&gt;</span>
-structure[<span class="s">&#39;A&#39;</span>][<span class="n">10</span>][<span class="s">&quot;CA&quot;</span>] <span class="c"># =&gt; &lt;Atom A:ARG10:CA(146)&gt;</span></code></pre>
-<p>Alternatively, you can use the <code>#dig</code> and <code>#dig?</code> methods:</p>
-<pre><code class="language-crystal">structure.dig <span class="s">&#39;A&#39;</span> <span class="c"># =&gt; &lt;Chain A&gt;</span>
-structure.dig <span class="s">&#39;A&#39;</span>, <span class="n">10</span> <span class="c"># =&gt; &lt;Residue A:ARG10&gt;</span>
-structure.dig <span class="s">&#39;A&#39;</span>, <span class="n">10</span>, <span class="s">&quot;CA&quot;</span> <span class="c"># =&gt; &lt;Atom A:ARG10:CA(146)&gt;</span>
+<p>You can access topology objects using the <code>#dig</code> methods:</p>
+<pre><code class="language-crystal">struc.dig(<span class="s">&#39;A&#39;</span>)           <span class="c"># =&gt; &lt;Chain A&gt;</span>
+struc.dig(<span class="s">&#39;A&#39;</span>, <span class="n">10</span>)       <span class="c"># =&gt; &lt;Residue A:ARG10&gt;</span>
+struc.dig(<span class="s">&#39;A&#39;</span>, <span class="n">10</span>, <span class="s">&quot;CA&quot;</span>) <span class="c"># =&gt; &lt;Atom A:ARG10:CA(146)&gt;</span>
 
-structure.dig <span class="s">&#39;A&#39;</span>, <span class="n">10</span>, <span class="s">&quot;CJ&quot;</span> <span class="c"># causes an error because &quot;CJ&quot; doesn&#39;t exist</span>
-structure.dig? <span class="s">&#39;A&#39;</span>, <span class="n">10</span>, <span class="s">&quot;CJ&quot;</span> <span class="c"># =&gt; nil</span></code></pre>
+struc.dig <span class="s">&#39;A&#39;</span>, <span class="n">10</span>, <span class="s">&quot;CJ&quot;</span>  <span class="c"># raises a KeyError because &quot;CJ&quot; doesn&#39;t exist</span>
+struc.dig? <span class="s">&#39;A&#39;</span>, <span class="n">10</span>, <span class="s">&quot;CJ&quot;</span> <span class="c"># =&gt; nil</span></code></pre>
 <p>Each topology object have several modifiable properties:</p>
-<pre><code class="language-crystal">atom <span class="o">=</span> structure.dig <span class="s">&#39;A&#39;</span>, <span class="n">10</span>, <span class="s">&quot;CA&quot;</span>
-atom.element.name <span class="c"># =&gt; &quot;Carbon&quot;</span>
-atom.coords <span class="c"># =&gt; [8.47 4.577 8.764]</span>
-atom.occupancy <span class="c"># =&gt; 1.0</span>
-atom.bonded_atoms.map <span class="o">&amp;</span>.name <span class="c"># =&gt; [&quot;N&quot;, &quot;C&quot;, &quot;HA&quot;, &quot;CB&quot;]</span></code></pre>
-<p>Thanks to Crystal's powerful standard library, manipulating topology objects is
-very easy:</p>
-<pre><code class="language-crystal"><span class="c"># ramachandran angles</span>
-structure.residues.map { <span class="o">|</span>r<span class="o">|</span> {r.phi, r.psi} } <span class="c"># =&gt; [{129.5, 90.1}, ...]</span>
+<pre><code class="language-crystal">atom <span class="o">=</span> struc.dig <span class="s">&#39;A&#39;</span>, <span class="n">10</span>, <span class="s">&quot;CA&quot;</span>
+atom.element.name            <span class="c"># =&gt; &quot;Carbon&quot;</span>
+atom.coords                  <span class="c"># =&gt; [8.47 4.577 8.764]</span>
+atom.occupancy               <span class="c"># =&gt; 1.0</span>
+atom.bonded_atoms.map <span class="o">&amp;</span>.name <span class="c"># =&gt; [&quot;N&quot;, &quot;C&quot;, &quot;HA&quot;, &quot;CB&quot;]</span>
+
+atom.residue.number   <span class="c"># =&gt; 10</span>
+atom.residue.protein? <span class="c"># =&gt; true</span>
+atom.residue.pred     <span class="c"># =&gt; &lt;Residue A:PHE9&gt;</span>
+
+atom.chain.id            <span class="c"># =&gt; &#39;A&#39;</span>
+atom.chain.residues.size <span class="c"># =&gt; 152</span></code></pre>
+<p>Thanks to Crystal's powerful standard library, manipulating topology objects is very easy:</p>
+<pre><code class="language-crystal"><span class="c"># select chains longer than 50 residues</span>
+struc.chains.<span class="k">select</span> { <span class="o">|</span>chain<span class="o">|</span> chain.residues.size <span class="o">&gt;</span> <span class="n">50</span> }
+<span class="c"># ramachandran angles</span>
+struc.residues.map { <span class="o">|</span>residue<span class="o">|</span> {residue.phi, residue.psi} } <span class="c"># =&gt; [{129.5, 90.1}, ...]</span>
 <span class="c"># renumber residues starting from 1</span>
-structure.residues.each_with_index { <span class="o">|</span>res, i<span class="o">|</span> res.number <span class="o">=</span> i <span class="o">+</span> <span class="n">1</span> }
+struc.residues.each_with_index { <span class="o">|</span>residue, i<span class="o">|</span> residue.number <span class="o">=</span> i <span class="o">+</span> <span class="n">1</span> }
 <span class="c"># constrain Z-axis</span>
-structure.atoms.each <span class="o">&amp;</span>.constraint<span class="o">=</span>(<span class="n">:z</span>)
-<span class="c"># total charge</span>
-structure.atoms.sum_of <span class="o">&amp;</span>.partial_charge
+struc.atoms.each <span class="o">&amp;</span>.constraint<span class="o">=</span>(<span class="n">:z</span>)
+<span class="c"># total partial charge</span>
+struc.atoms.sum_of <span class="o">&amp;</span>.partial_charge
 <span class="c"># iterate over secondary structure elements</span>
-structure.residues.chunk(<span class="o">&amp;</span>.sec).each <span class="k">do</span> <span class="o">|</span>sec, residues<span class="o">|</span>
-  sec <span class="c"># =&gt; HelixAlpha</span>
+struc.residues.chunk(<span class="o">&amp;</span>.sec).each <span class="k">do</span> <span class="o">|</span>sec, residues<span class="o">|</span>
+  sec      <span class="c"># =&gt; HelixAlpha</span>
   residues <span class="c"># =&gt; [&lt;Residue A:ARG1&gt;, &lt;Residue A:LEU2&gt;, ...]</span>
 <span class="k">end</span></code></pre>
-<p>Here <code>#residues</code> and <code>#atoms</code> return an array of <code>Residue</code> and <code>Atom</code> instances,
-respectively. Collections also provide iterator-based access, e.g.,
-<code>#each_atom</code>, that avoids expensive memory allocations:</p>
-<pre><code class="language-crystal">structure.atoms.any? <span class="o">&amp;</span>.constraint <span class="c"># array allocation to just check a condition</span>
-structure.each_atom.any? <span class="o">&amp;</span>.constraint <span class="c"># faster!</span></code></pre>
+<p>The <code>#chains</code>, <code>#residues</code>, and <code>#atoms</code> methods return an array view of <code>Chain</code>, <code>Residue</code> and <code>Atom</code> instances, respectively.</p>
 <h3><a id="atom-selection" class="anchor" href="#atom-selection">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>Atom selection</h3>
-<p>Right now, there is no custom language to select a subset of atoms. However,
-thanks to Crystal, one can achieve a similar result with an intuitive syntax:</p>
-<pre><code class="language-crystal">structure.atoms.<span class="k">select</span> { <span class="o">|</span>atom<span class="o">|</span> atom.partial_charge <span class="o">&gt;</span> <span class="n">0</span> }
-<span class="c"># or</span>
-structure.atoms.<span class="k">select</span> <span class="o">&amp;</span>.partial_charge.<span class="o">&gt;</span>(<span class="n">0</span>)
+<p>Unlike most other libraries for computational chemistry, there is no text-based language to select a subset of atoms.
+However, one can achieve a rather similar experience using Crystal's own syntax:</p>
+<pre><code class="language-crystal">struc.atoms.<span class="k">select</span> { <span class="o">|</span>atom<span class="o">|</span> atom.partial_charge <span class="o">&gt;</span> <span class="n">0</span> }
+<span class="c"># or (Crystal&#39;s short block syntax)</span>
+struc.atoms.<span class="k">select</span> <span class="o">&amp;</span>.partial_charge.<span class="o">&gt;</span>(<span class="n">0</span>)
 <span class="c"># compared to a custom language</span>
-structure.atoms.<span class="k">select</span> <span class="s">&quot;partial_charge &gt; 0&quot;</span>
+struc.atoms.<span class="k">select</span> <span class="s">&quot;partial_charge &gt; 0&quot;</span>
 
-<span class="c"># select atoms within a cylinder of radius = 4 A and centered at the origin</span>
-structure.atoms.<span class="k">select</span> { <span class="o">|</span>atom<span class="o">|</span> atom.x<span class="o">**</span><span class="n">2</span> <span class="o">+</span> atom.y<span class="o">**</span><span class="n">2</span> <span class="o">&lt;</span> <span class="n">4</span> }
+<span class="c"># select atoms within a cylinder of radius = 4 A along the Z axis and centered at the origin</span>
+struc.atoms.<span class="k">select</span> { <span class="o">|</span>atom<span class="o">|</span> atom.x<span class="o">**</span><span class="n">2</span> <span class="o">+</span> atom.y<span class="o">**</span><span class="n">2</span> <span class="o">&lt;</span> <span class="n">4</span> }
 <span class="c"># compared to a custom language</span>
-structure.atoms.<span class="k">select</span> <span class="s">&quot;sqrt(x) + sqrt(y) &lt; 4&quot;</span> <span class="c"># or &quot;x**2 + y**2 &lt; 4&quot;</span></code></pre>
-<p>One advantage to using Crystal itself is that it provides type-safety: doing
-something like <code>atom.name**2</code> will result in a compilation error, whereas using
-a custom language will probably produce a confusing error during runtime.
-Additionally, the code block can be as big and complex as necessary with
-multiple intermediary computations. Furthermore, a negative condition may be
-confusing and not be trivial to write, but in Crystal you would simply use
-<code>#reject</code> instead.</p>
-<p>Finally, the above also works for chain and residue collections:</p>
+struc.atoms.<span class="k">select</span> <span class="s">&quot;sqrt(x) + sqrt(y) &lt; 4&quot;</span> <span class="c"># or &quot;x**2 + y**2 &lt; 4&quot;</span></code></pre>
+<p>Using Crystal itself for selection provides one big advantage: type-safety.
+Doing something like <code>atom.name**2</code> will result in an error during <em>compilation</em>, pointing exactly the error's location.
+Instead, using a custom language will produce an error during <em>runtime</em> at some point during execution, where the message may be useful or not depending on the type of error.</p>
+<p>Additionally, the code block can be as big and complex as necessary with multiple intermediary computations.
+Furthermore, a negative condition may be confusing and not be trivial to write, but in Crystal you would simply use the <code>#reject</code> method instead.
+The same syntax can also be used for counting, grouping, etc. via the standard library (see <a href="https://crystal-lang.org/api/latest/Enumerable.html">Enumerable</a> module).</p>
+<p>Thanks to the topology hierarchical access, the above also works for chains and residues:</p>
 <pre><code class="language-crystal"><span class="c"># select protein chains</span>
-structure.chains.<span class="k">select</span> <span class="o">&amp;</span>.each_residue.any?(<span class="o">&amp;</span>.protein?)
+struc.chains.<span class="k">select</span> <span class="o">&amp;</span>.residue.any?(<span class="o">&amp;</span>.protein?)
 <span class="c"># select only solvent residues</span>
-structure.residues.<span class="k">select</span> <span class="o">&amp;</span>.solvent?
-<span class="c"># select residues with any atom within 5 A of the first CA atom</span>
-<span class="c"># (this is equivalent to &quot;same residue as&quot; or &quot;fillres&quot; in other libraries)</span>
-ca <span class="o">=</span> structure.dig <span class="s">&#39;A&#39;</span>, <span class="n">1</span>, <span class="s">&quot;CA&quot;</span>
-structure.residues.<span class="k">select</span> <span class="k">do</span> <span class="o">|</span>res<span class="o">|</span>
-  res.each_atom.any? { <span class="o">|</span>atom<span class="o">|</span> <span class="t">Spatial</span>.distance(atom, ca) <span class="o">&lt;</span> <span class="n">5</span> }
-<span class="k">end</span>
-<span class="c"># or</span>
-structure.atoms.<span class="k">select</span> { <span class="o">|</span>atom<span class="o">|</span> <span class="t">Spatial</span>.distance(atom, ca) <span class="o">&lt;</span> <span class="n">5</span> }.residues</code></pre>
+struc.residues.<span class="k">select</span> <span class="o">&amp;</span>.solvent?
+<span class="c"># select residues with its CA atom within 5 A of the first CA atom (this is equivalent to &quot;same residue as&quot; or &quot;fillres&quot; in other libraries)</span>
+ca <span class="o">=</span> struc.dig(<span class="s">&#39;A&#39;</span>, <span class="n">1</span>, <span class="s">&quot;CA&quot;</span>)
+struc.residues.<span class="k">select</span> { <span class="o">|</span>residue<span class="o">|</span> residue.dig(<span class="s">&quot;CA&quot;</span>).coords.distance ca.coords <span class="o">&lt;</span> <span class="n">5</span> }</code></pre>
+<p>This may improve performance drastically when selecting chains/residues as it only requires traversing the chains/residues, which will be significantly smaller than the number of atoms.
+Most libraries do not offer such functionality, and one often needs to resort to select unique atoms within the desired residues.</p>
 <h3><a id="coordinates-manipulation" class="anchor" href="#coordinates-manipulation">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>Coordinates manipulation</h3>
-<p>All coordinates manipulation is done using a <code>CoordinatesProxy</code> instance,
-available for any atom collection (i.e., structure, chain or residue) via
-<code>#coords</code>:</p>
+<p>All coordinates manipulation is done using a <code>CoordinatesProxy</code> instance, available for topology object containing atoms (<em>i.e.</em>, structure, chain, and residue) via the <code>#coords</code> method:</p>
 <pre><code class="language-crystal"><span class="c"># geometric center</span>
-structure.coords.center
+struc.coords.center
 <span class="c"># center at origin</span>
-structure.coords.translate! <span class="o">-</span>structure.coords.center
+struc.coords.center_at_origin
 <span class="c"># wraps atoms into the primary unit cell</span>
-structure.coords.wrap
-...</code></pre>
-<h2><a id="benchmarks" class="anchor" href="#benchmarks">
+struc.coords.wrap
+<span class="c"># rotate about an axis</span>
+struc.coords.rotate <span class="t">Chem</span><span class="t">::</span><span class="t">Spatial</span><span class="t">::</span><span class="t">Vec3</span>[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>], <span class="n">90</span>.degrees
+<span class="c"># align coordinates to a reference structure</span>
+struc.coords.align_to ref_struc</code></pre>
+<h2><a id="benchmark" class="anchor" href="#benchmark">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
-</a>Benchmarks</h2>
+</a>Benchmark</h2>
 <p><code>chem.cr</code> is implemented in pure Crystal, making it as fast or even faster than
 some C-powered packages.</p>
-<p>The benchmark is designed as follows:</p>
+<p>There is a benchmark at the <a href="https://github.com/franciscoadasme/pdb-bench">pdb-bench</a> repository that compares <code>chem.cr</code> with popular software for computational chemistry.
+The benchmark includes the following tests:</p>
 <ul>
-<li>The tests are implemented using the functionality documented by each library
-in tutorials, examples, etc. Optimized versions may be faster but require
-advanced (possibly undocumented) usage.</li>
-<li>Tests are run ten times (except for 1HTQ, 3 times) and the elapsed time for
-each run is averaged.</li>
-<li>Parsing PDB files
-<ul>
-<li><a href="http://www.rcsb.org/pdb/explore/explore.do?structureId=1crn">1CRN</a> -
-hydrophobic protein (327 atoms).</li>
-<li><a href="http://www.rcsb.org/pdb/explore/explore.do?structureId=3jyv">3JYV</a> - 80S
-rRNA (57,327 atoms).</li>
-<li><a href="http://www.rcsb.org/pdb/explore/explore.do?structureId=1htq">1HTQ</a> -
-multicopy glutamine synthetase (10 models of 97,872 atoms).</li>
+<li>Read and parse PDB files.</li>
+<li>Counting residues matching a condition.</li>
+<li>Calculating distances.</li>
+<li>Calculating the Ramachandran angles.</li>
+<li>Aligning two structures.</li>
 </ul>
-</li>
-<li>Counting the number of alanine residues in adenylate kinase (1AKE, 3816
-atoms).</li>
-<li>Calculating the distance between residues 50 and 60 of chain A in adenylate
-kinase (1AKE, 3816 atoms).</li>
-<li>Calculating the Ramachandran phi/psi angles in adenylate kinase (1AKE, 3816
-atoms).</li>
-</ul>
-<p><strong>IMPORTANT</strong>: direct comparison of parsing times should be taken with a grain
-of salt because each library does something slightly different, e.g., error
-checking. Some of this functionality is listed below. Nonetheless, these results
-gives an overall picture in terms of the expected performance.</p>
-<p>|                      | Biopython | chem.cr | Chemfiles | MDAnalysis | MDTraj | schrodinger |   VMD |
-| -------------------- | --------: | ------: | --------: | ---------: | -----: | ----------: | ----: |
-| Parse 1CRN [ms]      |     6.521 |   1.028 |     1.668 |      5.059 | 11.923 |      45.497 | 2.285 |
-| Parse 3JYV [s]       |     0.837 |   0.086 |     0.199 |      0.404 |  1.490 |       0.766 | 0.162 |
-| Parse 1HTQ [s]       |    16.146 |   1.673 |     2.540 |      1.387 | 18.969 |      11.997 | 0.236 |
-| Count [ms]           |     0.210 |   0.009 |     0.322 |      0.041 |  0.079 |      25.997 | 0.165 |
-| Distance [ms]        |     0.172 |   0.000 |     1.016 |      0.382 |  0.990 |      43.101 | 0.379 |
-| Ramachandran [ms]    |   110.450 |   0.607 |         - |    690.201 |  4.947 |      68.758 | 1.814 |
-|                      |           |         |           |            |        |             |       |
-| License              | Biopython |     MIT |       BSD |      GPLv2 |   LGPL | Proprietary |   VMD |
-| Parse Header         |       yes |     yes |       yes |         no |     no |          no |    no |
-| Parse CONECT         |        no |     yes |       yes |         no |    yes |         yes |   yes |
-| Guess bonds          |        no |      no |       yes |         no |    yes |         yes |   yes |
-| Hybrid36             |        no |     yes |        no |        yes |     no |          no |    no |
-| Hierarchical parsing |       yes |     yes |        no |         no |     no |          no |    no |
-| Supports disorder    |       yes |     yes |        no |         no |    yes |         yes |    no |</p>
-<p>Latest update: 2019-11-10</p>
-<p>Scripts and details are provided at <a href="https://github.com/franciscoadasme/pdb-bench">pdb-bench</a>.</p>
+<p>Overall, <code>chem.cr</code> (orange) comes first in most tests, sometimes over two orders of magnitude faster than the tested software.
+Otherwise, it is slightly slower than the faster software, even compared to C/C++ code.</p>
+<p>Parsing a large PDB file like <code>1HTQ</code> seems to be slow in <code>chem.cr</code>, but the implementation may drastically differ between softwares (e.g. error checking, implicit bond guessing).
+Please refer to the table at the <a href="https://github.com/franciscoadasme/pdb-bench#results">benchmark results</a> for a detailed comparison.</p>
+<p><img src="https://github.com/franciscoadasme/pdb-bench/raw/master/assets/bench.png" alt="" /></p>
 <h2><a id="roadmap" class="anchor" href="#roadmap">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
@@ -1225,17 +1165,16 @@ gives an overall picture in terms of the expected performance.</p>
   </svg>
 </a>Topology manipulation</h3>
 <ul>
-<li>[x] Automatic connectivity detection (includes periodic systems)</li>
-<li>[x] Automatic bond order assignment</li>
-<li>[x] Residue templates (basic impl.)
+<li>[x] Automatic connectivity detection (includes periodic systems).</li>
+<li>[x] Automatic bond order assignment.</li>
+<li>[x] Residue templates.
 <ul>
-<li>[x] Custom terminal groups</li>
+<li>[x] Custom terminal groups.</li>
 </ul>
 </li>
-<li>[x] Automatic topology assignment (chain, residue names, atom names) based on
-residue templates</li>
-<li>[ ] Atom wildcards (<code>&quot;C*&quot;</code> will select <code>&quot;C&quot;</code>, <code>&quot;CA&quot;</code>, <code>&quot;CB&quot;</code>, etc.)</li>
-<li>[ ] Atom selection language</li>
+<li>[x] Automatic topology reconstruction based on residue templates.</li>
+<li>[x] Atom wildcards (<code>&quot;C*&quot;</code> will select <code>&quot;C&quot;</code>, <code>&quot;CA&quot;</code>, <code>&quot;CB&quot;</code>, etc.).</li>
+<li>[ ] Atom selection language.</li>
 </ul>
 <h3><a id="input-and-output" class="anchor" href="#input-and-output">
   <svg class="octicon-link" aria-hidden="true">
@@ -1243,12 +1182,12 @@ residue templates</li>
   </svg>
 </a>Input and Output</h3>
 <ul>
-<li>[x] Automatic file format detection</li>
-<li>[x] Support for per-file format options (e.g., select PDB chain)</li>
-<li>[x] Friendly errors (message with error location)</li>
-<li>[x] Iterator-based IO</li>
-<li>[ ] Compressed files (.gz and .xz)</li>
-<li>[x] Trajectory support</li>
+<li>[x] Automatic file format detection.</li>
+<li>[x] Support for per-file format options (<em>e.g.</em> select PDB chain).</li>
+<li>[x] Friendly errors (message with error location).</li>
+<li>[x] Iterator-based IO.</li>
+<li>[ ] Compressed files (.gz and .xz).</li>
+<li>[x] Trajectory support (basic implementation).</li>
 </ul>
 <h4><a id="file-formats" class="anchor" href="#file-formats">
   <svg class="octicon-link" aria-hidden="true">
@@ -1256,14 +1195,18 @@ residue templates</li>
   </svg>
 </a>File formats</h4>
 <ul>
-<li>[x] DFTB+'s Gen format</li>
-<li>[ ] Macromolecular Crystallographic Information Framework (CIF)</li>
-<li>[ ] MacroMolecular Transmission Format (MMTF)</li>
-<li>[x] PDB</li>
-<li>[x] Tripos Mol2</li>
-<li>[x] VASP's Poscar</li>
-<li>[x] XYZ</li>
-<li>[ ] and many more</li>
+<li>[x] PDB (.pdb, .ent).</li>
+<li>[ ] Macromolecular Crystallographic Information Framework (CIF).</li>
+<li>[ ] MacroMolecular Transmission Format (MMTF).</li>
+<li>[x] Extended XYZ (.xyz).</li>
+<li>[x] Mol/SDF (.mol, .sdf).</li>
+<li>[x] Tripos Mol2 (.mol2).</li>
+<li>[x] PSF (.psf).</li>
+<li>[ ] Maestro (.mae).</li>
+<li>[x] DCD trajectory format (.dcd).</li>
+<li>[x] JDFTx (.ionpos and .lattice).</li>
+<li>[x] VASP's Poscar (POSCAR, CONTCAR).</li>
+<li>[x] DFTB+'s Gen format (.gen).</li>
 </ul>
 <h3><a id="analysis" class="anchor" href="#analysis">
   <svg class="octicon-link" aria-hidden="true">
@@ -1271,23 +1214,22 @@ residue templates</li>
   </svg>
 </a>Analysis</h3>
 <ul>
-<li>[x] Coordinates manipulation (via <code>CoordinatesProxy</code>)</li>
-<li>[x] Spatial calculations (distance, angle, dihedral, quaternions, affine
-transformations)</li>
-<li>[x] Periodic boundary conditions (PBC) support (topology-aware wrap and
-unwrap)</li>
-<li>[x] Secondary structure assignment
+<li>[x] Coordinates manipulation.</li>
+<li>[x] Spatial calculations (distance, angle, dihedral, quaternions, affine transformations).</li>
+<li>[x] Periodic boundary conditions (PBC) support (topology-aware wrap and unwrap).</li>
+<li>[x] Secondary structure assignment.
 <ul>
-<li>[x] DSSP (native implementation)</li>
-<li>[x] STRIDE (uses external program for now)</li>
+<li>[x] DSSP (native implementation).</li>
+<li>[x] STRIDE (uses external program for now).</li>
+<li>[x] PSIQUE (own method).</li>
 </ul>
 </li>
-<li>[x] Nearest neighbor search (via native k-d tree impl.)</li>
-<li>[x] RMSD</li>
-<li>[x] Structure superposition</li>
-<li>[ ] Intermolecular interactions (H-bonds, etc.)</li>
-<li>[x] Volumetric data</li>
-<li>[ ] Parallel processing</li>
+<li>[x] Nearest neighbor search (via native k-d tree).</li>
+<li>[x] RMSD.</li>
+<li>[x] Structure superposition.</li>
+<li>[ ] Intermolecular interactions (H-bonds, etc.).</li>
+<li>[x] Volumetric data.</li>
+<li>[ ] Parallel processing.</li>
 </ul>
 <h3><a id="other" class="anchor" href="#other">
   <svg class="octicon-link" aria-hidden="true">
@@ -1295,45 +1237,39 @@ unwrap)</li>
   </svg>
 </a>Other</h3>
 <ul>
-<li>[ ] Documentation</li>
-<li>[ ] Guides</li>
-<li>[ ] Workflows (handle calculation pipelines)</li>
-<li>[ ] More tests</li>
+<li>[ ] Documentation.</li>
+<li>[ ] Guides.</li>
+<li>[ ] Workflows (handle calculation pipelines).</li>
+<li>[ ] More tests.</li>
+</ul>
+<h2><a id="similar-software" class="anchor" href="#similar-software">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Similar software</h2>
+<p>There are several libraries providing similar functionality.
+Here we list some of them and provide one or more reasons for why we didn't use them. However, each one of them is good in their own right, so please do check them out if <code>chem.cr</code> does not work for you.</p>
+<ul>
+<li><a href="http://chemfiles.org/">Chemfiles</a> is a library for reading and writing chemistry files written in C++, but can also be used from other languages such as Python.
+It is mainly focused on simulation trajectories and does not provide an object-oriented topology access.
+Also, it does not provide functionality beyond parsing and writing files.</li>
+<li><a href="https://openbabel.org/wiki/Main_Page">OpenBabel</a> is a massive C++ library providing support for more than 110 formats.
+Its API is very complex to use.</li>
+<li><a href="http://mdtraj.org/latest/">MDTraj</a>, <a href="http://www.mdanalysis.org/">MDAnalysis</a>, <a href="https://cclib.github.io">cclib</a>, <a href="https://pymatgen.org">pymatgen</a>, <a href="http://prody.csb.pitt.edu">prody</a>, <a href="https://biopython.org">Biopython</a> and more are written in Python, which usually means two things.
+First, no type safety makes them sometimes difficult to use if there is not enough documentation (more common than one may think).
+Second, need to deal with C for performance critical code.</li>
+<li><a href="http://www.ks.uiuc.edu/Research/vmd/">VMD</a> and <a href="https://schrodinger.com/">Schrodinger</a> are very popular software for molecular visualization that provide an API in Tcl and/or Python to manipulate molecules.
+However, these usually suffer from poor documentation, and they are difficult to extend functionality.</li>
 </ul>
 <h2><a id="testing" class="anchor" href="#testing">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>Testing</h2>
-<p>Run the tests with <code>crystal spec</code>.</p>
-<h2><a id="similar-software" class="anchor" href="#similar-software">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>Similar software</h2>
-<p>There are several libraries providing similar functionality. Here we list some
-of them and provide one or more reasons for why we didn't use them. However,
-each one of them is good in their own right so please do check them out if
-<code>chem.cr</code> does not work for you.</p>
-<ul>
-<li><a href="http://chemfiles.org/">Chemfiles</a> is a library for reading and writing
-chemistry files written in C++, but can also be used from other languages such
-as Python. It is mainly focused on simulation trajectories and does not
-provide an object-oriented topology access.</li>
-<li><a href="https://openbabel.org/wiki/Main_Page">OpenBabel</a> is a massive C++ library
-providing support for more than 110 formats. Its API is very complex to use.</li>
-<li><a href="http://mdtraj.org/latest/">MDTraj</a>, <a href="http://www.mdanalysis.org/">MDAnalysis</a>,
-<a href="https://cclib.github.io">cclib</a>, <a href="https://pymatgen.org">pymatgen</a>,
-<a href="http://prody.csb.pitt.edu">prody</a>, <a href="https://biopython.org">Biopython</a> and
-more are written in Python, which usually means two things: (1) no type safety
-makes them sometimes difficult to use if there is not enough documentation
-(more common than one may think), (2) one usually have to deal with C for
-performance critical code.</li>
-<li><a href="http://www.ks.uiuc.edu/Research/vmd/">VMD</a> and
-<a href="https://schrodinger.com/">Schrodinger</a> are very popular software for
-molecular visualization that provide an API in Tcl and/or Python to manipulate
-molecules. However, these usually suffer from poor documentation.</li>
-</ul>
+<p>Run the tests with the <code>crystal spec</code> command.
+Some tests work by compiling small programs, which may be slower to run.
+These may be skipped by running:</p>
+<pre><code class="language-console">$ crystal spec --tag='~codegen'</code></pre>
 <h2><a id="contributing" class="anchor" href="#contributing">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
