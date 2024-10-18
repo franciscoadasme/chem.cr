@@ -85,7 +85,7 @@ $ shards install
 ```
 
 Dependencies are installed into the `lib` folder.
-More about dependencies at the [Shards guides][5].
+More about dependencies at the [Requiring files][4] guide.
 
 ### Requirements
 
@@ -94,7 +94,7 @@ More about dependencies at the [Shards guides][5].
 
 ## Usage
 
-First require the `chem` module (refer to the [Crystal guides][6] for more information):
+First require the `chem` module:
 
 ```crystal
 require "chem"
@@ -194,10 +194,11 @@ end
 ```
 
 The `#chains`, `#residues`, and `#atoms` methods return an array view of `Chain`, `Residue` and `Atom` instances, respectively.
+Refer to the [Enumerable](https://crystal-lang.org/api/latest/Enumerable.html) and [Indexable](https://crystal-lang.org/api/latest/Indexable.html) modules for more information about available methods.
 
 ### Atom selection
 
-Unlike most other libraries for computational chemistry, there is no text-based language to select a subset of atoms.
+Unlike most other libraries for computational chemistry, there is no text-based language to select a subset of atoms (for now).
 However, one can achieve a rather similar experience using Crystal's own syntax:
 
 ```crystal
@@ -219,7 +220,7 @@ Instead, using a custom language will produce an error during _runtime_ at some 
 
 Additionally, the code block can be as big and complex as necessary with multiple intermediary computations.
 Furthermore, a negative condition may be confusing and not be trivial to write, but in Crystal you would simply use the `#reject` method instead.
-The same syntax can also be used for counting, grouping, etc. via the standard library (see [Enumerable](https://crystal-lang.org/api/latest/Enumerable.html) module).
+The same syntax can also be used for counting, grouping, etc. via the standard library.
 
 Thanks to the topology hierarchical access, the above also works for chains and residues:
 
@@ -238,7 +239,7 @@ Most libraries do not offer such functionality, and one often needs to resort to
 
 ### Coordinates manipulation
 
-All coordinates manipulation is done using a `CoordinatesProxy` instance, available for topology object containing atoms (_i.e._, structure, chain, and residue) via the `#coords` method:
+All coordinates manipulation is done using a `CoordinatesProxy` instance, available for any topology object containing atoms (_i.e._ structure, chain, and residue) via the `#coords` method:
 
 ```crystal
 # geometric center
@@ -380,3 +381,4 @@ Licensed under the MIT license, see the separate LICENSE file.
 [1]: https://crystal-lang.org
 [2]: https://en.wikipedia.org/wiki/Protein_Data_Bank_(file_format)
 [3]: https://crystal-lang.org/install
+[4]: https://crystal-lang.org/reference/1.14/syntax_and_semantics/requiring_files.html
