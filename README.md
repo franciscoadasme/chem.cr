@@ -271,7 +271,7 @@ The benchmark includes the following tests:
 Overall, `chem.cr` (orange) comes first in most tests, sometimes over two orders of magnitude faster than the tested software.
 Otherwise, it is slightly slower than the faster software, even compared to C/C++ code.
 
-Parsing a large PDB file like `1HTQ` seems to be slow in `chem.cr`, but the implementation may drastically differ between softwares (e.g. error checking, implicit bond guessing).
+Parsing a large PDB file like `1HTQ` seems to be slow in `chem.cr`, but the implementation may drastically differ between software (e.g. error checking, implicit bond guessing).
 Please refer to the table at the [benchmark results](https://github.com/franciscoadasme/pdb-bench#results) for a detailed comparison.
 
 ![](https://github.com/franciscoadasme/pdb-bench/raw/master/assets/bench.png)
