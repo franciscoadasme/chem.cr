@@ -175,6 +175,14 @@ module Chem
       atoms.pos = pos
     end
 
+    # Sets the atom coordinates and cell.
+    # TODO: test
+    def pos=(pos : Spatial::Positions3) : Spatial::Positions3
+      atoms.pos = pos
+      @cell = pos.cell
+      pos
+    end
+
     def delete(ch : Chain) : Chain?
       ch = @chains.delete ch
       @chain_table.delete(ch.id) if ch && @chain_table[ch.id]?.same?(ch)
