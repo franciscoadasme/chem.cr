@@ -532,11 +532,6 @@
       
         <ul>
   
-  <li class=" " data-id="chem/Chem/Spatial/CoordinatesProxy" data-name="chem::spatial::coordinatesproxy">
-      <a href="../Chem/Spatial/CoordinatesProxy.html">CoordinatesProxy</a>
-      
-    </li>
-  
   <li class=" " data-id="chem/Chem/Spatial/Direction" data-name="chem::spatial::direction">
       <a href="../Chem/Spatial/Direction.html">Direction</a>
       
@@ -604,6 +599,11 @@
   
   <li class=" " data-id="chem/Chem/Spatial/PeriodicKDTree" data-name="chem::spatial::periodickdtree">
       <a href="../Chem/Spatial/PeriodicKDTree.html">PeriodicKDTree</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem/Chem/Spatial/Positions3Proxy" data-name="chem::spatial::positions3proxy">
+      <a href="../Chem/Spatial/Positions3Proxy.html">Positions3Proxy</a>
       
     </li>
   
@@ -973,14 +973,14 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom_view.cr#L2" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom_view.cr#L2" target="_blank">
         chem/core/atom_view.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/register_format.cr#L270" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/register_format.cr#L270" target="_blank">
         chem/register_format.cr
       </a>
     
@@ -1018,24 +1018,24 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#coords%3ASpatial%3A%3ACoordinatesProxy-instance-method" class="signature"><strong>#coords</strong> : Spatial::CoordinatesProxy</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#coords%3D%28coords%3AEnumerable%28Spatial%3A%3AVec3%29%29%3AEnumerable%28Spatial%3A%3AVec3%29-instance-method" class="signature"><strong>#coords=</strong>(coords : Enumerable(Spatial::Vec3)) : Enumerable(Spatial::Vec3)</a>
-        
-          <div class="summary"><p>Sets the atom coordinates.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
         <a href="#each_fragment%28%26%3Aself-%3E%29%3ANil-instance-method" class="signature"><strong>#each_fragment</strong>(& : <span class="k">self</span> -> ) : Nil</a>
         
       </li>
     
       <li class="entry-summary">
         <a href="#fragments%3AArray%28self%29-instance-method" class="signature"><strong>#fragments</strong> : Array(<span class="k">self</span>)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#pos%3ASpatial%3A%3APositions3Proxy-instance-method" class="signature"><strong>#pos</strong> : Spatial::Positions3Proxy</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#pos%3D%28pos%3AEnumerable%28Spatial%3A%3AVec3%29%29%3AEnumerable%28Spatial%3A%3AVec3%29-instance-method" class="signature"><strong>#pos=</strong>(pos : Enumerable(Spatial::Vec3)) : Enumerable(Spatial::Vec3)</a>
+        
+          <div class="summary"><p>Sets the atom coordinates.</p></div>
         
       </li>
     
@@ -1323,7 +1323,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom_view.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom_view.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1339,44 +1339,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom_view.cr#L13" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="coords:Spatial::CoordinatesProxy-instance-method">
-      <div class="signature">
-        
-        def <strong>coords</strong> : <a href="../Chem/Spatial/CoordinatesProxy.html">Spatial::CoordinatesProxy</a>
-
-        <a class="method-permalink" href="#coords%3ASpatial%3A%3ACoordinatesProxy-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom_view.cr#L19" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="coords=(coords:Enumerable(Spatial::Vec3)):Enumerable(Spatial::Vec3)-instance-method">
-      <div class="signature">
-        
-        def <strong>coords=</strong>(coords : <a href="../Enumerable.html">Enumerable</a>(<a href="../Chem/Spatial/Vec3.html">Spatial::Vec3</a>)) : <a href="../Enumerable.html">Enumerable</a>(<a href="../Chem/Spatial/Vec3.html">Spatial::Vec3</a>)
-
-        <a class="method-permalink" href="#coords%3D%28coords%3AEnumerable%28Spatial%3A%3AVec3%29%29%3AEnumerable%28Spatial%3A%3AVec3%29-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Sets the atom coordinates.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom_view.cr#L24" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom_view.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1392,7 +1355,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom_view.cr#L31" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom_view.cr#L31" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1408,7 +1371,44 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom_view.cr#L48" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom_view.cr#L48" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="pos:Spatial::Positions3Proxy-instance-method">
+      <div class="signature">
+        
+        def <strong>pos</strong> : <a href="../Chem/Spatial/Positions3Proxy.html">Spatial::Positions3Proxy</a>
+
+        <a class="method-permalink" href="#pos%3ASpatial%3A%3APositions3Proxy-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom_view.cr#L19" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="pos=(pos:Enumerable(Spatial::Vec3)):Enumerable(Spatial::Vec3)-instance-method">
+      <div class="signature">
+        
+        def <strong>pos=</strong>(pos : <a href="../Enumerable.html">Enumerable</a>(<a href="../Chem/Spatial/Vec3.html">Spatial::Vec3</a>)) : <a href="../Enumerable.html">Enumerable</a>(<a href="../Chem/Spatial/Vec3.html">Spatial::Vec3</a>)
+
+        <a class="method-permalink" href="#pos%3D%28pos%3AEnumerable%28Spatial%3A%3AVec3%29%29%3AEnumerable%28Spatial%3A%3AVec3%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Sets the atom coordinates.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom_view.cr#L24" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1424,7 +1424,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom_view.cr#L54" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom_view.cr#L54" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1447,7 +1447,7 @@ the <code><a href="../Chem/Gen.html">Chem::Gen</a></code> file format. Arguments
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1469,7 +1469,7 @@ file format. Arguments are forwarded to <code><a href="../Chem/Gen/Writer.html#o
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1492,7 +1492,7 @@ the <code><a href="../Chem/Mol.html">Chem::Mol</a></code> file format. Arguments
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1514,7 +1514,7 @@ file format. Arguments are forwarded to <code><a href="../Chem/Mol/Writer.html#o
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1536,7 +1536,7 @@ file format. Arguments are forwarded to <code><a href="../Chem/Mol2/Writer.html#
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1559,7 +1559,7 @@ the <code><a href="../Chem/Mol2.html">Chem::Mol2</a></code> file format. Argumen
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1582,7 +1582,7 @@ the <code><a href="../Chem/PDB.html">Chem::PDB</a></code> file format. Arguments
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1604,7 +1604,7 @@ file format. Arguments are forwarded to <code><a href="../Chem/PDB/Writer.html#o
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1627,7 +1627,7 @@ the <code><a href="../Chem/XYZ.html">Chem::XYZ</a></code> file format. Arguments
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1649,7 +1649,7 @@ file format. Arguments are forwarded to <code><a href="../Chem/XYZ/Writer.html#o
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1675,7 +1675,7 @@ corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1709,7 +1709,7 @@ in the corresponding file format if possible.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/register_format.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>

@@ -532,11 +532,6 @@
       
         <ul>
   
-  <li class=" " data-id="chem/Chem/Spatial/CoordinatesProxy" data-name="chem::spatial::coordinatesproxy">
-      <a href="../Chem/Spatial/CoordinatesProxy.html">CoordinatesProxy</a>
-      
-    </li>
-  
   <li class=" " data-id="chem/Chem/Spatial/Direction" data-name="chem::spatial::direction">
       <a href="../Chem/Spatial/Direction.html">Direction</a>
       
@@ -604,6 +599,11 @@
   
   <li class=" " data-id="chem/Chem/Spatial/PeriodicKDTree" data-name="chem::spatial::periodickdtree">
       <a href="../Chem/Spatial/PeriodicKDTree.html">PeriodicKDTree</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem/Chem/Spatial/Positions3Proxy" data-name="chem::spatial::positions3proxy">
+      <a href="../Chem/Spatial/Positions3Proxy.html">Positions3Proxy</a>
       
     </li>
   
@@ -973,7 +973,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L2" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L2" target="_blank">
         chem/core/atom.cr
       </a>
     
@@ -995,7 +995,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28residue%3AResidue%2Cnumber%3AInt32%2Celement%3AElement%2Cname%3AString%2Ccoords%3ASpatial%3A%3AVec3%2Ctypename%3AString%7CNil%3Dnil%2Cformal_charge%3AInt32%3D0%2Cmass%3AFloat64%3Delement.mass%2Coccupancy%3AFloat64%3D1%2Cpartial_charge%3AFloat64%3D0.0%2Ctemperature_factor%3AFloat64%3D0%2Cvdw_radius%3AFloat64%3Delement.vdw_radius%29-class-method" class="signature"><strong>.new</strong>(residue : Residue, number : Int32, element : Element, name : String, coords : Spatial::Vec3, typename : String | Nil = <span class="n">nil</span>, formal_charge : Int32 = <span class="n">0</span>, mass : Float64 = element.mass, occupancy : Float64 = <span class="n">1</span>, partial_charge : Float64 = <span class="n">0.0</span>, temperature_factor : Float64 = <span class="n">0</span>, vdw_radius : Float64 = element.vdw_radius)</a>
+        <a href="#new%28residue%3AResidue%2Cnumber%3AInt32%2Celement%3AElement%2Cname%3AString%2Cpos%3ASpatial%3A%3AVec3%2Ctypename%3AString%7CNil%3Dnil%2Cformal_charge%3AInt32%3D0%2Cmass%3AFloat64%3Delement.mass%2Coccupancy%3AFloat64%3D1%2Cpartial_charge%3AFloat64%3D0.0%2Ctemperature_factor%3AFloat64%3D0%2Cvdw_radius%3AFloat64%3Delement.vdw_radius%29-class-method" class="signature"><strong>.new</strong>(residue : Residue, number : Int32, element : Element, name : String, pos : Spatial::Vec3, typename : String | Nil = <span class="n">nil</span>, formal_charge : Int32 = <span class="n">0</span>, mass : Float64 = element.mass, occupancy : Float64 = <span class="n">1</span>, partial_charge : Float64 = <span class="n">0.0</span>, temperature_factor : Float64 = <span class="n">0</span>, vdw_radius : Float64 = element.vdw_radius)</a>
         
       </li>
     
@@ -1227,16 +1227,6 @@
     
       <li class="entry-summary">
         <a href="#constraint%3D%28constraint%3ASpatial%3A%3ADirection%7CNil%29-instance-method" class="signature"><strong>#constraint=</strong>(constraint : Spatial::Direction | Nil)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#coords%3ASpatial%3A%3AVec3-instance-method" class="signature"><strong>#coords</strong> : Spatial::Vec3</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#coords%3D%28coords%3ASpatial%3A%3AVec3%29-instance-method" class="signature"><strong>#coords=</strong>(coords : Spatial::Vec3)</a>
         
       </li>
     
@@ -1860,6 +1850,16 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#pos%3ASpatial%3A%3AVec3-instance-method" class="signature"><strong>#pos</strong> : Spatial::Vec3</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#pos%3D%28pos%3ASpatial%3A%3AVec3%29-instance-method" class="signature"><strong>#pos=</strong>(pos : Spatial::Vec3)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#potassium%3F-instance-method" class="signature"><strong>#potassium?</strong></a>
         
           <div class="summary"><p>Returns <code>true</code> if the atom's element is &quot;Potassium&quot;, else <code>false</code>.</p></div>
@@ -2341,18 +2341,18 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(residue:Residue,number:Int32,element:Element,name:String,coords:Spatial::Vec3,typename:String|Nil=nil,formal_charge:Int32=0,mass:Float64=element.mass,occupancy:Float64=1,partial_charge:Float64=0.0,temperature_factor:Float64=0,vdw_radius:Float64=element.vdw_radius)-class-method">
+    <div class="entry-detail" id="new(residue:Residue,number:Int32,element:Element,name:String,pos:Spatial::Vec3,typename:String|Nil=nil,formal_charge:Int32=0,mass:Float64=element.mass,occupancy:Float64=1,partial_charge:Float64=0.0,temperature_factor:Float64=0,vdw_radius:Float64=element.vdw_radius)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(residue : <a href="../Chem/Residue.html">Residue</a>, number : Int32, element : <a href="../Chem/Element.html">Element</a>, name : <a href="../String.html">String</a>, coords : <a href="../Chem/Spatial/Vec3.html">Spatial::Vec3</a>, typename : <a href="../String.html">String</a> | Nil = <span class="n">nil</span>, formal_charge : Int32 = <span class="n">0</span>, mass : Float64 = element.mass, occupancy : Float64 = <span class="n">1</span>, partial_charge : Float64 = <span class="n">0.0</span>, temperature_factor : Float64 = <span class="n">0</span>, vdw_radius : Float64 = element.vdw_radius)
+        def self.<strong>new</strong>(residue : <a href="../Chem/Residue.html">Residue</a>, number : Int32, element : <a href="../Chem/Element.html">Element</a>, name : <a href="../String.html">String</a>, pos : <a href="../Chem/Spatial/Vec3.html">Spatial::Vec3</a>, typename : <a href="../String.html">String</a> | Nil = <span class="n">nil</span>, formal_charge : Int32 = <span class="n">0</span>, mass : Float64 = element.mass, occupancy : Float64 = <span class="n">1</span>, partial_charge : Float64 = <span class="n">0.0</span>, temperature_factor : Float64 = <span class="n">0</span>, vdw_radius : Float64 = element.vdw_radius)
 
-        <a class="method-permalink" href="#new%28residue%3AResidue%2Cnumber%3AInt32%2Celement%3AElement%2Cname%3AString%2Ccoords%3ASpatial%3A%3AVec3%2Ctypename%3AString%7CNil%3Dnil%2Cformal_charge%3AInt32%3D0%2Cmass%3AFloat64%3Delement.mass%2Coccupancy%3AFloat64%3D1%2Cpartial_charge%3AFloat64%3D0.0%2Ctemperature_factor%3AFloat64%3D0%2Cvdw_radius%3AFloat64%3Delement.vdw_radius%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28residue%3AResidue%2Cnumber%3AInt32%2Celement%3AElement%2Cname%3AString%2Cpos%3ASpatial%3A%3AVec3%2Ctypename%3AString%7CNil%3Dnil%2Cformal_charge%3AInt32%3D0%2Cmass%3AFloat64%3Delement.mass%2Coccupancy%3AFloat64%3D1%2Cpartial_charge%3AFloat64%3D0.0%2Ctemperature_factor%3AFloat64%3D0%2Cvdw_radius%3AFloat64%3Delement.vdw_radius%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L40" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L40" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2397,7 +2397,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L72" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L72" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2419,7 +2419,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2441,7 +2441,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2463,7 +2463,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2485,7 +2485,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2507,7 +2507,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2529,7 +2529,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2551,7 +2551,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2567,7 +2567,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L38" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L38" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2583,7 +2583,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L38" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L38" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2605,7 +2605,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2627,7 +2627,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2649,7 +2649,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2671,7 +2671,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2693,7 +2693,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2709,7 +2709,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L76" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L76" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2725,7 +2725,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L80" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L80" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2741,7 +2741,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2763,7 +2763,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2785,7 +2785,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2807,7 +2807,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2829,7 +2829,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2851,7 +2851,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2873,7 +2873,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2895,7 +2895,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2917,7 +2917,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2933,7 +2933,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L37" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L37" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2949,7 +2949,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L37" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L37" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2971,7 +2971,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2993,7 +2993,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3015,7 +3015,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3031,7 +3031,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3047,39 +3047,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L6" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="coords:Spatial::Vec3-instance-method">
-      <div class="signature">
-        
-        def <strong>coords</strong> : <a href="../Chem/Spatial/Vec3.html">Spatial::Vec3</a>
-
-        <a class="method-permalink" href="#coords%3ASpatial%3A%3AVec3-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L7" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="coords=(coords:Spatial::Vec3)-instance-method">
-      <div class="signature">
-        
-        def <strong>coords=</strong>(coords : <a href="../Chem/Spatial/Vec3.html">Spatial::Vec3</a>)
-
-        <a class="method-permalink" href="#coords%3D%28coords%3ASpatial%3A%3AVec3%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L7" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3101,7 +3069,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3123,7 +3091,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3139,7 +3107,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L38" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L38" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3155,7 +3123,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L38" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L38" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3177,7 +3145,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3199,7 +3167,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3220,7 +3188,7 @@ atoms[<span class="n">2</span>] <span class="o">&lt;=&gt;</span> atoms[<span cla
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L85" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L85" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3242,7 +3210,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L231" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L231" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3264,7 +3232,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3286,7 +3254,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3302,7 +3270,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L89" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L89" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3318,7 +3286,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L93" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L93" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3340,7 +3308,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3356,7 +3324,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L8" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3372,7 +3340,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L8" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3394,7 +3362,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3416,7 +3384,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3438,7 +3406,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3460,7 +3428,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3482,7 +3450,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3498,7 +3466,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3514,7 +3482,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3536,7 +3504,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3558,7 +3526,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3580,7 +3548,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3602,7 +3570,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3624,7 +3592,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3646,7 +3614,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3668,7 +3636,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3684,7 +3652,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L38" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L38" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3700,7 +3668,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L38" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L38" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3722,7 +3690,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3744,7 +3712,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L101" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L101" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3766,7 +3734,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3788,7 +3756,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3810,7 +3778,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3843,7 +3811,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L105" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L105" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3865,7 +3833,7 @@ and the values of all instance variables.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3887,7 +3855,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L231" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L231" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3909,7 +3877,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3931,7 +3899,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3953,7 +3921,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3975,7 +3943,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -3997,7 +3965,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4019,7 +3987,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4041,7 +4009,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4063,7 +4031,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4085,7 +4053,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4107,7 +4075,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4129,7 +4097,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4145,7 +4113,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L11" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L11" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4161,7 +4129,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L11" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L11" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4183,7 +4151,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L111" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L111" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4205,7 +4173,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L117" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L117" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4227,7 +4195,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L123" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L123" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4249,7 +4217,7 @@ else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L135" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L135" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4271,7 +4239,7 @@ numbers, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L141" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L141" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4293,7 +4261,7 @@ names, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L147" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L147" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4315,7 +4283,7 @@ else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L129" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L129" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4343,7 +4311,7 @@ atom.match?(<span class="t">Templates</span><span class="t">::</span><span class
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L163" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L163" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4359,7 +4327,7 @@ atom.match?(<span class="t">Templates</span><span class="t">::</span><span class
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L38" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L38" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4375,7 +4343,7 @@ atom.match?(<span class="t">Templates</span><span class="t">::</span><span class
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L38" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L38" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4397,7 +4365,7 @@ atom.match?(<span class="t">Templates</span><span class="t">::</span><span class
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4419,7 +4387,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L231" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L231" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4441,7 +4409,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4463,7 +4431,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4493,7 +4461,7 @@ atom.metadata[<span class="s">&quot;foo&quot;</span>].as_s <span class="c"># rai
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L34" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L34" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4509,7 +4477,7 @@ atom.metadata[<span class="s">&quot;foo&quot;</span>].as_s <span class="c"># rai
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L167" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L167" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4531,7 +4499,7 @@ atom.metadata[<span class="s">&quot;foo&quot;</span>].as_s <span class="c"># rai
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4553,7 +4521,7 @@ atom.metadata[<span class="s">&quot;foo&quot;</span>].as_s <span class="c"># rai
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4569,7 +4537,7 @@ atom.metadata[<span class="s">&quot;foo&quot;</span>].as_s <span class="c"># rai
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4585,7 +4553,7 @@ atom.metadata[<span class="s">&quot;foo&quot;</span>].as_s <span class="c"># rai
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4607,7 +4575,7 @@ atom.metadata[<span class="s">&quot;foo&quot;</span>].as_s <span class="c"># rai
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4629,7 +4597,7 @@ atom.metadata[<span class="s">&quot;foo&quot;</span>].as_s <span class="c"># rai
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4651,7 +4619,7 @@ atom.metadata[<span class="s">&quot;foo&quot;</span>].as_s <span class="c"># rai
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4673,7 +4641,7 @@ atom.metadata[<span class="s">&quot;foo&quot;</span>].as_s <span class="c"># rai
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4695,7 +4663,7 @@ atom.metadata[<span class="s">&quot;foo&quot;</span>].as_s <span class="c"># rai
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4717,7 +4685,7 @@ atom.metadata[<span class="s">&quot;foo&quot;</span>].as_s <span class="c"># rai
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4739,7 +4707,7 @@ atom.metadata[<span class="s">&quot;foo&quot;</span>].as_s <span class="c"># rai
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4761,7 +4729,7 @@ atom.metadata[<span class="s">&quot;foo&quot;</span>].as_s <span class="c"># rai
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4777,7 +4745,7 @@ atom.metadata[<span class="s">&quot;foo&quot;</span>].as_s <span class="c"># rai
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L15" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4793,7 +4761,7 @@ atom.metadata[<span class="s">&quot;foo&quot;</span>].as_s <span class="c"># rai
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L15" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4809,7 +4777,7 @@ atom.metadata[<span class="s">&quot;foo&quot;</span>].as_s <span class="c"># rai
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L12" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L12" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4825,7 +4793,7 @@ atom.metadata[<span class="s">&quot;foo&quot;</span>].as_s <span class="c"># rai
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L12" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L12" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4847,7 +4815,7 @@ atom.metadata[<span class="s">&quot;foo&quot;</span>].as_s <span class="c"># rai
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4869,7 +4837,7 @@ atom.metadata[<span class="s">&quot;foo&quot;</span>].as_s <span class="c"># rai
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4891,7 +4859,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L231" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L231" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4913,7 +4881,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4935,7 +4903,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4951,7 +4919,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L13" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4967,7 +4935,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L13" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4989,7 +4957,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5011,7 +4979,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5033,7 +5001,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5055,7 +5023,39 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="pos:Spatial::Vec3-instance-method">
+      <div class="signature">
+        
+        def <strong>pos</strong> : <a href="../Chem/Spatial/Vec3.html">Spatial::Vec3</a>
+
+        <a class="method-permalink" href="#pos%3ASpatial%3A%3AVec3-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L7" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="pos=(pos:Spatial::Vec3)-instance-method">
+      <div class="signature">
+        
+        def <strong>pos=</strong>(pos : <a href="../Chem/Spatial/Vec3.html">Spatial::Vec3</a>)
+
+        <a class="method-permalink" href="#pos%3D%28pos%3ASpatial%3A%3AVec3%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L7" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5077,7 +5077,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5099,7 +5099,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5121,7 +5121,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5143,7 +5143,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5165,7 +5165,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L231" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L231" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5187,7 +5187,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5209,7 +5209,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5225,7 +5225,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L14" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L14" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5241,7 +5241,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L171" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L171" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5263,7 +5263,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5285,7 +5285,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5307,7 +5307,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5329,7 +5329,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5351,7 +5351,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5373,7 +5373,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5395,7 +5395,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5417,7 +5417,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5439,7 +5439,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5461,7 +5461,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5483,7 +5483,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5505,7 +5505,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5527,7 +5527,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5549,7 +5549,7 @@ residue, else <code>false</code>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L231" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L231" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5572,7 +5572,7 @@ information including chain, residue, atom name, and atom number.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L191" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L191" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5595,7 +5595,7 @@ information including chain, residue, atom name, and atom number.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L181" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L181" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5617,7 +5617,7 @@ information including chain, residue, atom name, and atom number.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5639,7 +5639,7 @@ information including chain, residue, atom name, and atom number.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5661,7 +5661,7 @@ information including chain, residue, atom name, and atom number.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5683,7 +5683,7 @@ useful for multi-valent elements (e.g., sulfur, phosphorus).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L198" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L198" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5705,7 +5705,7 @@ useful for multi-valent elements (e.g., sulfur, phosphorus).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5727,7 +5727,7 @@ useful for multi-valent elements (e.g., sulfur, phosphorus).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5743,7 +5743,7 @@ useful for multi-valent elements (e.g., sulfur, phosphorus).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L16" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L16" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5759,7 +5759,7 @@ useful for multi-valent elements (e.g., sulfur, phosphorus).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L16" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L16" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5781,7 +5781,7 @@ useful for multi-valent elements (e.g., sulfur, phosphorus).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5803,7 +5803,7 @@ useful for multi-valent elements (e.g., sulfur, phosphorus).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5826,7 +5826,7 @@ terminal functional groups such as -CH₃, -NH₂, etc.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L205" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L205" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5848,7 +5848,7 @@ terminal functional groups such as -CH₃, -NH₂, etc.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5870,7 +5870,7 @@ terminal functional groups such as -CH₃, -NH₂, etc.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5892,7 +5892,7 @@ terminal functional groups such as -CH₃, -NH₂, etc.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5914,7 +5914,7 @@ terminal functional groups such as -CH₃, -NH₂, etc.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5936,7 +5936,7 @@ terminal functional groups such as -CH₃, -NH₂, etc.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5968,7 +5968,7 @@ which includes its class name and its object address.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L209" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L209" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5990,7 +5990,7 @@ which includes its class name and its object address.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -6012,7 +6012,7 @@ to this atom within a given force field.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L19" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L19" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -6034,7 +6034,7 @@ to this atom within a given force field.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L19" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L19" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -6056,7 +6056,7 @@ to this atom within a given force field.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -6078,7 +6078,7 @@ the bond orders.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L217" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L217" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -6094,7 +6094,7 @@ the bond orders.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L38" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L38" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -6110,7 +6110,7 @@ the bond orders.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L38" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L38" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -6132,7 +6132,7 @@ the bond orders.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -6148,7 +6148,7 @@ the bond orders.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L20" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L20" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -6164,7 +6164,7 @@ the bond orders.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L20" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L20" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -6186,7 +6186,7 @@ the bond orders.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L223" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L223" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -6202,7 +6202,7 @@ the bond orders.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L227" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L227" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -6218,7 +6218,7 @@ the bond orders.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L36" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L36" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -6234,7 +6234,7 @@ the bond orders.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L36" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L36" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -6256,7 +6256,7 @@ the bond orders.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -6272,7 +6272,7 @@ the bond orders.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L36" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L36" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -6288,7 +6288,7 @@ the bond orders.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L36" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L36" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -6310,7 +6310,7 @@ the bond orders.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -6332,7 +6332,7 @@ the bond orders.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -6348,7 +6348,7 @@ the bond orders.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L36" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L36" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -6364,7 +6364,7 @@ the bond orders.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L36" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L36" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -6386,7 +6386,7 @@ the bond orders.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -6408,7 +6408,7 @@ the bond orders.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/core/atom.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>

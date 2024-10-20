@@ -532,11 +532,6 @@
       
         <ul>
   
-  <li class=" " data-id="chem/Chem/Spatial/CoordinatesProxy" data-name="chem::spatial::coordinatesproxy">
-      <a href="Chem/Spatial/CoordinatesProxy.html">CoordinatesProxy</a>
-      
-    </li>
-  
   <li class=" " data-id="chem/Chem/Spatial/Direction" data-name="chem::spatial::direction">
       <a href="Chem/Spatial/Direction.html">Direction</a>
       
@@ -604,6 +599,11 @@
   
   <li class=" " data-id="chem/Chem/Spatial/PeriodicKDTree" data-name="chem::spatial::periodickdtree">
       <a href="Chem/Spatial/PeriodicKDTree.html">PeriodicKDTree</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem/Chem/Spatial/Positions3Proxy" data-name="chem::spatial::positions3proxy">
+      <a href="Chem/Spatial/Positions3Proxy.html">Positions3Proxy</a>
       
     </li>
   
@@ -1029,10 +1029,10 @@ struc <span class="c"># =&gt; &lt;Structure &quot;1cbn&quot;: 644 atoms, 47 resi
 <span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>.from_pdb <span class="s">&quot;/path/to/file.pdb&quot;</span>, alt_loc: <span class="s">&#39;A&#39;</span>  <span class="c"># selects alternate location A</span></code></pre>
 <p>You can access PDB header information via the <code>#experiment</code> property:</p>
 <pre><code class="language-crystal"><span class="k">if</span> expt <span class="o">=</span> struc.experiment <span class="c"># checks if experiment data is present</span>
-  expt.title           <span class="c"># =&gt; &quot;ATOMIC RESOLUTION (0.83 ANGSTROMS) CRYSTAL STRUCTURE...&quot;</span>
-  expt.kind            <span class="c"># =&gt; XRayDiffraction</span>
-  expt.resolution      <span class="c"># =&gt; 0.83</span>
-  expt.deposition_date <span class="c"># =&gt; 1991-10-11</span>
+  expt.title               <span class="c"># =&gt; &quot;ATOMIC RESOLUTION (0.83 ANGSTROMS) CRYSTAL STRUCTURE...&quot;</span>
+  expt.kind                <span class="c"># =&gt; XRayDiffraction</span>
+  expt.resolution          <span class="c"># =&gt; 0.83</span>
+  expt.deposition_date     <span class="c"># =&gt; 1991-10-11</span>
 <span class="k">end</span></code></pre>
 <p>You can also read many structures at once:</p>
 <pre><code class="language-crystal"><span class="c"># read all models</span>
@@ -1057,7 +1057,7 @@ struc.dig? <span class="s">&#39;A&#39;</span>, <span class="n">10</span>, <span 
 <p>Each topology object have several modifiable properties:</p>
 <pre><code class="language-crystal">atom <span class="o">=</span> struc.dig <span class="s">&#39;A&#39;</span>, <span class="n">10</span>, <span class="s">&quot;CA&quot;</span>
 atom.element.name            <span class="c"># =&gt; &quot;Carbon&quot;</span>
-atom.coords                  <span class="c"># =&gt; [8.47 4.577 8.764]</span>
+atom.pos                     <span class="c"># =&gt; [8.47 4.577 8.764]</span>
 atom.occupancy               <span class="c"># =&gt; 1.0</span>
 atom.bonded_atoms.map <span class="o">&amp;</span>.name <span class="c"># =&gt; [&quot;N&quot;, &quot;C&quot;, &quot;HA&quot;, &quot;CB&quot;]</span>
 
@@ -1115,7 +1115,7 @@ struc.chains.<span class="k">select</span> <span class="o">&amp;</span>.residue.
 struc.residues.<span class="k">select</span> <span class="o">&amp;</span>.solvent?
 <span class="c"># select residues with its CA atom within 5 A of the first CA atom (this is equivalent to &quot;same residue as&quot; or &quot;fillres&quot; in other libraries)</span>
 ca <span class="o">=</span> struc.dig(<span class="s">&#39;A&#39;</span>, <span class="n">1</span>, <span class="s">&quot;CA&quot;</span>)
-struc.residues.<span class="k">select</span> { <span class="o">|</span>residue<span class="o">|</span> residue.dig(<span class="s">&quot;CA&quot;</span>).coords.distance ca.coords <span class="o">&lt;</span> <span class="n">5</span> }</code></pre>
+struc.residues.<span class="k">select</span> { <span class="o">|</span>residue<span class="o">|</span> residue.dig(<span class="s">&quot;CA&quot;</span>).pos.distance ca.pos <span class="o">&lt;</span> <span class="n">5</span> }</code></pre>
 <p>This may improve performance drastically when selecting chains/residues as it only requires traversing the chains/residues, which will be significantly smaller than the number of atoms.
 Most libraries do not offer such functionality, and one often needs to resort to select unique atoms within the desired residues.</p>
 <h3><a id="coordinates-manipulation" class="anchor" href="#coordinates-manipulation">
@@ -1123,17 +1123,17 @@ Most libraries do not offer such functionality, and one often needs to resort to
     <use href="#octicon-link"/>
   </svg>
 </a>Coordinates manipulation</h3>
-<p>All coordinates manipulation is done using a <code>CoordinatesProxy</code> instance, available for any topology object containing atoms (<em>i.e.</em> structure, chain, and residue) via the <code>#coords</code> method:</p>
+<p>All coordinates manipulation is done using a <code>Positions3Proxy</code> instance, available for any topology object containing atoms (<em>i.e.</em> structure, chain, and residue) via the <code>#pos</code> method:</p>
 <pre><code class="language-crystal"><span class="c"># geometric center</span>
-struc.coords.center
+struc.pos.center
 <span class="c"># center at origin</span>
-struc.coords.center_at_origin
+struc.pos.center_at_origin
 <span class="c"># wraps atoms into the primary unit cell</span>
-struc.coords.wrap
+struc.pos.wrap
 <span class="c"># rotate about an axis</span>
-struc.coords.rotate <span class="t">Chem</span><span class="t">::</span><span class="t">Spatial</span><span class="t">::</span><span class="t">Vec3</span>[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>], <span class="n">90</span>.degrees
+struc.pos.rotate <span class="t">Chem</span><span class="t">::</span><span class="t">Spatial</span><span class="t">::</span><span class="t">Vec3</span>[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>], <span class="n">90</span>.degrees
 <span class="c"># align coordinates to a reference structure</span>
-struc.coords.align_to ref_struc</code></pre>
+struc.pos.align_to ref_struc</code></pre>
 <h2><a id="benchmark" class="anchor" href="#benchmark">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>

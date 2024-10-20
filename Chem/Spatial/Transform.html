@@ -532,11 +532,6 @@
       
         <ul>
   
-  <li class=" " data-id="chem/Chem/Spatial/CoordinatesProxy" data-name="chem::spatial::coordinatesproxy">
-      <a href="../../Chem/Spatial/CoordinatesProxy.html">CoordinatesProxy</a>
-      
-    </li>
-  
   <li class=" " data-id="chem/Chem/Spatial/Direction" data-name="chem::spatial::direction">
       <a href="../../Chem/Spatial/Direction.html">Direction</a>
       
@@ -604,6 +599,11 @@
   
   <li class=" " data-id="chem/Chem/Spatial/PeriodicKDTree" data-name="chem::spatial::periodickdtree">
       <a href="../../Chem/Spatial/PeriodicKDTree.html">PeriodicKDTree</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem/Chem/Spatial/Positions3Proxy" data-name="chem::spatial::positions3proxy">
+      <a href="../../Chem/Spatial/Positions3Proxy.html">Positions3Proxy</a>
       
     </li>
   
@@ -1014,14 +1014,14 @@ transform <span class="o">*</span> vec <span class="c"># =&gt; Vec3[3.0, 2.0, 5.
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/spatial/transform.cr#L53" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/spatial/transform.cr#L53" target="_blank">
         chem/spatial/transform.cr:53
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/spatial/transform.cr#L281" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/spatial/transform.cr#L281" target="_blank">
         chem/spatial/transform.cr:281
       </a>
     
@@ -1062,7 +1062,7 @@ transform <span class="o">*</span> vec <span class="c"># =&gt; Vec3[3.0, 2.0, 5.
       </li>
     
       <li class="entry-summary">
-        <a href="#aligning%28pos%3ACoordinatesProxy%2Ctoref_pos%3ACoordinatesProxy%29%3Aself-class-method" class="signature"><strong>.aligning</strong>(pos : CoordinatesProxy, to ref_pos : CoordinatesProxy) : <span class="k">self</span></a>
+        <a href="#aligning%28pos%3APositions3Proxy%2Ctoref_pos%3APositions3Proxy%29%3Aself-class-method" class="signature"><strong>.aligning</strong>(pos : Positions3Proxy, to ref_pos : Positions3Proxy) : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns the transformation encoding the rotation and translation to align <em>pos</em> onto <em>ref_pos</em>.</p></div>
         
@@ -1343,7 +1343,7 @@ perpendicular to <em>v[0]</em> by taking their projections.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/spatial/transform.cr#L75" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/spatial/transform.cr#L75" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1359,7 +1359,7 @@ perpendicular to <em>v[0]</em> by taking their projections.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/spatial/transform.cr#L282" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/spatial/transform.cr#L282" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1381,17 +1381,17 @@ perpendicular to <em>v[0]</em> by taking their projections.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/spatial/transform.cr#L65" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/spatial/transform.cr#L65" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="aligning(pos:CoordinatesProxy,toref_pos:CoordinatesProxy):self-class-method">
+    <div class="entry-detail" id="aligning(pos:Positions3Proxy,toref_pos:Positions3Proxy):self-class-method">
       <div class="signature">
         
-        def self.<strong>aligning</strong>(pos : <a href="../../Chem/Spatial/CoordinatesProxy.html">CoordinatesProxy</a>, to ref_pos : <a href="../../Chem/Spatial/CoordinatesProxy.html">CoordinatesProxy</a>) : <span class="k">self</span>
+        def self.<strong>aligning</strong>(pos : <a href="../../Chem/Spatial/Positions3Proxy.html">Positions3Proxy</a>, to ref_pos : <a href="../../Chem/Spatial/Positions3Proxy.html">Positions3Proxy</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#aligning%28pos%3ACoordinatesProxy%2Ctoref_pos%3ACoordinatesProxy%29%3Aself-class-method">#</a>
+        <a class="method-permalink" href="#aligning%28pos%3APositions3Proxy%2Ctoref_pos%3APositions3Proxy%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1407,7 +1407,7 @@ mean square deviation (RMSD) using the QCP method (refer to
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/spatial/transform.cr#L86" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/spatial/transform.cr#L86" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1428,7 +1428,7 @@ mean square deviation (RMSD) using the QCP method (refer to
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/spatial/transform.cr#L100" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/spatial/transform.cr#L100" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1449,7 +1449,7 @@ mean square deviation (RMSD) using the QCP method (refer to
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/spatial/transform.cr#L60" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/spatial/transform.cr#L60" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1471,7 +1471,7 @@ degrees. Delegates to <code><a href="../../Chem/Spatial/Quat.html#rotation%28x%3
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/spatial/transform.cr#L106" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/spatial/transform.cr#L106" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1494,7 +1494,7 @@ computing the rotation.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/spatial/transform.cr#L113" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/spatial/transform.cr#L113" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1516,7 +1516,7 @@ the given quaternion.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/spatial/transform.cr#L119" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/spatial/transform.cr#L119" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1537,7 +1537,7 @@ the given quaternion.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/spatial/transform.cr#L129" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/spatial/transform.cr#L129" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1558,7 +1558,7 @@ the given quaternion.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/spatial/transform.cr#L124" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/spatial/transform.cr#L124" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1579,7 +1579,7 @@ the given quaternion.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/spatial/transform.cr#L134" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/spatial/transform.cr#L134" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1627,7 +1627,7 @@ scale_translate <span class="o">*</span> vec                   <span class="c">#
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/spatial/transform.cr#L153" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/spatial/transform.cr#L153" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1649,7 +1649,7 @@ effectively applies the transformation to <em>rhs</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/spatial/transform.cr#L161" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/spatial/transform.cr#L161" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1665,7 +1665,7 @@ effectively applies the transformation to <em>rhs</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/spatial/transform.cr#L165" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/spatial/transform.cr#L165" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1687,7 +1687,7 @@ each other, else <code>false</code>. See the <code><a href="../../Chem/Spatial/T
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/spatial/transform.cr#L171" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/spatial/transform.cr#L171" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1709,7 +1709,7 @@ each other, else <code>false</code>. See the <code><a href="../../Chem/Spatial/T
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/spatial/transform.cr#L177" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/spatial/transform.cr#L177" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1746,7 +1746,7 @@ Overflow.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/spatial/transform.cr#L209" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/spatial/transform.cr#L209" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1767,7 +1767,7 @@ Overflow.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/spatial/transform.cr#L55" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/spatial/transform.cr#L55" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1788,7 +1788,7 @@ Overflow.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/spatial/transform.cr#L57" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/spatial/transform.cr#L57" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1810,7 +1810,7 @@ degrees. Delegates to <code><a href="../../Chem/Spatial/Quat.html#rotation%28x%3
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/spatial/transform.cr#L216" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/spatial/transform.cr#L216" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1832,7 +1832,7 @@ degrees. Delegates to <code><a href="../../Chem/Spatial/Quat.html#rotation%28x%3
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/spatial/transform.cr#L222" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/spatial/transform.cr#L222" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1853,7 +1853,7 @@ degrees. Delegates to <code><a href="../../Chem/Spatial/Quat.html#rotation%28x%3
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/spatial/transform.cr#L227" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/spatial/transform.cr#L227" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1874,7 +1874,7 @@ degrees. Delegates to <code><a href="../../Chem/Spatial/Quat.html#rotation%28x%3
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/spatial/transform.cr#L232" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/spatial/transform.cr#L232" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1895,7 +1895,7 @@ degrees. Delegates to <code><a href="../../Chem/Spatial/Quat.html#rotation%28x%3
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/spatial/transform.cr#L242" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/spatial/transform.cr#L242" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1916,7 +1916,7 @@ degrees. Delegates to <code><a href="../../Chem/Spatial/Quat.html#rotation%28x%3
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/spatial/transform.cr#L237" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/spatial/transform.cr#L237" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1941,7 +1941,7 @@ degrees. Delegates to <code><a href="../../Chem/Spatial/Quat.html#rotation%28x%3
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/spatial/transform.cr#L246" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/spatial/transform.cr#L246" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1963,7 +1963,7 @@ effectively combines two transformations.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/spatial/transform.cr#L265" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/spatial/transform.cr#L265" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1984,7 +1984,7 @@ effectively combines two transformations.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/spatial/transform.cr#L270" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/spatial/transform.cr#L270" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2005,7 +2005,7 @@ effectively combines two transformations.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/c011f996b593980875b0addc8dae79fa84b25571/src/chem/spatial/transform.cr#L275" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/spatial/transform.cr#L275" target="_blank">View source</a>]
         
       </div>
     </div>
