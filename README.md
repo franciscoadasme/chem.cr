@@ -239,7 +239,7 @@ Most libraries do not offer such functionality, and one often needs to resort to
 
 ### Coordinates manipulation
 
-All coordinates manipulation is done using a `CoordinatesProxy` instance, available for any topology object containing atoms (_i.e._ structure, chain, and residue) via the `#pos` method:
+All coordinates manipulation is done using a `Positions3Proxy` instance, available for any topology object containing atoms (_i.e._ structure, chain, and residue) via the `#pos` method:
 
 ```crystal
 # geometric center

@@ -92,7 +92,7 @@ module Spec
   end
 
   struct EqualExpectation
-    def match(actual_value : Chem::Spatial::CoordinatesProxy) : Bool
+    def match(actual_value : Chem::Spatial::Positions3Proxy) : Bool
       match actual_value.to_a
     end
 

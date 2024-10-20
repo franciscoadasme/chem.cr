@@ -8,7 +8,7 @@ require "./spatial/grid"
 require "./spatial/quat"
 require "./spatial/parallelepiped"
 
-require "./spatial/coordinates_proxy"
+require "./spatial/positions3_proxy"
 require "./spatial/kdtree"
 require "./spatial/qcp"
 

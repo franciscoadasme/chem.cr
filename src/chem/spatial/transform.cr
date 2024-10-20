@@ -83,7 +83,7 @@ module Chem::Spatial
     # The optimal rotation matrix is computed by minimizing the root
     # mean square deviation (RMSD) using the QCP method (refer to
     # `Spatial.qcp` for details).
-    def self.aligning(pos : CoordinatesProxy, to ref_pos : CoordinatesProxy) : self
+    def self.aligning(pos : Positions3Proxy, to ref_pos : Positions3Proxy) : self
       pos = pos.to_a         # FIXME: avoid copying coordinates
       ref_pos = ref_pos.to_a # FIXME: avoid copying coordinates
       raise ArgumentError.new("Incompatible coordinates") if pos.size != ref_pos.size

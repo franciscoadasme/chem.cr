@@ -16,8 +16,8 @@ module Chem
       ChainView.new chains.to_a
     end
 
-    def pos : Spatial::CoordinatesProxy
-      Spatial::CoordinatesProxy.new self
+    def pos : Spatial::Positions3Proxy
+      Spatial::Positions3Proxy.new self
     end
 
     # Sets the atom coordinates.

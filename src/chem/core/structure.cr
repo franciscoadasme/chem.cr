@@ -166,8 +166,8 @@ module Chem
       structure
     end
 
-    def pos : Spatial::CoordinatesProxy
-      Spatial::CoordinatesProxy.new atoms, @cell
+    def pos : Spatial::Positions3Proxy
+      Spatial::Positions3Proxy.new atoms, @cell
     end
 
     # Sets the atom coordinates.

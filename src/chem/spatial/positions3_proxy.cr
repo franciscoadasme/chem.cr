@@ -1,5 +1,5 @@
 module Chem::Spatial
-  struct CoordinatesProxy
+  struct Positions3Proxy
     include Enumerable(Vec3)
     include Iterable(Vec3)
 
@@ -229,7 +229,7 @@ module Chem::Spatial
     # the coordinates onto *other* by computing the optimal rotation
     # between the two coordinate sets before calculating the RMSD.
     def rmsd(
-      other : CoordinatesProxy,
+      other : Positions3Proxy,
       minimize : Bool = false
     ) : Float64
       pos = to_a           # FIXME: avoid copying coordinates

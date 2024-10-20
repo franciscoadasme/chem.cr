@@ -1,6 +1,6 @@
 require "../spec_helper"
 
-describe Chem::Spatial::CoordinatesProxy do
+describe Chem::Spatial::Positions3Proxy do
   structure = Chem::Structure.build do
     cell 10, 10, 10
 
