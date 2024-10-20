@@ -602,6 +602,11 @@
       
     </li>
   
+  <li class=" " data-id="chem/Chem/Spatial/Positions3" data-name="chem::spatial::positions3">
+      <a href="../../Chem/Spatial/Positions3.html">Positions3</a>
+      
+    </li>
+  
   <li class=" " data-id="chem/Chem/Spatial/Positions3Proxy" data-name="chem::spatial::positions3proxy">
       <a href="../../Chem/Spatial/Positions3Proxy.html">Positions3Proxy</a>
       
@@ -961,9 +966,9 @@
   </h2>
   <ul class="other-types-list">
     
-      <li class="other-type"><a href="../../Chem/FormatReader.html">Chem::FormatReader</a>(<a href="../../Chem/Structure.html">Chem::Structure</a>)</li>
+      <li class="other-type"><a href="../../Chem/FormatReader.html">Chem::FormatReader</a>(<a href="../../Chem/Spatial/Positions3.html">Chem::Spatial::Positions3</a>)</li>
     
-      <li class="other-type"><a href="../../Chem/FormatReader/Indexable.html">Chem::FormatReader::Indexable</a>(<a href="../../Chem/Structure.html">Chem::Structure</a>)</li>
+      <li class="other-type"><a href="../../Chem/FormatReader/Indexable.html">Chem::FormatReader::Indexable</a>(<a href="../../Chem/Spatial/Positions3.html">Chem::Spatial::Positions3</a>)</li>
     
   </ul>
 
@@ -986,7 +991,7 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/formats/dcd.cr#L7" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/ccf42dd85282a903a74f5de5a5911a055511dc2f/src/chem/formats/dcd.cr#L7" target="_blank">
         chem/formats/dcd.cr
       </a>
     
@@ -1008,12 +1013,12 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28io%3AIO%2Cstructure%3AChem%3A%3AStructure%2Creuse%3ABool%3Dfalse%2Csync_close%3ABool%3Dfalse%29-class-method" class="signature"><strong>.new</strong>(io : IO, structure : Chem::Structure, reuse : Bool = <span class="n">false</span>, sync_close : Bool = <span class="n">false</span>)</a>
+        <a href="#new%28io%3AIO%2Csync_close%3ABool%3Dfalse%29-class-method" class="signature"><strong>.new</strong>(io : IO, sync_close : Bool = <span class="n">false</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new%28path%3APath%7CString%2Cstructure%3AChem%3A%3AStructure%2Creuse%3ABool%3Dfalse%29%3Aself-class-method" class="signature"><strong>.new</strong>(path : Path | String, structure : Chem::Structure, reuse : Bool = <span class="n">false</span>) : <span class="k">self</span></a>
+        <a href="#new%28path%3APath%7CString%29%3Aself-class-method" class="signature"><strong>.new</strong>(path : Path | String) : <span class="k">self</span></a>
         
           <div class="summary"><p>Creates a new object from the given <em>path</em>.</p></div>
         
@@ -1034,14 +1039,14 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#open%28io%3AIO%2Cstructure%3AChem%3A%3AStructure%2Creuse%3ABool%3Dfalse%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method" class="signature"><strong>.open</strong>(io : IO, structure : Chem::Structure, reuse : Bool = <span class="n">false</span>, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )</a>
+        <a href="#open%28io%3AIO%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method" class="signature"><strong>.open</strong>(io : IO, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )</a>
         
           <div class="summary"><p>Creates a new object from the given <em>io</em>, yields it to the given block, and closes it at the end.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#open%28path%3APath%7CString%2Cstructure%3AChem%3A%3AStructure%2Creuse%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method" class="signature"><strong>.open</strong>(path : Path | String, structure : Chem::Structure, reuse : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )</a>
+        <a href="#open%28path%3APath%7CString%2C%26%3Aself-%3E%29-class-method" class="signature"><strong>.open</strong>(path : Path | String, & : <span class="k">self</span> -> )</a>
         
           <div class="summary"><p>Creates a new object from the given <em>path</em> yields it to the given block, and closes it at the end.</p></div>
         
@@ -1092,7 +1097,7 @@
   
     
 
-  <h3>Instance methods inherited from module <code><a href="../../Chem/FormatReader/Indexable.html">Chem::FormatReader::Indexable</a>(<a href="../../Chem/Structure.html">Chem::Structure</a>)</code></h3>
+  <h3>Instance methods inherited from module <code><a href="../../Chem/FormatReader/Indexable.html">Chem::FormatReader::Indexable</a>(<a href="../../Chem/Spatial/Positions3.html">Chem::Spatial::Positions3</a>)</code></h3>
   
   
     <a href="../../Chem/FormatReader/Indexable.html#entry_index%3AInt32-instance-method" class="tooltip">
@@ -1139,7 +1144,7 @@
   
     
 
-  <h3>Instance methods inherited from module <code><a href="../../Chem/FormatReader/MultiEntry.html">Chem::FormatReader::MultiEntry</a>(<a href="../../Chem/Structure.html">Chem::Structure</a>)</code></h3>
+  <h3>Instance methods inherited from module <code><a href="../../Chem/FormatReader/MultiEntry.html">Chem::FormatReader::MultiEntry</a>(<a href="../../Chem/Spatial/Positions3.html">Chem::Spatial::Positions3</a>)</code></h3>
   
   
     <a href="../../Chem/FormatReader/MultiEntry.html#each%28indexes%3AEnumerable%28Int%29%2C%26%3AT-%3E%29-instance-method" class="tooltip">
@@ -1176,7 +1181,7 @@
   
     
 
-  <h3>Instance methods inherited from module <code><a href="../../Chem/FormatReader.html">Chem::FormatReader</a>(<a href="../../Chem/Structure.html">Chem::Structure</a>)</code></h3>
+  <h3>Instance methods inherited from module <code><a href="../../Chem/FormatReader.html">Chem::FormatReader</a>(<a href="../../Chem/Spatial/Positions3.html">Chem::Spatial::Positions3</a>)</code></h3>
   
   
     <a href="../../Chem/FormatReader.html#read%3F%3ABool-instance-method" class="tooltip">
@@ -1276,28 +1281,28 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(io:IO,structure:Chem::Structure,reuse:Bool=false,sync_close:Bool=false)-class-method">
+    <div class="entry-detail" id="new(io:IO,sync_close:Bool=false)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(io : IO, structure : <a href="../../Chem/Structure.html">Chem::Structure</a>, reuse : Bool = <span class="n">false</span>, sync_close : Bool = <span class="n">false</span>)
+        def self.<strong>new</strong>(io : IO, sync_close : Bool = <span class="n">false</span>)
 
-        <a class="method-permalink" href="#new%28io%3AIO%2Cstructure%3AChem%3A%3AStructure%2Creuse%3ABool%3Dfalse%2Csync_close%3ABool%3Dfalse%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28io%3AIO%2Csync_close%3ABool%3Dfalse%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/formats/dcd.cr#L32" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ccf42dd85282a903a74f5de5a5911a055511dc2f/src/chem/formats/dcd.cr#L32" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="new(path:Path|String,structure:Chem::Structure,reuse:Bool=false):self-class-method">
+    <div class="entry-detail" id="new(path:Path|String):self-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(path : <a href="../../Path.html">Path</a> | <a href="../../String.html">String</a>, structure : <a href="../../Chem/Structure.html">Chem::Structure</a>, reuse : Bool = <span class="n">false</span>) : <span class="k">self</span>
+        def self.<strong>new</strong>(path : <a href="../../Path.html">Path</a> | <a href="../../String.html">String</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#new%28path%3APath%7CString%2Cstructure%3AChem%3A%3AStructure%2Creuse%3ABool%3Dfalse%29%3Aself-class-method">#</a>
+        <a class="method-permalink" href="#new%28path%3APath%7CString%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1327,12 +1332,12 @@ constant.</p>
     Class Method Detail
   </h2>
   
-    <div class="entry-detail" id="open(io:IO,structure:Chem::Structure,reuse:Bool=false,sync_close:Bool=false,&amp;:self-&gt;)-class-method">
+    <div class="entry-detail" id="open(io:IO,sync_close:Bool=false,&amp;:self-&gt;)-class-method">
       <div class="signature">
         
-        def self.<strong>open</strong>(io : IO, structure : <a href="../../Chem/Structure.html">Chem::Structure</a>, reuse : Bool = <span class="n">false</span>, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )
+        def self.<strong>open</strong>(io : IO, sync_close : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )
 
-        <a class="method-permalink" href="#open%28io%3AIO%2Cstructure%3AChem%3A%3AStructure%2Creuse%3ABool%3Dfalse%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">#</a>
+        <a class="method-permalink" href="#open%28io%3AIO%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1348,12 +1353,12 @@ are forwarded to the constructor.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="open(path:Path|String,structure:Chem::Structure,reuse:Bool=false,&amp;:self-&gt;)-class-method">
+    <div class="entry-detail" id="open(path:Path|String,&amp;:self-&gt;)-class-method">
       <div class="signature">
         
-        def self.<strong>open</strong>(path : <a href="../../Path.html">Path</a> | <a href="../../String.html">String</a>, structure : <a href="../../Chem/Structure.html">Chem::Structure</a>, reuse : Bool = <span class="n">false</span>, & : <span class="k">self</span> -> )
+        def self.<strong>open</strong>(path : <a href="../../Path.html">Path</a> | <a href="../../String.html">String</a>, & : <span class="k">self</span> -> )
 
-        <a class="method-permalink" href="#open%28path%3APath%7CString%2Cstructure%3AChem%3A%3AStructure%2Creuse%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">#</a>
+        <a class="method-permalink" href="#open%28path%3APath%7CString%2C%26%3Aself-%3E%29-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1397,7 +1402,7 @@ constant.</p>
         <div class="doc">
           
             <div class="doc-inherited">
-              Description copied from module <a href="../../Chem/FormatReader/Indexable.html">Chem::FormatReader::Indexable</a>(<a href="../../Chem/Structure.html">Chem::Structure</a>)
+              Description copied from module <a href="../../Chem/FormatReader/Indexable.html">Chem::FormatReader::Indexable</a>(<a href="../../Chem/Spatial/Positions3.html">Chem::Spatial::Positions3</a>)
             </div>
           
           <p>Returns the index of the current entry.</p>
@@ -1406,7 +1411,7 @@ constant.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/formats/dcd.cr#L29" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ccf42dd85282a903a74f5de5a5911a055511dc2f/src/chem/formats/dcd.cr#L29" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1422,7 +1427,7 @@ constant.</p>
         <div class="doc">
           
             <div class="doc-inherited">
-              Description copied from module <a href="../../Chem/FormatReader/Indexable.html">Chem::FormatReader::Indexable</a>(<a href="../../Chem/Structure.html">Chem::Structure</a>)
+              Description copied from module <a href="../../Chem/FormatReader/Indexable.html">Chem::FormatReader::Indexable</a>(<a href="../../Chem/Spatial/Positions3.html">Chem::Spatial::Positions3</a>)
             </div>
           
           <p>Returns the number of entries in the IO.</p>
@@ -1431,7 +1436,7 @@ constant.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/formats/dcd.cr#L30" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ccf42dd85282a903a74f5de5a5911a055511dc2f/src/chem/formats/dcd.cr#L30" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1447,7 +1452,7 @@ constant.</p>
         <div class="doc">
           
             <div class="doc-inherited">
-              Description copied from module <a href="../../Chem/FormatReader/Indexable.html">Chem::FormatReader::Indexable</a>(<a href="../../Chem/Structure.html">Chem::Structure</a>)
+              Description copied from module <a href="../../Chem/FormatReader/Indexable.html">Chem::FormatReader::Indexable</a>(<a href="../../Chem/Spatial/Positions3.html">Chem::Spatial::Positions3</a>)
             </div>
           
           <p>Discards the entries (without parsing) up until the given index.
@@ -1457,7 +1462,7 @@ Raises <code>IndexError</code> if the index is invalid.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/42f7aada31533e90d2602799f5828c32a144cb7a/src/chem/formats/dcd.cr#L70" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ccf42dd85282a903a74f5de5a5911a055511dc2f/src/chem/formats/dcd.cr#L59" target="_blank">View source</a>]
         
       </div>
     </div>

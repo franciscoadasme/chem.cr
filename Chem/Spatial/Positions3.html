@@ -14,7 +14,7 @@
 <script type="text/javascript" src="../../js/doc.js"></script>
 
   <meta name="repository-name" content="chem">
-  <title>Chem::Protein::SecondaryStructureType - chem master</title>
+  <title>Chem::Spatial::Positions3 - chem master</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -402,7 +402,7 @@
       
     </li>
   
-  <li class="parent open current" data-id="chem/Chem/Protein" data-name="chem::protein">
+  <li class="parent " data-id="chem/Chem/Protein" data-name="chem::protein">
       <a href="../../Chem/Protein.html">Protein</a>
       
         <ul>
@@ -427,7 +427,7 @@
       
     </li>
   
-  <li class=" current" data-id="chem/Chem/Protein/SecondaryStructureType" data-name="chem::protein::secondarystructuretype">
+  <li class=" " data-id="chem/Chem/Protein/SecondaryStructureType" data-name="chem::protein::secondarystructuretype">
       <a href="../../Chem/Protein/SecondaryStructureType.html">SecondaryStructureType</a>
       
     </li>
@@ -527,7 +527,7 @@
       
     </li>
   
-  <li class="parent " data-id="chem/Chem/Spatial" data-name="chem::spatial">
+  <li class="parent open current" data-id="chem/Chem/Spatial" data-name="chem::spatial">
       <a href="../../Chem/Spatial.html">Spatial</a>
       
         <ul>
@@ -602,7 +602,7 @@
       
     </li>
   
-  <li class=" " data-id="chem/Chem/Spatial/Positions3" data-name="chem::spatial::positions3">
+  <li class=" current" data-id="chem/Chem/Spatial/Positions3" data-name="chem::spatial::positions3">
       <a href="../../Chem/Spatial/Positions3.html">Positions3</a>
       
     </li>
@@ -931,10 +931,12 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">enum</span> Chem::<wbr>Protein::<wbr>SecondaryStructureType
+  <span class="kind">struct</span> Chem::<wbr>Spatial::<wbr>Positions3
 
 </h1>
 
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Chem/Spatial/Positions3.html">Chem::Spatial::Positions3</a></li><li class="superclass">Struct</li><li class="superclass">Value</li><li class="superclass">Object</li></ul>
 
 
 
@@ -948,17 +950,25 @@
     Overview
   </h2>
 
-  <p>Members are similar to simplified or reduced secondary structure
-classification:</p>
-<ul>
-<li>Helical (α-helix, π-helix, etc.)</li>
-<li>Extended (β-strand, polyproline, 2.2_7-helix, etc.)</li>
-<li>Coil (Bend, turn, etc.)</li>
-</ul>
+  <p><span class="flag orange">TODO</span>  make compatible with <code><a href="../../Chem/Spatial/Positions3Proxy.html">Positions3Proxy</a></code></p>
 
 
 
 
+
+  <h2>
+    <a id="included-modules" class="anchor" href="#included-modules">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Included Modules
+  </h2>
+  <ul class="other-types-list">
+    
+      <li class="other-type"><a href="../../Indexable.html">Indexable</a>(<a href="../../Chem/Spatial/Vec3.html">Chem::Spatial::Vec3</a>)</li>
+    
+  </ul>
 
 
 
@@ -979,8 +989,15 @@ classification:</p>
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/ccf42dd85282a903a74f5de5a5911a055511dc2f/src/chem/protein/secondary_structure.cr#L226" target="_blank">
-        chem/protein/secondary_structure.cr
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/ccf42dd85282a903a74f5de5a5911a055511dc2f/src/chem/register_format.cr#L270" target="_blank">
+        chem/register_format.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/ccf42dd85282a903a74f5de5a5911a055511dc2f/src/chem/spatial/positions3.cr#L2" target="_blank">
+        chem/spatial/positions3.cr
       </a>
     
     <br/>
@@ -988,36 +1005,45 @@ classification:</p>
 
 
 
-  
-    <h2>
-      <a id="enum-members" class="anchor" href="#enum-members">
+
+
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>
-      Enum Members
-    </h2>
-  
-  <dl>
+    Constructors
+  </h2>
+  <ul class="list-summary">
     
-      <dt class="entry-const" id="Coil">
-        <strong>Coil</strong> = <code><span class="n">0</span></code>
-      </dt>
-      
+      <li class="entry-summary">
+        <a href="#from_dcd%28input%3AIO%7CPath%7CString%29%3Aself-class-method" class="signature"><strong>.from_dcd</strong>(input : IO | Path | String) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the positions3 encoded in <em>input</em> using the <code><a href="../../Chem/DCD.html">Chem::DCD</a></code> file format.</p></div>
+        
+      </li>
     
-      <dt class="entry-const" id="Extended">
-        <strong>Extended</strong> = <code><span class="n">1</span></code>
-      </dt>
-      
+      <li class="entry-summary">
+        <a href="#new%28pos%3ASlice%28Vec3%29%2Ccell%3AParallelepiped%7CNil%3Dnil%29-class-method" class="signature"><strong>.new</strong>(pos : Slice(Vec3), cell : Parallelepiped | Nil = <span class="n">nil</span>)</a>
+        
+      </li>
     
-      <dt class="entry-const" id="Helical">
-        <strong>Helical</strong> = <code><span class="n">2</span></code>
-      </dt>
-      
+      <li class="entry-summary">
+        <a href="#read%28input%3AIO%7CPath%7CString%2Cformat%3AChem%3A%3AFormat%7CString%29%3Aself-class-method" class="signature"><strong>.read</strong>(input : IO | Path | String, format : Chem::Format | String) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the positions3 encoded in the specified file using <em>format</em>.</p></div>
+        
+      </li>
     
-  </dl>
-
-
+      <li class="entry-summary">
+        <a href="#read%28path%3APath%7CString%29%3Aself-class-method" class="signature"><strong>.read</strong>(path : Path | String) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns the positions3 encoded in the specified file.</p></div>
+        
+      </li>
+    
+  </ul>
 
 
 
@@ -1036,38 +1062,32 @@ classification:</p>
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#code%3AChar-instance-method" class="signature"><strong>#code</strong> : Char</a>
-        
-          <div class="summary"><p>Returns one-letter secondary structure type code.</p></div>
+        <a href="#cell%3AParallelepiped%7CNil-instance-method" class="signature"><strong>#cell</strong> : Parallelepiped | Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#coil%3F-instance-method" class="signature"><strong>#coil?</strong></a>
+        <a href="#cell%3F%3AParallelepiped%7CNil%7CNil-instance-method" class="signature"><strong>#cell?</strong> : Parallelepiped | Nil | Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#extended%3F-instance-method" class="signature"><strong>#extended?</strong></a>
+        <a href="#size%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#size</strong>(*args, **options)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#helical%3F-instance-method" class="signature"><strong>#helical?</strong></a>
+        <a href="#size%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#size</strong>(*args, **options, &)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#min_size%3AInt32-instance-method" class="signature"><strong>#min_size</strong> : Int32</a>
-        
-          <div class="summary"><p>Returns nominal secondary structure type's minimum size.</p></div>
+        <a href="#unsafe_fetch%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#unsafe_fetch</strong>(*args, **options)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#regular%3F%3ABool-instance-method" class="signature"><strong>#regular?</strong> : Bool</a>
-        
-          <div class="summary"><p>Returns <code>true</code> if it's a regular secondary structure type, otherwise <code>false</code>.</p></div>
+        <a href="#unsafe_fetch%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#unsafe_fetch</strong>(*args, **options, &)</a>
         
       </li>
     
@@ -1076,6 +1096,75 @@ classification:</p>
 
 
 <div class="methods-inherited">
+  
+    
+
+  <h3>Instance methods inherited from module <code><a href="../../Indexable.html">Indexable</a>(<a href="../../Chem/Spatial/Vec3.html">Chem::Spatial::Vec3</a>)</code></h3>
+  
+  
+    <a href="../../Indexable.html#%5B%5D%28idxs%3ATuple%29%3ATuple-instance-method" class="tooltip">
+      <span>[](idxs : Tuple) : Tuple<br/>[](idxs : Enumerable(Int)) : Array(T)<br/>[](*idxs : Int) : Tuple</span>
+    []</a>, 
+    
+  
+    <a href="../../Indexable.html#sentence%28io%3AIO%2Cseparator%3AString%3D%22%2C%22%2C%2A%2Cpair_separator%3AString%3D%22and%22%2Ctail_separator%3AString%3D%22%2Cand%22%2C%26%3AT%2CIO-%3E%29%3ANil-instance-method" class="tooltip">
+      <span>sentence(io : IO, separator : String = <span class="s">&quot;, &quot;</span>, *, pair_separator : String = <span class="s">&quot; and &quot;</span>, tail_separator : String = <span class="s">&quot;, and &quot;</span>, & : T, IO -> ) : Nil<br/>sentence(io : IO, separator : String = <span class="s">&quot;, &quot;</span>, *, pair_separator : String = <span class="s">&quot; and &quot;</span>, tail_separator : String = <span class="s">&quot;, and &quot;</span>) : Nil<br/>sentence(separator : String = <span class="s">&quot;, &quot;</span>, *, pair_separator : String = <span class="s">&quot; and &quot;</span>, tail_separator : String = <span class="s">&quot;, and &quot;</span>, & : T -> ) : String<br/>sentence(separator : String = <span class="s">&quot;, &quot;</span>, *, pair_separator : String = <span class="s">&quot; and &quot;</span>, tail_separator : String = <span class="s">&quot;, and &quot;</span>) : String</span>
+    sentence</a>
+    
+  
+
+
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+  <h3>Instance methods inherited from module <code><a href="../../Enumerable.html">Enumerable</a>(<a href="../../Chem/Spatial/Vec3.html">Chem::Spatial::Vec3</a>)</code></h3>
+  
+  
+    <a href="../../Enumerable.html#%3D%3D%3D%28atom%3AChem%3A%3AAtom%29%3ABool-instance-method" class="tooltip">
+      <span>===(atom : Chem::Atom) : Bool<br/>===(chain : Chem::Chain) : Bool<br/>===(residue : Chem::Residue) : Bool</span>
+    ===</a>, 
+    
+  
+    <a href="../../Enumerable.html#average%28weights%3AIndexable%28Number%29%29-instance-method" class="tooltip">
+      <span>average(weights : Indexable(Number))<br/>average(weights : Indexable(Number), & : T -> _)</span>
+    average</a>, 
+    
+  
+    <a href="../../Enumerable.html#find%28pattern%2Cif_nonedefault%3Dnil%29-instance-method" class="tooltip">
+      <span>find(pattern, if_none default = <span class="n">nil</span>)</span>
+    find</a>, 
+    
+  
+    <a href="../../Enumerable.html#find%21%28pattern%29-instance-method" class="tooltip">
+      <span>find!(pattern)</span>
+    find!</a>, 
+    
+  
+    <a href="../../Enumerable.html#mean-instance-method" class="tooltip">
+      <span>mean<br/>mean(& : T -> _)</span>
+    mean</a>
+    
+  
+
+
+    
+
+
+    
+
+
+    
+
+
   
     
 
@@ -1132,6 +1221,114 @@ classification:</p>
 </div>
 
 
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="from_dcd(input:IO|Path|String):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>from_dcd</strong>(input : IO | <a href="../../Path.html">Path</a> | <a href="../../String.html">String</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#from_dcd%28input%3AIO%7CPath%7CString%29%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the positions3 encoded in <em>input</em> using the
+<code><a href="../../Chem/DCD.html">Chem::DCD</a></code> file format. Arguments are forwarded to
+<code><a href="../../Chem/DCD/Reader.html#open%28io%3AIO%2Csync_close%3ABool%3Dfalse%2C%26%3Aself-%3E%29-class-method">Chem::DCD::Reader.open</a></code>.</p>
+<p>If <em>input</em> contains multiple entries, this method returns
+the first one only. Use <code><a href="../../Array.html#from_dcd%28input%3AIO%7CPath%7CString%2Cindexes%3AArray%28Int%29%29%3Aself-class-method">Array#from_dcd</a></code> or
+<code>Chem::DCD::Reader#each</code> to get multiple entries instead.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ccf42dd85282a903a74f5de5a5911a055511dc2f/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(pos:Slice(Vec3),cell:Parallelepiped|Nil=nil)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(pos : Slice(<a href="../../Chem/Spatial/Vec3.html">Vec3</a>), cell : <a href="../../Chem/Spatial/Parallelepiped.html">Parallelepiped</a> | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#new%28pos%3ASlice%28Vec3%29%2Ccell%3AParallelepiped%7CNil%3Dnil%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ccf42dd85282a903a74f5de5a5911a055511dc2f/src/chem/spatial/positions3.cr#L11" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="read(input:IO|Path|String,format:Chem::Format|String):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>read</strong>(input : IO | <a href="../../Path.html">Path</a> | <a href="../../String.html">String</a>, format : <a href="../../Chem/Format.html">Chem::Format</a> | <a href="../../String.html">String</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#read%28input%3AIO%7CPath%7CString%2Cformat%3AChem%3A%3AFormat%7CString%29%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the positions3 encoded in the specified file
+using <em>format</em>. Raises <code>ArgumentError</code> if <em>format</em> has
+required arguments or cannot read <code><a href="../../Chem/Spatial/Positions3.html">Chem::Spatial::Positions3</a></code>.</p>
+<p>The supported file formats are <code><a href="../../Chem/DCD.html">Chem::DCD</a></code>. Use the
+<code>.from_*</code> methods to customize how the object is decoded in
+the corresponding file format if possible.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ccf42dd85282a903a74f5de5a5911a055511dc2f/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="read(path:Path|String):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>read</strong>(path : <a href="../../Path.html">Path</a> | <a href="../../String.html">String</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#read%28path%3APath%7CString%29%3Aself-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the positions3 encoded in the specified file.
+The file format is chosen based on the filename (see
+<code><a href="../../Chem/Format.html#from_filename%28filename%3APath%7CString%29%3Aself-class-method">Chem::Format#from_filename</a></code>). Raises <code>ArgumentError</code> if the
+file format cannot be determined.</p>
+<p>The supported file formats are the following:</p>
+<ul>
+<li><code><a href="../../Chem/DCD.html">Chem::DCD</a></code> (.dcd)</li>
+</ul>
+<p>Use the <code>.from_*</code> methods to customize how the object is
+decoded in the corresponding file format if possible.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ccf42dd85282a903a74f5de5a5911a055511dc2f/src/chem/register_format.cr#L270" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
 
 
 
@@ -1147,123 +1344,98 @@ classification:</p>
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="code:Char-instance-method">
+    <div class="entry-detail" id="cell:Parallelepiped|Nil-instance-method">
       <div class="signature">
         
-        def <strong>code</strong> : <a href="../../Char.html">Char</a>
+        def <strong>cell</strong> : <a href="../../Chem/Spatial/Parallelepiped.html">Parallelepiped</a> | Nil
 
-        <a class="method-permalink" href="#code%3AChar-instance-method">#</a>
+        <a class="method-permalink" href="#cell%3AParallelepiped%7CNil-instance-method">#</a>
       </div>
-      
-        <div class="doc">
-          
-          <p>Returns one-letter secondary structure type code.</p>
-<p>Assignment codes are similar to those of simplified DSSP:</p>
-<ul>
-<li><code>'H'</code> : Helical</li>
-<li><code>'E'</code> : Extended</li>
-<li><code>'C'</code> : Coil</li>
-</ul>
-        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ccf42dd85282a903a74f5de5a5911a055511dc2f/src/chem/protein/secondary_structure.cr#L238" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ccf42dd85282a903a74f5de5a5911a055511dc2f/src/chem/spatial/positions3.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="coil?-instance-method">
+    <div class="entry-detail" id="cell?:Parallelepiped|Nil|Nil-instance-method">
       <div class="signature">
         
-        def <strong>coil?</strong>
+        def <strong>cell?</strong> : <a href="../../Chem/Spatial/Parallelepiped.html">Parallelepiped</a> | Nil | Nil
 
-        <a class="method-permalink" href="#coil%3F-instance-method">#</a>
+        <a class="method-permalink" href="#cell%3F%3AParallelepiped%7CNil%7CNil-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ccf42dd85282a903a74f5de5a5911a055511dc2f/src/chem/protein/secondary_structure.cr#L227" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ccf42dd85282a903a74f5de5a5911a055511dc2f/src/chem/spatial/positions3.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="extended?-instance-method">
+    <div class="entry-detail" id="size(*args,**options)-instance-method">
       <div class="signature">
         
-        def <strong>extended?</strong>
+        def <strong>size</strong>(*args, **options)
 
-        <a class="method-permalink" href="#extended%3F-instance-method">#</a>
+        <a class="method-permalink" href="#size%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ccf42dd85282a903a74f5de5a5911a055511dc2f/src/chem/protein/secondary_structure.cr#L228" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ccf42dd85282a903a74f5de5a5911a055511dc2f/src/chem/spatial/positions3.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="helical?-instance-method">
+    <div class="entry-detail" id="size(*args,**options,&amp;)-instance-method">
       <div class="signature">
         
-        def <strong>helical?</strong>
+        def <strong>size</strong>(*args, **options, &)
 
-        <a class="method-permalink" href="#helical%3F-instance-method">#</a>
+        <a class="method-permalink" href="#size%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ccf42dd85282a903a74f5de5a5911a055511dc2f/src/chem/protein/secondary_structure.cr#L229" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ccf42dd85282a903a74f5de5a5911a055511dc2f/src/chem/spatial/positions3.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="min_size:Int32-instance-method">
+    <div class="entry-detail" id="unsafe_fetch(*args,**options)-instance-method">
       <div class="signature">
         
-        def <strong>min_size</strong> : Int32
+        def <strong>unsafe_fetch</strong>(*args, **options)
 
-        <a class="method-permalink" href="#min_size%3AInt32-instance-method">#</a>
+        <a class="method-permalink" href="#unsafe_fetch%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
       </div>
-      
-        <div class="doc">
-          
-          <p>Returns nominal secondary structure type's minimum size.</p>
-        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ccf42dd85282a903a74f5de5a5911a055511dc2f/src/chem/protein/secondary_structure.cr#L247" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ccf42dd85282a903a74f5de5a5911a055511dc2f/src/chem/spatial/positions3.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="regular?:Bool-instance-method">
+    <div class="entry-detail" id="unsafe_fetch(*args,**options,&amp;)-instance-method">
       <div class="signature">
         
-        def <strong>regular?</strong> : Bool
+        def <strong>unsafe_fetch</strong>(*args, **options, &)
 
-        <a class="method-permalink" href="#regular%3F%3ABool-instance-method">#</a>
+        <a class="method-permalink" href="#unsafe_fetch%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
       </div>
-      
-        <div class="doc">
-          
-          <p>Returns <code>true</code> if it's a regular secondary structure type,
-otherwise <code>false</code>.</p>
-<pre><code class="language-crystal"><span class="t">SecondaryStructureType</span><span class="t">::</span><span class="t">Helical</span>.regular?  <span class="c"># =&gt; true</span>
-<span class="t">SecondaryStructureType</span><span class="t">::</span><span class="t">Extended</span>.regular? <span class="c"># =&gt; true</span>
-<span class="t">SecondaryStructureType</span><span class="t">::</span><span class="t">Coil</span>.regular?     <span class="c"># =&gt; false</span></code></pre>
-        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ccf42dd85282a903a74f5de5a5911a055511dc2f/src/chem/protein/secondary_structure.cr#L263" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/ccf42dd85282a903a74f5de5a5911a055511dc2f/src/chem/spatial/positions3.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
