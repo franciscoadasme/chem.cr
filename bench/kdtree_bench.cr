@@ -5,7 +5,7 @@ include Chem::Spatial
 random = Random.new
 
 structure = Chem::Structure.read "spec/data/pdb/1h1s.pdb"
-coords = structure.coords.to_a
+pos = structure.pos.to_a
 kdtree = uninitialized KDTree
 pkdtree = uninitialized PeriodicKDTree
 points = (0...1000).map do
@@ -14,11 +14,11 @@ end
 
 Benchmark.bm do |bm|
   bm.report("initialization") do
-    kdtree = KDTree.new coords
+    kdtree = KDTree.new pos
   end
 
   bm.report("initialization (periodic)") do
-    pkdtree = PeriodicKDTree.new coords, structure.cell
+    pkdtree = PeriodicKDTree.new pos, structure.cell
   end
 
   bm.report("query nearest neighbor") do

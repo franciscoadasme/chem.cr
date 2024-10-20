@@ -16,8 +16,8 @@ module Chem
       @structure = Structure.new **options
     end
 
-    def atom(coords : Spatial::Vec3, **options) : Atom
-      atom :C, coords, **options
+    def atom(pos : Spatial::Vec3, **options) : Atom
+      atom :C, pos, **options
     end
 
     # Creates an `Atom` of *element* at the given coordinates. Extra
@@ -48,24 +48,24 @@ module Chem
     # sequence, so calling `#residue` will always create a new residue,
     # not retrieving a preceding one. Otherwise, the order of the atom
     # names will be reset.
-    def atom(element : Element | Symbol, coords : Spatial::Vec3, **options) : Atom
+    def atom(element : Element | Symbol, pos : Spatial::Vec3, **options) : Atom
       element = PeriodicTable[element.to_s.capitalize] if element.is_a?(Symbol)
 
       id = (@element_counter[element] += 1)
-      atom "#{element.symbol}#{id}", coords, **options.merge(element: element)
+      atom "#{element.symbol}#{id}", pos, **options.merge(element: element)
     end
 
-    def atom(name : String, coords : Spatial::Vec3, **options) : Atom
-      atom name, @atom_number + 1, coords, **options
+    def atom(name : String, pos : Spatial::Vec3, **options) : Atom
+      atom name, @atom_number + 1, pos, **options
     end
 
-    def atom(name : String, number : Int32, coords : Spatial::Vec3, **options) : Atom
-      atom name, number, coords, Structure.guess_element(name), **options
+    def atom(name : String, number : Int32, pos : Spatial::Vec3, **options) : Atom
+      atom name, number, pos, Structure.guess_element(name), **options
     end
 
-    def atom(name : String, number : Int32, coords : Spatial::Vec3, element : Element, **options) : Atom
+    def atom(name : String, number : Int32, pos : Spatial::Vec3, element : Element, **options) : Atom
       @atom_number = number
-      Atom.new(residue, @atom_number, element, name, coords, **options)
+      Atom.new(residue, @atom_number, element, name, pos, **options)
         .tap { |atom| @atom_map[atom.number] = atom }
     end
 

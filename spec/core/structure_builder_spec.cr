@@ -221,7 +221,7 @@ describe Chem::Structure::Builder do
     end
 
     st.atoms.map(&.name).should eq ["N", "CA", "C", "O", "CB"]
-    st.atoms.all?(&.coords.zero?).should be_true
+    st.atoms.all?(&.pos.zero?).should be_true
   end
 
   it "adds dummy atoms with coordinates" do

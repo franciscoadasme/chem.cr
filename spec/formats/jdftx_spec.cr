@@ -7,7 +7,7 @@ describe Chem::JDFTx::Reader do
 
     structure.residues.size.should eq 6
     structure.residues.map(&.name).should eq %w(VAL ALA ALA ALA ALA ALA)
-    structure.dig('A', 1, "HG13").coords.should be_close vec3(-3.632, 1.758, 1.855), 1e-3
+    structure.dig('A', 1, "HG13").pos.should be_close vec3(-3.632, 1.758, 1.855), 1e-3
 
     structure.cell.basisvec.should be_close [
       vec3(21.023, 0, 0),
@@ -19,7 +19,7 @@ describe Chem::JDFTx::Reader do
   it "parses a split JDFTx file" do
     path = spec_file("ff2d.ionpos")
     structure = Chem::Structure.from_jdftx path
-    structure.atoms[5].coords.should be_close vec3(-9.997, -3.330, 3.142), 1e-3
+    structure.atoms[5].pos.should be_close vec3(-9.997, -3.330, 3.142), 1e-3
 
     structure.guess_bonds
     structure.guess_formal_charges

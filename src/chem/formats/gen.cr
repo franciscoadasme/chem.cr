@@ -57,7 +57,7 @@ module Chem::Gen
         vk = Spatial::Vec3.new @pull.next_f, @pull.next_f, @pull.next_f
         @pull.consume_line
         structure.cell = Spatial::Parallelepiped.new vi, vj, vk
-        structure.coords.to_cart! if fractional
+        structure.pos.to_cart! if fractional
       end
 
       structure
@@ -86,7 +86,7 @@ module Chem::Gen
 
       atoms.each_with_index do |atom, i|
         ele = ele_table[atom.element] + 1
-        vec = atom.coords
+        vec = atom.pos
         vec = cell.not_nil!.fract vec if @fractional
         @io.printf "%5d%2s%20.10E%20.10E%20.10E\n", i + 1, ele, vec.x, vec.y, vec.z
       end

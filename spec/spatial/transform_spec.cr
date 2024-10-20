@@ -23,8 +23,8 @@ describe Chem::Spatial::Transform do
     it "returns a transformation that aligns two coordinate sets" do
       s = Array(Chem::Structure).read spec_file("E20_conformers.mol2")
       transform = Chem::Spatial::Transform.aligning(s[1], s[0])
-      s[1].coords.transform transform
-      s[1].coords.rmsd(s[0].coords).should be_close 3.463298, 1e-6
+      s[1].pos.transform transform
+      s[1].pos.rmsd(s[0].pos).should be_close 3.463298, 1e-6
     end
 
     it "returns the identity matrix for the same coordinate set" do

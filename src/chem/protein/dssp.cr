@@ -387,20 +387,20 @@ module Chem::Protein::DSSP
     getter o : Spatial::Vec3
 
     def initialize(residue : Residue)
-      @n = residue["N"]?.as(Atom).coords
+      @n = residue["N"]?.as(Atom).pos
       @h = Coords.guess_hydrogen residue
-      @c = residue["C"]?.as(Atom).coords
-      @o = residue["O"]?.as(Atom).coords
-      @ca = residue["CA"]?.as(Atom).coords
+      @c = residue["C"]?.as(Atom).pos
+      @o = residue["O"]?.as(Atom).pos
+      @ca = residue["CA"]?.as(Atom).pos
     end
 
     def self.guess_hydrogen(residue : Residue) : Spatial::Vec3
-      r_n = residue["N"]?.as(Atom).coords
+      r_n = residue["N"]?.as(Atom).pos
       return r_n if residue.name == "PRO"
       return r_n unless prev_res = residue.pred?
       return r_n unless carbon = prev_res["C"]?
       return r_n unless oxygen = prev_res["O"]?
-      r_n + ((carbon.coords - oxygen.coords) / Spatial.distance(carbon, oxygen))
+      r_n + ((carbon.pos - oxygen.pos) / Spatial.distance(carbon, oxygen))
     end
   end
 

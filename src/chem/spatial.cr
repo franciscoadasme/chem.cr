@@ -29,7 +29,7 @@ module Chem::Spatial
   end
 
   def self.angle(a : Atom, b : Atom, c : Atom) : Float64
-    angle a.coords, b.coords, c.coords
+    angle a.pos, b.pos, c.pos
   end
 
   def self.angle(a : Vec3, b : Vec3, c : Vec3) : Float64
@@ -37,7 +37,7 @@ module Chem::Spatial
   end
 
   def self.angle(cell : Parallelepiped, a : Atom, b : Atom, c : Atom) : Float64
-    angle cell, a.coords, b.coords, c.coords
+    angle cell, a.pos, b.pos, c.pos
   end
 
   def self.angle(cell : Parallelepiped, a : Vec3, b : Vec3, c : Vec3) : Float64
@@ -51,7 +51,7 @@ module Chem::Spatial
   end
 
   def self.dihedral(a : Atom, b : Atom, c : Atom, d : Atom) : Float64
-    dihedral a.coords, b.coords, c.coords, d.coords
+    dihedral a.pos, b.pos, c.pos, d.pos
   end
 
   def self.dihedral(a : Vec3, b : Vec3, c : Vec3, d : Vec3) : Float64
@@ -59,7 +59,7 @@ module Chem::Spatial
   end
 
   def self.dihedral(cell : Parallelepiped, a : Atom, b : Atom, c : Atom, d : Atom) : Float64
-    dihedral cell, a.coords, b.coords, c.coords, d.coords
+    dihedral cell, a.pos, b.pos, c.pos, d.pos
   end
 
   def self.dihedral(cell : Parallelepiped, a : Vec3, b : Vec3, c : Vec3, d : Vec3) : Float64
@@ -74,11 +74,11 @@ module Chem::Spatial
   end
 
   def self.distance(a : Atom, b : Atom) : Float64
-    a.coords.distance(b.coords)
+    a.pos.distance(b.pos)
   end
 
   def self.distance(cell : Parallelepiped, a : Atom, b : Atom) : Float64
-    distance cell, a.coords, b.coords
+    distance cell, a.pos, b.pos
   end
 
   def self.distance(cell : Parallelepiped, a : Vec3, b : Vec3) : Float64
@@ -101,11 +101,11 @@ module Chem::Spatial
   end
 
   def self.distance2(a : Atom, b : Atom) : Float64
-    a.coords.distance2 b.coords
+    a.pos.distance2 b.pos
   end
 
   def self.distance2(cell : Parallelepiped, a : Atom, b : Atom) : Float64
-    distance2 cell, a.coords, b.coords
+    distance2 cell, a.pos, b.pos
   end
 
   def self.distance2(cell : Parallelepiped, a : Vec3, b : Vec3) : Float64
@@ -113,7 +113,7 @@ module Chem::Spatial
   end
 
   def self.improper(a : Atom, b : Atom, c : Atom, d : Atom) : Float64
-    improper a.coords, b.coords, c.coords, d.coords
+    improper a.pos, b.pos, c.pos, d.pos
   end
 
   def self.improper(a : Vec3, b : Vec3, c : Vec3, d : Vec3) : Float64
@@ -121,7 +121,7 @@ module Chem::Spatial
   end
 
   def self.improper(cell : Parallelepiped, a : Atom, b : Atom, c : Atom, d : Atom) : Float64
-    improper cell, a.coords, b.coords, c.coords, d.coords
+    improper cell, a.pos, b.pos, c.pos, d.pos
   end
 
   def self.improper(cell : Parallelepiped, a : Vec3, b : Vec3, c : Vec3, d : Vec3) : Float64

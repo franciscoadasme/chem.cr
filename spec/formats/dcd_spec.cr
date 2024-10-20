@@ -11,8 +11,8 @@ describe Chem::DCD::Reader do
       structure.metadata["time"]?.should eq 0
       structure.title.should eq \
         "Created by DCD plugin\nREMARKS Created 30 May, 2015 at 19:24\n"
-      structure.atoms[0].coords.should be_close vec3(0.41721907, 8.303366, 11.737172), 1e-6
-      structure.atoms[296].coords.should be_close vec3(6.664049, 11.614183, 12.961486), 1e-6
+      structure.atoms[0].pos.should be_close vec3(0.41721907, 8.303366, 11.737172), 1e-6
+      structure.atoms[296].pos.should be_close vec3(6.664049, 11.614183, 12.961486), 1e-6
 
       structure.cell?.should_not be_nil
       structure.cell.size.should eq [15, 15, 15]
@@ -20,8 +20,8 @@ describe Chem::DCD::Reader do
 
       structure = reader.read_entry 2
       structure.metadata["time"]?.should eq 2
-      structure.atoms[0].coords.should be_close vec3(0.29909524, 8.31003, 11.721462), 1e-6
-      structure.atoms[296].coords.should be_close vec3(6.797599, 11.50882, 12.704233), 1e-6
+      structure.atoms[0].pos.should be_close vec3(0.29909524, 8.31003, 11.721462), 1e-6
+      structure.atoms[296].pos.should be_close vec3(6.797599, 11.50882, 12.704233), 1e-6
     end
   end
 
@@ -99,13 +99,13 @@ describe Chem::DCD::Reader do
 
       structure = reader.read_entry
       structure.cell?.should be_nil
-      structure.atoms[5].coords.should be_close vec3(-1.5822195, 0.6511365, 1.3911803), 1e-6
-      structure.atoms[15].coords.should be_close vec3(2.2381972, -0.5173331, -0.4879273), 1e-6
+      structure.atoms[5].pos.should be_close vec3(-1.5822195, 0.6511365, 1.3911803), 1e-6
+      structure.atoms[15].pos.should be_close vec3(2.2381972, -0.5173331, -0.4879273), 1e-6
 
       structure = reader.read_entry 3
       structure.cell?.should be_nil
-      structure.atoms[5].coords.should be_close vec3(-1.5833939, 0.70485264, 1.3606575), 1e-6
-      structure.atoms[15].coords.should be_close vec3(2.230041, -0.5253474, -0.50111574), 1e-6
+      structure.atoms[5].pos.should be_close vec3(-1.5833939, 0.70485264, 1.3606575), 1e-6
+      structure.atoms[15].pos.should be_close vec3(2.230041, -0.5253474, -0.50111574), 1e-6
     end
   end
 
@@ -116,18 +116,18 @@ describe Chem::DCD::Reader do
 
       structure = reader.read_entry
       structure.cell?.should be_nil
-      structure.atoms[2].coords.should be_close vec3(-1.0220516, -1.0135641, 0), 1e-6
-      structure.atoms[10].coords.should be_close vec3(1.820057, -1.3015488, 10), 1e-6
+      structure.atoms[2].pos.should be_close vec3(-1.0220516, -1.0135641, 0), 1e-6
+      structure.atoms[10].pos.should be_close vec3(1.820057, -1.3015488, 10), 1e-6
 
       structure = reader.read_entry
       structure.cell?.should be_nil
-      structure.atoms[2].coords.should be_close vec3(-1.0220516, -1.0135641, 0), 1e-6
-      structure.atoms[10].coords.should be_close vec3(1.8200468, -1.3015325, 10), 1e-6
+      structure.atoms[2].pos.should be_close vec3(-1.0220516, -1.0135641, 0), 1e-6
+      structure.atoms[10].pos.should be_close vec3(1.8200468, -1.3015325, 10), 1e-6
 
       structure = reader.read_entry 5
       structure.cell?.should be_nil
-      structure.atoms[2].coords.should be_close vec3(-1.0220516, -1.0135641, 0), 1e-6
-      structure.atoms[10].coords.should be_close vec3(1.8199368, -1.3013588, 10), 1e-6
+      structure.atoms[2].pos.should be_close vec3(-1.0220516, -1.0135641, 0), 1e-6
+      structure.atoms[10].pos.should be_close vec3(1.8199368, -1.3013588, 10), 1e-6
     end
   end
 
@@ -138,8 +138,8 @@ describe Chem::DCD::Reader do
 
       structure = reader.read_entry 23
       structure.cell?.should be_nil
-      structure.atoms[2].coords.should be_close vec3(0.6486294, 0.062248673, -1.5570515), 1e-6
-      structure.atoms[4].coords.should be_close vec3(-1.3111109, 0.35563222, 0.9946163), 1e-6
+      structure.atoms[2].pos.should be_close vec3(0.6486294, 0.062248673, -1.5570515), 1e-6
+      structure.atoms[4].pos.should be_close vec3(-1.3111109, 0.35563222, 0.9946163), 1e-6
     end
   end
 
@@ -150,8 +150,8 @@ describe Chem::DCD::Reader do
 
       structure = reader.read_entry 23
       structure.cell?.should be_nil
-      structure.atoms[2].coords.should be_close vec3(0.6486294, 0.062248673, -1.5570515), 1e-6
-      structure.atoms[4].coords.should be_close vec3(-1.3111109, 0.35563222, 0.9946163), 1e-6
+      structure.atoms[2].pos.should be_close vec3(0.6486294, 0.062248673, -1.5570515), 1e-6
+      structure.atoms[4].pos.should be_close vec3(-1.3111109, 0.35563222, 0.9946163), 1e-6
     end
   end
 
@@ -162,8 +162,8 @@ describe Chem::DCD::Reader do
 
       structure = reader.read_entry 23
       structure.cell?.should be_nil
-      structure.atoms[2].coords.should be_close vec3(0.6486294, 0.062248673, -1.5570515), 1e-6
-      structure.atoms[4].coords.should be_close vec3(-1.3111109, 0.35563222, 0.9946163), 1e-6
+      structure.atoms[2].pos.should be_close vec3(0.6486294, 0.062248673, -1.5570515), 1e-6
+      structure.atoms[4].pos.should be_close vec3(-1.3111109, 0.35563222, 0.9946163), 1e-6
     end
   end
 end

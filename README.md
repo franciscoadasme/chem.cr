@@ -120,10 +120,10 @@ You can access PDB header information via the `#experiment` property:
 
 ```crystal
 if expt = struc.experiment # checks if experiment data is present
-  expt.title           # => "ATOMIC RESOLUTION (0.83 ANGSTROMS) CRYSTAL STRUCTURE..."
-  expt.kind            # => XRayDiffraction
-  expt.resolution      # => 0.83
-  expt.deposition_date # => 1991-10-11
+  expt.title               # => "ATOMIC RESOLUTION (0.83 ANGSTROMS) CRYSTAL STRUCTURE..."
+  expt.kind                # => XRayDiffraction
+  expt.resolution          # => 0.83
+  expt.deposition_date     # => 1991-10-11
 end
 ```
 
@@ -161,7 +161,7 @@ Each topology object have several modifiable properties:
 ```crystal
 atom = struc.dig 'A', 10, "CA"
 atom.element.name            # => "Carbon"
-atom.coords                  # => [8.47 4.577 8.764]
+atom.pos                     # => [8.47 4.577 8.764]
 atom.occupancy               # => 1.0
 atom.bonded_atoms.map &.name # => ["N", "C", "HA", "CB"]
 
@@ -231,7 +231,7 @@ struc.chains.select &.residue.any?(&.protein?)
 struc.residues.select &.solvent?
 # select residues with its CA atom within 5 A of the first CA atom (this is equivalent to "same residue as" or "fillres" in other libraries)
 ca = struc.dig('A', 1, "CA")
-struc.residues.select { |residue| residue.dig("CA").coords.distance ca.coords < 5 }
+struc.residues.select { |residue| residue.dig("CA").pos.distance ca.pos < 5 }
 ```
 
 This may improve performance drastically when selecting chains/residues as it only requires traversing the chains/residues, which will be significantly smaller than the number of atoms.
@@ -239,19 +239,19 @@ Most libraries do not offer such functionality, and one often needs to resort to
 
 ### Coordinates manipulation
 
-All coordinates manipulation is done using a `CoordinatesProxy` instance, available for any topology object containing atoms (_i.e._ structure, chain, and residue) via the `#coords` method:
+All coordinates manipulation is done using a `CoordinatesProxy` instance, available for any topology object containing atoms (_i.e._ structure, chain, and residue) via the `#pos` method:
 
 ```crystal
 # geometric center
-struc.coords.center
+struc.pos.center
 # center at origin
-struc.coords.center_at_origin
+struc.pos.center_at_origin
 # wraps atoms into the primary unit cell
-struc.coords.wrap
+struc.pos.wrap
 # rotate about an axis
-struc.coords.rotate Chem::Spatial::Vec3[1, 2, 3], 90.degrees
+struc.pos.rotate Chem::Spatial::Vec3[1, 2, 3], 90.degrees
 # align coordinates to a reference structure
-struc.coords.align_to ref_struc
+struc.pos.align_to ref_struc
 ```
 
 ## Benchmark

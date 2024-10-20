@@ -41,7 +41,7 @@ module Chem::Mol2
               @pull.consume_line
               number = @pull.next_i
               name = @pull.next_s
-              coords = Spatial::Vec3[@pull.next_f, @pull.next_f, @pull.next_f]
+              pos = Spatial::Vec3[@pull.next_f, @pull.next_f, @pull.next_f]
               atom_t = @pull.next_s
               symbol = atom_t[...atom_t.index('.')] # ignore sybyl type
               element = PeriodicTable[symbol]? || @pull.error("Unknown element")
@@ -52,7 +52,7 @@ module Chem::Mol2
                 builder.residue resname[..2], resid
                 chg = @pull.next_f if include_charges
               end
-              builder.atom name, coords, element: element, partial_charge: (chg || 0.0)
+              builder.atom name, pos, element: element, partial_charge: (chg || 0.0)
             end
           when "@<TRIPOS>BOND"
             n_bonds.times do

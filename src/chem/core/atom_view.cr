@@ -16,16 +16,16 @@ module Chem
       ChainView.new chains.to_a
     end
 
-    def coords : Spatial::CoordinatesProxy
+    def pos : Spatial::CoordinatesProxy
       Spatial::CoordinatesProxy.new self
     end
 
     # Sets the atom coordinates.
-    def coords=(coords : Enumerable(Spatial::Vec3)) : Enumerable(Spatial::Vec3)
-      zip(coords) do |atom, vec|
-        atom.coords = vec
+    def pos=(pos : Enumerable(Spatial::Vec3)) : Enumerable(Spatial::Vec3)
+      zip(pos) do |atom, vec|
+        atom.pos = vec
       end
-      coords
+      pos
     end
 
     def each_fragment(& : self ->) : Nil

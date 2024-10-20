@@ -136,7 +136,7 @@ describe Chem::Spatial::Grid do
       end
 
       actual = [] of Chem::Spatial::Vec3
-      Chem::Spatial::Grid.vdw_mask(st, {6, 6, 6}, bounds(2, 2, 2), 0.02).each_with_coords do |ele, vec|
+      Chem::Spatial::Grid.vdw_mask(st, {6, 6, 6}, bounds(2, 2, 2), 0.02).each_with_pos do |ele, vec|
         actual << vec if ele == 1
       end
       actual.should be_close [
@@ -284,48 +284,48 @@ describe Chem::Spatial::Grid do
     end
   end
 
-  describe "#coords_at" do
+  describe "#pos_at" do
     it "fails when index is out of bounds" do
-      expect_raises(IndexError) { make_grid({2, 3, 4}).coords_at 285 }
+      expect_raises(IndexError) { make_grid({2, 3, 4}).pos_at 285 }
     end
 
     it "fails when location is out of bounds" do
       grid = make_grid({10, 10, 10}, bounds(10, 20, 30).translate(vec3(1, 2, 3)))
-      expect_raises(IndexError) { grid.coords_at 20, 35, 1 }
+      expect_raises(IndexError) { grid.pos_at 20, 35, 1 }
     end
   end
 
-  describe "#coords_at?" do
+  describe "#pos_at?" do
     it "returns the coordinates at index" do
       grid = make_grid({11, 11, 11}, bounds(10, 10, 10).translate(vec3(8, 5, 4)))
-      grid.coords_at?(0).should eq [8, 5, 4]
-      grid.coords_at?(1330).should eq [18, 15, 14]
-      grid.coords_at?(-1).should eq [18, 15, 14]
-      grid.coords_at?(75).should eq [8, 11, 13]
+      grid.pos_at?(0).should eq [8, 5, 4]
+      grid.pos_at?(1330).should eq [18, 15, 14]
+      grid.pos_at?(-1).should eq [18, 15, 14]
+      grid.pos_at?(75).should eq [8, 11, 13]
     end
 
     it "returns the coordinates at location" do
       grid = make_grid({11, 11, 11}, bounds(10, 20, 30).translate(vec3(1, 2, 3)))
-      grid.coords_at?(0, 0, 0).should eq [1, 2, 3]
-      grid.coords_at?(10, 10, 10).should eq [11, 22, 33]
-      grid.coords_at?(3, 5, 0).should eq [4, 12, 3]
+      grid.pos_at?(0, 0, 0).should eq [1, 2, 3]
+      grid.pos_at?(10, 10, 10).should eq [11, 22, 33]
+      grid.pos_at?(3, 5, 0).should eq [4, 12, 3]
     end
 
     it "returns the coordinates at location (non-orthogonal)" do
       bounds = Chem::Spatial::Parallelepiped.hexagonal(10, 5).translate(vec3(1, 2, 3))
       grid = make_grid({11, 11, 11}, bounds)
-      grid.coords_at?(0, 0, 0).should eq [1, 2, 3]
-      grid.coords_at?(10, 10, 10).not_nil!.should be_close [6, 10.660, 8], 1e-3
-      grid.coords_at?(3, 5, 0).not_nil!.should be_close [1.5, 6.330, 3], 1e-3
+      grid.pos_at?(0, 0, 0).should eq [1, 2, 3]
+      grid.pos_at?(10, 10, 10).not_nil!.should be_close [6, 10.660, 8], 1e-3
+      grid.pos_at?(3, 5, 0).not_nil!.should be_close [1.5, 6.330, 3], 1e-3
     end
 
     it "returns nil when index is out of bounds" do
-      make_grid({2, 2, 2}).coords_at?(356).should be_nil
+      make_grid({2, 2, 2}).pos_at?(356).should be_nil
     end
 
     it "returns nil when location is out of bounds" do
       grid = make_grid({10, 10, 10}, bounds(10, 20, 30).translate(vec3(1, 2, 3)))
-      grid.coords_at?(20, 35, 1).should be_nil
+      grid.pos_at?(20, 35, 1).should be_nil
     end
   end
 
@@ -351,10 +351,10 @@ describe Chem::Spatial::Grid do
     end
   end
 
-  describe "#each_coords" do
+  describe "#each_pos" do
     it "yields each coordinates" do
       ary = [] of Chem::Spatial::Vec3
-      Chem::Spatial::Grid.new({2, 2, 2}, bounds(3, 3, 3).translate(vec3(1, 2, 3))).each_coords do |vec|
+      Chem::Spatial::Grid.new({2, 2, 2}, bounds(3, 3, 3).translate(vec3(1, 2, 3))).each_pos do |vec|
         ary << vec
       end
 
@@ -381,7 +381,7 @@ describe Chem::Spatial::Grid do
 
       expected = [] of Chem::Spatial::Grid::Location
       grid.each_loc do |i, j, k|
-        d = grid.coords_at(i, j, k).distance2 vec
+        d = grid.pos_at(i, j, k).distance2 vec
         expected << {i, j, k} if d < cutoff**2
       end
 
@@ -438,13 +438,13 @@ describe Chem::Spatial::Grid do
     end
   end
 
-  describe "#each_with_coords" do
+  describe "#each_with_pos" do
     it "yields each element with its coordinates" do
       hash = {} of Chem::Spatial::Vec3 => Float64
       grid = make_grid({3, 2, 1}, bounds(2, 1, 1).translate(vec3(1, 2, 3))) do |i, j, k|
         i * 100 + j * 10 + k
       end
-      grid.each_with_coords { |ele, vec| hash[vec] = ele }
+      grid.each_with_pos { |ele, vec| hash[vec] = ele }
       hash.should eq({
         vec3(1, 2, 3) => 0,
         vec3(1, 3, 3) => 10,
@@ -543,20 +543,20 @@ describe Chem::Spatial::Grid do
     end
   end
 
-  describe "#map_with_coords" do
+  describe "#map_with_pos" do
     it "modifies the grid yielding each element and its coordinates" do
       grid = make_grid({3, 2, 1}, bounds(2, 1, 1).translate(vec3(1, 2, 3)))
-      other = grid.map_with_coords { |ele, vec| ele + vec.x * 100 + vec.y * 10 + vec.z }
+      other = grid.map_with_pos { |ele, vec| ele + vec.x * 100 + vec.y * 10 + vec.z }
       grid.to_a.should eq [0, 1, 2, 3, 4, 5]
       other.to_a.should eq [123, 134, 225, 236, 327, 338]
       other.bounds.should eq bounds(2, 1, 1).translate(vec3(1, 2, 3))
     end
   end
 
-  describe "#map_with_coords!" do
+  describe "#map_with_pos!" do
     it "modifies the grid yielding each element and its coordinates" do
       grid = make_grid({3, 2, 1}, bounds(2, 1, 1).translate(vec3(1, 2, 3)))
-      grid.map_with_coords! { |ele, vec| ele + vec.x * 100 + vec.y * 10 + vec.z }
+      grid.map_with_pos! { |ele, vec| ele + vec.x * 100 + vec.y * 10 + vec.z }
       grid.to_a.should eq [123, 134, 225, 236, 327, 338]
     end
   end
@@ -650,18 +650,18 @@ describe Chem::Spatial::Grid do
     end
   end
 
-  describe "#mask_by_coords" do
+  describe "#mask_by_pos" do
     it "returns a grid mask" do
       grid = make_grid({2, 2, 2}, bounds(1, 1, 1))
-      grid.mask_by_coords(&.x.==(0)).to_a.should eq [1, 1, 1, 1, 0, 0, 0, 0]
+      grid.mask_by_pos(&.x.==(0)).to_a.should eq [1, 1, 1, 1, 0, 0, 0, 0]
       grid.to_a.should eq [0, 1, 2, 3, 4, 5, 6, 7]
     end
   end
 
-  describe "#mask_by_coords!" do
+  describe "#mask_by_pos!" do
     it "masks a grid in-place by coordinates" do
       grid = make_grid({2, 2, 2}, bounds(5, 5, 5))
-      grid.mask_by_coords! { |vec| vec.y == 5 }
+      grid.mask_by_pos! { |vec| vec.y == 5 }
       grid.to_a.should eq [0, 0, 2, 3, 0, 0, 6, 7]
     end
   end
@@ -714,9 +714,9 @@ describe Chem::Spatial::Grid do
     end
   end
 
-  describe "#mean_with_coords" do
+  describe "#mean_with_pos" do
     it "returns the arithmetic mean along an axis with its coordinates" do
-      ary = make_grid({2, 3, 11}, bounds(4, 5, 6)).mean_with_coords(axis: 2)
+      ary = make_grid({2, 3, 11}, bounds(4, 5, 6)).mean_with_pos(axis: 2)
       ary.map(&.[0]).should eq [
         27.5, 28.5, 29.5, 30.5, 31.5, 32.5, 33.5, 34.5, 35.5, 36.5, 37.5,
       ]

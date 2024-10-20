@@ -136,7 +136,7 @@ module Chem::VASP::Poscar
 
       ele_tally.each do |ele, _|
         atoms.each.select(&.element.==(ele)).each do |atom|
-          vec = atom.coords
+          vec = atom.pos
           if @fractional
             vec = cell.fract vec
             vec = vec.wrap if @wrap

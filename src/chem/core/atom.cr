@@ -4,7 +4,7 @@ module Chem
 
     getter bonds : BondArray { BondArray.new self }
     property constraint : Spatial::Direction?
-    property coords : Spatial::Vec3
+    property pos : Spatial::Vec3
     property element : Element
     property formal_charge : Int32 = 0
     property name : String
@@ -33,7 +33,7 @@ module Chem
     # ```
     getter metadata : Metadata { Metadata.new }
 
-    delegate x, y, z, to: @coords
+    delegate x, y, z, to: @pos
     delegate chain, to: @residue
     delegate atomic_number, covalent_radius, heavy?, max_valence, valence_electrons, to: @element
 
@@ -42,7 +42,7 @@ module Chem
       @number : Int32,
       @element : Element,
       @name : String,
-      @coords : Spatial::Vec3,
+      @pos : Spatial::Vec3,
       @typename : String? = nil,
       @formal_charge : Int32 = 0,
       @mass : Float64 = element.mass,
@@ -254,7 +254,7 @@ module Chem
     #
     # NOTE: bonds are not copied and must be set manually for the copy.
     protected def copy_to(residue : Residue) : self
-      atom = Atom.new residue, @number, @element, @name, @coords, @typename,
+      atom = Atom.new residue, @number, @element, @name, @pos, @typename,
         @formal_charge, @occupancy, @partial_charge, @temperature_factor
       atom.constraint = @constraint
       atom

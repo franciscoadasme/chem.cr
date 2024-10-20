@@ -14,7 +14,7 @@ describe Chem::VASP::Poscar do
 
       atom = st.atoms[-1]
       atom.chain.id.should eq 'A'
-      atom.coords.should eq [1.25020645, 3.42088266, 4.92610368]
+      atom.pos.should eq [1.25020645, 3.42088266, 4.92610368]
       atom.element.oxygen?.should be_true
       atom.number.should eq 49
       atom.name.should eq "O"
@@ -32,15 +32,15 @@ describe Chem::VASP::Poscar do
     it "parses a file with direct coordinates" do
       st = load_file "direct.poscar"
       st.source_file.should eq Path[spec_file("direct.poscar")].expand
-      st.atoms[0].coords.should eq [0, 0, 0]
-      st.atoms[1].coords.should be_close [1.0710, 1.6065, 1.2495], 1e-15
+      st.atoms[0].pos.should eq [0, 0, 0]
+      st.atoms[1].pos.should be_close [1.0710, 1.6065, 1.2495], 1e-15
     end
 
     it "parses a file with scaled Cartesian coordinates" do
       st = load_file "cartesian.poscar"
       st.source_file.should eq Path[spec_file("cartesian.poscar")].expand
-      st.atoms[0].coords.should eq [0, 0, 0]
-      st.atoms[1].coords.should be_close [0.8925, 0.8925, 0.8925], 1e-16
+      st.atoms[0].pos.should eq [0, 0, 0]
+      st.atoms[1].pos.should be_close [0.8925, 0.8925, 0.8925], 1e-16
     end
 
     it "parses a file with selective dynamics" do

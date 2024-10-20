@@ -32,7 +32,7 @@ describe Chem::Structure do
       other.chains.map(&.id).should eq ['A']
       other.dig('A', 32).name.should eq "CYS"
       other.dig('A', 32).sec.beta_strand?.should be_true
-      other.dig('A', 32, "CA").coords.should eq [8.140, 11.694, 9.635]
+      other.dig('A', 32, "CA").pos.should eq [8.140, 11.694, 9.635]
 
       other.cell?.should eq structure.cell?
       other.experiment.should eq structure.experiment
@@ -1249,19 +1249,19 @@ describe Chem::Structure do
     end
   end
 
-  describe "#coords" do
+  describe "#pos" do
     it "sets the coordinates from an enumerable" do
       struc = Chem::Structure.from_xyz spec_file("waters.xyz")
-      expected = struc.coords.map(&.*(2))
-      struc.coords = expected
-      struc.coords.to_a.should eq expected
+      expected = struc.pos.map(&.*(2))
+      struc.pos = expected
+      struc.pos.to_a.should eq expected
     end
 
-    it "sets the coordinates from coords" do
+    it "sets the coordinates from pos" do
       struc = Chem::Structure.from_xyz spec_file("waters.xyz")
-      expected = struc.coords.map(&.*(0.5))
-      struc.coords = struc.clone.coords.map!(&.*(0.5))
-      struc.coords.to_a.should eq expected
+      expected = struc.pos.map(&.*(0.5))
+      struc.pos = struc.clone.pos.map!(&.*(0.5))
+      struc.pos.to_a.should eq expected
     end
   end
 end

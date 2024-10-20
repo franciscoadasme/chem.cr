@@ -1,7 +1,7 @@
 module Chem::Spatial
   # TODO: add support for non-cubic grids (use cell instead of bounds?)
-  #       - i to coords: origin.x + (i / nx) * cell.a
-  #       - coords to i: ?
+  #       - i to pos: origin.x + (i / nx) * cell.a
+  #       - pos to i: ?
   # TODO: implement functionality from vmd's volmap
   class Grid
     include Indexable(Float64)
@@ -44,10 +44,10 @@ module Chem::Spatial
     def self.atom_distance(structure : Structure,
                            dim : Dimensions,
                            bounds : Parallelepiped? = nil) : self
-      grid = new dim, (bounds || structure.coords.bounds)
-      coords = structure.coords.to_a
-      kdtree = KDTree.new(coords, structure.cell?)
-      grid.map_with_coords! do |_, vec|
+      grid = new dim, (bounds || structure.pos.bounds)
+      pos = structure.pos.to_a
+      kdtree = KDTree.new(pos, structure.cell?)
+      grid.map_with_pos! do |_, vec|
         Math.sqrt kdtree.nearest_with_distance(vec)[1]
       end
     end
@@ -148,12 +148,12 @@ module Chem::Spatial
                       dim : Dimensions,
                       bounds : Parallelepiped? = nil,
                       delta : Float64 = 0.02) : self
-      grid = new dim, (bounds || structure.coords.bounds)
+      grid = new dim, (bounds || structure.pos.bounds)
       delta = Math.min delta, grid.resolution.min / 2
       atoms = structure.atoms
-      kdtree = KDTree.new(atoms.map(&.coords), structure.cell?)
+      kdtree = KDTree.new(atoms.map(&.pos), structure.cell?)
       vdw_cutoff = structure.atoms.max_of &.vdw_radius
-      # grid.map_with_coords! do |_, vec|
+      # grid.map_with_pos! do |_, vec|
       #   value = 0
       #   kdtree.each_neighbor(vec, within: vdw_cutoff) do |atom, d|
       #     next if value < 0
@@ -167,9 +167,9 @@ module Chem::Spatial
       #   value.clamp(0, 1)
       # end
       structure.atoms.each do |atom|
-        grid.each_loc(atom.coords, atom.vdw_radius + delta) do |loc, d|
+        grid.each_loc(atom.pos, atom.vdw_radius + delta) do |loc, d|
           too_close = false
-          kdtree.each_neighbor(grid.coords_at(loc), within: vdw_cutoff) do |index, od|
+          kdtree.each_neighbor(grid.pos_at(loc), within: vdw_cutoff) do |index, od|
             other = atoms.unsafe_fetch(index)
             too_close = true if Math.sqrt(od) < other.vdw_radius - delta
           end
@@ -266,23 +266,23 @@ module Chem::Spatial
       @buffer[i] = value
     end
 
-    def coords_at(*args, **options) : Vec3
-      coords_at?(*args, **options) || raise IndexError.new
+    def pos_at(*args, **options) : Vec3
+      pos_at?(*args, **options) || raise IndexError.new
     end
 
-    def coords_at?(i : Int) : Vec3?
+    def pos_at?(i : Int) : Vec3?
       if loc = loc_at?(i)
-        coords_at? loc
+        pos_at? loc
       end
     end
 
-    def coords_at?(i : Int, j : Int, k : Int) : Vec3?
-      coords_at?(Location.new(i, j, k))
+    def pos_at?(i : Int, j : Int, k : Int) : Vec3?
+      pos_at?(Location.new(i, j, k))
     end
 
-    def coords_at?(loc : Location) : Vec3?
+    def pos_at?(loc : Location) : Vec3?
       return unless index(loc)
-      unsafe_coords_at(loc)
+      unsafe_pos_at(loc)
     end
 
     def dup : self
@@ -342,9 +342,9 @@ module Chem::Spatial
       end
     end
 
-    def each_coords(& : Vec3 ->) : Nil
+    def each_pos(& : Vec3 ->) : Nil
       each_loc do |loc|
-        yield unsafe_coords_at(loc)
+        yield unsafe_pos_at(loc)
       end
     end
 
@@ -366,16 +366,16 @@ module Chem::Spatial
         ((loc[1] - dj - 1)..(loc[1] + dj + 1)).clamp(0..nj - 1).each do |j|
           ((loc[2] - dk - 1)..(loc[2] + dk + 1)).clamp(0..nk - 1).each do |k|
             new_loc = Location.new i, j, k
-            d = vec.distance2 unsafe_coords_at(new_loc)
+            d = vec.distance2 unsafe_pos_at(new_loc)
             yield new_loc, Math.sqrt(d) if d < cutoff
           end
         end
       end
     end
 
-    def each_with_coords(& : Float64, Vec3 ->) : Nil
+    def each_with_pos(& : Float64, Vec3 ->) : Nil
       each_index do |i|
-        yield unsafe_fetch(i), unsafe_coords_at(unsafe_loc_at(i))
+        yield unsafe_fetch(i), unsafe_pos_at(unsafe_loc_at(i))
       end
     end
 
@@ -430,15 +430,15 @@ module Chem::Spatial
       self
     end
 
-    def map_with_coords(& : Float64, Vec3 -> Number) : self
-      dup.map_with_coords! do |ele, vec|
+    def map_with_pos(& : Float64, Vec3 -> Number) : self
+      dup.map_with_pos! do |ele, vec|
         yield ele, vec
       end
     end
 
-    def map_with_coords!(& : Float64, Vec3 -> Number) : self
+    def map_with_pos!(& : Float64, Vec3 -> Number) : self
       each_with_index do |ele, i|
-        @buffer[i] = (yield ele, unsafe_coords_at(unsafe_loc_at(i))).to_f
+        @buffer[i] = (yield ele, unsafe_pos_at(unsafe_loc_at(i))).to_f
       end
       self
     end
@@ -576,12 +576,12 @@ module Chem::Spatial
     #
     # ```
     # grid = Grid.new({2, 2, 2}, Parallelepiped[10, 10, 10]) { |i, j, k| i * 4 + j * 2 + k }
-    # grid.to_a                           # => [0, 1, 2, 3, 4, 5, 6, 7]
-    # grid.mask_by_coords(&.x.==(0)).to_a # => [1, 1, 1, 1, 0, 0, 0, 0]
-    # grid.to_a                           # => [0, 1, 2, 3, 4, 5, 6, 7]
+    # grid.to_a                        # => [0, 1, 2, 3, 4, 5, 6, 7]
+    # grid.mask_by_pos(&.x.==(0)).to_a # => [1, 1, 1, 1, 0, 0, 0, 0]
+    # grid.to_a                        # => [0, 1, 2, 3, 4, 5, 6, 7]
     # ```
-    def mask_by_coords(& : Vec3 -> Bool) : self
-      map_with_coords { |_, vec| (yield vec) ? 1.0 : 0.0 }
+    def mask_by_pos(& : Vec3 -> Bool) : self
+      map_with_pos { |_, vec| (yield vec) ? 1.0 : 0.0 }
     end
 
     # Masks a grid by coordinates. Coordinates for which the passed block returns
@@ -589,16 +589,16 @@ module Chem::Spatial
     #
     # Optimized version of creating a mask and applying it to the same grid, but avoids
     # creating intermediate grids. This is equivalent to `grid = grid *
-    # grid.mask_by_coords { ... }`
+    # grid.mask_by_pos { ... }`
     #
     # ```
     # grid = Grid.new({2, 2, 2}, Parallelepiped[5, 5, 5]) { |i, j, k| i * 4 + j * 2 + k }
     # grid.to_a # => [0, 1, 2, 3, 4, 5, 6, 7]
-    # grid.mask_by_coords! { |vec| vec.y == 5 }
+    # grid.mask_by_pos! { |vec| vec.y == 5 }
     # grid.to_a # => [0, 0, 2, 3, 0, 0, 6, 7]
     # ```
-    def mask_by_coords!(& : Vec3 -> Bool) : self
-      map_with_coords! { |ele, vec| (yield vec) ? ele : 0.0 }
+    def mask_by_pos!(& : Vec3 -> Bool) : self
+      map_with_pos! { |ele, vec| (yield vec) ? ele : 0.0 }
     end
 
     # Returns a grid mask. Indexes for which the passed block returns `true` are set to
@@ -708,7 +708,7 @@ module Chem::Spatial
     # grid = Grid.new({2, 3, 5}, Parallelepiped[1, 1, 1]) { |i, j, k| i * 12 + j * 4 + k }
     # grid.mean(axis: 1) # => [{9.5, 0.0}, {14.5, 0.5}, {19.5, 1.0}]
     # ```
-    def mean_with_coords(axis : Int) : Array(Tuple(Float64, Float64))
+    def mean_with_pos(axis : Int) : Array(Tuple(Float64, Float64))
       delta = resolution[axis]
       i = 0
       ary = Array(Tuple(Float64, Float64)).new @dim[axis]
@@ -812,7 +812,7 @@ module Chem::Spatial
     end
 
     @[AlwaysInline]
-    private def unsafe_coords_at(loc : Location) : Vec3
+    private def unsafe_pos_at(loc : Location) : Vec3
       vec = origin
       {% for i in 0..2 %}
         vec += loc[{{i}}] * bounds.basisvec[{{i}}] / (@dim[{{i}}] - 1) if @dim[{{i}}] > 1

@@ -35,7 +35,7 @@ describe Chem::PDB do
       atom.residue.name.should eq "HOH"
       atom.chain.id.should eq 'D'
       atom.residue.number.should eq 2112
-      atom.coords.should eq [66.315, 27.887, 48.252]
+      atom.pos.should eq [66.315, 27.887, 48.252]
       atom.occupancy.should eq 1
       atom.temperature_factor.should eq 53.58
       atom.element.oxygen?.should be_true
@@ -64,7 +64,7 @@ describe Chem::PDB do
       atom.chain.id.should eq 'A'
       atom.residue.number.should eq 2
       # atom.insertion_code.should be_nil
-      atom.coords.should eq [-1.204, 4.061, 0.195]
+      atom.pos.should eq [-1.204, 4.061, 0.195]
       atom.occupancy.should eq 1
       atom.temperature_factor.should eq 0
       atom.element.oxygen?.should be_true
@@ -248,7 +248,7 @@ describe Chem::PDB do
       structure.atoms.size.should eq 14
       structure.atoms.map(&.occupancy).uniq.to_a.should eq [0.56]
       structure['A'][1].name.should eq "TRP"
-      structure['A'][1]["N"].coords.should eq [3.298, 2.388, 22.684]
+      structure['A'][1]["N"].pos.should eq [3.298, 2.388, 22.684]
     end
 
     it "parses selected alternate conformation" do
@@ -257,7 +257,7 @@ describe Chem::PDB do
       structure.atoms.size.should eq 11
       structure.atoms.map(&.occupancy).uniq.to_a.should eq [0.22]
       structure['A'][1].name.should eq "ARG"
-      structure['A'][1]["CB"].coords.should eq [4.437, 2.680, 20.555]
+      structure['A'][1]["CB"].pos.should eq [4.437, 2.680, 20.555]
     end
 
     it "parses insertion codes" do
@@ -296,9 +296,9 @@ describe Chem::PDB do
     it "skip models" do
       Chem::PDB::Reader.open(spec_file("models.pdb")) do |reader|
         reader.skip_entry
-        reader.read_entry.atoms[0].coords.should eq [7.212, 15.334, 0.966]
+        reader.read_entry.atoms[0].pos.should eq [7.212, 15.334, 0.966]
         reader.skip_entry
-        reader.read_entry.atoms[0].coords.should eq [22.055, 14.701, 7.032]
+        reader.read_entry.atoms[0].pos.should eq [22.055, 14.701, 7.032]
       end
     end
 
@@ -342,7 +342,7 @@ describe Chem::PDB do
       residue = structure['A'][23]
       residue.atoms.size.should eq 15
       residue.atoms.map(&.occupancy).uniq.should eq [1, 0.8]
-      residue["CG"].coords.should eq [10.387, 12.021, 0.058]
+      residue["CG"].pos.should eq [10.387, 12.021, 0.058]
     end
 
     it "parses 1dpo (insertions)" do
@@ -706,8 +706,8 @@ describe Chem::PDB::Writer do
   it "aligns the unit cell to the xy-plane" do
     structure = load_file "5e5v--unwrapped.poscar"
     structure = Chem::Structure.from_pdb IO::Memory.new(structure.to_pdb)
-    structure.atoms[0].coords.should be_close [8.128, 2.297, 11.112], 1e-3
-    structure.atoms[167].coords.should be_close [11.0, 6.405, 12.834], 1e-3
+    structure.atoms[0].pos.should be_close [8.128, 2.297, 11.112], 1e-3
+    structure.atoms[167].pos.should be_close [11.0, 6.405, 12.834], 1e-3
   end
 
   it "writes CONECT records for disulfide bridges and HET groups by default" do

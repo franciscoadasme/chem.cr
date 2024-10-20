@@ -10,14 +10,14 @@ module Chem::Protein
       raise ArgumentError.new("#{residue} is N-terminus") unless prev_res = residue.pred?
       raise ArgumentError.new("#{residue} is C-terminus") unless next_res = residue.succ?
 
-      c1 = prev_res.dig("C").coords
-      ca1 = prev_res.dig("CA").coords
-      n2 = residue.dig("N").coords
-      ca2 = residue.dig("CA").coords
-      c2 = residue.dig("C").coords
-      cb2 = residue.dig?("CB").try &.coords
-      n3 = next_res.dig("N").coords
-      ca3 = next_res.dig("CA").coords
+      c1 = prev_res.dig("C").pos
+      ca1 = prev_res.dig("CA").pos
+      n2 = residue.dig("N").pos
+      ca2 = residue.dig("CA").pos
+      c2 = residue.dig("C").pos
+      cb2 = residue.dig?("CB").try &.pos
+      n3 = next_res.dig("N").pos
+      ca3 = next_res.dig("CA").pos
 
       if cell = residue.structure.cell?
         n2 = cell.wrap n2, around: ca2

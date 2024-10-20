@@ -280,6 +280,6 @@ end
 
 struct Chem::Spatial::Transform
   def self.aligning(atoms : AtomContainer, to ref_atoms : AtomContainer) : self
-    aligning atoms.coords, ref_atoms.coords
+    aligning atoms.pos, ref_atoms.pos
   end
 end

@@ -8,7 +8,7 @@ describe Chem::Gen::Reader do
 
     structure.atoms.size.should eq 5
     structure.atoms.map(&.element.symbol).should eq ["Cl", "Na", "O", "Na", "Cl"]
-    structure.coords.should eq [
+    structure.pos.should eq [
       [30, 15, 10],
       [10, 5, 5],
       [30, 15, 9],
@@ -28,7 +28,7 @@ describe Chem::Gen::Reader do
 
     structure.atoms.size.should eq 4
     structure.atoms.map(&.element.symbol).should eq ["Cl", "O", "O", "Na"]
-    structure.coords.should eq [
+    structure.pos.should eq [
       [30, 15, 10],
       [10, 5, 5],
       [3, 1.5, 9],
@@ -48,7 +48,7 @@ describe Chem::Gen::Reader do
 
     structure.atoms.size.should eq 2
     structure.atoms.map(&.element.symbol).should eq ["Ga", "As"]
-    structure.coords.should eq [[0, 0, 0], [1.356773, 1.356773, 1.356773]]
+    structure.pos.should eq [[0, 0, 0], [1.356773, 1.356773, 1.356773]]
   end
 end
 

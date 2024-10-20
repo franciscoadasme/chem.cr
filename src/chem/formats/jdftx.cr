@@ -54,7 +54,7 @@ module Chem::JDFTx
       cell = cell.try &.scale(*lattice_scale)
       if fractional
         raise "Missing command lattice" unless cell
-        structure.coords.to_cart!
+        structure.pos.to_cart!
       end
 
       structure
@@ -134,7 +134,7 @@ module Chem::JDFTx
       @io.print "coords-type "
       @io.puts @fractional ? "Lattice" : "Cartesian"
       obj.atoms.each do |atom|
-        vec = atom.coords
+        vec = atom.pos
         if @fractional
           format = "%22.16f"
           vec = obj.cell.fract vec

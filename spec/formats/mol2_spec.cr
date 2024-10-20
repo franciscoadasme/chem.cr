@@ -13,12 +13,12 @@ describe Chem::Mol2::Reader do
                                  "H4", "H5", "H6"]
     atoms[0].element.should eq Chem::PeriodicTable::C
     atoms[4].partial_charge.should eq -0.062
-    atoms[5].coords.should eq [0, 1.394, 0]
+    atoms[5].pos.should eq [0, 1.394, 0]
     atoms[6].element.should eq Chem::PeriodicTable::H
-    atoms[8].coords.should eq [3.353, -0.542, 0]
+    atoms[8].pos.should eq [3.353, -0.542, 0]
     atoms[9].partial_charge.should eq 0.062
     atoms[11].element.should eq Chem::PeriodicTable::H
-    atoms[11].coords.should eq [-0.939, 1.936, 0]
+    atoms[11].pos.should eq [-0.939, 1.936, 0]
 
     atoms[0].bonds[atoms[1]].order.should eq 2
     atoms[1].bonds[atoms[2]].order.should eq 1
@@ -42,8 +42,8 @@ describe Chem::Mol2::Reader do
     atoms.size.should eq 20
     atoms.map(&.name).should eq atom_names
     atoms.map(&.element.symbol).should eq symbols
-    atoms[2].coords.should eq [-0.2043, -0.1565, -0.4766]
-    atoms[14].coords.should eq [-0.7202, -1.1105, -0.3899]
+    atoms[2].pos.should eq [-0.2043, -0.1565, -0.4766]
+    atoms[14].pos.should eq [-0.7202, -1.1105, -0.3899]
 
     atoms[3].bonded_atoms.map(&.number).should eq [2, 5, 12]
     atoms[3].bonds[atoms[4]].order.should eq 2
@@ -61,11 +61,11 @@ describe Chem::Mol2::Reader do
     atoms[0].name.should eq "N1"
     atoms[0].element.nitrogen?.should be_true
     atoms[0].partial_charge.should eq -0.896
-    atoms[0].coords.should be_close [6.8420, 9.9900, 22.7430], 1e-4
+    atoms[0].pos.should be_close [6.8420, 9.9900, 22.7430], 1e-4
     atoms[33].name.should eq "H131"
     atoms[33].element.hydrogen?.should be_true
     atoms[33].partial_charge.should eq 0.072
-    atoms[33].coords.should be_close [4.5540, 11.1000, 22.5880], 1e-4
+    atoms[33].pos.should be_close [4.5540, 11.1000, 22.5880], 1e-4
 
     structure.bonds.size.should eq 51
     atoms[7].bonded?(atoms[34]).should be_true

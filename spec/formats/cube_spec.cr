@@ -49,9 +49,9 @@ describe Chem::Cube::Reader do
     structure.source_file.should eq Path[spec_file("20.cube")].expand
     structure.atoms.size.should eq 16
     structure.atoms.map(&.element.symbol).should eq %w(Cu O H H O H H O H H O O H H H H)
-    structure.atoms[0].coords.should eq [2.317035, 3.509540, -0.795570]
+    structure.atoms[0].pos.should eq [2.317035, 3.509540, -0.795570]
     structure.atoms[0].partial_charge.should eq 29
-    structure.atoms[-1].coords.should eq [0.794769, 5.548665, 3.668909]
+    structure.atoms[-1].pos.should eq [0.794769, 5.548665, 3.668909]
 
     structure.should be reader.read_attached
   end

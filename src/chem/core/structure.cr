@@ -166,13 +166,13 @@ module Chem
       structure
     end
 
-    def coords : Spatial::CoordinatesProxy
+    def pos : Spatial::CoordinatesProxy
       Spatial::CoordinatesProxy.new atoms, @cell
     end
 
     # Sets the atom coordinates.
-    def coords=(coords : Enumerable(Spatial::Vec3)) : Enumerable(Spatial::Vec3)
-      atoms.coords = coords
+    def pos=(pos : Enumerable(Spatial::Vec3)) : Enumerable(Spatial::Vec3)
+      atoms.pos = pos
     end
 
     def delete(ch : Chain) : Chain?
@@ -305,10 +305,10 @@ module Chem
       end
 
       # Add initial bonds based on pairwise distances
-      kdtree = Spatial::KDTree.new(atoms.map(&.coords), cell?)
+      kdtree = Spatial::KDTree.new(atoms.map(&.pos), cell?)
       atoms.each do |atom|
         cutoff = Math.sqrt(dcov2_map[{atom.element, largest_atom.element}])
-        kdtree.each_neighbor(atom.coords, within: cutoff) do |index, dis2|
+        kdtree.each_neighbor(atom.pos, within: cutoff) do |index, dis2|
           other = atoms.unsafe_fetch(index)
           if atom.number < other.number &&                            # check bond once
              other.element.max_bonds > 0 &&                           # skip non-bonding
@@ -339,10 +339,10 @@ module Chem
 
       # Remove bonds that produce high ring strain (<50°) in distored structures
       bond_table.each do |atom, bonded_atoms|
-        pb = atom.coords
+        pb = atom.pos
         bonded_atoms.combinations(2).each do |(a, b)|
-          pa = cell?.try(&.wrap(a.coords, around: pb)) || a.coords
-          pc = cell?.try(&.wrap(b.coords, around: pb)) || b.coords
+          pa = cell?.try(&.wrap(a.pos, around: pb)) || a.pos
+          pc = cell?.try(&.wrap(b.pos, around: pb)) || b.pos
           next unless (pc - pb).angle(pa - pb).degrees < MIN_RING_ANGLE
           farther_atom = pa.distance(pb) > pc.distance(pb) ? a : b
           bonded_atoms.delete farther_atom
@@ -395,7 +395,7 @@ module Chem
                   other.missing_valence,
                   other.degree,
                   other.bonded_atoms.count(&.heavy?),
-                  atom.coords.distance2(other.coords),
+                  atom.pos.distance2(other.pos),
                 }
               end
               .each do |other|

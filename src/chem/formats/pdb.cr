@@ -439,7 +439,7 @@ module Chem::PDB
     end
 
     private def write(atom : Atom, transform : Spatial::Transform? = nil) : Nil
-      vec = atom.coords
+      vec = atom.pos
       vec = transform * vec if transform
       @io.printf "%-6s%5s %4s %-4s%s%4s%1s   %8.3f%8.3f%8.3f%6.2f%6.2f          %2s%2s\n",
         (atom.residue.protein? ? "ATOM" : "HETATM"),

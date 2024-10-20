@@ -26,7 +26,7 @@ module Chem::Cube
           builder.atom \
             element: (PeriodicTable[@pull.next_i]? || @pull.error("Unknown element")),
             partial_charge: @pull.next_f,
-            coords: read_vector
+            pos: read_vector
           @pull.consume_line
         end
       end

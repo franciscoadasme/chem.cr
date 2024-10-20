@@ -56,11 +56,11 @@ class Chem::DCD::Reader
     if @fixed_positions.size > 0 && @entry_index > 0
       i = -1
       atoms.zip(@fixed_positions) do |atom, fixed_pos|
-        atom.coords = fixed_pos || Spatial::Vec3[x[(i += 1)], y[i], z[i]]
+        atom.pos = fixed_pos || Spatial::Vec3[x[(i += 1)], y[i], z[i]]
       end
     else
       atoms.each_with_index do |atom, i|
-        atom.coords = Spatial::Vec3[x[i], y[i], z[i]]
+        atom.pos = Spatial::Vec3[x[i], y[i], z[i]]
       end
     end
 

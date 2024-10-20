@@ -16,8 +16,8 @@ module Chem::Spatial
     #
     # ```
     # conformers = Array(Structure).read "E20_conformers.mol2"
-    # ref_pos = conformers[0].coords
-    # pos = conformers[1].coords
+    # ref_pos = conformers[0].pos
+    # pos = conformers[1].pos
     # Spatial.rmsd(pos, ref_pos)   # => 7.933736
     # pos.center == ref_pos.center # => false
     # pos.align_to(res_pos)
@@ -54,9 +54,9 @@ module Chem::Spatial
     #
     # ```
     # structure = Structure.read "path/to/file"
-    # structure.coords.center # => [1.5 2.0 3.2]
-    # structure.coords.center_along Vec3[0, 10, 0]
-    # structure.coords.center # => [1.5 5.0 3.2]
+    # structure.pos.center # => [1.5 2.0 3.2]
+    # structure.pos.center_along Vec3[0, 10, 0]
+    # structure.pos.center # => [1.5 5.0 3.2]
     # ```
     def center_along(vec : Vec3) : self
       nvec = vec.normalize
@@ -67,9 +67,9 @@ module Chem::Spatial
     #
     # ```
     # structure = Structure.read "path/to/file"
-    # structure.coords.center # => [1.0 2.0 3.0]
-    # structure.coords.center_at Vec3[10, 20, 30]
-    # structure.coords.center # => [10 20 30]
+    # structure.pos.center # => [1.0 2.0 3.0]
+    # structure.pos.center_at Vec3[10, 20, 30]
+    # structure.pos.center # => [10 20 30]
     # ```
     def center_at(vec : Vec3) : self
       translate vec - center
@@ -81,13 +81,13 @@ module Chem::Spatial
     #
     # ```
     # structure = Structure.read "path/to/file"
-    # structure.cell          # => [[1.0 0.0 0.0] [0.0 25.0 0.0] [0.0 0.0 213]]
-    # structure.coords.center # => [1.0 2.0 3.0]
-    # structure.coords.center_at_cell
-    # structure.coords.center # => [0.5 12.5 106.5]
+    # structure.cell       # => [[1.0 0.0 0.0] [0.0 25.0 0.0] [0.0 0.0 213]]
+    # structure.pos.center # => [1.0 2.0 3.0]
+    # structure.pos.center_at_cell
+    # structure.pos.center # => [0.5 12.5 106.5]
     #
     # structure = Structure.read "path/to/non_periodic_file"
-    # structure.coords.center_at_cell # raises NotPeriodicError
+    # structure.pos.center_at_cell # raises NotPeriodicError
     # ```
     def center_at_cell : self
       raise NotPeriodicError.new unless cell = @cell
@@ -98,9 +98,9 @@ module Chem::Spatial
     #
     # ```
     # structure = Structure.read "path/to/file"
-    # structure.coords.center # => [1.0 2.0 3.0]
-    # structure.coords.center_at_origin
-    # structure.coords.center # => [0.0 0.0 0.0]
+    # structure.pos.center # => [1.0 2.0 3.0]
+    # structure.pos.center_at_origin
+    # structure.pos.center # => [0.0 0.0 0.0]
     # ```
     def center_at_origin : self
       center_at Vec3.zero
@@ -114,14 +114,14 @@ module Chem::Spatial
     #   atom :H, Vec3[4, 5, 6]
     #   atom :H, Vec3[7, 8, 9]
     # end
-    # structure.coords.center # => [4.0 5.0 6.0]
-    # structure.coords.com    # => [1.5035248 2.5035248 3.5035248]
+    # structure.pos.center # => [4.0 5.0 6.0]
+    # structure.pos.com    # => [1.5035248 2.5035248 3.5035248]
     # ```
     def com : Vec3
       center = Vec3[0, 0, 0]
       total_mass = 0.0
       @atoms.each do |atom|
-        center += atom.mass * atom.coords
+        center += atom.mass * atom.pos
         total_mass += atom.mass
       end
       center / total_mass
@@ -132,16 +132,16 @@ module Chem::Spatial
         raise NotPeriodicError.new unless cell = @cell
         FractionalCoordinatesIterator.new @atoms, cell
       else
-        @atoms.each.map &.coords
+        @atoms.each.map &.pos
       end
     end
 
     def each(fractional : Bool = false, &block : Vec3 ->)
       if fractional
         raise NotPeriodicError.new unless cell = @cell
-        @atoms.each { |atom| yield cell.fract(atom.coords) }
+        @atoms.each { |atom| yield cell.fract(atom.pos) }
       else
-        @atoms.each { |atom| yield atom.coords }
+        @atoms.each { |atom| yield atom.pos }
       end
     end
 
@@ -157,10 +157,10 @@ module Chem::Spatial
       if fractional
         raise NotPeriodicError.new unless cell = @cell
         @atoms.each do |atom|
-          atom.coords = cell.cart(yield cell.fract(atom.coords))
+          atom.pos = cell.cart(yield cell.fract(atom.pos))
         end
       else
-        @atoms.each { |atom| atom.coords = yield atom.coords }
+        @atoms.each { |atom| atom.pos = yield atom.pos }
       end
       self
     end
@@ -311,7 +311,7 @@ module Chem::Spatial
 
     def to_a(fractional : Bool = false) : Array(Vec3)
       ary = [] of Vec3
-      each(fractional) { |coords| ary << coords }
+      each(fractional) { |pos| ary << pos }
       ary
     end
 
@@ -330,8 +330,8 @@ module Chem::Spatial
       to_fract!
       moved_atoms = Set(Atom).new
       @atoms.each_fragment do |fragment|
-        assemble_fragment(fragment[0], fragment[0].coords, moved_atoms)
-        fragment.coords.translate(-fragment.coords.center.map(&.floor))
+        assemble_fragment(fragment[0], fragment[0].pos, moved_atoms)
+        fragment.pos.translate(-fragment.pos.center.map(&.floor))
         moved_atoms.clear
       end
       to_cart!
@@ -341,11 +341,11 @@ module Chem::Spatial
     private def assemble_fragment(atom, center, moved_atoms)
       return if atom.in?(moved_atoms)
 
-      atom.coords -= (atom.coords - center).map(&.round)
+      atom.pos -= (atom.pos - center).map(&.round)
       moved_atoms << atom
 
       atom.each_bonded_atom do |other|
-        assemble_fragment other, atom.coords, moved_atoms
+        assemble_fragment other, atom.pos, moved_atoms
       end
     end
 
@@ -390,7 +390,7 @@ module Chem::Spatial
 
       def next : Vec3 | Iterator::Stop
         atom = wrapped_next
-        @cell.fract atom.coords
+        @cell.fract atom.pos
       end
     end
   end

@@ -3,11 +3,11 @@ module Crystalline
   class KDTree(T)
     class Node(T)
       property id
-      property coords
+      property pos
       property left : Node(T)?
       property right : Node(T)?
 
-      def initialize(@id : T, @coords : Array(T), @left = nil, @right = nil)
+      def initialize(@id : T, @pos : Array(T), @left = nil, @right = nil)
       end
     end
 
@@ -49,12 +49,12 @@ module Crystalline
       node
     end
 
-    # Euclidian distance, squared, between a node and target coords
+    # Euclidian distance, squared, between a node and target pos
     private def distance2(node, target)
       return unless node && target
-      c = node.coords[0] - target[0]
-      d = node.coords[1] - target[1]
-      e = node.coords[2] - target[2]
+      c = node.pos[0] - target[0]
+      d = node.pos[1] - target[1]
+      e = node.pos[2] - target[2]
       c * c + d * d + e * e
     end
 
@@ -86,7 +86,7 @@ module Crystalline
         end
 
         # Go down the nearest split
-        if !node.right || (node.left && target[axis] <= node.coords[axis])
+        if !node.right || (node.left && target[axis] <= node.pos[axis])
           nearer = node.left
           further = node.right
         else
@@ -97,7 +97,7 @@ module Crystalline
 
         # See if we have to check other side
         if further
-          if @nearest.size < k_nearest || (target[axis] - node.coords[axis]) ** 2 < @nearest.last[0]
+          if @nearest.size < k_nearest || (target[axis] - node.pos[axis]) ** 2 < @nearest.last[0]
             nearest(further, target, k_nearest, depth + 1)
           end
         end
@@ -116,7 +116,7 @@ module Crystalline
         end
 
         # Go down the nearest split
-        if !node.right || (node.left && target[axis] <= node.coords[axis])
+        if !node.right || (node.left && target[axis] <= node.pos[axis])
           nearer = node.left
           further = node.right
         else
@@ -127,7 +127,7 @@ module Crystalline
 
         # See if we have to check other side
         if further
-          if (target[axis] - node.coords[axis]) ** 2 <= radius
+          if (target[axis] - node.pos[axis]) ** 2 <= radius
             nearest(further, target, radius, depth + 1)
           end
         end
@@ -141,7 +141,7 @@ end
 def naive_search(atoms, point, count)
   neighbors = Array({Chem::Atom, Float64}).new count
   atoms.each do |atom|
-    dist = Chem::Spatial.distance2 atom.coords, point
+    dist = Chem::Spatial.distance2 atom.pos, point
     if neighbors.size < count
       neighbors << {atom, dist}
     elsif dist < neighbors.last[1]
@@ -155,8 +155,8 @@ end
 
 def sort_search(atoms, point, count)
   atoms = atoms.sort do |a, b|
-    dist_a = Chem::Spatial.distance2 a.coords, point
-    dist_b = Chem::Spatial.distance2 b.coords, point
+    dist_a = Chem::Spatial.distance2 a.pos, point
+    dist_b = Chem::Spatial.distance2 b.pos, point
     dist_a <=> dist_b
   end
   atoms.first count

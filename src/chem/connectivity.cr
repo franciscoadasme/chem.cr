@@ -152,7 +152,7 @@ module Chem
 
     # Returns the current value of the bond in angstroms.
     def measure : Float64
-      Spatial.distance(*@atoms.map(&.coords))
+      Spatial.distance(*@atoms.map(&.pos))
     end
 
     # Returns the atom bonded to *atom*. Raises `Error` if *atom* is not
@@ -196,7 +196,7 @@ module Chem
 
     # Returns the current value of the angle in radians.
     def measure : Float64
-      Spatial.angle(*@atoms.map(&.coords))
+      Spatial.angle(*@atoms.map(&.pos))
     end
   end
 
@@ -223,7 +223,7 @@ module Chem
 
     # Returns the current value of the dihedral angle in radians.
     def measure : Float64
-      Spatial.dihedral(*@atoms.map(&.coords))
+      Spatial.dihedral(*@atoms.map(&.pos))
     end
 
     private def sort! : Nil
@@ -260,7 +260,7 @@ module Chem
     # Returns the current value of the improper dihedral angle in
     # radians.
     def measure : Float64
-      Spatial.improper(*@atoms.map(&.coords))
+      Spatial.improper(*@atoms.map(&.pos))
     end
 
     private def sort! : Nil

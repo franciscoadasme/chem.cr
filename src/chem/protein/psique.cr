@@ -222,9 +222,9 @@ module Chem::Protein::PSIQUE
     end
 
     private def guess_hydrogen(residue : Residue) : Spatial::Vec3
-      n = residue.dig("N").coords
+      n = residue.dig("N").pos
       if (pred = residue.pred?) && (c = pred.dig?("C")) && (o = pred.dig?("O"))
-        n + (c.coords - o.coords).normalize
+        n + (c.pos - o.pos).normalize
       else
         n
       end
@@ -259,20 +259,20 @@ module Chem::Protein::PSIQUE
 
     private def update_bridged_residues
       atoms = @residues.atoms.to_a
-      kdtree = Spatial::KDTree.new atoms.map(&.coords)
+      kdtree = Spatial::KDTree.new atoms.map(&.pos)
       @bridged_residues.clear
       @residues.each do |residue|
         next if residue.name == "PRO" && residue.in?(@bridged_residues)
         next unless donor = residue.dig?("N")
-        h = residue.dig?("H").try(&.coords) || guess_hydrogen(residue)
+        h = residue.dig?("H").try(&.pos) || guess_hydrogen(residue)
         kdtree.each_neighbor(h, within: HBOND_DISTANCE.end) do |index|
           acceptor = atoms.unsafe_fetch(index)
           if acceptor.residue != residue &&
              acceptor.name == "O" &&
              (residue.chain != acceptor.chain ||
              (residue.number - acceptor.residue.number).abs >= MIN_RESIDUE_DISTANCE) &&
-             h.distance(acceptor.coords).in?(HBOND_DISTANCE) &&
-             Spatial.angle(donor.coords, h, acceptor.coords) >= HBOND_MIN_ANGLE
+             h.distance(acceptor.pos).in?(HBOND_DISTANCE) &&
+             Spatial.angle(donor.pos, h, acceptor.pos) >= HBOND_MIN_ANGLE
             @bridged_residues << residue << acceptor.residue
           end
         end

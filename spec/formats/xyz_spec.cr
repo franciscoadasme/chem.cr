@@ -13,8 +13,8 @@ describe Chem::XYZ::Reader do
     structure.title.should eq "Ala-Cys-Ala-Met-Ala"
     structure.atoms.size.should eq 61
     structure.atoms.map(&.element.symbol).should eq symbols
-    structure.atoms[11].coords.should eq [4.76610, 0.49650, 5.29840]
-    structure.atoms[-1].coords.should eq [0.72200, 0.70700, 7.66970]
+    structure.atoms[11].pos.should eq [4.76610, 0.49650, 5.29840]
+    structure.atoms[-1].pos.should eq [0.72200, 0.70700, 7.66970]
   end
 
   it "parses a XYZ file with multiple structures" do
@@ -84,7 +84,7 @@ describe Chem::XYZ::Reader do
     structure.residues.map(&.number).should eq [1, 2, 3, 4, 1, 2, 3, 1]
     structure.atoms.size.should eq 8
     structure.atoms.map(&.element).uniq!.should eq [Chem::PeriodicTable::Si]
-    structure.atoms[-2].coords.should eq vec3(0, 2.72, 2.72)
+    structure.atoms[-2].pos.should eq vec3(0, 2.72, 2.72)
     structure.atoms.map(&.formal_charge).should eq [0, 0, 0, 2, 0, 0, 1, 0]
     structure.atoms.count(&.partial_charge.zero?).should eq 8
     structure.atoms.each_with_index do |atom, i|
@@ -126,7 +126,7 @@ describe Chem::XYZ::Writer do
     Chem::XYZ::Writer.open(io) do |xyz|
       (1..3).each do |i|
         structure.title = "COO- Step #{i}"
-        structure.coords.map! &.*(i)
+        structure.pos.map! &.*(i)
         xyz << structure
       end
     end
