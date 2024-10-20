@@ -5,8 +5,8 @@ module Chem::DCD; end
 #
 # [Chemfiles]: https://github.com/chemfiles/chemfiles/blob/master/src/formats/DCD.cpp
 class Chem::DCD::Reader
-  include FormatReader(Structure)
-  include FormatReader::Indexable(Structure)
+  include FormatReader(Spatial::Positions3)
+  include FormatReader::Indexable(Spatial::Positions3)
 
   @byte_format : IO::ByteFormat = IO::ByteFormat::SystemEndian
   @buffer = Bytes.empty
@@ -31,40 +31,29 @@ class Chem::DCD::Reader
 
   def initialize(
     @io : IO,
-    @structure : Chem::Structure,
-    @reuse : Bool = false,
     @sync_close : Bool = false
   )
     detect_encoding
     read_header
-    unless @n_atoms == @structure.atoms.size
-      raise "DCD content is incompatible with #{@structure}"
-    end
   end
 
-  protected def decode_entry : Structure
-    structure = @reuse ? @structure : @structure.clone
-    if @timestep > 0 && @frame_step > 0
-      structure.metadata["time"] = (@start_frame + @entry_index * @frame_step) * @timestep
-    end
-    structure.title = @title || ""
-    structure.cell = (read_cell if @charmm_format && @charmm_unitcell)
-
-    atoms = structure.atoms
+  protected def decode_entry : Spatial::Positions3
+    cell = read_cell if @charmm_format && @charmm_unitcell
 
     x, y, z = read_positions
+    pos = Slice(Spatial::Vec3).new @n_atoms, Spatial::Vec3.zero
     if @fixed_positions.size > 0 && @entry_index > 0
-      i = -1
-      atoms.zip(@fixed_positions) do |atom, fixed_pos|
-        atom.pos = fixed_pos || Spatial::Vec3[x[(i += 1)], y[i], z[i]]
+      j = -1
+      @fixed_positions.each_with_index do |fixed_pos, i|
+        pos[i] = fixed_pos || Spatial::Vec3[x[(j += 1)], y[j], z[j]]
       end
     else
-      atoms.each_with_index do |atom, i|
-        atom.pos = Spatial::Vec3[x[i], y[i], z[i]]
+      @n_atoms.times do |i|
+        pos[i] = Spatial::Vec3[x[i], y[i], z[i]]
       end
     end
 
-    structure
+    Spatial::Positions3.new pos, cell
   end
 
   def skip_to_entry(index : Int) : Nil
