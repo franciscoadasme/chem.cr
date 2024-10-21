@@ -1263,6 +1263,28 @@ describe Chem::Structure do
       struc.pos = struc.clone.pos.map!(&.*(0.5))
       struc.pos.to_a.should eq expected
     end
+
+    it "sets the coordinates and cell" do
+      struc = Chem::Structure.build do |builder|
+        297.times { builder.atom vec3(0, 0, 0) }
+      end
+      struc.pos = Chem::Spatial::Positions3.from_dcd spec_file("water.dcd")
+      struc.cell?.should_not be_nil
+      struc.cell.size.should eq [15, 15, 15]
+      struc.cell.angles.should eq({90, 90, 90})
+      struc.atoms[0].pos.should be_close vec3(0.41721907, 8.303366, 11.737172), 1e-6
+      struc.atoms[296].pos.should be_close vec3(6.664049, 11.614183, 12.961486), 1e-6
+    end
+
+    it "sets cell as nil for non-periodic" do
+      struc = Chem::Structure.build do |builder|
+        401.times { builder.atom vec3(0, 0, 0) }
+      end
+      struc.pos = Chem::Spatial::Positions3.from_dcd(spec_file("nopbc.dcd"))
+      struc.cell?.should be_nil
+      struc.atoms[0].pos.should be_close vec3(-0.3523273, 0.5521879, 3.471434), 1e-6
+      struc.atoms[-1].pos.should be_close vec3(5.015859, 3.057116, 3.079986), 1e-6
+    end
   end
 end
 

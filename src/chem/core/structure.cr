@@ -176,10 +176,9 @@ module Chem
     end
 
     # Sets the atom coordinates and cell.
-    # TODO: test
     def pos=(pos : Spatial::Positions3) : Spatial::Positions3
       atoms.pos = pos
-      @cell = pos.cell
+      @cell = pos.cell?
       pos
     end
 
