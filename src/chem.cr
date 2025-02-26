@@ -5,6 +5,7 @@ module Chem
   alias AtomContainer = AtomView | Residue | ResidueView | Chain | ChainView | Structure
 end
 
+require "./chem/color"
 require "./chem/metadata"
 require "./chem/spatial"
 
