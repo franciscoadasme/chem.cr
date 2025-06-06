@@ -10,4 +10,9 @@ struct Chem::Spatial::Positions3
 
   def initialize(@pos : Slice(Vec3), @cell : Parallelepiped? = nil)
   end
+
+  # Returns a read-only slice of the positions.
+  def to_slice : Slice(Vec3)
+    Slice.new @pos.to_unsafe, @pos.size, read_only: true
+  end
 end
