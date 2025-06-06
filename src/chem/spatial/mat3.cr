@@ -234,6 +234,14 @@ module Chem::Spatial
       end
     end
 
+    # Returns `true` if all the entries above the main diagonal are
+    # zero, otherwise `false`.
+    def lower_triangular?(delta : Float64 = Float64::EPSILON) : Bool
+      self[0, 1].close_to?(0, delta) &&
+        self[0, 2].close_to?(0, delta) &&
+        self[1, 2].close_to?(0, delta)
+    end
+
     # Returns a new matrix with the results of the passed block for each
     # element in the matrix.
     def map(& : Float64 -> Float64) : self

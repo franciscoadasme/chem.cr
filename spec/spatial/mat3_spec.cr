@@ -164,6 +164,16 @@ describe Chem::Spatial::Mat3 do
     end
   end
 
+  describe "#lower_triangular" do
+    it "returns if matrix is a lower triangular matrix" do
+      Chem::Spatial::Mat3.identity.lower_triangular?.should eq true
+      Chem::Spatial::Mat3.zero.lower_triangular?.should eq true
+      Chem::Spatial::Mat3.diagonal(1, 2, 3).lower_triangular?.should eq true
+      Chem::Spatial::Mat3[{1, 0, 0}, {4, 5, 0}, {7, 8, 9}].lower_triangular?.should eq true
+      Chem::Spatial::Mat3[{1, 2, 3}, {4, 5, 6}, {7, 8, 9}].lower_triangular?.should eq false
+    end
+  end
+
   describe "#to_s" do
     it "returns a string representation" do
       expected = "\
