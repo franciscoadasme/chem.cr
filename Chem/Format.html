@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Crystal Docs 1.13.3">
+<meta name="generator" content="Crystal Docs 1.15.1">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem">
 
@@ -154,6 +154,11 @@
   
   <li class=" " data-id="chem/Chem/DCD/Reader" data-name="chem::dcd::reader">
       <a href="../Chem/DCD/Reader.html">Reader</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem/Chem/DCD/Writer" data-name="chem::dcd::writer">
+      <a href="../Chem/DCD/Writer.html">Writer</a>
       
     </li>
   
@@ -931,7 +936,9 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">enum</span> Chem::<wbr>Format
+  <span class="kind">
+    enum
+  </span> Chem::<wbr>Format
 
 </h1>
 
@@ -982,6 +989,8 @@ information declared in the annotations.</p>
 
 
 
+
+
   <h2>
     <a id="defined-in" class="anchor" href="#defined-in">
   <svg class="octicon-link" aria-hidden="true">
@@ -992,7 +1001,7 @@ information declared in the annotations.</p>
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">
         chem/format.cr
       </a>
     
@@ -1170,6 +1179,7 @@ information declared in the annotations.</p>
 
 
 
+  
   <h2>
     <a id="constructors" class="anchor" href="#constructors">
   <svg class="octicon-link" aria-hidden="true">
@@ -1204,7 +1214,7 @@ information declared in the annotations.</p>
   </ul>
 
 
-
+  
   <h2>
     <a id="class-method-summary" class="anchor" href="#class-method-summary">
   <svg class="octicon-link" aria-hidden="true">
@@ -1239,9 +1249,9 @@ information declared in the annotations.</p>
   </ul>
 
 
+  
 
-
-
+  
   <h2>
     <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
   <svg class="octicon-link" aria-hidden="true">
@@ -1318,6 +1328,8 @@ information declared in the annotations.</p>
       <li class="entry-summary">
         <a href="#jdf_tx%3F-instance-method" class="signature"><strong>#jdf_tx?</strong></a>
         
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../Chem/Format.html#JDFTx">JDFTx</a></code></p></div>
+        
       </li>
     
       <li class="entry-summary">
@@ -1371,6 +1383,8 @@ information declared in the annotations.</p>
     
       <li class="entry-summary">
         <a href="#py_mol%3F-instance-method" class="signature"><strong>#py_mol?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../Chem/Format.html#PyMOL">PyMOL</a></code></p></div>
         
       </li>
     
@@ -1445,6 +1459,13 @@ information declared in the annotations.</p>
       </li>
     
       <li class="entry-summary">
+        <a href="#writer%28type%3AChem%3A%3ASpatial%3A%3APositions3.class%29-instance-method" class="signature"><strong>#writer</strong>(type : <span class="t">Chem</span><span class="t">::</span><span class="t">Spatial</span><span class="t">::</span><span class="t">Positions3</span>.<span class="k">class</span>)</a>
+        
+          <div class="summary"><p>Returns the writer associated with the format.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#writer%28type%3AChem%3A%3AAtomView.class%29-instance-method" class="signature"><strong>#writer</strong>(type : <span class="t">Chem</span><span class="t">::</span><span class="t">AtomView</span>.<span class="k">class</span>)</a>
         
           <div class="summary"><p>Returns the writer associated with the format.</p></div>
@@ -1481,6 +1502,13 @@ information declared in the annotations.</p>
     
       <li class="entry-summary">
         <a href="#writer%28type%3AChem%3A%3AStructure.class%29-instance-method" class="signature"><strong>#writer</strong>(type : <span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>.<span class="k">class</span>)</a>
+        
+          <div class="summary"><p>Returns the writer associated with the format.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#writer%28type%3AArray%28Chem%3A%3ASpatial%3A%3APositions3%29.class%29-instance-method" class="signature"><strong>#writer</strong>(type : <span class="t">Array</span>(<span class="t">Chem</span><span class="t">::</span><span class="t">Spatial</span><span class="t">::</span><span class="t">Positions3</span>).<span class="k">class</span>)</a>
         
           <div class="summary"><p>Returns the writer associated with the format.</p></div>
         
@@ -1539,63 +1567,63 @@ information declared in the annotations.</p>
 
 
 
-<div class="methods-inherited">
+  <div class="methods-inherited">
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+  </div>
+
   
-    
-
-
-    
-
-
-    
-
-
-    
-
-
-  
-    
-
-
-    
-
-
-    
-
-
-    
-
-
-  
-    
-
-
-    
-
-
-    
-
-
-    
-
-
-  
-    
-
-
-    
-
-
-    
-
-
-    
-
-
-  
-</div>
-
-
   <h2>
     <a id="constructor-detail" class="anchor" href="#constructor-detail">
   <svg class="octicon-link" aria-hidden="true">
@@ -1632,7 +1660,7 @@ return the same.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1669,7 +1697,7 @@ of <em>filename</em> via <code><a href="../Chem/Format.html#from_stem%3F%28stem%
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1712,14 +1740,14 @@ the beginning or end).</li>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
   
 
 
-
+  
   <h2>
     <a id="class-method-detail" class="anchor" href="#class-method-detail">
   <svg class="octicon-link" aria-hidden="true">
@@ -1756,7 +1784,7 @@ return the same.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1793,7 +1821,7 @@ of <em>filename</em> via <code><a href="../Chem/Format.html#from_stem%3F%28stem%
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1836,16 +1864,16 @@ the beginning or end).</li>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
   
 
 
+  
 
-
-
+  
   <h2>
     <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
   <svg class="octicon-link" aria-hidden="true">
@@ -1871,7 +1899,7 @@ the beginning or end).</li>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1892,7 +1920,7 @@ the beginning or end).</li>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1913,7 +1941,7 @@ the beginning or end).</li>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1934,7 +1962,7 @@ the beginning or end).</li>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1963,7 +1991,7 @@ the beginning or end).</li>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1992,7 +2020,7 @@ the beginning or end).</li>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2017,7 +2045,7 @@ the beginning or end).</li>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2042,7 +2070,7 @@ the beginning or end).</li>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2063,7 +2091,7 @@ the beginning or end).</li>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2076,10 +2104,15 @@ the beginning or end).</li>
         <a class="method-permalink" href="#jdf_tx%3F-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../Chem/Format.html#JDFTx">JDFTx</a></code></p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2100,7 +2133,7 @@ the beginning or end).</li>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2121,7 +2154,7 @@ the beginning or end).</li>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2142,7 +2175,7 @@ the beginning or end).</li>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2163,7 +2196,7 @@ the beginning or end).</li>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2184,7 +2217,7 @@ the beginning or end).</li>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2205,7 +2238,7 @@ the beginning or end).</li>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2226,7 +2259,7 @@ the beginning or end).</li>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2239,10 +2272,15 @@ the beginning or end).</li>
         <a class="method-permalink" href="#py_mol%3F-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../Chem/Format.html#PyMOL">PyMOL</a></code></p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2263,7 +2301,7 @@ the beginning or end).</li>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2292,7 +2330,7 @@ write only.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2321,7 +2359,7 @@ write only.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2350,7 +2388,7 @@ write only.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2379,7 +2417,7 @@ write only.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2408,7 +2446,7 @@ write only.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2429,7 +2467,7 @@ write only.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2450,7 +2488,7 @@ write only.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2471,7 +2509,7 @@ write only.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2499,7 +2537,35 @@ read only.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="writer(type:Chem::Spatial::Positions3.class)-instance-method">
+      <div class="signature">
+        
+        def <strong>writer</strong>(type : <span class="t">Chem</span><span class="t">::</span><span class="t">Spatial</span><span class="t">::</span><span class="t">Positions3</span>.<span class="k">class</span>)
+
+        <a class="method-permalink" href="#writer%28type%3AChem%3A%3ASpatial%3A%3APositions3.class%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the writer associated with the format. Raises
+<code>ArgumentError</code> if the format does not encode <em>type</em> or it is
+read only.</p>
+<pre><code class="language-crystal"><span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">XYZ</span>.writer(<span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>)           <span class="c"># =&gt; Chem::XYZ::Writer</span>
+<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">DX</span>.writer(<span class="t">Chem</span><span class="t">::</span><span class="t">Spatial</span><span class="t">::</span><span class="t">Grid</span>)        <span class="c"># =&gt; Chem::DX::Writer</span>
+<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">XYZ</span>.writer(<span class="t">Array</span>(<span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>))    <span class="c"># =&gt; Chem::XYZ::Writer</span>
+<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">DX</span>.writer(<span class="t">Array</span>(<span class="t">Chem</span><span class="t">::</span><span class="t">Spatial</span><span class="t">::</span><span class="t">Grid</span>)) <span class="c"># raises ArgumentError</span>
+<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">XYZ</span>.writer(<span class="t">Int32</span>)                     <span class="c"># raises ArgumentError</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2527,7 +2593,7 @@ read only.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2555,7 +2621,7 @@ read only.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2583,7 +2649,7 @@ read only.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2611,7 +2677,7 @@ read only.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2639,7 +2705,7 @@ read only.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2667,7 +2733,35 @@ read only.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="writer(type:Array(Chem::Spatial::Positions3).class)-instance-method">
+      <div class="signature">
+        
+        def <strong>writer</strong>(type : <span class="t">Array</span>(<span class="t">Chem</span><span class="t">::</span><span class="t">Spatial</span><span class="t">::</span><span class="t">Positions3</span>).<span class="k">class</span>)
+
+        <a class="method-permalink" href="#writer%28type%3AArray%28Chem%3A%3ASpatial%3A%3APositions3%29.class%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the writer associated with the format. Raises
+<code>ArgumentError</code> if the format does not encode <em>type</em> or it is
+read only.</p>
+<pre><code class="language-crystal"><span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">XYZ</span>.writer(<span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>)           <span class="c"># =&gt; Chem::XYZ::Writer</span>
+<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">DX</span>.writer(<span class="t">Chem</span><span class="t">::</span><span class="t">Spatial</span><span class="t">::</span><span class="t">Grid</span>)        <span class="c"># =&gt; Chem::DX::Writer</span>
+<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">XYZ</span>.writer(<span class="t">Array</span>(<span class="t">Chem</span><span class="t">::</span><span class="t">Structure</span>))    <span class="c"># =&gt; Chem::XYZ::Writer</span>
+<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">DX</span>.writer(<span class="t">Array</span>(<span class="t">Chem</span><span class="t">::</span><span class="t">Spatial</span><span class="t">::</span><span class="t">Grid</span>)) <span class="c"># raises ArgumentError</span>
+<span class="t">Chem</span><span class="t">::</span><span class="t">Format</span><span class="t">::</span><span class="t">XYZ</span>.writer(<span class="t">Int32</span>)                     <span class="c"># raises ArgumentError</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2695,7 +2789,7 @@ read only.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2723,7 +2817,7 @@ read only.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2751,7 +2845,7 @@ read only.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2779,7 +2873,7 @@ read only.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2807,7 +2901,7 @@ read only.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2835,7 +2929,7 @@ read only.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2856,11 +2950,12 @@ read only.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/86245b517b6de6e509937ceee9263b24ebe26e80/src/chem/format.cr#L2" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/b8fa37400009ff2f7dd09b79b603da773fe4ae42/src/chem/format.cr#L2" target="_blank">View source</a>]
         
       </div>
     </div>
   
+
 
 
 </div>
