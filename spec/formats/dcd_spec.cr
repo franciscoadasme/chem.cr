@@ -163,3 +163,41 @@ describe Chem::DCD::Reader do
     end
   end
 end
+
+describe Chem::DCD::Writer do
+  it "writes a DCD" do
+    traj = Array.new(10) { fake_positions(3) }
+
+    io = IO::Memory.new
+    Chem::DCD::Writer.open(io) do |writer|
+      traj.each { |pos| writer << pos }
+    end
+
+    io.rewind
+    Chem::DCD::Reader.open(io) do |reader|
+      reader.n_entries.should eq 10
+
+      pos = reader.read_entry
+      pos.size.should eq 3
+      pos.cell?.should_not be_nil
+      pos.cell.should eq traj[0].cell
+      pos[0].should be_close traj[0][0], 1e-6
+      pos[1].should be_close traj[0][1], 1e-6
+      pos[2].should be_close traj[0][2], 1e-6
+
+      pos = reader.read_entry(9)
+      pos.size.should eq 3
+      pos.cell?.should_not be_nil
+      pos.cell.should eq traj[-1].cell
+      pos[0].should be_close traj[-1][0], 1e-6
+      pos[1].should be_close traj[-1][1], 1e-6
+      pos[2].should be_close traj[-1][2], 1e-6
+    end
+  end
+end
+
+private def fake_positions(size : Int) : Chem::Spatial::Positions3
+  slice = Slice.new(size) { Chem::Spatial::Vec3.rand }
+  cell = Chem::Spatial::Parallelepiped[rand(1.0..10.0), rand(10.0..20.0), rand(20.0..30.0)]
+  Chem::Spatial::Positions3.new slice, cell
+end

@@ -31,7 +31,7 @@ class Chem::DCD::Reader
 
   def initialize(
     @io : IO,
-    @sync_close : Bool = false
+    @sync_close : Bool = false,
   )
     detect_encoding
     read_header
@@ -107,7 +107,7 @@ class Chem::DCD::Reader
 
   private def expect_marker(
     expected : Int,
-    message : String = "Expected marker %{expected}, got %{actual}"
+    message : String = "Expected marker %{expected}, got %{actual}",
   ) : Nil
     unless (actual = read_marker) == expected
       raise message % {expected: expected.inspect, actual: actual.inspect}
@@ -292,5 +292,132 @@ class Chem::DCD::Reader
     read_block(name, bytesize) do
       @io.pos += bytesize
     end
+  end
+end
+
+class Chem::DCD::Writer
+  include FormatWriter(Spatial::Positions3)
+  include FormatWriter::MultiEntry(Spatial::Positions3)
+
+  @buffer : Slice(Float32)
+  @size : Int32
+
+  def initialize(
+    @io : IO,
+    @total_entries : Int32? = nil,
+    @title : String? = nil,
+    @sync_close : Bool = false,
+  )
+    check_total_entries
+    @buffer = Slice(Float32).empty
+    @size = 0
+  end
+
+  protected def encode_entry(obj : Spatial::Positions3) : Nil
+    raise ArgumentError.new "Cannot write empty positions" if obj.size == 0
+    if !@written
+      @size = obj.size
+      @buffer = Slice(Float32).new @size
+      write_header !!obj.cell?
+    end
+    if cell = obj.cell?
+      write_cell cell
+    end
+    write_positions obj
+    update_frames
+  end
+
+  private def update_frames : Nil
+    current = @io.pos
+    @io.pos = 8 # the number of frames is always at offset 8 (1 marker + CORD)
+    @io.write_bytes @entry_index + 1
+    @io.pos = current
+  end
+
+  private def write_block(marker : T.class, count : Int, & : ->) : Nil forall T
+    write_block(count * sizeof(T)) do
+      yield
+    end
+  end
+
+  private def write_block(marker : T.class, & : ->) : Nil forall T
+    write_block(sizeof(T)) do
+      yield
+    end
+  end
+
+  private def write_block(marker : Int, & : ->) : Nil
+    marker = marker.to_i32
+    @io.write_bytes marker
+    yield
+    @io.write_bytes marker
+  end
+
+  private def write_cell(cell : Spatial::Parallelepiped) : Nil
+    if !cell.basis.lower_triangular? # not aligned to XY
+      Log.warn do
+        "The unit cell is not aligned to the XY plane for writing DCD. \
+          Atom coordinates might not align with the cell."
+      end
+    end
+    size = cell.size
+    angles = cell.angles
+    write_block(Float64, 6) do
+      @io.write_bytes size[0]
+      @io.write_bytes angles[2]
+      @io.write_bytes size[1]
+      @io.write_bytes angles[1]
+      @io.write_bytes angles[0]
+      @io.write_bytes size[2]
+    end
+  end
+
+  private def write_header(has_unitcell : Bool) : Nil
+    write_block(84) do
+      @io.write "CORD".to_slice
+      @io.write_bytes 0 # number of frames (updated after writing every frame)
+      @io.write_bytes 0 # frame start
+      @io.write_bytes 1 # frame step
+
+      @io.write Bytes.new(16) # unused bytes
+
+      @io.write_bytes 3 * @size # degrees of freedom
+      @io.write_bytes 0         # number of fixed atoms
+      @io.write_bytes 0_f32     # time step
+
+      @io.write_bytes has_unitcell ? 1 : 0
+      @io.write_bytes 0 # 4D data
+
+      @io.write Bytes.new(28) # unused bytes
+
+      @io.write_bytes 24 # CHARMM version
+    end
+
+    if title = @title
+      title = title.ljust((title.bytesize // 80 + 1) * 80) if title.bytesize % 80 != 0
+      write_block(title.bytesize + sizeof(Int32)) do
+        @io.write_bytes title.bytesize // 80
+        @io.write title.to_slice
+      end
+    else
+      write_block(Int32) do
+        @io.write_bytes 0
+      end
+    end
+
+    write_block(Int32) do
+      @io.write_bytes @size # number of atoms
+    end
+  end
+
+  private def write_positions(pos : Spatial::Positions3) : Nil
+    {% for component in %w(x y z) %}
+      pos.each_with_index do |vec, i|
+        @buffer[i] = vec.{{component.id}}.to_f32
+      end
+      write_block(Float32, @size) do
+        @io.write @buffer.to_unsafe_bytes
+      end
+    {% end %}
   end
 end
