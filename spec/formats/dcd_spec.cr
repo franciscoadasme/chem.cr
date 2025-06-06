@@ -194,6 +194,16 @@ describe Chem::DCD::Writer do
       pos[2].should be_close traj[-1][2], 1e-6
     end
   end
+
+  it "raises on different size" do
+    expect_raises ArgumentError,
+      "Cannot write positions of different size (expected 3, got 10)" do
+      Chem::DCD::Writer.open(IO::Memory.new) do |writer|
+        writer << fake_positions(3)
+        writer << fake_positions(10)
+      end
+    end
+  end
 end
 
 private def fake_positions(size : Int) : Chem::Spatial::Positions3

@@ -319,6 +319,9 @@ class Chem::DCD::Writer
       @size = obj.size
       @buffer = Slice(Float32).new @size
       write_header !!obj.cell?
+    elsif obj.size != @size
+      raise ArgumentError.new "Cannot write positions of different size \
+                               (expected #{@size}, got #{obj.size})"
     end
     if cell = obj.cell?
       write_cell cell
