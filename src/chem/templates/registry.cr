@@ -240,14 +240,14 @@ class Chem::Templates::Registry
   # Loads the residue template(s) encoded in the given YAML or structure
   # file into the registry.
   #
-  # If a valid structure file (checked via `Format.from_filename?`) is
+  # If a valid structure file (checked via `Chem.guess_format?`) is
   # passed, it's read into a `Structure` instance, and the first residue
   # is transformed into a template by calling `Residue.build`.
   #
   # Otherwise, the content of the YAML file is parsed by calling
   # `Registry#parse`.
   def load(filepath : Path | String) : self
-    if Format.from_filename?(filepath) # valid structure file
+    if Chem.guess_format?(filepath) # valid structure file
       structure = Structure.read filepath
       res_t = Residue.build structure.residues[0]
       self << res_t

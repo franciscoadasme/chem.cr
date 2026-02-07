@@ -96,7 +96,7 @@ describe Chem::Structure do
 
     it "writes a structure into a file with specified file format" do
       path = File.tempname ".pdb"
-      structure.write path, :xyz
+      structure.write path, Chem::XYZ
       File.read(path).should eq <<-EOS
         3
         ICN
@@ -110,20 +110,7 @@ describe Chem::Structure do
 
     it "writes a structure into an IO" do
       io = IO::Memory.new
-      structure.write io, :xyz
-      io.to_s.should eq <<-EOS
-        3
-        ICN
-        I    -2.000    0.000    0.000
-        C     0.000    0.000    0.000
-        N     1.500    0.000    0.000
-
-        EOS
-    end
-
-    it "accepts file format as string" do
-      io = IO::Memory.new
-      structure.write io, "xyz"
+      structure.write io, Chem::XYZ
       io.to_s.should eq <<-EOS
         3
         ICN
@@ -136,7 +123,7 @@ describe Chem::Structure do
 
     it "raises on invalid file format" do
       expect_raises ArgumentError do
-        structure.write IO::Memory.new, "asd"
+        structure.write IO::Memory.new, Chem::Cube
       end
     end
   end

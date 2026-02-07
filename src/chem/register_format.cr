@@ -14,7 +14,7 @@ module Chem
   # - **names**: an array of file patterns. File patterns can include
   #   wildcards (`"*"`) to denote either prefix (e.g., `"Foo*"`), suffix
   #   (e.g., `"*Bar"`), or both (e.g., `"*Baz*"`). Refer to
-  #   `Format#from_stem` for details.
+  #   `File.match?` for details.
   # - **reader**: reader class name. Defaults to "Reader".
   # - **writer**: writer class name. Defaults to "Writer".
   #
@@ -81,22 +81,10 @@ module Chem
   # end
   # ```
   #
-  # A member named `Foo` is added to the `Format` enum, which can be
-  # used to query the format during runtime using the `.from_*` methods.
-  #
-  # ```
-  # Chem::Format::Foo                      # => Foo
-  # Chem::Format::Foo.extnames             # => [".foo"]
-  # Chem::Format::Foo.file_patterns        # => ["foo_*"]
-  # Chem::Format.from_filename("file.foo") # => Foo
-  # Chem::Format.from_filename("foo_1")    # => Foo
-  # ```
-  #
   # The convenience `A.from_foo` and `A.read` methods are generated
   # during compilation time to create an `A` instance from an IO or file
-  # using the `Foo` file format. The latter can be specified via the
-  # corresponding member of the `Format` enum or as a string.
-  # Additionally, the file format can be guessed from the filename.
+  # using the `Foo` file format. Additionally, the file format can be
+  # guessed from the filename.
   #
   # ```
   # # static read methods (can forward arguments to Foo::Reader)
@@ -104,11 +92,9 @@ module Chem
   # A.from_foo("a.foo")        # => A()
   #
   # # dynamic read methods (format is detected on runtime; no arguments)
-  # A.read(IO::Memory.new, Chem::Format::Foo) # => A()
-  # A.read(IO::Memory.new, "foo")             # => A()
-  # A.read("a.foo", Chem::Format::Foo)        # => A()
-  # A.read("a.foo", "foo")                    # => A()
-  # A.read("a.foo")                           # => A()
+  # A.read(IO::Memory.new, Foo) # => A()
+  # A.read("a.foo", Foo)        # => A()
+  # A.read("a.foo")             # => A()
   # ```
   #
   # The above methods are also created on the types representing the
@@ -127,10 +113,8 @@ module Chem
   # A.new.to_foo("a.foo")        # writes to a file
   #
   # # dynamic read methods (format is detected on runtime; no arguments)
-  # A.new.write(IO::Memory.new, Chem::Format::A)
-  # A.new.write(IO::Memory.new, "foo")
-  # A.new.write("a.foo", Chem::Format::A)
-  # A.new.write("a.foo", "foo")
+  # A.new.write(IO::Memory.new, Foo)
+  # A.new.write("a.foo", Foo)
   # A.new.write("a.foo")
   # ```
   #
@@ -146,15 +130,15 @@ module Chem
   # generated in `Array` during compilation time.
   #
   # ```
-  # Array(A).from_foo(IO::Memory.new)   # => [Foo(), ...]
-  # Array(A).from_foo("a.foo")          # => [Foo(), ...]
-  # Array(A).read(IO::Memory.new, :foo) # => [Foo(), ...]
+  # Array(A).from_foo(IO::Memory.new)  # => [Foo(), ...]
+  # Array(A).from_foo("a.foo")         # => [Foo(), ...]
+  # Array(A).read(IO::Memory.new, Foo) # => [Foo(), ...]
   # # and other overloads
   #
-  # Array(A).new.to_foo                     # returns a string representation
-  # Array(A).new.to_foo(IO::Memory.new)     # writes to an IO
-  # Array(A).new.to_foo("a.foo")            # writes to a file
-  # Array(A).new.write IO::Memory.new, :foo # writes to an IO
+  # Array(A).new.to_foo                    # returns a string representation
+  # Array(A).new.to_foo(IO::Memory.new)    # writes to an IO
+  # Array(A).new.to_foo("a.foo")           # writes to a file
+  # Array(A).new.write IO::Memory.new, Foo # writes to an IO
   # # and other overloads
   # ```
   #
@@ -408,7 +392,7 @@ macro finished
       {{keyword.id}} {{etype}}
         # Returns the {{type_docs.id}} encoded in the specified file.
         # The file format is chosen based on the filename (see
-        # `Chem::Format#from_filename`). Raises `ArgumentError` if the
+        # `Chem.guess_format`). Raises `ArgumentError` if the
         # file format cannot be determined.
         {% if !rtypes.empty? && argless_types.any?(&.constant("WRITE_MULTI")) %}
           #
@@ -433,7 +417,7 @@ macro finished
         # Use the `.from_*` methods to customize how the object is
         # decoded in the corresponding file format if possible.
         def self.read(path : Path | String) : self
-          read path, ::Chem::Format.from_filename(path)
+          read path, ::Chem.guess_format(path)
         end
 
         # Returns the {{type_docs.id}} encoded in the specified file
@@ -441,24 +425,21 @@ macro finished
         # required arguments or cannot read `{{etype}}`.
         {% if !rtypes.empty? && argless_types.any?(&.constant("WRITE_MULTI")) %}
           #
-          # If *input* contains multiple entries, this method returns
-          # the first one only. Use `Array.read` or
-          # `Chem::FormatReader::MultiEntry#each` (reader can be
-          # obtained via `Chem::Format.reader`) to get multiple entries
-          # instead.
+        # If *input* contains multiple entries, this method returns
+        # the first one only. Use `Array.read` or the format's reader
+        # (e.g. `Chem::XYZ::Reader#each`) to get multiple entries
+        # instead.
         {% end %}
         #
         # The supported file formats are {{format_docs.splat}}. Use the
         # `.from_*` methods to customize how the object is decoded in
         # the corresponding file format if possible.
-        def self.read(input : IO | Path | String,
-                      format : ::Chem::Format | String) : self
-          format = ::Chem::Format.parse format if format.is_a?(String)
+        # Accepts any format module (e.g. return value of guess_format(path))
+        def self.read(input : IO | Path | String, format) : self
           {% begin %}
-            case format
             {% for ftype in decoding_types %}
               {% method_name = ftype.constant("FORMAT_METHOD_NAME").id %}
-              when .{{method_name}}?
+              {% if ftype == decoding_types.first %}if{% else %}elsif{% end %} format == {{ftype}}
                 {% if argless_types.includes?(ftype) %}
                   from_{{method_name}} input
                 {% else %}
@@ -589,7 +570,7 @@ macro finished
       {{keyword.id}} {{etype}}
         # Writes the {{type_name.id}} to the specified file. The file
         # format is chosen based on the filename (see
-        # `Chem::Format#from_filename`). Raises `ArgumentError` if the
+        # `Chem.guess_format`). Raises `ArgumentError` if the
         # file format cannot be determined.
         #
         # The supported file formats are the following:
@@ -608,7 +589,7 @@ macro finished
         # Use the `#to_*` methods to customize how the object is written
         # in the corresponding file format if possible.
         def write(path : Path | String) : Nil
-          write path, ::Chem::Format.from_filename(path)
+          write path, ::Chem.guess_format(path)
         end
 
         # Writes the {{type_name.id}} to *output* using *format*. Raises
@@ -618,13 +599,13 @@ macro finished
         # The supported file formats are {{format_docs.splat}}. Use the
         # `#to_*` methods to customize how the object is written in the
         # corresponding file format if possible.
-        def write(output : IO | Path | String, format : ::Chem::Format | String) : Nil
-          format = ::Chem::Format.parse format if format.is_a?(String)
+        # Accepts any format module (e.g. return value of guess_format(path))
+        def write(output : IO | Path | String, format : {{Chem::FORMAT_TYPES.map { |x| "#{x}.class" }.join(" | ").id}}) : Nil
+          # TODO: accept only encoding types
           {% begin %}
-            case format
             {% for ftype in encoding_types %}
               {% method_name = ftype.constant("FORMAT_METHOD_NAME").id %}
-              when .{{method_name}}?
+              {% if ftype == encoding_types.first %}if{% else %}elsif{% end %} format == {{ftype}}
                 {% if argless_types.includes?(ftype) %}
                   to_{{method_name}} output
                 {% else %}
@@ -643,33 +624,28 @@ macro finished
 
   class Array(T)
     # Returns the entries encoded in the specified file. The file format
-    # is chosen based on the filename (see `Chem::Format#from_filename`).
+    # is chosen based on the filename (see `Chem.guess_format`).
     # Raises `ArgumentError` if the file format cannot be determined.
     def self.read(path : Path | String) : self
-      read path, Chem::Format.from_filename(path)
-    end
-
-    # Returns the entries encoded in the specified file using *format*.
-    # Raises `ArgumentError` if *format* is invalid.
-    def self.read(input : IO | Path | String, format : String) : self
-      read input, Chem::Format.parse(format)
+      read path, Chem.guess_format(path)
     end
 
     # Returns the entries encoded in the specified file using *format*.
     # Raises `ArgumentError` if *format* cannot read the element type or
     # it is write only.
-    def self.read(input : IO | Path | String, format : Chem::Format) : self
+    # Accepts any format module (e.g. return value of guess_format(path))
+    def self.read(input : IO | Path | String, format) : self
       {% format_types = Chem::FORMAT_TYPES.select &.constant("READ_MULTI") %}
       {% encoded_types = format_types.map(&.constant("READ_TYPE")).uniq %}
       \{% if !{{encoded_types}}.any? { |etype| @type.type_vars[0] <= etype } %}
         \{% raise "undefined method 'read' for #{@type}.class" %}
       \{% end %}
 
+      {% reader_formats = Chem::FORMAT_TYPES.select(&.constant("READER")) %}
       {% begin %}
-        case format
-        {% for ftype in Chem::FORMAT_TYPES.select(&.constant("READER")) %}
+        {% for ftype in reader_formats %}
           {% method_name = ftype.constant("FORMAT_METHOD_NAME").id %}
-          when .{{method_name}}?
+          {% if ftype == reader_formats.first %}if{% else %}elsif{% end %} format == {{ftype}}
             {% if ftype.constant("READ_MULTI") %}
               {% if needs_args_map[ftype.constant("READER").resolve] %}
                 raise ArgumentError.new("#{format} format has required arguments. \
@@ -698,22 +674,17 @@ macro finished
     end
 
     # Writes the elements to the specified file. The file format is chosen
-    # based on the filename (see `Chem::Format#from_filename`). Raises
+    # based on the filename (see `Chem.guess_format`). Raises
     # `ArgumentError` if the file format cannot be determined.
     def write(path : Path | String) : Nil
-      write path, Chem::Format.from_filename(path)
-    end
-
-    # Writes the elements to *output* using *format*. Raises
-    # `ArgumentError` if *format* is invalid.
-    def write(output : IO | Path | String, format : String) : Nil
-      write output, Chem::Format.parse(format)
+      write path, Chem.guess_format(path)
     end
 
     # Writes the elements to *output* using *format*. Raises
     # `ArgumentError` if *format* cannot write the element type or it is
     # read only.
-    def write(output : IO | Path | String, format : Chem::Format) : Nil
+    # Accepts any format module (e.g. return value of guess_format(path))
+    def write(output : IO | Path | String, format : {{Chem::FORMAT_TYPES.map { |x| "#{x}.class" }.join(" | ").id}}) : Nil
       {% format_types = Chem::FORMAT_TYPES.select &.constant("WRITE_MULTI") %}
       {% encoded_types = [] of Nil %}
       {% format_types.each { |ftype| encoded_types += ftype.constant("WRITE_TYPES") } %}
@@ -722,11 +693,11 @@ macro finished
         \{% raise "undefined method 'write' for #{@type}" %}
       \{% end %}
 
+      {% writer_formats = Chem::FORMAT_TYPES.select(&.constant("WRITER")) %}
       {% begin %}
-        case format
-        {% for ftype in Chem::FORMAT_TYPES.select(&.constant("WRITER")) %}
+        {% for ftype in writer_formats %}
           {% method_name = ftype.constant("FORMAT_METHOD_NAME").id %}
-          when .{{method_name}}?
+          {% if ftype == writer_formats.first %}if{% else %}elsif{% end %} format == {{ftype}}
             {% if ftype.constant("WRITE_MULTI") %}
               {% if needs_args_map[ftype.constant("WRITER").resolve] %}
                 raise ArgumentError.new("#{format} format has required arguments. \
@@ -751,5 +722,32 @@ macro finished
         end
       {% end %}
     end
+  end
+end
+
+macro finished
+  # Returns the format module for *path* based on its filename, or `nil`
+  # if unknown. File stem matching via `File.match?` is case-sensitive 
+  # but extension matching is not.
+  def Chem.guess_format?(path : Path | String)
+    path = Path[path]
+    stem = path.stem
+    ext = path.extension.downcase
+    {% for ftype in Chem::FORMAT_TYPES %}
+      {% if exts = ftype.annotation(Chem::RegisterFormat)[:ext] %}
+        return {{ftype}} if {{{exts.splat}}}.includes?(ext)
+      {% end %}
+      {% if names = ftype.annotation(Chem::RegisterFormat)[:names] %}
+        return {{ftype}} if {{{names.splat}}}.any? { |pattern| File.match?(pattern, stem) }
+      {% end %}
+    {% end %}
+  end
+
+  # Returns the format module for *path* based on its filename. File 
+  # stem matching via `File.match?` is case-sensitive but extension 
+  # matching is not. Raises ArgumentError if the format cannot be 
+  # determined.
+  def Chem.guess_format(path : Path | String)
+    guess_format?(path) || raise ArgumentError.new("File format not found for #{path}")
   end
 end

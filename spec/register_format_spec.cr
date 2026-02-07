@@ -74,19 +74,15 @@ describe Chem::RegisterFormat, tags: %w(register_format codegen) do
 
       A.from_foo(IO::Memory.new, foo: 1).as(A)
       A.from_foo("a.foo", foo: 1).as(A)
-      A.read(IO::Memory.new, Chem::Format::Foo).as(A)
-      A.read(IO::Memory.new, "foo").as(A)
-      A.read("a.foo", Chem::Format::Foo).as(A)
-      A.read("a.foo", "foo").as(A)
+      A.read(IO::Memory.new, Foo).as(A)
+      A.read("a.foo", Foo).as(A)
       A.read("a.foo").as(A)
 
       A.new.to_foo(bar: "1").as(String)
       A.new.to_foo(IO::Memory.new, bar: "1")
       A.new.to_foo("a.foo", bar: "1")
-      A.new.write(IO::Memory.new, Chem::Format::Foo)
-      A.new.write(IO::Memory.new, "foo")
-      A.new.write("a.foo", Chem::Format::Foo)
-      A.new.write("a.foo", "foo")
+      A.new.write(IO::Memory.new, Foo)
+      A.new.write("a.foo", Foo)
       A.new.write("a.foo")
       EOS
   end
@@ -114,10 +110,8 @@ describe Chem::RegisterFormat, tags: %w(register_format codegen) do
 
       A::Info.from_foo(IO::Memory.new).as(A::Info)
       A::Info.from_foo("a.foo").as(A::Info)
-      A::Info.read(IO::Memory.new, Chem::Format::Foo).as(A::Info)
-      A::Info.read(IO::Memory.new, "foo").as(A::Info)
-      A::Info.read("a.foo", Chem::Format::Foo).as(A::Info)
-      A::Info.read("a.foo", "foo").as(A::Info)
+      A::Info.read(IO::Memory.new, Foo).as(A::Info)
+      A::Info.read("a.foo", Foo).as(A::Info)
       A::Info.read("a.foo").as(A::Info)
       EOS
   end
@@ -145,10 +139,8 @@ describe Chem::RegisterFormat, tags: %w(register_format codegen) do
 
       B.from_foo(IO::Memory.new).as(B)
       B.from_foo("a.foo").as(B)
-      B.read(IO::Memory.new, Chem::Format::Foo).as(B)
-      B.read(IO::Memory.new, "foo").as(B)
-      B.read("a.foo", Chem::Format::Foo).as(B)
-      B.read("a.foo", "foo").as(B)
+      B.read(IO::Memory.new, Foo).as(B)
+      B.read("a.foo", Foo).as(B)
       B.read("a.foo").as(B)
       EOS
   end
@@ -180,17 +172,13 @@ describe Chem::RegisterFormat, tags: %w(register_format codegen) do
 
       Array(A).from_foo(IO::Memory.new).as(Array(A))
       Array(A).from_foo("a.foo").as(Array(A))
-      Array(A).read(IO::Memory.new, Chem::Format::Foo).as(Array(A))
-      Array(A).read(IO::Memory.new, "foo").as(Array(A))
-      Array(A).read("a.foo", Chem::Format::Foo).as(Array(A))
-      Array(A).read("a.foo", "foo").as(Array(A))
+      Array(A).read(IO::Memory.new, Foo).as(Array(A))
+      Array(A).read("a.foo", Foo).as(Array(A))
       Array(A).read("a.foo").as(Array(A))
       Array(A).new.to_foo
       Array(A).new.to_foo("a.foo")
-      Array(A).new.write(IO::Memory.new, Chem::Format::Foo)
-      Array(A).new.write(IO::Memory.new, "foo")
-      Array(A).new.write("a.foo", Chem::Format::Foo)
-      Array(A).new.write("a.foo", "foo")
+      Array(A).new.write(IO::Memory.new, Foo)
+      Array(A).new.write("a.foo", Foo)
       Array(A).new.write("a.foo")
       EOS
   end
@@ -253,10 +241,6 @@ describe Chem::RegisterFormat, tags: %w(register_format codegen) do
 
       A.new.to_foo.as(String)
       B.new.to_foo.as(String)
-      Chem::Format::Foo.writer(A)
-      Chem::Format::Foo.writer(B)
-      raise "" unless Chem::Format::Foo.encodes?(A)
-      raise "" unless Chem::Format::Foo.encodes?(B)
       EOS
   end
 end
@@ -270,23 +254,23 @@ describe Array do
 
     it "raises for a single-entry format" do
       expect_raises ArgumentError, "Poscar format cannot read Array(Chem::Structure)" do
-        Array(Chem::Structure).read(IO::Memory.new, :poscar)
+        Array(Chem::Structure).read(IO::Memory.new, Chem::VASP::Poscar)
       end
     end
 
     it "raises if format does not decode the given type" do
       expect_raises ArgumentError, "DX format cannot read Array(Chem::Structure)" do
-        Array(Chem::Structure).read(IO::Memory.new, :dx)
+        Array(Chem::Structure).read(IO::Memory.new, Chem::DX)
       end
     end
 
     it "fails for non-encoded types", tags: %w(codegen) do
-      assert_error "Array(Int32).read(IO::Memory.new, :xyz)",
+      assert_error "Array(Int32).read(IO::Memory.new, Chem::XYZ)",
         "undefined method 'read' for Array(Int32).class"
     end
 
     it "fails with an array for a single-entry type", tags: %w(codegen) do
-      assert_error "Array(Chem::Spatial::Grid).read IO::Memory.new, :xyz",
+      assert_error "Array(Chem::Spatial::Grid).read IO::Memory.new, Chem::XYZ",
         "undefined method 'read' for Array(Chem::Spatial::Grid).class"
     end
   end
@@ -294,7 +278,7 @@ describe Array do
   describe "#write" do
     it "writes in a multiple-entry format" do
       x = Array(Chem::Structure).from_pdb spec_file("models.pdb")
-      String.build { |io| x.write(io, :xyz) }.should eq <<-XYZ
+      String.build { |io| x.write(io, Chem::XYZ) }.should eq <<-XYZ
         5
 
         N     5.606    4.546   11.941
@@ -329,17 +313,17 @@ describe Array do
 
     it "raises for a single-entry format" do
       expect_raises ArgumentError, "Poscar format cannot write Array(Chem::Structure)" do
-        Array(Chem::Structure).new.write(IO::Memory.new, :poscar)
+        Array(Chem::Structure).new.write(IO::Memory.new, Chem::VASP::Poscar)
       end
     end
 
     it "fails for non-encoded types", tags: %w(codegen) do
-      assert_error "[1].write(IO::Memory.new, :xyz)",
+      assert_error "[1].write(IO::Memory.new, Chem::XYZ)",
         "undefined method 'write' for Array(Int32)"
     end
 
     it "fails with an array for a single-entry type", tags: %w(codegen) do
-      assert_error "Array(Chem::Spatial::Grid).new.write IO::Memory.new, :xyz",
+      assert_error "Array(Chem::Spatial::Grid).new.write IO::Memory.new, Chem::XYZ",
         "undefined method 'write' for Array(Chem::Spatial::Grid)"
     end
   end

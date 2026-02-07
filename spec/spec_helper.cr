@@ -220,8 +220,8 @@ end
 # Returns the path for a spec file
 def spec_file(filename : String) : String
   path = filename
-  format = Chem::Format.from_filename? filename
-  path = File.join format.to_s.downcase, path if format
+  format = Chem.guess_format?(filename)
+  path = File.join format.to_s.split("::").last.downcase, path if format
   path = File.join "spec", "data", path
   return path if File.exists?(path)
   path = File.join "spec", "data", filename.downcase, filename
@@ -234,15 +234,15 @@ end
 def load_file(
   filename : String,
   guess_bonds : Bool = false,
-  guess_names : Bool = false
+  guess_names : Bool = false,
 ) : Chem::Structure
   path = spec_file filename
-  case Chem::Format.from_filename(filename)
-  when .xyz?    then Chem::Structure.from_xyz(path, guess_bonds, guess_names)
-  when .poscar? then Chem::Structure.from_poscar(path, guess_bonds, guess_names)
-  when .gen?    then Chem::Structure.from_gen(path, guess_bonds, guess_names)
-  when .pdb?    then Chem::Structure.from_pdb(path, guess_bonds: guess_bonds)
-  else               Chem::Structure.read(path)
+  case Chem.guess_format(filename)
+  when Chem::XYZ.class          then Chem::Structure.from_xyz(path, guess_bonds, guess_names)
+  when Chem::VASP::Poscar.class then Chem::Structure.from_poscar(path, guess_bonds, guess_names)
+  when Chem::Gen.class          then Chem::Structure.from_gen(path, guess_bonds, guess_names)
+  when Chem::PDB.class          then Chem::Structure.from_pdb(path, guess_bonds: guess_bonds)
+  else                               Chem::Structure.read(path)
   end
 end
 
@@ -295,7 +295,7 @@ end
 
 def make_grid(
   dim : Indexable(Int),
-  bounds : Chem::Spatial::Parallelepiped | Indexable(Number::Primitive) = {0, 0, 0}
+  bounds : Chem::Spatial::Parallelepiped | Indexable(Number::Primitive) = {0, 0, 0},
 ) : Chem::Spatial::Grid
   dim = {dim[0], dim[1], dim[2]}
   if bounds.is_a?(Indexable)
