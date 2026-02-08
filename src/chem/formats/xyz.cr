@@ -1,4 +1,4 @@
-@[Chem::RegisterFormat(ext: %w(.xyz))]
+@[Chem::RegisterFormat(ext: %w(.xyz), module_api: true)]
 module Chem::XYZ
   # Yields each structure in *io*.
   def self.each(
@@ -38,28 +38,31 @@ module Chem::XYZ
     end
   end
 
-  # Writes a single structure or group of atoms to *io*.
+  # Writes one or more structures or groups of atoms to *io*.
+  #
+  # *extended* enables the [extended XYZ](https://github.com/libAtoms/extxyz) specification, which allows to specify additional data and atom properties in the comment line.
+  # If given, *fields* specifies which atom properties to write in extended mode, otherwise all metadata properties are written.
+  #
+  # *total_entries* indicates the number of entries to write.
   def self.write(
     io : IO | Path | String,
     obj : Structure | AtomView,
     extended : Bool = false,
     fields : Array(String) = [] of String,
-    total_entries : Int32? = 1,
   ) : Nil
-    Writer.open(io, extended, fields, total_entries) do |writer|
+    Writer.open(io, extended, fields) do |writer|
       writer << obj
     end
   end
 
-  # Writes multiple structures to *io*.
+  # :ditto:
   def self.write(
     io : IO | Path | String,
     objs : Enumerable(Structure),
     extended : Bool = false,
     fields : Array(String) = [] of String,
-    total_entries : Int32? = nil,
   ) : Nil
-    Writer.open(io, extended, fields, total_entries) do |writer|
+    Writer.open(io, extended, fields) do |writer|
       objs.each { |struc| writer << struc }
     end
   end
@@ -214,6 +217,7 @@ module Chem::XYZ
       @io.puts atoms.size
       if obj.is_a?(Structure)
         if @extended
+          # FIXME: gather fields from all atoms
           @fields = atoms.first.metadata.keys if @fields.empty?
           write_extended_config(obj)
         else

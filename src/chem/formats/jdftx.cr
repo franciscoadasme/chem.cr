@@ -1,5 +1,37 @@
-@[Chem::RegisterFormat(ext: %w(.ionpos .lattice))]
+@[Chem::RegisterFormat(ext: %w(.ionpos .lattice), module_api: true)]
 module Chem::JDFTx
+  # Reads the structure from *io*.
+  #
+  # If *io* is a file, a sibling `.lattice` file is read for the unit cell.
+  def self.read(
+    io : IO | Path | String,
+    guess_bonds : Bool = false,
+    guess_names : Bool = false,
+  ) : Structure
+    Reader.open(io, guess_bonds: guess_bonds, guess_names: guess_names) do |r|
+      r.read_entry
+    end
+  end
+
+  # Writes a structure to *io*.
+  #
+  # Atom positions are written in fractional coordinates if *fractional* is true, Cartesian otherwise.
+  # Additionally, atom positions may be wrapped into the unit cell during writing if *wrap* is true (original positions are not modified).
+  # Raises `Spatial::NotPeriodicError` if *fractional* is true and the structure is not periodic.
+  #
+  # Unit cell and atoms are written to the same file if *single_file* is true, otherwise the lattice is written to a sibling `.lattice` file.
+  def self.write(
+    io : IO | Path | String,
+    structure : Structure,
+    fractional : Bool = false,
+    wrap : Bool = false,
+    single_file : Bool = true,
+  ) : Nil
+    Writer.open(io, fractional: fractional, wrap: wrap, single_file: single_file) do |w|
+      w << structure
+    end
+  end
+
   class Reader
     include FormatReader(Structure)
 
@@ -7,7 +39,7 @@ module Chem::JDFTx
       @io : IO,
       @guess_bonds : Bool = false,
       @guess_names : Bool = false,
-      @sync_close : Bool = false
+      @sync_close : Bool = false,
     )
     end
 
@@ -107,7 +139,7 @@ module Chem::JDFTx
       @fractional : Bool = false,
       @wrap : Bool = false,
       @single_file : Bool = true,
-      @sync_close : Bool = false
+      @sync_close : Bool = false,
     )
     end
 

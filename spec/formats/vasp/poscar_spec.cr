@@ -1,9 +1,9 @@
 require "../../spec_helper.cr"
 
 describe Chem::VASP::Poscar do
-  describe ".parse" do
+  describe ".read" do
     it "parses a basic file" do
-      st = load_file "basic.poscar", guess_bonds: true, guess_names: true
+      st = Chem::VASP::Poscar.read spec_file("basic.poscar"), guess_bonds: true, guess_names: true
       st.source_file.should eq Path[spec_file("basic.poscar")].expand
       st.atoms.size.should eq 49
 
@@ -30,21 +30,21 @@ describe Chem::VASP::Poscar do
     end
 
     it "parses a file with direct coordinates" do
-      st = load_file "direct.poscar"
+      st = Chem::VASP::Poscar.read spec_file("direct.poscar")
       st.source_file.should eq Path[spec_file("direct.poscar")].expand
       st.atoms[0].pos.should eq [0, 0, 0]
       st.atoms[1].pos.should be_close [1.0710, 1.6065, 1.2495], 1e-15
     end
 
     it "parses a file with scaled Cartesian coordinates" do
-      st = load_file "cartesian.poscar"
+      st = Chem::VASP::Poscar.read spec_file("cartesian.poscar")
       st.source_file.should eq Path[spec_file("cartesian.poscar")].expand
       st.atoms[0].pos.should eq [0, 0, 0]
       st.atoms[1].pos.should be_close [0.8925, 0.8925, 0.8925], 1e-16
     end
 
     it "parses a file with selective dynamics" do
-      st = load_file "selective_dynamics.poscar"
+      st = Chem::VASP::Poscar.read spec_file("selective_dynamics.poscar")
       st.source_file.should eq Path[spec_file("selective_dynamics.poscar")].expand
       st.atoms[0].constraint.should eq Chem::Spatial::Direction::Z
       st.atoms[1].constraint.should eq Chem::Spatial::Direction::XYZ
@@ -54,14 +54,14 @@ describe Chem::VASP::Poscar do
     it "fails when element symbols are missing" do
       msg = "Expected element symbols (vasp 5+)"
       ex = expect_raises(Chem::ParseException) do
-        load_file "no_symbols.poscar"
+        Chem::VASP::Poscar.read spec_file("no_symbols.poscar")
       end
       ex.to_s.should eq "Missing atom species"
     end
 
     it "fails when there are missing atomic species counts" do
       ex = expect_raises(Chem::ParseException) do
-        load_file "mismatch.poscar"
+        Chem::VASP::Poscar.read spec_file("mismatch.poscar")
       end
       ex.to_s.should eq "Couldn't read number of atoms for N"
       # ex.to_s_with_location.should eq <<-EOS
@@ -77,7 +77,7 @@ describe Chem::VASP::Poscar do
 
     it "fails when constraint flags are invalid" do
       ex = expect_raises Chem::ParseException do
-        Chem::Structure.from_poscar IO::Memory.new <<-EOS
+        Chem::VASP::Poscar.read IO::Memory.new <<-EOS
           Cubic BN
           3.57
             0.0 0.5 0.5
@@ -103,21 +103,22 @@ describe Chem::VASP::Poscar do
       #   EOS
     end
   end
-end
 
-describe Chem::VASP::Poscar::Writer do
-  structure = Chem::Structure.build(guess_bonds: true) do
-    title "NaCl-O-NaCl"
-    cell 40, 20, 10
-    atom :Cl, vec3(30, 15, 10)
-    atom :Na, vec3(10, 5, 5)
-    atom :O, vec3(30, 15, 9)
-    atom :Na, vec3(10, 10, 12.5)
-    atom :Cl, vec3(20, 10, 10)
-  end
+  describe ".write" do
+    structure = Chem::Structure.build(guess_bonds: true) do
+      title "NaCl-O-NaCl"
+      cell 40, 20, 10
+      atom :Cl, vec3(30, 15, 10)
+      atom :Na, vec3(10, 5, 5)
+      atom :O, vec3(30, 15, 9)
+      atom :Na, vec3(10, 10, 12.5)
+      atom :Cl, vec3(20, 10, 10)
+    end
 
-  it "writes a structure in Cartesian coordinates" do
-    structure.to_poscar.should eq <<-EOS
+    it "writes a structure in Cartesian coordinates" do
+      io = IO::Memory.new
+      Chem::VASP::Poscar.write io, structure
+      io.to_s.should eq <<-EOS
       NaCl-O-NaCl
          1.00000000000000
           40.0000000000000000    0.0000000000000000    0.0000000000000000
@@ -132,10 +133,12 @@ describe Chem::VASP::Poscar::Writer do
          10.0000000000000000   10.0000000000000000   12.5000000000000000
          30.0000000000000000   15.0000000000000000    9.0000000000000000\n
       EOS
-  end
+    end
 
-  it "writes a structure in the specified element order" do
-    structure.to_poscar(order: %w(O Na Cl)).should eq <<-EOS
+    it "writes a structure in the specified element order" do
+      io = IO::Memory.new
+      Chem::VASP::Poscar.write io, structure, order: %w(O Na Cl)
+      io.to_s.should eq <<-EOS
       NaCl-O-NaCl
          1.00000000000000
           40.0000000000000000    0.0000000000000000    0.0000000000000000
@@ -150,10 +153,12 @@ describe Chem::VASP::Poscar::Writer do
          30.0000000000000000   15.0000000000000000   10.0000000000000000
          20.0000000000000000   10.0000000000000000   10.0000000000000000\n
       EOS
-  end
+    end
 
-  it "writes a structure in fractional coordinates" do
-    structure.to_poscar(fractional: true).should eq <<-EOS
+    it "writes a structure in fractional coordinates" do
+      io = IO::Memory.new
+      Chem::VASP::Poscar.write io, structure, fractional: true
+      io.to_s.should eq <<-EOS
       NaCl-O-NaCl
          1.00000000000000
           40.0000000000000000    0.0000000000000000    0.0000000000000000
@@ -168,10 +173,12 @@ describe Chem::VASP::Poscar::Writer do
           0.2500000000000000    0.5000000000000000    1.2500000000000000
           0.7500000000000000    0.7500000000000000    0.9000000000000000\n
       EOS
-  end
+    end
 
-  it "writes a structure in fractional coordinates (wrapped)" do
-    structure.to_poscar(fractional: true, wrap: true).should eq <<-EOS
+    it "writes a structure in fractional coordinates (wrapped)" do
+      io = IO::Memory.new
+      Chem::VASP::Poscar.write io, structure, fractional: true, wrap: true
+      io.to_s.should eq <<-EOS
       NaCl-O-NaCl
          1.00000000000000
           40.0000000000000000    0.0000000000000000    0.0000000000000000
@@ -186,13 +193,15 @@ describe Chem::VASP::Poscar::Writer do
           0.2500000000000000    0.5000000000000000    0.2500000000000000
           0.7500000000000000    0.7500000000000000    0.9000000000000000\n
       EOS
-  end
+    end
 
-  it "writes a structure having constraints" do
-    other = structure.clone
-    other.atoms[0].constraint = Chem::Spatial::Direction::XYZ
-    other.atoms[3].constraint = Chem::Spatial::Direction::XZ
-    other.to_poscar.should eq <<-EOS
+    it "writes a structure having constraints" do
+      other = structure.clone
+      other.atoms[0].constraint = Chem::Spatial::Direction::XYZ
+      other.atoms[3].constraint = Chem::Spatial::Direction::XZ
+      io = IO::Memory.new
+      Chem::VASP::Poscar.write io, other
+      io.to_s.should eq <<-EOS
       NaCl-O-NaCl
          1.00000000000000
           40.0000000000000000    0.0000000000000000    0.0000000000000000
@@ -208,22 +217,26 @@ describe Chem::VASP::Poscar::Writer do
          10.0000000000000000   10.0000000000000000   12.5000000000000000   F   T   F
          30.0000000000000000   15.0000000000000000    9.0000000000000000   T   T   T\n
       EOS
-  end
-
-  it "fails with non-periodic structures" do
-    expect_raises Chem::Spatial::NotPeriodicError do
-      Chem::Structure.new.to_poscar
     end
-  end
 
-  it "fails when there is a missing element in the specified order" do
-    expect_raises ArgumentError, "<Element Cl> not found in specified order" do
-      structure.to_poscar order: [Chem::PeriodicTable::H]
+    it "fails with non-periodic structures" do
+      io = IO::Memory.new
+      expect_raises Chem::Spatial::NotPeriodicError do
+        Chem::VASP::Poscar.write io, Chem::Structure.new
+      end
     end
-  end
 
-  it "does not fail when element order has extra elements (#22)" do
-    structure.to_poscar(order: %w(O Na Cl P)).should eq <<-EOS
+    it "fails when there is a missing element in the specified order" do
+      io = IO::Memory.new
+      expect_raises ArgumentError, "<Element Cl> not found in specified order" do
+        Chem::VASP::Poscar.write io, structure, order: [Chem::PeriodicTable::H]
+      end
+    end
+
+    it "does not fail when element order has extra elements (#22)" do
+      io = IO::Memory.new
+      Chem::VASP::Poscar.write io, structure, order: %w(O Na Cl P)
+      io.to_s.should eq <<-EOS
       NaCl-O-NaCl
          1.00000000000000
           40.0000000000000000    0.0000000000000000    0.0000000000000000
@@ -238,5 +251,6 @@ describe Chem::VASP::Poscar::Writer do
          30.0000000000000000   15.0000000000000000   10.0000000000000000
          20.0000000000000000   10.0000000000000000   10.0000000000000000\n
       EOS
+    end
   end
 end

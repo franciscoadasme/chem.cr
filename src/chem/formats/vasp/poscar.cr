@@ -1,5 +1,44 @@
-@[Chem::RegisterFormat(ext: %w(.poscar), names: %w(POSCAR* CONTCAR*))]
+@[Chem::RegisterFormat(ext: %w(.poscar), names: %w(POSCAR* CONTCAR*), module_api: true)]
 module Chem::VASP::Poscar
+  # Returns the structure from *io*.
+  #
+  # Direct coordinates are always converted to Cartesian coordinates and both the unit cell vectors and atom positions are scaled by the scale factor.
+  def self.read(
+    io : IO | Path | String,
+    guess_bonds : Bool = false,
+    guess_names : Bool = false,
+  ) : Structure
+    Reader.open(io, guess_bonds, guess_names) do |r|
+      r.read_entry
+    end
+  end
+
+  # Writes a structure to *io*. Raises `Spatial::NotPeriodicError` if the structure is not periodic.
+  #
+  # If given, *order* specifies the element order in the output, otherwise the order of the first occurrence of each element in the structure is used.
+  # *order* can be an array of `Element` instances or element symbols (as strings) for convenience.
+  #
+  # Atom positions are written in direct (fractional) coordinates if *fractional* is true, Cartesian otherwise.
+  # Additionally, atom positions may be wrapped into the unit cell during writing if *wrap* is true (original positions are not modified).
+  #
+  # ```
+  # order = [Chem::PeriodicTable::O, Chem::PeriodicTable::Na, Chem::PeriodicTable::Cl]
+  # Chem::VASP::Poscar.write(io, structure, order)
+  # # or
+  # Chem::VASP::Poscar.write(io, structure, order: %w(O Na Cl))
+  # ```
+  def self.write(
+    io : IO | Path | String,
+    structure : Structure,
+    order : Array(Element) | Array(String) | Nil = nil,
+    fractional : Bool = false,
+    wrap : Bool = false,
+  ) : Nil
+    Writer.open(io, order: order, fractional: fractional, wrap: wrap) do |w|
+      w << structure
+    end
+  end
+
   class Reader
     include FormatReader(Structure)
 
@@ -7,7 +46,7 @@ module Chem::VASP::Poscar
       @io : IO,
       @guess_bonds : Bool = false,
       @guess_names : Bool = false,
-      @sync_close : Bool = false
+      @sync_close : Bool = false,
     )
       @pull = PullParser.new(@io)
     end

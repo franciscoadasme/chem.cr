@@ -1,8 +1,8 @@
 require "../spec_helper"
 
-describe Chem::Gen::Reader do
+describe Chem::Gen do
   it "parses a non-periodic Gen file" do
-    structure = load_file "non_periodic.gen"
+    structure = Chem::Gen.read(spec_file("non_periodic.gen"))
     structure.source_file.should eq Path[spec_file("non_periodic.gen")].expand
     structure.cell?.should be_nil
 
@@ -18,7 +18,7 @@ describe Chem::Gen::Reader do
   end
 
   it "parses a periodic Gen file" do
-    structure = load_file "periodic.gen"
+    structure = Chem::Gen.read(spec_file("periodic.gen"))
     structure.source_file.should eq Path[spec_file("periodic.gen")].expand
     cell = structure.cell?.should_not be_nil
     cell.basis.should eq Chem::Spatial::Mat3.basis(
@@ -37,7 +37,7 @@ describe Chem::Gen::Reader do
   end
 
   it "parses a Gen file having fractional coordinates" do
-    structure = load_file "fractional.gen"
+    structure = Chem::Gen.read(spec_file("fractional.gen"))
     structure.source_file.should eq Path[spec_file("fractional.gen")].expand
     cell = structure.cell?.should_not be_nil
     cell.not_nil!.basis.should eq Chem::Spatial::Mat3.basis(
@@ -52,7 +52,8 @@ describe Chem::Gen::Reader do
   end
 end
 
-describe Chem::Gen::Writer do
+describe Chem::Gen do
+  describe ".write" do
   structure = Chem::Structure.build do
     title "NaCl-O-NaCl"
     atom Chem::PeriodicTable::Cl, vec3(30, 15, 10)
@@ -124,5 +125,6 @@ describe Chem::Gen::Writer do
     expect_raises Chem::Spatial::NotPeriodicError do
       Chem::Structure.new.to_gen fractional: true
     end
+  end
   end
 end

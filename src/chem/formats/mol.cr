@@ -16,7 +16,7 @@
 #
 # [ctfile]:
 #     https://discover.3ds.com/sites/default/files/2020-08/biovia_ctfileformats_2020.pdf
-@[Chem::RegisterFormat(ext: %w(.mol))]
+@[Chem::RegisterFormat(ext: %w(.mol), module_api: true)]
 module Chem::Mol
   # Connection table (CTAB) format.
   enum Variant
@@ -24,6 +24,27 @@ module Chem::Mol
     V2000
     # The V3000 (current) format.
     V3000
+  end
+
+  # Reads the structure from *io*.
+  # Supports both V2000 and V3000 variants.
+  def self.read(io : IO | Path | String) : Structure
+    Reader.open(io) do |r|
+      r.read_entry
+    end
+  end
+
+  # Writes a structure or group of atoms to *io*.
+  #
+  # The CTAB format is specified via *variant*: V2000 (legacy) or V3000.
+  def self.write(
+    io : IO | Path | String,
+    obj : Structure | AtomView,
+    variant : Chem::Mol::Variant = :v2000,
+  ) : Nil
+    Writer.open(io, variant: variant) do |w|
+      w << obj
+    end
   end
 
   class Reader
@@ -82,7 +103,7 @@ module Chem::Mol
     def initialize(
       @io : IO,
       @variant : Chem::Mol::Variant = :v2000,
-      @sync_close : Bool = false
+      @sync_close : Bool = false,
     )
     end
 
@@ -256,7 +277,7 @@ module Chem::Mol
     def self.check_entry(
       pull : PullParser,
       tokens : Tuple,
-      message : String = "Expected #{name} entry at %{loc_with_file}"
+      message : String = "Expected #{name} entry at %{loc_with_file}",
     ) : Nil
       check_entry_tag(pull)
       if tokens.map { pull.next_s? } != tokens
@@ -267,7 +288,7 @@ module Chem::Mol
 
     def self.check_entry_tag(
       pull : PullParser,
-      message : String = "Invalid V3000 entry at %{loc_with_file}"
+      message : String = "Invalid V3000 entry at %{loc_with_file}",
     ) : Nil
       if {pull.next_s?, pull.next_s?} != {"M", "V30"}
         pull.rewind_line

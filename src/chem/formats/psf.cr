@@ -1,5 +1,15 @@
-@[Chem::RegisterFormat(ext: %w(.psf))]
+@[Chem::RegisterFormat(ext: %w(.psf), module_api: true)]
 module Chem::PSF
+  # Reads the structure from *io*.
+  # Supports the standard, extended, and NAMD variants.
+  #
+  # Atom positions are set to zero.
+  def self.read(io : IO | Path | String) : Structure
+    Reader.open(io) do |r|
+      r.read_entry
+    end
+  end
+
   # :nodoc:
   enum Variant
     Standard

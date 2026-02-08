@@ -1,45 +1,49 @@
 require "../spec_helper"
 
-describe Chem::Mol::Reader do
-  it "parses a Mol V2000 file" do
-    path = Path[spec_file("702_v2000.mol")]
-    structure = Chem::Structure.read path
-    structure.source_file.should eq path.expand
-    structure.title.should eq ""
-    structure.atoms.size.should eq 9
-    structure.bonds.size.should eq 8
-    structure.atoms.reject(&.formal_charge.zero?)
-      .to_h { |atom| {atom.number, atom.formal_charge} }
-      .should eq({1 => -2, 4 => 1, 6 => -1})
-    structure.bonds.reject(&.single?)
-      .to_h { |bond| {bond.atoms.map(&.number), bond.order.to_i} }
-      .should eq({ {1, 2} => 2 })
-    structure.atoms[2].mass.should eq 14
-    structure.residues.map(&.name).should eq ["702"]
+describe Chem::Mol do
+  describe ".read" do
+    it "parses a Mol V2000 file" do
+      path = Path[spec_file("702_v2000.mol")]
+      structure = Chem::Mol.read path
+      structure.source_file.should eq path.expand
+      structure.title.should eq ""
+      structure.atoms.size.should eq 9
+      structure.bonds.size.should eq 8
+      structure.atoms.reject(&.formal_charge.zero?)
+        .to_h { |atom| {atom.number, atom.formal_charge} }
+        .should eq({1 => -2, 4 => 1, 6 => -1})
+      structure.bonds.reject(&.single?)
+        .to_h { |bond| {bond.atoms.map(&.number), bond.order.to_i} }
+        .should eq({ {1, 2} => 2 })
+      structure.atoms[2].mass.should eq 14
+      structure.residues.map(&.name).should eq ["702"]
+    end
+
+    it "parses a Mol V3000 file" do
+      path = Path[spec_file("702_v3000.mol")]
+      structure = Chem::Mol.read path
+      structure.source_file.should eq path.expand
+      structure.title.should eq "Schrodinger Suite 2021-4."
+      structure.atoms.size.should eq 9
+      structure.bonds.size.should eq 8
+      structure.atoms.reject(&.formal_charge.zero?)
+        .to_h { |atom| {atom.number, atom.formal_charge} }
+        .should eq({1 => -2, 4 => 1, 6 => -1})
+      structure.bonds.reject(&.single?)
+        .to_h { |bond| {bond.atoms.map(&.number), bond.order.to_i} }
+        .should eq({ {1, 2} => 2 })
+      structure.atoms[2].mass.should eq 14
+      structure.residues.map(&.name).should eq ["702"]
+    end
   end
 
-  it "parses a Mol V3000 file" do
-    path = Path[spec_file("702_v3000.mol")]
-    structure = Chem::Structure.read path
-    structure.source_file.should eq path.expand
-    structure.title.should eq "Schrodinger Suite 2021-4."
-    structure.atoms.size.should eq 9
-    structure.bonds.size.should eq 8
-    structure.atoms.reject(&.formal_charge.zero?)
-      .to_h { |atom| {atom.number, atom.formal_charge} }
-      .should eq({1 => -2, 4 => 1, 6 => -1})
-    structure.bonds.reject(&.single?)
-      .to_h { |bond| {bond.atoms.map(&.number), bond.order.to_i} }
-      .should eq({ {1, 2} => 2 })
-    structure.atoms[2].mass.should eq 14
-    structure.residues.map(&.name).should eq ["702"]
-  end
-end
+  describe ".write" do
+    it "writes a Mol V2000 file" do
+      structure = Chem::Mol.read spec_file("702_v2000.mol")
 
-describe Chem::Mol::Writer do
-  it "writes a Mol V2000 file" do
-    structure = Chem::Structure.read(spec_file("702_v2000.mol"))
-    structure.to_mol.strip.should eq <<-MOL
+      io = IO::Memory.new
+      Chem::Mol.write io, structure
+      io.to_s.strip.should eq <<-MOL
       702
         chem.cr #{Time.local.to_s("%m%d%y%H%M")}2D
 
@@ -64,11 +68,14 @@ describe Chem::Mol::Writer do
       M  CHG  3   1  -2   4   1   6  -1
       M  END
       MOL
-  end
+    end
 
-  it "writes a Mol V3000 file" do
-    structure = Chem::Structure.read(spec_file("702_v2000.mol"))
-    structure.to_mol(:v3000).strip.should eq <<-MOL
+    it "writes a Mol V3000 file" do
+      structure = Chem::Mol.read spec_file("702_v2000.mol")
+
+      io = IO::Memory.new
+      Chem::Mol.write io, structure, variant: :v3000
+      io.to_s.strip.should eq <<-MOL
       702
         chem.cr #{Time.local.to_s("%m%d%y%H%M")}2D
 
@@ -99,5 +106,6 @@ describe Chem::Mol::Writer do
       M  V30 END CTAB
       M END
       MOL
+    end
   end
 end

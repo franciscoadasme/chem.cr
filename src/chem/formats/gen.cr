@@ -1,5 +1,32 @@
-@[Chem::RegisterFormat(ext: %w(.gen))]
+@[Chem::RegisterFormat(ext: %w(.gen), module_api: true)]
 module Chem::Gen
+  # Reads the structure from *io*.
+  #
+  # Fractional coordinates are always converted to Cartesian coordinates.
+  def self.read(
+    io : IO | Path | String,
+    guess_bonds : Bool = false,
+    guess_names : Bool = false,
+  ) : Structure
+    Reader.open(io, guess_bonds: guess_bonds, guess_names: guess_names) do |r|
+      r.read_entry
+    end
+  end
+
+  # Writes a structure or group of atoms to *io*.
+  #
+  # Atom positions are written in fractional coordinates if *fractional* is true, Cartesian otherwise.
+  # Raises `Spatial::NotPeriodicError` if *fractional* is true and the structure is not periodic.
+  def self.write(
+    io : IO | Path | String,
+    obj : Structure | AtomView,
+    fractional : Bool = false,
+  ) : Nil
+    Writer.open(io, fractional: fractional) do |w|
+      w << obj
+    end
+  end
+
   class Reader
     include FormatReader(Structure)
 
@@ -7,7 +34,7 @@ module Chem::Gen
       @io : IO,
       @guess_bonds : Bool = false,
       @guess_names : Bool = false,
-      @sync_close : Bool = false
+      @sync_close : Bool = false,
     )
       @pull = PullParser.new(@io)
     end

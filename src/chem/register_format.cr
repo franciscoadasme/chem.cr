@@ -322,14 +322,23 @@ macro finished
             {{arg}},
           {% end %}
         ) : self
-          {{reader}}.open(
-            input \
-            {% for arg in args %} \
-              ,{{arg.internal_name}} \
-            {% end %}
-          ) do |reader|
-            reader.read_{{read_suffix.id}}
-          end
+          {% if kind == :read && ftype.annotation(Chem::RegisterFormat)[:module_api] %}
+            {{ftype}}.read(
+              input \
+              {% for arg in args %} \
+                ,{{arg.internal_name}} \
+              {% end %}
+            )
+          {% else %}
+            {{reader}}.open(
+              input \
+              {% for arg in args %} \
+                ,{{arg.internal_name}} \
+              {% end %}
+            ) do |reader|
+              reader.read_{{read_suffix.id}}
+            end
+          {% end %}
         end
       end
 
@@ -506,17 +515,34 @@ macro finished
             {{arg}},
           {% end %}
         ) : Nil
-          {{writer}}.open(
-            output \
-            {% for arg in args %} \
-              ,{{arg.internal_name}} \
-            {% end %} \
-            {% if ftype.constant("WRITE_MULTI") %} \
-              ,total_entries: 1 \
-            {% end %}
-          ) do |writer|
-            writer << self
-          end
+          {% if ftype.constant("WRITE_MULTI") %}
+            {{writer}}.open(
+              output \
+              {% for arg in args %} \
+                ,{{arg.internal_name}} \
+              {% end %} \
+              ,total_entries: 1
+            ) do |writer|
+              writer << self
+            end
+          {% elsif ftype.annotation(Chem::RegisterFormat)[:module_api] %}
+            {{ftype}}.write(
+              output \
+              ,self \
+              {% for arg in args %} \
+                ,{{arg.internal_name}} \
+              {% end %}
+            )
+          {% else %}
+            {{writer}}.open(
+              output \
+              {% for arg in args %} \
+                ,{{arg.internal_name}} \
+              {% end %}
+            ) do |writer|
+              writer << self
+            end
+          {% end %}
         end
       end
 
