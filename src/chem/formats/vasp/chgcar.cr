@@ -1,7 +1,43 @@
 require "./utils"
 
-@[Chem::RegisterFormat(names: %w(CHGCAR*))]
+@[Chem::RegisterFormat(names: %w(CHGCAR*), module_api: true)]
 module Chem::VASP::Chgcar
+  # Returns the charge density from *io*.
+  def self.read(io : IO | Path | String) : Spatial::Grid
+    Reader.open(io) do |r|
+      r.read_entry
+    end
+  end
+
+  # Returns the grid information from *io* without reading the data.
+  def self.read_info(io : IO | Path | String) : Spatial::Grid::Info
+    Reader.open(io) do |r|
+      r.read_header
+    end
+  end
+
+  # Returns the structure from *io* without reading the data.
+  # Equivalent to `Poscar.read`.
+  def self.read_structure(io : IO | Path | String) : Structure
+    Reader.open(io) do |r|
+      r.read_attached
+    end
+  end
+
+  # Writes a grid to *io*.
+  #
+  # The structure is written in the header.
+  # Raises `ArgumentError` if the structure's unit cell does not match the grid bounds.
+  def self.write(
+    io : IO | Path | String,
+    grid : Spatial::Grid,
+    structure : Structure,
+  ) : Nil
+    Writer.open(io, structure: structure) do |w|
+      w << grid
+    end
+  end
+
   class Reader
     include FormatReader(Spatial::Grid)
     include FormatReader::Headed(Spatial::Grid::Info)

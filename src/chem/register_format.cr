@@ -329,6 +329,20 @@ macro finished
                 ,{{arg.internal_name}} \
               {% end %}
             )
+          {% elsif kind == :head && ftype.annotation(Chem::RegisterFormat)[:module_api] %}
+            {{ftype}}.read_info(
+              input \
+              {% for arg in args %} \
+                ,{{arg.internal_name}} \
+              {% end %}
+            )
+          {% elsif kind == :attached && ftype.annotation(Chem::RegisterFormat)[:module_api] %}
+            {{ftype}}.read_structure(
+              input \
+              {% for arg in args %} \
+                ,{{arg.internal_name}} \
+              {% end %}
+            )
           {% else %}
             {{reader}}.open(
               input \
