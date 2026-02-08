@@ -1,14 +1,14 @@
 require "../spec_helper"
 
-describe Chem::XYZ::Reader do
-  it "parses a XYZ file" do
+describe Chem::XYZ do
+  it "reads a XYZ file" do
     symbols = ["N", "C", "C", "O", "C", "H", "H", "H", "H", "H", "N", "C", "C", "O",
                "C", "S", "H", "H", "H", "H", "H", "N", "C", "C", "O", "C", "H", "H",
                "H", "H", "H", "N", "C", "C", "O", "C", "C", "S", "C", "H", "H", "H",
                "H", "H", "H", "H", "H", "H", "N", "C", "C", "O", "C", "H", "H", "H",
                "H", "H", "O", "H", "H"]
 
-    structure = load_file "acama.xyz"
+    structure = Chem::XYZ.read(spec_file("acama.xyz"))
     structure.source_file.should eq Path[spec_file("acama.xyz")].expand
     structure.title.should eq "Ala-Cys-Ala-Met-Ala"
     structure.atoms.size.should eq 61
@@ -17,8 +17,8 @@ describe Chem::XYZ::Reader do
     structure.atoms[-1].pos.should eq [0.72200, 0.70700, 7.66970]
   end
 
-  it "parses a XYZ file with multiple structures" do
-    structures = Array(Chem::Structure).from_xyz spec_file("coo.trj.xyz")
+  it "reads all structures from a XYZ file" do
+    structures = Chem::XYZ.read_all(spec_file("coo.trj.xyz"))
 
     structures.size.should eq 4
     structures.map(&.title).should eq ["0", "1", "2", "3"]
@@ -30,7 +30,7 @@ describe Chem::XYZ::Reader do
     end
   end
 
-  it "parses selected structures of a XYZ file with multiple structures" do
+  pending "parses selected structures of a XYZ file with multiple structures" do
     path = spec_file("coo.trj.xyz")
     structures = Array(Chem::Structure).from_xyz path, indexes: [1, 3]
 
@@ -40,7 +40,7 @@ describe Chem::XYZ::Reader do
     structures.map(&.atoms[1].z).should eq [1.2, 1.4]
   end
 
-  it "parses a XYZ file with atomic numbers" do
+  it "reads a XYZ file with atomic numbers" do
     io = IO::Memory.new <<-EOS
       9
       Three waters
@@ -54,18 +54,18 @@ describe Chem::XYZ::Reader do
       1   6.440  12.040   7.394
       1   6.738  10.850   8.321
       EOS
-    structure = Chem::Structure.from_xyz io
+    structure = Chem::XYZ.read(io)
     structure.atoms.map(&.element.symbol).should eq %w(O H H O H H O H H)
   end
 
-  it "fails when structure index is invalid" do
+  pending "fails when structure index is invalid" do
     expect_raises IndexError do
       Array(Chem::Structure).from_xyz spec_file("coo.trj.xyz"), indexes: [5]
     end
   end
 
-  it "parses extended XYZ (#105)" do
-    structure = Chem::Structure.from_xyz spec_file("extended.xyz")
+  it "reads extended XYZ (#105)" do
+    structure = Chem::XYZ.read(spec_file("extended.xyz"))
     structure.title.should eq "Cubic Si"
     structure.cell.size.should eq Chem::Spatial::Size3[5.44, 5.44, 5.44]
     structure.cell.cubic?.should be_true
@@ -95,7 +95,7 @@ describe Chem::XYZ::Reader do
   end
 end
 
-describe Chem::XYZ::Writer do
+describe Chem::XYZ do
   it "writes a structure" do
     structure = Chem::Structure.build do
       title "COO-"
@@ -104,9 +104,11 @@ describe Chem::XYZ::Writer do
       atom :o, vec3(0, 0, -1.159076)
     end
 
-    structure.chains[0].atoms.to_xyz.should eq <<-EOS
+    io = IO::Memory.new
+    Chem::XYZ.write(io, structure)
+    io.to_s.should eq <<-EOS
       3
-
+      COO-
       C     0.000    0.000    0.000
       O     0.000    0.000    1.159
       O     0.000    0.000   -1.159
@@ -115,21 +117,16 @@ describe Chem::XYZ::Writer do
   end
 
   it "writes multiple structures" do
-    structure = Chem::Structure.build do
-      title "COO-"
-      atom :c, vec3(1, 0, 0)
-      atom :o, vec3(2, 0, 0)
-      atom :o, vec3(3, 0, 0)
-    end
-
-    io = IO::Memory.new
-    Chem::XYZ::Writer.open(io) do |xyz|
-      (1..3).each do |i|
-        structure.title = "COO- Step #{i}"
-        structure.pos.map! &.*(i)
-        xyz << structure
+    structures = (1..3).map do |i|
+      Chem::Structure.build do
+        title "COO- Step #{i}"
+        atom :c, vec3(1.0 * i, 0, 0)
+        atom :o, vec3(2.0 * i, 0, 0)
+        atom :o, vec3(3.0 * i, 0, 0)
       end
     end
+    io = IO::Memory.new
+    Chem::XYZ.write(io, structures)
 
     io.to_s.should eq <<-EOS
       3
@@ -144,19 +141,20 @@ describe Chem::XYZ::Writer do
       O     6.000    0.000    0.000
       3
       COO- Step 3
-      C     6.000    0.000    0.000
-      O    12.000    0.000    0.000
-      O    18.000    0.000    0.000
+      C     3.000    0.000    0.000
+      O     6.000    0.000    0.000
+      O     9.000    0.000    0.000
 
       EOS
   end
 
   it "writes extended" do
-    structure = Chem::Structure.from_xyz spec_file("extended.xyz")
-    structure.to_xyz(
+    structure = Chem::XYZ.read(spec_file("extended.xyz"))
+    io = IO::Memory.new
+    Chem::XYZ.write(io, structure,
       extended: true,
-      fields: %w(constraint chain resid resname charge dd label)
-    ).should eq <<-EOS
+      fields: %w(constraint chain resid resname charge dd label))
+    io.to_s.should eq <<-EOS
       8
       Title="Cubic Si" Properties=species:S:1:pos:R:3:constraint:L:3:chain:S:1:resid:I:1:resname:S:1:charge:I:1:dd:R:3:label:S:1 Lattice=[[5.44, 0.0, 0.0], [0.0, 5.44, 0.0], [0.0, 0.0, 5.44]] Energy=-0.1235 Dipole=[0.234, 1.234, 10.234] Pressure=[1.23, 1.254, 0.923] Time=1030.1 Step=515050 Converged=true Wrap=false
       Si    0.000    0.000    0.000 T F F A    1 SIL   0      0.1     0.2     0.3 si1

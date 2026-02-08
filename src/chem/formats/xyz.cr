@@ -1,5 +1,69 @@
 @[Chem::RegisterFormat(ext: %w(.xyz))]
 module Chem::XYZ
+  # Yields each structure in *io*.
+  def self.each(
+    io : IO | Path | String,
+    guess_bonds : Bool = false,
+    guess_names : Bool = false,
+    & : Structure ->
+  ) : Nil
+    Reader.open(io, guess_bonds, guess_names) do |reader|
+      reader.each do |struc|
+        yield struc
+      end
+    end
+  end
+
+  # Returns the first structure from *io*. Use `read_all` or `each` for multiple.
+  def self.read(
+    io : IO | Path | String,
+    guess_bonds : Bool = false,
+    guess_names : Bool = false,
+  ) : Structure
+    Reader.open(io, guess_bonds, guess_names) do |r|
+      r.read_entry
+    end
+  end
+
+  # Returns all structures in *io*.
+  def self.read_all(
+    io : IO | Path | String,
+    guess_bonds : Bool = false,
+    guess_names : Bool = false,
+  ) : Array(Structure)
+    Reader.open(io, guess_bonds, guess_names) do |reader|
+      ary = [] of Structure
+      reader.each { |s| ary << s }
+      ary
+    end
+  end
+
+  # Writes a single structure or group of atoms to *io*.
+  def self.write(
+    io : IO | Path | String,
+    obj : Structure | AtomView,
+    extended : Bool = false,
+    fields : Array(String) = [] of String,
+    total_entries : Int32? = 1,
+  ) : Nil
+    Writer.open(io, extended, fields, total_entries) do |writer|
+      writer << obj
+    end
+  end
+
+  # Writes multiple structures to *io*.
+  def self.write(
+    io : IO | Path | String,
+    objs : Enumerable(Structure),
+    extended : Bool = false,
+    fields : Array(String) = [] of String,
+    total_entries : Int32? = nil,
+  ) : Nil
+    Writer.open(io, extended, fields, total_entries) do |writer|
+      objs.each { |struc| writer << struc }
+    end
+  end
+
   class Reader
     include FormatReader(Structure)
     include FormatReader::MultiEntry(Structure)
@@ -8,7 +72,7 @@ module Chem::XYZ
       @io : IO,
       @guess_bonds : Bool = false,
       @guess_names : Bool = false,
-      @sync_close : Bool = false
+      @sync_close : Bool = false,
     )
       @pull = PullParser.new(@io)
     end
