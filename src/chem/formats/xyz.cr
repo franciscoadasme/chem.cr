@@ -49,6 +49,7 @@ module Chem::XYZ
     obj : Structure | AtomView,
     extended : Bool = false,
     fields : Array(String) = [] of String,
+    total_entries : Int32? = 1,
   ) : Nil
     Writer.open(io, extended, fields) do |writer|
       writer << obj
@@ -61,6 +62,7 @@ module Chem::XYZ
     objs : Enumerable(Structure),
     extended : Bool = false,
     fields : Array(String) = [] of String,
+    total_entries : Int32? = nil,
   ) : Nil
     Writer.open(io, extended, fields) do |writer|
       objs.each { |struc| writer << struc }

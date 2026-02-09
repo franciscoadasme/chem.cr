@@ -1,5 +1,57 @@
-@[Chem::RegisterFormat(ext: %w(.sdf))]
+@[Chem::RegisterFormat(ext: %w(.sdf), module_api: true)]
 module Chem::SDF
+  # Yields each structure in *io*.
+  def self.each(io : IO | Path | String, & : Structure ->) : Nil
+    Reader.open(io) do |reader|
+      reader.each do |struc|
+        yield struc
+      end
+    end
+  end
+
+  # Returns the first structure from *io*.
+  # Use `read_all` or `each` for multiple.
+  def self.read(io : IO | Path | String) : Structure
+    Reader.open(io) do |reader|
+      reader.read_entry
+    end
+  end
+
+  # Returns all structures in *io*.
+  def self.read_all(io : IO | Path | String) : Array(Structure)
+    Reader.open(io) do |reader|
+      ary = [] of Structure
+      reader.each { |struc| ary << struc }
+      ary
+    end
+  end
+
+  # Writes one or more structures to *io*.
+  #
+  # The CTAB format is specified via *variant*: V2000 (legacy) or V3000.
+  def self.write(
+    io : IO | Path | String,
+    obj : Structure,
+    variant : Chem::Mol::Variant = :v2000,
+    total_entries : Int32? = 1,
+  ) : Nil
+    Writer.open(io, variant: variant) do |writer|
+      writer << obj
+    end
+  end
+
+  # :ditto:
+  def self.write(
+    io : IO | Path | String,
+    objs : Enumerable(Structure),
+    variant : Chem::Mol::Variant = :v2000,
+    total_entries : Int32? = nil,
+  ) : Nil
+    Writer.open(io, variant: variant) do |writer|
+      objs.each { |struc| writer << struc }
+    end
+  end
+
   class Reader
     include FormatReader(Structure)
     include FormatReader::MultiEntry(Structure)
@@ -52,7 +104,7 @@ module Chem::SDF
       @io : IO,
       @variant : Chem::Mol::Variant = :v2000,
       @total_entries : Int32? = nil,
-      @sync_close : Bool = false
+      @sync_close : Bool = false,
     )
     end
 

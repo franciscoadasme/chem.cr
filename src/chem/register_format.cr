@@ -370,16 +370,25 @@ macro finished
             \{% unless (type = @type) <= Array({{etype}}) %}
               \{% raise "undefined method '.from_{{method_name}}' for #{type}.class" %}
             \{% end %}
-            {{reader}}.open(
-              input \
-              {% for arg in args %} \
-                ,{{arg.internal_name}} \
-              {% end %}
-            ) do |reader|
-              Array(T).new.tap do |ary|
-                reader.each { |obj| ary << obj }
+            {% if ftype.annotation(Chem::RegisterFormat)[:module_api] %}
+              {{ftype}}.read_all(
+                input \
+                {% for arg in args %} \
+                  ,{{arg.internal_name}} \
+                {% end %}
+              )
+            {% else %}
+              {{reader}}.open(
+                input \
+                {% for arg in args %} \
+                  ,{{arg.internal_name}} \
+                {% end %}
+              ) do |reader|
+                Array(T).new.tap do |ary|
+                  reader.each { |obj| ary << obj }
+                end
               end
-            end
+            {% end %}
           end
 
           # Creates a new array of `{{etype}}` with the entries at
@@ -529,7 +538,18 @@ macro finished
             {{arg}},
           {% end %}
         ) : Nil
-          {% if ftype.constant("WRITE_MULTI") %}
+          {% if ftype.annotation(Chem::RegisterFormat)[:module_api] %}
+            {{ftype}}.write(
+              output,
+              self \
+              {% if ftype.constant("WRITE_MULTI") %} \
+                ,total_entries: 1 \
+              {% end %} \
+              {% for arg in args %} \
+                ,{{arg.internal_name.id}}: {{arg.internal_name}} \
+              {% end %}
+            )
+          {% elsif ftype.constant("WRITE_MULTI") %}
             {{writer}}.open(
               output \
               {% for arg in args %} \
@@ -539,14 +559,6 @@ macro finished
             ) do |writer|
               writer << self
             end
-          {% elsif ftype.annotation(Chem::RegisterFormat)[:module_api] %}
-            {{ftype}}.write(
-              output \
-              ,self \
-              {% for arg in args %} \
-                ,{{arg.internal_name}} \
-              {% end %}
-            )
           {% else %}
             {{writer}}.open(
               output \
@@ -588,17 +600,27 @@ macro finished
               {{arg}},
             {% end %}
           ) : Nil
-            {{writer}}.open(
-              output,
-              {% for arg in args %}
-                {{arg.internal_name}},
-              {% end %}
-              total_entries: size
-            ) do |writer|
-              each do |obj|
-                writer << obj
+            {% if ftype.annotation(Chem::RegisterFormat)[:module_api] %}
+              {{ftype}}.write(
+                output,
+                self \
+                {% for arg in args %} \
+                  ,{{arg.internal_name.id}}: {{(arg.internal_name.stringify == "total_entries" ? "size".id : arg.internal_name)}} \
+                {% end %}
+              )
+            {% else %}
+              {{writer}}.open(
+                output,
+                {% for arg in args %}
+                  {{arg.internal_name}},
+                {% end %}
+                total_entries: size
+              ) do |writer|
+                each do |obj|
+                  writer << obj
+                end
               end
-            end
+            {% end %}
           end
         end
       {% end %}
