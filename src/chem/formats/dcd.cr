@@ -1,5 +1,55 @@
-@[Chem::RegisterFormat(ext: %w(.dcd))]
-module Chem::DCD; end
+@[Chem::RegisterFormat(ext: %w(.dcd), module_api: true)]
+module Chem::DCD
+  # Yields each trajectory frame in *io*.
+  def self.each(io : IO | Path | String, & : Spatial::Positions3 ->) : Nil
+    Reader.open(io) do |reader|
+      reader.each do |frame|
+        yield frame
+      end
+    end
+  end
+
+  # Returns the first trajectory frame from *io*.
+  # Use `read_all` or `each` for multiple.
+  def self.read(io : IO | Path | String) : Spatial::Positions3
+    Reader.open(io) do |reader|
+      reader.read_entry
+    end
+  end
+
+  # Returns the trajectory frame at *index* from *io*.
+  def self.read(io : IO | Path | String, index : Int) : Spatial::Positions3
+    Reader.open(io) do |reader|
+      reader.read_entry(index)
+    end
+  end
+
+  # Writes one or more trajectory frames to *io*.
+  #
+  # If passed, *title* (single or multiple lines) will be stored in the file header.
+  def self.write(
+    io : IO | Path | String,
+    frame : Spatial::Positions3,
+    total_entries : Int32? = 1,
+    title : String? = nil,
+  ) : Nil
+    Writer.open(io, title: title) do |writer|
+      writer << frame
+    end
+  end
+
+  # :ditto:
+  def self.write(
+    io : IO | Path | String,
+    frames : Enumerable(Spatial::Positions3),
+    total_entries : Int32? = nil,
+    title : String? = nil,
+  ) : Nil
+    Writer.open(io, title: title) do |writer|
+      frames.each { |frame| writer << frame }
+    end
+  end
+end
 
 # Implementation based on [Chemfiles] C++ library.
 #
