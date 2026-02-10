@@ -30,7 +30,6 @@ module Chem::DCD
   def self.write(
     io : IO | Path | String,
     frame : Spatial::Positions3,
-    total_entries : Int32? = 1,
     title : String? = nil,
   ) : Nil
     Writer.open(io, title: title) do |writer|
@@ -42,7 +41,6 @@ module Chem::DCD
   def self.write(
     io : IO | Path | String,
     frames : Enumerable(Spatial::Positions3),
-    total_entries : Int32? = nil,
     title : String? = nil,
   ) : Nil
     Writer.open(io, title: title) do |writer|
@@ -354,11 +352,9 @@ class Chem::DCD::Writer
 
   def initialize(
     @io : IO,
-    @total_entries : Int32? = nil,
     @title : String? = nil,
     @sync_close : Bool = false,
   )
-    check_total_entries
     @buffer = Slice(Float32).empty
     @size = 0
   end

@@ -27,22 +27,14 @@ module Chem::Mol2
   end
 
   # Writes one or more structures or groups of atoms to *io*.
-  def self.write(
-    io : IO | Path | String,
-    obj : Structure | AtomView,
-    total_entries : Int32? = 1,
-  ) : Nil
+  def self.write(io : IO | Path | String, obj : Structure | AtomView) : Nil
     Writer.open(io) do |writer|
       writer << obj
     end
   end
 
   # :ditto:
-  def self.write(
-    io : IO | Path | String,
-    objs : Enumerable(Structure),
-    total_entries : Int32? = nil,
-  ) : Nil
+  def self.write(io : IO | Path | String, objs : Enumerable(Structure)) : Nil
     Writer.open(io) do |writer|
       objs.each { |struc| writer << struc }
     end

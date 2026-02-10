@@ -42,14 +42,11 @@ module Chem::XYZ
   #
   # *extended* enables the [extended XYZ](https://github.com/libAtoms/extxyz) specification, which allows to specify additional data and atom properties in the comment line.
   # If given, *fields* specifies which atom properties to write in extended mode, otherwise all metadata properties are written.
-  #
-  # *total_entries* indicates the number of entries to write.
   def self.write(
     io : IO | Path | String,
     obj : Structure | AtomView,
     extended : Bool = false,
     fields : Array(String) = [] of String,
-    total_entries : Int32? = 1,
   ) : Nil
     Writer.open(io, extended, fields) do |writer|
       writer << obj
@@ -62,7 +59,6 @@ module Chem::XYZ
     objs : Enumerable(Structure),
     extended : Bool = false,
     fields : Array(String) = [] of String,
-    total_entries : Int32? = nil,
   ) : Nil
     Writer.open(io, extended, fields) do |writer|
       objs.each { |struc| writer << struc }
@@ -209,7 +205,6 @@ module Chem::XYZ
     def initialize(@io : IO,
                    @extended : Bool = false,
                    @fields : Array(String) = [] of String,
-                   @total_entries : Int32? = nil,
                    @sync_close : Bool = false)
     end
 

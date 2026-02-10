@@ -33,7 +33,6 @@ module Chem::SDF
     io : IO | Path | String,
     obj : Structure,
     variant : Chem::Mol::Variant = :v2000,
-    total_entries : Int32? = 1,
   ) : Nil
     Writer.open(io, variant: variant) do |writer|
       writer << obj
@@ -45,7 +44,6 @@ module Chem::SDF
     io : IO | Path | String,
     objs : Enumerable(Structure),
     variant : Chem::Mol::Variant = :v2000,
-    total_entries : Int32? = nil,
   ) : Nil
     Writer.open(io, variant: variant) do |writer|
       objs.each { |struc| writer << struc }
@@ -103,7 +101,6 @@ module Chem::SDF
     def initialize(
       @io : IO,
       @variant : Chem::Mol::Variant = :v2000,
-      @total_entries : Int32? = nil,
       @sync_close : Bool = false,
     )
     end

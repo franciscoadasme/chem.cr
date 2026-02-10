@@ -503,7 +503,6 @@ macro finished
       {% end %}
       {% if constructor %}
         {% known_args = %w(io sync_close) %}
-        {% known_args << "total_entries" if ftype.constant("WRITE_MULTI") %}
         {% args = constructor.args.reject { |x| known_args.includes? x.name.stringify } %}
       {% else %}
         {% args = [] of Nil %}
@@ -542,9 +541,6 @@ macro finished
             {{ftype}}.write(
               output,
               self \
-              {% if ftype.constant("WRITE_MULTI") %} \
-                ,total_entries: 1 \
-              {% end %} \
               {% for arg in args %} \
                 ,{{arg.internal_name.id}}: {{arg.internal_name}} \
               {% end %}
@@ -555,7 +551,6 @@ macro finished
               {% for arg in args %} \
                 ,{{arg.internal_name}} \
               {% end %} \
-              ,total_entries: 1
             ) do |writer|
               writer << self
             end
@@ -605,8 +600,8 @@ macro finished
                 output,
                 self \
                 {% for arg in args %} \
-                  ,{{arg.internal_name.id}}: {{(arg.internal_name.stringify == "total_entries" ? "size".id : arg.internal_name)}} \
-                {% end %}
+                  ,{{arg.internal_name.id}} \
+                {% end %} \
               )
             {% else %}
               {{writer}}.open(
@@ -614,7 +609,6 @@ macro finished
                 {% for arg in args %}
                   {{arg.internal_name}},
                 {% end %}
-                total_entries: size
               ) do |writer|
                 each do |obj|
                   writer << obj
@@ -766,7 +760,7 @@ macro finished
                                          Use #to_{{method_name}} instead.")
               {% else %}
                 \{% if {{ftype.constant("WRITE_TYPES")}}.any? { |wtype| @type.type_vars[0] <= wtype.resolve } %}
-                  {{ftype.constant("WRITER")}}.open(output, total_entries: size) do |writer|
+                  {{ftype.constant("WRITER")}}.open(output) do |writer|
                     each do |obj|
                       writer << obj
                     end

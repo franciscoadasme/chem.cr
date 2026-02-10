@@ -86,7 +86,7 @@ module Chem::PDB
     bonds : Writer::BondOptions = Writer::BondOptions.flags(Het, Disulfide),
     renumber : Bool = true,
     ter_on_fragment : Bool = false,
-    total_entries : Int32 = 1,
+    total_entries : Int32? = 1,
   ) : Nil
     Writer.open(io, bonds: bonds, renumber: renumber, ter_on_fragment: ter_on_fragment, total_entries: 1) do |writer|
       writer << obj
@@ -460,7 +460,13 @@ module Chem::PDB
       @total_entries : Int32? = nil,
       @sync_close : Bool = false,
     )
-      check_total_entries
+      if (@total_entries || Int32::MAX) < 1
+        raise ArgumentError.new "Total entries cannot be negative or zero"
+      end
+    end
+
+    def multi? : Bool
+      (@total_entries || Int32::MAX) > 1
     end
 
     def close : Nil

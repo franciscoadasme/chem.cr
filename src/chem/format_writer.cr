@@ -83,22 +83,11 @@ module Chem
 
   # The `MultiEntry` mixin provides an interface for writing in a file
   # format that can hold a variable number of objects.
-  #
-  # It holds the total number of entries (`#total_entries`) and
-  # reimplements the `<<` operator to track how many of them has been
-  # written so far.
   module FormatWriter::MultiEntry(T)
     @entry_index = 0
 
-    # Total number of entries to be written. A value of `nil` indicates
-    # that it could not be determinate.
-    @total_entries : Int32?
-
-    # Creates a new object from the given *io*. If the number of entries
-    # to be written is known, pass *total_entries*, otherwise set it to
-    # `nil`.
-    def initialize(@io : IO, @total_entries : Int32? = nil, @sync_close : Bool = false)
-      check_total_entries
+    # Creates a new object from the given *io*.
+    def initialize(@io : IO, @sync_close : Bool = false)
     end
 
     # Writes *obj* to the `IO`. It keeps count of the number of entries
@@ -109,18 +98,6 @@ module Chem
       @entry_index += 1
       @written = true
       self
-    end
-
-    # Returns `true` if multiple entries or an indeterminate number of
-    # entries are to be written, else `false`.
-    def multi? : Bool
-      (@total_entries || Int32::MAX) > 1
-    end
-
-    protected def check_total_entries : Nil
-      if (@total_entries || Int32::MAX) < 1
-        raise ArgumentError.new "Total entries cannot be negative or zero"
-      end
     end
   end
 end
