@@ -1,5 +1,112 @@
-@[Chem::RegisterFormat(ext: %w(.ent .pdb))]
+@[Chem::RegisterFormat(ext: %w(.ent .pdb), module_api: true)]
 module Chem::PDB
+  # Yields each structure in *io*.
+  #
+  # If passed, only chains in *chains* will be read, otherwise all chains will be read.
+  # Similarly, HET atoms can be excluded by setting *het* to *false*.
+  #
+  # If the structure has alternate locations, only the most populated one will be read unless *alt_loc* is set.
+  def self.each(
+    io : IO | Path | String,
+    alt_loc : Char? = nil,
+    chains : Enumerable(Char) | String | Nil = nil,
+    guess_bonds : Bool = false,
+    het : Bool = true,
+    &
+  ) : Nil
+    Reader.open(io, alt_loc: alt_loc, chains: chains, guess_bonds: guess_bonds, het: het) do |reader|
+      reader.each do |structure|
+        yield structure
+      end
+    end
+  end
+
+  # Returns the first structure from *io*.
+  # Use `read_all` or `each` for multiple.
+  #
+  # If passed, only chains in *chains* will be read, otherwise all chains will be read.
+  # Similarly, HET atoms can be excluded by setting *het* to *false*.
+  #
+  # If the structure has alternate locations, only the most populated one will be read unless *alt_loc* is set.
+  def self.read(
+    io : IO | Path | String,
+    alt_loc : Char? = nil,
+    chains : Enumerable(Char) | String | Nil = nil,
+    guess_bonds : Bool = false,
+    het : Bool = true,
+  ) : Structure
+    Reader.open(io, alt_loc: alt_loc, chains: chains, guess_bonds: guess_bonds, het: het) do |reader|
+      reader.read_entry
+    end
+  end
+
+  # Returns all structures in *io*.
+  #
+  # If passed, only chains in *chains* will be read, otherwise all chains will be read.
+  # Similarly, HET atoms can be excluded by setting *het* to *false*.
+  #
+  # If the structure has alternate locations, only the most populated one will be read unless *alt_loc* is set.
+  def self.read_all(
+    io : IO | Path | String,
+    alt_loc : Char? = nil,
+    chains : Enumerable(Char) | String | Nil = nil,
+    guess_bonds : Bool = false,
+    het : Bool = true,
+  ) : Array(Structure)
+    Reader.open(io, alt_loc: alt_loc, chains: chains, guess_bonds: guess_bonds, het: het) do |reader|
+      ary = [] of Structure
+      reader.each { |s| ary << s }
+      ary
+    end
+  end
+
+  # Returns the experimental information from the header of *io*.
+  def self.read_header(io : IO | Path | String) : Structure::Experiment
+    Reader.open(io) do |reader|
+      reader.read_header
+    end
+  end
+
+  # Returns the experimental information from the header of *io*.
+  #
+  # TODO: remove this method in favor of `read_header` in future releases.
+  def self.read_info(io : IO | Path | String) : Structure::Experiment
+    read_header(io)
+  end
+
+  # Writes one or more structures or groups of atoms to *io*.
+  #
+  # Atom numbering starts from 1 and increments sequentially if *renumber* is true, otherwise the atom numbers are written as is.
+  #
+  # CONECT records are written for HET residues and disulfide bridges only, but can be changed using *bonds*.
+  # TER records are written for each fragment if *ter_on_fragment* is true.
+  def self.write(
+    io : IO | Path | String,
+    obj : Structure | AtomView,
+    bonds : Writer::BondOptions = Writer::BondOptions.flags(Het, Disulfide),
+    renumber : Bool = true,
+    ter_on_fragment : Bool = false,
+    total_entries : Int32 = 1,
+  ) : Nil
+    Writer.open(io, bonds: bonds, renumber: renumber, ter_on_fragment: ter_on_fragment, total_entries: 1) do |writer|
+      writer << obj
+    end
+  end
+
+  # :ditto:
+  def self.write(
+    io : IO | Path | String,
+    objs : Enumerable(Structure),
+    bonds : Writer::BondOptions = Writer::BondOptions.flags(Het, Disulfide),
+    renumber : Bool = true,
+    ter_on_fragment : Bool = false,
+    total_entries : Int32? = nil,
+  ) : Nil
+    Writer.open(io, bonds: bonds, renumber: renumber, ter_on_fragment: ter_on_fragment, total_entries: total_entries) do |writer|
+      objs.each { |s| writer << s }
+    end
+  end
+
   class Reader
     include FormatReader(Structure)
     include FormatReader::MultiEntry(Structure)
@@ -351,7 +458,7 @@ module Chem::PDB
       @renumber : Bool = true,
       @ter_on_fragment : Bool = false,
       @total_entries : Int32? = nil,
-      @sync_close : Bool = false
+      @sync_close : Bool = false,
     )
       check_total_entries
     end

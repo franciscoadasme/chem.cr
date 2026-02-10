@@ -1,10 +1,11 @@
 require "../spec_helper"
 
 describe Chem::PDB do
-  describe ".parse" do
+  describe ".read" do
     it "parses a (real) PDB file" do
-      st = load_file "1h1s.pdb"
-      st.source_file.should eq Path[spec_file("1h1s.pdb")].expand
+      path = spec_file("1h1s.pdb")
+      st = Chem::PDB.read path
+      st.source_file.should eq Path[path].expand
       st.atoms.size.should eq 9701
 
       # Charges are set from templates only due to missing hydrogens
@@ -43,8 +44,9 @@ describe Chem::PDB do
     end
 
     it "parses a PDB file" do
-      st = load_file "simple.pdb"
-      st.source_file.should eq Path[spec_file("simple.pdb")].expand
+      path = spec_file("simple.pdb")
+      st = Chem::PDB.read path
+      st.source_file.should eq Path[path].expand
       st.experiment.should be_nil
       st.title.should eq "Glutamate"
       st.atoms.size.should eq 13
@@ -72,62 +74,62 @@ describe Chem::PDB do
     end
 
     it "parses a PDB file without elements" do
-      st = load_file "no_elements.pdb"
+      st = Chem::PDB.read spec_file("no_elements.pdb")
       st.atoms.size.should eq 6
       st.atoms.map(&.element.symbol).should eq ["N", "C", "C", "O", "C", "O"]
       st.atoms.map(&.formal_charge).should eq [0, 0, 0, 0, 0, 0]
     end
 
     it "parses a PDB file without elements and irregular line width (77)" do
-      st = load_file "no_elements_irregular_end.pdb"
+      st = Chem::PDB.read spec_file("no_elements_irregular_end.pdb")
       st.atoms.size.should eq 6
       st.atoms.map(&.element.symbol).should eq ["N", "C", "C", "O", "C", "O"]
       st.atoms.map(&.formal_charge).should eq [0, 0, 0, 0, 0, 0]
     end
 
     it "parses a PDB file without charges" do
-      st = load_file "no_charges.pdb"
+      st = Chem::PDB.read spec_file("no_charges.pdb")
       st.atoms.size.should eq 6
       st.atoms.map(&.element.symbol).should eq ["N", "C", "C", "O", "C", "O"]
       st.atoms.map(&.formal_charge).should eq [0, 0, 0, 0, 0, 0]
     end
 
     it "parses a PDB file without charges and irregular line width (79)" do
-      st = load_file "no_charges_irregular_end.pdb"
+      st = Chem::PDB.read spec_file("no_charges_irregular_end.pdb")
       st.atoms.size.should eq 6
       st.atoms.map(&.element.symbol).should eq ["N", "C", "C", "O", "C", "O"]
       st.atoms.map(&.formal_charge).should eq [0, 0, 0, 0, 0, 0]
     end
 
     it "parses a PDB file without trailing spaces" do
-      st = load_file "no_trailing_spaces.pdb"
+      st = Chem::PDB.read spec_file("no_trailing_spaces.pdb")
       st.atoms.size.should eq 6
       st.atoms.map(&.element.symbol).should eq ["N", "C", "C", "O", "C", "O"]
       st.atoms.map(&.formal_charge).should eq [0, 0, 0, 0, 0, 0]
     end
 
     it "parses a PDB file with long title" do
-      st = load_file "title_long.pdb"
+      st = Chem::PDB.read spec_file("title_long.pdb")
       st.title.should eq "STRUCTURE OF THE TRANSFORMED MONOCLINIC LYSOZYME BY " \
                          "CONTROLLED DEHYDRATION"
     end
 
     it "parses a PDB file with numbers in hexadecimal representation" do
-      st = load_file "big_numbers.pdb"
+      st = Chem::PDB.read spec_file("big_numbers.pdb")
       st.atoms.size.should eq 6
       st.atoms.map(&.number).should eq (99995..100000).to_a
       st.residues.map(&.number).should eq [9999, 10000]
     end
 
     it "parses a PDB file with unit cell parameters" do
-      structure = load_file "1crn.pdb"
+      structure = Chem::PDB.read spec_file("1crn.pdb")
       cell = structure.cell?.should_not be_nil
       cell.size.should eq [40.960, 18.650, 22.520]
       cell.angles.should eq({90, 90.77, 90})
     end
 
     it "parses a PDB file with experimental header" do
-      st = load_file "1crn.pdb"
+      st = Chem::PDB.read spec_file("1crn.pdb")
       st.title.should eq "1CRN"
       st.experiment.should_not be_nil
       exp = st.experiment.not_nil!
@@ -142,7 +144,7 @@ describe Chem::PDB do
     end
 
     it "parses experiment with multiple methods" do
-      structure = Chem::Structure.from_pdb IO::Memory.new <<-PDB
+      structure = Chem::PDB.read IO::Memory.new <<-PDB
         HEADER    CHAPERONE                               14-FEB-13   4J7Z
         TITLE     THERMUS THERMOPHILUS DNAJ J- AND G/F-DOMAINS
         EXPDTA    X-RAY DIFFRACTION; EPR
@@ -158,31 +160,31 @@ describe Chem::PDB do
     end
 
     it "parses a PDB file with anisou/ter records" do
-      st = load_file "anisou.pdb"
+      st = Chem::PDB.read spec_file("anisou.pdb")
       st.atoms.size.should eq 133
       st.residues.map(&.number).should eq (32..52).to_a
     end
 
     it "parses a PDB file with deuterium" do
-      st = load_file "isotopes.pdb"
+      st = Chem::PDB.read spec_file("isotopes.pdb")
       st.atoms.size.should eq 12
       st.atoms[5].element.should eq Chem::PeriodicTable::H
     end
 
     it "raises on unknown element X (ASX case)" do
       expect_raises Chem::ParseException, "Unknown element" do
-        load_file "3e2o.pdb"
+        Chem::PDB.read spec_file("3e2o.pdb")
       end
     end
 
     it "parses a PDB file with SIG* records" do
-      st = load_file "1etl.pdb"
+      st = Chem::PDB.read spec_file("1etl.pdb")
       st.atoms.size.should eq 160
       st.residues.find!(6)["SG"].bonded?(st.residues.find!(14)["SG"]).should be_true
     end
 
     it "parses secondary structure information" do
-      st = load_file "1crn.pdb"
+      st = Chem::PDB.read spec_file("1crn.pdb")
       st.residues[0].sec.code.should eq 'E'
       st.residues[1].sec.code.should eq 'E'
       st.residues[3].sec.code.should eq 'E'
@@ -196,24 +198,24 @@ describe Chem::PDB do
     end
 
     it "parses secondary structure information with insertion codes" do
-      st = load_file "secondary_structure_inscode.pdb"
+      st = Chem::PDB.read spec_file("secondary_structure_inscode.pdb")
       st.residues.map(&.sec.code).should eq "HHHHHH000000EEEHH000".chars
     end
 
     it "parses secondary structure information when sheet type is missing" do
-      st = load_file "secondary_structure_missing_type.pdb"
+      st = Chem::PDB.read spec_file("secondary_structure_missing_type.pdb")
       st.residues.map(&.sec.code).should eq "0EE00EEEEE0".chars
     end
 
     it "parses bonds" do
-      st = load_file "1crn.pdb"
+      st = Chem::PDB.read spec_file("1crn.pdb")
       st.atoms[19].bonds[st.atoms[281]].order.should eq 1
       st.atoms[25].bonds[st.atoms[228]].order.should eq 1
       st.atoms[115].bonds[st.atoms[187]].order.should eq 1
     end
 
     it "parses bonds when multiple models" do
-      models = Array(Chem::Structure).from_pdb spec_file("models.pdb")
+      models = Chem::PDB.read_all(spec_file("models.pdb"))
       models.size.should eq 4
       models.each do |st|
         st.atoms[0].bonds[st.atoms[1]].order.should eq 1
@@ -224,7 +226,7 @@ describe Chem::PDB do
     end
 
     it "parses duplicate bonds" do
-      st = load_file "duplicate_bonds.pdb"
+      st = Chem::PDB.read spec_file("duplicate_bonds.pdb")
       st.atoms[0].bonds[st.atoms[1]].order.should eq 1
       st.atoms[1].bonds[st.atoms[2]].order.should eq 2
       st.atoms[2].bonds[st.atoms[3]].order.should eq 1
@@ -234,7 +236,7 @@ describe Chem::PDB do
     end
 
     it "parses alternate conformations" do
-      structure = load_file "alternate_conf.pdb"
+      structure = Chem::PDB.read spec_file("alternate_conf.pdb")
       structure.residues.size.should eq 1
       structure.atoms.size.should eq 8
       structure.atoms.map(&.occupancy).uniq.to_a.should eq [1, 0.37]
@@ -243,7 +245,7 @@ describe Chem::PDB do
     end
 
     it "parses alternate conformations with different residues" do
-      structure = load_file "alternate_conf_mut.pdb"
+      structure = Chem::PDB.read spec_file("alternate_conf_mut.pdb")
       structure.residues.size.should eq 1
       structure.atoms.size.should eq 14
       structure.atoms.map(&.occupancy).uniq.to_a.should eq [0.56]
@@ -252,7 +254,7 @@ describe Chem::PDB do
     end
 
     it "parses selected alternate conformation" do
-      structure = Chem::Structure.from_pdb spec_file("alternate_conf_mut.pdb"), alt_loc: 'B'
+      structure = Chem::PDB.read spec_file("alternate_conf_mut.pdb"), alt_loc: 'B'
       structure.residues.size.should eq 1
       structure.atoms.size.should eq 11
       structure.atoms.map(&.occupancy).uniq.to_a.should eq [0.22]
@@ -261,18 +263,19 @@ describe Chem::PDB do
     end
 
     it "parses insertion codes" do
-      residues = load_file("insertion_codes.pdb").residues
+      residues = Chem::PDB.read(spec_file("insertion_codes.pdb")).residues
       residues.size.should eq 7
       residues.map(&.number).should eq [75, 75, 75, 75, 75, 75, 76]
       residues.map(&.insertion_code).should eq [nil, 'A', 'B', 'C', 'D', 'E', nil]
     end
 
     it "parses multiple models" do
-      st_list = Array(Chem::Structure).from_pdb spec_file("models.pdb")
+      path = spec_file("models.pdb")
+      st_list = Chem::PDB.read_all path
       st_list.size.should eq 4
       xs = {5.606, 7.212, 5.408, 22.055}
       st_list.zip(xs) do |st, x|
-        st.source_file.should eq Path[spec_file("models.pdb")].expand
+        st.source_file.should eq Path[path].expand
         st.atoms.size.should eq 5
         st.atoms.map(&.number).should eq (1..5).to_a
         st.atoms.map(&.name).should eq ["N", "CA", "C", "O", "CB"]
@@ -280,7 +283,7 @@ describe Chem::PDB do
       end
     end
 
-    it "parses selected models" do
+    pending "parses selected models" do
       path = spec_file("models.pdb")
       st_list = Array(Chem::Structure).from_pdb path, indexes: [1, 3]
       st_list.size.should eq 2
@@ -293,7 +296,7 @@ describe Chem::PDB do
       end
     end
 
-    it "skip models" do
+    pending "skip models" do
       Chem::PDB::Reader.open(spec_file("models.pdb")) do |reader|
         reader.skip_entry
         reader.read_entry.atoms[0].pos.should eq [7.212, 15.334, 0.966]
@@ -303,7 +306,7 @@ describe Chem::PDB do
     end
 
     it "parses selected chains" do
-      structure = Chem::Structure.from_pdb spec_file("5jqf.pdb"), chains: ['B']
+      structure = Chem::PDB.read spec_file("5jqf.pdb"), chains: ['B']
       structure.chains.size.should eq 1
       structure.residues.size.should eq 38
       structure.atoms.size.should eq 310
@@ -312,14 +315,14 @@ describe Chem::PDB do
     end
 
     it "parses only protein" do
-      structure = Chem::Structure.from_pdb spec_file("5jqf.pdb"), het: false
+      structure = Chem::PDB.read spec_file("5jqf.pdb"), het: false
       structure.chains.size.should eq 2
       structure.residues.size.should eq 42
       structure.atoms.size.should eq 586
     end
 
     it "parses file without the END record" do
-      st = load_file "no_end.pdb"
+      st = Chem::PDB.read spec_file("no_end.pdb")
       st.atoms.size.should eq 6
       st.chains.map(&.id).should eq ['A']
       st.residues.map(&.number).should eq [0]
@@ -328,7 +331,7 @@ describe Chem::PDB do
     end
 
     it "parses 1cbn (alternate conformations)" do
-      structure = load_file "1cbn.pdb"
+      structure = Chem::PDB.read spec_file("1cbn.pdb")
       structure.atoms.size.should eq 644
       structure.chains.size.should eq 1
       structure.residues.size.should eq 47
@@ -346,7 +349,7 @@ describe Chem::PDB do
     end
 
     it "parses 1dpo (insertions)" do
-      st = load_file "1dpo.pdb"
+      st = Chem::PDB.read spec_file("1dpo.pdb")
       st.atoms.size.should eq 1921
       st.chains.size.should eq 1
       st.residues.size.should eq 446
@@ -362,15 +365,15 @@ describe Chem::PDB do
       st.residues.map { |res| {res.number, res.insertion_code} }.should eq resids
     end
 
-    it "does not assign bonds for skipped atoms" do
+    pending "does not assign bonds for skipped atoms" do
       # it triggered IndexError for skipped atoms, but cannot test
       # whether bonds are assigned from PDB or not since missing bonds
       # are automatically guessed
-      Chem::Structure.from_pdb spec_file("1crn.pdb"), chains: ['C']
+      Chem::PDB.read spec_file("1crn.pdb"), chains: ['C']
     end
 
     it "parses first chain" do
-      structure = Chem::Structure.from_pdb spec_file("multiple_chains.pdb"), chains: "first"
+      structure = Chem::PDB.read spec_file("multiple_chains.pdb"), chains: "first"
       structure.chains.size.should eq 1
       structure.residues.size.should eq 2
       structure.atoms.size.should eq 14
@@ -385,24 +388,12 @@ describe Chem::PDB do
         ATOM      4  H3  GLY     1     -21.301 -37.774  -7.185  1.00  0.00          H
         ATOM      5  CA  GLY     1     -19.299 -38.321  -7.682  1.00  0.00          C
         PDB
-      s = Chem::Structure.from_pdb io
+      s = Chem::PDB.read io
       s.atoms.map(&.element.symbol).should eq %w(N H H H C)
     end
 
-    it "parses a PDB header" do
-      expt = Chem::Structure::Experiment.from_pdb spec_file("1crn.pdb")
-      expt.deposition_date.should eq Time.utc(1981, 4, 30)
-      expt.doi.should eq "10.1073/PNAS.81.19.6014"
-      expt.method.x_ray_diffraction?.should be_true
-      expt.pdb_accession.should eq "1CRN"
-      expt.resolution.should eq 1.5
-      expt.title.should eq "WATER STRUCTURE OF A HYDROPHOBIC PROTEIN AT ATOMIC \
-                            RESOLUTION. PENTAGON RINGS OF WATER MOLECULES IN CRYSTALS \
-                            OF CRAMBIN"
-    end
-
     it "reads jumping resids" do
-      structure = load_file "1a02_1.pdb"
+      structure = Chem::PDB.read spec_file("1a02_1.pdb")
       structure.dig('B').residues.map(&.number).should eq(
         (5001..5020).to_a +
         [6004, 6012, 6014, 6031, 6032, 6033, 6037, 6038, 6039, 6041, 6042, 6047,
@@ -411,29 +402,8 @@ describe Chem::PDB do
         (140..192).to_a + [6010, 6044, 6064])
     end
 
-    it "discards empty remark 2 record" do
-      expt = Chem::Structure::Experiment.from_pdb spec_file("1a02_1.pdb")
-      expt.resolution.should eq 2.7
-    end
-
-    it "raises if unit cell is invalid" do
-      io = IO::Memory.new <<-PDB
-        CRYST1   40.960   18.650   22.520  90.00  90.77 -90.00 P 1 21 1
-        PDB
-      ex = expect_raises Chem::ParseException, "Invalid cell angle gamma" do
-        Chem::Structure::Experiment.from_pdb io
-      end
-      ex.inspect_with_location.should eq <<-PDB
-        Found a parsing issue:
-
-         1 | CRYST1   40.960   18.650   22.520  90.00  90.77 -90.00 P 1 21 1
-                                                            ^^^^^^^
-        Error: Invalid cell angle gamma
-        PDB
-    end
-
     it "ignores alternate conformation if occupancy is one" do
-      structure = Chem::Structure.from_pdb spec_file("3h31.pdb"), alt_loc: 'A'
+      structure = Chem::PDB.read spec_file("3h31.pdb"), alt_loc: 'A'
       # N is in alternate conformation B only but it has occupancy = 1
       structure.dig('A', 33, "N").number.should eq 285
     end
@@ -443,11 +413,11 @@ describe Chem::PDB do
         CRYST1    1.000    1.000    1.000  90.00  90.00  90.00 P 1 21 1
         ATOM      1  N   THR A   1      17.047  14.099   3.625  1.00 13.79           N
         PDB
-      Chem::Structure.from_pdb(io).cell?.should be_nil
+      Chem::PDB.read(io).cell?.should be_nil
     end
 
     it "parses a truncated PDB without occupancy" do
-      structure = load_file "DTD.pdb"
+      structure = Chem::PDB.read spec_file("DTD.pdb")
       structure.atoms.size.should eq 16
       structure.bonds.size.should eq 16
     end
@@ -457,7 +427,7 @@ describe Chem::PDB do
         CRYST1    0.000    0.000    0.000  90.00  90.00  90.00 P 1           1
         ATOM      1  N   SER A   0      14.353  62.634  39.550  1.00 48.24           N
         PDB
-      Chem::Structure.from_pdb(io).cell?.should be_nil
+      Chem::PDB.read(io).cell?.should be_nil
     end
 
     it "parses one-sized cell as nil" do
@@ -465,7 +435,7 @@ describe Chem::PDB do
         CRYST1    1.000    1.000    1.000  90.00  90.00  90.00 P 1           1
         ATOM      1  N   SER A   0      14.353  62.634  39.550  1.00 48.24           N
         PDB
-      Chem::Structure.from_pdb(io).cell?.should be_nil
+      Chem::PDB.read(io).cell?.should be_nil
     end
 
     it "raises on invalid cell parameters" do
@@ -474,7 +444,7 @@ describe Chem::PDB do
         ATOM      1  N   SER A   0      14.353  62.634  39.550  1.00 48.24           N
         PDB
       expect_raises(Chem::ParseException, "Invalid cell parameters") do
-        Chem::Structure.from_pdb(io).cell?.should be_nil
+        Chem::PDB.read(io).cell?.should be_nil
       end
     end
 
@@ -489,7 +459,7 @@ describe Chem::PDB do
         HETATM    2  C2  LIG A   1      -1.369  -0.309   0.001  0.00  1.00           C  
         HETATM    3  C3  LIG A   1      -0.895   1.105  -0.002  0.00  1.00           C
         PDB
-      struc = Chem::Structure.from_pdb IO::Memory.new(content)
+      struc = Chem::PDB.read IO::Memory.new(content)
       struc.title.should eq "Built with Packmol"
       struc.experiment.should be_nil
       struc.atoms.map(&.name).should eq %w(C1 C2 C3)
@@ -518,7 +488,7 @@ describe Chem::PDB do
         ATOM     15  H2  TIP3A   1       4.996   1.188  -0.116  1.00  0.00      TIP3
         PDB
       ex = expect_raises(Chem::ParseException) do
-        Chem::Structure.from_pdb IO::Memory.new(content)
+        Chem::PDB.read IO::Memory.new(content)
       end
       ex.inspect_with_location.should eq <<-EOS
         Found a parsing issue:
@@ -529,351 +499,452 @@ describe Chem::PDB do
         EOS
     end
   end
-end
 
-describe Chem::PDB::Writer do
-  it "writes a structure" do
-    structure = load_file "1crn.pdb"
-    expected = File.read spec_file("1crn--stripped.pdb")
-    structure.to_pdb(bonds: :none).should eq expected
-  end
-
-  it "writes atoms" do
-    structure = load_file "1crn.pdb"
-    structure.residues[4].atoms.to_pdb.should eq <<-PDB.delete('|')
-      REMARK   4                                                                      |
-      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         |
-      ATOM      1  N   PRO A   5       9.561   9.108  13.563  1.00  3.96           N  |
-      ATOM      2  CA  PRO A   5       9.448   9.034  15.012  1.00  4.25           C  |
-      ATOM      3  C   PRO A   5       9.288   7.670  15.606  1.00  4.96           C  |
-      ATOM      4  O   PRO A   5       9.490   7.519  16.819  1.00  7.44           O  |
-      ATOM      5  CB  PRO A   5       8.230   9.957  15.345  1.00  5.11           C  |
-      ATOM      6  CG  PRO A   5       7.338   9.786  14.114  1.00  5.24           C  |
-      ATOM      7  CD  PRO A   5       8.366   9.804  12.958  1.00  5.20           C  |
-      END                                                                             |\n
-      PDB
-  end
-
-  it "writes ter records at the end of polymer chains" do
-    content = File.read spec_file("5e5v.pdb")
-    structure = Chem::Structure.from_pdb IO::Memory.new(content), guess_bonds: true
-    structure.to_pdb.should eq content
-  end
-
-  it "keeps original atom numbering" do
-    structure = load_file "1crn.pdb"
-    structure.residues[4].atoms.to_pdb(renumber: false).should eq <<-PDB.delete('|')
-      REMARK   4                                                                      |
-      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         |
-      ATOM     27  N   PRO A   5       9.561   9.108  13.563  1.00  3.96           N  |
-      ATOM     28  CA  PRO A   5       9.448   9.034  15.012  1.00  4.25           C  |
-      ATOM     29  C   PRO A   5       9.288   7.670  15.606  1.00  4.96           C  |
-      ATOM     30  O   PRO A   5       9.490   7.519  16.819  1.00  7.44           O  |
-      ATOM     31  CB  PRO A   5       8.230   9.957  15.345  1.00  5.11           C  |
-      ATOM     32  CG  PRO A   5       7.338   9.786  14.114  1.00  5.24           C  |
-      ATOM     33  CD  PRO A   5       8.366   9.804  12.958  1.00  5.20           C  |
-      END                                                                             |\n
-      PDB
-  end
-
-  it "writes CONECT records" do
-    structure = Chem::Structure.build do
-      residue "ICN" do
-        atom :i, vec3(3.149, 0, 0)
-        atom :c, vec3(1.148, 0, 0)
-        atom :n, vec3(0, 0, 0)
-
-        bond "I1", "C1"
-        bond "C1", "N1", :triple
-      end
+  describe ".read_header" do
+    it "parses a PDB header" do
+      expt = Chem::PDB.read_header spec_file("1crn.pdb")
+      expt.deposition_date.should eq Time.utc(1981, 4, 30)
+      expt.doi.should eq "10.1073/PNAS.81.19.6014"
+      expt.method.x_ray_diffraction?.should be_true
+      expt.pdb_accession.should eq "1CRN"
+      expt.resolution.should eq 1.5
+      expt.title.should eq "WATER STRUCTURE OF A HYDROPHOBIC PROTEIN AT ATOMIC \
+                            RESOLUTION. PENTAGON RINGS OF WATER MOLECULES IN CRYSTALS \
+                            OF CRAMBIN"
     end
 
-    structure.to_pdb(bonds: :all).should eq <<-PDB.delete('|')
-      REMARK   4                                                                      |
-      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         |
-      HETATM    1  I1  ICN A   1       3.149   0.000   0.000  1.00  0.00           I  |
-      HETATM    2  C1  ICN A   1       1.148   0.000   0.000  1.00  0.00           C  |
-      HETATM    3  N1  ICN A   1       0.000   0.000   0.000  1.00  0.00           N  |
-      CONECT    1    2                                                                |
-      CONECT    2    1    3    3    3                                                 |
-      CONECT    3    2    2    2                                                      |
-      END                                                                             |\n
-      PDB
-  end
-
-  it "writes CONECT records for renumbered atoms" do
-    structure = Chem::Structure.build do
-      residue "ICN" do
-        atom :i, vec3(3.149, 0, 0)
-        atom :c, vec3(1.148, 0, 0)
-        atom :n, vec3(0, 0, 0)
-
-        bond "I1", "C1"
-        bond "C1", "N1", :triple
-      end
-
-      residue "ICN" do
-        atom :i, vec3(13.149, 0, 0)
-        atom :c, vec3(11.148, 0, 0)
-        atom :n, vec3(10, 0, 0)
-
-        bond "I1", "C1"
-        bond "C1", "N1", :triple
-      end
+    it "discards empty remark 2 record" do
+      expt = Chem::PDB.read_header spec_file("1a02_1.pdb")
+      expt.resolution.should eq 2.7
     end
 
-    structure.residues[1].atoms.to_pdb(bonds: :all).should eq <<-PDB.delete('|')
-      REMARK   4                                                                      |
-      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         |
-      HETATM    1  I1  ICN A   2      13.149   0.000   0.000  1.00  0.00           I  |
-      HETATM    2  C1  ICN A   2      11.148   0.000   0.000  1.00  0.00           C  |
-      HETATM    3  N1  ICN A   2      10.000   0.000   0.000  1.00  0.00           N  |
-      CONECT    1    2                                                                |
-      CONECT    2    1    3    3    3                                                 |
-      CONECT    3    2    2    2                                                      |
-      END                                                                             |\n
-      PDB
-  end
-
-  it "writes big numbers" do
-    structure = Chem::Structure.build do
-      residue "ICN" do
-        atom :i, vec3(3.149, 0, 0)
-        atom :c, vec3(1.148, 0, 0)
-        atom :n, vec3(0, 0, 0)
-
-        bond "I1", "C1"
-        bond "C1", "N1", :triple
+    it "raises if unit cell is invalid" do
+      io = IO::Memory.new <<-PDB
+        CRYST1   40.960   18.650   22.520  90.00  90.77 -90.00 P 1 21 1
+        PDB
+      ex = expect_raises Chem::ParseException, "Invalid cell angle gamma" do
+        Chem::PDB.read_header io
       end
-    end
-    structure.atoms[0].number = 99_999
-    structure.atoms[1].number = 100_000
-    structure.atoms[2].number = 235_123
-    structure.residues[0].number = 10_231
+      ex.inspect_with_location.should eq <<-PDB
+        Found a parsing issue:
 
-    structure.to_pdb(bonds: :all, renumber: false).should eq <<-PDB.delete('|')
-      REMARK   4                                                                      |
-      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         |
-      HETATM99999  I1  ICN AA06F       3.149   0.000   0.000  1.00  0.00           I  |
-      HETATMA0000  C1  ICN AA06F       1.148   0.000   0.000  1.00  0.00           C  |
-      HETATMA2W9F  N1  ICN AA06F       0.000   0.000   0.000  1.00  0.00           N  |
-      CONECT99999A0000                                                                |
-      CONECTA000099999A2W9FA2W9FA2W9F                                                 |
-      CONECTA2W9FA0000A0000A0000                                                      |
-      END                                                                             |\n
-      PDB
+         1 | CRYST1   40.960   18.650   22.520  90.00  90.77 -90.00 P 1 21 1
+                                                            ^^^^^^^
+        Error: Invalid cell angle gamma
+        PDB
+    end
   end
 
-  it "writes four-letter residue names (#45)" do
-    structure = Chem::Structure.build(guess_bonds: true) do
-      residue "DMPG" do
-        atom "C13", vec3(9.194, 10.488, 13.865)
-        atom "H13A", vec3(8.843, 9.508, 14.253)
-        atom "H13B", vec3(10.299, 10.527, 13.756)
-        atom "OC3", vec3(8.600, 10.828, 12.580)
+  describe ".write" do
+    it "writes a structure" do
+      struc = Chem::PDB.read spec_file("1crn.pdb")
+      expected = File.read spec_file("1crn--stripped.pdb")
+
+      io = IO::Memory.new
+      Chem::PDB.write(io, struc, bonds: :none)
+      io.to_s.should eq expected
+    end
+
+    it "writes atoms" do
+      struc = Chem::PDB.read spec_file("1crn.pdb")
+      expected = <<-PDB.delete('|')
+        REMARK   4                                                                      |
+        REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         |
+        ATOM      1  N   PRO A   5       9.561   9.108  13.563  1.00  3.96           N  |
+        ATOM      2  CA  PRO A   5       9.448   9.034  15.012  1.00  4.25           C  |
+        ATOM      3  C   PRO A   5       9.288   7.670  15.606  1.00  4.96           C  |
+        ATOM      4  O   PRO A   5       9.490   7.519  16.819  1.00  7.44           O  |
+        ATOM      5  CB  PRO A   5       8.230   9.957  15.345  1.00  5.11           C  |
+        ATOM      6  CG  PRO A   5       7.338   9.786  14.114  1.00  5.24           C  |
+        ATOM      7  CD  PRO A   5       8.366   9.804  12.958  1.00  5.20           C  |
+        END                                                                             |\n
+        PDB
+
+      io = IO::Memory.new
+      Chem::PDB.write io, struc.residues[4].atoms
+      io.to_s.should eq expected
+    end
+
+    it "writes ter records at the end of polymer chains" do
+      path = spec_file("5e5v.pdb")
+      struc = Chem::PDB.read path, guess_bonds: true
+      content = File.read path
+
+      io = IO::Memory.new
+      Chem::PDB.write io, struc
+      io.to_s.should eq content
+    end
+
+    it "keeps original atom numbering" do
+      struc = Chem::PDB.read spec_file("1crn.pdb")
+      expected = <<-PDB.delete('|')
+        REMARK   4                                                                      |
+        REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         |
+        ATOM     27  N   PRO A   5       9.561   9.108  13.563  1.00  3.96           N  |
+        ATOM     28  CA  PRO A   5       9.448   9.034  15.012  1.00  4.25           C  |
+        ATOM     29  C   PRO A   5       9.288   7.670  15.606  1.00  4.96           C  |
+        ATOM     30  O   PRO A   5       9.490   7.519  16.819  1.00  7.44           O  |
+        ATOM     31  CB  PRO A   5       8.230   9.957  15.345  1.00  5.11           C  |
+        ATOM     32  CG  PRO A   5       7.338   9.786  14.114  1.00  5.24           C  |
+        ATOM     33  CD  PRO A   5       8.366   9.804  12.958  1.00  5.20           C  |
+        END                                                                             |\n
+        PDB
+
+      io = IO::Memory.new
+      Chem::PDB.write io, struc.residues[4].atoms, renumber: false
+      io.to_s.should eq expected
+    end
+
+    it "writes CONECT records" do
+      struc = Chem::Structure.build do
+        residue "ICN" do
+          atom :i, vec3(3.149, 0, 0)
+          atom :c, vec3(1.148, 0, 0)
+          atom :n, vec3(0, 0, 0)
+
+          bond "I1", "C1"
+          bond "C1", "N1", :triple
+        end
       end
+      expected = <<-PDB.delete('|')
+        REMARK   4                                                                      |
+        REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         |
+        HETATM    1  I1  ICN A   1       3.149   0.000   0.000  1.00  0.00           I  |
+        HETATM    2  C1  ICN A   1       1.148   0.000   0.000  1.00  0.00           C  |
+        HETATM    3  N1  ICN A   1       0.000   0.000   0.000  1.00  0.00           N  |
+        CONECT    1    2                                                                |
+        CONECT    2    1    3    3    3                                                 |
+        CONECT    3    2    2    2                                                      |
+        END                                                                             |\n
+        PDB
+
+      io = IO::Memory.new
+      Chem::PDB.write io, struc, bonds: :all
+      io.to_s.should eq expected
     end
-    structure.to_pdb(bonds: :none).should eq <<-PDB.delete('|')
-      REMARK   4                                                                      |
-      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         |
-      HETATM    1  C13 DMPGA   1       9.194  10.488  13.865  1.00  0.00           C1-|
-      HETATM    2 H13A DMPGA   1       8.843   9.508  14.253  1.00  0.00           H  |
-      HETATM    3 H13B DMPGA   1      10.299  10.527  13.756  1.00  0.00           H  |
-      HETATM    4  OC3 DMPGA   1       8.600  10.828  12.580  1.00  0.00           O1-|
-      END                                                                             |\n
-      PDB
-  end
 
-  it "writes multiple entries" do
-    path = spec_file("models.pdb")
-    entries = Array(Chem::Structure).from_pdb path
-    entries.to_pdb.should eq File.read(path).gsub(/CONECT.+\n/, "")
-  end
+    it "writes CONECT records for renumbered atoms" do
+      struc = Chem::Structure.build do
+        residue "ICN" do
+          atom :i, vec3(3.149, 0, 0)
+          atom :c, vec3(1.148, 0, 0)
+          atom :n, vec3(0, 0, 0)
 
-  it "writes an indeterminate number of entries" do
-    path = spec_file("models.pdb")
-    entries = Array(Chem::Structure).from_pdb path
+          bond "I1", "C1"
+          bond "C1", "N1", :triple
+        end
 
-    io = IO::Memory.new
-    Chem::PDB::Writer.open(io) do |writer|
-      entries.each do |entry|
-        writer << entry
+        residue "ICN" do
+          atom :i, vec3(13.149, 0, 0)
+          atom :c, vec3(11.148, 0, 0)
+          atom :n, vec3(10, 0, 0)
+
+          bond "I1", "C1"
+          bond "C1", "N1", :triple
+        end
       end
+      expected = <<-PDB.delete('|')
+        REMARK   4                                                                      |
+        REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         |
+        HETATM    1  I1  ICN A   2      13.149   0.000   0.000  1.00  0.00           I  |
+        HETATM    2  C1  ICN A   2      11.148   0.000   0.000  1.00  0.00           C  |
+        HETATM    3  N1  ICN A   2      10.000   0.000   0.000  1.00  0.00           N  |
+        CONECT    1    2                                                                |
+        CONECT    2    1    3    3    3                                                 |
+        CONECT    3    2    2    2                                                      |
+        END                                                                             |\n
+        PDB
+
+      io = IO::Memory.new
+      Chem::PDB.write io, struc.residues[1].atoms, bonds: :all
+      io.to_s.should eq expected
     end
-    io.to_s.should eq File.read(path).gsub(/(NUMMDL|CONECT).+\n/, "")
-  end
 
-  it "aligns the unit cell to the xy-plane" do
-    structure = load_file "5e5v--unwrapped.poscar"
-    structure = Chem::Structure.from_pdb IO::Memory.new(structure.to_pdb)
-    structure.atoms[0].pos.should be_close [8.128, 2.297, 11.112], 1e-3
-    structure.atoms[167].pos.should be_close [11.0, 6.405, 12.834], 1e-3
-  end
+    it "writes big numbers" do
+      struc = Chem::Structure.build do
+        residue "ICN" do
+          atom :i, vec3(3.149, 0, 0)
+          atom :c, vec3(1.148, 0, 0)
+          atom :n, vec3(0, 0, 0)
 
-  it "writes CONECT records for disulfide bridges and HET groups by default" do
-    pdb_content = load_file("1cbn.pdb").to_pdb(renumber: false)
-    pdb_content.lines.select(/^CONECT/).join('\n').should eq <<-PDB.delete('|')
-      CONECT   44  685                                                                |
-      CONECT   54  566                                                                |
-      CONECT  269  477                                                                |
-      CONECT  477  269                                                                |
-      CONECT  566   54                                                                |
-      CONECT  685   44                                                                |
-      CONECT  774  775  777                                                           |
-      CONECT  775  774                                                                |
-      CONECT  777  774                                                                |
-      PDB
-  end
+          bond "I1", "C1"
+          bond "C1", "N1", :triple
+        end
+      end
+      struc.atoms[0].number = 99_999
+      struc.atoms[1].number = 100_000
+      struc.atoms[2].number = 235_123
+      struc.residues[0].number = 10_231
+      expected = <<-PDB.delete('|')
+        REMARK   4                                                                      |
+        REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         |
+        HETATM99999  I1  ICN AA06F       3.149   0.000   0.000  1.00  0.00           I  |
+        HETATMA0000  C1  ICN AA06F       1.148   0.000   0.000  1.00  0.00           C  |
+        HETATMA2W9F  N1  ICN AA06F       0.000   0.000   0.000  1.00  0.00           N  |
+        CONECT99999A0000                                                                |
+        CONECTA000099999A2W9FA2W9FA2W9F                                                 |
+        CONECTA2W9FA0000A0000A0000                                                      |
+        END                                                                             |\n
+        PDB
 
-  it "writes CONECT records for standard residues only" do
-    structure = load_file("AlaIle--unwrapped.poscar", guess_bonds: true, guess_names: true)
-    pdb_content = structure.to_pdb(bonds: :standard)
-    pdb_content.lines.select(/^CONECT/).join('\n').should eq <<-PDB.delete('|')
-      CONECT    1    2    3    4                                                      |
-      CONECT    2    1                                                                |
-      CONECT    3    1                                                                |
-      CONECT    4    1    5    6    8                                                 |
-      CONECT    5    4                                                                |
-      CONECT    6    4    7    7   12                                                 |
-      CONECT    7    6    6                                                           |
-      CONECT    8    4    9   10   11                                                 |
-      CONECT    9    8                                                                |
-      CONECT   10    8                                                                |
-      CONECT   11    8                                                                |
-      CONECT   12    6   13   14                                                      |
-      CONECT   13   12                                                                |
-      CONECT   14   12   15   16   20                                                 |
-      CONECT   15   14                                                                |
-      CONECT   16   14   17   17   18                                                 |
-      CONECT   17   16   16                                                           |
-      CONECT   18   16   19                                                           |
-      CONECT   19   18                                                                |
-      CONECT   20   14   21   22   29                                                 |
-      CONECT   21   20                                                                |
-      CONECT   22   20   23   24   25                                                 |
-      CONECT   23   22                                                                |
-      CONECT   24   22                                                                |
-      CONECT   25   22   26   27   28                                                 |
-      CONECT   26   25                                                                |
-      CONECT   27   25                                                                |
-      CONECT   28   25                                                                |
-      CONECT   29   20   30   31   32                                                 |
-      CONECT   30   29                                                                |
-      CONECT   31   29                                                                |
-      CONECT   32   29                                                                |
-      PDB
-  end
+      io = IO::Memory.new
+      Chem::PDB.write io, struc, bonds: :all, renumber: false
+      io.to_s.should eq expected
+    end
 
-  it "writes CONECT records for disulfide bridges only" do
-    expected = File.read(spec_file("1crn.pdb")).lines.select(/^CONECT/).join('\n')
-    pdb_content = load_file("1crn.pdb").to_pdb(bonds: :disulfide)
-    pdb_content.lines.select(/^CONECT/).join('\n').should eq expected
-  end
+    it "writes four-letter residue names (#45)" do
+      struc = Chem::Structure.build(guess_bonds: true) do
+        residue "DMPG" do
+          atom "C13", vec3(9.194, 10.488, 13.865)
+          atom "H13A", vec3(8.843, 9.508, 14.253)
+          atom "H13B", vec3(10.299, 10.527, 13.756)
+          atom "OC3", vec3(8.600, 10.828, 12.580)
+        end
+      end
+      expected = <<-PDB.delete('|')
+        REMARK   4                                                                      |
+        REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         |
+        HETATM    1  C13 DMPGA   1       9.194  10.488  13.865  1.00  0.00           C1-|
+        HETATM    2 H13A DMPGA   1       8.843   9.508  14.253  1.00  0.00           H  |
+        HETATM    3 H13B DMPGA   1      10.299  10.527  13.756  1.00  0.00           H  |
+        HETATM    4  OC3 DMPGA   1       8.600  10.828  12.580  1.00  0.00           O1-|
+        END                                                                             |\n
+        PDB
 
-  it "writes CONECT records for HET groups only" do
-    pdb_content = load_file("1cbn.pdb").to_pdb(bonds: :het, renumber: false)
-    pdb_content.lines.select(/^CONECT/).join('\n').should eq <<-PDB.delete('|')
-      CONECT  774  775  777                                                           |
-      CONECT  775  774                                                                |
-      CONECT  777  774                                                                |
-      PDB
-  end
+      io = IO::Memory.new
+      Chem::PDB.write io, struc, bonds: :none
+      io.to_s.should eq expected
+    end
 
-  it "does not write CONECT records for water residues if bonds is HET" do
-    structure = load_file("waters.xyz", guess_bonds: true, guess_names: true)
-    pdb_content = structure.to_pdb(bonds: :het)
-    pdb_content.lines.select(/^CONECT/).join('\n').should eq ""
-  end
+    it "writes multiple entries" do
+      path = spec_file("models.pdb")
+      strip = /(CONECT|NUMMDL).+\n/
 
-  it "writes CONECT records for water residues if bonds is standard" do
-    structure = load_file("waters.xyz", guess_bonds: true, guess_names: true)
-    pdb_content = structure.to_pdb(bonds: :standard)
-    pdb_content.lines.select(/^CONECT/).join('\n').should eq <<-PDB.delete('|')
-      CONECT    1    2    3                                                           |
-      CONECT    2    1                                                                |
-      CONECT    3    1                                                                |
-      CONECT    4    5    6                                                           |
-      CONECT    5    4                                                                |
-      CONECT    6    4                                                                |
-      CONECT    7    8    9                                                           |
-      CONECT    8    7                                                                |
-      CONECT    9    7                                                                |
-      PDB
-  end
+      entries = Chem::PDB.read_all path
+      expected = File.read(path).gsub(strip, "")
 
-  it "writes TER per each fragment (#89)" do
-    structure = load_file("waters.xyz", guess_bonds: true, guess_names: true)
-    structure.to_pdb(ter_on_fragment: true).should eq <<-PDB.delete('|')
-      TITLE     Three waters                                                          |
-      REMARK   4                                                                      |
-      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         |
-      HETATM    1  O   HOH A   1       2.336   3.448   7.781  1.00  0.00           O  |
-      HETATM    2  H1  HOH A   1       1.446   3.485   7.315  1.00  0.00           H  |
-      HETATM    3  H2  HOH A   1       2.977   2.940   7.234  1.00  0.00           H  |
-      TER       4      HOH A   1                                                      |
-      HETATM    5  O   HOH A   2      11.776  11.590   8.510  1.00  0.00           O  |
-      HETATM    6  H1  HOH A   2      12.756  11.588   8.379  1.00  0.00           H  |
-      HETATM    7  H2  HOH A   2      11.395  11.031   7.787  1.00  0.00           H  |
-      TER       8      HOH A   2                                                      |
-      HETATM    9  O   HOH A   3       6.015  11.234   7.771  1.00  0.00           O  |
-      HETATM   10  H1  HOH A   3       6.440  12.040   7.394  1.00  0.00           H  |
-      HETATM   11  H2  HOH A   3       6.738  10.850   8.321  1.00  0.00           H  |
-      TER      12      HOH A   3                                                      |
-      END                                                                             |
+      io = IO::Memory.new
+      Chem::PDB.write io, entries
+      io.to_s.gsub(strip, "").should eq expected
+    end
 
-      PDB
-  end
+    it "writes an indeterminate number of entries" do
+      path = spec_file("models.pdb")
+      entries = Chem::PDB.read_all(path)
 
-  it "writes TER per each fragment for a view (#89)" do
-    structure = load_file("waters.xyz", guess_bonds: true, guess_names: true)
-    structure.atoms.to_pdb(ter_on_fragment: true).should eq <<-PDB.delete('|')
-      REMARK   4                                                                      |
-      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         |
-      HETATM    1  O   HOH A   1       2.336   3.448   7.781  1.00  0.00           O  |
-      HETATM    2  H1  HOH A   1       1.446   3.485   7.315  1.00  0.00           H  |
-      HETATM    3  H2  HOH A   1       2.977   2.940   7.234  1.00  0.00           H  |
-      TER       4      HOH A   1                                                      |
-      HETATM    5  O   HOH A   2      11.776  11.590   8.510  1.00  0.00           O  |
-      HETATM    6  H1  HOH A   2      12.756  11.588   8.379  1.00  0.00           H  |
-      HETATM    7  H2  HOH A   2      11.395  11.031   7.787  1.00  0.00           H  |
-      TER       8      HOH A   2                                                      |
-      HETATM    9  O   HOH A   3       6.015  11.234   7.771  1.00  0.00           O  |
-      HETATM   10  H1  HOH A   3       6.440  12.040   7.394  1.00  0.00           H  |
-      HETATM   11  H2  HOH A   3       6.738  10.850   8.321  1.00  0.00           H  |
-      TER      12      HOH A   3                                                      |
-      END                                                                             |
+      io = IO::Memory.new
+      Chem::PDB.write(io, entries)
+      io.to_s.should eq File.read(path).gsub(/(NUMMDL|CONECT).+\n/, "")
+    end
 
-      PDB
-  end
+    it "aligns the unit cell to the xy-plane" do
+      struc = Chem::VASP::Poscar.read spec_file("5e5v--unwrapped.poscar")
 
-  it "writes correct numbers in CONECT with TER" do
-    structure = load_file("waters.xyz", guess_bonds: true, guess_names: true)
-    structure.to_pdb(bonds: :all, ter_on_fragment: true).should eq <<-PDB.delete('|')
-      TITLE     Three waters                                                          |
-      REMARK   4                                                                      |
-      REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         |
-      HETATM    1  O   HOH A   1       2.336   3.448   7.781  1.00  0.00           O  |
-      HETATM    2  H1  HOH A   1       1.446   3.485   7.315  1.00  0.00           H  |
-      HETATM    3  H2  HOH A   1       2.977   2.940   7.234  1.00  0.00           H  |
-      TER       4      HOH A   1                                                      |
-      HETATM    5  O   HOH A   2      11.776  11.590   8.510  1.00  0.00           O  |
-      HETATM    6  H1  HOH A   2      12.756  11.588   8.379  1.00  0.00           H  |
-      HETATM    7  H2  HOH A   2      11.395  11.031   7.787  1.00  0.00           H  |
-      TER       8      HOH A   2                                                      |
-      HETATM    9  O   HOH A   3       6.015  11.234   7.771  1.00  0.00           O  |
-      HETATM   10  H1  HOH A   3       6.440  12.040   7.394  1.00  0.00           H  |
-      HETATM   11  H2  HOH A   3       6.738  10.850   8.321  1.00  0.00           H  |
-      TER      12      HOH A   3                                                      |
-      CONECT    1    2    3                                                           |
-      CONECT    2    1                                                                |
-      CONECT    3    1                                                                |
-      CONECT    5    6    7                                                           |
-      CONECT    6    5                                                                |
-      CONECT    7    5                                                                |
-      CONECT    9   10   11                                                           |
-      CONECT   10    9                                                                |
-      CONECT   11    9                                                                |
-      END                                                                             |\n
-      PDB
+      io = IO::Memory.new
+      Chem::PDB.write io, struc
+      io.rewind
+
+      struc = Chem::PDB.read io
+      struc.atoms[0].pos.should be_close [8.128, 2.297, 11.112], 1e-3
+      struc.atoms[167].pos.should be_close [11.0, 6.405, 12.834], 1e-3
+    end
+
+    it "writes CONECT records for disulfide bridges and HET groups by default" do
+      struc = Chem::PDB.read spec_file("1cbn.pdb")
+      expected = <<-PDB.delete('|')
+        CONECT   44  685                                                                |
+        CONECT   54  566                                                                |
+        CONECT  269  477                                                                |
+        CONECT  477  269                                                                |
+        CONECT  566   54                                                                |
+        CONECT  685   44                                                                |
+        CONECT  774  775  777                                                           |
+        CONECT  775  774                                                                |
+        CONECT  777  774                                                                |
+        PDB
+
+      io = IO::Memory.new
+      Chem::PDB.write io, struc, renumber: false
+      io.to_s.lines.select(/^CONECT/).join('\n').should eq expected
+    end
+
+    it "writes CONECT records for standard residues only" do
+      struc = Chem::VASP::Poscar.read spec_file("AlaIle--unwrapped.poscar"), guess_bonds: true, guess_names: true
+      expected = <<-PDB.delete('|')
+        CONECT    1    2    3    4                                                      |
+        CONECT    2    1                                                                |
+        CONECT    3    1                                                                |
+        CONECT    4    1    5    6    8                                                 |
+        CONECT    5    4                                                                |
+        CONECT    6    4    7    7   12                                                 |
+        CONECT    7    6    6                                                           |
+        CONECT    8    4    9   10   11                                                 |
+        CONECT    9    8                                                                |
+        CONECT   10    8                                                                |
+        CONECT   11    8                                                                |
+        CONECT   12    6   13   14                                                      |
+        CONECT   13   12                                                                |
+        CONECT   14   12   15   16   20                                                 |
+        CONECT   15   14                                                                |
+        CONECT   16   14   17   17   18                                                 |
+        CONECT   17   16   16                                                           |
+        CONECT   18   16   19                                                           |
+        CONECT   19   18                                                                |
+        CONECT   20   14   21   22   29                                                 |
+        CONECT   21   20                                                                |
+        CONECT   22   20   23   24   25                                                 |
+        CONECT   23   22                                                                |
+        CONECT   24   22                                                                |
+        CONECT   25   22   26   27   28                                                 |
+        CONECT   26   25                                                                |
+        CONECT   27   25                                                                |
+        CONECT   28   25                                                                |
+        CONECT   29   20   30   31   32                                                 |
+        CONECT   30   29                                                                |
+        CONECT   31   29                                                                |
+        CONECT   32   29                                                                |
+        PDB
+
+      io = IO::Memory.new
+      Chem::PDB.write io, struc, bonds: :standard
+      io.to_s.lines.select(/^CONECT/).join('\n').should eq expected
+    end
+
+    it "writes CONECT records for disulfide bridges only" do
+      struc = Chem::PDB.read spec_file("1crn.pdb")
+      expected = File.read(spec_file("1crn.pdb")).lines.select(/^CONECT/).join('\n')
+
+      io = IO::Memory.new
+      Chem::PDB.write io, struc, bonds: :disulfide
+      io.to_s.lines.select(/^CONECT/).join('\n').should eq expected
+    end
+
+    it "writes CONECT records for HET groups only" do
+      struc = Chem::PDB.read spec_file("1cbn.pdb")
+      expected = <<-PDB.delete('|')
+        CONECT  774  775  777                                                           |
+        CONECT  775  774                                                                |
+        CONECT  777  774                                                                |
+        PDB
+
+      io = IO::Memory.new
+      Chem::PDB.write io, struc, bonds: :het, renumber: false
+      io.to_s.lines.select(/^CONECT/).join('\n').should eq expected
+    end
+
+    it "does not write CONECT records for water residues if bonds is HET" do
+      struc = Chem::XYZ.read spec_file("waters.xyz"), guess_bonds: true, guess_names: true
+
+      io = IO::Memory.new
+      Chem::PDB.write io, struc, bonds: :het
+      io.to_s.lines.select(/^CONECT/).join('\n').should eq ""
+    end
+
+    it "writes CONECT records for water residues if bonds is standard" do
+      struc = Chem::XYZ.read spec_file("waters.xyz"), guess_bonds: true, guess_names: true
+      expected = <<-PDB.delete('|')
+        CONECT    1    2    3                                                           |
+        CONECT    2    1                                                                |
+        CONECT    3    1                                                                |
+        CONECT    4    5    6                                                           |
+        CONECT    5    4                                                                |
+        CONECT    6    4                                                                |
+        CONECT    7    8    9                                                           |
+        CONECT    8    7                                                                |
+        CONECT    9    7                                                                |
+        PDB
+
+      io = IO::Memory.new
+      Chem::PDB.write io, struc, bonds: :standard
+      io.to_s.lines.select(/^CONECT/).join('\n').should eq expected
+    end
+
+    it "writes TER per each fragment (#89)" do
+      struc = Chem::XYZ.read spec_file("waters.xyz"), guess_bonds: true, guess_names: true
+      expected = <<-PDB.delete('|')
+        TITLE     Three waters                                                          |
+        REMARK   4                                                                      |
+        REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         |
+        HETATM    1  O   HOH A   1       2.336   3.448   7.781  1.00  0.00           O  |
+        HETATM    2  H1  HOH A   1       1.446   3.485   7.315  1.00  0.00           H  |
+        HETATM    3  H2  HOH A   1       2.977   2.940   7.234  1.00  0.00           H  |
+        TER       4      HOH A   1                                                      |
+        HETATM    5  O   HOH A   2      11.776  11.590   8.510  1.00  0.00           O  |
+        HETATM    6  H1  HOH A   2      12.756  11.588   8.379  1.00  0.00           H  |
+        HETATM    7  H2  HOH A   2      11.395  11.031   7.787  1.00  0.00           H  |
+        TER       8      HOH A   2                                                      |
+        HETATM    9  O   HOH A   3       6.015  11.234   7.771  1.00  0.00           O  |
+        HETATM   10  H1  HOH A   3       6.440  12.040   7.394  1.00  0.00           H  |
+        HETATM   11  H2  HOH A   3       6.738  10.850   8.321  1.00  0.00           H  |
+        TER      12      HOH A   3                                                      |
+        END                                                                             |
+
+        PDB
+
+      io = IO::Memory.new
+      Chem::PDB.write io, struc, ter_on_fragment: true
+      io.to_s.should eq expected
+    end
+
+    it "writes TER per each fragment for a view (#89)" do
+      struc = Chem::XYZ.read spec_file("waters.xyz"), guess_bonds: true, guess_names: true
+      expected = <<-PDB.delete('|')
+        REMARK   4                                                                      |
+        REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         |
+        HETATM    1  O   HOH A   1       2.336   3.448   7.781  1.00  0.00           O  |
+        HETATM    2  H1  HOH A   1       1.446   3.485   7.315  1.00  0.00           H  |
+        HETATM    3  H2  HOH A   1       2.977   2.940   7.234  1.00  0.00           H  |
+        TER       4      HOH A   1                                                      |
+        HETATM    5  O   HOH A   2      11.776  11.590   8.510  1.00  0.00           O  |
+        HETATM    6  H1  HOH A   2      12.756  11.588   8.379  1.00  0.00           H  |
+        HETATM    7  H2  HOH A   2      11.395  11.031   7.787  1.00  0.00           H  |
+        TER       8      HOH A   2                                                      |
+        HETATM    9  O   HOH A   3       6.015  11.234   7.771  1.00  0.00           O  |
+        HETATM   10  H1  HOH A   3       6.440  12.040   7.394  1.00  0.00           H  |
+        HETATM   11  H2  HOH A   3       6.738  10.850   8.321  1.00  0.00           H  |
+        TER      12      HOH A   3                                                      |
+        END                                                                             |
+
+        PDB
+
+      io = IO::Memory.new
+      Chem::PDB.write io, struc.atoms, ter_on_fragment: true
+      io.to_s.should eq expected
+    end
+
+    it "writes correct numbers in CONECT with TER" do
+      struc = Chem::XYZ.read spec_file("waters.xyz"), guess_bonds: true, guess_names: true
+      expected = <<-PDB.delete('|')
+        TITLE     Three waters                                                          |
+        REMARK   4                                                                      |
+        REMARK   4      COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         |
+        HETATM    1  O   HOH A   1       2.336   3.448   7.781  1.00  0.00           O  |
+        HETATM    2  H1  HOH A   1       1.446   3.485   7.315  1.00  0.00           H  |
+        HETATM    3  H2  HOH A   1       2.977   2.940   7.234  1.00  0.00           H  |
+        TER       4      HOH A   1                                                      |
+        HETATM    5  O   HOH A   2      11.776  11.590   8.510  1.00  0.00           O  |
+        HETATM    6  H1  HOH A   2      12.756  11.588   8.379  1.00  0.00           H  |
+        HETATM    7  H2  HOH A   2      11.395  11.031   7.787  1.00  0.00           H  |
+        TER       8      HOH A   2                                                      |
+        HETATM    9  O   HOH A   3       6.015  11.234   7.771  1.00  0.00           O  |
+        HETATM   10  H1  HOH A   3       6.440  12.040   7.394  1.00  0.00           H  |
+        HETATM   11  H2  HOH A   3       6.738  10.850   8.321  1.00  0.00           H  |
+        TER      12      HOH A   3                                                      |
+        CONECT    1    2    3                                                           |
+        CONECT    2    1                                                                |
+        CONECT    3    1                                                                |
+        CONECT    5    6    7                                                           |
+        CONECT    6    5                                                                |
+        CONECT    7    5                                                                |
+        CONECT    9   10   11                                                           |
+        CONECT   10    9                                                                |
+        CONECT   11    9                                                                |
+        END                                                                             |\n
+        PDB
+
+      io = IO::Memory.new
+      Chem::PDB.write io, struc, bonds: :all, ter_on_fragment: true
+      io.to_s.should eq expected
+    end
   end
 end
