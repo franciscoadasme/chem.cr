@@ -1,5 +1,13 @@
-@[Chem::RegisterFormat(ext: %w(.stride))]
+# TODO: drop this as a format.
+@[Chem::RegisterFormat(ext: %w(.stride), module_api: true)]
 module Chem::Protein::Stride
+  # Writes a structure to *io*.
+  def self.write(io : IO | Path | String, struc : Structure) : Nil
+    Writer.open(io) do |writer|
+      writer << struc
+    end
+  end
+
   class Writer
     include FormatWriter(Structure)
 

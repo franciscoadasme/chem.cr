@@ -1,5 +1,19 @@
-@[Chem::RegisterFormat(ext: %w(.pml))]
+# TODO: drop this as a format.
+@[Chem::RegisterFormat(ext: %w(.pml), module_api: true)]
 module Chem::PyMOL
+  # Writes a PyMOL Macro Language (PML) script to *io*.
+  #
+  # The script will load the source file (read from `Structure#source_file`) and display the secondary structure in the Cartoon representation.
+  # Secondary structure is overridden via the `ss` property based on the current secondary structure (see `Residue#sec`).
+  # Custom colors are set for the secondary structure types.
+  #
+  # TODO: add colors to the docs.
+  def self.write(io : IO | Path | String, struc : Structure) : Nil
+    Writer.open(io) do |writer|
+      writer << struc
+    end
+  end
+
   class Writer
     include FormatWriter(Structure)
 

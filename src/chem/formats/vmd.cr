@@ -1,5 +1,18 @@
-@[Chem::RegisterFormat(ext: %w(.vmd))]
+# TODO: drop this as a format.
+@[Chem::RegisterFormat(ext: %w(.vmd), module_api: true)]
 module Chem::VMD
+  # Writes a VMD command script to *io*.
+  #
+  # The script will load the source file (read from `Structure#source_file`) and display the secondary structure in the Cartoon representation.
+  # Custom colors are set for the secondary structure types.
+  #
+  # TODO: add colors to the docs.
+  def self.write(io : IO | Path | String, struc : Structure) : Nil
+    Writer.open(io) do |writer|
+      writer << struc
+    end
+  end
+
   class Writer
     include FormatWriter(Structure)
 

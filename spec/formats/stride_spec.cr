@@ -1,8 +1,14 @@
 require "../spec_helper"
 
-describe Chem::Protein::Stride::Writer do
-  it "writes in the STRIDE file format" do
-    expected = File.read(spec_file("1crn.stride"))
-    load_file("1crn.pdb").to_stride.should eq expected
+describe Chem::Protein::Stride do
+  describe ".write" do
+    it "writes in the STRIDE file format" do
+      struc = Chem::PDB.read spec_file("1crn.pdb")
+      expected = File.read spec_file("1crn.stride")
+
+      io = IO::Memory.new
+      Chem::Protein::Stride.write io, struc
+      io.to_s.should eq expected
+    end
   end
 end
