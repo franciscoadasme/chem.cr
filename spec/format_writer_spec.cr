@@ -22,11 +22,10 @@ end
 
 @[Chem::RegisterFormat(ext: %w(.pdf .doc .docx .rtf))]
 module Document
-  class Writer
-    include Chem::FormatWriter(String)
-
-    protected def encode_entry(obj : String) : Nil
-      @io << '<' << obj << '>'
-    end
+  def self.write(io : IO | Path | String, obj : String) : Nil
+    should_close = !io.is_a?(IO)
+    io = File.open(io, "w") unless io.is_a?(IO)
+    io << '<' << obj << '>'
+    io.close if should_close
   end
 end

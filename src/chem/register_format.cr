@@ -147,6 +147,39 @@ module Chem
   #
   # Refer to the implementations of the supported file formats (e.g.,
   # `PDB` and `XYZ`) for real examples.
+  #
+  # NOTE: Method overloading may not work as expected in some cases.
+  # If two methods with the same name and required arguments (may have different optional arguments), only the last overload will be taken into account and trying to calling the first one will result in a missing method error during compilation.
+  # Example:
+  # ```
+  # # Both methods require input, but baz is optional
+  # module Foo
+  #   def self.read(input : String, baz : Bool = false)
+  #     "1"
+  #   end
+  #
+  #   def self.read(input : String)
+  #     "2"
+  #   end
+  # end
+  #
+  # Foo.read "foo"            # => "2"
+  # Foo.read "foo", baz: true # Missing method error
+  #
+  # # Setting baz as required makes the two overloads different
+  # module Foo
+  #   def self.read(input : String, baz : Bool)
+  #     "1"
+  #   end
+  #
+  #   def self.read(input : String)
+  #     "2"
+  #   end
+  # end
+  #
+  # Foo.read "foo"            # => "2"
+  # Foo.read "foo", baz: true # => "1"
+  # ```
   annotation RegisterFormat; end
 
   # :nodoc:
@@ -200,20 +233,15 @@ macro finished
       {% name_map[key] = ftype %}
     {% end %}
 
-    {% read_type = head_type = attached_type = nil %}
-    {% if reader = ftype.constant(ann[:reader] || "Reader") %}
-      {% read_type = reader.ancestors.select(&.<=(Chem::FormatReader))[-1] %}
-      {% reader.raise "#{reader} must include #{Chem::FormatReader}" unless read_type %}
-
-      {% head_type = reader.ancestors.select(&.<=(Chem::FormatReader::Headed))[-1] %}
-      {% attached_type = reader.ancestors.select(&.<=(Chem::FormatReader::Attached))[-1] %}
-    {% end %}
-
-    {% write_type = nil %}
-    {% if writer = ftype.constant(ann[:writer] || "Writer") %}
-      {% write_type = writer.ancestors.select(&.<=(Chem::FormatWriter))[-1] %}
-      {% writer.raise "#{writer} must include #{Chem::FormatWriter}" unless write_type %}
-    {% end %}
+    # Validate that format module has at least one read or write method
+    {% class_methods = ftype.class.methods.map(&.name.stringify) %}
+    {% has_read = class_methods.includes?("read") %}
+    {% has_read_all = class_methods.includes?("read_all") %}
+    {% has_read_info = class_methods.includes?("read_info") %}
+    {% has_read_structure = class_methods.includes?("read_structure") %}
+    {% has_write = class_methods.includes?("write") %}
+    {% has_any = has_read || has_read_all || has_read_info || has_read_structure || has_write %}
+    {% ann.raise "Format module must define at least one of: read, read_all, read_info, write" unless has_any %}
 
     {% keyword = "module" if ftype.module? %}
     {% keyword = "class" if ftype.class? %}
@@ -223,459 +251,243 @@ macro finished
       FORMAT_NAME = "{{format}}"
       # :nodoc:
       FORMAT_METHOD_NAME = "{{method_name}}"
-      {% if reader %}
-        # :nodoc:
-        READER = {{reader}}
-        # :nodoc:
-        READ_TYPE = {{read_type.type_vars[0]}}
-        # :nodoc:
-        READ_MULTI = {{reader <= Chem::FormatReader::MultiEntry}}
-      {% end %}
-      {% if head_type %}
-        # :nodoc:
-        HEAD_TYPE = {{head_type.type_vars[0]}}
-      {% end %}
-      {% if attached_type %}
-        # :nodoc:
-        ATTACHED_TYPE = {{attached_type.type_vars[0]}}
-      {% end %}
-      {% if writer %}
-        # :nodoc:
-        WRITER = {{writer}}
-        # :nodoc:
-        WRITE_TYPES = {{write_type.type_vars[0].union_types}}
-        # :nodoc:
-        WRITE_MULTI = {{writer <= Chem::FormatWriter::MultiEntry}}
-      {% end %}
+
+      def self.format_name : String
+        FORMAT_NAME
+      end
     end
   {% end %}
 end
 
 macro finished
-  # Generate methods on encoded types
+  # Generate methods on encoded types from module methods
 
-  {% encoded_types = [] of TypeNode %}
   {% for ftype in Chem::FORMAT_TYPES %}
-    {% for cname in %w(READ_TYPE HEAD_TYPE ATTACHED_TYPE WRITE_TYPES) %}
-      {% if types = ftype.constant(cname) %}
-        {% types = [types] unless types.is_a?(ArrayLiteral) %}
-        {% for type in types %}
-          {% type = type.resolve %}
-          {% encoded_types << type unless encoded_types.includes?(type) %}
+    {% method_name = ftype.constant("FORMAT_METHOD_NAME").id %}
+    {% class_methods = ftype.class.methods %}
+
+    {% for read_method in class_methods.select(&.name.==("read")) %}
+      {% if read_method.return_type %}
+        {% etype = read_method.return_type.resolve? ||
+                   read_method.return_type.id.split("::").reduce(Chem) { |type, name| type.constant(name) } ||
+                   read_info_method.return_type.resolve %}
+        {% args = read_method.args %}
+        {% keyword = "module" if etype.module? %}
+        {% keyword = "class" if etype.class? %}
+        {% keyword = "struct" if etype.struct? %}
+        {{keyword.id}} {{etype}}
+          def self.from_{{method_name}}(
+            input : IO | Path | String{% for arg, i in args %}{% if i > 0 %}, {{arg}}{% end %}{% end %}
+          ) : self
+            {{ftype}}.read(input{% for arg, i in args %}{% if i > 0 %}, {{arg.internal_name}}{% end %}{% end %})
+          end
+        end
+      {% end %}
+    {% end %}
+
+    {% read_info_method = class_methods.find(&.name.==("read_info")) %}
+    {% if read_info_method && read_info_method.return_type %}
+      {% etype = read_info_method.return_type.resolve? ||
+                 read_info_method.return_type.id.split("::").reduce(Chem) { |type, name| type.constant(name) } ||
+                 read_info_method.return_type.resolve %}
+      {% args = read_info_method.args %}
+      {% keyword = "module" if etype.module? %}
+      {% keyword = "class" if etype.class? %}
+      {% keyword = "struct" if etype.struct? %}
+      {{keyword.id}} {{etype}}
+        def self.from_{{method_name}}(
+          input : IO | Path | String{% for arg, i in args %}{% if i > 0 %}, {{arg}}{% end %}{% end %}
+        ) : self
+          {{ftype}}.read_info(input{% for arg, i in args %}{% if i > 0 %}, {{arg.internal_name}}{% end %}{% end %})
+        end
+      end
+    {% end %}
+
+    {% read_all_method = class_methods.find(&.name.==("read_all")) %}
+    {% if read_all_method && read_all_method.return_type %}
+      {% ret = read_all_method.return_type %}
+      {% if ret.is_a?(Generic) && ret.name.stringify == "Array" %}
+        {% etype = ret.type_vars[0].resolve? ||
+                   ret.type_vars[0].id.split("::").reduce(Chem) { |type, name| type.constant(name) } ||
+                   ret.type_vars[0].resolve %}
+        {% args = read_all_method.args %}
+        class Array(T)
+          def self.from_{{method_name}}(
+            input : IO | Path | String{% for arg, i in args %}{% if i > 0 %}, {{arg}}{% end %}{% end %}
+          ) : self
+            \{% if @type.type_vars[0] <= {{etype}} %}
+              {{ftype}}.read_all(input{% for arg, i in args %}{% if i > 0 %}, {{arg.internal_name}}{% end %}{% end %})
+            \{% else %}
+              \{% raise "undefined method '.from_{{method_name}}' for #{@type}.class" %}
+            \{% end %}
+          end
+        end
+      {% end %}
+    {% end %}
+
+    {% write_methods = class_methods.select(&.name.==("write")) %}
+    {% for write_method in write_methods %}
+      {% if write_method.args.size >= 2 %}
+        {% obj_arg = write_method.args[1] %}
+        {% if obj_restriction = obj_arg.restriction %}
+          {% obj_types = obj_restriction.is_a?(Union) ? obj_restriction.types : [obj_restriction] %}
+          {% for obj_type in obj_types %}
+            {% if obj_type.is_a?(Generic) && obj_type.name.stringify == "Enumerable" %}
+              {% etype = obj_type.type_vars[0] %}
+              {% args = write_method.args %}
+              class Array(T)
+                def to_{{method_name}}(
+                  output : IO | Path | String{% for arg, i in args %}{% if i > 1 %}, {{arg}}{% end %}{% end %}
+                ) : Nil
+                  {{ftype}}.write(output, self{% for arg, i in args %}{% if i > 1 %}, {{arg.internal_name}}{% end %}{% end %})
+                end
+
+                def to_{{method_name}}(
+                  {% for arg, i in args %}
+                    {% if i > 1 %}{{arg}}{% if i < args.size - 1 %},{% end %}
+                    {% end %}
+                  {% end %}
+                ) : String
+                  String.build do |io|
+                    {{ftype}}.write(io, self{% for arg, i in args %}{% if i > 1 %}, {{arg.internal_name}}{% end %}{% end %})
+                  end
+                end
+              end
+            {% else %}
+              {% etype = obj_type.resolve? ||
+                         obj_type.id.split("::").reduce(Chem) { |type, name| type.constant(name) } ||
+                         obj_type.resolve %}
+              {% args = write_method.args %}
+              {% keyword = "module" if etype.module? %}
+              {% keyword = "class" if etype.class? %}
+              {% keyword = "struct" if etype.struct? %}
+              {{keyword.id}} {{etype}}
+                def to_{{method_name}}(
+                  {% for arg, i in args %}
+                    {% if i > 1 %}{{arg}}{% if i < args.size - 1 %},{% end %}
+                    {% end %}
+                  {% end %}
+                ) : String
+                  String.build do |io|
+                    {{ftype}}.write(io, self{% for arg, i in args %}{% if i > 1 %}, {{arg.internal_name}}{% end %}{% end %})
+                  end
+                end
+
+                def to_{{method_name}}(
+                  output : IO | Path | String{% for arg, i in args %}{% if i > 1 %}, {{arg}}{% end %}{% end %}
+                ) : Nil
+                  {{ftype}}.write(output, self{% for arg, i in args %}{% if i > 1 %}, {{arg.internal_name}}{% end %}{% end %})
+                end
+              end
+            {% end %}
+          {% end %}
         {% end %}
       {% end %}
     {% end %}
   {% end %}
 
-  {% needs_args_map = {} of TypeNode => Bool %}
-  {% for etype in encoded_types %}
-    {% type_name = etype.name.split("::")[-1].underscore.gsub(/_/, " ") %}
+  # Generate read(input, format) and write(output, format) for encoded types
+  # Each entry: (etype, ftype, read_method_name)
+  {% read_type_formats = [] of Tuple(TypeNode, TypeNode, String) %}
+  {% write_type_formats = [] of Tuple(TypeNode, TypeNode) %}
+  {% for ftype in Chem::FORMAT_TYPES %}
+    {% class_methods = ftype.class.methods %}
+    {% read_m = class_methods.find(&.name.==("read")) %}
+    {% if read_m && read_m.return_type %}
+      {% read_type_formats << {read_m.return_type, ftype, "read"} %}
+    {% end %}
+    {% read_info_m = class_methods.find(&.name.==("read_info")) %}
+    {% if read_info_m && read_info_m.return_type %}
+      {% read_type_formats << {read_info_m.return_type, ftype, "read_info"} %}
+    {% end %}
+    {% read_structure_m = class_methods.find(&.name.==("read_structure")) %}
+    {% if read_structure_m && read_structure_m.return_type %}
+      {% read_type_formats << {read_structure_m.return_type, ftype, "read_structure"} %}
+    {% end %}
+    {% for write_m in class_methods.select(&.name.==("write")) %}
+      {% if write_m.args.size >= 2 %}
+        {% obj_restriction = write_m.args[1].restriction %}
+        {% if obj_restriction %}
+          {% obj_types = obj_restriction.is_a?(Union) ? obj_restriction.types : [obj_restriction] %}
+          {% for obj_type in obj_types %}
+            {% if !obj_type.is_a?(Generic) || obj_type.name.stringify != "Enumerable" %}
+              {% write_type_formats << {obj_type, ftype} %}
+            {% end %}
+          {% end %}
+        {% end %}
+      {% end %}
+    {% end %}
+  {% end %}
+  {% read_types_seen = [] of TypeNode %}
+  {% for pair in read_type_formats %}
+    {% etype = pair[0].resolve? ||
+               pair[0].id.split("::").reduce(Chem) { |type, name| type.constant(name) } ||
+               pair[0].resolve %}
+    {% ftype = pair[1] %}
+    {% method_name = pair[2] %}
+    {% is_first = !read_types_seen.includes?(etype) %}
+    {% read_types_seen << etype if is_first %}
     {% keyword = "module" if etype.module? %}
     {% keyword = "class" if etype.class? %}
     {% keyword = "struct" if etype.struct? %}
-
-    {% rtypes = Chem::FORMAT_TYPES.select &.constant("READ_TYPE").id.==(etype.id) %}
-    {% htypes = Chem::FORMAT_TYPES.select &.constant("HEAD_TYPE").id.==(etype.id) %}
-    {% atypes = Chem::FORMAT_TYPES.select &.constant("ATTACHED_TYPE").id.==(etype.id) %}
-    {% decoding_types = rtypes + htypes + atypes %}
-    {% argless_types = [] of TypeNode %}
-    {% for ftype in decoding_types %}
-      {% reader = ftype.constant("READER").resolve %}
-      {% kind = :read if rtypes.includes?(ftype) %}
-      {% kind = :head if htypes.includes?(ftype) %}
-      {% kind = :attached if atypes.includes?(ftype) %}
-
-      # look for a constructor (including ancestors) & gather required args
-      {% constructor = reader.methods.find &.name.==("initialize") %}
-      {% for type in reader.ancestors %}
-        {% constructor ||= type.methods.find(&.name.==("initialize")) %}
-      {% end %}
-      {% if constructor %}
-        {% args = constructor.args.select do |arg|
-             !%w(io sync_close).includes? arg.name.stringify
-           end %}
-      {% else %}
-        {% args = [] of Nil %}
-      {% end %}
-      {% argless_types << ftype unless args.any? &.default_value.is_a?(Nop) %}
-      {% needs_args_map[reader] = args.any? &.default_value.is_a?(Nop) %}
-
-      # auxiliary values for method generation
-      {% method_name = ftype.constant("FORMAT_METHOD_NAME").id %}
-      {% type_docs, read_suffix = type_name, "entry" if kind == :read %}
-      {% type_docs = read_suffix = "header" if kind == :head %}
-      {% type_docs, read_suffix = type_name, "attached" if kind == :attached %}
-
-      {{keyword.id}} {{etype}}
-        # Returns the {{type_docs.id}} encoded in *input* using the
-        # `{{ftype}}` file format. Arguments are forwarded to
-        # `{{reader}}.open`.
-        {% if ftype.constant("READ_MULTI") %}
-          #
-          # If *input* contains multiple entries, this method returns
-          # the first one only. Use `Array#from_{{method_name}}` or
-          # `{{reader}}#each` to get multiple entries instead.
-        {% end %}
-        def self.from_{{method_name}}(
-          input : IO | Path | String,
-          {% for arg in args %}
-            {{arg}},
-          {% end %}
-        ) : self
-          {% if kind == :read && ftype.annotation(Chem::RegisterFormat)[:module_api] %}
-            {{ftype}}.read(
-              input \
-              {% for arg in args %} \
-                ,{{arg.internal_name}} \
-              {% end %}
-            )
-          {% elsif kind == :head && ftype.annotation(Chem::RegisterFormat)[:module_api] %}
-            {{ftype}}.read_info(
-              input \
-              {% for arg in args %} \
-                ,{{arg.internal_name}} \
-              {% end %}
-            )
-          {% elsif kind == :attached && ftype.annotation(Chem::RegisterFormat)[:module_api] %}
-            {{ftype}}.read_structure(
-              input \
-              {% for arg in args %} \
-                ,{{arg.internal_name}} \
-              {% end %}
-            )
-          {% else %}
-            {{reader}}.open(
-              input \
-              {% for arg in args %} \
-                ,{{arg.internal_name}} \
-              {% end %}
-            ) do |reader|
-              reader.read_{{read_suffix.id}}
-            end
-          {% end %}
-        end
+    {{keyword.id}} {{etype}}
+      {% if is_first %}
+      def self.read(path : Path | String) : self
+        read path, Chem.guess_format(path, self)
       end
-
-      {% if kind == :read && ftype.constant("READ_MULTI") %}
-        class Array(T)
-          # Creates a new array of `{{etype}}` with the entries
-          # encoded in *input* using the `{{ftype}}` file format.
-          # Arguments are forwarded to `{{reader}}.open`.
-          def self.from_{{method_name}}(
-            input : IO | Path | String,
-            {% for arg in args %}
-              {{arg}},
-            {% end %}
-          ) : self
-            \{% unless (type = @type) <= Array({{etype}}) %}
-              \{% raise "undefined method '.from_{{method_name}}' for #{type}.class" %}
-            \{% end %}
-            {% if ftype.annotation(Chem::RegisterFormat)[:module_api] %}
-              {{ftype}}.read_all(
-                input \
-                {% for arg in args %} \
-                  ,{{arg.internal_name}} \
-                {% end %}
-              )
-            {% else %}
-              {{reader}}.open(
-                input \
-                {% for arg in args %} \
-                  ,{{arg.internal_name}} \
-                {% end %}
-              ) do |reader|
-                Array(T).new.tap do |ary|
-                  reader.each { |obj| ary << obj }
-                end
-              end
-            {% end %}
-          end
-
-          # Creates a new array of `{{etype}}` with the entries at
-          # *indexes* encoded in *input* using the `{{ftype}}` file
-          # format. Arguments are forwarded to `{{reader}}.open`.
-          def self.from_{{method_name}}(
-            input : IO | Path | String,
-            indexes : Array(Int),
-            {% for arg in args %}
-              {{arg}},
-            {% end %}
-          ) : self
-            {{reader}}.open(
-              input \
-              {% for arg in args %} \
-              ,{{arg.internal_name}} \
-              {% end %}
-            ) do |reader|
-              Array(T).new(indexes.size).tap do |ary|
-                reader.each(indexes) { |obj| ary << obj }
-              end
-            end
-          end
-        end
       {% end %}
-    {% end %}
-
-    {% unless argless_types.empty? %}
-      {% type_docs = type_name %}
-      {% type_docs = "header" if rtypes.empty? && atypes.empty? %}
-      {% format_docs = argless_types.map { |t| "`#{t}`".id }.sort %}
-
-      {{keyword.id}} {{etype}}
-        # Returns the {{type_docs.id}} encoded in the specified file.
-        # The file format is chosen based on the filename (see
-        # `Chem.guess_format`). Raises `ArgumentError` if the
-        # file format cannot be determined.
-        {% if !rtypes.empty? && argless_types.any?(&.constant("WRITE_MULTI")) %}
-          #
-          # If the file contains multiple entries, this method returns
-          # the first one only. Use `Array.read` to get multiple entries
-          # instead.
-        {% end %}
-        #
-        # The supported file formats are the following:
-        #
-        {% for type in argless_types %}
-          {% ann = type.annotation(Chem::RegisterFormat) %}
-          {% tokens = (ann["ext"] || %w()) %}
-          {% tokens += (ann["names"] || %w()).map(&.gsub(/\*/, "")) %}
-          {% if tokens.empty? %}
-            # - `{{type}}`
-          {% else %}
-            # - `{{type}}` ({{tokens.map(&.id).splat}})
-          {% end %}
-        {% end %}
-        #
-        # Use the `.from_*` methods to customize how the object is
-        # decoded in the corresponding file format if possible.
-        def self.read(path : Path | String) : self
-          read path, ::Chem.guess_format(path)
-        end
-
-        # Returns the {{type_docs.id}} encoded in the specified file
-        # using *format*. Raises `ArgumentError` if *format* has
-        # required arguments or cannot read `{{etype}}`.
-        {% if !rtypes.empty? && argless_types.any?(&.constant("WRITE_MULTI")) %}
-          #
-        # If *input* contains multiple entries, this method returns
-        # the first one only. Use `Array.read` or the format's reader
-        # (e.g. `Chem::XYZ::Reader#each`) to get multiple entries
-        # instead.
-        {% end %}
-        #
-        # The supported file formats are {{format_docs.splat}}. Use the
-        # `.from_*` methods to customize how the object is decoded in
-        # the corresponding file format if possible.
-        # Accepts any format module (e.g. return value of guess_format(path))
-        def self.read(input : IO | Path | String, format) : self
-          {% begin %}
-            {% for ftype in decoding_types %}
-              {% method_name = ftype.constant("FORMAT_METHOD_NAME").id %}
-              {% if ftype == decoding_types.first %}if{% else %}elsif{% end %} format == {{ftype}}
-                {% if argless_types.includes?(ftype) %}
-                  from_{{method_name}} input
-                {% else %}
-                  raise ArgumentError.new "#{format} format has required arguments. \
-                                           Use `.from_{{method_name}}` instead."
-                {% end %}
-            {% end %}
-            else
-              raise ArgumentError.new "#{format} does not encode {{etype}}"
-            end
-          {% end %}
-        end
+      def self.read(input : IO | Path | String, format : {{ftype}}.class) : self
+        {{ftype}}.{{method_name.id}}(input)
       end
-    {% end %}
-
-    {% encoding_types = Chem::FORMAT_TYPES.select do |t|
-         (write_types = t.constant("WRITE_TYPES")) &&
-           write_types.any? { |type| etype <= type.resolve }
-       end %}
-    {% argless_types = [] of TypeNode %}
-    {% for ftype in encoding_types %}
-      {% writer = ftype.constant("WRITER").resolve %}
-      {% method_name = ftype.constant("FORMAT_METHOD_NAME").id %}
-
-      # look for a constructor (including ancestors) & gather required args
-      {% constructor = writer.methods.find &.name.==("initialize") %}
-      {% for type in writer.ancestors %}
-        {% constructor ||= type.methods.find(&.name.==("initialize")) %}
-      {% end %}
-      {% if constructor %}
-        {% known_args = %w(io sync_close) %}
-        {% args = constructor.args.reject { |x| known_args.includes? x.name.stringify } %}
-      {% else %}
-        {% args = [] of Nil %}
-      {% end %}
-      {% argless_types << ftype unless args.any? &.default_value.is_a?(Nop) %}
-      {% needs_args_map[writer] = args.any? &.default_value.is_a?(Nop) %}
-
-      {{keyword.id}} {{etype}}
-        # Returns a string representation of the {{type_name.id}} using
-        # the `{{ftype}}` file format. Arguments are forwarded to
-        # `{{writer}}.open`.
-        def to_{{method_name}}(
-          {% for arg in args %}
-            {{arg}},
-          {% end %}
-        ) : String
-          String.build do |io|
-            to_{{method_name}}(
-              io \
-              {% for arg in args %} \
-                ,{{arg.internal_name}} \
-              {% end %}
-            )
-          end
-        end
-
-        # Writes the {{type_name.id}} to *output* using the `{{ftype}}`
-        # file format. Arguments are forwarded to `{{writer}}.open`.
-        def to_{{method_name}}(
-          output : IO | Path | String,
-          {% for arg in args %}
-            {{arg}},
-          {% end %}
-        ) : Nil
-          {% if ftype.annotation(Chem::RegisterFormat)[:module_api] %}
-            {{ftype}}.write(
-              output,
-              self \
-              {% for arg in args %} \
-                ,{{arg.internal_name.id}}: {{arg.internal_name}} \
-              {% end %}
-            )
-          {% elsif ftype.constant("WRITE_MULTI") %}
-            {{writer}}.open(
-              output \
-              {% for arg in args %} \
-                ,{{arg.internal_name}} \
-              {% end %} \
-            ) do |writer|
-              writer << self
-            end
-          {% else %}
-            {{writer}}.open(
-              output \
-              {% for arg in args %} \
-                ,{{arg.internal_name}} \
-              {% end %}
-            ) do |writer|
-              writer << self
-            end
-          {% end %}
-        end
+    end
+  {% end %}
+  {% for pair in read_type_formats %}
+    {% etype = pair[0].resolve? ||
+               pair[0].id.split("::").reduce(Chem) { |type, name| type.constant(name) } ||
+               pair[0].resolve %}
+    {% keyword = "module" if etype.module? %}
+    {% keyword = "class" if etype.class? %}
+    {% keyword = "struct" if etype.struct? %}
+    {{keyword.id}} {{etype}}
+      def self.read(input : IO | Path | String, format) : self
+        raise ArgumentError.new("#{format} format is write only")
       end
-
-      {% if ftype.constant("WRITE_MULTI") %}
-        class Array(T)
-          # Returns a string representation of the elements encoded in
-          # the `{{ftype}}` file format. Arguments are forwarded to
-          # `{{writer}}.open`.
-          def to_{{method_name}}(
-            {% for arg in args %}
-              {{arg}},
-            {% end %}
-          ) : String
-            String.build do |io|
-              to_{{method_name}}(
-                io \
-                {% for arg in args %} \
-                  ,{{arg.internal_name}} \
-                {% end %}
-              )
-            end
-          end
-
-          # Writes the elements to *output* using the `{{ftype}}` file
-          # format. Arguments are forwarded to `{{writer}}.open`.
-          def to_{{method_name}}(
-            output : IO | Path | String,
-            {% for arg in args %}
-              {{arg}},
-            {% end %}
-          ) : Nil
-            {% if ftype.annotation(Chem::RegisterFormat)[:module_api] %}
-              {{ftype}}.write(
-                output,
-                self \
-                {% for arg in args %} \
-                  ,{{arg.internal_name.id}} \
-                {% end %} \
-              )
-            {% else %}
-              {{writer}}.open(
-                output,
-                {% for arg in args %}
-                  {{arg.internal_name}},
-                {% end %}
-              ) do |writer|
-                each do |obj|
-                  writer << obj
-                end
-              end
-            {% end %}
-          end
-        end
-      {% end %}
-    {% end %}
-
-    {% unless argless_types.empty? %}
-      {% format_docs = argless_types.map { |t| "`#{t}`".id }.sort %}
-
-      {{keyword.id}} {{etype}}
-        # Writes the {{type_name.id}} to the specified file. The file
-        # format is chosen based on the filename (see
-        # `Chem.guess_format`). Raises `ArgumentError` if the
-        # file format cannot be determined.
-        #
-        # The supported file formats are the following:
-        #
-        {% for type in argless_types %}
-          {% ann = type.annotation(Chem::RegisterFormat) %}
-          {% tokens = (ann["ext"] || %w()) %}
-          {% tokens += (ann["names"] || %w()).map(&.gsub(/\*/, "")) %}
-          {% if tokens.empty? %}
-            # - `{{type}}`
-          {% else %}
-            # - `{{type}}` ({{tokens.map(&.id).splat}})
-          {% end %}
-        {% end %}
-        #
-        # Use the `#to_*` methods to customize how the object is written
-        # in the corresponding file format if possible.
-        def write(path : Path | String) : Nil
-          write path, ::Chem.guess_format(path)
-        end
-
-        # Writes the {{type_name.id}} to *output* using *format*. Raises
-        # `ArgumentError` if *format* has required arguments or cannot
-        # write `{{etype}}`.
-        #
-        # The supported file formats are {{format_docs.splat}}. Use the
-        # `#to_*` methods to customize how the object is written in the
-        # corresponding file format if possible.
-        # Accepts any format module (e.g. return value of guess_format(path))
-        def write(output : IO | Path | String, format : {{Chem::FORMAT_TYPES.map { |x| "#{x}.class" }.join(" | ").id}}) : Nil
-          # TODO: accept only encoding types
-          {% begin %}
-            {% for ftype in encoding_types %}
-              {% method_name = ftype.constant("FORMAT_METHOD_NAME").id %}
-              {% if ftype == encoding_types.first %}if{% else %}elsif{% end %} format == {{ftype}}
-                {% if argless_types.includes?(ftype) %}
-                  to_{{method_name}} output
-                {% else %}
-                  raise ArgumentError.new "#{format} format has required arguments. \
-                                           Use `#to_{{method_name}}` instead."
-                {% end %}
-            {% end %}
-            else
-              raise ArgumentError.new "#{format} does not encode {{etype}}"
-            end
-          {% end %}
-        end
+    end
+  {% end %}
+  {% write_types_seen = [] of TypeNode %}
+  {% for pair in write_type_formats %}
+    {% etype = pair[0].resolve? ||
+               pair[0].id.split("::").reduce(Chem) { |type, name| type.constant(name) } ||
+               pair[0].resolve %}
+    {% ftype = pair[1] %}
+    {% is_first = !write_types_seen.includes?(etype) %}
+    {% write_types_seen << etype if is_first %}
+    {% keyword = "module" if etype.module? %}
+    {% keyword = "class" if etype.class? %}
+    {% keyword = "struct" if etype.struct? %}
+    {{keyword.id}} {{etype}}
+      {% if is_first %}
+      def write(path : Path | String) : Nil
+        write path, Chem.guess_format(path, self.class)
       end
-    {% end %}
+      {% end %}
+      def write(output : IO | Path | String, format : {{ftype}}.class) : Nil
+        {{ftype}}.write(output, self)
+      end
+    end
+  {% end %}
+  {% for pair in write_type_formats %}
+    {% etype = pair[0].resolve? ||
+               pair[0].id.split("::").reduce(Chem) { |type, name| type.constant(name) } ||
+               pair[0].resolve %}
+    {% keyword = "module" if etype.module? %}
+    {% keyword = "class" if etype.class? %}
+    {% keyword = "struct" if etype.struct? %}
+    {{keyword.id}} {{etype}}
+      def write(output : IO | Path | String, format) : Nil
+        raise ArgumentError.new("#{format.format_name} format cannot write #{self.class}")
+      end
+    end
   {% end %}
 
   class Array(T)
@@ -683,101 +495,107 @@ macro finished
     # is chosen based on the filename (see `Chem.guess_format`).
     # Raises `ArgumentError` if the file format cannot be determined.
     def self.read(path : Path | String) : self
-      read path, Chem.guess_format(path)
+      read(path, Chem.guess_format(path, self))
     end
 
     # Returns the entries encoded in the specified file using *format*.
     # Raises `ArgumentError` if *format* cannot read the element type or
     # it is write only.
     # Accepts any format module (e.g. return value of guess_format(path))
-    def self.read(input : IO | Path | String, format) : self
-      {% format_types = Chem::FORMAT_TYPES.select &.constant("READ_MULTI") %}
-      {% encoded_types = format_types.map(&.constant("READ_TYPE")).uniq %}
-      \{% if !{{encoded_types}}.any? { |etype| @type.type_vars[0] <= etype } %}
-        \{% raise "undefined method 'read' for #{@type}.class" %}
-      \{% end %}
-
-      {% reader_formats = Chem::FORMAT_TYPES.select(&.constant("READER")) %}
-      {% begin %}
-        {% for ftype in reader_formats %}
-          {% method_name = ftype.constant("FORMAT_METHOD_NAME").id %}
-          {% if ftype == reader_formats.first %}if{% else %}elsif{% end %} format == {{ftype}}
-            {% if ftype.constant("READ_MULTI") %}
-              {% if needs_args_map[ftype.constant("READER").resolve] %}
-                raise ArgumentError.new("#{format} format has required arguments. \
-                                         Use .from_{{method_name}} instead.")
-              {% else %}
-                \{% if @type.type_vars[0] <= {{ftype.constant("READ_TYPE")}}.resolve %}
-                  {{ftype.constant("READER")}}.open(input) do |reader|
-                    \{{@type}}.new.tap do |ary|
-                      reader.each do |obj|
-                        ary << obj
-                      end
-                    end
-                  end
-                \{% else %}
-                  raise ArgumentError.new("#{format} format cannot read #{self}")
-                \{% end %}
-              {% end %}
-            {% else %}
-              raise ArgumentError.new("#{format} format cannot read #{self}")
-            {% end %}
+    {% read_all_formats = [] of TypeNode %}
+    {% read_all_etypes = [] of TypeNode %}
+    {% for ftype in Chem::FORMAT_TYPES %}
+      {% read_all_m = ftype.class.methods.find(&.name.==("read_all")) %}
+      {% if read_all_m && read_all_m.return_type %}
+        {% ret = read_all_m.return_type %}
+        {% if ret.is_a?(Generic) && ret.name.stringify == "Array" %}
+          {% read_all_formats << ftype %}
+          {% read_all_etypes << ret.type_vars[0] %}
         {% end %}
-        else
-          raise ArgumentError.new("#{format} format is write only")
+      {% end %}
+    {% end %}
+    {% if read_all_etypes.size == 0 %}
+      def self.read(input : IO | Path | String, format) : self
+        \{% raise "undefined method 'read' for #{@type}.class" %}
+      end
+    {% else %}
+      {% for ftype, i in read_all_formats %}
+        {% etype = read_all_etypes[i].resolve? ||
+                   read_all_etypes[i].id.split("::").reduce(Chem) { |type, name| type.constant(name) } ||
+                   read_all_etypes[i].resolve %}
+        def self.read(input : IO | Path | String, format : {{ftype}}.class) : self
+          \{% if @type.type_vars[0] <= {{etype}} %}
+            {{ftype}}.read_all(input)
+          \{% else %}
+            \{% raise "undefined method 'read' for #{@type}.class" %}
+          \{% end %}
         end
       {% end %}
-    end
+      def self.read(input : IO | Path | String, format : {{Chem::FORMAT_TYPES.map { |x| "#{x}.class" }.join(" | ").id}}) : self
+        case format
+        {% for ftype in read_all_formats %}
+        when {{ftype}}
+          {{ftype}}.read_all(input)
+        {% end %}
+        else
+          raise ArgumentError.new("#{format.format_name} format cannot read #{self}")
+        end
+      end
+      def self.read(input : IO | Path | String, format) : self
+        raise ArgumentError.new("#{format.format_name} format cannot read #{self}")
+      end
+    {% end %}
 
     # Writes the elements to the specified file. The file format is chosen
     # based on the filename (see `Chem.guess_format`). Raises
     # `ArgumentError` if the file format cannot be determined.
     def write(path : Path | String) : Nil
-      write path, Chem.guess_format(path)
+      write path, Chem.guess_format(path, self.class)
     end
 
     # Writes the elements to *output* using *format*. Raises
     # `ArgumentError` if *format* cannot write the element type or it is
     # read only.
     # Accepts any format module (e.g. return value of guess_format(path))
-    def write(output : IO | Path | String, format : {{Chem::FORMAT_TYPES.map { |x| "#{x}.class" }.join(" | ").id}}) : Nil
-      {% format_types = Chem::FORMAT_TYPES.select &.constant("WRITE_MULTI") %}
-      {% encoded_types = [] of Nil %}
-      {% format_types.each { |ftype| encoded_types += ftype.constant("WRITE_TYPES") } %}
-      {% encoded_types = encoded_types.uniq %}
-      \{% if !{{encoded_types}}.any? { |etype| @type.type_vars[0] <= etype } %}
-        \{% raise "undefined method 'write' for #{@type}" %}
-      \{% end %}
-
-      {% writer_formats = Chem::FORMAT_TYPES.select(&.constant("WRITER")) %}
-      {% begin %}
-        {% for ftype in writer_formats %}
-          {% method_name = ftype.constant("FORMAT_METHOD_NAME").id %}
-          {% if ftype == writer_formats.first %}if{% else %}elsif{% end %} format == {{ftype}}
-            {% if ftype.constant("WRITE_MULTI") %}
-              {% if needs_args_map[ftype.constant("WRITER").resolve] %}
-                raise ArgumentError.new("#{format} format has required arguments. \
-                                         Use #to_{{method_name}} instead.")
-              {% else %}
-                \{% if {{ftype.constant("WRITE_TYPES")}}.any? { |wtype| @type.type_vars[0] <= wtype.resolve } %}
-                  {{ftype.constant("WRITER")}}.open(output) do |writer|
-                    each do |obj|
-                      writer << obj
-                    end
-                  end
-                \{% else %}
-                  raise ArgumentError.new("#{format} format cannot write #{self.class}")
-                \{% end %}
+    {% write_enum_formats = [] of TypeNode %}
+    {% write_enum_etypes = [] of TypeNode %}
+    {% for ftype in Chem::FORMAT_TYPES %}
+      {% for write_m in ftype.class.methods.select(&.name.==("write")) %}
+        {% if write_m.args.size >= 2 %}
+          {% obj_restriction = write_m.args[1].restriction %}
+          {% if obj_restriction %}
+            {% obj_types = obj_restriction.is_a?(Union) ? obj_restriction.types : [obj_restriction] %}
+            {% for obj_type in obj_types %}
+              {% if obj_type.is_a?(Generic) && obj_type.name.stringify == "Enumerable" %}
+                {% write_enum_formats << ftype %}
+                {% write_enum_etypes << obj_type.type_vars[0] %}
               {% end %}
-            {% else %}
-              raise ArgumentError.new("#{format} format cannot write #{self.class}")
             {% end %}
+          {% end %}
         {% end %}
-        else
-          raise ArgumentError.new("#{format} format is read only")
+      {% end %}
+    {% end %}
+    {% if write_enum_etypes.size == 0 %}
+      def write(output : IO | Path | String, format) : Nil
+        \{% raise "undefined method 'write' for #{@type}" %}
+      end
+    {% else %}
+      {% for ftype, i in write_enum_formats %}
+        {% etype = write_enum_etypes[i].resolve? ||
+                   write_enum_etypes[i].id.split("::").reduce(Chem) { |type, name| type.constant(name) } ||
+                   write_enum_etypes[i].resolve %}
+        def write(output : IO | Path | String, format : {{ftype}}.class) : Nil
+          \{% if @type.type_vars[0] <= {{etype}} %}
+            {{ftype}}.write(output, self)
+          \{% else %}
+            \{% raise "undefined method 'write' for #{@type}" %}
+          \{% end %}
         end
       {% end %}
-    end
+      def write(output : IO | Path | String, format) : Nil
+        raise ArgumentError.new("#{format.format_name} format cannot write #{self.class}")
+      end
+    {% end %}
   end
 end
 
@@ -799,11 +617,94 @@ macro finished
     {% end %}
   end
 
-  # Returns the format module for *path* based on its filename. File 
-  # stem matching via `File.match?` is case-sensitive but extension 
-  # matching is not. Raises ArgumentError if the format cannot be 
+  # Returns the format module for *path* based on its filename. File
+  # stem matching via `File.match?` is case-sensitive but extension
+  # matching is not. Raises ArgumentError if the format cannot be
   # determined.
   def Chem.guess_format(path : Path | String)
     guess_format?(path) || raise ArgumentError.new("File format not found for #{path}")
+  end
+
+  # Build (type_key, is_array, formats) - type_key is etype for single, etype for Array(etype)
+  {% type_format_pairs = [] of Tuple(String, Bool, TypeNode) %}
+  {% for ftype in Chem::FORMAT_TYPES %}
+    {% class_methods = ftype.class.methods %}
+    {% read_m = class_methods.find(&.name.==("read")) %}
+    {% if read_m && read_m.return_type %}
+      {% etype = read_m.return_type.resolve? ||
+                 read_m.return_type.id.split("::").reduce(Chem) { |t, n| t.constant(n) } ||
+                 read_m.return_type.resolve %}
+      {% type_format_pairs << {etype.stringify, false, ftype} %}
+    {% end %}
+    {% read_info_m = class_methods.find(&.name.==("read_info")) %}
+    {% if read_info_m && read_info_m.return_type %}
+      {% etype = read_info_m.return_type.resolve? ||
+                 read_info_m.return_type.id.split("::").reduce(Chem) { |t, n| t.constant(n) } ||
+                 read_info_m.return_type.resolve %}
+      {% type_format_pairs << {etype.stringify, false, ftype} %}
+    {% end %}
+    {% read_structure_m = class_methods.find(&.name.==("read_structure")) %}
+    {% if read_structure_m && read_structure_m.return_type %}
+      {% etype = read_structure_m.return_type.resolve? ||
+                 read_structure_m.return_type.id.split("::").reduce(Chem) { |t, n| t.constant(n) } ||
+                 read_structure_m.return_type.resolve %}
+      {% type_format_pairs << {etype.stringify, false, ftype} %}
+    {% end %}
+    {% read_all_m = class_methods.find(&.name.==("read_all")) %}
+    {% if read_all_m && read_all_m.return_type %}
+      {% ret = read_all_m.return_type %}
+      {% if ret.is_a?(Generic) && ret.name.stringify == "Array" %}
+        {% etype = ret.type_vars[0].resolve? ||
+                   ret.type_vars[0].id.split("::").reduce(Chem) { |t, n| t.constant(n) } ||
+                   ret.type_vars[0].resolve %}
+        {% type_format_pairs << {"Array(#{etype})", true, ftype} %}
+      {% end %}
+    {% end %}
+    {% for write_m in class_methods.select(&.name.==("write")) %}
+      {% if write_m.args.size >= 2 %}
+        {% obj_restriction = write_m.args[1].restriction %}
+        {% if obj_restriction %}
+          {% obj_types = obj_restriction.is_a?(Union) ? obj_restriction.types : [obj_restriction] %}
+          {% for obj_type in obj_types %}
+            {% if obj_type.is_a?(Generic) && obj_type.name.stringify == "Enumerable" %}
+              {% etype = obj_type.type_vars[0].resolve? ||
+                         obj_type.type_vars[0].id.split("::").reduce(Chem) { |t, n| t.constant(n) } ||
+                         obj_type.type_vars[0].resolve %}
+              {% type_format_pairs << {"Array(#{etype})", true, ftype} %}
+            {% else %}
+              {% etype = obj_type.resolve? ||
+                         obj_type.id.split("::").reduce(Chem) { |t, n| t.constant(n) } ||
+                         obj_type.resolve %}
+              {% type_format_pairs << {etype.stringify, false, ftype} %}
+            {% end %}
+          {% end %}
+        {% end %}
+      {% end %}
+    {% end %}
+  {% end %}
+
+  # Group by type key and collect unique formats (manual - no group_by in macros)
+  {% seen_keys = [] of String %}
+  {% for pair in type_format_pairs %}
+    {% type_key = pair[0] %}
+    {% unless seen_keys.includes?(type_key) %}
+      {% seen_keys << type_key %}
+      {% formats = [] of TypeNode %}
+      {% for p in type_format_pairs %}
+        {% formats << p[2] if p[0] == type_key %}
+      {% end %}
+      {% formats = formats.uniq %}
+      {% if formats.size > 0 %}
+        {% format_union = formats.map { |f| "#{f}.class" }.join(" | ").id %}
+        def Chem.guess_format(path : Path | String, type : {{type_key.id}}.class) : {{format_union}}
+          (guess_format?(path) || raise ArgumentError.new("File format not found for #{path}")).as({{format_union}})
+        end
+      {% end %}
+    {% end %}
+  {% end %}
+
+  # Wildcard: raises at compile time for unsupported types
+  def Chem.guess_format(path : Path | String, type)
+    \{% raise "guess_format does not support type #{type} - use one of the encoded types" %}
   end
 end

@@ -2,44 +2,24 @@ require "./spec_helper"
 
 @[Chem::RegisterFormat(ext: %w(.cad))]
 module CAD
-  class Reader
-    include Chem::FormatReader(String)
-    include Chem::FormatReader::MultiEntry(String)
-
-    protected def decode_entry : String
-      "foo"
-    end
-
-    def skip_entry : Nil; end
+  def self.read(io : IO | Path | String) : String
+    "foo"
   end
 end
 
 @[Chem::RegisterFormat(ext: %w(.bmp .jpg .png .tiff))]
 module Image
-  class Writer
-    include Chem::FormatWriter(String)
-
-    protected def encode_entry(obj : String) : Nil; end
-  end
+  def self.write(io : IO, obj : String) : Nil; end
 end
 
 @[Chem::RegisterFormat(ext: %w(.lic), names: %w(SPEC LIC* *KE *ANY*))]
 module License
-  class Writer
-    include Chem::FormatWriter(String)
-
-    protected def encode_entry(obj : String) : Nil; end
-  end
+  def self.write(io : IO, obj : String) : Nil; end
 end
 
 @[Chem::RegisterFormat]
 module MultiString
-  class Writer
-    include Chem::FormatWriter(String)
-    include Chem::FormatWriter::MultiEntry(String)
-
-    protected def encode_entry(obj : String) : Nil; end
-  end
+  def self.write(io : IO, obj : String) : Nil; end
 end
 
 describe Chem do

@@ -3,49 +3,52 @@ require "./spec_helper"
 describe Chem::RegisterFormat, tags: %w(register_format codegen) do
   it "fails on duplicate format" do
     assert_error <<-EOS, "Format F in B::F is registered to A::F"
-      @[Chem::RegisterFormat]
-      module A::F; end
-      @[Chem::RegisterFormat]
-      module B::F; end
+      struct X; end
+      @[Chem::RegisterFormat(ext: %w(.af))]
+      module A::F
+        def self.read(io : IO | Path | String) : X; X.new; end
+      end
+      @[Chem::RegisterFormat(ext: %w(.bf))]
+      module B::F
+        def self.read(io : IO | Path | String) : X; X.new; end
+      end
       EOS
   end
 
   it "fails on duplicate extension" do
     assert_error <<-EOS, "Extension .txt in B is registered to A"
+      struct X; end
       @[Chem::RegisterFormat(ext: %w(.txt))]
-      module A; end
+      module A
+        def self.read(io : IO | Path | String) : X; X.new; end
+      end
       @[Chem::RegisterFormat(ext: %w(.txt))]
-      module B; end
+      module B
+        def self.read(io : IO | Path | String) : X; X.new; end
+      end
       EOS
   end
 
   it "fails on duplicate file pattern" do
     message = "File pattern *foo* in B is registered to A"
     assert_error <<-EOS, message
+      struct X; end
       @[Chem::RegisterFormat(names: %w(FOO*))]
-      module A; end
+      module A
+        def self.read(io : IO | Path | String) : X; X.new; end
+      end
       @[Chem::RegisterFormat(names: %w(*foo*))]
-      module B; end
-      EOS
-  end
-
-  it "fails on reader not including FormatReader" do
-    message = "A::Reader must include Chem::FormatReader(T)"
-    assert_error <<-EOS, message
-      @[Chem::RegisterFormat]
-      module A
-        class Reader; end
+      module B
+        def self.read(io : IO | Path | String) : X; X.new; end
       end
       EOS
   end
 
-  it "fails on writer not including FormatWriter" do
-    message = "A::Writer must include Chem::FormatWriter(T)"
+  it "fails on format without read or write methods" do
+    message = "Format module must define at least one of: read, read_all, read_info, write"
     assert_error <<-EOS, message
-      @[Chem::RegisterFormat]
-      module A
-        class Writer; end
-      end
+      @[Chem::RegisterFormat(ext: %w(.foo))]
+      module A; end
       EOS
   end
 
@@ -53,22 +56,12 @@ describe Chem::RegisterFormat, tags: %w(register_format codegen) do
     assert_code <<-EOS
       struct A; end
 
-      @[Chem::RegisterFormat]
+      @[Chem::RegisterFormat(ext: %w(.foo))]
       module Foo
-        class Reader
-          include Chem::FormatReader(A)
-
-          def initialize(@io : IO, foo : Int32 = 1, sync_close : Bool = false); end
-
-          protected def decode_entry : A
-            A.new
-          end
+        def self.read(io : IO | Path | String, foo : Int32 = 1) : A
+          A.new
         end
-        class Writer
-          include Chem::FormatWriter(A)
-
-          def initialize(@io : IO, bar : String = "bar", sync_close : Bool = false); end
-          def encode_entry(obj : A) : Nil; end
+        def self.write(io : IO | Path | String, obj : A, bar : String = "bar") : Nil
         end
       end
 
@@ -92,19 +85,13 @@ describe Chem::RegisterFormat, tags: %w(register_format codegen) do
       struct A; end
       struct A::Info; end
 
-      @[Chem::RegisterFormat]
+      @[Chem::RegisterFormat(ext: %w(.foo))]
       module Foo
-        class Reader
-          include Chem::FormatReader(A)
-          include Chem::FormatReader::Headed(A::Info)
-
-          protected def decode_entry : A
-            A.new
-          end
-
-          protected def decode_header : A::Info
-            A::Info.new
-          end
+        def self.read(io : IO | Path | String) : A
+          A.new
+        end
+        def self.read_info(io : IO | Path | String) : A::Info
+          A::Info.new
         end
       end
 
@@ -116,57 +103,21 @@ describe Chem::RegisterFormat, tags: %w(register_format codegen) do
       EOS
   end
 
-  it "generates read methods on attached type" do
-    assert_code <<-EOS
-      struct A; end
-      struct B; end
-
-      @[Chem::RegisterFormat]
-      module Foo
-        class Reader
-          include Chem::FormatReader(A)
-          include Chem::FormatReader::Attached(B)
-
-          protected def decode_entry : A
-            A.new
-          end
-
-          protected def decode_attached : B
-            B.new
-          end
-        end
-      end
-
-      B.from_foo(IO::Memory.new).as(B)
-      B.from_foo("a.foo").as(B)
-      B.read(IO::Memory.new, Foo).as(B)
-      B.read("a.foo", Foo).as(B)
-      B.read("a.foo").as(B)
-      EOS
-  end
-
   it "generates read and write methods on array" do
     assert_code <<-EOS
       struct A; end
 
-      @[Chem::RegisterFormat]
+      @[Chem::RegisterFormat(ext: %w(.foo))]
       module Foo
-        class Reader
-          include Chem::FormatReader(A)
-          include Chem::FormatReader::MultiEntry(A)
-
-          protected def decode_entry : A
-            A.new
-          end
-
-          def skip_entry : Nil; end
+        def self.read(io : IO | Path | String) : A
+          A.new
         end
-
-        class Writer
-          include Chem::FormatWriter(A)
-          include Chem::FormatWriter::MultiEntry(A)
-
-          protected def encode_entry(obj : A) : Nil; end
+        def self.read_all(io : IO | Path | String) : Array(A)
+          [A.new]
+        end
+        def self.write(io : IO | Path | String, obj : A) : Nil
+        end
+        def self.write(io : IO | Path | String, objs : Enumerable(A)) : Nil
         end
       end
 
@@ -187,14 +138,10 @@ describe Chem::RegisterFormat, tags: %w(register_format codegen) do
     assert_error <<-EOS, "undefined method 'from_foo' for Array(A).class"
       struct A; end
 
-      @[Chem::RegisterFormat]
+      @[Chem::RegisterFormat(ext: %w(.foo))]
       module Foo
-        class Reader
-          include Chem::FormatReader(A)
-
-          protected def decode_entry : A
-            2
-          end
+        def self.read(io : IO | Path | String) : A
+          A.new
         end
       end
 
@@ -207,17 +154,13 @@ describe Chem::RegisterFormat, tags: %w(register_format codegen) do
     assert_error <<-EOS, message
       struct A; end
 
-      @[Chem::RegisterFormat]
+      @[Chem::RegisterFormat(ext: %w(.foo))]
       module Foo
-        class Reader
-          include Chem::FormatReader(A)
-          include Chem::FormatReader::MultiEntry(A)
-
-          protected def decode_entry : A
-            A.new
-          end
-
-          def skip_entry : Nil; end
+        def self.read(io : IO | Path | String) : A
+          A.new
+        end
+        def self.read_all(io : IO | Path | String) : Array(A)
+          [A.new]
         end
       end
 
@@ -230,12 +173,9 @@ describe Chem::RegisterFormat, tags: %w(register_format codegen) do
       struct A; end
       struct B; end
 
-      @[Chem::RegisterFormat]
+      @[Chem::RegisterFormat(ext: %w(.foo))]
       module Foo
-        class Writer
-          include Chem::FormatWriter(A | B)
-
-          protected def encode_entry(obj : A | B) : Nil; end
+        def self.write(io : IO | Path | String, obj : A | B) : Nil
         end
       end
 
