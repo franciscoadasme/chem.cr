@@ -30,14 +30,14 @@ describe Chem::RegisterFormat, tags: %w(register_format codegen) do
   end
 
   it "fails on duplicate file pattern" do
-    message = "File pattern *foo* in B is registered to A"
+    message = "File pattern FOO* in B is registered to A"
     assert_error <<-EOS, message
       struct X; end
       @[Chem::RegisterFormat(names: %w(FOO*))]
       module A
         def self.read(io : IO | Path | String) : X; X.new; end
       end
-      @[Chem::RegisterFormat(names: %w(*foo*))]
+      @[Chem::RegisterFormat(names: %w(FOO*))]
       module B
         def self.read(io : IO | Path | String) : X; X.new; end
       end
