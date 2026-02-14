@@ -305,6 +305,7 @@ macro finished
       {% for restype in tres.is_a?(Union) ? tres.types : [tres] %}
         {%
           if restype.is_a?(Generic)
+            # TODO: enforce Array everywhere. there are a few cases where it'd be beneficial to allow other types
             is_supported = %w(Array Enumerable Indexable Iterable Iterator Slice).includes?(restype.name.stringify)
             tres.raise "Generic type restriction #{tres} is not supported in the write method. \
                         Use standard collection types such as Array or Enumerable." unless is_supported
@@ -480,6 +481,8 @@ macro finished
     end
   {% end %}
 
+  # TODO: Improve docs.
+
   # Returns the format module for *path* based on its filename, or `nil`
   # if unknown. File stem matching via `File.match?` is case-sensitive
   # but extension matching is not.
@@ -505,87 +508,52 @@ macro finished
     guess_format?(path) || raise ArgumentError.new("File format not found for #{path}")
   end
 
-  # Build (type_key, is_array, formats) - type_key is etype for single, etype for Array(etype)
-  {% type_format_pairs = [] of Tuple(String, Bool, TypeNode) %}
-  {% for ftype in formats %}
-    {% class_methods = ftype.class.methods %}
-    {% read_m = class_methods.find(&.name.==("read")) %}
-    {% if read_m && read_m.return_type %}
-      {% etype = read_m.return_type.resolve? ||
-                 read_m.return_type.id.split("::").reduce(Chem) { |t, n| t.constant(n) } ||
-                 read_m.return_type.resolve %}
-      {% type_format_pairs << {etype.stringify, false, ftype} %}
-    {% end %}
-    {% read_info_m = class_methods.find(&.name.==("read_info")) %}
-    {% if read_info_m && read_info_m.return_type %}
-      {% etype = read_info_m.return_type.resolve? ||
-                 read_info_m.return_type.id.split("::").reduce(Chem) { |t, n| t.constant(n) } ||
-                 read_info_m.return_type.resolve %}
-      {% type_format_pairs << {etype.stringify, false, ftype} %}
-    {% end %}
-    {% read_structure_m = class_methods.find(&.name.==("read_structure")) %}
-    {% if read_structure_m && read_structure_m.return_type %}
-      {% etype = read_structure_m.return_type.resolve? ||
-                 read_structure_m.return_type.id.split("::").reduce(Chem) { |t, n| t.constant(n) } ||
-                 read_structure_m.return_type.resolve %}
-      {% type_format_pairs << {etype.stringify, false, ftype} %}
-    {% end %}
-    {% read_all_m = class_methods.find(&.name.==("read_all")) %}
-    {% if read_all_m && read_all_m.return_type %}
-      {% ret = read_all_m.return_type %}
-      {% if ret.is_a?(Generic) && ret.name.stringify == "Array" %}
-        {% etype = ret.type_vars[0].resolve? ||
-                   ret.type_vars[0].id.split("::").reduce(Chem) { |t, n| t.constant(n) } ||
-                   ret.type_vars[0].resolve %}
-        {% type_format_pairs << {"Array(#{etype})", true, ftype} %}
-      {% end %}
-    {% end %}
-    {% for write_m in class_methods.select(&.name.==("write")) %}
-      {% if write_m.args.size >= 2 %}
-        {% obj_restriction = write_m.args[1].restriction %}
-        {% if obj_restriction %}
-          {% obj_types = obj_restriction.is_a?(Union) ? obj_restriction.types : [obj_restriction] %}
-          {% for obj_type in obj_types %}
-            {% if obj_type.is_a?(Generic) && obj_type.name.stringify == "Enumerable" %}
-              {% etype = obj_type.type_vars[0].resolve? ||
-                         obj_type.type_vars[0].id.split("::").reduce(Chem) { |t, n| t.constant(n) } ||
-                         obj_type.type_vars[0].resolve %}
-              {% type_format_pairs << {"Array(#{etype})", true, ftype} %}
-            {% else %}
-              {% etype = obj_type.resolve? ||
-                         obj_type.id.split("::").reduce(Chem) { |t, n| t.constant(n) } ||
-                         obj_type.resolve %}
-              {% type_format_pairs << {etype.stringify, false, ftype} %}
-            {% end %}
-          {% end %}
-        {% end %}
-      {% end %}
-    {% end %}
-  {% end %}
+  {% for open_type, format_info in format_table %}
+    {%
+      supported_formats, array_supported_formats = ["", "_multi"].map do |suffix|
+        %w(read write).map(&.+(suffix)).reduce([] of TypeNode) do |acc, key|
+          format_info[key].each { |(ftype, method)| acc << ftype } if format_info[key]
+          acc
+        end.sort_by(&.name).uniq
+      end
+      supported_format_table = {open_type => supported_formats, "Enumerable(#{open_type})".id => array_supported_formats}
+    %}
+    {% for tres, supported_formats in supported_format_table %}
+      {% if supported_formats.size > 0 %}
+        {% format_union = supported_formats.map { |f| "#{f}.class" }.join(" | ").id %}
+        # Returns the format compatible with `{{tres}}` based on *path*.
+        # Raises `ArgumentError` if the format does not support *type* or cannot be determined.
+        #
+        # This method effectively narrows down the union of available formats to those compatible with *type*.
+        # See `.guess_format?(path)` for more details.
+        def Chem.guess_format(path : Path | String, type : {{tres}}.class) : {{format_union}}
+          if format = guess_format?(path)
+            format.as?({{format_union}}) || raise ArgumentError.new("#{format} does not support #{type}")
+          else
+            raise ArgumentError.new("File format not found for #{path}")
+          end
+        end
 
-  # Group by type key and collect unique formats (manual - no group_by in macros)
-  {% seen_keys = [] of String %}
-  {% for pair in type_format_pairs %}
-    {% type_key = pair[0] %}
-    {% unless seen_keys.includes?(type_key) %}
-      {% seen_keys << type_key %}
-      {% formats = [] of TypeNode %}
-      {% for p in type_format_pairs %}
-        {% formats << p[2] if p[0] == type_key %}
-      {% end %}
-      {% formats = formats.uniq %}
-      {% if formats.size > 0 %}
-        {% format_union = formats.map { |f| "#{f}.class" }.join(" | ").id %}
-        def Chem.guess_format(path : Path | String, type : {{type_key.id}}.class) : {{format_union}}
-          (guess_format?(path) || raise ArgumentError.new("File format not found for #{path}")).as({{format_union}})
+        # Returns the format compatible with `{{tres}}` based on *path* or `nil` if the format does not support *type* or cannot be determined.
+        #
+        # This method effectively narrows down the union of available formats to those compatible with *type*.
+        # See `.guess_format?(path)` for more details.
+        def Chem.guess_format?(path : Path | String, type : {{tres}}.class) : {{format_union}} | Nil
+          guess_format?(path).as?({{format_union}})
         end
       {% end %}
     {% end %}
   {% end %}
 
-  # Wildcard: raises at compile time for unsupported types
-  # FIXME: add a list of all readable/writable types
+  {% supported_types = format_table.keys.sort_by(&.name).join(", ").id %}
+
+  # :nodoc:
   def Chem.guess_format(path : Path | String, type : T.class) : NoReturn forall T
-    \{% raise "No format registered for #{T}. Use one of the readable/writable types." %}
+    \{% raise "No format registered for #{T}. Supported types are {{supported_types}}" %}
+  end
+
+  # :nodoc:
+  def Chem.guess_format?(path : Path | String, type : T.class) : NoReturn forall T
+    \{% raise "No format registered for #{T}. Supported types are {{supported_types}}" %}
   end
 end
