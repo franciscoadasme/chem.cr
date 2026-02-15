@@ -244,9 +244,14 @@ macro finished
       {%
         method.raise "Read method must have a return type" unless method.return_type
 
-        rtype = method.return_type.resolve? ||
-                method.return_type.id.split("::").reduce(Chem) { |type, name| type.constant(name) } ||
-                method.return_type.resolve
+        # Resolve the return type relative to the format module
+        rtype = method.return_type.resolve?
+        if !rtype
+          parents = ftype.name.split("::").reduce([] of TypeNode) { |acc, name| acc << (acc[-1] || @top_level).constant(name) }
+          parts = method.return_type.id.split("::")
+          rtype = parents.map(&.constant(parts[0])).find(&.nil?.!) || method.return_type.resolve # trigger error if not found
+          rtype = parts[1..].reduce(rtype) { |type, name| type.constant(name) }
+        end
         args = method.args
 
         format_table[rtype] = format_table[rtype] || {} of String => Array(Tuple(TypeNode, Def))
@@ -273,9 +278,15 @@ macro finished
         returns_array = rtype.is_a?(Generic) && rtype.name.stringify == "Array"
         method.raise "Read method must return an array" unless returns_array
 
-        rtype = rtype.type_vars[0].resolve? ||
-                rtype.type_vars[0].id.split("::").reduce(Chem) { |type, name| type.constant(name) } ||
-                rtype.type_vars[0].resolve
+        # Resolve the array's element type relative to the format module
+        type_var = rtype.type_vars[0]
+        element_type = type_var.resolve?
+        if !rtype
+          parents = ftype.name.split("::").reduce([] of TypeNode) { |acc, name| acc << (acc[-1] || @top_level).constant(name) }
+          parts = type_var.id.split("::")
+          rtype = parents.map(&.constant(parts[0])).find(&.nil?.!) || type_var.resolve # trigger error if not found
+          rtype = parts[1..].reduce(rtype) { |type, name| type.constant(name) }
+        end
         args = method.args
 
         format_table[rtype] = format_table[rtype] || {} of String => Array(Tuple(TypeNode, Def))
@@ -310,9 +321,15 @@ macro finished
             tres.raise "Generic type restriction #{tres} is not supported in the write method. \
                         Use standard collection types such as Array or Enumerable." unless is_supported
 
-            wtype = restype.type_vars[0].resolve? ||
-                    restype.type_vars[0].id.split("::").reduce(Chem) { |type, name| type.constant(name) } ||
-                    restype.type_vars[0].resolve
+            # Resolve the collection's element type relative to the format module
+            type_var = restype.type_vars[0]
+            wtype = type_var.resolve?
+            if !wtype
+              parents = ftype.name.split("::").reduce([] of TypeNode) { |acc, name| acc << (acc[-1] || @top_level).constant(name) }
+              parts = type_var.id.split("::")
+              wtype = parents.map(&.constant(parts[0])).find(&.nil?.!) || type_var.resolve # trigger error if not found
+              wtype = parts[1..].reduce(wtype) { |type, name| type.constant(name) }
+            end
 
             format_table[wtype] = format_table[wtype] || {} of String => Array(Tuple(TypeNode, Def))
             format_table[wtype]["write_multi"] = format_table[wtype]["write_multi"] || [] of Tuple(TypeNode, Def)
@@ -321,9 +338,14 @@ macro finished
             open_type = "#{restype.name}(T)"
             keyword = {"Array" => "class", "Slice" => "struct"}[restype.name.stringify] || "module"
           else
-            wtype = restype.resolve? ||
-                    restype.id.split("::").reduce(Chem) { |type, name| type.constant(name) } ||
-                    restype.resolve
+            # Resolve the type restriction relative to the format module
+            wtype = restype.resolve?
+            if !wtype
+              parents = ftype.name.split("::").reduce([] of TypeNode) { |acc, name| acc << (acc[-1] || @top_level).constant(name) }
+              parts = restype.id.split("::")
+              wtype = parents.map(&.constant(parts[0])).find(&.nil?.!) || restype.resolve # trigger error if not found
+              wtype = parts[1..].reduce(wtype) { |type, name| type.constant(name) }
+            end
 
             format_table[wtype] = format_table[wtype] || {} of String => Array(Tuple(TypeNode, Def))
             format_table[wtype]["write"] = format_table[wtype]["write"] || [] of Tuple(TypeNode, Def)
