@@ -28,132 +28,109 @@ module Chem::Mol
 
   # Reads the structure from *io*.
   # Supports both V2000 and V3000 variants.
-  def self.read(io : IO | Path | String) : Structure
-    Reader.open(io) do |r|
-      r.read_entry
+  def self.read(io : IO) : Structure
+    pull = PullParser.new(io)
+    raise IO::EOFError.new if pull.eof?
+
+    title = pull.line!.strip
+    pull.consume_line # skip software
+    comment = pull.consume_line.line!.strip.presence
+
+    pull.consume_line
+    variant = pull.at(33, 6).parse("Invalid Mol variant %{token}") do |str|
+      case str.strip
+      when "V2000" then V2000
+      when "V3000" then V3000
+      end
+    end
+
+    structure = Structure.build(
+      guess_bonds: false,
+      guess_names: false,
+      source_file: (file = io).is_a?(File) ? file.path : nil,
+      use_templates: false,
+    ) do |builder|
+      if title.matches?(/^[A-Z0-9]{3,4}$/)
+        builder.title comment || ""
+        builder.residue title
+      else
+        builder.title title
+      end
+      variant.parse pull, builder
+    end
+
+    if structure.atoms.all?(&.z.zero?) # non-3D
+      path = (file = io).is_a?(File) ? "file #{file.path}" : "content"
+      Log.warn { "Detected non-3D molecule in MOL #{path}" }
+    end
+
+    structure
+  end
+
+  # :ditto:
+  def self.read(path : Path | String) : Structure
+    File.open(path) do |file|
+      read(file)
     end
   end
 
   # Writes a structure or group of atoms to *io*.
   #
   # The CTAB format is specified via *variant*: V2000 (legacy) or V3000.
-  def self.write(
-    io : IO | Path | String,
-    obj : Structure | AtomView,
-    variant : Chem::Mol::Variant = :v2000,
-  ) : Nil
-    Writer.open(io, variant: variant) do |w|
-      w << obj
+  def self.write(io : IO, obj : Structure | AtomView, variant : Mol::Variant = :v2000) : Nil
+    atoms = obj.is_a?(AtomView) ? obj : obj.atoms
+    write_header(io, obj, variant)
+    case variant
+    in .v2000? then V2000.write(io, atoms)
+    in .v3000? then V3000.write(io, atoms)
     end
   end
 
-  class Reader
-    include FormatReader(Structure)
-
-    def initialize(@io : IO, @sync_close : Bool = false)
-      @pull = PullParser.new @io
-    end
-
-    # :nodoc:
-    protected def initialize(@pull : PullParser, @sync_close : Bool = false)
-      @io = @pull.io
-    end
-
-    private def decode_entry : Structure
-      raise IO::EOFError.new if @pull.eof?
-      title = @pull.line!.strip
-      @pull.consume_line # skip software
-      comment = @pull.consume_line.line!.strip.presence
-
-      @pull.consume_line
-      variant = @pull.at(33, 6).parse("Invalid Mol variant %{token}") do |str|
-        case str.strip
-        when "V2000" then V2000
-        when "V3000" then V3000
-        end
-      end
-
-      structure = Structure.build(
-        guess_bonds: false,
-        guess_names: false,
-        source_file: (file = @io).is_a?(File) ? file.path : nil,
-        use_templates: false,
-      ) do |builder|
-        if title.matches?(/^[A-Z0-9]{3,4}$/)
-          builder.title comment || ""
-          builder.residue title
-        else
-          builder.title title
-        end
-        variant.parse @pull, builder
-      end
-
-      if structure.atoms.all?(&.z.zero?) # non-3D
-        path = (io = @io).is_a?(File) ? "file #{io.path}" : "content"
-        Log.warn { "Detected non-3D molecule in MOL #{path}" }
-      end
-
-      structure
+  # :ditto:
+  def self.write(io : Path | String, obj : Structure | AtomView, variant : Mol::Variant = :v2000) : Nil
+    File.open(io, "w") do |file|
+      write(file, obj, variant: variant)
     end
   end
 
-  class Writer
-    include FormatWriter(AtomContainer)
+  private def self.write_header(io : IO, atoms : Structure | AtomView, variant : Variant) : Nil
+    # FIXME: atoms.n_residues was removed!
+    n_residues = atoms.is_a?(Structure) ? atoms.residues.size : atoms.n_residues
+    single_residue = n_residues == 1
+    title = atoms.title.presence.try(&.gsub(/ *\n */, ' ')) if atoms.is_a?(Structure)
 
-    def initialize(
-      @io : IO,
-      @variant : Chem::Mol::Variant = :v2000,
-      @sync_close : Bool = false,
-    )
-    end
+    # title line
+    io.puts single_residue ? atoms.residues[0].name : title
 
-    def encode_entry(obj : AtomContainer) : Nil
-      atoms = obj.is_a?(AtomView) ? obj : obj.atoms
-      write_header_block obj
-      case @variant
-      in .v2000? then V2000.encode(@io, atoms)
-      in .v3000? then V3000.encode(@io, atoms)
-      end
-    end
+    # program timestamp line
+    io.printf "%2s", nil        # user's initials
+    io.printf "%-8s", "chem.cr" # program name
+    Time.local.to_s io, "%m%d%y%H%M"
+    io.puts atoms.atoms.all?(&.z.zero?) ? "2D" : "3D"
 
-    private def write_header_block(atoms : AtomContainer) : Nil
-      n_residues = atoms.is_a?(Structure) ? atoms.residues.size : atoms.n_residues
-      single_residue = n_residues == 1
-      title = atoms.title.presence.try(&.gsub(/ *\n */, ' ')) if atoms.is_a?(Structure)
+    # comment line
+    io.puts single_residue ? title : nil
 
-      # title line
-      @io.puts single_residue ? atoms.residues[0].name : title
-
-      # program timestamp line
-      @io.printf "%2s", nil        # user's initials
-      @io.printf "%-8s", "chem.cr" # program name
-      Time.local.to_s @io, "%m%d%y%H%M"
-      @io.puts atoms.atoms.all?(&.z.zero?) ? "2D" : "3D"
-
-      # comment line
-      @io.puts single_residue ? title : nil
-
-      # counts line
-      @io.printf "%3d", (@variant.v2000? ? atoms.atoms.size : 0)
-      @io.printf "%3d", (@variant.v2000? ? atoms.bonds.size : 0)
-      @io.printf "%3d", 0   # number of atom list
-      @io.printf "%3d", 0   # obsolete
-      @io.printf "%3d", 0   # chiral flag
-      @io.printf "%3d", 0   # obsolete
-      @io.printf "%3d", 0   # obsolete
-      @io.printf "%3d", 0   # obsolete
-      @io.printf "%3d", 0   # obsolete
-      @io.printf "%3d", 0   # obsolete
-      @io.printf "%3d", 999 # number of lines of additional properties (obsolete)
-      @io.printf "%6s", @variant
-      @io.puts
-    end
+    # counts line
+    io.printf "%3d", (variant.v2000? ? atoms.atoms.size : 0)
+    io.printf "%3d", (variant.v2000? ? atoms.bonds.size : 0)
+    io.printf "%3d", 0   # number of atom list
+    io.printf "%3d", 0   # obsolete
+    io.printf "%3d", 0   # chiral flag
+    io.printf "%3d", 0   # obsolete
+    io.printf "%3d", 0   # obsolete
+    io.printf "%3d", 0   # obsolete
+    io.printf "%3d", 0   # obsolete
+    io.printf "%3d", 0   # obsolete
+    io.printf "%3d", 999 # number of lines of additional properties (obsolete)
+    io.printf "%6s", variant
+    io.puts
   end
 
   private module V2000
     FORMAL_CHARGE_MAP = {0 => 0, 3 => 1, 2 => 2, 1 => 3, 5 => -1, 6 => -2, 7 => -3}
 
-    def self.encode(io : IO, atoms : AtomView) : Nil
+    def self.write(io : IO, atoms : AtomView) : Nil
       atom_index_map = atoms.each.with_index.to_h.transform_values(&.succ)
 
       atoms.each do |atom|
@@ -296,7 +273,7 @@ module Chem::Mol
       end
     end
 
-    def self.encode(io : IO, atoms : AtomView) : Nil
+    def self.write(io : IO, atoms : AtomView) : Nil
       atom_index_map = atoms.each.with_index.to_h.transform_values(&.succ)
 
       io.puts "M  V30 BEGIN CTAB"

@@ -228,7 +228,7 @@ describe Chem::VASP::Poscar do
 
     it "fails when there is a missing element in the specified order" do
       io = IO::Memory.new
-      expect_raises ArgumentError, "<Element Cl> not found in specified order" do
+      expect_raises ArgumentError, "<Element Cl> not found in the specified order" do
         Chem::VASP::Poscar.write io, structure, order: [Chem::PeriodicTable::H]
       end
     end

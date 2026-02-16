@@ -59,9 +59,10 @@ module Chem::SDF
     end
 
     private def decode_entry : Structure
-      structure = Mol::Reader.new(@pull).read_entry
+      # FIXME: line tracking is broken as pull is shared with Mol.read
+      structure = Mol.read(@pull.io)
       structure.metadata.merge! parse_metadata
-      @pull.expect("$$$$").consume_line
+      @pull.expect("$$$$")
       structure
     end
 
