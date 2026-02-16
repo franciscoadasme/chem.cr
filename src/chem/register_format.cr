@@ -280,7 +280,7 @@ macro finished
 
         # Resolve the array's element type relative to the format module
         type_var = rtype.type_vars[0]
-        element_type = type_var.resolve?
+        rtype = type_var.resolve?
         if !rtype
           parents = ftype.name.split("::").reduce([] of TypeNode) { |acc, name| acc << (acc[-1] || @top_level).constant(name) }
           parts = type_var.id.split("::")
