@@ -237,6 +237,8 @@ macro finished
       # Validate that format module has at least one read or write method
       reads_or_writes = class_methods.any? { |m| m.name.starts_with?("read") || m.name == "write" }
       ann.raise "Format module must define at least one of: read, read_all, read_info, write" unless reads_or_writes
+
+      type_parents = ftype.name.split("::").reduce([] of TypeNode) { |acc, name| acc << (acc[-1] || @top_level).constant(name) }
     %}
 
     # Generate `.from_*` methods on readable types
@@ -247,11 +249,11 @@ macro finished
         # Resolve the return type relative to the format module
         rtype = method.return_type.resolve?
         if !rtype
-          parents = ftype.name.split("::").reduce([] of TypeNode) { |acc, name| acc << (acc[-1] || @top_level).constant(name) }
           parts = method.return_type.id.split("::")
-          rtype = parents.map(&.constant(parts[0])).find(&.nil?.!) || method.return_type.resolve # trigger error if not found
+          rtype = type_parents.map(&.constant(parts[0])).find(&.nil?.!) || method.return_type.resolve # trigger error if not found
           rtype = parts[1..].reduce(rtype) { |type, name| type.constant(name) }
         end
+        # FIXME: args should be scoped to the format module as they will be used within the readable/writable type
         args = method.args
 
         format_table[rtype] = format_table[rtype] || {} of String => Array(Tuple(TypeNode, Def))
@@ -282,9 +284,8 @@ macro finished
         type_var = rtype.type_vars[0]
         rtype = type_var.resolve?
         if !rtype
-          parents = ftype.name.split("::").reduce([] of TypeNode) { |acc, name| acc << (acc[-1] || @top_level).constant(name) }
           parts = type_var.id.split("::")
-          rtype = parents.map(&.constant(parts[0])).find(&.nil?.!) || type_var.resolve # trigger error if not found
+          rtype = type_parents.map(&.constant(parts[0])).find(&.nil?.!) || type_var.resolve # trigger error if not found
           rtype = parts[1..].reduce(rtype) { |type, name| type.constant(name) }
         end
         args = method.args
@@ -325,9 +326,8 @@ macro finished
             type_var = restype.type_vars[0]
             wtype = type_var.resolve?
             if !wtype
-              parents = ftype.name.split("::").reduce([] of TypeNode) { |acc, name| acc << (acc[-1] || @top_level).constant(name) }
               parts = type_var.id.split("::")
-              wtype = parents.map(&.constant(parts[0])).find(&.nil?.!) || type_var.resolve # trigger error if not found
+              wtype = type_parents.map(&.constant(parts[0])).find(&.nil?.!) || type_var.resolve # trigger error if not found
               wtype = parts[1..].reduce(wtype) { |type, name| type.constant(name) }
             end
 
@@ -341,9 +341,8 @@ macro finished
             # Resolve the type restriction relative to the format module
             wtype = restype.resolve?
             if !wtype
-              parents = ftype.name.split("::").reduce([] of TypeNode) { |acc, name| acc << (acc[-1] || @top_level).constant(name) }
               parts = restype.id.split("::")
-              wtype = parents.map(&.constant(parts[0])).find(&.nil?.!) || restype.resolve # trigger error if not found
+              wtype = type_parents.map(&.constant(parts[0])).find(&.nil?.!) || restype.resolve # trigger error if not found
               wtype = parts[1..].reduce(wtype) { |type, name| type.constant(name) }
             end
 
@@ -538,6 +537,7 @@ macro finished
           acc
         end.sort_by(&.name).uniq
       end
+      # TODO: Add support for any collection type. Group format_info by container type.
       supported_format_table = {open_type => supported_formats, "Enumerable(#{open_type})".id => array_supported_formats}
     %}
     {% for tres, supported_formats in supported_format_table %}
@@ -549,6 +549,7 @@ macro finished
         # This method effectively narrows down the union of available formats to those compatible with *type*.
         # See `.guess_format?(path)` for more details.
         def Chem.guess_format(path : Path | String, type : {{tres}}.class) : {{format_union}}
+          # TODO: Add read/write mode overrides.
           if format = guess_format?(path)
             format.as?({{format_union}}) || raise ArgumentError.new("#{format} does not support #{type}")
           else
