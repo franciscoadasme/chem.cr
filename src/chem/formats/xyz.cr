@@ -1,40 +1,153 @@
 @[Chem::RegisterFormat(ext: %w(.xyz), module_api: true)]
 module Chem::XYZ
   # Yields each structure in *io*.
-  def self.each(
-    io : IO | Path | String,
-    guess_bonds : Bool = false,
-    guess_names : Bool = false,
-    & : Structure ->
-  ) : Nil
-    Reader.open(io, guess_bonds, guess_names) do |reader|
-      reader.each do |struc|
+  def self.each(io : IO, guess_bonds : Bool = false, guess_names : Bool = false, & : Structure ->) : Nil
+    loop { yield read(io, guess_bonds, guess_names) } rescue IO::EOFError
+  end
+
+  # :ditto:
+  def self.each(path : Path | String, guess_bonds : Bool = false, guess_names : Bool = false, & : Structure ->) : Nil
+    File.open(path) do |file|
+      each(file, guess_bonds, guess_names) do |struc|
         yield struc
       end
     end
   end
 
-  # Returns the first structure from *io*. Use `read_all` or `each` for multiple.
-  def self.read(
-    io : IO | Path | String,
-    guess_bonds : Bool = false,
-    guess_names : Bool = false,
-  ) : Structure
-    Reader.open(io, guess_bonds, guess_names) do |r|
-      r.read_entry
+  # Returns the next structure from *io*.
+  # Use `read_all` or `each` for multiple.
+  def self.read(io : IO, guess_bonds : Bool = false, guess_names : Bool = false) : Structure
+    # TODO: implement default XYZ reading and call XYZ::Extended.read if extended is detected
+    pull = PullParser.new(io)
+    raise IO::EOFError.new if pull.eof?
+
+    n_atoms = pull.next_i
+
+    pull.consume_line
+    ext_parser = ConfigurationParser.new(pull)
+    ext_parser.parse
+
+    struc = Structure.build(
+      guess_bonds: guess_bonds,
+      guess_names: guess_names,
+      source_file: (file = io).is_a?(File) ? file.path : nil,
+      use_templates: false,
+    ) do |builder|
+      ext_parser.cell.try { |cell| builder.cell cell }
+
+      n_atoms.times do
+        constraint = nil
+        chain = resname = resid = name = number = typename = mass = vdw_radius = nil
+        ele = PeriodicTable::C
+        pos = Spatial::Vec3.zero
+        formal_charge = 0
+        partial_charge = temperature_factor = 0.0
+        metadata = Metadata.new
+        occupancy = 1.0
+
+        pull.consume_line
+        ext_parser.fields.each do |field|
+          case field.name
+          when "species"
+            pull.consume_token
+            ele = PeriodicTable[pull.int? || pull.str]? ||
+                  pull.error("Unknown element")
+          when "pos"
+            pos = Spatial::Vec3.new pull.next_f, pull.next_f, pull.next_f
+          when "chain"
+            chain = pull.consume_token.expect(/^[a-zA-Z0-9]$/).char
+          when "constraint"
+            case {pull.next_bool, pull.next_bool, pull.next_bool}
+            when {true, true, true}    then constraint = Spatial::Direction::XYZ
+            when {false, true, true}   then constraint = Spatial::Direction::YZ
+            when {true, false, true}   then constraint = Spatial::Direction::XZ
+            when {true, true, false}   then constraint = Spatial::Direction::XY
+            when {false, false, true}  then constraint = Spatial::Direction::Z
+            when {false, true, false}  then constraint = Spatial::Direction::Y
+            when {true, false, false}  then constraint = Spatial::Direction::X
+            when {false, false, false} then constraint = nil
+            end
+          when "charge"
+            if field.type == Int32
+              formal_charge = pull.next_i
+            else
+              partial_charge = pull.next_f
+            end
+          when "formal_charge"
+            formal_charge = pull.next_i
+          when "mass"
+            mass = pull.next_f
+          when "name"
+            name = pull.next_s
+          when "occupancy"
+            occupancy = pull.next_f
+          when "partial_charge"
+            partial_charge = pull.next_f
+          when "resid"
+            resid = pull.next_i
+          when "resname"
+            resname = pull.next_s
+          when "number"
+            number = pull.next_i
+          when "temperature_factor", "bfactor"
+            temperature_factor = pull.next_f
+          when "typename"
+            typename = pull.next_s
+          when "vdw_radius"
+            vdw_radius = pull.next_f
+          else
+            value = if field.cols > 1
+                      (0...field.cols).map { pull.consume_token.parse(field.type) }
+                    else
+                      pull.consume_token.parse(field.type)
+                    end
+            metadata[field.name] = value
+          end
+        end
+
+        chain.try { |ch| builder.chain ch }
+        if i = resid
+          builder.residue resname || "UNK", i
+        elsif resname && builder.current_residue.try(&.name) != resname
+          builder.residue resname
+        end
+
+        atom = builder.atom ele, pos
+        {% for name in %w(constraint formal_charge mass name occupancy
+                         partial_charge number temperature_factor typename
+                         vdw_radius) %}
+          atom.{{name.id}} = {{name.id}} if {{name.id}}
+        {% end %}
+        atom.metadata.merge! metadata
+      end
+    end
+
+    ext_parser.title.try { |title| struc.title = title }
+    struc.metadata.merge! ext_parser.metadata
+
+    struc
+  end
+
+  # :ditto:
+  def self.read(path : Path | String, guess_bonds : Bool = false, guess_names : Bool = false) : Structure
+    File.open(path) do |file|
+      read(file, guess_bonds, guess_names)
     end
   end
 
   # Returns all structures in *io*.
-  def self.read_all(
-    io : IO | Path | String,
-    guess_bonds : Bool = false,
-    guess_names : Bool = false,
-  ) : Array(Structure)
-    Reader.open(io, guess_bonds, guess_names) do |reader|
-      ary = [] of Structure
-      reader.each { |s| ary << s }
-      ary
+  def self.read_all(io : IO, guess_bonds : Bool = false, guess_names : Bool = false) : Array(Structure)
+    ary = [] of Structure
+    each(io, guess_bonds, guess_names) do |struc|
+      ary << struc
+    end
+    ary
+  end
+
+  # :ditto:
+  def self.read_all(path : Path | String, guess_bonds : Bool = false, guess_names : Bool = false) : Array(Structure)
+    File.open(path) do |file|
+      read_all(file, guess_bonds, guess_names)
     end
   end
 
@@ -43,307 +156,173 @@ module Chem::XYZ
   # *extended* enables the [extended XYZ](https://github.com/libAtoms/extxyz) specification, which allows to specify additional data and atom properties in the comment line.
   # If given, *fields* specifies which atom properties to write in extended mode, otherwise all metadata properties are written.
   def self.write(
-    io : IO | Path | String,
-    obj : Structure | AtomView,
+    io : IO,
+    obj : AtomView | Structure,
     extended : Bool = false,
     fields : Array(String) = [] of String,
   ) : Nil
-    Writer.open(io, extended, fields) do |writer|
-      writer << obj
+    # TODO: implement default XYZ and call XYZ::Extended.write if extended is true
+    atoms = obj.is_a?(AtomView) ? obj : obj.atoms
+
+    io.puts atoms.size
+    if obj.is_a?(Structure)
+      if extended
+        # TODO: gather all metadata keys from all atoms
+        fields = fields.empty? ? atoms.first.metadata.keys : fields
+        write_extended(io, obj, fields)
+      else
+        io.puts obj.title.gsub(/ *\n */, ' ')
+      end
+    else
+      io.puts
+    end
+
+    atoms.each do |atom|
+      io.printf "%-2s %8.3f %8.3f %8.3f", atom.element.symbol, atom.x, atom.y, atom.z
+      fields.each do |name|
+        io << ' '
+        case name
+        when "chain"
+          io << atom.chain.id
+        when "constraint"
+          {Spatial::Direction::X, Spatial::Direction::Y, Spatial::Direction::Z}
+            .each_with_index do |axis, i|
+              flag = atom.constraint.try(&.includes?(axis)) || false
+              io << ' ' if i > 0
+              io << (flag ? 'T' : 'F')
+            end
+        when "formal_charge", "charge"
+          io.printf "%2d", atom.formal_charge
+        when "mass"
+          io.printf "%8.4f", atom.mass
+        when "name"
+          io.printf "%-4s", atom.name
+        when "occupancy"
+          io.printf "%6.2f", atom.occupancy
+        when "partial_charge"
+          io.printf "%8.4f", atom.partial_charge
+        when "resid"
+          io.printf "%4d", atom.residue.number
+        when "resname"
+          io.printf "%-4s", atom.residue.name
+        when "number"
+          io.printf "%5d", atom.number
+        when "temperature_factor", "bfactor"
+          io.printf "%6.2f", atom.temperature_factor
+        when "typename"
+          io.printf "%4s", atom.typename
+        when "vdw_radius"
+          io.printf "%8.3f", atom.vdw_radius
+        else
+          value = atom.metadata[name]? ||
+                  raise "Property #{name} not found in metadata of #{atom}"
+          (value.as_a? || {value}).each do |ele|
+            case type = ele.raw.class
+            when Bool.class    then io << (ele.raw ? 'T' : 'F')
+            when Int32.class   then io.printf "%5d", ele.raw
+            when Float64.class then io.printf "%8g", ele.raw
+            when String.class
+              if ele.as_s.strip.count(&.whitespace?) > 0
+                raise "Cannot write string with whitespace in extended XYZ"
+              end
+              io << ele.as_s.strip
+            else
+              raise "Cannot write #{type} in extended XYZ"
+            end
+          end
+        end
+      end
+      io.puts
     end
   end
 
   # :ditto:
   def self.write(
-    io : IO | Path | String,
+    io : IO,
     objs : Enumerable(Structure),
     extended : Bool = false,
     fields : Array(String) = [] of String,
   ) : Nil
-    Writer.open(io, extended, fields) do |writer|
-      objs.each { |struc| writer << struc }
+    objs.each do |struc|
+      write(io, struc, extended, fields)
     end
   end
 
-  class Reader
-    include FormatReader(Structure)
-    include FormatReader::MultiEntry(Structure)
-
-    def initialize(
-      @io : IO,
-      @guess_bonds : Bool = false,
-      @guess_names : Bool = false,
-      @sync_close : Bool = false,
-    )
-      @pull = PullParser.new(@io)
-    end
-
-    protected def decode_entry : Structure
-      raise IO::EOFError.new if @pull.eof?
-
-      n_atoms = @pull.next_i
-
-      @pull.consume_line
-      ext_parser = ConfigurationParser.new(@pull)
-      ext_parser.parse
-
-      structure = Structure.build(
-        guess_bonds: @guess_bonds,
-        guess_names: @guess_names,
-        source_file: (file = @io).is_a?(File) ? file.path : nil,
-        use_templates: false,
-      ) do |builder|
-        ext_parser.cell.try { |cell| builder.cell cell }
-
-        n_atoms.times do
-          constraint = nil
-          chain = resname = resid = name = number = typename = mass = vdw_radius = nil
-          ele = PeriodicTable::C
-          pos = Spatial::Vec3.zero
-          formal_charge = 0
-          partial_charge = temperature_factor = 0.0
-          metadata = Metadata.new
-          occupancy = 1.0
-
-          @pull.consume_line
-          ext_parser.fields.each do |field|
-            case field.name
-            when "species"
-              @pull.consume_token
-              ele = PeriodicTable[@pull.int? || @pull.str]? ||
-                    @pull.error("Unknown element")
-            when "pos"
-              pos = Spatial::Vec3.new @pull.next_f, @pull.next_f, @pull.next_f
-            when "chain"
-              chain = @pull.consume_token.expect(/^[a-zA-Z0-9]$/).char
-            when "constraint"
-              case {@pull.next_bool, @pull.next_bool, @pull.next_bool}
-              when {true, true, true}    then constraint = Spatial::Direction::XYZ
-              when {false, true, true}   then constraint = Spatial::Direction::YZ
-              when {true, false, true}   then constraint = Spatial::Direction::XZ
-              when {true, true, false}   then constraint = Spatial::Direction::XY
-              when {false, false, true}  then constraint = Spatial::Direction::Z
-              when {false, true, false}  then constraint = Spatial::Direction::Y
-              when {true, false, false}  then constraint = Spatial::Direction::X
-              when {false, false, false} then constraint = nil
-              end
-            when "charge"
-              if field.type == Int32
-                formal_charge = @pull.next_i
-              else
-                partial_charge = @pull.next_f
-              end
-            when "formal_charge"
-              formal_charge = @pull.next_i
-            when "mass"
-              mass = @pull.next_f
-            when "name"
-              name = @pull.next_s
-            when "occupancy"
-              occupancy = @pull.next_f
-            when "partial_charge"
-              partial_charge = @pull.next_f
-            when "resid"
-              resid = @pull.next_i
-            when "resname"
-              resname = @pull.next_s
-            when "number"
-              number = @pull.next_i
-            when "temperature_factor", "bfactor"
-              temperature_factor = @pull.next_f
-            when "typename"
-              typename = @pull.next_s
-            when "vdw_radius"
-              vdw_radius = @pull.next_f
-            else
-              value = if field.cols > 1
-                        (0...field.cols).map { @pull.consume_token.parse(field.type) }
-                      else
-                        @pull.consume_token.parse(field.type)
-                      end
-              metadata[field.name] = value
-            end
-          end
-
-          chain.try { |ch| builder.chain ch }
-          if i = resid
-            builder.residue resname || "UNK", i
-          elsif resname && builder.current_residue.try(&.name) != resname
-            builder.residue resname
-          end
-
-          atom = builder.atom ele, pos
-          {% for name in %w(constraint formal_charge mass name occupancy
-                           partial_charge number temperature_factor typename
-                           vdw_radius) %}
-            atom.{{name.id}} = {{name.id}} if {{name.id}}
-          {% end %}
-          atom.metadata.merge! metadata
-        end
-        @pull.consume_line
-      end
-
-      ext_parser.title.try { |title| structure.title = title }
-      structure.metadata.merge! ext_parser.metadata
-
-      structure
-    end
-
-    def skip_entry : Nil
-      return if @pull.eof?
-      n_atoms = @pull.next_i
-      (n_atoms + 2).times { @pull.consume_line }
+  # :ditto:
+  def self.write(
+    path : Path | String,
+    obj : AtomView | Structure | Enumerable(Structure),
+    extended : Bool = false,
+    fields : Array(String) = [] of String,
+  ) : Nil
+    File.open(path, "w") do |file|
+      write(file, obj, extended, fields)
     end
   end
 
-  class Writer
-    include FormatWriter(AtomContainer)
-    include FormatWriter::MultiEntry(AtomContainer)
+  private TYPE_CHAR_MAP = {Bool => 'L', Int32 => 'I', Float64 => 'R', String => 'S'}
 
-    private TYPE_CHAR_MAP = {Bool => 'L', Int32 => 'I', Float64 => 'R', String => 'S'}
-
-    def initialize(@io : IO,
-                   @extended : Bool = false,
-                   @fields : Array(String) = [] of String,
-                   @sync_close : Bool = false)
-    end
-
-    protected def encode_entry(obj : AtomContainer) : Nil
-      atoms = obj.is_a?(AtomView) ? obj : obj.atoms
-
-      @io.puts atoms.size
-      if obj.is_a?(Structure)
-        if @extended
-          # FIXME: gather fields from all atoms
-          @fields = atoms.first.metadata.keys if @fields.empty?
-          write_extended_config(obj)
-        else
-          @io.puts obj.title.gsub(/ *\n */, ' ')
-        end
+  private def self.write_atom_properties(io : IO, fields : Array(String), metadata : Metadata) : Nil
+    io << "species:S:1" << ':' << "pos:R:3"
+    fields.each do |name|
+      io << ':' << name << ':'
+      case name
+      when "chain"                         then io << "S:1"
+      when "constraint"                    then io << "L:3"
+      when "formal_charge", "charge"       then io << "I:1"
+      when "mass"                          then io << "F:1"
+      when "name"                          then io << "S:1"
+      when "occupancy"                     then io << "F:1"
+      when "partial_charge"                then io << "F:1"
+      when "resid"                         then io << "I:1"
+      when "resname"                       then io << "S:1"
+      when "number"                        then io << "I:1"
+      when "temperature_factor", "bfactor" then io << "F:1"
+      when "typename"                      then io << "S:1"
+      when "vdw_radius"                    then io << "F:1"
       else
-        @io.puts
-      end
-
-      atoms.each do |atom|
-        @io.printf "%-2s %8.3f %8.3f %8.3f", atom.element.symbol, atom.x, atom.y, atom.z
-        @fields.each do |name|
-          @io << ' '
-          case name
-          when "chain"
-            @io << atom.chain.id
-          when "constraint"
-            {Spatial::Direction::X, Spatial::Direction::Y, Spatial::Direction::Z}
-              .each_with_index do |axis, i|
-                flag = atom.constraint.try(&.includes?(axis)) || false
-                @io << ' ' if i > 0
-                @io << (flag ? 'T' : 'F')
-              end
-          when "formal_charge", "charge"
-            @io.printf "%2d", atom.formal_charge
-          when "mass"
-            @io.printf "%8.4f", atom.mass
-          when "name"
-            @io.printf "%-4s", atom.name
-          when "occupancy"
-            @io.print "%6.2f", atom.occupancy
-          when "partial_charge"
-            @io.printf "%8.4f", atom.partial_charge
-          when "resid"
-            @io.printf "%4d", atom.residue.number
-          when "resname"
-            @io.printf "%-4s", atom.residue.name
-          when "number"
-            @io.printf "%5d", atom.number
-          when "temperature_factor", "bfactor"
-            @io.printf "%6.2f", atom.temperature_factor
-          when "typename"
-            @io.printf "%4s", atom.typename
-          when "vdw_radius"
-            @io.printf "%8.3f", atom.vdw_radius
+        if value = metadata[name]?
+          if arr = value.as_a?
+            raise ArgumentError.new("Nested arrays are not supported") if arr[0].as_a?
+            type = arr[0].raw.class
+            cols = arr.size
           else
-            value = atom.metadata[name]? ||
-                    raise "Property #{name} not found in metadata of #{atom}"
-            (value.as_a? || {value}).each do |ele|
-              case type = ele.raw.class
-              when Bool.class    then @io << (ele.raw ? 'T' : 'F')
-              when Int32.class   then @io.printf "%5d", ele.raw
-              when Float64.class then @io.printf "%8g", ele.raw
-              when String.class
-                if ele.as_s.strip.count(&.whitespace?) > 0
-                  raise "Cannot write string with whitespace in extended XYZ"
-                end
-                @io << ele.as_s.strip
-              else
-                raise "Cannot write #{type} in extended XYZ"
-              end
-            end
+            type = value.raw.class
+            cols = 1
           end
-        end
-        @io.puts
-      end
-    end
 
-    private def write_atom_properties(metadata : Metadata) : Nil
-      @io << "species:S:1" << ':' << "pos:R:3"
-      @fields.each do |name|
-        @io << ':' << name << ':'
-        case name
-        when "chain"                         then @io << "S:1"
-        when "constraint"                    then @io << "L:3"
-        when "formal_charge", "charge"       then @io << "I:1"
-        when "mass"                          then @io << "F:1"
-        when "name"                          then @io << "S:1"
-        when "occupancy"                     then @io << "F:1"
-        when "partial_charge"                then @io << "F:1"
-        when "resid"                         then @io << "I:1"
-        when "resname"                       then @io << "S:1"
-        when "number"                        then @io << "I:1"
-        when "temperature_factor", "bfactor" then @io << "F:1"
-        when "typename"                      then @io << "S:1"
-        when "vdw_radius"                    then @io << "F:1"
+          type_char = TYPE_CHAR_MAP[type]? || raise "Cannot write #{type} in extended XYZ"
+          io << type_char << ':' << cols
         else
-          if value = metadata[name]?
-            if arr = value.as_a?
-              raise ArgumentError.new("Nested arrays are not supported") if arr[0].as_a?
-              type = arr[0].raw.class
-              cols = arr.size
-            else
-              type = value.raw.class
-              cols = 1
-            end
-
-            type = TYPE_CHAR_MAP[type]? || raise "Cannot write #{type} in extended XYZ"
-            @io << type << ':' << cols
-          else
-            raise ArgumentError.new("Property #{name} not found in atom metadata")
-          end
+          raise ArgumentError.new("Property #{name} not found in atom metadata")
         end
       end
-    end
-
-    private def write_extended_config(structure : Structure) : Nil
-      @io << "Title="
-      structure.title.gsub(/ *\n */, ' ').inspect @io
-      @io << ' ' << "Properties="
-      write_atom_properties structure.atoms.first.metadata
-      if cell = structure.cell?
-        @io << ' ' << "Lattice=" << '['
-        cell.basisvec.each_with_index do |(x, y, z), i|
-          @io << ", " if i > 0
-          @io << '['
-          {x, y, z}.join(@io, ", ") { |i, io| io << i }
-          @io << ']'
-        end
-        @io << ']'
-      end
-      structure.metadata.each do |key, value|
-        @io << ' ' << key.camelcase << '='
-        value.raw.inspect @io
-      end
-      @io.puts
     end
   end
 
+  private def self.write_extended(io : IO, struc : Structure, fields : Array(String)) : Nil
+    io << "Title="
+    struc.title.gsub(/ *\n */, ' ').inspect io
+    io << ' ' << "Properties="
+    write_atom_properties(io, fields, struc.atoms.first.metadata)
+    if cell = struc.cell?
+      io << ' ' << "Lattice=" << '['
+      cell.basisvec.each_with_index do |(x, y, z), i|
+        io << ", " if i > 0
+        io << '['
+        {x, y, z}.join(io, ", ") { |i, io| io << i }
+        io << ']'
+      end
+      io << ']'
+    end
+    struc.metadata.each do |key, value|
+      io << ' ' << key.camelcase << '='
+      value.raw.inspect io
+    end
+    io.puts
+  end
+
+  # TODO: convert to XYZ::Extended module and refactor into methods
   private class ConfigurationParser
     record Field,
       name : String,
