@@ -13,13 +13,15 @@ abstract struct Number
   end
 
   # Returns the length in angstroms from bohrs.
+  #
+  # Taken from [2022 CODATA Value: Bohr radius](https://physics.nist.gov/cgi-bin/cuu/Value?bohrrada0).
   def bohr : Float64
-    self * 0.529177
+    self * 0.529177210544
   end
 
   # :ditto:
   def bohrs : Float64
-    self * 0.529177
+    self * 0.529177210544
   end
 
   # Returns `true` if numbers are within *delta* from each other, else
@@ -73,8 +75,10 @@ abstract struct Number
   end
 
   # Returns the length in bohrs from angstroms.
+  #
+  # Taken from [2022 CODATA Value: Bohr radius](https://physics.nist.gov/cgi-bin/cuu/Value?bohrrada0).
   def to_bohrs : Float64
-    self * 1.88973
+    self * 1.889726125907
   end
 
   # Reverts the scaling in the given range.
