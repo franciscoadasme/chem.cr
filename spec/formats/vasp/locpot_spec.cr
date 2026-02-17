@@ -18,7 +18,9 @@ describe Chem::VASP::Locpot do
       grid[17, 20, 11].should eq -4.028097687
       grid[31, 31, 31].should eq -45.337774769
     end
+  end
 
+  describe ".read_info" do
     it "reads a LOCPOT header" do
       info = Chem::VASP::Locpot.read_info spec_file("vasp/LOCPOT")
       info.bounds.should be_close Chem::Spatial::Parallelepiped.new(
@@ -28,7 +30,9 @@ describe Chem::VASP::Locpot do
       ), 1e-6
       info.dim.should eq({32, 32, 32})
     end
+  end
 
+  describe ".read_structure" do
     it "reads the structure" do
       path = spec_file("vasp/LOCPOT")
       structure = Chem::VASP::Locpot.read_structure path
