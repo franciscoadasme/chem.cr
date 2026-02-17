@@ -29,9 +29,9 @@ describe Chem::JDFTx do
       structure.residues.map(&.name).uniq.should eq %w(PHE)
 
       structure.cell.basisvec.should be_close [
-        vec3(23.84396309, 0.00112639, 0.00055391),
-        vec3(-11.92104721, 20.67853790, -0.00008092),
-        vec3(-0.00082321, -0.00033590, 35.43662857),
+        vec3(23.84397257, 0.00112639, 0.00055391),
+        vec3(-11.92105195, 20.67854613, -0.00008092),
+        vec3(-0.00082321, -0.00033590, 35.43664267),
       ], 1e-8
     end
   end
@@ -75,5 +75,5 @@ describe Chem::JDFTx do
 end
 
 private def reduced_cell_prec(str : String)
-  str.gsub(/\.(\d{3})\d{12}/, ".\\1000000000000")
+  str.gsub(/\.(\d{3})\d{12,13}/, ".\\1000000000000")
 end
