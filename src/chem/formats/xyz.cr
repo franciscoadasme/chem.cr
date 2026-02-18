@@ -2,7 +2,13 @@
 module Chem::XYZ
   # Yields each structure in *io*.
   def self.each(io : IO, guess_bonds : Bool = false, guess_names : Bool = false, & : Structure ->) : Nil
-    loop { yield read(io, guess_bonds, guess_names) } rescue IO::EOFError
+    loop do
+      begin
+        yield read(io, guess_bonds, guess_names)
+      rescue IO::EOFError
+        break
+      end
+    end
   end
 
   # :ditto:
