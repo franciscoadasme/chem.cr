@@ -1,28 +1,68 @@
 @[Chem::RegisterFormat(ext: %w(.sdf), module_api: true)]
 module Chem::SDF
   # Yields each structure in *io*.
-  def self.each(io : IO | Path | String, & : Structure ->) : Nil
-    Reader.open(io) do |reader|
-      reader.each do |struc|
+  def self.each(io : IO, & : Structure ->) : Nil
+    loop do
+      begin
+        yield read(io)
+      rescue IO::EOFError
+        break
+      end
+    end
+  end
+
+  # :ditto:
+  def self.each(path : Path | String, & : Structure ->) : Nil
+    File.open(path) do |file|
+      each(file) do |struc|
         yield struc
       end
     end
   end
 
-  # Returns the first structure from *io*.
+  # Returns the next structure from *io*.
   # Use `read_all` or `each` for multiple.
-  def self.read(io : IO | Path | String) : Structure
-    Reader.open(io) do |reader|
-      reader.read_entry
+  def self.read(io : IO) : Structure
+    struc = Mol.read(io)
+
+    pull = PullParser.new(io)
+    while pull.consume_line.next_s? == ">"
+      key = pull.expect_next(/<\w+>/).str.lchop('<').rchop('>').underscore
+      value = pull.consume_line.line.presence || pull.error "Expected a data value for field #{key}"
+      if value.size == 200 # may be split into multiple lines
+        while pull.consume_line.line.presence
+          value += pull.line || ""
+        end
+      elsif !pull.consume_line.line.try(&.blank?)
+        pull.error "Expected blank line after field #{key}"
+      end
+      struc.metadata[key] = value.to_i? || value.to_f? || value
+    end
+    pull.expect("$$$$")
+
+    struc
+  end
+
+  # :ditto:
+  def self.read(path : Path | String) : Structure
+    File.open(path) do |file|
+      read(file)
     end
   end
 
   # Returns all structures in *io*.
-  def self.read_all(io : IO | Path | String) : Array(Structure)
-    Reader.open(io) do |reader|
-      ary = [] of Structure
-      reader.each { |struc| ary << struc }
-      ary
+  def self.read_all(io : IO) : Array(Structure)
+    ary = [] of Structure
+    each(io) do |struc|
+      ary << struc
+    end
+    ary
+  end
+
+  # :ditto:
+  def self.read_all(path : Path | String) : Array(Structure)
+    File.open(path) do |file|
+      read_all(file)
     end
   end
 
@@ -30,96 +70,43 @@ module Chem::SDF
   #
   # The CTAB format is specified via *variant*: V2000 (legacy) or V3000.
   def self.write(
-    io : IO | Path | String,
-    obj : Structure,
-    variant : Chem::Mol::Variant = :v2000,
+    io : IO,
+    struc : Structure,
+    variant : Mol::Variant = :v2000,
   ) : Nil
-    Writer.open(io, variant: variant) do |writer|
-      writer << obj
+    Mol.write io, struc, variant
+    struc.metadata.each do |key, value|
+      io.puts "> <#{key.underscore.upcase}>"
+      if str = value.as_s?
+        str.scan(/.{1,200}( |$)/).each do |match|
+          io.puts match[0]
+        end
+      else
+        io.puts value
+      end
+      io.puts
+    end
+    io.puts "$$$$"
+  end
+
+  # :ditto:
+  def self.write(path : Path | String, struc : Structure, variant : Mol::Variant = :v2000) : Nil
+    File.open(path, "w") do |file|
+      write(file, struc, variant)
     end
   end
 
   # :ditto:
-  def self.write(
-    io : IO | Path | String,
-    objs : Enumerable(Structure),
-    variant : Chem::Mol::Variant = :v2000,
-  ) : Nil
-    Writer.open(io, variant: variant) do |writer|
-      objs.each { |struc| writer << struc }
+  def self.write(io : IO, structures : Enumerable(Structure), variant : Mol::Variant = :v2000) : Nil
+    structures.each do |struc|
+      write(io, struc, variant)
     end
   end
 
-  class Reader
-    include FormatReader(Structure)
-    include FormatReader::MultiEntry(Structure)
-
-    def initialize(@io : IO, @sync_close : Bool = false)
-      @pull = PullParser.new @io
-    end
-
-    private def decode_entry : Structure
-      # FIXME: line tracking is broken as pull is shared with Mol.read
-      structure = Mol.read(@pull.io)
-      structure.metadata.merge! parse_metadata
-      @pull.expect("$$$$")
-      structure
-    end
-
-    private def parse_metadata : Metadata
-      Chem::Metadata.new.tap do |metadata|
-        while @pull.consume_line.next_s? == ">"
-          key = @pull.expect_next(/<\w+>/).str.lchop('<').rchop('>').underscore
-          value = @pull.consume_line.line.presence || @pull.error "Expected a data value for field #{key}"
-          if value.size == 200 # may be split into multiple lines
-            while @pull.consume_line.line.presence
-              value += @pull.line || ""
-            end
-          elsif !@pull.consume_line.line.try(&.blank?)
-            @pull.error "Expected blank line after field #{key}"
-          end
-          metadata[key] = value.to_i? || value.to_f? || value
-        end
-      end
-    end
-
-    def skip_entry : Nil
-      skip_after_delimiter
-    end
-
-    private def skip_after_delimiter
-      until @pull.eof? || @pull.next_s? == "$$$$"
-        @pull.consume_line
-      end
-      @pull.consume_line
-    end
-  end
-
-  class Writer
-    include FormatWriter(Structure)
-    include FormatWriter::MultiEntry(Structure)
-
-    def initialize(
-      @io : IO,
-      @variant : Chem::Mol::Variant = :v2000,
-      @sync_close : Bool = false,
-    )
-    end
-
-    private def encode_entry(obj : Structure) : Nil
-      obj.to_mol @io, @variant
-      obj.metadata.each do |key, value|
-        @io.puts "> <#{key.underscore.upcase}>  (#{@entry_index + 1})"
-        if str = value.as_s?
-          str.scan(/.{1,200}( |$)/).each do |match|
-            @io.puts match[0]
-          end
-        else
-          @io.puts value
-        end
-        @io.puts
-      end
-      @io.puts "$$$$"
+  # :ditto:
+  def self.write(path : Path | String, structures : Enumerable(Structure), variant : Mol::Variant = :v2000) : Nil
+    File.open(path, "w") do |file|
+      write(file, structures, variant)
     end
   end
 end
