@@ -133,36 +133,46 @@ describe Chem::DCD do
     end
   end
 
+  describe ".read_all" do
+    it "reads all frames" do
+      frames = Chem::DCD.read_all spec_file("water.dcd")
+      frames.size.should eq 100
+
+      frames[0].size.should eq 297
+      frames[0][0].should be_close vec3(0.41721907, 8.303366, 11.737172), 1e-6
+      frames[0][296].should be_close vec3(6.664049, 11.614183, 12.961486), 1e-6
+
+      frames[-1].size.should eq 297
+      frames[-1][0].should be_close vec3(0.318559, 8.776042, 11.892704), 1e-6
+      frames[-1][296].should be_close vec3(7.089802, 10.350066, 12.815898), 1e-6
+    end
+  end
+
   describe ".write" do
     it "writes frames" do
-      traj = Array.new(10) { fake_positions(3) }
+      orig_traj = Array.new(10) { fake_positions(3) }
 
-      io = IO::Memory.new
-      Chem::DCD.write(io, traj)
+      # test both indexable and enumerable (iterator)
+      {orig_traj, orig_traj.each}.each do |traj|
+        io = IO::Memory.new
+        Chem::DCD.write(io, traj)
 
-      io.rewind
+        io.rewind
 
-      pos = Chem::DCD.read io
-      pos.size.should eq 3
-      pos.cell?.should_not be_nil
-      pos.cell.should eq traj[0].cell
-      pos[0].should be_close traj[0][0], 1e-6
-      pos[1].should be_close traj[0][1], 1e-6
-      pos[2].should be_close traj[0][2], 1e-6
-
-      io.rewind
-      pos = Chem::DCD.read io, index: 9
-      pos.size.should eq 3
-      pos.cell?.should_not be_nil
-      pos.cell.should eq traj[-1].cell
-      pos[0].should be_close traj[-1][0], 1e-6
-      pos[1].should be_close traj[-1][1], 1e-6
-      pos[2].should be_close traj[-1][2], 1e-6
+        traj = Chem::DCD.read_all io
+        traj.size.should eq orig_traj.size
+        traj.each_with_index do |pos, i|
+          pos.size.should eq orig_traj[i].size
+          pos.cell?.should eq orig_traj[i].cell?
+          pos[0].should be_close orig_traj[i][0], 1e-6
+          pos[1].should be_close orig_traj[i][1], 1e-6
+          pos[2].should be_close orig_traj[i][2], 1e-6
+        end
+      end
     end
 
     it "raises on different size" do
-      expect_raises ArgumentError,
-        "Cannot write positions of different size (expected 3, got 10)" do
+      expect_raises ArgumentError, "Cannot write frames with different size" do
         Chem::DCD.write IO::Memory.new, [fake_positions(3), fake_positions(10)]
       end
     end
