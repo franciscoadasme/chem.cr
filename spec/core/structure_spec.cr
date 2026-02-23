@@ -1255,7 +1255,9 @@ describe Chem::Structure do
       struc = Chem::Structure.build do |builder|
         297.times { builder.atom vec3(0, 0, 0) }
       end
-      struc.pos = Chem::Spatial::Positions3.from_dcd spec_file("water.dcd")
+      struc.pos = File.open(spec_file("water.dcd")) do |io|
+        Chem::DCD.read io, Chem::DCD.read_info(io)
+      end
       struc.cell?.should_not be_nil
       struc.cell.size.should eq [15, 15, 15]
       struc.cell.angles.should eq({90, 90, 90})
@@ -1267,7 +1269,9 @@ describe Chem::Structure do
       struc = Chem::Structure.build do |builder|
         401.times { builder.atom vec3(0, 0, 0) }
       end
-      struc.pos = Chem::Spatial::Positions3.from_dcd(spec_file("nopbc.dcd"))
+      struc.pos = File.open(spec_file("nopbc.dcd")) do |io|
+        Chem::DCD.read io, Chem::DCD.read_info(io)
+      end
       struc.cell?.should be_nil
       struc.atoms[0].pos.should be_close vec3(-0.3523273, 0.5521879, 3.471434), 1e-6
       struc.atoms[-1].pos.should be_close vec3(5.015859, 3.057116, 3.079986), 1e-6

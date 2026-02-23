@@ -12,8 +12,10 @@ describe Chem::DCD do
   end
 
   describe ".read" do
-    it "reads the first entry" do
-      pos = Chem::DCD.read spec_file("water.dcd")
+    it "reads the next frame" do
+      pos = File.open(spec_file("water.dcd")) do |io|
+        Chem::DCD.read io, Chem::DCD.read_info(io)
+      end
       pos[0].should be_close vec3(0.41721907, 8.303366, 11.737172), 1e-6
       pos[296].should be_close vec3(6.664049, 11.614183, 12.961486), 1e-6
 
@@ -23,18 +25,24 @@ describe Chem::DCD do
     end
 
     it "reads an entry at a specific index" do
-      pos = Chem::DCD.read spec_file("water.dcd"), index: 2
+      pos = File.open(spec_file("water.dcd")) do |io|
+        Chem::DCD.read io, Chem::DCD.read_info(io), index: 2
+      end
       pos[0].should be_close vec3(0.29909524, 8.31003, 11.721462), 1e-6
       pos[296].should be_close vec3(6.797599, 11.50882, 12.704233), 1e-6
     end
 
     it "sets cell to nil if missing" do
-      pos = Chem::DCD.read spec_file("nopbc.dcd")
+      pos = File.open(spec_file("nopbc.dcd")) do |io|
+        Chem::DCD.read io, Chem::DCD.read_info(io)
+      end
       pos.cell?.should be_nil
     end
 
     it "reads an orthorhombic cell" do
-      pos = Chem::DCD.read spec_file("withpbc.dcd")
+      pos = File.open(spec_file("withpbc.dcd")) do |io|
+        Chem::DCD.read io, Chem::DCD.read_info(io)
+      end
       pos.size.should eq 364
       pos.cell?.should_not be_nil
       pos.cell.size.should eq [100, 100, 100]
@@ -42,7 +50,9 @@ describe Chem::DCD do
     end
 
     it "reads a triclinic cell" do
-      pos = Chem::DCD.read spec_file("triclinic-octane-direct.dcd")
+      pos = File.open(spec_file("triclinic-octane-direct.dcd")) do |io|
+        Chem::DCD.read io, Chem::DCD.read_info(io)
+      end
       pos.size.should eq 13
       pos.cell?.should_not be_nil
       pos.cell.size.should be_close [4.109898, 4.707060, 10.993230], 1e-6
@@ -50,7 +60,9 @@ describe Chem::DCD do
     end
 
     it "reads a triclinic cell with cosine angles" do
-      pos = Chem::DCD.read spec_file("triclinic-octane-cos.dcd")
+      pos = File.open(spec_file("triclinic-octane-cos.dcd")) do |io|
+        Chem::DCD.read io, Chem::DCD.read_info(io)
+      end
       pos.size.should eq 13
       pos.cell?.should_not be_nil
       pos.cell.size.should be_close [4.109898, 4.707060, 10.993230], 1e-6
@@ -58,7 +70,9 @@ describe Chem::DCD do
     end
 
     it "reads cell vectors" do
-      pos = Chem::DCD.read spec_file("triclinic-octane-vectors.dcd")
+      pos = File.open(spec_file("triclinic-octane-vectors.dcd")) do |io|
+        Chem::DCD.read io, Chem::DCD.read_info(io)
+      end
       pos.size.should eq 13
       pos.cell?.should_not be_nil
       pos.cell.size.should be_close [4.1594858, 4.749700, 11.000093], 1e-6
@@ -66,7 +80,9 @@ describe Chem::DCD do
     end
 
     it "reads a cell from NAMD" do
-      pos = Chem::DCD.read spec_file("triclinic-namd.dcd")
+      pos = File.open(spec_file("triclinic-namd.dcd")) do |io|
+        Chem::DCD.read io, Chem::DCD.read_info(io)
+      end
       pos.size.should eq 9999
       pos.cell?.should_not be_nil
       pos.cell.size.should be_close [85.440037, 89.442719, 85.440037], 1e-6
@@ -75,13 +91,17 @@ describe Chem::DCD do
     end
 
     it "reads a 4D DCD" do
-      pos = Chem::DCD.read spec_file("4d-dynamic.dcd")
+      pos = File.open(spec_file("4d-dynamic.dcd")) do |io|
+        Chem::DCD.read io, Chem::DCD.read_info(io)
+      end
       pos.size.should eq 27
       pos.cell?.should be_nil
       pos[5].should be_close vec3(-1.5822195, 0.6511365, 1.3911803), 1e-6
       pos[15].should be_close vec3(2.2381972, -0.5173331, -0.4879273), 1e-6
 
-      pos = Chem::DCD.read spec_file("4d-dynamic.dcd"), index: 3
+      pos = File.open(spec_file("4d-dynamic.dcd")) do |io|
+        Chem::DCD.read io, Chem::DCD.read_info(io), index: 3
+      end
       pos.size.should eq 27
       pos.cell?.should be_nil
       pos[5].should be_close vec3(-1.5833939, 0.70485264, 1.3606575), 1e-6
@@ -89,27 +109,33 @@ describe Chem::DCD do
     end
 
     it "reads fixed atoms" do
-      pos = Chem::DCD.read spec_file("fixed-atoms.dcd")
-      pos.size.should eq 12
-      pos.cell?.should be_nil
-      pos[2].should be_close vec3(-1.0220516, -1.0135641, 0), 1e-6
-      pos[10].should be_close vec3(1.820057, -1.3015488, 10), 1e-6
+      File.open(spec_file("fixed-atoms.dcd")) do |io|
+        info = Chem::DCD.read_info(io)
 
-      pos = Chem::DCD.read spec_file("fixed-atoms.dcd"), index: 1
-      pos.size.should eq 12
-      pos.cell?.should be_nil
-      pos[2].should be_close vec3(-1.0220516, -1.0135641, 0), 1e-6
-      pos[10].should be_close vec3(1.8200468, -1.3015325, 10), 1e-6
+        pos = Chem::DCD.read io, info
+        pos.size.should eq 12
+        pos.cell?.should be_nil
+        pos[2].should be_close vec3(-1.0220516, -1.0135641, 0), 1e-6
+        pos[10].should be_close vec3(1.820057, -1.3015488, 10), 1e-6
 
-      pos = Chem::DCD.read spec_file("fixed-atoms.dcd"), index: 5
-      pos.size.should eq 12
-      pos.cell?.should be_nil
-      pos[2].should be_close vec3(-1.0220516, -1.0135641, 0), 1e-6
-      pos[10].should be_close vec3(1.8199368, -1.3013588, 10), 1e-6
+        pos = Chem::DCD.read io, info, index: 1
+        pos.size.should eq 12
+        pos.cell?.should be_nil
+        pos[2].should be_close vec3(-1.0220516, -1.0135641, 0), 1e-6
+        pos[10].should be_close vec3(1.8200468, -1.3015325, 10), 1e-6
+
+        pos = Chem::DCD.read io, info, index: 5
+        pos.size.should eq 12
+        pos.cell?.should be_nil
+        pos[2].should be_close vec3(-1.0220516, -1.0135641, 0), 1e-6
+        pos[10].should be_close vec3(1.8199368, -1.3013588, 10), 1e-6
+      end
     end
 
     it "reads big endian" do
-      pos = Chem::DCD.read spec_file("mrmd_h2so4-32bit-be.dcd"), index: 23
+      pos = File.open(spec_file("mrmd_h2so4-32bit-be.dcd")) do |io|
+        Chem::DCD.read io, Chem::DCD.read_info(io), index: 23
+      end
       pos.size.should eq 7
       pos.cell?.should be_nil
       pos[2].should be_close vec3(0.6486294, 0.062248673, -1.5570515), 1e-6
@@ -117,7 +143,9 @@ describe Chem::DCD do
     end
 
     it "reads 64-bit markers" do
-      pos = Chem::DCD.read spec_file("mrmd_h2so4-64bit-le.dcd"), index: 23
+      pos = File.open(spec_file("mrmd_h2so4-64bit-le.dcd")) do |io|
+        Chem::DCD.read io, Chem::DCD.read_info(io), index: 23
+      end
       pos.size.should eq 7
       pos.cell?.should be_nil
       pos[2].should be_close vec3(0.6486294, 0.062248673, -1.5570515), 1e-6
@@ -125,7 +153,9 @@ describe Chem::DCD do
     end
 
     it "reads 64-bit markers (big endian)" do
-      pos = Chem::DCD.read spec_file("mrmd_h2so4-64bit-be.dcd"), index: 23
+      pos = File.open(spec_file("mrmd_h2so4-64bit-be.dcd")) do |io|
+        Chem::DCD.read io, Chem::DCD.read_info(io), index: 23
+      end
       pos.size.should eq 7
       pos.cell?.should be_nil
       pos[2].should be_close vec3(0.6486294, 0.062248673, -1.5570515), 1e-6
