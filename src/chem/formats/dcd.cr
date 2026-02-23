@@ -143,17 +143,6 @@ module Chem::DCD
 
     info_size = io.pos
 
-    marker_size = marker_type == Int32 ? sizeof(Int32) : sizeof(Int64)
-    first_frame_bytesize, frame_bytesize = {n_atoms, n_free_atoms}.map do |size|
-      coord_block_bytesize = marker_size * 2 + size * sizeof(Float32)
-      bytesize = dim * coord_block_bytesize
-      if is_periodic
-        cell_block_size = marker_size * 2 + 6 * sizeof(Float64)
-        bytesize += cell_block_size
-      end
-      bytesize
-    end
-
     info = Info.new(
       buffer: Bytes.new(sizeof(Float32) * n_atoms * 3), # TODO: shrink to n_free_atoms whenever possible
       byte_format: byte_format,
@@ -198,7 +187,7 @@ module Chem::DCD
 
     if file = io.as?(File)
       body_bytesize = file.info.size - info_size
-      n_frames = (body_bytesize - first_frame_bytesize) // frame_bytesize + 1
+      n_frames = (body_bytesize - info.first_frame_bytesize) // info.frame_bytesize + 1
       if n_frames != info.n_frames
         Log.warn { "Frame count mismatch (expected #{info.n_frames}, got #{n_frames})" }
         info = info.copy_with(n_frames: n_frames.to_i)
