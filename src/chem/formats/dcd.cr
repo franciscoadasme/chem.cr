@@ -369,13 +369,6 @@ module Chem::DCD
     raise "Invalid DCD (0x#{bytes[..3].join { |x| "%x" % x }} 0x#{bytes[4..].join { |x| "%x" % x }})"
   end
 
-  private def self.read_block(io : IO, encoding : Encoding, & : Int32 | Int64 -> T) : T forall T
-    marker = encoding.read_marker(io)
-    value = yield marker
-    raise "Invalid end of block" unless encoding.read_marker(io) == marker
-    value
-  end
-
   private def self.read_block(io : IO, encoding : Encoding, marker : Int, & : -> T) : T forall T
     raise "Invalid start of block" unless encoding.read_marker(io) == marker
     value = yield
@@ -427,30 +420,31 @@ module Chem::DCD
   end
 
   private def self.read_title(io : IO, encoding : Encoding) : String?
-    read_block(io, encoding) do |title_size|
-      if title_size < 4 || (title_size - 4) % 80 != 0
-        io.seek(title_size, :current) if title_size != 0
-        Log.warn { "Skipping title section due to invalid size" }
-        nil
+    bytesize = encoding.read_marker(io)
+    title = nil
+    if bytesize < 4 || (bytesize - 4) % 80 != 0
+      io.seek(bytesize, :current) if bytesize != 0
+      Log.warn { "Skipping title section due to invalid size" }
+    else
+      n_lines = encoding.read(io, Int32)
+      if n_lines != (bytesize - 4) // 80
+        io.seek(bytesize - 4, :current)
+        Log.warn { "Skipping title section due to size mismatch" }
       else
-        n_lines = encoding.read(io, Int32)
-        if n_lines != (title_size - 4) // 80
-          io.seek(title_size - 4, :current)
-          Log.warn { "Skipping title section due to size mismatch" }
-          nil
-        else
-          line_bytes = Bytes.new(80)
-          String.build do |str|
-            n_lines.times do
-              line_bytes.fill(0)
-              io.read(line_bytes)
-              str.write line_bytes[0...line_bytes.index(0)]
-              str << '\n'
-            end
+        line_bytes = Bytes.new(80)
+        title = String.build do |str|
+          n_lines.times do
+            line_bytes.fill(0)
+            io.read(line_bytes)
+            str.write line_bytes[0...line_bytes.index(0)]
+            str << '\n'
           end
         end
       end
     end
+
+    raise "Invalid end of title block" unless encoding.read_marker(io) == bytesize
+    title
   end
 
   private def self.write_block(io : IO, marker : Int32, & : ->) : Nil
