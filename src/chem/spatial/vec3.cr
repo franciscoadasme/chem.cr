@@ -35,6 +35,8 @@ module Chem::Spatial
     # The upward unit vector. Shorthand for `Vec3[0, 1, 0]` or `Vec3::Y`.
     UP = Y
 
+    NAN = Vec3[Float64::NAN, Float64::NAN, Float64::NAN]
+
     # X component of the vector.
     getter x : Float64
     # Y component of the vector.
@@ -318,6 +320,11 @@ module Chem::Spatial
     # ```
     def map_with_index(& : Float64, Int32 -> Number) : self
       Vec3[(yield @x, 0), (yield @y, 1), (yield @z, 2)]
+    end
+
+    # Returns `true` if the vector contains a not-a-number (NaN) value, else `false`.
+    def nan? : Bool
+      @x.nan? || @y.nan? || @z.nan?
     end
 
     # Returns the unit vector pointing in the same direction of the
