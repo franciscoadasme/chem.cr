@@ -79,16 +79,16 @@ module Chem::DCD
 
     cell = read_cell(io, info) if info.periodic?
 
-    x, y, z = read_positions(io, info, index > 0 ? info.n_free_atoms : info.n_atoms)
-    pos = Slice(Float64).new(info.n_atoms * 3).unsafe_slice_of(Spatial::Vec3)
+    size = index > 0 ? info.n_free_atoms : info.n_atoms
+    # use pointer arithmetic to avoid indexing
+    px, py, pz = read_positions(io, info, size).map &.to_unsafe.-(1)
     if index > 0 && info.n_free_atoms < info.n_atoms
-      j = -1
-      info.fixed_positions.each_with_index do |fixed_pos, i|
-        pos[i] = fixed_pos.nan? ? Spatial::Vec3[x[(j += 1)], y[j], z[j]] : fixed_pos
+      pos = info.fixed_positions.map_with_index do |vec, i|
+        vec.nan? ? Spatial::Vec3[(px += 1).value, (py += 1).value, (pz += 1).value] : vec
       end
     else
-      info.n_atoms.times do |i|
-        pos[i] = Spatial::Vec3[x[i], y[i], z[i]]
+      pos = Slice(Spatial::Vec3).new(info.n_atoms) do
+        Spatial::Vec3[(px += 1).value, (py += 1).value, (pz += 1).value]
       end
     end
 
