@@ -35,7 +35,7 @@ module Chem::DCD
     n_frames : Int32,
     n_free_atoms : Int32,
     periodic : Bool,
-    size : Int64,
+    bytesize : Int64,
     title : String? do
     protected getter cell_block_bytesize : Int32 { periodic? ? marker_bytesize * 2 + 6 * sizeof(Float64) : 0 }
     protected getter first_frame_bytesize : Int32 { frame_bytesize(@n_atoms) }
@@ -73,7 +73,7 @@ module Chem::DCD
   # Returns the first trajectory frame from *io*.
   # Use `read_all` or `each` for multiple.
   def self.read(io : IO, info : Info) : Spatial::Positions3
-    offset = io.pos - info.size
+    offset = io.pos - info.bytesize
     index = offset // info.first_frame_bytesize
     index = (offset - info.first_frame_bytesize) // info.frame_bytesize + 1 if index > 1
 
@@ -98,7 +98,7 @@ module Chem::DCD
   # Returns the trajectory frame at *index* from *io*.
   def self.read(io : IO, info : Info, index : Int) : Spatial::Positions3
     raise IndexError.new unless 0 <= index < info.n_frames
-    new_pos = info.size + info.first_frame_bytesize
+    new_pos = info.bytesize + info.first_frame_bytesize
     new_pos += (index - 1) * info.frame_bytesize if index > 0
     io.pos = new_pos
     read(io, info)
@@ -166,7 +166,7 @@ module Chem::DCD
       n_atoms: n_atoms,
       n_frames: n_frames,
       n_free_atoms: n_free_atoms,
-      size: info_size,
+      bytesize: info_size,
       title: title,
     )
 
@@ -194,11 +194,11 @@ module Chem::DCD
       end
       io.pos = info_size
 
-      info = info.copy_with(fixed_positions: fixed_positions, size: info_size)
+      info = info.copy_with(fixed_positions: fixed_positions, bytesize: info_size)
     end
 
     if file = io.as?(File)
-      body_bytesize = file.info.size - info_size
+      body_bytesize = file.info.size - info.bytesize
       n_frames = (body_bytesize - info.first_frame_bytesize) // info.frame_bytesize + 1
       if n_frames != info.n_frames
         Log.warn { "Frame count mismatch (expected #{info.n_frames}, got #{n_frames})" }
