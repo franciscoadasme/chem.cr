@@ -182,12 +182,7 @@ module Chem::DCD
 
       info_size = io.pos # header now ends here
 
-      if info.periodic? # skip unit cell block if present
-        bytesize = 6 * sizeof(Float64)
-        read_block(io, info.encoding, bytesize) do
-          io.pos += bytesize
-        end
-      end
+      io.pos += info.marker_bytesize * 2 + 6 * sizeof(Float64) if info.periodic? # skip unit cell block if present
       xx, yy, zz = read_positions(io, info, n_atoms)
       fixed_positions.zip(xx, yy, zz, 0...n_atoms) do |fixed_pos, x, y, z, i|
         fixed_positions[i] = Spatial::Vec3[x, y, z] unless fixed_pos.nan?
@@ -404,11 +399,7 @@ module Chem::DCD
     read_block(io, info.encoding, bytesize) { io.read_fully(slices[0]) }
     read_block(io, info.encoding, bytesize) { io.read_fully(slices[1]) }
     read_block(io, info.encoding, bytesize) { io.read_fully(slices[2]) }
-    if info.dim > 3 # skip 4th dimension if present
-      read_block(io, info.encoding, bytesize) do
-        io.pos += bytesize
-      end
-    end
+    io.pos += info.marker_bytesize * 2 + bytesize if info.dim > 3 # skip 4th dimension if present
     if info.encoding.byte_format != IO::ByteFormat::SystemEndian
       slices.each do |slice|
         size.times do |i|
