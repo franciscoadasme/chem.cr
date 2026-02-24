@@ -46,6 +46,13 @@ module Chem::DCD
       cell_block_bytesize + dim * (marker_bytesize * 2 + n_atoms * sizeof(Float32))
     end
 
+    def frame_byte_offset(index : Int) : Int64
+      offset = bytesize + first_frame_bytesize
+      offset += (index - 1) * frame_bytesize if index > 0
+      offset
+    end
+
+    # Returns true if the DCD content is periodic (includes unit cell), else false.
     def periodic? : Bool
       @periodic
     end
@@ -98,9 +105,7 @@ module Chem::DCD
   # Returns the trajectory frame at *index* from *io*.
   def self.read(io : IO, info : Info, index : Int) : Spatial::Positions3
     raise IndexError.new unless 0 <= index < info.n_frames
-    new_pos = info.bytesize + info.first_frame_bytesize
-    new_pos += (index - 1) * info.frame_bytesize if index > 0
-    io.pos = new_pos
+    io.pos = info.frame_byte_offset(index)
     read(io, info)
   end
 
@@ -413,15 +418,9 @@ module Chem::DCD
   private def self.read_title(io : IO, encoding : Encoding) : String?
     bytesize = encoding.read_marker(io)
     title = nil
-    if bytesize < 4 || (bytesize - 4) % 80 != 0
-      io.seek(bytesize, :current) if bytesize != 0
-      Log.warn { "Skipping title section due to invalid size" }
-    else
+    if bytesize >= sizeof(Int32) && (bytesize - sizeof(Int32)) % 80 == 0
       n_lines = encoding.read(io, Int32)
-      if n_lines != (bytesize - 4) // 80
-        io.seek(bytesize - 4, :current)
-        Log.warn { "Skipping title section due to size mismatch" }
-      else
+      if n_lines == (bytesize - sizeof(Int32)) // 80
         line_bytes = Bytes.new(80)
         title = String.build do |str|
           n_lines.times do
@@ -431,7 +430,13 @@ module Chem::DCD
             str << '\n'
           end
         end
+      else
+        io.seek(bytesize - sizeof(Int32), :current)
+        Log.warn { "Skipping title section due to size mismatch" }
       end
+    else
+      io.seek(bytesize, :current) if bytesize != 0
+      Log.warn { "Skipping title section due to invalid size" }
     end
 
     raise "Invalid end of title block" unless encoding.read_marker(io) == bytesize
