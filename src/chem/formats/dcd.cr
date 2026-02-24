@@ -3,16 +3,34 @@
 # [Chemfiles]: https://github.com/chemfiles/chemfiles/blob/master/src/formats/DCD.cpp
 @[Chem::RegisterFormat(ext: %w(.dcd), module_api: true)]
 module Chem::DCD
-  # TODO: add a `Encoding` struct to join byte_format and marker_type.
+  # Binary encoding for reading DCD content.
+  struct Encoding
+    # Byte order (big or little endian) of the DCD content.
+    getter byte_format : IO::ByteFormat
+    # Type of the block marker (32 or 64 bits).
+    getter marker_type : Int32.class | Int64.class
+
+    def initialize(@byte_format : IO::ByteFormat, @marker_type : Int32.class | Int64.class)
+    end
+
+    # Reads a value of the given type from *io* using the byte format.
+    def read(io : IO, type : T.class) : T forall T
+      io.read_bytes(type, @byte_format)
+    end
+
+    # Reads a block marker from *io*.
+    def read_marker(io : IO) : Int32 | Int64
+      io.read_bytes(@marker_type, @byte_format)
+    end
+  end
 
   # Info state needed for reading frames.
   record Info,
     buffer : Bytes,
-    byte_format : IO::ByteFormat,
     charmm_version : Int32,
     dim : Int32,
+    encoding : Encoding,
     fixed_positions : Array(Spatial::Vec3?),
-    marker_type : Int32.class | Int64.class,
     n_atoms : Int32,
     n_frames : Int32,
     n_free_atoms : Int32,
@@ -22,7 +40,7 @@ module Chem::DCD
     protected getter cell_block_bytesize : Int32 { periodic? ? marker_bytesize * 2 + 6 * sizeof(Float64) : 0 }
     protected getter first_frame_bytesize : Int32 { frame_bytesize(@n_atoms) }
     protected getter frame_bytesize : Int32 { frame_bytesize(@n_free_atoms) }
-    protected getter marker_bytesize : Int32 { @marker_type == Int32 ? sizeof(Int32) : sizeof(Int64) }
+    protected getter marker_bytesize : Int32 { @encoding.marker_type == Int32 ? sizeof(Int32) : sizeof(Int64) }
 
     private def frame_bytesize(n_atoms : Int32) : Int32
       cell_block_bytesize + dim * (marker_bytesize * 2 + n_atoms * sizeof(Float32))
@@ -102,54 +120,48 @@ module Chem::DCD
   end
 
   def self.read_info(io : IO) : Info
-    # TODO: Add Encoding.read(io, T) to replace io.read_bytes(T, encoding.byte_format) and Encoding.read_marker(io) to replace io.read_bytes(marker_type, byte_format)
-    byte_format, marker_type = detect_encoding(io)
+    encoding = detect_encoding(io)
     io.pos -= 4 # rewind "CORD"
 
     info_start = io.pos
 
     io.pos += 80
-    charmm_version = io.read_bytes(Int32, byte_format)
+    charmm_version = encoding.read(io, Int32)
 
     io.pos = info_start + 4
-    n_frames = io.read_bytes(Int32, byte_format)
-    start_frame = io.read_bytes(Int32, byte_format)
-    frame_step = io.read_bytes(Int32, byte_format)
+    n_frames = encoding.read(io, Int32)
+    start_frame = encoding.read(io, Int32)
+    frame_step = encoding.read(io, Int32)
 
     io.pos += 20 # skip 20 unused bytes
-    n_fixed_atoms = io.read_bytes(Int32, byte_format)
+    n_fixed_atoms = encoding.read(io, Int32)
 
     if charmm_version != 0
-      timestep = io.read_bytes(Float32, byte_format).to_f
-      is_periodic = io.read_bytes(Int32, byte_format) != 0
-      dim = io.read_bytes(Int32, byte_format) == 1 ? 4 : 3
-      if dim == 4
-        Log.warn { "Detected 4D DCD. Fourth dimension will be ignored." }
-      end
+      timestep = encoding.read(io, Float32).to_f
+      is_periodic = encoding.read(io, Int32) != 0
+      dim = encoding.read(io, Int32) == 1 ? 4 : 3
+      Log.warn { "Detected 4D DCD. Fourth dimension will be ignored." } if dim == 4
     else
-      timestep = io.read_bytes(Float64, byte_format)
+      timestep = encoding.read(io, Float64)
       is_periodic = false
       dim = 3
     end
 
     io.pos = info_start + 84
-    raise "Invalid end of info" unless io.read_bytes(marker_type, byte_format) == 84
+    raise "Invalid end of info" unless encoding.read_marker(io) == 84
 
-    title = read_title(io, marker_type, byte_format)
-    n_atoms = read_block(io, marker_type, byte_format, sizeof(Int32)) do
-      io.read_bytes(Int32, byte_format)
-    end
+    title = read_title(io, encoding)
+    n_atoms = read_block(io, encoding, sizeof(Int32)) { encoding.read(io, Int32) }
     n_free_atoms = n_atoms - n_fixed_atoms
 
-    info_size = io.pos
+    info_size = io.pos # here ends the header
 
     info = Info.new(
       buffer: Bytes.new(sizeof(Float32) * n_atoms * 3), # TODO: shrink to n_free_atoms whenever possible
-      byte_format: byte_format,
+      encoding: encoding,
       charmm_version: charmm_version,
       dim: dim,
       fixed_positions: [] of Spatial::Vec3?,
-      marker_type: marker_type,
       periodic: is_periodic,
       n_atoms: n_atoms,
       n_frames: n_frames,
@@ -160,9 +172,9 @@ module Chem::DCD
 
     if n_fixed_atoms > 0
       fixed_positions = Array(Spatial::Vec3?).new(n_atoms) { Spatial::Vec3.zero }
-      read_block(io, marker_type, byte_format, sizeof(Int32) * n_free_atoms) do
+      read_block(io, encoding, sizeof(Int32) * n_free_atoms) do
         n_free_atoms.times do
-          i = io.read_bytes(Int32, byte_format)
+          i = encoding.read(io, Int32)
           raise "Invalid atom index #{i}" unless 1 <= i <= n_atoms
           fixed_positions.unsafe_put(i - 1, nil)
         end
@@ -172,7 +184,7 @@ module Chem::DCD
 
       if info.periodic? # skip unit cell block if present
         bytesize = 6 * sizeof(Float64)
-        read_block(io, info.marker_type, info.byte_format, bytesize) do
+        read_block(io, info.encoding, bytesize) do
           io.pos += bytesize
         end
       end
@@ -328,29 +340,28 @@ module Chem::DCD
     end
   end
 
-  # TODO: detect_encoding should return an Encoding struct and then pass around instead of two separated values
-  private def self.detect_encoding(io : IO) : Tuple(IO::ByteFormat, Int32.class | Int64.class)
+  private def self.detect_encoding(io : IO) : Encoding
     bytes = Bytes.new(8)
     io.read(bytes)
 
     if bytes[0..3] == UInt8.slice(84, 0, 0, 0)
       if bytes[4..7] == "CORD".to_slice
-        return IO::ByteFormat::LittleEndian, Int32
+        return Encoding.new(IO::ByteFormat::LittleEndian, Int32)
       elsif bytes[4..7] == UInt8.slice(0, 0, 0, 0)
         extra = Bytes.new(4)
         io.read(extra)
         if extra == "CORD".to_slice
-          return IO::ByteFormat::LittleEndian, Int64
+          return Encoding.new(IO::ByteFormat::LittleEndian, Int64)
         end
       end
     elsif bytes[0..2] == UInt8.slice(0, 0, 0)
       if bytes[3] == 84 && bytes[4..7] == "CORD".to_slice
-        return IO::ByteFormat::BigEndian, Int32
+        return Encoding.new(IO::ByteFormat::BigEndian, Int32)
       elsif bytes[3..7] == UInt8.slice(0, 0, 0, 0, 84)
         extra = Bytes.new(4)
         io.read(extra)
         if extra == "CORD".to_slice
-          return IO::ByteFormat::BigEndian, Int64
+          return Encoding.new(IO::ByteFormat::BigEndian, Int64)
         end
       end
     end
@@ -358,35 +369,24 @@ module Chem::DCD
     raise "Invalid DCD (0x#{bytes[..3].join { |x| "%x" % x }} 0x#{bytes[4..].join { |x| "%x" % x }})"
   end
 
-  private def self.read_block(
-    io : IO,
-    marker_type : Int32.class | Int64.class,
-    byte_format : IO::ByteFormat,
-    & : Int32 | Int64 -> T
-  ) : T forall T
-    marker = io.read_bytes(marker_type, byte_format)
+  private def self.read_block(io : IO, encoding : Encoding, & : Int32 | Int64 -> T) : T forall T
+    marker = encoding.read_marker(io)
     value = yield marker
-    raise "Invalid end of block" unless io.read_bytes(marker_type, byte_format) == marker
+    raise "Invalid end of block" unless encoding.read_marker(io) == marker
     value
   end
 
-  private def self.read_block(
-    io : IO,
-    marker_type : Int32.class | Int64.class,
-    byte_format : IO::ByteFormat,
-    marker : Int,
-    & : -> T
-  ) : T forall T
-    raise "Invalid start of block" unless io.read_bytes(marker_type, byte_format) == marker
+  private def self.read_block(io : IO, encoding : Encoding, marker : Int, & : -> T) : T forall T
+    raise "Invalid start of block" unless encoding.read_marker(io) == marker
     value = yield
-    raise "Invalid end of block" unless io.read_bytes(marker_type, byte_format) == marker
+    raise "Invalid end of block" unless encoding.read_marker(io) == marker
     value
   end
 
   private def self.read_cell(io : IO, info : Info) : Spatial::Parallelepiped
-    buffer = read_block(io, info.marker_type, info.byte_format, 6 * sizeof(Float64)) do
+    buffer = read_block(io, info.encoding, 6 * sizeof(Float64)) do
       StaticArray(Float64, 6).new do
-        io.read_bytes(Float64, info.byte_format)
+        info.encoding.read(io, Float64)
       end
     end
 
@@ -408,15 +408,15 @@ module Chem::DCD
   private def self.read_positions(io : IO, info : Info, size : Int32) : Tuple(Slice(Float32), Slice(Float32), Slice(Float32))
     bytesize = size * sizeof(Float32)
     slices = {0, 1, 2}.map { |i| info.buffer[i * bytesize, bytesize] }
-    read_block(io, info.marker_type, info.byte_format, bytesize) { io.read_fully(slices[0]) }
-    read_block(io, info.marker_type, info.byte_format, bytesize) { io.read_fully(slices[1]) }
-    read_block(io, info.marker_type, info.byte_format, bytesize) { io.read_fully(slices[2]) }
-    if info.dim > 3
-      read_block(io, info.marker_type, info.byte_format, bytesize) do
+    read_block(io, info.encoding, bytesize) { io.read_fully(slices[0]) }
+    read_block(io, info.encoding, bytesize) { io.read_fully(slices[1]) }
+    read_block(io, info.encoding, bytesize) { io.read_fully(slices[2]) }
+    if info.dim > 3 # skip 4th dimension if present
+      read_block(io, info.encoding, bytesize) do
         io.pos += bytesize
       end
     end
-    if info.byte_format != IO::ByteFormat::SystemEndian
+    if info.encoding.byte_format != IO::ByteFormat::SystemEndian
       slices.each do |slice|
         size.times do |i|
           slice[i * sizeof(Float32), sizeof(Float32)].reverse!
@@ -426,14 +426,14 @@ module Chem::DCD
     slices.map(&.unsafe_slice_of(Float32))
   end
 
-  private def self.read_title(io : IO, marker_type : Int32.class | Int64.class, byte_format : IO::ByteFormat) : String?
-    read_block(io, marker_type, byte_format) do |title_size|
+  private def self.read_title(io : IO, encoding : Encoding) : String?
+    read_block(io, encoding) do |title_size|
       if title_size < 4 || (title_size - 4) % 80 != 0
         io.seek(title_size, :current) if title_size != 0
         Log.warn { "Skipping title section due to invalid size" }
         nil
       else
-        n_lines = io.read_bytes(Int32, byte_format)
+        n_lines = encoding.read(io, Int32)
         if n_lines != (title_size - 4) // 80
           io.seek(title_size - 4, :current)
           Log.warn { "Skipping title section due to size mismatch" }
