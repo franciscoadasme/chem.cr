@@ -24,28 +24,95 @@ module Chem::DCD
     end
   end
 
-  # Info state needed for reading frames.
-  record Info,
-    buffer : Bytes,
-    charmm_version : Int32,
-    dim : Int32,
-    encoding : Encoding,
-    fixed_positions : Slice(Spatial::Vec3),
-    n_atoms : Int32,
-    n_frames : Int32,
-    n_free_atoms : Int32,
-    periodic : Bool,
-    bytesize : Int64,
-    title : String? do
-    protected getter cell_block_bytesize : Int32 { periodic? ? marker_bytesize * 2 + 6 * sizeof(Float64) : 0 }
-    protected getter first_frame_bytesize : Int32 { frame_bytesize(@n_atoms) }
-    protected getter frame_bytesize : Int32 { frame_bytesize(@n_free_atoms) }
-    protected getter marker_bytesize : Int32 { @encoding.marker_type == Int32 ? sizeof(Int32) : sizeof(Int64) }
+  # Info about the DCD content needed for reading frames.
+  # Use `.read_info` to get it.
+  struct Info
+    # Reusable buffer for reading each frame positions.
+    # Size should be `sizeof(Float32) * n_atoms * 3`.
+    getter buffer : Bytes
+    # DCD header bytesize.
+    getter bytesize : Int64
+    # CHARMM version of the DCD content.
+    getter charmm_version : Int32
+    # Number of spatial dimensions (either 3 or 4).
+    getter dim : Int32
+    # Encoding (byte order and marker type) of the DCD content.
+    getter encoding : Encoding
+    # Atom positions for constrained/fixed atoms.
+    # Free positions are set to NaN.
+    getter fixed_positions : Slice(Spatial::Vec3)
+    # Number of atoms in the system.
+    getter n_atoms : Int32
+    # Number of frames in the trajectory.
+    getter n_frames : Int32
+    # Number of free atoms (not fixed) in the system.
+    # Equal to *n_atoms* if no atom is fixed.
+    getter n_free_atoms : Int32
+    # Whether the DCD content uses periodic boundaries (includes unit cell).
+    getter periodic : Bool
+    # The title in the DCD content, if present.
+    getter title : String?
 
+    # Number of bytes used for the cell block in each frame, or 0 if not periodic.
+    getter cell_block_bytesize : Int32 { periodic? ? marker_bytesize * 2 + 6 * sizeof(Float64) : 0 }
+    # Number of bytes occupied by the first frame (which may include fixed atoms).
+    getter first_frame_bytesize : Int32 { frame_bytesize(@n_atoms) }
+    # Number of bytes of a frame.
+    # It may be less than the first frame's bytesize as the second frame and after include free atoms only.
+    getter frame_bytesize : Int32 { frame_bytesize(@n_free_atoms) }
+    # Number of bytes of a block marker.
+    getter marker_bytesize : Int32 { @encoding.marker_type == Int32 ? sizeof(Int32) : sizeof(Int64) }
+
+    protected def initialize(
+      @buffer : Bytes,
+      @bytesize : Int64,
+      @charmm_version : Int32,
+      @dim : Int32,
+      @encoding : Encoding,
+      @fixed_positions : Slice(Spatial::Vec3),
+      @n_atoms : Int32,
+      @n_frames : Int32,
+      @n_free_atoms : Int32,
+      @periodic : Bool,
+      @title : String?,
+    )
+    end
+
+    # Returns a copy of `self` with the given fields updated.
+    def copy_with(
+      buffer : Bytes = @buffer,
+      bytesize : Int64 = @bytesize,
+      charmm_version : Int32 = @charmm_version,
+      dim : Int32 = @dim,
+      encoding : Encoding = @encoding,
+      fixed_positions : Slice(Spatial::Vec3) = @fixed_positions,
+      n_atoms : Int32 = @n_atoms,
+      n_frames : Int32 = @n_frames,
+      n_free_atoms : Int32 = @n_free_atoms,
+      periodic : Bool = @periodic,
+      title : String? = @title,
+    ) : self
+      self.class.new(
+        buffer: buffer,
+        bytesize: bytesize,
+        charmm_version: charmm_version,
+        dim: dim,
+        encoding: encoding,
+        fixed_positions: fixed_positions,
+        n_atoms: n_atoms,
+        n_frames: n_frames,
+        n_free_atoms: n_free_atoms,
+        periodic: periodic,
+        title: title,
+      )
+    end
+
+    # Returns the bytesize of a frame with *n_atoms* atoms.
     private def frame_bytesize(n_atoms : Int32) : Int32
       cell_block_bytesize + dim * (marker_bytesize * 2 + n_atoms * sizeof(Float32))
     end
 
+    # Returns the byte offset of the frame at *index*.
     def frame_byte_offset(index : Int) : Int64
       offset = bytesize + first_frame_bytesize
       offset += (index - 1) * frame_bytesize if index > 0
@@ -77,8 +144,10 @@ module Chem::DCD
 
   # TODO: Implement iterator/indexable that holds io, info and read any frame.
 
-  # Returns the first trajectory frame from *io*.
-  # Use `read_all` or `each` for multiple.
+  # Returns the next trajectory frame from *io*.
+  # Use `.read_all` or `.each` for multiple.
+  #
+  # NOTE: *io* must be seekable.
   def self.read(io : IO, info : Info) : Spatial::Positions3
     offset = io.pos - info.bytesize
     index = offset // info.first_frame_bytesize
@@ -103,6 +172,9 @@ module Chem::DCD
   end
 
   # Returns the trajectory frame at *index* from *io*.
+  # Raises `IndexError` if the index is out of bounds.
+  #
+  # NOTE: *io* must be seekable.
   def self.read(io : IO, info : Info, index : Int) : Spatial::Positions3
     raise IndexError.new unless 0 <= index < info.n_frames
     io.pos = info.frame_byte_offset(index)
@@ -110,6 +182,8 @@ module Chem::DCD
   end
 
   # Returns all trajectory frames in *io*.
+  #
+  # NOTE: *io* must be seekable.
   def self.read_all(io : IO) : Array(Spatial::Positions3)
     info = read_info(io)
     Array(Spatial::Positions3).new(info.n_frames) do |i|
@@ -124,6 +198,10 @@ module Chem::DCD
     end
   end
 
+  # Returns the info from *io*.
+  # It must called at the begining of the DCD content and before reading frames via `.read`.
+  #
+  # NOTE: *io* must be seekable.
   def self.read_info(io : IO) : Info
     encoding = detect_encoding(io)
     io.pos -= 4 # rewind "CORD"
@@ -187,6 +265,7 @@ module Chem::DCD
 
       info_size = io.pos # header now ends here
 
+      # read fixed positions from first frame and rewind
       io.pos += info.marker_bytesize * 2 + 6 * sizeof(Float64) if info.periodic? # skip unit cell block if present
       xx, yy, zz = read_positions(io, info, n_atoms)
       fixed_positions.zip(xx, yy, zz, 0...n_atoms) do |fixed_pos, x, y, z, i|
@@ -197,6 +276,7 @@ module Chem::DCD
       info = info.copy_with(fixed_positions: fixed_positions, bytesize: info_size)
     end
 
+    # check if the file size matches the number of frames
     if file = io.as?(File)
       body_bytesize = file.info.size - info.bytesize
       n_frames = (body_bytesize - info.first_frame_bytesize) // info.frame_bytesize + 1
@@ -369,6 +449,8 @@ module Chem::DCD
     raise "Invalid DCD (0x#{bytes[..3].join { |x| "%x" % x }} 0x#{bytes[4..].join { |x| "%x" % x }})"
   end
 
+  # Checks the start and end of the block before and after yielding and returns the yielded value.
+  # Raises if either the start or end marker does not match the expected value.
   private def self.read_block(io : IO, encoding : Encoding, marker : Int, & : -> T) : T forall T
     raise "Invalid start of block" unless encoding.read_marker(io) == marker
     value = yield
@@ -376,6 +458,9 @@ module Chem::DCD
     value
   end
 
+  # Returns the unit cell from *io*.
+  #
+  # If all angles are between 0 and 1, they are assumed to be saved as cos(angle).
   private def self.read_cell(io : IO, info : Info) : Spatial::Parallelepiped
     buffer = read_block(io, info.encoding, 6 * sizeof(Float64)) do
       StaticArray(Float64, 6).new do
@@ -398,6 +483,9 @@ module Chem::DCD
     end
   end
 
+  # Returns the x, y, and y components of the positions from *io*. The 4th dimension is skipped if present.
+  #
+  # It uses the buffer from *info* to avoid allocating a new slice for each component.
   private def self.read_positions(io : IO, info : Info, size : Int32) : Tuple(Slice(Float32), Slice(Float32), Slice(Float32))
     bytesize = size * sizeof(Float32)
     slices = {0, 1, 2}.map { |i| info.buffer[i * bytesize, bytesize] }
@@ -415,6 +503,10 @@ module Chem::DCD
     slices.map(&.unsafe_slice_of(Float32))
   end
 
+  # Returns the title from *io* or nil if the title section is not present or invalid.
+  #
+  # The string must be padded to 80 bytes and the number of lines is stored in the header.
+  # Otherwise, it skips the title section.
   private def self.read_title(io : IO, encoding : Encoding) : String?
     bytesize = encoding.read_marker(io)
     title = nil
@@ -443,6 +535,7 @@ module Chem::DCD
     title
   end
 
+  # Writes *marker* to *io* before and after yielding.
   private def self.write_block(io : IO, marker : Int32, & : ->) : Nil
     io.write_bytes(marker)
     yield
