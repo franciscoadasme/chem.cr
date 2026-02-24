@@ -30,7 +30,7 @@ module Chem::DCD
     charmm_version : Int32,
     dim : Int32,
     encoding : Encoding,
-    fixed_positions : Array(Spatial::Vec3?),
+    fixed_positions : Slice(Spatial::Vec3),
     n_atoms : Int32,
     n_frames : Int32,
     n_free_atoms : Int32,
@@ -84,7 +84,7 @@ module Chem::DCD
     if index > 0 && info.n_free_atoms < info.n_atoms
       j = -1
       info.fixed_positions.each_with_index do |fixed_pos, i|
-        pos[i] = fixed_pos || Spatial::Vec3[x[(j += 1)], y[j], z[j]]
+        pos[i] = fixed_pos.nan? ? Spatial::Vec3[x[(j += 1)], y[j], z[j]] : fixed_pos
       end
     else
       info.n_atoms.times do |i|
@@ -161,7 +161,7 @@ module Chem::DCD
       encoding: encoding,
       charmm_version: charmm_version,
       dim: dim,
-      fixed_positions: [] of Spatial::Vec3?,
+      fixed_positions: Slice(Spatial::Vec3).empty,
       periodic: is_periodic,
       n_atoms: n_atoms,
       n_frames: n_frames,
@@ -171,16 +171,16 @@ module Chem::DCD
     )
 
     if n_fixed_atoms > 0
-      fixed_positions = Array(Spatial::Vec3?).new(n_atoms) { Spatial::Vec3.zero }
+      fixed_positions = Slice(Float64).new(n_atoms * 3).unsafe_slice_of(Spatial::Vec3)
       read_block(io, encoding, sizeof(Int32) * n_free_atoms) do
         n_free_atoms.times do
-          i = encoding.read(io, Int32)
-          raise "Invalid atom index #{i}" unless 1 <= i <= n_atoms
-          fixed_positions.unsafe_put(i - 1, nil)
+          i = encoding.read(io, Int32) - 1
+          raise "Invalid atom index #{i}" unless 0 <= i < n_atoms
+          fixed_positions[i] = Spatial::Vec3::NAN
         end
       end
 
-      info_size = io.pos
+      info_size = io.pos # header now ends here
 
       if info.periodic? # skip unit cell block if present
         bytesize = 6 * sizeof(Float64)
@@ -188,9 +188,9 @@ module Chem::DCD
           io.pos += bytesize
         end
       end
-      x, y, z = read_positions(io, info, n_atoms)
-      fixed_positions.map_with_index! do |pos, i|
-        Spatial::Vec3[x[i], y[i], z[i]] if pos
+      xx, yy, zz = read_positions(io, info, n_atoms)
+      fixed_positions.zip(xx, yy, zz, 0...n_atoms) do |fixed_pos, x, y, z, i|
+        fixed_positions[i] = Spatial::Vec3[x, y, z] unless fixed_pos.nan?
       end
       io.pos = info_size
 
