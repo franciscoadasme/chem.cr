@@ -541,7 +541,7 @@ describe Chem::PDB do
       expected = File.read spec_file("1crn--stripped.pdb")
 
       io = IO::Memory.new
-      Chem::PDB.write(io, struc, bonds: :none)
+      Chem::PDB.write(io, struc, conect: :none)
       io.to_s.should eq expected
     end
 
@@ -619,7 +619,7 @@ describe Chem::PDB do
         PDB
 
       io = IO::Memory.new
-      Chem::PDB.write io, struc, bonds: :all
+      Chem::PDB.write io, struc, conect: :all
       io.to_s.should eq expected
     end
 
@@ -656,7 +656,7 @@ describe Chem::PDB do
         PDB
 
       io = IO::Memory.new
-      Chem::PDB.write io, struc.residues[1].atoms, bonds: :all
+      Chem::PDB.write io, struc.residues[1].atoms, conect: :all
       io.to_s.should eq expected
     end
 
@@ -688,7 +688,7 @@ describe Chem::PDB do
         PDB
 
       io = IO::Memory.new
-      Chem::PDB.write io, struc, bonds: :all, renumber: false
+      Chem::PDB.write io, struc, conect: :all, renumber: false
       io.to_s.should eq expected
     end
 
@@ -712,13 +712,12 @@ describe Chem::PDB do
         PDB
 
       io = IO::Memory.new
-      Chem::PDB.write io, struc, bonds: :none
+      Chem::PDB.write io, struc, conect: :none
       io.to_s.should eq expected
     end
 
     it "writes multiple entries" do
       path = spec_file("models.pdb")
-      strip = /(CONECT|NUMMDL).+\n/
 
       entries = Chem::PDB.read_all path
       expected = File.read(path).gsub(strip, "")
@@ -733,7 +732,7 @@ describe Chem::PDB do
       entries = Chem::PDB.read_all(path)
 
       io = IO::Memory.new
-      Chem::PDB.write(io, entries)
+      Chem::PDB.write(io, entries.each)
       io.to_s.should eq File.read(path).gsub(/(NUMMDL|CONECT).+\n/, "")
     end
 
@@ -806,7 +805,7 @@ describe Chem::PDB do
         PDB
 
       io = IO::Memory.new
-      Chem::PDB.write io, struc, bonds: :standard
+      Chem::PDB.write io, struc, conect: :standard
       io.to_s.lines.select(/^CONECT/).join('\n').should eq expected
     end
 
@@ -815,7 +814,7 @@ describe Chem::PDB do
       expected = File.read(spec_file("1crn.pdb")).lines.select(/^CONECT/).join('\n')
 
       io = IO::Memory.new
-      Chem::PDB.write io, struc, bonds: :disulfide
+      Chem::PDB.write io, struc, conect: :disulfide
       io.to_s.lines.select(/^CONECT/).join('\n').should eq expected
     end
 
@@ -828,7 +827,7 @@ describe Chem::PDB do
         PDB
 
       io = IO::Memory.new
-      Chem::PDB.write io, struc, bonds: :het, renumber: false
+      Chem::PDB.write io, struc, conect: :het, renumber: false
       io.to_s.lines.select(/^CONECT/).join('\n').should eq expected
     end
 
@@ -836,7 +835,7 @@ describe Chem::PDB do
       struc = Chem::XYZ.read spec_file("waters.xyz"), guess_bonds: true, guess_names: true
 
       io = IO::Memory.new
-      Chem::PDB.write io, struc, bonds: :het
+      Chem::PDB.write io, struc, conect: :het
       io.to_s.lines.select(/^CONECT/).join('\n').should eq ""
     end
 
@@ -855,7 +854,7 @@ describe Chem::PDB do
         PDB
 
       io = IO::Memory.new
-      Chem::PDB.write io, struc, bonds: :standard
+      Chem::PDB.write io, struc, conect: :standard
       io.to_s.lines.select(/^CONECT/).join('\n').should eq expected
     end
 
@@ -943,7 +942,7 @@ describe Chem::PDB do
         PDB
 
       io = IO::Memory.new
-      Chem::PDB.write io, struc, bonds: :all, ter_on_fragment: true
+      Chem::PDB.write io, struc, conect: :all, ter_on_fragment: true
       io.to_s.should eq expected
     end
   end

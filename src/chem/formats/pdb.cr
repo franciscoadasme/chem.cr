@@ -1,5 +1,17 @@
 @[Chem::RegisterFormat(ext: %w(.ent .pdb), module_api: true)]
 module Chem::PDB
+  # Controls which CONECT records are written to a PDB.
+  @[Flags]
+  enum ConectOptions
+    # Write CONECT records for standard residues (including water)
+    Standard
+    # Write CONECT records for disulfide bridges
+    Disulfide
+    # Write CONECT records for non-standard (HET) groups excluding
+    # water (both intra- and inter-residue bonds)
+    Het
+  end
+
   # Yields each structure in *io*.
   #
   # If passed, only chains in *chains* will be read, otherwise all chains will be read.
@@ -78,32 +90,154 @@ module Chem::PDB
   #
   # Atom numbering starts from 1 and increments sequentially if *renumber* is true, otherwise the atom numbers are written as is.
   #
-  # CONECT records are written for HET residues and disulfide bridges only, but can be changed using *bonds*.
+  # CONECT records are written for HET residues and disulfide bridges only, but can be changed using *conect*.
   # TER records are written for each fragment if *ter_on_fragment* is true.
+  #
+  # If *include_header* is true, the experimental data, secondary structure, unit cell, and other information is written if available.
+  # If *include_end* is true, the END record is written at the end of the output.
   def self.write(
-    io : IO | Path | String,
-    obj : Structure | AtomView,
-    bonds : Writer::BondOptions = Writer::BondOptions.flags(Het, Disulfide),
+    io : IO,
+    struc : AtomView | Structure,
+    conect conect_options : PDB::ConectOptions = PDB::ConectOptions.flags(Het, Disulfide),
     renumber : Bool = true,
     ter_on_fragment : Bool = false,
-    total_entries : Int32? = 1,
+    include_header : Bool = true,
+    include_end : Bool = true,
   ) : Nil
-    Writer.open(io, bonds: bonds, renumber: renumber, ter_on_fragment: ter_on_fragment, total_entries: 1) do |writer|
-      writer << obj
+    write_header(io, struc) if include_header
+
+    atom_index_table = {} of Int32 => Int32
+    serial = 0
+    if struc.is_a?(Structure)
+      transform = nil
+      if (cell = struc.cell?) && !(cell.basisvec[0].parallel?(:x) && cell.basisvec[1].z.zero?)
+        transform = Spatial::Transform
+          .aligning(cell.basisvec[..1], to: {Spatial::Vec3::X, Spatial::Vec3::Y})
+          .translate(cell.origin)
+        Log.warn do
+          "Aligning unit cell to the XY plane for writing PDB. \
+           This will change the atom coordinates."
+        end
+      end
+
+      struc.chains.each do |chain|
+        prev_res = nil
+        chain.residues.each do |residue|
+          write_ter(io, prev_res, (serial += 1 if renumber)) if ter_on_fragment && prev_res && !residue.bonded?(prev_res)
+          residue.atoms.each do |atom|
+            pos = atom.pos
+            pos = transform * pos if transform
+            write_atom(io, atom, renumber ? (serial += 1) : atom.number, pos)
+            atom_index_table[atom.number] = serial if renumber && !conect_options.none?
+          end
+          prev_res = residue
+        end
+        write_ter(io, prev_res, (serial += 1 if renumber)) if prev_res && (prev_res.polymer? || ter_on_fragment)
+      end
+    elsif ter_on_fragment
+      atoms = struc.is_a?(AtomView) ? struc : struc.atoms
+      atoms.each_fragment do |fragment|
+        fragment.each do |atom|
+          write_atom(io, atom, renumber ? (serial += 1) : atom.number, atom.pos)
+          atom_index_table[atom.number] = serial if renumber && !conect_options.none?
+        end
+        write_ter(io, fragment[-1].residue, (serial += 1 if renumber))
+      end
+    else
+      atoms = struc.is_a?(AtomView) ? struc : struc.atoms
+      atoms.each do |atom|
+        write_atom(io, atom, renumber ? (serial += 1) : atom.number, atom.pos)
+        atom_index_table[atom.number] = serial if renumber && !conect_options.none?
+      end
+    end
+
+    # write bonds if requested
+    if !conect_options.none?
+      # gather bonds to write
+      bonds = struc.responds_to?(:bonds) ? struc.bonds : struc.atoms.bonds
+      if conect_options != ConectOptions::All
+        bonds.select! do |bond|
+          a, b = bond.atoms
+          ok = false
+          ok ||= (a.protein? || a.water?) && (b.protein? || b.water?) if conect_options.standard?
+          ok ||= (a.het? && !a.water?) || (b.het? && !b.water?) if conect_options.het?
+          ok ||= a.sulfur? && b.sulfur? && a.residue != b.residue if conect_options.disulfide?
+          ok
+        end
+      end
+
+      # generate atom serial pairs for conect records
+      idx_pairs = [] of Tuple(Int32, Int32)
+      bonds.each do |bond|
+        i, j = bond.atoms.map(&.number)
+        i, j = {i, j}.map { |k| atom_index_table[k] } unless atom_index_table.empty?
+        bond.order.to_i.times do
+          idx_pairs << {i, j} << {j, i}
+        end
+      end
+
+      # write conect records
+      buffer = Array(Tuple(Int32, Int32)).new(4)
+      idx_pairs.sort!.chunk(reuse: true, &.[0]).each do |i, pairs|
+        pairs.each_slice(4, reuse: buffer) do |slice|
+          io << "CONECT"
+          Hybrid36.encode(io, i, width: 5)
+          slice.each do |pair|
+            Hybrid36.encode(io, pair[1], width: 5)
+          end
+          "\n".rjust io, 81 - 6 - 5 - slice.size * 5
+        end
+      end
+    end
+
+    io.printf "%-80s\n", "END" if include_end
+  end
+
+  # :ditto:
+  def self.write(
+    path : Path | String,
+    struc : AtomView | Structure,
+    conect conect_options : PDB::ConectOptions = PDB::ConectOptions.flags(Het, Disulfide),
+    renumber : Bool = true,
+    ter_on_fragment : Bool = false,
+    include_header : Bool = true,
+    include_end : Bool = true,
+  ) : Nil
+    File.open(path, "w") do |io|
+      write(io, struc, conect_options, renumber, ter_on_fragment)
     end
   end
 
   # :ditto:
   def self.write(
-    io : IO | Path | String,
-    objs : Enumerable(Structure),
-    bonds : Writer::BondOptions = Writer::BondOptions.flags(Het, Disulfide),
+    io : IO,
+    structures : Enumerable(Structure),
+    conect conect_options : PDB::ConectOptions = PDB::ConectOptions.flags(Het, Disulfide),
     renumber : Bool = true,
     ter_on_fragment : Bool = false,
-    total_entries : Int32? = nil,
   ) : Nil
-    Writer.open(io, bonds: bonds, renumber: renumber, ter_on_fragment: ter_on_fragment, total_entries: total_entries) do |writer|
-      objs.each { |s| writer << s }
+    structures.each_with_index do |struc, i|
+      if i == 0
+        write_header(io, struc)
+        io.printf "NUMMDL    %-4d%66s\n", structures.size, nil if structures.is_a?(Indexable)
+      end
+      io.printf "MODEL     %4d%66s\n", i + 1, nil
+      write(io, struc, conect_options, renumber, ter_on_fragment, include_header: false, include_end: false)
+      io.printf "%-80s\n", "ENDMDL"
+    end
+    io.printf "%-80s\n", "END"
+  end
+
+  # :ditto:
+  def self.write(
+    path : Path | String,
+    structures : Enumerable(Structure),
+    conect conect_options : PDB::ConectOptions = PDB::ConectOptions.flags(Het, Disulfide),
+    renumber : Bool = true,
+    ter_on_fragment : Bool = false,
+  ) : Nil
+    File.open(path, "w") do |io|
+      write(io, structures, conect_options, renumber, ter_on_fragment)
     end
   end
 
@@ -427,307 +561,6 @@ module Chem::PDB
     end
   end
 
-  class Writer
-    include FormatWriter(AtomContainer)
-    include FormatWriter::MultiEntry(AtomContainer)
-
-    LINE_WIDTH       = 80
-    PDB_VERSION      = "3.30"
-    PDB_VERSION_DATE = Time.local 2011, 7, 13
-    WHITESPACE       = ' '
-
-    # Controls which bonds are written to a PDB.
-    @[Flags]
-    enum BondOptions
-      # Write CONECT records for standard residues (including water)
-      Standard
-      # Write CONECT records for disulfide bridges
-      Disulfide
-      # Write CONECT records for non-standard (HET) groups excluding
-      # water (both intra- and inter-residue bonds)
-      Het
-    end
-
-    @atom_index_table = {} of Int32 => Int32
-    @record_index = 0
-
-    def initialize(
-      @io : IO,
-      # FIXME: add scope to type when creating constructors in register_format
-      @bonds : Chem::PDB::Writer::BondOptions = Chem::PDB::Writer::BondOptions.flags(Het, Disulfide),
-      @renumber : Bool = true,
-      @ter_on_fragment : Bool = false,
-      @total_entries : Int32? = nil,
-      @sync_close : Bool = false,
-    )
-      if (@total_entries || Int32::MAX) < 1
-        raise ArgumentError.new "Total entries cannot be negative or zero"
-      end
-    end
-
-    def multi? : Bool
-      (@total_entries || Int32::MAX) > 1
-    end
-
-    def close : Nil
-      @io.printf "%-#{LINE_WIDTH}s\n", "END"
-      super
-    end
-
-    protected def encode_entry(obj : AtomContainer) : Nil
-      @record_index = 0
-
-      if @entry_index == 0
-        obj.is_a?(Structure) ? write_header(obj) : write_pdb_version
-        formatl "NUMMDL    %-4d%66s", @total_entries, ' ' if multi? && @total_entries
-      end
-
-      formatl "MODEL     %4d%66s", @entry_index + 1, ' ' if multi?
-      if obj.is_a?(Structure)
-        if (cell = obj.cell?) &&
-           !(cell.basisvec[0].parallel?(:x) && cell.basisvec[1].z.zero?)
-          # compute the unit cell aligned to the xy-plane
-          ref = Spatial::Parallelepiped.new cell.size, cell.angles
-          transform = Spatial::Transform
-            .aligning(cell.basisvec[..1], to: ref.basisvec[..1])
-            .translate(cell.origin)
-          Log.warn do
-            "Aligning unit cell to the XY plane for writing PDB. \
-             This will change the atom coordinates."
-          end
-        end
-
-        obj.chains.each do |chain|
-          p_res = nil
-          chain.residues.each do |residue|
-            # assume residues are ordered by connectivity, so a chain
-            # break (new fragment) can be detected if residue i and i+1
-            # are not bonded
-            write_ter p_res if @ter_on_fragment && p_res && !p_res.bonded?(residue)
-            residue.atoms.each { |atom| write atom, transform }
-            p_res = residue
-          end
-          # assume that a chain is one or multiple (chain breaks) fragments
-          write_ter p_res if p_res && (p_res.polymer? || @ter_on_fragment)
-        end
-      elsif @ter_on_fragment
-        atoms = obj.is_a?(AtomView) ? obj : obj.atoms
-        atoms.each_fragment do |atoms|
-          atoms.each do |atom|
-            write atom
-          end
-          write_ter atoms[-1].residue
-        end
-      else
-        atoms = obj.is_a?(AtomView) ? obj : obj.atoms
-        atoms.each { |atom| write atom }
-      end
-
-      unless @bonds.none?
-        bonds = obj.responds_to?(:bonds) ? obj.bonds : obj.atoms.bonds
-        if @bonds != BondOptions::All
-          bonds.select! do |bond|
-            a, b = bond.atoms
-            ok = false
-            ok ||= (a.protein? || a.water?) && (b.protein? || b.water?) if @bonds.standard?
-            ok ||= (a.het? && !a.water?) || (b.het? && !b.water?) if @bonds.het?
-            ok ||= a.sulfur? && b.sulfur? && a.residue != b.residue if @bonds.disulfide?
-            ok
-          end
-        end
-        write_bonds bonds
-      end
-
-      formatl "%-#{LINE_WIDTH}s", "ENDMDL" if multi?
-    end
-
-    private def index(atom : Atom) : Int32
-      idx = next_index
-      @atom_index_table[atom.number] = idx if @bonds
-      idx
-    end
-
-    private def next_index : Int32
-      @record_index += 1
-    end
-
-    private def write(atom : Atom, transform : Spatial::Transform? = nil) : Nil
-      vec = atom.pos
-      vec = transform * vec if transform
-      @io.printf "%-6s%5s %4s %-4s%s%4s%1s   %8.3f%8.3f%8.3f%6.2f%6.2f          %2s%2s\n",
-        (atom.residue.protein? ? "ATOM" : "HETATM"),
-        PDB::Hybrid36.encode(@renumber ? index(atom) : atom.number, width: 5),
-        atom.name[..3].ljust(3),
-        atom.residue.name[..3],
-        atom.chain.id,
-        PDB::Hybrid36.encode(atom.residue.number, width: 4),
-        atom.residue.insertion_code,
-        vec.x,
-        vec.y,
-        vec.z,
-        atom.occupancy,
-        atom.temperature_factor,
-        atom.element.symbol,
-        (sprintf("%+d", atom.formal_charge).reverse if atom.formal_charge != 0)
-    end
-
-    private def write(expt : Structure::Experiment) : Nil
-      raw_method = expt.method.to_s.underscore.upcase.gsub('_', ' ').gsub "X RAY", "X-RAY"
-
-      @io.printf "HEADER    %40s%9s   %4s              \n",
-        WHITESPACE, # classification
-        expt.deposition_date.to_s("%d-%^b-%y"),
-        expt.pdb_accession.upcase
-      write_title expt.title
-      @io.printf "EXPDTA    %-70s\n", raw_method
-      @io.printf "JRNL        DOI    %-61s\n", expt.doi.not_nil! if expt.doi
-    end
-
-    private def write(cell : Spatial::Parallelepiped) : Nil
-      a, b, c = cell.size
-      alpha, beta, gamma = cell.angles
-      @io.printf "CRYST1%9.3f%9.3f%9.3f%7.2f%7.2f%7.2f %-11s%4d          \n",
-        a,
-        b,
-        c,
-        alpha,
-        beta,
-        gamma,
-        "P 1", # default space group
-        1      # default Z value
-    end
-
-    private def write_bonds(bonds : Array(Bond)) : Nil
-      idx_pairs = Array(Tuple(Int32, Int32)).new bonds.size
-      bonds.each do |bond|
-        i, j = bond.atoms.map(&.number)
-        i, j = @atom_index_table[i], @atom_index_table[j] if @renumber
-        bond.order.to_i.times do
-          idx_pairs << {i, j} << {j, i}
-        end
-      end
-
-      idx_pairs.sort!.chunk(&.[0]).each do |i, pairs|
-        pairs.each_slice(4, reuse: true) do |slice|
-          @io << "CONECT"
-          Hybrid36.encode @io, i, width: 5
-          slice.each { |pair| Hybrid36.encode @io, pair[1], width: 5 }
-          @io.puts " " * (LINE_WIDTH - 6 - 5 - slice.size * 5)
-        end
-      end
-    end
-
-    private def write_header(structure : Structure) : Nil
-      if expt = structure.experiment
-        write expt
-      else
-        write_title structure.title unless structure.title.blank?
-      end
-      write_pdb_version structure.experiment.try(&.pdb_accession)
-      write_sec structure
-      structure.cell?.try { |cell| write cell }
-    end
-
-    private def write_pdb_version(pdb_accession : String? = nil) : Nil
-      @io.printf "REMARK   4%-70s\n", WHITESPACE
-      @io.printf "REMARK   4 %4s COMPLIES WITH FORMAT V. %4s, %9s%25s\n",
-        pdb_accession.try(&.upcase),
-        PDB_VERSION,
-        PDB_VERSION_DATE.to_s("%d-%^b-%y"),
-        WHITESPACE
-    end
-
-    private def write_sec(structure : Structure) : Nil
-      helix_id = sheet_id = 0
-      structure.residues.secondary_structures
-        .select!(&.[0].sec.regular?)
-        .sort_by! do |residues|
-          {residues[0].sec.beta_strand? ? 1 : -1, residues[0]}
-        end
-        .each do |residues|
-          case residues[0].sec
-          when .beta_strand?
-            write_sheet (sheet_id += 1), residues
-          when .left_handed_helix3_10?
-            write_helix (helix_id += 1), residues, helix_type: 11
-          when .left_handed_helix_alpha?
-            write_helix (helix_id += 1), residues, helix_type: 6
-          when .left_handed_helix_gamma?
-            write_helix (helix_id += 1), residues, helix_type: 8
-          when .left_handed_helix_pi?
-            write_helix (helix_id += 1), residues, helix_type: 13
-          when .polyproline?
-            write_helix (helix_id += 1), residues, helix_type: 10
-          when .right_handed_helix3_10?
-            write_helix (helix_id += 1), residues, helix_type: 5
-          when .right_handed_helix_alpha?
-            write_helix (helix_id += 1), residues, helix_type: 1
-          when .right_handed_helix_gamma?
-            write_helix (helix_id += 1), residues, helix_type: 4
-          when .right_handed_helix_pi?
-            write_helix (helix_id += 1), residues, helix_type: 3
-          end
-        end
-    end
-
-    private def write_helix(id : Int, residues : ResidueView, helix_type : Int) : Nil
-      @io.printf "%-6s %3d %3d %3s %s %4d%1s %3s %s %4d%1s%2d%30s%6d    \n",
-        "HELIX",
-        id,
-        id,
-        residues[0].name,
-        residues[0].chain.id,
-        residues[0].number,
-        residues[0].insertion_code,
-        residues[-1].name,
-        residues[-1].chain.id,
-        residues[-1].number,
-        residues[-1].insertion_code,
-        helix_type,
-        "",
-        residues.size
-    end
-
-    private def write_sheet(id : Int, residues : ResidueView) : Nil
-      @io.printf "%-6s %3d %3s%2s %3s %1s%4d%1s %3s %1s%4d%1s%2s%40s\n",
-        "SHEET",
-        id,  # strand number
-        nil, # sheet identifier
-        nil, # number of strands in sheet
-        residues[0].name,
-        residues[0].chain.id,
-        residues[0].number,
-        residues[0].insertion_code,
-        residues[-1].name,
-        residues[-1].chain.id,
-        residues[-1].number,
-        residues[-1].insertion_code,
-        nil, # strand sense (first strand = 0, parallel = 1, anti-parallel = -1)
-        ""
-    end
-
-    private def write_ter(prev_res : Residue) : Nil
-      @io.printf "TER   %5d      %3s %s%4d%1s%53s\n",
-        @renumber ? next_index.to_s : WHITESPACE,
-        prev_res.name,
-        prev_res.chain.id,
-        prev_res.number,
-        prev_res.insertion_code,
-        WHITESPACE
-    end
-
-    private def write_title(str : String) : Nil
-      str.scan(/.{1,70}( |$)/).each_with_index do |match, i|
-        @io << "TITLE   "
-        if i > 0
-          @io.printf "%2d %-69s\n", i + 1, match[0]
-        else
-          @io.printf "  %-70s\n", match[0]
-        end
-      end
-    end
-  end
-
   module Hybrid36
     extend self
 
@@ -780,5 +613,120 @@ module Chem::PDB
     private def out_of_range(num : Int)
       raise ArgumentError.new "Value out of range"
     end
+  end
+
+  private HELIX_NUMBER_TABLE = {
+    Protein::SecondaryStructure::LeftHandedHelix3_10   => 11,
+    Protein::SecondaryStructure::LeftHandedHelixAlpha  => 6,
+    Protein::SecondaryStructure::LeftHandedHelixGamma  => 8,
+    Protein::SecondaryStructure::LeftHandedHelixPi     => 13,
+    Protein::SecondaryStructure::Polyproline           => 10,
+    Protein::SecondaryStructure::RightHandedHelix3_10  => 5,
+    Protein::SecondaryStructure::RightHandedHelixAlpha => 1,
+    Protein::SecondaryStructure::RightHandedHelixGamma => 4,
+    Protein::SecondaryStructure::RightHandedHelixPi    => 3,
+  }
+
+  private def self.write_atom(io : IO, atom : Atom, serial : Int32, pos : Spatial::Vec3) : Nil
+    io.printf "%-6s%5s %4s %-4s%s%4s%1s   %8.3f%8.3f%8.3f%6.2f%6.2f          %2s%2s\n",
+      (atom.residue.protein? ? "ATOM" : "HETATM"),
+      Hybrid36.encode(serial, width: 5),
+      atom.name[..3].ljust(3),
+      atom.residue.name[..3],
+      atom.chain.id,
+      Hybrid36.encode(atom.residue.number, width: 4),
+      atom.residue.insertion_code,
+      pos.x,
+      pos.y,
+      pos.z,
+      atom.occupancy,
+      atom.temperature_factor,
+      atom.element.symbol,
+      (sprintf("%+d", atom.formal_charge).reverse if atom.formal_charge != 0)
+  end
+
+  private def self.write_header(io : IO, atoms : AtomView) : Nil
+    write_version(io)
+  end
+
+  private def self.write_header(io : IO, struc : Structure) : Nil
+    if expt = struc.experiment
+      io.printf "HEADER    %40s%9s   %4s              \n",
+        nil,
+        expt.deposition_date.to_s("%d-%^b-%y"),
+        expt.pdb_accession.upcase
+      method = expt.method.to_s.underscore.upcase.gsub('_', ' ').gsub("X RAY", "X-RAY")
+      write_title(io, expt.title)
+      io.printf "EXPDTA    %-70s\n", method
+      io.printf "JRNL        DOI    %-61s\n", expt.doi.not_nil! if expt.doi
+      write_version(io, code: expt.pdb_accession)
+    else
+      write_title(io, struc.title) unless struc.title.blank?
+      write_version(io)
+    end
+
+    # write secondary structure records
+    helix_id = sheet_id = 0
+    struc.residues.secondary_structures
+      .select!(&.[0].sec.regular?)
+      .sort_by! do |residues|
+        {residues[0].sec.beta_strand? ? 1 : -1, residues[0]}
+      end
+      .each do |residues|
+        sec = residues[0].sec
+        if sec.beta_strand?
+          sheet_id += 1
+          io.printf "SHEET  %3d %3s%2s %3s %1s%4d%1s %3s %1s%4d%1s%2s%40s\n",
+            sheet_id, nil, nil, residues[0].name, residues[0].chain.id,
+            residues[0].number, residues[0].insertion_code,
+            residues[-1].name, residues[-1].chain.id,
+            residues[-1].number, residues[-1].insertion_code, nil, nil
+        else
+          helix_id += 1
+          io.printf "HELIX  %3d %3d %3s %s %4d%1s %3s %s %4d%1s%2d%30s%6d    \n",
+            helix_id, helix_id, residues[0].name, residues[0].chain.id,
+            residues[0].number, residues[0].insertion_code,
+            residues[-1].name, residues[-1].chain.id,
+            residues[-1].number, residues[-1].insertion_code,
+            HELIX_NUMBER_TABLE[sec], nil, residues.size
+        end
+      end
+
+    # write unit cell if present
+    if cell = struc.cell?
+      a, b, c = cell.size
+      alpha, beta, gamma = cell.angles
+      io.printf "CRYST1%9.3f%9.3f%9.3f%7.2f%7.2f%7.2f %-11s%4d          \n",
+        a, b, c, alpha, beta, gamma, "P 1", 1
+    end
+  end
+
+  private def self.write_ter(io : IO, residue : Residue, serial : Int32?) : Nil
+    io.printf "TER   %5s      %3s %s%4d%1s%53s\n",
+      serial.to_s,
+      residue.name,
+      residue.chain.id,
+      residue.number,
+      residue.insertion_code,
+      nil
+  end
+
+  private def self.write_title(io : IO, str : String) : Nil
+    str.scan(/.{1,70}( |$)/).each_with_index do |match, i|
+      io << "TITLE   "
+      if i > 0
+        io.printf "%2d %-69s\n", i + 1, match[0]
+      else
+        io.printf "  %-70s\n", match[0]
+      end
+    end
+  end
+
+  private def self.write_version(io : IO, code : String? = nil) : Nil
+    io.printf "REMARK   4%-70s\n", nil
+    # FIXME: update date. should be 31-NOV-12
+    io.printf "REMARK   4 %4s COMPLIES WITH FORMAT V. 3.30, 13-JUL-11%25s\n",
+      code.try(&.upcase),
+      nil
   end
 end
