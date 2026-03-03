@@ -1,3 +1,4 @@
+# TODO: Move to PDB::Experiment.
 struct Chem::Structure::Experiment
   enum Method
     ElectronCrystallography

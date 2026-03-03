@@ -116,4 +116,7 @@ module Chem
       io.flush
     end
   end
+
+  # Identifier for a residue in a structure.
+  alias ResidueId = Tuple(Char, Int32, Char?)
 end

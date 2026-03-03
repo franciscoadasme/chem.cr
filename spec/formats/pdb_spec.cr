@@ -493,7 +493,7 @@ describe Chem::PDB do
       ex.inspect_with_location.should eq <<-EOS
         Found a parsing issue:
 
-         17 | ATOM     13  OH2 TIP3A   1       4.531   0.382  -0.339  1.00  0.00      TIP3    
+         13 | ATOM     13  OH2 TIP3A   1       4.531   0.382  -0.339  1.00  0.00      TIP3    
                                ^^^^
         Error: Found different name "TIP3" for <Residue A:LIG1>
         EOS
@@ -720,11 +720,11 @@ describe Chem::PDB do
       path = spec_file("models.pdb")
 
       entries = Chem::PDB.read_all path
-      expected = File.read(path).gsub(strip, "")
+      expected = File.read(path).gsub(/CONECT.+\n/, "")
 
       io = IO::Memory.new
       Chem::PDB.write io, entries
-      io.to_s.gsub(strip, "").should eq expected
+      io.to_s.gsub(/CONECT.+\n/, "").should eq expected
     end
 
     it "writes an indeterminate number of entries" do

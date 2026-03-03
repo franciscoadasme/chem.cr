@@ -12,6 +12,33 @@ module Chem::PDB
     Het
   end
 
+  # A secondary structure record (HELIX or SHEET) in the PDB.
+  struct SecondaryStructureRecord
+    # Identifier for the first residue of the secondary structure element.
+    getter begin : ResidueId
+    # Identifier for the last residue of the secondary structure element.
+    getter end : ResidueId
+    # Secondary structure.
+    getter type : Protein::SecondaryStructure
+
+    protected def initialize(@type, @begin, @end); end
+  end
+
+  # Experimental and structural information from the PDB header.
+  # Use `.read_info` to get it.
+  struct Info
+    # Unit cell of the structure if present in the header, else `nil`.
+    getter cell : Spatial::Parallelepiped?
+    # Experimental information of the structure if present in the header, else `nil`.
+    getter experiment : Structure::Experiment?
+    # Title of the structure.
+    getter title : String
+    # List of secondary structure (HELIX and SHEET) records.
+    getter sec_records : Array(SecondaryStructureRecord)
+
+    protected def initialize(@cell, @experiment, @title, @sec_records); end
+  end
+
   # Yields each structure in *io*.
   #
   # If passed, only chains in *chains* will be read, otherwise all chains will be read.
@@ -19,36 +46,187 @@ module Chem::PDB
   #
   # If the structure has alternate locations, only the most populated one will be read unless *alt_loc* is set.
   def self.each(
-    io : IO | Path | String,
+    io : IO,
     alt_loc : Char? = nil,
     chains : Enumerable(Char) | String | Nil = nil,
     guess_bonds : Bool = false,
     het : Bool = true,
-    &
+    & : Structure ->
   ) : Nil
-    Reader.open(io, alt_loc: alt_loc, chains: chains, guess_bonds: guess_bonds, het: het) do |reader|
-      reader.each do |structure|
-        yield structure
+    info = read_info(io)
+    loop do
+      yield read(io, info, alt_loc: alt_loc, chains: chains, guess_bonds: guess_bonds, het: het)
+    rescue IO::EOFError
+      break
+    end
+  end
+
+  # :ditto:
+  def self.each(
+    path : Path | String,
+    alt_loc : Char? = nil,
+    chains : Enumerable(Char) | String | Nil = nil,
+    guess_bonds : Bool = false,
+    het : Bool = true,
+    & : Structure ->
+  ) : Nil
+    File.open(path) do |file|
+      each(file, alt_loc: alt_loc, chains: chains, guess_bonds: guess_bonds, het: het) do |struc|
+        yield struc
       end
     end
   end
 
-  # Returns the first structure from *io*.
-  # Use `read_all` or `each` for multiple.
+  # Returns the next structure from *io*.
+  # Raises `IO::EOFError` when there are no more structures.
+  # Use `.read_all` or `.each` for multiple.
+  #
+  # Experimental and structural data specified in the header is set from *info*.
+  # If *info* is nil and *io* is at the beginning, the header is read first.
   #
   # If passed, only chains in *chains* will be read, otherwise all chains will be read.
   # Similarly, HET atoms can be excluded by setting *het* to *false*.
   #
   # If the structure has alternate locations, only the most populated one will be read unless *alt_loc* is set.
   def self.read(
-    io : IO | Path | String,
+    io : IO,
+    info : Info? = nil,
     alt_loc : Char? = nil,
     chains : Enumerable(Char) | String | Nil = nil,
     guess_bonds : Bool = false,
     het : Bool = true,
   ) : Structure
-    Reader.open(io, alt_loc: alt_loc, chains: chains, guess_bonds: guess_bonds, het: het) do |reader|
-      reader.read_entry
+    info ||= read_info(io)
+    pull = PullParser.new(io)
+    pull.each_line do
+      case pull.at(0, 6).str
+      when "ATOM  ", "HETATM", "MODEL "
+        pull.consume_line if pull.at(0, 6).str == "MODEL "
+
+        builder = Structure::Builder.new(
+          guess_bonds: guess_bonds,
+          guess_names: false,
+          source_file: (file = io).is_a?(File) ? file.path : nil,
+          use_templates: true,
+        )
+        builder.title info.title
+        builder.cell info.cell
+        builder.expt info.experiment
+
+        pdb_bonds = Hash(Tuple(Int32, Int32), BondOrder).new BondOrder::Zero
+        alt_locs = Hash(Residue, Array(AlternateLocation)).new do |hash, key|
+          hash[key] = Array(AlternateLocation).new 4
+        end
+        chains_set = chains.is_a?(Enumerable) ? chains.to_set : chains
+
+        pull.each_line do
+          case pull.at?(0, 6).str?
+          when "ATOM  ", "HETATM"
+            next if pull.at(0, 6).str == "HETATM" && !het
+
+            alt_loc_char = pull.at(16).char.presence
+            occupancy = pull.at?(54, 6).float(if_blank: 0)
+            next if alt_loc && alt_loc_char && alt_loc_char != alt_loc && occupancy < 1
+
+            chid = pull.at(21).char
+            case chains_set
+            when Set     then next unless chid.in?(chains_set)
+            when "first" then next if chid != (builder.current_chain.try(&.id) || chid)
+            end
+
+            atom_name = pull.at(12, 4).str.strip
+            ele = case symbol = pull.at?(76, 2).str?.presence.try(&.strip)
+                  when "D"
+                    PeriodicTable::H
+                  when String
+                    PeriodicTable[symbol]? || pull.error("Unknown element")
+                  else
+                    Structure.guess_element?(atom_name) || pull.error("Could not guess element")
+                  end
+
+            builder.chain chid if chid.alphanumeric?
+            resnum = read_serial(pull, 22, 4)
+            inscode = pull.at(26).char.presence
+            resname = pull.at(17, 4).str.strip
+            residue = builder.residue resname, resnum, inscode
+
+            pull.error "Found different name #{resname.inspect} for #{residue}" if alt_loc_char.nil? && resname != residue.name
+
+            x = pull.at(30, 8).float
+            y = pull.at(38, 8).float
+            z = pull.at(46, 8).float
+            formal_charge = pull.at?(78, 2).str?.presence.try { |str| str.reverse.to_i? || pull.error("Invalid formal charge") }
+            atom = builder.atom \
+              atom_name,
+              read_serial(pull, 6, 5),
+              Spatial::Vec3.new(x, y, z),
+              element: ele,
+              formal_charge: formal_charge || 0,
+              occupancy: occupancy,
+              temperature_factor: pull.at?(60, 6).float(if_blank: 0)
+
+            if !alt_loc && alt_loc_char
+              loc = alt_locs[atom.residue].find &.id.==(alt_loc_char)
+              alt_locs[atom.residue] << (loc = AlternateLocation.new alt_loc_char, resname) unless loc
+              loc << atom
+            end
+          when "CONECT"
+            i = read_serial(pull, 6, 5)
+            (11..).step(5).each do |start|
+              break unless j = read_serial?(pull, start, 5)
+              pdb_bonds.update({i, j}, &.succ) unless i > j
+            end
+          when "ENDMDL"
+            # pull.consume_line
+            break
+          when "END", "END   ", "MODEL ", "MASTER"
+            # FIXME: hack such that the next call to read can start at this line
+            if line = pull.line
+              io.pos -= line.bytesize + 1
+              io.pos += 1 if io.peek[0]?.try(&.unsafe_chr) == '\n'
+            end
+            break
+          end
+        end
+
+        if alt_loc.nil?
+          # resolve alternate locations
+          alt_locs.each do |residue, locs|
+            locs.sort! { |a, b| b.occupancy <=> a.occupancy }
+            locs.each(within: 1..) do |loc|
+              loc.each_atom do |atom|
+                residue.delete atom
+              end
+            end
+            residue.name = locs[0].resname
+            residue.reset_cache
+          end
+        end
+        builder.bonds pdb_bonds unless pdb_bonds.empty?
+        info.sec_records.each do |sec|
+          builder.secondary_structure sec.begin, sec.end, sec.type
+        end
+
+        return builder.build
+      when "END   ", "MASTER"
+        break
+      end
+    end
+    raise IO::EOFError.new
+  end
+
+  # :ditto:
+  #
+  # TODO: create macro to create this overload
+  def self.read(
+    path : Path | String,
+    alt_loc : Char? = nil,
+    chains : Enumerable(Char) | String | Nil = nil,
+    guess_bonds : Bool = false,
+    het : Bool = true,
+  ) : Structure
+    File.open(path) do |file|
+      read(file, alt_loc: alt_loc, chains: chains, guess_bonds: guess_bonds, het: het)
     end
   end
 
@@ -59,31 +237,149 @@ module Chem::PDB
   #
   # If the structure has alternate locations, only the most populated one will be read unless *alt_loc* is set.
   def self.read_all(
-    io : IO | Path | String,
+    io : IO,
     alt_loc : Char? = nil,
     chains : Enumerable(Char) | String | Nil = nil,
     guess_bonds : Bool = false,
     het : Bool = true,
   ) : Array(Structure)
-    Reader.open(io, alt_loc: alt_loc, chains: chains, guess_bonds: guess_bonds, het: het) do |reader|
-      ary = [] of Structure
-      reader.each { |s| ary << s }
-      ary
+    ary = [] of Structure
+    each(io, alt_loc: alt_loc, chains: chains, guess_bonds: guess_bonds, het: het) { |s| ary << s }
+    ary
+  end
+
+  # :ditto:
+  #
+  # TODO: create macro to create this overload
+  def self.read_all(
+    path : Path | String,
+    alt_loc : Char? = nil,
+    chains : Enumerable(Char) | String | Nil = nil,
+    guess_bonds : Bool = false,
+    het : Bool = true,
+  ) : Array(Structure)
+    File.open(path) do |file|
+      read_all(file, alt_loc: alt_loc, chains: chains, guess_bonds: guess_bonds, het: het)
     end
   end
 
-  # Returns the experimental information from the header of *io*.
-  def self.read_header(io : IO | Path | String) : Structure::Experiment
-    Reader.open(io) do |reader|
-      reader.read_header
+  # Returns the info from *io*.
+  # It must be called at the beginning of the PDB content and before reading structures via `.read`.
+  def self.read_info(io : IO) : Info
+    cell = nil
+    date = doi = pdbid = resolution = nil
+    method = Structure::Experiment::Method::XRayDiffraction
+    title = ""
+    sec_records = [] of SecondaryStructureRecord
+
+    pull = PullParser.new(io)
+    pull.each_line do
+      case pull.at?(0, 6).str?
+      when "CRYST1"
+        x = pull.at(6, 9).float
+        pull.error "Negative cell size a" if x < 0
+        y = pull.at(15, 9).float
+        pull.error "Negative cell size b" if y < 0
+        z = pull.at(24, 9).float
+        pull.error "Negative cell size c" if z < 0
+        alpha = pull.at(33, 7).float
+        pull.error "Invalid cell angle alpha" unless 0 < alpha <= 180
+        beta = pull.at(40, 7).float
+        pull.error "Invalid cell angle beta" unless 0 < beta <= 180
+        gamma = pull.at(47, 7).float
+        pull.error "Invalid cell angle gamma" unless 0 < gamma <= 180
+
+        case {x, y, z, alpha, beta, gamma}
+        when {0, 0, 0, 90, 90, 90}, {1, 1, 1, 90, 90, 90}
+          next
+        when {.positive?, .positive?, .positive?, .positive?, .positive?, .positive?}
+          cell = Spatial::Parallelepiped.new({x, y, z}, {alpha, beta, gamma})
+        else
+          pull.error "Invalid cell parameters: #{{x, y, z, alpha, beta, gamma}}"
+        end
+      when "EXPDTA"
+        str = pull.at(10, 70).str.split(';')[0].delete "- "
+        method = Structure::Experiment::Method.parse str
+      when "HEADER"
+        date = pull.at?(50, 9).str?.presence.try { |str| Time.parse_utc str, "%d-%^b-%y" }
+        pdbid = pull.at?(62, 4).str?.presence
+      when "HELIX "
+        sec_type = case pull.at(38, 2).int
+                   when 1 then Protein::SecondaryStructure::RightHandedHelixAlpha
+                   when 3 then Protein::SecondaryStructure::RightHandedHelixPi
+                   when 5 then Protein::SecondaryStructure::RightHandedHelix3_10
+                   else        pull.error("Invalid helix type")
+                   end
+        ch1 = pull.at(19).char.presence || pull.error("Blank chain id")
+        ch2 = pull.at(31).char.presence || pull.error("Blank chain id")
+        pull.error("Different chain ids in HELIX record") if ch1 != ch2
+        num1 = read_serial(pull, 21, 4)
+        inscode1 = pull.at(25).char.presence
+        initial_resid = {ch1, num1, inscode1}
+        num2 = read_serial(pull, 33, 4)
+        inscode2 = pull.at(37).char.presence
+        terminal_resid = {ch2, num2, inscode2}
+        sec_records << SecondaryStructureRecord.new(sec_type, initial_resid, terminal_resid)
+      when "JRNL  "
+        case pull.at(12, 4).str
+        when "DOI " then doi = pull.at(19, 60).str.strip
+        end
+      when "REMARK"
+        case pull.at?(7, 3).str?
+        when "  2"
+          resolution = pull.at?(23, 7).float?
+        end
+      when "SHEET "
+        ch1 = pull.at(21).char.presence || pull.error("Blank chain id")
+        ch2 = pull.at(32).char.presence || pull.error("Blank chain id")
+        pull.error("Different chain ids in SHEET record") if ch1 != ch2
+        num1 = read_serial(pull, 22, 4)
+        inscode1 = pull.at(26).char.presence
+        initial_resid = {ch1, num1, inscode1}
+        num2 = read_serial(pull, 33, 4)
+        inscode2 = pull.at(37).char.presence
+        terminal_resid = {ch2, num2, inscode2}
+        sec_records << SecondaryStructureRecord.new(:beta_strand, initial_resid, terminal_resid)
+      when "TITLE "
+        title += pull.at(10, 70).str.rstrip.squeeze(' ')
+      when "ATOM  ", "HETATM", "MODEL "
+        # FIXME: hack such that the next call to read can start at this line
+        # TODO: add pull.rewind_line to PullParser. Use 1: false, then chomp but save real bytesize
+        if line = pull.line
+          io.pos -= line.bytesize + 1
+          io.pos += 1 if io.peek[0]?.try(&.unsafe_chr) == '\n'
+        end
+        break
+      end
+    end
+
+    if date && pdbid
+      experiment = Structure::Experiment.new(title, method, resolution, pdbid, date, doi)
+      title = pdbid
+    end
+
+    Info.new(cell, experiment, title, sec_records)
+  end
+
+  # :ditto:
+  def self.read_info(path : Path | String) : Info
+    File.open(path) do |file|
+      read_info(file)
     end
   end
 
   # Returns the experimental information from the header of *io*.
   #
-  # TODO: remove this method in favor of `read_header` in future releases.
-  def self.read_info(io : IO | Path | String) : Structure::Experiment
-    read_header(io)
+  # TODO: Remove in favor of `read_info`.
+  def self.read_header(io : IO) : Structure::Experiment
+    read_info(io).experiment || raise ParseException.new("Empty header")
+  end
+
+  # :ditto:
+  def self.read_header(path : Path | String) : Structure::Experiment
+    File.open(path) do |file|
+      read_header(file)
+    end
   end
 
   # Writes one or more structures or groups of atoms to *io*.
@@ -241,326 +537,6 @@ module Chem::PDB
     end
   end
 
-  class Reader
-    include FormatReader(Structure)
-    include FormatReader::MultiEntry(Structure)
-    include FormatReader::Headed(Structure::Experiment)
-
-    private alias ResidueId = Tuple(Char, Int32, Char?)
-    private alias Sec = Protein::SecondaryStructure
-
-    HELIX_TYPES = {
-      1 => Sec::RightHandedHelixAlpha,
-      3 => Sec::RightHandedHelixPi,
-      5 => Sec::RightHandedHelix3_10,
-    }
-
-    @pdb_bonds = Hash(Tuple(Int32, Int32), BondOrder).new BondOrder::Zero
-    @pdb_cell : Spatial::Parallelepiped?
-    @pdb_title = ""
-    @header_decoded = false
-
-    @alt_locs : Hash(Residue, Array(AlternateLocation))?
-    @builder = uninitialized Structure::Builder
-    @chains : Set(Char) | String | Nil
-    @seek_bonds = true
-    @sec = [] of Tuple(Protein::SecondaryStructure, ResidueId, ResidueId)
-
-    def initialize(@io : IO,
-                   @alt_loc : Char? = nil,
-                   chains : Enumerable(Char) | String | Nil = nil,
-                   @guess_bonds : Bool = false,
-                   @het : Bool = true,
-                   @sync_close : Bool = false)
-      @pull = PullParser.new(@io)
-      @chains = chains.is_a?(Enumerable) ? chains.to_set : chains
-    end
-
-    def next_entry : Structure?
-      decode_header unless @header_decoded
-      @pull.each_line do
-        case @pull.at(0, 6).str
-        when "ATOM  ", "HETATM", "MODEL "
-          obj = decode_entry
-          @read = true
-          return obj
-        when "END   ", "MASTER"
-          break
-        end
-      end
-    end
-
-    def skip_entry : Nil
-      decode_header unless @header_decoded
-      @pull.consume_line if @pull.at(0, 6).str == "MODEL "
-      @pull.each_line do
-        case @pull.at(0, 6).str
-        when "ENDMDL"
-          @pull.consume_line
-          break
-        when "MODEL ", "END   ", "MASTER"
-          break
-        end
-      end
-    end
-
-    def read_header : Structure::Experiment
-      decode_header unless @header_decoded
-      @header || @pull.error("Empty header")
-    end
-
-    private def alt_loc(residue : Residue, id : Char, resname : String) : AlternateLocation
-      alt_loc = alt_locs[residue].find &.id.==(id)
-      alt_locs[residue] << (alt_loc = AlternateLocation.new id, resname) unless alt_loc
-      alt_loc
-    end
-
-    private def alt_locs : Hash(Residue, Array(AlternateLocation))
-      @alt_locs ||= Hash(Residue, Array(AlternateLocation)).new do |hash, key|
-        hash[key] = Array(AlternateLocation).new 4
-      end
-    end
-
-    private def assign_bonds : Nil
-      @builder.bonds @pdb_bonds unless @pdb_bonds.empty?
-    end
-
-    private def assign_secondary_structure : Nil
-      @sec.each do |(sec, ri, rj)|
-        @builder.secondary_structure ri, rj, sec
-      end
-    end
-
-    private def decode_header : Structure::Experiment
-      date = doi = pdbid = resolution = nil
-      method = Structure::Experiment::Method::XRayDiffraction
-      title = ""
-
-      @pull.each_line do
-        case @pull.at?(0, 6).str?
-        when "CRYST1"
-          x = @pull.at(6, 9).float
-          @pull.error "Negative cell size a" if x < 0
-          y = @pull.at(15, 9).float
-          @pull.error "Negative cell size b" if y < 0
-          z = @pull.at(24, 9).float
-          @pull.error "Negative cell size c" if z < 0
-          alpha = @pull.at(33, 7).float
-          @pull.error "Invalid cell angle alpha" unless 0 < alpha <= 180
-          beta = @pull.at(40, 7).float
-          @pull.error "Invalid cell angle beta" unless 0 < beta <= 180
-          gamma = @pull.at(47, 7).float
-          @pull.error "Invalid cell angle gamma" unless 0 < gamma <= 180
-
-          case {x, y, z, alpha, beta, gamma}
-          when {0, 0, 0, 90, 90, 90}, {1, 1, 1, 90, 90, 90}
-            next
-          when {.positive?, .positive?, .positive?, .positive?, .positive?, .positive?}
-            @pdb_cell = Spatial::Parallelepiped.new({x, y, z}, {alpha, beta, gamma})
-          else
-            @pull.error "Invalid cell parameters: #{{x, y, z, alpha, beta, gamma}}"
-          end
-        when "EXPDTA"
-          str = @pull.at(10, 70).str.split(';')[0].delete "- "
-          method = Structure::Experiment::Method.parse str
-        when "HEADER"
-          date = @pull.at?(50, 9).str?.presence.try do |str|
-            Time.parse_utc str, "%d-%^b-%y"
-          end
-          pdbid = @pull.at?(62, 4).str?.presence
-        when "HELIX "
-          sec = HELIX_TYPES[@pull.at(38, 2).int]? || @pull.error("Invalid helix type")
-          ch1 = @pull.at(19).char.presence || @pull.error("Blank chain id")
-          ch2 = @pull.at(31).char.presence || @pull.error("Blank chain id")
-          @pull.error("Different chain ids in HELIX record") if ch1 != ch2
-          num1 = seqnum_at(21, 4)
-          inscode1 = @pull.at(25).char.presence
-          num2 = seqnum_at(33, 4)
-          inscode2 = @pull.at(37).char.presence
-          @sec << {sec, {ch1, num1, inscode1}, {ch2, num2, inscode2}}
-        when "JRNL  "
-          case @pull.at(12, 4).str
-          when "DOI " then doi = @pull.at(19, 60).str.strip
-          end
-        when "REMARK"
-          case @pull.at?(7, 3).str?
-          when "  2"
-            resolution = @pull.at?(23, 7).float?
-          end
-        when "SHEET "
-          ch1 = @pull.at(21).char.presence || @pull.error("Blank chain id")
-          ch2 = @pull.at(32).char.presence || @pull.error("Blank chain id")
-          @pull.error("Different chain ids in SHEET record") if ch1 != ch2
-          num1 = seqnum_at(22, 4)
-          inscode1 = @pull.at(26).char.presence
-          num2 = seqnum_at(33, 4)
-          inscode2 = @pull.at(37).char.presence
-          @sec << {Sec::BetaStrand, {ch1, num1, inscode1}, {ch2, num2, inscode2}}
-        when "TITLE "
-          title += @pull.at(10, 70).str.rstrip.squeeze(' ')
-        when "ATOM  ", "HETATM", "MODEL "
-          break
-        end
-      end
-
-      if date && pdbid
-        @header = Structure::Experiment.new title, method, resolution, pdbid, date, doi
-        @pdb_title = pdbid
-      else
-        @pdb_title = title
-      end
-
-      @header_decoded = true
-      @header || Structure::Experiment.new "", method, nil, "", Time::UNIX_EPOCH, nil
-    end
-
-    private def read_atom : Nil
-      alt_loc = @pull.at(16).char.presence
-      occupancy = @pull.at?(54, 6).float(if_blank: 0)
-      return if @alt_loc && alt_loc && alt_loc != @alt_loc && occupancy < 1
-
-      chid = @pull.at(21).char
-      case chains = @chains
-      when Set     then return unless chid.in?(chains)
-      when "first" then return if chid != (@builder.current_chain.try(&.id) || chid)
-      end
-
-      atom_name = @pull.at(12, 4).str.strip
-      ele = case symbol = @pull.at?(76, 2).str?.presence.try(&.strip)
-            when "D"
-              PeriodicTable::H # deuterium
-            when String
-              PeriodicTable[symbol]? || @pull.error("Unknown element")
-            else
-              Structure.guess_element?(atom_name) || @pull.error("Could not guess element")
-            end
-
-      @builder.chain chid if chid.alphanumeric?
-      resnum = seqnum_at(22, 4)
-      inscode = @pull.at(26).char.presence
-      resname = @pull.at(17, 4).str.strip
-      residue = @builder.residue resname, resnum, inscode
-
-      if alt_loc.nil? && resname != residue.name
-        @pull.error "Found different name #{resname.inspect} for #{residue}"
-      end
-
-      x = @pull.at(30, 8).float
-      y = @pull.at(38, 8).float
-      z = @pull.at(46, 8).float
-      formal_charge = @pull.at?(78, 2).str?.presence.try do |str|
-        str.reverse.to_i? || @pull.error("Invalid formal charge")
-      end
-      atom = @builder.atom \
-        atom_name,
-        seqnum_at(6, 5),
-        Spatial::Vec3.new(x, y, z),
-        element: ele,
-        formal_charge: formal_charge || 0,
-        occupancy: occupancy,
-        temperature_factor: @pull.at?(60, 6).float(if_blank: 0)
-
-      alt_loc(atom.residue, alt_loc, resname) << atom if !@alt_loc && alt_loc
-    end
-
-    private def read_bonds : Nil
-      i = seqnum_at(6, 5)
-      (11..).step(5).each do |start|
-        break unless j = seqnum_at?(start, 5)
-        @pdb_bonds.update({i, j}, &.succ) unless i > j # skip redundant bonds
-      end
-    end
-
-    private def read_het? : Bool
-      @het
-    end
-
-    private def decode_entry : Structure
-      @pull.consume_line if @pull.at(0, 6).str == "MODEL "
-
-      @builder = Structure::Builder.new(
-        guess_bonds: @guess_bonds,
-        guess_names: false,
-        source_file: (file = @io).is_a?(File) ? file.path : nil,
-        use_templates: true,
-      )
-      @builder.title @pdb_title
-      @builder.cell @pdb_cell
-      @builder.expt @header
-
-      @pdb_bonds.clear
-      @number = 0
-      @pull.each_line do
-        case @pull.at?(0, 6).str?
-        when "ATOM  "
-          read_atom
-        when "HETATM"
-          read_atom if read_het?
-        when "CONECT"
-          read_bonds
-        when "ENDMDL"
-          @pull.consume_line
-          break
-        when "END", "END   ", "MODEL ", "MASTER"
-          break
-        end
-      end
-
-      resolve_alternate_locations unless @alt_loc
-      assign_bonds
-      assign_secondary_structure
-
-      @builder.build
-    end
-
-    private def resolve_alternate_locations : Nil
-      return unless table = @alt_locs
-      table.each do |residue, alt_locs|
-        alt_locs.sort! { |a, b| b.occupancy <=> a.occupancy }
-        alt_locs.each(within: 1..) do |alt_loc|
-          alt_loc.each_atom do |atom|
-            residue.delete atom
-          end
-        end
-        residue.name = alt_locs[0].resname
-        residue.reset_cache
-      end
-      table.clear
-    end
-
-    private def seqnum_at(start : Int, size : Int) : Int32
-      seqnum_at?(start, size) || @pull.error("Invalid sequence number")
-    end
-
-    private def seqnum_at?(start : Int, size : Int) : Int32?
-      @pull.at?(start, size).parse? { |str| Hybrid36.decode?(str) }
-    end
-
-    private struct AlternateLocation
-      getter id : Char
-      getter resname : String
-
-      def initialize(@id : Char, @resname : String)
-        @atoms = [] of Atom
-      end
-
-      def <<(atom : Atom) : self
-        @atoms << atom
-        self
-      end
-
-      def each_atom(&block : Atom ->) : Nil
-        @atoms.each do |atom|
-          yield atom
-        end
-      end
-
-      def occupancy : Float64
-        @atoms.sum(&.occupancy) / @atoms.size
-      end
-    end
-  end
-
   module Hybrid36
     extend self
 
@@ -615,17 +591,39 @@ module Chem::PDB
     end
   end
 
-  private HELIX_NUMBER_TABLE = {
-    Protein::SecondaryStructure::LeftHandedHelix3_10   => 11,
-    Protein::SecondaryStructure::LeftHandedHelixAlpha  => 6,
-    Protein::SecondaryStructure::LeftHandedHelixGamma  => 8,
-    Protein::SecondaryStructure::LeftHandedHelixPi     => 13,
-    Protein::SecondaryStructure::Polyproline           => 10,
-    Protein::SecondaryStructure::RightHandedHelix3_10  => 5,
-    Protein::SecondaryStructure::RightHandedHelixAlpha => 1,
-    Protein::SecondaryStructure::RightHandedHelixGamma => 4,
-    Protein::SecondaryStructure::RightHandedHelixPi    => 3,
-  }
+  private struct AlternateLocation
+    getter id : Char
+    getter resname : String
+
+    def initialize(@id : Char, @resname : String)
+      @atoms = [] of Atom
+    end
+
+    def <<(atom : Atom) : self
+      @atoms << atom
+      self
+    end
+
+    def each_atom(&block : Atom ->) : Nil
+      @atoms.each do |atom|
+        yield atom
+      end
+    end
+
+    def occupancy : Float64
+      @atoms.sum(&.occupancy) / @atoms.size
+    end
+  end
+
+  private def self.read_serial(pull : PullParser, start : Int, size : Int) : Int32
+    read_serial?(pull, start, size) || pull.error("Invalid sequence number")
+  end
+
+  private def self.read_serial?(pull : PullParser, start : Int, size : Int) : Int32?
+    pull.at?(start, size).str?.try do |str|
+      Hybrid36.decode?(str)
+    end
+  end
 
   private def self.write_atom(io : IO, atom : Atom, serial : Int32, pos : Spatial::Vec3) : Nil
     io.printf "%-6s%5s %4s %-4s%s%4s%1s   %8.3f%8.3f%8.3f%6.2f%6.2f          %2s%2s\n",
@@ -683,12 +681,24 @@ module Chem::PDB
             residues[-1].number, residues[-1].insertion_code, nil, nil
         else
           helix_id += 1
+          helix_class = case sec
+                        when .left_handed_helix3_10?    then 11
+                        when .left_handed_helix_alpha?  then 6
+                        when .left_handed_helix_gamma?  then 8
+                        when .left_handed_helix_pi?     then 13
+                        when .polyproline?              then 10
+                        when .right_handed_helix3_10?   then 5
+                        when .right_handed_helix_alpha? then 1
+                        when .right_handed_helix_gamma? then 4
+                        when .right_handed_helix_pi?    then 3
+                        else                                 raise "BUG: unreachable"
+                        end
           io.printf "HELIX  %3d %3d %3s %s %4d%1s %3s %s %4d%1s%2d%30s%6d    \n",
             helix_id, helix_id, residues[0].name, residues[0].chain.id,
             residues[0].number, residues[0].insertion_code,
             residues[-1].name, residues[-1].chain.id,
             residues[-1].number, residues[-1].insertion_code,
-            HELIX_NUMBER_TABLE[sec], nil, residues.size
+            helix_class, nil, residues.size
         end
       end
 
