@@ -1,4 +1,4 @@
-@[Chem::RegisterFormat(ext: %w(.dx), module_api: true)]
+@[Chem::RegisterFormat(ext: %w(.dx))]
 module Chem::DX
   # Returns the grid from *io*.
   def self.read(io : IO) : Spatial::Grid

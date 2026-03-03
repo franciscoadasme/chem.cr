@@ -1,4 +1,4 @@
-@[Chem::RegisterFormat(ext: %w(.poscar), names: %w(POSCAR* CONTCAR*), module_api: true)]
+@[Chem::RegisterFormat(ext: %w(.poscar), names: %w(POSCAR* CONTCAR*))]
 module Chem::VASP::Poscar
   # Returns the structure from *io*.
   #

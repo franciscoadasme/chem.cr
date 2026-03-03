@@ -1,4 +1,4 @@
-@[Chem::RegisterFormat(ext: %w(.psf), module_api: true)]
+@[Chem::RegisterFormat(ext: %w(.psf))]
 module Chem::PSF
   # Reads the structure from *io*.
   # Supports the standard, extended, and NAMD variants.

@@ -1,4 +1,4 @@
-@[Chem::RegisterFormat(names: %w(CHGCAR*), module_api: true)]
+@[Chem::RegisterFormat(names: %w(CHGCAR*))]
 module Chem::VASP::Chgcar
   # Returns the charge density from *io*.
   def self.read(io : IO) : Spatial::Grid

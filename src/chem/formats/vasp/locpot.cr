@@ -1,4 +1,4 @@
-@[Chem::RegisterFormat(names: %w(LOCPOT*), module_api: true)]
+@[Chem::RegisterFormat(names: %w(LOCPOT*))]
 module Chem::VASP::Locpot
   # TODO: merge with Chgcar as it is almost identical except for the value scaling by the volume
 

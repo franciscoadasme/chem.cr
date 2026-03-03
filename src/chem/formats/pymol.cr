@@ -1,5 +1,5 @@
 # TODO: drop this as a format.
-@[Chem::RegisterFormat(ext: %w(.pml), module_api: true)]
+@[Chem::RegisterFormat(ext: %w(.pml))]
 module Chem::PyMOL
   # Writes a PyMOL Macro Language (PML) script to *io*.
   #

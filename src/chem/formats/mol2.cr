@@ -1,4 +1,4 @@
-@[Chem::RegisterFormat(ext: %w(.mol2), module_api: true)]
+@[Chem::RegisterFormat(ext: %w(.mol2))]
 module Chem::Mol2
   # Yields each structure in *io*.
   def self.each(io : IO, & : Structure ->) : Nil

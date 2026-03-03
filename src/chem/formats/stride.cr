@@ -1,5 +1,5 @@
 # TODO: drop this as a format.
-@[Chem::RegisterFormat(ext: %w(.stride), module_api: true)]
+@[Chem::RegisterFormat(ext: %w(.stride))]
 module Chem::Protein::Stride
   # Writes a structure to *io*.
   def self.write(io : IO | Path | String, struc : Structure) : Nil

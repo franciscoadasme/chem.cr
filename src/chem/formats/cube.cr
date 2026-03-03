@@ -1,4 +1,4 @@
-@[Chem::RegisterFormat(ext: %w(.cube), module_api: true)]
+@[Chem::RegisterFormat(ext: %w(.cube))]
 module Chem::Cube
   # Returns the grid from *io*.
   def self.read(io : IO) : Spatial::Grid

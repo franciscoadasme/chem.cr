@@ -1,7 +1,7 @@
 # Implementation based on [Chemfiles] C++ library.
 #
 # [Chemfiles]: https://github.com/chemfiles/chemfiles/blob/master/src/formats/DCD.cpp
-@[Chem::RegisterFormat(ext: %w(.dcd), module_api: true)]
+@[Chem::RegisterFormat(ext: %w(.dcd))]
 module Chem::DCD
   # Binary encoding for reading DCD content.
   struct Encoding

@@ -1,4 +1,4 @@
-@[Chem::RegisterFormat(ext: %w(.ionpos .lattice), module_api: true)]
+@[Chem::RegisterFormat(ext: %w(.ionpos .lattice))]
 module Chem::JDFTx
   # Reads the structure from *io*.
   #

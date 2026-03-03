@@ -1,4 +1,4 @@
-@[Chem::RegisterFormat(ext: %w(.xyz), module_api: true)]
+@[Chem::RegisterFormat(ext: %w(.xyz))]
 module Chem::XYZ
   # Yields each structure in *io*.
   def self.each(io : IO, guess_bonds : Bool = false, guess_names : Bool = false, & : Structure ->) : Nil

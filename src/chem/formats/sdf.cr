@@ -1,4 +1,4 @@
-@[Chem::RegisterFormat(ext: %w(.sdf), module_api: true)]
+@[Chem::RegisterFormat(ext: %w(.sdf))]
 module Chem::SDF
   # Yields each structure in *io*.
   def self.each(io : IO, & : Structure ->) : Nil

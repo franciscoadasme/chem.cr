@@ -1,5 +1,5 @@
 # TODO: drop this as a format.
-@[Chem::RegisterFormat(ext: %w(.vmd), module_api: true)]
+@[Chem::RegisterFormat(ext: %w(.vmd))]
 module Chem::VMD
   # Writes a VMD command script to *io*.
   #

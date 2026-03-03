@@ -16,7 +16,7 @@
 #
 # [ctfile]:
 #     https://discover.3ds.com/sites/default/files/2020-08/biovia_ctfileformats_2020.pdf
-@[Chem::RegisterFormat(ext: %w(.mol), module_api: true)]
+@[Chem::RegisterFormat(ext: %w(.mol))]
 module Chem::Mol
   # Connection table (CTAB) format.
   enum Variant

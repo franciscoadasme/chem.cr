@@ -1,4 +1,4 @@
-@[Chem::RegisterFormat(ext: %w(.ent .pdb), module_api: true)]
+@[Chem::RegisterFormat(ext: %w(.ent .pdb))]
 module Chem::PDB
   # Controls which CONECT records are written to a PDB.
   @[Flags]

@@ -1,4 +1,4 @@
-@[Chem::RegisterFormat(ext: %w(.gen), module_api: true)]
+@[Chem::RegisterFormat(ext: %w(.gen))]
 module Chem::Gen
   # Reads the structure from *io*.
   #
