@@ -1,93 +1,82 @@
 module Chem
   # Registers a file format.
   #
-  # The annotated type provides the implementation of a *file format*
-  # that encodes an *encoded type*. The *file format* is determined from
-  # the annotated type's name, where the last component of the fully
-  # qualified name is used (e.g., `Baz` for `Foo::Bar::Baz`). An entry
-  # of the same name will be added to the `Format` enum, where the
-  # declared extensions and file patterns will be associated with the
-  # corresponding file format. This annotation accepts the following
-  # named arguments:
+  # The annotated type provides the implementation of a *file format* that encodes an *encoded type*.
+  # The *file format* is determined from the annotated type's name, where the last component of the fully qualified name is used (e.g., `Baz` for `Foo::Bar::Baz`).
+  # The declared extensions and file patterns are used for format detection via `Chem.guess_format`.
+  #
+  # The annotation accepts the following named arguments:
   #
   # - **ext**: an array of extensions (including leading dot).
-  # - **names**: an array of file patterns. File patterns can include
-  #   wildcards (`"*"`) to denote either prefix (e.g., `"Foo*"`), suffix
-  #   (e.g., `"*Bar"`), or both (e.g., `"*Baz*"`). Refer to
-  #   `File.match?` for details.
-  # - **reader**: reader class name. Defaults to "Reader".
-  # - **writer**: writer class name. Defaults to "Writer".
+  # - **names**: an array of file patterns.
+  #   The pattern syntax is similar to shell filename globbing and it is evaluated via `File.match?` to match against a filepath.
   #
-  # The ability to read or write is determined by the declaration of
-  # reader and writer classes, respectively, which must include the
-  # `FormatReader`, `FormatWriter` and other related mixins when
-  # appropriate. The *encoded type* is dictated by the type variable of
-  # the included mixins. The `FormatReader::Headed` and
-  # `FormatReader::Attached` provides interfaces to read additional
-  # information into custom objects.
+  # The format module must define at least one of:
   #
-  # Convenience read (`.from_*` and `.read`) and write (`#to_*` and
-  # `#write`) methods will be generated on the *encoded types* during
-  # compilation time using the type information of the included mixins
-  # in the reader and writer classes. Types declared by the
-  # `FormatReader::Headed` and `FormatReader::Attached` are also
-  # considered *encoded types*. Additionally, convenience read and write
-  # methods will be generated on `Array` for file formats that can hold
-  # multiple entries, which are declared via the
-  # `FormatReader::MultiEntry` and `FormatWriter::MultiEntry` mixins.
+  # - `.each`: Must yield each entry in the given input.
+  # - `.read`: Must read the next entry from the given input.
+  # - `.read_all`: Must read all entries from the given input.
+  # - Any other `.read_*` method must read a single entry from the given input.
+  #   Useful for formats that include additional information in the header.
+  # - `.write`: Must write a single entry to the given output.
+  #
+  # The *encoded type* is inferred from the type restrictions and return type of the methods, so they must be annotated.
+  # The methods must accept an IO as first argument.
+  # Use the `define_file_overload` macro to generate overloads that accept `Path | String` instead of `IO`.
+  #
+  # Convenience read (`.from_*` and `.read`) and write (`#to_*` and `#write`) methods will be generated on the *encoded types* during compilation time using the type information from the methods.
+  # Additionally, convenience read and write methods will be generated on `Array` for file formats that can hold multiple entries (indicated by the definition of `.read_all` and `.write(io, Array)`).
   #
   # ### Example
   #
-  # The following code registers the `Foo` format associated with the
-  # `Chem::Foo` module, which provides read and write capabilities of
-  # `A` via the `Reader` and `Writer` classes, respectively. Both
-  # declare that the `Foo` format can hold multiple entries via the
-  # corresponding `MultiEntry` mixins. The reader class also provides
-  # support for reading the header information into a `B` instance and
-  # reading secondary information into a `C` instance.
+  # The following code registers the `Foo` format matching the `*.foo` and `foo_*` files.
+  # The module defines `.each`, `read`, `read_all`, and `write` to read instances of `A` and `Array(A)`, and write `A`, respectively.
+  # Additionally, it defines additional read methods for `B` instances.
   #
   # ```
   # record A
   # record B
-  # record C
   #
   # @[Chem::RegisterFormat(ext: %w(.foo), names: %w(foo_*))]
   # module Foo
-  #   class Reader
-  #     include FormatReader(A)
-  #     include FormatReader::MultiEntry(A)
-  #     include FormatReader::Headed(B)
-  #     include FormatReader::Attached(C)
-  #
-  #     protected def decode_attached : C
-  #       C.new
-  #     end
-  #
-  #     protected def decode_entry : A
-  #       A.new
-  #     end
-  #
-  #     protected def decode_headed : B
-  #       B.new
+  #   def self.each(io : IO, & : A ->) : Nil
+  #     loop do
+  #       yield read(io)
+  #     rescue IO::EOFError
+  #       break
   #     end
   #   end
   #
-  #   class Writer
-  #     include FormatWriter(A)
-  #     include FormatWriter::MultiEntry(A)
+  #   def self.read(io : IO) : A
+  #     A.new
+  #   end
   #
-  #     def encode_entry(frame : A) : Nil; end
+  #   def self.read_all(io : IO) : Array(A)
+  #     entries = [] of A
+  #     each(io) { |entry| entries << entry }
+  #     entries
+  #   end
+  #
+  #   def self.read_info(io : IO) : B
+  #     B.new
+  #   end
+  #
+  #   def self.write(io : IO, instance : A) : Nil
+  #     # ...
+  #   end
+  #
+  #   def self.write(io : IO, instances : Array(A), info : B) : Nil
+  #     # write header based on info
+  #     instances.each { |instance| write(io, instance) }
   #   end
   # end
   # ```
   #
-  # The convenience `A.from_foo` and `A.read` methods are generated
-  # during compilation time to create an `A` instance from an IO or file
-  # using the `Foo` file format. Additionally, the file format can be
-  # guessed from the filename.
+  # The convenience `A.from_foo` and `A.read` methods are generated during compilation time to create an `A` instance from an IO or file using the `Foo` file format.
+  # Additionally, the file format can be guessed from the filename.
   #
   # ```
-  # # static read methods (can forward arguments to Foo::Reader)
+  # # static read methods (can forward arguments to Foo.read)
   # A.from_foo(IO::Memory.new) # => A()
   # A.from_foo("a.foo")        # => A()
   #
@@ -97,17 +86,12 @@ module Chem
   # A.read("a.foo")             # => A()
   # ```
   #
-  # The above methods are also created on the types representing the
-  # header (`B`) and attached (`C`) types. This is convenient since one
-  # does not to worry about if `X` is either the encoded type, header or
-  # attached type to be read from a `Foo` file.
+  # The above methods are also created on the `B` type.
   #
-  # Similar to the read methods, `A.to_foo` and `A.write` are generated
-  # to write an `A` instance to an IO or file using the `Foo` file
-  # format.
+  # Similar to the read methods, `A.to_foo` and `A.write` are generated to write an `A` instance to an IO or file using the `Foo` file format.
   #
   # ```
-  # # static read methods (can forward arguments to Foo::Writer)
+  # # static read methods (can forward arguments to Foo.write)
   # A.new.to_foo                 # returns a string representation
   # A.new.to_foo(IO::Memory.new) # writes to an IO
   # A.new.to_foo("a.foo")        # writes to a file
@@ -118,16 +102,7 @@ module Chem
   # A.new.write("a.foo")
   # ```
   #
-  # These methods are not generated for header (`B`) and attached (`C`)
-  # types however, because these cannot produce a valid `Foo` file by
-  # themselves. If a header/attached object is required to write a valid
-  # file, it should be declared as a required argument in the writer
-  # (see `Cube::Writer` or `VASP::Chgcar::Writer`).
-  #
-  # Since `Foo::Reader` and `Foo::Writer` reads and writes multiple
-  # entries (indicated by the corresponding `MultiEntry` mixins), the
-  # `.from_foo`, `.read`, `#to_foo`, and `#write` methods are also
-  # generated in `Array` during compilation time.
+  # Since `Foo` reads and writes multiple entries (indicated by `.read_all` and `.write(io, Array(A))`), the `.from_foo`, `.read`, `#to_foo`, and `#write` methods are also generated in `Array` during compilation time.
   #
   # ```
   # Array(A).from_foo(IO::Memory.new)  # => [Foo(), ...]
@@ -142,15 +117,15 @@ module Chem
   # # and other overloads
   # ```
   #
-  # Calling any of these methods on an array of unsupported types will
-  # produce a missing method error during compilation.
+  # Calling any of these methods on an array of unsupported types will produce a missing method error during compilation.
   #
-  # Refer to the implementations of the supported file formats (e.g.,
-  # `PDB` and `XYZ`) for real examples.
+  # Refer to the implementations of the supported file formats (e.g., `PDB` and `XYZ`) for real examples.
   #
   # NOTE: Method overloading may not work as expected in some cases.
   # If two methods with the same name and required arguments (may have different optional arguments), only the last overload will be taken into account and trying to calling the first one will result in a missing method error during compilation.
+  #
   # Example:
+  #
   # ```
   # # Both methods require input, but baz is optional
   # module Foo
