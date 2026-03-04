@@ -89,12 +89,7 @@ module Chem::VASP::Poscar
     end
   end
 
-  # :ditto:
-  def self.read(io : Path | String, guess_bonds : Bool = false, guess_names : Bool = false) : Structure
-    File.open(io) do |file|
-      read(file, guess_bonds, guess_names)
-    end
-  end
+  define_file_overload(VASP::Poscar, read)
 
   private def self.read_flag(pull : PullParser) : Bool
     case pull.consume_token.char
@@ -173,16 +168,5 @@ module Chem::VASP::Poscar
     end
   end
 
-  # :ditto:
-  def self.write(
-    io : Path | String,
-    structure : Structure,
-    order : Array(Element) | Array(String) | Nil = nil,
-    fractional : Bool = false,
-    wrap : Bool = false,
-  ) : Nil
-    File.open(io, mode: "w") do |file|
-      write file, structure, order, fractional, wrap
-    end
-  end
+  define_file_overload(VASP::Poscar, write, mode: "w")
 end

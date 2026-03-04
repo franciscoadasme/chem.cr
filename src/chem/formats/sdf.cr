@@ -11,15 +11,6 @@ module Chem::SDF
     end
   end
 
-  # :ditto:
-  def self.each(path : Path | String, & : Structure ->) : Nil
-    File.open(path) do |file|
-      each(file) do |struc|
-        yield struc
-      end
-    end
-  end
-
   # Returns the next structure from *io*.
   # Use `read_all` or `each` for multiple.
   def self.read(io : IO) : Structure
@@ -43,13 +34,6 @@ module Chem::SDF
     struc
   end
 
-  # :ditto:
-  def self.read(path : Path | String) : Structure
-    File.open(path) do |file|
-      read(file)
-    end
-  end
-
   # Returns all structures in *io*.
   def self.read_all(io : IO) : Array(Structure)
     ary = [] of Structure
@@ -59,12 +43,7 @@ module Chem::SDF
     ary
   end
 
-  # :ditto:
-  def self.read_all(path : Path | String) : Array(Structure)
-    File.open(path) do |file|
-      read_all(file)
-    end
-  end
+  define_file_overload(SDF, each, read, read_all)
 
   # Writes one or more structures to *io*.
   #
@@ -90,23 +69,11 @@ module Chem::SDF
   end
 
   # :ditto:
-  def self.write(path : Path | String, struc : Structure, variant : Mol::Variant = :v2000) : Nil
-    File.open(path, "w") do |file|
-      write(file, struc, variant)
-    end
-  end
-
-  # :ditto:
   def self.write(io : IO, structures : Enumerable(Structure), variant : Mol::Variant = :v2000) : Nil
     structures.each do |struc|
       write(io, struc, variant)
     end
   end
 
-  # :ditto:
-  def self.write(path : Path | String, structures : Enumerable(Structure), variant : Mol::Variant = :v2000) : Nil
-    File.open(path, "w") do |file|
-      write(file, structures, variant)
-    end
-  end
+  define_file_overload(SDF, write, mode: "w")
 end

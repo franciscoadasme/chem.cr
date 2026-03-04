@@ -11,15 +11,6 @@ module Chem::Mol2
     end
   end
 
-  # :ditto:
-  def self.each(path : Path | String, & : Structure ->) : Nil
-    File.open(path) do |file|
-      each(file) do |struc|
-        yield struc
-      end
-    end
-  end
-
   # Returns the first structure from *io*.
   # Use `read_all` or `each` for multiple.
   def self.read(io : IO) : Structure
@@ -110,13 +101,6 @@ module Chem::Mol2
     struc
   end
 
-  # :ditto:
-  def self.read(path : Path | String) : Structure
-    File.open(path) do |file|
-      read(file)
-    end
-  end
-
   # Returns all structures in *io*.
   def self.read_all(io : IO) : Array(Structure)
     ary = [] of Structure
@@ -126,12 +110,7 @@ module Chem::Mol2
     ary
   end
 
-  # :ditto:
-  def self.read_all(path : Path | String) : Array(Structure)
-    File.open(path) do |file|
-      read_all(file)
-    end
-  end
+  define_file_overload(Mol2, each, read, read_all)
 
   # Writes one or more structures or groups of atoms to *io*.
   def self.write(io : IO, obj : AtomView | Structure) : Nil
@@ -193,25 +172,13 @@ module Chem::Mol2
   end
 
   # :ditto:
-  def self.write(path : Path | String, obj : Structure | AtomView) : Nil
-    File.open(path, "w") do |file|
-      write(file, obj)
-    end
-  end
-
-  # :ditto:
   def self.write(io : IO, objs : Enumerable(Structure)) : Nil
     objs.each do |struc|
       write(io, struc)
     end
   end
 
-  # :ditto:
-  def self.write(path : Path | String, objs : Enumerable(Structure)) : Nil
-    File.open(path, "w") do |file|
-      write(file, objs)
-    end
-  end
+  define_file_overload(Mol2, write, mode: "w")
 
   private def self.write_section(io : IO, name : String, & : ->) : Nil
     io << "@<TRIPOS>" << name.upcase << '\n'

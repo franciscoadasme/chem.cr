@@ -79,12 +79,7 @@ module Chem::PSF
     structure
   end
 
-  # :ditto:
-  def self.read(path : Path | String) : Structure
-    File.open(path) do |file|
-      read(file)
-    end
-  end
+  define_file_overload(PSF, read)
 
   # :nodoc:
   enum Variant

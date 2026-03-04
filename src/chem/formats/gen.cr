@@ -55,12 +55,7 @@ module Chem::Gen
     structure
   end
 
-  # :ditto:
-  def self.read(io : Path | String, guess_bonds : Bool = false, guess_names : Bool = false) : Structure
-    File.open(io) do |file|
-      read(file, guess_bonds, guess_names)
-    end
-  end
+  define_file_overload(Gen, read)
 
   # Writes a structure or group of atoms to *io*.
   #
@@ -88,12 +83,7 @@ module Chem::Gen
     write_cell(io, cell) if cell
   end
 
-  # :ditto:
-  def self.write(io : Path | String, obj : Structure | AtomView, fractional : Bool = false) : Nil
-    File.open(io, "w") do |file|
-      write(file, obj, fractional: fractional)
-    end
-  end
+  define_file_overload(Gen, write, mode: "w")
 
   private def self.write_cell(io : IO, cell : Spatial::Parallelepiped) : Nil
     ({Spatial::Vec3.zero} + cell.basisvec).each do |vec|

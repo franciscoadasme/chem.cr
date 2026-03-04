@@ -18,13 +18,6 @@ module Chem::DX
     end
   end
 
-  # :ditto:
-  def self.read(path : Path | String) : Spatial::Grid
-    File.open(path) do |file|
-      read(file)
-    end
-  end
-
   # Returns the grid information from *io* without reading the data.
   def self.read_info(io : IO) : Spatial::Grid::Info
     pull = PullParser.new(io)
@@ -50,12 +43,7 @@ module Chem::DX
     Spatial::Grid::Info.new bounds, {ni, nj, nk}
   end
 
-  # :ditto:
-  def self.read_info(path : Path | String) : Spatial::Grid::Info
-    File.open(path) do |file|
-      read_info(file)
-    end
-  end
+  define_file_overload(DX, read, read_info)
 
   # Writes a grid to *io*.
   def self.write(io : IO, grid : Spatial::Grid) : Nil
@@ -74,10 +62,5 @@ module Chem::DX
     io << '\n' unless grid.size % 3 == 0
   end
 
-  # :ditto:
-  def self.write(path : Path | String, grid : Spatial::Grid) : Nil
-    File.open(path, "w") do |file|
-      write(file, grid)
-    end
-  end
+  define_file_overload(DX, write, mode: "w")
 end

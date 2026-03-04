@@ -67,12 +67,7 @@ module Chem::Mol
     structure
   end
 
-  # :ditto:
-  def self.read(path : Path | String) : Structure
-    File.open(path) do |file|
-      read(file)
-    end
-  end
+  define_file_overload(Mol, read)
 
   # Writes a structure or group of atoms to *io*.
   #
@@ -86,12 +81,7 @@ module Chem::Mol
     end
   end
 
-  # :ditto:
-  def self.write(io : Path | String, obj : Structure | AtomView, variant : Mol::Variant = :v2000) : Nil
-    File.open(io, "w") do |file|
-      write(file, obj, variant: variant)
-    end
-  end
+  define_file_overload(Mol, write, mode: "w")
 
   private def self.write_header(io : IO, atoms : Structure | AtomView, variant : Variant) : Nil
     # FIXME: atoms.n_residues was removed!

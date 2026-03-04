@@ -11,15 +11,6 @@ module Chem::XYZ
     end
   end
 
-  # :ditto:
-  def self.each(path : Path | String, guess_bonds : Bool = false, guess_names : Bool = false, & : Structure ->) : Nil
-    File.open(path) do |file|
-      each(file, guess_bonds, guess_names) do |struc|
-        yield struc
-      end
-    end
-  end
-
   # Returns the next structure from *io*.
   # Use `read_all` or `each` for multiple.
   def self.read(io : IO, guess_bonds : Bool = false, guess_names : Bool = false) : Structure
@@ -134,13 +125,6 @@ module Chem::XYZ
     struc
   end
 
-  # :ditto:
-  def self.read(path : Path | String, guess_bonds : Bool = false, guess_names : Bool = false) : Structure
-    File.open(path) do |file|
-      read(file, guess_bonds, guess_names)
-    end
-  end
-
   # Returns all structures in *io*.
   def self.read_all(io : IO, guess_bonds : Bool = false, guess_names : Bool = false) : Array(Structure)
     ary = [] of Structure
@@ -150,12 +134,7 @@ module Chem::XYZ
     ary
   end
 
-  # :ditto:
-  def self.read_all(path : Path | String, guess_bonds : Bool = false, guess_names : Bool = false) : Array(Structure)
-    File.open(path) do |file|
-      read_all(file, guess_bonds, guess_names)
-    end
-  end
+  define_file_overload(XYZ, each, read, read_all)
 
   # Writes one or more structures or groups of atoms to *io*.
   #
@@ -254,17 +233,7 @@ module Chem::XYZ
     end
   end
 
-  # :ditto:
-  def self.write(
-    path : Path | String,
-    obj : AtomView | Structure | Enumerable(Structure),
-    extended : Bool = false,
-    fields : Array(String) = [] of String,
-  ) : Nil
-    File.open(path, "w") do |file|
-      write(file, obj, extended, fields)
-    end
-  end
+  define_file_overload(XYZ, write, mode: "w")
 
   private TYPE_CHAR_MAP = {Bool => 'L', Int32 => 'I', Float64 => 'R', String => 'S'}
 

@@ -21,13 +21,6 @@ module Chem::VASP::Chgcar
     end
   end
 
-  # :ditto:
-  def self.read(path : Path | String) : Spatial::Grid
-    File.open(path) do |file|
-      read(file)
-    end
-  end
-
   # Returns the grid information from *io* without reading the data.
   def self.read_info(io : IO) : Spatial::Grid::Info
     struc = read_structure(io) # TODO: skip, do not parse the structure
@@ -38,25 +31,13 @@ module Chem::VASP::Chgcar
     Spatial::Grid::Info.new cell, {nx, ny, nz}
   end
 
-  # :ditto:
-  def self.read_info(path : Path | String) : Spatial::Grid::Info
-    File.open(path) do |file|
-      read_info(file)
-    end
-  end
-
   # Returns the structure from *io* without reading the data.
   # Equivalent to `Poscar.read`.
   def self.read_structure(io : IO) : Structure
     Poscar.read(io)
   end
 
-  # :ditto:
-  def self.read_structure(path : Path | String) : Structure
-    File.open(path) do |file|
-      read_structure(file)
-    end
-  end
+  define_file_overload(VASP::Chgcar, read, read_info, read_structure)
 
   # Writes a grid to *io*.
   #
@@ -80,12 +61,7 @@ module Chem::VASP::Chgcar
     io << '\n' unless grid.size % 5 == 0
   end
 
-  # :ditto:
-  def self.write(path : Path | String, grid : Spatial::Grid, structure : Structure) : Nil
-    File.open(path, "w") do |file|
-      write(file, grid, structure)
-    end
-  end
+  define_file_overload(VASP::Chgcar, write, mode: "w")
 
   private def self.write(io : IO, value : Float64) : Nil
     if value == 0

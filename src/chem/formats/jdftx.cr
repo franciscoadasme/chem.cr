@@ -51,12 +51,7 @@ module Chem::JDFTx
     struc
   end
 
-  # :ditto:
-  def self.read(path : Path | String, guess_bonds : Bool = false, guess_names : Bool = false) : Structure
-    File.open(path) do |file|
-      read(file, guess_bonds, guess_names)
-    end
-  end
+  define_file_overload(JDFTx, read)
 
   # Writes a structure to *io*.
   #
@@ -113,18 +108,7 @@ module Chem::JDFTx
     end
   end
 
-  # :ditto:
-  def self.write(
-    path : Path | String,
-    structure : Structure,
-    fractional : Bool = false,
-    wrap : Bool = false,
-    single_file : Bool = true,
-  ) : Nil
-    File.open(path, mode: "w") do |file|
-      write(file, structure, fractional: fractional, wrap: wrap, single_file: single_file)
-    end
-  end
+  define_file_overload(JDFTx, write, mode: "w")
 end
 
 private def parse_cell(line : String) : Chem::Spatial::Parallelepiped

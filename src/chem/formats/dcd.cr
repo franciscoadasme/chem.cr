@@ -133,15 +133,6 @@ module Chem::DCD
     end
   end
 
-  # :ditto:
-  def self.each(path : Path | String, & : Spatial::Positions3 ->) : Nil
-    File.open(path) do |file|
-      each(file) do |pos|
-        yield pos
-      end
-    end
-  end
-
   # TODO: Implement iterator/indexable that holds io, info and read any frame.
 
   # Returns the next trajectory frame from *io*.
@@ -188,13 +179,6 @@ module Chem::DCD
     info = read_info(io)
     Array(Spatial::Positions3).new(info.n_frames) do |i|
       read(io, info)
-    end
-  end
-
-  # :ditto:
-  def self.read_all(path : Path | String) : Array(Spatial::Positions3)
-    File.open(path) do |file|
-      read_all(file)
     end
   end
 
@@ -289,6 +273,8 @@ module Chem::DCD
     info
   end
 
+  define_file_overload(DCD, each, read_all)
+
   # Writes a trajectory frame to *io*.
   #
   # The DCD must be initialized before writing frames, otherwise it will raise `ArgumentError`.
@@ -375,13 +361,7 @@ module Chem::DCD
     io.pos = current
   end
 
-  # Writes trajectory frames to the file at *path*.
-  # It just opens the file and delegates it to `.write(io, frames, title)`.
-  def self.write(path : Path | String, frames : Enumerable(Spatial::Positions3), title : String? = nil) : Nil
-    File.open(path, "w") do |file|
-      write(file, frames, title)
-    end
-  end
+  define_file_overload(DCD, write(io, frames, title), mode: "w")
 
   # Writes the DCD header to *io*. Must be called before writing frames.
   #

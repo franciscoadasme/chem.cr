@@ -20,13 +20,6 @@ module Chem::Cube
     end
   end
 
-  # :ditto:
-  def self.read(path : Path | String) : Spatial::Grid
-    File.open(path) do |file|
-      read(file)
-    end
-  end
-
   # Returns the grid information from *io* without reading the data.
   def self.read_info(io : IO) : Spatial::Grid::Info
     pull = PullParser.new(io)
@@ -46,13 +39,6 @@ module Chem::Cube
     vi, vj, vk = dvi * ni, dvj * nj, dvk * nk
     bounds = Spatial::Parallelepiped.new vi, vj, vk, origin
     info = Spatial::Grid::Info.new bounds, {ni, nj, nk}
-  end
-
-  # :ditto:
-  def self.read_info(path : Path | String) : Spatial::Grid::Info
-    File.open(path) do |file|
-      read_info(file)
-    end
   end
 
   # Returns the structure from *io* without reading the data.
@@ -85,12 +71,7 @@ module Chem::Cube
     end
   end
 
-  # :ditto:
-  def self.read_structure(path : Path | String) : Structure
-    File.open(path) do |file|
-      read_structure(file)
-    end
-  end
+  define_file_overload(Cube, read, read_info, read_structure)
 
   # Writes a grid to *io*.
   #
@@ -126,12 +107,7 @@ module Chem::Cube
     io << '\n' unless grid.size % 6 == 0
   end
 
-  # :ditto:
-  def self.write(path : Path | String, grid : Spatial::Grid, atoms : AtomView | Structure) : Nil
-    File.open(path, "w") do |file|
-      write(file, grid, atoms)
-    end
-  end
+  define_file_overload(Cube, write, mode: "w")
 
   private def self.read_vector(pull : PullParser) : Spatial::Vec3
     Spatial::Vec3[pull.next_f, pull.next_f, pull.next_f]

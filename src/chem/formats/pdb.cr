@@ -61,22 +61,6 @@ module Chem::PDB
     end
   end
 
-  # :ditto:
-  def self.each(
-    path : Path | String,
-    alt_loc : Char? = nil,
-    chains : Enumerable(Char) | String | Nil = nil,
-    guess_bonds : Bool = false,
-    het : Bool = true,
-    & : Structure ->
-  ) : Nil
-    File.open(path) do |file|
-      each(file, alt_loc: alt_loc, chains: chains, guess_bonds: guess_bonds, het: het) do |struc|
-        yield struc
-      end
-    end
-  end
-
   # Returns the next structure from *io*.
   # Raises `IO::EOFError` when there are no more structures.
   # Use `.read_all` or `.each` for multiple.
@@ -90,7 +74,7 @@ module Chem::PDB
   # If the structure has alternate locations, only the most populated one will be read unless *alt_loc* is set.
   def self.read(
     io : IO,
-    info : Info? = nil,
+    info : PDB::Info? = nil,
     alt_loc : Char? = nil,
     chains : Enumerable(Char) | String | Nil = nil,
     guess_bonds : Bool = false,
@@ -215,21 +199,6 @@ module Chem::PDB
     raise IO::EOFError.new
   end
 
-  # :ditto:
-  #
-  # TODO: create macro to create this overload
-  def self.read(
-    path : Path | String,
-    alt_loc : Char? = nil,
-    chains : Enumerable(Char) | String | Nil = nil,
-    guess_bonds : Bool = false,
-    het : Bool = true,
-  ) : Structure
-    File.open(path) do |file|
-      read(file, alt_loc: alt_loc, chains: chains, guess_bonds: guess_bonds, het: het)
-    end
-  end
-
   # Returns all structures in *io*.
   #
   # If passed, only chains in *chains* will be read, otherwise all chains will be read.
@@ -246,21 +215,6 @@ module Chem::PDB
     ary = [] of Structure
     each(io, alt_loc: alt_loc, chains: chains, guess_bonds: guess_bonds, het: het) { |s| ary << s }
     ary
-  end
-
-  # :ditto:
-  #
-  # TODO: create macro to create this overload
-  def self.read_all(
-    path : Path | String,
-    alt_loc : Char? = nil,
-    chains : Enumerable(Char) | String | Nil = nil,
-    guess_bonds : Bool = false,
-    het : Bool = true,
-  ) : Array(Structure)
-    File.open(path) do |file|
-      read_all(file, alt_loc: alt_loc, chains: chains, guess_bonds: guess_bonds, het: het)
-    end
   end
 
   # Returns the info from *io*.
@@ -361,13 +315,6 @@ module Chem::PDB
     Info.new(cell, experiment, title, sec_records)
   end
 
-  # :ditto:
-  def self.read_info(path : Path | String) : Info
-    File.open(path) do |file|
-      read_info(file)
-    end
-  end
-
   # Returns the experimental information from the header of *io*.
   #
   # TODO: Remove in favor of `read_info`.
@@ -375,12 +322,7 @@ module Chem::PDB
     read_info(io).experiment || raise ParseException.new("Empty header")
   end
 
-  # :ditto:
-  def self.read_header(path : Path | String) : Structure::Experiment
-    File.open(path) do |file|
-      read_header(file)
-    end
-  end
+  define_file_overload(PDB, each, read, read_all, read_info, read_header)
 
   # Writes one or more structures or groups of atoms to *io*.
   #
@@ -491,21 +433,6 @@ module Chem::PDB
 
   # :ditto:
   def self.write(
-    path : Path | String,
-    struc : AtomView | Structure,
-    conect conect_options : PDB::ConectOptions = PDB::ConectOptions.flags(Het, Disulfide),
-    renumber : Bool = true,
-    ter_on_fragment : Bool = false,
-    include_header : Bool = true,
-    include_end : Bool = true,
-  ) : Nil
-    File.open(path, "w") do |io|
-      write(io, struc, conect_options, renumber, ter_on_fragment)
-    end
-  end
-
-  # :ditto:
-  def self.write(
     io : IO,
     structures : Enumerable(Structure),
     conect conect_options : PDB::ConectOptions = PDB::ConectOptions.flags(Het, Disulfide),
@@ -524,18 +451,7 @@ module Chem::PDB
     io.printf "%-80s\n", "END"
   end
 
-  # :ditto:
-  def self.write(
-    path : Path | String,
-    structures : Enumerable(Structure),
-    conect conect_options : PDB::ConectOptions = PDB::ConectOptions.flags(Het, Disulfide),
-    renumber : Bool = true,
-    ter_on_fragment : Bool = false,
-  ) : Nil
-    File.open(path, "w") do |io|
-      write(io, structures, conect_options, renumber, ter_on_fragment)
-    end
-  end
+  define_file_overload(PDB, write, mode: "w")
 
   module Hybrid36
     extend self
