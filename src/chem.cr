@@ -196,6 +196,4 @@ require "./chem/protein"
 
 require "./chem/pull_parser"
 require "./chem/register_format"
-require "./chem/format_reader"
-require "./chem/format_writer"
 require "./chem/formats/**"
