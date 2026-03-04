@@ -7,83 +7,55 @@ module Chem::VMD
   # Custom colors are set for the secondary structure types.
   #
   # TODO: add colors to the docs.
-  def self.write(io : IO | Path | String, struc : Structure) : Nil
-    Writer.open(io) do |writer|
-      writer << struc
+  def self.write(io : IO, struc : Structure) : Nil
+    io.puts <<-EOS
+      display resetview
+      color Structure "Alpha Helix" 29
+      color change rgb 29 #{color_to_vmd(:right_handed_helix_alpha)}
+      color Structure "3_10_Helix" 13
+      color change rgb 13 #{color_to_vmd(:right_handed_helix3_10)}
+      color Structure "Pi_Helix" 11
+      color change rgb 11 #{color_to_vmd(:right_handed_helix_pi)}
+      # used for gamma-helix
+      color Structure "Bridge_Beta" 32
+      color change rgb 32 #{color_to_vmd(:right_handed_helix_gamma)}
+      # used for polyproline
+      color Structure "Turn" 17
+      color change rgb 17 #{color_to_vmd(:polyproline)}
+      color Structure "Extended_Beta" 20
+      color change rgb 20 #{color_to_vmd(:beta_strand)}
+      color Structure "Coil" 6
+      color change rgb 6 #{color_to_vmd(:none)}
+      color Display Background white
+      EOS
+    io.puts "mol new #{struc.source_file}" if struc.source_file
+    io.puts <<-EOS
+      mol delrep top top
+      mol representation NewCartoon
+      mol color Structure
+      mol addrep top
+      EOS
+    struc.residues.each_secondary_structure do |residues, sec|
+      ch = residues[0].chain.id
+      first = residues[0].number
+      last = residues[-1].number
+      sel = "chain #{ch} and resid #{first} to #{last}"
+      code = case sec
+             when .helix_alpha? then 'H'
+             when .helix3_10?   then 'G'
+             when .helix_pi?    then 'I'
+             when .helix_gamma? then 'B'
+             when .polyproline? then 'T'
+             when .beta_strand? then 'E'
+             else                    'C'
+             end
+      io.puts %([atomselect top "#{sel}"] set structure #{code})
     end
   end
 
-  class Writer
-    include FormatWriter(Structure)
+  define_file_overload(VMD, write, mode: "w")
 
-    protected def encode_entry(obj : Structure) : Nil
-      check_open
-      header obj.source_file
-      obj.residues.each_secondary_structure do |residues, sec|
-        ch = residues[0].chain.id
-        first = residues[0].number
-        last = residues[-1].number
-        sel = "chain #{ch} and resid #{first} to #{last}"
-        @io.puts %([atomselect top "#{sel}"] set structure #{seccode(sec)})
-      end
-    end
-
-    private def header(source_file : Path?) : Nil
-      @io.puts <<-EOS
-        display resetview
-        color Structure "Alpha Helix" 29
-        color change rgb 29 #{seccolor(:right_handed_helix_alpha).join ' '}
-        color Structure "3_10_Helix" 13
-        color change rgb 13 #{seccolor(:right_handed_helix3_10).join ' '}
-        color Structure "Pi_Helix" 11
-        color change rgb 11 #{seccolor(:right_handed_helix_pi).join ' '}
-        # used for gamma-helix
-        color Structure "Bridge_Beta" 32
-        color change rgb 32 #{seccolor(:right_handed_helix_gamma).join ' '}
-        # used for polyproline
-        color Structure "Turn" 17
-        color change rgb 17 #{seccolor(:polyproline).join ' '}
-        color Structure "Extended_Beta" 20
-        color change rgb 20 #{seccolor(:beta_strand).join ' '}
-        color Structure "Coil" 6
-        color change rgb 6 #{seccolor(:none).join ' '}
-        color Display Background white
-        EOS
-      @io.puts "mol new #{source_file}" if source_file
-      @io.puts <<-EOS
-        mol delrep top top
-        mol representation NewCartoon
-        mol color Structure
-        mol addrep top
-        EOS
-    end
-
-    private def seccode(sec : Protein::SecondaryStructure) : Char
-      case sec
-      when .helix_alpha? then 'H'
-      when .helix3_10?   then 'G'
-      when .helix_pi?    then 'I'
-      when .helix_gamma? then 'B'
-      when .polyproline? then 'T'
-      when .beta_strand? then 'E'
-      else                    'C'
-      end
-    end
-
-    private def seccolor(sec : Protein::SecondaryStructure) : Array(Float64)
-      sec.color.to_a.map &./(255).round(3)
-    end
-
-    private def seccolorid(sec : Protein::SecondaryStructure) : Int32
-      case sec
-      when .helix_alpha? then 29 # red2
-      when .helix3_10?   then 13 # mauve
-      when .helix_pi?    then 11 # purple
-      when .helix_gamma? then 32 # orange3
-      when .polyproline? then 17 # yellow2
-      when .beta_strand? then 20 # green3
-      else                    6  # silver
-      end
-    end
+  private def self.color_to_vmd(sec : Protein::SecondaryStructure) : String
+    sec.color.to_a.map(&./(255).round(3)).join ' '
   end
 end
