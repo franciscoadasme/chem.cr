@@ -8,76 +8,59 @@ module Chem::PyMOL
   # Custom colors are set for the secondary structure types.
   #
   # TODO: add colors to the docs.
-  def self.write(io : IO | Path | String, struc : Structure) : Nil
-    Writer.open(io) do |writer|
-      writer << struc
+  def self.write(io : IO, struc : Structure) : Nil
+    io.puts "load #{struc.source_file}" if struc.source_file
+    SHORT_NAMES.each do |sec, short_name|
+      io.puts "set_color col-#{short_name}, #{sec.color.to_a}"
+    end
+    io.puts <<-EOS
+      set cartoon_discrete_colors, on
+      hide everything
+      show cartoon
+      zoom all
+      bg_color white
+      color col-protein, all
+      alter all, ss = '0'
+      EOS
+
+    struc.residues.each_secondary_structure do |residues, sec|
+      code = case sec
+             when .beta_strand?
+               'S'
+             when .left_handed_helix3_10?,
+                  .left_handed_helix_alpha?,
+                  .left_handed_helix_gamma?,
+                  .left_handed_helix_pi?,
+                  .right_handed_helix3_10?,
+                  .right_handed_helix_alpha?,
+                  .right_handed_helix_gamma?,
+                  .right_handed_helix_pi?,
+                  .polyproline?
+               'H'
+             else
+               next
+             end
+      ch = residues[0].chain.id
+      first = residues[0].number
+      last = residues[-1].number
+      sel = %(chain #{ch} and resi #{first}-#{last})
+      io.puts "alter #{sel}, ss = '#{code}'"
+      io.puts "color col-#{SHORT_NAMES[sec]}, #{sel}"
     end
   end
 
-  class Writer
-    include FormatWriter(Structure)
+  define_file_overload(PyMOL, write, mode: "w")
 
-    CODES = {
-      Protein::SecondaryStructure::BetaStrand            => 'S',
-      Protein::SecondaryStructure::LeftHandedHelix3_10   => 'H',
-      Protein::SecondaryStructure::LeftHandedHelixAlpha  => 'H',
-      Protein::SecondaryStructure::LeftHandedHelixGamma  => 'H',
-      Protein::SecondaryStructure::LeftHandedHelixPi     => 'H',
-      Protein::SecondaryStructure::RightHandedHelix3_10  => 'H',
-      Protein::SecondaryStructure::RightHandedHelixAlpha => 'H',
-      Protein::SecondaryStructure::RightHandedHelixGamma => 'H',
-      Protein::SecondaryStructure::RightHandedHelixPi    => 'H',
-      Protein::SecondaryStructure::Polyproline           => 'H',
-    }
-    SHORT_NAMES = {
-      Protein::SecondaryStructure::BetaStrand            => "strand",
-      Protein::SecondaryStructure::LeftHandedHelix3_10   => "310",
-      Protein::SecondaryStructure::LeftHandedHelixAlpha  => "alpha",
-      Protein::SecondaryStructure::LeftHandedHelixGamma  => "gamma",
-      Protein::SecondaryStructure::LeftHandedHelixPi     => "pi",
-      Protein::SecondaryStructure::RightHandedHelix3_10  => "310",
-      Protein::SecondaryStructure::RightHandedHelixAlpha => "alpha",
-      Protein::SecondaryStructure::RightHandedHelixGamma => "gamma",
-      Protein::SecondaryStructure::RightHandedHelixPi    => "pi",
-      Protein::SecondaryStructure::Polyproline           => "pp",
-    }
-
-    protected def encode_entry(obj : Structure) : Nil
-      check_open
-      header obj.source_file
-      obj.residues.each_secondary_structure do |residues, sec|
-        next unless code = CODES[sec]?
-        ch = residues[0].chain.id
-        first = residues[0].number
-        last = residues[-1].number
-        sel = %(chain #{ch} and resi #{first}-#{last})
-        @io.puts "alter #{sel}, ss = '#{code}'"
-        @io.puts "color col-#{SHORT_NAMES[sec]}, #{sel}"
-      end
-    end
-
-    private def header(source_file : Path?)
-      @io.puts "load #{source_file}" if source_file
-      @io.puts <<-EOS
-        set cartoon_discrete_colors, on
-        hide everything
-        show cartoon
-        zoom all
-        bg_color white
-        set_color col-protein, #{seccolor(:none)}
-        set_color col-310, #{seccolor(:right_handed_helix3_10)}
-        set_color col-alpha, #{seccolor(:right_handed_helix_alpha)}
-        set_color col-gamma, #{seccolor(:right_handed_helix_gamma)}
-        set_color col-pi, #{seccolor(:right_handed_helix_pi)}
-        set_color col-pp, #{seccolor(:polyproline)}
-        set_color col-strand, #{seccolor(:beta_strand)}
-        color col-protein, all
-        alter all, ss = '0'
-        EOS
-    end
-
-    private def seccolor(sec : Protein::SecondaryStructure) : Array(UInt8)
-      sec.color.to_a
-    end
-  end
+  private SHORT_NAMES = {
+    Protein::SecondaryStructure::BetaStrand            => "strand",
+    Protein::SecondaryStructure::LeftHandedHelix3_10   => "310",
+    Protein::SecondaryStructure::LeftHandedHelixAlpha  => "alpha",
+    Protein::SecondaryStructure::LeftHandedHelixGamma  => "gamma",
+    Protein::SecondaryStructure::LeftHandedHelixPi     => "pi",
+    Protein::SecondaryStructure::RightHandedHelix3_10  => "310",
+    Protein::SecondaryStructure::RightHandedHelixAlpha => "alpha",
+    Protein::SecondaryStructure::RightHandedHelixGamma => "gamma",
+    Protein::SecondaryStructure::RightHandedHelixPi    => "pi",
+    Protein::SecondaryStructure::Polyproline           => "pp",
+  }
 end
