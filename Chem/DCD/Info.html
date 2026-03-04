@@ -14,7 +14,7 @@
 <script type="text/javascript" src="../../js/doc.js"></script>
 
   <meta name="repository-name" content="chem">
-  <title>Chem::Templates::Residue - chem master</title>
+  <title>Chem::DCD::Info - chem master</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -137,7 +137,7 @@
       
     </li>
   
-  <li class="parent " data-id="chem/Chem/DCD" data-name="chem::dcd">
+  <li class="parent open current" data-id="chem/Chem/DCD" data-name="chem::dcd">
       <a href="../../Chem/DCD.html">DCD</a>
       
         <ul>
@@ -147,7 +147,7 @@
       
     </li>
   
-  <li class=" " data-id="chem/Chem/DCD/Info" data-name="chem::dcd::info">
+  <li class=" current" data-id="chem/Chem/DCD/Info" data-name="chem::dcd::info">
       <a href="../../Chem/DCD/Info.html">Info</a>
       
     </li>
@@ -497,7 +497,7 @@
       
     </li>
   
-  <li class="parent open current" data-id="chem/Chem/Templates" data-name="chem::templates">
+  <li class="parent " data-id="chem/Chem/Templates" data-name="chem::templates">
       <a href="../../Chem/Templates.html">Templates</a>
       
         <ul>
@@ -532,7 +532,7 @@
       
     </li>
   
-  <li class=" current" data-id="chem/Chem/Templates/Residue" data-name="chem::templates::residue">
+  <li class=" " data-id="chem/Chem/Templates/Residue" data-name="chem::templates::residue">
       <a href="../../Chem/Templates/Residue.html">Residue</a>
       
     </li>
@@ -682,16 +682,27 @@
 <h1 class="type-name">
 
   <span class="kind">
-    class
-  </span> Chem::<wbr>Templates::<wbr>Residue
+    struct
+  </span> Chem::<wbr>DCD::<wbr>Info
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Chem/Templates/Residue.html">Chem::Templates::Residue</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Chem/DCD/Info.html">Chem::DCD::Info</a></li><li class="superclass">Struct</li><li class="superclass">Value</li><li class="superclass">Object</li></ul>
 
 
 
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>Gather, check and annotate types registering a format</p>
 
 
 
@@ -718,8 +729,15 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/templates/residue.cr#L1" target="_blank">
-        chem/templates/residue.cr
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/formats/dcd.cr#L29" target="_blank">
+        chem/formats/dcd.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/register_format.cr#L162" target="_blank">
+        chem/register_format.cr
       </a>
     
     <br/>
@@ -741,19 +759,24 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#build%28%26%29%3Aself-class-method" class="signature"><strong>.build</strong>(&) : <span class="k">self</span></a>
+        <a href="#from_dcd%28io%3AIO%29%3Aself-class-method" class="signature"><strong>.from_dcd</strong>(io : IO) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#build%28residue%3AChem%3A%3AResidue%2Cdescription%3AString%7CNil%3Dnil%2Clink_bond%3ABond%7CNil%3Dnil%2Csymmetric_atom_groups%3AArray%28Array%28Tuple%28String%2CString%29%29%29%7CNil%3Dnil%29%3Aself-class-method" class="signature"><strong>.build</strong>(residue : Chem::Residue, description : String | Nil = <span class="n">nil</span>, link_bond : Bond | Nil = <span class="n">nil</span>, symmetric_atom_groups : Array(Array(Tuple(String, String))) | Nil = <span class="n">nil</span>) : <span class="k">self</span></a>
-        
-          <div class="summary"><p>Creates a new residue template from an existing residue.</p></div>
+        <a href="#read%28input%3AIO%7CPath%7CString%2Cformat%3AChem%3A%3ADCD.class%29%3Aself-class-method" class="signature"><strong>.read</strong>(input : IO | Path | String, format : <span class="t">Chem</span><span class="t">::</span><span class="t">DCD</span>.<span class="k">class</span>) : <span class="k">self</span></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new%28names%3AArray%28String%29%2Ccode%3AChar%7CNil%2Ctype%3AResidueType%2Cdescription%3AString%7CNil%2Catoms%3AArray%28Atom%29%2Cbonds%3AArray%28Bond%29%2Crootroot_name%3AString%2Clink_bond%3ABond%7CNil%3Dnil%2Csymmetric_atom_groups%3AArray%28Array%28Tuple%28String%2CString%29%29%29%7CNil%3Dnil%29-class-method" class="signature"><strong>.new</strong>(names : Array(String), code : Char | Nil, type : ResidueType, description : String | Nil, atoms : Array(Atom), bonds : Array(Bond), root root_name : String, link_bond : Bond | Nil = <span class="n">nil</span>, symmetric_atom_groups : Array(Array(Tuple(String, String))) | Nil = <span class="n">nil</span>)</a>
+        <a href="#read%28input%3AIO%7CPath%7CString%2Cformat%29%3Aself-class-method" class="signature"><strong>.read</strong>(input : IO | Path | String, format) : <span class="k">self</span></a>
+        
+          <div class="summary"><p><span class="flag yellow">FIXME</span>  Make it compile time error.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#read%28path%3AIO%7CPath%7CString%29%3Aself-class-method" class="signature"><strong>.read</strong>(path : IO | Path | String) : <span class="k">self</span></a>
         
       </li>
     
@@ -776,109 +799,128 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#%5B%5D%28atom_t%3AAtom%2Cother%3AAtom%29%3ABond-instance-method" class="signature"><strong>#[]</strong>(atom_t : Atom, other : Atom) : Bond</a>
+        <a href="#buffer%3ABytes-instance-method" class="signature"><strong>#buffer</strong> : Bytes</a>
         
-          <div class="summary"><p>Returns the bond template between the given atoms.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#%5B%5D%28name%3AString%2Cother%3AString%29%3ABond-instance-method" class="signature"><strong>#[]</strong>(name : String, other : String) : Bond</a>
-        
-          <div class="summary"><p>Returns the bond template between the given atoms.</p></div>
+          <div class="summary"><p>Reusable buffer for reading each frame positions.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#%5B%5D%28name%3AString%29%3AAtom-instance-method" class="signature"><strong>#[]</strong>(name : String) : Atom</a>
+        <a href="#bytesize%3AInt64-instance-method" class="signature"><strong>#bytesize</strong> : Int64</a>
+        
+          <div class="summary"><p>DCD header bytesize.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#%5B%5D%3F%28atom_t%3AAtom%2Cother%3AAtom%29%3ABond%7CNil-instance-method" class="signature"><strong>#[]?</strong>(atom_t : Atom, other : Atom) : Bond | Nil</a>
+        <a href="#cell_block_bytesize%3AInt32-instance-method" class="signature"><strong>#cell_block_bytesize</strong> : Int32</a>
         
-          <div class="summary"><p>Returns the bond template between the given atoms if exists, else <code>nil</code>.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#%5B%5D%3F%28name%3AString%2Cother%3AString%29%3ABond%7CNil-instance-method" class="signature"><strong>#[]?</strong>(name : String, other : String) : Bond | Nil</a>
-        
-          <div class="summary"><p>Returns the bond template between the given atoms if exists, else <code>nil</code>.</p></div>
+          <div class="summary"><p>Number of bytes used for the cell block in each frame, or 0 if not periodic.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#%5B%5D%3F%28name%3AString%29%3AAtom%7CNil-instance-method" class="signature"><strong>#[]?</strong>(name : String) : Atom | Nil</a>
+        <a href="#charmm_version%3AInt32-instance-method" class="signature"><strong>#charmm_version</strong> : Int32</a>
+        
+          <div class="summary"><p>CHARMM version of the DCD content.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#atoms%3AArray%3A%3AView%28Atom%29-instance-method" class="signature"><strong>#atoms</strong> : Array::View(Atom)</a>
+        <a href="#copy_with%28buffer%3ABytes%3D%40buffer%2Cbytesize%3AInt64%3D%40bytesize%2Ccharmm_version%3AInt32%3D%40charmm_version%2Cdim%3AInt32%3D%40dim%2Cencoding%3AEncoding%3D%40encoding%2Cfixed_positions%3ASlice%28Spatial%3A%3AVec3%29%3D%40fixed_positions%2Cn_atoms%3AInt32%3D%40n_atoms%2Cn_frames%3AInt32%3D%40n_frames%2Cn_free_atoms%3AInt32%3D%40n_free_atoms%2Cperiodic%3ABool%3D%40periodic%2Ctitle%3AString%7CNil%3D%40title%29%3Aself-instance-method" class="signature"><strong>#copy_with</strong>(buffer : Bytes = @buffer, bytesize : Int64 = @bytesize, charmm_version : Int32 = @charmm_version, dim : Int32 = @dim, encoding : Encoding = @encoding, fixed_positions : Slice(Spatial::Vec3) = @fixed_positions, n_atoms : Int32 = @n_atoms, n_frames : Int32 = @n_frames, n_free_atoms : Int32 = @n_free_atoms, periodic : Bool = @periodic, title : String | Nil = @title) : <span class="k">self</span></a>
+        
+          <div class="summary"><p>Returns a copy of <code>self</code> with the given fields updated.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#bonds%3AArray%3A%3AView%28Bond%29-instance-method" class="signature"><strong>#bonds</strong> : Array::View(Bond)</a>
+        <a href="#dim%3AInt32-instance-method" class="signature"><strong>#dim</strong> : Int32</a>
+        
+          <div class="summary"><p>Number of spatial dimensions (either 3 or 4).</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#code%3AChar%7CNil-instance-method" class="signature"><strong>#code</strong> : Char | Nil</a>
+        <a href="#encoding%3AEncoding-instance-method" class="signature"><strong>#encoding</strong> : Encoding</a>
+        
+          <div class="summary"><p>Encoding (byte order and marker type) of the DCD content.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#description%3AString%7CNil-instance-method" class="signature"><strong>#description</strong> : String | Nil</a>
+        <a href="#first_frame_bytesize%3AInt32-instance-method" class="signature"><strong>#first_frame_bytesize</strong> : Int32</a>
+        
+          <div class="summary"><p>Number of bytes occupied by the first frame (which may include fixed atoms).</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#formal_charge%3AInt32-instance-method" class="signature"><strong>#formal_charge</strong> : Int32</a>
+        <a href="#fixed_positions%3ASlice%28Spatial%3A%3AVec3%29-instance-method" class="signature"><strong>#fixed_positions</strong> : Slice(Spatial::Vec3)</a>
+        
+          <div class="summary"><p>Atom positions for constrained/fixed atoms.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#link_bond%3ABond%7CNil-instance-method" class="signature"><strong>#link_bond</strong> : Bond | Nil</a>
+        <a href="#frame_byte_offset%28index%3AInt%29%3AInt64-instance-method" class="signature"><strong>#frame_byte_offset</strong>(index : Int) : Int64</a>
+        
+          <div class="summary"><p>Returns the byte offset of the frame at <em>index</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#name%3AString-instance-method" class="signature"><strong>#name</strong> : String</a>
+        <a href="#frame_bytesize%3AInt32-instance-method" class="signature"><strong>#frame_bytesize</strong> : Int32</a>
         
-          <div class="summary"><p>Returns the designated residue name.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#names%3AArray%28String%29-instance-method" class="signature"><strong>#names</strong> : Array(String)</a>
+          <div class="summary"><p>Number of bytes of a frame.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#polymer%3F%3ABool-instance-method" class="signature"><strong>#polymer?</strong> : Bool</a>
+        <a href="#marker_bytesize%3AInt32-instance-method" class="signature"><strong>#marker_bytesize</strong> : Int32</a>
+        
+          <div class="summary"><p>Number of bytes of a block marker.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#root%3AAtom-instance-method" class="signature"><strong>#root</strong> : Atom</a>
+        <a href="#n_atoms%3AInt32-instance-method" class="signature"><strong>#n_atoms</strong> : Int32</a>
+        
+          <div class="summary"><p>Number of atoms in the system.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#symmetric_atom_groups%3AArray%28Array%28Tuple%28String%2CString%29%29%29%7CNil-instance-method" class="signature"><strong>#symmetric_atom_groups</strong> : Array(Array(Tuple(String, String))) | Nil</a>
+        <a href="#n_frames%3AInt32-instance-method" class="signature"><strong>#n_frames</strong> : Int32</a>
+        
+          <div class="summary"><p>Number of frames in the trajectory.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#to_s%28io%3AIO%29%3ANil-instance-method" class="signature"><strong>#to_s</strong>(io : IO) : Nil</a>
+        <a href="#n_free_atoms%3AInt32-instance-method" class="signature"><strong>#n_free_atoms</strong> : Int32</a>
         
-          <div class="summary"><p>Appends a short String representation of this object which includes its class name and its object address.</p></div>
+          <div class="summary"><p>Number of free atoms (not fixed) in the system.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#type%3AResidueType-instance-method" class="signature"><strong>#type</strong> : ResidueType</a>
+        <a href="#periodic%3ABool-instance-method" class="signature"><strong>#periodic</strong> : Bool</a>
+        
+          <div class="summary"><p>Whether the DCD content uses periodic boundaries (includes unit cell).</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#periodic%3F%3ABool-instance-method" class="signature"><strong>#periodic?</strong> : Bool</a>
+        
+          <div class="summary"><p>Returns true if the DCD content is periodic (includes unit cell), else false.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#title%3AString%7CNil-instance-method" class="signature"><strong>#title</strong> : String | Nil</a>
+        
+          <div class="summary"><p>The title in the DCD content, if present.</p></div>
         
       </li>
     
@@ -887,6 +929,19 @@
 
 
   <div class="methods-inherited">
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
     
       
 
@@ -926,64 +981,71 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="build(&amp;):self-class-method">
+    <div class="entry-detail" id="from_dcd(io:IO):self-class-method">
       <div class="signature">
         
-        def self.<strong>build</strong>(&) : <span class="k">self</span>
+        def self.<strong>from_dcd</strong>(io : IO) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#build%28%26%29%3Aself-class-method">#</a>
+        <a class="method-permalink" href="#from_dcd%28io%3AIO%29%3Aself-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/templates/residue.cr#L52" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/register_format.cr#L162" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="build(residue:Chem::Residue,description:String|Nil=nil,link_bond:Bond|Nil=nil,symmetric_atom_groups:Array(Array(Tuple(String,String)))|Nil=nil):self-class-method">
+    <div class="entry-detail" id="read(input:IO|Path|String,format:Chem::DCD.class):self-class-method">
       <div class="signature">
         
-        def self.<strong>build</strong>(residue : <a href="../../Chem/Residue.html">Chem::Residue</a>, description : <a href="../../String.html">String</a> | Nil = <span class="n">nil</span>, link_bond : <a href="../../Chem/Templates/Bond.html">Bond</a> | Nil = <span class="n">nil</span>, symmetric_atom_groups : <a href="../../Array.html">Array</a>(<a href="../../Array.html">Array</a>(Tuple(<a href="../../String.html">String</a>, <a href="../../String.html">String</a>))) | Nil = <span class="n">nil</span>) : <span class="k">self</span>
+        def self.<strong>read</strong>(input : IO | <a href="../../Path.html">Path</a> | <a href="../../String.html">String</a>, format : <span class="t">Chem</span><span class="t">::</span><span class="t">DCD</span>.<span class="k">class</span>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#build%28residue%3AChem%3A%3AResidue%2Cdescription%3AString%7CNil%3Dnil%2Clink_bond%3ABond%7CNil%3Dnil%2Csymmetric_atom_groups%3AArray%28Array%28Tuple%28String%2CString%29%29%29%7CNil%3Dnil%29%3Aself-class-method">#</a>
+        <a class="method-permalink" href="#read%28input%3AIO%7CPath%7CString%2Cformat%3AChem%3A%3ADCD.class%29%3Aself-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/register_format.cr#L162" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="read(input:IO|Path|String,format):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>read</strong>(input : IO | <a href="../../Path.html">Path</a> | <a href="../../String.html">String</a>, format) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#read%28input%3AIO%7CPath%7CString%2Cformat%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Creates a new residue template from an existing residue.</p>
-<p>Every atom and bond is converted to a template, which are then
-passed down to the constructor along with the optional arguments.
-Information such as name, code, etc. is obtained from the residue.</p>
-<p>If <em>link_bond</em> is <code>nil</code>, it will be obtained from the associated
-residue template if exists. Otherwise, it will be guessed from the
-connectivity. If the residue is connected to two other residues by
-equivalent bonds, one of them will be chosen. The sense of the link
-bond will be inferred from the residue numbering.</p>
-<p>Raises <code><a href="../../Chem/Error.html">Error</a></code> if there is missing connectivity (no bonds).</p>
+          <p><span class="flag yellow">FIXME</span>  Make it compile time error. Should raise if format is not registered or format is incompatible with open_type. Better create an override with the other formats, and leave this as a fallback.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/templates/residue.cr#L71" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/register_format.cr#L162" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="new(names:Array(String),code:Char|Nil,type:ResidueType,description:String|Nil,atoms:Array(Atom),bonds:Array(Bond),rootroot_name:String,link_bond:Bond|Nil=nil,symmetric_atom_groups:Array(Array(Tuple(String,String)))|Nil=nil)-class-method">
+    <div class="entry-detail" id="read(path:IO|Path|String):self-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(names : <a href="../../Array.html">Array</a>(<a href="../../String.html">String</a>), code : <a href="../../Char.html">Char</a> | Nil, type : <a href="../../Chem/ResidueType.html">ResidueType</a>, description : <a href="../../String.html">String</a> | Nil, atoms : <a href="../../Array.html">Array</a>(<a href="../../Chem/Templates/Atom.html">Atom</a>), bonds : <a href="../../Array.html">Array</a>(<a href="../../Chem/Templates/Bond.html">Bond</a>), root root_name : <a href="../../String.html">String</a>, link_bond : <a href="../../Chem/Templates/Bond.html">Bond</a> | Nil = <span class="n">nil</span>, symmetric_atom_groups : <a href="../../Array.html">Array</a>(<a href="../../Array.html">Array</a>(Tuple(<a href="../../String.html">String</a>, <a href="../../String.html">String</a>))) | Nil = <span class="n">nil</span>)
+        def self.<strong>read</strong>(path : IO | <a href="../../Path.html">Path</a> | <a href="../../String.html">String</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#new%28names%3AArray%28String%29%2Ccode%3AChar%7CNil%2Ctype%3AResidueType%2Cdescription%3AString%7CNil%2Catoms%3AArray%28Atom%29%2Cbonds%3AArray%28Bond%29%2Crootroot_name%3AString%2Clink_bond%3ABond%7CNil%3Dnil%2Csymmetric_atom_groups%3AArray%28Array%28Tuple%28String%2CString%29%29%29%7CNil%3Dnil%29-class-method">#</a>
+        <a class="method-permalink" href="#read%28path%3AIO%7CPath%7CString%29%3Aself-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/templates/residue.cr#L14" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/register_format.cr#L162" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1004,351 +1066,384 @@ bond will be inferred from the residue numbering.</p>
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="[](atom_t:Atom,other:Atom):Bond-instance-method">
+    <div class="entry-detail" id="buffer:Bytes-instance-method">
       <div class="signature">
         
-        def <strong>[]</strong>(atom_t : <a href="../../Chem/Templates/Atom.html">Atom</a>, other : <a href="../../Chem/Templates/Atom.html">Atom</a>) : <a href="../../Chem/Templates/Bond.html">Bond</a>
+        def <strong>buffer</strong> : Bytes
 
-        <a class="method-permalink" href="#%5B%5D%28atom_t%3AAtom%2Cother%3AAtom%29%3ABond-instance-method">#</a>
+        <a class="method-permalink" href="#buffer%3ABytes-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Returns the bond template between the given atoms. Raises <code>KeyError</code>
-if the bond does not exist.</p>
+          <p>Reusable buffer for reading each frame positions.
+Size should be <code>sizeof(Float32) * n_atoms * 3</code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/templates/residue.cr#L112" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/formats/dcd.cr#L32" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="[](name:String,other:String):Bond-instance-method">
+    <div class="entry-detail" id="bytesize:Int64-instance-method">
       <div class="signature">
         
-        def <strong>[]</strong>(name : <a href="../../String.html">String</a>, other : <a href="../../String.html">String</a>) : <a href="../../Chem/Templates/Bond.html">Bond</a>
+        def <strong>bytesize</strong> : Int64
 
-        <a class="method-permalink" href="#%5B%5D%28name%3AString%2Cother%3AString%29%3ABond-instance-method">#</a>
+        <a class="method-permalink" href="#bytesize%3AInt64-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Returns the bond template between the given atoms. Raises <code>KeyError</code>
-if the bond does not exist.</p>
+          <p>DCD header bytesize.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/templates/residue.cr#L117" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/formats/dcd.cr#L34" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="[](name:String):Atom-instance-method">
+    <div class="entry-detail" id="cell_block_bytesize:Int32-instance-method">
       <div class="signature">
         
-        def <strong>[]</strong>(name : <a href="../../String.html">String</a>) : <a href="../../Chem/Templates/Atom.html">Atom</a>
+        def <strong>cell_block_bytesize</strong> : Int32
 
-        <a class="method-permalink" href="#%5B%5D%28name%3AString%29%3AAtom-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/templates/residue.cr#L121" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="[]?(atom_t:Atom,other:Atom):Bond|Nil-instance-method">
-      <div class="signature">
-        
-        def <strong>[]?</strong>(atom_t : <a href="../../Chem/Templates/Atom.html">Atom</a>, other : <a href="../../Chem/Templates/Atom.html">Atom</a>) : <a href="../../Chem/Templates/Bond.html">Bond</a> | Nil
-
-        <a class="method-permalink" href="#%5B%5D%3F%28atom_t%3AAtom%2Cother%3AAtom%29%3ABond%7CNil-instance-method">#</a>
+        <a class="method-permalink" href="#cell_block_bytesize%3AInt32-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Returns the bond template between the given atoms if exists, else
-<code>nil</code>.</p>
+          <p>Number of bytes used for the cell block in each frame, or 0 if not periodic.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/templates/residue.cr#L127" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/formats/dcd.cr#L57" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="[]?(name:String,other:String):Bond|Nil-instance-method">
+    <div class="entry-detail" id="charmm_version:Int32-instance-method">
       <div class="signature">
         
-        def <strong>[]?</strong>(name : <a href="../../String.html">String</a>, other : <a href="../../String.html">String</a>) : <a href="../../Chem/Templates/Bond.html">Bond</a> | Nil
+        def <strong>charmm_version</strong> : Int32
 
-        <a class="method-permalink" href="#%5B%5D%3F%28name%3AString%2Cother%3AString%29%3ABond%7CNil-instance-method">#</a>
+        <a class="method-permalink" href="#charmm_version%3AInt32-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Returns the bond template between the given atoms if exists, else
-<code>nil</code>.</p>
+          <p>CHARMM version of the DCD content.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/templates/residue.cr#L134" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/formats/dcd.cr#L36" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="[]?(name:String):Atom|Nil-instance-method">
+    <div class="entry-detail" id="copy_with(buffer:Bytes=@buffer,bytesize:Int64=@bytesize,charmm_version:Int32=@charmm_version,dim:Int32=@dim,encoding:Encoding=@encoding,fixed_positions:Slice(Spatial::Vec3)=@fixed_positions,n_atoms:Int32=@n_atoms,n_frames:Int32=@n_frames,n_free_atoms:Int32=@n_free_atoms,periodic:Bool=@periodic,title:String|Nil=@title):self-instance-method">
       <div class="signature">
         
-        def <strong>[]?</strong>(name : <a href="../../String.html">String</a>) : <a href="../../Chem/Templates/Atom.html">Atom</a> | Nil
+        def <strong>copy_with</strong>(buffer : Bytes = @buffer, bytesize : Int64 = @bytesize, charmm_version : Int32 = @charmm_version, dim : Int32 = @dim, encoding : <a href="../../Chem/DCD/Encoding.html">Encoding</a> = @encoding, fixed_positions : Slice(<a href="../../Chem/Spatial/Vec3.html">Spatial::Vec3</a>) = @fixed_positions, n_atoms : Int32 = @n_atoms, n_frames : Int32 = @n_frames, n_free_atoms : Int32 = @n_free_atoms, periodic : Bool = @periodic, title : <a href="../../String.html">String</a> | Nil = @title) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#%5B%5D%3F%28name%3AString%29%3AAtom%7CNil-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/templates/residue.cr#L139" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="atoms:Array::View(Atom)-instance-method">
-      <div class="signature">
-        
-        def <strong>atoms</strong> : Array::View(<a href="../../Chem/Templates/Atom.html">Atom</a>)
-
-        <a class="method-permalink" href="#atoms%3AArray%3A%3AView%28Atom%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/templates/residue.cr#L143" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="bonds:Array::View(Bond)-instance-method">
-      <div class="signature">
-        
-        def <strong>bonds</strong> : Array::View(<a href="../../Chem/Templates/Bond.html">Bond</a>)
-
-        <a class="method-permalink" href="#bonds%3AArray%3A%3AView%28Bond%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/templates/residue.cr#L147" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="code:Char|Nil-instance-method">
-      <div class="signature">
-        
-        def <strong>code</strong> : <a href="../../Char.html">Char</a> | Nil
-
-        <a class="method-permalink" href="#code%3AChar%7CNil-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/templates/residue.cr#L11" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="description:String|Nil-instance-method">
-      <div class="signature">
-        
-        def <strong>description</strong> : <a href="../../String.html">String</a> | Nil
-
-        <a class="method-permalink" href="#description%3AString%7CNil-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/templates/residue.cr#L9" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="formal_charge:Int32-instance-method">
-      <div class="signature">
-        
-        def <strong>formal_charge</strong> : Int32
-
-        <a class="method-permalink" href="#formal_charge%3AInt32-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/templates/residue.cr#L151" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="link_bond:Bond|Nil-instance-method">
-      <div class="signature">
-        
-        def <strong>link_bond</strong> : <a href="../../Chem/Templates/Bond.html">Bond</a> | Nil
-
-        <a class="method-permalink" href="#link_bond%3ABond%7CNil-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/templates/residue.cr#L8" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="name:String-instance-method">
-      <div class="signature">
-        
-        def <strong>name</strong> : <a href="../../String.html">String</a>
-
-        <a class="method-permalink" href="#name%3AString-instance-method">#</a>
+        <a class="method-permalink" href="#copy_with%28buffer%3ABytes%3D%40buffer%2Cbytesize%3AInt64%3D%40bytesize%2Ccharmm_version%3AInt32%3D%40charmm_version%2Cdim%3AInt32%3D%40dim%2Cencoding%3AEncoding%3D%40encoding%2Cfixed_positions%3ASlice%28Spatial%3A%3AVec3%29%3D%40fixed_positions%2Cn_atoms%3AInt32%3D%40n_atoms%2Cn_frames%3AInt32%3D%40n_frames%2Cn_free_atoms%3AInt32%3D%40n_free_atoms%2Cperiodic%3ABool%3D%40periodic%2Ctitle%3AString%7CNil%3D%40title%29%3Aself-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Returns the designated residue name.</p>
+          <p>Returns a copy of <code>self</code> with the given fields updated.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/templates/residue.cr#L156" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/formats/dcd.cr#L82" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="names:Array(String)-instance-method">
+    <div class="entry-detail" id="dim:Int32-instance-method">
       <div class="signature">
         
-        def <strong>names</strong> : <a href="../../Array.html">Array</a>(<a href="../../String.html">String</a>)
+        def <strong>dim</strong> : Int32
 
-        <a class="method-permalink" href="#names%3AArray%28String%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/templates/residue.cr#L6" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="polymer?:Bool-instance-method">
-      <div class="signature">
-        
-        def <strong>polymer?</strong> : Bool
-
-        <a class="method-permalink" href="#polymer%3F%3ABool-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/templates/residue.cr#L160" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="root:Atom-instance-method">
-      <div class="signature">
-        
-        def <strong>root</strong> : <a href="../../Chem/Templates/Atom.html">Atom</a>
-
-        <a class="method-permalink" href="#root%3AAtom-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/templates/residue.cr#L10" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="symmetric_atom_groups:Array(Array(Tuple(String,String)))|Nil-instance-method">
-      <div class="signature">
-        
-        def <strong>symmetric_atom_groups</strong> : <a href="../../Array.html">Array</a>(<a href="../../Array.html">Array</a>(Tuple(<a href="../../String.html">String</a>, <a href="../../String.html">String</a>))) | Nil
-
-        <a class="method-permalink" href="#symmetric_atom_groups%3AArray%28Array%28Tuple%28String%2CString%29%29%29%7CNil-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/templates/residue.cr#L12" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="to_s(io:IO):Nil-instance-method">
-      <div class="signature">
-        
-        def <strong>to_s</strong>(io : IO) : Nil
-
-        <a class="method-permalink" href="#to_s%28io%3AIO%29%3ANil-instance-method">#</a>
+        <a class="method-permalink" href="#dim%3AInt32-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-            <div class="doc-inherited">
-              Description copied from class Reference
-            </div>
-          
-          <p>Appends a short String representation of this object
-which includes its class name and its object address.</p>
-<pre><code class="language-crystal"><span class="k">class</span> <span class="t">Person</span>
-  <span class="k">def</span> <span class="m">initialize</span>(@name : <span class="t">String</span>, @age : <span class="t">Int32</span>)
-  <span class="k">end</span>
-<span class="k">end</span>
-
-<span class="t">Person</span>.new(<span class="s">&quot;John&quot;</span>, <span class="n">32</span>).to_s <span class="c"># =&gt; #&lt;Person:0x10a199f20&gt;</span></code></pre>
+          <p>Number of spatial dimensions (either 3 or 4).</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/templates/residue.cr#L164" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/formats/dcd.cr#L38" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="type:ResidueType-instance-method">
+    <div class="entry-detail" id="encoding:Encoding-instance-method">
       <div class="signature">
         
-        def <strong>type</strong> : <a href="../../Chem/ResidueType.html">ResidueType</a>
+        def <strong>encoding</strong> : <a href="../../Chem/DCD/Encoding.html">Encoding</a>
 
-        <a class="method-permalink" href="#type%3AResidueType-instance-method">#</a>
+        <a class="method-permalink" href="#encoding%3AEncoding-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Encoding (byte order and marker type) of the DCD content.</p>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/templates/residue.cr#L7" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/formats/dcd.cr#L40" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="first_frame_bytesize:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>first_frame_bytesize</strong> : Int32
+
+        <a class="method-permalink" href="#first_frame_bytesize%3AInt32-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Number of bytes occupied by the first frame (which may include fixed atoms).</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/formats/dcd.cr#L59" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="fixed_positions:Slice(Spatial::Vec3)-instance-method">
+      <div class="signature">
+        
+        def <strong>fixed_positions</strong> : Slice(<a href="../../Chem/Spatial/Vec3.html">Spatial::Vec3</a>)
+
+        <a class="method-permalink" href="#fixed_positions%3ASlice%28Spatial%3A%3AVec3%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Atom positions for constrained/fixed atoms.
+Free positions are set to NaN.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/formats/dcd.cr#L43" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="frame_byte_offset(index:Int):Int64-instance-method">
+      <div class="signature">
+        
+        def <strong>frame_byte_offset</strong>(index : <a href="../../Int.html">Int</a>) : Int64
+
+        <a class="method-permalink" href="#frame_byte_offset%28index%3AInt%29%3AInt64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the byte offset of the frame at <em>index</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/formats/dcd.cr#L116" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="frame_bytesize:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>frame_bytesize</strong> : Int32
+
+        <a class="method-permalink" href="#frame_bytesize%3AInt32-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Number of bytes of a frame.
+It may be less than the first frame's bytesize as the second frame and after include free atoms only.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/formats/dcd.cr#L62" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="marker_bytesize:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>marker_bytesize</strong> : Int32
+
+        <a class="method-permalink" href="#marker_bytesize%3AInt32-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Number of bytes of a block marker.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/formats/dcd.cr#L64" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="n_atoms:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>n_atoms</strong> : Int32
+
+        <a class="method-permalink" href="#n_atoms%3AInt32-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Number of atoms in the system.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/formats/dcd.cr#L45" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="n_frames:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>n_frames</strong> : Int32
+
+        <a class="method-permalink" href="#n_frames%3AInt32-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Number of frames in the trajectory.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/formats/dcd.cr#L47" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="n_free_atoms:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>n_free_atoms</strong> : Int32
+
+        <a class="method-permalink" href="#n_free_atoms%3AInt32-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Number of free atoms (not fixed) in the system.
+Equal to <em>n_atoms</em> if no atom is fixed.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/formats/dcd.cr#L50" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="periodic:Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>periodic</strong> : Bool
+
+        <a class="method-permalink" href="#periodic%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Whether the DCD content uses periodic boundaries (includes unit cell).</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/formats/dcd.cr#L52" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="periodic?:Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>periodic?</strong> : Bool
+
+        <a class="method-permalink" href="#periodic%3F%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns true if the DCD content is periodic (includes unit cell), else false.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/formats/dcd.cr#L123" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="title:String|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>title</strong> : <a href="../../String.html">String</a> | Nil
+
+        <a class="method-permalink" href="#title%3AString%7CNil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>The title in the DCD content, if present.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/638d69621f43ea7ab65c64b2e2cdcc4662f9ba92/src/chem/formats/dcd.cr#L54" target="_blank">View source</a>]
         
       </div>
     </div>
