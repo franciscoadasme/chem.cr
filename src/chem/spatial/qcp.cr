@@ -44,7 +44,7 @@ module Chem::Spatial
   def self.qcp(
     pos : Indexable(Vec3),
     ref_pos : Indexable(Vec3),
-    weights : Indexable(Float64)? = nil
+    weights : Indexable(Float64)? = nil,
   ) : Tuple(Quat, Float64)
     raise ArgumentError.new("Incompatible coordinates") if pos.size != ref_pos.size
     g1, g2, m = inner_products(pos, ref_pos, weights)

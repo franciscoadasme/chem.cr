@@ -11,7 +11,7 @@ module Chem
       @guess_bonds : Bool = false,
       @guess_names : Bool = false,
       @use_templates : Bool = false,
-      **options
+      **options,
     )
       @structure = Structure.new **options
     end

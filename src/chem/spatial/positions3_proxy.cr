@@ -190,7 +190,7 @@ module Chem::Spatial
     def rmsd(
       other : self,
       weights : Indexable(Float64),
-      minimize : Bool = false
+      minimize : Bool = false,
     ) : Float64
       pos = to_a           # FIXME: avoid copying coordinates
       ref_pos = other.to_a # FIXME: avoid copying coordinates
@@ -230,7 +230,7 @@ module Chem::Spatial
     # between the two coordinate sets before calculating the RMSD.
     def rmsd(
       other : Positions3Proxy,
-      minimize : Bool = false
+      minimize : Bool = false,
     ) : Float64
       pos = to_a           # FIXME: avoid copying coordinates
       ref_pos = other.to_a # FIXME: avoid copying coordinates

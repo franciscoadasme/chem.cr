@@ -138,7 +138,7 @@ class Chem::Templates::Builder
   def self.guess_root(
     atoms : Array(Atom),
     bonds : Array(Bond),
-    link_bond : Bond?
+    link_bond : Bond?,
   ) : String
     heavy_atoms = atoms.select &.element.heavy?
     return heavy_atoms[0].name unless heavy_atoms.size > 1

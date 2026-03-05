@@ -18,7 +18,7 @@ class Chem::Element
     @vdw_radius : Float64,
     @valence_electrons : Int32,
     @valence : Int32 | Array(Int32) | Nil,
-    @max_bonds : Int32
+    @max_bonds : Int32,
   )
   end
 

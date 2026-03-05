@@ -23,7 +23,7 @@ class Chem::Templates::Atom
     name : String,
     top_spec : String,
     formal_charge : Int32 = 0,
-    valence : Int32? = nil
+    valence : Int32? = nil,
   ) : self
     raise ArgumentError.new("Empty atom topology spec") if top_spec.blank?
     elements = top_spec.scan(/[A-Z][a-z]?/).map { |sym| PeriodicTable[sym[0]] }

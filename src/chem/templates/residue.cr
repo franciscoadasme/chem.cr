@@ -20,7 +20,7 @@ class Chem::Templates::Residue
     @bonds : Array(Bond),
     root root_name : String,
     @link_bond : Bond? = nil,
-    @symmetric_atom_groups : Array(Array(Tuple(String, String)))? = nil
+    @symmetric_atom_groups : Array(Array(Tuple(String, String)))? = nil,
   )
     raise ArgumentError.new("Empty residue template names") if names.empty?
 
@@ -49,7 +49,7 @@ class Chem::Templates::Residue
     end
   end
 
-  def self.build : self
+  def self.build(&) : self
     builder = Builder.new
     with builder yield builder
     builder.build
@@ -72,7 +72,7 @@ class Chem::Templates::Residue
     residue : ::Chem::Residue,
     description : String? = nil,
     link_bond : Bond? = nil,
-    symmetric_atom_groups : Array(Array(Tuple(String, String)))? = nil
+    symmetric_atom_groups : Array(Array(Tuple(String, String)))? = nil,
   ) : self
     atoms = residue.atoms.map do |atom|
       Atom.new(atom.name, atom.element, atom.bonded_atoms.map(&.element),

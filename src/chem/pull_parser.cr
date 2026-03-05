@@ -414,7 +414,7 @@ module Chem
     # ```
     def expect(
       expected : Char,
-      message : String = "Expected %{expected}, got %{actual}"
+      message : String = "Expected %{expected}, got %{actual}",
     ) : self
       actual = char?
       return self if actual == expected && @token_size == 1
@@ -442,7 +442,7 @@ module Chem
     # ```
     def expect(
       expected : Range(Char?, Char?),
-      message : String = "Expected %{actual} to be within %{expected}"
+      message : String = "Expected %{actual} to be within %{expected}",
     ) : self
       actual = char?
       return self if actual && actual.in?(expected) && @token_size == 1
@@ -468,7 +468,7 @@ module Chem
     # ```
     def expect(
       expected : Enumerable(Char),
-      message : String = "Expected %{expected}, got %{actual}"
+      message : String = "Expected %{expected}, got %{actual}",
     ) : self
       actual = char?
       return self if actual.in?(expected) && @token_size == 1
@@ -497,7 +497,7 @@ module Chem
     # ```
     def expect(
       expected : String,
-      message : String = "Expected %{expected}, got %{actual}"
+      message : String = "Expected %{expected}, got %{actual}",
     ) : self
       actual = str? || ""
       unless actual == expected
@@ -542,7 +542,7 @@ module Chem
     # ```
     def expect(
       pattern : Regex,
-      message : String = "Expected %{actual} to match %{expected}"
+      message : String = "Expected %{actual} to match %{expected}",
     ) : self
       actual = str? || ""
       unless actual.matches?(pattern)
@@ -571,7 +571,7 @@ module Chem
     # ```
     def expect(
       expected : Enumerable(String),
-      message : String = "Expected %{expected}, got %{actual}"
+      message : String = "Expected %{expected}, got %{actual}",
     ) : self
       actual = str? || ""
       unless actual.in?(expected)
@@ -585,7 +585,7 @@ module Chem
     # Same as `expect` but advances to the next token first.
     def expect_next(
       expected : String,
-      message : String = "Expected %{expected}, got %{actual}"
+      message : String = "Expected %{expected}, got %{actual}",
     ) : self
       consume_token.expect expected, message
     end
@@ -593,7 +593,7 @@ module Chem
     # :ditto:
     def expect_next(
       pattern : Regex,
-      message : String = "Expected %{actual} to match %{expected}"
+      message : String = "Expected %{actual} to match %{expected}",
     ) : self
       consume_token.expect pattern, message
     end
@@ -601,7 +601,7 @@ module Chem
     # :ditto:
     def expect_next(
       expected : Enumerable(String),
-      message : String = "Expected %{expected}, got %{actual}"
+      message : String = "Expected %{expected}, got %{actual}",
     ) : self
       consume_token.expect expected, message
     end

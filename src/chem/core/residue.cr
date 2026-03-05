@@ -31,7 +31,7 @@ class Chem::Residue
     @chain : Chain,
     @number : Int32,
     @insertion_code : Char?,
-    @name : String
+    @name : String,
   )
     assign_type_from_templates
     @chain << self

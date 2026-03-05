@@ -109,7 +109,7 @@ module Indexable(T)
     separator : String = ", ",
     *,
     pair_separator : String = " and ",
-    tail_separator : String = ", and "
+    tail_separator : String = ", and ",
   ) : Nil
     sentence(
       io,
@@ -181,7 +181,7 @@ module Indexable(T)
     separator : String = ", ",
     *,
     pair_separator : String = " and ",
-    tail_separator : String = ", and "
+    tail_separator : String = ", and ",
   ) : String
     String.build do |io|
       sentence(

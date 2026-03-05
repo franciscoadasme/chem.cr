@@ -83,7 +83,7 @@ module Chem
     def each_secondary_structure(
       reuse : Bool | Array(Residue) = false,
       strict : Bool = true,
-      handedness : Bool = true
+      handedness : Bool = true,
     ) : Iterator(ResidueView)
       each
         .select(&.protein?)

@@ -65,7 +65,7 @@ class Chem::Templates::Detector
   private def extend_search(
     res_t : Residue,
     atom_map : Hash(Atom, ::Chem::Atom),
-    ters : Enumerable(Ter)
+    ters : Enumerable(Ter),
   ) : Hash(Atom, ::Chem::Atom)?
     visited = atom_map.values.to_set
     ter_map = {} of Atom => ::Chem::Atom
@@ -138,7 +138,7 @@ end
 private def merge_ter(
   res_t : Chem::Templates::Residue,
   atom_map : Hash(Chem::Templates::Atom, Chem::Atom),
-  ter_map : Hash(Chem::Templates::Atom, Chem::Atom)
+  ter_map : Hash(Chem::Templates::Atom, Chem::Atom),
 ) : Hash(Chem::Templates::Atom, Chem::Atom)
   sorted_matches = atom_map.to_a
   ter_matches = ter_map.to_a

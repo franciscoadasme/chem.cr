@@ -3,7 +3,7 @@ struct Chem::Templates::MatchData
 
   def initialize(
     @template : Residue,
-    @atom_map : Hash(Atom, ::Chem::Atom)
+    @atom_map : Hash(Atom, ::Chem::Atom),
   )
   end
 

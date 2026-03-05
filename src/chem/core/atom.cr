@@ -49,7 +49,7 @@ module Chem
       @occupancy : Float64 = 1,
       @partial_charge : Float64 = 0.0,
       @temperature_factor : Float64 = 0,
-      @vdw_radius : Float64 = element.vdw_radius
+      @vdw_radius : Float64 = element.vdw_radius,
     )
       raise ArgumentError.new("Negative mass") if @mass < 0
       raise ArgumentError.new("Negative vdW radius") if @vdw_radius < 0

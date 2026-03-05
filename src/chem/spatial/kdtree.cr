@@ -14,7 +14,7 @@ module Chem::Spatial
     protected def self.build_tree(
       points_with_index : Array(Tuple(Vec3, Int32)),
       range : Range(Int, Int),
-      depth : Int32
+      depth : Int32,
     ) : Node?
       start, stop = range.begin, range.end
       stop -= 1 if range.exclusive?
@@ -77,7 +77,7 @@ module Chem::Spatial
 
     def neighbors_with_distances(
       pos : Vec3, *,
-      within radius : Number
+      within radius : Number,
     ) : Array({Int32, Float64})
       neighbors = [] of {Int32, Float64}
       each_neighbor(pos, within: radius) do |index, dis2|
@@ -221,7 +221,7 @@ module Chem::Spatial
 
     def neighbors_with_distances(
       pos : Vec3, *,
-      within radius : Number
+      within radius : Number,
     ) : Array({Int32, Float64})
       neighbors = [] of {Int32, Float64}
       each_neighbor(pos, within: radius) do |index, dis2|

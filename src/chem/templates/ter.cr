@@ -14,7 +14,7 @@ class Chem::Templates::Ter
     @description : String?,
     @atoms : Array(Atom),
     @bonds : Array(Bond),
-    root root_name : String
+    root root_name : String,
   )
     raise ArgumentError.new("Empty ter template names") if names.empty?
 
@@ -27,7 +27,7 @@ class Chem::Templates::Ter
     end
   end
 
-  def self.build : self
+  def self.build(&) : self
     # TODO: use an adhoc builder to avoid setting unneeded things like symmetry
     builder = Builder.new
     with builder yield builder
