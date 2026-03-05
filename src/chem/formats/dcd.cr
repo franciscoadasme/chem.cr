@@ -183,7 +183,7 @@ module Chem::DCD
   end
 
   # Returns the info from *io*.
-  # It must called at the begining of the DCD content and before reading frames via `.read`.
+  # It must called at the beginning of the DCD content and before reading frames via `.read`.
   #
   # NOTE: *io* must be seekable.
   def self.read_info(io : IO) : Info

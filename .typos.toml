@@ -6,6 +6,9 @@ conect = "conect"
 ser = "ser"
 namd = "namd"
 struc = "struc"
+tru = "tru"
+fals = "fals"
+thr = "thr"
 
 [files]
 extend-exclude = ["bench/data/**", "spec/data/**"]
