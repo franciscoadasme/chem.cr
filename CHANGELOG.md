@@ -1,5 +1,17 @@
 # Changelog
 
+## [Unreleased]
+
+### Changed
+
+#### Core
+
+- **Breaking:** remove `Angle`, `Dihedral`, `Improper`, and the `Connectivity` mixin. Related variables and methods on `Structure` are also removed. Bonds stay on atoms. Geometric measurements remain via `Spatial.angle` / `Spatial.dihedral` / `Spatial.improper`.
+
+#### Input/output
+
+- **Breaking:** `PSF.read` reads atoms and bonds only. Angle, dihedral, and improper sections are ignored.
+
 ## [v0.6.0] - 2023-08-09
 
 Development got erratic after v0.5.0 and the tracking of releases was ignored for years.

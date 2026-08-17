@@ -2,12 +2,11 @@ require "../spec_helper"
 
 describe Chem::PSF do
   it "parses a PSF file" do
-    structure = Chem::PSF.read spec_file("5yok_initial.psf")
+    path = spec_file("5yok_initial.psf")
+    structure = Chem::PSF.read path
+    structure.source_file.should eq Path[path].expand
     structure.atoms.size.should eq 819
     structure.bonds.size.should eq 804
-    structure.angles.size.should eq 1416
-    structure.dihedrals.size.should eq 1938
-    structure.impropers.size.should eq 140
 
     structure.chains.size.should eq 19
     structure.residues.join(&.code).should eq(
@@ -25,28 +24,18 @@ describe Chem::PSF do
     atom.partial_charge.should eq -0.12
     atom.mass.should eq 12.011
     atom.bonded_atoms.map(&.number).should eq [751, 746, 755, 756]
-
-    structure.angles[2].atoms.map(&.number).should eq({2, 1, 4})
-    structure.dihedrals[6].atoms.map(&.number).should eq({4, 1, 5, 7})
-    structure.impropers[15].atoms.map(&.number).should eq({80, 90, 91, 92})
   end
 
   it "parses PSF with non-multiple number of records (#178)" do
     structure = Chem::PSF.read spec_file("DTD.psf")
     structure.atoms.size.should eq 16
     structure.bonds.size.should eq 16
-    structure.angles.size.should eq 28
-    structure.dihedrals.size.should eq 40
-    structure.impropers.size.should eq 8
   end
 
   it "parses PSF with extended format (#190)" do
     structure = Chem::PSF.read spec_file("N4I.psf")
     structure.atoms.size.should eq 67
     structure.bonds.size.should eq 70
-    structure.angles.size.should eq 124
-    structure.dihedrals.size.should eq 187
-    structure.impropers.size.should eq 20
 
     atom = structure.atoms[-1]
     atom.number.should eq 67

@@ -23,7 +23,9 @@ module Chem::PSF
 
     n_atoms = parse_section_header(pull, "ATOM")
     atoms = [] of Atom
-    structure = Structure.build do |builder|
+    structure = Structure.build(
+      source_file: (file = io).is_a?(File) ? file.path : nil,
+    ) do |builder|
       prev_seg = nil
       n_atoms.times do
         case variant
@@ -69,12 +71,17 @@ module Chem::PSF
       end
     end
 
-    parse_connectivity(pull, Bond, "BOND", atoms).each do |bond|
-      bond.atoms[0].bonds << bond
+    pull.skip_blank_lines
+    n_bonds = parse_section_header(pull, "BOND")
+    remaining = n_bonds
+    ((n_bonds / 4).ceil.to_i).times do
+      4.times do
+        break unless remaining > 0
+        atoms[pull.next_i - 1].bonds.add atoms[pull.next_i - 1]
+        remaining -= 1
+      end
+      pull.consume_line
     end
-    structure.angles = parse_connectivity(pull, Angle, "THETA", atoms)
-    structure.dihedrals = parse_connectivity(pull, Dihedral, "PHI", atoms)
-    structure.impropers = parse_connectivity(pull, Improper, "IMPHI", atoms)
 
     structure
   end
@@ -93,44 +100,6 @@ module Chem::PSF
       when "ext", "extended" then Extended
       when "namd"            then NAMD
       else                        nil
-      end
-    end
-  end
-
-  private def self.parse_connectivity(pull : PullParser, type : T.class, title : String, atoms : Array(Atom)) : Array(T) forall T
-    pull.skip_blank_lines
-    n_records = parse_section_header(pull, title)
-    parse_records(pull, type, n_records, atoms)
-  end
-
-  private def self.parse_records(pull : PullParser, type : Bond.class, size : Int, atoms : Array(Atom)) : Array(Bond)
-    parse_records(pull, Bond, {Int32, Int32}, size, atoms)
-  end
-
-  private def self.parse_records(pull : PullParser, type : Angle.class, size : Int, atoms : Array(Atom)) : Array(Angle)
-    parse_records(pull, Angle, {Int32, Int32, Int32}, size, atoms)
-  end
-
-  private def self.parse_records(pull : PullParser, type : Dihedral.class, size : Int, atoms : Array(Atom)) : Array(Dihedral)
-    parse_records(pull, Dihedral, {Int32, Int32, Int32, Int32}, size, atoms)
-  end
-
-  private def self.parse_records(pull : PullParser, type : Improper.class, size : Int, atoms : Array(Atom)) : Array(Improper)
-    parse_records(pull, Improper, {Int32, Int32, Int32, Int32}, size, atoms)
-  end
-
-  private def self.parse_records(pull : PullParser, type : T.class, tuple : Tuple, size : Int, atoms : Array(Atom)) : Array(T) forall T
-    records_per_line = (8 / tuple.size).ceil.to_i
-    n_lines = (size / records_per_line).ceil.to_i
-    remaining = size
-    Array(T).new(size).tap do |records|
-      n_lines.times do
-        records_per_line.times do
-          break unless remaining > 0
-          records << T.new(*tuple.map { atoms[pull.next_i - 1] })
-          remaining -= 1
-        end
-        pull.consume_line
       end
     end
   end

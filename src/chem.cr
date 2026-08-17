@@ -178,7 +178,7 @@ require "./chem/spatial"
 
 require "./chem/core/residue"
 require "./chem/core/atom"
-require "./chem/connectivity"
+require "./chem/core/bond"
 require "./chem/core/bias"
 require "./chem/core/bond_array"
 require "./chem/core/element"

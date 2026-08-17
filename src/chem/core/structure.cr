@@ -23,14 +23,6 @@ module Chem
     # ```
     getter metadata = Metadata.new
 
-    # Angles in the topology. See `Angle` for definition.
-    setter angles = [] of Angle
-    # Dihedral angles in the topology. See `Dihedral` for definition.
-    setter dihedrals = [] of Dihedral
-    # Improper dihedral angles in the topology. See `Improper` for
-    # definition.
-    setter impropers = [] of Improper
-
     @chain_table = {} of Char => Chain
     @chains = [] of Chain
 
@@ -59,13 +51,7 @@ module Chem
       self
     end
 
-    # Returns the angles in the topology. See `Angle` for definition.
-    def angles : Array::View(Angle)
-      guess_angles if @angles.empty?
-      @angles.view
-    end
-
-    # Assign bonds, formal charges, and residue's type from known residue
+    # Assigns bonds, formal charges, and residue's type from known residue
     # types.
     def apply_templates : Nil
       prev_res = nil
@@ -206,13 +192,6 @@ module Chem
       end
     end
 
-    # Returns the dihedral angles in the topology. See `Dihedral` for
-    # definition.
-    def dihedrals : Array::View(Dihedral)
-      guess_dihedrals if @dihedrals.empty?
-      @dihedrals.view
-    end
-
     # Returns a new structure containing the selected atoms by the given
     # block.
     #
@@ -240,19 +219,6 @@ module Chem
     # TODO: implement compound accessors in a global module
     def formal_charge : Int32
       atoms.sum &.formal_charge
-    end
-
-    # Determines the angles based on connectivity. See `Angle` for
-    # definition.
-    #
-    # NOTE: It deletes existing angles.
-    def guess_angles : Nil
-      @angles.clear
-      atoms.each do |a2|
-        a2.bonded_atoms.each_combination(2, reuse: true) do |(a1, a3)|
-          @angles << Angle.new(a1, a2, a3)
-        end
-      end
     end
 
     # Determines the bonds from connectivity and geometry.
@@ -446,29 +412,6 @@ module Chem
       end
     end
 
-    # Determines the dihedral angles based on connectivity. See `Dihedral`
-    # for definition.
-    #
-    # NOTE: It deletes existing dihedral angles.
-    def guess_dihedrals : Nil
-      @dihedrals.clear
-      # TODO: use a sorted set
-      dihedrals = Set(Dihedral).new
-      angles.each do |angle|
-        a1, a2, a3 = angle.atoms
-        a1.each_bonded_atom do |a0|
-          next if a0 == a2 || a0 == a3
-          dihedrals << Dihedral.new(a0, a1, a2, a3)
-        end
-
-        a3.each_bonded_atom do |a4|
-          next if a4 == a2 || a4 == a1
-          dihedrals << Dihedral.new(a1, a2, a3, a4)
-        end
-      end
-      dihedrals.each { |dihedral| @dihedrals << dihedral }
-    end
-
     # Returns the element of an atom based on its name. Raises `Error` if
     # the element could not be determined. Refer to `guess_element?` for
     # details.
@@ -526,30 +469,6 @@ module Chem
           atom.formal_charge = atom.element.valence_electrons - target_electrons + valence
         end
       end
-    end
-
-    # Determines the improper dihedral angles based on connectivity. See
-    # `Improper` for definition.
-    #
-    # Improper dihedral angles are often used to constraint the planarity
-    # of certain functional groups of molecules in molecular mechanics
-    # simulations, and so not every possible improper dihedral angle is
-    # required. This method lists every possible improper dihedral angle
-    # following the formal definition, which will probably generate
-    # extraneous angles.
-    #
-    # NOTE: It deletes existing improper dihedral angles.
-    def guess_impropers : Nil
-      @impropers.clear
-      # TODO: use a sorted set
-      impropers = Set(Improper).new
-      angles.each do |angle|
-        a1, a2, a3 = angle.atoms
-        a2.each_bonded_atom do |a4|
-          impropers << Improper.new(a1, a2, a3, a4) unless a4.in?(a1, a3)
-        end
-      end
-      impropers.each { |improper| @impropers << improper }
     end
 
     # Detects and assigns topology names from known residue templates based on
@@ -674,13 +593,6 @@ module Chem
           .reject!(&.other?)
         residue.type = types.size == 1 ? types[0] : ResidueType::Other
       end
-    end
-
-    # Returns the improper dihedral angles in the topology. See `Improper`
-    # for definition.
-    def impropers : Array::View(Improper)
-      guess_impropers if @impropers.empty?
-      @impropers.view
     end
 
     def inspect(io : IO) : Nil
