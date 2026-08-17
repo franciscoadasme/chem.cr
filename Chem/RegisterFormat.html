@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Crystal Docs 1.18.2">
+<meta name="generator" content="Crystal Docs 1.20.3">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem">
 
@@ -179,6 +179,11 @@
   
   <li class=" " data-id="chem/Chem/Gen" data-name="chem::gen">
       <a href="../Chem/Gen.html">Gen</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem/Chem/GOpenMol" data-name="chem::gopenmol">
+      <a href="../Chem/GOpenMol.html">GOpenMol</a>
       
     </li>
   
@@ -703,7 +708,7 @@
   <p>Registers a file format.</p>
 <p>The annotated type provides the implementation of a <em>file format</em> that encodes an <em>encoded type</em>.
 The <em>file format</em> is determined from the annotated type's name, where the last component of the fully qualified name is used (e.g., <code>Baz</code> for <code>Foo::Bar::Baz</code>).
-The declared extensions and file patterns are used for format detection via <code><a href="../Chem.html#guess_format%28path%3APath%7CString%2Ctype%3AChem%3A%3ASpatial%3A%3AGrid.class%29%3AChem%3A%3ACube.class%7CChem%3A%3ADX.class%7CChem%3A%3AVASP%3A%3AChgcar.class%7CChem%3A%3AVASP%3A%3ALocpot.class-class-method">Chem.guess_format</a></code>.</p>
+The declared extensions and file patterns are used for format detection via <code><a href="../Chem.html#guess_format%28path%3APath%7CString%2Ctype%3AChem%3A%3ASpatial%3A%3AGrid.class%29%3AChem%3A%3ACube.class%7CChem%3A%3ADX.class%7CChem%3A%3AGOpenMol.class%7CChem%3A%3AVASP%3A%3AChgcar.class%7CChem%3A%3AVASP%3A%3ALocpot.class-class-method">Chem.guess_format</a></code>.</p>
 <p>The annotation accepts the following named arguments:</p>
 <ul>
 <li><strong>ext</strong>: an array of extensions (including leading dot).</li>
@@ -858,7 +863,7 @@ If two methods with the same name and required arguments (may have different opt
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/fc0a49bfd86ae9244bab9fc433f366aaaa212a0b/src/chem/register_format.cr#L158" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/register_format.cr#L158" target="_blank">
         chem/register_format.cr
       </a>
     

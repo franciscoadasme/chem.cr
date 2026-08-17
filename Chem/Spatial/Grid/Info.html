@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Crystal Docs 1.18.2">
+<meta name="generator" content="Crystal Docs 1.20.3">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="chem">
 
@@ -179,6 +179,11 @@
   
   <li class=" " data-id="chem/Chem/Gen" data-name="chem::gen">
       <a href="../../../Chem/Gen.html">Gen</a>
+      
+    </li>
+  
+  <li class=" " data-id="chem/Chem/GOpenMol" data-name="chem::gopenmol">
+      <a href="../../../Chem/GOpenMol.html">GOpenMol</a>
       
     </li>
   
@@ -729,14 +734,14 @@
   </h2>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/fc0a49bfd86ae9244bab9fc433f366aaaa212a0b/src/chem/register_format.cr#L162" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/register_format.cr#L162" target="_blank">
         chem/register_format.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/franciscoadasme/chem.cr/blob/fc0a49bfd86ae9244bab9fc433f366aaaa212a0b/src/chem/spatial/grid.cr#L11" target="_blank">
+      <a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/spatial/grid.cr#L11" target="_blank">
         chem/spatial/grid.cr
       </a>
     
@@ -789,6 +794,16 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#from_gopenmol%28io%3AIO%29%3Aself-class-method" class="signature"><strong>.from_gopenmol</strong>(io : IO) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#from_gopenmol%28path%3APath%7CString%29%3Aself-class-method" class="signature"><strong>.from_gopenmol</strong>(path : Path | String) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#from_locpot%28io%3AIO%29%3Aself-class-method" class="signature"><strong>.from_locpot</strong>(io : IO) : <span class="k">self</span></a>
         
       </li>
@@ -810,6 +825,11 @@
     
       <li class="entry-summary">
         <a href="#read%28input%3AIO%7CPath%7CString%2Cformat%3AChem%3A%3ADX.class%29%3Aself-class-method" class="signature"><strong>.read</strong>(input : IO | Path | String, format : <span class="t">Chem</span><span class="t">::</span><span class="t">DX</span>.<span class="k">class</span>) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#read%28input%3AIO%7CPath%7CString%2Cformat%3AChem%3A%3AGOpenMol.class%29%3Aself-class-method" class="signature"><strong>.read</strong>(input : IO | Path | String, format : <span class="t">Chem</span><span class="t">::</span><span class="t">GOpenMol</span>.<span class="k">class</span>) : <span class="k">self</span></a>
         
       </li>
     
@@ -941,7 +961,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc0a49bfd86ae9244bab9fc433f366aaaa212a0b/src/chem/register_format.cr#L162" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/register_format.cr#L162" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -957,7 +977,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc0a49bfd86ae9244bab9fc433f366aaaa212a0b/src/chem/register_format.cr#L162" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/register_format.cr#L162" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -973,7 +993,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc0a49bfd86ae9244bab9fc433f366aaaa212a0b/src/chem/register_format.cr#L162" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/register_format.cr#L162" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -989,7 +1009,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc0a49bfd86ae9244bab9fc433f366aaaa212a0b/src/chem/register_format.cr#L162" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/register_format.cr#L162" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1005,7 +1025,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc0a49bfd86ae9244bab9fc433f366aaaa212a0b/src/chem/register_format.cr#L162" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/register_format.cr#L162" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1021,7 +1041,39 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc0a49bfd86ae9244bab9fc433f366aaaa212a0b/src/chem/register_format.cr#L162" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/register_format.cr#L162" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="from_gopenmol(io:IO):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>from_gopenmol</strong>(io : IO) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#from_gopenmol%28io%3AIO%29%3Aself-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/register_format.cr#L162" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="from_gopenmol(path:Path|String):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>from_gopenmol</strong>(path : <a href="../../../Path.html">Path</a> | <a href="../../../String.html">String</a>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#from_gopenmol%28path%3APath%7CString%29%3Aself-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/register_format.cr#L162" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1037,7 +1089,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc0a49bfd86ae9244bab9fc433f366aaaa212a0b/src/chem/register_format.cr#L162" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/register_format.cr#L162" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1053,7 +1105,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc0a49bfd86ae9244bab9fc433f366aaaa212a0b/src/chem/register_format.cr#L162" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/register_format.cr#L162" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1069,7 +1121,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc0a49bfd86ae9244bab9fc433f366aaaa212a0b/src/chem/spatial/grid.cr#L11" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/spatial/grid.cr#L11" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1085,7 +1137,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc0a49bfd86ae9244bab9fc433f366aaaa212a0b/src/chem/register_format.cr#L162" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/register_format.cr#L162" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1101,7 +1153,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc0a49bfd86ae9244bab9fc433f366aaaa212a0b/src/chem/register_format.cr#L162" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/register_format.cr#L162" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="read(input:IO|Path|String,format:Chem::GOpenMol.class):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>read</strong>(input : IO | <a href="../../../Path.html">Path</a> | <a href="../../../String.html">String</a>, format : <span class="t">Chem</span><span class="t">::</span><span class="t">GOpenMol</span>.<span class="k">class</span>) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#read%28input%3AIO%7CPath%7CString%2Cformat%3AChem%3A%3AGOpenMol.class%29%3Aself-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/register_format.cr#L162" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1117,7 +1185,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc0a49bfd86ae9244bab9fc433f366aaaa212a0b/src/chem/register_format.cr#L162" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/register_format.cr#L162" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1133,7 +1201,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc0a49bfd86ae9244bab9fc433f366aaaa212a0b/src/chem/register_format.cr#L162" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/register_format.cr#L162" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1154,7 +1222,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc0a49bfd86ae9244bab9fc433f366aaaa212a0b/src/chem/register_format.cr#L162" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/register_format.cr#L162" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1170,7 +1238,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc0a49bfd86ae9244bab9fc433f366aaaa212a0b/src/chem/register_format.cr#L162" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/register_format.cr#L162" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1216,7 +1284,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc0a49bfd86ae9244bab9fc433f366aaaa212a0b/src/chem/spatial/grid.cr#L11" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/spatial/grid.cr#L11" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1232,7 +1300,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/franciscoadasme/chem.cr/blob/fc0a49bfd86ae9244bab9fc433f366aaaa212a0b/src/chem/spatial/grid.cr#L11" target="_blank">View source</a>]
+          [<a href="https://github.com/franciscoadasme/chem.cr/blob/30e5f55b21b187bf73320cda100900d32d6b0d95/src/chem/spatial/grid.cr#L11" target="_blank">View source</a>]
         
       </div>
     </div>
