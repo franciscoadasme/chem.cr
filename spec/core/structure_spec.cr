@@ -740,6 +740,60 @@ describe Chem::Structure do
       r3["C"].bonded_atoms.map(&.name).should eq ["CA", "O"]
     end
 
+    it "assigns template charges when hydrogens are missing (#233)" do
+      struc = Chem::PDB.read spec_file("1h1s.pdb")
+      struc.chains.map(&.atoms.sum(&.formal_charge)).should eq [3, -3, 3, -3]
+      # TPO160(-2) is unknown so formal charges aren't assigned
+      struc.dig('A', 160).atoms.sum(&.formal_charge).should eq 0
+      struc.dig('C', 160).atoms.sum(&.formal_charge).should eq 0
+      # N-ter (175) is not matched by templates so N is left uncharged
+      struc.dig('B', 175).atoms.sum(&.formal_charge).should eq 0
+      struc.dig('D', 175).atoms.sum(&.formal_charge).should eq 0
+    end
+
+    it "does not overwrite existing formal charges (#233)" do
+      struc = Chem::PDB.read spec_file("simple.pdb")
+      struc.atoms[2].formal_charge.should eq -1
+      struc.atoms[11].formal_charge.should eq -1
+      struc.atoms[12].formal_charge.should eq 1
+    end
+
+    it "does not assign template charge when bonds do not match (#233)" do
+      struc = Chem::Structure.build do
+        residue "LYS"
+        atom "CE", vec3(0, 0, 1.5)
+        atom "NZ", vec3(0, 0, 0)
+        atom "HZ1", vec3(1.01, 0, 0)
+        atom "HZ2", vec3(-0.5, 0.87, 0)
+      end
+      struc.apply_templates
+      struc.dig('A', 1, "NZ").formal_charge.should eq 0
+    end
+
+    it "does not assign template charge when bond orders do not match (#233)" do
+      struc = Chem::Structure.build do
+        residue "ASP"
+        atom "CG", vec3(0, 0, 0)
+        atom "OD2", vec3(1.25, 0, 0)
+        bond "CG", "OD2", :double
+      end
+      struc.apply_templates
+      struc.dig('A', 1, "OD2").formal_charge.should eq 0
+    end
+
+    it "assigns template charge when bonds match (#233)" do
+      struc = Chem::Structure.build do
+        residue "LYS"
+        atom "CE", vec3(0, 0, 1.5)
+        atom "NZ", vec3(0, 0, 0)
+        atom "HZ1", vec3(1.01, 0, 0)
+        atom "HZ2", vec3(-0.5, 0.87, 0)
+        atom "HZ3", vec3(-0.5, -0.87, 0)
+      end
+      struc.apply_templates
+      struc.dig('A', 1, "NZ").formal_charge.should eq 1
+    end
+
     it "does not connect consecutive residues when there are far away" do
       structure = load_file "protein_gap.pdb"
       structure.apply_templates

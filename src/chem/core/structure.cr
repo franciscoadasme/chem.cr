@@ -51,18 +51,19 @@ module Chem
       self
     end
 
-    # Assigns bonds, formal charges, and residue's type from known residue
-    # types.
+    # Assigns bonds and residue type from known residue templates.
+    #
+    # Formal charges are copied from the template only when the template
+    # atom is charged, the atom is currently uncharged, and its bonds
+    # (neighbor element and order) match the template. If the structure
+    # has no hydrogens, hydrogen bonds in the template are ignored so
+    # X-ray structures still receive charges for ionized side chains.
     def apply_templates : Nil
+      ignore_hydrogens = !atoms.any?(&.hydrogen?)
       prev_res = nil
       residues.each do |residue|
         if template = residue.template
           residue.type = template.type
-          residue.atoms.each do |atom|
-            if atom_t = template[atom.name]?
-              atom.formal_charge = atom_t.formal_charge
-            end
-          end
 
           template.bonds.each do |bond_t|
             if (lhs = residue[bond_t.atoms[0]]?) &&
@@ -78,6 +79,14 @@ module Chem
              (rhs = residue[bond_t.atoms[1]]?) &&
              lhs.within_covalent_distance?(rhs)
             lhs.bonds.add rhs, bond_t.order
+          end
+
+          residue.atoms.each do |atom|
+            next unless atom_t = template[atom.name]?
+            next if atom_t.formal_charge.zero?
+            next unless atom.formal_charge.zero?
+            next unless bonds_match_template?(atom, atom_t, template, ignore_hydrogens)
+            atom.formal_charge = atom_t.formal_charge
           end
         end
         prev_res = residue
@@ -674,6 +683,40 @@ module Chem
       io << ", "
       io << "non-" unless @cell
       io << "periodic>"
+    end
+
+    # Returns `true` if *atom*'s bonds match *atom_t* in *template*
+    # (neighbor element and bond order). Hydrogen bonds are skipped when
+    # *ignore_hydrogens* is `true`.
+    private def bonds_match_template?(
+      atom : Atom,
+      atom_t : Templates::Atom,
+      template : Templates::Residue,
+      ignore_hydrogens : Bool,
+    ) : Bool
+      actual = [] of {Int32, Int32}
+      atom.bonds.each do |bond|
+        other = bond.other(atom)
+        next if ignore_hydrogens && other.hydrogen?
+        actual << {other.atomic_number, bond.order.to_i}
+      end
+
+      expected = [] of {Int32, Int32}
+      template.bonds.each do |bond_t|
+        next unless bond_t.includes?(atom_t)
+        other = bond_t.other(atom_t)
+        next if ignore_hydrogens && other.element.hydrogen?
+        expected << {other.element.atomic_number, bond_t.order.to_i}
+      end
+
+      if (link = template.link_bond) && link.includes?(atom_t)
+        other = link.other(atom_t)
+        unless ignore_hydrogens && other.element.hydrogen?
+          expected << {other.element.atomic_number, link.order.to_i}
+        end
+      end
+
+      actual.tally == expected.tally
     end
   end
 end

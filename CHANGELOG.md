@@ -7,6 +7,7 @@
 #### Core
 
 - **Breaking:** remove `Angle`, `Dihedral`, `Improper`, and the `Connectivity` mixin. Related variables and methods on `Structure` are also removed. Bonds stay on atoms. Geometric measurements remain via `Spatial.angle` / `Spatial.dihedral` / `Spatial.improper`.
+- `apply_templates` no longer overwrites existing formal charges. Template charges are applied only to uncharged atoms whose bonds (neighbor element and order) match a charged template atom (#233).
 
 #### Input/output
 
