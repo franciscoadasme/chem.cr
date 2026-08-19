@@ -61,7 +61,9 @@ module Chem
         unless residue.structure.same?(@structure)
           raise ArgumentError.new("Residue does not belong to the given structure")
         end
-        if @structure.atoms.any? { |atom| atom.residue?.nil? }
+        # All existing atoms share topology (or none do), so the first
+        # atom is enough. Scanning every atom here was O(N²) on load.
+        if (first = @structure.atoms.first?) && first.residue?.nil?
           raise ArgumentError.new("Cannot mix atoms with and without topology")
         end
       elsif @structure.has_topology?
