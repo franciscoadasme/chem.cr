@@ -56,5 +56,15 @@ module Chem
       each { |atom| atom.residue?.try { |residue| residues << residue } }
       ResidueView.new residues.to_a
     end
+
+    # Returns a mutable copy of the enclosed atoms.
+    def to_a : Array(Atom)
+      @wrapped.dup
+    end
+
+    # Returns the enclosed array. Mutating it changes the view's source.
+    def to_unsafe : Array(Atom)
+      @wrapped
+    end
   end
 end

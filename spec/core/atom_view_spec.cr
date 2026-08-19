@@ -63,4 +63,25 @@ describe Chem::AtomView do
       atoms.size.should eq 25
     end
   end
+
+  describe "#to_a" do
+    it "returns a copy of the enclosed array" do
+      struc = fake_structure
+      ary = struc.atoms.to_a
+      ary.should eq struc.atoms.to_unsafe
+      ary.same?(struc.atoms.to_unsafe).should be_false
+      size = struc.atoms.size
+      ary.clear
+      struc.atoms.size.should eq size
+    end
+  end
+
+  describe "#to_unsafe" do
+    it "returns the enclosed array" do
+      struc = fake_structure
+      inner = struc.atoms.to_unsafe
+      struc.atoms.to_unsafe.same?(inner).should be_true
+      struc.atoms.to_unsafe.size.should eq struc.atoms.size
+    end
+  end
 end

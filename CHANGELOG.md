@@ -13,6 +13,7 @@
 - `Structure#atoms` is insertion-ordered. Use `Structure#reorder_atoms_by_topology` to match chain/residue order. `guess_names` reorders by default (`reorder: false` to keep insertion order).
 - Add `Structure#has_topology?`, `Atom#delete`, `Residue#delete`, and `Chain#delete` (#215). Deleting a chain or residue also deletes its atoms. `Structure#clear` removes atoms and topology.
 - Residue numbers are labels: `Residue#number=` and `#insertion_code=` no longer sort the parent chain. Use `Chain#sort_residues!` if iteration should follow numbering.
+- **Breaking:** `AtomView#to_a` returns a copy of the enclosed array. Use `#to_unsafe` for the inner array.
 
 #### Input/output
 

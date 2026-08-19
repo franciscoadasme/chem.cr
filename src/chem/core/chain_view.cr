@@ -7,7 +7,7 @@ module Chem
       each do |chain|
         chain.residues.each do |residue|
           # #concat(Array) copies memory instead of appending one by one
-          atoms.concat residue.atoms.to_a
+          atoms.concat residue.atoms.to_unsafe
         end
       end
       AtomView.new atoms

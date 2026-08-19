@@ -748,7 +748,7 @@ module Chem
       atoms = [] of Atom
       @chains.each do |chain|
         chain.residues.each do |residue|
-          atoms.concat residue.atoms.to_a
+          atoms.concat residue.atoms.to_unsafe
         end
       end
       @atoms.clear
