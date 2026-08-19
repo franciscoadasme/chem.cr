@@ -52,7 +52,23 @@ module Chem
       self
     end
 
+    # Adds *atom* to the structure.
+    #
+    # Raises if *atom* would mix residue-less atoms with topology, or if
+    # its residue belongs to another structure. All existing atoms share
+    # topology (or none do), so the first atom is enough to check.
+    # Scanning every atom here was O(N²) on load.
     protected def <<(atom : Atom) : self
+      if residue = atom.residue?
+        unless residue.structure.same?(self)
+          raise ArgumentError.new("Residue does not belong to the given structure")
+        end
+        if (first = @atoms.first?) && first.residue?.nil?
+          raise ArgumentError.new("Cannot mix atoms with and without topology")
+        end
+      elsif has_topology?
+        raise ArgumentError.new("Structure has topology; atom must belong to a residue")
+      end
       @atoms << atom
       self
     end

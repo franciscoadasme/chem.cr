@@ -57,18 +57,6 @@ module Chem
     )
       raise ArgumentError.new("Negative mass") if @mass < 0
       raise ArgumentError.new("Negative vdW radius") if @vdw_radius < 0
-      if residue
-        unless residue.structure.same?(@structure)
-          raise ArgumentError.new("Residue does not belong to the given structure")
-        end
-        # All existing atoms share topology (or none do), so the first
-        # atom is enough. Scanning every atom here was O(N²) on load.
-        if (first = @structure.atoms.first?) && first.residue?.nil?
-          raise ArgumentError.new("Cannot mix atoms with and without topology")
-        end
-      elsif @structure.has_topology?
-        raise ArgumentError.new("Structure has topology; atom must belong to a residue")
-      end
       @residue = residue
       @structure << self
       residue.try &.<<(self)
