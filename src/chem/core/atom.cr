@@ -11,7 +11,11 @@ module Chem
     property mass : Float64
     property occupancy : Float64 = 1
     property partial_charge : Float64 = 0.0
-    property residue : Residue
+    # Parent structure.
+    getter structure : Structure
+    # Parent residue. Raises if the atom is not in a residue. Use
+    # `#residue?` when hierarchy may be absent.
+    getter! residue : Residue
     property number : Int32
     property temperature_factor : Float64 = 0
     # Atom typename. Usually specifies the atomic parameter set assigned
@@ -34,11 +38,10 @@ module Chem
     getter metadata : Metadata { Metadata.new }
 
     delegate x, y, z, to: @pos
-    delegate chain, to: @residue
     delegate atomic_number, covalent_radius, heavy?, max_valence, valence_electrons, to: @element
 
     def initialize(
-      @residue : Residue,
+      @structure : Structure,
       @number : Int32,
       @element : Element,
       @name : String,
@@ -50,10 +53,45 @@ module Chem
       @partial_charge : Float64 = 0.0,
       @temperature_factor : Float64 = 0,
       @vdw_radius : Float64 = element.vdw_radius,
+      residue : Residue? = nil,
     )
       raise ArgumentError.new("Negative mass") if @mass < 0
       raise ArgumentError.new("Negative vdW radius") if @vdw_radius < 0
-      @residue << self
+      if residue
+        unless residue.structure.same?(@structure)
+          raise ArgumentError.new("Residue does not belong to the given structure")
+        end
+        if @structure.atoms.any? { |atom| atom.residue?.nil? }
+          raise ArgumentError.new("Cannot mix atoms with and without topology")
+        end
+      elsif @structure.has_topology?
+        raise ArgumentError.new("Structure has topology; atom must belong to a residue")
+      end
+      @residue = residue
+      @structure << self
+      residue.try &.<<(self)
+    end
+
+    # Creates an atom in *residue* (and its parent structure).
+    def self.new(
+      residue : Residue,
+      number : Int32,
+      element : Element,
+      name : String,
+      pos : Spatial::Vec3,
+      **options,
+    ) : self
+      new(residue.structure, number, element, name, pos, **options, residue: residue)
+    end
+
+    # Returns the parent chain. Raises if the atom has no residue.
+    def chain : Chain
+      residue.chain
+    end
+
+    # Returns the parent chain, or `nil` if the atom has no residue.
+    def chain? : Chain?
+      residue?.try(&.chain)
     end
 
     # The comparison operator.
@@ -71,6 +109,16 @@ module Chem
     # ```
     def <=>(other : self) : Int32
       @number <=> other.number
+    end
+
+    # Returns `true` if `self` and *rhs* are the same atom, else
+    # `false`.
+    #
+    # NOTE: overrides the equality operator included by `Comparable`,
+    # which uses the `<=>` operator thus returning true for two
+    # different atoms that have the same number.
+    def ==(rhs : self) : Bool
+      same?(rhs)
     end
 
     def bonded?(to other : self) : Bool
@@ -99,7 +147,7 @@ module Chem
     # Returns `true` if the atom belongs to a non-standard (HET)
     # residue, else `false`.
     def het? : Bool
-      @residue.het?
+      residue?.try(&.het?) || false
     end
 
     def inspect(io : IO) : Nil
@@ -168,10 +216,23 @@ module Chem
       (target_valence - valence).clamp 0..
     end
 
+    # Removes the atom from its parent structure and residue, and
+    # deletes its bonds.
+    def delete : Nil
+      @structure.delete self
+    end
+
+    # Assigns the parent residue. To remove the atom from the structure,
+    # use `#delete`.
     def residue=(new_res : Residue) : Residue
-      @residue.delete self
+      return new_res if @residue.same?(new_res)
+      unless new_res.structure.same?(@structure)
+        raise ArgumentError.new("Residue does not belong to the atom's structure")
+      end
+      @residue.try &.delete(self)
       @residue = new_res
       new_res << self
+      new_res
     end
 
     # Returns the atom specification.
@@ -189,8 +250,11 @@ module Chem
     # Atom specification is a short string representation encoding atom
     # information including chain, residue, atom name, and atom number.
     def spec(io : IO) : Nil
-      @residue.spec io
-      io << ':' << @name << '(' << @number << ')'
+      if residue = @residue
+        residue.spec io
+        io << ':'
+      end
+      io << @name << '(' << @number << ')'
     end
 
     # Returns the target valence based on the effective valence. This is
@@ -221,7 +285,7 @@ module Chem
     # Returns `true` if the atom belongs to a water residue, else
     # `false`.
     def water? : Bool
-      @residue.water?
+      residue?.try(&.water?) || false
     end
 
     def within_covalent_distance?(rhs : self) : Bool
@@ -232,7 +296,7 @@ module Chem
       # Returns `true` if the atom belongs to a {{member.downcase}}
       # residue, else `false`.
       def {{member.underscore.id}}? : Bool
-        @residue.{{member.underscore.id}}?
+        residue?.try(&.{{member.underscore.id}}?) || false
       end
     {% end %}
 
@@ -250,14 +314,44 @@ module Chem
       {% end %}
     end
 
-    # Copies `self` into *residue*
+    # Copies `self` into *structure* without a residue.
+    #
+    # NOTE: bonds are not copied and must be set manually for the copy.
+    protected def copy_to(structure : Structure) : self
+      copy_to structure, residue: nil
+    end
+
+    # Copies `self` into *residue*.
     #
     # NOTE: bonds are not copied and must be set manually for the copy.
     protected def copy_to(residue : Residue) : self
-      atom = Atom.new residue, @number, @element, @name, @pos, @typename,
-        @formal_charge, @occupancy, @partial_charge, @temperature_factor
+      copy_to residue.structure, residue: residue
+    end
+
+    private def copy_to(structure : Structure, residue : Residue?) : self
+      atom = Atom.new(structure, @number, @element, @name, @pos,
+        typename: @typename,
+        formal_charge: @formal_charge,
+        mass: @mass,
+        occupancy: @occupancy,
+        partial_charge: @partial_charge,
+        temperature_factor: @temperature_factor,
+        vdw_radius: @vdw_radius,
+        residue: residue)
       atom.constraint = @constraint
+      if metadata = @metadata
+        atom.metadata.merge! metadata
+      end
       atom
+    end
+
+    # Unlinks the atom from its residue without removing it from the
+    # structure. Used when deleting the atom or stripping topology.
+    protected def detach_from_residue : Nil
+      if residue = @residue
+        residue.delete self
+        @residue = nil
+      end
     end
   end
 end

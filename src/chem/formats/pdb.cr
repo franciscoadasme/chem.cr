@@ -179,7 +179,7 @@ module Chem::PDB
             locs.sort! { |a, b| b.occupancy <=> a.occupancy }
             locs.each(within: 1..) do |loc|
               loc.each_atom do |atom|
-                residue.delete atom
+                atom.delete
               end
             end
             residue.name = locs[0].resname
@@ -358,19 +358,28 @@ module Chem::PDB
         end
       end
 
-      struc.chains.each do |chain|
-        prev_res = nil
-        chain.residues.each do |residue|
-          write_ter(io, prev_res, (serial += 1 if renumber)) if ter_on_fragment && prev_res && !residue.bonded?(prev_res)
-          residue.atoms.each do |atom|
-            pos = atom.pos
-            pos = transform * pos if transform
-            write_atom(io, atom, renumber ? (serial += 1) : atom.number, pos)
-            atom_index_table[atom.number] = serial if renumber && !conect_options.none?
+      if struc.has_topology?
+        struc.chains.each do |chain|
+          prev_res = nil
+          chain.residues.each do |residue|
+            write_ter(io, prev_res, (serial += 1 if renumber)) if ter_on_fragment && prev_res && !residue.bonded?(prev_res)
+            residue.atoms.each do |atom|
+              pos = atom.pos
+              pos = transform * pos if transform
+              write_atom(io, atom, renumber ? (serial += 1) : atom.number, pos)
+              atom_index_table[atom.number] = serial if renumber && !conect_options.none?
+            end
+            prev_res = residue
           end
-          prev_res = residue
+          write_ter(io, prev_res, (serial += 1 if renumber)) if prev_res && (prev_res.polymer? || ter_on_fragment)
         end
-        write_ter(io, prev_res, (serial += 1 if renumber)) if prev_res && (prev_res.polymer? || ter_on_fragment)
+      else
+        struc.atoms.each do |atom|
+          pos = atom.pos
+          pos = transform * pos if transform
+          write_atom(io, atom, renumber ? (serial += 1) : atom.number, pos)
+          atom_index_table[atom.number] = serial if renumber && !conect_options.none?
+        end
       end
     elsif ter_on_fragment
       atoms = struc.is_a?(AtomView) ? struc : struc.atoms
@@ -379,7 +388,9 @@ module Chem::PDB
           write_atom(io, atom, renumber ? (serial += 1) : atom.number, atom.pos)
           atom_index_table[atom.number] = serial if renumber && !conect_options.none?
         end
-        write_ter(io, fragment[-1].residue, (serial += 1 if renumber))
+        if residue = fragment[-1].residue?
+          write_ter(io, residue, (serial += 1 if renumber))
+        end
       end
     else
       atoms = struc.is_a?(AtomView) ? struc : struc.atoms
@@ -399,7 +410,7 @@ module Chem::PDB
           ok = false
           ok ||= (a.protein? || a.water?) && (b.protein? || b.water?) if conect_options.standard?
           ok ||= (a.het? && !a.water?) || (b.het? && !b.water?) if conect_options.het?
-          ok ||= a.sulfur? && b.sulfur? && a.residue != b.residue if conect_options.disulfide?
+          ok ||= a.sulfur? && b.sulfur? && a.residue? != b.residue? if conect_options.disulfide?
           ok
         end
       end
@@ -542,14 +553,15 @@ module Chem::PDB
   end
 
   private def self.write_atom(io : IO, atom : Atom, serial : Int32, pos : Spatial::Vec3) : Nil
+    residue = atom.residue?
     io.printf "%-6s%5s %4s %-4s%s%4s%1s   %8.3f%8.3f%8.3f%6.2f%6.2f          %2s%2s\n",
-      (atom.residue.protein? ? "ATOM" : "HETATM"),
+      (residue.try(&.protein?) ? "ATOM" : "HETATM"),
       Hybrid36.encode(serial, width: 5),
       atom.name[..3].ljust(3),
-      atom.residue.name[..3],
-      atom.chain.id,
-      Hybrid36.encode(atom.residue.number, width: 4),
-      atom.residue.insertion_code,
+      residue.try(&.name[..3]) || "UNK ",
+      atom.chain?.try(&.id) || ' ',
+      Hybrid36.encode(residue.try(&.number) || 1, width: 4),
+      residue.try(&.insertion_code),
       pos.x,
       pos.y,
       pos.z,

@@ -4,12 +4,14 @@ describe Chem::Spatial::KDTree do
   describe "#each_neighbor" do
     it "yields each point within the given radius" do
       structure = load_file "1h1s.pdb"
-      kdtree = Chem::Spatial::KDTree.new(structure.pos.to_a)
+      points = structure.pos.to_a
+      kdtree = Chem::Spatial::KDTree.new(points)
+      query = vec3(19, 32, 44)
       idxs = [] of Int32
-      kdtree.each_neighbor(vec3(19, 32, 44), within: 3.5) do |index, _|
+      kdtree.each_neighbor(query, within: 3.5) do |index, _|
         idxs << index
       end
-      idxs.sort!.should eq [1116, 1118, 2538, 2539]
+      idxs.sort!.should eq naive_neighbor_search(points, query, 3.5).sort
     end
   end
 
@@ -36,11 +38,12 @@ describe Chem::Spatial::KDTree do
 
     it "returns the N closest points in a large point cloud" do
       structure = load_file "1h1s.pdb"
-      kdtree = Chem::Spatial::KDTree.new(structure.pos.to_a)
-      kdtree.neighbors(vec3(19, 32, 44), 3).should eq [2539, 1118, 1116]
-      kdtree.neighbors(structure.dig('C', 46, "OG").pos, 5).should eq [
-        5316, 5315, 7401, 5312, 5317,
-      ]
+      points = structure.pos.to_a
+      kdtree = Chem::Spatial::KDTree.new(points)
+      query = vec3(19, 32, 44)
+      kdtree.neighbors(query, 3).should eq naive_neighbor_search(points, query, 3)
+      og = structure.dig('C', 46, "OG").pos
+      kdtree.neighbors(og, 5).should eq naive_neighbor_search(points, og, 5)
     end
 
     it "returns the points within the given radius" do
@@ -57,10 +60,12 @@ describe Chem::Spatial::KDTree do
 
     it "returns the points within the given radius in a large point cloud" do
       structure = load_file "1h1s.pdb"
-      kdtree = Chem::Spatial::KDTree.new(structure.pos.to_a)
-      kdtree.neighbors(vec3(19, 32, 44), within: 3.5).should eq [2539, 1118, 1116, 2538]
+      points = structure.pos.to_a
+      kdtree = Chem::Spatial::KDTree.new(points)
+      query = vec3(19, 32, 44)
+      kdtree.neighbors(query, within: 3.5).should eq naive_neighbor_search(points, query, 3.5)
       point = structure.dig('C', 1298, "S23").pos
-      kdtree.neighbors(point, within: 1.5).should eq [7365, 7366, 7367]
+      kdtree.neighbors(point, within: 1.5).should eq naive_neighbor_search(points, point, 1.5)
     end
   end
 end

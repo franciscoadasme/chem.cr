@@ -168,7 +168,7 @@ module Chem::XYZ
         io << ' '
         case name
         when "chain"
-          io << atom.chain.id
+          io << (atom.chain?.try(&.id) || ' ')
         when "constraint"
           {Spatial::Direction::X, Spatial::Direction::Y, Spatial::Direction::Z}
             .each_with_index do |axis, i|
@@ -187,9 +187,9 @@ module Chem::XYZ
         when "partial_charge"
           io.printf "%8.4f", atom.partial_charge
         when "resid"
-          io.printf "%4d", atom.residue.number
+          io.printf "%4d", atom.residue?.try(&.number) || 1
         when "resname"
-          io.printf "%-4s", atom.residue.name
+          io.printf "%-4s", atom.residue?.try(&.name) || "UNK"
         when "number"
           io.printf "%5d", atom.number
         when "temperature_factor", "bfactor"

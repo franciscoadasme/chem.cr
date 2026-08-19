@@ -15,6 +15,68 @@ describe Chem::Structure do
     end
   end
 
+  describe "#atoms" do
+    it "returns owned atoms without concatenating residues" do
+      struc = load_file("1crn.pdb")
+      struc.atoms.size.should eq 327
+      struc.atoms.to_a.should eq struc.residues.flat_map(&.atoms.to_a)
+    end
+
+    it "keeps atoms without a residue" do
+      struc = Chem::Structure.build do
+        atom :C, vec3(0, 0, 0)
+        atom :O, vec3(1, 0, 0)
+      end
+      struc.atoms.size.should eq 2
+      struc.residues.should be_empty
+      struc.has_topology?.should be_false
+      struc.atoms.map(&.residue?).should eq [nil, nil]
+    end
+  end
+
+  describe "#has_topology?" do
+    it "returns true when the structure has chains" do
+      fake_structure.has_topology?.should be_true
+    end
+
+    it "returns false when the structure has no chains" do
+      Chem::Structure.new.has_topology?.should be_false
+    end
+  end
+
+  describe "#clear" do
+    it "removes atoms and topology" do
+      struc = fake_structure
+      struc.clear
+      struc.atoms.should be_empty
+      struc.chains.should be_empty
+      struc.residues.should be_empty
+      struc.has_topology?.should be_false
+    end
+  end
+
+  describe "#reorder_atoms_by_topology" do
+    it "reorders atoms to match the residue hierarchy" do
+      struc = Chem::Structure.build do
+        atom "CA1", vec3(0, 0, 0)
+        atom "N2", vec3(1, 0, 0)
+        atom "N1", vec3(2, 0, 0)
+        atom "CA2", vec3(3, 0, 0)
+      end
+      chain = Chem::Chain.new struc, 'A'
+      ala = Chem::Residue.new chain, 1, "ALA"
+      gly = Chem::Residue.new chain, 2, "GLY"
+      struc.atoms[2].residue = ala
+      struc.atoms[0].residue = ala
+      struc.atoms[1].residue = gly
+      struc.atoms[3].residue = gly
+      struc.atoms.map(&.name).should eq %w(CA1 N2 N1 CA2)
+
+      struc.reorder_atoms_by_topology
+      struc.atoms.map(&.name).should eq %w(N1 CA1 N2 CA2)
+    end
+  end
+
   describe "#clone" do
     it "returns a copy of the structure" do
       structure = load_file "1crn.pdb", guess_bonds: true
@@ -37,6 +99,32 @@ describe Chem::Structure do
       other.cell?.should eq structure.cell?
       other.experiment.should eq structure.experiment
       other.title.should eq structure.title
+    end
+
+    it "preserves residue order when atom order differs" do
+      struc = Chem::Structure.build do
+        atom "CA1", vec3(0, 0, 0)
+        atom "N2", vec3(1, 0, 0)
+        atom "N1", vec3(2, 0, 0)
+        atom "CA2", vec3(3, 0, 0)
+      end
+      chain = Chem::Chain.new struc, 'A'
+      ala = Chem::Residue.new chain, 1, "ALA"
+      gly = Chem::Residue.new chain, 2, "GLY"
+      struc.atoms[2].residue = ala
+      struc.atoms[0].residue = ala
+      struc.atoms[1].residue = gly
+      struc.atoms[3].residue = gly
+
+      struc.dig('A').residues.map(&.name).should eq %w(ALA GLY)
+      struc.atoms.map(&.name).should eq %w(CA1 N2 N1 CA2)
+
+      other = struc.clone
+      other.dig('A').residues.map(&.name).should eq %w(ALA GLY)
+      other.residues.map(&.name).should eq %w(ALA GLY)
+      other.atoms.map(&.name).should eq %w(CA1 N2 N1 CA2)
+      other.dig('A', 1).atoms.map(&.name).should eq %w(CA1 N1)
+      other.dig('A', 2).atoms.map(&.name).should eq %w(N2 CA2)
     end
   end
 
@@ -149,6 +237,26 @@ describe Chem::Structure do
       other.source_file.should eq structure.source_file
       other.title.should eq structure.title
     end
+
+    it "preserves residue order when atom order differs" do
+      struc = Chem::Structure.build do
+        atom "CA1", vec3(0, 0, 0)
+        atom "N2", vec3(1, 0, 0)
+        atom "N1", vec3(2, 0, 0)
+        atom "CA2", vec3(3, 0, 0)
+      end
+      chain = Chem::Chain.new struc, 'A'
+      ala = Chem::Residue.new chain, 1, "ALA"
+      gly = Chem::Residue.new chain, 2, "GLY"
+      struc.atoms[2].residue = ala
+      struc.atoms[0].residue = ala
+      struc.atoms[1].residue = gly
+      struc.atoms[3].residue = gly
+
+      other = struc.extract { true }
+      other.dig('A').residues.map(&.name).should eq %w(ALA GLY)
+      other.atoms.map(&.name).should eq %w(CA1 N2 N1 CA2)
+    end
   end
 
   describe "#delete" do
@@ -179,6 +287,47 @@ describe Chem::Structure do
       structure.chains.size.should eq 2
       structure.chains.map(&.id).should eq "BA".chars
       structure.dig('A').should be structure.chains[1]
+    end
+
+    it "deletes an atom from the structure and residue" do
+      struc = fake_structure include_bonds: true
+      atom = struc.dig('A', 1, "CA")
+      neighbors = atom.bonded_atoms
+      neighbors.should_not be_empty
+
+      struc.delete atom
+      struc.atoms.includes?(atom).should be_false
+      struc.dig?('A', 1, "CA").should be_nil
+      atom.residue?.should be_nil
+      atom.bonds.should be_empty
+      neighbors.each { |other| other.bonded?(atom).should be_false }
+    end
+
+    it "deletes a chain and its atoms" do
+      struc = fake_structure
+      chain = struc.dig('A')
+      n_atoms = struc.atoms.size
+      chain_atoms = chain.atoms.size
+      struc.delete chain
+      struc.dig?('A').should be_nil
+      struc.atoms.size.should eq n_atoms - chain_atoms
+    end
+
+    it "deletes a residue and its atoms" do
+      struc = fake_structure
+      residue = struc.dig('A', 1)
+      atom = residue.atoms[0]
+      struc.delete residue
+      struc.dig?('A', 1).should be_nil
+      struc.atoms.includes?(atom).should be_false
+    end
+
+    it "deletes by identity when atom numbers collide" do
+      struc = Chem::Structure.new
+      a = Chem::Atom.new struc, 1, Chem::PeriodicTable::C, "C1", vec3(0, 0, 0)
+      b = Chem::Atom.new struc, 1, Chem::PeriodicTable::O, "O1", vec3(1, 0, 0)
+      struc.delete b
+      struc.atoms.to_a.should eq [a]
     end
   end
 
@@ -452,6 +601,16 @@ describe Chem::Structure do
         N H1 H2 CA HA C O CB HB1 HB2 HB3)
       structure.residues[1].atoms.map(&.name).should eq %w(
         N H CA HA C O OXT HXT CB HB CG1 HG11 HG12 CD1 HD11 HD12 HD13 CG2 HG21 HG22 HG23)
+      structure.atoms.to_a.should eq structure.residues.flat_map(&.atoms.to_a)
+    end
+
+    it "keeps insertion order when reorder is false" do
+      structure = load_file("AlaIle--unwrapped.poscar")
+      structure.guess_bonds
+      order = structure.atoms.map(&.object_id)
+      structure.guess_names reorder: false
+      structure.atoms.map(&.object_id).should eq order
+      structure.residues.map(&.name).should eq %w(ALA ILE)
     end
 
     it "guesses the topology of two peptide chains" do

@@ -12,7 +12,7 @@ module Chem
 
     def chains : ChainView
       chains = Set(Chain).new
-      each { |atom| chains << atom.chain }
+      each { |atom| atom.chain?.try { |chain| chains << chain } }
       ChainView.new chains.to_a
     end
 
@@ -53,7 +53,7 @@ module Chem
 
     def residues : ResidueView
       residues = Set(Residue).new
-      each { |atom| residues << atom.residue }
+      each { |atom| atom.residue?.try { |residue| residues << residue } }
       ResidueView.new residues.to_a
     end
   end

@@ -161,6 +161,89 @@ describe Chem::Atom do
       fake_structure.dig('B', 1, "OG").spec io
       io.to_s.should eq "B:SER1:OG(25)"
     end
+
+    it "omits residue when the atom has no hierarchy" do
+      atom = Chem::Structure.build { atom "CA", vec3(0, 0, 0) }.atoms[0]
+      atom.spec.should eq "CA(1)"
+    end
+  end
+
+  describe "#==" do
+    it "compares by identity, not number" do
+      struc = Chem::Structure.new
+      a = Chem::Atom.new struc, 1, Chem::PeriodicTable::C, "C1", vec3(0, 0, 0)
+      b = Chem::Atom.new struc, 1, Chem::PeriodicTable::O, "O1", vec3(1, 0, 0)
+      (a == b).should be_false
+      (a == a).should be_true
+      (a <=> b).should eq 0
+    end
+  end
+
+  describe "#residue=" do
+    it "moves the atom to another residue" do
+      struc = fake_structure
+      atom = struc.dig('A', 1, "CA")
+      other = struc.dig('A', 2)
+      atom.residue = other
+      atom.residue.should be other
+      struc.dig?('A', 1, "CA").should be_nil
+      struc.dig('A', 2, "CA").should be atom
+    end
+
+    it "raises if the residue belongs to another structure" do
+      struc = fake_structure
+      other = Chem::Structure.build do
+        residue "ALA"
+        atom "N", vec3(0, 0, 0)
+      end
+      expect_raises(ArgumentError, "Residue does not belong to the atom's structure") do
+        struc.atoms[0].residue = other.residues[0]
+      end
+    end
+  end
+
+  describe ".new" do
+    it "raises if adding a residue-less atom to a structure with topology" do
+      struc = Chem::Structure.build do
+        residue "ALA"
+        atom "N", vec3(0, 0, 0)
+      end
+      expect_raises(ArgumentError, "Structure has topology; atom must belong to a residue") do
+        Chem::Atom.new struc, 2, Chem::PeriodicTable::C, "CA", vec3(1, 0, 0)
+      end
+    end
+
+    it "raises if adding a residue atom to a structure with residue-less atoms" do
+      struc = Chem::Structure.build do
+        atom :C, vec3(0, 0, 0)
+      end
+      chain = Chem::Chain.new struc, 'A'
+      residue = Chem::Residue.new chain, 1, "ALA"
+      expect_raises(ArgumentError, "Cannot mix atoms with and without topology") do
+        Chem::Atom.new struc, 2, Chem::PeriodicTable::N, "N", vec3(1, 0, 0), residue: residue
+      end
+    end
+  end
+
+  describe "#delete" do
+    it "removes the atom from the structure, residue, and bonds" do
+      struc = Chem::Structure.build do
+        residue "HOH" do
+          atom :O, vec3(0, 0, 0)
+          atom :H, vec3(1, 0, 0)
+          atom :H, vec3(0, 1, 0)
+          bond "O1", "H1"
+          bond "O1", "H2"
+        end
+      end
+      hydrogen = struc.atoms[1]
+      oxygen = struc.atoms[0]
+      hydrogen.delete
+      struc.atoms.size.should eq 2
+      struc.residues[0].atoms.size.should eq 2
+      hydrogen.residue?.should be_nil
+      oxygen.bonded?(hydrogen).should be_false
+    end
   end
 
   describe "#target_valence" do

@@ -84,13 +84,12 @@ module Chem::Mol
   define_file_overload(Mol, write, mode: "w")
 
   private def self.write_header(io : IO, atoms : Structure | AtomView, variant : Variant) : Nil
-    # FIXME: atoms.n_residues was removed!
-    n_residues = atoms.is_a?(Structure) ? atoms.residues.size : atoms.n_residues
+    n_residues = atoms.residues.size
     single_residue = n_residues == 1
     title = atoms.title.presence.try(&.gsub(/ *\n */, ' ')) if atoms.is_a?(Structure)
 
     # title line
-    io.puts single_residue ? atoms.residues[0].name : title
+    io.puts single_residue ? atoms.residues[0].name : (title.presence || "UNK")
 
     # program timestamp line
     io.printf "%2s", nil        # user's initials

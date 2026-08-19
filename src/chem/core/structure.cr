@@ -25,6 +25,7 @@ module Chem
 
     @chain_table = {} of Char => Chain
     @chains = [] of Chain
+    @atoms = [] of Atom
 
     def initialize(source_file : Path | String | Nil = nil)
       source_file = Path.new(source_file) if source_file.is_a?(String)
@@ -49,6 +50,16 @@ module Chem
       @chains << chain
       @chain_table[chain.id] = chain
       self
+    end
+
+    protected def <<(atom : Atom) : self
+      @atoms << atom
+      self
+    end
+
+    # Returns `true` if the structure has a chain/residue hierarchy.
+    def has_topology? : Bool
+      !@chains.empty?
     end
 
     # Assigns bonds and residue type from known residue templates.
@@ -93,15 +104,13 @@ module Chem
       end
     end
 
+    # Returns the atoms in insertion order.
+    #
+    # This order is independent of the chain/residue hierarchy. Changing
+    # residue numbers or chain ids does not reorder the list. Use
+    # `#reorder_atoms_by_topology` to match hierarchy order.
     def atoms : AtomView
-      atoms = [] of Atom
-      @chains.each do |chain|
-        chain.residues.each do |residue|
-          # #concat(Array) copies memory instead of appending one by one
-          atoms.concat residue.atoms.to_a
-        end
-      end
-      AtomView.new atoms
+      AtomView.new @atoms
     end
 
     # Returns the bonds between all atoms.
@@ -123,7 +132,13 @@ module Chem
       ChainView.new @chains
     end
 
+    # Removes all atoms, residues, and chains.
     def clear : self
+      @atoms.each do |atom|
+        atom.bonds.to_a.each { |bond| atom.bonds.delete bond }
+        atom.detach_from_residue
+      end
+      @atoms.clear
       @chain_table.clear
       @chains.clear
       self
@@ -150,13 +165,19 @@ module Chem
       structure.experiment = @experiment
       structure.cell = @cell
       structure.title = @title
-      # TODO: drop copy_to and implement the nested loops here
-      @chains.each &.copy_to(structure)
+
+      res_map = copy_hierarchy_to structure
+      atom_map = {} of Atom => Atom
+      @atoms.each do |atom|
+        if residue = atom.residue?
+          atom_map[atom] = atom.copy_to res_map[residue]
+        else
+          atom_map[atom] = atom.copy_to structure
+        end
+      end
       bonds.each do |bond|
         a, b = bond.atoms
-        a = structure.dig a.chain.id, a.residue.number, a.residue.insertion_code, a.name
-        b = structure.dig b.chain.id, b.residue.number, b.residue.insertion_code, b.name
-        a.bonds.add b, order: bond.order
+        atom_map[a].bonds.add atom_map[b], order: bond.order
       end
       structure
     end
@@ -178,9 +199,33 @@ module Chem
     end
 
     def delete(ch : Chain) : Chain?
-      ch = @chains.delete ch
-      @chain_table.delete(ch.id) if ch && @chain_table[ch.id]?.same?(ch)
+      i = @chains.index { |chain| chain.same?(ch) }
+      return unless i
+      residues = [] of Residue
+      ch.residues.each { |residue| residues << residue }
+      residues.each { |residue| delete residue }
+      @chains.delete_at i
+      @chain_table.delete(ch.id) if @chain_table[ch.id]?.same?(ch)
       ch
+    end
+
+    # Deletes *residue* and its atoms.
+    def delete(residue : Residue) : Residue?
+      return unless residue.structure.same?(self)
+      atoms = [] of Atom
+      residue.atoms.each { |atom| atoms << atom }
+      atoms.each { |atom| delete atom }
+      residue.chain.delete residue
+      residue
+    end
+
+    # Deletes *atom* from the structure and residue, and removes its
+    # bonds.
+    def delete(atom : Atom) : Atom?
+      return unless @atoms.delete(atom)
+      atom.detach_from_residue
+      atom.bonds.to_a.each { |bond| atom.bonds.delete bond }
+      atom
     end
 
     def dig(id : Char) : Chain
@@ -208,12 +253,20 @@ module Chem
     # copied only if *copy_properties* is `true`.
     def extract(copy_properties : Bool = true, & : Atom -> Bool) : self
       structure = self.class.new(copy_properties ? @source_file : nil)
-      atoms.each do |atom|
+      selected = [] of Atom
+      keep = Set(Residue).new
+      @atoms.each do |atom|
         next unless yield atom
-        chain = structure.dig?(atom.chain.id) || atom.chain.copy_to(structure, recursive: false)
-        residue = chain.dig?(atom.residue.number, atom.residue.insertion_code) ||
-                  atom.residue.copy_to(chain, recursive: false)
-        atom.copy_to residue
+        selected << atom
+        atom.residue?.try { |residue| keep << residue }
+      end
+      res_map = copy_hierarchy_to structure, keep
+      selected.each do |atom|
+        if residue = atom.residue?
+          atom.copy_to res_map[residue]
+        else
+          atom.copy_to structure
+        end
       end
 
       if copy_properties
@@ -494,15 +547,24 @@ module Chem
     # are assigned to a unique chain and residues are created for each
     # match.
     #
+    # `#atoms` is insertion-ordered. After topology is assigned, atoms
+    # are reordered to match chain/residue order unless *reorder* is
+    # `false`.
+    #
     # NOTE: Fragments are assigned to a unique chain unless the chain
     # limit (62) is reached, otherwise all residues are assigned to the
     # same chain.
     #
     # WARNING: Existing chains and residues are invalid after calling this
     # method so do not cache them.
-    def guess_names(registry : Templates::Registry = Templates::Registry.default) : Nil
-      atoms = self.atoms.to_a
-      clear
+    def guess_names(
+      registry : Templates::Registry = Templates::Registry.default,
+      *,
+      reorder : Bool = true,
+    ) : Nil
+      atoms = [] of Atom
+      @atoms.each { |atom| atoms << atom }
+      clear_topology
 
       matches, unmatched_atoms = Templates::Detector.new(atoms).detect registry
 
@@ -539,7 +601,7 @@ module Chem
       polymers, nonpolymers = fragments.partition &.size.>(1)
       grouped_nonpolymers = nonpolymers.map(&.first).group_by(&.type).values
       if polymers.size + grouped_nonpolymers.size <= MAX_CHAINS
-        clear
+        reset_chains
         (polymers + grouped_nonpolymers).each do |residues|
           chain = Chain.new self, next_chain_id(@chains.last?.try(&.id) || 'A'.pred)
           residues.each &.chain=(chain)
@@ -548,6 +610,7 @@ module Chem
 
       renumber_residues_by_connectivity split_chains: false
       guess_unknown_residue_types
+      reorder_atoms_by_topology if reorder
     end
 
     # Determines the atom hybridizations based on the average bond angles.
@@ -674,6 +737,24 @@ module Chem
       ResidueView.new residues
     end
 
+    # Reorders `#atoms` to match chain/residue order.
+    #
+    # `Structure#atoms` follows insertion order and is not updated when
+    # residue numbers, chain ids, or similar labels change. Call this
+    # after rearranging the hierarchy if the atom list should follow
+    # topology. No-op when the structure has no topology.
+    def reorder_atoms_by_topology : Nil
+      return unless has_topology?
+      atoms = [] of Atom
+      @chains.each do |chain|
+        chain.residues.each do |residue|
+          atoms.concat residue.atoms.to_a
+        end
+      end
+      @atoms.clear
+      @atoms.concat atoms
+    end
+
     def to_s(io : IO)
       io << "<Structure"
       io << " " << title.inspect unless title.blank?
@@ -683,6 +764,43 @@ module Chem
       io << ", "
       io << "non-" unless @cell
       io << "periodic>"
+    end
+
+    # Copies chains and residues into *structure* in existing order,
+    # without atoms. If *residues* is given, only those residues (and
+    # their chains) are copied.
+    private def copy_hierarchy_to(
+      structure : Structure,
+      residues : Set(Residue)? = nil,
+    ) : Hash(Residue, Residue)
+      res_map = {} of Residue => Residue
+      @chains.each do |chain|
+        copied = [] of Residue
+        chain.residues.each do |residue|
+          copied << residue if residues.nil? || residue.in?(residues)
+        end
+        next if copied.empty?
+        new_chain = chain.copy_to(structure, recursive: false)
+        copied.each do |residue|
+          res_map[residue] = residue.copy_to(new_chain, recursive: false)
+        end
+      end
+      res_map
+    end
+
+    # Drops chains and residues, keeping atoms. Atoms are detached from
+    # the hierarchy.
+    private def clear_topology : Nil
+      @atoms.each &.detach_from_residue
+      reset_chains
+    end
+
+    # Removes chains from the structure without touching residues or
+    # atoms. Residues still point to their previous chain until
+    # reassigned.
+    private def reset_chains : Nil
+      @chain_table.clear
+      @chains.clear
     end
 
     # Returns `true` if *atom*'s bonds match *atom_t* in *template*

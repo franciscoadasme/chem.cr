@@ -53,11 +53,12 @@ describe Chem::Templates::Residue do
     end
 
     it "raises if missing connectivity" do
-      structure = Chem::Structure.build do |builder|
-        builder.atom vec3(0, 0, 0)
-      end
       expect_raises(Chem::Error,
         "Cannot create template from <Residue A:UNK1> due to missing connectivity") do
+        structure = Chem::Structure.build do |builder|
+          builder.residue "UNK"
+          builder.atom vec3(0, 0, 0)
+        end
         Chem::Templates::Residue.build structure.residues[0]
       end
     end

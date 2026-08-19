@@ -34,6 +34,9 @@ describe Chem::VASP::Poscar do
       st.source_file.should eq Path[spec_file("direct.poscar")].expand
       st.atoms[0].pos.should eq [0, 0, 0]
       st.atoms[1].pos.should be_close [1.0710, 1.6065, 1.2495], 1e-15
+      st.chains.should be_empty
+      st.residues.should be_empty
+      st.atoms[0].residue?.should be_nil
     end
 
     it "parses a file with scaled Cartesian coordinates" do

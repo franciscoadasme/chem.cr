@@ -8,6 +8,8 @@ describe Chem::Gen do
       structure.cell?.should be_nil
 
       structure.atoms.size.should eq 5
+      structure.chains.should be_empty
+      structure.residues.should be_empty
       structure.atoms.map(&.element.symbol).should eq ["Cl", "Na", "O", "Na", "Cl"]
       structure.pos.should eq [
         [30, 15, 10],
@@ -110,7 +112,7 @@ describe Chem::Gen do
     end
 
     it "writes atoms" do
-      structure.chains[0].atoms.to_gen.should eq <<-EOS
+      structure.atoms.to_gen.should eq <<-EOS
           5  C
        Cl Na  O
           1 1    3.0000000000E+01    1.5000000000E+01    1.0000000000E+01

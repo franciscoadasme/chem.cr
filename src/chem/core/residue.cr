@@ -377,9 +377,14 @@ class Chem::Residue
     template.try(&.code) || default
   end
 
+  def delete : Nil
+    structure.delete self
+  end
+
   def delete(atom : Atom) : Atom?
-    atom = @atoms.delete atom
-    @atom_table.delete(atom.name) if atom && @atom_table[atom.name]?.same?(atom)
+    return unless i = @atoms.index &.same?(atom)
+    @atoms.delete_at i
+    @atom_table.delete(atom.name) if @atom_table[atom.name]?.same?(atom)
     atom
   end
 
@@ -415,7 +420,7 @@ class Chem::Residue
     residues = Set(Residue).new
     @atoms.each do |atom|
       atom.each_bonded_atom do |other|
-        residue = other.residue
+        residue = other.residue? || next
         yield residue if residue != self && !residue.in?(residues)
         residues << residue
       end

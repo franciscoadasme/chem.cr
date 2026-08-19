@@ -15,6 +15,9 @@ describe Chem::XYZ do
     structure.atoms.map(&.element.symbol).should eq symbols
     structure.atoms[11].pos.should eq [4.76610, 0.49650, 5.29840]
     structure.atoms[-1].pos.should eq [0.72200, 0.70700, 7.66970]
+    structure.chains.should be_empty
+    structure.residues.should be_empty
+    structure.atoms.all?(&.residue?.nil?).should be_true
   end
 
   it "reads all structures from a XYZ file" do

@@ -205,17 +205,20 @@ describe Chem::Structure::Builder do
     st.chains.map(&.id).should eq ['A']
   end
 
-  it "creates a residue automatically" do
+  it "does not create a residue automatically" do
     st = Chem::Structure.build do
       atom "CA", vec3(0, 0, 0)
     end
 
-    st.chains.map(&.id).should eq ['A']
-    st.residues.map(&.number).should eq [1]
-    st.residues.map(&.name).should eq ["UNK"]
+    st.chains.should be_empty
+    st.residues.should be_empty
+    st.atoms.size.should eq 1
+    st.atoms[0].residue?.should be_nil
+    st.atoms[0].structure.should be st
+    expect_raises(NilAssertionError) { st.atoms[0].residue }
   end
 
-  it "adds dummy atoms" do
+  it "creates dummy atoms without a residue" do
     st = Chem::Structure.build do
       %w(N CA C O CB).each { |name| atom name, vec3(0, 0, 0) }
     end

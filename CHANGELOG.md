@@ -8,6 +8,10 @@
 
 - **Breaking:** remove `Angle`, `Dihedral`, `Improper`, and the `Connectivity` mixin. Related variables and methods on `Structure` are also removed. Bonds stay on atoms. Geometric measurements remain via `Spatial.angle` / `Spatial.dihedral` / `Spatial.improper`.
 - `apply_templates` no longer overwrites existing formal charges. Template charges are applied only to uncharged atoms whose bonds (neighbor element and order) match a charged template atom (#233).
+- **Breaking:** `Structure` owns atoms; residue/chain hierarchy is optional. `Atom#residue` raises if unset; use `Atom#residue?`. Topology is all-or-nothing: every atom has a residue, or none do. Flat formats (XYZ, POSCAR, Cube, JDFTx, Gen) no longer invent fake residues (#215).
+- **Breaking:** `Atom#==` compares by identity, not serial number.
+- `Structure#atoms` is insertion-ordered. Use `Structure#reorder_atoms_by_topology` to match chain/residue order. `guess_names` reorders by default (`reorder: false` to keep insertion order).
+- Add `Structure#has_topology?`, `Atom#delete`, `Residue#delete`, and `Chain#delete` (#215). Deleting a chain or residue also deletes its atoms. `Structure#clear` removes atoms and topology.
 
 #### Input/output
 

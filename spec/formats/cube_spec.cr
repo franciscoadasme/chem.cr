@@ -72,6 +72,8 @@ describe Chem::Cube do
       structure.should be_a Chem::Structure
       structure.source_file.should eq Path[path].expand
       structure.atoms.size.should eq 16
+      structure.chains.should be_empty
+      structure.residues.should be_empty
       structure.atoms.map(&.element.symbol).should eq %w(Cu O H H O H H O H H O O H H H H)
       structure.atoms[0].pos.should eq [2.317035, 3.509540, -0.795570]
       structure.atoms[0].partial_charge.should eq 29

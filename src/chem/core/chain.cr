@@ -59,6 +59,10 @@ module Chem
       self
     end
 
+    def delete : Nil
+      @structure.delete self
+    end
+
     def delete(residue : Residue) : Residue?
       residue = @residues.delete residue
       if residue

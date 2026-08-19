@@ -65,7 +65,7 @@ module Chem
 
     def atom(name : String, number : Int32, pos : Spatial::Vec3, element : Element, **options) : Atom
       @atom_number = number
-      Atom.new(residue, @atom_number, element, name, pos, **options)
+      Atom.new(@structure, @atom_number, element, name, pos, **options.merge({residue: @residue}))
         .tap { |atom| @atom_map[atom.number] = atom }
     end
 
@@ -229,7 +229,7 @@ module Chem
           return atom if atom.name == name
         end
       end
-      raise "Unknown atom #{name.inspect}"
+      @structure.atoms.find(name) || raise "Unknown atom #{name.inspect}"
     end
 
     private def next_chain : Chain

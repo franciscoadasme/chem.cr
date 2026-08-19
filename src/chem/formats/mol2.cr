@@ -128,14 +128,15 @@ module Chem::Mol2
     end
     write_section(io, "atom") do
       atoms.each do |atom|
+        residue = atom.residue?
         io.printf "%5d %-4s%10.4f%10.4f%10.4f %-4s%4d %3s%-4d%8.4f\n",
           atom_table[atom],
           atom.name,
           atom.x, atom.y, atom.z,
           atom.element.symbol,
-          res_table[atom.residue],
-          atom.residue.name,
-          atom.residue.number,
+          residue ? res_table[residue] : 1,
+          residue.try(&.name) || "UNK",
+          residue.try(&.number) || 1,
           atom.partial_charge
       end
     end
