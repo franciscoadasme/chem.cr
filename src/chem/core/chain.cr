@@ -131,14 +131,10 @@ module Chem
     # Renumber residues based on the order by the output value of the
     # block.
     def renumber_residues_by(& : Residue -> _) : Nil
-      # FIXME: `residue.number` call reset_cache internally, which
-      # re-orders the residues each iteration. Maybe add a boolean to
-      # avoid resetting the cache while editing.
-      @residues.sort_by { |residue| yield residue }
-        .each_with_index do |residue, i|
-          residue.number = i + 1
-        end
-      reset_cache
+      @residues.sort_by! { |residue| yield residue }
+      @residues.each_with_index do |residue, i|
+        residue.number = i + 1
+      end
     end
 
     # Renumber residues based on bond information. Residue ordering is
@@ -155,7 +151,7 @@ module Chem
                     residue.bonded_residues.find(&.in?(residues))
         end
       end
-      reset_cache
+      sort_residues!
     end
 
     def residues : ResidueView
@@ -196,8 +192,27 @@ module Chem
       chain
     end
 
-    def reset_cache : Nil
+    # Sorts residues by chain id, number, and insertion code.
+    #
+    # Residue numbers are labels; assigning `#number=` does not reorder
+    # the chain. Call this after changing numbers if iteration should
+    # follow numbering.
+    def sort_residues! : Nil
       @residues.sort!
+      rebuild_residue_table
+    end
+
+    protected def update_residue_index(
+      residue : Residue,
+      old_number : Int32,
+      old_inscode : Char?,
+    ) : Nil
+      old = {old_number, old_inscode}
+      @residue_table.delete(old) if @residue_table[old]?.same?(residue)
+      @residue_table[{residue.number, residue.insertion_code}] = residue
+    end
+
+    private def rebuild_residue_table : Nil
       @residue_table.clear
       @residues.each do |residue|
         @residue_table[{residue.number, residue.insertion_code}] = residue

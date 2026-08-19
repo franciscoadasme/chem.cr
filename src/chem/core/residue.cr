@@ -470,8 +470,10 @@ class Chem::Residue
   end
 
   def insertion_code=(insertion_code : Char?) : Char?
+    return @insertion_code if @insertion_code == insertion_code
+    old = @insertion_code
     @insertion_code = insertion_code
-    @chain.reset_cache
+    @chain.update_residue_index self, @number, old
     @insertion_code
   end
 
@@ -549,9 +551,13 @@ class Chem::Residue
     str
   end
 
+  # Sets the residue number. This does not reorder the parent chain;
+  # use `Chain#sort_residues!` if iteration should follow numbering.
   def number=(number : Int32) : Int32
+    return @number if @number == number
+    old = @number
     @number = number
-    @chain.reset_cache
+    @chain.update_residue_index self, old, @insertion_code
     @number
   end
 

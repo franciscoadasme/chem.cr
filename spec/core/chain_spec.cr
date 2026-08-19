@@ -61,6 +61,19 @@ describe Chem::Chain do
     end
   end
 
+  describe "#sort_residues!" do
+    it "sorts residues by number" do
+      struc = fake_structure
+      chain = struc.dig('A')
+      first = chain.residues[0]
+      first.number = 99
+      chain.residues[0].should be first
+      chain.sort_residues!
+      chain.residues[-1].should be first
+      chain.residues.map(&.number).should eq [2, 99]
+    end
+  end
+
   describe "#spec" do
     it "returns the chain specification" do
       fake_structure.dig('A').spec.should eq "A"

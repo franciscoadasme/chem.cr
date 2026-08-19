@@ -360,15 +360,17 @@ describe Chem::Residue do
   end
 
   describe "#insertion_code" do
-    it "updates residue position" do
+    it "updates residue lookup without reordering" do
       structure = load_file("insertion_codes.pdb")
-      seqres = structure.dig('A').residues.select(&.protein?).join(&.code)
+      chain = structure.dig('A')
+      seqres = chain.residues.select(&.protein?).join(&.code)
       seqres.should eq "WGSNKPV"
       residue = structure.dig('A', 75, 'C')
       structure.dig('A', 75).insertion_code = 'C'
       residue.insertion_code = nil
-      seqres = structure.dig('A').residues.select(&.protein?).join(&.code)
-      seqres.should eq "NGSWKPV"
+      chain.residues.select(&.protein?).join(&.code).should eq "WGSNKPV"
+      chain.sort_residues!
+      chain.residues.select(&.protein?).join(&.code).should eq "NGSWKPV"
     end
   end
 
@@ -443,13 +445,15 @@ describe Chem::Residue do
   end
 
   describe "#number" do
-    it "updates residue position" do
+    it "updates residue lookup without reordering" do
       structure = load_file("3sgr.pdb")
-      seqres = structure.dig('B').residues.select(&.protein?).join(&.code)
+      chain = structure.dig('B')
+      seqres = chain.residues.select(&.protein?).join(&.code)
       seqres.should eq "GKLKVLGDVIEVGGKLKVLGDVIEV"
       structure.dig('B', 10).number = 40
-      seqres = structure.dig('B').residues.select(&.protein?).join(&.code)
-      seqres.should eq "GKLKVLGDVIVGGKLKVLGDVIEVE"
+      chain.residues.select(&.protein?).join(&.code).should eq "GKLKVLGDVIEVGGKLKVLGDVIEV"
+      chain.sort_residues!
+      chain.residues.select(&.protein?).join(&.code).should eq "GKLKVLGDVIVGGKLKVLGDVIEVE"
     end
   end
 
@@ -635,6 +639,19 @@ describe Chem::Residue do
       io = IO::Memory.new
       fake_structure.dig('B', 1).spec io
       io.to_s.should eq "B:SER1"
+    end
+  end
+
+  describe "#number=" do
+    it "does not reorder residues in the chain" do
+      struc = fake_structure
+      chain = struc.dig('A')
+      first = chain.residues[0]
+      second = chain.residues[1]
+      first.number = 99
+      chain.residues[0].should be first
+      chain.residues[1].should be second
+      chain[99].should be first
     end
   end
 end
