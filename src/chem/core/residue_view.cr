@@ -191,5 +191,10 @@ module Chem
       end
       chunks
     end
+
+    # Returns the enclosed array. Mutating it changes the view's source.
+    def to_unsafe : Array(Residue)
+      @wrapped
+    end
   end
 end

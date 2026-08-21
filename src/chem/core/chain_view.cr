@@ -21,5 +21,10 @@ module Chem
       end
       ResidueView.new residues
     end
+
+    # Returns the enclosed array. Mutating it changes the view's source.
+    def to_unsafe : Array(Chain)
+      @wrapped
+    end
   end
 end
