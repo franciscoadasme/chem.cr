@@ -14,8 +14,8 @@
 - Topology membership checks run in `Structure#<<(Atom)` when an atom is added.
 - Add `Structure#has_topology?`, `Atom#delete`, `Residue#delete`, and `Chain#delete` (#215). Deleting a chain or residue also deletes its atoms. `Structure#clear` removes atoms and topology.
 - Residue numbers are labels: `Residue#number=` and `#insertion_code=` no longer sort the parent chain. Use `Chain#sort_residues!` if iteration should follow numbering.
-- **Breaking:** `AtomView#to_a` returns a copy of the enclosed array. Use `#to_unsafe` for the inner array.
-- Make Chain comparable by id.
+- **Breaking:** `AtomView#to_a`, `ResidueView#to_a`, and `ChainView#to_a` return a copy of the enclosed array. Use `#to_unsafe` for the inner array.
+- `Chain` is comparable by id.
 
 #### Input/output
 
