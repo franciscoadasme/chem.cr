@@ -192,6 +192,11 @@ module Chem
       chunks
     end
 
+    # Returns a mutable copy of the enclosed residues.
+    def to_a : Array(Residue)
+      @wrapped.dup
+    end
+
     # Returns the enclosed array. Mutating it changes the view's source.
     def to_unsafe : Array(Residue)
       @wrapped

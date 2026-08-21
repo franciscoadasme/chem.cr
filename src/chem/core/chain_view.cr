@@ -22,6 +22,11 @@ module Chem
       ResidueView.new residues
     end
 
+    # Returns a mutable copy of the enclosed chains.
+    def to_a : Array(Chain)
+      @wrapped.dup
+    end
+
     # Returns the enclosed array. Mutating it changes the view's source.
     def to_unsafe : Array(Chain)
       @wrapped
